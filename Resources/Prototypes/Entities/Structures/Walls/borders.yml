@@ -16,7 +16,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          boundingBox: "-1024,-2,1024,2"
+          bounds: "-1024,-2,1024,2"
       layer:
       - Opaque
       - Impassable

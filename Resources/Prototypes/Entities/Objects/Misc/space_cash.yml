@@ -25,6 +25,12 @@
       - cash_1000
       - cash_1000000
 
+- type: material
+  id: Credit
+  name: credit
+  stack: Credit
+  icon: /Textures/Objects/Economy/cash.rsi/cash.png
+
 - type: stack
   id: Credit
   name: credit
