@@ -1,17 +1,4 @@
 Entries:
-- author: PJB
-  changes:
-  - {message: Gravity generator now needs ~100 seconds to charge up/down when turned
-      on/off. This means spamming the power button won't immediately do anything.,
-    type: Tweak}
-  - {message: Gravity generator UI now looks very fancy., type: Tweak}
-  id: 524
-  time: '2021-11-02T00:12:55.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: You are now alerted if an AHelp is not received by anyone., type: Add}
-  id: 525
-  time: '2021-11-02T00:42:05.0000000+00:00'
 - author: Ygg01
   changes:
   - {message: 'Make tomato juiceable and grindable. Finally, more nutritious juice
@@ -2963,3 +2950,14 @@ Entries:
   - {message: command decal color to departmental pallette, type: Add}
   id: 1024
   time: '2022-02-09T17:26:10.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Packed Station is now significantly more colorful., type: Tweak}
+  id: 1025
+  time: '2022-02-10T01:36:57.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Reduced the size of cartridges from 5 to 1 so you can fit more in a
+      trash bag., type: Tweak}
+  id: 1026
+  time: '2022-02-10T01:37:43.0000000+00:00'
