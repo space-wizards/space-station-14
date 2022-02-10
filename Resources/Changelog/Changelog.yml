@@ -1,17 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Open firelocks now have a smaller draw depth, so that they are not
-      drawn above windoors.', type: Tweak}
-  id: 535
-  time: '2021-11-03T13:43:10.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Improvised pneumatic cannons! You can mess around with them with a
-      screwdriver and wrench, and shoot items from them as long as they have a gas
-      tank. They''re in the crafting menu.', type: Add}
-  id: 536
-  time: '2021-11-03T21:33:36.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Added a brand new pinpointer for the nuclear disk in a captain locker,
@@ -2959,3 +2946,15 @@ Entries:
   - {message: 'Added some new, sensibly-sized signs.', type: Add}
   id: 1035
   time: '2022-02-10T21:08:56.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added more clothes to the ClothesMate to make greytide less grey, type: Add}
+  - {message: Job AutoDrobes are now coming to stations near you! Dress for the job.,
+    type: Add}
+  id: 1036
+  time: '2022-02-10T21:58:31.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Lack of oxygen is now slightly less deadly., type: Tweak}
+  id: 1037
+  time: '2022-02-10T21:58:41.0000000+00:00'
