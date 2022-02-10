@@ -61,16 +61,19 @@ namespace Content.Server.Body.Systems
                 respirator.AccumulatedFrametime -= respirator.CycleDelay;
                 UpdateSaturation(respirator.Owner, -respirator.CycleDelay, respirator);
 
-                switch (respirator.Status)
+                if (!state.IsIncapacitated()) // cannot breathe in crit.
                 {
-                    case RespiratorStatus.Inhaling:
-                        Inhale(uid, body);
-                        respirator.Status = RespiratorStatus.Exhaling;
-                        break;
-                    case RespiratorStatus.Exhaling:
-                        Exhale(uid, body);
-                        respirator.Status = RespiratorStatus.Inhaling;
-                        break;
+                    switch (respirator.Status)
+                    {
+                        case RespiratorStatus.Inhaling:
+                            Inhale(uid, body);
+                            respirator.Status = RespiratorStatus.Exhaling;
+                            break;
+                        case RespiratorStatus.Exhaling:
+                            Exhale(uid, body);
+                            respirator.Status = RespiratorStatus.Inhaling;
+                            break;
+                    }
                 }
 
                 if (respirator.Saturation < respirator.SuffocationThreshold)
