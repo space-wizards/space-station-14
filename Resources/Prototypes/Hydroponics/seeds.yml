@@ -633,8 +633,8 @@
   productPrototypes:
     - FoodGatfruit
   lifespan: 65
-  maturation: 40
-  production: 40
+  maturation: 25
+  production: 25
   yield: 1
   potency: 10
   growthStages: 2
