@@ -108,7 +108,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 sGridEntity = sGrid.GridEntityId;
                 entityManager.GetComponent<MetaDataComponent>(sGridEntity).EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1444
 
-                var tileDefinition = sTileDefinitionManager["underplating"];
+                var tileDefinition = sTileDefinitionManager["plating"];
                 var tile = new Tile(tileDefinition.TileId);
                 sCoordinates = sGrid.ToCoordinates();
 

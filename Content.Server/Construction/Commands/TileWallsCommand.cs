@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Commands
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "tilewalls";
-        public string Description => "Puts an underplating tile below every wall on a grid.";
+        public string Description => "Puts a plating tile below every wall on a grid.";
         public string Help => $"Usage: {Command} <gridId> | {Command}";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -64,7 +64,7 @@ namespace Content.Server.Construction.Commands
 
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var underplating = tileDefinitionManager["underplating"];
+            var underplating = tileDefinitionManager["plating"];
             var underplatingTile = new Tile(underplating.TileId);
             var changed = 0;
             foreach (var child in entityManager.GetComponent<TransformComponent>(grid.GridEntityId).ChildEntities)
@@ -100,7 +100,7 @@ namespace Content.Server.Construction.Commands
                 var tile = grid.GetTileRef(childTransform.Coordinates);
                 var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
-                if (tileDef.ID == "underplating")
+                if (tileDef.ID == "plating")
                 {
                     continue;
                 }

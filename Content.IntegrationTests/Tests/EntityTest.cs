@@ -54,7 +54,7 @@ namespace Content.IntegrationTests.Tests
                     grid = mapManager.CreateGrid(mapId, gridId);
                 }
 
-                var tileDefinition = tileDefinitionManager["underplating"];
+                var tileDefinition = tileDefinitionManager["plating"];
                 var tile = new Tile(tileDefinition.TileId);
                 var coordinates = grid.ToCoordinates();
 
@@ -146,7 +146,7 @@ namespace Content.IntegrationTests.Tests
                     grid = mapManager.CreateGrid(mapId, gridId);
                 }
 
-                var tileDefinition = tileDefinitionManager["underplating"];
+                var tileDefinition = tileDefinitionManager["plating"];
                 var tile = new Tile(tileDefinition.TileId);
                 var coordinates = grid.ToCoordinates();
 
@@ -250,7 +250,7 @@ namespace Content.IntegrationTests.Tests
                     grid = mapManager.CreateGrid(mapId, gridId);
                 }
 
-                var tileDefinition = tileDefinitionManager["underplating"];
+                var tileDefinition = tileDefinitionManager["plating"];
                 var tile = new Tile(tileDefinition.TileId);
                 var coordinates = grid.ToCoordinates();
 
