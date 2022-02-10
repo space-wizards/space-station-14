@@ -38,4 +38,19 @@ public abstract class SharedAirlockSystem : EntitySystem
         if (airlock.Safety && DoorSystem.GetColliding(uid).Any())
             args.Cancel();
     }
+
+
+    public void UpdateEmergencyLightStatus(SharedAirlockComponent component)
+    {
+        if (TryComp<AppearanceComponent>(component.Owner, out var appearanceComponent))
+        {
+            appearanceComponent.SetData(DoorVisuals.EmergencyLights, component.EmergencyAccess);
+        }
+    }
+
+    public void ToggleEmergencyAccess(SharedAirlockComponent component)
+    {
+        component.EmergencyAccess = !component.EmergencyAccess;
+        UpdateEmergencyLightStatus(component);
+    }
 }
