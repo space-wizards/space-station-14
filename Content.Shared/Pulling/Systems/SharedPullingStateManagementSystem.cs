@@ -30,6 +30,7 @@ namespace Content.Shared.Pulling
     public class SharedPullingStateManagementSystem : EntitySystem
     {
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         public override void Initialize()
         {
@@ -116,7 +117,7 @@ namespace Content.Shared.Pulling
                 pullable.Puller = puller.Owner;
 
                 // Joint startup
-                var union = pullerPhysics.GetWorldAABB().Union(pullablePhysics.GetWorldAABB());
+                var union = _physics.GetHardAABB(pullerPhysics).Union(_physics.GetHardAABB(pullablePhysics));
                 var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
                 pullable.PullJoint = _jointSystem.CreateDistanceJoint(pullablePhysics.Owner, pullerPhysics.Owner, id:$"pull-joint-{pullablePhysics.Owner}");

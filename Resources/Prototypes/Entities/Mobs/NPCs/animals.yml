@@ -575,6 +575,9 @@
     pieces: 1
   - type: ReplacementAccent
     accent: mouse
+  - type: Tag
+    tags:
+    - Trash
 
 
 - type: entity

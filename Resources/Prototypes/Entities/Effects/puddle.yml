@@ -13,6 +13,7 @@
       path: /Audio/Effects/Fluids/splat.ogg
     recolor: true
   - type: Clickable
+  - type: Evaporation
   - type: Slippery
   - type: Physics
   - type: Fixtures
@@ -67,7 +68,6 @@
     state: smear-0
     netsync: false
   - type: Puddle
-  - type: Evaporation
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
@@ -84,7 +84,6 @@
     state: splatter-0
     netsync: false
   - type: Puddle
-  - type: Evaporation
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
@@ -146,7 +145,6 @@
     state: writing-0
     netsync: false
   - type: Puddle
-  - type: Evaporation
     evaporateTime: 10
   - type: Appearance
     visuals:

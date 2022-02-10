@@ -9,6 +9,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Conditions
 {
@@ -39,18 +40,23 @@ namespace Content.Shared.Construction.Conditions
             var physics = EntitySystem.Get<SharedPhysicsSystem>();
             var rUserToObj = new CollisionRay(userWorldPosition, userToObject.Normalized, (int) CollisionGroup.Impassable);
             var length = userToObject.Length;
+
+            var tagSystem = EntitySystem.Get<TagSystem>();
+
             var userToObjRaycastResults = physics.IntersectRayWithPredicate(entManager.GetComponent<TransformComponent>(user).MapID, rUserToObj, maxLength: length,
-                predicate: (e) => !e.HasTag("Wall"));
-            if (!userToObjRaycastResults.Any())
+                predicate: (e) => !tagSystem.HasTag(e, "Wall"));
+
+            var targetWall = userToObjRaycastResults.FirstOrNull();
+
+            if (targetWall == null)
                 return false;
 
             // get this wall entity
-            var targetWall = userToObjRaycastResults.First().HitEntity;
-
             // check that we didn't try to build wallmount that facing another adjacent wall
             var rAdjWall = new CollisionRay(objWorldPosition, directionWithOffset.Normalized, (int) CollisionGroup.Impassable);
             var adjWallRaycastResults = physics.IntersectRayWithPredicate(entManager.GetComponent<TransformComponent>(user).MapID, rAdjWall, maxLength: 0.5f,
-               predicate: (e) => e == targetWall || !e.HasTag("Wall"));
+               predicate: (e) => e == targetWall.Value.HitEntity || !tagSystem.HasTag(e, "Wall"));
+
             return !adjWallRaycastResults.Any();
         }
 

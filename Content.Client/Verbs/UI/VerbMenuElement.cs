@@ -6,7 +6,6 @@ using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Verbs.UI
 {
@@ -16,10 +15,6 @@ namespace Content.Client.Verbs.UI
     /// </summary>
     public partial class VerbMenuElement : ContextMenuElement
     {
-        public const string StyleClassVerbInteractionText = "InteractionVerb";
-        public const string StyleClassVerbActivationText = "ActivationVerb";
-        public const string StyleClassVerbAlternativeText = "AlternativeVerb";
-        public const string StyleClassVerbOtherText = "OtherVerb";
         public const string StyleClassVerbMenuConfirmationTexture = "verbMenuConfirmationTexture";
 
         public const float VerbTooltipDelay = 0.5f;
@@ -31,38 +26,15 @@ namespace Content.Client.Verbs.UI
         // Top quality variable naming
         public Verb? Verb;
 
-        public VerbType Type;
-
-        public VerbMenuElement(string? text, VerbType verbType) : base(text)
-        {
-            Type = verbType;
-
-            // Set text font style based on verb type
-            switch (verbType)
-            {
-                case VerbType.Interaction:
-                case VerbType.Utility:
-                    Label.SetOnlyStyleClass(StyleClassVerbInteractionText);
-                    break;
-                case VerbType.Activation:
-                    Label.SetOnlyStyleClass(StyleClassVerbActivationText);
-                    break;
-                case VerbType.Alternative:
-                    Label.SetOnlyStyleClass(StyleClassVerbAlternativeText);
-                    break;
-                default:
-                    Label.SetOnlyStyleClass(StyleClassVerbOtherText);
-                    break;
-            }
-        }
-
-        public VerbMenuElement(Verb verb, VerbType verbType) : this(verb.Text, verbType)
+        public VerbMenuElement(Verb verb) : base(verb.Text)
         {
             ToolTip = verb.Message;
             TooltipDelay = VerbTooltipDelay;
             Disabled = verb.Disabled;
             Verb = verb;
             Type = verbType;
+
+            Label.SetOnlyStyleClass(verb.TextStyleClass);
 
             if (verb.ConfirmationPopup)
             {
@@ -90,15 +62,15 @@ namespace Content.Client.Verbs.UI
             });
         }
 
-        public VerbMenuElement(VerbCategory category, VerbType verbType) : this(category.Text, verbType)
+        public VerbMenuElement(VerbCategory category, string styleClass) : base(category.Text)
         {
+            Label.SetOnlyStyleClass(styleClass);
+
             Icon.AddChild(new TextureRect()
             {
                 Texture = category.Icon?.Frame0(),
                 Stretch = TextureRect.StretchMode.KeepAspectCentered
             });
-
-            Type = verbType;
         }
     }
 }

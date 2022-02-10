@@ -39,8 +39,8 @@ namespace Content.Shared.Containers.ItemSlots
             SubscribeLocalEvent<ItemSlotsComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ItemSlotsComponent, UseInHandEvent>(OnUseInHand);
 
-            SubscribeLocalEvent<ItemSlotsComponent, GetAlternativeVerbsEvent>(AddEjectVerbs);
-            SubscribeLocalEvent<ItemSlotsComponent, GetInteractionVerbsEvent>(AddInteractionVerbsVerbs);
+            SubscribeLocalEvent<ItemSlotsComponent, GetVerbsEvent<AlternativeVerb>>(AddEjectVerbs);
+            SubscribeLocalEvent<ItemSlotsComponent, GetVerbsEvent<InteractionVerb>>(AddInteractionVerbsVerbs);
 
             SubscribeLocalEvent<ItemSlotsComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<ItemSlotsComponent, DestructionEventArgs>(OnBreak);
@@ -380,7 +380,7 @@ namespace Content.Shared.Containers.ItemSlots
         #endregion
 
         #region Verbs
-        private void AddEjectVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetAlternativeVerbsEvent args)
+        private void AddEjectVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetVerbsEvent<AlternativeVerb> args)
         {
             if (args.Hands == null || !args.CanAccess ||!args.CanInteract ||
                 !_actionBlockerSystem.CanPickup(args.User))
@@ -402,7 +402,7 @@ namespace Content.Shared.Containers.ItemSlots
                     ? Loc.GetString(slot.Name)
                     : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
 
-                Verb verb = new();
+                AlternativeVerb verb = new();
                 verb.IconEntity = slot.Item;
                 verb.Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true);
 
@@ -420,7 +420,7 @@ namespace Content.Shared.Containers.ItemSlots
             }
         }
 
-        private void AddInteractionVerbsVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetInteractionVerbsEvent args)
+        private void AddInteractionVerbsVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetVerbsEvent<InteractionVerb> args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
@@ -437,7 +437,7 @@ namespace Content.Shared.Containers.ItemSlots
                         ? Loc.GetString(slot.Name)
                         : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
 
-                    Verb takeVerb = new();
+                    InteractionVerb takeVerb = new();
                     takeVerb.IconEntity = slot.Item;
                     takeVerb.Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true);
 
@@ -463,7 +463,7 @@ namespace Content.Shared.Containers.ItemSlots
                     ? Loc.GetString(slot.Name)
                     : Name(args.Using.Value) ?? string.Empty;
 
-                Verb insertVerb = new();
+                InteractionVerb insertVerb = new();
                 insertVerb.IconEntity = args.Using;
                 insertVerb.Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true);
 

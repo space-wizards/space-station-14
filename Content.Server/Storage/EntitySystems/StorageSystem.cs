@@ -36,11 +36,11 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleEntityRemovedFromContainer);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
 
-            SubscribeLocalEvent<EntityStorageComponent, GetInteractionVerbsEvent>(AddToggleOpenVerb);
+            SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
             SubscribeLocalEvent<EntityStorageComponent, RelayMovementEntityEvent>(OnRelayMovement);
 
-            SubscribeLocalEvent<ServerStorageComponent, GetActivationVerbsEvent>(AddOpenUiVerb);
-            SubscribeLocalEvent<ServerStorageComponent, GetUtilityVerbsEvent>(AddTransferVerbs);
+            SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
+            SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<UtilityVerb>>(AddTransferVerbs);
 
             SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
         }
@@ -69,7 +69,7 @@ namespace Content.Server.Storage.EntitySystems
             }
         }
 
-        private void AddToggleOpenVerb(EntityUid uid, EntityStorageComponent component, GetInteractionVerbsEvent args)
+        private void AddToggleOpenVerb(EntityUid uid, EntityStorageComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -77,7 +77,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!component.CanOpen(args.User, silent: true))
                 return;
 
-            Verb verb = new();
+            InteractionVerb verb = new();
             if (component.Open)
             {
                 verb.Text = Loc.GetString("verb-common-close");
@@ -92,7 +92,7 @@ namespace Content.Server.Storage.EntitySystems
             args.Verbs.Add(verb);
         }
 
-        private void AddOpenUiVerb(EntityUid uid, ServerStorageComponent component, GetActivationVerbsEvent args)
+        private void AddOpenUiVerb(EntityUid uid, ServerStorageComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -108,7 +108,7 @@ namespace Content.Server.Storage.EntitySystems
             // Does this player currently have the storage UI open?
             var uiOpen = component.SubscribedSessions.Contains(session);
 
-            Verb verb = new();
+            ActivationVerb verb = new();
             verb.Act = () => component.OpenStorageUI(args.User);
             if (uiOpen)
             {
