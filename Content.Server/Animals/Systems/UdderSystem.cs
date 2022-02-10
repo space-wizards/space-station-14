@@ -26,7 +26,7 @@ namespace Content.Server.Animals.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<UdderComponent, GetAlternativeVerbsEvent>(AddMilkVerb);
+            SubscribeLocalEvent<UdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
             SubscribeLocalEvent<UdderComponent, MilkingFinishedEvent>(OnMilkingFinished);
             SubscribeLocalEvent<UdderComponent, MilkingFailEvent>(OnMilkingFailed);
         }
@@ -117,14 +117,14 @@ namespace Content.Server.Animals.Systems
             component.BeingMilked = false;
         }
 
-        private void AddMilkVerb(EntityUid uid, UdderComponent component, GetAlternativeVerbsEvent args)
+        private void AddMilkVerb(EntityUid uid, UdderComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (args.Using == null ||
                  !args.CanInteract ||
                  !EntityManager.HasComponent<RefillableSolutionComponent>(args.Using.Value))
                 return;
 
-            Verb verb = new()
+            AlternativeVerb verb = new()
             {
                 Act = () =>
                 {

@@ -103,8 +103,8 @@ namespace Content.Server.Chemistry.EntitySystems
                 || !Resolve(uid, ref appearanceComponent, false))
                 return;
 
-            var filledVolumeFraction = solution.CurrentVolume.Float() / solution.MaxVolume.Float();
-            appearanceComponent.SetData(SolutionContainerVisuals.VisualState, new SolutionContainerVisualState(solution.Color, filledVolumeFraction));
+            var filledVolumePercent = solution.CurrentVolume.Float() / solution.MaxVolume.Float();
+            appearanceComponent.SetData(SolutionContainerVisuals.VisualState, new SolutionContainerVisualState(solution.Color, filledVolumePercent));
         }
 
         /// <summary>

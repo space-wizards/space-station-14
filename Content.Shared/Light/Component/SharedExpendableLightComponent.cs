@@ -36,39 +36,39 @@ namespace Content.Shared.Light.Component
 
         [ViewVariables]
         [DataField("turnOnBehaviourID")]
-        protected string TurnOnBehaviourID { get; set; } = string.Empty;
+        public string TurnOnBehaviourID { get; set; } = string.Empty;
 
         [ViewVariables]
         [DataField("fadeOutBehaviourID")]
-        protected string FadeOutBehaviourID { get; set; } = string.Empty;
+        public string FadeOutBehaviourID { get; set; } = string.Empty;
 
         [ViewVariables]
         [DataField("glowDuration")]
-        protected float GlowDuration { get; set; } = 60 * 15f;
+        public float GlowDuration { get; set; } = 60 * 15f;
 
         [ViewVariables]
         [DataField("fadeOutDuration")]
-        protected float FadeOutDuration { get; set; } = 60 * 5f;
+        public float FadeOutDuration { get; set; } = 60 * 5f;
 
         [ViewVariables]
         [DataField("spentDesc")]
-        protected string SpentDesc { get; set; } = string.Empty;
+        public string SpentDesc { get; set; } = string.Empty;
 
         [ViewVariables]
         [DataField("spentName")]
-        protected string SpentName { get; set; } = string.Empty;
+        public string SpentName { get; set; } = string.Empty;
 
         [ViewVariables]
         [DataField("iconStateSpent")]
-        protected string IconStateSpent { get; set; } = string.Empty;
+        public string IconStateSpent { get; set; } = string.Empty;
 
         [ViewVariables]
         [DataField("iconStateOn")]
-        protected string IconStateLit { get; set; } = string.Empty;
+        public string IconStateLit { get; set; } = string.Empty;
 
         [ViewVariables]
         [DataField("litSound", required: true)]
-        protected SoundSpecifier LitSound { get; set; } = default!;
+        public SoundSpecifier LitSound { get; set; } = default!;
 
         [ViewVariables]
         [DataField("loopedSound")]
@@ -76,6 +76,6 @@ namespace Content.Shared.Light.Component
 
         [ViewVariables]
         [DataField("dieSound")]
-        protected SoundSpecifier? DieSound { get; set; } = null;
+        public SoundSpecifier? DieSound { get; set; } = null;
     }
 }
