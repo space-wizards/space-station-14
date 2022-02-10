@@ -28,7 +28,9 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (_gameTiming.CurTime < component.LastInteractTime + component.InteractDelay)
+        var curTime = _gameTiming.CurTime;
+
+        if (curTime < component.LastInteractTime + component.InteractDelay)
             return;
 
         EntityManager.TryGetComponent<MobStateComponent>(uid, out var MobStateComponent);
@@ -57,7 +59,7 @@ public sealed class InteractionPopupSystem : EntitySystem
 
         _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid));
 
-        component.LastInteractTime = _gameTiming.CurTime;
+        component.LastInteractTime = curTime;
         args.Handled = true;
     }
 }
