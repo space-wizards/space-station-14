@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Body.Components
 {
     [RegisterComponent, Friend(typeof(RespiratorSystem))]
-    public class RespiratorComponent : Component
+    public sealed class RespiratorComponent : Component
     {
         /// <summary>
         ///     Saturation level. Reduced by CycleDelay each tick.
@@ -28,7 +28,7 @@ namespace Content.Server.Body.Components
         public float MaxSaturation = 5.0f;
 
         [DataField("minSaturation")]
-        public float MinSaturation = -5.0f;
+        public float MinSaturation = -2.0f;
 
         // TODO HYPEROXIA?
 
