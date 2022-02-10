@@ -1160,3 +1160,119 @@
     - type: WiresVisualizer
   - type: AccessReader
     access: [["Janitor"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSciDrobe
+  name: SciDrobe
+  description: A simple vending machine suitable to dispense well tailored science clothing. Endorsed by Space Cubans.
+  components:
+  - type: VendingMachine
+    pack: SciDrobeInventory
+  - type: Advertise
+    pack: SciDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/scidrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineRoboDrobe
+  name: RoboDrobe
+  description: A vending machine designed to dispense clothing known only to roboticists.
+  components:
+  - type: VendingMachine
+    pack: RoboDrobeInventory
+  - type: Advertise
+    pack: RoboDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/robodrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineGeneDrobe
+  name: GeneDrobe
+  description: A machine for dispensing clothing related to genetics.
+  components:
+  - type: VendingMachine
+    pack: GeneDrobeInventory
+  - type: Advertise
+    pack: GeneDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/genedrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineViroDrobe
+  name: ViroDrobe
+  description: An unsterilized machine for dispending virology related clothing.
+  components:
+  - type: VendingMachine
+    pack: ViroDrobeInventory
+  - type: Advertise
+    pack: ViroDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/virodrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Medical"]]
