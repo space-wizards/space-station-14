@@ -38,7 +38,7 @@ namespace Content.Client.Tools.Components
                 _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
                 AddChild(_label);
 
-                parent.UiUpdateNeeded = true;
+                UpdateDraw();
             }
 
             /// <inheritdoc />
@@ -50,7 +50,11 @@ namespace Content.Client.Tools.Components
                 {
                     return;
                 }
+                Update();
+            }
 
+            public void Update()
+            {
                 _parent.UiUpdateNeeded = false;
 
                 var fuelCap = _parent.FuelCapacity;

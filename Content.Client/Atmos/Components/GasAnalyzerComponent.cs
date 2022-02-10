@@ -43,7 +43,7 @@ namespace Content.Client.Atmos.Components
                 _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
                 AddChild(_label);
 
-                parent._uiUpdateNeeded = true;
+                Update();
             }
 
             /// <inheritdoc />
@@ -56,6 +56,11 @@ namespace Content.Client.Atmos.Components
                     return;
                 }
 
+                Update();
+            }
+
+            public void Update()
+            {
                 _parent._uiUpdateNeeded = false;
 
                 var color = _parent.Danger switch
