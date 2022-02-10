@@ -41,7 +41,7 @@ namespace Content.Server.Interaction.Components;
         [DataField("interactFailureSound")]
         public SoundSpecifier? InteractFailureSound;
 
-        /// <summary> 
+        /// <summary>
         /// Chance that an interaction attempt will succeed.
         /// 1   = always play "success" popup and sound.
         /// 0.5 = 50% chance to play either success or failure popup and sound.
@@ -64,7 +64,4 @@ namespace Content.Server.Interaction.Components;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public TimeSpan LastInteractTime;
-
     }
-
-

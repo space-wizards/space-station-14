@@ -48,15 +48,11 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (component.InteractDelay.TotalSeconds <= 0)
-            return;
-
         if (_gameTiming.CurTime < component.LastInteractTime + component.InteractDelay)
             return;
 
         if (component.SuccessChance == -1.0f) // for the special "invalid" case where SuccessChance is -1 (e.g. target is deceased), suppress both popup and sound effect.
             return;
-
 
         string msg = "";
 
