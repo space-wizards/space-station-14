@@ -6,6 +6,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Climbing;
 using Content.Shared.DragDrop;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
@@ -70,7 +71,7 @@ namespace Content.Server.Climbing.Components
         /// <returns></returns>
         private bool CanVault(EntityUid user, EntityUid target, out string reason)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user, target))
             {
                 reason = Loc.GetString("comp-climbable-cant-interact");
                 return false;
@@ -110,7 +111,17 @@ namespace Content.Server.Climbing.Components
         /// <returns></returns>
         private bool CanVault(EntityUid user, EntityUid dragged, EntityUid target, out string reason)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user, dragged))
+            {
+                reason = Loc.GetString("comp-climbable-cant-interact");
+                return false;
+            }
+
+            // CanInteract() doesn't support checking a second "target" entity.
+            // Doing so manually:
+            var ev = new GettingInteractedWithAttemptEvent(user, target);
+            _entities.EventBus.RaiseLocalEvent(target, ev);
+            if (ev.Cancelled)
             {
                 reason = Loc.GetString("comp-climbable-cant-interact");
                 return false;

@@ -207,11 +207,6 @@ namespace Content.Server.Atmos.Components
 
         internal void ToggleInternals()
         {
-            var user = GetInternalsComponent()?.Owner;
-
-            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user.Value))
-                return;
-
             if (IsConnected)
             {
                 DisconnectFromInternals();
@@ -321,6 +316,9 @@ namespace Content.Server.Atmos.Components
     {
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(args.Performer, args.Item))
+                return false;
+
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<GasTankComponent?>(args.Item, out var gasTankComponent)) return false;
             // no change
             if (gasTankComponent.IsConnected == args.ToggledOn) return false;

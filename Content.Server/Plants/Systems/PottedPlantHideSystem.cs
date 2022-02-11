@@ -37,9 +37,6 @@ namespace Content.Server.Plants.Systems
             if (args.Handled)
                 return;
 
-            // standard interaction checks
-            if (!_blocker.CanInteract(args.User)) return;
-
             Rustle(uid, component);
             args.Handled = _stashSystem.TryHideItem(uid, args.User, args.Used);
         }
@@ -48,9 +45,6 @@ namespace Content.Server.Plants.Systems
         {
             if (args.Handled)
                 return;
-
-            // standard interaction checks
-            if (!_blocker.CanInteract(args.User)) return;
 
             Rustle(uid, component);
 

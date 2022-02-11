@@ -184,11 +184,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            if (!_actionBlockerSystem.CanInteract(player) || !_actionBlockerSystem.CanUse(player))
-            {
-                return;
-            }
-
             switch (args.Button)
             {
                 case SharedDisposalUnitComponent.UiButton.Eject:
@@ -441,12 +436,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
         {
-            if (!Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
-            {
-                eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-cannot=interact"));
-                return false;
-            }
-
+            // CBF checking right now but pretty sure interactions are already blocked if they're in a separate container.
             if (eventArgs.User.IsInContainer())
             {
                 eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-cannot-reach"));

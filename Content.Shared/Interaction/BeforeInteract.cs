@@ -8,7 +8,7 @@ namespace Content.Shared.Interaction
     ///     Raised directed on the used object when clicking on another object before an interaction is handled.
     /// </summary>
     [PublicAPI]
-    public class BeforeInteractEvent : HandledEntityEventArgs
+    public class BeforeRangedInteractEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that triggered the interaction.
@@ -35,7 +35,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public bool CanReach { get; }
 
-        public BeforeInteractEvent(
+        public BeforeRangedInteractEvent(
             EntityUid user,
             EntityUid used,
             EntityUid? target,

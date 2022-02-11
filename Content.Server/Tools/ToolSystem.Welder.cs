@@ -102,9 +102,6 @@ namespace Content.Server.Tools
                 return false;
             }
 
-            if (user != null && !_actionBlockerSystem.CanInteract(user.Value))
-                return false;
-
             solution.RemoveReagent(welder.FuelReagent, welder.FuelLitCost);
 
             welder.Lit = true;
@@ -139,9 +136,6 @@ namespace Content.Server.Tools
 
             // Optional components.
             Resolve(uid, ref item, ref light, ref sprite);
-
-            if (user != null && !_actionBlockerSystem.CanInteract(user.Value))
-                return false;
 
             welder.Lit = false;
 

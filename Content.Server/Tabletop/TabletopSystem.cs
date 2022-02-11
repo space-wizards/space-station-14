@@ -58,9 +58,7 @@ namespace Content.Server.Tabletop
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            // Check that the entity can interact with the game board.
-            if(_actionBlockerSystem.CanInteract(args.User))
-                OpenSessionFor(actor.PlayerSession, uid);
+            OpenSessionFor(actor.PlayerSession, uid);
         }
 
         private void OnGameShutdown(EntityUid uid, TabletopGameComponent component, ComponentShutdown args)

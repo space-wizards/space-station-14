@@ -561,7 +561,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Attempts to interact with the item in a hand using the active held item.
         /// </summary>
-        public async void InteractHandWithActiveHand(string handName)
+        public void InteractHandWithActiveHand(string handName)
         {
             if (!TryGetActiveHeldEntity(out var activeHeldEntity))
                 return;
@@ -572,7 +572,7 @@ namespace Content.Shared.Hands.Components
             if (activeHeldEntity == heldEntity)
                 return;
 
-            await EntitySystem.Get<SharedInteractionSystem>()
+            EntitySystem.Get<SharedInteractionSystem>()
                 .InteractUsing(Owner, activeHeldEntity.Value, heldEntity.Value, EntityCoordinates.Invalid);
         }
 
@@ -585,7 +585,7 @@ namespace Content.Shared.Hands.Components
             if (altInteract)
                 sys.AltInteract(Owner, heldEntity.Value);
             else
-                sys.TryUseInteraction(Owner, heldEntity.Value);
+                sys.UseInHandInteraction(Owner, heldEntity.Value);
         }
 
         public void ActivateHeldEntity(string handName)
@@ -594,7 +594,7 @@ namespace Content.Shared.Hands.Components
                 return;
 
             EntitySystem.Get<SharedInteractionSystem>()
-                .TryInteractionActivate(Owner, heldEntity);
+                .InteractionActivate(Owner, heldEntity.Value);
         }
 
         /// <summary>

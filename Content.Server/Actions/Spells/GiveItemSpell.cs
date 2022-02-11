@@ -45,7 +45,7 @@ namespace Content.Server.Actions.Spells
                 return;
             }
 
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(caster)) return;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(caster, null)) return;
 
             // TODO: Nix when we get EntityPrototype serializers
             if (!IoCManager.Resolve<IPrototypeManager>().HasIndex<EntityPrototype>(ItemProto))

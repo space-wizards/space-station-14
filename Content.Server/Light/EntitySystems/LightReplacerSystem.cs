@@ -16,9 +16,8 @@ using Robust.Shared.Player;
 namespace Content.Server.Light.EntitySystems
 {
     [UsedImplicitly]
-    public class LightReplacerSystem : EntitySystem
+    public sealed class LightReplacerSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
@@ -42,7 +41,6 @@ namespace Content.Server.Light.EntitySystems
                 return;
 
             // standard interaction checks
-            if (!_blocker.CanUse(eventArgs.User)) return;
             if (!eventArgs.CanReach) return;
 
             // behaviour will depends on target type
@@ -63,9 +61,6 @@ namespace Content.Server.Light.EntitySystems
         {
             if (eventArgs.Handled)
                 return;
-
-            // standard interaction checks
-            if (!_blocker.CanInteract(eventArgs.User)) return;
 
             var usedUid = eventArgs.Used;
 
