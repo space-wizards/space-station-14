@@ -199,7 +199,7 @@ namespace Content.Shared.Interaction
             // empty-hand interactions
             if (hand.HeldEntity == null)
             {
-                if (target != null)
+                if (inRangeUnobstructed && target != null)
                     InteractHand(user, target.Value);
 
                 return;
