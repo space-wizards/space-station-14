@@ -68,6 +68,7 @@
     tag: Window
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
+    popupPerceivedByOthers: true
     interactSuccessSound:
       path: /Audio/Effects/glass_knock.ogg
   - type: Construction
