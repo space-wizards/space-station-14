@@ -1,16 +1,13 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.PDA;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Access.Components
 {
-    // TODO BUI NETWORKING if ever clients can open their own BUI's (id card console, pda), then this data should be
-    // networked.
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     [Friend(typeof(SharedIdCardSystem), typeof(SharedPDASystem))]
-    public class IdCardComponent : Component
+    public sealed class IdCardComponent : Component
     {
         [DataField("originalOwnerName")]
         public string OriginalOwnerName = default!;
@@ -20,5 +17,18 @@ namespace Content.Shared.Access.Components
 
         [DataField("jobTitle")]
         public string? JobTitle;
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class IdCardComponentState : ComponentState
+    {
+        public string? FullName;
+        public string? JobTitle;
+
+        public IdCardComponentState(string? fullName, string? jobTitle)
+        {
+            FullName = fullName;
+            JobTitle = jobTitle;
+        }
     }
 }

@@ -4,12 +4,35 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Access.Systems;
 
 public abstract class SharedIdCardSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<IdCardComponent, ComponentGetState>(OnComponentGetState);
+        SubscribeLocalEvent<IdCardComponent, ComponentHandleState>(OnComponentHandleState);
+    }
+
+    private void OnComponentGetState(EntityUid uid, IdCardComponent component, ref ComponentGetState args)
+    {
+        args.State = new IdCardComponentState(component.FullName, component.JobTitle);
+    }
+
+    private void OnComponentHandleState(EntityUid uid, IdCardComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is IdCardComponentState state)
+        {
+            component.FullName = state.FullName;
+            component.JobTitle = state.JobTitle;
+        }
+    }
 
     /// <summary>
     ///     Attempt to find an ID card on an entity. This will look in the entity itself, in the entity's hands, and
@@ -47,9 +70,10 @@ public abstract class SharedIdCardSystem : EntitySystem
         if (EntityManager.TryGetComponent(uid, out idCard))
             return true;
 
-        if (EntityManager.TryGetComponent(uid, out PDAComponent? pda) && pda.ContainedID != null)
+        if (EntityManager.TryGetComponent(uid, out PDAComponent? pda)
+            && TryComp<IdCardComponent>(pda.IdSlot.Item, out var id))
         {
-            idCard = pda.ContainedID;
+            idCard = id;
             return true;
         }
 

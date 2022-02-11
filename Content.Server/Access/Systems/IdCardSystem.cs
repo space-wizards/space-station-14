@@ -35,6 +35,7 @@ namespace Content.Server.Access.Systems
                 jobTitle = jobTitle[..SharedIdCardConsoleComponent.MaxJobTitleLength];
 
             id.JobTitle = jobTitle;
+            Dirty(id);
             UpdateEntityName(uid, id);
             return true;
         }
@@ -48,6 +49,7 @@ namespace Content.Server.Access.Systems
                 fullName = fullName[..SharedIdCardConsoleComponent.MaxFullNameLength];
 
             id.FullName = fullName;
+            Dirty(id);
             UpdateEntityName(uid, id);
             return true;
         }

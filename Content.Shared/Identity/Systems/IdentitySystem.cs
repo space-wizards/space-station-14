@@ -19,9 +19,10 @@ public sealed partial class IdentitySystem : EntitySystem
     /// </summary>
     /// <param name="target">The entity to get an identity string for.</param>
     /// <param name="viewer">The "viewer" of the identity.</param>
+    /// <param name="useTrueName">Should we get the entity's true name, if it's known?</param>
     /// <param name="inventory">Resolve comp</param>
     /// <param name="appearance">Resolve comp</param>
-    public string GetIdentityString(EntityUid target, EntityUid viewer,
+    public string GetIdentityString(EntityUid target, EntityUid? viewer=null, bool useTrueName=false,
         InventoryComponent? inventory=null,
         HumanoidAppearanceComponent? appearance=null)
     {
@@ -31,20 +32,36 @@ public sealed partial class IdentitySystem : EntitySystem
         // These events handles things like masks blocking identity, or monkeys
         // not knowing identity.
 
-        // What the viewer says
         var viewerEv = new ShouldKnowIdentityAttemptEvent(target);
-        RaiseLocalEvent(viewer, viewerEv, false);
+        // What the viewer says
+        if (viewer != null)
+        {
+            RaiseLocalEvent(viewer.Value, viewerEv, false);
+        }
 
         var targetEv = new CanKnowIdentityAttemptEvent(viewer);
         RaiseLocalEvent(target, targetEv, false);
 
-        var trueName = viewerEv.KnowsTrueName || targetEv.KnowsTrueName;
+        var trueName = useTrueName || viewerEv.KnowsTrueName || targetEv.KnowsTrueName;
         var representation = GetIdentityRepresentation(target, inventory, appearance);
 
-        if ((viewerEv.Cancelled || targetEv.Cancelled) && !AlwaysKnowsIdentity(viewer))
-            return representation.ToStringUnknown();
+        string presumedString;
+        if ((viewerEv.Cancelled || targetEv.Cancelled))
+        {
+            presumedString = representation.ToStringKnown(false);
+        }
+        else
+        {
+            presumedString = representation.ToStringKnown(true);
+        }
 
-        return representation.ToStringKnown(trueName);
+        if ((AlwaysKnowsIdentity(target, viewer) || trueName)
+            && presumedString != representation.ToStringKnown(true))
+        {
+            return presumedString + $" ({representation.ToStringKnown(true)})";
+        }
+
+        return presumedString;
     }
 
     /// <summary>
@@ -90,8 +107,12 @@ public sealed partial class IdentitySystem : EntitySystem
     ///     Should the viewer always know someone's identity,
     ///     regardless of anything else?
     /// </summary>
-    private bool AlwaysKnowsIdentity(EntityUid viewer)
+    private bool AlwaysKnowsIdentity(EntityUid target, EntityUid? viewer)
     {
+        // Well, duh.
+        if (target == viewer)
+            return true;
+
         // Ghosts always know someone's true identity.
         if (HasComp<SharedGhostComponent>(viewer))
             return true;
@@ -129,10 +150,12 @@ public sealed class ShouldKnowIdentityAttemptEvent : IdentityAttemptEventBase
 /// </summary>
 public sealed class CanKnowIdentityAttemptEvent : IdentityAttemptEventBase, IInventoryRelayEvent
 {
-    public EntityUid Viewer;
-    public SlotFlags TargetSlots => SlotFlags.MASK;
+    public EntityUid? Viewer;
 
-    public CanKnowIdentityAttemptEvent(EntityUid viewer)
+    // i.e. masks or helmets.
+    public SlotFlags TargetSlots => SlotFlags.MASK | SlotFlags.HEAD;
+
+    public CanKnowIdentityAttemptEvent(EntityUid? viewer)
     {
         Viewer = viewer;
     }
@@ -165,7 +188,7 @@ public sealed class IdentityRepresentation
     {
         return trueName
             ? TrueName
-            : PresumedName ?? Loc.GetString("identity-unknown-name");
+            : PresumedName ?? ToStringUnknown();
     }
 
     /// <summary>

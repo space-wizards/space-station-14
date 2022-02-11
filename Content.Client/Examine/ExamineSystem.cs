@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Examine;
+using Content.Shared.Identity.Systems;
 using Content.Shared.Input;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -29,6 +30,7 @@ namespace Content.Client.Examine
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IdentitySystem _identitySystem = default!;
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
@@ -142,7 +144,7 @@ namespace Content.Client.Examine
 
             hBox.AddChild(new Label
             {
-                Text = EntityManager.GetComponent<MetaDataComponent>(entity).EntityName,
+                Text = _identitySystem.GetIdentityString(entity, _playerManager.LocalPlayer!.ControlledEntity!.Value),
                 HorizontalExpand = true,
             });
 

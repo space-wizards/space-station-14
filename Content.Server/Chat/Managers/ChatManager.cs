@@ -15,6 +15,7 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared.Identity.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -59,6 +60,7 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private AdminLogSystem _logs = default!;
+        private IdentitySystem _identitySystem = default!;
 
         /// <summary>
         /// The maximum length a player-sent message can be sent
@@ -78,6 +80,7 @@ namespace Content.Server.Chat.Managers
         public void Initialize()
         {
             _logs = EntitySystem.Get<AdminLogSystem>();
+            _identitySystem = EntitySystem.Get<IdentitySystem>();
             _netManager.RegisterNetMessage<MsgChatMessage>();
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
@@ -231,7 +234,8 @@ namespace Content.Server.Chat.Managers
             var sessions = new List<ICommonSession>();
             ClientDistanceToList(source, VoiceRange, sessions);
 
-            var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            var name = _identitySystem.GetIdentityString(source, useTrueName: true);
+            var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", name));
 
             foreach (var session in sessions)
             {
@@ -275,7 +279,9 @@ namespace Content.Server.Chat.Managers
 
             var transformSource = _entManager.GetComponent<TransformComponent>(source);
             var sourceCoords = transformSource.Coordinates;
-            var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+
+            var name = _identitySystem.GetIdentityString(source, useTrueName: true);
+            var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", name));
 
             var xforms = _entManager.GetEntityQuery<TransformComponent>();
             var ghosts = _entManager.GetEntityQuery<GhostComponent>();
@@ -319,7 +325,8 @@ namespace Content.Server.Chat.Managers
 
             ClientDistanceToList(source, VoiceRange, sessions);
 
-            var messageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            var name = _identitySystem.GetIdentityString(source, useTrueName: true);
+            var messageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName", name));
 
             foreach (var session in sessions)
             {
@@ -364,7 +371,8 @@ namespace Content.Server.Chat.Managers
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.LOOC;
             msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message", ("entityName", Name: _entManager.GetComponent<MetaDataComponent>(entity).EntityName));
+            var name = _identitySystem.GetIdentityString(entity, useTrueName: true);
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message", ("entityName", name));
 
             _netManager.ServerSendToMany(msg, sessions.Select(o => o.ConnectedClient).ToList());
 

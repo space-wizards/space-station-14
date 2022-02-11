@@ -10,6 +10,7 @@
     sprite: Clothing/Mask/gas.rsi
   - type: BreathMask
   - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
