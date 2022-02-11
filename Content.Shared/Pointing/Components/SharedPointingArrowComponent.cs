@@ -1,8 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+namespace Content.Shared.Pointing.Components;
 
-namespace Content.Shared.Pointing.Components
+public abstract class SharedPointingArrowComponent : Component
 {
-    public class SharedPointingArrowComponent : Component
-    {
-    }
 }

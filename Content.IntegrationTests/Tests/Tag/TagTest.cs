@@ -53,6 +53,7 @@ namespace Content.IntegrationTests.Tests.Tag
             var sMapManager = server.ResolveDependency<IMapManager>();
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
+            var tagSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<TagSystem>();
 
             EntityUid sTagDummy = default;
             TagComponent sTagComponent = null!;
@@ -61,7 +62,7 @@ namespace Content.IntegrationTests.Tests.Tag
             {
                 sMapManager.CreateNewMapEntity(MapId.Nullspace);
                 sTagDummy = sEntityManager.SpawnEntity(TagEntityId, MapCoordinates.Nullspace);
-                sTagComponent = IoCManager.Resolve<IEntityManager>().GetComponent<TagComponent>(sTagDummy);
+                sTagComponent = sEntityManager.GetComponent<TagComponent>(sTagDummy);
             });
 
             await server.WaitAssertion(() =>
@@ -72,48 +73,48 @@ namespace Content.IntegrationTests.Tests.Tag
                 Assert.That(sTagComponent.Tags, Contains.Item(StartingTag));
 
                 // Single
-                Assert.True(sTagDummy.HasTag(StartingTag));
-                Assert.True(sTagComponent.HasTag(StartingTag));
+                Assert.True(tagSystem.HasTag(sTagDummy, StartingTag));
+                Assert.True(tagSystem.HasTag(sTagComponent, StartingTag));
 
                 // Any
-                Assert.True(sTagDummy.HasAnyTag(StartingTag));
-                Assert.True(sTagComponent.HasAnyTag(StartingTag));
+                Assert.True(tagSystem.HasAnyTag(sTagDummy, StartingTag));
+                Assert.True(tagSystem.HasAnyTag(sTagComponent, StartingTag));
 
                 // All
-                Assert.True(sTagDummy.HasAllTags(StartingTag));
-                Assert.True(sTagComponent.HasAllTags(StartingTag));
+                Assert.True(tagSystem.HasAllTags(sTagDummy, StartingTag));
+                Assert.True(tagSystem.HasAllTags(sTagComponent, StartingTag));
 
                 // Does not have the added tag
                 var addedTagPrototype = sPrototypeManager.Index<TagPrototype>(AddedTag);
                 Assert.That(sTagComponent.Tags, Does.Not.Contains(addedTagPrototype));
 
                 // Single
-                Assert.False(sTagDummy.HasTag(AddedTag));
-                Assert.False(sTagComponent.HasTag(AddedTag));
+                Assert.False(tagSystem.HasTag(sTagDummy, AddedTag));
+                Assert.False(tagSystem.HasTag(sTagComponent, AddedTag));
 
                 // Any
-                Assert.False(sTagDummy.HasAnyTag(AddedTag));
-                Assert.False(sTagComponent.HasAnyTag(AddedTag));
+                Assert.False(tagSystem.HasAnyTag(sTagDummy, AddedTag));
+                Assert.False(tagSystem.HasAnyTag(sTagComponent, AddedTag));
 
                 // All
-                Assert.False(sTagDummy.HasAllTags(AddedTag));
-                Assert.False(sTagComponent.HasAllTags(AddedTag));
+                Assert.False(tagSystem.HasAllTags(sTagDummy, AddedTag));
+                Assert.False(tagSystem.HasAllTags(sTagComponent, AddedTag));
 
                 // Does not have the unused tag
                 var unusedTagPrototype = sPrototypeManager.Index<TagPrototype>(UnusedTag);
                 Assert.That(sTagComponent.Tags, Does.Not.Contains(unusedTagPrototype));
 
                 // Single
-                Assert.False(sTagDummy.HasTag(UnusedTag));
-                Assert.False(sTagComponent.HasTag(UnusedTag));
+                Assert.False(tagSystem.HasTag(sTagDummy, UnusedTag));
+                Assert.False(tagSystem.HasTag(sTagComponent, UnusedTag));
 
                 // Any
-                Assert.False(sTagDummy.HasAnyTag(UnusedTag));
-                Assert.False(sTagComponent.HasAnyTag(UnusedTag));
+                Assert.False(tagSystem.HasAnyTag(sTagDummy, UnusedTag));
+                Assert.False(tagSystem.HasAnyTag(sTagComponent, UnusedTag));
 
                 // All
-                Assert.False(sTagDummy.HasAllTags(UnusedTag));
-                Assert.False(sTagComponent.HasAllTags(UnusedTag));
+                Assert.False(tagSystem.HasAllTags(sTagDummy, UnusedTag));
+                Assert.False(tagSystem.HasAllTags(sTagComponent, UnusedTag));
 
                 // Throws when checking for an unregistered tag
                 Assert.Throws<UnknownPrototypeException>(() =>
@@ -124,96 +125,96 @@ namespace Content.IntegrationTests.Tests.Tag
                 // Single
                 Assert.Throws<UnknownPrototypeException>(() =>
                 {
-                    sTagDummy.HasTag(UnregisteredTag);
+                    tagSystem.HasTag(sTagDummy, UnregisteredTag);
                 });
                 Assert.Throws<UnknownPrototypeException>(() =>
                 {
-                    sTagComponent.HasTag(UnregisteredTag);
+                    tagSystem.HasTag(sTagComponent, UnregisteredTag);
                 });
 
                 // Any
                 Assert.Throws<UnknownPrototypeException>(() =>
                 {
-                    sTagDummy.HasAnyTag(UnregisteredTag);
+                    tagSystem.HasAnyTag(sTagDummy, UnregisteredTag);
                 });
                 Assert.Throws<UnknownPrototypeException>(() =>
                 {
-                    sTagComponent.HasAnyTag(UnregisteredTag);
+                    tagSystem.HasAnyTag(sTagComponent, UnregisteredTag);
                 });
 
                 // All
                 Assert.Throws<UnknownPrototypeException>(() =>
                 {
-                    sTagDummy.HasAllTags(UnregisteredTag);
+                    tagSystem.HasAllTags(sTagDummy, UnregisteredTag);
                 });
                 Assert.Throws<UnknownPrototypeException>(() =>
                 {
-                    sTagComponent.HasAllTags(UnregisteredTag);
+                    tagSystem.HasAllTags(sTagComponent, UnregisteredTag);
                 });
 
                 // Cannot add the starting tag again
-                Assert.That(sTagComponent.AddTag(StartingTag), Is.False);
-                Assert.That(sTagComponent.AddTags(StartingTag, StartingTag), Is.False);
-                Assert.That(sTagComponent.AddTags(new List<string> {StartingTag, StartingTag}), Is.False);
+                Assert.That(tagSystem.AddTag(sTagComponent, StartingTag), Is.False);
+                Assert.That(tagSystem.AddTags(sTagComponent, StartingTag, StartingTag), Is.False);
+                Assert.That(tagSystem.AddTags(sTagComponent, new List<string> {StartingTag, StartingTag}), Is.False);
 
                 // Has the starting tag
-                Assert.That(sTagComponent.HasTag(StartingTag), Is.True);
-                Assert.That(sTagComponent.HasAllTags(StartingTag, StartingTag), Is.True);
-                Assert.That(sTagComponent.HasAllTags(new List<string> {StartingTag, StartingTag}), Is.True);
-                Assert.That(sTagComponent.HasAnyTag(StartingTag, StartingTag), Is.True);
-                Assert.That(sTagComponent.HasAnyTag(new List<string> {StartingTag, StartingTag}), Is.True);
+                Assert.That(tagSystem.HasTag(sTagComponent, StartingTag), Is.True);
+                Assert.That(tagSystem.HasAllTags(sTagComponent, StartingTag, StartingTag), Is.True);
+                Assert.That(tagSystem.HasAllTags(sTagComponent, new List<string> {StartingTag, StartingTag}), Is.True);
+                Assert.That(tagSystem.HasAnyTag(sTagComponent, StartingTag, StartingTag), Is.True);
+                Assert.That(tagSystem.HasAnyTag(sTagComponent, new List<string> {StartingTag, StartingTag}), Is.True);
 
                 // Does not have the added tag yet
-                Assert.That(sTagComponent.HasTag(AddedTag), Is.False);
-                Assert.That(sTagComponent.HasAllTags(AddedTag, AddedTag), Is.False);
-                Assert.That(sTagComponent.HasAllTags(new List<string> {AddedTag, AddedTag}), Is.False);
-                Assert.That(sTagComponent.HasAnyTag(AddedTag, AddedTag), Is.False);
-                Assert.That(sTagComponent.HasAnyTag(new List<string> {AddedTag, AddedTag}), Is.False);
+                Assert.That(tagSystem.HasTag(sTagComponent, AddedTag), Is.False);
+                Assert.That(tagSystem.HasAllTags(sTagComponent, AddedTag, AddedTag), Is.False);
+                Assert.That(tagSystem.HasAllTags(sTagComponent, new List<string> {AddedTag, AddedTag}), Is.False);
+                Assert.That(tagSystem.HasAnyTag(sTagComponent, AddedTag, AddedTag), Is.False);
+                Assert.That(tagSystem.HasAnyTag(sTagComponent, new List<string> {AddedTag, AddedTag}), Is.False);
 
                 // Has a combination of the two tags
-                Assert.That(sTagComponent.HasAnyTag(StartingTag, AddedTag), Is.True);
-                Assert.That(sTagComponent.HasAnyTag(new List<string> {StartingTag, AddedTag}), Is.True);
+                Assert.That(tagSystem.HasAnyTag(sTagComponent, StartingTag, AddedTag), Is.True);
+                Assert.That(tagSystem.HasAnyTag(sTagComponent, new List<string> {StartingTag, AddedTag}), Is.True);
 
                 // Does not have both tags
-                Assert.That(sTagComponent.HasAllTags(StartingTag, AddedTag), Is.False);
-                Assert.That(sTagComponent.HasAllTags(new List<string> {StartingTag, AddedTag}), Is.False);
+                Assert.That(tagSystem.HasAllTags(sTagComponent, StartingTag, AddedTag), Is.False);
+                Assert.That(tagSystem.HasAllTags(sTagComponent, new List<string> {StartingTag, AddedTag}), Is.False);
 
                 // Cannot remove a tag that does not exist
-                Assert.That(sTagComponent.RemoveTag(AddedTag), Is.False);
-                Assert.That(sTagComponent.RemoveTags(AddedTag, AddedTag), Is.False);
-                Assert.That(sTagComponent.RemoveTags(new List<string> {AddedTag, AddedTag}), Is.False);
+                Assert.That(tagSystem.RemoveTag(sTagComponent, AddedTag), Is.False);
+                Assert.That(tagSystem.RemoveTags(sTagComponent, AddedTag, AddedTag), Is.False);
+                Assert.That(tagSystem.RemoveTags(sTagComponent, new List<string> {AddedTag, AddedTag}), Is.False);
 
                 // Can add the new tag
-                Assert.That(sTagComponent.AddTag(AddedTag), Is.True);
+                Assert.That(tagSystem.AddTag(sTagComponent, AddedTag), Is.True);
 
                 // Cannot add it twice
-                Assert.That(sTagComponent.AddTag(AddedTag), Is.False);
+                Assert.That(tagSystem.AddTag(sTagComponent, AddedTag), Is.False);
 
                 // Cannot add existing tags
-                Assert.That(sTagComponent.AddTags(StartingTag, AddedTag), Is.False);
-                Assert.That(sTagComponent.AddTags(new List<string> {StartingTag, AddedTag}), Is.False);
+                Assert.That(tagSystem.AddTags(sTagComponent, StartingTag, AddedTag), Is.False);
+                Assert.That(tagSystem.AddTags(sTagComponent, new List<string> {StartingTag, AddedTag}), Is.False);
 
                 // Now has two tags
                 Assert.That(sTagComponent.Tags.Count, Is.EqualTo(2));
 
                 // Has both tags
-                Assert.That(sTagComponent.HasTag(StartingTag), Is.True);
-                Assert.That(sTagComponent.HasTag(AddedTag), Is.True);
-                Assert.That(sTagComponent.HasAllTags(StartingTag, StartingTag), Is.True);
-                Assert.That(sTagComponent.HasAllTags(AddedTag, StartingTag), Is.True);
-                Assert.That(sTagComponent.HasAllTags(new List<string> {StartingTag, AddedTag}), Is.True);
-                Assert.That(sTagComponent.HasAllTags(new List<string> {AddedTag, StartingTag}), Is.True);
-                Assert.That(sTagComponent.HasAnyTag(StartingTag, AddedTag), Is.True);
-                Assert.That(sTagComponent.HasAnyTag(AddedTag, StartingTag), Is.True);
+                Assert.That(tagSystem.HasTag(sTagComponent, StartingTag), Is.True);
+                Assert.That(tagSystem.HasTag(sTagComponent, AddedTag), Is.True);
+                Assert.That(tagSystem.HasAllTags(sTagComponent, StartingTag, StartingTag), Is.True);
+                Assert.That(tagSystem.HasAllTags(sTagComponent, AddedTag, StartingTag), Is.True);
+                Assert.That(tagSystem.HasAllTags(sTagComponent, new List<string> {StartingTag, AddedTag}), Is.True);
+                Assert.That(tagSystem.HasAllTags(sTagComponent, new List<string> {AddedTag, StartingTag}), Is.True);
+                Assert.That(tagSystem.HasAnyTag(sTagComponent, StartingTag, AddedTag), Is.True);
+                Assert.That(tagSystem.HasAnyTag(sTagComponent, AddedTag, StartingTag), Is.True);
 
                 // Remove the existing starting tag
-                Assert.That(sTagComponent.RemoveTag(StartingTag), Is.True);
+                Assert.That(tagSystem.RemoveTag(sTagComponent, StartingTag), Is.True);
 
                 // Remove the existing added tag
-                Assert.That(sTagComponent.RemoveTags(AddedTag, AddedTag), Is.True);
+                Assert.That(tagSystem.RemoveTags(sTagComponent, AddedTag, AddedTag), Is.True);
 
                 // No tags left to remove
-                Assert.That(sTagComponent.RemoveTags(new List<string> {StartingTag, AddedTag}), Is.False);
+                Assert.That(tagSystem.RemoveTags(sTagComponent, new List<string> {StartingTag, AddedTag}), Is.False);
 
                 // No tags left in the component
                 Assert.That(sTagComponent.Tags, Is.Empty);

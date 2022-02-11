@@ -14,8 +14,8 @@ namespace Content.Server.Remotes
         public enum OperatingMode : byte
         {
             OpenClose,
-            ToggleBolts
-            // ToggleEmergencyAccess
+            ToggleBolts,
+            ToggleEmergencyAccess
         }
     }
 }

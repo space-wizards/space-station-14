@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.Inventory;
 using Content.Shared.Medical.SuitSensor;
 using Robust.Shared.Analyzers;
@@ -13,7 +13,6 @@ namespace Content.Server.Medical.SuitSensors
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(SuitSensorSystem))]
-    [ComponentProtoName("SuitSensor")]
     public sealed class SuitSensorComponent : Component
     {
         /// <summary>

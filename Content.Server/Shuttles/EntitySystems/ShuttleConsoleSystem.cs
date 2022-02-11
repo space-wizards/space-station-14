@@ -25,6 +25,7 @@ namespace Content.Server.Shuttles.EntitySystems
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
 
         public override void Initialize()
         {
@@ -33,13 +34,13 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<ShuttleConsoleComponent, ComponentShutdown>(HandleConsoleShutdown);
             SubscribeLocalEvent<ShuttleConsoleComponent, ActivateInWorldEvent>(HandleConsoleInteract);
             SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(HandlePowerChange);
-            SubscribeLocalEvent<ShuttleConsoleComponent, GetInteractionVerbsEvent>(OnConsoleInteract);
+            SubscribeLocalEvent<ShuttleConsoleComponent, GetVerbsEvent<InteractionVerb>>(OnConsoleInteract);
 
             SubscribeLocalEvent<PilotComponent, ComponentShutdown>(HandlePilotShutdown);
             SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
         }
 
-        private void OnConsoleInteract(EntityUid uid, ShuttleConsoleComponent component, GetInteractionVerbsEvent args)
+        private void OnConsoleInteract(EntityUid uid, ShuttleConsoleComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (!args.CanAccess ||
                 !args.CanInteract)
@@ -51,7 +52,7 @@ namespace Content.Server.Shuttles.EntitySystems
             if (!_mapManager.TryGetGrid(xform.GridID, out var grid) ||
                 !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttle)) return;
 
-            Verb verb = new()
+            InteractionVerb verb = new()
             {
                 Text = Loc.GetString("shuttle-mode-toggle"),
                 Act = () => ToggleShuttleMode(args.User, component, shuttle),
@@ -147,7 +148,7 @@ namespace Content.Server.Shuttles.EntitySystems
         /// </summary>
         private void HandleConsoleInteract(EntityUid uid, ShuttleConsoleComponent component, ActivateInWorldEvent args)
         {
-            if (!args.User.HasTag("CanPilot"))
+            if (!_tags.HasTag(args.User, "CanPilot"))
             {
                 return;
             }
