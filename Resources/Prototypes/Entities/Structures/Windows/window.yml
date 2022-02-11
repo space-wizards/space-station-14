@@ -12,6 +12,7 @@
     tags:
       - RCDDeconstructWhitelist
       - ForceFixRotations
+      - Window
   - type: Sprite
     netsync: false
     drawdepth: WallTops
@@ -64,8 +65,6 @@
   - type: IconSmooth
     key: windows
     base: window
-  - type: Tag
-    tag: Window
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
     popupPerceivedByOthers: true
