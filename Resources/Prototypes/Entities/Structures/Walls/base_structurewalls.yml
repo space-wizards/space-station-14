@@ -30,7 +30,6 @@
       layer:
       - Opaque
       - Impassable
-      - MobImpassable
       - VaultImpassable
       - SmallImpassable
   - type: Occluder
