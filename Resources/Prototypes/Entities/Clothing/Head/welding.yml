@@ -5,6 +5,7 @@
   abstract: true
   components:
   - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: WeldingMaskBase

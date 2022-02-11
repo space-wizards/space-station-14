@@ -9,6 +9,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/bombsuit.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -21,7 +22,8 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/cosmonaut.rsi
   - type: IngestionBlocker
-  
+  - type: IdentityBlocker
+
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetCult
@@ -33,6 +35,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/cult.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -45,6 +48,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/eva.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -110,6 +114,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/spaceninja.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -122,6 +127,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/syndicate.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -134,6 +140,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/templar.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
