@@ -265,13 +265,6 @@
       normal: spacecat
       crit: spacecat_dead
       dead: spacecat_dead
-  - type: Respirator #Space kitty should be immune to Asphyxiation. Taken from xenos.yml
-    damage:
-      types:
-        Asphyxiation: 1
-    damageRecovery:
-      types:
-        Asphyxiation: -1
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-space-cat
