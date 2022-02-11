@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'There is now an indicator showing how many ghost roles are available,
-      if any.', type: Add}
-  id: 540
-  time: '2021-11-03T23:48:13.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: 'Receiving a message from server administrators now makes the game window
@@ -2960,3 +2954,8 @@ Entries:
     type: Add}
   id: 1040
   time: '2022-02-11T05:12:34.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: weh now weh on interact, type: Fix}
+  id: 1041
+  time: '2022-02-11T22:59:05.0000000+00:00'
