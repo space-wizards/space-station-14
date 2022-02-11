@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
@@ -127,7 +127,7 @@ namespace Content.Client.GameTicking.Managers
         private void RoundEnd(RoundEndMessageEvent message)
         {
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
-            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.AllPlayersEndInfo);
+            var roundEnd = new RoundEndSummaryWindow(message.RoundId, message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.AllPlayersEndInfo);
         }
     }
 }

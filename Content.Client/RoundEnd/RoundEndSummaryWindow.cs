@@ -12,7 +12,7 @@ namespace Content.Client.RoundEnd
     public sealed class RoundEndSummaryWindow : DefaultWindow
     {
 
-        public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, RoundEndMessageEvent.RoundEndPlayerInfo[] info)
+        public RoundEndSummaryWindow(int roundId, string gm, string roundEnd, TimeSpan roundTimeSpan, RoundEndMessageEvent.RoundEndPlayerInfo[] info)
         {
             MinSize = SetSize = (520, 580);
 
@@ -25,7 +25,7 @@ namespace Content.Client.RoundEnd
             // Also good for serious info.
 
             var roundEndTabs = new TabContainer();
-            roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan));
+            roundEndTabs.AddChild(MakeRoundEndSummaryTab(roundId, gm, roundEnd, roundTimeSpan));
             roundEndTabs.AddChild(MakePlayerManifestoTab(info));
 
             Contents.AddChild(roundEndTabs);
@@ -34,7 +34,7 @@ namespace Content.Client.RoundEnd
             MoveToFront();
         }
 
-        private BoxContainer MakeRoundEndSummaryTab(string gamemode, string roundEnd, TimeSpan roundDuration)
+        private BoxContainer MakeRoundEndSummaryTab(int roundId, string gamemode, string roundEnd, TimeSpan roundDuration)
         {
             var roundEndSummaryTab = new BoxContainer
             {
@@ -53,7 +53,9 @@ namespace Content.Client.RoundEnd
 
             //Gamemode Name
             var gamemodeLabel = new RichTextLabel();
-            gamemodeLabel.SetMarkup(Loc.GetString("round-end-summary-window-gamemode-name-label", ("gamemode", gamemode)));
+            gamemodeLabel.SetMarkup(Loc.GetString("round-end-summary-window-gamemode-name-label",
+                ("id", roundId),
+                ("gamemode", gamemode)));
             roundEndSummaryContainer.AddChild(gamemodeLabel);
 
             //Duration

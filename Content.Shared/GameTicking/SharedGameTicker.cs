@@ -134,15 +134,17 @@ namespace Content.Shared.GameTicking
             public bool Connected;
         }
 
+        public int RoundId { get; }
         public string GamemodeTitle { get; }
         public string RoundEndText { get; }
         public TimeSpan RoundDuration { get; }
         public int PlayerCount { get; }
         public RoundEndPlayerInfo[] AllPlayersEndInfo { get; }
 
-        public RoundEndMessageEvent(string gamemodeTitle, string roundEndText, TimeSpan roundDuration, int playerCount,
+        public RoundEndMessageEvent(int roundId, string gamemodeTitle, string roundEndText, TimeSpan roundDuration, int playerCount,
             RoundEndPlayerInfo[] allPlayersEndInfo)
         {
+            RoundId = roundId;
             GamemodeTitle = gamemodeTitle;
             RoundEndText = roundEndText;
             RoundDuration = roundDuration;
