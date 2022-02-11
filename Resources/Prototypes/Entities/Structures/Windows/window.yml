@@ -64,7 +64,7 @@
   - type: IconSmooth
     key: windows
     base: window
-  - type: tag
+  - type: Tag
     tag: Window
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
