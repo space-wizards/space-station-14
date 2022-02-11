@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Content.Server.Act;
+using Content.Server.Actions.Events;
 using Content.Server.Administration.Logs;
 using Content.Server.Interaction;
 using Content.Server.Popups;
@@ -44,11 +45,16 @@ namespace Content.Server.Actions.Actions
         [ViewVariables]
         [DataField("disarmSuccessSound")]
         private SoundSpecifier DisarmSuccessSound { get; } = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
-
         public void DoTargetEntityAction(TargetEntityActionEventArgs args)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
             var disarmedActs = entMan.GetComponents<IDisarmedAct>(args.Target).ToArray();
+            var attemptEvent = new DisarmAttemptEvent(args.Target, args.Performer);
+
+            entMan.EventBus.RaiseLocalEvent(args.Target, attemptEvent);
+
+            if (attemptEvent.Cancelled)
+                return;
 
             if (!args.Performer.InRangeUnobstructed(args.Target)) return;
 
