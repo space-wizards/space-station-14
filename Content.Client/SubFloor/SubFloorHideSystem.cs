@@ -29,7 +29,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         SubscribeLocalEvent<SubFloorHideComponent, AppearanceChangeEvent>(OnAppearanceChanged);
     }
 
-    private void OnAppearanceChanged(EntityUid uid, SubFloorHideComponent component, AppearanceChangeEvent args)
+    private void OnAppearanceChanged(EntityUid uid, SubFloorHideComponent component, ref AppearanceChangeEvent args)
     {
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
