@@ -214,17 +214,44 @@ namespace Content.Server.Chemistry.EntitySystems
         /// <summary>
         ///     Adds a solution to the container, if it can fully fit.
         /// </summary>
-        /// <param name="targetUid"></param>
-        /// <param name="targetSolution">The container to which we try to add.</param>
+        /// <param name="targetUid">entity holding targetSolution</param>
+        /// <param name="addedSolution">solution being added</param>
         /// <param name="solution">The solution to try to add.</param>
         /// <returns>If the solution could be added.</returns>
-        public bool TryAddSolution(EntityUid targetUid, Solution? targetSolution, Solution solution)
+        public bool TryAddSolution(EntityUid targetUid, Solution? addedSolution, Solution solution)
         {
-            if (targetSolution == null || !targetSolution.CanAddSolution(solution) || solution.TotalVolume == 0)
+            if (addedSolution == null || !addedSolution.CanAddSolution(solution) || solution.TotalVolume == 0)
                 return false;
 
-            targetSolution.AddSolution(solution);
+            addedSolution.AddSolution(solution);
+            UpdateChemicals(targetUid, addedSolution, true);
+            return true;
+        }
+
+        /// <summary>
+        ///     Adds a solution to the container, overflowing the rest.
+        ///     Unlike TryAddSolution it will ignore size limits.
+        /// </summary>
+        /// <param name="targetUid">entity holding targetSolution</param>
+        /// <param name="targetSolution">The container to which we try to add.</param>
+        /// <param name="addedSolution">solution being added</param>
+        /// <param name="overflowThreshold">After addition this much will be left in targetSolution</param>
+        /// <param name="overflowingSolution">Solution that exceeded overflowThreshold</param>
+        /// <returns></returns>
+        public bool TryMixAndOverflow(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
+            FixedPoint2 overflowThreshold,
+            out Solution? overflowingSolution)
+        {
+            if (addedSolution.TotalVolume == 0)
+            {
+                overflowingSolution = null;
+                return false;
+            }
+
+            targetSolution.AddSolution(addedSolution);
             UpdateChemicals(targetUid, targetSolution, true);
+            overflowingSolution = targetSolution.SplitSolution(FixedPoint2.Max(FixedPoint2.Zero,
+                targetSolution.CurrentVolume - overflowThreshold));
             return true;
         }
 

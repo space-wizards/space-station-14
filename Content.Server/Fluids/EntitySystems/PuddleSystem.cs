@@ -137,12 +137,15 @@ namespace Content.Server.Fluids.EntitySystems
                 return false;
             }
 
-            if (checkForOverflow && WouldOverflow(puddleComponent.Owner, addedSolution, puddleComponent))
-            {
-                _fluidSpreaderSystem.AddOverflowingPuddle(puddleComponent, addedSolution);
-            }
             var result = _solutionContainerSystem
-                .TryAddSolution(puddleComponent.Owner, puddleSolution, addedSolution);
+                .TryMixAndOverflow(puddleComponent.Owner, puddleSolution, addedSolution, puddleComponent.OverflowVolume,
+                    out var overflowSolution);
+
+            if (checkForOverflow && overflowSolution != null)
+            {
+                _fluidSpreaderSystem.AddOverflowingPuddle(puddleComponent, overflowSolution);
+            }
+
             if (!result)
             {
                 return false;
