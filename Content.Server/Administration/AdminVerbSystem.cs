@@ -51,13 +51,13 @@ namespace Content.Server.Administration
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddAdminVerbs);
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddAdminVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddDebugVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
         }
 
-        private void AddAdminVerbs(GetOtherVerbsEvent args)
+        private void AddAdminVerbs(GetVerbsEvent<Verb> args)
         {
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
@@ -121,7 +121,7 @@ namespace Content.Server.Administration
             }
         }
 
-        private void AddDebugVerbs(GetOtherVerbsEvent args)
+        private void AddDebugVerbs(GetVerbsEvent<Verb> args)
         {
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;

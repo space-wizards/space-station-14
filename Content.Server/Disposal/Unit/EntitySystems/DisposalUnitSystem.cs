@@ -68,9 +68,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             SubscribeLocalEvent<DisposalUnitComponent, DestructionEventArgs>(HandleDestruction);
 
             // Verbs
-            SubscribeLocalEvent<DisposalUnitComponent, GetInteractionVerbsEvent>(AddInsertVerb);
-            SubscribeLocalEvent<DisposalUnitComponent, GetAlternativeVerbsEvent>(AddFlushEjectVerbs);
-            SubscribeLocalEvent<DisposalUnitComponent, GetOtherVerbsEvent>(AddClimbInsideVerb);
+            SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<InteractionVerb>>(AddInsertVerb);
+            SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<AlternativeVerb>>(AddFlushEjectVerbs);
+            SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<Verb>>(AddClimbInsideVerb);
 
             // Units
             SubscribeLocalEvent<DoInsertDisposalUnitEvent>(DoInsertDisposalUnit);
@@ -79,13 +79,13 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             SubscribeLocalEvent<DisposalUnitComponent, SharedDisposalUnitComponent.UiButtonPressedMessage>(OnUiButtonPressed);
         }
 
-        private void AddFlushEjectVerbs(EntityUid uid, DisposalUnitComponent component, GetAlternativeVerbsEvent args)
+        private void AddFlushEjectVerbs(EntityUid uid, DisposalUnitComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract || component.Container.ContainedEntities.Count == 0)
                 return;
 
             // Verbs to flush the unit
-            Verb flushVerb = new();
+            AlternativeVerb flushVerb = new();
             flushVerb.Act = () => Engage(component);
             flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
             flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
@@ -93,14 +93,14 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             args.Verbs.Add(flushVerb);
 
             // Verb to eject the contents
-            Verb ejectVerb = new();
+            AlternativeVerb ejectVerb = new();
             ejectVerb.Act = () => TryEjectContents(component);
             ejectVerb.Category = VerbCategory.Eject;
             ejectVerb.Text = Loc.GetString("disposal-eject-verb-contents");
             args.Verbs.Add(ejectVerb);
         }
 
-        private void AddClimbInsideVerb(EntityUid uid, DisposalUnitComponent component, GetOtherVerbsEvent args)
+        private void AddClimbInsideVerb(EntityUid uid, DisposalUnitComponent component, GetVerbsEvent<Verb> args)
         {
             // This is not an interaction, activation, or alternative verb type because unfortunately most users are
             // unwilling to accept that this is where they belong and don't want to accidentally climb inside.
@@ -123,7 +123,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             args.Verbs.Add(verb);
         }
 
-        private void AddInsertVerb(EntityUid uid, DisposalUnitComponent component, GetInteractionVerbsEvent args)
+        private void AddInsertVerb(EntityUid uid, DisposalUnitComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract || args.Hands == null || args.Using == null)
                 return;
@@ -134,7 +134,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!CanInsert(component, args.Using.Value))
                 return;
 
-            Verb insertVerb = new()
+            InteractionVerb insertVerb = new()
             {
                 Text = Name(args.Using.Value),
                 Category = VerbCategory.Insert,

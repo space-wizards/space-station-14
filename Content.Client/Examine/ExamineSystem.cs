@@ -41,7 +41,7 @@ namespace Content.Client.Examine
         {
             UpdatesOutsidePrediction = true;
 
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddExamineVerb);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddExamineVerb);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine, outsidePrediction: true))
@@ -90,7 +90,7 @@ namespace Content.Client.Examine
             return true;
         }
 
-        private void AddExamineVerb(GetOtherVerbsEvent args)
+        private void AddExamineVerb(GetVerbsEvent<Verb> args)
         {
             if (!CanExamine(args.User, args.Target))
                 return;
