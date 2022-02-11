@@ -4,26 +4,24 @@ using Content.Server.Hands.Components;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using JetBrains.Annotations;
 namespace Content.Server.Engineering.EntitySystems
 {
     [UsedImplicitly]
-    public class DisassembleOnAltVerbSystem : EntitySystem
+    public sealed class DisassembleOnAltVerbSystem : EntitySystem
     {
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<DisassembleOnAltVerbComponent, GetAlternativeVerbsEvent>(AddDisassembleVerb);
+            SubscribeLocalEvent<DisassembleOnAltVerbComponent, GetVerbsEvent<AlternativeVerb>>(AddDisassembleVerb);
         }
-        private void AddDisassembleVerb(EntityUid uid, DisassembleOnAltVerbComponent component, GetAlternativeVerbsEvent args)
+        private void AddDisassembleVerb(EntityUid uid, DisassembleOnAltVerbComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
          if (!args.CanInteract)
                 return;
 
-            Verb verb = new()
+            AlternativeVerb verb = new()
             {
                 Act = () =>
                 {

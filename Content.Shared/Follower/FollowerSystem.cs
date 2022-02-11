@@ -15,12 +15,12 @@ public class FollowerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GetAlternativeVerbsEvent>(OnGetAlternativeVerbs);
+        SubscribeLocalEvent<GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
         SubscribeLocalEvent<FollowerComponent, RelayMoveInputEvent>(OnFollowerMove);
         SubscribeLocalEvent<FollowedComponent, EntityTerminatingEvent>(OnFollowedTerminating);
     }
 
-    private void OnGetAlternativeVerbs(GetAlternativeVerbsEvent ev)
+    private void OnGetAlternativeVerbs(GetVerbsEvent<AlternativeVerb> ev)
     {
         if (!HasComp<SharedGhostComponent>(ev.User))
             return;
@@ -28,7 +28,7 @@ public class FollowerSystem : EntitySystem
         if (ev.User == ev.Target)
             return;
 
-        var verb = new Verb
+        var verb = new AlternativeVerb
         {
             Priority = 10,
             Act = (() =>
