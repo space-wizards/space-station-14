@@ -64,7 +64,12 @@
   - type: IconSmooth
     key: windows
     base: window
-  - type: Window
+  - type: tag
+    tag: Window
+  - type: InteractionPopup
+    interactSuccessString: comp-window-knock
+    interactSuccessSound:
+      path: /Audio/Effects/glass_knock.ogg
   - type: Construction
     graph: Window
     node: window

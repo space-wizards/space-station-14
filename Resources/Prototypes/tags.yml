@@ -274,6 +274,9 @@
   id: Wall
 
 - type: Tag
+  id: Window
+
+- type: Tag
   id: Wirecutter
 
 - type: Tag
