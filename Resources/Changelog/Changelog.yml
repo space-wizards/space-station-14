@@ -1,25 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: 'Receiving a message from server administrators now makes the game window
-      light up in your task bar, to grab your attention if you are alt-tabbed or similar.',
-    type: Tweak}
-  id: 541
-  time: '2021-11-04T03:22:09.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: ChemMaster buffer displays properly with no beaker, type: Fix}
-  - {message: Chemical dispenser 100 button works again, type: Fix}
-  id: 542
-  time: '2021-11-04T03:22:48.0000000+00:00'
-- author: Daemon
-  changes:
-  - {message: Fixed some drink cans not having correct drink/size, type: Fix}
-  - {message: Fixed being unable to juice potato in grinder, type: Fix}
-  - {message: Changed BrownStar to Starkist, type: Tweak}
-  - {message: Added energy drink reagent and can object to vending machine, type: Add}
-  id: 543
-  time: '2021-11-04T04:31:22.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'Added some pAIs at roundstart (in dorms and in RD office). Also, some
@@ -2959,3 +2938,23 @@ Entries:
   - {message: weh now weh on interact, type: Fix}
   id: 1041
   time: '2022-02-11T22:59:05.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Pillar now has a complete atmos recycling loop, role based autodrobes
+      and new spawn points.', type: Add}
+  - {message: 'This is a minor update, major update coming in approx 1 week with massive
+      changes.', type: Tweak}
+  id: 1042
+  time: '2022-02-11T23:00:06.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added another SMES to Saltern as well as a small drone room at engineering.,
+    type: Tweak}
+  id: 1043
+  time: '2022-02-11T23:00:23.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed T-Ray scanners sometimes causing sub-floor entities to get stuck
+      in a visible state., type: Fix}
+  id: 1044
+  time: '2022-02-11T23:00:33.0000000+00:00'
