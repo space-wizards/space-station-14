@@ -38,20 +38,22 @@ namespace Content.Server.NodeContainer.Nodes
 
         public void AddAlwaysReachable(PipeNode pipeNode)
         {
-            if (NodeGroup == null) return;
             if (pipeNode.NodeGroupID != NodeGroupID) return;
             _alwaysReachable ??= new();
             _alwaysReachable.Add(pipeNode);
-            EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
+
+            if (NodeGroup != null)
+                EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
         }
 
         public void RemoveAlwaysReachable(PipeNode pipeNode)
         {
             if (_alwaysReachable == null) return;
-            if (NodeGroup == null) return;
-            if (pipeNode.NodeGroupID != NodeGroupID) return;
+
             _alwaysReachable.Remove(pipeNode);
-            EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
+
+            if (NodeGroup != null)
+                EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
         }
 
         /// <summary>

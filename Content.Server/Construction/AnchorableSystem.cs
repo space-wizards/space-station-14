@@ -30,7 +30,7 @@ namespace Content.Server.Construction
                 return;
 
             // If the used entity doesn't have a tool, return early.
-            if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? usedTool))
+            if (!TryComp(args.Used, out ToolComponent? usedTool) || !usedTool.Qualities.Contains(anchorable.Tool))
                 return;
 
             args.Handled = true;

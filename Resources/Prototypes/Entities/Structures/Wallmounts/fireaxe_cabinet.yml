@@ -24,10 +24,9 @@
       doorSound:
         path: /Audio/Machines/machine_switch.ogg
     - type: Appearance
-      visuals:
-        - type: ItemCabinetVisualizer
-          closedState: glass
-          openState: glass-up
+    - type: ItemCabinetVisuals
+      openState: glass-up
+      closedState: glass
   placement:
     mode: SnapgridCenter
 

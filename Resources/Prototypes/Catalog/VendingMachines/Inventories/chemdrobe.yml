@@ -1,0 +1,14 @@
+- type: vendingMachineInventory
+  id: ChemDrobeInventory
+  name: ChemDrobe
+  spriteName: chemdrobe
+  startingInventory:
+    ClothingUniformJumpsuitChemistry: 2
+    ClothingUniformJumpskirtChemistry: 2
+    ClothingOuterCoatLabChem: 2
+    ClothingShoesColorWhite: 2
+    ClothingBackpackChemistry: 2
+    ClothingBackpackSatchelChemistry: 2
+    ClothingBackpackDuffelChemistry: 2
+    ClothingHandsGlovesLatex: 2
+    ClothingHeadsetMedical: 2

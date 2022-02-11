@@ -29,7 +29,7 @@ namespace Content.Server.PAI
             SubscribeLocalEvent<PAIComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<PAIComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
-            SubscribeLocalEvent<PAIComponent, GetActivationVerbsEvent>(AddWipeVerb);
+            SubscribeLocalEvent<PAIComponent, GetVerbsEvent<ActivationVerb>>(AddWipeVerb);
         }
 
         private void OnExamined(EntityUid uid, PAIComponent component, ExaminedEvent args)
@@ -127,14 +127,14 @@ namespace Content.Server.PAI
             }
         }
 
-        private void AddWipeVerb(EntityUid uid, PAIComponent pai, GetActivationVerbsEvent args)
+        private void AddWipeVerb(EntityUid uid, PAIComponent pai, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
             if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
             {
-                Verb verb = new();
+                ActivationVerb verb = new();
                 verb.Text = Loc.GetString("pai-system-wipe-device-verb-text");
                 verb.Act = () => {
                     if (pai.Deleted)
@@ -153,7 +153,7 @@ namespace Content.Server.PAI
             }
             else if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
             {
-                Verb verb = new();
+                ActivationVerb verb = new();
                 verb.Text = Loc.GetString("pai-system-stop-searching-verb-text");
                 verb.Act = () => {
                     if (pai.Deleted)

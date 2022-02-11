@@ -32,7 +32,7 @@ namespace Content.Server.Lock
             SubscribeLocalEvent<LockComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated);
             SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<LockComponent, GetAlternativeVerbsEvent>(AddToggleLockVerb);
+            SubscribeLocalEvent<LockComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleLockVerb);
         }
 
         private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
@@ -169,12 +169,12 @@ namespace Content.Server.Lock
             return true;
         }
 
-        private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetAlternativeVerbsEvent args)
+        private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract || !CanToggleLock(uid, args.User))
                 return;
 
-            Verb verb = new();
+            AlternativeVerb verb = new();
             verb.Act = component.Locked ?
                 () => TryUnlock(uid, args.User, component) :
                 () => TryLock(uid, args.User, component);

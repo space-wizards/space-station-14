@@ -18,15 +18,15 @@ namespace Content.Server.Morgue
         {
             base.Initialize();
 
-            SubscribeLocalEvent<CrematoriumEntityStorageComponent, GetAlternativeVerbsEvent>(AddCremateVerb);
+            SubscribeLocalEvent<CrematoriumEntityStorageComponent, GetVerbsEvent<AlternativeVerb>>(AddCremateVerb);
         }
 
-        private void AddCremateVerb(EntityUid uid, CrematoriumEntityStorageComponent component, GetAlternativeVerbsEvent args)
+        private void AddCremateVerb(EntityUid uid, CrematoriumEntityStorageComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract || component.Cooking || component.Open)
                 return;
 
-            Verb verb = new();
+            AlternativeVerb verb = new();
             verb.Text = Loc.GetString("cremate-verb-get-data-text");
             // TODO VERB ICON add flame/burn symbol?
             verb.Act = () => component.TryCremate();
