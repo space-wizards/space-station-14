@@ -7,6 +7,7 @@ using Content.Client.Resources;
 using Content.Client.Targeting;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
+using Content.Shared.Verbs;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -615,16 +616,16 @@ namespace Content.Client.Stylesheets
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorContextDisabled),
 
                 // Context Menu Labels
-                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbInteractionText)
+                Element<RichTextLabel>().Class(InteractionVerb.DefaultTextStyleClass)
                     .Prop(Label.StylePropertyFont, notoSansBoldItalic12),
 
-                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbActivationText)
+                Element<RichTextLabel>().Class(ActivationVerb.DefaultTextStyleClass)
                     .Prop(Label.StylePropertyFont, notoSansBold12),
 
-                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbAlternativeText)
+                Element<RichTextLabel>().Class(AlternativeVerb.DefaultTextStyleClass)
                     .Prop(Label.StylePropertyFont, notoSansItalic12),
 
-                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbOtherText)
+                Element<RichTextLabel>().Class(Verb.DefaultTextStyleClass)
                     .Prop(Label.StylePropertyFont, notoSans12),
 
                 Element<TextureRect>().Class(ContextMenuElement.StyleClassContextMenuExpansionTexture)

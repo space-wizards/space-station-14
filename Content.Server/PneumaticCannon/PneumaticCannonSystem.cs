@@ -45,8 +45,8 @@ namespace Content.Server.PneumaticCannon
             SubscribeLocalEvent<PneumaticCannonComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<PneumaticCannonComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<PneumaticCannonComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<PneumaticCannonComponent, GetAlternativeVerbsEvent>(OnAlternativeVerbs);
-            SubscribeLocalEvent<PneumaticCannonComponent, GetOtherVerbsEvent>(OnOtherVerbs);
+            SubscribeLocalEvent<PneumaticCannonComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerbs);
+            SubscribeLocalEvent<PneumaticCannonComponent, GetVerbsEvent<Verb>>(OnOtherVerbs);
         }
 
         public override void Update(float frameTime)
@@ -285,20 +285,20 @@ namespace Content.Server.PneumaticCannon
             return false;
         }
 
-        private void OnAlternativeVerbs(EntityUid uid, PneumaticCannonComponent component, GetAlternativeVerbsEvent args)
+        private void OnAlternativeVerbs(EntityUid uid, PneumaticCannonComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (component.GasTankSlot.ContainedEntities.Count == 0 || !component.GasTankRequired)
                 return;
             if (!args.CanInteract)
                 return;
 
-            Verb ejectTank = new();
+            AlternativeVerb ejectTank = new();
             ejectTank.Act = () => TryRemoveGasTank(component, args.User);
             ejectTank.Text = Loc.GetString("pneumatic-cannon-component-verb-gas-tank-name");
             args.Verbs.Add(ejectTank);
         }
 
-        private void OnOtherVerbs(EntityUid uid, PneumaticCannonComponent component, GetOtherVerbsEvent args)
+        private void OnOtherVerbs(EntityUid uid, PneumaticCannonComponent component, GetVerbsEvent<Verb> args)
         {
             if (!args.CanInteract)
                 return;

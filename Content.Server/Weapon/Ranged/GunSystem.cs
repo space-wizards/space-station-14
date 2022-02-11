@@ -70,7 +70,7 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<AmmoBoxComponent, InteractUsingEvent>(OnAmmoBoxInteractUsing);
         SubscribeLocalEvent<AmmoBoxComponent, UseInHandEvent>(OnAmmoBoxUse);
         SubscribeLocalEvent<AmmoBoxComponent, InteractHandEvent>(OnAmmoBoxInteractHand);
-        SubscribeLocalEvent<AmmoBoxComponent, GetAlternativeVerbsEvent>(OnAmmoBoxAltVerbs);
+        SubscribeLocalEvent<AmmoBoxComponent, GetVerbsEvent<AlternativeVerb>>(OnAmmoBoxAltVerbs);
 
         SubscribeLocalEvent<RangedMagazineComponent, ComponentInit>(OnRangedMagInit);
         SubscribeLocalEvent<RangedMagazineComponent, MapInitEvent>(OnRangedMagMapInit);
@@ -96,7 +96,7 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<BoltActionBarrelComponent, InteractUsingEvent>(OnBoltInteractUsing);
         SubscribeLocalEvent<BoltActionBarrelComponent, ComponentGetState>(OnBoltGetState);
         SubscribeLocalEvent<BoltActionBarrelComponent, ExaminedEvent>(OnBoltExamine);
-        SubscribeLocalEvent<BoltActionBarrelComponent, GetInteractionVerbsEvent>(AddToggleBoltVerb);
+        SubscribeLocalEvent<BoltActionBarrelComponent, GetVerbsEvent<InteractionVerb>>(AddToggleBoltVerb);
 
         SubscribeLocalEvent<MagazineBarrelComponent, ComponentInit>(OnMagazineInit);
         SubscribeLocalEvent<MagazineBarrelComponent, MapInitEvent>(OnMagazineMapInit);
@@ -104,8 +104,8 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<MagazineBarrelComponent, UseInHandEvent>(OnMagazineUse);
         SubscribeLocalEvent<MagazineBarrelComponent, InteractUsingEvent>(OnMagazineInteractUsing);
         SubscribeLocalEvent<MagazineBarrelComponent, ComponentGetState>(OnMagazineGetState);
-        SubscribeLocalEvent<MagazineBarrelComponent, GetInteractionVerbsEvent>(AddMagazineInteractionVerbs);
-        SubscribeLocalEvent<MagazineBarrelComponent, GetAlternativeVerbsEvent>(AddEjectMagazineVerb);
+        SubscribeLocalEvent<MagazineBarrelComponent, GetVerbsEvent<InteractionVerb>>(AddMagazineInteractionVerbs);
+        SubscribeLocalEvent<MagazineBarrelComponent, GetVerbsEvent<AlternativeVerb>>(AddEjectMagazineVerb);
 
         SubscribeLocalEvent<PumpBarrelComponent, ComponentGetState>(OnPumpGetState);
         SubscribeLocalEvent<PumpBarrelComponent, ComponentInit>(OnPumpInit);
@@ -118,7 +118,7 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<RevolverBarrelComponent, UseInHandEvent>(OnRevolverUse);
         SubscribeLocalEvent<RevolverBarrelComponent, InteractUsingEvent>(OnRevolverInteractUsing);
         SubscribeLocalEvent<RevolverBarrelComponent, ComponentGetState>(OnRevolverGetState);
-        SubscribeLocalEvent<RevolverBarrelComponent, GetAlternativeVerbsEvent>(AddSpinVerb);
+        SubscribeLocalEvent<RevolverBarrelComponent, GetVerbsEvent<AlternativeVerb>>(AddSpinVerb);
 
         SubscribeLocalEvent<SpeedLoaderComponent, ComponentInit>(OnSpeedLoaderInit);
         SubscribeLocalEvent<SpeedLoaderComponent, MapInitEvent>(OnSpeedLoaderMapInit);
