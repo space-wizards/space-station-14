@@ -94,6 +94,9 @@
   components:
     # Attention! If adding tags here:
     # Keep WindowTintedDirectional in mind
+  - type: Tag
+    tags:
+      - Window
   - type: Sprite
     netsync: false
     sprite: Structures/Windows/directional.rsi
@@ -141,7 +144,6 @@
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
     - South
-  - type: Window
   - type: Construction
     graph: WindowDirectional
     node: windowDirectional
