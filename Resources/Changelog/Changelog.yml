@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Pinpointers stop being active on component shutdown, type: Fix}
-  id: 538
-  time: '2021-11-03T23:42:22.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Bicaridine now properly heals blunt damage., type: Fix}
@@ -2958,3 +2953,9 @@ Entries:
       research, or can be found in drone storage rooms.', type: Add}
   id: 1038
   time: '2022-02-10T22:15:06.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones should be much less likely to get flung through walls by atmos
+      now., type: Fix}
+  id: 1039
+  time: '2022-02-11T00:45:08.0000000+00:00'
