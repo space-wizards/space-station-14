@@ -1,0 +1,16 @@
+- type: vendingMachineInventory
+  id: JaniDrobeInventory
+  name: JaniDrobe
+  spriteName: janidrobe
+  startingInventory:
+    ClothingUniformJumpsuitJanitor: 2
+    ClothingUniformJumpskirtJanitor: 2
+    ClothingShoesColorBlack: 2
+    ClothingHeadHatPurplesoft: 2
+    FlashlightLantern: 2
+    LightReplacer: 2
+    SoapNT: 2
+    TrashBag: 2
+    ClothingShoesGaloshes: 2
+    ClothingBeltJanitor: 2
+    ClothingHeadsetService: 2
