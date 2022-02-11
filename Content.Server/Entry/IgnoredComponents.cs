@@ -12,11 +12,12 @@ namespace Content.Server.Entry
             "AnimationsTest",
             "ItemStatus",
             "Marker",
+            "PipeVisuals",
             "Clickable",
             "Icon",
             "ClientEntitySpawner",
             "CharacterInfo",
-            "PipeVisuals",
+            "ItemCabinetVisuals"
         };
     }
 }

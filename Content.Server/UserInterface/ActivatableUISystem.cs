@@ -33,10 +33,10 @@ namespace Content.Server.UserInterface
             SubscribeLocalEvent<ActivatableUIComponent, EntParentChangedMessage>(OnParentChanged);
             SubscribeLocalEvent<ActivatableUIComponent, BoundUIClosedEvent>(OnUIClose);
 
-            SubscribeLocalEvent<ActivatableUIComponent, GetActivationVerbsEvent>(AddOpenUiVerb);
+            SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
         }
 
-        private void AddOpenUiVerb(EntityUid uid, ActivatableUIComponent component, GetActivationVerbsEvent args)
+        private void AddOpenUiVerb(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess)
                 return;
@@ -44,7 +44,7 @@ namespace Content.Server.UserInterface
             if (!args.CanInteract && !HasComp<GhostComponent>(args.User))
                 return;
 
-            Verb verb = new();
+            ActivationVerb verb = new();
             verb.Act = () => InteractUI(args.User, component);
             verb.Text = Loc.GetString("ui-verb-toggle-open");
             // TODO VERBS add "open UI" icon?

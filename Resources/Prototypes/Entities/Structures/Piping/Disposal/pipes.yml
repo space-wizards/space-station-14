@@ -8,6 +8,8 @@
     snap:
     - Disposal
   components:
+  - type: Sprite
+    netsync: false
   - type: SubFloorHide
   - type: Clickable
   - type: InteractionOutline
