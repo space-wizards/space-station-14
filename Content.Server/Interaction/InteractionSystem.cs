@@ -259,9 +259,9 @@ namespace Content.Server.Interaction
 
             // Else we run Activate.
             InteractionActivate(user, target,
-                checkCanInteract: false, // checked here in this function
+                checkCanInteract: false,
                 checkUseDelay: true,
-                checkAccess: false); // should have been checked before this function (see docstring disclaimer)
+                checkAccess: false);
         }
 
         /// <summary>

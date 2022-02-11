@@ -633,7 +633,7 @@ namespace Content.Shared.Interaction
                     return;
             }
 
-            InteractDoAfter(user, used, target, clickLocation, true);
+            InteractDoAfter(user, used, target, clickLocation, canReach: true);
         }
 
         /// <summary>
