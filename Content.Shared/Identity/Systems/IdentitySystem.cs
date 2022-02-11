@@ -8,7 +8,7 @@ using Robust.Shared.Enums;
 namespace Content.Shared.Identity.Systems;
 
 /// <summary>
-///     Handles getting an entity's 'identity', which is separate from their
+///     Handles getting an entity's 'identity', essentially an IC version of <see cref="MetaDataComponent.EntityName"/>
 /// </summary>
 public sealed partial class IdentitySystem : EntitySystem
 {
