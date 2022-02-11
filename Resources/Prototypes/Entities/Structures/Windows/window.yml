@@ -104,6 +104,11 @@
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: window
+  - type: InteractionPopup
+    interactSuccessString: comp-window-knock
+    popupPerceivedByOthers: true
+    interactSuccessSound:
+      path: /Audio/Effects/glass_knock.ogg
   - type: Physics
   - type: Fixtures
     fixtures:
