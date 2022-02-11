@@ -21,7 +21,7 @@ namespace Content.Shared.CharacterAppearance.Systems
         public void UpdateFromProfile(EntityUid uid, ICharacterProfile profile)
         {
             var humanoid = (HumanoidCharacterProfile) profile;
-            UpdateAppearance(uid, humanoid.Appearance, humanoid.Sex, humanoid.Gender);
+            UpdateAppearance(uid, humanoid.Appearance, humanoid.Sex, humanoid.Gender, humanoid.Age);
         }
 
         // The magic mirror otherwise wouldn't work. (it directly modifies the component server-side)
@@ -31,13 +31,14 @@ namespace Content.Shared.CharacterAppearance.Systems
             component.Dirty();
         }
 
-        private void UpdateAppearance(EntityUid uid, HumanoidCharacterAppearance appearance, Sex sex, Gender gender, HumanoidAppearanceComponent? component = null)
+        private void UpdateAppearance(EntityUid uid, HumanoidCharacterAppearance appearance, Sex sex, Gender gender, int age, HumanoidAppearanceComponent? component = null)
         {
             if (!Resolve(uid, ref component)) return;
 
             component.Appearance = appearance;
             component.Sex = sex;
             component.Gender = gender;
+            component.Age = age;
 
             if (EntityManager.TryGetComponent(uid, out GrammarComponent? g))
                 g.Gender = gender;
@@ -49,7 +50,7 @@ namespace Content.Shared.CharacterAppearance.Systems
 
         private void OnAppearanceGetState(EntityUid uid, HumanoidAppearanceComponent component, ref ComponentGetState args)
         {
-            args.State = new HumanoidAppearanceComponentState(component.Appearance, component.Sex, component.Gender);
+            args.State = new HumanoidAppearanceComponentState(component.Appearance, component.Sex, component.Gender, component.Age);
         }
 
         private void OnAppearanceHandleState(EntityUid uid, HumanoidAppearanceComponent component, ref ComponentHandleState args)
@@ -57,7 +58,7 @@ namespace Content.Shared.CharacterAppearance.Systems
             if (args.Current is not HumanoidAppearanceComponentState state)
                 return;
 
-            UpdateAppearance(uid, state.Appearance, state.Sex, state.Gender);
+            UpdateAppearance(uid, state.Appearance, state.Sex, state.Gender, state.Age);
         }
 
         // Scaffolding until Body is moved to ECS.

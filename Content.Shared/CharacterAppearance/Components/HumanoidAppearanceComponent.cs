@@ -1,6 +1,7 @@
 using System;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Systems;
+using Content.Shared.Preferences;
 using Robust.Shared.Analyzers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
@@ -24,6 +25,9 @@ namespace Content.Shared.CharacterAppearance.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public Gender Gender { get; set; } = default!;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int Age { get; set; } = HumanoidCharacterProfile.MinimumAge;
 
         [DataField("categoriesHair")]
         [ViewVariables]
@@ -56,14 +60,17 @@ namespace Content.Shared.CharacterAppearance.Components
         public HumanoidCharacterAppearance Appearance { get; }
         public Sex Sex { get; }
         public Gender Gender { get; }
+        public int Age { get; }
 
         public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance,
             Sex sex,
-            Gender gender)
+            Gender gender,
+            int age)
         {
             Appearance = appearance;
             Sex = sex;
             Gender = gender;
+            Age = age;
         }
     }
 }

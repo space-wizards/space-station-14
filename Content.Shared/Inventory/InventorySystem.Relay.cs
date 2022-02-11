@@ -1,8 +1,9 @@
 ﻿using Content.Shared.Damage;
 using Content.Shared.Electrocution;
+using Content.Shared.Identity;
+using Content.Shared.Identity.Systems;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Slippery;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Inventory;
 
@@ -14,6 +15,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, ElectrocutionAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshMovementSpeedModifiersEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, CanKnowIdentityAttemptEvent>(RelayInventoryEvent);
     }
 
     protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : EntityEventArgs, IInventoryRelayEvent
