@@ -6,5 +6,6 @@
   - type: Tag
     tags:
     - Cartridge
+    - Recyclable
   - type: Item
     size: 1

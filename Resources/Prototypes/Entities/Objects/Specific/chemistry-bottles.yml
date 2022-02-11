@@ -8,6 +8,7 @@
   - type: Tag
     tags:
     - Bottle
+    - Recyclable
     - Trash
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
@@ -123,7 +124,7 @@
         reagents:
         - ReagentId: Epinephrine
           Quantity: 30
-          
+
 - type: entity
   id: RobustHarvestChemistryBottle
   name: robust harvest bottle

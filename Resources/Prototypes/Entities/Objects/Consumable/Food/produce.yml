@@ -193,6 +193,7 @@
         - SmallImpassable
   - type: Tag
     tags:
+    - Recyclable
     - Trash
 
 - type: entity

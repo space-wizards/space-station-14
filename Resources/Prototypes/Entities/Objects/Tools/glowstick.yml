@@ -6,6 +6,7 @@
   components:
     - type: Tag
       tags:
+      - Recyclable
       - Trash
     - type: ExpendableLight
       spentName: spent green glowstick

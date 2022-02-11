@@ -36,6 +36,7 @@
       stateOpen: icon_open
   - type: Tag
     tags:
+    - Recyclable
     - Trash
   - type: ItemCooldown
 
@@ -55,6 +56,7 @@
   - type: Tag
     tags:
     - Cola
+    - Recyclable
     - Trash
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cola.rsi

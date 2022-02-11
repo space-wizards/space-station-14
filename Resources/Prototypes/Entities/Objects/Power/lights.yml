@@ -54,6 +54,7 @@
     - type: LightBulbVisualizer
   - type: Tag
     tags:
+    - Recyclable
     - Trash
 
 # Lighting color values gathered from
@@ -126,7 +127,7 @@
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal
-    
+
 - type: entity
   parent: BaseLightbulb
   name: sodium light tube
