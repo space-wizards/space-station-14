@@ -33,6 +33,20 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasMixerComponent, GasMixerChangeOutputPressureMessage>(OnOutputPressureChangeMessage);
             SubscribeLocalEvent<GasMixerComponent, GasMixerChangeNodePercentageMessage>(OnChangeNodePercentageMessage);
             SubscribeLocalEvent<GasMixerComponent, GasMixerToggleStatusMessage>(OnToggleStatusMessage);
+
+            SubscribeLocalEvent<GasMixerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+        }
+
+        private void OnAnchorChanged(EntityUid uid, GasMixerComponent component, ref AnchorStateChangedEvent args)
+        {
+            if (args.Anchored)
+                return;
+
+            component.Enabled = false;
+
+            DirtyUI(uid, component);
+            UpdateAppearance(uid, component);
+            _userInterfaceSystem.TryCloseAll(uid, GasFilterUiKey.Key);
         }
 
         private void OnInit(EntityUid uid, GasMixerComponent component, ComponentInit args)

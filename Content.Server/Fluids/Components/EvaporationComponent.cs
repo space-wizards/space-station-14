@@ -12,6 +12,12 @@ namespace Content.Server.Fluids.Components
     public sealed class EvaporationComponent : Component
     {
         /// <summary>
+        ///     Is this entity actively evaporating? This toggle lets us pause evaporation under certain conditions.
+        /// </summary>
+        [DataField("evaporationToggle")]
+        public bool EvaporationToggle = true;
+
+        /// <summary>
         ///     The time that it will take this puddle to lose one fixed unit of solution, in seconds.
         /// </summary>
         [DataField("evaporateTime")]
@@ -32,10 +38,10 @@ namespace Content.Server.Fluids.Components
 
         /// <summary>
         ///     Upper limit below which puddle won't evaporate. Useful when wanting to make sure large puddle will
-        ///     remain forever. Defaults to <see cref="PuddleComponent.DefaultOverflowVolume"/>.
+        ///     remain forever. Defaults to 100.
         /// </summary>
         [DataField("upperLimit")]
-        public FixedPoint2 UpperLimit = PuddleComponent.DefaultOverflowVolume;
+        public FixedPoint2 UpperLimit = FixedPoint2.New(100); //TODO: Consider setting this back to PuddleComponent.DefaultOverflowVolume once that behaviour is fixed.
 
         /// <summary>
         ///     The time accumulated since the start.
