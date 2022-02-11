@@ -15,6 +15,7 @@
   # Could probably do with some kind of wildcard or whatever to automate this.
   # HELL FUCKING YEAH WE COULD
   # Guys please don't fight
+  # Seriously though...
   - Captain
   - HeadOfPersonnel
   - ChiefEngineer
@@ -24,9 +25,11 @@
   - Command
   - Security
   - Armory
- # - Brig
+  - Brig
   - Engineering
   - Medical
+  - Quartermaster
+  - Salvage
   - Cargo
   - Research
   - Service
@@ -49,7 +52,7 @@
     head: ClothingHeadHatCaptain
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesCaptain
-    outerClothing: ClothingOuterHardsuitCap
+    outerClothing: ClothingOuterArmorCaptainCarapace
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
   innerclothingskirt: ClothingUniformJumpskirtCaptain

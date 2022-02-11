@@ -1,4 +1,4 @@
-<SS14Window
+<DefaultWindow
     xmlns="https://spacestation14.io" Title="{Loc Events}">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
@@ -10,4 +10,4 @@
         <Button Name="ResumeButton" Text="{Loc Resume}" Disabled="True" />
         <Button Name="SubmitButton" Text="{Loc Run}" Disabled="True" />
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

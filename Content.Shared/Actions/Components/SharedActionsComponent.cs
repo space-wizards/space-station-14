@@ -40,8 +40,6 @@ namespace Content.Shared.Actions.Components
         [Dependency]
         protected readonly IEntityManager EntityManager = default!;
 
-        public override string Name => "Actions";
-
         /// <summary>
         /// Actions granted to this entity as soon as they spawn, regardless
         /// of the status of the entity.

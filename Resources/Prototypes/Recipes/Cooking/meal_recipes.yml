@@ -495,3 +495,11 @@
   time: 10
   solids:
     LeavesCannabis: 1
+
+- type: microwaveMealRecipe
+  id: RecipeAloeCream
+  name: aloe cream recipe
+  result: AloeCream
+  time: 10
+  solids:
+    FoodAloe: 1

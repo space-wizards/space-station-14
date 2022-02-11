@@ -9,8 +9,6 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(IActivate))]
     public class MorgueTrayComponent : Component, IActivate
     {
-        public override string Name => "MorgueTray";
-
         [ViewVariables]
         public EntityUid Morgue { get; set; }
 

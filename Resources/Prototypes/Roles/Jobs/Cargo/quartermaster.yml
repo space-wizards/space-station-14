@@ -8,7 +8,8 @@
   supervisors: "the head of personnel"
   access:
   - Cargo
- # - Quartermaster
+  - Salvage
+  - Quartermaster
   - Maintenance
   - External
 

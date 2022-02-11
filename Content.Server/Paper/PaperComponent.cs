@@ -27,6 +27,10 @@ namespace Content.Server.Paper
         [DataField("content")]
         public string Content { get; set; } = "";
 
+        [DataField("contentSize")]
+        public int ContentSize { get; set; } = 500;
+
+
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(PaperUiKey.Key);
 
         protected override void Initialize()
@@ -44,6 +48,7 @@ namespace Content.Server.Paper
 
         public void SetContent(string content)
         {
+
             Content = content + '\n';
             UpdateUserInterface();
 
@@ -93,7 +98,9 @@ namespace Content.Server.Paper
             if (string.IsNullOrEmpty(msg.Text))
                 return;
 
-            Content += msg.Text + '\n';
+
+            if (msg.Text.Length + Content.Length <= ContentSize)
+                Content += msg.Text + '\n';
 
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
@@ -106,7 +113,7 @@ namespace Content.Server.Paper
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.HasTag("Write"))
+            if (!EntitySystem.Get<TagSystem>().HasTag(eventArgs.Using, "Write"))
                 return false;
             if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return false;

@@ -11,8 +11,6 @@ namespace Content.Shared.Nutrition.Components
     [RegisterComponent]
     public class CreamPieComponent : Component
     {
-        public override string Name => "CreamPie";
-
         [ViewVariables]
         [DataField("paralyzeTime")]
         public float ParalyzeTime { get; } = 1f;

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
 using Content.Server.Headset;
@@ -12,6 +14,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -55,6 +58,8 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
+        private AdminLogSystem _logs = default!;
+
         /// <summary>
         /// The maximum length a player-sent message can be sent
         /// </summary>
@@ -72,6 +77,7 @@ namespace Content.Server.Chat.Managers
 
         public void Initialize()
         {
+            _logs = EntitySystem.Get<AdminLogSystem>();
             _netManager.RegisterNetMessage<MsgChatMessage>();
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
@@ -81,18 +87,24 @@ namespace Content.Server.Chat.Managers
 
         private void OnOocEnabledChanged(bool val)
         {
+            if (_oocEnabled == val) return;
+
             _oocEnabled = val;
             DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-ooc-chat-enabled-message" : "chat-manager-ooc-chat-disabled-message"));
         }
 
         private void OnLoocEnabledChanged(bool val)
         {
+            if (_loocEnabled == val) return;
+
             _loocEnabled = val;
             DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-looc-chat-enabled-message" : "chat-manager-looc-chat-disabled-message"));
         }
 
         private void OnAdminOocEnabledChanged(bool val)
         {
+            if (_adminOocEnabled == val) return;
+
             _adminOocEnabled = val;
             DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-admin-ooc-chat-enabled-message" : "chat-manager-admin-ooc-chat-disabled-message"));
         }
@@ -102,6 +114,8 @@ namespace Content.Server.Chat.Managers
             var messageWrap = Loc.GetString("chat-manager-server-wrap-message");
             NetMessageToAll(ChatChannel.Server, message, messageWrap);
             Logger.InfoS("SERVER", message);
+
+            _logs.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
         }
 
         public void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true)
@@ -112,6 +126,8 @@ namespace Content.Server.Chat.Managers
             {
                 SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
             }
+
+            _logs.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
         }
 
         public void DispatchServerMessage(IPlayerSession player, string message)
@@ -122,9 +138,11 @@ namespace Content.Server.Chat.Managers
             msg.Message = message;
             msg.MessageWrap = messageWrap;
             _netManager.ServerSendMessage(msg, player.ConnectedClient);
+
+            _logs.Add(LogType.Chat, LogImpact.Low, $"Server message from {player:Player}: {message}");
         }
 
-        public void TrySpeak(EntityUid source, string message, bool whisper = false, IConsoleShell? shell = null, IPlayerSession? player = null)
+        public void TrySpeak(EntityUid source, string message, bool isWhisper = false, IConsoleShell? shell = null, IPlayerSession? player = null)
         {
             // Listen it avoids the 30 lines being copy-paste and means only 1 source needs updating if something changes.
             if (_entManager.HasComponent<GhostComponent>(source))
@@ -148,19 +166,39 @@ namespace Content.Server.Chat.Managers
                     return;
                 }
 
-                var emote = _sanitizer.TrySanitizeOutSmilies(message, owned, out var sanitized, out var emoteStr);
+                var isEmote = _sanitizer.TrySanitizeOutSmilies(message, owned, out var sanitized, out var emoteStr);
 
                 if (sanitized.Length != 0)
-                {
-                    if (whisper)
-                        EntityWhisper(owned, sanitized);
-                    else
-                        EntitySay(owned, sanitized);
-                }
+                    SendEntityChatType(owned, sanitized, isWhisper);
 
-                if (emote)
+                if (isEmote)
                     EntityMe(owned, emoteStr!);
             }
+        }
+
+        public void TryEmote(EntityUid source, string message, IConsoleShell? shell = null, IPlayerSession? player = null)
+        {
+            var mindComponent = player?.ContentData()?.Mind;
+
+            if (mindComponent == null)
+            {
+                shell?.WriteError("You don't have a mind!");
+                return;
+            }
+
+            if (mindComponent.OwnedEntity is not {Valid: true} owned)
+            {
+                shell?.WriteError("You don't have an entity!");
+                return;
+            }
+
+            var isEmote = _sanitizer.TrySanitizeOutSmilies(message, mindComponent.OwnedEntity.Value, out var sanitized, out var emoteStr);
+
+            if (sanitized.Length != 0)
+                EntityMe(mindComponent.OwnedEntity.Value, sanitized);
+
+            if (isEmote)
+                EntityMe(mindComponent.OwnedEntity.Value, emoteStr!);
         }
 
         public void EntitySay(EntityUid source, string message, bool hideChat=false)
@@ -175,15 +213,15 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
+            message = message.Trim();
+
+            message = SanitizeMessageCapital(source, message);
+
             foreach (var handler in _chatTransformHandlers)
             {
                 //TODO: rather return a bool and use a out var?
                 message = handler(source, message);
             }
-
-            message = message.Trim();
-
-            message = SanitizeMessageCapital(source, message);
 
             var listeners = EntitySystem.Get<ListeningSystem>();
             listeners.PingListeners(source, message);
@@ -199,6 +237,8 @@ namespace Content.Server.Chat.Managers
             {
                 NetMessageToOne(ChatChannel.Local, message, messageWrap, source, hideChat, session.ConnectedClient);
             }
+
+            _logs.Add(LogType.Chat, LogImpact.Low, $"Say from {_entManager.ToPrettyString(source):user}: {message}");
         }
 
         public void EntityWhisper(EntityUid source, string message, bool hideChat=false)
@@ -213,15 +253,15 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
+            message = message.Trim();
+
+            message = SanitizeMessageCapital(source, message);
+
             foreach (var handler in _chatTransformHandlers)
             {
                 //TODO: rather return a bool and use a out var?
                 message = handler(source, message);
             }
-
-            message = message.Trim();
-
-            message = SanitizeMessageCapital(source, message);
 
             var listeners = EntitySystem.Get<ListeningSystem>();
             listeners.PingListeners(source, message);
@@ -237,15 +277,18 @@ namespace Content.Server.Chat.Managers
             var sourceCoords = transformSource.Coordinates;
             var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
 
+            var xforms = _entManager.GetEntityQuery<TransformComponent>();
+            var ghosts = _entManager.GetEntityQuery<GhostComponent>();
+
             foreach (var session in sessions)
             {
                 if (session.AttachedEntity is not {Valid: true} playerEntity)
                     continue;
 
-                var transformEntity = _entManager.GetComponent<TransformComponent>(playerEntity);
+                var transformEntity = xforms.GetComponent(playerEntity);
 
                 if (sourceCoords.InRange(_entManager, transformEntity.Coordinates, WhisperRange) ||
-                    _entManager.HasComponent<GhostComponent>(playerEntity))
+                    ghosts.HasComponent(playerEntity))
                 {
                     NetMessageToOne(ChatChannel.Whisper, message, messageWrap, source, hideChat, session.ConnectedClient);
                 }
@@ -254,6 +297,8 @@ namespace Content.Server.Chat.Managers
                     NetMessageToOne(ChatChannel.Whisper, obfuscatedMessage, messageWrap, source, hideChat, session.ConnectedClient);
                 }
             }
+
+            _logs.Add(LogType.Chat, LogImpact.Low, $"Whisper from {_entManager.ToPrettyString(source):user}: {message}");
         }
 
         public void EntityMe(EntityUid source, string action)
@@ -280,6 +325,8 @@ namespace Content.Server.Chat.Managers
             {
                 NetMessageToOne(ChatChannel.Emotes, action, messageWrap, source, true, session.ConnectedClient);
             }
+
+            _logs.Add(LogType.Chat, LogImpact.Low, $"Emote from {_entManager.ToPrettyString(source):user}: {action}");
         }
 
         public void SendLOOC(IPlayerSession player, string message)
@@ -310,18 +357,18 @@ namespace Content.Server.Chat.Managers
             }
 
             message = FormattedMessage.EscapeText(message);
+            var sessions = new List<ICommonSession>();
 
-            var clients = Filter.Empty()
-                .AddInRange(_entManager.GetComponent<TransformComponent>(entity).MapPosition, VoiceRange)
-                .Recipients
-                .Select(p => p.ConnectedClient)
-                .ToList();
+            ClientDistanceToList(entity, VoiceRange, sessions);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.LOOC;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message", ("entityName", Name: _entManager.GetComponent<MetaDataComponent>(entity).EntityName));
-            _netManager.ServerSendToMany(msg, clients);
+
+            _netManager.ServerSendToMany(msg, sessions.Select(o => o.ConnectedClient).ToList());
+
+            _logs.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
         }
 
         public void SendOOC(IPlayerSession player, string message)
@@ -366,6 +413,7 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendToAll(msg);
 
             _mommiLink.SendOOCMessage(player.Name, message);
+            _logs.Add(LogType.Chat, LogImpact.Low, $"OOC from {player:Player}: {message}");
         }
 
         public void SendDeadChat(IPlayerSession player, string message)
@@ -393,6 +441,8 @@ namespace Content.Server.Chat.Managers
                                             ("playerName", (playerName)));
             msg.SenderEntity = player.AttachedEntity.GetValueOrDefault();
             _netManager.ServerSendToMany(msg, clients.ToList());
+
+            _logs.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
         }
 
         public void SendAdminDeadChat(IPlayerSession player, string message)
@@ -415,6 +465,8 @@ namespace Content.Server.Chat.Managers
                                             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                                             ("userName", player.ConnectedClient.UserName));
             _netManager.ServerSendToMany(msg, clients.ToList());
+
+            _logs.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {player:Player}: {message}");
         }
 
         private IEnumerable<INetChannel> GetDeadChatClients()
@@ -447,6 +499,8 @@ namespace Content.Server.Chat.Managers
                                             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                                             ("playerName", player.Name));
             _netManager.ServerSendToMany(msg, clients.ToList());
+
+            _logs.Add(LogType.Chat, $"Admin chat from {player:Player}: {message}");
         }
 
         public void SendAdminAnnouncement(string message)
@@ -463,6 +517,8 @@ namespace Content.Server.Chat.Managers
                                             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")));
 
             _netManager.ServerSendToMany(msg, clients.ToList());
+
+            _logs.Add(LogType.Chat, LogImpact.Low, $"Admin announcement from {message}: {message}");
         }
 
         public void SendHookOOC(string sender, string message)
@@ -470,6 +526,7 @@ namespace Content.Server.Chat.Managers
             message = FormattedMessage.EscapeText(message);
             var messageWrap = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender));
             NetMessageToAll(ChatChannel.OOC, message, messageWrap);
+            _logs.Add(LogType.Chat, LogImpact.Low, $"Hook OOC from {sender}: {message}");
         }
 
         public void RegisterChatTransform(TransformChat handler)
@@ -478,6 +535,25 @@ namespace Content.Server.Chat.Managers
             _chatTransformHandlers.Add(handler);
         }
 
+        public void SendEntityChatType(EntityUid source, string message, bool isWhisper)
+        {
+            // I don't know why you're trying to smile over the radio...
+            // This filters out the players who just really want to try.
+            if (message.StartsWith(';') && message.Length <= 1)
+            {
+                return;
+            }
+
+            // We check to see if message is a whisper or a standard say message.
+            if (isWhisper)
+            {
+                EntityWhisper(source, message);
+            }
+            else
+            {
+                EntitySay(source, message);
+            }
+        }
         public string SanitizeMessageCapital(EntityUid source, string message)
         {
             if (message.StartsWith(';'))
@@ -549,7 +625,10 @@ namespace Content.Server.Chat.Managers
 
         public void ClientDistanceToList(EntityUid source, int voiceRange, List<ICommonSession> playerSessions)
         {
-            var transformSource = _entManager.GetComponent<TransformComponent>(source);
+            var ghosts = _entManager.GetEntityQuery<GhostComponent>();
+            var xforms = _entManager.GetEntityQuery<TransformComponent>();
+
+            var transformSource = xforms.GetComponent(source);
             var sourceMapId = transformSource.MapID;
             var sourceCoords = transformSource.Coordinates;
 
@@ -558,10 +637,10 @@ namespace Content.Server.Chat.Managers
                 if (player.AttachedEntity is not {Valid: true} playerEntity)
                     continue;
 
-                var transformEntity = _entManager.GetComponent<TransformComponent>(playerEntity);
+                var transformEntity = xforms.GetComponent(playerEntity);
 
                 if (transformEntity.MapID != sourceMapId ||
-                    !_entManager.HasComponent<GhostComponent>(playerEntity) &&
+                    !ghosts.HasComponent(playerEntity) &&
                     !sourceCoords.InRange(_entManager, transformEntity.Coordinates, voiceRange))
                     continue;
 

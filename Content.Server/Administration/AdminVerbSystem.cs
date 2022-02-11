@@ -51,13 +51,13 @@ namespace Content.Server.Administration
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddAdminVerbs);
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddAdminVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddDebugVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
         }
 
-        private void AddAdminVerbs(GetOtherVerbsEvent args)
+        private void AddAdminVerbs(GetVerbsEvent<Verb> args)
         {
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
@@ -116,11 +116,12 @@ namespace Content.Server.Administration
                     }
                 };
                 verb.Impact = LogImpact.Extreme; // if you're just outright killing a person, I guess that deserves to be extreme?
+                verb.ConfirmationPopup = true;
                 args.Verbs.Add(verb);
             }
         }
 
-        private void AddDebugVerbs(GetOtherVerbsEvent args)
+        private void AddDebugVerbs(GetVerbsEvent<Verb> args)
         {
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
@@ -136,6 +137,7 @@ namespace Content.Server.Administration
                 verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
                 verb.Act = () => EntityManager.DeleteEntity(args.Target);
                 verb.Impact = LogImpact.Medium;
+                verb.ConfirmationPopup = true;
                 args.Verbs.Add(verb);
             }
 
@@ -166,6 +168,7 @@ namespace Content.Server.Administration
                     player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
                 };
                 verb.Impact = LogImpact.High;
+                verb.ConfirmationPopup = true;
                 args.Verbs.Add(verb);
             }
 

@@ -21,7 +21,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Credits
 {
     [GenerateTypedNameReferences]
-    public sealed partial class CreditsWindow : SS14Window
+    public sealed partial class CreditsWindow : DefaultWindow
     {
         [Dependency] private readonly IResourceCache _resourceManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;

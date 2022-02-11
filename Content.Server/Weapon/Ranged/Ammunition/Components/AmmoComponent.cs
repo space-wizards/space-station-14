@@ -25,7 +25,6 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     /// Generally used for bullets but can be used for other things like bananas
     /// </summary>
     [RegisterComponent]
-    [ComponentProtoName("Ammo")]
     [Friend(typeof(GunSystem))]
     public sealed class AmmoComponent : Component, ISerializationHooks
     {
@@ -82,7 +81,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         [DataField("ammoVelocity")]
         public float Velocity { get; } = 20f;
 
-        [DataField("muzzleFlash", customTypeSerializer:typeof(ResourcePathSerializer))]
+        [DataField("muzzleFlash")]
         public ResourcePath? MuzzleFlashSprite = new("Objects/Weapons/Guns/Projectiles/bullet_muzzle.png");
 
         [DataField("soundCollectionEject")]

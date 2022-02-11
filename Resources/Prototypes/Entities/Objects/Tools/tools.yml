@@ -122,6 +122,7 @@
   - type: Sprite
     sprite: Objects/Tools/crowbar.rsi
     state: icon
+    netsync: false
   - type: Item
     sprite: Objects/Tools/crowbar.rsi
     size: 10
@@ -198,6 +199,7 @@
   - type: Tool
     qualities:
       - Screwing
+    speed: 1.5
   - type: MultipleTool
     statusShowBehavior: true
     entries:

@@ -20,9 +20,6 @@ namespace Content.Server.Fluids.Components
         private static readonly FixedPoint2 DefaultSlipThreshold = FixedPoint2.New(3);
         public static readonly FixedPoint2 DefaultOverflowVolume = FixedPoint2.New(20);
 
-        public override string Name => "Puddle";
-
-
         // Current design: Something calls the SpillHelper.Spill, that will either
         // A) Add to an existing puddle at the location (normalised to tile-center) or
         // B) add a new one
@@ -35,8 +32,18 @@ namespace Content.Server.Fluids.Components
         // based on behaviour (e.g. someone being punched vs slashed with a sword would have different blood sprite)
         // to check for low volumes for evaporation or whatever
 
+        /// <summary>
+        /// Puddles with volume above this threshold can slip players.
+        /// </summary>
+        [DataField("slipThreshold")]
+        public FixedPoint2 SlipThreshold = DefaultSlipThreshold;
 
-        [DataField("slipThreshold")] public FixedPoint2 SlipThreshold = DefaultSlipThreshold;
+        /// <summary>
+        /// Puddles with volume below this threshold will have their sprite changed to a wet floor effect,
+        /// provided they can evaporate down to zero.
+        /// </summary>
+        [DataField("wetFloorEffectThreshold")]
+        public FixedPoint2 WetFloorEffectThreshold = FixedPoint2.New(5);
 
         [DataField("spillSound")]
         public SoundSpecifier SpillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");

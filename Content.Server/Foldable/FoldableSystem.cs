@@ -21,7 +21,7 @@ namespace Content.Server.Foldable
             base.Initialize();
 
             SubscribeLocalEvent<FoldableComponent, StorageOpenAttemptEvent>(OnFoldableOpenAttempt);
-            SubscribeLocalEvent<FoldableComponent, GetAlternativeVerbsEvent>(AddFoldVerb);
+            SubscribeLocalEvent<FoldableComponent, GetVerbsEvent<AlternativeVerb>>(AddFoldVerb);
         }
 
         private void OnFoldableOpenAttempt(EntityUid uid, FoldableComponent component, StorageOpenAttemptEvent args)
@@ -40,7 +40,7 @@ namespace Content.Server.Foldable
             if (!Resolve(uid, ref fold))
                 return false;
 
-            // Can't un-fold in hands / inventory
+            // Can't un-fold in any container (locker, hands, inventory, whatever).
             if (_container.IsEntityInContainer(uid))
                 return false;
 
@@ -91,12 +91,12 @@ namespace Content.Server.Foldable
 
         #region Verb
 
-        private void AddFoldVerb(EntityUid uid, FoldableComponent component, GetAlternativeVerbsEvent args)
+        private void AddFoldVerb(EntityUid uid, FoldableComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract || !CanToggleFold(uid, component))
                 return;
 
-            Verb verb = new()
+            AlternativeVerb verb = new()
             {
                 Act = () => TryToggleFold(component),
                 Text = component.IsFolded ? Loc.GetString("unfold-verb") : Loc.GetString("fold-verb"),

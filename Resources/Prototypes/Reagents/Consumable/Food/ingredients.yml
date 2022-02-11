@@ -1,6 +1,7 @@
 - type: reagent
   id: Flour
   name: flour
+  group: Foods
   desc: Used for baking.
   physicalDesc: powdery
   color: white
@@ -13,6 +14,7 @@
 - type: reagent
   id: Oats
   name: oats
+  group: Foods
   desc: Used for a variety of tasty purposes.
   physicalDesc: coarse
   color: tan
@@ -25,6 +27,7 @@
 - type: reagent
   id: Enzyme
   name: universal enzyme
+  group: Foods
   desc: Used in cooking various dishes.
   color: "#009900"
   metabolisms:
@@ -36,6 +39,7 @@
 - type: reagent
   id: Egg
   name: egg
+  group: Foods
   desc: Used for baking.
   physicalDesc: mucus-like
   color: white
@@ -48,6 +52,7 @@
 - type: reagent
   id: Sugar
   name: sugar
+  group: Foods
   desc: Tasty spacey sugar!
   physicalDesc:
   color: white
@@ -60,6 +65,7 @@
 - type: reagent
   id: Blackpepper
   name: black pepper
+  group: Foods
   desc: Often used to flavor food or make people sneeze.
   physicalDesc: Grainy.
   color: black
@@ -72,6 +78,7 @@
 - type: reagent
   id: Vinegar
   name: vinegar
+  group: Foods
   desc: Often used to flavor food.
   color: tan
   metabolisms:
@@ -83,6 +90,7 @@
 - type: reagent
   id: Rice
   name: rice
+  group: Foods
   desc: Hard, small white grains.
   color: white
   metabolisms:
@@ -93,6 +101,7 @@
 - type: reagent
   id: OilOlive
   name: olive oil
+  group: Foods
   desc: Viscous and fragrant.
   color: olive
   metabolisms:
@@ -104,6 +113,7 @@
 - type: reagent
   id: Oil
   name: oil
+  group: Foods
   desc: Used by chefs to cook.
   physicalDesc: oily
   color: "#b67823"

@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -30,6 +31,11 @@ namespace Content.Shared.Examine
 
     public abstract class ExamineSystemShared : EntitySystem
     {
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+
+        public const float MaxRaycastRange = 100;
+
         /// <summary>
         ///     Examine range to use when the examiner is in critical condition.
         /// </summary>
@@ -54,11 +60,17 @@ namespace Content.Shared.Examine
             if (EntityManager.TryGetComponent(examiner, out MobStateComponent mobState) && mobState.IsIncapacitated())
                 return false;
 
-            if (entity.TryGetContainerMan(out var man) && man.Owner == examiner)
+            if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange, ignoreInsideBlocker: true))
+                return false;
+
+            // Is the target hidden in a opaque locker or something? Currently this check allows players to examine
+            // their organs, if they can somehow target them. Really this should be with userSeeInsideSelf: false, and a
+            // separate check for if the item is in their inventory or hands.
+            if (_containerSystem.IsInSameOrTransparentContainer(examiner, entity, userSeeInsideSelf: true))
                 return true;
 
-            return examiner.InRangeUnobstructed(entity, ExamineDetailsRange, ignoreInsideBlocker: true) &&
-                   examiner.IsInSameOrNoContainer(entity);
+            // is it inside of an open storage (e.g., an open backpack)?
+            return _interactionSystem.CanAccessViaStorage(examiner, entity);
         }
 
         [Pure]
@@ -105,23 +117,31 @@ namespace Content.Shared.Examine
 
         public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            if (origin.MapId == MapId.Nullspace ||
+            if (other.MapId != origin.MapId ||
                 other.MapId == MapId.Nullspace) return false;
+
+            var dir = other.Position - origin.Position;
+            var length = dir.Length;
+
+            // If range specified also check it
+            if (range > 0f && length > range) return false;
+
+            if (MathHelper.CloseTo(length, 0)) return true;
+
+            if (length > MaxRaycastRange)
+            {
+                Logger.Warning("InRangeUnOccluded check performed over extreme range. Limiting CollisionRay size.");
+                length = MaxRaycastRange;
+            }
 
             var occluderSystem = Get<OccluderSystem>();
             var entMan = IoCManager.Resolve<IEntityManager>();
-            if (!origin.InRange(other, range)) return false;
-
-            var dir = other.Position - origin.Position;
-
-            if (dir.LengthSquared.Equals(0f)) return true;
-            if (range > 0f && !(dir.LengthSquared <= range * range)) return false;
 
             predicate ??= _ => false;
 
             var ray = new Ray(origin.Position, dir.Normalized);
             var rayResults = occluderSystem
-                .IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+                .IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0) return true;
 

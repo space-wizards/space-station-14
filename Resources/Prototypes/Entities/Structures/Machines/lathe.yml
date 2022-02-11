@@ -32,7 +32,7 @@
       - Opaque
       - MobImpassable
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -111,7 +111,7 @@
       - MobImpassable
   - type: ResearchClient
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -147,6 +147,7 @@
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
       - Shovel
+      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
@@ -159,6 +160,7 @@
       - Dropper
       - Syringe
       - PillCanister
+      - Drone
       - Flash
       - Handcuffs
       - Stunbaton
@@ -166,6 +168,12 @@
       - ShellShotgun
       - CartridgeLRifle
       - CartridgeMagnum
+      - ShellShotgunBeanbag
+      - CartridgePistolRubber
+      - CartridgeMagnumRubber
+      - CartridgeClRifleRubber
+      - CartridgeLRifleRubber
+      - CartridgeSRifleRubber
       - MicroManipulatorStockPart
       - ScanningModuleStockPart
       - MicroLaserStockPart
@@ -188,6 +196,9 @@
       - ProtolatheMachineCircuitboard
       - KitchenReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
+      - ShuttleConsoleCircuitboard
+      - DawInstrumentMachineCircuitboard
+      - SynthesizerInstrument
       - Bucket
       - MopItem
       - SprayBottle

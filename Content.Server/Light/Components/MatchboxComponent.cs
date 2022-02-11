@@ -10,6 +10,5 @@ namespace Content.Server.Light.Components
     [RegisterComponent]
     public class MatchboxComponent : Component
     {
-        public override string Name => "Matchbox";
     }
 }

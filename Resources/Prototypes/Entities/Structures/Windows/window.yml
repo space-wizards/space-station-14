@@ -35,9 +35,17 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: ExaminableDamage
+    messages: WindowMessages
   - type: Repairable
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150 #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -58,12 +66,13 @@
     base: window
   - type: Window
   - type: Construction
-    graph: window
+    graph: Window
     node: window
   - type: Appearance
     visuals:
     - type: DamageVisualizer
       thresholds: [4, 8, 12]
+      damageDivisor: 2
       trackAllDamage: true
       damageOverlay:
         sprite: Structures/Windows/cracks.rsi
@@ -82,7 +91,6 @@
     # Keep WindowTintedDirectional in mind
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: window
   - type: Icon
@@ -106,6 +114,8 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: ExaminableDamage
+    messages: WindowMessages
   - type: Destructible
     thresholds:
     - trigger:
@@ -128,7 +138,7 @@
     - South
   - type: Window
   - type: Construction
-    graph: windowDirectional
+    graph: WindowDirectional
     node: windowDirectional
 
 - type: entity
@@ -143,7 +153,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: tinted_window
   - type: Tag
@@ -167,7 +176,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: frosted_window
   - type: Icon

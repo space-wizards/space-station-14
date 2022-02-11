@@ -116,6 +116,7 @@
     - ChemMasterMachineCircuitboard
     - ChemDispenserMachineCircuitboard
     - CrewMonitoringComputerCircuitboard
+    - HandheldCrewMonitor
 
 # Security Technology Tree
 
@@ -133,6 +134,24 @@
     - Flash
     - Handcuffs
     - Stunbaton
+
+- type: technology
+  name: "non-lethal technology"
+  id: NonLethalTechnology
+  description: For the softer approach to detaining.
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
+    state: base
+  requiredPoints: 8000
+  requiredTechnologies:
+     - SecurityTechnology
+  unlockedRecipes:
+    - ShellShotgunBeanbag
+    - CartridgePistolRubber
+    - CartridgeMagnumRubber
+    - CartridgeClRifleRubber
+    - CartridgeLRifleRubber
+    - CartridgeSRifleRubber
 
 - type: technology
   name: "ballistic technology"
@@ -244,6 +263,22 @@
     - SheetRGlass
     - SheetGlass1
 
+# Avionics Circuitry Technology Tree
+
+- type: technology
+  name: "avionics systems"
+  id: AvionicsSystems
+  description: The latest in fly-by-LV-wire technology
+  icon:
+    sprite: Structures/Machines/computers.rsi
+    state: avionics-systems
+  requiredPoints: 10000
+  requiredTechnologies:
+    - IndustrialEngineering
+  unlockedRecipes:
+    - ShuttleConsoleCircuitboard
+    - Drone
+
 # Electromagnetic Theory Technology Tree
 
 - type: technology
@@ -269,6 +304,20 @@
     - SubstationMachineCircuitboard
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
+
+- type: technology
+  name: "applied musicology"
+  id: AppliedMusicology
+  description: Bringing you the latest in audio-audio technology.
+  icon:
+    sprite: Objects/Fun/Instruments/guitar.rsi
+    state: icon
+  requiredPoints: 10000
+  requiredTechnologies:
+    - ElectromagneticTheory
+  unlockedRecipes:
+    - SynthesizerInstrument
+    - DawInstrumentMachineCircuitboard
 
 # Basic Parts Technology Tree
 

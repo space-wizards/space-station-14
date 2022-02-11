@@ -14,8 +14,6 @@ namespace Content.Client.CharacterInterface
     [RegisterComponent]
     public class CharacterInterfaceComponent : Component
     {
-        public override string Name => "Character Interface Component";
-
         /// <summary>
         ///     Window to hold each of the character interfaces
         /// </summary>
@@ -29,7 +27,7 @@ namespace Content.Client.CharacterInterface
         /// <summary>
         /// A window that collects and shows all the individual character user interfaces
         /// </summary>
-        public class CharacterWindow : SS14Window
+        public class CharacterWindow : DefaultWindow
         {
             private readonly List<ICharacterUI> _windowComponents;
 

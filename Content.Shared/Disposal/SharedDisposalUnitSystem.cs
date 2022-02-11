@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
+using Content.Shared.DragDrop;
 using Content.Shared.Item;
 using Content.Shared.MobState.Components;
 using Content.Shared.Throwing;
@@ -26,10 +27,11 @@ namespace Content.Shared.Disposal
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedDisposalUnitComponent, PreventCollideEvent>(HandlePreventCollide);
+            SubscribeLocalEvent<SharedDisposalUnitComponent, PreventCollideEvent>(OnPreventCollide);
+            SubscribeLocalEvent<SharedDisposalUnitComponent, CanDragDropOnEvent>(OnCanDragDropOn);
         }
 
-        private void HandlePreventCollide(EntityUid uid, SharedDisposalUnitComponent component, PreventCollideEvent args)
+        private void OnPreventCollide(EntityUid uid, SharedDisposalUnitComponent component, PreventCollideEvent args)
         {
             var otherBody = args.BodyB.Owner;
 
@@ -45,6 +47,14 @@ namespace Content.Shared.Disposal
             {
                 args.Cancel();
             }
+        }
+
+        private void OnCanDragDropOn(EntityUid uid, SharedDisposalUnitComponent component, CanDragDropOnEvent args)
+        {
+            if (args.Handled) return;
+
+            args.CanDrop = CanInsert(component, args.Dragged);
+            args.Handled = true;
         }
 
         public virtual bool CanInsert(SharedDisposalUnitComponent component, EntityUid entity)

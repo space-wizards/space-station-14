@@ -11,7 +11,6 @@ namespace Content.Server.Stunnable.Components
     public sealed class StunOnCollideComponent : Component
     {
         // TODO: Can probably predict this.
-        public override string Name => "StunOnCollide";
 
         // See stunsystem for what these do
         [DataField("stunAmount")]

@@ -18,7 +18,7 @@ namespace Content.Server.Construction
         private void InitializeGuided()
         {
             SubscribeNetworkEvent<RequestConstructionGuide>(OnGuideRequested);
-            SubscribeLocalEvent<ConstructionComponent, GetOtherVerbsEvent>(AddDeconstructVerb);
+            SubscribeLocalEvent<ConstructionComponent, GetVerbsEvent<Verb>>(AddDeconstructVerb);
             SubscribeLocalEvent<ConstructionComponent, ExaminedEvent>(HandleConstructionExamined);
         }
 
@@ -31,7 +31,7 @@ namespace Content.Server.Construction
                 RaiseNetworkEvent(new ResponseConstructionGuide(msg.ConstructionId, guide), args.SenderSession.ConnectedClient);
         }
 
-        private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetOtherVerbsEvent args)
+        private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetVerbsEvent<Verb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -95,7 +95,9 @@ namespace Content.Server.Construction
                     preventStepExamine |= condition.DoExamine(args);
                 }
 
-                if (preventStepExamine) return;
+                if (!preventStepExamine && component.StepIndex < edge.Steps.Count)
+                    edge.Steps[component.StepIndex].DoExamine(args);
+                return;
             }
         }
 
