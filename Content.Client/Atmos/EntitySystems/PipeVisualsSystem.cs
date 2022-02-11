@@ -42,7 +42,7 @@ public sealed class PipeVisualsSystem : EntitySystem
         }
     }
 
-    private void OnAppearanceChanged(EntityUid uid, PipeVisualsComponent component, AppearanceChangeEvent args)
+    private void OnAppearanceChanged(EntityUid uid, PipeVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
