@@ -61,14 +61,14 @@ public abstract class SharedDoorSystem : EntitySystem
         {
             if (door.State == DoorState.Opening)
             {
-                Logger.Error($"Initializing a door mid-opening with no queued state change. Entity: {ToPrettyString(uid)}");
+                Logger.Warning($"Initializing a door mid-opening with no queued state change. Entity: {ToPrettyString(uid)}");
                 // force to open.
                 door.State = DoorState.Open;
                 door.Partial = false;
             }
             if (door.State == DoorState.Closing)
             {
-                Logger.Error($"Initializing a door mid-closing with no queued state change. Entity: {ToPrettyString(uid)}");
+                Logger.Warning($"Initializing a door mid-closing with no queued state change. Entity: {ToPrettyString(uid)}");
                 // force to closed.
                 door.State = DoorState.Closed;
                 door.Partial = false;
