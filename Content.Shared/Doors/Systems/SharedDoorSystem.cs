@@ -59,16 +59,15 @@ public abstract class SharedDoorSystem : EntitySystem
             _activeDoors.Add(door);
         else
         {
+            // Make sure doors are not perpetually stuck opening or closing.
             if (door.State == DoorState.Opening)
             {
-                Logger.Warning($"Initializing a door mid-opening with no queued state change. Entity: {ToPrettyString(uid)}");
                 // force to open.
                 door.State = DoorState.Open;
                 door.Partial = false;
             }
             if (door.State == DoorState.Closing)
             {
-                Logger.Warning($"Initializing a door mid-closing with no queued state change. Entity: {ToPrettyString(uid)}");
                 // force to closed.
                 door.State = DoorState.Closed;
                 door.Partial = false;
