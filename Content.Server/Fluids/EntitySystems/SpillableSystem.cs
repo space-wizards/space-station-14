@@ -36,7 +36,7 @@ public class SpillableSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
-        SubscribeLocalEvent<SpillableComponent, GetOtherVerbsEvent>(AddSpillVerb);
+        SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
     }
 
@@ -98,7 +98,7 @@ public class SpillableSystem : EntitySystem
         SpillAt(drainedSolution, EntityManager.GetComponent<TransformComponent>(uid).Coordinates, "PuddleSmear");
     }
 
-    private void AddSpillVerb(EntityUid uid, SpillableComponent component, GetOtherVerbsEvent args)
+    private void AddSpillVerb(EntityUid uid, SpillableComponent component, GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;

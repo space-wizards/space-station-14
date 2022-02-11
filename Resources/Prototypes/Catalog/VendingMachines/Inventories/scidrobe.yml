@@ -1,0 +1,14 @@
+- type: vendingMachineInventory
+  id: SciDrobeInventory
+  name: SciDrobe
+  spriteName: scidrobe
+  startingInventory:
+    ClothingBackpackScience: 3
+    ClothingBackpackSatchelScience: 3
+    ClothingBackpackDuffelScience: 3
+    ClothingUniformJumpsuitScientist: 3
+    ClothingUniformJumpskirtScientist: 3
+    ClothingOuterCoatLab: 3
+    ClothingShoesColorWhite: 3
+    ClothingHeadsetScience: 3
+    ClothingMaskGas: 3

@@ -15,7 +15,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// <summary>
     /// Bolt-action rifles
     /// </summary>
-    [RegisterComponent, NetworkedComponent, ComponentProtoName("PumpBarrel"), ComponentReference(typeof(ServerRangedBarrelComponent))]
+    [RegisterComponent, NetworkedComponent, ComponentReference(typeof(ServerRangedBarrelComponent))]
     public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, ISerializationHooks
     {
         public override int ShotsLeft

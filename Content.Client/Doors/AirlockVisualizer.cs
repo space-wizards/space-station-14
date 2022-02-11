@@ -46,6 +46,12 @@ namespace Content.Client.Doors
         [DataField("openUnlitVisible")]
         private bool _openUnlitVisible = false;
 
+        /// <summary>
+        ///     Whether the door should have an emergency access layer
+        /// </summary>
+        [DataField("emergencyAccessLayer")]
+        private bool _emergencyAccessLayer = true;
+
         private Animation CloseAnimation = default!;
         private Animation OpenAnimation = default!;
         private Animation DenyAnimation = default!;
@@ -141,6 +147,7 @@ namespace Content.Client.Doors
             var unlitVisible = true;
             var boltedVisible = false;
             var weldedVisible = false;
+            var emergencyLightsVisible = false;
 
             if (animPlayer.HasRunningAnimation(AnimationKey))
             {
@@ -192,11 +199,25 @@ namespace Content.Client.Doors
                 boltedVisible = true;
             }
 
+            if (component.TryGetData(DoorVisuals.EmergencyLights, out bool eaLights) && eaLights)
+            {
+                emergencyLightsVisible = true;
+            }
+
             if (!_simpleVisuals)
             {
                 sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && state != DoorState.Closed && state != DoorState.Welded);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseWelded, weldedVisible);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
+                if (_emergencyAccessLayer)
+                {
+                    sprite.LayerSetVisible(DoorVisualLayers.BaseEmergencyAccess, 
+                            emergencyLightsVisible 
+                            && state != DoorState.Open 
+                            && state != DoorState.Opening 
+                            && state != DoorState.Closing
+                            && unlitVisible);
+                }
             }
         }
     }
@@ -207,5 +228,6 @@ namespace Content.Client.Doors
         BaseUnlit,
         BaseWelded,
         BaseBolted,
+        BaseEmergencyAccess,
     }
 }

@@ -489,6 +489,7 @@
     Nutriment:
       Min: 1
       Max: 2
+      Potencydivisor: 50
     Bicaridine:
       Min: 1
       Max: 10
@@ -510,10 +511,140 @@
   growthStages: 5
   waterConsumption: 6
   chemicals:
+    Aloe:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Dermaline:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: lingzhi
+  name: lingzhi
+  seedName: lingzhi
+  displayName: lingzhi
+  plantRsi: Objects/Specific/Hydroponics/lingzhi.rsi
+  productPrototypes:
+    - FoodLingzhi
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 3
+  waterConsumption: 6
+  chemicals:
+    Ultravasculine:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
+    Epinephrine:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
+
+- type: seed
+  id: ambrosiaVulgaris
+  name: ambrosia vulgaris
+  seedName: ambrosiaVulgaris
+  displayName: ambrosia vulgaris
+  plantRsi: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+  productPrototypes:
+    - FoodAmbrosiaVulgaris
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 6
+  waterConsumption: 6
+  chemicals:
     Nutriment:
       Min: 1
       Max: 2
+      PotencyDivisor: 10
+    Bicaridine:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
     Kelotane:
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Desoxyephedrine: #Needs a small touch of spice, replace this with something better when we have more fun drugs
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50
+
+- type: seed
+  id: galaxythistle
+  name: galaxythistle
+  seedName: galaxythistle
+  displayName: galaxythistle
+  plantRsi: Objects/Specific/Hydroponics/galaxythistle.rsi
+  productPrototypes:
+    - FoodGalaxythistle
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 3
+  waterConsumption: 6
+  chemicals:
+    Stellibinin:
+      Min: 1
+      Max: 25
+      PotencyDivisor: 4
+
+- type: seed
+  id: flyAmanita
+  name: fly amanita
+  seedname: flyAmanita
+  displayName: fly amanita
+  plantRsi: Objects/Specific/Hydroponics/fly_amanita.rsi
+  productPrototypes:
+    - FoodFlyAmanita
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 2
+  waterConsumption: 6
+  chemicals:
+    Amatoxin:
+      Min: 1
+      Max: 25
+      PotencyDivisor: 4
+    Nutriment: ## yumby :)
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: gatfruit
+  name: gatfruit
+  seedName: gatfruit
+  displayName: gatfruit tree
+  plantRsi: Objects/Specific/Hydroponics/gatfruit.rsi
+  productPrototypes:
+    - FoodGatfruit
+  lifespan: 65
+  maturation: 25
+  production: 25
+  yield: 1
+  potency: 10
+  growthStages: 2
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Sulfur:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20

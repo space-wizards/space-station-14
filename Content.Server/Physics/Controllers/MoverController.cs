@@ -27,6 +27,7 @@ namespace Content.Server.Physics.Controllers
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -272,7 +273,7 @@ namespace Content.Server.Physics.Controllers
 
         protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)
         {
-            if (!mover.Owner.HasTag("FootstepSound")) return;
+            if (!_tags.HasTag(mover.Owner, "FootstepSound")) return;
 
             var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
             var coordinates = transform.Coordinates;

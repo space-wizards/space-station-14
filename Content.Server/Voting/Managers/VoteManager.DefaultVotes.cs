@@ -58,8 +58,8 @@ namespace Content.Server.Voting.Managers
                     (Loc.GetString("ui-vote-restart-no"), false)
                 },
                 Duration = alone
-                    ? TimeSpan.FromSeconds(10)
-                    : TimeSpan.FromSeconds(30),
+                    ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
+                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerRestart)),
                 InitiatorTimeout = TimeSpan.FromMinutes(3)
             };
 
@@ -122,8 +122,8 @@ namespace Content.Server.Voting.Managers
             {
                 Title = Loc.GetString("ui-vote-gamemode-title"),
                 Duration = alone
-                    ? TimeSpan.FromSeconds(10)
-                    : TimeSpan.FromSeconds(30)
+                    ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
+                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerPreset))
             };
 
             if (alone)
@@ -167,8 +167,8 @@ namespace Content.Server.Voting.Managers
             {
                 Title = Loc.GetString("ui-vote-map-title"),
                 Duration = alone
-                    ? TimeSpan.FromSeconds(10)
-                    : TimeSpan.FromSeconds(180)
+                    ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
+                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerMap))
             };
 
             if (alone)

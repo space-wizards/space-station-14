@@ -1,0 +1,9 @@
+- type: vendingMachineInventory
+  id: ViroDrobeInventory
+  name: ViroDrobe
+  spriteName: virodrobe
+  startingInventory:
+    ClothingShoesColorWhite: 2
+    ClothingOuterCoatLab: 2
+    ClothingBackpackVirology: 2
+    ClothingHeadsetMedical: 2
