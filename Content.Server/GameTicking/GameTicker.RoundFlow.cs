@@ -432,6 +432,7 @@ namespace Content.Server.GameTicking
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
             _playersInGame.Clear();
             RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal));
+            SendDiscordEndRoundAlert(roundDuration);
         }
 
         public void RestartRound()
@@ -449,7 +450,6 @@ namespace Content.Server.GameTicking
             Logger.InfoS("ticker", "Restarting round!");
 
             SendServerMessage(Loc.GetString("game-ticker-restart-round"));
-            SendDiscordNewRoundAlert();
 
             RoundNumberMetric.Inc();
 
@@ -457,6 +457,7 @@ namespace Content.Server.GameTicking
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             ResettingCleanup();
             PreRoundSetup();
+            SendDiscordNewRoundAlert();
 
             if (!LobbyEnabled)
             {

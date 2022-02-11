@@ -15,7 +15,10 @@ namespace Content.Server.GameTicking
             var sendsWebhook = DiscordWebhook != string.Empty;
             if (sendsWebhook)
             {
-                WebhookPayload payload;
+                var payload = new WebhookPayload()
+                {
+                    Content = Loc.GetString("discord-round-new"),
+                };
 
                 if (DiscordRoleId != string.Empty)
                 {
@@ -28,23 +31,40 @@ namespace Content.Server.GameTicking
                         },
                     };
                 }
-                else
-                {
-                    payload = new WebhookPayload()
-                    {
-                        Content = Loc.GetString("discord-round-new"),
-                    };
-                }
 
-                var request = await _httpClient.PostAsync(DiscordWebhook,
-                    new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
+                SendDiscordMessage(payload);
+            }
+        }
 
-                var content = await request.Content.ReadAsStringAsync();
-                if (!request.IsSuccessStatusCode)
+        private async void SendDiscordEndRoundAlert(TimeSpan roundDuration)
+        {
+            var sendsWebhook = DiscordWebhook != string.Empty;
+            if (sendsWebhook)
+            {
+                var text = Loc.GetString("discord-round-end",
+                    ("hours", roundDuration.Hours),
+                    ("minutes", roundDuration.Minutes),
+                    ("seconds", roundDuration.Seconds));
+
+                var payload = new WebhookPayload()
                 {
-                    Logger.ErrorS("ticker", $"Discord returned bad status code when posting message: {request.StatusCode}\nResponse: {content}");
-                    return;
-                }
+                    Content = text,
+                };
+
+                SendDiscordMessage(payload);
+            }
+        }
+
+        private async void SendDiscordMessage(WebhookPayload payload)
+        {
+            var request = await _httpClient.PostAsync(DiscordWebhook,
+                new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
+
+            var content = await request.Content.ReadAsStringAsync();
+            if (!request.IsSuccessStatusCode)
+            {
+                Logger.ErrorS("ticker", $"Discord returned bad status code when posting message: {request.StatusCode}\nResponse: {content}");
+                return;
             }
         }
 
