@@ -39,8 +39,6 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
         scanner.Toggled = state;
         scanner.Dirty();
-
-        // RaiseLocalEvent(uid, new TrayScannerToggleEvent(scanner.Toggled));
     }
 
     private void OnTrayScannerGetState(EntityUid uid, TrayScannerComponent scanner, ref ComponentGetState args)

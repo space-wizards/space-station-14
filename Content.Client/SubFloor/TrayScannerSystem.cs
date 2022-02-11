@@ -76,9 +76,10 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
             if (!TryComp(entity, out TrayScannerComponent? scanner))
                 continue;
 
-            if (Transform(entity).MapPosition.InRange(pos, scanner.Range))
+            if (!Transform(entity).MapPosition.InRange(pos, scanner.Range))
                 continue;
 
+            hideComp.RevealedBy.Add(entity);
             scanner.RevealedSubfloors.Add(uid);
         }
     }
@@ -101,7 +102,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         // set all the known subfloor to invisible,
         // and return false so it's removed from
         // the active scanner list
-        if (!scanner.Toggled)
+        if (!scanner.Toggled || transform.MapID == MapId.Nullspace)
         {
             _subfloorSystem.SetEntitiesRevealed(scanner.RevealedSubfloors, uid, false, _visualizerKeys);
             scanner.LastLocation = Vector2.Zero;
