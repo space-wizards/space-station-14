@@ -37,7 +37,6 @@
     visuals:
     - type: EnergySwordVisualizer
 
-
 - type: entity
   name: pen
   parent: EnergySword
@@ -63,10 +62,6 @@
     damage:
       types:
         Blunt: 1
-  # - type: DamageOtherOnHit
-  #   damage:
-  #     types:
-  #       Piercing: 15
   - type: Item
     size: 5
     sprite: Objects/Weapons/Melee/e_dagger.rsi
