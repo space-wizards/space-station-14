@@ -21,3 +21,11 @@
     visuals:
     - type: AirlockVisualizer
     - type: WiresVisualizer
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalGlass
+  - type: Occluder
+    enabled: false
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/external.rsi
