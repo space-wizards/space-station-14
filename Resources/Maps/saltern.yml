@@ -115,437 +115,63 @@ grids:
     tiles: JAAAACQAAAAkAAAAJAAAACQAAAAkAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAkAAAAJAAAACQAAAAYAAAAGAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAJAAAACQAAAAkAAAAGAAAABgAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACQAAAAkAAAAJAAAABgAAAAYAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAkAAAAJAAAACQAAAAkAAAAJAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAJAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
-  type: ToolboxGoldFilled
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -3.454914,18.643616
-    parent: 852
-    type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 1
-  type: SuspicionSMGSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -13.5,20.5
-    parent: 852
-    type: Transform
-- uid: 2
-  type: Window
-  components:
-  - pos: 18.5,-18.5
-    parent: 852
-    type: Transform
-- uid: 3
-  type: SuspicionShotgunMagazineSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -30.5,-4.5
-    parent: 852
-    type: Transform
-- uid: 4
-  type: SuspicionLaunchersSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -12.5,18.5
-    parent: 852
-    type: Transform
-- uid: 5
-  type: WallReinforced
-  components:
-  - pos: -11.5,-28.5
-    parent: 852
-    type: Transform
-- uid: 6
-  type: DisgustingSweptSoup
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -14.96041,24.545767
-    parent: 852
-    type: Transform
-- uid: 7
-  type: FirelockElectronics
-  components:
-  - pos: -29.687315,9.038336
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 8
-  type: ReinforcedWindow
-  components:
-  - pos: -10.5,-29.5
-    parent: 852
-    type: Transform
-- uid: 9
-  type: SuspicionGrenadesSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -11.5,18.5
-    parent: 852
-    type: Transform
-- uid: 10
-  type: Table
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -3.5,16.5
-    parent: 852
-    type: Transform
-- uid: 11
-  type: ClothingNeckBling
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -2.861164,18.612366
-    parent: 852
-    type: Transform
-- uid: 12
-  type: ToyMouse
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 31.376545,-7.1625524
-    parent: 852
-    type: Transform
-- uid: 13
-  type: ReinforcedWindow
-  components:
-  - pos: -7.5,-30.5
-    parent: 852
-    type: Transform
-- uid: 14
-  type: FoodDonkpocket
-  components:
-  - pos: 33.66531,-1.3435456
-    parent: 852
-    type: Transform
-- uid: 15
-  type: Table
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -2.5,18.5
-    parent: 852
-    type: Transform
-- uid: 16
-  type: DrinkBottleRum
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -15.694785,24.608267
-    parent: 852
-    type: Transform
-  - solution: drink
-    type: RefillableSolution
-  - solution: drink
-    type: DrainableSolution
-- uid: 17
-  type: BoxLatex
-  components:
-  - pos: 21.79705,-4.4901056
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 18
-  type: SuspicionHitscanSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -14.5,18.5
-    parent: 852
-    type: Transform
-- uid: 19
-  type: ReinforcedWindow
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 26.5,14.5
-    parent: 852
-    type: Transform
-- uid: 20
-  type: Table
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -3.5,18.5
-    parent: 852
-    type: Transform
-- uid: 21
-  type: SuspicionPistolSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -5.5,24.5
-    parent: 852
-    type: Transform
-- uid: 22
-  type: SuspicionPistolMagazineSpawner
-  components:
-  - pos: -13.5,7.5
-    parent: 852
-    type: Transform
-- uid: 23
-  type: BikeHornInstrument
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -18.5,-9.5
-    parent: 852
-    type: Transform
-- uid: 24
-  type: ReinforcedWindow
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.5,14.5
-    parent: 852
-    type: Transform
-- uid: 25
-  type: Table
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -2.5,16.5
-    parent: 852
-    type: Transform
-- uid: 26
-  type: SuspicionShotgunMagazineSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -29.5,-4.5
-    parent: 852
-    type: Transform
-- uid: 27
-  type: SuspicionGrenadesSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -8.5,-17.5
-    parent: 852
-    type: Transform
-- uid: 28
-  type: Table
-  components:
-  - rot: 3.141592697301183 rad
-    pos: 33.5,-2.5
-    parent: 852
-    type: Transform
-- uid: 29
-  type: SuspicionPistolMagazineSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -31.5,13.5
-    parent: 852
-    type: Transform
-- uid: 30
-  type: SuspicionGrenadesSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 15.5,-0.5
-    parent: 852
-    type: Transform
-- uid: 31
-  type: ClothingUnderSocksCoder
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 47.437466,-6.6893435
-    parent: 852
-    type: Transform
-- uid: 32
-  type: Grille
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.5,14.5
-    parent: 852
-    type: Transform
-- uid: 33
-  type: SuspicionGrenadesSpawner
-  components:
-  - pos: 21.5,0.5
-    parent: 852
-    type: Transform
-- uid: 34
-  type: SuspicionMagnumMagazineSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 16.5,7.5
-    parent: 852
-    type: Transform
-- uid: 35
-  type: SuspicionShotgunMagazineSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -35.5,-7.5
-    parent: 852
-    type: Transform
-- uid: 36
-  type: SuspicionShotgunMagazineSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -23.5,-13.5
-    parent: 852
-    type: Transform
-- uid: 37
-  type: SuspicionRifleMagazineSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -35.5,-3.5
-    parent: 852
-    type: Transform
-- uid: 38
-  type: FoodBanana
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.603624,-9.388998
-    parent: 852
-    type: Transform
-- uid: 39
-  type: SpawnPointStationEngineer
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 33.5,9.5
-    parent: 852
-    type: Transform
-- uid: 40
-  type: Table
-  components:
-  - rot: 3.141592697301183 rad
-    pos: 33.5,-1.5
-    parent: 852
-    type: Transform
-- uid: 41
-  type: SuspicionHitscanSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 25.5,0.5
-    parent: 852
-    type: Transform
-- uid: 42
-  type: SuspicionShotgunSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -12.5,20.5
-    parent: 852
-    type: Transform
-- uid: 43
-  type: ToyPhazon
-  components:
-  - pos: 9.5,17.5
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 44
-  type: FoodBanana
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.728624,-9.576498
-    parent: 852
-    type: Transform
-- uid: 45
-  type: SuspicionShotgunSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -29.5,-5.5
-    parent: 852
-    type: Transform
-- uid: 46
-  type: SuspicionPistolSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -10.5,-0.5
-    parent: 852
-    type: Transform
-- uid: 47
-  type: SuspicionShotgunSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -7.5,-6.5
-    parent: 852
-    type: Transform
-- uid: 48
-  type: BoxSterile
-  components:
-  - rot: 0.00033142371103167534 rad
-    pos: 21.263584,-4.4745717
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 49
   type: SuspicionPistolMagazineSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,1.5
     parent: 852
     type: Transform
-- uid: 50
-  type: Poweredlight
+- uid: 1
+  type: SuspicionShotgunMagazineSpawner
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -25.5,6.5
+  - rot: 4.371139006309477E-08 rad
+    pos: -6.5,-3.5
     parent: 852
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-- uid: 51
+- uid: 2
   type: SuspicionRifleMagazineSpawner
   components:
   - rot: 4.371139006309477E-08 rad
-    pos: -35.5,-4.5
+    pos: -7.5,7.5
     parent: 852
     type: Transform
-- uid: 52
-  type: Carpet
+- uid: 3
+  type: BedsheetMedical
   components:
-  - rot: 3.141592697301183 rad
-    pos: -1.5,-1.5
-    parent: 852
-    type: Transform
-- uid: 53
-  type: Table
-  components:
-  - pos: -5.5,-3.5
-    parent: 852
-    type: Transform
-- uid: 54
-  type: ReinforcedWindow
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 27.5,14.5
-    parent: 852
-    type: Transform
-- uid: 55
-  type: WallReinforced
-  components:
-  - pos: 13.5,2.5
-    parent: 852
-    type: Transform
-- uid: 56
-  type: APCElectronics
-  components:
-  - pos: -29.406065,9.491461
+  - anchored: True
+    rot: 4.371139006309477E-08 rad
+    pos: 18.5,-20.5
     parent: 852
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 57
-  type: SuspicionRevolverSpawner
+- uid: 4
+  type: SuspicionShotgunMagazineSpawner
   components:
   - rot: 4.371139006309477E-08 rad
-    pos: -14.5,19.5
+    pos: -35.5,-6.5
     parent: 852
     type: Transform
-- uid: 58
-  type: SuspicionSniperSpawner
+- uid: 5
+  type: SalternSMES
+  components:
+  - pos: 41.5,5.5
+    parent: 852
+    type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 6
+  type: Table
   components:
   - rot: 4.371139006309477E-08 rad
-    pos: -8.5,-12.5
+    pos: -3.5,16.5
     parent: 852
     type: Transform
-- uid: 59
+- uid: 7
   type: DisposalBend
   components:
   - rot: 3.141592653589793 rad
@@ -560,91 +186,67 @@ entities:
       DisposalBend: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 60
-  type: FirelockGlass
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 1.5,5.5
-    parent: 852
-    type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
-- uid: 61
-  type: APCElectronics
-  components:
-  - pos: -29.64044,9.647711
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 62
-  type: Bed
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 18.5,-20.5
-    parent: 852
-    type: Transform
-- uid: 63
+- uid: 8
   type: ReinforcedWindow
   components:
-  - pos: -6.5,-30.5
+  - rot: 4.371139006309477E-08 rad
+    pos: 27.5,14.5
     parent: 852
     type: Transform
-- uid: 64
-  type: ClothingNeckBling
+- uid: 9
+  type: RandomSpawner
+  components:
+  - pos: 26.5,-5.5
+    parent: 852
+    type: Transform
+- uid: 10
+  type: Grille
   components:
   - rot: 4.371139006309477E-08 rad
-    pos: -2.564289,18.643616
+    pos: 27.5,14.5
     parent: 852
     type: Transform
-- uid: 65
-  type: BedsheetMedical
+- uid: 11
+  type: WallReinforced
   components:
-  - anchored: True
-    rot: 4.371139006309477E-08 rad
-    pos: 18.5,-20.5
+  - pos: -10.5,-28.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 66
-  type: SuspicionShotgunMagazineSpawner
+- uid: 12
+  type: FoodPieBananaCream
   components:
   - rot: 4.371139006309477E-08 rad
-    pos: -35.5,-6.5
+    pos: -18.947374,-9.467123
     parent: 852
     type: Transform
-- uid: 67
-  type: Table
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.5,-9.5
-    parent: 852
-    type: Transform
-- uid: 68
-  type: SuspicionGrenadesSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,-15.5
-    parent: 852
-    type: Transform
-- uid: 69
-  type: SuspicionShotgunMagazineSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -7.5,-3.5
-    parent: 852
-    type: Transform
-- uid: 70
+- uid: 13
   type: SuspicionHitscanSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,-11.5
     parent: 852
     type: Transform
-- uid: 71
+- uid: 14
+  type: FoodPieBananaCream
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -18.509874,-9.279623
+    parent: 852
+    type: Transform
+- uid: 15
+  type: Carpet
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -0.5,-0.5
+    parent: 852
+    type: Transform
+- uid: 16
+  type: FoodDonkpocket
+  components:
+  - pos: 33.274685,-1.5622956
+    parent: 852
+    type: Transform
+- uid: 17
   type: PowerCellRecharger
   components:
   - rot: 4.371139006309477E-08 rad
@@ -655,88 +257,233 @@ entities:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 72
-  type: FoodPieBananaCream
+- uid: 18
+  type: SuspicionShotgunMagazineSpawner
   components:
   - rot: 4.371139006309477E-08 rad
-    pos: -18.947374,-9.467123
+    pos: -7.5,-3.5
     parent: 852
     type: Transform
-- uid: 73
+- uid: 19
+  type: Table
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -19.5,-9.5
+    parent: 852
+    type: Transform
+- uid: 20
+  type: SuspicionGrenadesSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: 0.5,-15.5
+    parent: 852
+    type: Transform
+- uid: 21
+  type: SuspicionPistolMagazineSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -31.5,13.5
+    parent: 852
+    type: Transform
+- uid: 22
+  type: Table
+  components:
+  - rot: 3.141592697301183 rad
+    pos: 33.5,-2.5
+    parent: 852
+    type: Transform
+- uid: 23
+  type: ReinforcedWindow
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: 28.5,14.5
+    parent: 852
+    type: Transform
+- uid: 24
+  type: Table
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -2.5,16.5
+    parent: 852
+    type: Transform
+- uid: 25
+  type: SuspicionShotgunMagazineSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -29.5,-4.5
+    parent: 852
+    type: Transform
+- uid: 26
+  type: SuspicionGrenadesSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -8.5,-17.5
+    parent: 852
+    type: Transform
+- uid: 27
+  type: Carpet
+  components:
+  - rot: 3.141592697301183 rad
+    pos: -1.5,-1.5
+    parent: 852
+    type: Transform
+- uid: 28
+  type: Poweredlight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -25.5,6.5
+    parent: 852
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 29
+  type: SuspicionPistolSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -10.5,-0.5
+    parent: 852
+    type: Transform
+- uid: 30
+  type: SuspicionShotgunSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -7.5,-6.5
+    parent: 852
+    type: Transform
+- uid: 31
   type: SuspicionRifleMagazineSpawner
   components:
   - rot: 4.371139006309477E-08 rad
-    pos: -7.5,7.5
+    pos: -35.5,-4.5
     parent: 852
     type: Transform
-- uid: 74
-  type: FoodDonkpocket
+- uid: 32
+  type: BoxSterile
   components:
-  - pos: 33.274685,-1.5622956
+  - rot: 0.00033142371103167534 rad
+    pos: 21.263584,-4.4745717
     parent: 852
     type: Transform
-- uid: 75
-  type: Carpet
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 33
+  type: SuspicionShotgunMagazineSpawner
   components:
   - rot: 4.371139006309477E-08 rad
-    pos: -0.5,-0.5
+    pos: -23.5,-13.5
     parent: 852
     type: Transform
-- uid: 76
-  type: Grille
+- uid: 34
+  type: SpawnPointStationEngineer
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: 33.5,9.5
+    parent: 852
+    type: Transform
+- uid: 35
+  type: Table
+  components:
+  - rot: 3.141592697301183 rad
+    pos: 33.5,-1.5
+    parent: 852
+    type: Transform
+- uid: 36
+  type: FoodBanana
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -19.603624,-9.388998
+    parent: 852
+    type: Transform
+- uid: 37
+  type: SuspicionHitscanSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: 25.5,0.5
+    parent: 852
+    type: Transform
+- uid: 38
+  type: ToyPhazon
+  components:
+  - pos: 9.5,17.5
+    parent: 852
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 39
+  type: SuspicionShotgunSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -12.5,20.5
+    parent: 852
+    type: Transform
+- uid: 40
+  type: FoodBanana
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -19.728624,-9.576498
+    parent: 852
+    type: Transform
+- uid: 41
+  type: SuspicionPistolSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -5.5,24.5
+    parent: 852
+    type: Transform
+- uid: 42
+  type: BoxLatex
+  components:
+  - pos: 21.79705,-4.4901056
+    parent: 852
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 43
+  type: SuspicionHitscanSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -14.5,18.5
+    parent: 852
+    type: Transform
+- uid: 44
+  type: ReinforcedWindow
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 26.5,14.5
     parent: 852
     type: Transform
-- uid: 77
-  type: SuspicionShotgunMagazineSpawner
+- uid: 45
+  type: Table
   components:
   - rot: 4.371139006309477E-08 rad
-    pos: -6.5,-3.5
+    pos: -3.5,18.5
     parent: 852
     type: Transform
-- uid: 78
+- uid: 46
+  type: BikeHornInstrument
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -18.5,-9.5
+    parent: 852
+    type: Transform
+- uid: 47
   type: SuspicionPistolMagazineSpawner
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -35.5,-0.5
+  - pos: -13.5,7.5
     parent: 852
     type: Transform
-- uid: 79
-  type: FoodPieBananaCream
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -18.509874,-9.279623
-    parent: 852
-    type: Transform
-- uid: 80
-  type: SalternSMES
-  components:
-  - pos: 41.5,5.5
-    parent: 852
-    type: Transform
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 81
-  type: SuspicionPistolMagazineSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -29.5,9.5
-    parent: 852
-    type: Transform
-- uid: 82
-  type: Carpet
-  components:
-  - rot: 3.141592697301183 rad
-    pos: -0.5,-1.5
-    parent: 852
-    type: Transform
-- uid: 83
+- uid: 48
   type: DrinkFlask
   components:
   - pos: 8.439846,26.712742
@@ -744,42 +491,14 @@ entities:
     type: Transform
   - solution: drink
     type: DrainableSolution
-- uid: 84
-  type: ReinforcedWindow
-  components:
-  - pos: -6.5,-29.5
-    parent: 852
-    type: Transform
-- uid: 85
-  type: SuspicionPistolSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 8.5,-4.5
-    parent: 852
-    type: Transform
-- uid: 86
-  type: WallReinforced
-  components:
-  - pos: -10.5,-28.5
-    parent: 852
-    type: Transform
-- uid: 87
-  type: DrinkGoldenCup
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -3.470539,16.956116
-    parent: 852
-    type: Transform
-  - solution: drink
-    type: DrainableSolution
-- uid: 88
+- uid: 49
   type: FoodBanana
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -19.463,-9.482748
     parent: 852
     type: Transform
-- uid: 89
+- uid: 50
   type: FirelockGlass
   components:
   - rot: 4.371139006309477E-08 rad
@@ -790,21 +509,14 @@ entities:
     type: Airtight
   - canCollide: False
     type: Physics
-- uid: 90
-  type: Grille
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 27.5,14.5
-    parent: 852
-    type: Transform
-- uid: 91
+- uid: 51
   type: SuspicionPistolMagazineSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,0.5
     parent: 852
     type: Transform
-- uid: 92
+- uid: 52
   type: JawsOfLife
   components:
   - rot: 4.371139006309477E-08 rad
@@ -814,13 +526,25 @@ entities:
   - useSound: !type:SoundPathSpecifier
       path: /Audio/Items/jaws_pry.ogg
     type: Tool
-- uid: 93
-  type: RandomSpawner
+- uid: 53
+  type: FirelockElectronics
   components:
-  - pos: 26.5,-5.5
+  - pos: -29.687315,9.038336
     parent: 852
     type: Transform
-- uid: 94
+  - canCollide: False
+    type: Physics
+- uid: 54
+  type: VendingMachineCoffee
+  components:
+  - name: Hot drinks machine
+    type: MetaData
+  - pos: -11.5,-17.5
+    parent: 852
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 55
   type: ToolboxElectricalFilled
   components:
   - pos: -29.499815,8.100836
@@ -832,13 +556,7 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 95
-  type: WallReinforced
-  components:
-  - pos: 20.5,-0.5
-    parent: 852
-    type: Transform
-- uid: 96
+- uid: 56
   type: FirelockElectronics
   components:
   - pos: -29.42169,8.819586
@@ -846,6 +564,291 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 57
+  type: WallReinforced
+  components:
+  - pos: 20.5,-0.5
+    parent: 852
+    type: Transform
+- uid: 58
+  type: SuspicionShotgunSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -15.5,-14.5
+    parent: 852
+    type: Transform
+- uid: 59
+  type: ReinforcedWindow
+  components:
+  - pos: -10.5,-29.5
+    parent: 852
+    type: Transform
+- uid: 60
+  type: ReinforcedWindow
+  components:
+  - pos: -7.5,-30.5
+    parent: 852
+    type: Transform
+- uid: 61
+  type: ToolboxGoldFilled
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -3.454914,18.643616
+    parent: 852
+    type: Transform
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 62
+  type: Window
+  components:
+  - pos: 18.5,-18.5
+    parent: 852
+    type: Transform
+- uid: 63
+  type: SuspicionSMGSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -13.5,20.5
+    parent: 852
+    type: Transform
+- uid: 64
+  type: SuspicionGrenadesSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -11.5,18.5
+    parent: 852
+    type: Transform
+- uid: 65
+  type: DrinkBottleRum
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -15.694785,24.608267
+    parent: 852
+    type: Transform
+  - solution: drink
+    type: RefillableSolution
+  - solution: drink
+    type: DrainableSolution
+- uid: 66
+  type: ReinforcedWindow
+  components:
+  - pos: -6.5,-30.5
+    parent: 852
+    type: Transform
+- uid: 67
+  type: WallReinforced
+  components:
+  - pos: -11.5,-28.5
+    parent: 852
+    type: Transform
+- uid: 68
+  type: SuspicionShotgunMagazineSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -30.5,-4.5
+    parent: 852
+    type: Transform
+- uid: 69
+  type: DisgustingSweptSoup
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -14.96041,24.545767
+    parent: 852
+    type: Transform
+- uid: 70
+  type: SuspicionPistolMagazineSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -29.5,9.5
+    parent: 852
+    type: Transform
+- uid: 71
+  type: SuspicionGrenadesSpawner
+  components:
+  - pos: 21.5,0.5
+    parent: 852
+    type: Transform
+- uid: 72
+  type: SuspicionMagnumMagazineSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: 16.5,7.5
+    parent: 852
+    type: Transform
+- uid: 73
+  type: SuspicionShotgunMagazineSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -35.5,-7.5
+    parent: 852
+    type: Transform
+- uid: 74
+  type: SuspicionGrenadesSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: 15.5,-0.5
+    parent: 852
+    type: Transform
+- uid: 75
+  type: ClothingUnderSocksCoder
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: 47.437466,-6.6893435
+    parent: 852
+    type: Transform
+- uid: 76
+  type: DrinkGoldenCup
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -3.470539,16.956116
+    parent: 852
+    type: Transform
+  - solution: drink
+    type: DrainableSolution
+- uid: 77
+  type: Table
+  components:
+  - pos: -5.5,-3.5
+    parent: 852
+    type: Transform
+- uid: 78
+  type: WallReinforced
+  components:
+  - pos: 13.5,2.5
+    parent: 852
+    type: Transform
+- uid: 79
+  type: SuspicionRevolverSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -14.5,19.5
+    parent: 852
+    type: Transform
+- uid: 80
+  type: SuspicionSniperSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -8.5,-12.5
+    parent: 852
+    type: Transform
+- uid: 81
+  type: APCElectronics
+  components:
+  - pos: -29.64044,9.647711
+    parent: 852
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 82
+  type: SuspicionLaunchersSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -12.5,18.5
+    parent: 852
+    type: Transform
+- uid: 83
+  type: ClothingNeckBling
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -2.564289,18.643616
+    parent: 852
+    type: Transform
+- uid: 84
+  type: APCElectronics
+  components:
+  - pos: -29.406065,9.491461
+    parent: 852
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 85
+  type: ReinforcedWindow
+  components:
+  - pos: -6.5,-29.5
+    parent: 852
+    type: Transform
+- uid: 86
+  type: SuspicionPistolMagazineSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -35.5,-0.5
+    parent: 852
+    type: Transform
+- uid: 87
+  type: SuspicionPistolSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: 8.5,-4.5
+    parent: 852
+    type: Transform
+- uid: 88
+  type: SuspicionRifleMagazineSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -35.5,-3.5
+    parent: 852
+    type: Transform
+- uid: 89
+  type: Table
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -2.5,18.5
+    parent: 852
+    type: Transform
+- uid: 90
+  type: FoodDonkpocket
+  components:
+  - pos: 33.66531,-1.3435456
+    parent: 852
+    type: Transform
+- uid: 91
+  type: Bed
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: 18.5,-20.5
+    parent: 852
+    type: Transform
+- uid: 92
+  type: ToyMouse
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: 31.376545,-7.1625524
+    parent: 852
+    type: Transform
+- uid: 93
+  type: FirelockGlass
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: 1.5,5.5
+    parent: 852
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 94
+  type: ClothingNeckBling
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -2.861164,18.612366
+    parent: 852
+    type: Transform
+- uid: 95
+  type: Grille
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: 28.5,14.5
+    parent: 852
+    type: Transform
+- uid: 96
+  type: SuspicionShotgunSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -29.5,-5.5
+    parent: 852
+    type: Transform
 - uid: 97
   type: FirelockGlass
   components:
@@ -858,26 +861,23 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 98
-  type: SuspicionRifleSpawner
+  type: Grille
   components:
-  - pos: 6.5,7.5
+  - rot: 4.371139006309477E-08 rad
+    pos: 26.5,14.5
     parent: 852
     type: Transform
 - uid: 99
-  type: VendingMachineCoffee
+  type: Carpet
   components:
-  - name: Hot drinks machine
-    type: MetaData
-  - pos: -11.5,-17.5
+  - rot: 3.141592697301183 rad
+    pos: -0.5,-1.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 100
-  type: SuspicionShotgunSpawner
+  type: SuspicionRifleSpawner
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -15.5,-14.5
+  - pos: 6.5,7.5
     parent: 852
     type: Transform
 - uid: 101
@@ -67870,14 +67870,12 @@ entities:
 - uid: 6367
   type: GasPassiveGate
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 28.5,19.5
+  - rot: -1.5707963267948966 rad
+    pos: 28.5,20.5
     parent: 852
     type: Transform
   - canCollide: False
     type: Physics
-  - color: '#007F7FFF'
-    type: AtmosPipeColor
 - uid: 6368
   type: GasPipeTJunction
   components:
@@ -70403,6 +70401,8 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - externalPressureBound: 4500
+    type: GasVentPump
   - canCollide: False
     type: Physics
   - color: '#007F7FFF'
@@ -70925,14 +70925,12 @@ entities:
 - uid: 6752
   type: GasPassiveGate
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 28.5,20.5
+  - rot: -1.5707963267948966 rad
+    pos: 28.5,19.5
     parent: 852
     type: Transform
   - canCollide: False
     type: Physics
-  - color: '#007F7FFF'
-    type: AtmosPipeColor
 - uid: 6753
   type: GasPipeStraight
   components:
@@ -71822,6 +71820,8 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - externalPressureBound: 4500
+    type: GasVentPump
   - canCollide: False
     type: Physics
   - color: '#FF0000FF'
