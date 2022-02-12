@@ -1,27 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Server.Examine;
 using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
-using Content.Server.Power.Nodes;
-using Content.Server.Power.Pow3r;
 using Content.Server.Power.NodeGroups;
-using Content.Server.Power.EntitySystems;
-using Content.Server.Hands.Components;
 using Content.Server.Tools;
-using Content.Shared.Wires;
 using Content.Shared.Examine;
-using Content.Shared.Hands.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems
@@ -47,24 +30,25 @@ namespace Content.Server.Power.EntitySystems
             if (_examineSystem.IsInDetailsRange(args.User, args.Target))
             {
                 var held = args.Using;
+
                 // Pulsing is hardcoded here because I don't think it needs to be more complex than that right now.
                 // Update if I'm wrong.
-                if (held != null && _toolSystem.HasQuality(held.Value, "Pulsing"))
+                var enabled = held != null && _toolSystem.HasQuality(held.Value, "Pulsing");
+                var verb = new ExamineVerb
                 {
-                    var verb = new ExamineVerb
+                    Disabled = !enabled,
+                    Message = Loc.GetString("cable-multitool-system-verb-tooltip"),
+                    Text = Loc.GetString("cable-multitool-system-verb-name"),
+                    Category = VerbCategory.Examine,
+                    IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png",
+                    Act = () =>
                     {
-                        Text = Loc.GetString("cable-multitool-system-verb-name"),
-                        Category = VerbCategory.Examine,
-                        IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png",
-                        Act = () =>
-                        {
-                            var markup = FormattedMessage.FromMarkup(GenerateCableMarkup(uid));
-                            _examineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
-                        }
-                    };
+                        var markup = FormattedMessage.FromMarkup(GenerateCableMarkup(uid));
+                        _examineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
+                    }
+                };
 
-                    args.Verbs.Add(verb);
-                }
+                args.Verbs.Add(verb);
             }
         }
 

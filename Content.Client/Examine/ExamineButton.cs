@@ -35,6 +35,13 @@ public class ExamineButton : ContainerButton
 
         Verb = verb;
 
+        if (verb.Disabled)
+        {
+            Disabled = true;
+        }
+
+        ToolTip = verb.Message;
+
         Icon = new TextureRect
         {
             SetWidth = ElementWidth,
