@@ -1,91 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: Rotating on barstools/etc. now works in more cases and rotates the right
-      way., type: Fix}
-  id: 532
-  time: '2021-11-02T18:38:47.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix parallax viewport when the eye is rotated., type: Fix}
-  id: 533
-  time: '2021-11-03T00:27:40.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Added character name to traitor round end screen., type: Add}
-  id: 534
-  time: '2021-11-03T13:40:32.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Open firelocks now have a smaller draw depth, so that they are not
-      drawn above windoors.', type: Tweak}
-  id: 535
-  time: '2021-11-03T13:43:10.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Improvised pneumatic cannons! You can mess around with them with a
-      screwdriver and wrench, and shoot items from them as long as they have a gas
-      tank. They''re in the crafting menu.', type: Add}
-  id: 536
-  time: '2021-11-03T21:33:36.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Added a brand new pinpointer for the nuclear disk in a captain locker,
-    type: Add}
-  id: 537
-  time: '2021-11-03T21:35:34.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Pinpointers stop being active on component shutdown, type: Fix}
-  id: 538
-  time: '2021-11-03T23:42:22.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Bicaridine now properly heals blunt damage., type: Fix}
-  id: 539
-  time: '2021-11-03T23:48:03.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'There is now an indicator showing how many ghost roles are available,
-      if any.', type: Add}
-  id: 540
-  time: '2021-11-03T23:48:13.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: 'Receiving a message from server administrators now makes the game window
-      light up in your task bar, to grab your attention if you are alt-tabbed or similar.',
-    type: Tweak}
-  id: 541
-  time: '2021-11-04T03:22:09.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: ChemMaster buffer displays properly with no beaker, type: Fix}
-  - {message: Chemical dispenser 100 button works again, type: Fix}
-  id: 542
-  time: '2021-11-04T03:22:48.0000000+00:00'
-- author: Daemon
-  changes:
-  - {message: Fixed some drink cans not having correct drink/size, type: Fix}
-  - {message: Fixed being unable to juice potato in grinder, type: Fix}
-  - {message: Changed BrownStar to Starkist, type: Tweak}
-  - {message: Added energy drink reagent and can object to vending machine, type: Add}
-  id: 543
-  time: '2021-11-04T04:31:22.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Added some pAIs at roundstart (in dorms and in RD office). Also, some
-      toy spawners.', type: Add}
-  - {message: The reinforced glass under solars is now just plating so it doesn't
-      have to be crowbared up., type: Tweak}
-  id: 544
-  time: '2021-11-04T14:11:07.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Draw depth issues for the bar dispensers & wall mounted lights., type: Fix}
-  id: 545
-  time: '2021-11-04T19:44:15.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: pAIs can no longer wipe each other or do other odd things. You can still
       wipe yourself with the ghost command., type: Fix}
   - {message: pAIs name themselves after their owner automatically, type: Add}
@@ -2958,3 +2873,85 @@ Entries:
     type: Fix}
   id: 1032
   time: '2022-02-10T19:04:05.0000000+00:00'
+- author: Spillhelm53
+  changes:
+  - {message: 'Fixes certain puddles not being able to evaporate, which had been slipping
+      people forever. The janitor''s *points at wet floor sign* schadenfreude  can
+      now return to its regular safe levels.', type: Fix}
+  id: 1033
+  time: '2022-02-10T21:07:22.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: High-voltage cables are now a little smoother., type: Tweak}
+  id: 1034
+  time: '2022-02-10T21:08:50.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: 'Added some new, sensibly-sized signs.', type: Add}
+  id: 1035
+  time: '2022-02-10T21:08:56.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added more clothes to the ClothesMate to make greytide less grey, type: Add}
+  - {message: Job AutoDrobes are now coming to stations near you! Dress for the job.,
+    type: Add}
+  id: 1036
+  time: '2022-02-10T21:58:31.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Lack of oxygen is now slightly less deadly., type: Tweak}
+  id: 1037
+  time: '2022-02-10T21:58:41.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Maintenance drones are a new ghost role. They are unlocked with Avionics
+      research, or can be found in drone storage rooms.', type: Add}
+  id: 1038
+  time: '2022-02-10T22:15:06.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones should be much less likely to get flung through walls by atmos
+      now., type: Fix}
+  id: 1039
+  time: '2022-02-11T00:45:08.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Packed Station now has departmental wardrobe vendors. Collect them all!,
+    type: Add}
+  id: 1040
+  time: '2022-02-11T05:12:34.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: weh now weh on interact, type: Fix}
+  id: 1041
+  time: '2022-02-11T22:59:05.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Pillar now has a complete atmos recycling loop, role based autodrobes
+      and new spawn points.', type: Add}
+  - {message: 'This is a minor update, major update coming in approx 1 week with massive
+      changes.', type: Tweak}
+  id: 1042
+  time: '2022-02-11T23:00:06.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added another SMES to Saltern as well as a small drone room at engineering.,
+    type: Tweak}
+  id: 1043
+  time: '2022-02-11T23:00:23.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed T-Ray scanners sometimes causing sub-floor entities to get stuck
+      in a visible state., type: Fix}
+  id: 1044
+  time: '2022-02-11T23:00:33.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added a small energy dagger for purchase on Syndicate uplink., type: Add}
+  id: 1045
+  time: '2022-02-12T10:42:10.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Drones can now wear hats. Go wild., type: Add}
+  id: 1046
+  time: '2022-02-12T15:44:50.0000000+00:00'
