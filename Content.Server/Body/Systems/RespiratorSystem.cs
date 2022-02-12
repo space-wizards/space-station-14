@@ -138,7 +138,7 @@ namespace Content.Server.Body.Systems
 
             if (ev.Gas == null)
             {
-                ev.Gas = _atmosSys.GetTileMixture(Transform(uid).Coordinates) ?? GasMixture.SpaceGas;
+                ev.Gas = _atmosSys.GetTileMixture(Transform(uid).Coordinates);
 
                 // Walls and grids without atmos comp return null. I guess it makes sense to not be able to exhale in walls,
                 // but this also means you cannot exhale on some grids.
