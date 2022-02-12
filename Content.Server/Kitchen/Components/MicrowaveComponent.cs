@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Act;
 using Content.Server.Chat.Managers;
-using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
@@ -15,7 +13,6 @@ using Content.Server.UserInterface;
 using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -28,12 +25,7 @@ using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Kitchen.Components
 {
@@ -276,8 +268,10 @@ namespace Content.Server.Kitchen.Components
                 if (ev.Handled)
                     return;
 
-                if (item.HasTag("MicrowaveMachineUnsafe")
-                    || item.HasTag("Metal"))
+                var tagSys = EntitySystem.Get<TagSystem>();
+
+                if (tagSys.HasTag(item, "MicrowaveMachineUnsafe")
+                    || tagSys.HasTag(item, "Metal"))
                 {
                     // destroy microwave
                     _broken = true;
@@ -286,8 +280,8 @@ namespace Content.Server.Kitchen.Components
                     return;
                 }
 
-                if (item.HasTag("MicrowaveSelfUnsafe")
-                    || item.HasTag("Plastic"))
+                if (tagSys.HasTag(item, "MicrowaveSelfUnsafe")
+                    || tagSys.HasTag(item, "Plastic"))
                 {
                     _entities.SpawnEntity(_badRecipeName,
                         _entities.GetComponent<TransformComponent>(Owner).Coordinates);
