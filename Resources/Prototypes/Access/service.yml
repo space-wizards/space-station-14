@@ -18,3 +18,14 @@
 
 - type: accessLevel
   id: Chapel
+
+- type: accessGroup
+  id: Service
+  tags:
+  - Bar
+  - Kitchen
+  - Hydroponics
+  - Service
+  - Janitor
+  - Theatre
+  - Chapel

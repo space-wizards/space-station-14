@@ -4,3 +4,9 @@
 
 - type: accessLevel
   id: Research
+
+- type: accessGroup
+  id: Research
+  tags:
+  - ResearchDirector
+  - Research
