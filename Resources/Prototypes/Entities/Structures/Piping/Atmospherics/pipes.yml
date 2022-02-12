@@ -59,7 +59,6 @@
   - type: Appearance
     visuals:
     - type: PipeColorVisualizer
-    - type: TrayScannerSubFloorVisualizer
   - type: NodeContainer
   - type: AtmosUnsafeUnanchor
   - type: AtmosPipeColor

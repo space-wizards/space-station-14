@@ -34,25 +34,35 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        if (!args.Component.TryGetData(SubFloorVisuals.SubFloor, out bool subfloor))
-            return;
+        args.Component.TryGetData(SubFloorVisuals.Covered, out bool covered);
+        args.Component.TryGetData(SubFloorVisuals.ScannerRevealed, out bool scannerRevealed);
 
-        subfloor |= ShowAll;
+        scannerRevealed &= !ShowAll; // no transparency for show-subfloor mode.
 
+        var revealed = !covered || ShowAll || scannerRevealed;
+        var transparency = scannerRevealed ? component.ScannerTransparency : 1f;
+
+        // set visibility & color of each layer
         foreach (var layer in sprite.AllLayers)
         {
-            layer.Visible = subfloor;
+            // pipe connection visuals are updated AFTER this, and may re-hide some layers
+            layer.Visible = revealed; 
+
+            if (layer.Visible)
+                layer.Color = layer.Color.WithAlpha(transparency);
         }
 
-        if (!sprite.LayerMapTryGet(SubfloorLayers.FirstLayer, out var firstLayer))
+        // Is there some layer that is always visible?
+        if (sprite.LayerMapTryGet(SubfloorLayers.FirstLayer, out var firstLayer))
         {
-            sprite.Visible = subfloor;
+            var layer = sprite[firstLayer];
+            layer.Visible = true;
+            layer.Color = layer.Color.WithAlpha(1f);
+            sprite.Visible = true;
             return;
         }
 
-        // show the top part of the sprite. E.g. the grille-part of a vent, but not the connecting pipes.
-        sprite.LayerSetVisible(firstLayer, true);
-        sprite.Visible = true;
+        sprite.Visible = revealed;
     }
 
     private void UpdateAll()
