@@ -265,6 +265,14 @@
     access: [["Bar"]]
 
 - type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassLocked
+  suffix: External, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]
+
+- type: entity
   parent: AirlockGlass
   id: AirlockKitchenGlassLocked
   suffix: Kitchen, Locked
