@@ -30,6 +30,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: normal
+    netsync: false
   - type: NodeContainer
     examinable: true
     nodes:
@@ -170,6 +171,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_tracker
+    netsync: false
   - type: Transform
     anchored: true
   - type: Damageable

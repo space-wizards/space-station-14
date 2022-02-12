@@ -9,6 +9,7 @@
   components:
   - type: Sprite # TODO: add sprite for maintenance panel open
     sprite: Structures/Power/substation.rsi
+    netsync: false
     layers:
     - state: substation
     - state: screen

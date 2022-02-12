@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
+    netsync: false
     layers:
     - state: icon
       map: ["enum.AutolatheVisualLayers.Base"]
@@ -84,6 +85,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/protolathe.rsi
+    netsync: false
     layers:
     - state: icon
       map: ["enum.ProtolatheVisualLayers.Base"]
