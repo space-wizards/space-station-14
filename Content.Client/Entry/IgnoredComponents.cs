@@ -304,6 +304,7 @@ namespace Content.Client.Entry
             "TelepathicArtifact",
             "ArtifactGasTrigger",
             "ArtifactInteractionTrigger",
+            "ArtifactTimerTriggerComponent",
             "Artifact",
             "RandomArtifactSprite",
             "EnergySword",
