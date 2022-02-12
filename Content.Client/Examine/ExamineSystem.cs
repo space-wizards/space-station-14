@@ -37,7 +37,7 @@ namespace Content.Client.Examine
         {
             UpdatesOutsidePrediction = true;
 
-            SubscribeLocalEvent<GetExamineVerbsEvent>(AddExamineVerb);
+            SubscribeLocalEvent<GetVerbsEvent<ExamineVerb>>(AddExamineVerb);
 
             SubscribeNetworkEvent<ExamineSystemMessages.ExamineInfoResponseMessage>(OnExamineInfoResponse);
             SubscribeNetworkEvent<VerbsResponseEvent>(OnVerbsResponse);
@@ -89,19 +89,20 @@ namespace Content.Client.Examine
             return true;
         }
 
-        private void AddExamineVerb(GetExamineVerbsEvent args)
+        private void AddExamineVerb(GetVerbsEvent<ExamineVerb> args)
         {
             if (!CanExamine(args.User, args.Target))
                 return;
 
             // Basic examine verb.
-            Verb verb = new();
+            ExamineVerb verb = new();
             verb.Category = VerbCategory.Examine;
             verb.Priority = 10;
             // Center it on the entity if they use the verb instead.
             verb.Act = () => DoExamine(args.Target, false);
             verb.Text = Loc.GetString("examine-verb-name");
             verb.IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png";
+            verb.ShowOnExamineTooltip = false;
             verb.ClientExclusive = true;
             args.Verbs.Add(verb);
         }
@@ -124,11 +125,15 @@ namespace Content.Client.Examine
             if (ev.Verbs == null || _examineTooltipOpen == null)
                 return;
 
-            // Get examine verbs then add them all to the tooltip
-            if (ev.Verbs.TryGetValue(VerbType.Examine, out var set))
+            var verbs = new List<ExamineVerb>();
+
+            foreach (var verb in ev.Verbs)
             {
-                AddVerbsToTooltip(set);
+                if (verb is ExamineVerb ex)
+                    verbs.Add(ex);
             }
+
+            AddVerbsToTooltip(verbs);
         }
 
         public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor)
@@ -224,14 +229,6 @@ namespace Content.Client.Examine
                 return;
             }
 
-            SortedSet<Verb>? set = null;
-            if (getVerbs)
-            {
-                // Get verbs
-                var verbs = _verbSystem.GetVerbs(target, player, VerbType.Examine);
-                verbs.TryGetValue(VerbType.Examine, out set);
-            }
-
             foreach (var msg in message.Tags.OfType<FormattedMessage.TagText>())
             {
                 if (string.IsNullOrWhiteSpace(msg.Text)) continue;
@@ -242,8 +239,10 @@ namespace Content.Client.Examine
                 break;
             }
 
-            if (set != null)
+            if (getVerbs)
             {
+                // Get verbs
+                var set = _verbSystem.GetVerbs(target, player, typeof(ExamineVerb));
                 AddVerbsToTooltip(set);
             }
         }
@@ -264,14 +263,16 @@ namespace Content.Client.Examine
             // Examine button time
             foreach (var verb in verbs)
             {
-                if (verb.IconTexture == null)
+                if (verb is not ExamineVerb examine)
                     continue;
 
-                // snowflake this for now.
-                if (verb.Text == "Basic")
+                if (examine.IconTexture == null)
                     continue;
 
-                var button = new ExamineButton(verb);
+                if (!examine.ShowOnExamineTooltip)
+                    continue;
+
+                var button = new ExamineButton(examine);
 
                 button.OnPressed += VerbButtonPressed;
                 buttonsHBox.AddChild(button);
@@ -298,7 +299,7 @@ namespace Content.Client.Examine
         {
             if (obj.Button is ExamineButton button)
             {
-                _verbSystem.ExecuteVerb(_examinedEntity, button.Verb, VerbType.Examine);
+                _verbSystem.ExecuteVerb(_examinedEntity, button.Verb);
             }
         }
 

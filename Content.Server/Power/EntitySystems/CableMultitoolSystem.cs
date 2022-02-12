@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Examine;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
@@ -36,21 +37,21 @@ namespace Content.Server.Power.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<CableComponent, GetExamineVerbsEvent>(OnGetExamineVerbs);
+            SubscribeLocalEvent<CableComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
         }
 
-        private void OnGetExamineVerbs(EntityUid uid, CableComponent component, GetExamineVerbsEvent args)
+        private void OnGetExamineVerbs(EntityUid uid, CableComponent component, GetVerbsEvent<ExamineVerb> args)
         {
             // Must be in details range to try this.
             // Theoretically there should be a separate range at which a multitool works, but this does just fine.
-            if (args.IsInDetailsRange)
+            if (_examineSystem.IsInDetailsRange(args.User, args.Target))
             {
                 var held = args.Using;
                 // Pulsing is hardcoded here because I don't think it needs to be more complex than that right now.
                 // Update if I'm wrong.
                 if (held != null && _toolSystem.HasQuality(held.Value, "Pulsing"))
                 {
-                    var verb = new Verb
+                    var verb = new ExamineVerb
                     {
                         Text = Loc.GetString("cable-multitool-system-verb-name"),
                         Category = VerbCategory.Examine,

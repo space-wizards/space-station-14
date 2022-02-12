@@ -25,9 +25,9 @@ public class ExamineButton : ContainerButton
 
     public TextureRect Icon;
 
-    public Verb Verb;
+    public ExamineVerb Verb;
 
-    public ExamineButton(Verb verb)
+    public ExamineButton(ExamineVerb verb)
     {
         Margin = new Thickness(Thickness, Thickness, Thickness, Thickness);
 

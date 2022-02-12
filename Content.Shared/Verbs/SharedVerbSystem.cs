@@ -114,11 +114,10 @@ namespace Content.Shared.Verbs
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
-            if (types.Contains(typeof(ExamineVerb)
+            if (types.Contains(typeof(ExamineVerb)))
             {
-                var detailsRange = _examineSystem.IsInDetailsRange(user, target);
                 var verbEvent = new GetVerbsEvent<ExamineVerb>(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target, getVerbEvent);
+                RaiseLocalEvent(target, verbEvent);
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
