@@ -1,0 +1,16 @@
+- type: accessLevel
+  id: ChiefMedicalOfficer
+  name: Chief Medical Officer
+
+- type: accessLevel
+  id: Medical
+
+- type: accessLevel
+  id: Chemistry
+
+- type: accessGroup
+  id: Medical
+  tags:
+  - ChiefMedicalOfficer
+  - Medical
+  - Chemistry
