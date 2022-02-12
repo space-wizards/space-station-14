@@ -20,6 +20,7 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
+using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -51,13 +52,13 @@ namespace Content.Server.Administration
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddAdminVerbs);
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddAdminVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddDebugVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
         }
 
-        private void AddAdminVerbs(GetOtherVerbsEvent args)
+        private void AddAdminVerbs(GetVerbsEvent<Verb> args)
         {
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
@@ -77,6 +78,26 @@ namespace Content.Server.Administration
                         _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");
                     verb.Impact = LogImpact.Low;
                     args.Verbs.Add(verb);
+                    
+                    // Freeze
+                    var frozen = HasComp<AdminFrozenComponent>(args.Target);
+                    args.Verbs.Add(new Verb
+                    {
+                        Priority = -1, // This is just so it doesn't change position in the menu between freeze/unfreeze.
+                        Text = frozen
+                            ? Loc.GetString("admin-verbs-unfreeze")
+                            : Loc.GetString("admin-verbs-freeze"),
+                        Category = VerbCategory.Admin,
+                        IconTexture = "/Textures/Interface/VerbIcons/snow.svg.192dpi.png",
+                        Act = () =>
+                        {
+                            if (frozen)
+                                RemComp<AdminFrozenComponent>(args.Target);
+                            else
+                                EnsureComp<AdminFrozenComponent>(args.Target);
+                        },
+                        Impact = LogImpact.Medium,
+                    });
                 }
 
                 // TeleportTo
@@ -121,7 +142,7 @@ namespace Content.Server.Administration
             }
         }
 
-        private void AddDebugVerbs(GetOtherVerbsEvent args)
+        private void AddDebugVerbs(GetVerbsEvent<Verb> args)
         {
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;

@@ -32,7 +32,7 @@ namespace Content.Server.Climbing
             base.Initialize();
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<ClimbableComponent, GetAlternativeVerbsEvent>(AddClimbVerb);
+            SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbVerb);
             SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
         }
 
@@ -44,7 +44,7 @@ namespace Content.Server.Climbing
             UnsetTransitionBoolAfterBufferTime(uid, component);
         }
 
-        private void AddClimbVerb(EntityUid uid, ClimbableComponent component, GetAlternativeVerbsEvent args)
+        private void AddClimbVerb(EntityUid uid, ClimbableComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User))
                 return;
@@ -55,7 +55,7 @@ namespace Content.Server.Climbing
                 return;
 
             // Add a climb verb
-            Verb verb = new();
+            AlternativeVerb verb = new();
             verb.Act = () => component.TryClimb(args.User, args.Target);
             verb.Text = Loc.GetString("comp-climbable-verb-climb");
             // TODO VERBS ICON add a climbing icon?

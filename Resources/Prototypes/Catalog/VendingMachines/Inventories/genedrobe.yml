@@ -1,0 +1,9 @@
+- type: vendingMachineInventory
+  id: GeneDrobeInventory
+  name: GeneDrobe
+  spriteName: genedrobe
+  startingInventory:
+    ClothingShoesColorWhite: 2
+    ClothingOuterCoatLab: 2
+    ClothingHandsGlovesLatex: 2
+    ClothingHeadsetMedical: 2

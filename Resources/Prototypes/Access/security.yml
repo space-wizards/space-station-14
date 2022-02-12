@@ -1,0 +1,24 @@
+- type: accessLevel
+  id: HeadOfSecurity
+  name: Head of Security
+
+- type: accessLevel
+  id: Security
+
+- type: accessLevel
+  id: Armory
+
+- type: accessLevel
+  id: Brig
+
+#- type: accessLevel
+#  id: Detective
+
+- type: accessGroup
+  id: Security
+  tags:
+  - HeadOfSecurity
+  - Security
+  - Armory
+  - Brig
+  # - Detective

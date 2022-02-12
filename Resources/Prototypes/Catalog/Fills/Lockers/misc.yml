@@ -20,7 +20,9 @@
         prob: 0.4
       - id: OxygenTankFilled
         prob: 0.2
-
+      - id: FlareGun
+        prob: 0.05
+        
 - type: entity
   id: ClosetFireFilled
   parent: ClosetFire
@@ -70,3 +72,5 @@
           prob: 0.33
         - id: ClothingHeadHatCone
           prob: 0.2
+        - id: FlareGun
+          prob: 0.1
