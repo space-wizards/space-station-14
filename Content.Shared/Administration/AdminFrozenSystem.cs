@@ -11,6 +11,7 @@ public sealed class AdminFrozenSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<AdminFrozenComponent, UseAttemptEvent>((_, _, args) => args.Cancel());
         SubscribeLocalEvent<AdminFrozenComponent, PickupAttemptEvent>((_, _, args) => args.Cancel());
         SubscribeLocalEvent<AdminFrozenComponent, ThrowAttemptEvent>((_, _, args) => args.Cancel());
         SubscribeLocalEvent<AdminFrozenComponent, AttackAttemptEvent>((_, _, args) => args.Cancel());
