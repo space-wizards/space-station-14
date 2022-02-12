@@ -6,3 +6,10 @@
 
 - type: accessLevel
   id: Salvage
+
+- type: accessGroup
+  id: Cargo
+  tags:
+  - Quartermaster
+  - Salvage
+  - Cargo

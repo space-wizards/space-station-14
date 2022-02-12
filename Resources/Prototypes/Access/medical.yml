@@ -4,6 +4,13 @@
 
 - type: accessLevel
   id: Medical
-  
+
 - type: accessLevel
   id: Chemistry
+
+- type: accessGroup
+  id: Medical
+  tags:
+  - ChiefMedicalOfficer
+  - Medical
+  - Chemistry

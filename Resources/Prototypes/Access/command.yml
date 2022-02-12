@@ -7,3 +7,10 @@
 - type: accessLevel
   id: HeadOfPersonnel
   name: Head of Personnel
+
+- type: accessGroup
+  id: Command
+  tags:
+  - Command
+  - Captain
+  - HeadOfPersonnel

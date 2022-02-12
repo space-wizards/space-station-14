@@ -98,28 +98,8 @@
       - Opaque
   - type: Tag
   - type: Access
-    tags:
-    - Maintenance
-    - Cargo
-  #  - Quartermaster
-    - Engineering
-    - ChiefEngineer
-    - Medical
-    - ChiefMedicalOfficer
-    - Research
-    - ResearchDirector
-    - Security
-    - Service
-    - Captain
-    - Command
-    - External
-    - HeadOfSecurity
-    - HeadOfPersonnel
-    - Bar
-    - Hydroponics
-    - Kitchen
-    - Janitor
-    - Theatre
+    groups:
+    - AllAccess
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer
