@@ -47,8 +47,8 @@ namespace Content.Server.Strip
 
             _strippableSystem = EntitySystem.Get<StrippableSystem>();
             Owner.EnsureComponentWarn<ServerInventoryComponent>();
-            if(_entities.TryGetComponent<CuffableComponent>(Owner, out var cuffed))
-                cuffed.OnCuffedStateChanged += UpdateState;
+            var cuffed = Owner.EnsureComponentWarn<CuffableComponent>();
+            cuffed.OnCuffedStateChanged += UpdateState;
         }
 
         protected override void Shutdown()
