@@ -25,6 +25,8 @@
 - type: entity
   parent: AirlockExternal
   id: AirlockExternalGlass
+  suffix: Glass, External
+  components:
   - type: Occluder
     enabled: false
   - type: Sprite
