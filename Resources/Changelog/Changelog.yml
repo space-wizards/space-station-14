@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Draw depth issues for the bar dispensers & wall mounted lights., type: Fix}
-  id: 545
-  time: '2021-11-04T19:44:15.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: pAIs can no longer wipe each other or do other odd things. You can still
@@ -2955,3 +2950,8 @@ Entries:
   - {message: Added a small energy dagger for purchase on Syndicate uplink., type: Add}
   id: 1045
   time: '2022-02-12T10:42:10.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Drones can now wear hats. Go wild., type: Add}
+  id: 1046
+  time: '2022-02-12T15:44:50.0000000+00:00'
