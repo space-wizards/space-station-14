@@ -4,3 +4,9 @@
 
 - type: accessLevel
   id: Engineering
+
+- type: accessGroup
+  id: Engineering
+  tags:
+  - ChiefEngineer
+  - Engineering

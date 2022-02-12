@@ -4,7 +4,7 @@
 
 - type: accessLevel
   id: Security
-  
+
 - type: accessLevel
   id: Armory
 
@@ -13,3 +13,12 @@
 
 #- type: accessLevel
 #  id: Detective
+
+- type: accessGroup
+  id: Security
+  tags:
+  - HeadOfSecurity
+  - Security
+  - Armory
+  - Brig
+  # - Detective
