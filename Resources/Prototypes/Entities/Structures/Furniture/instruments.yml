@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: baseinstrument
   id: BasePlaceableInstrument
   parent: BaseStructureDynamic
@@ -67,7 +67,7 @@
   description: This thing really blows!
   components:
   - type: Instrument
-    program: 20
+    program: 19
   - type: Sprite
     state: church-organ
 
