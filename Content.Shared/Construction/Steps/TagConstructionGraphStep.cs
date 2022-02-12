@@ -12,7 +12,8 @@ namespace Content.Shared.Construction.Steps
 
         public override bool EntityValid(EntityUid uid, IEntityManager entityManager)
         {
-            return !string.IsNullOrEmpty(_tag) && entityManager.TryGetComponent(uid, out TagComponent? tags) && tags.HasTag(_tag);
+            var tagSystem = EntitySystem.Get<TagSystem>();
+            return !string.IsNullOrEmpty(_tag) && tagSystem.HasTag(uid, _tag);
         }
     }
 }

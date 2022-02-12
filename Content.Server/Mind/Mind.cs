@@ -35,7 +35,7 @@ namespace Content.Server.Mind
         private readonly ISet<Role> _roles = new HashSet<Role>();
 
         private readonly List<Objective> _objectives = new();
-        
+
         public string Briefing = String.Empty;
 
         /// <summary>
@@ -222,6 +222,11 @@ namespace Content.Server.Mind
 
             return _roles.Any(role => role.GetType() == t);
         }
+
+        /// <summary>
+        ///     Gets the current job
+        /// </summary>
+        public Job? CurrentJob => _roles.OfType<Job>().SingleOrDefault();
 
         /// <summary>
         /// Adds an objective to this mind.

@@ -56,6 +56,7 @@ namespace Content.Client.Entry
             "Electrified",
             "Electrocution",
             "Paper",
+            "Drone",
             "Bloodstream",
             "TransformableContainer",
             "Mind",
@@ -118,6 +119,9 @@ namespace Content.Client.Entry
             "RCDAmmo",
             "CursedEntityStorage",
             "Radio",
+            "GasArtifact",
+            "RadiateArtifact",
+            "TemperatureArtifact",
             "DisposalHolder",
             "DisposalTagger",
             "DisposalRouter",
@@ -131,6 +135,7 @@ namespace Content.Client.Entry
             "Airtight",
             "MovedByPressure",
             "Spray",
+            "Ringer",
             "Vapor",
             "AddAccentClothing",
             "DamageOnHighSpeedImpact",
@@ -247,7 +252,7 @@ namespace Content.Client.Entry
             "GhostOnMove",
             "RandomSpawner",
             "SpawnAfterInteract",
-            "DisassembleOnActivate",
+            "DisassembleOnAltVerb",
             "ExplosionLaunched",
             "BeingCloned",
             "Advertise",
@@ -301,7 +306,8 @@ namespace Content.Client.Entry
             "ArtifactInteractionTrigger",
             "Artifact",
             "RandomArtifactSprite",
-            "EnergySword"
+            "EnergySword",
+            "DoorRemote",
         };
     }
 }

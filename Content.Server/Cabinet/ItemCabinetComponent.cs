@@ -1,8 +1,5 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cabinet
 {
@@ -10,7 +7,7 @@ namespace Content.Server.Cabinet
     ///     Used for entities that can be opened, closed, and can hold one item. E.g., fire extinguisher cabinets.
     /// </summary>
     [RegisterComponent]
-    public class ItemCabinetComponent : Component
+    public sealed class ItemCabinetComponent : Component
     {
         /// <summary>
         ///     Sound to be played when the cabinet door is opened.

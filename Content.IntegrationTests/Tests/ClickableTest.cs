@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Client.Clickable;
 using Content.Server.GameTicking;
 using NUnit.Framework;
+using Robust.Client.Graphics;
 using Robust.Server.GameObjects;
 using Robust.Shared;
 using Robust.Shared.GameObjects;
@@ -71,6 +72,7 @@ namespace Content.IntegrationTests.Tests
             EntityUid entity = default;
             var clientEntManager = _client.ResolveDependency<IEntityManager>();
             var serverEntManager = _server.ResolveDependency<IEntityManager>();
+            var eyeManager = _client.ResolveDependency<IEyeManager>();
             var mapManager = _server.ResolveDependency<IMapManager>();
             var gameTicker = _server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
 
@@ -92,6 +94,9 @@ namespace Content.IntegrationTests.Tests
 
             await _client.WaitPost(() =>
             {
+                // these tests currently all assume player eye is 0
+                eyeManager.CurrentEye.Rotation = 0;
+
                 var clickable = clientEntManager.GetComponent<ClickableComponent>(entity);
 
                 hit = clickable.CheckClick((clickPosX, clickPosY) + worldPos!.Value, out _, out _);

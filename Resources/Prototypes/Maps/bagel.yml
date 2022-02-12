@@ -1,0 +1,37 @@
+- type: gameMap
+  id: bagelstation
+  mapName: 'Bagel Station'
+  mapNameTemplate: '{0} Bagel Station {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: /Maps/bagel.yml
+  minPlayers: 25
+  overflowJobs:
+    - Assistant
+  availableJobs:
+    CargoTechnician: [ 3, 3 ]
+    Assistant: [ -1, -1 ]
+    Bartender: [ 2, 2 ]
+    Botanist: [ 3, 3]
+    Chef: [ 2, 2 ]
+    Clown: [ 1, 1 ]
+    Janitor: [ 2, 2 ]
+    Mime: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 6, 6 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 3, 3 ]
+    Chemist: [ 2, 3 ]
+    ResearchDirector: [ 1, 1 ]
+    Scientist: [ 3, 4 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 4, 4 ]
+    Chaplain: [ 1, 1 ]
+    Warden: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
+    Lawyer: [ 2, 2 ]
+    Quartermaster: [ 1, 1 ]
+    SalvageSpecialist: [ 3, 3 ] 

@@ -9,6 +9,7 @@
     tags:
     - Write
     - Crayon
+    - Trash
   - type: UserInterface
     interfaces:
     - key: enum.CrayonUiKey.Key
@@ -36,6 +37,7 @@
     - Write
     - Crayon
     - CrayonWhite
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -57,6 +59,7 @@
     - Write
     - Crayon
     - CrayonWhite
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -78,6 +81,7 @@
     - Write
     - Crayon
     - CrayonBlack
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -99,6 +103,7 @@
     - Write
     - Crayon
     - CrayonRed
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -120,6 +125,7 @@
     - Write
     - Crayon
     - CrayonOrange
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -141,6 +147,7 @@
     - Write
     - Crayon
     - CrayonYellow
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -162,6 +169,7 @@
     - Write
     - Crayon
     - CrayonGreen
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -183,6 +191,7 @@
     - Write
     - Crayon
     - CrayonBlue
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -204,6 +213,7 @@
     - Write
     - Crayon
     - CrayonPurple
+    - Trash
 
 - type: entity
   parent: BoxCardboard

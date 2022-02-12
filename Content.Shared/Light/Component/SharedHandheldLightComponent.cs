@@ -6,7 +6,6 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Light.Component
 {
     [NetworkedComponent]
-    [ComponentProtoName("HandheldLight")]
     public abstract class SharedHandheldLightComponent : Robust.Shared.GameObjects.Component
     {
         public const int StatusLevels = 6;

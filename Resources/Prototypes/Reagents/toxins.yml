@@ -133,35 +133,6 @@
         type: Local
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
-  # TODO MIRROR acid!
-
-- type: reagent
-  id: Plasma
-  name: plasma
-  group: Toxins
-  desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
-  physicalDesc: gaseous
-  color: "#7e009e"
-  boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
-  meltingPoint: -186.4
-  tileReactions:
-  - !type:FlammableTileReaction
-    temperatureMultiplier: 1.5
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 3
-      - !type:AdjustReagent
-        reagent: Inaprovaline
-        amount: -2.0
-  reactiveEffects:
-    Flammable:
-      methods: [ Touch ]
-      effects:
-      - !type:FlammableReaction
 
 - type: reagent
   id: UnstableMutagen
@@ -295,3 +266,18 @@
         damage:
           types:
             Poison: 4
+
+- type: reagent
+  id: Amatoxin
+  name: amatoxin
+  group: Toxins
+  desc: A potent toxin found in some mushrooms.
+  physicalDesc: nondescript
+  color: "#D6CE7B"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 6

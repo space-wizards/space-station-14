@@ -10,36 +10,8 @@
   joinNotifyCrew: true
   supervisors: "Nanotrasen officials"
   canBeAntag: false
-  access:
-  # All of em.
-  # Could probably do with some kind of wildcard or whatever to automate this.
-  # HELL FUCKING YEAH WE COULD
-  # Guys please don't fight
-  - Captain
-  - HeadOfPersonnel
-  - ChiefEngineer
-  - ChiefMedicalOfficer
-  - HeadOfSecurity
-  - ResearchDirector
-  - Command
-  - Security
-  - Armory
-  - Brig
-  - Engineering
-  - Medical
-  - Quartermaster
-  - Cargo
-  - Research
-  - Service
-  - Maintenance
-  - External
-  - Janitor
-  - Theatre
-  - Bar
-  - Chemistry
-  - Kitchen
-  - Chapel
-  - Hydroponics
+  accessGroups:
+  - AllAccess
 
 - type: startingGear
   id: CaptainGear

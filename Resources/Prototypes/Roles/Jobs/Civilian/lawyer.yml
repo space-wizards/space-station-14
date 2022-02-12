@@ -8,6 +8,7 @@
   supervisors: "the head of personnel"
   access:
   - Service
+  - Brig
   - Maintenance
 
 - type: startingGear

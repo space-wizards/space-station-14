@@ -96,6 +96,34 @@
     - type: HumanoidAppearance
       hairMatchesSkin: true
       hairAlpha: 0.5
+    - type: Damageable
+      damageContainer: Biological
+      damageModifierSet: Slime
+    - type: Barotrauma
+      damage:
+        types:
+          Blunt: 1.4 #per second, scales with pressure and other constants. Twice as much as humans.
+    - type: Reactive
+      groups:
+        Flammable: [ Touch ]
+        Extinguish: [ Touch ]
+      reactions:
+      - reagents: [ Water, SpaceCleaner ]
+        methods: [ Touch ]
+        effects:
+        - !type:WashCreamPieReaction
+      - reagents: [ Water ]
+        methods: [ Touch ]
+        effects:
+        - !type:HealthChange
+          scaled: true
+          damage:
+            types:
+              Heat: 2
+        - !type:PopupMessage
+          type: Local
+          messages: [ "slime-hurt-by-water-popup" ]
+          probability: 0.25
     - type: Butcherable
       meat: FoodMeatSlime
 

@@ -28,12 +28,15 @@
     softness: 5
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
+  - type: Ringer
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
     - key: enum.UplinkUiKey.Key
       type: UplinkBoundUserInterface
+    - key: enum.RingerUiKey.Key
+      type: RingerBoundUserInterface
   - type: PDA
     penSlot:
       startingItem: Pen
@@ -199,6 +202,21 @@
         state: pda-cargo
   - type: Icon
     state: pda-cargo
+
+- type: entity
+  parent: BasePDA
+  id: SalvagePDA
+  name: salvage PDA
+  description: Smells like ash.
+  components:
+  - type: PDA
+    id: SalvageIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-miner
+  - type: Icon
+    state: pda-miner
 
 - type: entity
   parent: BasePDA

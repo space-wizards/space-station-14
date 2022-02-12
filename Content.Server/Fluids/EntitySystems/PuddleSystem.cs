@@ -68,8 +68,18 @@ namespace Content.Server.Fluids.EntitySystems
             var volumeScale = puddleComponent.CurrentVolume.Float() / puddleComponent.OverflowVolume.Float();
             var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddleComponent.SolutionName);
 
+
+            bool hasEvaporationComponent = EntityManager.TryGetComponent<EvaporationComponent>(uid, out var evaporationComponent);
+            bool canEvaporate = (hasEvaporationComponent &&
+                                (evaporationComponent.LowerLimit == 0 || puddleComponent.CurrentVolume > evaporationComponent.LowerLimit));
+
+            // "Does this puddle's sprite need changing to the wet floor effect sprite?"
+            bool changeToWetFloor = (puddleComponent.CurrentVolume <= puddleComponent.WetFloorEffectThreshold
+                                    && canEvaporate);
+
             appearanceComponent.SetData(PuddleVisuals.VolumeScale, volumeScale);
             appearanceComponent.SetData(PuddleVisuals.SolutionColor, puddleSolution.Color);
+            appearanceComponent.SetData(PuddleVisuals.ForceWetFloorSprite, changeToWetFloor);
         }
 
         private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)

@@ -49,6 +49,9 @@
       maxFillLevels: 1
       changeColor: false
       emptySpriteName: medipen_empty
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   name: epinephrine medipen
