@@ -40,7 +40,7 @@ namespace Content.Server.Power.EntitySystems
                     Message = Loc.GetString("cable-multitool-system-verb-tooltip"),
                     Text = Loc.GetString("cable-multitool-system-verb-name"),
                     Category = VerbCategory.Examine,
-                    IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png",
+                    IconTexture = "/Textures/Interface/VerbIcons/zap.svg.192dpi.png",
                     Act = () =>
                     {
                         var markup = FormattedMessage.FromMarkup(GenerateCableMarkup(uid));
