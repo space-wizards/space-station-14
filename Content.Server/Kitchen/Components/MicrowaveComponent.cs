@@ -74,6 +74,12 @@ namespace Content.Server.Kitchen.Components
         /// </summary>
         [ViewVariables] private uint _currentCookTimerTime = 1;
 
+        /// <summary>
+        ///     The max temperature that this microwave can heat objects to.
+        /// </summary>
+        [DataField("temperatureUpperThreshold")]
+        public float TemperatureUpperThreshold = 373.15f;
+
         private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private bool HasContents => _storage.ContainedEntities.Count > 0;
@@ -318,16 +324,6 @@ namespace Content.Server.Kitchen.Components
                 }
             }
 
-            foreach (var id in solidsDict.Keys)
-            {
-                if (_recipeManager.SolidAppears(id))
-                {
-                    continue;
-                }
-
-                break;
-            }
-
             // Check recipes
             FoodRecipePrototype? recipeToCook = null;
             foreach (var r in _recipeManager.Recipes.Where(r =>
@@ -346,7 +342,7 @@ namespace Content.Server.Kitchen.Components
                     return;
                 }
 
-                AddTemperature(time / 1000.0f);
+                AddTemperature(time);
 
                 if (recipeToCook != null)
                 {
@@ -354,11 +350,8 @@ namespace Content.Server.Kitchen.Components
                     _entities.SpawnEntity(recipeToCook.Result,
                         _entities.GetComponent<TransformComponent>(Owner).Coordinates);
                 }
-                else
-                {
-                    EjectSolids();
-                }
 
+                EjectSolids();
 
                 SoundSystem.Play(Filter.Pvs(Owner), _cookingCompleteSound.GetSound(), Owner,
                     AudioParams.Default.WithVolume(-1f));
@@ -372,6 +365,11 @@ namespace Content.Server.Kitchen.Components
             _uiDirty = true;
         }
 
+        /// <summary>
+        ///     Adds temperature to every item in the microwave,
+        ///     based on the time it took to microwave.
+        /// </summary>
+        /// <param name="time">The time on the microwave, in seconds.</param>
         public void AddTemperature(float time)
         {
             var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
@@ -379,18 +377,17 @@ namespace Content.Server.Kitchen.Components
             {
                 if (_entities.TryGetComponent(entity, out TemperatureComponent? temp))
                 {
-                    EntitySystem.Get<TemperatureSystem>().ChangeHeat(entity, time * 100, false, temp);
+                    EntitySystem.Get<TemperatureSystem>().ChangeHeat(entity, time / 10, false, temp);
                 }
 
                 if (_entities.TryGetComponent(entity, out SolutionContainerManagerComponent? solutions))
                 {
                     foreach (var (_, solution) in solutions.Solutions)
                     {
-                        // can't heat above value (datafield this later)
-                        if (solution.Temperature > 373.15)
+                        if (solution.Temperature > TemperatureUpperThreshold)
                             continue;
 
-                        solutionContainerSystem.AddThermalEnergy(entity, solution, time * 100);
+                        solutionContainerSystem.AddThermalEnergy(entity, solution, time / 10);
                     }
                 }
             }
