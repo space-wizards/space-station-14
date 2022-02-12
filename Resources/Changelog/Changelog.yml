@@ -1,12 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'Added some pAIs at roundstart (in dorms and in RD office). Also, some
-      toy spawners.', type: Add}
-  - {message: The reinforced glass under solars is now just plating so it doesn't
-      have to be crowbared up., type: Tweak}
-  id: 544
-  time: '2021-11-04T14:11:07.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Draw depth issues for the bar dispensers & wall mounted lights., type: Fix}
@@ -2958,3 +2950,8 @@ Entries:
       in a visible state., type: Fix}
   id: 1044
   time: '2022-02-11T23:00:33.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added a small energy dagger for purchase on Syndicate uplink., type: Add}
+  id: 1045
+  time: '2022-02-12T10:42:10.0000000+00:00'
