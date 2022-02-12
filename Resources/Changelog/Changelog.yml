@@ -1,11 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: pAIs can no longer wipe each other or do other odd things. You can still
-      wipe yourself with the ghost command., type: Fix}
-  - {message: pAIs name themselves after their owner automatically, type: Add}
-  id: 546
-  time: '2021-11-04T22:29:17.0000000+00:00'
 - author: ike709
   changes:
   - {message: Pressure pumps now have a UI, type: Add}
@@ -2955,3 +2948,9 @@ Entries:
   - {message: Drones can now wear hats. Go wild., type: Add}
   id: 1046
   time: '2022-02-12T15:44:50.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Salvage crew can breathe easy, a bug causing CO2 poisoning on some
+      salvage maps has been fixed.', type: Fix}
+  id: 1047
+  time: '2022-02-12T22:08:54.0000000+00:00'
