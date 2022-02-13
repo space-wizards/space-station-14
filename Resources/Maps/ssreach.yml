@@ -20268,7 +20268,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 1963
-  type: CargoTelepad
+  type: cargoTelepad
   components:
   - pos: 6.5,9.5
     parent: 4
