@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Directional windows have been added (non-fulltile), though not mapped
-      in yet.', type: Add}
-  id: 550
-  time: '2021-11-07T00:12:42.0000000+00:00'
 - author: Swept
   changes:
   - {message: Valves make sound when used, type: Tweak}
@@ -2960,3 +2954,9 @@ Entries:
     type: Add}
   id: 1050
   time: '2022-02-13T00:53:54.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added new spawners for mappers to use. Now there's a random chance of
+      what might appear in maint and secret spots..., type: Add}
+  id: 1051
+  time: '2022-02-13T09:52:12.0000000+00:00'
