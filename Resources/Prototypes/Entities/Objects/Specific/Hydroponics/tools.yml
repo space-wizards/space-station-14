@@ -51,6 +51,7 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     state: icon
+    netsync: false
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
@@ -61,7 +62,7 @@
     size: 20
     Slots:
     - back
-    
+
 - type: entity
   name: hatchet
   parent: BaseItem
@@ -75,6 +76,7 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
     state: icon
+    netsync: false
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:

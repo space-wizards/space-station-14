@@ -5,6 +5,8 @@
   id: BasePlushie
   abstract: true
   components:
+  - type: Sprite
+    netsync: false
   - type: EmitSoundOnUse
     sound:
       collection: ToySqueak
@@ -61,7 +63,10 @@
       path: /Audio/Items/Toys/weh.ogg
   - type: EmitSoundOnLand
     sound:
-       path: /Audio/Items/Toys/weh.ogg
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -160,6 +165,7 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_vox
+    netsync: false
   - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:

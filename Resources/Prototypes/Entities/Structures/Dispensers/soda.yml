@@ -9,6 +9,7 @@
     sprite: Structures/dispensers.rsi
     drawdepth: SmallObjects
     state: soda
+    netsync: false
   - type: Fixtures
     fixtures:
     - shape:
