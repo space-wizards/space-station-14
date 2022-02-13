@@ -8,7 +8,6 @@
       Acidic: [Touch]
   - type: Input
     context: "human"
-  - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -86,6 +85,7 @@
     layers:
     - state: shell
       sprite: Mobs/Silicon/drone.rsi
+  - type: MovementIgnoreGravity
   - type: Fixtures
     fixtures:
     - shape:
