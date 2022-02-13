@@ -109,7 +109,7 @@ namespace Content.Server.SmartFridge.systems
 
         private void OnInteractUsing(EntityUid uid, SmartFridgeComponent fridgeComponent, InteractUsingEvent args)
         {
-
+            // args.
         }
 
 

@@ -70,11 +70,13 @@ namespace Content.Server.SmartFridge
 
     public struct SmartFridgeInventoryEntry
     {
+       public int ID;
        public String Name;
        public List<Solution> Reagents;
        public int Count;
-        public SmartFridgeInventoryEntry(String name, List<Solution> reagents, int count)
+        public SmartFridgeInventoryEntry(int id, String name, List<Solution> reagents, int count)
         {
+            ID = id;
             Name = name;
             Reagents = reagents;
             Count = count;
