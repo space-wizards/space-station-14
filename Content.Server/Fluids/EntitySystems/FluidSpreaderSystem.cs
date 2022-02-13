@@ -66,7 +66,13 @@ public sealed class FluidSpreaderSystem : EntitySystem
         _fluidSpread = new HashSet<EntityUid>();
         foreach (var uid in spreaders)
         {
-            if (EntityManager.Deleted(uid))
+            MetaDataComponent? meta = null;
+            
+            if (Deleted(uid, meta))
+            // RemQueue add here
+                continue;
+            
+            if (Paused(uid, meta))
                 continue;
 
             SpreadFluid(uid);
