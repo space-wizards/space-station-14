@@ -3,27 +3,61 @@ using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Server.Kitchen.Components;
+using Content.Server.Popups;
+using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.PDA;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Access.Systems
 {
     public class IdCardSystem : SharedIdCardSystem
     {
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<IdCardComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<IdCardComponent, BeingMicrowavedEvent>(OnMicrowaved);
         }
 
         private void OnInit(EntityUid uid, IdCardComponent id, ComponentInit args)
         {
             id.OriginalOwnerName ??= EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName;
             UpdateEntityName(uid, id);
+        }
+
+        private void OnMicrowaved(EntityUid uid, IdCardComponent component, BeingMicrowavedEvent args)
+        {
+            if (TryComp<AccessComponent>(uid, out var access))
+            {
+                // If they're unlucky, brick their ID
+                if (_random.Prob(0.25f))
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-bricked", ("id", uid)),
+                        uid, Filter.Pvs(uid));
+                    access.Tags.Clear();
+                }
+                else
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-safe", ("id", uid)),
+                        uid, Filter.Pvs(uid));
+                }
+
+                // Give them a wonderful new access to compensate for everything
+                var random = _random.Pick(_prototypeManager.EnumeratePrototypes<AccessLevelPrototype>().ToArray());
+                access.Tags.Add(random.ID);
+            }
         }
 
         public bool TryChangeJobTitle(EntityUid uid, string jobTitle, IdCardComponent? id = null)

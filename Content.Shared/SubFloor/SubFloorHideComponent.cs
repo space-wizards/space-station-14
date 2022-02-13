@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.SubFloor
 {
@@ -17,6 +11,7 @@ namespace Content.Shared.SubFloor
     /// <seealso cref="P:Content.Shared.Maps.ContentTileDefinition.IsSubFloor" />
     [NetworkedComponent]
     [RegisterComponent]
+    [Friend(typeof(SubFloorHideSystem))]
     public sealed class SubFloorHideComponent : Component
     {
         /// <summary>
@@ -27,15 +22,24 @@ namespace Content.Shared.SubFloor
         public bool Enabled { get; set; } = true;
 
         /// <summary>
+        ///     Whether the entity's current position has a "Floor-type" tile above its current position.
+        /// </summary>
+        public bool IsUnderCover { get; set; } = false;
+
+        /*
+         * An un-anchored hiding entity would require listening to on-move events in case it moves into a sub-floor
+         * tile. Also T-Ray scanner headaches.
+        /// <summary>
         ///     This entity needs to be anchored to be hid when not in subfloor.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("requireAnchored")]
         public bool RequireAnchored { get; set; } = true;
+        */
 
         public override ComponentState GetComponentState()
         {
-            return new SubFloorHideComponentState(Enabled, RequireAnchored);
+            return new SubFloorHideComponentState(Enabled);
         }
 
         /// <summary>
@@ -50,25 +54,16 @@ namespace Content.Shared.SubFloor
         /// </summary>
         [ViewVariables]
         public HashSet<EntityUid> RevealedBy { get; set; } = new();
-
-        /// <summary>
-        ///     Whether or not this entity was revealed with or without
-        ///     an entity.
-        /// </summary>
-        [ViewVariables]
-        public bool RevealedWithoutEntity { get; set; }
     }
 
     [Serializable, NetSerializable]
-    public class SubFloorHideComponentState : ComponentState
+    public sealed class SubFloorHideComponentState : ComponentState
     {
         public bool Enabled { get; }
-        public bool RequireAnchored { get; }
 
-        public SubFloorHideComponentState(bool enabled, bool requireAnchored)
+        public SubFloorHideComponentState(bool enabled)
         {
             Enabled = enabled;
-            RequireAnchored = requireAnchored;
         }
     }
 }

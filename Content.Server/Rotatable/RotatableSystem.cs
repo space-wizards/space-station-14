@@ -16,11 +16,11 @@ namespace Content.Server.Rotatable
     {
         public override void Initialize()
         {
-            SubscribeLocalEvent<FlippableComponent, GetOtherVerbsEvent>(AddFlipVerb);
-            SubscribeLocalEvent<RotatableComponent, GetOtherVerbsEvent>(AddRotateVerbs);
+            SubscribeLocalEvent<FlippableComponent, GetVerbsEvent<Verb>>(AddFlipVerb);
+            SubscribeLocalEvent<RotatableComponent, GetVerbsEvent<Verb>>(AddRotateVerbs);
         }
 
-        private void AddFlipVerb(EntityUid uid, FlippableComponent component, GetOtherVerbsEvent args)
+        private void AddFlipVerb(EntityUid uid, FlippableComponent component, GetVerbsEvent<Verb> args)
         {
             if (!args.CanAccess || !args.CanInteract || component.MirrorEntity == null)
                 return;
@@ -32,7 +32,7 @@ namespace Content.Server.Rotatable
             args.Verbs.Add(verb);
         }
 
-        private void AddRotateVerbs(EntityUid uid, RotatableComponent component, GetOtherVerbsEvent args)
+        private void AddRotateVerbs(EntityUid uid, RotatableComponent component, GetVerbsEvent<Verb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;

@@ -11,11 +11,8 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -42,12 +39,12 @@ public sealed partial class ChemistrySystem
 
     private void OnInjectionComplete(InjectionCompleteEvent ev)
     {
-        var component = ev.Component;
-        var user = ev.User;
-        var target = ev.Target;
+        ev.Component.CancelToken = null;
+        UseInjector(ev.Target, ev.User, ev.Component);
+    }
 
-        component.CancelToken = null;
-
+    private void UseInjector(EntityUid target, EntityUid user, InjectorComponent component)
+    { 
         // Handle injecting/drawing for solutions
         if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
         {
@@ -116,9 +113,6 @@ public sealed partial class ChemistrySystem
             return;
         }
 
-        if (!_blocker.CanInteract(args.User))
-            return;
-
         //Make sure we have the attacking entity
         if (args.Target is not { Valid: true } target ||
             !HasComp<SolutionContainerManagerComponent>(uid))
@@ -134,6 +128,9 @@ public sealed partial class ChemistrySystem
             args.Handled = true;
             return;
         }
+
+        UseInjector(target, args.User, component);
+        args.Handled = true;
     }
 
     private void OnInjectorStartup(EntityUid uid, InjectorComponent component, ComponentStartup args)
@@ -188,7 +185,6 @@ public sealed partial class ChemistrySystem
         if (!_solutions.TryGetSolution(component.Owner, InjectorComponent.SolutionName, out var solution))
             return;
 
-        // Get entity for logging. Log with EntityUids when?
         var actualDelay = MathF.Max(component.Delay, 1f);
         if (user != target)
         {
@@ -214,7 +210,6 @@ public sealed partial class ChemistrySystem
             {
                 _logs.Add(LogType.ForceFeed,
                     $"{EntityManager.ToPrettyString(user):user} is attempting to inject {EntityManager.ToPrettyString(target):target} with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}");
-                // TODO solution pretty string.
             }
         }
         else
@@ -225,7 +220,6 @@ public sealed partial class ChemistrySystem
             if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
                 _logs.Add(LogType.Ingestion,
                     $"{EntityManager.ToPrettyString(user):user} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
-            //TODO solution pretty string.
         }
 
         component.CancelToken = new CancellationTokenSource();
@@ -358,7 +352,7 @@ public sealed partial class ChemistrySystem
         // Move units from attackSolution to targetSolution
         var removedSolution = _solutions.Draw(targetEntity, targetSolution, realTransferAmount);
 
-        if (!_solutions.TryAddSolution(targetEntity, solution, removedSolution))
+        if (!_solutions.TryAddSolution(component.Owner, solution, removedSolution))
         {
             return;
         }

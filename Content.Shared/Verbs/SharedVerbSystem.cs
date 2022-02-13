@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
@@ -5,6 +6,7 @@ using Content.Shared.Interaction;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Verbs
 {
@@ -29,7 +31,7 @@ namespace Content.Shared.Verbs
 
             // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
             // the user can perform.
-            var verbs = GetLocalVerbs(args.Target, user.Value, args.Type)[args.Type];
+            var verbs = GetLocalVerbs(args.Target, user.Value, args.RequestedVerb.GetType());
 
             // Note that GetLocalVerbs might waste time checking & preparing unrelated verbs even though we know
             // precisely which one we want to run. However, MOST entities will only have 1 or 2 verbs of a given type.
@@ -44,9 +46,18 @@ namespace Content.Shared.Verbs
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
         ///     does not request verbs from the server.
         /// </summary>
-        public virtual Dictionary<VerbType, SortedSet<Verb>> GetLocalVerbs(EntityUid target, EntityUid user, VerbType verbTypes, bool force = false)
+        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, Type type, bool force = false, bool all = false)
         {
-            Dictionary<VerbType, SortedSet<Verb>> verbs = new();
+            return GetLocalVerbs(target, user, new List<Type>() { type }, force, all);
+        }
+
+        /// <summary>
+        ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
+        ///     does not request verbs from the server.
+        /// </summary>
+        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, List<Type> types, bool force = false, bool all = false)
+        {
+            SortedSet<Verb> verbs = new();
 
             // accessibility checks
             bool canAccess = false;
@@ -80,32 +91,33 @@ namespace Content.Shared.Verbs
                 }
             }
 
-            if ((verbTypes & VerbType.Interaction) == VerbType.Interaction)
+            if (types.Contains(typeof(InteractionVerb)))
             {
-                GetInteractionVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target, getVerbEvent);
-                verbs.Add(VerbType.Interaction, getVerbEvent.Verbs);
+                var verbEvent = new GetVerbsEvent<InteractionVerb>(user, target, @using, hands, canInteract, canAccess);
+                RaiseLocalEvent(target, verbEvent);
+                verbs.UnionWith(verbEvent.Verbs);
             }
 
-            if ((verbTypes & VerbType.Activation) == VerbType.Activation)
+            if (types.Contains(typeof(AlternativeVerb)))
             {
-                GetActivationVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target, getVerbEvent);
-                verbs.Add(VerbType.Activation, getVerbEvent.Verbs);
+                var verbEvent = new GetVerbsEvent<AlternativeVerb>(user, target, @using, hands, canInteract, canAccess);
+                RaiseLocalEvent(target, verbEvent);
+                verbs.UnionWith(verbEvent.Verbs);
             }
 
-            if ((verbTypes & VerbType.Alternative) == VerbType.Alternative)
+            if (types.Contains(typeof(ActivationVerb)))
             {
-                GetAlternativeVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target, getVerbEvent);
-                verbs.Add(VerbType.Alternative, getVerbEvent.Verbs);
+                var verbEvent = new GetVerbsEvent<ActivationVerb>(user, target, @using, hands, canInteract, canAccess);
+                RaiseLocalEvent(target, verbEvent);
+                verbs.UnionWith(verbEvent.Verbs);
             }
 
-            if ((verbTypes & VerbType.Other) == VerbType.Other)
+            // generic verbs
+            if (types.Contains(typeof(Verb)))
             {
-                GetOtherVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target, getVerbEvent);
-                verbs.Add(VerbType.Other, getVerbEvent.Verbs);
+                var verbEvent = new GetVerbsEvent<Verb>(user, target, @using, hands, canInteract, canAccess);
+                RaiseLocalEvent(target, verbEvent);
+                verbs.UnionWith(verbEvent.Verbs);
             }
 
             return verbs;

@@ -6,5 +6,5 @@
   result: ConveyorBeltAssembly
   completetime: 1000
   materials:
-    Steel: 1000
+    Steel: 500
     Plastic: 50

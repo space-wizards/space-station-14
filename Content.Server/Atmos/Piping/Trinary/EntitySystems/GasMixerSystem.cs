@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
@@ -6,20 +5,18 @@ using Content.Server.Atmos.Piping.Trinary.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Trinary.Components;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasMixerSystem : EntitySystem
+    public sealed class GasMixerSystem : EntitySystem
     {
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private AdminLogSystem _adminLogSystem = default!;
@@ -29,12 +26,32 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             base.Initialize();
 
+            SubscribeLocalEvent<GasMixerComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GasMixerComponent, AtmosDeviceUpdateEvent>(OnMixerUpdated);
             SubscribeLocalEvent<GasMixerComponent, InteractHandEvent>(OnMixerInteractHand);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasMixerComponent, GasMixerChangeOutputPressureMessage>(OnOutputPressureChangeMessage);
             SubscribeLocalEvent<GasMixerComponent, GasMixerChangeNodePercentageMessage>(OnChangeNodePercentageMessage);
             SubscribeLocalEvent<GasMixerComponent, GasMixerToggleStatusMessage>(OnToggleStatusMessage);
+
+            SubscribeLocalEvent<GasMixerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+        }
+
+        private void OnAnchorChanged(EntityUid uid, GasMixerComponent component, ref AnchorStateChangedEvent args)
+        {
+            if (args.Anchored)
+                return;
+
+            component.Enabled = false;
+
+            DirtyUI(uid, component);
+            UpdateAppearance(uid, component);
+            _userInterfaceSystem.TryCloseAll(uid, GasFilterUiKey.Key);
+        }
+
+        private void OnInit(EntityUid uid, GasMixerComponent component, ComponentInit args)
+        {
+            UpdateAppearance(uid, component);
         }
 
         private void OnMixerUpdated(EntityUid uid, GasMixerComponent mixer, AtmosDeviceUpdateEvent args)
@@ -137,12 +154,21 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 new GasMixerBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(mixer.Owner).EntityName, mixer.TargetPressure, mixer.Enabled, mixer.InletOneConcentration));
         }
 
+        private void UpdateAppearance(EntityUid uid, GasMixerComponent? mixer = null, AppearanceComponent? appearance = null)
+        {
+            if (!Resolve(uid, ref mixer, ref appearance, false))
+                return;
+
+            appearance.SetData(FilterVisuals.Enabled, mixer.Enabled);
+        }
+
         private void OnToggleStatusMessage(EntityUid uid, GasMixerComponent mixer, GasMixerToggleStatusMessage args)
         {
             mixer.Enabled = args.Enabled;
             _adminLogSystem.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, mixer);
+            UpdateAppearance(uid, mixer);
         }
 
         private void OnOutputPressureChangeMessage(EntityUid uid, GasMixerComponent mixer, GasMixerChangeOutputPressureMessage args)

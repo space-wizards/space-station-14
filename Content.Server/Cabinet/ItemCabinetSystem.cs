@@ -25,7 +25,7 @@ namespace Content.Server.Cabinet
             SubscribeLocalEvent<ItemCabinetComponent, ComponentStartup>(OnComponentStartup);
 
             SubscribeLocalEvent<ItemCabinetComponent, ActivateInWorldEvent>(OnActivateInWorld);
-            SubscribeLocalEvent<ItemCabinetComponent, GetActivationVerbsEvent>(AddToggleOpenVerb);
+            SubscribeLocalEvent<ItemCabinetComponent, GetVerbsEvent<ActivationVerb>>(AddToggleOpenVerb);
 
             SubscribeLocalEvent<ItemCabinetComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<ItemCabinetComponent, EntRemovedFromContainerMessage>(OnContainerModified);
@@ -65,13 +65,13 @@ namespace Content.Server.Cabinet
                 UpdateAppearance(uid, cabinet);
         }
 
-        private void AddToggleOpenVerb(EntityUid uid, ItemCabinetComponent cabinet, GetActivationVerbsEvent args)
+        private void AddToggleOpenVerb(EntityUid uid, ItemCabinetComponent cabinet, GetVerbsEvent<ActivationVerb> args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
 
             // Toggle open verb
-            Verb toggleVerb = new();
+            ActivationVerb toggleVerb = new();
             toggleVerb.Act = () => ToggleItemCabinet(uid, cabinet);
             if (cabinet.Opened)
             {

@@ -365,7 +365,7 @@
         - ReagentId: JuiceTomato
           Quantity: 10
   - type: Evaporation
-    lowerLimit: 2
+    lowerLimit: 0 # todo: reimplement stain behaviour, ideally in a way that doesn't use evaporation lowerLimit
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
@@ -587,10 +587,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12 ##I'm pretty sure this has to match the total of 100 potency yields
+        maxVol: 20 ##I'm pretty sure this has to match the total of 100 potency yields
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
+        - ReagentId: Aloe
+          Quantity: 10
         - ReagentId: Kelotane
           Quantity: 10
   - type: Sprite
@@ -621,3 +621,119 @@
     seed: poppy
   - type: Extractable
     grindableSolutionName: food
+
+- type: entity
+  name: lingzhi
+  parent: FoodProduceBase
+  id: FoodLingzhi
+  description: A potent medicinal mushroom. Don't go overboard.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Ultravasculine
+          Quantity: 20
+        - ReagentId: Epinephrine
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lingzhi.rsi
+  - type: Produce
+    seed: lingzhi
+  - type: Extractable
+    grindableSolutionName: food
+
+- type: entity
+  name: ambrosia vulgaris
+  parent: FoodProduceBase
+  id: FoodAmbrosiaVulgaris
+  description: A medicinal plant. May make you feel a little funny.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 24
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 10
+        - ReagentId: Kelotane
+          Quantity: 10
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Desoxyephedrine
+          Quantity: 2
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+  - type: Produce
+    seed: ambrosiaVulgaris
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+    Slots:
+    - HEAD
+
+- type: entity
+  name: galaxythistle
+  parent: FoodProduceBase
+  id: FoodGalaxythistle
+  description: A medicinal plant used for its antitoxin.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Stellibinin
+          Quantity: 25
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
+  - type: Produce
+    seed: galaxythistle
+  - type: Extractable
+    grindableSolutionName: food
+
+- type: entity
+  name: fly amanita
+  parent: FoodProduceBase
+  id: FoodFlyAmanita
+  description: A delicious-looking mushroom like you see in those cartoons.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Amatoxin
+          Quantity: 25
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
+  - type: Produce
+    seed: flyAmanita
+  - type: Extractable
+    grindableSolutionName: food
+
+- type: entity
+  name: gatfruit
+  parent: FoodProduceBase
+  id: FoodGatfruit
+  description: A delicious, gun-shaped fruit with a thick wooden stem.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Sulfur
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/gatfruit.rsi
+  - type: Produce
+    seed: gatfruit
+  - type: Food
+    trash: RevolverPredator
