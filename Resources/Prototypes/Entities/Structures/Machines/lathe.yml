@@ -162,6 +162,7 @@
       - Syringe
       - PillCanister
       - Drone
+      - Flash
       - MicroManipulatorStockPart
       - ScanningModuleStockPart
       - MicroLaserStockPart
@@ -255,10 +256,6 @@
       - CartridgeLRifleRubber
       - CartridgeSRifleRubber #Everything below this is shared with other lathes
       - FlashlightLantern
-      - FirelockElectronics
-      - DoorElectronics
-      - APCElectronics
-      - FireAlarmElectronics
       - Bucket
       - MopItem
       - SprayBottle
@@ -272,4 +269,3 @@
       - CableStack
       - CableMVStack
       - CableHVStack
-
