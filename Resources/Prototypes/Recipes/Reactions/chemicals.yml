@@ -94,7 +94,7 @@
       lightImpactRange: 0.075
       flashRange: 0.1
       scaled: true #Scaled proportionally to amount of potassium and water
-      maxScale: 20 #Explosion strength stops scaling at 30 potassium + 30 water
+      maxScale: 20 #Explosion strength stops scaling at 20 potassium + 20 water
 
 - type: reaction
   id: Smoke
