@@ -12,7 +12,6 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     /// Stores ammo and can quickly transfer ammo into a magazine.
     /// </summary>
     [RegisterComponent]
-    [ComponentProtoName("AmmoBox")]
     [Friend(typeof(GunSystem))]
     public sealed class AmmoBoxComponent : Component
     {

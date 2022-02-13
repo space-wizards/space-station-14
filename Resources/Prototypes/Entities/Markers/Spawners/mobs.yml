@@ -44,3 +44,18 @@
     prototypes:
       - MobCorgi
       - MobCorgiOld
+
+## Player-controlled
+
+- type: entity
+  name: Drone Spawner
+  id: SpawnMobDrone
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - texture: Mobs/Silicon/drone.rsi/shell.png
+  - type: ConditionalSpawner
+    prototypes:
+      - Drone

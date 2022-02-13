@@ -447,7 +447,7 @@
   id: Tricordrazine
   name: tricordrazine
   group: Medicine
-  desc: A wide-spectrum stimulant, originally derived from Cordrazine. Is capable of healing all four main damage types simultaneously, however it only heals at half the rate of conventional healing chemicals. Because of its low potency, it's best used as a supplement to other medicines.
+  desc: A wide-spectrum stimulant, originally derived from Cordrazine. It is capable of healing most common damage types simultaneously, however only at about half the rate of other medications. Because of its low potency, it's best used as a supplement to other medicines.
   physicalDesc: opaque
   color: "#00e5ff"
   metabolisms:
@@ -457,9 +457,9 @@
         damage:
           groups:
             Burn: -1
-            Toxin: -1
-            Airloss: -1
             Brute: -1
+          types:
+            Poison: -0.5 ##Should be about what it was when it healed the toxin group
 
 - type: reagent
   id: ChloralHydrate
@@ -521,7 +521,7 @@
 
 - type: reagent
   id: Ultravasculine
-  name: Ultravasculine
+  name: ultravasculine
   group: Medicine
   desc: Rapidly flushes toxins from the body, but places some stress on the veins. Do not overdose.
   physicalDesc: thick and grainy
@@ -560,3 +560,40 @@
           min: 1
         reagent: Ultravasculine
         amount: 0.5
+
+- type: reagent
+  id: Stellibinin
+  name: stellibinin
+  group: Medicine
+  desc: A natual antitoxin with particular effectiveness against amatoxin.
+  physicalDesc: starry
+  color: "#2b2f77"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -1
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Amatoxin
+          min: 1
+        reagent: Amatoxin
+        amount: -3
+
+- type: reagent
+  id: Siderlac
+  name: siderlac
+  group: Medicine
+  desc: A powerful anti-caustic medicine derived from plants.
+  physicalDesc: milky
+  color: "#f4dab8"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Caustic: -5

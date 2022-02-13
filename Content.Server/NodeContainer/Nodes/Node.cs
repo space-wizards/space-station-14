@@ -56,7 +56,7 @@ namespace Content.Server.NodeContainer.Nodes
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("needAnchored")]
-        private bool NeedAnchored { get; } = true;
+        public bool NeedAnchored { get; } = true;
 
         /// <summary>
         ///    Prevents a node from being used by other nodes while midway through removal.
@@ -83,68 +83,9 @@ namespace Content.Server.NodeContainer.Nodes
         ///     Invoked when the owning <see cref="NodeContainerComponent"/> is initialized.
         /// </summary>
         /// <param name="owner">The owning entity.</param>
-        public virtual void Initialize(EntityUid owner)
+        public virtual void Initialize(EntityUid owner, IEntityManager entMan)
         {
             Owner = owner;
-        }
-
-        /// <summary>
-        ///     Invoked when the owning <see cref="NodeContainerComponent"/> is started.
-        /// </summary>
-        public virtual void OnContainerStartup()
-        {
-            EntitySystem.Get<NodeGroupSystem>().QueueReflood(this);
-        }
-
-        /// <summary>
-        ///     Immediately create a single-node node group for this node if it does not have one yet.
-        /// </summary>
-        /// <remarks>
-        ///     This can be useful for nodes like pipes
-        ///     that need immediate access to their node group to set parameters like node volume.
-        ///     The node group created by this function (if necessary) will still update and form new,
-        ///     merged groups later if necessary.
-        ///     Set parameters like pipe net volume should then be transferred/merged there.
-        /// </remarks>
-        public void CreateSingleNetImmediate()
-        {
-            EntitySystem.Get<NodeGroupSystem>().CreateSingleNetImmediate(this);
-        }
-
-        public void AnchorUpdate()
-        {
-            if (Anchored)
-            {
-                EntitySystem.Get<NodeGroupSystem>().QueueReflood(this);
-            }
-            else
-            {
-                EntitySystem.Get<NodeGroupSystem>().QueueNodeRemove(this);
-            }
-        }
-
-        /// <summary>
-        ///     Called when the anchored state of the owning entity changes.
-        /// </summary>
-        public virtual void AnchorStateChanged()
-        {
-        }
-
-        /// <summary>
-        ///     Called after the parent node group has been rebuilt.
-        /// </summary>
-        public virtual void OnPostRebuild()
-        {
-
-        }
-
-        /// <summary>
-        ///     Called when the owning <see cref="NodeContainerComponent"/> is shut down.
-        /// </summary>
-        public virtual void OnContainerShutdown()
-        {
-            Deleting = true;
-            EntitySystem.Get<NodeGroupSystem>().QueueNodeRemove(this);
         }
 
         /// <summary>

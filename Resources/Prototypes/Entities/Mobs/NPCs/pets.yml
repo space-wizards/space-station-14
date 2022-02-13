@@ -223,13 +223,6 @@
       normal: spacecat
       crit: spacecat_dead
       dead: spacecat_dead
-  - type: Respirator #Space kitty should be immune to Asphyxiation. Taken from xenos.yml
-    damage:
-      types:
-        Asphyxiation: 1
-    damageRecovery:
-      types:
-        Asphyxiation: -1
 
 - type: entity
   name: caracal cat

@@ -1,15 +1,12 @@
-﻿using Content.Shared.Pointing.Components;
+using Content.Shared.Pointing.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Server.Pointing.Components
 {
     [RegisterComponent]
-    public class PointingArrowComponent : SharedPointingArrowComponent
+    [ComponentReference(typeof(SharedPointingArrowComponent))]
+    public sealed class PointingArrowComponent : SharedPointingArrowComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
