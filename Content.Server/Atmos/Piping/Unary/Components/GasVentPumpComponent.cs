@@ -54,8 +54,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         private float _internalPressureBound = 0;
 
         /// <summary>
-        ///     If the difference between the internal and external pressure is larger than this, the device can no
-        ///     longer move gas.
+        ///     Max pressure of the target gas (NOT relative to source).
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("maxPressure")]
@@ -66,7 +65,8 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// </summary>
         /// <remarks>
         ///     The pump will attempt to modify the destination's final pressure by this quantity every second. If this
-        ///     is too high, someone can nearly instantly flood a room with gas.
+        ///     is too high, and the vent is connected to a large pipe-net, then someone can nearly instantly flood a
+        ///     room with gas.
         /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("targetPressureChange")]

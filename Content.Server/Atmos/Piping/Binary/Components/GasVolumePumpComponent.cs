@@ -37,6 +37,6 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         public float HigherThreshold { get; set; } = 2 * Atmospherics.MaxOutputPressure;
 
         [DataField("overclockThreshold")]
-        public float OverclockThreshold { get; set; } = 1000 + 2 * Atmospherics.MaxOutputPressure;
+        public float OverclockThreshold { get; set; } = 1000;
     }
 }

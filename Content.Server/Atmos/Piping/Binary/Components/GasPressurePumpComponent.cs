@@ -21,8 +21,7 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         public float TargetPressure { get; set; } = Atmospherics.OneAtmosphere;
 
         /// <summary>
-        ///     If the difference between the internal and external pressure is larger than this, the device can no
-        ///     longer move gas.
+        ///     Max pressure of the target gas (NOT relative to source).
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("maxTargetPressure")]
