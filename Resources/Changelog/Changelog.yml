@@ -1,21 +1,4 @@
 Entries:
-- author: thevinter
-  changes:
-  - {message: power cells now properly bounce off walls, type: Fix}
-  id: 554
-  time: '2021-11-07T09:11:40.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fix a bug that causes the examine-popup to close immediately after opening.,
-    type: Fix}
-  id: 555
-  time: '2021-11-07T10:33:52.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: The game rules have been updated to bring the server to Low Roleplay
-      standards. Go read 'em!, type: Tweak}
-  id: 556
-  time: '2021-11-10T00:12:46.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Labelers have been mapped in to Saltern. There''s some in the dorms,
@@ -2960,3 +2943,23 @@ Entries:
   - {message: 'Added a new lobby song, "Vibe Ace" by Kevin MacLeod.', type: Add}
   id: 1054
   time: '2022-02-13T12:17:03.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: Added an upright piano for all your saloon tunes, type: Add}
+  - {message: Retuned the church organ to sound more churchy, type: Fix}
+  - {message: Updated piano sprite to stop violating laws of physics, type: Fix}
+  id: 1055
+  time: '2022-02-13T22:35:56.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added plant bags to botany! They can more easily manage their huge harvests
+      and dump everything on kitchen or chemistry's desk now., type: Add}
+  id: 1056
+  time: '2022-02-13T22:36:01.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones should no longer get pushed through walls and their propulsion
+      works in zero-gravity., type: Fix}
+  - {message: Drone movement speed reduced by 1/6., type: Tweak}
+  id: 1057
+  time: '2022-02-13T22:36:07.0000000+00:00'
