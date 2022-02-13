@@ -12,16 +12,13 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fluids.EntitySystems;
 
 [UsedImplicitly]
-public class SpillableSystem : EntitySystem
+public sealed class SpillableSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
