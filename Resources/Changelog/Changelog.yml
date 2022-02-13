@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Fixed bucket, type: Fix}
-  id: 552
-  time: '2021-11-07T00:33:03.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Pulling to a specific location now pushes the player doing the pulling,
@@ -2961,3 +2956,11 @@ Entries:
   - {message: Water has been removed from the soda and chem dispensers, type: Tweak}
   id: 1052
   time: '2022-02-13T10:12:48.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added Circuit Imprinters. These machines are used to print all machine
+      circuit boards, instead of the protolathe.', type: Add}
+  - {message: 'Circuit board recipes tweaked. They now use a lot of glass, a bit of
+      metal, and a little bit of gold for the rarest ones.', type: Tweak}
+  id: 1053
+  time: '2022-02-13T11:21:29.0000000+00:00'
