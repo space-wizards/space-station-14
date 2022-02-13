@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   name: baseinstrument
   id: BasePlaceableInstrument
   parent: BaseStructureDynamic
@@ -47,6 +47,18 @@
     program: 1
   - type: Sprite
     state: piano
+  - type: Climbable
+
+- type: entity
+  name: upright piano
+  parent: BasePlaceableInstrumentRotatable
+  id: UprightPianoInstrument
+  description: I said Piannie!
+  components:
+  - type: Instrument
+    program: 3
+  - type: Sprite
+    state: piano-upright
   - type: Climbable
 
 - type: entity
