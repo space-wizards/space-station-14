@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
@@ -21,10 +22,23 @@ public class TemperatureArtifactSystem : EntitySystem
     {
         var transform = Transform(uid);
 
-        var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates, true);
-        if (environment == null)
+        var center = _atmosphereSystem.GetTileMixture(transform.Coordinates, true);
+        if (center == null)
             return;
+        UpdateTileTemperature(component, center);
 
+        if (component.EffectAdjacentTiles)
+        {
+            var adjacent = _atmosphereSystem.GetAdjacentTileMixtures(transform.Coordinates, invalidate: true);
+            foreach (var mixture in adjacent)
+            {
+                UpdateTileTemperature(component, mixture);
+            }
+        }
+    }
+
+    private void UpdateTileTemperature(TemperatureArtifactComponent component, GasMixture environment)
+    {
         var dif = component.TargetTemperature - environment.Temperature;
         var absDif = Math.Abs(dif);
         if (absDif < component.MaxTemperatureDifference)

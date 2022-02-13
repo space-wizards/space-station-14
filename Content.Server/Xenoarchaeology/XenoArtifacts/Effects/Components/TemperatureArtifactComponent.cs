@@ -20,4 +20,11 @@ public class TemperatureArtifactComponent : Component
 
     [DataField("maxTempDif")]
     public float MaxTemperatureDifference = 1;
+
+    /// <summary>
+    ///     If true, artifact will heat/cool not only its current tile, but surrounding tiles too.
+    ///     This will change room temperature much faster.
+    /// </summary>
+    [DataField("effectAdjacent")]
+    public bool EffectAdjacentTiles = true;
 }
