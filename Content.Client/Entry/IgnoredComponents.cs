@@ -61,7 +61,7 @@ namespace Content.Client.Entry
             "TransformableContainer",
             "Mind",
             "StorageFill",
-            "Mop",
+            "Absorbent",
             "Bucket",
             "CableVis",
             "BatterySelfRecharger",

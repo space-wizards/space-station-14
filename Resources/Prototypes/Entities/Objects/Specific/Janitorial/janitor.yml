@@ -11,10 +11,10 @@
   - type: Item
     size: 10
     sprite: Objects/Specific/Janitorial/mop.rsi
-  - type: Mopping
+  - type: Absorbent
   - type: SolutionContainerManager
     solutions:
-      mop:
+      absorbed:
         maxVol: 50
 
 - type: entity
