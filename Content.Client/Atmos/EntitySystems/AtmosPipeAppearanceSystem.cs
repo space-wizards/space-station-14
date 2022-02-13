@@ -1,6 +1,6 @@
-using Content.Client.Atmos.Components;
 using Content.Client.SubFloor;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -9,7 +9,7 @@ using Robust.Client.ResourceManagement;
 namespace Content.Client.Atmos.EntitySystems;
 
 [UsedImplicitly]
-public sealed class PipeVisualsSystem : EntitySystem
+public sealed class AtmosPipeAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly IResourceCache _resCache = default!;
 
@@ -17,18 +17,18 @@ public sealed class PipeVisualsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PipeVisualsComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<PipeVisualsComponent, AppearanceChangeEvent>(OnAppearanceChanged, after: new[] { typeof(SubFloorHideSystem) });
+        SubscribeLocalEvent<PipeAppearanceComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<PipeAppearanceComponent, AppearanceChangeEvent>(OnAppearanceChanged, after: new[] { typeof(SubFloorHideSystem) });
     }
 
-    private void OnInit(EntityUid uid, PipeVisualsComponent component, ComponentInit args)
+    private void OnInit(EntityUid uid, PipeAppearanceComponent component, ComponentInit args)
     {
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
         if (!_resCache.TryGetResource(SharedSpriteComponent.TextureRoot / component.RsiPath, out RSIResource? rsi))
         {
-            Logger.Error($"{nameof(PipeVisualsSystem)} could not load to load RSI {component.RsiPath}.");
+            Logger.Error($"{nameof(AtmosPipeAppearanceSystem)} could not load to load RSI {component.RsiPath}.");
             return;
         }
 
@@ -42,7 +42,7 @@ public sealed class PipeVisualsSystem : EntitySystem
         }
     }
 
-    private void OnAppearanceChanged(EntityUid uid, PipeVisualsComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearanceChanged(EntityUid uid, PipeAppearanceComponent component, ref AppearanceChangeEvent args)
     {
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;

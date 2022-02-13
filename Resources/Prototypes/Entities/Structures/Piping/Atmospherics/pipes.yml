@@ -40,7 +40,7 @@
     damageContainer: Inorganic
     damageModifierSet: Metallic
   - type: SubFloorHide
-  - type: PipeVisuals
+  - type: PipeAppearance
   - type: Anchorable
   - type: Rotatable
   - type: Pullable

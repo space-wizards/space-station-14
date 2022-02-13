@@ -2,14 +2,12 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Atmos.Components;
 using Robust.Shared.Map;
-using System.Collections.Generic;
 
 namespace Content.Server.Atmos.Piping.EntitySystems;
 
-public sealed class AtmosPipeNodeAppearanceSystem : EntitySystem
+public sealed class AtmosPipeAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -17,17 +15,12 @@ public sealed class AtmosPipeNodeAppearanceSystem : EntitySystem
     {
         base.Initialize();
 
-        // This should probably just be a directed event, but that would require a weird component that exists only to
-        // receive directed events (*cough* *cough* CableVisComponent *cough*).
-        //
-        // Really I want to target any entity with a PipeConnectorVisualizer or a NodeContainerComponent that contains a
-        // pipe-node. But I don't know of nice way of doing that.
-        SubscribeLocalEvent<NodeGroupsRebuilt>(OnNodeUpdate);
+        SubscribeLocalEvent<PipeAppearanceComponent, NodeGroupsRebuilt>(OnNodeUpdate);
     }
 
-    private void OnNodeUpdate(ref NodeGroupsRebuilt ev)
+    private void OnNodeUpdate(EntityUid uid, PipeAppearanceComponent component, ref NodeGroupsRebuilt args)
     {
-        UpdateAppearance(ev.NodeOwner);
+        UpdateAppearance(args.NodeOwner);
     }
 
     private void UpdateAppearance(EntityUid uid, AppearanceComponent? appearance = null, NodeContainerComponent? container = null,

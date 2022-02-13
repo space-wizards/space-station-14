@@ -1,7 +1,7 @@
-namespace Content.Client.Atmos.Components;
+namespace Content.Shared.Atmos.Components;
 
 [RegisterComponent]
-public sealed class PipeVisualsComponent : Component
+public sealed class PipeAppearanceComponent : Component
 {
     [DataField("rsi")]
     public string RsiPath = "Structures/Piping/Atmospherics/pipe.rsi";
