@@ -244,6 +244,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
                 oldGroup.Removed = true;
                 oldGroup.AfterRemake(newGrouped);
+                _nodeGroups.Remove(oldGroup);
                 if (VisEnabled)
                     _visDeletes.Add(oldGroup.NetId);
             }
