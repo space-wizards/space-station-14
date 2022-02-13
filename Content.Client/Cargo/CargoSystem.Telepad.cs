@@ -48,7 +48,7 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoTelepadComponent, AnimationCompletedEvent>(OnCargoAnimComplete);
     }
 
-    private void OnCargoAppChange(EntityUid uid, CargoTelepadComponent component, AppearanceChangeEvent args)
+    private void OnCargoAppChange(EntityUid uid, CargoTelepadComponent component, ref AppearanceChangeEvent args)
     {
         OnChangeData(args.Component);
     }
