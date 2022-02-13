@@ -1,11 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: Valves make sound when used, type: Tweak}
-  id: 551
-  time: '2021-11-07T00:32:33.0000000+00:00'
-- author: Swept
-  changes:
   - {message: Fixed bucket, type: Fix}
   id: 552
   time: '2021-11-07T00:33:03.0000000+00:00'
@@ -2960,3 +2955,9 @@ Entries:
       what might appear in maint and secret spots..., type: Add}
   id: 1051
   time: '2022-02-13T09:52:12.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Potassium/water explosions nerfed, type: Tweak}
+  - {message: Water has been removed from the soda and chem dispensers, type: Tweak}
+  id: 1052
+  time: '2022-02-13T10:12:48.0000000+00:00'
