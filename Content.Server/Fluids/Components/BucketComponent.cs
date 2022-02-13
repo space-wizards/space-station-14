@@ -58,8 +58,8 @@ namespace Content.Server.Fluids.Components
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
             if (!solutionsSys.TryGetSolution(Owner, SolutionName, out var contents) ||
                 _currentlyUsing.Contains(eventArgs.Using) ||
-                !_entMan.TryGetComponent(eventArgs.Using, out MopComponent? mopComponent) ||
-                mopComponent.Mopping)
+                !_entMan.TryGetComponent(eventArgs.Using, out MoppingComponent? moppingComponent) ||
+                moppingComponent.Mopping)
             {
                 return false;
             }
@@ -84,22 +84,22 @@ namespace Content.Server.Fluids.Components
 
             _currentlyUsing.Remove(eventArgs.Using);
 
-            if (result == DoAfterStatus.Cancelled || _entMan.Deleted(Owner) || mopComponent.Deleted ||
-                CurrentVolume <= 0 || !Owner.InRangeUnobstructed(mopComponent.Owner))
+            if (result == DoAfterStatus.Cancelled || _entMan.Deleted(Owner) || moppingComponent.Deleted ||
+                CurrentVolume <= 0 || !Owner.InRangeUnobstructed(moppingComponent.Owner))
                 return false;
 
             //Checks if the mop is empty
-            if(mopComponent.CurrentVolume == 0)
+            if(moppingComponent.CurrentVolume == 0)
             {
                 // Transfers up to half the mop's available capacity to the mop
                 // Takes the lower of the mop's available volume and the bucket's current volume.
-                var transferAmount = FixedPoint2.Min(0.5*mopComponent.AvailableVolume, CurrentVolume);
+                var transferAmount = FixedPoint2.Min(0.5*moppingComponent.AvailableVolume, CurrentVolume);
                 if (transferAmount == 0)
                 {
                     return false;
                 }
 
-                var mopContents = mopComponent.MopSolution;
+                var mopContents = moppingComponent.MopSolution;
 
                 if (mopContents == null)
                 {
@@ -109,7 +109,7 @@ namespace Content.Server.Fluids.Components
                 // Transfer solution from the bucket to the mop
                 // Owner is the bucket being interacted with. contents is the Solution contained by said bucket.
                 var solution = solutionsSys.SplitSolution(Owner, contents, transferAmount);
-                if (!solutionsSys.TryAddSolution(mopComponent.Owner, mopComponent.MopSolution, solution))
+                if (!solutionsSys.TryAddSolution(moppingComponent.Owner, moppingComponent.MopSolution, solution))
                 {
                     return false; //if the attempt fails
                 }
@@ -120,10 +120,10 @@ namespace Content.Server.Fluids.Components
             {
                 //Transfer the mop solution to the bucket
 
-                if (mopComponent.MopSolution == null)
+                if (moppingComponent.MopSolution == null)
                     return false;
 
-                var solutionFromMop = solutionsSys.SplitSolution(mopComponent.Owner, mopComponent.MopSolution, mopComponent.CurrentVolume);
+                var solutionFromMop = solutionsSys.SplitSolution(moppingComponent.Owner, moppingComponent.MopSolution, moppingComponent.CurrentVolume);
                 EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
                 if (!solutionsSys.TryAddSolution(Owner, solution, solutionFromMop))
                 {
