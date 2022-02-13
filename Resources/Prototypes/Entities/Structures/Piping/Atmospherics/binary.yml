@@ -6,7 +6,6 @@
     mode: SnapgridCenter
   components:
   - type: AtmosDevice
-  - type: PipeVisuals
   - type: NodeContainer
     nodes:
       inlet:
