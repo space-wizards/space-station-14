@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: PDA flashlights are brighter now, type: Tweak}
-  id: 549
-  time: '2021-11-06T22:35:01.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Directional windows have been added (non-fulltile), though not mapped
@@ -2952,3 +2947,16 @@ Entries:
   - {message: Fixed bucket "set transferAmount" behaviour with reagent tanks., type: Fix}
   id: 1049
   time: '2022-02-12T22:18:35.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Microwaves now heat up the solutions of entities inside them., type: Add}
+  - {message: 'Microwaves can no longer have reagents put inside them directly. If
+      a recipe calls for reagents, add another item that contains those reagents into
+      the microwave.', type: Remove}
+  - {message: Hot Ramen now must be heated up before it can be created., type: Tweak}
+  - {message: NanoTrasen recommends that you do not put your ID in the microwave.,
+    type: Add}
+  - {message: NanoTrasen HEAVILY recommends that you do not put batteries in the microwave.,
+    type: Add}
+  id: 1050
+  time: '2022-02-13T00:53:54.0000000+00:00'
