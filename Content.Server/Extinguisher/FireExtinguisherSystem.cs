@@ -31,7 +31,7 @@ public class FireExtinguisherSystem : EntitySystem
         SubscribeLocalEvent<FireExtinguisherComponent, DroppedEvent>(OnDropped);
         SubscribeLocalEvent<FireExtinguisherComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<FireExtinguisherComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<FireExtinguisherComponent, GetInteractionVerbsEvent>(OnGetInteractionVerbs);
+        SubscribeLocalEvent<FireExtinguisherComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
         SubscribeLocalEvent<FireExtinguisherComponent, SprayAttemptEvent>(OnSprayAttempt);
     }
 
@@ -103,12 +103,12 @@ public class FireExtinguisherSystem : EntitySystem
         }
     }
 
-    private void OnGetInteractionVerbs(EntityUid uid, FireExtinguisherComponent component, GetInteractionVerbsEvent args)
+    private void OnGetInteractionVerbs(EntityUid uid, FireExtinguisherComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanInteract)
             return;
 
-        var verb = new Verb
+        var verb = new InteractionVerb
         {
             Act = () => ToggleSafety(uid, args.User, component),
             Text = Loc.GetString("fire-extinguisher-component-verb-text"),

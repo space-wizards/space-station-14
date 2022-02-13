@@ -87,7 +87,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (!user.InRangeUnobstructed(ev.Target))
+            if (!InRangeUnobstructed(user, ev.Target, ignoreInsideBlocker: true))
             {
                 ev.Cancel();
                 return;
@@ -743,7 +743,7 @@ namespace Content.Shared.Interaction
         public bool AltInteract(EntityUid user, EntityUid target)
         {
             // Get list of alt-interact verbs
-            var verbs = _verbSystem.GetLocalVerbs(target, user, VerbType.Alternative)[VerbType.Alternative];
+            var verbs = _verbSystem.GetLocalVerbs(target, user, typeof(AlternativeVerb));
 
             if (!verbs.Any())
                 return false;

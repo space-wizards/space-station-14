@@ -36,6 +36,11 @@
             - material: Steel
               amount: 5
               doAfter: 1
+        - to: chairPilotSeat
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 1
         - to: chairWood
           steps:
             - material: WoodPlank
@@ -110,6 +115,18 @@
           steps:
             - tool: Screwing
               doAfter: 1
+              
+    - node: chairPilotSeat
+      entity: ChairPilotSeat
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 5
+          steps:
+            - tool: Screwing
+              doAfter: 2
 
     - node: chairWood
       entity: ChairWood

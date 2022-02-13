@@ -17,6 +17,7 @@
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
     state: bed
+    netsync: false
   - type: Strap
     position: Down
     rotation: -90

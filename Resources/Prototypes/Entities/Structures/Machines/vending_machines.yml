@@ -113,35 +113,6 @@
 
 - type: entity
   parent: VendingMachine
-  id: VendingBarDrobe
-  name: BarDrobe
-  description: A stylish vendor to dispense the most stylish bar clothing!
-  components:
-  - type: VendingMachine
-    pack: BarDrobe
-  - type: Advertise
-    pack: BarDrobeAds
-  - type: Sprite
-    sprite: Structures/Machines/VendingMachines/bardrobe.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
-  - type: AccessReader
-    access: [["Bar"]]
-
-- type: entity
-  parent: VendingMachine
   id: VendingMachineCart
   name: PTech
   description: PTech vending! Providing a ROBUST selection of PDA cartridges.
@@ -170,37 +141,6 @@
     radius: 1
     energy: 1.3
     color: "#ffb0b0"
-
-- type: entity
-  parent: VendingMachine
-  id: VendingMachineChapel
-  name: PietyVend
-  components:
-  - type: VendingMachine
-    pack: PietyVendInventory
-  - type: Sprite
-    sprite: Structures/Machines/VendingMachines/chapel.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: AccessReader
-    access: [["Chapel"]]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#CCCCCC" #The holy C
 
 - type: entity
   parent: VendingMachine
@@ -841,3 +781,498 @@
     radius: 1.5
     energy: 1.6
     color: "#326e3f"
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineHydrobe
+  name: HyDrobe
+  description: A machine with a catchy name. It dispenses botany related clothing and gear.
+  components:
+  - type: VendingMachine
+    pack: HyDrobeInventory
+  - type: Advertise
+    pack: HyDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/hydrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Hydroponics"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineLawDrobe
+  name: LawDrobe
+  description: Objection! This wardrobe dispenses the rule of law... and lawyer clothing..
+  components:
+  - type: VendingMachine
+    pack: LawDrobeInventory
+  - type: Advertise
+    pack: LawDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/lawdrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Brig"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSecDrobe
+  name: SecDrobe
+  description: A vending machine for security and security-related clothing!
+  components:
+  - type: VendingMachine
+    pack: SecDrobeInventory
+  - type: Advertise
+    pack: SecDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/secdrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingBarDrobe
+  name: BarDrobe
+  description: A stylish vendor to dispense the most stylish bar clothing!
+  components:
+  - type: VendingMachine
+    pack: BarDrobeInventory
+  - type: Advertise
+    pack: BarDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/bardrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Bar"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineChapel
+  name: PietyVend
+  components:
+  - type: VendingMachine
+    pack: PietyVendInventory
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/chapdrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["Chapel"]]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      denyUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#CCCCCC" #The holy C
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineCargoDrobe
+  name: CargoDrobe
+  description: A highly advanced vending machine for buying cargo related clothing for free.
+  components:
+  - type: VendingMachine
+    pack: CargoDrobeInventory
+  - type: Advertise
+    pack: CargoDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/cargodrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Cargo"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineMediDrobe
+  name: MediDrobe
+  description: A vending machine rumoured to be capable of dispensing clothing for medical personnel.
+  components:
+  - type: VendingMachine
+    pack: MediDrobeInventory
+  - type: Advertise
+    pack: MediDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/medidrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineChemDrobe
+  name: ChemDrobe
+  description: A vending machine for dispensing chemistry related clothing.
+  components:
+  - type: VendingMachine
+    pack: ChemDrobeInventory
+  - type: Advertise
+    pack: ChemDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/chemdrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Chemistry"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineAtmosDrobe
+  name: AtmosDrobe
+  description: This relatively unknown vending machine delivers clothing for Atmospherics Technicians, an equally unknown job.
+  components:
+  - type: VendingMachine
+    pack: AtmosDrobeInventory
+  - type: Advertise
+    pack: AtmosDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/atmosdrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineEngiDrobe
+  name: EngiDrobe
+  description: A vending machine renowned for vending industrial grade clothing.
+  components:
+  - type: VendingMachine
+    pack: EngiDrobeInventory
+  - type: Advertise
+    pack: EngiDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/engidrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineChefDrobe
+  name: ChefDrobe
+  description: This vending machine might not dispense meat, but it certainly dispenses chef related clothing.
+  components:
+  - type: VendingMachine
+    pack: ChefDrobeInventory
+  - type: Advertise
+    pack: ChefDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/chefdrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Kitchen"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineDetDrobe
+  name: DetDrobe
+  description: A machine for all your detective needs, as long as you need clothes.
+  components:
+  - type: VendingMachine
+    pack: DetDrobeInventory
+  - type: Advertise
+    pack: DetDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/detdrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineJaniDrobe
+  name: JaniDrobe
+  description: A self cleaning vending machine capable of dispensing clothing for janitors.
+  components:
+  - type: VendingMachine
+    pack: JaniDrobeInventory
+  - type: Advertise
+    pack: JaniDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/janidrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Janitor"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSciDrobe
+  name: SciDrobe
+  description: A simple vending machine suitable to dispense well tailored science clothing. Endorsed by Space Cubans.
+  components:
+  - type: VendingMachine
+    pack: SciDrobeInventory
+  - type: Advertise
+    pack: SciDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/scidrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineRoboDrobe
+  name: RoboDrobe
+  description: A vending machine designed to dispense clothing known only to roboticists.
+  components:
+  - type: VendingMachine
+    pack: RoboDrobeInventory
+  - type: Advertise
+    pack: RoboDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/robodrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineGeneDrobe
+  name: GeneDrobe
+  description: A machine for dispensing clothing related to genetics.
+  components:
+  - type: VendingMachine
+    pack: GeneDrobeInventory
+  - type: Advertise
+    pack: GeneDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/genedrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineViroDrobe
+  name: ViroDrobe
+  description: An unsterilized machine for dispending virology related clothing.
+  components:
+  - type: VendingMachine
+    pack: ViroDrobeInventory
+  - type: Advertise
+    pack: ViroDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/virodrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Medical"]]

@@ -39,7 +39,7 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<DockingComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
 
-            SubscribeLocalEvent<DockingComponent, GetInteractionVerbsEvent>(OnVerb);
+            SubscribeLocalEvent<DockingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
             SubscribeLocalEvent<DockingComponent, BeforeDoorAutoCloseEvent>(OnAutoClose);
         }
 
@@ -50,12 +50,12 @@ namespace Content.Server.Shuttles.EntitySystems
                 args.Cancel();
         }
 
-        private void OnVerb(EntityUid uid, DockingComponent component, GetInteractionVerbsEvent args)
+        private void OnVerb(EntityUid uid, DockingComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (!args.CanInteract ||
                 !args.CanAccess) return;
 
-            Verb? verb;
+            InteractionVerb? verb;
 
             // TODO: Have it open the UI and have the UI do this.
             if (!component.Docked &&
@@ -67,7 +67,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 if (component.Enabled)
                     otherDock = GetDockable(body, xform);
 
-                verb = new Verb
+                verb = new InteractionVerb
                 {
                     Disabled = otherDock == null,
                     Text = Loc.GetString("docking-component-dock"),
@@ -80,7 +80,7 @@ namespace Content.Server.Shuttles.EntitySystems
             }
             else if (component.Docked)
             {
-                verb = new Verb
+                verb = new InteractionVerb
                 {
                     Disabled = !component.Docked,
                     Text = Loc.GetString("docking-component-undock"),

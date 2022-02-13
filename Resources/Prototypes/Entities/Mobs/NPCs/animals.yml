@@ -88,6 +88,28 @@
     - Bee
 
 - type: entity
+  name: bee
+  suffix: Angry
+  parent: MobBee
+  id: MobAngryBee
+  description: How nice a bee. Oh no, it looks angry and wants my pizza.
+  components:
+  - type: UnarmedCombat
+    range: 0.3
+    arcwidth: 0
+    arc: bite
+    damage:
+      types:
+        Poison: 2
+        Piercing: 1
+  - type: UtilityAI
+    behaviorSets:
+    - UnarmedAttackHostiles
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
+
+- type: entity
   name: chicken
   parent: SimpleMobBase
   id: MobChicken
