@@ -3,7 +3,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
-public class ArtifactTimerTriggerSystem : EntitySystem
+public sealed class ArtifactTimerTriggerSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _time = default!;
     [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
