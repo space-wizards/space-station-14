@@ -57,7 +57,8 @@ public sealed partial class CargoSystem
     private void SetEnabled(CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
         TransformComponent? xform = null)
     {
-        if (!Resolve(component.Owner, ref receiver, ref xform)) return;
+        // False due to AllCompsOneEntity test where they may not have the powerreceiver.
+        if (!Resolve(component.Owner, ref receiver, ref xform, false)) return;
 
         var disabled = !receiver.Powered || !xform.Anchored;
 
