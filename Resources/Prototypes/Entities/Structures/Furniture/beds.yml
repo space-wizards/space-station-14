@@ -4,6 +4,20 @@
   parent: BaseStructure
   description: This is used to lie in, sleep in or strap on.
   components:
+  - type: Bed
+    damage:
+      types:
+        Blunt: -0.1
+        Slash: -0.1
+        Piercing: -0.1
+        Heat: -0.1
+        Shock: -0.1
+        Cold: -0.1
+        Asphyxiation: -0.1
+        Bloodloss: -0.1
+        Poison: -0.1
+        Radiation: -0.1
+        Cellular: -0.1
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -45,6 +59,29 @@
           SheetSteel1:
             min: 1
             max: 2
+
+- type: entity
+  parent: Bed
+  id: MedicalBed
+  name: medical bed
+  description: A hospital bed for patients to recover in.
+  components:
+  - type: Sprite
+    state: bed-MED
+  - type: Bed
+    damage:
+      types:
+        Blunt: -0.2
+        Slash: -0.2
+        Piercing: -0.2
+        Heat: -0.2
+        Shock: -0.2
+        Cold: -0.2
+        Asphyxiation: -0.2
+        Bloodloss: -0.2
+        Poison: -0.2
+        Radiation: -0.2
+        Cellular: -0.2
 
 - type: entity
   parent: Bed
