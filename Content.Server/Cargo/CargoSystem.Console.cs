@@ -53,6 +53,7 @@ namespace Content.Server.Cargo
         private void InitializeConsole()
         {
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            Reset();
         }
 
         private void Reset(RoundRestartCleanupEvent ev)
