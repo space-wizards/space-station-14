@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.NodeContainer
 {
@@ -25,12 +21,6 @@ namespace Content.Shared.NodeContainer
             public List<GroupData> Groups = new();
             public List<int> GroupDeletions = new();
             public Dictionary<int, string?> GroupDataUpdates = new();
-        }
-
-        [Serializable, NetSerializable]
-        public sealed class DataUpdate : EntityEventArgs
-        {
-            public Dictionary<int, string?> Data = new();
         }
 
         [Serializable, NetSerializable]

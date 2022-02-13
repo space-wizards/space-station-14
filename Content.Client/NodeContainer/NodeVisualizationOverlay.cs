@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using Content.Client.Resources;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Content.Shared.NodeContainer.NodeVis;
@@ -86,6 +82,7 @@ namespace Content.Client.NodeContainer
 
             var sb = new StringBuilder();
             sb.Append($"entity: {node.Entity}\n");
+            sb.Append($"group id: {group.GroupId}\n");
             sb.Append($"node: {node.Name}\n");
             sb.Append($"type: {node.Type}\n");
             sb.Append($"grid pos: {gridTile}\n");
