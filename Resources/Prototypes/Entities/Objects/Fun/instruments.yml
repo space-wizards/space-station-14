@@ -39,6 +39,7 @@
   parent: BaseHandheldInstrument
   id: AcousticGuitarInstrument
   name: acoustic guitar
+  description: Anyway, here's Wonderwall.
   components:
   - type: Instrument
     program: 25
