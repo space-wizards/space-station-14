@@ -215,15 +215,16 @@ namespace Content.Server.Chemistry.EntitySystems
         ///     Adds a solution to the container, if it can fully fit.
         /// </summary>
         /// <param name="targetUid">entity holding targetSolution</param>
+        ///  <param name="targetSolution">entity holding targetSolution</param>
         /// <param name="addedSolution">solution being added</param>
-        /// <param name="solution">The solution to try to add.</param>
         /// <returns>If the solution could be added.</returns>
-        public bool TryAddSolution(EntityUid targetUid, Solution? addedSolution, Solution solution)
+        public bool TryAddSolution(EntityUid targetUid, Solution? targetSolution, Solution addedSolution)
         {
-            if (addedSolution == null || !addedSolution.CanAddSolution(solution) || solution.TotalVolume == 0)
+            if (targetSolution == null
+                || !targetSolution.CanAddSolution(addedSolution) || targetSolution.TotalVolume == 0)
                 return false;
 
-            addedSolution.AddSolution(solution);
+            addedSolution.AddSolution(targetSolution);
             UpdateChemicals(targetUid, addedSolution, true);
             return true;
         }
@@ -238,9 +239,10 @@ namespace Content.Server.Chemistry.EntitySystems
         /// <param name="overflowThreshold">After addition this much will be left in targetSolution</param>
         /// <param name="overflowingSolution">Solution that exceeded overflowThreshold</param>
         /// <returns></returns>
-        public bool TryMixAndOverflow(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
+        public bool TryMixAndOverflow(EntityUid targetUid, Solution targetSolution,
+            Solution addedSolution,
             FixedPoint2 overflowThreshold,
-            out Solution? overflowingSolution)
+            [NotNullWhen(true)] out Solution? overflowingSolution)
         {
             if (addedSolution.TotalVolume == 0)
             {

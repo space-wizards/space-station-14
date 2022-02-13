@@ -9,6 +9,7 @@ using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -62,20 +63,27 @@ public sealed class FluidSpreaderSystem : EntitySystem
 
         base.Update(frameTime);
 
-        var spreaders = new HashSet<EntityUid>(_fluidSpread);
-        _fluidSpread = new HashSet<EntityUid>();
-        foreach (var uid in spreaders)
+        var remQueue = new RemQueue<EntityUid>();
+        foreach (var uid in _fluidSpread)
         {
             MetaDataComponent? meta = null;
-            
-            if (Deleted(uid, meta))
-            // RemQueue add here
-                continue;
-            
+
             if (Paused(uid, meta))
                 continue;
 
+            // If not paused
+            // it's either Deleted or will be via SpreadFluid
+            remQueue.Add(uid);
+
+            if (Deleted(uid, meta))
+                continue;
+
             SpreadFluid(uid);
+        }
+
+        foreach (var removeUid in remQueue)
+        {
+            _fluidSpread.Remove(removeUid);
         }
     }
 
@@ -94,7 +102,8 @@ public sealed class FluidSpreaderSystem : EntitySystem
         var puddles = new List<PuddleComponent> { puddleComponent };
         var visitedTiles = new HashSet<Vector2i>();
 
-        var mapGrid = _mapManager.GetGrid(transformOrig.GridID);
+        if (!_mapManager.TryGetGrid(transformOrig.GridID, out var mapGrid))
+            return;
 
         while (puddles.Count > 0
                && spreader.OverflownSolution.CurrentVolume > FixedPoint2.Zero)
