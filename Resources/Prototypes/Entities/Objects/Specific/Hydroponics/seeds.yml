@@ -9,6 +9,9 @@
       sprite: Objects/Specific/Hydroponics/seeds.rsi
       state: seed
       netsync: true
+    - type: Tag
+      tags:
+      - Seed
 
 - type: entity
   parent: SeedBase

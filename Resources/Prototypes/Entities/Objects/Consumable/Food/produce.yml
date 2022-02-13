@@ -12,6 +12,9 @@
   - type: Produce
   - type: Extractable
     grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Produce
 
 # For produce that can be immediately eaten
 
@@ -27,6 +30,9 @@
   - type: Produce
   - type: Extractable
     grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Produce
 
 # Subclasses
 
