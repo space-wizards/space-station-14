@@ -129,6 +129,6 @@
     quickInsert: true
     areaInsert: true
     whitelist:
-      tags:
+      components:
         - Produce
         - Seed
