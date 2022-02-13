@@ -35,7 +35,7 @@ public sealed class ArtifactGasTriggerSystem : EntitySystem
             if (trigger.ActivationGas == null)
                 continue;
 
-            var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates, true);
+            var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates);
             if (environment == null)
                 continue;
 
