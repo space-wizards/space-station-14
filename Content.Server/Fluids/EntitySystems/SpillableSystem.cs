@@ -190,8 +190,7 @@ public sealed class SpillableSystem : EntitySystem
 
         if (combine)
         {
-            var spillEntities = _entityLookup.GetEntitiesIntersecting(mapGrid.ParentMapId, spillGridCoords.Position)
-                .ToArray();
+            var spillEntities = _entityLookup.GetEntitiesIntersecting(tileRef).ToArray();
 
             foreach (var spillEntity in spillEntities)
             {
