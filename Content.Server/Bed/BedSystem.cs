@@ -12,14 +12,8 @@ namespace Content.Server.Bed
         {
             base.Update(frameTime);
 
-            foreach (var bedComponent in EntityManager.EntityQuery<BedComponent>())
+            foreach (var (bedComponent, strapComponent) in EntityManager.EntityQuery<BedComponent, StrapComponent>())
             {
-                var uid = bedComponent.Owner;
-                if (!TryComp<StrapComponent>(uid, out var strapComponent))
-                {
-                    continue;
-                }
-
                 if (strapComponent.BuckledEntities.Count == 0)
                 {
                     bedComponent.Accumulator = 0;
