@@ -123,9 +123,9 @@
     QuickEquip: false
     Slots:
     - belt
-    size: 125
+    size: 200
   - type: Storage
-    capacity: 125
+    capacity: 200
     quickInsert: true
     areaInsert: true
     whitelist:

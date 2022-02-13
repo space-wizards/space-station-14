@@ -12,6 +12,8 @@
     - type: Tag
       tags:
       - Seed
+    - type: Item
+      size: 2
 
 - type: entity
   parent: SeedBase
