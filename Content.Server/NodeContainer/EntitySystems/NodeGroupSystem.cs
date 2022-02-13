@@ -371,7 +371,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
             if (_accumulatedFrameTime > VisDataUpdateInterval)
             {
-                _accumulatedFrameTime = 0;
+                _accumulatedFrameTime -= VisDataUpdateInterval;
                 foreach (var group in _nodeGroups)
                 {
                     if (_visSends.Contains(group))
