@@ -1,13 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Pulling to a specific location now pushes the player doing the pulling,
-    type: Tweak}
-  - {message: Pulled object rotation snaps cleanly to (grid-relative) angles so pianos
-      don't get stuck as often, type: Tweak}
-  - {message: Moved more pulling code server-side to prevent desyncs, type: Fix}
-  id: 553
-  time: '2021-11-07T02:16:49.0000000+00:00'
 - author: thevinter
   changes:
   - {message: power cells now properly bounce off walls, type: Fix}
@@ -2964,3 +2955,8 @@ Entries:
       metal, and a little bit of gold for the rarest ones.', type: Tweak}
   id: 1053
   time: '2022-02-13T11:21:29.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: 'Added a new lobby song, "Vibe Ace" by Kevin MacLeod.', type: Add}
+  id: 1054
+  time: '2022-02-13T12:17:03.0000000+00:00'
