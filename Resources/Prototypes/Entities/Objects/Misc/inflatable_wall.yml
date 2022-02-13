@@ -8,6 +8,7 @@
   - type: Sprite
     sprite: Objects/Misc/inflatable_wall.rsi
     state: inflatable_wall
+    netsync: false
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -32,7 +33,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: DisassembleOnActivate
+  - type: DisassembleOnAltVerb
     prototype: InflatableWallStack1
     doAfter: 3
   - type: Airtight
@@ -40,3 +41,47 @@
     anchored: true
   placement:
     mode: SnapgridCenter
+
+- type: entity
+  id: InflatableDoor
+  name: inflatable door
+  parent: BaseMaterialDoor
+  description: An inflated membrane. Activate to deflate. Now with a door. Do not puncture.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Objects/Misc/inflatable_door.rsi
+    state: closed
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+      mass: 15
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Door
+    openSound:
+      path: /Audio/Misc/zip.ogg
+    closeSound:
+      path: /Audio/Misc/zip.ogg
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Inflatable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DisassembleOnAltVerb
+    prototype: InflatableDoorStack1
+    doAfter: 3

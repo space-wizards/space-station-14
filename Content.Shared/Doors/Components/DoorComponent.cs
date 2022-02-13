@@ -204,7 +204,8 @@ public enum DoorVisuals
 {
     State,
     Powered,
-    BoltLights
+    BoltLights,
+    EmergencyLights,
 }
 
 [Serializable, NetSerializable]

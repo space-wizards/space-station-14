@@ -5,6 +5,7 @@
   heatCapacityRatio: 1.4
   molarMass: 32
   color: 2887E8
+  reagent: Oxygen
 
 - type: gas
   id: 1
@@ -13,6 +14,7 @@
   heatCapacityRatio: 1.4
   molarMass: 28
   color: DA1010
+  reagent: Nitrogen
 
 - type: gas
   id: 2
@@ -21,6 +23,7 @@
   heatCapacityRatio: 1.3
   molarMass: 44
   color: 4e4e4e
+  reagent: CarbonDioxide
 
 - type: gas
   id: 3
@@ -31,6 +34,7 @@
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: plasma
   color: FF3300
+  reagent: Plasma
 
 - type: gas
   id: 4
@@ -41,6 +45,7 @@
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: tritium
   color: 13FF4B
+  reagent: Tritium
 
 - type: gas
   id: 5
@@ -51,3 +56,4 @@
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: water_vapor
   color: bffffd
+  reagent: Water

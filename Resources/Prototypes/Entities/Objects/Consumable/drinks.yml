@@ -14,15 +14,13 @@
   - type: Drink
   - type: Sprite
     state: icon
+    netsync: false
   - type: Spillable
     solution: drink
   - type: UserInterface
     interfaces:
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.0
 
 - type: entity
   parent: DrinkBase
@@ -2104,9 +2102,12 @@
           Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ramen.rsi
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkRamen
   id: DrinkHellRamen
   name: hell ramen
   description: Just add 10ml water, self heats! Super spicy flavor.
@@ -2120,5 +2121,4 @@
           Quantity: 30
         - ReagentId: CapsaicinOil
           Quantity: 5
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/ramen.rsi
+

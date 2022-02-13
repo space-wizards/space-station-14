@@ -47,12 +47,13 @@
 #  itemId: DoubleBladedESword
 #  price: 16
 
-# bug swept to make
-#- type: uplinkListing
-#  id: UplinkEnergyDagger
-#  category: Weapons
-#  itemId: EnergyDagger
-#  price: 2
+- type: uplinkListing
+  id: UplinkEnergyDagger
+  category: Weapons
+  itemId: EnergyDagger
+  listingName: Energy Dagger
+  description: A small energy blade conveniently disguised in the form of a pen.
+  price: 2
 
 # Explosives
 
@@ -118,8 +119,7 @@
   listingName: Holoparasite Kit
   description: The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active. The guardian can punch rapidly and is immune to hazardous environments and bullets, but shares any damage it takes with the user.
   icon: /Textures/Objects/Misc/guardian_info.rsi/icon.png
-  price: 16
-
+  price: 14
 
 # Bundles
 
@@ -127,29 +127,29 @@
   id: UplinkC20RBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledSMG
-  price: 14
+  price: 25
   icon: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkBojevicBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledShotgun
-  price: 13
+  price: 25
   icon: /Textures/Objects/Weapons/Guns/Shotguns/bojevic.rsi/icon.png
-
-- type: uplinkListing
-  id: UplinkL6SawBundle
-  category: Bundles
-  itemId: ClothingBackpackDuffelSyndicateFilledLMG
-  price: 18
-  icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkGrenadeLauncherBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
-  price: 25
+  price: 30
   icon: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi/icon.png
+
+- type: uplinkListing
+  id: UplinkL6SawBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledLMG
+  price: 40
+  icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
 
 #- type: uplinkListing
 #  id: UplinkCarbineBundle
