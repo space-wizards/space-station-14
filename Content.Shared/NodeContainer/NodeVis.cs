@@ -24,6 +24,13 @@ namespace Content.Shared.NodeContainer
         {
             public List<GroupData> Groups = new();
             public List<int> GroupDeletions = new();
+            public Dictionary<int, string?> GroupDataUpdates = new();
+        }
+
+        [Serializable, NetSerializable]
+        public sealed class DataUpdate : EntityEventArgs
+        {
+            public Dictionary<int, string?> Data = new();
         }
 
         [Serializable, NetSerializable]
@@ -33,6 +40,7 @@ namespace Content.Shared.NodeContainer
             public string GroupId = "";
             public Color Color;
             public NodeDatum[] Nodes = Array.Empty<NodeDatum>();
+            public string? DebugData;
         }
 
         [Serializable, NetSerializable]

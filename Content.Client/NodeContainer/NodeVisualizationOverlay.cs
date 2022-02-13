@@ -86,10 +86,10 @@ namespace Content.Client.NodeContainer
 
             var sb = new StringBuilder();
             sb.Append($"entity: {node.Entity}\n");
-            sb.Append($"group id: {group.GroupId}\n");
             sb.Append($"node: {node.Name}\n");
             sb.Append($"type: {node.Type}\n");
             sb.Append($"grid pos: {gridTile}\n");
+            sb.Append(group.DebugData);
 
             args.ScreenHandle.DrawString(_font, mousePos + (20, -20), sb.ToString());
         }
