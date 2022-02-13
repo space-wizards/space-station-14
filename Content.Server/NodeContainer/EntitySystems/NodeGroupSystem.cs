@@ -353,6 +353,9 @@ namespace Content.Server.NodeContainer.EntitySystems
 
         private void VisDoUpdate(float frametime)
         {
+            if (_visPlayers.Count == 0)
+                return;
+
             _accumulatedFrameTime += frametime;
 
             if (_accumulatedFrameTime < VisDataUpdateInterval
