@@ -225,7 +225,7 @@ namespace Content.Client.Tabletop
         /// <param name="viewport">The viewport in which we are dragging.</param>
         private void StartDragging(EntityUid draggedEntity, ScalingViewport viewport)
         {
-            RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(draggedEntity, _playerManager.LocalPlayer?.UserId));
+            RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(draggedEntity, true));
 
             if (EntityManager.TryGetComponent<AppearanceComponent>(draggedEntity, out var appearance))
             {
@@ -246,7 +246,7 @@ namespace Content.Client.Tabletop
             // Set the dragging player on the component to noone
             if (broadcast && _draggedEntity != null && EntityManager.HasComponent<TabletopDraggableComponent>(_draggedEntity.Value))
             {
-                RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(_draggedEntity.Value, null));
+                RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(_draggedEntity.Value, false));
             }
 
             _draggedEntity = null;
