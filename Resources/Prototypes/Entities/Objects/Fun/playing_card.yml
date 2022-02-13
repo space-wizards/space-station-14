@@ -1,0 +1,46 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BasePlayingCard
+  components:
+  # - type: Sprite
+  #   sprite: Objects/Fun/dice.rsi
+  #   noRot: true # If their sprites rotate, the number becomes even more illegible than usual.
+  # - type: Tag
+  #   tags:
+  #   - Dice
+  - type: Item
+    size: 2
+  - type: Sprite
+    sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
+    # layers:
+    # - state: "off"
+    #   map: ["enum.VendingMachineVisualLayers.Unlit"]
+    # - state: "off"
+    #   map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+    #   shader: unshaded
+    # - state: panel
+    #   map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+
+- type: entity
+  parent: BasePlayingCard
+  id: playingCard
+  name: playing card
+  description: A test
+  components:
+  - type: Sprite
+    state: singlecard_down_nanotrasen
+
+- type: entity
+  parent: BasePlayingCard
+  id: playingCardDeck
+  name: playing card deck
+  description: A test
+  components:
+  - type: Sprite
+    state: deck_nanotrasen_full

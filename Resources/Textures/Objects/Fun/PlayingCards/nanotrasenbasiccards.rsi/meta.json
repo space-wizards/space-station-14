@@ -1,0 +1,195 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "deck_nanotrasen_empty"
+        },
+        {
+            "name": "deck_nanotrasen_full"
+        },
+        {
+            "name": "deck_nanotrasen_half"
+        },
+        {
+            "name": "deck_nanotrasen_low"
+        },
+        {
+            "name": "nanotrasen_hand1"
+        },
+        {
+            "name": "nanotrasen_hand2"
+        },
+        {
+            "name": "nanotrasen_hand3"
+        },
+        {
+            "name": "nanotrasen_hand4"
+        },
+        {
+            "name": "nanotrasen_hand5"
+        },
+        {
+            "name": "sc_10 of Clubs_nanotrasen"
+        },
+        {
+            "name": "sc_10 of Diamonds_nanotrasen"
+        },
+        {
+            "name": "sc_10 of Hearts_nanotrasen"
+        },
+        {
+            "name": "sc_10 of Spades_nanotrasen"
+        },
+        {
+            "name": "sc_2 of Clubs_nanotrasen"
+        },
+        {
+            "name": "sc_2 of Diamonds_nanotrasen"
+        },
+        {
+            "name": "sc_2 of Hearts_nanotrasen"
+        },
+        {
+            "name": "sc_2 of Spades_nanotrasen"
+        },
+        {
+            "name": "sc_3 of Clubs_nanotrasen"
+        },
+        {
+            "name": "sc_3 of Diamonds_nanotrasen"
+        },
+        {
+            "name": "sc_3 of Hearts_nanotrasen"
+        },
+        {
+            "name": "sc_3 of Spades_nanotrasen"
+        },
+        {
+            "name": "sc_4 of Clubs_nanotrasen"
+        },
+        {
+            "name": "sc_4 of Diamonds_nanotrasen"
+        },
+        {
+            "name": "sc_4 of Hearts_nanotrasen"
+        },
+        {
+            "name": "sc_4 of Spades_nanotrasen"
+        },
+        {
+            "name": "sc_5 of Clubs_nanotrasen"
+        },
+        {
+            "name": "sc_5 of Diamonds_nanotrasen"
+        },
+        {
+            "name": "sc_5 of Hearts_nanotrasen"
+        },
+        {
+            "name": "sc_5 of Spades_nanotrasen"
+        },
+        {
+            "name": "sc_6 of Clubs_nanotrasen"
+        },
+        {
+            "name": "sc_6 of Diamonds_nanotrasen"
+        },
+        {
+            "name": "sc_6 of Hearts_nanotrasen"
+        },
+        {
+            "name": "sc_6 of Spades_nanotrasen"
+        },
+        {
+            "name": "sc_7 of Clubs_nanotrasen"
+        },
+        {
+            "name": "sc_7 of Diamonds_nanotrasen"
+        },
+        {
+            "name": "sc_7 of Hearts_nanotrasen"
+        },
+        {
+            "name": "sc_7 of Spades_nanotrasen"
+        },
+        {
+            "name": "sc_8 of Clubs_nanotrasen"
+        },
+        {
+            "name": "sc_8 of Diamonds_nanotrasen"
+        },
+        {
+            "name": "sc_8 of Hearts_nanotrasen"
+        },
+        {
+            "name": "sc_8 of Spades_nanotrasen"
+        },
+        {
+            "name": "sc_9 of Clubs_nanotrasen"
+        },
+        {
+            "name": "sc_9 of Diamonds_nanotrasen"
+        },
+        {
+            "name": "sc_9 of Hearts_nanotrasen"
+        },
+        {
+            "name": "sc_9 of Spades_nanotrasen"
+        },
+        {
+            "name": "sc_Ace of Clubs_nanotrasen"
+        },
+        {
+            "name": "sc_Ace of Diamonds_nanotrasen"
+        },
+        {
+            "name": "sc_Ace of Hearts_nanotrasen"
+        },
+        {
+            "name": "sc_Ace of Spades_nanotrasen"
+        },
+        {
+            "name": "sc_Jack of Clubs_nanotrasen"
+        },
+        {
+            "name": "sc_Jack of Diamonds_nanotrasen"
+        },
+        {
+            "name": "sc_Jack of Hearts_nanotrasen"
+        },
+        {
+            "name": "sc_Jack of Spades_nanotrasen"
+        },
+        {
+            "name": "sc_King of Clubs_nanotrasen"
+        },
+        {
+            "name": "sc_King of Diamonds_nanotrasen"
+        },
+        {
+            "name": "sc_King of Hearts_nanotrasen"
+        },
+        {
+            "name": "sc_King of Spades_nanotrasen"
+        },
+        {
+            "name": "sc_Queen of Clubs_nanotrasen"
+        },
+        {
+            "name": "sc_Queen of Diamonds_nanotrasen"
+        },
+        {
+            "name": "sc_Queen of Hearts_nanotrasen"
+        },
+        {
+            "name": "sc_Queen of Spades_nanotrasen"
+        },
+        {
+            "name": "singlecard_down_nanotrasen"
+        }
+    ]
+}
