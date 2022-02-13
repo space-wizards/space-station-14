@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
@@ -17,28 +18,22 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     Target volume to transfer. If <see cref="WideNet"/> is enabled, actual transfer rate will be much higher.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float VolumeRate
+        public float TransferRate
         {
-            get => _volumeRate;
-            set => _volumeRate = Math.Clamp(value, 0f, MaxVolumeRate);
+            get => _transferRate;
+            set => _transferRate = Math.Clamp(value, 0f, MaxTransferRate);
         }
 
-        private float _volumeRate = 50;
+        private float _transferRate = 50;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("maxVolumeRate")]
-        public float MaxVolumeRate = 200f;
+        [DataField("maxTransferRate")]
+        public float MaxTransferRate = Atmospherics.MaxTransferRate;
 
-        /// <summary>
-        ///     As pressure difference approaches this number, the effective volume rate may be smaller than <see
-        ///     cref="VolumeRate"/>
-        /// </summary>
-        [DataField("MaxPressureDifference")]
-        public float MaxPressureDifference = 4500;
+        [DataField("maxPressure")]
+        public float MaxPressure { get; set; } = 2 * Atmospherics.MaxOutputPressure;
 
         [DataField("inlet")]
         public string InletName { get; set; } = "pipe";
-
-        // TODO ATMOS: Inject method.
     }
 }

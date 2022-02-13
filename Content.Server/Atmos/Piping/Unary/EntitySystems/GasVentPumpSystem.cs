@@ -14,6 +14,7 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
 using JetBrains.Annotations;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -22,6 +23,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {
@@ -32,17 +34,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentPumpComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<GasVentPumpComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<GasVentPumpComponent, PacketSentEvent>(OnPacketRecv);
-        }
-
-        private static float Efficiency(float pressureDifference, float maxPressureDifference)
-        {
-            if (pressureDifference < 0)
-                return 1;
-            if (pressureDifference > maxPressureDifference)
-                return 0;
-
-            // about 70% efficiency when pressure difference is half of the maximum.
-            return MathF.Sqrt(1 - pressureDifference / maxPressureDifference);
         }
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, AtmosDeviceUpdateEvent args)
@@ -56,7 +47,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
 
             if (!vent.Enabled
-                || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+                || !TryComp(uid, out AtmosDeviceComponent? device)
+                || !TryComp(uid, out NodeContainerComponent? nodeContainer)
                 || !nodeContainer.TryGetNode(vent.InletName, out PipeNode? pipe))
             {
                 appearance?.SetData(VentPumpVisuals.State, VentPumpState.Off);
@@ -72,11 +64,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
+            var timeDelta =  (_gameTiming.CurTime - device.LastProcess).TotalSeconds;
+            var pressureDelta = (float) timeDelta * vent.TargetPressureChange;
+
             if (vent.PumpDirection == VentPumpDirection.Releasing && pipe.Air.Pressure > 0)
             {
                 appearance?.SetData(VentPumpVisuals.State, VentPumpState.Out);
 
-                var pressureDelta = vent.PumpPressure;
+                if (environment.Pressure > vent.MaxPressure)
+                    return;
 
                 if ((vent.PressureChecks & VentPressureBound.ExternalBound) != 0)
                     pressureDelta = MathF.Min(pressureDelta, vent.ExternalPressureBound - environment.Pressure);
@@ -100,14 +96,14 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     transferMoles = MathF.Min(transferMoles, maxTransfer);
                 }
 
-                transferMoles *= Efficiency(environment.Pressure - pipe.Air.Pressure, vent.MaxPressureDifference);
                 _atmosphereSystem.Merge(environment, pipe.Air.Remove(transferMoles));
             }
             else if (vent.PumpDirection == VentPumpDirection.Siphoning && environment.Pressure > 0)
             {
                 appearance?.SetData(VentPumpVisuals.State, VentPumpState.In);
 
-                var pressureDelta = vent.PumpPressure;
+                if (pipe.Air.Pressure > vent.MaxPressure)
+                    return;
 
                 if ((vent.PressureChecks & VentPressureBound.InternalBound) != 0)
                     pressureDelta = MathF.Min(pressureDelta, vent.InternalPressureBound - pipe.Air.Pressure);
@@ -132,7 +128,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     transferMoles = MathF.Min(transferMoles, maxTransfer);
                 }
 
-                transferMoles *= Efficiency(pipe.Air.Pressure - environment.Pressure, vent.MaxPressureDifference);
                 _atmosphereSystem.Merge(pipe.Air, environment.Remove(transferMoles));
             }
         }

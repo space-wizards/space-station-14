@@ -64,12 +64,15 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpVolume
-          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer", "enum.PressurePumpVisualizer+Layers.Enabled" ]
     - type: Appearance
       visuals:
         - type: SubFloorShowLayerVisualizer
         - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
+        - type: PressurePumpVisualizer
+          disabledState: pumpVolume
+          enabledState: pumpVolumeOn
     - type: GasVolumePump
     - type: UserInterface
       interfaces:

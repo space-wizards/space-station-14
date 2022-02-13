@@ -3,8 +3,8 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
-using Content.Shared.Atmos;
 using JetBrains.Annotations;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -12,6 +12,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     public sealed class GasOutletInjectorSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {
@@ -30,6 +31,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
+            if (!TryComp(uid, out AtmosDeviceComponent? device))
+                return;
+
             if (!nodeContainer.TryGetNode(injector.InletName, out PipeNode? inlet))
                 return;
 
@@ -41,13 +45,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (inlet.Air.Temperature < 0)
                 return;
 
-            var ratio = GasVentScrubberSystem.GetTransferRatio(
-                inlet.Air,
-                environment,
-                injector.VolumeRate,
-                injector.MaxVolumeRate,
-                injector.MaxPressureDifference);
-
+            var timeDelta = (float) (_gameTiming.CurTime - device.LastProcess).TotalSeconds;
+            var ratio = MathF.Min(1f, timeDelta * injector.TransferRate / inlet.Air.Volume);
             var removed = inlet.Air.RemoveRatio(ratio);
 
             _atmosphereSystem.Merge(environment, removed);

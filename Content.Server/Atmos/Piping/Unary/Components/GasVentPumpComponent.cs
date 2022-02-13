@@ -29,33 +29,48 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("externalPressureBound")]
-        public float ExternalPressureBound { get; set; } = Atmospherics.OneAtmosphere;
+        public float ExternalPressureBound
+        {
+            get => _externalPressureBound;
+            set
+            {
+                _externalPressureBound = Math.Clamp(value, 0, MaxPressure);
+            }
+        }
 
+        private float _externalPressureBound = Atmospherics.OneAtmosphere;
+        
         [ViewVariables(VVAccess.ReadWrite)]
-
         [DataField("internalPressureBound")]
-        public float InternalPressureBound { get; set; } = 0f;
+        public float InternalPressureBound
+        {
+            get => _internalPressureBound;
+            set
+            {
+                _internalPressureBound = Math.Clamp(value, 0, MaxPressure);
+            }
+        }
+
+        private float _internalPressureBound = 0;
 
         /// <summary>
         ///     If the difference between the internal and external pressure is larger than this, the device can no
         ///     longer move gas.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("maxPressureDifference")]
-        public float MaxPressureDifference = 4500;
+        [DataField("maxPressure")]
+        public float MaxPressure = Atmospherics.MaxOutputPressure;
 
         /// <summary>
-        ///     Pressure pump speed. Determines how much gas is moved.
+        ///     Pressure pump speed in kPa/s. Determines how much gas is moved.
         /// </summary>
         /// <remarks>
-        ///     The pump will attempt to modify the destination's final pressure by this quantity. The actual change
-        ///     will be limited by efficiency losses as the pressure difference approaches <see
-        ///     cref="MaxPressureDifference"/>.
+        ///     The pump will attempt to modify the destination's final pressure by this quantity every second. If this
+        ///     is too high, someone can nearly instantly flood a room with gas.
         /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("pumpPressure")]
-        public float PumpPressure = 100;
-        // currently total-mole pumping capacity increases with available volume in the destination.
+        [DataField("targetPressureChange")]
+        public float TargetPressureChange = Atmospherics.OneAtmosphere;
 
         public GasVentPumpData ToAirAlarmData()
         {

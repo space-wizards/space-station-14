@@ -1,12 +1,9 @@
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
-    public class GasPressurePumpComponent : Component
+    public sealed class GasPressurePumpComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
@@ -20,6 +17,15 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         public string OutletName { get; set; } = "outlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("targetPressure")]
         public float TargetPressure { get; set; } = Atmospherics.OneAtmosphere;
+
+        /// <summary>
+        ///     If the difference between the internal and external pressure is larger than this, the device can no
+        ///     longer move gas.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("maxTargetPressure")]
+        public float MaxTargetPressure = Atmospherics.MaxOutputPressure;
     }
 }
