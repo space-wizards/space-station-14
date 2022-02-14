@@ -132,6 +132,7 @@
     Lawyer: [ 1, 2 ]
     Warden: [ 1, 1 ]
     Quartermaster: [ 1, 1 ]
+    SalvageSpecialist: [ 4, 6 ] 
 
 - type: gameMap
   id: ssreach
