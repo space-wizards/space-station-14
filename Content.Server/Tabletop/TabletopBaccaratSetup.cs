@@ -36,20 +36,6 @@ namespace Content.Server.Tabletop
                 var pos = borderLengthY - (pieceDistanceY * positionNumber);
                 return isTop ? pos : -pos;
             }
-
-            void AddPieces(
-                float distanceFromSide,
-                int numberOfPieces,
-                bool isBlackPiece,
-                bool isTop,
-                bool isLeftSide)
-            {
-                for (int i = 0; i < numberOfPieces; i++)
-                {
-                    session.Entities.Add(entityManager.SpawnEntity(isBlackPiece ? BlackPiecePrototype : WhitePiecePrototype, session.Position.Offset(GetXPosition(distanceFromSide, isLeftSide), GetYPosition(i, isTop))));
-                }
-            }
-
             // // Top left
             // AddPieces(0, 5, true, true, true);
             // // top middle left

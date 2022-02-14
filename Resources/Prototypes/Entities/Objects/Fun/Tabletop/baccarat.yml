@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/baccarat.rsi
-    state: board
+    state: baccarat
   - type: TabletopGame
     boardName: tabletop-baccarat-board-name
     size: 550, 410
