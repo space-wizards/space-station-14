@@ -73,3 +73,109 @@
     sprite: Objects/Specific/Hydroponics/aloe.rsi
     state: cream
 
+# Pills
+- type: entity
+  name: kelotane pill
+  parent: pill
+  id: PillKelotane
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Kelotane
+          Quantity: 15
+          
+- type: entity
+  name: dexalin pill
+  parent: pill
+  id: PillDexalin
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Dexalin
+          Quantity: 15
+          
+- type: entity
+  name: dylovene pill
+  parent: pill
+  id: PillDylovene
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Dylovene
+          Quantity: 15
+
+- type: entity
+  name: hyronalin pill
+  parent: pill
+  id: PillHyronalin
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Hyronalin
+          Quantity: 15
+          
+- type: entity
+  name: space drugs
+  parent: pill
+  id: PillSpaceDrugs
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: SpaceDrugs
+          Quantity: 15
+          
+# Syringes
+- type: entity
+  name: inaprovaline syringe
+  parent: Syringe
+  id: SyringeInaprovaline
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Inaprovaline
+          Quantity: 15
+
+- type: entity
+  name: spaceacillin syringe
+  parent: Syringe
+  id: SyringeSpaceacillin
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Spaceacillin
+          Quantity: 15
+
+- type: entity
+  name: ephedrine syringe
+  parent: Syringe
+  id: SyringeEphedrine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Ephedrine
+          Quantity: 15
+        
