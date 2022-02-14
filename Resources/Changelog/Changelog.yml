@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Labelers have been mapped in to Saltern. There''s some in the dorms,
-      chemistry, and cargo.', type: Add}
-  id: 557
-  time: '2021-11-10T06:45:18.0000000+00:00'
 - author: xRiriq
   changes:
   - {message: Syringes now can draw from ChemMaster 4000 bottles, type: Fix}
@@ -2963,3 +2957,8 @@ Entries:
   - {message: Drone movement speed reduced by 1/6., type: Tweak}
   id: 1057
   time: '2022-02-13T22:36:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to deconstruct windoors., type: Fix}
+  id: 1058
+  time: '2022-02-14T02:44:22.0000000+00:00'
