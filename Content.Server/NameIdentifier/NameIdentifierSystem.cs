@@ -9,7 +9,7 @@ namespace Content.Server.NameIdentifier;
 /// <summary>
 ///     Handles unique name identifiers for entities e.g. `monkey (MK-912)`
 /// </summary>
-public class NameIdentifierSystem : EntitySystem
+public sealed class NameIdentifierSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
