@@ -202,6 +202,7 @@ namespace Content.Shared.Verbs
             { typeof(InteractionVerb) },
             { typeof(AlternativeVerb) },
             { typeof(ActivationVerb) },
+            { typeof(ExamineVerb) }
         };
     }
 
@@ -263,5 +264,13 @@ namespace Content.Shared.Verbs
         {
             TextStyleClass = DefaultTextStyleClass;
         }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ExamineVerb : Verb
+    {
+        public override int TypePriority => 0;
+
+        public bool ShowOnExamineTooltip = true;
     }
 }
