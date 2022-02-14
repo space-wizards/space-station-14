@@ -326,6 +326,29 @@
         acts: [ "Destruction" ]
 
 - type: entity
+  id: BaccaratTable
+  parent: TableBase
+  name: baccarat table
+  description: Oh god this is a bad idea. 
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/stone.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/stone.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/picaxe2.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+
+- type: entity
   id: TableDebug
   parent: TableBase
   name: table
