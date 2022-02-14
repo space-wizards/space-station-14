@@ -8,7 +8,7 @@ namespace Content.Server.Tabletop
     public class TabletopBaccaratSetup : TabletopSetup
     {
         [DataField("boardPrototype")]
-        public string BaccaratTablePrototype { get; } = "BaccaratTableTabletop";
+        public string BaccaratTablePrototype { get; } = "BaccaratTabletop";
 
         [DataField("playingCardPrototype")]
         public string PlayingCardPrototype { get; } = "PlayingCard";

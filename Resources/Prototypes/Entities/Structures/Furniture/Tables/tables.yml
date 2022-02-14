@@ -327,12 +327,17 @@
 
 - type: entity
   id: BaccaratTable
-  parent: TableBase
   name: baccarat table
   description: Oh god this is a bad idea.
   components:
   - type: Sprite
     sprite: Structures/Furniture/Tables/baccarat.rsi
+    state: baccarat
+  - type: TabletopGame
+    boardName: tabletop-baccarat-board-name
+    size: 550, 410
+    setup:
+      !type:TabletopBaccaratSetup
   - type: Icon
     sprite: Structures/Furniture/Tables/baccarat.rsi
 
