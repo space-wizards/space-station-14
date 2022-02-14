@@ -4,5 +4,5 @@
 public class NameIdentifierComponent : Component
 {
     [DataField("group", required: true)]
-    public string Group = default!;
+    public string Group = string.Empty;
 }
