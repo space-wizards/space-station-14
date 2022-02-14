@@ -1,0 +1,29 @@
+- type: entity
+  parent: BaseItem
+  id: BaccaratTable
+  name: baccarat table
+  description: Lose all your money
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/baccarat.rsi
+    state: board
+  - type: TabletopGame
+    boardName: tabletop-baccarat-board-name
+    size: 550, 410
+    setup:
+      !type:TabletopBaccaratSetup
+
+- type: entity
+  id: BaccaratTabletop
+  name: baccarat
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/baccarat_tabletop.rsi
+    state: baccaratTable
+    noRot: false
+    drawdepth: FloorTiles
+  - type: TabletopGame
+    boardName: tabletop-baccarat-board-name
+    size: 338, 274
+    setup: !type:TabletopBaccaratSetup

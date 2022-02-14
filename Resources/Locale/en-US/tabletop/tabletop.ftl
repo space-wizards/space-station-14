@@ -14,3 +14,6 @@ tabletop-backgammon-board-name = Backgammon
 
 ## Checkers
 tabletop-checkers-board-name = Checkers
+
+## Baccarat
+tabletop-baccarat-board-name = Baccarat
