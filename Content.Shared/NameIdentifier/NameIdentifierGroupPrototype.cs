@@ -19,4 +19,7 @@ public sealed class NameIdentifierGroupPrototype : IPrototype
 
     [DataField("maxValue")]
     public int MaxValue = 999;
+
+    [DataField("minValue")]
+    public int MinValue = 0;
 }

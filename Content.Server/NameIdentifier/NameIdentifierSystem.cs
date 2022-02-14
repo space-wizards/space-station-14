@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameTicking;
+﻿using System.Linq;
+using Content.Shared.GameTicking;
 using Content.Shared.NameIdentifier;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -44,7 +45,7 @@ public class NameIdentifierSystem : EntitySystem
         if (!CurrentIds.TryGetValue(proto, out var set))
             return entityName;
 
-        if (set.Count == proto.MaxValue + 1)
+        if (set.Count == (proto.MaxValue - proto.MinValue) + 1)
         {
             // Oh jeez. We're outta numbers.
             return entityName;
@@ -52,10 +53,11 @@ public class NameIdentifierSystem : EntitySystem
 
         // This is kind of inefficient with very large amounts of entities but its better than any other method
         // I could come up with.
-        var randomVal = _robustRandom.Next(0, proto.MaxValue);
+
+        var randomVal = _robustRandom.Next(proto.MinValue, proto.MaxValue);
         while (set.Contains(randomVal))
         {
-            randomVal = _robustRandom.Next(0, proto.MaxValue);
+            randomVal = _robustRandom.Next(proto.MinValue, proto.MaxValue);
         }
 
         set.Add(randomVal);
