@@ -76,7 +76,7 @@
 # Pills
 - type: entity
   name: kelotane pill
-  parent: pill
+  parent: Pill
   id: PillKelotane
   components:
   - type: SolutionContainerManager
@@ -89,7 +89,7 @@
           
 - type: entity
   name: dexalin pill
-  parent: pill
+  parent: Pill
   id: PillDexalin
   components:
   - type: SolutionContainerManager
@@ -102,7 +102,7 @@
           
 - type: entity
   name: dylovene pill
-  parent: pill
+  parent: Pill
   id: PillDylovene
   components:
   - type: SolutionContainerManager
@@ -115,7 +115,7 @@
 
 - type: entity
   name: hyronalin pill
-  parent: pill
+  parent: Pill
   id: PillHyronalin
   components:
   - type: SolutionContainerManager
@@ -128,7 +128,7 @@
           
 - type: entity
   name: space drugs
-  parent: pill
+  parent: Pill
   id: PillSpaceDrugs
   components:
   - type: SolutionContainerManager
