@@ -68,12 +68,12 @@ namespace Content.Shared.SmartFridge
         public class SmartFridgePublicListEntry
         {
             [ViewVariables(VVAccess.ReadWrite)]
-            public string ID;
+            public int ID;
             [ViewVariables(VVAccess.ReadWrite)]
             public string Name;
             [ViewVariables(VVAccess.ReadWrite)]
             public uint Amount;
-            public SmartFridgePublicListEntry(string id, string name, uint amount)
+            public SmartFridgePublicListEntry(int id, string name, uint amount)
             {
                 ID = id;
                 Name = name;

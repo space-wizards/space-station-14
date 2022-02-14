@@ -4,6 +4,8 @@ using Content.Shared.Sound;
 using Content.Shared.SmartFridge;
 using Content.Server.SmartFridge.systems;
 using Robust.Server.GameObjects;
+using Content.Shared.Whitelist;
+using Robust.Shared.Containers;
 
 using Content.Shared.Chemistry.Components;
 using static Content.Shared.Wires.SharedWiresComponent;
@@ -29,9 +31,11 @@ namespace Content.Server.SmartFridge
         public float NonLimitedEjectForce = 7.5f;
         public float NonLimitedEjectRange = 5f;
 
-        // public Dictionary< SmartFridgeListEntry>
-        public Dictionary<string, SmartFridgeInventoryEntry>? Inventory { get; private set; }
-        public Dictionary<string, SmartFridgeInventoryEntry>? InventoryID { get; private set; }
+        [DataField("insertWhitelist")]
+        public EntityWhitelist? Whitelist;
+        public Container? Storage;
+
+        public List<SmartFridgeInventoryEntry> Inventory = new List<SmartFridgeInventoryEntry>();
         // public Dictionary<(int ID, string Name), string>? Inventory { get; private set; }
 
             //                 if (Inventory != null)
@@ -72,14 +76,17 @@ namespace Content.Server.SmartFridge
     {
        public int ID;
        public String Name;
-       public List<Solution> Reagents;
-       public int Count;
-        public SmartFridgeInventoryEntry(int id, String name, List<Solution> reagents, int count)
+       public Dictionary<string, Solution>? Reagents;
+       public uint Amount;
+       public Queue<EntityUid> Entities;
+
+        public SmartFridgeInventoryEntry(int id, String name, Dictionary<string, Solution>? reagents, uint amount, Queue<EntityUid> entities)
         {
             ID = id;
             Name = name;
             Reagents = reagents;
-            Count = count;
+            Amount = amount;
+            Entities = entities;
         }
     }
     public class WiresUpdateEventArgs : EventArgs

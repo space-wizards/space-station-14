@@ -1,24 +1,19 @@
-using System.Collections.Generic;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
-using System;
-using System.Linq;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.WireHacking;
-using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Server.Throwing;
 using Robust.Shared.Maths;
 using Content.Shared.Acts;
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Shared.Item;
+using Robust.Shared.Containers;
 
 using static Content.Shared.SmartFridge.SharedSmartFridgeComponent;
 
@@ -30,6 +25,7 @@ namespace Content.Server.SmartFridge.systems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        private int _nextAllocatedId = 0;
 
         public override void Initialize()
         {
@@ -47,10 +43,12 @@ namespace Content.Server.SmartFridge.systems
         {
             base.Initialize();
 
-            if (TryComp<ApcPowerReceiverComponent>(component.Owner, out var receiver))
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
             {
                 TryUpdateVisualState(uid, null, component);
             }
+
+            component.Storage = uid.EnsureContainer<Container>("vendor_entity_container");
         }
 
         private void OnInventoryRequestMessage(EntityUid uid, SmartFridgeComponent component, InventorySyncRequestMessage args)
@@ -109,7 +107,7 @@ namespace Content.Server.SmartFridge.systems
 
         private void OnInteractUsing(EntityUid uid, SmartFridgeComponent fridgeComponent, InteractUsingEvent args)
         {
-            // args.
+
         }
 
 
@@ -120,14 +118,15 @@ namespace Content.Server.SmartFridge.systems
 
             fridgeComponent.PublicInventory = new List<SmartFridgePublicListEntry>();
 
-            if (fridgeComponent.Inventory == null || fridgeComponent.Inventory.Count <= 0)
+            if (fridgeComponent.Inventory == null)
             {
+                return;
             }
             else
             {
-                foreach (var (identifiers, entry) in fridgeComponent.Inventory)
+                foreach (var entry in fridgeComponent.Inventory)
                 {
-                    fridgeComponent.PublicInventory.Add(new SmartFridgePublicListEntry(identifiers.ID, identifiers.Name, entry.count));
+                    fridgeComponent.PublicInventory.Add(new SmartFridgePublicListEntry(entry.ID, entry.Name, entry.Amount));
                 }
             }
         }
@@ -167,23 +166,82 @@ namespace Content.Server.SmartFridge.systems
             });
         }
 
-        public void TryEjectVendorItem(EntityUid uid, string itemId, bool throwItem, SmartFridgeComponent? fridgeComponent = null)
+
+        public bool TryInsertVendorItem(EntityUid uid, EntityUid itemUid, SmartFridgeComponent fridgeComponent)
+        {
+            if (fridgeComponent.Storage == null)
+                return false;
+
+            // if (_entMan.GetComponent<HandsComponent>(eventArgs.User).GetActiveHand?.Owner is not {Valid: true} itemEntity)
+            // {
+            //     eventArgs.User.PopupMessage(Loc.GetString("vending-machine-component-interact-using-no-active-hand"));
+            //     return;
+            // }
+
+            if (fridgeComponent.Whitelist != null && !fridgeComponent.Whitelist.IsValid(itemUid))
+            {
+                return false;
+            }
+
+            if (!TryComp<SharedItemComponent>(itemUid, out SharedItemComponent? item))
+                return false;
+
+            TryComp<MetaDataComponent>(itemUid, out MetaDataComponent? metaData);
+            if (metaData == null)
+            {
+                // fuck no just fix in a sec
+                return false;
+            }
+
+            TryComp<SolutionContainerManagerComponent>(itemUid, out SolutionContainerManagerComponent? itemSolutions);
+
+            bool matchedEntry = false;
+            foreach (var inventoryItem in fridgeComponent.Inventory)
+            {
+                if (metaData.EntityName == inventoryItem.Name)
+                {
+                    if ((itemSolutions == null && inventoryItem.Reagents == null)
+                     || (itemSolutions != null && inventoryItem.Reagents != null && itemSolutions.Solutions == inventoryItem.Reagents))
+                    {
+                        matchedEntry = true;
+                        var listedItem = fridgeComponent.Inventory.Find(x => x.ID == inventoryItem.ID);
+                        listedItem.Amount++;
+                        listedItem.Entities.Enqueue(itemUid);
+                        break;
+                    }
+                }
+            }
+
+            if (!matchedEntry)
+            {
+                SmartFridgeInventoryEntry newEntry = new SmartFridgeInventoryEntry(_nextAllocatedId++, metaData.EntityName, itemSolutions?.Solutions, 1, new Queue<EntityUid>());
+                newEntry.Entities.Enqueue(itemUid);
+                fridgeComponent.Inventory.Add(newEntry);
+            }
+
+            fridgeComponent.Storage.Insert(itemUid);
+            RefreshInventory(uid, fridgeComponent);
+            fridgeComponent.UserInterface?.SendMessage(new SmartFridgeInventoryMessage(fridgeComponent.PublicInventory));
+            // SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+            return true;
+        }
+
+        public void TryEjectVendorItem(EntityUid uid, int itemId, bool throwItem, SmartFridgeComponent? fridgeComponent = null)
         {
             if (!Resolve(uid, ref fridgeComponent))
                 return;
 
-            if (fridgeComponent.Ejecting || fridgeComponent.Inventory == null || fridgeComponent.Broken || !IsPowered(uid, fridgeComponent))
-            {
+            if (fridgeComponent.Storage == null || fridgeComponent.Ejecting || fridgeComponent.Inventory == null || fridgeComponent.Inventory.Count == 0 || fridgeComponent.Broken || !IsPowered(uid, fridgeComponent))
                 return;
-            }
 
-            var entry = fridgeComponent.Inventory.Find(x => x.ID == itemId);
-            if (entry == null)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid, Filter.Pvs(uid));
-                Deny(uid, fridgeComponent);
-                return;
-            }
+            SmartFridgeInventoryEntry entry = fridgeComponent.Inventory.Find(x => x.ID == itemId);
+
+            // if (entry == null)
+            // {
+            //     _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid, Filter.Pvs(uid));
+            //     Deny(uid, fridgeComponent);
+            //     return;
+            // }
 
             if (entry.Amount <= 0)
             {
@@ -192,28 +250,28 @@ namespace Content.Server.SmartFridge.systems
                 return;
             }
 
-            if (entry.ID == null)
-                return;
-
             if (!TryComp<TransformComponent>(fridgeComponent.Owner, out var transformComp))
                 return;
 
             // Start Ejecting, and prevent users from ordering while anim playing
             fridgeComponent.Ejecting = true;
             entry.Amount--;
-            fridgeComponent.UserInterface?.SendMessage(new VendingMachineInventoryMessage(fridgeComponent.Inventory));
+            EntityUid targetEntity = entry.Entities.Dequeue();
+            RefreshInventory(uid, fridgeComponent);
+            fridgeComponent.UserInterface?.SendMessage(new SmartFridgeInventoryMessage(fridgeComponent.PublicInventory));
             TryUpdateVisualState(uid, VendingMachineVisualState.Eject, fridgeComponent);
             fridgeComponent.Owner.SpawnTimer(fridgeComponent.AnimationDuration, () =>
             {
                 fridgeComponent.Ejecting = false;
                 TryUpdateVisualState(uid, VendingMachineVisualState.Normal, fridgeComponent);
-                var ent = EntityManager.SpawnEntity(entry.ID, transformComp.Coordinates);
-                if (throwItem)
-                {
-                    float range = fridgeComponent.NonLimitedEjectRange;
-                    Vector2 direction = new Vector2(_random.NextFloat(-range, range), _random.NextFloat(-range, range));
-                    ent.TryThrow(direction, fridgeComponent.NonLimitedEjectForce);
-                }
+                // var ent = EntityManager.SpawnEntity(, transformComp.Coordinates);
+                fridgeComponent.Storage.Remove(targetEntity);
+                // if (throwItem)
+                // {
+                //     float range = fridgeComponent.NonLimitedEjectRange;
+                //     Vector2 direction = new Vector2(_random.NextFloat(-range, range), _random.NextFloat(-range, range));
+                //     ent.TryThrow(direction, fridgeComponent.NonLimitedEjectForce);
+                // }
             });
             SoundSystem.Play(Filter.Pvs(fridgeComponent.Owner), fridgeComponent.SoundVend.GetSound(), fridgeComponent.Owner, AudioParams.Default.WithVolume(-2f));
         }
