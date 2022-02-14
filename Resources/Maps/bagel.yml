@@ -70501,7 +70501,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4998
-  type: MedkitO2
+  type: MedkitOxygen
   components:
   - pos: 49.550457,-18.250292
     parent: 36
@@ -70513,7 +70513,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4999
-  type: MedkitO2
+  type: MedkitOxygen
   components:
   - pos: 49.566082,-18.531542
     parent: 36
