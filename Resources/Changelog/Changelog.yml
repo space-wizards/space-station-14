@@ -1,48 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: 'Directional windows have been added (non-fulltile), though not mapped
-      in yet.', type: Add}
-  id: 550
-  time: '2021-11-07T00:12:42.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Valves make sound when used, type: Tweak}
-  id: 551
-  time: '2021-11-07T00:32:33.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Fixed bucket, type: Fix}
-  id: 552
-  time: '2021-11-07T00:33:03.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Pulling to a specific location now pushes the player doing the pulling,
-    type: Tweak}
-  - {message: Pulled object rotation snaps cleanly to (grid-relative) angles so pianos
-      don't get stuck as often, type: Tweak}
-  - {message: Moved more pulling code server-side to prevent desyncs, type: Fix}
-  id: 553
-  time: '2021-11-07T02:16:49.0000000+00:00'
-- author: thevinter
-  changes:
-  - {message: power cells now properly bounce off walls, type: Fix}
-  id: 554
-  time: '2021-11-07T09:11:40.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fix a bug that causes the examine-popup to close immediately after opening.,
-    type: Fix}
-  id: 555
-  time: '2021-11-07T10:33:52.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: The game rules have been updated to bring the server to Low Roleplay
-      standards. Go read 'em!, type: Tweak}
-  id: 556
-  time: '2021-11-10T00:12:46.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: 'Labelers have been mapped in to Saltern. There''s some in the dorms,
       chemistry, and cargo.', type: Add}
   id: 557
@@ -2960,3 +2918,48 @@ Entries:
     type: Add}
   id: 1050
   time: '2022-02-13T00:53:54.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added new spawners for mappers to use. Now there's a random chance of
+      what might appear in maint and secret spots..., type: Add}
+  id: 1051
+  time: '2022-02-13T09:52:12.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Potassium/water explosions nerfed, type: Tweak}
+  - {message: Water has been removed from the soda and chem dispensers, type: Tweak}
+  id: 1052
+  time: '2022-02-13T10:12:48.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added Circuit Imprinters. These machines are used to print all machine
+      circuit boards, instead of the protolathe.', type: Add}
+  - {message: 'Circuit board recipes tweaked. They now use a lot of glass, a bit of
+      metal, and a little bit of gold for the rarest ones.', type: Tweak}
+  id: 1053
+  time: '2022-02-13T11:21:29.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: 'Added a new lobby song, "Vibe Ace" by Kevin MacLeod.', type: Add}
+  id: 1054
+  time: '2022-02-13T12:17:03.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: Added an upright piano for all your saloon tunes, type: Add}
+  - {message: Retuned the church organ to sound more churchy, type: Fix}
+  - {message: Updated piano sprite to stop violating laws of physics, type: Fix}
+  id: 1055
+  time: '2022-02-13T22:35:56.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added plant bags to botany! They can more easily manage their huge harvests
+      and dump everything on kitchen or chemistry's desk now., type: Add}
+  id: 1056
+  time: '2022-02-13T22:36:01.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones should no longer get pushed through walls and their propulsion
+      works in zero-gravity., type: Fix}
+  - {message: Drone movement speed reduced by 1/6., type: Tweak}
+  id: 1057
+  time: '2022-02-13T22:36:07.0000000+00:00'

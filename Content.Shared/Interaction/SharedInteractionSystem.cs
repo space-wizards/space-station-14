@@ -87,7 +87,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (!user.InRangeUnobstructed(ev.Target))
+            if (!InRangeUnobstructed(user, ev.Target, ignoreInsideBlocker: true))
             {
                 ev.Cancel();
                 return;
