@@ -4,20 +4,6 @@
   name: rollerbed
   description: Used to carry patients around without damaging them.
   components:
-    - type: Bed
-      damage:
-        types:
-          Blunt: -0.1
-          Slash: -0.1
-          Piercing: -0.1
-          Heat: -0.1
-          Shock: -0.1
-          Cold: -0.1
-          Asphyxiation: -0.1
-          Bloodloss: -0.1
-          Poison: -0.1
-          Radiation: -0.1
-          Cellular: -0.1
     - type: Transform
       noRot: true
     - type: Item
