@@ -308,6 +308,7 @@ namespace Content.Client.Entry
             "RandomArtifactSprite",
             "EnergySword",
             "DoorRemote",
+            "InteractionPopup",
         };
     }
 }
