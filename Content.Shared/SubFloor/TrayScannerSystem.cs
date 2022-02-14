@@ -1,48 +1,88 @@
-using System.Linq;
-using Content.Shared.SubFloor;
+using Content.Shared.Interaction;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
 
-namespace Content.Client.SubFloor;
+namespace Content.Shared.SubFloor;
 
-public sealed class TrayScannerSystem : SharedTrayScannerSystem
+public sealed class TrayScannerSystem : EntitySystem
 {
     [Dependency] private IMapManager _mapManager = default!;
-    [Dependency] private SubFloorHideSystem _subfloorSystem = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private SharedSubFloorHideSystem _subfloorSystem = default!;
     [Dependency] private SharedContainerSystem _containerSystem = default!;
+
+    private HashSet<EntityUid> _activeScanners = new();
+    private RemQueue<EntityUid> _invalidScanners = new();
 
     public override void Initialize()
     {
         base.Initialize();
 
-        UpdatesOutsidePrediction = true;
-
         SubscribeLocalEvent<TrayScannerComponent, ComponentShutdown>(OnComponentShutdown);
+        SubscribeLocalEvent<TrayScannerComponent, ComponentGetState>(OnTrayScannerGetState);
+        SubscribeLocalEvent<TrayScannerComponent, ComponentHandleState>(OnTrayScannerHandleState);
+        SubscribeLocalEvent<TrayScannerComponent, ActivateInWorldEvent>(OnTrayScannerActivate);
     }
 
-    public void OnComponentShutdown(EntityUid uid, TrayScannerComponent scanner, ComponentShutdown args)
+    private void OnTrayScannerActivate(EntityUid uid, TrayScannerComponent scanner, ActivateInWorldEvent args)
     {
-        _subfloorSystem.SetEntitiesRevealed(scanner.RevealedSubfloors, uid, false, _visualizerKeys);
-        _invalidScanners.Add(uid);
+        SetScannerEnabled(uid, !scanner.Enabled, scanner);
     }
 
-    public override void ToggleTrayScanner(EntityUid uid, bool toggle, TrayScannerComponent? scanner = null)
+    private void SetScannerEnabled(EntityUid uid, bool enabled, TrayScannerComponent? scanner = null)
     {
         if (!Resolve(uid, ref scanner))
             return;
 
-        scanner.Toggled = toggle;
-        UpdateTrayScanner(uid, scanner);
+        scanner.Enabled = enabled;
+        scanner.Dirty();
 
-        if (toggle) _activeScanners.Add(uid);
+        if (scanner.Enabled)
+            _activeScanners.Add(uid);
+
+        // We don't remove from _activeScanners on disabled, because the update function will handle that, as well as
+        // managing the revealed subfloor entities
+
+        if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
+        {
+            appearance.SetData(TrayScannerVisual.Visual, scanner.Enabled == true ? TrayScannerVisual.On : TrayScannerVisual.Off);
+        }
     }
 
-    private HashSet<EntityUid> _activeScanners = new();
-    private RemQueue<EntityUid> _invalidScanners = new();
+    private void OnTrayScannerGetState(EntityUid uid, TrayScannerComponent scanner, ref ComponentGetState args)
+    {
+        args.State = new TrayScannerState(scanner.Enabled);
+    }
+
+    private void OnTrayScannerHandleState(EntityUid uid, TrayScannerComponent scanner, ref ComponentHandleState args)
+    {
+        if (args.Current is not TrayScannerState state)
+            return;
+
+        SetScannerEnabled(uid, scanner.Enabled, scanner);
+
+        // This is hacky and somewhat inefficient for the client. But when resetting predicted entities we have to unset
+        // last position. This is because appearance data gets reset, but if the position isn't reset the scanner won't
+        // re-reveal entities leading to odd visuals.
+        scanner.LastLocation = null;
+    }
+
+    public void OnComponentShutdown(EntityUid uid, TrayScannerComponent scanner, ComponentShutdown args)
+    {
+        _subfloorSystem.SetEntitiesRevealed(scanner.RevealedSubfloors, uid, false);
+        _activeScanners.Remove(uid);
+    }
 
     public override void Update(float frameTime)
     {
+        if (!_gameTiming.IsFirstTimePredicted)
+            return;
+
         if (!_activeScanners.Any()) return;
 
         foreach (var scanner in _activeScanners)
@@ -58,17 +98,17 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         foreach (var invalidScanner in _invalidScanners)
             _activeScanners.Remove(invalidScanner);
 
-        if (_invalidScanners.List != null) _invalidScanners.List.Clear();
+        _invalidScanners.List?.Clear();
     }
 
     /// <summary>
     ///     When a subfloor entity gets anchored (which includes spawning & coming into PVS range), Check for nearby scanners.
     /// </summary>
-    public override void OnSubfloorAnchored(EntityUid uid, SubFloorHideComponent? hideComp = null, TransformComponent? xform = null)
+    public void OnSubfloorAnchored(EntityUid uid, SubFloorHideComponent? hideComp = null, TransformComponent? xform = null)
     {
         if (!Resolve(uid, ref hideComp, ref xform))
             return;
-        
+
         var pos = xform.MapPosition;
 
         foreach (var entity in _activeScanners)
@@ -92,66 +132,61 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
     /// <returns>true if the update was successful, false otherwise</returns>
     private bool UpdateTrayScanner(EntityUid uid, TrayScannerComponent? scanner = null, TransformComponent? transform = null)
     {
-        // whoops?
         if (!Resolve(uid, ref scanner, ref transform))
-        {
             return false;
-        }
 
         // if the scanner was toggled off recently,
         // set all the known subfloor to invisible,
         // and return false so it's removed from
         // the active scanner list
-        if (!scanner.Toggled || transform.MapID == MapId.Nullspace)
+        if (!scanner.Enabled || transform.MapID == MapId.Nullspace)
         {
-            _subfloorSystem.SetEntitiesRevealed(scanner.RevealedSubfloors, uid, false, _visualizerKeys);
-            scanner.LastLocation = Vector2.Zero;
+            _subfloorSystem.SetEntitiesRevealed(scanner.RevealedSubfloors, uid, false);
+            scanner.LastLocation = null;
             scanner.RevealedSubfloors.Clear();
             return false;
         }
 
-        // get the rounded position so that small movements don't cause this to
-        // update every time
-        Vector2 flooredPos;
+        var pos = transform.LocalPosition;
 
         // zero vector implies container
         //
         // this means we should get the entity transform's parent
-        if (transform.LocalPosition == Vector2.Zero
+        if (pos == Vector2.Zero
             && transform.Parent != null
             && _containerSystem.ContainsEntity(transform.ParentUid, uid))
         {
-            flooredPos = transform.Parent.LocalPosition.Rounded();
+            pos = transform.Parent.LocalPosition;
 
             // if this is also zero, we can check one more time
             //
             // could recurse through fully but i think that's useless,
             // just attempt to check through the gp's transform and if
             // that doesn't work, just don't bother any further
-            if (flooredPos == Vector2.Zero)
+            if (pos == Vector2.Zero)
             {
                 var gpTransform = transform.Parent.Parent;
                 if (gpTransform != null
                     && _containerSystem.ContainsEntity(gpTransform.Owner, transform.ParentUid))
                 {
-                    flooredPos = gpTransform.LocalPosition.Rounded();
+                    pos = gpTransform.LocalPosition;
                 }
             }
-        }
-        else
-        {
-            flooredPos = transform.LocalPosition.Rounded();
         }
 
         // is the position still logically zero? just clear,
         // but we need to keep it as 'true' since this t-ray
         // is still technically on
-        if (flooredPos == Vector2.Zero)
+        if (pos == Vector2.Zero)
         {
-            _subfloorSystem.SetEntitiesRevealed(scanner.RevealedSubfloors, uid, false, _visualizerKeys);
+            _subfloorSystem.SetEntitiesRevealed(scanner.RevealedSubfloors, uid, false);
             scanner.RevealedSubfloors.Clear();
             return true;
         }
+
+        // get the rounded position so that small movements don't cause this to
+        // update every time
+        var flooredPos = (Vector2i) pos;
 
         // MAYBE redo this. Currently different players can see different entities
         //
@@ -161,7 +196,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         // same scanner. The correct fix for this is probably just to network the revealed entity set.... But I CBF
         // doing that right now....
         if (flooredPos == scanner.LastLocation
-            || (float.IsNaN(flooredPos.X) && float.IsNaN(flooredPos.Y)))
+            || float.IsNaN(flooredPos.X) && float.IsNaN(flooredPos.Y))
             return true;
 
         scanner.LastLocation = flooredPos;
@@ -186,7 +221,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
                 nearby.Add(entity);
 
                 if (scanner.RevealedSubfloors.Add(entity))
-                    _subfloorSystem.SetEntityRevealed(entity, uid, true, hideComp, _visualizerKeys);
+                    _subfloorSystem.SetEntityRevealed(entity, uid, true, hideComp);
             }
         }
 
@@ -197,14 +232,16 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         scanner.RevealedSubfloors.ExceptWith(missing);
 
         // and hide them
-        _subfloorSystem.SetEntitiesRevealed(missing, uid, false, _visualizerKeys);
+        _subfloorSystem.SetEntitiesRevealed(missing, uid, false);
 
         return true;
     }
+}
 
-    private static IEnumerable<object> _visualizerKeys = new List<object>
-    {
-        SubFloorVisuals.SubFloor,
-        TrayScannerTransparency.Key
-    };
+[Serializable, NetSerializable]
+public enum TrayScannerVisual : sbyte
+{
+    Visual,
+    On,
+    Off
 }

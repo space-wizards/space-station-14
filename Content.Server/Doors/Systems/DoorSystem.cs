@@ -5,7 +5,6 @@ using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
-using Content.Server.Doors.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Doors;
@@ -15,8 +14,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using System.Linq;
@@ -154,7 +151,9 @@ public sealed class DoorSystem : SharedDoorSystem
         RaiseLocalEvent(target, canEv, false);
 
         if (canEv.Cancelled)
-            return false;
+            // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
+            // under a windoor.
+            return true; 
 
         var modEv = new DoorGetPryTimeModifierEvent();
         RaiseLocalEvent(target, modEv, false);
@@ -293,19 +292,16 @@ public sealed class DoorSystem : SharedDoorSystem
 
         var container = uid.EnsureContainer<Container>("board", out var existed);
 
-        /* // TODO ShadowCommander: Re-enable when access is added to boards. Requires map update.
-           if (existed)
-           {
-        // We already contain a board. Note: We don't check if it's the right one!
-        if (container.ContainedEntities.Count != 0)
-        return;
+        if (existed & container.ContainedEntities.Count != 0)
+        {
+            // We already contain a board. Note: We don't check if it's the right one!
+            return;
         }
 
-        var board = Owner.EntityManager.SpawnEntity(_boardPrototype, Owner.Transform.Coordinates);
+        var board = EntityManager.SpawnEntity(door.BoardPrototype, Transform(uid).Coordinates);
 
         if(!container.Insert(board))
-        Logger.Warning($"Couldn't insert board {board} into door {Owner}!");
-        */
+            Logger.Warning($"Couldn't insert board {ToPrettyString(board)} into door {ToPrettyString(uid)}!");
     }
 }
 

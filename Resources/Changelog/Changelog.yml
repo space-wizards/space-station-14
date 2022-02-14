@@ -1,56 +1,4 @@
 Entries:
-- author: thevinter
-  changes:
-  - {message: power cells now properly bounce off walls, type: Fix}
-  id: 554
-  time: '2021-11-07T09:11:40.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fix a bug that causes the examine-popup to close immediately after opening.,
-    type: Fix}
-  id: 555
-  time: '2021-11-07T10:33:52.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: The game rules have been updated to bring the server to Low Roleplay
-      standards. Go read 'em!, type: Tweak}
-  id: 556
-  time: '2021-11-10T00:12:46.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Labelers have been mapped in to Saltern. There''s some in the dorms,
-      chemistry, and cargo.', type: Add}
-  id: 557
-  time: '2021-11-10T06:45:18.0000000+00:00'
-- author: xRiriq
-  changes:
-  - {message: Syringes now can draw from ChemMaster 4000 bottles, type: Fix}
-  id: 558
-  time: '2021-11-10T10:01:24.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: You no longer move at the speed of sound even though you're inches from
-      death., type: Tweak}
-  id: 559
-  time: '2021-11-10T10:06:28.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Cargo crates now have paper labels that can be read by examining them.,
-    type: Add}
-  - {message: 'Added new crates to cargo console (medical supplies, cigarettes, and
-      pizza).', type: Add}
-  id: 560
-  time: '2021-11-10T13:15:23.0000000+00:00'
-- author: Efruit
-  changes:
-  - {message: Enabled tab complete in the Server-side C# Interpreter, type: Add}
-  id: 561
-  time: '2021-11-10T19:35:34.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Storages that are unlocked can be escaped from by movement again., type: Fix}
-  id: 562
-  time: '2021-11-10T23:07:05.0000000+00:00'
 - author: Macoron
   changes:
   - {message: 'Added a nuclear bomb to game code. Not mapped yet,', type: Add}
@@ -2960,3 +2908,57 @@ Entries:
   - {message: 'Added a new lobby song, "Vibe Ace" by Kevin MacLeod.', type: Add}
   id: 1054
   time: '2022-02-13T12:17:03.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: Added an upright piano for all your saloon tunes, type: Add}
+  - {message: Retuned the church organ to sound more churchy, type: Fix}
+  - {message: Updated piano sprite to stop violating laws of physics, type: Fix}
+  id: 1055
+  time: '2022-02-13T22:35:56.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added plant bags to botany! They can more easily manage their huge harvests
+      and dump everything on kitchen or chemistry's desk now., type: Add}
+  id: 1056
+  time: '2022-02-13T22:36:01.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones should no longer get pushed through walls and their propulsion
+      works in zero-gravity., type: Fix}
+  - {message: Drone movement speed reduced by 1/6., type: Tweak}
+  id: 1057
+  time: '2022-02-13T22:36:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to deconstruct windoors., type: Fix}
+  id: 1058
+  time: '2022-02-14T02:44:22.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added new windoors and glass external / docking airlocks!, type: Add}
+  id: 1059
+  time: '2022-02-14T03:20:30.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: "Added the ability to pet dogs, cats, and various other animals around\
+      \ the station \U0001F60A", type: Add}
+  id: 1060
+  time: '2022-02-14T03:20:47.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Commemorate your favourite event with the new memorial object., type: Add}
+  id: 1061
+  time: '2022-02-14T03:20:53.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Adds Examine Buttons/Verbs, which are special verbs that show up on
+      the examine tooltip window.', type: Add}
+  - {message: Converted multitool power examination to to the Examine Verb system.,
+    type: Tweak}
+  id: 1062
+  time: '2022-02-14T03:20:58.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Pillar Update V4! See github pull request #6705 for changelog.', type: Add}
+  id: 1063
+  time: '2022-02-14T16:47:25.0000000+00:00'

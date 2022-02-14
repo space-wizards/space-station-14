@@ -76,6 +76,7 @@
   - type: Door
     canCrush: false
     weldable: false
+    board: DoorElectronics
     openSound:
       path: /Audio/Machines/windoor_open.ogg
     closeSound:

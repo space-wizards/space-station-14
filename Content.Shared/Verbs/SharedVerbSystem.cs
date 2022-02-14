@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
@@ -15,6 +16,7 @@ namespace Content.Shared.Verbs
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
+        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
         public override void Initialize()
         {
@@ -108,6 +110,13 @@ namespace Content.Shared.Verbs
             if (types.Contains(typeof(ActivationVerb)))
             {
                 var verbEvent = new GetVerbsEvent<ActivationVerb>(user, target, @using, hands, canInteract, canAccess);
+                RaiseLocalEvent(target, verbEvent);
+                verbs.UnionWith(verbEvent.Verbs);
+            }
+
+            if (types.Contains(typeof(ExamineVerb)))
+            {
+                var verbEvent = new GetVerbsEvent<ExamineVerb>(user, target, @using, hands, canInteract, canAccess);
                 RaiseLocalEvent(target, verbEvent);
                 verbs.UnionWith(verbEvent.Verbs);
             }

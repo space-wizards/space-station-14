@@ -39,6 +39,10 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.2
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-bat
 
 - type: entity
   name: bee
@@ -130,6 +134,12 @@
   - type: Butcherable
     meat: FoodMeatChicken
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.8
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/chicken_cluck_happy.ogg
 
 - type: entity
   name: mallard duck #Quack
@@ -152,6 +162,12 @@
   - type: Butcherable
     meat: FoodMeatDuck
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
 
 - type: entity
   name: white duck #Quack
@@ -174,6 +190,12 @@
   - type: Butcherable
     meat: FoodMeatDuck
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
 
 - type: entity
   name: brown duck #Quack
@@ -196,6 +218,12 @@
   - type: Butcherable
     meat: FoodMeatDuck
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
 
 - type: entity
   name: butterfly
@@ -295,6 +323,13 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 5
+  - type: Grammar
+    attributes:
+      gender: female # Here because of UdderComponent
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
 
 - type: entity
   name: crab
@@ -332,12 +367,16 @@
   - type: Butcherable
     meat: FoodMeatCrab
     pieces: 2
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-crab
+    interactFailureString: petting-failure-crab
 
 - type: entity
   name: goat
   parent: SimpleMobBase
   id: MobGoat
-  description: His spine consists of long sharp segments, no wonder he is so grumpy.
+  description: Her spine consists of long sharp segments, no wonder she is so grumpy.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -366,6 +405,13 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 4
+  - type: Grammar
+    attributes:
+      gender: female # Here because of UdderComponent
+  - type: InteractionPopup
+    successChance: 0.2
+    interactSuccessString: petting-success-goat
+    interactFailureString: petting-failure-goat
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -389,6 +435,10 @@
   - type: Butcherable
     meat: FoodMeatChicken
     pieces: 2
+  - type: InteractionPopup # TODO: Make it so there's a separate chance to make certain animals outright hostile towards you.
+    successChance: 0.1 # Yeah, good luck with that.
+    interactSuccessString: petting-success-goose
+    interactFailureString: petting-failure-goose
 
 - type: entity
   name: gorilla
@@ -679,6 +729,10 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.3
+    interactSuccessString: petting-success-reptile
+    interactFailureString: petting-failure-generic
 
 - type: entity
   name: frog
@@ -718,6 +772,10 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-frog
+    interactFailureString: petting-failure-generic
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
@@ -758,6 +816,10 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
 
 - type: entity
   name: penguin
@@ -794,6 +856,10 @@
   - type: Butcherable
     meat: FoodMeatPenguin
     pieces: 3
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
 
 - type: entity
   name: snake
@@ -833,6 +899,10 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-reptile
+    interactFailureString: petting-failure-generic
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -871,3 +941,7 @@
   - type: Butcherable
     meat: FoodMeatSpider
     pieces: 2
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-tarantula
+    interactFailureString: petting-failure-generic
