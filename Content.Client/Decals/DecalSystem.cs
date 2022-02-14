@@ -1,25 +1,29 @@
-using System.Collections.Generic;
+using System.Buffers;
+using System.Linq;
 using Content.Shared.Decals;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Client.Decals
 {
-    public class DecalSystem : SharedDecalSystem
+    public sealed class DecalSystem : SharedDecalSystem
     {
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
+        [Dependency] private readonly SharedTransformSystem _transforms = default!;
+        [Dependency] private readonly SpriteSystem _sprites = default!;
 
         private DecalOverlay _overlay = default!;
         public Dictionary<GridId, SortedDictionary<int, SortedDictionary<uint, Decal>>> DecalRenderIndex = new();
         private Dictionary<GridId, Dictionary<uint, int>> DecalZIndexIndex = new();
 
+        public const float MaxDecalSize = 1f;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            _overlay = new DecalOverlay(this, MapManager, PrototypeManager);
+            _overlay = new DecalOverlay(this, _transforms, _sprites, EntityManager, MapManager, PrototypeManager);
             _overlayManager.AddOverlay(_overlay);
 
             SubscribeNetworkEvent<DecalChunkUpdateEvent>(OnChunkUpdate);
@@ -75,6 +79,45 @@ namespace Content.Client.Decals
             DecalZIndexIndex[gridId].Remove(uid);
         }
 
+        public IEnumerable<Decal> GetDecals(GridId gridId, Box2Rotated worldBounds, TransformComponent xform)
+        {
+            var decals = new List<Decal>(64);
+            // TODO: Need some way to do this better and also enlarge the viewport by the necessary amount.
+            // Sprites also have this problem.
+
+            // When maps support decals just take in an Euid instead
+            var chunks = ChunkCollection(gridId);
+            var localAABB = Transforms.GetInvWorldMatrix(xform).TransformBox(worldBounds);
+            var enumerator = new ChunkIndicesEnumerator(localAABB, ChunkSize);
+
+            while (enumerator.MoveNext(out var chunkIndex))
+            {
+                if (!chunks.TryGetValue(chunkIndex.Value, out var chunk)) continue;
+
+                foreach (var (_, decal) in chunk)
+                {
+                    var decalAABB = new Box2(decal.Coordinates - MaxDecalSize, decal.Coordinates + MaxDecalSize);
+                    if (!localAABB.Intersects(decalAABB)) continue;
+
+                    decals.Add(decal);
+                }
+            }
+
+            var indices = new int[decals.Count];
+
+            for (var i = 0; i < decals.Count; i++)
+            {
+                indices[i] = i;
+            }
+
+            Array.Sort(indices, 0, decals.Count, new DecalComparer(decals));
+
+            for (var i = 0; i < decals.Count; i++)
+            {
+                yield return decals[i];
+            }
+        }
+
         private void OnChunkUpdate(DecalChunkUpdateEvent ev)
         {
             foreach (var (gridId, gridChunks) in ev.Data)
@@ -108,6 +151,25 @@ namespace Content.Client.Decals
                     }
                     chunkCollection[indices] = newChunkData;
                 }
+            }
+        }
+
+        private sealed class DecalComparer : IComparer<int>
+        {
+            private List<Decal> _decals;
+
+            public DecalComparer(List<Decal> decals)
+            {
+                _decals = decals;
+            }
+
+
+            public int Compare(int x, int y)
+            {
+                var decalX = _decals[x];
+                var decalY = _decals[y];
+
+                return decalY.ZIndex.CompareTo(decalX.ZIndex);
             }
         }
     }
