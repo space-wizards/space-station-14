@@ -64,7 +64,7 @@ namespace Content.Server.Chemistry.Components
                 bloodstream.Solution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
-            bloodstreamSys.TryAddToBloodstream(entity, transferSolution, bloodstream);
+            bloodstreamSys.TryAddToChemicals(entity, transferSolution, bloodstream);
         }
 
         protected override void OnKill()

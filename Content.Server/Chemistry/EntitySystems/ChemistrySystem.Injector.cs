@@ -259,7 +259,7 @@ public sealed partial class ChemistrySystem
         // Move units from attackSolution to targetSolution
         var removedSolution = _solutions.SplitSolution(user, targetBloodstream.Solution, realTransferAmount);
 
-        _blood.TryAddToBloodstream((targetBloodstream).Owner, removedSolution, targetBloodstream);
+        _blood.TryAddToChemicals((targetBloodstream).Owner, removedSolution, targetBloodstream);
 
         removedSolution.DoEntityReaction(targetBloodstream.Owner, ReactionMethod.Injection);
 

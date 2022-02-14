@@ -51,7 +51,7 @@ namespace Content.Server.Chemistry.Components
             }
 
             var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
-            bloodstreamSys.TryAddToBloodstream(entity, transferSolution, bloodstream);
+            bloodstreamSys.TryAddToChemicals(entity, transferSolution, bloodstream);
         }
 
 

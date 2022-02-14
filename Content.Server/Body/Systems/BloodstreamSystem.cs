@@ -16,7 +16,9 @@ public class BloodstreamSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
     [Dependency] private readonly RespiratorSystem _respiratorSystem = default!;
 
-    public static string DefaultSolutionName = "bloodstream";
+    // TODO here
+    // Update over time. Modify bloodloss damage in accordance with (amount of blood / max blood level), and reduce bleeding over time
+    // Sub to damage changed event and modify bloodloss if incurring large hits of slashing/piercing
 
     public override void Initialize()
     {
@@ -27,21 +29,23 @@ public class BloodstreamSystem : EntitySystem
 
     private void OnComponentInit(EntityUid uid, BloodstreamComponent component, ComponentInit args)
     {
-        component.Solution = _solutionContainerSystem.EnsureSolution(uid, DefaultSolutionName);
-        if (component.Solution != null)
-        {
-            component.Solution.MaxVolume = component.InitialMaxVolume;
-        }
+        component.ChemicalSolution = _solutionContainerSystem.EnsureSolution(uid, BloodstreamComponent.DefaultChemicalsSolutionName);
+        component.BloodSolution = _solutionContainerSystem.EnsureSolution(uid, BloodstreamComponent.DefaultBloodSolutionName);
+
+        component.ChemicalSolution.MaxVolume = component.ChemicalMaxVolume;
+        component.Che
     }
 
     /// <summary>
     ///     Attempt to transfer provided solution to internal solution.
     /// </summary>
-    public bool TryAddToBloodstream(EntityUid uid, Solution solution, BloodstreamComponent? component=null)
+    public bool TryAddToChemicals(EntityUid uid, Solution solution, BloodstreamComponent? component=null)
     {
         if (!Resolve(uid, ref component, false))
             return false;
 
         return _solutionContainerSystem.TryAddSolution(uid, component.Solution, solution);
     }
+
+    public bool TryRefill
 }

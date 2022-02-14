@@ -117,7 +117,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     continue;
 
                 _reactiveSystem.ReactionEntity(containerManager.Owner, ReactionMethod.Ingestion, inhaledSolution);
-                _bloodstreamSystem.TryAddToBloodstream(containerManager.Owner, inhaledSolution, bloodstream);
+                _bloodstreamSystem.TryAddToChemicals(containerManager.Owner, inhaledSolution, bloodstream);
             }
 
             _timer -= UpdateTimer;

@@ -295,7 +295,7 @@ namespace Content.Server.Weapon.Melee
             foreach (var bloodstream in hitBloodstreams)
             {
                 var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
-                _bloodstreamSystem.TryAddToBloodstream((bloodstream).Owner, individualInjection, bloodstream);
+                _bloodstreamSystem.TryAddToChemicals((bloodstream).Owner, individualInjection, bloodstream);
             }
         }
 
