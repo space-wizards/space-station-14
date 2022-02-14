@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Content.Server.Access.Systems;
@@ -22,14 +20,10 @@ using Content.Shared.Roles;
 using Content.Shared.Species;
 using Content.Shared.Station;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
@@ -156,7 +150,7 @@ namespace Content.Server.GameTicking
             }
 
             // Pick best job best on prefs.
-            jobId ??= PickBestAvailableJob(character, station);
+            jobId ??= PickBestAvailableJob(player, character, station);
             // If no job available, stay in lobby, or if no lobby spawn as observer
             if (jobId is null)
             {

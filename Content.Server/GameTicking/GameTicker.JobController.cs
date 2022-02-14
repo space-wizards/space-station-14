@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -7,12 +6,10 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Station;
 using Robust.Server.Player;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
@@ -36,6 +33,7 @@ namespace Content.Server.GameTicking
                     {
                         var profile = profiles[player.UserId];
 
+                        var roleBans = _roleBanSystem.GetRoleBans(player.UserId);
                         var availableJobs = profile.JobPriorities
                             .Where(j =>
                             {
@@ -53,6 +51,7 @@ namespace Content.Server.GameTicking
 
                                 return priority == i;
                             })
+                            .Where(p => roleBans == null || !roleBans.Contains(p.Key))
                             .Select(j => j.Key)
                             .ToList();
 
@@ -106,14 +105,17 @@ namespace Content.Server.GameTicking
             return assigned;
         }
 
-        private string? PickBestAvailableJob(HumanoidCharacterProfile profile, StationId station)
+        private string? PickBestAvailableJob(IPlayerSession playerSession, HumanoidCharacterProfile profile,
+            StationId station)
         {
             var available = _stationSystem.StationInfo[station].JobList;
 
             bool TryPick(JobPriority priority, [NotNullWhen(true)] out string? jobId)
             {
+                var roleBans = _roleBanSystem.GetRoleBans(playerSession.UserId);
                 var filtered = profile.JobPriorities
                     .Where(p => p.Value == priority)
+                    .Where(p => roleBans != null && !roleBans.Contains(p.Key))
                     .Select(p => p.Key)
                     .ToList();
 
