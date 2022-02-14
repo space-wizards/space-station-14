@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Storages that are unlocked can be escaped from by movement again., type: Fix}
-  id: 562
-  time: '2021-11-10T23:07:05.0000000+00:00'
 - author: Macoron
   changes:
   - {message: 'Added a nuclear bomb to game code. Not mapped yet,', type: Add}
@@ -2962,3 +2957,8 @@ Entries:
     type: Tweak}
   id: 1062
   time: '2022-02-14T03:20:58.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Pillar Update V4! See github pull request #6705 for changelog.', type: Add}
+  id: 1063
+  time: '2022-02-14T16:47:25.0000000+00:00'
