@@ -38,9 +38,9 @@
         amount: 5 # TO DO: Advanced brute pack
         
 - type: entity
-  id: MedkitToxinsFilled
+  id: MedkitToxinFilled
   suffix: Filled
-  parent: MedkitToxins
+  parent: MedkitToxin
   components:
   - type: StorageFill
     contents:
