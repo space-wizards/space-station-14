@@ -1,9 +1,8 @@
-using System.Buffers;
-using System.Linq;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Decals
 {
@@ -16,8 +15,6 @@ namespace Content.Client.Decals
         private DecalOverlay _overlay = default!;
         public Dictionary<GridId, SortedDictionary<int, SortedDictionary<uint, Decal>>> DecalRenderIndex = new();
         private Dictionary<GridId, Dictionary<uint, int>> DecalZIndexIndex = new();
-
-        public const float MaxDecalSize = 1f;
 
         public override void Initialize()
         {
@@ -79,52 +76,14 @@ namespace Content.Client.Decals
             DecalZIndexIndex[gridId].Remove(uid);
         }
 
-        public IEnumerable<Decal> GetDecals(GridId gridId, Box2Rotated worldBounds, TransformComponent xform)
-        {
-            var decals = new List<Decal>(64);
-            // TODO: Need some way to do this better and also enlarge the viewport by the necessary amount.
-            // Sprites also have this problem.
-
-            // When maps support decals just take in an Euid instead
-            var chunks = ChunkCollection(gridId);
-            var localAABB = Transforms.GetInvWorldMatrix(xform).TransformBox(worldBounds);
-            var enumerator = new ChunkIndicesEnumerator(localAABB, ChunkSize);
-
-            while (enumerator.MoveNext(out var chunkIndex))
-            {
-                if (!chunks.TryGetValue(chunkIndex.Value, out var chunk)) continue;
-
-                foreach (var (_, decal) in chunk)
-                {
-                    var decalAABB = new Box2(decal.Coordinates - MaxDecalSize, decal.Coordinates + MaxDecalSize);
-                    if (!localAABB.Intersects(decalAABB)) continue;
-
-                    decals.Add(decal);
-                }
-            }
-
-            var indices = new int[decals.Count];
-
-            for (var i = 0; i < decals.Count; i++)
-            {
-                indices[i] = i;
-            }
-
-            Array.Sort(indices, 0, decals.Count, new DecalComparer(decals));
-
-            for (var i = 0; i < decals.Count; i++)
-            {
-                yield return decals[i];
-            }
-        }
-
         private void OnChunkUpdate(DecalChunkUpdateEvent ev)
         {
             foreach (var (gridId, gridChunks) in ev.Data)
             {
+                var chunkCollection = ChunkCollection(gridId);
+
                 foreach (var (indices, newChunkData) in gridChunks)
                 {
-                    var chunkCollection = ChunkCollection(gridId);
                     if (chunkCollection.TryGetValue(indices, out var chunk))
                     {
                         var removedUids = new HashSet<uint>(chunk.Keys);
@@ -134,12 +93,14 @@ namespace Content.Client.Decals
                             RemoveDecalFromRenderIndex(gridId, removedUid);
                         }
                     }
+
                     foreach (var (uid, decal) in newChunkData)
                     {
-                        if(!DecalRenderIndex[gridId].ContainsKey(decal.ZIndex))
+                        if (!DecalRenderIndex[gridId].ContainsKey(decal.ZIndex))
                             DecalRenderIndex[gridId][decal.ZIndex] = new();
 
-                        if (DecalZIndexIndex.TryGetValue(gridId, out var values) && values.TryGetValue(uid, out var zIndex))
+                        if (DecalZIndexIndex.TryGetValue(gridId, out var values) &&
+                            values.TryGetValue(uid, out var zIndex))
                         {
                             DecalRenderIndex[gridId][zIndex].Remove(uid);
                         }
@@ -149,27 +110,24 @@ namespace Content.Client.Decals
 
                         ChunkIndex[gridId][uid] = indices;
                     }
+
                     chunkCollection[indices] = newChunkData;
                 }
-            }
-        }
 
-        private sealed class DecalComparer : IComparer<int>
-        {
-            private List<Decal> _decals;
+                // Now we'll cull old chunks out of range as the server will send them to us anyway.
+                var toRemove = new RemQueue<Vector2i>();
 
-            public DecalComparer(List<Decal> decals)
-            {
-                _decals = decals;
-            }
+                foreach (var (index, _) in chunkCollection)
+                {
+                    if (gridChunks.ContainsKey(index)) continue;
 
+                    toRemove.Add(index);
+                }
 
-            public int Compare(int x, int y)
-            {
-                var decalX = _decals[x];
-                var decalY = _decals[y];
-
-                return decalY.ZIndex.CompareTo(decalX.ZIndex);
+                foreach (var index in toRemove)
+                {
+                    chunkCollection.Remove(index);
+                }
             }
         }
     }

@@ -53,21 +53,24 @@ namespace Content.Client.Decals
 
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(args.Viewport.Eye!.Position.MapId,
-                         args.WorldBounds))
+            foreach (var (gridId, zIndexDictionary) in _decals.DecalRenderIndex)
             {
-                var xform = xformQuery.GetComponent(grid.GridEntityId);
+                var gridUid = _mapManager.GetGridEuid(gridId);
+                var xform = xformQuery.GetComponent(gridUid);
 
                 handle.SetTransform(_transform.GetWorldMatrix(xform));
 
-                foreach (var decal in _decals.GetDecals(grid.Index, args.WorldBounds, xform))
+                foreach (var (_, decals) in zIndexDictionary)
                 {
-                    var spriteSpecifier = GetSpriteSpecifier(decal.Id);
+                    foreach (var (_, decal) in decals)
+                    {
+                        var spriteSpecifier = GetSpriteSpecifier(decal.Id);
 
-                    if (decal.Angle.Equals(Angle.Zero))
-                        handle.DrawTexture(_sprites.Frame0(spriteSpecifier), decal.Coordinates, decal.Color);
-                    else
-                        handle.DrawTexture(_sprites.Frame0(spriteSpecifier), decal.Coordinates, decal.Angle, decal.Color);
+                        if (decal.Angle.Equals(Angle.Zero))
+                            handle.DrawTexture(_sprites.Frame0(spriteSpecifier), decal.Coordinates, decal.Color);
+                        else
+                            handle.DrawTexture(_sprites.Frame0(spriteSpecifier), decal.Coordinates, decal.Angle, decal.Color);
+                    }
                 }
             }
         }
