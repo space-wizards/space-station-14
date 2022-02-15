@@ -173,7 +173,7 @@ namespace Content.Server.Chemistry.Components
                 }
             }
 
-            return true;
+            return false;
         }
 
         /// <returns>The actual amount transferred.</returns>
