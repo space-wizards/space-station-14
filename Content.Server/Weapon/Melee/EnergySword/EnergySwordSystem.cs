@@ -44,9 +44,6 @@ namespace Content.Server.Weapon.Melee.EnergySword
         {
             if (args.Handled) return;
 
-            if (!_blockerSystem.CanUse(args.User))
-                return;
-
             args.Handled = true;
 
             if (comp.Activated)
@@ -114,7 +111,7 @@ namespace Content.Server.Weapon.Melee.EnergySword
         {
             if (args.Handled) return;
 
-            if (comp.Hacked || !_blockerSystem.CanInteract(args.User))
+            if (comp.Hacked)
                 return;
 
             if (!TryComp(args.Used, out ToolComponent? tool) || !tool.Qualities.ContainsAny("Pulsing")) return;

@@ -33,11 +33,9 @@
       state: pipeStraight
       map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - state: pumpPressure
-      map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer", "enum.PressurePumpVisualizer+Layers.Enabled" ]
+      map: [ "enum.SubfloorLayers.FirstLayer", "enum.PressurePumpVisualizer+Layers.Enabled" ]
   - type: Appearance
     visuals:
-    - type: SubFloorShowLayerVisualizer
-    - type: PipeConnectorVisualizer
     - type: PipeColorVisualizer
     - type: PressurePumpVisualizer
       disabledState: pumpPressure
@@ -64,11 +62,9 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpVolume
-          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasVolumePump
     - type: UserInterface
@@ -92,11 +88,9 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpPassiveGate
-          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasPassiveGate
 
@@ -117,11 +111,9 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpManualValve
-          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer", "enum.GasValveVisualizer+Layers.Enabled" ]
+          map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasValveVisualizer+Layers.Enabled" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: GasValveVisualizer
           disabledState: pumpManualValve
@@ -156,11 +148,9 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: gasCanisterPort
-          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasPort
     - type: NodeContainer
@@ -187,11 +177,9 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
-          map: [ "enum.VentVisualLayers.Vent", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.VentVisualLayers.Vent", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: VentPumpVisualizer
     - type: GasVentPump

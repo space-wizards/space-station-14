@@ -56,7 +56,7 @@ namespace Content.Client.Chemistry.Components
                 _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
                 AddChild(_label);
 
-                parent._uiUpdateNeeded = true;
+                Update();
             }
 
             protected override void FrameUpdate(FrameEventArgs args)
@@ -66,7 +66,11 @@ namespace Content.Client.Chemistry.Components
                 {
                     return;
                 }
+                Update();
+            }
 
+            public void Update()
+            {
                 _parent._uiUpdateNeeded = false;
 
                 //Update current volume and injector state

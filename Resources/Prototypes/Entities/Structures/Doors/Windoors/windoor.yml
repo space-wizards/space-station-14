@@ -11,6 +11,7 @@
   description: It's a sturdy window and a sliding door. Wow!
 
 # TODO remove these with parameterized prototypes/whatever we end up doing
+# Windoors (alphabetical)
 - type: entity
   parent: Windoor
   id: WindoorBarLocked
@@ -18,6 +19,22 @@
   components:
   - type: AccessReader
     access: [["Bar"]]
+    
+- type: entity
+  parent: Windoor
+  id: WindoorCargoLocked
+  suffix: Cargo, Locked
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
+
+- type: entity
+  parent: Windoor
+  id: WindoorChapelLocked
+  suffix: Chapel, Locked
+  components:
+  - type: AccessReader
+    access: [["Chapel"]]
 
 - type: entity
   parent: Windoor
@@ -28,12 +45,54 @@
     access: [["Hydroponics"]]
 
 - type: entity
-  parent: WindoorSecure
-  id: WindoorMedicalLocked
-  suffix: Medical, Locked
+  parent: Windoor
+  id: WindoorJanitorLocked
+  suffix: Janitor, Locked
   components:
   - type: AccessReader
-    access: [["Medical"]]
+    access: [["Janitor"]]
+
+- type: entity
+  parent: Windoor
+  id: WindoorKitchenLocked
+  suffix: Kitchen, Locked
+  components:
+  - type: AccessReader
+    access: [["Kitchen"]]
+    
+- type: entity
+  parent: Windoor
+  id: WindoorTheatreLocked
+  suffix: Theatre, Locked
+  components:
+  - type: AccessReader
+    access: [["Theatre"]]
+
+# Secure
+
+- type: entity
+  parent: WindoorSecurityLocked
+  id: WindoorArmoryLocked
+  suffix: Armory, Locked
+  components:
+  - type: AccessReader
+    access: [["Armory"]]
+
+- type: entity
+  parent: WindoorSecurityLocked
+  id: WindoorBrigLocked
+  suffix: Brig, Locked
+  components:
+  - type: AccessReader
+    access: [["Brig"]]
+
+- type: entity
+  parent: WindoorSecure
+  id: WindoorSecureChapelLocked
+  suffix: Chapel, Locked
+  components:
+  - type: AccessReader
+    access: [["Chapel"]]
 
 - type: entity
   parent: WindoorSecure
@@ -42,15 +101,7 @@
   components:
   - type: AccessReader
     access: [["Chemistry"]]
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorScienceLocked
-  suffix: Science, Locked
-  components:
-  - type: AccessReader
-    access: [["Research"]]
-
+    
 - type: entity
   parent: WindoorSecure
   id: WindoorCommandLocked
@@ -62,12 +113,44 @@
     LayoutId: WindoorCommand
 
 - type: entity
-  parent: Windoor
-  id: WindoorCargoLocked
-  suffix: Cargo, Locked
+  parent: WindoorSecure
+  id: WindoorEngineeringLocked
+  suffix: Engineering, Locked
   components:
   - type: AccessReader
-    access: [["Cargo"]]
+    access: [["Engineering"]]
+
+- type: entity
+  parent: WindoorSecure
+  id: WindoorSecureJanitorLocked
+  suffix: Janitor, Locked
+  components:
+  - type: AccessReader
+    access: [["Janitor"]]
+
+- type: entity
+  parent: WindoorSecure
+  id: WindoorSecureKitchenLocked
+  suffix: Kitchen, Locked
+  components:
+  - type: AccessReader
+    access: [["Kitchen"]]
+
+- type: entity
+  parent: WindoorSecure
+  id: WindoorMedicalLocked
+  suffix: Medical, Locked
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  parent: WindoorSecure
+  id: WindoorSecureSalvageLocked
+  suffix: Salvage, Locked
+  components:
+  - type: AccessReader
+    access: [["Salvage"]]
 
 - type: entity
   parent: WindoorSecure
@@ -80,49 +163,9 @@
     LayoutId: WindoorSecurity
 
 - type: entity
-  parent: WindoorSecurityLocked
-  id: WindoorBrigLocked
-  suffix: Brig, Locked
-  components:
-  - type: AccessReader
-    access: [["Brig"]]
-
-- type: entity
-  parent: WindoorSecurityLocked
-  id: WindoorArmoryLocked
-  suffix: Armory, Locked
-  components:
-  - type: AccessReader
-    access: [["Armory"]]
-
-- type: entity
   parent: WindoorSecure
-  id: WindoorEngineeringLocked
-  suffix: Engineering, Locked
+  id: WindoorScienceLocked
+  suffix: Science, Locked
   components:
   - type: AccessReader
-    access: [["Engineering"]]
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorChapelLocked
-  suffix: Chapel, Locked
-  components:
-  - type: AccessReader
-    access: [["Chapel"]]
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorJanitorLocked
-  suffix: Janitor, Locked
-  components:
-  - type: AccessReader
-    access: [["Janitor"]]
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorKitchenLocked
-  suffix: Kitchen, Locked
-  components:
-  - type: AccessReader
-    access: [["Kitchen"]]
+    access: [["Research"]]

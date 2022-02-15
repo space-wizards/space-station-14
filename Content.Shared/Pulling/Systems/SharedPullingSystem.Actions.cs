@@ -24,7 +24,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!_blocker.CanInteract(puller))
+            if (!_blocker.CanInteract(puller, pulled))
             {
                 return false;
             }

@@ -75,7 +75,7 @@ namespace Content.Server.Medical
 
         private void OnRelayMovement(EntityUid uid, MedicalScannerComponent component, RelayMovementEntityEvent args)
         {
-            if (_blocker.CanInteract(args.Entity))
+            if (_blocker.CanInteract(args.Entity, null))
             {
                 if (_gameTiming.CurTime <
                     component.LastInternalOpenAttempt + MedicalScannerComponent.InternalOpenAttemptDelay)

@@ -49,9 +49,6 @@ namespace Content.Server.Arcade.Components
             if(!Powered || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return;
 
-            if(!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
-                return;
-
             UserInterface?.Toggle(actor.PlayerSession);
             if (UserInterface?.SessionHasOpen(actor.PlayerSession) == true)
             {
@@ -129,13 +126,6 @@ namespace Content.Server.Arcade.Components
             {
                 case BlockGameMessages.BlockGamePlayerActionMessage playerActionMessage:
                     if (obj.Session != _player) break;
-
-                    // TODO: Should this check if the Owner can interact...?
-                    if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(Owner))
-                    {
-                        DeactivePlayer(obj.Session);
-                        break;
-                    }
 
                     if (playerActionMessage.PlayerAction == BlockGamePlayerAction.NewGame)
                     {
