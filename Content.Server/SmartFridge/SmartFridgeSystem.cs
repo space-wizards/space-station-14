@@ -8,6 +8,9 @@ using Robust.Server.GameObjects;
 using Content.Shared.Acts;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
+using Content.Server.Storage.Components;
+using System.Linq;
+
 using static Content.Shared.SmartFridge.SharedSmartFridgeComponent;
 
 namespace Content.Server.SmartFridge
@@ -93,18 +96,16 @@ namespace Content.Server.SmartFridge
             fridgeComponent.Broken = true;
             TryUpdateVisualState(uid, SmartFridgeVisualState.Broken, fridgeComponent);
         }
-
         private void OnInteractUsing(EntityUid uid, SmartFridgeComponent fridgeComponent, InteractUsingEvent args)
         {
-            // !TryComp<IStorageComponent>(uid, out var storage)
-            // if (TryComp<IStorageComponent>(args.Used, out IStorageComponent? storageComponent))
-            // {
-            //     TryInsertFromStorage(uid, storageComponent, fridgeComponent);
-            // }
-            // else
-            // {
+            if (TryComp<ServerStorageComponent>(args.Used, out ServerStorageComponent? storageComponent))
+            {
+                TryInsertFromStorage(uid, storageComponent, fridgeComponent);
+            }
+            else
+            {
                 TryInsertVendorItem(uid, args.Used, fridgeComponent);
-            // }
+            }
         }
 
         public bool IsPowered(EntityUid uid, SmartFridgeComponent? fridgeComponent = null)
@@ -134,13 +135,24 @@ namespace Content.Server.SmartFridge
             });
         }
 
-        // public void TryInsertFromStorage(EntityUid uid, EntityStorageComponent storageComponent, SmartFridgeComponent fridgeComponent)
-        // {
-        //     foreach (var item in storageComponent.Contents.ContainedEntities)
-        //     {
-        //         var itemInserted = TryInsertVendorItem(uid, item, fridgeComponent);
-        //     }
-        // }
+        public void TryInsertFromStorage(EntityUid uid, ServerStorageComponent storageComponent, SmartFridgeComponent fridgeComponent)
+        {
+            if (storageComponent.StoredEntities == null)
+                return;
+
+            var storagedEnts = storageComponent.StoredEntities.ToArray();
+            uint addedCount = 0;
+            foreach (var ent in storagedEnts)
+            {
+                bool insertSuccess = TryInsertVendorItem(uid, ent, fridgeComponent);
+                if (insertSuccess)
+                    addedCount++;
+            }
+            if (addedCount > 0)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("smart-fridge-component-storage-insert-success", ("count", addedCount)), uid, Filter.Pvs(uid));
+            }
+        }
 
         public bool TryInsertVendorItem(EntityUid uid, EntityUid itemUid, SmartFridgeComponent fridgeComponent)
         {
@@ -198,14 +210,14 @@ namespace Content.Server.SmartFridge
 
             if (entry == null)
             {
-                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid, Filter.Pvs(uid));
+                _popupSystem.PopupEntity(Loc.GetString("smart-fridge-component-try-eject-invalid-item"), uid, Filter.Pvs(uid));
                 Deny(uid, fridgeComponent);
                 return;
             }
 
             if (entry.Amount <= 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-out-of-stock"), uid, Filter.Pvs(uid));
+                _popupSystem.PopupEntity(Loc.GetString("smart-fridge-component-try-eject-out-of-stock"), uid, Filter.Pvs(uid));
                 Deny(uid, fridgeComponent);
                 return;
             }
@@ -223,7 +235,7 @@ namespace Content.Server.SmartFridge
 
             fridgeComponent.UserInterface?.SendMessage(new SmartFridgeInventoryMessage(fridgeComponent.Inventory));
             TryUpdateVisualState(uid, SmartFridgeVisualState.Eject, fridgeComponent);
-            fridgeComponent.Owner.SpawnTimer(fridgeComponent.VendDelay, () =>
+            fridgeComponent.Owner.SpawnTimer(fridgeComponent.AnimationDuration, () =>
             {
                 fridgeComponent.Ejecting = false;
                 TryUpdateVisualState(uid, SmartFridgeVisualState.Normal, fridgeComponent);

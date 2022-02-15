@@ -26,8 +26,6 @@ namespace Content.Server.SmartFridge
 
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist;
-        [DataField("vendDelay")]
-        public int VendDelay = 2;
         public Container? Storage = default!;
         public Dictionary<uint,  Queue<EntityUid>> entityReference = new();
     }

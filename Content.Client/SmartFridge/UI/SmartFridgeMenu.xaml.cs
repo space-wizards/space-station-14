@@ -43,15 +43,10 @@ namespace Content.Client.SmartFridge.UI
                 if (itemName.Length > longestEntry.Length)
                     longestEntry = itemName;
 
-                Texture? icon = null;
-                // if(_prototypeManager.TryIndex(entry.ID, out EntityPrototype? prototype))
-                //     icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache).Default;
-
-                VendingContents.AddItem($"{itemName} [{entry.Amount}]", icon);
+                VendingContents.AddItem($"{itemName} [{entry.Amount}]");
             }
 
-            SetSize = (Math.Clamp((longestEntry.Length + 2) * 12, 250, 300),
-                Math.Clamp(VendingContents.Count * 50, 150, 350));
+            SetSize = ((250), (350));
         }
 
         public void ItemSelected(ItemList.ItemListSelectedEventArgs args)
