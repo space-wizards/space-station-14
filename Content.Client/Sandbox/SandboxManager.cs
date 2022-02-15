@@ -2,6 +2,7 @@ using System;
 using Content.Client.Decals.UI;
 using Content.Client.HUD;
 using Content.Client.Markers;
+using Content.Client.SubFloor;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
 using Content.Shared.SubFloor;

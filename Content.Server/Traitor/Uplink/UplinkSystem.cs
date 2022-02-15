@@ -89,10 +89,6 @@ namespace Content.Server.Traitor.Uplink
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-            if (!actionBlocker.CanInteract(uid) || !actionBlocker.CanUse(uid))
-                return;
-
             ToggleUplinkUI(component, actor.PlayerSession);
             args.Handled = true;
         }

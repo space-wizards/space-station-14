@@ -39,11 +39,9 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
-          map: [ "enum.VentVisualLayers.Vent", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.VentVisualLayers.Vent", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: VentPumpVisualizer
     - type: GasVentPump
@@ -66,11 +64,9 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
-          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasPassiveVent
 
@@ -100,11 +96,9 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: scrub_off
-          map: [ "enum.ScrubberVisualLayers.Scrubber", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.ScrubberVisualLayers.Scrubber", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: ScrubberVisualizer
     - type: AtmosDevice
@@ -126,11 +120,9 @@
       layers:
         - state: pipeHalf
           sprite: Structures/Piping/Atmospherics/pipe.rsi
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasOutletInjector
 
@@ -149,7 +141,6 @@
       noRot: true
     - type: Appearance
       visuals:
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: Rotatable
     - type: GasThermoMachine
@@ -177,7 +168,6 @@
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - type: Appearance
       visuals:
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: ThermoMachineVisualizer
           disabledState: freezer_off
@@ -201,7 +191,6 @@
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - type: Appearance
       visuals:
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: ThermoMachineVisualizer
           disabledState: heater_off

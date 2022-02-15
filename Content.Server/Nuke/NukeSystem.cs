@@ -117,12 +117,6 @@ namespace Content.Server.Nuke
             if (args.Handled)
                 return;
 
-            // standard interactions check
-            if (!args.InRangeUnobstructed())
-                return;
-            if (!_actionBlocker.CanInteract(args.User) || !_actionBlocker.CanUse(args.User))
-                return;
-
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
