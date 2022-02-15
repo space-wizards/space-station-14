@@ -121,11 +121,11 @@ public sealed class MoppingSystem : EntitySystem
                 BroadcastFinishedEvent = new MoppingDoafterSuccess() { User = user, Tool = used, Target = puddle.Owner, InteractionType = "puddle" }
             };
 
-            // Can't absorb too many entities at once.
+            // Can't interact with many entities at once.
             if (component.MaxInteractingEntities < component.InteractingEntities.Count + 1)
                 return;
 
-            // Can't mop one puddle multiple times.
+            // Can't mop the same puddle multiple times at once.
             if (!component.InteractingEntities.Add(puddle.Owner))
                 return;
 
@@ -154,6 +154,14 @@ public sealed class MoppingSystem : EntitySystem
                     BroadcastCancelledEvent = new MoppingDoafterCancel() { User = user, Tool = used, Target = refillable.Owner, InteractionType = "refillable" },
                     BroadcastFinishedEvent = new MoppingDoafterSuccess() { User = user, Tool = used, Target = refillable.Owner, InteractionType = "refillable" }
                 };
+
+                // Can't interact with too many entities at once.
+                if (component.MaxInteractingEntities < component.InteractingEntities.Count + 1)
+                    return;
+
+                // Can't refill the same container multiple times at once.
+                if (!component.InteractingEntities.Add(refillable.Owner))
+                    return;
 
                 var refillableResult = _doAfterSystem.WaitDoAfter(doAfterRefillableArgs);
                 args.Handled = true;
@@ -186,6 +194,14 @@ public sealed class MoppingSystem : EntitySystem
                     BroadcastFinishedEvent = new MoppingDoafterSuccess() { User = user, Tool = used, Target = drainable.Owner, InteractionType = "drainable" }
                 };
 
+                // Can't interact with too many entities at once.
+                if (component.MaxInteractingEntities < component.InteractingEntities.Count + 1)
+                    return;
+
+                // Can't drain the same container multiple times at once.
+                if (!component.InteractingEntities.Add(drainable.Owner))
+                    return;
+
                 var drainableResult = _doAfterSystem.WaitDoAfter(doAfterDrainableArgs);
                 args.Handled = true;
             }
@@ -198,67 +214,64 @@ public sealed class MoppingSystem : EntitySystem
 
     private void OnDoafterSuccess(MoppingDoafterSuccess ev)
     {
-        if (!TryComp(ev.Tool, out AbsorbentComponent? absorber))
+        if (!TryComp(ev.Tool, out AbsorbentComponent? absorbent))
             return;
+
+        var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
+
+        solutionSystem.TryGetSolution(ev.Tool, "absorbed", out var absorbedSolution); // We will always be looking for a solution named "absorbed" on our AbsorbentComponent.
+
+        FixedPoint2 transferAmount;
 
         if (ev.InteractionType == "puddle")
         {
             if (!TryComp(ev.Target, out PuddleComponent? puddle))
+            {
+                absorbent.InteractingEntities.Remove(ev.Target);
                 return;
-
-            var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
-
-            solutionSystem.TryGetSolution(ev.Tool, "absorbed", out var absorbedSolution); // We will always be looking for a solution named "absorbed" on our AbsorbentComponent.
+            }
 
             if(!solutionSystem.TryGetSolution(ev.Target, puddle.SolutionName, out var puddleSolution))
+            {
+                absorbent.InteractingEntities.Remove(ev.Target);
                 return;
+            }
 
-
-            // The volume the mop will take from the puddle
-            FixedPoint2 transferAmount;
 
             // does the puddle actually have reagents? it might not if its a weird cosmetic entity.
             if (puddleSolution.TotalVolume == 0)
-                transferAmount = FixedPoint2.Min(absorber.PickupAmount, absorber.AvailableVolume);
+                transferAmount = FixedPoint2.Min(absorbent.PickupAmount, absorbent.AvailableVolume);
             else
             {
-                transferAmount = FixedPoint2.Min(absorber.PickupAmount, puddleSolution.TotalVolume, absorber.AvailableVolume);
+                transferAmount = FixedPoint2.Min(absorbent.PickupAmount, puddleSolution.TotalVolume, absorbent.AvailableVolume);
 
-                if ((puddleSolution.TotalVolume - transferAmount) < absorber.MopLowerLimit) // If the transferAmount would bring the puddle below the MopLowerLimit
-                    transferAmount = puddleSolution.TotalVolume - absorber.MopLowerLimit; // Then the transferAmount should bring the puddle down to the MopLowerLimit exactly
+                if ((puddleSolution.TotalVolume - transferAmount) < absorbent.MopLowerLimit) // If the transferAmount would bring the puddle below the MopLowerLimit
+                    transferAmount = puddleSolution.TotalVolume - absorbent.MopLowerLimit; // Then the transferAmount should bring the puddle down to the MopLowerLimit exactly
             }
 
             // Transfers solution from the puddle to the mop
             solutionSystem.TryAddSolution(ev.Tool, absorbedSolution, solutionSystem.SplitSolution(ev.Target, puddleSolution, transferAmount));
 
-            SoundSystem.Play(Filter.Pvs(ev.User), absorber.PickupSound.GetSound(), ev.User);
+            SoundSystem.Play(Filter.Pvs(ev.User), absorbent.PickupSound.GetSound(), ev.User);
 
             // if the tool became full after that puddle, let the player know.
-            if(absorber.AvailableVolume <= 0)
+            if(absorbent.AvailableVolume <= 0)
                 ev.User.PopupMessage(ev.User, Loc.GetString("mopping-component-mop-is-now-full-message"));
-
-            absorber.InteractingEntities.Remove(ev.Target); // Tell the absorbentComponent that we have stopped interacting with the target.
-
         }
 
         if (ev.InteractionType == "refillable")
         {
             if (!TryComp(ev.Target, out RefillableSolutionComponent? refillable))
+            {
+                absorbent.InteractingEntities.Remove(ev.Target);
                 return;
-
-            if (!TryComp(ev.Tool, out AbsorbentComponent? absorbent))
-                return;
-
-            var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
-
-            solutionSystem.TryGetSolution(ev.Tool, "absorbed", out var absorbedSolution); // We will always be looking for a solution named "absorbed" on our AbsorbentComponent.
+            }
 
             // Try and get the Solution of the target container, and out var it into "solution."
             if (solutionSystem.TryGetSolution(refillable.Owner, refillable.Solution, out var solution)
                 && absorbedSolution is not null)
             {
-
-                var transferAmount = absorbent.CurrentVolume; // Drain all of the absorbed solution.
+                transferAmount = absorbent.CurrentVolume; // Drain all of the absorbed solution.
 
                 // Remove <transferAmount> units of solution from the used tool, and store it in temp var solutionFromTool.
                 var solutionFromTool = solutionSystem.SplitSolution(ev.Tool, absorbedSolution, transferAmount);
@@ -266,6 +279,7 @@ public sealed class MoppingSystem : EntitySystem
                 // Take that same solutionFromTool, and try adding it to the container we are refilling.
                 if (!solutionSystem.TryAddSolution(refillable.Owner, solution, solutionFromTool))
                 {
+                    absorbent.InteractingEntities.Remove(ev.Target);
                     return; //if the attempt fails
                 }
 
@@ -277,24 +291,21 @@ public sealed class MoppingSystem : EntitySystem
         if (ev.InteractionType == "drainable")
         {
             if (!TryComp(ev.Target, out DrainableSolutionComponent? drainable))
+            {
+                absorbent.InteractingEntities.Remove(ev.Target);
                 return;
-
-            if (!TryComp(ev.Tool, out AbsorbentComponent? absorbent))
-                return;
-
-            var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
-
-            solutionSystem.TryGetSolution(ev.Tool, "absorbed", out var absorbedSolution); // We will always be looking for a solution named "absorbed" on our AbsorbentComponent.
+            }
 
             // Try and get the Solution of the target container, and out var it into "solution."
             if (solutionSystem.TryGetSolution(drainable.Owner, drainable.Solution, out var drainableSolution))
             {
 
                 // Let's transfer up to to half the tool's available capacity to the tool.
-                var transferAmount = FixedPoint2.Min(0.5*absorbent.AvailableVolume, drainableSolution.CurrentVolume);
+                transferAmount = FixedPoint2.Min(0.5*absorbent.AvailableVolume, drainableSolution.CurrentVolume);
 
                 if (transferAmount == 0)
                 {
+                    absorbent.InteractingEntities.Remove(ev.Target);
                     return;
                 }
 
@@ -304,25 +315,23 @@ public sealed class MoppingSystem : EntitySystem
                 // Take that same solutionFromContainer and try adding it to the tool we are refilling.
                 if (!solutionSystem.TryAddSolution(ev.Tool, absorbent.AbsorbedSolution, solutionFromContainer))
                 {
+                    absorbent.InteractingEntities.Remove(ev.Target);
                     return; //if the attempt fails
                 }
 
                 ev.User.PopupMessage(ev.User, Loc.GetString("bucket-component-mop-is-now-wet-message"));
-
             }
-
-
         }
 
-
+        absorbent.InteractingEntities.Remove(ev.Target); // Tell the absorbentComponent that we have stopped interacting with the target.
     }
 
     private void OnDoafterCancel(MoppingDoafterCancel ev)
     {
-        if (!TryComp(ev.Tool, out AbsorbentComponent? absorber))
+        if (!TryComp(ev.Tool, out AbsorbentComponent? absorbent))
             return;
 
-        absorber.InteractingEntities.Remove(ev.Target); // Tell the absorbentComponent that we have stopped interacting with the target.
+        absorbent.InteractingEntities.Remove(ev.Target); // Tell the absorbentComponent that we have stopped interacting with the target.
         return;
     }
 
