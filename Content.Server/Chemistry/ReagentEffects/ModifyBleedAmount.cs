@@ -11,7 +11,7 @@ public sealed class ModifyBleedAmount : ReagentEffect
     public bool Scaled = false;
 
     [DataField("amount")]
-    public float Amount = 1.0f;
+    public float Amount = -1.0f;
 
     public override void Effect(ReagentEffectArgs args)
     {

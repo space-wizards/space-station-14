@@ -2,7 +2,7 @@
   id: Blood
   name: blood
   group: Biological
-  description: I hope this is ketchup.
+  desc: I hope this is ketchup.
   color: "#9e1010"
   physicalDesc: ferrous
   metabolisms:
@@ -19,7 +19,7 @@
   id: Slime
   name: slime
   group: Biological
-  description: You thought this was gradient blood at first, but you were mistaken.
+  desc: You thought this was gradient blood at first, but you were mistaken.
   color: "#2cf274"
   physicalDesc: viscous
   metabolisms:

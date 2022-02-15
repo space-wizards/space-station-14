@@ -108,7 +108,8 @@ public sealed class BloodstreamSystem : EntitySystem
         var totalFloat = total.Float();
         TryModifyBleedAmount(uid, totalFloat, component);
 
-        if (_robustRandom.Prob(totalFloat / 50))
+        var prob = Math.Clamp(totalFloat / 50, 0, 1);
+        if (_robustRandom.Prob(prob))
         {
             // This is gonna hurt.
             TryModifyBloodLevel(uid, (-total) / 5, component);

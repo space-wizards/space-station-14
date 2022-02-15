@@ -33,20 +33,13 @@ namespace Content.Server.Body.Components
         ///     How much should bleeding should be reduced every update interval?
         /// </summary>
         [DataField("bleedReductionAmount")]
-        public float BleedReductionAmount = 5.0f;
+        public float BleedReductionAmount = 1.0f;
 
         /// <summary>
         ///     What percentage of current blood is necessary to avoid dealing blood loss damage?
         /// </summary>
         [DataField("bloodlossThreshold")]
         public float BloodlossThreshold = 0.9f;
-
-        /// <summary>
-        ///     How much damage is required to make this entity
-        ///     instantly lose some blood?
-        /// </summary>
-        [DataField("instantBleedDamageThreshold")]
-        public FixedPoint2 InstantBleedDamageThreshold = 20f;
 
         /// <summary>
         ///     The base bloodloss damage to be incurred if below <see cref="BloodlossThreshold"/>
