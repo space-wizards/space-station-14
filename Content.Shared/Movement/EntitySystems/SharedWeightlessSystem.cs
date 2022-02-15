@@ -32,6 +32,7 @@ public abstract class SharedWeightlessSystem : EntitySystem
             return true;
         }
 
+        // TODO: This is the big perf problem here so cache it on ActionBlockerComponent in future.
         if (_inventory.TryGetSlotEntity(uid, "shoes", out var ent))
         {
             if (TryComp<SharedMagbootsComponent>(ent, out var boots) && boots.On)

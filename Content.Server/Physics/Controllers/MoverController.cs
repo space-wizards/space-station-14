@@ -1,32 +1,29 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Movement.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.Maps;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Sound;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Physics.Controllers
 {
-    public class MoverController : SharedMoverController
+    public sealed class MoverController : SharedMoverController
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ContentSoundSystem _sound = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly TagSystem _tags = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;
@@ -281,7 +278,7 @@ namespace Content.Server.Physics.Controllers
             var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
 
             // Handle footsteps.
-            if (_mapManager.GridExists(gridId))
+            if (_mapManager.TryGetGrid(gridId, out var grid))
             {
                 // Can happen when teleporting between grids.
                 if (!coordinates.TryDistance(EntityManager, mobMover.LastPosition, out var distance) ||
@@ -300,29 +297,30 @@ namespace Content.Server.Physics.Controllers
                 return;
             }
 
-            DebugTools.Assert(gridId != GridId.Invalid);
             mobMover.LastPosition = coordinates;
 
             if (mobMover.StepSoundDistance < distanceNeeded) return;
 
             mobMover.StepSoundDistance -= distanceNeeded;
 
-            var invSystem = EntitySystem.Get<InventorySystem>();
-
-            if (invSystem.TryGetSlotEntity(mover.Owner, "shoes", out var shoes) &&
+            if (_inventory.TryGetSlotEntity(mover.Owner, "shoes", out var shoes) &&
                 EntityManager.TryGetComponent<FootstepModifierComponent>(shoes, out var modifier))
             {
-                modifier.PlayFootstep();
+                PlayFootstepModifier(modifier, transform);
             }
             else
             {
-                PlayFootstepSound(mover.Owner, gridId, coordinates, mover.Sprinting);
+                PlayFootstepSound(mover.Owner, grid, coordinates, mover.Sprinting);
             }
         }
 
-        private void PlayFootstepSound(EntityUid mover, GridId gridId, EntityCoordinates coordinates, bool sprinting)
+        private void PlayFootstepModifier(FootstepModifierComponent component, TransformComponent xform)
         {
-            var grid = _mapManager.GetGrid(gridId);
+            SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), _sound.GetSound(component.SoundCollection), xform.Coordinates, AudioHelpers.WithVariation(component.Variation).WithVolume(-2f));
+        }
+
+        private void PlayFootstepSound(EntityUid mover, IMapGrid grid, EntityCoordinates coordinates, bool sprinting)
+        {
             var tile = grid.GetTileRef(coordinates);
 
             if (tile.IsSpace(_tileDefinitionManager)) return;

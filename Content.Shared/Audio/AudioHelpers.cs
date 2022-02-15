@@ -52,10 +52,12 @@ namespace Content.Shared.Audio
             return ShiftSemitone(IoCManager.Resolve<IRobustRandom>().Next(-variation, variation));
         }
 
-        public static string GetRandomFileFromSoundCollection(string name)
+        public static string GetRandomFileFromSoundCollection(string name, IPrototypeManager? proto = null, IRobustRandom? robust = null)
         {
-            var soundCollection = IoCManager.Resolve<IPrototypeManager>().Index<SoundCollectionPrototype>(name);
-            return IoCManager.Resolve<IRobustRandom>().Pick(soundCollection.PickFiles).ToString();
+            IoCManager.Resolve(ref proto);
+            IoCManager.Resolve(ref robust);
+            var soundCollection = proto.Index<SoundCollectionPrototype>(name);
+            return robust.Pick(soundCollection.PickFiles).ToString();
         }
     }
 }

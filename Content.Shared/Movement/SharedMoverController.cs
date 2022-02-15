@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
@@ -6,12 +5,8 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Pulling.Components;
-using JetBrains.Annotations;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Utility;
@@ -65,7 +60,7 @@ namespace Content.Shared.Movement
             if (xform.GridID == GridId.Invalid || !_mapManager.TryGetGrid(xform.GridID, out var grid))
                 return mover.LastGridAngle;
 
-            return grid.WorldRotation;
+            return Transform(grid.GridEntityId).WorldRotation;
         }
 
         /// <summary>

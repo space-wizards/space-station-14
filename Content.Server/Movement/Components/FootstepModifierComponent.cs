@@ -1,10 +1,4 @@
-using Content.Shared.Audio;
 using Content.Shared.Sound;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Movement.Components
 {
@@ -12,17 +6,12 @@ namespace Content.Server.Movement.Components
     /// Changes footstep sound
     /// </summary>
     [RegisterComponent]
-    public class FootstepModifierComponent : Component
+    public sealed class FootstepModifierComponent : Component
     {
         [DataField("footstepSoundCollection", required: true)]
         public SoundSpecifier SoundCollection = default!;
 
         [DataField("variation")]
         public float Variation = default;
-
-        public void PlayFootstep()
-        {
-            SoundSystem.Play(Filter.Pvs(Owner), SoundCollection.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(Variation).WithVolume(-2f));
-        }
     }
 }
