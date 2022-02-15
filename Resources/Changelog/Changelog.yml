@@ -1,10 +1,4 @@
 Entries:
-- author: xRiriq
-  changes:
-  - {message: Backpacks for CMO and Medical Doctors spawn with filled first aid kits,
-    type: Add}
-  id: 564
-  time: '2021-11-11T01:29:36.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Piloting now breaks on minimum distance (0.25 units) and not any distance,
@@ -2962,3 +2956,8 @@ Entries:
   - {message: Spillable Water tank, type: Fix}
   id: 1064
   time: '2022-02-15T02:22:26.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Drones and monkeys now have unique identifiers in their names., type: Add}
+  id: 1065
+  time: '2022-02-15T02:41:08.0000000+00:00'
