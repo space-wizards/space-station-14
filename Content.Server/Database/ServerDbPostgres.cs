@@ -243,7 +243,8 @@ namespace Content.Server.Database
 
         public override async Task<List<ServerRoleBanDef>> GetServerRoleBansAsync(IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId)
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned)
         {
             if (address == null && userId == null && hwId == null)
             {
@@ -252,31 +253,13 @@ namespace Content.Server.Database
 
             await using var db = await GetDbImpl();
 
-            var query = MakeRoleBanLookupQuery(address, userId, hwId, db)
-                .Where(p => p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.Now))
+            var query = MakeRoleBanLookupQuery(address, userId, hwId, db, includeUnbanned)
                 .OrderByDescending(b => b.BanTime);
 
             return await QueryRoleBans(query);
         }
 
-        public override async Task<List<ServerRoleBanDef>> GetAllServerRoleBansAsync(
-            IPAddress? address,
-            NetUserId? userId,
-            ImmutableArray<byte>? hwId)
-        {
-            if (address == null && userId == null && hwId == null)
-            {
-                throw new ArgumentException("Address, userId, and hwId cannot all be null");
-            }
-
-            await using var db = await GetDbImpl();
-
-            var query = MakeRoleBanLookupQuery(address, userId, hwId, db);
-
-            return await QueryRoleBans(query);
-        }
-
-        private async Task<List<ServerRoleBanDef>> QueryRoleBans(IQueryable<ServerRoleBan> query)
+        private static async Task<List<ServerRoleBanDef>> QueryRoleBans(IQueryable<ServerRoleBan> query)
         {
             var queryRoleBans = await query.ToArrayAsync();
             var bans = new List<ServerRoleBanDef>(queryRoleBans.Length);
@@ -298,7 +281,8 @@ namespace Content.Server.Database
             IPAddress? address,
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
-            DbGuardImpl db)
+            DbGuardImpl db,
+            bool includeUnbanned)
         {
             IQueryable<ServerRoleBan>? query = null;
 
@@ -327,6 +311,12 @@ namespace Content.Server.Database
                     .Where(b => b.HWId!.SequenceEqual(hwId.Value.ToArray()));
 
                 query = query == null ? newQ : query.Union(newQ);
+            }
+
+            if (!includeUnbanned)
+            {
+                query = query?.Where(p =>
+                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.Now));
             }
 
             query = query!.Distinct();

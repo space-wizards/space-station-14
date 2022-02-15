@@ -36,7 +36,7 @@ public sealed class ListRoleBans : IConsoleCommand
         var targetHWid = located.LastHWId;
         var targetAddress = located.LastAddress;
 
-        var bans = await dbMan.GetAllServerRoleBansAsync(targetAddress, targetUid, targetHWid);
+        var bans = await dbMan.GetServerRoleBansAsync(targetAddress, targetUid, targetHWid, true);
 
         if (bans.Count == 0)
         {

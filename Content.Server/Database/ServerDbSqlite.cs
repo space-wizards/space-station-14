@@ -177,16 +177,14 @@ namespace Content.Server.Database
 
         public override async Task<List<ServerRoleBanDef>> GetServerRoleBansAsync(IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId)
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned)
         {
             await using var db = await GetDbImpl();
 
             // SQLite can't do the net masking stuff we need to match IP address ranges.
             // So just pull down the whole list into memory.
-            var queryBans = await db.SqliteDbContext.RoleBan
-                .Include(p => p.Unban)
-                .Where(p => p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow))
-                .ToListAsync();
+            var queryBans = await GetAllRoleBans(db.SqliteDbContext, includeUnbanned);
 
             return queryBans
                 .Where(b => BanMatches(b, address, userId, hwId))
@@ -195,23 +193,18 @@ namespace Content.Server.Database
 
         }
 
-        public override async Task<List<ServerRoleBanDef>> GetAllServerRoleBansAsync(
-            IPAddress? address,
-            NetUserId? userId,
-            ImmutableArray<byte>? hwId)
+        private static async Task<List<ServerRoleBan>> GetAllRoleBans(
+            SqliteServerDbContext db,
+            bool includeUnbanned)
         {
-            await using var db = await GetDbImpl();
+            IQueryable<ServerRoleBan> query = db.RoleBan.Include(p => p.Unban);
+            if (!includeUnbanned)
+            {
+                query = query.Where(p =>
+                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow));
+            }
 
-            // SQLite can't do the net masking stuff we need to match IP address ranges.
-            // So just pull down the whole list into memory.
-            var queryBans = await db.SqliteDbContext.RoleBan
-                .Include(p => p.Unban)
-                .ToListAsync();
-
-            return queryBans
-                .Where(b => BanMatches(b, address, userId, hwId))
-                .Select(ConvertRoleBan)
-                .ToList()!;
+            return await query.ToListAsync();
         }
 
         private static bool BanMatches(
