@@ -26,7 +26,7 @@
   suffix: Bar&Kitchen, Locked
   components:
   - type: AccessReader
-    access: [["Bar"]], ["Kitchen"]]
+    access: [["Bar"], ["Kitchen"]]
     
 - type: entity
   parent: Windoor
@@ -74,7 +74,7 @@
   suffix: Kitchen&Hydroponics, Locked
   components:
   - type: AccessReader
-    access: [["Kitchen"]], [["Hydroponics"]]
+    access: [["Kitchen"], ["Hydroponics"]]
     
 - type: entity
   parent: Windoor
