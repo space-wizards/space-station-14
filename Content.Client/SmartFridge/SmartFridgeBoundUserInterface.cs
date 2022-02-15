@@ -32,7 +32,7 @@ namespace Content.Client.SmartFridge
 
         public void Eject(uint id)
         {
-            SendMessage(new SmartFridgeEjectMessage(id, false));
+            SendMessage(new SmartFridgeEjectMessage(id));
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)

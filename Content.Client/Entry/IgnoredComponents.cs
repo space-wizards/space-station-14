@@ -309,6 +309,7 @@ namespace Content.Client.Entry
             "EnergySword",
             "DoorRemote",
             "InteractionPopup",
+            "SmartFridge"
         };
     }
 }

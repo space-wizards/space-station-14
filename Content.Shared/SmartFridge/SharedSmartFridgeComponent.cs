@@ -1,4 +1,3 @@
-using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SmartFridge
@@ -28,11 +27,9 @@ namespace Content.Shared.SmartFridge
         public class SmartFridgeEjectMessage : BoundUserInterfaceMessage
         {
             public readonly uint ID;
-            public readonly bool EjectAll;
-            public SmartFridgeEjectMessage(uint id, bool ejectAll)
+            public SmartFridgeEjectMessage(uint id)
             {
                 ID = id;
-                EjectAll = ejectAll;
             }
         }
 
