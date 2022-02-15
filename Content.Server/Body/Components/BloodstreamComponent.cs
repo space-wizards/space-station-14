@@ -1,16 +1,9 @@
-using Content.Server.Atmos;
 using Content.Server.Body.Systems;
-using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body.Components
 {
@@ -24,21 +17,50 @@ namespace Content.Server.Body.Components
 
         /// <summary>
         ///     How much is this entity currently bleeding?
-        ///     Higher numbers mean more bloodloss.
+        ///     Higher numbers mean more blood lost every tick.
         ///
         ///     Goes down slowly over time, and items like bandages
         ///     or clotting reagents can lower bleeding.
         /// </summary>
         /// <remarks>
-        ///     This generally corresponds to an amount of damage (slashing/piercing)
+        ///     This generally corresponds to an amount of damage and can't go above 100.
         /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
         public float BleedAmount;
+
+        /// <summary>
+        ///     How much should bleeding should be reduced every update interval?
+        /// </summary>
+        [DataField("bleedReductionAmount")]
+        public float BleedReductionAmount = 0.25f;
+
+        /// <summary>
+        ///     What percentage of current blood is necessary to stop dealing blood loss damage?
+        /// </summary>
+        [DataField("bloodlossThreshold")]
+        public float BloodlossThreshold = 0.9f;
+
+        [DataField("bloodlossDamage", required: true)]
+        public DamageSpecifier BloodlossDamage = default!;
 
         /// <summary>
         ///     How frequently should this bloodstream update, in seconds?
         /// </summary>
         [DataField("updateInterval")]
         public float UpdateInterval = 5.0f;
+
+        // TODO shouldn't be hardcoded, should just use some organ simulation like bone marrow or smth.
+        /// <summary>
+        ///     How much reagent of blood should be restored each update interval?
+        /// </summary>
+        [DataField("bloodRefreshAmount")]
+        public float BloodRefreshAmount = 0.2f;
+
+        /// <summary>
+        ///     How much blood needs to be removed at once in order to create a puddle?
+        /// </summary>
+        [DataField("bleedPuddleThreshold")]
+        public FixedPoint2 BleedPuddleThreshold = 2.0f;
 
         /// <summary>
         ///     A modifier set prototype ID corresponding to how damage should be modified
@@ -47,7 +69,7 @@ namespace Content.Server.Body.Components
         /// <remarks>
         ///     For example, piercing damage is increased while poison damage is nullified entirely.
         /// </remarks>
-        [DataField("damageBleedModifiers", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<DamageModifierSetPrototype>))]
+        [DataField("damageBleedModifiers", customTypeSerializer:typeof(PrototypeIdSerializer<DamageModifierSetPrototype>))]
         public string DamageBleedModifiers = "BloodlossHuman";
 
         // TODO probably damage bleed thresholds.
@@ -59,16 +81,17 @@ namespace Content.Server.Body.Components
         public FixedPoint2 ChemicalMaxVolume = FixedPoint2.New(250);
 
         /// <summary>
-        ///     Max volume of internal blood storage
+        ///     Max volume of internal blood storage,
+        ///     and starting level of blood.
         /// </summary>
         [DataField("bloodMaxVolume")]
-        public FixedPoint2 BloodMaxVolume = FixedPoint2.New(100);
+        public FixedPoint2 BloodMaxVolume = FixedPoint2.New(300);
 
         /// <summary>
         ///     Which reagent is considered this entities 'blood'?
         /// </summary>
         /// <remarks>
-        ///     Slimepeople might use slime as their blood or something like that.
+        ///     Slime-people might use slime as their blood or something like that.
         /// </remarks>
         [DataField("bloodReagent")]
         public string BloodReagent = "Blood";

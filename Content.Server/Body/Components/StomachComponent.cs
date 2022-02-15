@@ -24,7 +24,7 @@ namespace Content.Server.Body.Components
         ///     What solution should this stomach push reagents into, on the body?
         /// </summary>
         [DataField("bodySolutionName")]
-        public string BodySolutionName = BloodstreamSystem.DefaultSolutionName;
+        public string BodySolutionName = BloodstreamComponent.DefaultChemicalsSolutionName;
 
         /// <summary>
         ///     Initial internal solution storage volume
