@@ -28,7 +28,6 @@ namespace Content.Server.Fluids.EntitySystems;
 [UsedImplicitly]
 public sealed class MoppingSystem : EntitySystem
 {
-    //  [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
     public override void Initialize()
@@ -80,21 +79,20 @@ public sealed class MoppingSystem : EntitySystem
 
                 args.Handled = true;
             }
-
             return;
         }
 
-        // if the target has a PuddleComponent
+
+        // For mopping up or adding to puddles
         if (TryComp<PuddleComponent>(args.Target, out var puddle)
             && !args.Handled)
         {
-            // Interact-With-Puddle behaviour
-
             if (!solutionSystem.TryGetSolution(puddle.Owner, puddle.SolutionName, out var puddleSolution)) // if the target has no solution (Note: A solution with zero volume is still a solution!)
             {
                 return;
             }
 
+            // adding to puddles
             if (puddleSolution.TotalVolume <= component.MopLowerLimit) // if the puddle is too small for the tool to effectively absorb any more solution from it
             {
                 // Dilutes the puddle with whatever is in the tool
@@ -102,7 +100,7 @@ public sealed class MoppingSystem : EntitySystem
                 return;
             }
 
-            // if the tool is full
+            // if the tool is full when trying to mop
             if(component.AvailableVolume <= 0)
             {
                 used.PopupMessage(user, Loc.GetString("used-tool-is-full-message"));
@@ -133,12 +131,11 @@ public sealed class MoppingSystem : EntitySystem
             args.Handled = true;
         }
 
+
         // For draining the tool into another container.
         if (absorbedSolution is not null && target is not null && component.CurrentVolume > 0 // if tool used has something absorbed
             && !args.Handled)
         {
-            // Interact-With-Refillable-Container behaviour:
-
             if (TryComp<RefillableSolutionComponent>(target, out RefillableSolutionComponent? refillable)) // target has refillable solution component
             {
                 // sets the doAfter delay
@@ -169,15 +166,11 @@ public sealed class MoppingSystem : EntitySystem
             }
         }
 
-        // if (absorbedSolution != null)
-        //     user.PopupMessage(user, "absorbed solution is null");
 
         // For wetting the tool from another container. Note that here the absorbedSolution is allowed to be null.
-        if (target is not null && component.CurrentVolume <= 0
-            && !args.Handled) // if tool used is completely dry
+        if (target is not null && component.CurrentVolume <= 0 // if tool used is completely dry
+            && !args.Handled)
         {
-            // Interact-With-Drainable-Container behaviour:
-
             if (TryComp<DrainableSolutionComponent>(target, out DrainableSolutionComponent? drainable)) // if target has drainable solution component
             {
                 // sets the doAfter delay
@@ -206,9 +199,6 @@ public sealed class MoppingSystem : EntitySystem
                 args.Handled = true;
             }
         }
-
-
-
         return;
     }
 
@@ -223,6 +213,7 @@ public sealed class MoppingSystem : EntitySystem
 
         FixedPoint2 transferAmount;
 
+        // Interact-With-Puddle behaviour:
         if (ev.InteractionType == "puddle")
         {
             if (!TryComp(ev.Target, out PuddleComponent? puddle))
@@ -236,7 +227,6 @@ public sealed class MoppingSystem : EntitySystem
                 absorbent.InteractingEntities.Remove(ev.Target);
                 return;
             }
-
 
             // does the puddle actually have reagents? it might not if its a weird cosmetic entity.
             if (puddleSolution.TotalVolume == 0)
@@ -259,6 +249,8 @@ public sealed class MoppingSystem : EntitySystem
                 ev.User.PopupMessage(ev.User, Loc.GetString("mopping-component-mop-is-now-full-message"));
         }
 
+
+        // Interact-With-Refillable-Container behaviour:
         if (ev.InteractionType == "refillable")
         {
             if (!TryComp(ev.Target, out RefillableSolutionComponent? refillable))
@@ -283,11 +275,13 @@ public sealed class MoppingSystem : EntitySystem
                     return; //if the attempt fails
                 }
 
+                SoundSystem.Play(Filter.Pvs(ev.User), absorbent.TransferSound.GetSound(), ev.User);
                 ev.User.PopupMessage(ev.User, Loc.GetString("bucket-component-mop-is-now-dry-message"));
             }
-
         }
 
+
+        // Interact-With-Drainable-Container behaviour:
         if (ev.InteractionType == "drainable")
         {
             if (!TryComp(ev.Target, out DrainableSolutionComponent? drainable))
@@ -319,6 +313,7 @@ public sealed class MoppingSystem : EntitySystem
                     return; //if the attempt fails
                 }
 
+                SoundSystem.Play(Filter.Pvs(ev.User), absorbent.TransferSound.GetSound(), ev.User);
                 ev.User.PopupMessage(ev.User, Loc.GetString("bucket-component-mop-is-now-wet-message"));
             }
         }

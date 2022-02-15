@@ -87,6 +87,9 @@ public class AbsorbentComponent : Component
     [DataField("pickupSound")]
     public SoundSpecifier PickupSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
 
+    [DataField("transferSound")]
+    public SoundSpecifier TransferSound = new SoundPathSpecifier("/Audio/Effects/Fluids/watersplash.ogg");
+
     /// <summary>
     ///     Multiplier for the do_after delay for how fast the mop works.
     /// </summary>
