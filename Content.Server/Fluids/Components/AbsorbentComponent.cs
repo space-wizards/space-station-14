@@ -35,7 +35,7 @@ public class AbsorbentComponent : Component
     /// </summary>
     public bool CurrentlyAbsorbing { get; set; }
 
-    // AbsorbedSolution Object stores whatever solution the entity has absorbed.
+    // AbsorbedSolution stores whatever solution the entity has absorbed.
     public Solution? AbsorbedSolution
     {
         get
