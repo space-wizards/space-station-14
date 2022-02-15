@@ -15,7 +15,7 @@ namespace Content.Shared.Strip.Components
         {
             return by != Owner
                    && IoCManager.Resolve<IEntityManager>().HasComponent<SharedHandsComponent>(@by)
-                   && EntitySystem.Get<ActionBlockerSystem>().CanInteract(@by);
+                   && EntitySystem.Get<ActionBlockerSystem>().CanInteract(@by, Owner);
         }
 
         bool IDraggable.CanDrop(CanDropEvent args)

@@ -99,6 +99,12 @@ namespace Content.Client.Stylesheets
         public static readonly Color ButtonColorContextPressed = Color.LightSlateGray;
         public static readonly Color ButtonColorContextDisabled = Color.Black;
 
+        // Examine button colors
+        public static readonly Color ExamineButtonColorContext = Color.Transparent;
+        public static readonly Color ExamineButtonColorContextHover = Color.DarkSlateGray;
+        public static readonly Color ExamineButtonColorContextPressed = Color.LightSlateGray;
+        public static readonly Color ExamineButtonColorContextDisabled = Color.FromHex("#5A5A5A");
+
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
         public const string StyleClassPowerStateLow = "PowerStateLow";
@@ -653,6 +659,26 @@ namespace Content.Client.Stylesheets
                 Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
+
+                // Examine buttons
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContext),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextHover),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextPressed),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextDisabled),
 
                 // Thin buttons (No padding nor vertical margin)
                 Element<EntityContainerButton>().Class(StyleClassStorageButton)

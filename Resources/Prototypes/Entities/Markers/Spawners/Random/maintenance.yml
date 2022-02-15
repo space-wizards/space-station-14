@@ -49,7 +49,7 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Clothing/Eyes/Glasses/gar.rsi/icon-super.png
+        - texture: Objects/Power/PowerCells/power_cell_large_sup.rsi/l_sup.png
     - type: RandomSpawner
       rarePrototypes:
         - lanternextrabright
@@ -84,7 +84,7 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Clothing/Eyes/Glasses/gar.rsi/icon-super.png
+        - texture: Objects/Weapons/Melee/machete.rsi/icon.png
     - type: RandomSpawner
       rarePrototypes:
         - Machete

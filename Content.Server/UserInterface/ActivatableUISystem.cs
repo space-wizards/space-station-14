@@ -18,7 +18,6 @@ namespace Content.Server.UserInterface
     [UsedImplicitly]
     internal sealed class ActivatableUISystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
 
         public override void Initialize()
@@ -81,12 +80,6 @@ namespace Content.Server.UserInterface
             if (!EntityManager.TryGetComponent(user, out ActorComponent? actor)) return false;
 
             if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return false;
-
-            if (!HasComp<GhostComponent>(user) && !_actionBlockerSystem.CanInteract(user))
-            {
-                user.PopupMessageCursor(Loc.GetString("base-computer-ui-component-cannot-interact"));
-                return true;
-            }
 
             var ui = aui.UserInterface;
             if (ui == null) return false;

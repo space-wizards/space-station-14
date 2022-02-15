@@ -83,7 +83,7 @@ namespace Content.Server.Cuffs
             else
             {
                 // Check if the user can interact.
-                if (!_actionBlockerSystem.CanInteract(args.User))
+                if (!_actionBlockerSystem.CanInteract(args.User, args.Target))
                 {
                     args.Cancel();
                 }
