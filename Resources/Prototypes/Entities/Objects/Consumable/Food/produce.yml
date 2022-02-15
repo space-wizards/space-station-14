@@ -208,6 +208,7 @@
   - type: Tag
     tags:
     - Carrot
+    - Produce
   - type: SolutionContainerManager
     solutions:
       food:
@@ -350,9 +351,6 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Tag
-    tags:
-    - Produce
 
 - type: entity
   name: tomato
