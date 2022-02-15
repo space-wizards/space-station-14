@@ -62,7 +62,6 @@ namespace Content.Client.Entry
             "Mind",
             "StorageFill",
             "Absorbent",
-            "Bucket",
             "CableVis",
             "BatterySelfRecharger",
             "Puddle",
