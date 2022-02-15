@@ -3,7 +3,6 @@ using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 
 namespace Content.Server.Weapon.Ranged;
@@ -23,12 +22,6 @@ public sealed partial class GunSystem
     private void OnBatteryMapInit(EntityUid uid, BatteryBarrelComponent component, MapInitEvent args)
     {
         UpdateBatteryAppearance(component);
-    }
-
-    private void OnBatteryGetState(EntityUid uid, BatteryBarrelComponent component, ref ComponentGetState args)
-    {
-        // currently unused, but maybe `FireRateSelector` will be used eventually?
-        args.State = new BatteryBarrelComponentState(component.FireRateSelector);
     }
 
     private void OnCellSlotUpdated(EntityUid uid, BatteryBarrelComponent component, PowerCellChangedEvent args)
