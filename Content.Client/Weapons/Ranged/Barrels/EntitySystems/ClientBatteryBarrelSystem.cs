@@ -12,7 +12,7 @@ public sealed class ClientBatteryBarrelSystem : EntitySystem
         SubscribeLocalEvent<ClientBatteryBarrelComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    private void OnAppearanceChange(EntityUid uid, ClientBatteryBarrelComponent component, AppearanceChangeEvent args)
+    private void OnAppearanceChange(EntityUid uid, ClientBatteryBarrelComponent component, ref AppearanceChangeEvent args)
     {
         component.ItemStatus?.Update(args.Component);
     }
