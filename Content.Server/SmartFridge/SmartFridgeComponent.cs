@@ -1,24 +1,19 @@
 using Content.Server.UserInterface;
-using Content.Server.WireHacking;
 using Content.Shared.Sound;
 using Content.Shared.SmartFridge;
-using Content.Server.SmartFridge.systems;
 using Robust.Server.GameObjects;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 
-using Content.Shared.Chemistry.Components;
-using static Content.Shared.Wires.SharedWiresComponent;
-
 namespace Content.Server.SmartFridge
 {
-    [RegisterComponent]
-    public class SmartFridgeComponent : SharedSmartFridgeComponent, IWires
+    [RegisterComponent, Friend(typeof(SmartFridgeSystem))]
+    public class SmartFridgeComponent : SharedSmartFridgeComponent
     {
         public bool Ejecting;
         public TimeSpan AnimationDuration = TimeSpan.Zero;
         [DataField("pack")]
-        public string SpriteName = "";
+
         public bool Broken;
 
         [DataField("soundVend")]
@@ -27,84 +22,14 @@ namespace Content.Server.SmartFridge
         [DataField("soundDeny")]
         // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
         public SoundSpecifier SoundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
-        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
-        public float NonLimitedEjectForce = 7.5f;
-        public float NonLimitedEjectRange = 5f;
+        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(SmartFridgeUiKey.Key);
 
-        [DataField("insertWhitelist")]
+        [DataField("whitelist")]
         public EntityWhitelist? Whitelist;
-        public Container? Storage;
-
-        public List<SmartFridgeInventoryEntry> Inventory = new List<SmartFridgeInventoryEntry>();
-        // public Dictionary<(int ID, string Name), string>? Inventory { get; private set; }
-
-            //                 if (Inventory != null)
-            // {
-            //     foreach (var (slot, name) in Inventory)
-            //     {
-            //         _strippingMenu.AddButton(slot.Name, name, (ev) =>
-            //         {
-            //             SendMessage(new StrippingInventoryButtonPressed(slot.ID));
-            //         });
-            //     }
-
-        public enum Wires
-        {
-            /// <summary>
-            /// Shoots a random item when pulsed.
-            /// </summary>
-            Limiter
-        }
-        public void RegisterWires(WiresComponent.WiresBuilder builder)
-        {
-            builder.CreateWire(Wires.Limiter);
-        }
-
-        public void WiresUpdate(WiresUpdateEventArgs args)
-        {
-            var identifier = (Wires) args.Identifier;
-            // if (identifier == Wires.Limiter && args.Action == WiresAction.Pulse)
-            // {
-            //     EntitySystem.Get<SmartFridgeSystem>().EjectRandom(this.Owner, true, this);
-            // }
-        }
-    }
-
-    [Serializable]
-
-    public struct SmartFridgeInventoryEntry
-    {
-       public int ID;
-       public String Name;
-       public Dictionary<string, Solution>? Reagents;
-       public uint Amount;
-       public Queue<EntityUid> Entities;
-
-        public SmartFridgeInventoryEntry(int id, String name, Dictionary<string, Solution>? reagents, uint amount, Queue<EntityUid> entities)
-        {
-            ID = id;
-            Name = name;
-            Reagents = reagents;
-            Amount = amount;
-            Entities = entities;
-        }
-    }
-    public class WiresUpdateEventArgs : EventArgs
-    {
-        public readonly object Identifier;
-        public readonly WiresAction Action;
-
-        public WiresUpdateEventArgs(object identifier, WiresAction action)
-        {
-            Identifier = identifier;
-            Action = action;
-        }
-    }
-
-    public interface IWires
-    {
-        void RegisterWires(WiresComponent.WiresBuilder builder);
-        void WiresUpdate(WiresUpdateEventArgs args);
+        [DataField("vendDelay")]
+        public int VendDelay = 2;
+        public Container? Storage = default!;
+        public Dictionary<uint,  Queue<EntityUid>> entityReference = new();
     }
 }
 

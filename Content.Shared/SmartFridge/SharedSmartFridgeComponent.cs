@@ -1,28 +1,21 @@
-using System;
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using Content.Shared.Chemistry.Components;
 
 namespace Content.Shared.SmartFridge
 {
-    [NetworkedComponent()]
     public class SharedSmartFridgeComponent : Component
     {
-        // [ViewVariables]
-        public List<SmartFridgePublicListEntry> PublicInventory = new();
-
+        [ViewVariables]
+        public List<SmartFridgeInventoryEntry> Inventory = new();
 
         [Serializable, NetSerializable]
-        public enum VendingMachineVisuals
+        public enum SmartFridgeVisuals
         {
             VisualState,
         }
 
         [Serializable, NetSerializable]
-        public enum VendingMachineVisualState
+        public enum SmartFridgeVisualState
         {
             Normal,
             Off,
@@ -34,9 +27,9 @@ namespace Content.Shared.SmartFridge
         [Serializable, NetSerializable]
         public class SmartFridgeEjectMessage : BoundUserInterfaceMessage
         {
-            public readonly string ID;
+            public readonly uint ID;
             public readonly bool EjectAll;
-            public SmartFridgeEjectMessage(string id, bool ejectAll)
+            public SmartFridgeEjectMessage(uint id, bool ejectAll)
             {
                 ID = id;
                 EjectAll = ejectAll;
@@ -44,7 +37,7 @@ namespace Content.Shared.SmartFridge
         }
 
         [Serializable, NetSerializable]
-        public enum VendingMachineUiKey
+        public enum SmartFridgeUiKey
         {
             Key,
         }
@@ -57,36 +50,28 @@ namespace Content.Shared.SmartFridge
         [Serializable, NetSerializable]
         public class SmartFridgeInventoryMessage : BoundUserInterfaceMessage
         {
-            public readonly List<SmartFridgePublicListEntry> Inventory;
-            public SmartFridgeInventoryMessage(List<SmartFridgePublicListEntry> inventory)
+            public readonly List<SmartFridgeInventoryEntry> Inventory;
+            public SmartFridgeInventoryMessage(List<SmartFridgeInventoryEntry> inventory)
             {
                 Inventory = inventory;
             }
         }
 
         [Serializable, NetSerializable]
-        public class SmartFridgePublicListEntry
+        public class SmartFridgeInventoryEntry
         {
             [ViewVariables(VVAccess.ReadWrite)]
-            public int ID;
+            public uint ID;
             [ViewVariables(VVAccess.ReadWrite)]
             public string Name;
             [ViewVariables(VVAccess.ReadWrite)]
             public uint Amount;
-            public SmartFridgePublicListEntry(int id, string name, uint amount)
+            public SmartFridgeInventoryEntry(uint id, string name, uint amount)
             {
                 ID = id;
                 Name = name;
                 Amount = amount;
             }
-        }
-        [Serializable, NetSerializable]
-        public enum VendingMachineWireStatus : byte
-        {
-            Power,
-            Access,
-            Advertisement,
-            Limiter
         }
     }
 }

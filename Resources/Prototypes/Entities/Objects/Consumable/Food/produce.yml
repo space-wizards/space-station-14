@@ -12,7 +12,9 @@
   - type: Produce
   - type: Extractable
     grindableSolutionName: food
-
+  - type: Tag
+    tags:
+    - Produce
 # For produce that can be immediately eaten
 
 - type: entity
@@ -27,7 +29,9 @@
   - type: Produce
   - type: Extractable
     grindableSolutionName: food
-
+  - type: Tag
+    tags:
+    - Produce
 # Subclasses
 
 - type: entity
@@ -346,6 +350,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Produce
 
 - type: entity
   name: tomato

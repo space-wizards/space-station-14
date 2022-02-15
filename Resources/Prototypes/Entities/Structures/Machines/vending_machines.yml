@@ -521,11 +521,19 @@
   name: SmartFridge
   description: A refrigerated storage unit for keeping items cold and fresh.
   components:
-  - type: VendingMachine
-    pack: SmartFridgeInventory
+  - type: SmartFridge
+    whitelist:
+      tags:
+        - Produce
+        - Pill
+        - Bottle
   - type: Advertise
     pack: SmartFridgeAds
   - type: Speech
+  - type: UserInterface
+    interfaces:
+    - key: enum.SmartFridgeUiKey.Key
+      type: SmartFridgeBoundUserInterface
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/smartfridge.rsi
     layers:
