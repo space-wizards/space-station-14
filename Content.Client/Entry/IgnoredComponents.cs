@@ -19,6 +19,7 @@ namespace Content.Client.Entry
             "WarpPoint",
             "EmitSoundOnUse",
             "EmitSoundOnLand",
+            "NameIdentifier",
             "EmitSoundOnActivate",
             "FootstepModifier",
             "HeatResistance",
