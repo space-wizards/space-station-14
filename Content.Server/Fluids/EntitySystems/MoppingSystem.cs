@@ -61,151 +61,154 @@ public sealed class MoppingSystem : EntitySystem
             return;
         }
 
-        if (!args.Handled)
+
+        // if a tile is clicked
+        if (args.Target is null
+            && !args.Handled)
         {
-            // if a tile is clicked
-            if (args.Target is null)
+            // Interact-With-Tile behaviour
+
+            TileRef tile = default!;
+
+            if ((_mapManager.TryGetGrid(clickLocation.GetGridId(EntityManager), out var mapGrid))
+                && absorbedSolution != null)
             {
-                // Interact-With-Tile behaviour
+                tile = mapGrid.GetTileRef(clickLocation);
 
-                TileRef tile = default!;
+                // Drop some of the absorbed liquid onto the ground
+                var solution = solutionSystem.SplitSolution(used, absorbedSolution, FixedPoint2.Min(component.ResidueAmount, component.CurrentVolume));
+                EntitySystem.Get<SpillableSystem>().SpillAt(tile, solution, "PuddleSmear");
 
-                if ((_mapManager.TryGetGrid(clickLocation.GetGridId(EntityManager), out var mapGrid))
-                    && absorbedSolution != null)
-                {
-                    tile = mapGrid.GetTileRef(clickLocation);
+                args.Handled = true;
+            }
 
-                    // Drop some of the absorbed liquid onto the ground
-                    var solution = solutionSystem.SplitSolution(used, absorbedSolution, FixedPoint2.Min(component.ResidueAmount, component.CurrentVolume));
-                    EntitySystem.Get<SpillableSystem>().SpillAt(tile, solution, "PuddleSmear");
+            return;
+        }
 
-                    args.Handled = true;
-                }
+        // if the target has a PuddleComponent
+        if (TryComp<PuddleComponent>(args.Target, out var puddle)
+            && !args.Handled)
+        {
+            // Interact-With-Puddle behaviour
 
+            if (!solutionSystem.TryGetSolution(puddle.Owner, puddle.SolutionName, out var puddleSolution)) // if the target has no solution (Note: A solution with zero volume is still a solution!)
+            {
                 return;
             }
 
-            // if the target has a PuddleComponent
-            if (TryComp<PuddleComponent>(args.Target, out var puddle))
+            if (puddleSolution.TotalVolume <= component.MopLowerLimit) // if the puddle is too small for the tool to effectively absorb any more solution from it
             {
-                // Interact-With-Puddle behaviour
-
-                if (!solutionSystem.TryGetSolution(puddle.Owner, puddle.SolutionName, out var puddleSolution)) // if the target has no solution (Note: A solution with zero volume is still a solution!)
-                {
-                    return;
-                }
-
-                if (puddleSolution.TotalVolume <= component.MopLowerLimit) // if the puddle is too small for the tool to effectively absorb any more solution from it
-                {
-                    // Dilutes the puddle with whatever is in the tool
-                    solutionSystem.TryAddSolution(component.Owner, puddleSolution, solutionSystem.SplitSolution(used, absorbedSolution, FixedPoint2.Min(component.ResidueAmount,component.CurrentVolume)));
-                    return;
-                }
-
-                // if the tool is full
-                if(component.AvailableVolume <= 0)
-                {
-                    used.PopupMessage(user, Loc.GetString("used-tool-is-full-message"));
-                    return;
-                }
-
-                // Mopping duration (doAfter delay) should scale with PickupAmount (the maximum volume of solution we can pick up with each click).
-                var doAfterArgs = new DoAfterEventArgs(user, component.MopSpeed * component.PickupAmount.Float() / 10.0f,
-                    target: target)
-                {
-                    BreakOnUserMove = true,
-                    BreakOnStun = true,
-                    BreakOnDamage = true,
-                    MovementThreshold = 0.2f,
-                    BroadcastCancelledEvent = new MoppingDoafterCancel() { User = user, Tool = used, Target = puddle.Owner },
-                    BroadcastFinishedEvent = new MoppingDoafterSuccess() { User = user, Tool = used, Target = puddle.Owner }
-                };
-
-                // Can't absorb too many entities at once.
-                if (component.MaxAbsorbingEntities < component.AbsorbingEntities.Count + 1)
-                    return;
-
-                // Can't mop one puddle multiple times.
-                if (!component.AbsorbingEntities.Add(puddle.Owner))
-                    return;
-
-
-                args.Handled = true;
-                var result = _doAfterSystem.WaitDoAfter(doAfterArgs);
-
-                    return;
+                // Dilutes the puddle with whatever is in the tool
+                solutionSystem.TryAddSolution(component.Owner, puddleSolution, solutionSystem.SplitSolution(used, absorbedSolution, FixedPoint2.Min(component.ResidueAmount,component.CurrentVolume)));
+                return;
             }
 
-            // For draining the tool into another container.
-            if (absorbedSolution is not null && target is not null && component.CurrentVolume > 0) // if tool used has something absorbed
+            // if the tool is full
+            if(component.AvailableVolume <= 0)
             {
-                // Interact-With-Refillable-Container behaviour:
+                used.PopupMessage(user, Loc.GetString("used-tool-is-full-message"));
+                return;
+            }
 
-                if (TryComp<RefillableSolutionComponent>(target, out RefillableSolutionComponent? refillableComponent)) // target has refillable solution component
+            // Mopping duration (doAfter delay) should scale with PickupAmount (the maximum volume of solution we can pick up with each click).
+            var doAfterArgs = new DoAfterEventArgs(user, component.MopSpeed * component.PickupAmount.Float() / 10.0f,
+                target: target)
+            {
+                BreakOnUserMove = true,
+                BreakOnStun = true,
+                BreakOnDamage = true,
+                MovementThreshold = 0.2f,
+                BroadcastCancelledEvent = new MoppingDoafterCancel() { User = user, Tool = used, Target = puddle.Owner },
+                BroadcastFinishedEvent = new MoppingDoafterSuccess() { User = user, Tool = used, Target = puddle.Owner }
+            };
+
+            // Can't absorb too many entities at once.
+            if (component.MaxAbsorbingEntities < component.AbsorbingEntities.Count + 1)
+                return;
+
+            // Can't mop one puddle multiple times.
+            if (!component.AbsorbingEntities.Add(puddle.Owner))
+                return;
+
+
+            args.Handled = true;
+            var result = _doAfterSystem.WaitDoAfter(doAfterArgs);
+
+                return;
+        }
+
+        // For draining the tool into another container.
+        if (absorbedSolution is not null && target is not null && component.CurrentVolume > 0 // if tool used has something absorbed
+            && !args.Handled)
+        {
+            // Interact-With-Refillable-Container behaviour:
+
+            if (TryComp<RefillableSolutionComponent>(target, out RefillableSolutionComponent? refillableComponent)) // target has refillable solution component
+            {
+                // Try and get the Solution of the target container, and out var it into "solution."
+                if (solutionSystem.TryGetSolution(refillableComponent.Owner, refillableComponent.Solution, out var solution))
                 {
-                    // Try and get the Solution of the target container, and out var it into "solution."
-                    if (solutionSystem.TryGetSolution(refillableComponent.Owner, refillableComponent.Solution, out var solution))
+
+                    var transferAmount = component.CurrentVolume; // Drain all of the absorbed solution.
+
+                    // Remove <transferAmount> units of solution from the used tool, and store it in temp var solutionFromTool.
+                    var solutionFromTool = solutionSystem.SplitSolution(used, absorbedSolution, transferAmount);
+
+                    // Take that same solutionFromTool, and try adding it to the container we are refilling.
+                    if (!solutionSystem.TryAddSolution(refillableComponent.Owner, solution, solutionFromTool))
                     {
-
-                        var transferAmount = component.CurrentVolume; // Drain all of the absorbed solution.
-
-                        // Remove <transferAmount> units of solution from the used tool, and store it in temp var solutionFromTool.
-                        var solutionFromTool = solutionSystem.SplitSolution(used, absorbedSolution, transferAmount);
-
-                        // Take that same solutionFromTool, and try adding it to the container we are refilling.
-                        if (!solutionSystem.TryAddSolution(refillableComponent.Owner, solution, solutionFromTool))
-                        {
-                            return; //if the attempt fails
-                        }
+                        return; //if the attempt fails
                     }
 
                     user.PopupMessage(user, Loc.GetString("bucket-component-mop-is-now-dry-message"));
                     args.Handled = true;
                 }
             }
+        }
 
-            // if (absorbedSolution != null)
-            //     user.PopupMessage(user, "absorbed solution is null");
+        // if (absorbedSolution != null)
+        //     user.PopupMessage(user, "absorbed solution is null");
 
-            // For wetting the tool from another container. Note that here the absorbedSolution is allowed to be null.
-            if (target is not null && component.CurrentVolume <= 0) // if tool used is completely dry
+        // For wetting the tool from another container. Note that here the absorbedSolution is allowed to be null.
+        if (target is not null && component.CurrentVolume <= 0
+            && !args.Handled) // if tool used is completely dry
+        {
+            // Interact-With-Drainable-Container behaviour:
+
+            if (TryComp<DrainableSolutionComponent>(target, out DrainableSolutionComponent? drainableComponent)) // if target has drainable solution component
             {
-                // Interact-With-Drainable-Container behaviour:
 
-                if (TryComp<DrainableSolutionComponent>(target, out DrainableSolutionComponent? drainableComponent)) // if target has drainable solution component
+                // Try and get the Solution of the target container, and out var it into "solution."
+                if (solutionSystem.TryGetSolution(drainableComponent.Owner, drainableComponent.Solution, out var drainableSolution))
                 {
 
-                    // Try and get the Solution of the target container, and out var it into "solution."
-                    if (solutionSystem.TryGetSolution(drainableComponent.Owner, drainableComponent.Solution, out var drainableSolution))
+                    // Let's transfer up to to half the tool's available capacity to the tool.
+                    var transferAmount = FixedPoint2.Min(0.5*component.AvailableVolume, drainableSolution.CurrentVolume);
+
+                    if (transferAmount == 0)
                     {
-
-                        // Let's transfer up to to half the tool's available capacity to the tool.
-                        var transferAmount = FixedPoint2.Min(0.5*component.AvailableVolume, drainableSolution.CurrentVolume);
-
-                        if (transferAmount == 0)
-                        {
-                            return;
-                        }
-
-                        // Remove <transferAmount> units of solution from the target container, and store it in temp var solutionFromContainer.
-                        var solutionFromContainer = solutionSystem.SplitSolution(drainableComponent.Owner, drainableSolution, transferAmount);
-
-                        // Take that same solutionFromContainer and try adding it to the tool we are refilling.
-                        solutionSystem.TryAddSolution(used, component.AbsorbedSolution, solutionFromContainer);
-
-                        // if (!solutionSystem.TryAddSolution(used, component.AbsorbedSolution, solutionFromContainer))
-                        // {
-                        //     user.PopupMessage(user, "Attempt failed");
-                        //     return; //if the attempt fails
-                        // }
+                        return;
                     }
+
+                    // Remove <transferAmount> units of solution from the target container, and store it in temp var solutionFromContainer.
+                    var solutionFromContainer = solutionSystem.SplitSolution(drainableComponent.Owner, drainableSolution, transferAmount);
+
+                    // Take that same solutionFromContainer and try adding it to the tool we are refilling.
+                    solutionSystem.TryAddSolution(used, component.AbsorbedSolution, solutionFromContainer);
+
+                    // if (!solutionSystem.TryAddSolution(used, component.AbsorbedSolution, solutionFromContainer))
+                    // {
+                    //     user.PopupMessage(user, "Attempt failed");
+                    //     return; //if the attempt fails
+                    // }
 
                     user.PopupMessage(user, Loc.GetString("bucket-component-mop-is-now-wet-message"));
                     args.Handled = true;
                 }
             }
-
         }
+
+
 
         return;
     }
