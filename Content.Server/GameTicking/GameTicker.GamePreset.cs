@@ -69,7 +69,7 @@ namespace Content.Server.GameTicking
             return prototype != null;
         }
 
-        private bool EnableGamePresetRules()
+        private bool AddGamePresetRules()
         {
             if (DummyTicker || _preset == null)
                 return false;
@@ -79,7 +79,7 @@ namespace Content.Server.GameTicking
                 if (!_prototypeManager.TryIndex(rule, out GameRulePrototype? ruleProto))
                     continue;
 
-                EnableGameRule(ruleProto);
+                AddGameRule(ruleProto);
             }
 
             return true;
@@ -87,7 +87,7 @@ namespace Content.Server.GameTicking
 
         private void StartGamePresetRules()
         {
-            foreach (var rule in _gameRules)
+            foreach (var rule in _addedGameRules)
             {
                 StartGameRule(rule);
             }

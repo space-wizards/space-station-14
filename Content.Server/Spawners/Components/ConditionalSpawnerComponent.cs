@@ -49,7 +49,7 @@ namespace Content.Server.Spawners.Components
 
             foreach (var rule in _gameRules)
             {
-                if (!EntitySystem.Get<GameTicker>().HasGameRule(rule)) continue;
+                if (!EntitySystem.Get<GameTicker>().GameRuleAdded(rule)) continue;
                 Spawn();
                 return;
             }

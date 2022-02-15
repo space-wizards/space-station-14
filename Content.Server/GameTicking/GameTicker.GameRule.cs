@@ -8,52 +8,78 @@ namespace Content.Server.GameTicking
     public partial class GameTicker
     {
         // No duplicates.
-        [ViewVariables] private readonly HashSet<GameRulePrototype> _gameRules = new();
-        public IEnumerable<GameRulePrototype> ActiveGameRules => _gameRules;
+        [ViewVariables] private readonly HashSet<GameRulePrototype> _addedGameRules = new();
+        public IEnumerable<GameRulePrototype> AddedGameRules => _addedGameRules;
 
+        [ViewVariables] private readonly HashSet<GameRulePrototype> _startedGameRules = new();
+        public IEnumerable<GameRulePrototype> StartedGameRules => _startedGameRules;
+
+        /// <summary>
+        ///     Game rules can be 'started' separately from being added. 'Starting' them usually
+        ///     happens at round start while they can be added and removed before then.
+        /// </summary>
         public void StartGameRule(GameRulePrototype rule)
         {
-            if (!HasGameRule(rule))
-                EnableGameRule(rule);
+            if (!GameRuleAdded(rule))
+                AddGameRule(rule);
 
+            _startedGameRules.Add(rule);
             RaiseLocalEvent(new GameRuleStartedEvent(rule));
         }
 
+        /// <summary>
+        ///     Ends a game rule.
+        ///     This always includes removing it (removing it from added game rules) so that behavior
+        ///     is not separate from this.
+        /// </summary>
+        /// <param name="rule"></param>
         public void EndGameRule(GameRulePrototype rule)
         {
-            if (!HasGameRule(rule))
+            if (!GameRuleAdded(rule))
                 return;
 
-            DisableGameRule(rule);
+            _addedGameRules.Remove(rule);
+            _startedGameRules.Remove(rule);
             RaiseLocalEvent(new GameRuleEndedEvent(rule));
         }
 
-        public bool EnableGameRule(GameRulePrototype rule)
+        /// <summary>
+        ///     Adds a game rule to the list, but does not
+        ///     start it yet, instead waiting until roundstart.
+        /// </summary>
+        public bool AddGameRule(GameRulePrototype rule)
         {
-            if (!_gameRules.Add(rule))
+            if (!_addedGameRules.Add(rule))
                 return false;
 
-            RaiseLocalEvent(new GameRuleEnabledEvent(rule));
+            RaiseLocalEvent(new GameRuleAddedEvent(rule));
             return true;
         }
 
-        public bool DisableGameRule(GameRulePrototype rule)
+        public bool GameRuleAdded(GameRulePrototype rule)
         {
-            if (!_gameRules.Remove(rule))
-                return false;
-
-            RaiseLocalEvent(new GameRuleDisabledEvent(rule));
-            return true;
+            return _addedGameRules.Contains(rule);
         }
 
-        public bool HasGameRule(GameRulePrototype rule)
+        public bool GameRuleAdded(string rule)
         {
-            return _gameRules.Contains(rule);
+            foreach (var ruleProto in _addedGameRules)
+            {
+                if (ruleProto.ID.Equals(rule))
+                    return true;
+            }
+
+            return false;
         }
 
-        public bool HasGameRule(string rule)
+        public bool GameRuleStarted(GameRulePrototype rule)
         {
-            foreach (var ruleProto in _gameRules)
+            return _startedGameRules.Contains(rule);
+        }
+
+        public bool GameRuleStarted(string rule)
+        {
+            foreach (var ruleProto in _startedGameRules)
             {
                 if (ruleProto.ID.Equals(rule))
                     return true;
@@ -64,34 +90,28 @@ namespace Content.Server.GameTicking
 
         public void ClearGameRules()
         {
-            foreach (var rule in _gameRules.ToArray())
+            _addedGameRules.Clear();
+            foreach (var rule in _startedGameRules.ToArray())
             {
                 EndGameRule(rule);
             }
         }
     }
 
-    public class GameRuleEnabledEvent
+    /// <summary>
+    ///     Raised broadcast when a game rule is selected, but not started yet.
+    /// </summary>
+    public sealed class GameRuleAddedEvent
     {
         public GameRulePrototype Rule { get; }
 
-        public GameRuleEnabledEvent(GameRulePrototype rule)
+        public GameRuleAddedEvent(GameRulePrototype rule)
         {
             Rule = rule;
         }
     }
 
-    public class GameRuleDisabledEvent
-    {
-        public GameRulePrototype Rule { get; }
-
-        public GameRuleDisabledEvent(GameRulePrototype rule)
-        {
-            Rule = rule;
-        }
-    }
-
-    public class GameRuleStartedEvent
+    public sealed class GameRuleStartedEvent
     {
         public GameRulePrototype Rule { get; }
 
@@ -101,7 +121,7 @@ namespace Content.Server.GameTicking
         }
     }
 
-    public class GameRuleEndedEvent
+    public sealed class GameRuleEndedEvent
     {
         public GameRulePrototype Rule { get; }
 

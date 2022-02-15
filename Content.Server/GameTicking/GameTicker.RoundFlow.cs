@@ -68,7 +68,7 @@ namespace Content.Server.GameTicking
 
         private void PreRoundSetup()
         {
-            EnableGamePresetRules();
+            AddGamePresetRules();
 
             DefaultMap = _mapManager.CreateMap();
             _pauseManager.AddUninitializedMap(DefaultMap);
@@ -191,7 +191,7 @@ namespace Content.Server.GameTicking
                         var oldPreset = _preset;
                         ClearGameRules();
                         SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
-                        EnableGamePresetRules();
+                        AddGamePresetRules();
                         StartGamePresetRules();
 
                         startAttempt.Uncancel();
@@ -455,7 +455,7 @@ namespace Content.Server.GameTicking
             // Clear up any game rules.
             ClearGameRules();
 
-            _gameRules.Clear();
+            _addedGameRules.Clear();
 
             // Round restart cleanup event, so entity systems can reset.
             var ev = new RoundRestartCleanupEvent();
