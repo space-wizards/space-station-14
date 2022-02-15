@@ -41,7 +41,7 @@
   name: oxygen deprivation treatment kit
   description: "A box full of oxygen goodies."
   parent: Medkit
-  id: MedkitOxygen
+  id: MedkitO2
   components:
   - type: Sprite
     state: o2kit
