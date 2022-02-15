@@ -336,6 +336,7 @@
     state: baccarat3
   - type: Icon
     sprite: Structures/Furniture/Tables/baccarat.rsi
+    state: baccarat3
   - type: TabletopGame
     boardName: tabletop-baccarat-board-name
     size: 550, 410
