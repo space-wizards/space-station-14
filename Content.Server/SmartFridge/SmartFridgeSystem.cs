@@ -82,7 +82,6 @@ namespace Content.Server.SmartFridge
                     return;
                 }
             }
-
             component.UserInterface?.Toggle(actor.PlayerSession);
         }
 
@@ -126,9 +125,7 @@ namespace Content.Server.SmartFridge
                 return;
 
             SoundSystem.Play(Filter.Pvs(fridgeComponent.Owner), fridgeComponent.SoundDeny.GetSound(), fridgeComponent.Owner, AudioParams.Default.WithVolume(-2f));
-            // Play the Deny animation
             TryUpdateVisualState(uid, SmartFridgeVisualState.Deny, fridgeComponent);
-            //TODO: This duration should be a distinct value specific to the deny animation
             fridgeComponent.Owner.SpawnTimer(fridgeComponent.AnimationDuration, () =>
             {
                 TryUpdateVisualState(uid, SmartFridgeVisualState.Normal, fridgeComponent);
@@ -194,7 +191,6 @@ namespace Content.Server.SmartFridge
 
             fridgeComponent.Storage.Insert(itemUid);
             fridgeComponent.UserInterface?.SendMessage(new SmartFridgeInventoryMessage(fridgeComponent.Inventory));
-            // SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
             return true;
         }
 
@@ -225,7 +221,6 @@ namespace Content.Server.SmartFridge
             fridgeComponent.Ejecting = true;
             entry.Amount--;
             EntityUid targetEntity = fridgeComponent.entityReference[itemId].Dequeue();
-
 
             if (entry.Amount == 0 || targetEntity == null)
             {
