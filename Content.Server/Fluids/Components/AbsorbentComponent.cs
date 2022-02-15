@@ -94,15 +94,15 @@ public class AbsorbentComponent : Component
     [DataField("mopSpeed")] public float MopSpeed = 1;
 
     /// <summary>
-    ///     How many entities can this tool absorb from at once?
+    ///     How many entities can this tool interact with at once?
     /// </summary>
     [DataField("maxEntities")]
-    public int MaxAbsorbingEntities = 1;
+    public int MaxInteractingEntities = 1;
 
     /// <summary>
-    ///     What entities is this tool absorbing right now?
+    ///     What entities is this tool interacting with right now?
     /// </summary>
     [ViewVariables]
-    public HashSet<EntityUid> AbsorbingEntities = new();
+    public HashSet<EntityUid> InteractingEntities = new();
 
 }
