@@ -498,7 +498,7 @@ namespace Content.Server.Storage.Components
                         break;
                     }
 
-                    if (!player.InRangeUnobstructed(Owner, popup: true))
+                    if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player, Owner, popup: true))
                     {
                         break;
                     }

@@ -13,7 +13,6 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Audio;
 using Content.Shared.Cooldown;
 using Content.Shared.Database;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
@@ -56,7 +55,9 @@ namespace Content.Server.Actions.Actions
             if (attemptEvent.Cancelled)
                 return;
 
-            if (!args.Performer.InRangeUnobstructed(args.Target)) return;
+            var sys = EntitySystem.Get<InteractionSystem>();
+
+            if (!sys.InRangeUnobstructed(args.Performer, args.Target)) return;
 
             if (disarmedActs.Length == 0)
             {
@@ -66,7 +67,7 @@ namespace Content.Server.Actions.Actions
                     var player = actor.PlayerSession;
                     var coordinates = entMan.GetComponent<TransformComponent>(args.Target).Coordinates;
                     var target = args.Target;
-                    EntitySystem.Get<InteractionSystem>().HandleUseInteraction(player, coordinates, target);
+                    sys.HandleUseInteraction(player, coordinates, target);
                     return;
                 }
 

@@ -387,7 +387,8 @@ namespace Content.Shared.Hands.Components
                 target = new MapCoordinates(origin.Position + dropVector, target.MapId);
             }
 
-            var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, target, ignoredEnt: Owner);
+
+            var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, target, predicate: e => e == Owner);
 
             if (dropLength < requestedDropDistance)
                 return origin.Position + dropVector.Normalized * dropLength;

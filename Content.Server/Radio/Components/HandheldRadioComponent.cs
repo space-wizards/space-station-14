@@ -77,7 +77,7 @@ namespace Content.Server.Radio.Components
         public bool CanListen(string message, EntityUid source)
         {
             return RadioOn &&
-                   Owner.InRangeUnobstructed(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(source).Coordinates, range: ListenRange);
+                   EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
         }
 
         public void Receive(string message, int channel, EntityUid speaker)

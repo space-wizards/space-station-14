@@ -110,7 +110,8 @@ namespace Content.Server.Interaction
 
             // must be in range of both the target and the object they are drag / dropping
             // Client also does this check but ya know we gotta validate it.
-            if (!interactionArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            if (!InRangeUnobstructed(interactionArgs.User, interactionArgs.Dragged, popup: true)
+                || !InRangeUnobstructed(interactionArgs.User, interactionArgs.Target, popup: true))
                 return;
 
             // trigger dragdrops on the dropped entity
@@ -311,7 +312,11 @@ namespace Content.Server.Interaction
                 }
 
                 // TODO: Replace with body attack range when we get something like arm length or telekinesis or something.
-                if (!user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true))
+                var unobstructed = (target == null)
+                    ? InRangeUnobstructed(user, coordinates)
+                    : InRangeUnobstructed(user, target.Value);
+
+                if (!unobstructed)
                     return;
             }
 

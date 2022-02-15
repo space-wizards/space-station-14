@@ -332,7 +332,7 @@ namespace Content.Server.WireHacking
                 return false;
             }
 
-            if (!user.InRangeUnobstructed(Owner))
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, Owner))
             {
                 Owner.PopupMessage(user, Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"));
                 return false;

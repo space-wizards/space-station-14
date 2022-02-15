@@ -41,6 +41,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {
@@ -212,7 +213,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (_foodSystem.IsMouthBlocked(target, user))
                 return true;
 
-            if (!user.InRangeUnobstructed(drink.Owner, popup: true))
+            if (!_interactionSystem.InRangeUnobstructed(user, drink.Owner, popup: true))
                 return true;
 
             var forceDrink = user != target;

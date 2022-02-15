@@ -3,6 +3,7 @@
   name: air alarm
   description: An air alarm. Alarms... air?
   components:
+  - type: WallMount
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetworkComponent
