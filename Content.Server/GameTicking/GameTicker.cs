@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
 using Content.Server.CharacterAppearance.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Ghost;
@@ -99,6 +100,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly PDASystem _pdaSystem = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly GhostSystem _ghosts = default!;
-        [Dependency] private readonly RoleBanSystem _roleBanSystem = default!;
+        [Dependency] private readonly RoleBanManager _roleBanManager = default!;
     }
 }

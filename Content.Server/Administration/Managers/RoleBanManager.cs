@@ -6,27 +6,18 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 
-namespace Content.Server.Administration;
+namespace Content.Server.Administration.Managers;
 
-public sealed class RoleBanSystem : EntitySystem
+public sealed class RoleBanManager
 {
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     private readonly Dictionary<NetUserId, HashSet<string>> _cachedRoleBans = new();
 
-    public override void Initialize()
+    public void Initialize()
     {
-        base.Initialize();
-
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _cachedRoleBans.Clear();
     }
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Robust.Server.Player;
@@ -91,7 +92,7 @@ public sealed class RoleBanCommand : IConsoleCommand
             null,
             role);
 
-        if (!await EntitySystem.Get<RoleBanSystem>().AddRoleBan(banDef))
+        if (!await IoCManager.Resolve<RoleBanManager>().AddRoleBan(banDef))
         {
             shell.WriteLine($"{target} already has a role ban for {role}");
             return;
