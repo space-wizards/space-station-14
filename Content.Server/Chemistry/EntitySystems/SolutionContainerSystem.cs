@@ -221,11 +221,11 @@ namespace Content.Server.Chemistry.EntitySystems
         public bool TryAddSolution(EntityUid targetUid, Solution? targetSolution, Solution addedSolution)
         {
             if (targetSolution == null
-                || !targetSolution.CanAddSolution(addedSolution) || targetSolution.TotalVolume == 0)
+                || !targetSolution.CanAddSolution(addedSolution) || addedSolution.TotalVolume == 0)
                 return false;
 
-            addedSolution.AddSolution(targetSolution);
-            UpdateChemicals(targetUid, addedSolution, true);
+            targetSolution.AddSolution(addedSolution);
+            UpdateChemicals(targetUid, targetSolution, true);
             return true;
         }
 
