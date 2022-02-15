@@ -223,12 +223,14 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
     /// <summary>
     ///     Adds a solution to the container, overflowing the rest.
-    ///     Unlike TryAddSolution it will ignore size limits.
+    ///     It will
+    ///     Unlike <see cref="TryAddSolution"/> it will ignore size limits.
     /// </summary>
     /// <param name="targetUid">entity holding targetSolution</param>
     /// <param name="targetSolution">The container to which we try to add.</param>
     /// <param name="addedSolution">solution being added</param>
-    /// <param name="overflowThreshold">After addition this much will be left in targetSolution</param>
+    /// <param name="overflowThreshold">After addition this much will be left in targetSolution. Should be less
+    /// than targetSolution.TotalVolume</param>
     /// <param name="overflowingSolution">Solution that exceeded overflowThreshold</param>
     /// <returns></returns>
     public bool TryMixAndOverflow(EntityUid targetUid, Solution targetSolution,
@@ -236,7 +238,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         FixedPoint2 overflowThreshold,
         [NotNullWhen(true)] out Solution? overflowingSolution)
     {
-        if (addedSolution.TotalVolume == 0)
+        if (addedSolution.TotalVolume == 0 || overflowThreshold > targetSolution.MaxVolume)
         {
             overflowingSolution = null;
             return false;
