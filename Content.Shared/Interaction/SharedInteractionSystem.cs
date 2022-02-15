@@ -400,7 +400,6 @@ namespace Content.Shared.Interaction
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null)
         {
-            predicate = e => e == target || (predicate?.Invoke(e) ?? false);
             var transform = Transform(target);
             var (position, rotation) = transform.GetWorldPositionRotation();
             var mapPos = new MapCoordinates(position, transform.MapID);
