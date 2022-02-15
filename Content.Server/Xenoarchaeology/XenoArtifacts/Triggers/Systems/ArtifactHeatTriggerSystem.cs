@@ -38,7 +38,7 @@ public sealed class ArtifactHeatTriggerSystem : EntitySystem
 
     private void OnAttacked(EntityUid uid, ArtifactHeatTriggerComponent component, AttackedEvent args)
     {
-        if (!CheckHot(args.Used))
+        if (!component.ActivateHotItems || !CheckHot(args.Used))
             return;
         _artifactSystem.TryActivateArtifact(uid, args.User);
     }
@@ -48,7 +48,7 @@ public sealed class ArtifactHeatTriggerSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!CheckHot(args.Used))
+        if (!component.ActivateHotItems || !CheckHot(args.Used))
             return;
         args.Handled = _artifactSystem.TryActivateArtifact(uid, args.User);
     }
