@@ -162,7 +162,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
         if (component.BloodTemporarySolution.MaxVolume > component.BleedPuddleThreshold)
         {
-            _spillableSystem.SpillAt(uid, component.BloodTemporarySolution, "PuddleSmear", false);
+            _spillableSystem.SpillAt(uid, component.BloodTemporarySolution, "PuddleBlood", false);
             component.BloodTemporarySolution.RemoveAllSolution();
         }
 
