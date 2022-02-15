@@ -1,74 +1,35 @@
-using System;
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.SubFloor
 {
     /// <summary>
     /// Simple component that automatically hides the sibling
-    /// <see cref="ISpriteComponent" /> when the tile it's on is not a sub floor
+    /// <see cref="SpriteComponent" /> when the tile it's on is not a sub floor
     /// (plating).
     /// </summary>
     /// <seealso cref="P:Content.Shared.Maps.ContentTileDefinition.IsSubFloor" />
     [NetworkedComponent]
     [RegisterComponent]
+    [Friend(typeof(SharedSubFloorHideSystem))]
     public sealed class SubFloorHideComponent : Component
     {
         /// <summary>
-        ///     Whether the entity will be hid when not in subfloor.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("enabled")]
-        public bool Enabled { get; set; } = true;
-
-        /// <summary>
-        ///     This entity needs to be anchored to be hid when not in subfloor.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("requireAnchored")]
-        public bool RequireAnchored { get; set; } = true;
-
-        public override ComponentState GetComponentState()
-        {
-            return new SubFloorHideComponentState(Enabled, RequireAnchored);
-        }
-
-        /// <summary>
-        ///     Whether or not this entity is supposed
-        ///     to be visible.
+        ///     Whether the entity's current position has a "Floor-type" tile above its current position.
         /// </summary>
         [ViewVariables]
-        public bool Visible { get; set; }
+        public bool IsUnderCover { get; set; } = false;
+
+        /// <summary>
+        ///     When revealed using some scanning tool, what transparency should be used to draw this item?
+        /// </summary>
+        [DataField("scannerTransparency")]
+        public float ScannerTransparency = 0.8f;
 
         /// <summary>
         ///     The entities this subfloor is revealed by.
         /// </summary>
         [ViewVariables]
         public HashSet<EntityUid> RevealedBy { get; set; } = new();
-
-        /// <summary>
-        ///     Whether or not this entity was revealed with or without
-        ///     an entity.
-        /// </summary>
-        [ViewVariables]
-        public bool RevealedWithoutEntity { get; set; }
-    }
-
-    [Serializable, NetSerializable]
-    public class SubFloorHideComponentState : ComponentState
-    {
-        public bool Enabled { get; }
-        public bool RequireAnchored { get; }
-
-        public SubFloorHideComponentState(bool enabled, bool requireAnchored)
-        {
-            Enabled = enabled;
-            RequireAnchored = requireAnchored;
-        }
     }
 }

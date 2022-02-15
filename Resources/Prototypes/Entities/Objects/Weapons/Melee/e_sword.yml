@@ -36,3 +36,46 @@
   - type: Appearance
     visuals:
     - type: EnergySwordVisualizer
+
+- type: entity
+  name: pen
+  parent: EnergySword
+  id: EnergyDagger
+  suffix: E-Dagger
+  description: 'A dark ink pen.'
+  components:
+  - type: EnergySword
+    litDamageBonus:
+        types:
+            Slash: 7.5
+            Heat: 7.5
+            Blunt: -1
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_dagger.rsi
+    layers:
+      - state: e_sword
+      - state: e_sword_blade
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 1
+  - type: Item
+    size: 2
+    sprite: Objects/Weapons/Melee/e_dagger.rsi
+  - type: UseDelay
+    delay: 1.0
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 1.5
+    energy: 1.5
+    color: white
+  - type: Appearance
+    visuals:
+    - type: EnergySwordVisualizer
+  - type: Tag
+    tags:
+    - Write

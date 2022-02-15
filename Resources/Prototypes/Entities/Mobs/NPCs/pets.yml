@@ -38,6 +38,14 @@
     pieces: 3
   - type: ReplacementAccent
     accent: dog
+  - type: InteractionPopup
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: corrupted corgi
@@ -71,6 +79,13 @@
   - type: AiFactionTag
     factions:
     - SimpleHostile
+  - type: InteractionPopup
+    successChance: 0 # Override the automatic success that would normally be inherited from MobCorgi.
+    interactSuccessString: petting-success-corrupted-corgi # Normally impossible but added an easter egg just in case.
+    interactFailureString: petting-failure-corrupted-corgi
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: Ian
@@ -90,6 +105,10 @@
       normal: ian
       crit: ian_dead
       dead: ian_dead
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
 
 - type: entity
   name: Old Ian
@@ -109,6 +128,10 @@
       normal: old_ian
       crit: old_ian_dead
       dead: old_ian_dead
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
 
 - type: entity
   name: Lisa
@@ -128,6 +151,10 @@
       normal: lisa
       crit: lisa_dead
       dead: lisa_dead
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
 
 - type: entity
   name: corgi puppy
@@ -147,6 +174,9 @@
       normal: puppy
       crit: puppy_dead
       dead: puppy_dead
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: cat
@@ -185,6 +215,15 @@
     pieces: 2
   - type: ReplacementAccent
     accent: cat
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-cat
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: calico cat
@@ -204,6 +243,9 @@
       normal: cat2
       crit: cat2_dead
       dead: cat2_dead
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: space cat
@@ -223,13 +265,15 @@
       normal: spacecat
       crit: spacecat_dead
       dead: spacecat_dead
-  - type: Respirator #Space kitty should be immune to Asphyxiation. Taken from xenos.yml
-    damage:
-      types:
-        Asphyxiation: 1
-    damageRecovery:
-      types:
-        Asphyxiation: -1
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-space-cat
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: caracal cat
@@ -249,6 +293,9 @@
       normal: caracal_flop
       crit: caracal_dead
       dead: caracal_dead
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: sloth
@@ -288,3 +335,10 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 3
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-sloth
+    interactFailureString: petting-failure-sloth
+  - type: Grammar
+    attributes:
+      gender: epicene

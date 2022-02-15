@@ -27,10 +27,10 @@ namespace Content.Server.Cuffs
             SubscribeLocalEvent<HandCountChangedEvent>(OnHandCountChanged);
             SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
 
-            SubscribeLocalEvent<CuffableComponent, GetOtherVerbsEvent>(AddUncuffVerb);
+            SubscribeLocalEvent<CuffableComponent, GetVerbsEvent<Verb>>(AddUncuffVerb);
         }
 
-        private void AddUncuffVerb(EntityUid uid, CuffableComponent component, GetOtherVerbsEvent args)
+        private void AddUncuffVerb(EntityUid uid, CuffableComponent component, GetVerbsEvent<Verb> args)
         {
             // Can the user access the cuffs, and is there even anything to uncuff?
             if (!args.CanAccess || component.CuffedHandCount == 0)
@@ -83,7 +83,7 @@ namespace Content.Server.Cuffs
             else
             {
                 // Check if the user can interact.
-                if (!_actionBlockerSystem.CanInteract(args.User))
+                if (!_actionBlockerSystem.CanInteract(args.User, args.Target))
                 {
                     args.Cancel();
                 }

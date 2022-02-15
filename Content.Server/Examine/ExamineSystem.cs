@@ -1,5 +1,6 @@
 using Content.Shared.Examine;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -25,6 +26,20 @@ namespace Content.Server.Examine
             SubscribeNetworkEvent<ExamineSystemMessages.RequestExamineInfoMessage>(ExamineInfoRequest);
         }
 
+        public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor)
+        {
+            if (!TryComp<ActorComponent>(player, out var actor))
+                return;
+
+            var session = actor.PlayerSession;
+
+            var ev = new ExamineSystemMessages.ExamineInfoResponseMessage(
+                target, message, getVerbs, centerAtCursor
+            );
+
+            RaiseNetworkEvent(ev, session.ConnectedClient);
+        }
+
         private void ExamineInfoRequest(ExamineSystemMessages.RequestExamineInfoMessage request, EntitySessionEventArgs eventArgs)
         {
             var player = (IPlayerSession) eventArgs.SenderSession;
@@ -36,12 +51,12 @@ namespace Content.Server.Examine
                 || !CanExamine(playerEnt, request.EntityUid))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                    request.EntityUid, _entityNotFoundMessage), channel);
+                    request.EntityUid, _entityNotFoundMessage, request.GetVerbs), channel);
                 return;
             }
 
             var text = GetExamineText(request.EntityUid, player.AttachedEntity);
-            RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text), channel);
+            RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text, request.GetVerbs), channel);
         }
     }
 }

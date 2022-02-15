@@ -24,7 +24,6 @@ namespace Content.Server.Medical.SuitSensors
 {
     public class SuitSensorSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
@@ -41,7 +40,7 @@ namespace Content.Server.Medical.SuitSensors
             SubscribeLocalEvent<SuitSensorComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<SuitSensorComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<SuitSensorComponent, GetInteractionVerbsEvent>(OnVerb);
+            SubscribeLocalEvent<SuitSensorComponent, GetVerbsEvent<Verb>>(OnVerb);
         }
 
         public override void Update(float frameTime)
@@ -135,14 +134,14 @@ namespace Content.Server.Medical.SuitSensors
             args.PushMarkup(Loc.GetString(msg));
         }
 
-        private void OnVerb(EntityUid uid, SuitSensorComponent component, GetInteractionVerbsEvent args)
+        private void OnVerb(EntityUid uid, SuitSensorComponent component, GetVerbsEvent<Verb> args)
         {
             // check if user can change sensor
             if (component.ControlsLocked)
                 return;
 
             // standard interaction checks
-            if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanDrop(args.User))
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             args.Verbs.UnionWith(new[]

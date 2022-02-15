@@ -25,7 +25,7 @@ namespace Content.Server.Fluids.EntitySystems
                 if (!_solutionContainerSystem.TryGetSolution(uid, evaporationComponent.SolutionName, out var solution))
                 {
                     // If no solution, delete the entity
-                    queueDelete.Add(evaporationComponent);
+                    EntityManager.QueueDeleteEntity(uid);
                     continue;
                 }
 
@@ -34,19 +34,22 @@ namespace Content.Server.Fluids.EntitySystems
 
                 evaporationComponent.Accumulator -= evaporationComponent.EvaporateTime;
 
+                if (evaporationComponent.EvaporationToggle == true)
+                {
+                    _solutionContainerSystem.SplitSolution(uid, solution,
+                        FixedPoint2.Min(FixedPoint2.New(1), solution.CurrentVolume)); // removes 1 unit, or solution current volume, whichever is lower.
+                }
 
-                _solutionContainerSystem.SplitSolution(uid, solution,
-                    FixedPoint2.Min(FixedPoint2.New(1), solution.CurrentVolume));
-
-                if (solution.CurrentVolume == 0)
+                if (solution.CurrentVolume <= 0)
                 {
                     EntityManager.QueueDeleteEntity(uid);
                 }
-                else if (solution.CurrentVolume <= evaporationComponent.LowerLimit
+                else if (solution.CurrentVolume <= evaporationComponent.LowerLimit // if puddle is too big or too small to evaporate.
                          || solution.CurrentVolume >= evaporationComponent.UpperLimit)
                 {
-                    queueDelete.Add(evaporationComponent);
+                    evaporationComponent.EvaporationToggle = false; // pause evaporation
                 }
+                else evaporationComponent.EvaporationToggle = true; // unpause evaporation, e.g. if a puddle previously above evaporation UpperLimit was brought down below evaporation UpperLimit via mopping.
             }
 
             foreach (var evaporationComponent in queueDelete)

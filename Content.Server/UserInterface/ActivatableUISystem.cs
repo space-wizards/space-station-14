@@ -18,7 +18,6 @@ namespace Content.Server.UserInterface
     [UsedImplicitly]
     internal sealed class ActivatableUISystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
 
         public override void Initialize()
@@ -33,10 +32,10 @@ namespace Content.Server.UserInterface
             SubscribeLocalEvent<ActivatableUIComponent, EntParentChangedMessage>(OnParentChanged);
             SubscribeLocalEvent<ActivatableUIComponent, BoundUIClosedEvent>(OnUIClose);
 
-            SubscribeLocalEvent<ActivatableUIComponent, GetActivationVerbsEvent>(AddOpenUiVerb);
+            SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
         }
 
-        private void AddOpenUiVerb(EntityUid uid, ActivatableUIComponent component, GetActivationVerbsEvent args)
+        private void AddOpenUiVerb(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess)
                 return;
@@ -44,7 +43,7 @@ namespace Content.Server.UserInterface
             if (!args.CanInteract && !HasComp<GhostComponent>(args.User))
                 return;
 
-            Verb verb = new();
+            ActivationVerb verb = new();
             verb.Act = () => InteractUI(args.User, component);
             verb.Text = Loc.GetString("ui-verb-toggle-open");
             // TODO VERBS add "open UI" icon?
@@ -81,12 +80,6 @@ namespace Content.Server.UserInterface
             if (!EntityManager.TryGetComponent(user, out ActorComponent? actor)) return false;
 
             if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return false;
-
-            if (!HasComp<GhostComponent>(user) && !_actionBlockerSystem.CanInteract(user))
-            {
-                user.PopupMessageCursor(Loc.GetString("base-computer-ui-component-cannot-interact"));
-                return true;
-            }
 
             var ui = aui.UserInterface;
             if (ui == null) return false;

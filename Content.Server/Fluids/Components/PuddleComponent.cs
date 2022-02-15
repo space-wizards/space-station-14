@@ -32,16 +32,21 @@ namespace Content.Server.Fluids.Components
         // based on behaviour (e.g. someone being punched vs slashed with a sword would have different blood sprite)
         // to check for low volumes for evaporation or whatever
 
+        /// <summary>
+        /// Puddles with volume above this threshold can slip players.
+        /// </summary>
+        [DataField("slipThreshold")]
+        public FixedPoint2 SlipThreshold = DefaultSlipThreshold;
 
-        [DataField("slipThreshold")] public FixedPoint2 SlipThreshold = DefaultSlipThreshold;
+        /// <summary>
+        /// Puddles with volume below this threshold will have their sprite changed to a wet floor effect,
+        /// provided they can evaporate down to zero.
+        /// </summary>
+        [DataField("wetFloorEffectThreshold")]
+        public FixedPoint2 WetFloorEffectThreshold = FixedPoint2.New(5);
 
         [DataField("spillSound")]
         public SoundSpecifier SpillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
-
-        /// <summary>
-        /// Whether or not this puddle is currently overflowing onto its neighbors
-        /// </summary>
-        public bool Overflown;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public FixedPoint2 CurrentVolume => EntitySystem.Get<PuddleSystem>().CurrentVolume(Owner);

@@ -1,30 +1,33 @@
-using Content.Shared.Administration.Logs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System;
 using Content.Shared.Database;
+using System.Collections.Generic;
 
 namespace Content.Shared.Verbs
 {
-    [Flags]
-    public enum VerbType
-    {
-        Interaction = 1,
-        Activation = 2,
-        Alternative = 4,
-        Other = 8,
-        All = 1+2+4+8
-    }
-
     /// <summary>
     ///     Verb objects describe actions that a user can take. The actions can be specified via an Action, local
     ///     events, or networked events. Verbs also provide text, icons, and categories for displaying in the
     ///     context-menu.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class Verb : IComparable
+    public class Verb : IComparable
     {
+        public static string DefaultTextStyleClass = "Verb";
+
+        /// <summary>
+        ///     Determines the priority of this type of verb when displaying in the verb-menu. See <see
+        ///     cref="CompareTo"/>.
+        /// </summary>
+        public virtual int TypePriority => 0;
+
+        /// <summary>
+        ///     Style class for drawing in the context menu
+        /// </summary>
+        public string TextStyleClass = DefaultTextStyleClass;
+
         /// <summary>
         ///     This is an action that will be run when the verb is "acted" out.
         /// </summary>
@@ -161,7 +164,11 @@ namespace Content.Shared.Verbs
             if (obj is not Verb otherVerb)
                 return -1;
 
-            // Sort first by priority
+            // Sort first by type-priority
+            if (TypePriority != otherVerb.TypePriority)
+                return otherVerb.TypePriority - TypePriority;
+
+            // Then by verb-priority
             if (Priority != otherVerb.Priority)
                 return otherVerb.Priority - Priority;
 
@@ -180,5 +187,90 @@ namespace Content.Shared.Verbs
             // Finally, compare icon texture paths. Note that this matters for verbs that don't have any text (e.g., the rotate-verbs)
             return string.Compare(IconTexture, otherVerb.IconTexture, StringComparison.CurrentCulture);
         }
+
+        /// <summary>
+        ///     Collection of all verb types, along with string keys.
+        /// </summary>
+        /// <remarks>
+        ///     Useful when iterating over verb types, though maybe this should be obtained and stored via reflection or
+        ///     something (list of all classes that inherit from Verb). Currently used for networking (apparently Type
+        ///     is not serializable?), and resolving console commands.
+        /// </remarks>
+        public static List<Type> VerbTypes = new()
+        {
+            { typeof(Verb) },
+            { typeof(InteractionVerb) },
+            { typeof(AlternativeVerb) },
+            { typeof(ActivationVerb) },
+            { typeof(ExamineVerb) }
+        };
+    }
+
+    /// <summary>
+    ///    Primary interaction verbs. This includes both use-in-hand and interacting with external entities.
+    /// </summary>
+    /// <remarks>
+    ///    These verbs those that involve using the hands or the currently held item on some entity. These verbs usually
+    ///    correspond to interactions that can be triggered by left-clicking or using 'Z', and often depend on the
+    ///    currently held item. These verbs are collectively shown first in the context menu.
+    /// </remarks>
+    [Serializable, NetSerializable]
+    public sealed class InteractionVerb : Verb
+    {
+        public new static string DefaultTextStyleClass = "InteractionVerb";
+        public override int TypePriority => 4;
+
+        public InteractionVerb() : base()
+        {
+            TextStyleClass = DefaultTextStyleClass;
+        }
+    }
+
+    /// <summary>
+    ///     Verbs for alternative-interactions.
+    /// </summary>
+    /// <remarks>
+    ///     When interacting with an entity via alt + left-click/E/Z the highest priority alt-interact verb is executed.
+    ///     These verbs are collectively shown second-to-last in the context menu.
+    /// </remarks>
+    [Serializable, NetSerializable]
+    public sealed class AlternativeVerb : Verb
+    {
+        public override int TypePriority => 2;
+        public new static string DefaultTextStyleClass = "AlternativeVerb";
+
+        public AlternativeVerb() : base()
+        {
+            TextStyleClass = DefaultTextStyleClass;
+        }
+    }
+
+    /// <summary>
+    ///    Activation-type verbs.
+    /// </summary>
+    /// <remarks>
+    ///    These are verbs that activate an item in the world but are independent of the currently held items. For
+    ///    example, opening a door or a GUI. These verbs should correspond to interactions that can be triggered by
+    ///    using 'E', though many of those can also be triggered by left-mouse or 'Z' if there is no other interaction.
+    ///    These verbs are collectively shown second in the context menu.
+    /// </remarks>
+    [Serializable, NetSerializable]
+    public sealed class ActivationVerb : Verb
+    {
+        public override int TypePriority => 1;
+        public new static string DefaultTextStyleClass = "ActivationVerb";
+
+        public ActivationVerb() : base()
+        {
+            TextStyleClass = DefaultTextStyleClass;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ExamineVerb : Verb
+    {
+        public override int TypePriority => 0;
+
+        public bool ShowOnExamineTooltip = true;
     }
 }

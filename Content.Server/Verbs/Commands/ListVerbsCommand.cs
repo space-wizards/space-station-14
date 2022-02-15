@@ -1,10 +1,11 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using System.Linq;
 
 namespace Content.Server.Verbs.Commands
 {
@@ -65,14 +66,11 @@ namespace Content.Server.Verbs.Commands
                 return;
             }
 
-            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, VerbType.All, true);
+            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, Verb.VerbTypes);
 
-            foreach (var (type, set) in verbs)
+            foreach (var verb in verbs)
             {
-                foreach (var verb in set)
-                {
-                    shell.WriteLine(Loc.GetString("list-verbs-verb-listing", ("type", type), ("verb", verb.Text)));
-                }
+                shell.WriteLine(Loc.GetString("list-verbs-verb-listing", ("type", verb.GetType().Name), ("verb", verb.Text)));
             }
         }
     }

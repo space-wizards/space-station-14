@@ -19,6 +19,7 @@ namespace Content.Client.Entry
             "WarpPoint",
             "EmitSoundOnUse",
             "EmitSoundOnLand",
+            "NameIdentifier",
             "EmitSoundOnActivate",
             "FootstepModifier",
             "HeatResistance",
@@ -56,6 +57,7 @@ namespace Content.Client.Entry
             "Electrified",
             "Electrocution",
             "Paper",
+            "Drone",
             "Bloodstream",
             "TransformableContainer",
             "Mind",
@@ -225,7 +227,6 @@ namespace Content.Client.Entry
             "MachineFrame",
             "MachineBoard",
             "ChemicalAmmo",
-            "CargoTelepad",
             "TraitorDeathMatchRedemption",
             "CanHostGuardian",
             "SliceableFood",
@@ -307,6 +308,7 @@ namespace Content.Client.Entry
             "RandomArtifactSprite",
             "EnergySword",
             "DoorRemote",
+            "InteractionPopup",
         };
     }
 }

@@ -138,12 +138,6 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-            {
-                popupSystem.PopupEntity(Loc.GetString("buckle-component-cannot-do-that-message"), user, Filter.Entities(user));
-                return false;
-            }
-
             if (!_entMan.TryGetComponent(to, out strap))
             {
                 return false;
@@ -292,13 +286,6 @@ namespace Content.Server.Buckle.Components
             {
                 if (_gameTiming.CurTime < _buckleTime + _unbuckleDelay)
                 {
-                    return false;
-                }
-
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    var popupSystem = EntitySystem.Get<SharedPopupSystem>();
-                    popupSystem.PopupEntity(Loc.GetString("buckle-component-cannot-do-that-message"), user, Filter.Entities(user));
                     return false;
                 }
 

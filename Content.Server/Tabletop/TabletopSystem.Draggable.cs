@@ -56,13 +56,13 @@ namespace Content.Server.Tabletop
             transform.Coordinates = entityCoordinates;
         }
 
-        private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg)
+        private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg, EntitySessionEventArgs args)
         {
             var dragged = msg.DraggedEntityUid;
 
             if (!EntityManager.TryGetComponent<TabletopDraggableComponent?>(dragged, out var draggableComponent)) return;
 
-            draggableComponent.DraggingPlayer = msg.DraggingPlayer;
+            draggableComponent.DraggingPlayer = msg.IsDragging ? args.SenderSession.UserId : null;
 
             if (!EntityManager.TryGetComponent<AppearanceComponent?>(dragged, out var appearance)) return;
 

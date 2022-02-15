@@ -39,8 +39,8 @@ namespace Content.Shared.Containers.ItemSlots
             SubscribeLocalEvent<ItemSlotsComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ItemSlotsComponent, UseInHandEvent>(OnUseInHand);
 
-            SubscribeLocalEvent<ItemSlotsComponent, GetAlternativeVerbsEvent>(AddEjectVerbs);
-            SubscribeLocalEvent<ItemSlotsComponent, GetInteractionVerbsEvent>(AddInteractionVerbsVerbs);
+            SubscribeLocalEvent<ItemSlotsComponent, GetVerbsEvent<AlternativeVerb>>(AddEjectVerbs);
+            SubscribeLocalEvent<ItemSlotsComponent, GetVerbsEvent<InteractionVerb>>(AddInteractionVerbsVerbs);
 
             SubscribeLocalEvent<ItemSlotsComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<ItemSlotsComponent, DestructionEventArgs>(OnBreak);
@@ -278,6 +278,7 @@ namespace Content.Shared.Containers.ItemSlots
 
         /// <summary>
         ///     Tries to insert item into a specific slot from an entity's hand.
+        ///     Does not check action blockers.
         /// </summary>
         /// <returns>False if failed to insert item</returns>
         public bool TryInsertFromHand(EntityUid uid, ItemSlot slot, EntityUid user, SharedHandsComponent? hands = null)
@@ -293,7 +294,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
 
             // hands.Drop(item) checks CanDrop action blocker
-            if (!_actionBlockerSystem.CanInteract(user) && hands.Drop(heldItem))
+            if (hands.Drop(heldItem))
                 return false;
 
             Insert(uid, slot, heldItem, user);
@@ -380,7 +381,7 @@ namespace Content.Shared.Containers.ItemSlots
         #endregion
 
         #region Verbs
-        private void AddEjectVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetAlternativeVerbsEvent args)
+        private void AddEjectVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetVerbsEvent<AlternativeVerb> args)
         {
             if (args.Hands == null || !args.CanAccess ||!args.CanInteract ||
                 !_actionBlockerSystem.CanPickup(args.User))
@@ -402,7 +403,7 @@ namespace Content.Shared.Containers.ItemSlots
                     ? Loc.GetString(slot.Name)
                     : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
 
-                Verb verb = new();
+                AlternativeVerb verb = new();
                 verb.Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true);
 
                 if (slot.EjectVerbText == null)
@@ -420,7 +421,7 @@ namespace Content.Shared.Containers.ItemSlots
             }
         }
 
-        private void AddInteractionVerbsVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetInteractionVerbsEvent args)
+        private void AddInteractionVerbsVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetVerbsEvent<InteractionVerb> args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
@@ -437,7 +438,7 @@ namespace Content.Shared.Containers.ItemSlots
                         ? Loc.GetString(slot.Name)
                         : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
 
-                    Verb takeVerb = new();
+                    InteractionVerb takeVerb = new();
                     takeVerb.Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true);
                     takeVerb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
 
@@ -463,7 +464,7 @@ namespace Content.Shared.Containers.ItemSlots
                     ? Loc.GetString(slot.Name)
                     : Name(args.Using.Value) ?? string.Empty;
 
-                Verb insertVerb = new();
+                InteractionVerb insertVerb = new();
                 insertVerb.Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true);
 
                 if (slot.InsertVerbText != null)

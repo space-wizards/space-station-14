@@ -96,6 +96,14 @@
       ]
     },
     {
+      "name": "atmos_tritium",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "atmos_waste",
       "delays": [
         [
@@ -799,6 +807,118 @@
     },
     {
       "name": "xenolab",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "small_secure_red",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "small_secure",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_secure_red",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_blank",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_magnetics",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_danger",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_explosives",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_cryogenics",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_electrical",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_biohazard",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_radiation",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_flammable",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_laser",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_secure",
       "delays": [
         [
           1

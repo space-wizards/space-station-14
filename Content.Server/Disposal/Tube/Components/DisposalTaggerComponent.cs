@@ -67,7 +67,7 @@ namespace Content.Server.Disposal.Tube.Components
         {
             var msg = (UiActionMessage) obj.Message;
 
-            if (!PlayerCanUseDisposalTagger(obj.Session))
+            if (!Anchored)
                 return;
 
             //Check for correct message and ignore maleformed strings
@@ -76,28 +76,6 @@ namespace Content.Server.Disposal.Tube.Components
                     _tag = msg.Tag;
                     ClickSound();
             }
-        }
-
-        /// <summary>
-        /// Checks whether the player entity is able to use the configuration interface of the pipe tagger.
-        /// </summary>
-        /// <param name="IPlayerSession">The player entity.</param>
-        /// <returns>Returns true if the entity can use the configuration interface, and false if it cannot.</returns>
-        private bool PlayerCanUseDisposalTagger(IPlayerSession session)
-        {
-            //Need player entity to check if they are still able to use the configuration interface
-            if (session.AttachedEntity is not {} attached)
-                return false;
-            if (!Anchored)
-                return false;
-
-            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-            var groupController = IoCManager.Resolve<IConGroupController>();
-            //Check if player can interact in their current state
-            if (!groupController.CanAdminMenu(session) && (!actionBlocker.CanInteract(attached) || !actionBlocker.CanUse(attached)))
-                return false;
-
-            return true;
         }
 
         /// <summary>

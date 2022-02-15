@@ -1,0 +1,117 @@
+- type: entity
+  save: false
+  abstract: true
+  id: PlayerSiliconBase #for player controlled silicons
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Input
+    context: "human"
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+    - shape:
+        # Circles, cuz rotation of rectangles looks very bad
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 20
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 3
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+  - type: Physics
+    bodyType: KinematicController
+  - type: Hands
+  - type: Body
+    template: DroneTemplate
+    preset: DronePreset
+  - type: DoAfter
+  - type: Pullable
+  - type: Examiner
+  - type: Puller
+  - type: Recyclable
+    safe: false
+  - type: StandingState
+  - type: Alerts
+
+- type: entity
+  name: drone
+  id: Drone
+  parent: PlayerSiliconBase
+  components:
+  - type: Drone
+    tools:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+  - type: NameIdentifier
+    group: Drone
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Maintenance Drone
+    description: Maintain the station. Ignore organics.
+    rules: |
+     You are bound by these laws both in-game and out-of-character:
+     1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.
+     2. You may not harm any being, regardless of intent or circumstance.
+     3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      70: !type:DeadMobState {}
+  - type: Sprite
+    drawdepth: Mobs
+    netsync: false
+    layers:
+    - state: shell
+      sprite: Mobs/Silicon/drone.rsi
+  - type: MovementIgnoreGravity
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 20
+      mask:
+      - VaultImpassable
+      layer:
+      - Opaque
+  - type: Tag
+  - type: Access
+    groups:
+    - AllAccess
+  - type: Appearance
+    visuals:
+      - type: GenericEnumVisualizer
+        key: enum.DroneVisuals.Status
+        layer: 0
+        states:
+          enum.DroneStatus.Off: shell
+          enum.DroneStatus.On: drone
+  - type: ReplacementAccent
+    accent: silicon
+  - type: Repairable
+    fuelcost: 15
+    doAfterDelay: 8

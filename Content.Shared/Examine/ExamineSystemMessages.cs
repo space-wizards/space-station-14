@@ -12,9 +12,12 @@ namespace Content.Shared.Examine
         {
             public readonly EntityUid EntityUid;
 
-            public RequestExamineInfoMessage(EntityUid entityUid)
+            public readonly bool GetVerbs;
+
+            public RequestExamineInfoMessage(EntityUid entityUid, bool getVerbs=false)
             {
                 EntityUid = entityUid;
+                GetVerbs = getVerbs;
             }
         }
 
@@ -24,10 +27,18 @@ namespace Content.Shared.Examine
             public readonly EntityUid EntityUid;
             public readonly FormattedMessage Message;
 
-            public ExamineInfoResponseMessage(EntityUid entityUid, FormattedMessage message)
+            public readonly bool GetVerbs;
+            public readonly bool CenterAtCursor;
+            public readonly bool OpenAtOldTooltip;
+
+            public ExamineInfoResponseMessage(EntityUid entityUid, FormattedMessage message,
+                bool getVerbs=false, bool centerAtCursor=true, bool openAtOldTooltip=true)
             {
                 EntityUid = entityUid;
                 Message = message;
+                GetVerbs = getVerbs;
+                CenterAtCursor = centerAtCursor;
+                OpenAtOldTooltip = openAtOldTooltip;
             }
         }
     }

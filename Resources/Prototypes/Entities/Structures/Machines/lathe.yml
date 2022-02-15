@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
+    netsync: false
     layers:
     - state: icon
       map: ["enum.AutolatheVisualLayers.Base"]
@@ -84,6 +85,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/protolathe.rsi
+    netsync: false
     layers:
     - state: icon
       map: ["enum.ProtolatheVisualLayers.Base"]
@@ -160,6 +162,7 @@
       - Dropper
       - Syringe
       - PillCanister
+      - Drone
       - Flash
       - Handcuffs
       - Stunbaton
@@ -181,23 +184,8 @@
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
-      - SMESMachineCircuitboard
-      - SubstationMachineCircuitboard
       - AirAlarmElectronics
       - FireAlarmElectronics
-      - CloningPodMachineCircuitboard
-      - MedicalScannerMachineCircuitboard
-      - ChemMasterMachineCircuitboard
-      - ChemDispenserMachineCircuitboard
-      - HydroponicsTrayMachineCircuitboard
-      - SolarControlComputerCircuitboard
-      - AutolatheMachineCircuitboard
-      - ProtolatheMachineCircuitboard
-      - KitchenReagentGrinderMachineCircuitboard
-      - CrewMonitoringComputerCircuitboard
-      - ShuttleConsoleCircuitboard
-      - DawInstrumentMachineCircuitboard
-      - SynthesizerInstrument
       - Bucket
       - MopItem
       - SprayBottle
@@ -219,3 +207,43 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+
+- type: entity
+  parent: Protolathe
+  id: CircuitImprinter
+  name: Circuit Imprinter
+  description: Prints circuit boards for machines.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/circuit_imprinter.rsi
+    layers:
+    - state: icon
+      map: ["enum.ProtolatheVisualLayers.Base"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
+    - state: icon
+      map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: ProtolatheDatabase
+    protolatherecipes:
+      - SMESMachineCircuitboard
+      - SubstationMachineCircuitboard
+      - CloningPodMachineCircuitboard
+      - MedicalScannerMachineCircuitboard
+      - ChemMasterMachineCircuitboard
+      - ChemDispenserMachineCircuitboard
+      - HydroponicsTrayMachineCircuitboard
+      - SolarControlComputerCircuitboard
+      - AutolatheMachineCircuitboard
+      - ProtolatheMachineCircuitboard
+      - KitchenReagentGrinderMachineCircuitboard
+      - CrewMonitoringComputerCircuitboard
+      - ShuttleConsoleCircuitboard
+      - CircuitImprinterMachineCircuitboard
+      - DawInstrumentMachineCircuitboard
+  - type: Machine
+    board: CircuitImprinterMachineCircuitboard
+

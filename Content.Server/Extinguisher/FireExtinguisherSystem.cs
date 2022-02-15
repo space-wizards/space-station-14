@@ -19,7 +19,6 @@ namespace Content.Server.Extinguisher;
 
 public class FireExtinguisherSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
 
@@ -31,7 +30,7 @@ public class FireExtinguisherSystem : EntitySystem
         SubscribeLocalEvent<FireExtinguisherComponent, DroppedEvent>(OnDropped);
         SubscribeLocalEvent<FireExtinguisherComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<FireExtinguisherComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<FireExtinguisherComponent, GetInteractionVerbsEvent>(OnGetInteractionVerbs);
+        SubscribeLocalEvent<FireExtinguisherComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
         SubscribeLocalEvent<FireExtinguisherComponent, SprayAttemptEvent>(OnSprayAttempt);
     }
 
@@ -103,12 +102,12 @@ public class FireExtinguisherSystem : EntitySystem
         }
     }
 
-    private void OnGetInteractionVerbs(EntityUid uid, FireExtinguisherComponent component, GetInteractionVerbsEvent args)
+    private void OnGetInteractionVerbs(EntityUid uid, FireExtinguisherComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanInteract)
             return;
 
-        var verb = new Verb
+        var verb = new InteractionVerb
         {
             Act = () => ToggleSafety(uid, args.User, component),
             Text = Loc.GetString("fire-extinguisher-component-verb-text"),
@@ -143,9 +142,6 @@ public class FireExtinguisherSystem : EntitySystem
         FireExtinguisherComponent? extinguisher = null)
     {
         if (!Resolve(uid, ref extinguisher))
-            return;
-
-        if (!_actionBlockerSystem.CanInteract(user) || !extinguisher.HasSafety)
             return;
 
         extinguisher.Safety = !extinguisher.Safety;
