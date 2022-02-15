@@ -32,3 +32,33 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/betting_chips.rsi
     state: red_chip
+
+# Blue chip
+- type: entity
+  id: BlueChip
+  name: blue chip
+  parent: BaseBaccaratPiece
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/betting_chips.rsi
+    state: blue_chip
+
+  # Green chip
+- type: entity
+  id: GreenChip
+  name: green chip
+  parent: BaseBaccaratPiece
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/betting_chips.rsi
+    state: green_chip
+
+  # Yellow chip
+- type: entity
+  id: YellowChip
+  name: yellow chip
+  parent: BaseBaccaratPiece
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/betting_chips.rsi
+    state: yellow_chip

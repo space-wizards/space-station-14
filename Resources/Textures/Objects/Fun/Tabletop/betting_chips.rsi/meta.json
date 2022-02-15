@@ -3,12 +3,21 @@
     "license": "CC-BY-SA-3.0",
     "copyright": "Zumorica, Fishfish458, Capnsockless",
     "size": {
-        "x": 25,
-        "y": 25
+        "x": 16,
+        "y": 16
     },
     "states": [
         {
             "name": "red_chip"
+        },
+        {
+            "name": "blue_chip"
+        },
+        {
+            "name": "green_chip"
+        },
+        {
+            "name": "yellow_chip"
         }
     ]
 }
