@@ -8,3 +8,27 @@
     state: baccarat_tabletop
     noRot: false
     drawdepth: FloorTiles
+
+ ## Baccarat pieces
+- type: entity
+  id: BaseBaccaratPiece
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: TabletopDraggable
+  - type: Sprite
+    netsync: false
+    noRot: true
+  - type: Appearance
+    visuals:
+    - type: TabletopItemVisualizer
+
+# Red chip
+- type: entity
+  id: RedChip
+  name: red chip
+  parent: BaseBaccaratPiece
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/betting_chips.rsi
+    state: red_chip
