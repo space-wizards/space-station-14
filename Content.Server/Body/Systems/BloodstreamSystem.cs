@@ -8,6 +8,8 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -113,6 +115,7 @@ public sealed class BloodstreamSystem : EntitySystem
         {
             // This is gonna hurt.
             TryModifyBloodLevel(uid, (-total) / 5, component);
+            SoundSystem.Play(Filter.Pvs(uid), component.InstantBloodSound.GetSound(), uid, AudioParams.Default);
         }
     }
 

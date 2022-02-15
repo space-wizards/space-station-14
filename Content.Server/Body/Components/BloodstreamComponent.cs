@@ -3,6 +3,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.Sound;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Body.Components
@@ -75,6 +76,12 @@ namespace Content.Server.Body.Components
         /// </remarks>
         [DataField("damageBleedModifiers", customTypeSerializer:typeof(PrototypeIdSerializer<DamageModifierSetPrototype>))]
         public string DamageBleedModifiers = "BloodlossHuman";
+
+        /// <summary>
+        ///     The sound to be played when a weapon instantly deals blood loss damage.
+        /// </summary>
+        [DataField("instantBloodSound")]
+        public SoundSpecifier InstantBloodSound = new SoundCollectionSpecifier("blood");
 
         // TODO probably damage bleed thresholds.
 
