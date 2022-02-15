@@ -111,15 +111,15 @@ public sealed class MoppingSystem : EntitySystem
             }
 
             // Mopping duration (doAfter delay) should scale with PickupAmount (the maximum volume of solution we can pick up with each click).
-            var doAfterArgs = new DoAfterEventArgs(user, component.MopSpeed * component.PickupAmount.Float() / 10.0f,
+            var doAfterMoppingArgs = new DoAfterEventArgs(user, component.MopSpeed * component.PickupAmount.Float() / 10.0f,
                 target: target)
             {
                 BreakOnUserMove = true,
                 BreakOnStun = true,
                 BreakOnDamage = true,
                 MovementThreshold = 0.2f,
-                BroadcastCancelledEvent = new MoppingDoafterCancel() { User = user, Tool = used, Target = puddle.Owner },
-                BroadcastFinishedEvent = new MoppingDoafterSuccess() { User = user, Tool = used, Target = puddle.Owner }
+                BroadcastCancelledEvent = new MoppingDoafterCancel() { User = user, Tool = used, Target = puddle.Owner, InteractionType = "puddle" },
+                BroadcastFinishedEvent = new MoppingDoafterSuccess() { User = user, Tool = used, Target = puddle.Owner, InteractionType = "puddle" }
             };
 
             // Can't absorb too many entities at once.
@@ -132,7 +132,7 @@ public sealed class MoppingSystem : EntitySystem
 
 
             args.Handled = true;
-            var result = _doAfterSystem.WaitDoAfter(doAfterArgs);
+            var mopResult = _doAfterSystem.WaitDoAfter(doAfterMoppingArgs);
 
                 return;
         }
@@ -143,26 +143,25 @@ public sealed class MoppingSystem : EntitySystem
         {
             // Interact-With-Refillable-Container behaviour:
 
-            if (TryComp<RefillableSolutionComponent>(target, out RefillableSolutionComponent? refillableComponent)) // target has refillable solution component
+            if (TryComp<RefillableSolutionComponent>(target, out RefillableSolutionComponent? refillable)) // target has refillable solution component
             {
-                                    // Try and get the Solution of the target container, and out var it into "solution."
-                                    if (solutionSystem.TryGetSolution(refillableComponent.Owner, refillableComponent.Solution, out var solution))
-                                    {
+                // Refilling duration (doAfter delay)
+                var refillingDuration = 1.0f; //TODO: Make this scale with how much liquid is in the tool, as well as if the tool needs a wringer for max effect.
 
-                                        var transferAmount = component.CurrentVolume; // Drain all of the absorbed solution.
+                var doAfterRefillingArgs = new DoAfterEventArgs(user, refillingDuration,
+                    target: target)
+                {
+                    BreakOnUserMove = true,
+                    BreakOnStun = true,
+                    BreakOnDamage = true,
+                    MovementThreshold = 0.2f,
+                    BroadcastCancelledEvent = new MoppingDoafterCancel() { User = user, Tool = used, Target = refillable.Owner, InteractionType = "refillable" },
+                    BroadcastFinishedEvent = new MoppingDoafterSuccess() { User = user, Tool = used, Target = refillable.Owner, InteractionType = "refillable" }
+                };
 
-                                        // Remove <transferAmount> units of solution from the used tool, and store it in temp var solutionFromTool.
-                                        var solutionFromTool = solutionSystem.SplitSolution(used, absorbedSolution, transferAmount);
+                var refillableResult = _doAfterSystem.WaitDoAfter(doAfterRefillingArgs);
+                args.Handled = true;
 
-                                        // Take that same solutionFromTool, and try adding it to the container we are refilling.
-                                        if (!solutionSystem.TryAddSolution(refillableComponent.Owner, solution, solutionFromTool))
-                                        {
-                                            return; //if the attempt fails
-                                        }
-
-                                        user.PopupMessage(user, Loc.GetString("bucket-component-mop-is-now-dry-message"));
-                    args.Handled = true;
-                }
             }
         }
 
@@ -215,41 +214,83 @@ public sealed class MoppingSystem : EntitySystem
         if (!TryComp(ev.Tool, out AbsorbentComponent? absorber))
             return;
 
-        if (!TryComp(ev.Target, out PuddleComponent? puddle))
-            return;
-
-        var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
-
-        solutionSystem.TryGetSolution(ev.Tool, "absorbed", out var absorbedSolution); // We will always be looking for a solution named "absorbed" on our AbsorbentComponent.
-
-        if(!solutionSystem.TryGetSolution(ev.Target, puddle.SolutionName, out var puddleSolution))
-            return;
-
-
-        // The volume the mop will take from the puddle
-        FixedPoint2 transferAmount;
-
-        // does the puddle actually have reagents? it might not if its a weird cosmetic entity.
-        if (puddleSolution.TotalVolume == 0)
-            transferAmount = FixedPoint2.Min(absorber.PickupAmount, absorber.AvailableVolume);
-        else
+        if (ev.InteractionType == "puddle")
         {
-            transferAmount = FixedPoint2.Min(absorber.PickupAmount, puddleSolution.TotalVolume, absorber.AvailableVolume);
+            if (!TryComp(ev.Target, out PuddleComponent? puddle))
+                return;
 
-            if ((puddleSolution.TotalVolume - transferAmount) < absorber.MopLowerLimit) // If the transferAmount would bring the puddle below the MopLowerLimit
-                transferAmount = puddleSolution.TotalVolume - absorber.MopLowerLimit; // Then the transferAmount should bring the puddle down to the MopLowerLimit exactly
+            var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
+
+            solutionSystem.TryGetSolution(ev.Tool, "absorbed", out var absorbedSolution); // We will always be looking for a solution named "absorbed" on our AbsorbentComponent.
+
+            if(!solutionSystem.TryGetSolution(ev.Target, puddle.SolutionName, out var puddleSolution))
+                return;
+
+
+            // The volume the mop will take from the puddle
+            FixedPoint2 transferAmount;
+
+            // does the puddle actually have reagents? it might not if its a weird cosmetic entity.
+            if (puddleSolution.TotalVolume == 0)
+                transferAmount = FixedPoint2.Min(absorber.PickupAmount, absorber.AvailableVolume);
+            else
+            {
+                transferAmount = FixedPoint2.Min(absorber.PickupAmount, puddleSolution.TotalVolume, absorber.AvailableVolume);
+
+                if ((puddleSolution.TotalVolume - transferAmount) < absorber.MopLowerLimit) // If the transferAmount would bring the puddle below the MopLowerLimit
+                    transferAmount = puddleSolution.TotalVolume - absorber.MopLowerLimit; // Then the transferAmount should bring the puddle down to the MopLowerLimit exactly
+            }
+
+            // Transfers solution from the puddle to the mop
+            solutionSystem.TryAddSolution(ev.Tool, absorbedSolution, solutionSystem.SplitSolution(ev.Target, puddleSolution, transferAmount));
+
+            SoundSystem.Play(Filter.Pvs(ev.User), absorber.PickupSound.GetSound(), ev.User);
+
+            // if the tool became full after that puddle, let the player know.
+            if(absorber.AvailableVolume <= 0)
+                ev.User.PopupMessage(ev.User, Loc.GetString("mopping-component-mop-is-now-full-message"));
+
+            absorber.InteractingEntities.Remove(ev.Target); // Tell the absorbentComponent that we have stopped interacting with the target.
+
         }
 
-        // Transfers solution from the puddle to the mop
-        solutionSystem.TryAddSolution(ev.Tool, absorbedSolution, solutionSystem.SplitSolution(ev.Target, puddleSolution, transferAmount));
+        if (ev.InteractionType == "refillable")
+        {
+            ev.User.PopupMessage(ev.User, "doAfter refillable called.");
 
-        SoundSystem.Play(Filter.Pvs(ev.User), absorber.PickupSound.GetSound(), ev.User);
+            if (!TryComp(ev.Target, out RefillableSolutionComponent? refillable))
+                return;
 
-        // if the tool became full after that puddle, let the player know.
-        if(absorber.AvailableVolume <= 0)
-            ev.User.PopupMessage(ev.User, Loc.GetString("mopping-component-mop-is-now-full-message"));
+            if (!TryComp(ev.Tool, out AbsorbentComponent? absorbent))
+                return;
 
-        absorber.InteractingEntities.Remove(ev.Target); // Tell the absorbentComponent that we have stopped interacting with the target.
+            var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
+
+            solutionSystem.TryGetSolution(ev.Tool, "absorbed", out var absorbedSolution); // We will always be looking for a solution named "absorbed" on our AbsorbentComponent.
+
+
+            // Try and get the Solution of the target container, and out var it into "solution."
+            if (solutionSystem.TryGetSolution(refillable.Owner, refillable.Solution, out var solution)
+                && absorbedSolution is not null)
+            {
+
+                var transferAmount = absorbent.CurrentVolume; // Drain all of the absorbed solution.
+
+                // Remove <transferAmount> units of solution from the used tool, and store it in temp var solutionFromTool.
+                var solutionFromTool = solutionSystem.SplitSolution(ev.Tool, absorbedSolution, transferAmount);
+
+                // Take that same solutionFromTool, and try adding it to the container we are refilling.
+                if (!solutionSystem.TryAddSolution(refillable.Owner, solution, solutionFromTool))
+                {
+                    return; //if the attempt fails
+                }
+
+                ev.User.PopupMessage(ev.User, Loc.GetString("bucket-component-mop-is-now-dry-message"));
+            }
+
+        }
+
+
 
     }
 
