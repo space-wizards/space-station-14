@@ -43,19 +43,13 @@ public sealed class MoppingSystem : EntitySystem
     {
         var user = args.User;
         var used = args.Used;
-        var clickLocation = args.ClickLocation;
+        var target = args.Target;
 
         var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
         var absorbedSolution = component.AbsorbedSolution;
 
-        var target = args.Target;
-
-        if (absorbedSolution == null)
-        {
-            return;
-        }
-
-        if (!args.CanReach)
+        if (absorbedSolution == null
+            || !args.CanReach)
         {
             return;
         }
@@ -68,10 +62,10 @@ public sealed class MoppingSystem : EntitySystem
 
             TileRef tile = default!;
 
-            if ((_mapManager.TryGetGrid(clickLocation.GetGridId(EntityManager), out var mapGrid))
+            if ((_mapManager.TryGetGrid(args.ClickLocation.GetGridId(EntityManager), out var mapGrid))
                 && absorbedSolution != null)
             {
-                tile = mapGrid.GetTileRef(clickLocation);
+                tile = mapGrid.GetTileRef(args.ClickLocation);
 
                 // Drop some of the absorbed liquid onto the ground
                 var solution = solutionSystem.SplitSolution(used, absorbedSolution, FixedPoint2.Min(component.ResidueAmount, component.CurrentVolume));
