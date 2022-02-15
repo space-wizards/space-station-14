@@ -69,14 +69,9 @@ public sealed class RoleBanSystem : EntitySystem
         var userRoleBans = new HashSet<string>();
         foreach (var ban in roleBans)
         {
-            if (userRoleBans.Contains(ban.Role))
-                continue;
             userRoleBans.Add(ban.Role);
         }
 
-        if (_cachedRoleBans.ContainsKey(userId))
-            _cachedRoleBans[userId] = userRoleBans;
-        else
-            _cachedRoleBans.Add(userId, userRoleBans);
+        _cachedRoleBans[userId] = userRoleBans;
     }
 }
