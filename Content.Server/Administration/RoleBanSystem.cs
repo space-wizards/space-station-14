@@ -12,7 +12,6 @@ public sealed class RoleBanSystem : EntitySystem
 {
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IPlayerLocator _playerLocator = default!;
 
     private readonly Dictionary<NetUserId, HashSet<string>> _cachedRoleBans = new();
 
@@ -36,17 +35,8 @@ public sealed class RoleBanSystem : EntitySystem
             || _cachedRoleBans.ContainsKey(e.Session.UserId))
             return;
 
-        var playerData = await _playerLocator.LookupIdAsync(e.Session.UserId);
-        if (playerData == null)
-        {
-            Logger.Error("PlayerLocate", $"Role bans couldn't be found PlayerData for player {e.Session.Name} {e.Session.UserId.ToString()} couldn't be found.");
-            return;
-        }
-
-        if (_cachedRoleBans.ContainsKey(e.Session.UserId))
-            return;
-
-        await CacheDbRoleBans(playerData.UserId, playerData.LastAddress, playerData.LastHWId);
+        var netChannel = e.Session.ConnectedClient;
+        await CacheDbRoleBans(e.Session.UserId, netChannel.RemoteEndPoint.Address, netChannel.UserData.HWId);
     }
 
     public async Task<bool> AddRoleBan(ServerRoleBanDef banDef, LocatedPlayerData? playerData = null)
