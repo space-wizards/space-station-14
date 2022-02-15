@@ -56,9 +56,9 @@
         amount: 3
         
 - type: entity
-  id: MedkitO2Filled
+  id: MedkitOxygenFilled
   suffix: Filled
-  parent: MedkitO2
+  parent: MedkitOxygen
   components:
   - type: StorageFill
     contents:
