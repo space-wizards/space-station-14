@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -53,9 +51,9 @@ namespace Content.Server.Database
             NetUserId? userId,
             ImmutableArray<byte>? hwId)
         {
-            if (address == null && userId == null)
+            if (address == null && userId == null && hwId == null)
             {
-                throw new ArgumentException("Address and userId cannot both be null");
+                throw new ArgumentException("Address, userId, and hwId cannot all be null");
             }
 
             await using var db = await GetDbImpl();
@@ -74,7 +72,7 @@ namespace Content.Server.Database
         {
             if (address == null && userId == null && hwId == null)
             {
-                throw new ArgumentException("Address and userId cannot both be null");
+                throw new ArgumentException("Address, userId, and hwId cannot all be null");
             }
 
             await using var db = await GetDbImpl();
@@ -247,9 +245,9 @@ namespace Content.Server.Database
             NetUserId? userId,
             ImmutableArray<byte>? hwId)
         {
-            if (address == null && userId == null)
+            if (address == null && userId == null && hwId == null)
             {
-                throw new ArgumentException("Address and userId cannot both be null");
+                throw new ArgumentException("Address, userId, and hwId cannot all be null");
             }
 
             await using var db = await GetDbImpl();
@@ -268,7 +266,7 @@ namespace Content.Server.Database
         {
             if (address == null && userId == null && hwId == null)
             {
-                throw new ArgumentException("Address and userId cannot both be null");
+                throw new ArgumentException("Address, userId, and hwId cannot all be null");
             }
 
             await using var db = await GetDbImpl();
