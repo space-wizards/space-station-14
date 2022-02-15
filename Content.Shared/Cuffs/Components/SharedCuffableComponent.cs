@@ -1,4 +1,5 @@
 using System;
+using Content.Shared.ActionBlocker;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
@@ -8,10 +9,20 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Cuffs.Components
 {
     [NetworkedComponent()]
-    public class SharedCuffableComponent : Component
+    public abstract class SharedCuffableComponent : Component
     {
         [ViewVariables]
-        public bool CanStillInteract { get; set; } = true;
+        public bool CanStillInteract
+        {
+            get => _canStillInteract;
+            set
+            {
+                if (_canStillInteract == value) return;
+                EntitySystem.Get<ActionBlockerSystem>().RefreshCanMove(Owner);
+            }
+        }
+
+        private bool _canStillInteract = true;
 
         [Serializable, NetSerializable]
         protected sealed class CuffableComponentState : ComponentState

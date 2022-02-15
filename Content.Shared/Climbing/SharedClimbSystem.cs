@@ -1,5 +1,4 @@
 using Content.Shared.Movement;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Climbing
 {
@@ -7,11 +6,10 @@ namespace Content.Shared.Climbing
     {
         public override void Initialize()
         {
-            base.Initialize();
-            SubscribeLocalEvent<SharedClimbingComponent, MovementAttemptEvent>(HandleMoveAttempt);
+            SubscribeLocalEvent<SharedClimbingComponent, MovementAttemptEvent>(OnMoveAttempt);
         }
 
-        private void HandleMoveAttempt(EntityUid uid, SharedClimbingComponent component, MovementAttemptEvent args)
+        private void OnMoveAttempt(EntityUid uid, SharedClimbingComponent component, MovementAttemptEvent args)
         {
             if (component.OwnerIsTransitioning)
                 args.Cancel();

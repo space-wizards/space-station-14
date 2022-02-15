@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.ActionBlocker;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
@@ -27,8 +28,9 @@ namespace Content.Shared.Pulling
     /// Because pulling state is such a mess to get right, all writes to pulling state must go through this class.
     /// </summary>
     [UsedImplicitly]
-    public class SharedPullingStateManagementSystem : EntitySystem
+    public sealed class SharedPullingStateManagementSystem : EntitySystem
     {
+        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
@@ -69,6 +71,7 @@ namespace Content.Shared.Pulling
             // State shutdown
             puller.Pulling = null;
             pullable.Puller = null;
+            _blocker.RefreshCanMove(pullable.Owner);
 
             // Messaging
             var message = new PullStoppedMessage(pullerPhysics, pullablePhysics);
@@ -115,6 +118,7 @@ namespace Content.Shared.Pulling
                 // State startup
                 puller.Pulling = pullable.Owner;
                 pullable.Puller = puller.Owner;
+                _blocker.RefreshCanMove(pullable.Owner);
 
                 // Joint startup
                 var union = _physics.GetHardAABB(pullerPhysics).Union(_physics.GetHardAABB(pullablePhysics));

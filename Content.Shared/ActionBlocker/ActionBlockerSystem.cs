@@ -16,10 +16,15 @@ namespace Content.Shared.ActionBlocker
     /// Utility methods to check if a specific entity is allowed to perform an action.
     /// </summary>
     [UsedImplicitly]
-    public sealed class ActionBlockerSystem : EntitySystem
+    public sealed partial class ActionBlockerSystem : EntitySystem
     {
         public bool CanMove(EntityUid uid)
         {
+            if (TryComp<ActionBlockerComponent>(uid, out var comp) && comp.CanMove != null)
+            {
+                return comp.CanMove.Value;
+            }
+
             var ev = new MovementAttemptEvent(uid);
             RaiseLocalEvent(uid, ev);
 

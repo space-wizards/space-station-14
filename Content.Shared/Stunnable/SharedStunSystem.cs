@@ -1,4 +1,4 @@
-using System;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
@@ -6,25 +6,21 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
-using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Stunnable
 {
     [UsedImplicitly]
     public abstract class SharedStunSystem : EntitySystem
     {
+        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
@@ -47,6 +43,9 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<KnockedDownComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
 
+            SubscribeLocalEvent<StunnedComponent, ComponentInit>(OnStunnedInit);
+            SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(OnStunnedShutdown);
+
             // Attempt event subscriptions.
             SubscribeLocalEvent<StunnedComponent, MovementAttemptEvent>(OnMoveAttempt);
             SubscribeLocalEvent<StunnedComponent, InteractionAttemptEvent>(OnInteractAttempt);
@@ -57,6 +56,16 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<StunnedComponent, AttackAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<StunnedComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<StunnedComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
+        }
+
+        private void OnStunnedInit(EntityUid uid, StunnedComponent component, ComponentInit args)
+        {
+            _blocker.RefreshCanMove(uid);
+        }
+
+        private void OnStunnedShutdown(EntityUid uid, StunnedComponent component, ComponentShutdown args)
+        {
+            _blocker.RefreshCanMove(uid);
         }
 
         private void OnSlowGetState(EntityUid uid, SlowedDownComponent component, ref ComponentGetState args)
@@ -208,6 +217,7 @@ namespace Content.Shared.Stunnable
 
         private void OnMoveAttempt(EntityUid uid, StunnedComponent stunned, MovementAttemptEvent args)
         {
+            if (stunned.LifeStage > ComponentLifeStage.Initialized) return;
             args.Cancel();
         }
 

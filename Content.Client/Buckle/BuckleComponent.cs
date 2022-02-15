@@ -1,3 +1,4 @@
+using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -7,7 +8,7 @@ namespace Content.Client.Buckle
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBuckleComponent))]
-    public class BuckleComponent : SharedBuckleComponent
+    public sealed class BuckleComponent : SharedBuckleComponent
     {
         private bool _buckled;
         private int? _originalDrawDepth;
@@ -27,7 +28,12 @@ namespace Content.Client.Buckle
                 return;
             }
 
-            _buckled = buckle.Buckled;
+            if (_buckled != buckle.Buckled)
+            {
+                _buckled = buckle.Buckled;
+                EntitySystem.Get<ActionBlockerSystem>().RefreshCanMove(Owner);
+            }
+
             LastEntityBuckledTo = buckle.LastEntityBuckledTo;
             DontCollide = buckle.DontCollide;
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? ownerSprite))

@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
@@ -14,14 +13,8 @@ using Content.Shared.Stunnable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Buckle.Components
 {
@@ -30,7 +23,7 @@ namespace Content.Server.Buckle.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedBuckleComponent))]
-    public class BuckleComponent : SharedBuckleComponent
+    public sealed class BuckleComponent : SharedBuckleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -70,7 +63,8 @@ namespace Content.Server.Buckle.Components
             {
                 _buckledTo = value;
                 _buckleTime = _gameTiming.CurTime;
-                Dirty();
+                EntitySystem.Get<ActionBlockerSystem>().RefreshCanMove(Owner);
+                Dirty(_entMan);
             }
         }
 

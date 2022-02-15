@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
@@ -10,9 +9,6 @@ using Content.Shared.Shuttles;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -206,8 +202,9 @@ namespace Content.Server.Shuttles.EntitySystems
 
             entity.PopupMessage(Loc.GetString("shuttle-pilot-start"));
             pilotComponent.Console = component;
-            pilotComponent.Position = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-            pilotComponent.Dirty();
+            pilotComponent.Position = Transform(entity).Coordinates;
+            _blocker.RefreshCanMove(pilotComponent.Owner);
+            Dirty(pilotComponent);
         }
 
         public void RemovePilot(PilotComponent pilotComponent)
@@ -221,7 +218,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (TryComp<SharedEyeComponent>(pilotComponent.Owner, out var eye))
             {
-                eye.Zoom = new(1.0f, 1.0f);
+                eye.Zoom = new Vector2(1.0f, 1.0f);
             }
 
             if (!helmsman.SubscribedPilots.Remove(pilotComponent)) return;
@@ -232,6 +229,8 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (pilotComponent.LifeStage < ComponentLifeStage.Stopping)
                 EntityManager.RemoveComponent<PilotComponent>(pilotComponent.Owner);
+
+            _blocker.RefreshCanMove(pilotComponent.Owner);
         }
 
         public void RemovePilot(EntityUid entity)

@@ -1,14 +1,12 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Shared.Movement
+﻿namespace Content.Shared.Movement
 {
-    public class MovementAttemptEvent : CancellableEntityEventArgs
+    public sealed class MovementAttemptEvent : CancellableEntityEventArgs
     {
+        public EntityUid Uid { get; }
+
         public MovementAttemptEvent(EntityUid uid)
         {
             Uid = uid;
         }
-
-        public EntityUid Uid { get; }
     }
 }

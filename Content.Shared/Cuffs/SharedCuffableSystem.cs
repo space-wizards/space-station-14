@@ -13,9 +13,8 @@ namespace Content.Shared.Cuffs
     {
         public override void Initialize()
         {
-            base.Initialize();
-            SubscribeLocalEvent<SharedCuffableComponent, StopPullingEvent>(HandleStopPull);
-            SubscribeLocalEvent<SharedCuffableComponent, MovementAttemptEvent>(HandleMoveAttempt);
+            SubscribeLocalEvent<SharedCuffableComponent, StopPullingEvent>(OnStopPull);
+            SubscribeLocalEvent<SharedCuffableComponent, MovementAttemptEvent>(OnMoveAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, UseAttemptEvent>(OnUseAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, InteractionAttemptEvent>(OnInteractAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
@@ -25,15 +24,7 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<SharedCuffableComponent, PickupAttemptEvent>(OnPickupAttempt);
         }
 
-        private void HandleMoveAttempt(EntityUid uid, SharedCuffableComponent component, MovementAttemptEvent args)
-        {
-            if (component.CanStillInteract || !EntityManager.TryGetComponent(uid, out SharedPullableComponent? pullable) || !pullable.BeingPulled)
-                return;
-
-            args.Cancel();
-        }
-
-        private void HandleStopPull(EntityUid uid, SharedCuffableComponent component, StopPullingEvent args)
+        private void OnStopPull(EntityUid uid, SharedCuffableComponent component, StopPullingEvent args)
         {
             if (args.User == null || !EntityManager.EntityExists(args.User.Value)) return;
 
@@ -44,6 +35,14 @@ namespace Content.Shared.Cuffs
         }
 
         #region ActionBlocker
+
+        private void OnMoveAttempt(EntityUid uid, SharedCuffableComponent component, MovementAttemptEvent args)
+        {
+            if (component.CanStillInteract || !TryComp<SharedPullableComponent>(uid, out var pullable) || !pullable.BeingPulled)
+                return;
+
+            args.Cancel();
+        }
 
         private void CheckAct(EntityUid uid, SharedCuffableComponent component, CancellableEntityEventArgs args)
         {

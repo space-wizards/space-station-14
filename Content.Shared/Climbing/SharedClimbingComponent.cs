@@ -38,6 +38,9 @@ namespace Content.Shared.Climbing
             {
                 if (_ownerIsTransitioning == value) return;
                 _ownerIsTransitioning = value;
+
+                EntitySystem.Get<ActionBlockerSystem>().RefreshCanMove(Owner);
+
                 if (!_entMan.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent)) return;
                 if (value)
                 {

@@ -14,10 +14,10 @@ namespace Content.Shared.Buckle
         {
             base.Initialize();
             SubscribeLocalEvent<SharedBuckleComponent, PreventCollideEvent>(PreventCollision);
-            SubscribeLocalEvent<SharedBuckleComponent, DownAttemptEvent>(HandleDown);
-            SubscribeLocalEvent<SharedBuckleComponent, StandAttemptEvent>(HandleStand);
-            SubscribeLocalEvent<SharedBuckleComponent, ThrowPushbackAttemptEvent>(HandleThrowPushback);
-            SubscribeLocalEvent<SharedBuckleComponent, MovementAttemptEvent>(HandleMove);
+            SubscribeLocalEvent<SharedBuckleComponent, DownAttemptEvent>(OnDown);
+            SubscribeLocalEvent<SharedBuckleComponent, StandAttemptEvent>(OnStand);
+            SubscribeLocalEvent<SharedBuckleComponent, ThrowPushbackAttemptEvent>(OnThrowPushback);
+            SubscribeLocalEvent<SharedBuckleComponent, MovementAttemptEvent>(OnMoveAttempt);
             SubscribeLocalEvent<SharedBuckleComponent, ChangeDirectionAttemptEvent>(OnBuckleChangeDirectionAttempt);
         }
 
@@ -27,21 +27,13 @@ namespace Content.Shared.Buckle
                 args.Cancel();
         }
 
-        private void HandleMove(EntityUid uid, SharedBuckleComponent component, MovementAttemptEvent args)
+        private void OnMoveAttempt(EntityUid uid, SharedBuckleComponent component, MovementAttemptEvent args)
         {
             if (component.Buckled)
                 args.Cancel();
         }
 
-        private void HandleStand(EntityUid uid, SharedBuckleComponent component, StandAttemptEvent args)
-        {
-            if (component.Buckled)
-            {
-                args.Cancel();
-            }
-        }
-
-        private void HandleDown(EntityUid uid, SharedBuckleComponent component, DownAttemptEvent args)
+        private void OnStand(EntityUid uid, SharedBuckleComponent component, StandAttemptEvent args)
         {
             if (component.Buckled)
             {
@@ -49,7 +41,15 @@ namespace Content.Shared.Buckle
             }
         }
 
-        private void HandleThrowPushback(EntityUid uid, SharedBuckleComponent component, ThrowPushbackAttemptEvent args)
+        private void OnDown(EntityUid uid, SharedBuckleComponent component, DownAttemptEvent args)
+        {
+            if (component.Buckled)
+            {
+                args.Cancel();
+            }
+        }
+
+        private void OnThrowPushback(EntityUid uid, SharedBuckleComponent component, ThrowPushbackAttemptEvent args)
         {
             if (!component.Buckled) return;
             args.Cancel();

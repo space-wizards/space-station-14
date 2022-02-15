@@ -1,11 +1,7 @@
-using System;
-using Robust.Shared.GameObjects;
+using Content.Shared.ActionBlocker;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Shuttles.Components
 {
@@ -34,6 +30,7 @@ namespace Content.Shared.Shuttles.Components
             if (!console.IsValid())
             {
                 Console = null;
+                EntitySystem.Get<ActionBlockerSystem>().RefreshCanMove(Owner);
                 return;
             }
 
@@ -46,6 +43,7 @@ namespace Content.Shared.Shuttles.Components
             }
 
             Console = shuttleConsoleComponent;
+            EntitySystem.Get<ActionBlockerSystem>().RefreshCanMove(Owner);
         }
 
         public override ComponentState GetComponentState()
