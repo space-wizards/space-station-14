@@ -1,10 +1,6 @@
 using Content.Server.GameTicking;
 using Content.Server.Spawners.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Server.Spawners.EntitySystems
@@ -19,7 +15,7 @@ namespace Content.Server.Spawners.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GameRuleAddedEvent>(OnRuleAdded);
+            SubscribeLocalEvent<GameRuleStartedEvent>(OnRuleAdded);
             SubscribeLocalEvent<ConditionalSpawnerComponent, MapInitEvent>(OnCondSpawnMapInit);
             SubscribeLocalEvent<RandomSpawnerComponent, MapInitEvent>(OnRandSpawnMapInit);
         }
@@ -43,7 +39,7 @@ namespace Content.Server.Spawners.EntitySystems
             }
         }
 
-        public void RuleAdded(ConditionalSpawnerComponent component, GameRuleAddedEvent obj)
+        public void RuleAdded(ConditionalSpawnerComponent component, GameRuleStartedEvent obj)
         {
             if(component.GameRules.Contains(obj.Rule.ID))
                 Spawn(component);
@@ -59,7 +55,7 @@ namespace Content.Server.Spawners.EntitySystems
 
             foreach (var rule in component.GameRules)
             {
-                if (!_ticker.HasGameRule(rule)) continue;
+                if (!_ticker.GameRuleStarted(rule)) continue;
                 Spawn(component);
                 return;
             }
