@@ -73,20 +73,7 @@
     sprite: Objects/Specific/Hydroponics/aloe.rsi
     state: cream
 
-# Pills
-- type: entity
-  name: kelotane pill
-  parent: Pill
-  id: PillKelotane
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 50
-        reagents:
-        - ReagentId: Kelotane
-          Quantity: 15
-          
+# Pills     
 - type: entity
   name: dexalin pill
   parent: Pill
@@ -127,6 +114,32 @@
           Quantity: 15
           
 - type: entity
+  name: iron pill
+  parent: Pill
+  id: PillIron
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Iron
+          Quantity: 15
+
+- type: entity
+  name: kelotane pill
+  parent: Pill
+  id: PillKelotane
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Kelotane
+          Quantity: 15
+       
+- type: entity
   name: space drugs
   parent: Pill
   id: PillSpaceDrugs
@@ -139,7 +152,33 @@
         - ReagentId: SpaceDrugs
           Quantity: 15
           
+- type: entity
+  name: tricordrazine pill
+  parent: Pill
+  id: PillTricordrazine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Tricordrazine
+          Quantity: 15
+          
 # Syringes
+- type: entity
+  name: ephedrine syringe
+  parent: Syringe
+  id: SyringeEphedrine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Ephedrine
+          Quantity: 15
+
 - type: entity
   name: inaprovaline syringe
   parent: Syringe
@@ -167,15 +206,15 @@
           Quantity: 15
 
 - type: entity
-  name: ephedrine syringe
+  name: tranexamic acid syringe
   parent: Syringe
-  id: SyringeEphedrine
+  id: SyringeTranexamicAcid
   components:
   - type: SolutionContainerManager
     solutions:
       injector:
         maxVol: 15
         reagents:
-        - ReagentId: Ephedrine
+        - ReagentId: TranexamicAcid
           Quantity: 15
         
