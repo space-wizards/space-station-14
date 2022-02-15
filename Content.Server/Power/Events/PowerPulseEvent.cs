@@ -2,7 +2,7 @@
 
 /// <summary>
 ///     Invoked on a target entity, when it was pulsed with an energy.
-///     For instance, interacted with a multitool or active stun baton.
+///     For instance, interacted with an active stun baton.
 /// </summary>
 public sealed class PowerPulseEvent : EventArgs
 {

@@ -306,6 +306,7 @@ namespace Content.Client.Entry
             "ArtifactInteractionTrigger",
             "ArtifactTimerTrigger",
             "ArtifactHeatTrigger",
+            "ArtifactElectricityTrigger",
             "Artifact",
             "RandomArtifactSprite",
             "EnergySword",

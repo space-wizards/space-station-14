@@ -15,9 +15,9 @@ public sealed class ArtifactComponent : Component
     /// </summary>
     [DataField("possibleTriggers")]
     public string[] PossibleTriggers = {
-        /*"ArtifactInteractionTrigger",
+        "ArtifactInteractionTrigger",
         "ArtifactGasTrigger",
-        "ArtifactHeatTrigger",*/
+        "ArtifactHeatTrigger",
         "ArtifactElectricityTrigger",
     };
 
