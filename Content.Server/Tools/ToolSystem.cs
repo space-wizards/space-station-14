@@ -23,7 +23,6 @@ namespace Content.Server.Tools
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -214,7 +213,7 @@ namespace Content.Server.Tools
             if (!Resolve(tool, ref toolComponent))
                 return false;
 
-            if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded) || !_actionBlockerSystem.CanInteract(user))
+            if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded))
                 return false;
 
             var beforeAttempt = new ToolUseAttemptEvent(fuel, user);

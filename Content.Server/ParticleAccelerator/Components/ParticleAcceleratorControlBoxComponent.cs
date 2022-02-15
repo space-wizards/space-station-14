@@ -150,13 +150,6 @@ namespace Content.Server.ParticleAccelerator.Components
                 return;
             }
 
-
-            if (obj.Session.AttachedEntity is not {Valid: true} attached ||
-                !EntitySystem.Get<ActionBlockerSystem>().CanInteract(attached))
-            {
-                return;
-            }
-
             if (_wireInterfaceBlocked)
             {
                 return;

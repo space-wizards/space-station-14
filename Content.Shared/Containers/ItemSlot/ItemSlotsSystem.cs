@@ -278,6 +278,7 @@ namespace Content.Shared.Containers.ItemSlots
 
         /// <summary>
         ///     Tries to insert item into a specific slot from an entity's hand.
+        ///     Does not check action blockers.
         /// </summary>
         /// <returns>False if failed to insert item</returns>
         public bool TryInsertFromHand(EntityUid uid, ItemSlot slot, EntityUid user, SharedHandsComponent? hands = null)
@@ -293,7 +294,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
 
             // hands.Drop(item) checks CanDrop action blocker
-            if (!_actionBlockerSystem.CanInteract(user) && hands.Drop(heldItem))
+            if (hands.Drop(heldItem))
                 return false;
 
             Insert(uid, slot, heldItem, user);

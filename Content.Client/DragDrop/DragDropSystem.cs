@@ -5,6 +5,7 @@ using Content.Client.Viewport;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -428,10 +429,17 @@ namespace Content.Client.DragDrop
         /// <returns>null if the target doesn't support IDragDropOn</returns>
         private bool? ValidDragDrop(DragDropEvent eventArgs)
         {
-            if (!_actionBlockerSystem.CanInteract(eventArgs.User))
+            if (!_actionBlockerSystem.CanInteract(eventArgs.User, eventArgs.Target))
             {
                 return false;
             }
+
+            // CanInteract() doesn't support checking a second "target" entity.
+            // Doing so manually:
+            var ev = new GettingInteractedWithAttemptEvent(eventArgs.User, eventArgs.Dragged);
+            RaiseLocalEvent(eventArgs.Dragged, ev);
+            if (ev.Cancelled)
+                return false;
 
             var valid = CheckDragDropOn(eventArgs);
 

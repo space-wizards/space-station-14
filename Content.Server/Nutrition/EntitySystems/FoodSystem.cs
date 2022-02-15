@@ -40,7 +40,6 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly UtensilSystem _utensilSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         public override void Initialize()
@@ -79,9 +78,6 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public bool TryFeed(EntityUid user, EntityUid target, FoodComponent food)
         {
-            if (!_actionBlockerSystem.CanInteract(user) || !_actionBlockerSystem.CanUse(user))
-                return false;
-
             // if currently being used to feed, cancel that action.
             if (food.CancelToken != null)
             {

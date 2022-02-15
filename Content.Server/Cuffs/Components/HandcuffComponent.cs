@@ -149,7 +149,6 @@ namespace Content.Server.Cuffs.Components
             if (_cuffing) return true;
 
             if (eventArgs.Target is not {Valid: true} target ||
-                !EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User) ||
                 !_entities.TryGetComponent<CuffableComponent?>(eventArgs.Target.Value, out var cuffed))
             {
                 return false;
