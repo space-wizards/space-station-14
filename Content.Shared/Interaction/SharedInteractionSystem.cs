@@ -171,6 +171,7 @@ namespace Content.Shared.Interaction
                 // Perform alternative interactions, using context menu verbs.
                 // These perform their own range, can-interact, and accessibility checks.
                 AltInteract(user, target.Value);
+                return;
             }
 
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, target))
