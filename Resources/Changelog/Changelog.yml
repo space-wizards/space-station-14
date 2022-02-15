@@ -1,12 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Piloting now breaks on minimum distance (0.25 units) and not any distance,
-    type: Tweak}
-  id: 565
-  time: '2021-11-11T07:42:34.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Shuttles can now dock., type: Add}
   id: 566
   time: '2021-11-11T09:06:38.0000000+00:00'
@@ -2961,3 +2955,9 @@ Entries:
   - {message: Drones and monkeys now have unique identifiers in their names., type: Add}
   id: 1065
   time: '2022-02-15T02:41:08.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Atmos tickrate has been reduced significantly. Air "moves slower" now.,
+    type: Tweak}
+  id: 1066
+  time: '2022-02-15T11:04:34.0000000+00:00'
