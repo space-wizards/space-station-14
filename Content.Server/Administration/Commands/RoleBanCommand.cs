@@ -91,7 +91,7 @@ public sealed class RoleBanCommand : IConsoleCommand
             null,
             role);
 
-        if (!await EntitySystem.Get<RoleBanSystem>().AddRoleBan(banDef, located))
+        if (!await EntitySystem.Get<RoleBanSystem>().AddRoleBan(banDef))
         {
             shell.WriteLine($"{target} already has a role ban for {role}");
             return;

@@ -39,7 +39,7 @@ public sealed class RoleBanSystem : EntitySystem
         await CacheDbRoleBans(e.Session.UserId, netChannel.RemoteEndPoint.Address, netChannel.UserData.HWId);
     }
 
-    public async Task<bool> AddRoleBan(ServerRoleBanDef banDef, LocatedPlayerData? playerData = null)
+    public async Task<bool> AddRoleBan(ServerRoleBanDef banDef)
     {
         if (banDef.UserId != null)
         {
