@@ -15,7 +15,7 @@ namespace Content.Server.Spawners.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GameRuleStartedEvent>(OnRuleAdded);
+            SubscribeLocalEvent<GameRuleStartedEvent>(OnRuleStarted);
             SubscribeLocalEvent<ConditionalSpawnerComponent, MapInitEvent>(OnCondSpawnMapInit);
             SubscribeLocalEvent<RandomSpawnerComponent, MapInitEvent>(OnRandSpawnMapInit);
         }
@@ -31,15 +31,15 @@ namespace Content.Server.Spawners.EntitySystems
             EntityManager.QueueDeleteEntity(uid);
         }
 
-        private void OnRuleAdded(GameRuleStartedEvent args)
+        private void OnRuleStarted(GameRuleStartedEvent args)
         {
             foreach (var spawner in EntityManager.EntityQuery<ConditionalSpawnerComponent>())
             {
-                RuleAdded(spawner, args);
+                RuleStarted(spawner, args);
             }
         }
 
-        public void RuleAdded(ConditionalSpawnerComponent component, GameRuleStartedEvent obj)
+        public void RuleStarted(ConditionalSpawnerComponent component, GameRuleStartedEvent obj)
         {
             if(component.GameRules.Contains(obj.Rule.ID))
                 Spawn(component);

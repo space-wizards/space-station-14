@@ -53,6 +53,7 @@ public abstract class GameRuleSystem : EntitySystem
         if (ev.Rule.ID != Prototype)
             return;
 
+        Enabled = false;
         Ended();
     }
 

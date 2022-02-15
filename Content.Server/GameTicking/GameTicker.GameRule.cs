@@ -23,8 +23,8 @@ namespace Content.Server.GameTicking
             if (!GameRuleAdded(rule))
                 AddGameRule(rule);
 
-            _startedGameRules.Add(rule);
-            RaiseLocalEvent(new GameRuleStartedEvent(rule));
+            if (_startedGameRules.Add(rule))
+                RaiseLocalEvent(new GameRuleStartedEvent(rule));
         }
 
         /// <summary>
@@ -39,7 +39,9 @@ namespace Content.Server.GameTicking
                 return;
 
             _addedGameRules.Remove(rule);
-            _startedGameRules.Remove(rule);
+
+            if (GameRuleStarted(rule))
+                _startedGameRules.Remove(rule);
             RaiseLocalEvent(new GameRuleEndedEvent(rule));
         }
 
@@ -90,8 +92,7 @@ namespace Content.Server.GameTicking
 
         public void ClearGameRules()
         {
-            _addedGameRules.Clear();
-            foreach (var rule in _startedGameRules.ToArray())
+            foreach (var rule in _addedGameRules.ToArray())
             {
                 EndGameRule(rule);
             }
