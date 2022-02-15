@@ -124,5 +124,20 @@ namespace Content.Server.Power.NodeGroups
             Chargers.Remove(charger);
             _powerNetSystem.QueueReconnectPowerNet(this);
         }
+
+        public override string? GetDebugData()
+        {
+            // This is just recycling the multi-tool examine.
+            var ps = _powerNetSystem.GetNetworkStatistics(NetworkNode);
+
+            float storageRatio = ps.InStorageCurrent / Math.Max(ps.InStorageMax, 1.0f);
+            float outStorageRatio = ps.OutStorageCurrent / Math.Max(ps.OutStorageMax, 1.0f);
+            return @$"Current Supply: {ps.SupplyCurrent:G3}
+From Batteries: {ps.SupplyBatteries:G3}
+Theoretical Supply: {ps.SupplyTheoretical:G3}
+Ideal Consumption: {ps.Consumption:G3}
+Input Storage: {ps.InStorageCurrent:G3} / {ps.InStorageMax:G3} ({storageRatio:P1})
+Output Storage: {ps.OutStorageCurrent:G3} / {ps.OutStorageMax:G3} ({outStorageRatio:P1})";
+        }
     }
 }
