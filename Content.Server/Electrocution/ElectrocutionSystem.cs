@@ -8,7 +8,6 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
-using Content.Server.Window;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
@@ -21,6 +20,7 @@ using Content.Shared.Pulling.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
+using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -123,7 +123,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnBump)
                 return;
 
-            TryDoElectrifiedAct(uid, args.OtherFixture.Body.Owner, electrified);
+            TryDoElectrifiedAct(uid, args.OtherFixture.Body.Owner, 1, electrified);
         }
 
         private void OnElectrifiedAttacked(EntityUid uid, ElectrifiedComponent electrified, AttackedEvent args)
@@ -131,7 +131,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnAttacked)
                 return;
 
-            TryDoElectrifiedAct(uid, args.User, electrified);
+            TryDoElectrifiedAct(uid, args.User, 1, electrified);
         }
 
         private void OnElectrifiedHandInteract(EntityUid uid, ElectrifiedComponent electrified, InteractHandEvent args)
@@ -139,7 +139,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnHandInteract)
                 return;
 
-            TryDoElectrifiedAct(uid, args.User, electrified);
+            TryDoElectrifiedAct(uid, args.User, 1, electrified);
         }
 
         private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
@@ -147,10 +147,15 @@ namespace Content.Server.Electrocution
             if (!electrified.OnInteractUsing)
                 return;
 
-            TryDoElectrifiedAct(uid, args.User, electrified);
+            var siemens = TryComp(args.Used, out InsulatedComponent? insulation)
+                ? insulation.SiemensCoefficient
+                : 1;
+
+            TryDoElectrifiedAct(uid, args.User, siemens, electrified);
         }
 
         public bool TryDoElectrifiedAct(EntityUid uid, EntityUid targetUid,
+            float siemens = 1,
             ElectrifiedComponent? electrified = null,
             NodeContainerComponent? nodeContainer = null,
             TransformComponent? transform = null)
@@ -161,17 +166,19 @@ namespace Content.Server.Electrocution
             if (!electrified.Enabled)
                 return false;
 
+            var tagSystem = EntitySystem.Get<TagSystem>();
+
             if (electrified.NoWindowInTile)
             {
                 foreach (var entity in transform.Coordinates.GetEntitiesInTile(
                     LookupFlags.Approximate | LookupFlags.IncludeAnchored, _entityLookup))
                 {
-                    if (EntityManager.HasComponent<WindowComponent>(entity))
+                    if (tagSystem.HasTag(entity, "Window"))
                         return false;
                 }
             }
 
-            var siemens = electrified.SiemensCoefficient;
+            siemens *= electrified.SiemensCoefficient;
             if (!DoCommonElectrocutionAttempt(targetUid, uid, ref siemens) || siemens <= 0)
                 return false; // If electrocution would fail, do nothing.
 

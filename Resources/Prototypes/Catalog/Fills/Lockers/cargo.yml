@@ -1,0 +1,20 @@
+- type: entity
+  id: LockerSalvageSpecialistFilled
+  suffix: Filled
+  parent: LockerSalvageSpecialist
+  components:
+  - type: StorageFill
+    contents:
+# Should be moved to a suit storage unit when/if they are added.
+      - id: ClothingOuterHardsuitSalvage
+      - id: YellowOxygenTank
+      - id: ClothingShoesBootsMag
+      - id: ClothingHeadHelmetHardsuitSalvage
+      - id: ClothingMaskGas
+# Currently do not function as 'true' mesons, so they're useless for salvagers.
+#      - id: ClothingEyesGlassesMeson
+      - id: ClothingBeltUtilityFilled
+      - id: FlashlightSeclite
+      - id: SurvivalKnife
+
+

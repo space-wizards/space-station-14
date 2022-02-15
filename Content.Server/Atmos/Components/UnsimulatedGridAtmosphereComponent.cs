@@ -12,8 +12,6 @@ namespace Content.Server.Atmos.Components
     [Serializable]
     public class UnsimulatedGridAtmosphereComponent : GridAtmosphereComponent
     {
-        public override string Name => "UnsimulatedGridAtmosphere";
-
         public override bool Simulated => false;
     }
 }

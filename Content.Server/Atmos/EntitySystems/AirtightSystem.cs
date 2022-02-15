@@ -14,7 +14,6 @@ namespace Content.Server.Atmos.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly SpreaderSystem _spreaderSystem = default!;
 
         public override void Initialize()
         {
@@ -52,9 +51,6 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             SetAirblocked(airtight, false, xform);
-
-            InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum);
-            RaiseLocalEvent(new AirtightChanged(airtight));
         }
 
         private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent airtight, ref AnchorStateChangedEvent args)

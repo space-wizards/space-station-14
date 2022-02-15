@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.EntitySystems;
@@ -11,6 +12,7 @@ using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -18,6 +20,8 @@ namespace Content.Server.Tools
 {
     public partial class ToolSystem : EntitySystem
     {
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -30,6 +34,7 @@ namespace Content.Server.Tools
         {
             base.Initialize();
 
+            InitializeTilePrying();
             InitializeWelders();
             InitializeMultipleTools();
 
@@ -41,15 +46,27 @@ namespace Content.Server.Tools
         {
             // Actually finish the tool use! Depending on whether that succeeds or not, either event will be broadcast.
             if(ToolFinishUse(ev.Uid, ev.UserUid, ev.Fuel))
-                RaiseLocalEvent(ev.CompletedEvent);
+            {
+                if (ev.EventTarget != null)
+                    RaiseLocalEvent(ev.EventTarget.Value, ev.CompletedEvent, false);
+                else
+                    RaiseLocalEvent(ev.CompletedEvent);
+            }
             else if(ev.CancelledEvent != null)
-                RaiseLocalEvent(ev.CancelledEvent);
+            {
+                if (ev.EventTarget != null)
+                    RaiseLocalEvent(ev.EventTarget.Value, ev.CancelledEvent, false);
+                else
+                    RaiseLocalEvent(ev.CancelledEvent);
+            }
         }
 
         private void OnDoAfterCancelled(ToolDoAfterCancelled ev)
         {
-            // Broadcast wrapped event.
-            RaiseLocalEvent(ev.Event);
+            if (ev.EventTarget != null)
+                RaiseLocalEvent(ev.EventTarget.Value, ev.Event, false);
+            else
+                RaiseLocalEvent(ev.Event);
         }
 
         /// <summary>
@@ -77,18 +94,29 @@ namespace Content.Server.Tools
         /// <param name="fuel">An optional amount of fuel or energy to consume-</param>
         /// <param name="doAfterDelay">A doAfter delay in seconds.</param>
         /// <param name="toolQualitiesNeeded">The tool qualities needed to use the tool.</param>
-        /// <param name="doAfterCompleteEvent">An event to broadcast once the doAfter is completed successfully.</param>
-        /// <param name="doAfterCancelledEvent">An event to broadcast once the doAfter is cancelled.</param>
+        /// <param name="doAfterCompleteEvent">An event to raise once the doAfter is completed successfully.</param>
+        /// <param name="doAfterCancelledEvent">An event to raise once the doAfter is canceled.</param>
+        /// <param name="doAfterEventTarget">Where to direct the do-after events. If null, events are broadcast</param>
         /// <param name="doAfterCheck">An optional check to perform for the doAfter.</param>
         /// <param name="toolComponent">The tool component.</param>
+        /// <param name="cancelToken">Token to provide to do_after for cancelling</param>
         /// <returns>Whether initially, using the tool succeeded. If there's a doAfter delay, you'll need to listen to
         ///          the <see cref="doAfterCompleteEvent"/> and <see cref="doAfterCancelledEvent"/> being broadcast
         ///          to see whether using the tool succeeded or not. If the <see cref="doAfterDelay"/> is zero,
         ///          this simply returns whether using the tool succeeded or not.</returns>
-        public bool UseTool(EntityUid tool, EntityUid user, EntityUid? target, float fuel,
-            float doAfterDelay, IEnumerable<string> toolQualitiesNeeded,
-            object? doAfterCompleteEvent = null, object? doAfterCancelledEvent = null,
-            Func<bool>? doAfterCheck = null, ToolComponent? toolComponent = null)
+        public bool UseTool(
+            EntityUid tool,
+            EntityUid user,
+            EntityUid? target,
+            float fuel,
+            float doAfterDelay,
+            IEnumerable<string> toolQualitiesNeeded,
+            object? doAfterCompleteEvent = null,
+            object? doAfterCancelledEvent = null,
+            EntityUid? doAfterEventTarget = null,
+            Func<bool>? doAfterCheck = null,
+            ToolComponent? toolComponent = null,
+            CancellationToken? cancelToken = null)
         {
             // No logging here, after all that'd mean the caller would need to check if the component is there or not.
             if (!Resolve(tool, ref toolComponent, false))
@@ -99,7 +127,7 @@ namespace Content.Server.Tools
 
             if (doAfterDelay > 0f)
             {
-                var doAfterArgs = new DoAfterEventArgs(user, doAfterDelay / toolComponent.SpeedModifier, default, target)
+                var doAfterArgs = new DoAfterEventArgs(user, doAfterDelay / toolComponent.SpeedModifier, cancelToken ?? default, target)
                 {
                     ExtraCheck = doAfterCheck,
                     BreakOnDamage = true,
@@ -107,8 +135,8 @@ namespace Content.Server.Tools
                     BreakOnTargetMove = true,
                     BreakOnUserMove = true,
                     NeedHand = true,
-                    BroadcastFinishedEvent = doAfterCompleteEvent != null ? new ToolDoAfterComplete(doAfterCompleteEvent, doAfterCancelledEvent, tool, user, fuel) : null,
-                    BroadcastCancelledEvent = doAfterCancelledEvent != null ? new ToolDoAfterCancelled(doAfterCancelledEvent) : null,
+                    BroadcastFinishedEvent = doAfterCompleteEvent != null ? new ToolDoAfterComplete(doAfterCompleteEvent, doAfterCancelledEvent, tool, user, fuel, doAfterEventTarget) : null,
+                    BroadcastCancelledEvent = doAfterCancelledEvent != null ? new ToolDoAfterCancelled(doAfterCancelledEvent, doAfterEventTarget) : null,
                 };
 
                 _doAfterSystem.DoAfter(doAfterArgs);
@@ -121,11 +149,11 @@ namespace Content.Server.Tools
         // This is hilariously long.
         /// <inheritdoc cref="UseTool(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,System.Nullable{Robust.Shared.GameObjects.EntityUid},float,float,System.Collections.Generic.IEnumerable{string},Robust.Shared.GameObjects.EntityUid,object,object,System.Func{bool}?,Content.Server.Tools.Components.ToolComponent?)"/>
         public bool UseTool(EntityUid tool, EntityUid user, EntityUid? target, float fuel,
-            float doAfterDelay, string toolQualityNeeded, object doAfterCompleteEvent, object doAfterCancelledEvent,
+            float doAfterDelay, string toolQualityNeeded, object doAfterCompleteEvent, object doAfterCancelledEvent, EntityUid? doAfterEventTarget = null,
             Func<bool>? doAfterCheck = null, ToolComponent? toolComponent = null)
         {
             return UseTool(tool, user, target, fuel, doAfterDelay, new[] { toolQualityNeeded },
-                doAfterCompleteEvent, doAfterCancelledEvent, doAfterCheck, toolComponent);
+                doAfterCompleteEvent, doAfterCancelledEvent, doAfterEventTarget, doAfterCheck, toolComponent);
         }
 
         /// <summary>
@@ -239,24 +267,28 @@ namespace Content.Server.Tools
             public readonly EntityUid Uid;
             public readonly EntityUid UserUid;
             public readonly float Fuel;
+            public readonly EntityUid? EventTarget;
 
-            public ToolDoAfterComplete(object completedEvent, object? cancelledEvent, EntityUid uid, EntityUid userUid, float fuel)
+            public ToolDoAfterComplete(object completedEvent, object? cancelledEvent, EntityUid uid, EntityUid userUid, float fuel, EntityUid? eventTarget = null)
             {
                 CompletedEvent = completedEvent;
                 Uid = uid;
                 UserUid = userUid;
                 Fuel = fuel;
                 CancelledEvent = cancelledEvent;
+                EventTarget = eventTarget;
             }
         }
 
         private class ToolDoAfterCancelled : EntityEventArgs
         {
             public readonly object Event;
+            public readonly EntityUid? EventTarget;
 
-            public ToolDoAfterCancelled(object @event)
+            public ToolDoAfterCancelled(object @event, EntityUid? eventTarget = null)
             {
                 Event = @event;
+                EventTarget = eventTarget;
             }
         }
     }

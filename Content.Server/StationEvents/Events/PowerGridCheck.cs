@@ -1,11 +1,7 @@
-using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Power.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Timer = Robust.Shared.Timing.Timer;
@@ -68,7 +64,7 @@ namespace Content.Server.StationEvents.Events
             _announceCancelToken = new CancellationTokenSource();
             Timer.Spawn(3000, () =>
             {
-                SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/power_on.ogg");
+                SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/power_on.ogg", AudioParams);
             }, _announceCancelToken.Token);
             _powered.Clear();
 

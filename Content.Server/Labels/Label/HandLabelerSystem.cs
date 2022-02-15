@@ -34,7 +34,7 @@ namespace Content.Server.Labels
 
         private void AfterInteractOn(EntityUid uid, HandLabelerComponent handLabeler, AfterInteractEvent args)
         {
-            if (args.Target is not {Valid: true} target || !handLabeler.Whitelist.IsValid(target))
+            if (args.Target is not {Valid: true} target || !handLabeler.Whitelist.IsValid(target) || !args.CanReach)
                 return;
 
             AddLabelTo(uid, handLabeler, target, out string? result);

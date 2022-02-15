@@ -87,12 +87,16 @@
       amount: 15
     - id: Pen
       amount: 2
+    - id: HandLabeler
+    - id: BoxFolderBlue
+    - id: BoxFolderRed
+    - id: BoxFolderYellow
 
 - type: entity
   id: CrateServicePersonnel
   name: personnel crate
   description: Contains a box of blank ID cards and PDAs.
-  parent: CrateGenericSteel
+  parent: CrateCommandSecure
   components:
   - type: StorageFill
     contents:

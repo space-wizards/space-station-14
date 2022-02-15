@@ -1,0 +1,50 @@
+- type: entity
+  id: PartSilicon
+  parent: BaseItem
+  name: "silicon body part"
+  abstract: true
+  components:
+  - type: Damageable
+    damageContainer: Inorganic
+
+- type: entity
+  id: LeftHandDrone
+  name: "left drone hand"
+  parent: PartSilicon
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Silicon/drone.rsi
+    state: "l_hand"
+  - type: Icon
+    sprite: Mobs/Silicon/drone.rsi
+    state: "l_hand"
+  - type: BodyPart
+    partType: Hand
+    size: 3
+    compatibility: Biological ##Does this do anything? Revisit when surgery is in
+    symmetry: Left
+  - type: Tag
+    tags:
+    - Trash
+
+- type: entity
+  id: RightHandDrone
+  name: "right drone hand"
+  parent: PartSilicon
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Silicon/drone.rsi
+    state: "r_hand"
+  - type: Icon
+    sprite: Mobs/Silicon/drone.rsi
+    state: "r_hand"
+  - type: BodyPart
+    partType: Hand
+    size: 3
+    compatibility: Biological
+    symmetry: Right
+  - type: Tag
+    tags:
+    - Trash

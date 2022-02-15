@@ -14,8 +14,6 @@ namespace Content.Server.Destructible
     [RegisterComponent]
     public class DestructibleComponent : Component
     {
-        public override string Name => "Destructible";
-
         [ViewVariables]
         [DataField("thresholds")]
         public List<DamageThreshold> Thresholds = new();

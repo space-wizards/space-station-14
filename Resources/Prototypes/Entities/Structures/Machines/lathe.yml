@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
+    netsync: false
     layers:
     - state: icon
       map: ["enum.AutolatheVisualLayers.Base"]
@@ -32,7 +33,7 @@
       - Opaque
       - MobImpassable
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -84,6 +85,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/protolathe.rsi
+    netsync: false
     layers:
     - state: icon
       map: ["enum.ProtolatheVisualLayers.Base"]
@@ -111,7 +113,7 @@
       - MobImpassable
   - type: ResearchClient
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -147,6 +149,7 @@
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
       - Shovel
+      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
@@ -159,6 +162,7 @@
       - Dropper
       - Syringe
       - PillCanister
+      - Drone
       - Flash
       - Handcuffs
       - Stunbaton
@@ -166,6 +170,12 @@
       - ShellShotgun
       - CartridgeLRifle
       - CartridgeMagnum
+      - ShellShotgunBeanbag
+      - CartridgePistolRubber
+      - CartridgeMagnumRubber
+      - CartridgeClRifleRubber
+      - CartridgeLRifleRubber
+      - CartridgeSRifleRubber
       - MicroManipulatorStockPart
       - ScanningModuleStockPart
       - MicroLaserStockPart
@@ -174,21 +184,8 @@
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
-      - SMESMachineCircuitboard
-      - SubstationMachineCircuitboard
       - AirAlarmElectronics
       - FireAlarmElectronics
-      - CloningPodMachineCircuitboard
-      - MedicalScannerMachineCircuitboard
-      - ChemMasterMachineCircuitboard
-      - ChemDispenserMachineCircuitboard
-      - HydroponicsTrayMachineCircuitboard
-      - SolarControlComputerCircuitboard
-      - AutolatheMachineCircuitboard
-      - ProtolatheMachineCircuitboard
-      - KitchenReagentGrinderMachineCircuitboard
-      - CrewMonitoringComputerCircuitboard
-      - ShuttleConsoleCircuitboard
       - Bucket
       - MopItem
       - SprayBottle
@@ -210,3 +207,43 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+
+- type: entity
+  parent: Protolathe
+  id: CircuitImprinter
+  name: Circuit Imprinter
+  description: Prints circuit boards for machines.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/circuit_imprinter.rsi
+    layers:
+    - state: icon
+      map: ["enum.ProtolatheVisualLayers.Base"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
+    - state: icon
+      map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: ProtolatheDatabase
+    protolatherecipes:
+      - SMESMachineCircuitboard
+      - SubstationMachineCircuitboard
+      - CloningPodMachineCircuitboard
+      - MedicalScannerMachineCircuitboard
+      - ChemMasterMachineCircuitboard
+      - ChemDispenserMachineCircuitboard
+      - HydroponicsTrayMachineCircuitboard
+      - SolarControlComputerCircuitboard
+      - AutolatheMachineCircuitboard
+      - ProtolatheMachineCircuitboard
+      - KitchenReagentGrinderMachineCircuitboard
+      - CrewMonitoringComputerCircuitboard
+      - ShuttleConsoleCircuitboard
+      - CircuitImprinterMachineCircuitboard
+      - DawInstrumentMachineCircuitboard
+  - type: Machine
+    board: CircuitImprinterMachineCircuitboard
+

@@ -6,8 +6,6 @@ namespace Content.Shared.Research.Components
 {
     public class SharedResearchClientComponent : Component
     {
-        public override string Name => "ResearchClient";
-
         /// <summary>
         ///     Request that the server updates the client.
         /// </summary>

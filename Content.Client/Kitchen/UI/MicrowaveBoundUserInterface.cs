@@ -42,11 +42,6 @@ namespace Content.Client.Kitchen.UI
                 SendMessage(new MicrowaveEjectSolidIndexedMessage(_solids[args.ItemIndex]));
             };
 
-            _menu.IngredientsListReagents.OnItemSelected += args =>
-            {
-                SendMessage(new MicrowaveVaporizeReagentIndexedMessage(_reagents[args.ItemIndex]));
-            };
-
             _menu.OnCookTimeSelected += (args,buttonIndex) =>
             {
                 var actualButton = (MicrowaveMenu.MicrowaveCookTimeButton) args.Button ;
@@ -77,7 +72,7 @@ namespace Content.Client.Kitchen.UI
             }
 
             _menu?.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy);
-            RefreshContentsDisplay(cState.ReagentQuantities, cState.ContainedSolids);
+            RefreshContentsDisplay(cState.ContainedSolids);
 
             if (_menu == null) return;
 
@@ -90,21 +85,11 @@ namespace Content.Client.Kitchen.UI
                                                          ("time", cookTime));
         }
 
-        private void RefreshContentsDisplay(Solution.ReagentQuantity[] reagents, EntityUid[] containedSolids)
+        private void RefreshContentsDisplay(EntityUid[] containedSolids)
         {
             _reagents.Clear();
 
             if (_menu == null) return;
-
-            _menu.IngredientsListReagents.Clear();
-            for (var i = 0; i < reagents.Length; i++)
-            {
-                if (!_prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype? proto)) continue;
-
-                var reagentAdded = _menu.IngredientsListReagents.AddItem($"{reagents[i].Quantity} {proto.Name}");
-                var reagentIndex = _menu.IngredientsListReagents.IndexOf(reagentAdded);
-                _reagents.Add(reagentIndex, reagents[i]);
-            }
 
             _solids.Clear();
             _menu.IngredientsList.Clear();

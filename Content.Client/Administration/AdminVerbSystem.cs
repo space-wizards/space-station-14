@@ -12,14 +12,14 @@ namespace Content.Client.Verbs
     class AdminVerbSystem : EntitySystem
     {
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
-        [Dependency] private readonly IViewVariablesManager _viewVariablesManager = default!;
+        [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddAdminVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddAdminVerbs);
         }
 
-        private void AddAdminVerbs(GetOtherVerbsEvent args)
+        private void AddAdminVerbs(GetVerbsEvent<Verb> args)
         {
             // Currently this is only the ViewVariables verb, but more admin-UI related verbs can be added here.
 
@@ -30,7 +30,7 @@ namespace Content.Client.Verbs
                 verb.Category = VerbCategory.Debug;
                 verb.Text = "View Variables";
                 verb.IconTexture = "/Textures/Interface/VerbIcons/vv.svg.192dpi.png";
-                verb.Act = () => _viewVariablesManager.OpenVV(args.Target);
+                verb.Act = () => _clientConsoleHost.ExecuteCommand($"vv {args.Target}");
                 verb.ClientExclusive = true; // opening VV window is client-side. Don't ask server to run this verb.
                 args.Verbs.Add(verb);
             }
