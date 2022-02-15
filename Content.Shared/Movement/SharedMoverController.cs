@@ -4,6 +4,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Friction;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
@@ -25,8 +26,9 @@ namespace Content.Shared.Movement
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        [Dependency] private ActionBlockerSystem _blocker = default!;
+        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedWeightlessSystem _weightless = default!;
 
         private bool _relativeMovement;
 
@@ -40,7 +42,7 @@ namespace Content.Shared.Movement
             base.Initialize();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
-            UpdatesBefore.Add(typeof(SharedTileFrictionController));
+            UpdatesBefore.Add(typeof(TileFrictionController));
         }
 
         private void SetRelativeMovement(bool value) => _relativeMovement = value;
@@ -109,7 +111,7 @@ namespace Content.Shared.Movement
             }
 
             UsedMobMovement[mover.Owner] = true;
-            var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: EntityManager);
+            var weightless = _weightless.IsWeightless(mover.Owner, physicsComponent, xform);
             var (walkDir, sprintDir) = mover.VelocityDir;
 
             // Handle wall-pushes.
@@ -168,7 +170,7 @@ namespace Content.Shared.Movement
                    EntityManager.HasComponent<MobStateComponent>(body.Owner) &&
                    // If we're being pulled then don't mess with our velocity.
                    (!EntityManager.TryGetComponent(body.Owner, out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
-                   _blocker.CanMove((body).Owner);
+                   _blocker.CanMove(body.Owner);
         }
 
         /// <summary>

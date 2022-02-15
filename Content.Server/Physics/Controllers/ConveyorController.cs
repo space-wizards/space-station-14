@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.Conveyor;
 using Content.Shared.Conveyor;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -19,6 +20,7 @@ namespace Content.Server.Physics.Controllers
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ConveyorSystem _conveyor = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly SharedWeightlessSystem _weightless = default!;
 
         public override void Initialize()
         {
@@ -105,6 +107,7 @@ namespace Content.Server.Physics.Controllers
             if (!_mapManager.TryGetGrid(xform.GridID, out var grid) ||
                 !grid.TryGetTileRef(xform.Coordinates, out var tile)) yield break;
 
+            // TODO: Use EntityQuery here.
             var tileAABB = _lookup.GetLocalBounds(tile, grid.TileSize).Enlarged(0.01f);
             var gridMatrix = Transform(grid.GridEntityId).InvWorldMatrix;
 
@@ -116,20 +119,18 @@ namespace Content.Server.Physics.Controllers
 
                 if (!TryComp(entity, out PhysicsComponent? physics) ||
                     physics.BodyType == BodyType.Static ||
-                    physics.BodyStatus == BodyStatus.InAir ||
-                    entity.IsWeightless(physics, entityManager: EntityManager))
+                    physics.BodyStatus == BodyStatus.InAir)
                 {
                     continue;
                 }
 
-                if (_container.IsEntityInContainer(entity))
-                {
-                    continue;
-                }
+                var transform = Transform(entity);
+
+                if (_weightless.IsWeightless(entity, physics, transform) ||
+                    _container.IsEntityInContainer(entity, transform)) continue;
 
                 // Yes there's still going to be the occasional rounding issue where it stops getting conveyed
                 // When you fix the corner issue that will fix this anyway.
-                var transform = Transform(entity);
                 var gridPos = gridMatrix.Transform(transform.WorldPosition);
                 var gridAABB = new Box2(gridPos - 0.1f, gridPos + 0.1f);
 

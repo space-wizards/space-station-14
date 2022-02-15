@@ -1,11 +1,8 @@
-using System;
 using Content.Shared.CCVar;
 using Content.Shared.Movement;
-using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
@@ -13,20 +10,18 @@ using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Shared.Friction
 {
-    public abstract class SharedTileFrictionController : VirtualController
+    public sealed class TileFrictionController : VirtualController
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-
-        protected SharedMoverController Mover = default!;
+        [Dependency] private readonly SharedMoverController _mover = default!;
+        [Dependency] private readonly SharedWeightlessSystem _weightless = default!;
 
         private float _stopSpeed;
         private float _frictionModifier;
 
         public override void Initialize()
         {
-            base.Initialize();
-
             var configManager = IoCManager.Resolve<IConfigurationManager>();
 
             configManager.OnValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier, true);
@@ -39,7 +34,6 @@ namespace Content.Shared.Friction
 
         public override void Shutdown()
         {
-            base.Shutdown();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
 
             configManager.UnsubValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier);
@@ -56,10 +50,10 @@ namespace Content.Shared.Friction
                 if (body.Deleted ||
                     prediction && !body.Predict ||
                     body.BodyStatus == BodyStatus.InAir ||
-                    Mover.UseMobMovement(body.Owner)) continue;
+                    _mover.UseMobMovement(body.Owner)) continue;
 
                 var surfaceFriction = GetTileFriction(body);
-                var bodyModifier = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedTileFrictionModifier>(body.Owner)?.Modifier ?? 1.0f;
+                var bodyModifier = EntityManager.GetComponentOrNull<SharedTileFrictionModifier>(body.Owner)?.Modifier ?? 1.0f;
                 var friction = _frictionModifier * surfaceFriction * bodyModifier;
 
                 ReduceLinearVelocity(prediction, body, friction, frameTime);
@@ -132,18 +126,19 @@ namespace Content.Shared.Friction
         [Pure]
         private float GetTileFriction(PhysicsComponent body)
         {
-            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(body.Owner);
-            var coords = transform.Coordinates;
+            if (!TryComp<TransformComponent>(body.Owner, out var xform)) return 0f;
 
             // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
             if (body.BodyStatus == BodyStatus.InAir ||
-                body.Owner.IsWeightless(body, coords, _mapManager) ||
-                !_mapManager.TryGetGrid(transform.GridID, out var grid))
+                _weightless.IsWeightless(body.Owner, body, xform) ||
+                !_mapManager.TryGetGrid(xform.GridID, out var grid))
                 return 0.0f;
 
-            if (!coords.IsValid(EntityManager)) return 0.0f;
+            var coordinates = xform.Coordinates;
 
-            var tile = grid.GetTileRef(coords);
+            if (!coordinates.IsValid(EntityManager)) return 0.0f;
+
+            var tile = grid.GetTileRef(coordinates);
             var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
             return tileDef.Friction;
         }
