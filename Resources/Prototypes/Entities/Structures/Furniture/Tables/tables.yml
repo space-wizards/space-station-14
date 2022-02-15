@@ -333,7 +333,7 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/Tables/baccarat.rsi
-    state: baccarat2
+    state: baccarat3
   - type: Icon
     sprite: Structures/Furniture/Tables/baccarat.rsi
   - type: TabletopGame
