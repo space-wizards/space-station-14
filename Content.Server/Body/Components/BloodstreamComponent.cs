@@ -12,6 +12,7 @@ namespace Content.Server.Body.Components
     {
         public static string DefaultChemicalsSolutionName = "chemicals";
         public static string DefaultBloodSolutionName = "bloodstream";
+        public static string DefaultBloodTemporarySolutionName = "bloodstreamTemporary";
 
         public float AccumulatedFrametime = 0.0f;
 
@@ -32,14 +33,24 @@ namespace Content.Server.Body.Components
         ///     How much should bleeding should be reduced every update interval?
         /// </summary>
         [DataField("bleedReductionAmount")]
-        public float BleedReductionAmount = 0.25f;
+        public float BleedReductionAmount = 5.0f;
 
         /// <summary>
-        ///     What percentage of current blood is necessary to stop dealing blood loss damage?
+        ///     What percentage of current blood is necessary to avoid dealing blood loss damage?
         /// </summary>
         [DataField("bloodlossThreshold")]
         public float BloodlossThreshold = 0.9f;
 
+        /// <summary>
+        ///     How much damage is required to make this entity
+        ///     instantly lose some blood?
+        /// </summary>
+        [DataField("instantBleedDamageThreshold")]
+        public FixedPoint2 InstantBleedDamageThreshold = 20f;
+
+        /// <summary>
+        ///     The base bloodloss damage to be incurred if below <see cref="BloodlossThreshold"/>
+        /// </summary>
         [DataField("bloodlossDamage", required: true)]
         public DamageSpecifier BloodlossDamage = default!;
 
@@ -57,10 +68,10 @@ namespace Content.Server.Body.Components
         public float BloodRefreshAmount = 0.2f;
 
         /// <summary>
-        ///     How much blood needs to be removed at once in order to create a puddle?
+        ///     How much blood needs to be in the temporary solution in order to create a puddle?
         /// </summary>
         [DataField("bleedPuddleThreshold")]
-        public FixedPoint2 BleedPuddleThreshold = 2.0f;
+        public FixedPoint2 BleedPuddleThreshold = 10.0f;
 
         /// <summary>
         ///     A modifier set prototype ID corresponding to how damage should be modified
@@ -107,5 +118,13 @@ namespace Content.Server.Body.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public Solution BloodSolution = default!;
+
+        /// <summary>
+        ///     Temporary blood solution.
+        ///     When blood is lost, it goes to this solution, and when this
+        ///     solution hits a certain cap, the blood is actually spilled as a puddle.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Solution BloodTemporarySolution = default!;
     }
 }

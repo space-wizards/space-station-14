@@ -1,12 +1,15 @@
-﻿using Content.Server.Body.Components;
+﻿using System.Linq;
+using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Body.Systems;
 
@@ -16,6 +19,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SpillableSystem _spillableSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
     // TODO here
     // Update over time. Modify bloodloss damage in accordance with (amount of blood / max blood level), and reduce bleeding over time
@@ -27,6 +31,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
         SubscribeLocalEvent<BloodstreamComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<BloodstreamComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<BloodstreamComponent, ExaminedEvent>(OnExamined);
     }
 
     public override void Update(float frameTime)
@@ -48,13 +53,13 @@ public sealed class BloodstreamSystem : EntitySystem
 
             // First, let's refresh their blood if possible.
             if (bloodstream.BloodSolution.CurrentVolume < bloodstream.BloodSolution.MaxVolume)
-                TryModifyBloodLevel(uid, bloodstream.BloodRefreshAmount, false, bloodstream);
+                TryModifyBloodLevel(uid, bloodstream.BloodRefreshAmount, bloodstream);
 
             // Next, let's remove some blood from them according to their bleed level.
             // as well as stop their bleeding to a certain extent.
             if (bloodstream.BleedAmount > 0)
             {
-                TryModifyBloodLevel(uid, (-bloodstream.BleedAmount) / 10, true, bloodstream);
+                TryModifyBloodLevel(uid, (-bloodstream.BleedAmount) / 10, bloodstream);
                 TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
             }
 
@@ -74,9 +79,11 @@ public sealed class BloodstreamSystem : EntitySystem
     {
         component.ChemicalSolution = _solutionContainerSystem.EnsureSolution(uid, BloodstreamComponent.DefaultChemicalsSolutionName);
         component.BloodSolution = _solutionContainerSystem.EnsureSolution(uid, BloodstreamComponent.DefaultBloodSolutionName);
+        component.BloodTemporarySolution = _solutionContainerSystem.EnsureSolution(uid, BloodstreamComponent.DefaultBloodTemporarySolutionName);
 
         component.ChemicalSolution.MaxVolume = component.ChemicalMaxVolume;
         component.BloodSolution.MaxVolume = component.BloodMaxVolume;
+        component.BloodTemporarySolution.MaxVolume = component.BleedPuddleThreshold * 2; // give some leeway
 
         // Fill blood solution with BLOOD
         _solutionContainerSystem.TryAddReagent(uid, component.BloodSolution, component.BloodReagent,
@@ -92,8 +99,28 @@ public sealed class BloodstreamSystem : EntitySystem
         if (!_prototypeManager.TryIndex<DamageModifierSetPrototype>(component.DamageBleedModifiers, out var modifiers))
             return;
 
-        var bloodloss = DamageSpecifier.ApplyModifierSet(args.DamageDelta, modifiers).Total.Float();
-        TryModifyBleedAmount(uid, bloodloss, component);
+        var bloodloss = DamageSpecifier.ApplyModifierSet(args.DamageDelta, modifiers);
+
+        if (bloodloss.Empty)
+            return;
+
+        var total = bloodloss.Total;
+        var totalFloat = total.Float();
+        TryModifyBleedAmount(uid, totalFloat, component);
+
+        if (_robustRandom.Prob(totalFloat / 50))
+        {
+            // This is gonna hurt.
+            TryModifyBloodLevel(uid, (-total) / 5, component);
+        }
+    }
+
+    private void OnExamined(EntityUid uid, BloodstreamComponent component, ExaminedEvent args)
+    {
+        if (GetBloodLevelPercentage(uid, component) < component.BloodlossThreshold)
+        {
+            args.PushMarkup(Loc.GetString("bloodstream-component-looks-pale", ("target", uid)));
+        }
     }
 
     /// <summary>
@@ -118,7 +145,7 @@ public sealed class BloodstreamSystem : EntitySystem
     /// <summary>
     ///     Attempts to modify the blood level of this entity directly.
     /// </summary>
-    public bool TryModifyBloodLevel(EntityUid uid, FixedPoint2 amount, bool makePuddle=false, BloodstreamComponent? component = null)
+    public bool TryModifyBloodLevel(EntityUid uid, FixedPoint2 amount, BloodstreamComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
             return false;
@@ -126,31 +153,31 @@ public sealed class BloodstreamSystem : EntitySystem
         if (amount >= 0)
             return _solutionContainerSystem.TryAddReagent(uid, component.BloodSolution, component.BloodReagent, amount, out _);
 
-        // So we're removing blood, eh?
-        if (makePuddle)
+        // Removal is more involved,
+        // since we also wanna handle moving it to the temporary solution
+        // and then spilling it if necessary.
+        var newSol = component.BloodSolution.SplitSolution(-amount);
+        component.BloodTemporarySolution.AddSolution(newSol);
+
+        if (component.BloodTemporarySolution.MaxVolume > component.BleedPuddleThreshold)
         {
-            var puddleSolution = component.BloodSolution.SplitSolution(-amount);
-            _spillableSystem.SpillAt(uid, puddleSolution, "PuddleSmear", false);
-            return true;
+            _spillableSystem.SpillAt(uid, component.BloodTemporarySolution, "PuddleSmear", false);
+            component.BloodTemporarySolution.RemoveAllSolution();
         }
 
-        return _solutionContainerSystem.TryRemoveReagent(uid, component.BloodSolution, component.BloodReagent, amount);
+        return true;
     }
 
     /// <summary>
     ///     Tries to make an entity bleed more or less
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="amount"></param>
-    /// <param name="component"></param>
-    /// <returns></returns>
     public bool TryModifyBleedAmount(EntityUid uid, float amount, BloodstreamComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
             return false;
 
         component.BleedAmount += amount;
-        Math.Clamp(component.BleedAmount, 0, 100);
+        component.BleedAmount = Math.Clamp(component.BleedAmount, 0, 40);
 
         return true;
     }

@@ -105,6 +105,11 @@
   color: "#434b4d"
   boilingPoint: 2862.0
   meltingPoint: 1538.0
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ModifyBloodLevel
+        scaled: true # scales 1:1 with the amount of iron you consume
 
 - type: reagent
   id: Lithium
