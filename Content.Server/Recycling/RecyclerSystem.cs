@@ -106,7 +106,6 @@ namespace Content.Server.Recycling
                 {
                     Spawn(component.Prototype, xform.Coordinates);
                 }
-
             }
 
             QueueDel(component.Owner);
