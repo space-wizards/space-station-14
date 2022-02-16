@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class ListObjectivesCommand : IConsoleCommand
+    public sealed class ListObjectivesCommand : IConsoleCommand
     {
         public string Command => "lsobjectives";
         public string Description => "Lists all objectives in a players mind.";

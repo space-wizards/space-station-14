@@ -17,9 +17,8 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Extinguisher;
 
-public class FireExtinguisherSystem : EntitySystem
+public sealed class FireExtinguisherSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
 
@@ -143,9 +142,6 @@ public class FireExtinguisherSystem : EntitySystem
         FireExtinguisherComponent? extinguisher = null)
     {
         if (!Resolve(uid, ref extinguisher))
-            return;
-
-        if (!_actionBlockerSystem.CanInteract(user) || !extinguisher.HasSafety)
             return;
 
         extinguisher.Safety = !extinguisher.Safety;

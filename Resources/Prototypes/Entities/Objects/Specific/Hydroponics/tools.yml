@@ -51,6 +51,7 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     state: icon
+    netsync: false
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
@@ -61,7 +62,7 @@
     size: 20
     Slots:
     - back
-    
+
 - type: entity
   name: hatchet
   parent: BaseItem
@@ -75,6 +76,7 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
     state: icon
+    netsync: false
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
@@ -105,3 +107,28 @@
         Piercing: 5 # I guess you can stab it into them?
   - type: Item
     sprite: Objects/Tools/Hydroponics/spade.rsi
+
+- type: entity
+  name: plant bag
+  id: PlantBag
+  parent: BaseItem
+  description: A bag for botanists to easily move their huge harvests.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
+    state: icon
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
+    QuickEquip: false
+    Slots:
+    - belt
+    size: 200
+  - type: Storage
+    capacity: 200
+    quickInsert: true
+    areaInsert: true
+    whitelist:
+      components:
+        - Produce
+        - Seed

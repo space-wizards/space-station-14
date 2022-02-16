@@ -15,7 +15,7 @@ namespace Content.Server.Kitchen.Components
     /// it contained, juice an apple and get "apple juice".
     /// </summary>
     [RegisterComponent]
-    public class ReagentGrinderComponent : SharedReagentGrinderComponent
+    public sealed class ReagentGrinderComponent : SharedReagentGrinderComponent
     {
         [ViewVariables] public ContainerSlot BeakerContainer = default!;
 

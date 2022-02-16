@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Sound
 {
     [TypeSerializer]
-    public class SoundSpecifierTypeSerializer :
+    public sealed class SoundSpecifierTypeSerializer :
         ITypeReader<SoundSpecifier, MappingDataNode>,
         ITypeReader<SoundSpecifier, ValueDataNode>
     {

@@ -15,7 +15,7 @@ namespace Content.Server.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyComponent))]
-    public class BodyComponent : SharedBodyComponent
+    public sealed class BodyComponent : SharedBodyComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

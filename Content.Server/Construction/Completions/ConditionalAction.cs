@@ -8,7 +8,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class ConditionalAction : IGraphAction
+    public sealed class ConditionalAction : IGraphAction
     {
         [DataField("passUser")] public bool PassUser { get; } = false;
 

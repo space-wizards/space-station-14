@@ -96,6 +96,14 @@
       ]
     },
     {
+      "name": "atmos_tritium",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "atmos_waste",
       "delays": [
         [

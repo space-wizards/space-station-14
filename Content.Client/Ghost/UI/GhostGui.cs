@@ -10,7 +10,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Ghost.UI
 {
-    public class GhostGui : Control
+    public sealed class GhostGui : Control
     {
         private readonly Button _returnToBody = new() {Text = Loc.GetString("ghost-gui-return-to-body-button") };
         private readonly Button _ghostWarp = new() {Text = Loc.GetString("ghost-gui-ghost-warp-button") };

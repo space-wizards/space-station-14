@@ -13,7 +13,7 @@ namespace Content.Server.Power.Components
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(CableSystem))]
-    public class CableComponent : Component
+    public sealed class CableComponent : Component
     {
         [DataField("cableDroppedOnCutPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public readonly string CableDroppedOnCutPrototype = "CableHVStack1";

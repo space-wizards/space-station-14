@@ -12,7 +12,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.Ghost.UI
 {
     [GenerateTypedNameReferences]
-    public partial class GhostTargetWindow : DefaultWindow
+    public sealed partial class GhostTargetWindow : DefaultWindow
     {
         private readonly IEntityNetworkManager _netManager;
 

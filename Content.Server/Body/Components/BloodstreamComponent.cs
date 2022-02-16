@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Body.Components
 {
     [RegisterComponent, Friend(typeof(BloodstreamSystem))]
-    public class BloodstreamComponent : Component
+    public sealed class BloodstreamComponent : Component
     {
         /// <summary>
         ///     Max volume of internal solution storage

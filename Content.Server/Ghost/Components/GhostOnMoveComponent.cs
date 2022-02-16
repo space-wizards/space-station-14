@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Ghost.Components
 {
     [RegisterComponent]
-    public class GhostOnMoveComponent : Component
+    public sealed class GhostOnMoveComponent : Component
     {
         [DataField("canReturn")] public bool CanReturn { get; set; } = true;
 

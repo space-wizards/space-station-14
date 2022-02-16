@@ -9,7 +9,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
-    public partial class SolutionContainerSystem
+    public sealed partial class SolutionContainerSystem
     {
         public void Refill(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
             RefillableSolutionComponent? refillableSolution = null)

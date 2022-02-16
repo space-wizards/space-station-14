@@ -7,7 +7,7 @@ namespace Content.Server.Extinguisher;
 
 [RegisterComponent]
 [Friend(typeof(FireExtinguisherSystem))]
-public class FireExtinguisherComponent : Component
+public sealed class FireExtinguisherComponent : Component
 {
     [DataField("refillSound")] public SoundSpecifier RefillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
 

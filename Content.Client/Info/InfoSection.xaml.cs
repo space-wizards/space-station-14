@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Info;
 
 [GenerateTypedNameReferences]
-public partial class InfoSection : BoxContainer
+public sealed partial class InfoSection : BoxContainer
 {
     public InfoSection(string title, string text, bool markup = false)
     {

@@ -2,7 +2,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.MachineLinking.Events
 {
-    public class InvokePortEvent : EntityEventArgs
+    public sealed class InvokePortEvent : EntityEventArgs
     {
         public readonly string Port;
         public readonly object? Value;

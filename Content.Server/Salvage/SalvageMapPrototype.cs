@@ -10,7 +10,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Salvage
 {
     [Prototype("salvageMap")]
-    public class SalvageMapPrototype : IPrototype
+    public sealed class SalvageMapPrototype : IPrototype
     {
         [ViewVariables]
         [DataField("id", required: true)]

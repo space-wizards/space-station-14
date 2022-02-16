@@ -8,7 +8,7 @@ namespace Content.Client.Singularity.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedContainmentFieldComponent))]
-    public class ContainmentFieldComponent : SharedContainmentFieldComponent
+    public sealed class ContainmentFieldComponent : SharedContainmentFieldComponent
     {
         // Jesus what is this code.
         // Singulo cleanup WHEEENNN

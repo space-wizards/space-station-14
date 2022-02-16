@@ -8,7 +8,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Decals.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    public class RemoveDecalCommand : IConsoleCommand
+    public sealed class RemoveDecalCommand : IConsoleCommand
     {
         public string Command => "rmdecal";
         public string Description => "removes a decal";

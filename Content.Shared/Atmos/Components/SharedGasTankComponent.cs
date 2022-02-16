@@ -11,18 +11,18 @@ namespace Content.Shared.Atmos.Components
     }
 
     [Serializable, NetSerializable]
-    public class GasTankToggleInternalsMessage : BoundUserInterfaceMessage
+    public sealed class GasTankToggleInternalsMessage : BoundUserInterfaceMessage
     {
     }
 
     [Serializable, NetSerializable]
-    public class GasTankSetPressureMessage : BoundUserInterfaceMessage
+    public sealed class GasTankSetPressureMessage : BoundUserInterfaceMessage
     {
         public float Pressure { get; set; }
     }
 
     [Serializable, NetSerializable]
-    public class GasTankBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class GasTankBoundUserInterfaceState : BoundUserInterfaceState
     {
         public float TankPressure { get; set; }
         public float? OutputPressure { get; set; }

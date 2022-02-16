@@ -11,7 +11,7 @@ namespace Content.Server.Actions.Actions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class CombatMode : IToggleAction
+    public sealed class CombatMode : IToggleAction
     {
         public bool DoToggleAction(ToggleActionEventArgs args)
         {

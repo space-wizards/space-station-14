@@ -22,7 +22,7 @@ namespace Content.Shared.Chemistry.Components
     /// </summary>
     [Serializable, NetSerializable]
     [DataDefinition]
-    public partial class Solution : IEnumerable<Solution.ReagentQuantity>, ISerializationHooks
+    public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, ISerializationHooks
     {
         // Most objects on the station hold only 1 or 2 reagents
         [ViewVariables]

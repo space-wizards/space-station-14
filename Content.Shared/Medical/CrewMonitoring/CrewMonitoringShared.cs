@@ -15,7 +15,7 @@ namespace Content.Shared.Medical.CrewMonitoring
     }
 
     [Serializable, NetSerializable]
-    public class CrewMonitoringState : BoundUserInterfaceState
+    public sealed class CrewMonitoringState : BoundUserInterfaceState
     {
         public List<SuitSensorStatus> Sensors;
 

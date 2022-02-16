@@ -256,7 +256,7 @@ namespace Content.Client.Inventory
                                 if (e.Function != EngineKeyFunctions.UIClick &&
                                     e.Function != ContentKeyFunctions.ActivateItemInWorld)
                                     return;
-                                RaiseNetworkEvent(new OpenSlotStorageNetworkMessage(entityUid, definition.Name));
+                                RaiseNetworkEvent(new OpenSlotStorageNetworkMessage(definition.Name));
                             }
                         };
                         btn.OnHover = (_) =>

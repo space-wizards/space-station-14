@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.MachineLinking.Components
 {
     [RegisterComponent]
-    public class SignalReceiverComponent : Component
+    public sealed class SignalReceiverComponent : Component
     {
         [DataField("inputs")]
         private List<SignalPort> _inputs = new();

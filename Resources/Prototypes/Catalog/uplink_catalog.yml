@@ -47,12 +47,13 @@
 #  itemId: DoubleBladedESword
 #  price: 16
 
-# bug swept to make
-#- type: uplinkListing
-#  id: UplinkEnergyDagger
-#  category: Weapons
-#  itemId: EnergyDagger
-#  price: 2
+- type: uplinkListing
+  id: UplinkEnergyDagger
+  category: Weapons
+  itemId: EnergyDagger
+  listingName: Energy Dagger
+  description: A small energy blade conveniently disguised in the form of a pen.
+  price: 2
 
 # Explosives
 
