@@ -13,7 +13,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Visualizer
 {
     [UsedImplicitly]
-    public class GenericEnumVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class GenericEnumVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         public Enum Key { get; set; } = default!;
 

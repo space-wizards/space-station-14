@@ -11,7 +11,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Rotation
 {
     [UsedImplicitly]
-    public class RotationVisualizer : AppearanceVisualizer
+    public sealed class RotationVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

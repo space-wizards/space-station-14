@@ -12,7 +12,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Destructible
 {
     [UsedImplicitly]
-    public class DestructibleSystem : EntitySystem
+    public sealed class DestructibleSystem : EntitySystem
     {
         [Dependency] public readonly IRobustRandom Random = default!;
         public new IEntityManager EntityManager => base.EntityManager;
@@ -53,7 +53,7 @@ namespace Content.Server.Destructible
     /// <summary>
     ///     Event raised when a <see cref="DamageThreshold"/> is reached.
     /// </summary>
-    public class DamageThresholdReached : EntityEventArgs
+    public sealed class DamageThresholdReached : EntityEventArgs
     {
         public readonly DestructibleComponent Parent;
 

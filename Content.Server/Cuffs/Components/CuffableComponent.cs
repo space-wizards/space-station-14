@@ -22,7 +22,7 @@ namespace Content.Server.Cuffs.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedCuffableComponent))]
-    public class CuffableComponent : SharedCuffableComponent
+    public sealed class CuffableComponent : SharedCuffableComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

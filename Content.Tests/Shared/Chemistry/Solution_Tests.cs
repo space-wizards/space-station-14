@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace Content.Tests.Shared.Chemistry
 {
     [TestFixture, Parallelizable, TestOf(typeof(Solution))]
-    public class Solution_Tests : ContentUnitTest
+    public sealed class Solution_Tests : ContentUnitTest
     {
         [OneTimeSetUp]
         public void Setup()

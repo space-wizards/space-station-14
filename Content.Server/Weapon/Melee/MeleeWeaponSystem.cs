@@ -315,7 +315,7 @@ namespace Content.Server.Weapon.Melee
     ///     Raised directed on the melee weapon entity used to attack something in combat mode,
     ///     whether through a click attack or wide attack.
     /// </summary>
-    public class MeleeHitEvent : HandledEntityEventArgs
+    public sealed class MeleeHitEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Modifier sets to apply to the hit event when it's all said and done.
@@ -358,7 +358,7 @@ namespace Content.Server.Weapon.Melee
     ///     Raised directed on the melee weapon entity used to attack something in combat mode,
     ///     whether through a click attack or wide attack.
     /// </summary>
-    public class MeleeInteractEvent : EntityEventArgs
+    public sealed class MeleeInteractEvent : EntityEventArgs
     {
         /// <summary>
         ///     The entity interacted with.

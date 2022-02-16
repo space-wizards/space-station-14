@@ -15,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Interaction
     [TestOf(typeof(SharedInteractionSystem))]
     [TestOf(typeof(SharedUnobstructedExtensions))]
     [TestOf(typeof(UnobstructedExtensions))]
-    public class InRangeUnobstructed : ContentIntegrationTest
+    public sealed class InRangeUnobstructed : ContentIntegrationTest
     {
         private const string HumanId = "MobHumanBase";
 

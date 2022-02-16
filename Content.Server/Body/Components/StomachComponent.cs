@@ -10,7 +10,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Body.Components
 {
     [RegisterComponent, Friend(typeof(StomachSystem))]
-    public class StomachComponent : Component
+    public sealed class StomachComponent : Component
     {
         public float AccumulatedFrameTime;
 
@@ -48,7 +48,7 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     Used to track quantity changes when ingesting & digesting reagents
         /// </summary>
-        public class ReagentDelta
+        public sealed class ReagentDelta
         {
             public readonly string ReagentId;
             public readonly FixedPoint2 Quantity;

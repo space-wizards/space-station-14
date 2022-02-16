@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Objectives.Requirements
 {
     [DataDefinition]
-    public class IncompatibleObjectivesRequirement : IObjectiveRequirement
+    public sealed class IncompatibleObjectivesRequirement : IObjectiveRequirement
     {
         [DataField("objectives")]
         private readonly List<string> _incompatibleObjectives = new();

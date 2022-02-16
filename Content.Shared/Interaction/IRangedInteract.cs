@@ -8,7 +8,7 @@ namespace Content.Shared.Interaction
     ///     Raised when an entity is interacted with that is out of the user entity's range of direct use.
     /// </summary>
     [PublicAPI]
-    public class RangedInteractEvent : HandledEntityEventArgs
+    public sealed class RangedInteractEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that triggered the interaction.

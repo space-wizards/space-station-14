@@ -12,7 +12,7 @@ namespace Content.Server.Kitchen.Components
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(ReagentGrinderSystem))]
-    public class ExtractableComponent : Component
+    public sealed class ExtractableComponent : Component
     {
         [ViewVariables]
         [DataField("juiceSolution")]

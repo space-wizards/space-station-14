@@ -8,7 +8,7 @@ namespace Content.Server.Nutrition.Components
     ///     A disposable, single-use smokable.
     /// </summary>
     [RegisterComponent, Friend(typeof(SmokingSystem))]
-    public class CigarComponent : Component
+    public sealed class CigarComponent : Component
     {
     }
 }

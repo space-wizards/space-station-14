@@ -18,6 +18,7 @@ namespace Content.Server.Atmos.Components
     /// </summary>
     [ComponentReference(typeof(IAtmosphereComponent))]
     [RegisterComponent, Serializable]
+    [Virtual]
     public class GridAtmosphereComponent : Component, IAtmosphereComponent, ISerializationHooks
     {
         public virtual bool Simulated => true;

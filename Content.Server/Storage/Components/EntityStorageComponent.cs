@@ -32,6 +32,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Storage.Components
 {
     [RegisterComponent]
+    [Virtual]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
     public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IExAct

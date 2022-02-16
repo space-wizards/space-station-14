@@ -14,7 +14,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Alerts;
 
 [UsedImplicitly]
-internal class ClientAlertsSystem : AlertsSystem
+internal sealed class ClientAlertsSystem : AlertsSystem
 {
     public AlertOrderPrototype? AlertOrder { get; set; }
 
@@ -37,7 +37,7 @@ internal class ClientAlertsSystem : AlertsSystem
     protected override void LoadPrototypes()
     {
         base.LoadPrototypes();
-        
+
         AlertOrder = _prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
         if (AlertOrder == null)
             Logger.ErrorS("alert", "no alertOrder prototype found, alerts will be in random order");

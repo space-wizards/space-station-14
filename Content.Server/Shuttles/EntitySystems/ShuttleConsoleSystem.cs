@@ -96,7 +96,7 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 if (comp.Console == null) continue;
 
-                if (!_blocker.CanInteract((comp).Owner))
+                if (!_blocker.CanInteract(comp.Owner, comp.Console.Owner))
                 {
                     toRemove.Add(comp);
                 }
@@ -189,8 +189,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
         public void AddPilot(EntityUid entity, ShuttleConsoleComponent component)
         {
-            if (!_blocker.CanInteract(entity) ||
-                !EntityManager.TryGetComponent(entity, out PilotComponent? pilotComponent) ||
+            if (!EntityManager.TryGetComponent(entity, out PilotComponent? pilotComponent) ||
                 component.SubscribedPilots.Contains(pilotComponent))
             {
                 return;

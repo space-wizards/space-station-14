@@ -49,7 +49,7 @@ namespace Content.Shared.Tabletop
                 return false;
             }
 
-            return playerEntity.InRangeUnobstructed(table.Value) && _actionBlockerSystem.CanInteract(playerEntity);
+            return playerEntity.InRangeUnobstructed(table.Value) && _actionBlockerSystem.CanInteract(playerEntity, table);
         }
 
         protected bool StunnedOrNoHands(EntityUid playerEntity)

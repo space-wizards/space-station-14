@@ -7,6 +7,6 @@ namespace Content.Shared.Movement.Components;
 /// Exists just to listen to a single event. What a life.
 /// </summary>
 [NetworkedComponent, RegisterComponent]
-public class SlowsOnContactComponent : Component
+public sealed class SlowsOnContactComponent : Component
 {
 }

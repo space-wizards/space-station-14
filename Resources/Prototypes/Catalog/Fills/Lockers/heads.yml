@@ -149,17 +149,12 @@
   - type: StorageFill
     contents:
       - id: ResearchComputerCircuitboard
-        prob: 1
       - id: ProtolatheMachineCircuitboard
-        prob: 1
+      - id: CircuitImprinterMachineCircuitboard
       - id: ClothingNeckCloakRd
-        prob: 1
       - id: ClothingHeadsetMedicalScience
-        prob: 1
       - id: ClothingHeadHelmetHardsuitRd
-        prob: 1
       - id: ClothingOuterHardsuitRd
-        prob: 1
       - id: PlushieSlime
         prob: 0.1
       - id: DoorRemoteResearch

@@ -10,7 +10,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Alerts.UI
 {
-    public class AlertControl : BaseButton
+    public sealed class AlertControl : BaseButton
     {
         // shorter than default tooltip delay so user can more easily
         // see what alerts they have

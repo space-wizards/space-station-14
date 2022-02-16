@@ -6,7 +6,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Labels.Components
 {
     [RegisterComponent]
-    public class HandLabelerComponent : Component
+    public sealed class HandLabelerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("assignedLabel")]

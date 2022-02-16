@@ -12,7 +12,7 @@ namespace Content.Shared.Placeable
 {
     [RegisterComponent, NetworkedComponent]
     [Friend(typeof(PlaceableSurfaceSystem))]
-    public class PlaceableSurfaceComponent : Component
+    public sealed class PlaceableSurfaceComponent : Component
     {
         [ViewVariables]
         [DataField("isPlaceable")]
@@ -33,7 +33,7 @@ namespace Content.Shared.Placeable
     }
 
     [Serializable, NetSerializable]
-    public class PlaceableSurfaceComponentState : ComponentState
+    public sealed class PlaceableSurfaceComponentState : ComponentState
     {
         public readonly bool IsPlaceable;
         public readonly bool PlaceCentered;

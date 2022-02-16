@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Actions
 {
     [UsedImplicitly]
-    public class ActionsSystem : EntitySystem
+    public sealed class ActionsSystem : EntitySystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 

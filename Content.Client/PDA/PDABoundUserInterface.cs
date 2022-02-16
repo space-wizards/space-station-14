@@ -13,7 +13,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.PDA
 {
     [UsedImplicitly]
-    public class PDABoundUserInterface : BoundUserInterface
+    public sealed class PDABoundUserInterface : BoundUserInterface
     {
         private PDAMenu? _menu;
 

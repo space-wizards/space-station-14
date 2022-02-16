@@ -8,7 +8,7 @@ namespace Content.Server.Stack
     // TODO: Naming and presentation and such could use some improvement.
     [RegisterComponent, Friend(typeof(StackSystem))]
     [ComponentReference(typeof(SharedStackComponent))]
-    public class StackComponent : SharedStackComponent
+    public sealed class StackComponent : SharedStackComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ThrowIndividually { get; set; } = false;
