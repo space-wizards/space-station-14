@@ -24,7 +24,7 @@ namespace Content.Shared.SubFloor
         ///     Whether interactions with this entity should be blocked while it is under floor tiles.
         /// </summary>
         /// <remarks>
-        ///     Useful for entities like vents, which have exposed parts despite still partially hidden.
+        ///     Useful for entities like vents, which are only partially hidden.
         /// </remarks>
         [DataField("blockInteractions")]
         public bool BlockInteractions { get; set; } = true;
