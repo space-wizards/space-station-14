@@ -49,7 +49,7 @@ namespace Content.Client.Preferences.UI
     }
 
     [GenerateTypedNameReferences]
-    public partial class HumanoidProfileEditor : Control
+    public sealed partial class HumanoidProfileEditor : Control
     {
         private LineEdit _ageEdit => CAgeEdit;
         private LineEdit _nameEdit => CNameEdit;

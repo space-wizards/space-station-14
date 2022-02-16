@@ -12,7 +12,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.Atmos.Monitor.UI.Widgets
 {
     [GenerateTypedNameReferences]
-    public partial class ThresholdControl : BoxContainer
+    public sealed partial class ThresholdControl : BoxContainer
     {
         private AtmosAlarmThreshold _threshold;
         private AtmosMonitorThresholdType _type;

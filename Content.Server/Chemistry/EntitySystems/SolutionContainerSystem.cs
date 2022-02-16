@@ -30,7 +30,7 @@ namespace Content.Server.Chemistry.EntitySystems
     /// Part of Chemistry system deal with SolutionContainers
     /// </summary>
     [UsedImplicitly]
-    public partial class SolutionContainerSystem : EntitySystem
+    public sealed partial class SolutionContainerSystem : EntitySystem
     {
         [Dependency]
         private readonly SharedChemicalReactionSystem _chemistrySystem = default!;

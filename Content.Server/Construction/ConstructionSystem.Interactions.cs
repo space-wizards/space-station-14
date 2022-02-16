@@ -10,7 +10,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Construction
 {
-    public partial class ConstructionSystem
+    public sealed partial class ConstructionSystem
     {
         private readonly HashSet<EntityUid> _constructionUpdateQueue = new();
 

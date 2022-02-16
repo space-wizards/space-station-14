@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         public const float PresetFailedCooldownIncrease = 30f;
 

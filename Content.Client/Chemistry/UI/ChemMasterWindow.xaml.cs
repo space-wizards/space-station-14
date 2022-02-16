@@ -26,7 +26,7 @@ namespace Content.Client.Chemistry.UI
     /// Client-side UI used to control a <see cref="SharedChemMasterComponent"/>
     /// </summary>
     [GenerateTypedNameReferences]
-    public partial class ChemMasterWindow : DefaultWindow
+    public sealed partial class ChemMasterWindow : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         public event Action<string>? OnLabelEntered;

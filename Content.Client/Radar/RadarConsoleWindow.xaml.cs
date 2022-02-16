@@ -13,7 +13,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Radar;
 
 [GenerateTypedNameReferences]
-public partial class RadarConsoleWindow : DefaultWindow, IComputerWindow<RadarConsoleBoundInterfaceState>
+public sealed partial class RadarConsoleWindow : DefaultWindow, IComputerWindow<RadarConsoleBoundInterfaceState>
 {
     public RadarConsoleWindow()
     {

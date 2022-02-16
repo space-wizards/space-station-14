@@ -17,7 +17,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    public partial class SmokingSystem : EntitySystem
+    public sealed partial class SmokingSystem : EntitySystem
     {
         [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;

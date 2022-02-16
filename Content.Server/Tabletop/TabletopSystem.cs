@@ -16,7 +16,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public partial class TabletopSystem : SharedTabletopSystem
+    public sealed partial class TabletopSystem : SharedTabletopSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
