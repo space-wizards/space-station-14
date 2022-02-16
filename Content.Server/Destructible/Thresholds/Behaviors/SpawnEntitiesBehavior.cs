@@ -1,6 +1,5 @@
 using Content.Server.Stack;
 using Content.Shared.Prototypes;
-using Content.Shared.Random.Helpers;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
@@ -33,19 +32,16 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
                 if (count == 0) continue;
 
-                if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId))
+                if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.ComponentFactory))
                 {
                     var spawned = system.EntityManager.SpawnEntity(entityId, offsetPosition());
-                    var stack = system.EntityManager.GetComponent<StackComponent>(spawned);
-                    EntitySystem.Get<StackSystem>().SetCount(spawned, count, stack);
-                    spawned.RandomOffset(Offset);
+                    system.StackSystem.SetCount(spawned, count);
                 }
                 else
                 {
                     for (var i = 0; i < count; i++)
                     {
-                        var spawned = system.EntityManager.SpawnEntity(entityId, offsetPosition());
-                        spawned.RandomOffset(Offset);
+                        system.EntityManager.SpawnEntity(entityId, offsetPosition());
                     }
                 }
             }
