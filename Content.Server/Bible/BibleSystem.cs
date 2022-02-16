@@ -37,6 +37,9 @@ namespace Content.Server.Bible
 
         private void OnAfterInteract(EntityUid uid, BibleComponent component, AfterInteractEvent args)
         {
+            if (!args.CanReach)
+                return;
+
             var currentTime = _gameTiming.CurTime;
 
             if (currentTime < component.CooldownEnd)
