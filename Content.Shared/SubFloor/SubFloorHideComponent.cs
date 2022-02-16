@@ -21,6 +21,15 @@ namespace Content.Shared.SubFloor
         public bool IsUnderCover { get; set; } = false;
 
         /// <summary>
+        ///     Whether interactions with this entity should be blocked while it is under floor tiles.
+        /// </summary>
+        /// <remarks>
+        ///     Useful for entities like vents, which are only partially hidden.
+        /// </remarks>
+        [DataField("blockInteractions")]
+        public bool BlockInteractions { get; set; } = true;
+
+        /// <summary>
         ///     When revealed using some scanning tool, what transparency should be used to draw this item?
         /// </summary>
         [DataField("scannerTransparency")]
