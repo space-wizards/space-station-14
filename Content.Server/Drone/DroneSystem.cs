@@ -2,12 +2,16 @@ using Content.Shared.Drone;
 using Content.Server.Drone.Components;
 using Content.Shared.Drone.Components;
 using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Examine;
 using Content.Server.Popups;
 using Content.Server.Mind.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.Body.Components;
+using Content.Server.Construction.Components;
 using Robust.Shared.Player;
 using Content.Shared.Tag;
 
@@ -20,10 +24,28 @@ namespace Content.Server.Drone
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<DroneComponent, InteractionAttemptEvent>(OnInteractionAttempt);
+            SubscribeLocalEvent<ComputerComponent, InteractHandEvent>(OnInteractHand); //This is only raised on the target unfortunately
             SubscribeLocalEvent<DroneComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<DroneComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DroneComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<DroneComponent, MindRemovedMessage>(OnMindRemoved);
+        }
+
+        private void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
+        {
+            if (HasComp<MobStateComponent>(args.Target) && !HasComp<DroneComponent>(args.Target))
+            {
+                args.Cancel();
+            }
+        }
+
+        private void OnInteractHand(EntityUid uid, ComputerComponent component, InteractHandEvent args)
+        {
+            if (HasComp<DroneComponent>(args.User))
+            {
+                args.Handled = true;
+            }
         }
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)
