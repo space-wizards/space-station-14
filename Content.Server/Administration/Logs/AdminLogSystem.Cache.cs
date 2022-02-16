@@ -9,7 +9,7 @@ using Prometheus;
 
 namespace Content.Server.Administration.Logs;
 
-public partial class AdminLogSystem
+public sealed partial class AdminLogSystem
 {
     private const int MaxRoundsCached = 3;
     private const int LogListInitialSize = 30_000;

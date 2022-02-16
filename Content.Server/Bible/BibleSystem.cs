@@ -20,7 +20,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Bible
 {
-    public class BibleSystem : EntitySystem
+    public sealed class BibleSystem : EntitySystem
     {
         [Dependency] private readonly InventorySystem _invSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;

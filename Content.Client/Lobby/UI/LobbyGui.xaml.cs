@@ -40,7 +40,7 @@ namespace Content.Client.Lobby.UI
         }
     }
 
-    public class LobbyPlayerList : Control
+    public sealed class LobbyPlayerList : Control
     {
         private readonly ScrollContainer _scroll;
         private readonly BoxContainer _vBox;

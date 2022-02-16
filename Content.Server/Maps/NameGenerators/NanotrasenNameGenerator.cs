@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Maps.NameGenerators;
 
 [UsedImplicitly]
-public class NanotrasenNameGenerator : GameMapNameGenerator
+public sealed class NanotrasenNameGenerator : GameMapNameGenerator
 {
     /// <summary>
     ///     Where the map comes from. Should be a two or three letter code, for example "VG" for Packedstation.

@@ -11,7 +11,7 @@ namespace Content.Server.Climbing.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedClimbingComponent))]
-    public class ClimbingComponent : SharedClimbingComponent
+    public sealed class ClimbingComponent : SharedClimbingComponent
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;

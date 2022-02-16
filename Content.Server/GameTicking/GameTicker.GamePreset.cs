@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         public const float PresetFailedCooldownIncrease = 30f;
 
@@ -168,7 +168,7 @@ namespace Content.Server.GameTicking
         }
     }
 
-    public class GhostAttemptHandleEvent : HandledEntityEventArgs
+    public sealed class GhostAttemptHandleEvent : HandledEntityEventArgs
     {
         public Mind.Mind Mind { get; }
         public bool CanReturnGlobal { get; }

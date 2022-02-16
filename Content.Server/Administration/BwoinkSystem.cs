@@ -26,7 +26,7 @@ using System.Text.Json.Serialization;
 namespace Content.Server.Administration
 {
     [UsedImplicitly]
-    public class BwoinkSystem : SharedBwoinkSystem
+    public sealed class BwoinkSystem : SharedBwoinkSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;

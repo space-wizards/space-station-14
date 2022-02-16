@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
-public class RadiateArtifactSystem : EntitySystem
+public sealed class RadiateArtifactSystem : EntitySystem
 {
     public override void Initialize()
     {

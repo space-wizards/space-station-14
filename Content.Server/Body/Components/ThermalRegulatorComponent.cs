@@ -8,7 +8,7 @@ namespace Content.Server.Body.Components;
 
 [RegisterComponent]
 [Friend(typeof(ThermalRegulatorSystem))]
-public class ThermalRegulatorComponent : Component
+public sealed class ThermalRegulatorComponent : Component
 {
     /// <summary>
     /// Heat generated due to metabolism. It's generated via metabolism

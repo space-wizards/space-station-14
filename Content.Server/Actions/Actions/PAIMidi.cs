@@ -18,7 +18,7 @@ namespace Content.Server.Actions.Actions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class PAIMidi : IInstantAction
+    public sealed class PAIMidi : IInstantAction
     {
 
         public void DoInstantAction(InstantActionEventArgs args)

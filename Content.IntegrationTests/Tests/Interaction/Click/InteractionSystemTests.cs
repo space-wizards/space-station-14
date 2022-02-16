@@ -20,7 +20,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
 {
     [TestFixture]
     [TestOf(typeof(InteractionSystem))]
-    public class InteractionSystemTests : ContentIntegrationTest
+    public sealed class InteractionSystemTests : ContentIntegrationTest
     {
         const string PROTOTYPES = @"
 - type: entity
@@ -408,7 +408,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         }
 
         [Reflect(false)]
-        private class TestInteractionSystem : EntitySystem
+        private sealed class TestInteractionSystem : EntitySystem
         {
             public ComponentEventHandler<HandsComponent, ClickAttackEvent>? AttackEvent;
             public EntityEventHandler<InteractUsingEvent>? InteractUsingEvent;

@@ -17,7 +17,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Access.Systems
 {
-    public class IdCardSystem : SharedIdCardSystem
+    public sealed class IdCardSystem : SharedIdCardSystem
     {
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;

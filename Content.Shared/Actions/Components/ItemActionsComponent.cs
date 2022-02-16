@@ -24,7 +24,7 @@ namespace Content.Shared.Actions.Components
     /// Currently only maintained server side and not synced to client, as are all the equip/unequip events.
     /// </summary>
     [RegisterComponent]
-    public class ItemActionsComponent : Component
+    public sealed class ItemActionsComponent : Component
     {
         /// <summary>
         /// Configuration for the item actions initially provided by this item. Actions defined here
@@ -182,7 +182,7 @@ namespace Content.Shared.Actions.Components
     /// Configuration for an item action provided by an item.
     /// </summary>
     [DataDefinition]
-    public class ItemActionConfig : ISerializationHooks
+    public sealed class ItemActionConfig : ISerializationHooks
     {
         [DataField("actionType", required: true)]
         public ItemActionType ActionType { get; private set; } = ItemActionType.Error;

@@ -11,7 +11,7 @@ namespace Content.Shared.Atmos.Piping.Binary.Components
     }
 
     [Serializable, NetSerializable]
-    public class GasVolumePumpBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class GasVolumePumpBoundUserInterfaceState : BoundUserInterfaceState
     {
         public string PumpLabel { get; }
         public float TransferRate { get; }
@@ -26,7 +26,7 @@ namespace Content.Shared.Atmos.Piping.Binary.Components
     }
 
     [Serializable, NetSerializable]
-    public class GasVolumePumpToggleStatusMessage : BoundUserInterfaceMessage
+    public sealed class GasVolumePumpToggleStatusMessage : BoundUserInterfaceMessage
     {
         public bool Enabled { get; }
 
@@ -37,7 +37,7 @@ namespace Content.Shared.Atmos.Piping.Binary.Components
     }
 
     [Serializable, NetSerializable]
-    public class GasVolumePumpChangeTransferRateMessage : BoundUserInterfaceMessage
+    public sealed class GasVolumePumpChangeTransferRateMessage : BoundUserInterfaceMessage
     {
         public float TransferRate { get; }
 

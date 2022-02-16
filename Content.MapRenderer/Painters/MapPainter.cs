@@ -20,7 +20,7 @@ using SpriteComponent = Robust.Server.GameObjects.SpriteComponent;
 
 namespace Content.MapRenderer.Painters
 {
-    public class MapPainter : ContentIntegrationTest
+    public sealed class MapPainter : ContentIntegrationTest
     {
         public async IAsyncEnumerable<Image> Paint(string map)
         {

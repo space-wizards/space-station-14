@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Storage.Visualizers
 {
     [UsedImplicitly]
-    public class MappedItemVisualizer : AppearanceVisualizer
+    public sealed class MappedItemVisualizer : AppearanceVisualizer
     {
         [DataField("sprite")] private ResourcePath? _rsiPath;
         private List<string> _spriteLayers = new();

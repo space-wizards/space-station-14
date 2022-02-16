@@ -31,7 +31,7 @@ namespace Content.Client.Storage
     /// Client version of item storage containers, contains a UI which displays stored entities and their size
     /// </summary>
     [RegisterComponent]
-    public class ClientStorageComponent : SharedStorageComponent, IDraggable
+    public sealed class ClientStorageComponent : SharedStorageComponent, IDraggable
     {
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -233,7 +233,7 @@ namespace Content.Client.Storage
         /// <summary>
         /// GUI class for client storage component
         /// </summary>
-        private class StorageWindow : DefaultWindow
+        private sealed class StorageWindow : DefaultWindow
         {
             private Control _vBox;
             private readonly Label _information;

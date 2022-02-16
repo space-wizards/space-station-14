@@ -22,7 +22,7 @@ namespace Content.Server.Configurable
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedConfigurationComponent))]
-    public class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing, ISerializationHooks
+    public sealed class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

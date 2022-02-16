@@ -284,7 +284,7 @@ namespace Content.Shared.Examine
     /// <summary>
     ///     Raised when an entity is examined.
     /// </summary>
-    public class ExaminedEvent : EntityEventArgs
+    public sealed class ExaminedEvent : EntityEventArgs
     {
         /// <summary>
         ///     The message that will be displayed as the examine text.

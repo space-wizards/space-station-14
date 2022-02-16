@@ -10,7 +10,7 @@ using System;
 
 namespace Content.Server.Traitor.Uplink.Telecrystal
 {
-    public class TelecrystalSystem : EntitySystem
+    public sealed class TelecrystalSystem : EntitySystem
     {
         [Dependency]
         private readonly UplinkAccountsSystem _accounts = default!;

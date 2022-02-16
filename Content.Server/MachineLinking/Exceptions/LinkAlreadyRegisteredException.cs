@@ -2,7 +2,7 @@
 
 namespace Content.Server.MachineLinking.Exceptions
 {
-    public class LinkAlreadyRegisteredException : Exception
+    public sealed class LinkAlreadyRegisteredException : Exception
     {
 
     }

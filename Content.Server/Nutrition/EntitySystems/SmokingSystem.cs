@@ -17,7 +17,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    public partial class SmokingSystem : EntitySystem
+    public sealed partial class SmokingSystem : EntitySystem
     {
         [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
@@ -127,7 +127,7 @@ namespace Content.Server.Nutrition.EntitySystems
     /// <summary>
     ///     Directed event raised when the smokable solution is empty.
     /// </summary>
-    public class SmokableSolutionEmptyEvent : EntityEventArgs
+    public sealed class SmokableSolutionEmptyEvent : EntityEventArgs
     {
     }
 }

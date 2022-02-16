@@ -26,7 +26,7 @@ namespace Content.Server.Medical.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedMedicalScannerComponent))]
-    public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDestroyAct
+    public sealed class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDestroyAct
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;

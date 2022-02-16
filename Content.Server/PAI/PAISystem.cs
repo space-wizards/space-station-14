@@ -16,7 +16,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.PAI
 {
-    public class PAISystem : SharedPAISystem
+    public sealed class PAISystem : SharedPAISystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;

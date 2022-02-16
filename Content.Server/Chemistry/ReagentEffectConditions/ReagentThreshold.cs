@@ -13,7 +13,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
     ///     This can also trigger on -other- reagents, not just the one metabolizing. By default, it uses the
     ///     one being metabolized.
     /// </summary>
-    public class ReagentThreshold : ReagentEffectCondition
+    public sealed class ReagentThreshold : ReagentEffectCondition
     {
         [DataField("min")]
         public FixedPoint2 Min = FixedPoint2.Zero;

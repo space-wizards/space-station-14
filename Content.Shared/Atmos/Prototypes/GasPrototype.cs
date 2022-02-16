@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Atmos.Prototypes
 {
     [Prototype("gas")]
-    public class GasPrototype : IPrototype
+    public sealed class GasPrototype : IPrototype
     {
         [DataField("name")] public string Name { get; } = string.Empty;
 

@@ -12,7 +12,7 @@ namespace Content.Server.Chemistry.ReagentEffects;
 /// <summary>
 ///     Forces someone to do a certain action, if they have it.
 /// </summary>
-public class DoAction : ReagentEffect
+public sealed class DoAction : ReagentEffect
 {
     [DataField("action", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<ActionPrototype>))]
     public string Action = default!;

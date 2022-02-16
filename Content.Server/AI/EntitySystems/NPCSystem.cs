@@ -16,7 +16,7 @@ namespace Content.Server.AI.EntitySystems
     ///     Handles NPCs running every tick.
     /// </summary>
     [UsedImplicitly]
-    internal class NPCSystem : EntitySystem
+    internal sealed class NPCSystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;

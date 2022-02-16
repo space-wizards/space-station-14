@@ -22,7 +22,7 @@ namespace Content.Server.Fluids.Components
     /// Can a mop click on this entity and dump its fluids
     /// </summary>
     [RegisterComponent]
-    public class BucketComponent : Component, IInteractUsing
+    public sealed class BucketComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

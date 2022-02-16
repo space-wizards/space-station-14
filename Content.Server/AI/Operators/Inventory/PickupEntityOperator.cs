@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Inventory
 {
-    public class PickupEntityOperator : AiOperator
+    public sealed class PickupEntityOperator : AiOperator
     {
         // Input variables
         private readonly EntityUid _owner;

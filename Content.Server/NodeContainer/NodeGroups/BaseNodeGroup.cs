@@ -40,6 +40,7 @@ namespace Content.Server.NodeContainer.NodeGroups
     }
 
     [NodeGroup(NodeGroupID.Default, NodeGroupID.WireNet)]
+    [Virtual]
     public class BaseNodeGroup : INodeGroup
     {
         public bool Remaking { get; set; }
