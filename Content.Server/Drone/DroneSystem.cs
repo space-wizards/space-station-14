@@ -1,10 +1,10 @@
 using Content.Shared.Drone;
 using Content.Server.Drone.Components;
-using Content.Shared.Drone.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Examine;
 using Content.Server.Popups;
 using Content.Server.Mind.Components;
@@ -95,7 +95,7 @@ namespace Content.Server.Drone
                    foreach (var entry in drone.Tools)
                     {
                         var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
-                        AddComp<DroneToolComponent>(item);
+                        AddComp<UnremoveableComponent>(item);
                         hands.PutInHand(item);
                         drone.ToolUids.Add(item);
                     }
