@@ -1,17 +1,24 @@
+using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Server.Recycling.Components;
+using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Recycling;
 using Content.Shared.Tag;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Audio;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Recycling
 {
     public sealed class RecyclerSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly AmbientSoundSystem _ambience = default!;
         [Dependency] private readonly TagSystem _tags = default!;
+
+        private const float RecyclerSoundCooldown = 0.2f;
 
         public override void Initialize()
         {
@@ -19,9 +26,25 @@ namespace Content.Server.Recycling
             SubscribeLocalEvent<RecyclerComponent, StartCollideEvent>(OnCollide);
         }
 
+        public void EnableRecycler(RecyclerComponent component)
+        {
+            if (component.Enabled) return;
+
+            component.Enabled = true;
+            _ambience.SetAmbience(component.Owner, true);
+        }
+
+        public void DisableRecycler(RecyclerComponent component)
+        {
+            if (!component.Enabled) return;
+
+            component.Enabled = false;
+            _ambience.SetAmbience(component.Owner, false);
+        }
+
         private void OnCollide(EntityUid uid, RecyclerComponent component, StartCollideEvent args)
         {
-            if (args.OurFixture.ID != "brrt") return;
+            if (component.Enabled && args.OurFixture.ID != "brrt") return;
 
             Recycle(component, args.OtherFixture.Body.Owner);
         }
@@ -51,6 +74,12 @@ namespace Content.Server.Recycling
                 QueueDel(entity);
             else
                 Recycle(recyclable, component.Efficiency);
+
+            if (component.Sound != null && (_timing.CurTime - component.LastSound).TotalSeconds > RecyclerSoundCooldown)
+            {
+                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.Sound.GetSound());
+                component.LastSound = _timing.CurTime;
+            }
         }
 
         private bool CanGib(RecyclerComponent component, EntityUid entity)
