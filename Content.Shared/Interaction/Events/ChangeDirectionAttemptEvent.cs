@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Interaction.Events
 {
-    public class ChangeDirectionAttemptEvent : CancellableEntityEventArgs
+    public sealed class ChangeDirectionAttemptEvent : CancellableEntityEventArgs
     {
         public ChangeDirectionAttemptEvent(EntityUid uid)
         {

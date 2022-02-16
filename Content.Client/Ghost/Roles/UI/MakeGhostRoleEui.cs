@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Ghost.Roles.UI
 {
     [UsedImplicitly]
-    public class MakeGhostRoleEui : BaseEui
+    public sealed class MakeGhostRoleEui : BaseEui
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;

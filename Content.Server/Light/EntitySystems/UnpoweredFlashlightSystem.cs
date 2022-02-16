@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Light.EntitySystems
 {
-    public class UnpoweredFlashlightSystem : EntitySystem
+    public sealed class UnpoweredFlashlightSystem : EntitySystem
     {
         public override void Initialize()
         {

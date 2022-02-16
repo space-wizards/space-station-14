@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.StationEvents
 {
-        public class MsgStationEvents : NetMessage
+        public sealed class MsgStationEvents : NetMessage
         {
             public override MsgGroups MsgGroup => MsgGroups.Command;
 

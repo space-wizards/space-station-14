@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public class MeleeChemicalInjectorComponent : Component
+    public sealed class MeleeChemicalInjectorComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("transferAmount")]

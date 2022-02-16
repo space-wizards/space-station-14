@@ -15,7 +15,7 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.RoundEnd
 {
-    public class RoundEndSystem : EntitySystem
+    public sealed class RoundEndSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
@@ -154,7 +154,7 @@ namespace Content.Server.RoundEnd
         }
     }
 
-    public class RoundEndSystemChangedEvent : EntityEventArgs
+    public sealed class RoundEndSystemChangedEvent : EntityEventArgs
     {
         public static RoundEndSystemChangedEvent Default { get; } = new();
     }

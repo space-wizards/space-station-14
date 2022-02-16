@@ -25,7 +25,7 @@ namespace Content.Client.Actions.UI
     /// A slot in the action hotbar. Not extending BaseButton because
     /// its needs diverged too much.
     /// </summary>
-    public class ActionSlot : PanelContainer
+    public sealed class ActionSlot : PanelContainer
     {
         // shorter than default tooltip delay so user can more easily
         // see what actions they've been given

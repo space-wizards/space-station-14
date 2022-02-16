@@ -8,7 +8,7 @@ namespace Content.Server.Plants.Components
 {
     [RegisterComponent]
     [Friend(typeof(RandomPottedPlantSystem))]
-    public class RandomPottedPlantComponent : Component
+    public sealed class RandomPottedPlantComponent : Component
     {
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("selected")]

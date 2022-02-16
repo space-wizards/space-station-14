@@ -7,7 +7,7 @@ namespace Content.Server.Light.Components
     /// A component which applies a specific behaviour to a PointLightComponent on its owner.
     /// </summary>
     [RegisterComponent]
-    public class LightBehaviourComponent : SharedLightBehaviourComponent
+    public sealed class LightBehaviourComponent : SharedLightBehaviourComponent
     {
 
     }

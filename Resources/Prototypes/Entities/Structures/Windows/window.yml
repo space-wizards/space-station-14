@@ -12,6 +12,7 @@
     tags:
       - RCDDeconstructWhitelist
       - ForceFixRotations
+      - Window
   - type: Sprite
     netsync: false
     drawdepth: WallTops
@@ -64,7 +65,11 @@
   - type: IconSmooth
     key: windows
     base: window
-  - type: Window
+  - type: InteractionPopup
+    interactSuccessString: comp-window-knock
+    popupPerceivedByOthers: true
+    interactSuccessSound:
+      path: /Audio/Effects/glass_knock.ogg
   - type: Construction
     graph: Window
     node: window
@@ -89,6 +94,9 @@
   components:
     # Attention! If adding tags here:
     # Keep WindowTintedDirectional in mind
+  - type: Tag
+    tags:
+      - Window
   - type: Sprite
     netsync: false
     sprite: Structures/Windows/directional.rsi
@@ -96,6 +104,11 @@
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: window
+  - type: InteractionPopup
+    interactSuccessString: comp-window-knock
+    popupPerceivedByOthers: true
+    interactSuccessSound:
+      path: /Audio/Effects/glass_knock.ogg
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -136,7 +149,6 @@
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
     - South
-  - type: Window
   - type: Construction
     graph: WindowDirectional
     node: windowDirectional

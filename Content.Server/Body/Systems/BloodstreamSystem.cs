@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Body.Systems;
 
-public class BloodstreamSystem : EntitySystem
+public sealed class BloodstreamSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;

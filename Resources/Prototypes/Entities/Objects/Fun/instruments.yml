@@ -4,6 +4,8 @@
   id: BaseHandheldInstrument
   description: That's an instrument.
   components:
+  - type: Sprite
+    netsync: false
   - type: Instrument
   - type: ActivatableUI
     inHandsOnly: true
@@ -37,6 +39,7 @@
   parent: BaseHandheldInstrument
   id: AcousticGuitarInstrument
   name: acoustic guitar
+  description: Anyway, here's Wonderwall.
   components:
   - type: Instrument
     program: 25

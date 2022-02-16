@@ -17,7 +17,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Botany.Systems;
 
-public partial class BotanySystem
+public sealed partial class BotanySystem
 {
     public void InitializeSeeds()
     {

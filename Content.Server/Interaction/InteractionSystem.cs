@@ -100,10 +100,10 @@ namespace Content.Server.Interaction
                 return;
             }
 
-            if (!_actionBlockerSystem.CanInteract(userEntity.Value))
+            if (Deleted(msg.Dropped) || Deleted(msg.Target))
                 return;
 
-            if (Deleted(msg.Dropped) || Deleted(msg.Target))
+            if (!_actionBlockerSystem.CanInteract(userEntity.Value, msg.Target))
                 return;
 
             var interactionArgs = new DragDropEvent(userEntity.Value, msg.DropLocation, msg.Dropped, msg.Target);
@@ -232,13 +232,11 @@ namespace Content.Server.Interaction
         /// <summary>
         /// Uses an empty hand on an entity
         /// Finds components with the InteractHand interface and calls their function
-        /// NOTE: Does not have an InRangeUnobstructed check
+        /// NOTE: Does not have any range or can-interact checks. These should all have been done before this function is called.
         /// </summary>
-        public override void InteractHand(EntityUid user, EntityUid target, bool checkActionBlocker = true)
+        public override void InteractHand(EntityUid user, EntityUid target)
         {
             // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-            if (checkActionBlocker && !_actionBlockerSystem.CanInteract(user))
-                return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
@@ -260,18 +258,26 @@ namespace Content.Server.Interaction
             }
 
             // Else we run Activate.
-            InteractionActivate(user, target);
+            InteractionActivate(user, target,
+                checkCanInteract: false,
+                checkUseDelay: true,
+                checkAccess: false);
         }
 
         /// <summary>
         /// Will have two behaviors, either "uses" the used entity at range on the target entity if it is capable of accepting that action
         /// Or it will use the used entity itself on the position clicked, regardless of what was there
         /// </summary>
-        public override async Task<bool> InteractUsingRanged(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
+        public override void InteractUsingRanged(
+            EntityUid user,
+            EntityUid used,
+            EntityUid? target,
+            EntityCoordinates clickLocation,
+            bool inRangeUnobstructed)
         {
             // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-            if (InteractDoBefore(user, used, target, clickLocation, inRangeUnobstructed))
-                return true;
+            if (RangedInteractDoBefore(user, used, target, clickLocation, inRangeUnobstructed))
+                return;
 
             if (target != null)
             {
@@ -279,10 +285,10 @@ namespace Content.Server.Interaction
                 RaiseLocalEvent(target.Value, rangedMsg);
 
                 if (rangedMsg.Handled)
-                    return true;
+                    return;
             }
 
-            return await InteractDoAfter(user, used, target, clickLocation, inRangeUnobstructed);
+            InteractDoAfter(user, used, target, clickLocation, inRangeUnobstructed);
         }
 
         public override void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack, EntityUid? target = null)

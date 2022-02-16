@@ -9,7 +9,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public class GasTankSystem : EntitySystem
+    public sealed class GasTankSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 

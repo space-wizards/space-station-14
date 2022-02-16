@@ -14,7 +14,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class AirlockBolted : IGraphCondition
+    public sealed class AirlockBolted : IGraphCondition
     {
         [DataField("value")]
         public bool Value { get; private set; } = true;

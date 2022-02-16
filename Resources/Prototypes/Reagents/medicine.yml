@@ -447,7 +447,7 @@
   id: Tricordrazine
   name: tricordrazine
   group: Medicine
-  desc: A wide-spectrum stimulant, originally derived from Cordrazine. Is capable of healing all four main damage types simultaneously, however it only heals at half the rate of conventional healing chemicals. Because of its low potency, it's best used as a supplement to other medicines.
+  desc: A wide-spectrum stimulant, originally derived from Cordrazine. It is capable of healing most common damage types simultaneously, however only at about half the rate of other medications. Because of its low potency, it's best used as a supplement to other medicines.
   physicalDesc: opaque
   color: "#00e5ff"
   metabolisms:

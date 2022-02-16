@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Atmos.Monitor
 {
-    public class AtmosMonitorVisualizer : AppearanceVisualizer
+    public sealed class AtmosMonitorVisualizer : AppearanceVisualizer
     {
         [Dependency] IEntityManager _entityManager = default!;
         [DataField("layerMap")]

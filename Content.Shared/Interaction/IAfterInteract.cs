@@ -29,7 +29,7 @@ namespace Content.Shared.Interaction
         Task<bool> AfterInteract(AfterInteractEventArgs eventArgs);
     }
 
-    public class AfterInteractEventArgs : EventArgs
+    public sealed class AfterInteractEventArgs : EventArgs
     {
         public EntityUid User { get; }
         public EntityCoordinates ClickLocation { get; }

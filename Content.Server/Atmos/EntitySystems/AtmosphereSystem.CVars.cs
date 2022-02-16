@@ -4,7 +4,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public partial class AtmosphereSystem
+    public sealed partial class AtmosphereSystem
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 

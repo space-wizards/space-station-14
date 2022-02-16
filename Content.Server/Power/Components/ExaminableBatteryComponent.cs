@@ -9,7 +9,7 @@ namespace Content.Server.Power.Components
 {
     [RegisterComponent]
 #pragma warning disable 618
-    public class ExaminableBatteryComponent : Component, IExamine
+    public sealed class ExaminableBatteryComponent : Component, IExamine
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;

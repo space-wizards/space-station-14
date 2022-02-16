@@ -10,7 +10,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 ///     Spawn RadiationPulse when artifact activated.
 /// </summary>
 [RegisterComponent]
-public class RadiateArtifactComponent : Component
+public sealed class RadiateArtifactComponent : Component
 {
     public override string Name => "RadiateArtifact";
 

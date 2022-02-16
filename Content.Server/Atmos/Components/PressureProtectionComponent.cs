@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public class PressureProtectionComponent : Component
+    public sealed class PressureProtectionComponent : Component
     {
         [DataField("highPressureMultiplier")]
         public float HighPressureMultiplier { get; } = 1f;

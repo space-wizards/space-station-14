@@ -6,7 +6,7 @@
   components:
   - type: InteractionOutline
   - type: Physics
-    bodyType: Static  
+    bodyType: Static
   - type: Transform
     anchored: true
   - type: Fixtures
@@ -18,9 +18,15 @@
       layer:
       - Passable
   - type: Sprite
+    netsync: false
     sprite: Structures/cargo_telepad.rsi
-    state: offline
     drawdepth: FloorObjects
+    layers:
+    - state: offline
+      map: ["enum.CargoTelepadLayers.Base"]
+    - state: idle
+      map: [ "enum.CargoTelepadLayers.Beam" ]
+      shader: unshaded
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -40,3 +46,4 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: CargoTelepad
+  - type: Appearance

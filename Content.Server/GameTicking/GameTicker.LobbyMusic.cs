@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         private const string LobbyMusicCollection = "LobbyMusic";
 

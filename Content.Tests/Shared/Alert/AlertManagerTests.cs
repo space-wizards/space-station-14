@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 namespace Content.Tests.Shared.Alert
 {
     [TestFixture, TestOf(typeof(AlertsSystem))]
-    public class AlertManagerTests : ContentUnitTest
+    public sealed class AlertManagerTests : ContentUnitTest
     {
         const string PROTOTYPES = @"
 - type: alert
