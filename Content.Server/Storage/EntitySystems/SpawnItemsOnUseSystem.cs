@@ -10,7 +10,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Storage.EntitySystems
 {
-    public class SpawnItemsOnUseSystem : EntitySystem
+    public sealed class SpawnItemsOnUseSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 

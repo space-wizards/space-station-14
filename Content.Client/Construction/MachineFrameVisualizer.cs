@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Construction
 {
     [UsedImplicitly]
-    public class MachineFrameVisualizer : AppearanceVisualizer
+    public sealed class MachineFrameVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

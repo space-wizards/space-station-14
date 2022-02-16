@@ -19,6 +19,7 @@ namespace Content.Server.NodeContainer.Nodes
     ///     correctly correspond.
     /// </summary>
     [DataDefinition]
+    [Virtual]
     public class PipeNode : Node, IGasMixtureHolder, IRotatableNode
     {
         /// <summary>

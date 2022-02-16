@@ -7,7 +7,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.Explosion.Components
 {
     [RegisterComponent]
-    public class ExplosionLaunchedComponent : Component, IExAct
+    public sealed class ExplosionLaunchedComponent : Component, IExAct
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public class TabletopBackgammonSetup : TabletopSetup
+    public sealed class TabletopBackgammonSetup : TabletopSetup
     {
         [DataField("boardPrototype")]
         public string BackgammonBoardPrototype { get; } = "BackgammonBoardTabletop";

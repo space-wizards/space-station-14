@@ -25,11 +25,10 @@ using Robust.Shared.Players;
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasCanisterSystem : EntitySystem
+    public sealed class GasCanisterSystem : EntitySystem
     {
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
 
         public override void Initialize()

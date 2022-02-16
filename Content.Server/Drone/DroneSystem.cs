@@ -8,6 +8,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Emoting;
 using Robust.Shared.Player;
 using Content.Shared.Tag;
 
@@ -24,6 +25,7 @@ namespace Content.Server.Drone
             SubscribeLocalEvent<DroneComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DroneComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<DroneComponent, MindRemovedMessage>(OnMindRemoved);
+            SubscribeLocalEvent<DroneComponent, EmoteAttemptEvent>(OnEmoteAttempt);
         }
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)
@@ -88,6 +90,12 @@ namespace Content.Server.Drone
             UpdateDroneAppearance(uid, DroneStatus.Off);
             _tagSystem.RemoveTag(uid, "DoorBumpOpener");
             EnsureComp<GhostTakeoverAvailableComponent>(uid);
+        }
+
+        private void OnEmoteAttempt(EntityUid uid, DroneComponent component, EmoteAttemptEvent args)
+        {
+            // No.
+            args.Cancel();
         }
 
         private void UpdateDroneAppearance(EntityUid uid, DroneStatus status)

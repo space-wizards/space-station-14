@@ -6,7 +6,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.ContextMenu.UI
 {
-    public partial class EntityMenuElement : ContextMenuElement
+    public sealed partial class EntityMenuElement : ContextMenuElement
     {
         public const string StyleClassEntityMenuCountText = "contextMenuCount";
 

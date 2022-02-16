@@ -15,7 +15,7 @@ namespace Content.Server.Disposal.Unit.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IGasMixtureHolder
+    public sealed class DisposalUnitComponent : SharedDisposalUnitComponent, IGasMixtureHolder
     {
         /// <summary>
         ///     Last time that an entity tried to exit this disposal unit.

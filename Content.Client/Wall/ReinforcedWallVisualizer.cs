@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Wall
 {
     [UsedImplicitly]
-    public class ReinforcedWallVisualizer : AppearanceVisualizer
+    public sealed class ReinforcedWallVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

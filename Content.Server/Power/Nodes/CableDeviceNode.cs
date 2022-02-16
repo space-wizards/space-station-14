@@ -11,6 +11,7 @@ namespace Content.Server.Power.Nodes
     ///     Type of node that connects to a <see cref="CableNode"/> below it.
     /// </summary>
     [DataDefinition]
+    [Virtual]
     public class CableDeviceNode : Node
     {
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,

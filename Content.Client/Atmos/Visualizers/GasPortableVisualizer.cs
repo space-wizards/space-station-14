@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
-    public class GasPortableVisualizer : AppearanceVisualizer
+    public sealed class GasPortableVisualizer : AppearanceVisualizer
     {
         [DataField("stateConnected")]
         private string? _stateConnected;

@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Light.EntitySystems
 {
-    public class LitOnPoweredSystem : EntitySystem
+    public sealed class LitOnPoweredSystem : EntitySystem
     {
         public override void Initialize()
         {

@@ -18,7 +18,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.CharacterAppearance
 {
     [UsedImplicitly]
-    public class MagicMirrorBoundUserInterface : BoundUserInterface
+    public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
     {
         private MagicMirrorWindow? _window;
 
@@ -72,7 +72,7 @@ namespace Content.Client.CharacterAppearance
         }
     }
 
-    public class ColorSlider : Control
+    public sealed class ColorSlider : Control
     {
         private readonly Slider _slider;
         private readonly LineEdit _textBox;
@@ -276,7 +276,7 @@ namespace Content.Client.CharacterAppearance
         // ColorSlider
     }
 
-    public class EyeColorPicker : Control
+    public sealed class EyeColorPicker : Control
     {
         public event Action<Color>? OnEyeColorPicked;
 
@@ -329,7 +329,7 @@ namespace Content.Client.CharacterAppearance
         // ColorSlider
     }
 
-    public class MagicMirrorWindow : DefaultWindow
+    public sealed class MagicMirrorWindow : DefaultWindow
     {
         private readonly HairStylePicker _hairStylePicker;
         private readonly HairStylePicker _facialHairStylePicker;

@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddEntityStorageCommand : IConsoleCommand
+    public sealed class AddEntityStorageCommand : IConsoleCommand
     {
         public string Command => "addstorage";
         public string Description => "Adds a given entity to a containing storage.";

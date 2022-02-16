@@ -23,7 +23,7 @@ namespace Content.Client.Construction
     /// The client-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
-    public class ConstructionSystem : SharedConstructionSystem
+    public sealed class ConstructionSystem : SharedConstructionSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -246,7 +246,7 @@ namespace Content.Client.Construction
         }
     }
 
-    public class CraftingAvailabilityChangedArgs : EventArgs
+    public sealed class CraftingAvailabilityChangedArgs : EventArgs
     {
         public bool Available { get; }
 

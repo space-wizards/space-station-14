@@ -7,7 +7,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Shared.Item
 {
-    public class ItemSystem : EntitySystem
+    public sealed class ItemSystem : EntitySystem
     {
         public override void Initialize()
         {

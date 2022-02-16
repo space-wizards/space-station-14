@@ -11,7 +11,7 @@ namespace Content.Server.Climbing.Components;
 ///     not very generalized with regards to naming.
 /// </summary>
 [RegisterComponent, Friend(typeof(ClimbSystem))]
-public class GlassTableComponent : Component
+public sealed class GlassTableComponent : Component
 {
     /// <summary>
     ///     How much damage should be given to the climber?

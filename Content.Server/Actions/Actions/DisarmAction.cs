@@ -32,7 +32,7 @@ namespace Content.Server.Actions.Actions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class DisarmAction : ITargetEntityAction
+    public sealed class DisarmAction : ITargetEntityAction
     {
         [DataField("failProb")] private float _failProb = 0.4f;
         [DataField("pushProb")] private float _pushProb = 0.4f;

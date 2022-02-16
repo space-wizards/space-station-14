@@ -11,7 +11,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Weapon.Melee.EnergySword
 {
-    internal class EnergySwordSystem : EntitySystem
+    internal sealed class EnergySwordSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _blockerSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -43,9 +43,6 @@ namespace Content.Server.Weapon.Melee.EnergySword
         private void OnUseInHand(EntityUid uid, EnergySwordComponent comp, UseInHandEvent args)
         {
             if (args.Handled) return;
-
-            if (!_blockerSystem.CanUse(args.User))
-                return;
 
             args.Handled = true;
 
@@ -114,7 +111,7 @@ namespace Content.Server.Weapon.Melee.EnergySword
         {
             if (args.Handled) return;
 
-            if (comp.Hacked || !_blockerSystem.CanInteract(args.User))
+            if (comp.Hacked)
                 return;
 
             if (!TryComp(args.Used, out ToolComponent? tool) || !tool.Qualities.ContainsAny("Pulsing")) return;

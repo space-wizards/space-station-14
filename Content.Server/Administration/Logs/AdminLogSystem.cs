@@ -20,7 +20,7 @@ using Robust.Shared.Reflection;
 
 namespace Content.Server.Administration.Logs;
 
-public partial class AdminLogSystem : SharedAdminLogSystem
+public sealed partial class AdminLogSystem : SharedAdminLogSystem
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;

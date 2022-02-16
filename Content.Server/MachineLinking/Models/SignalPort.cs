@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.MachineLinking.Models
 {
     [DataDefinition]
-    public class SignalPort
+    public sealed class SignalPort
     {
         [DataField("name", required: true)] public string Name { get; } = default!;
         [DataField("type")] public Type? Type { get; }

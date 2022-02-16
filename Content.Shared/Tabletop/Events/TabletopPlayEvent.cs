@@ -9,7 +9,7 @@ namespace Content.Shared.Tabletop.Events
     /// An event sent by the server to the client to tell the client to open a tabletop game window.
     /// </summary>
     [Serializable, NetSerializable]
-    public class TabletopPlayEvent : EntityEventArgs
+    public sealed class TabletopPlayEvent : EntityEventArgs
     {
         public EntityUid TableUid;
         public EntityUid CameraUid;

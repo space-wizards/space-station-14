@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Construction.Prototypes
 {
     [Prototype("construction")]
-    public class ConstructionPrototype : IPrototype
+    public sealed class ConstructionPrototype : IPrototype
     {
         [DataField("conditions")] private List<IConstructionCondition> _conditions = new();
 

@@ -15,7 +15,7 @@ namespace Content.Shared.PAI
     /// All logic in PAISystem.
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public class PAIComponent : Component
+    public sealed class PAIComponent : Component
     {
     }
 }

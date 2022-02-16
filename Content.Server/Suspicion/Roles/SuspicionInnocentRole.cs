@@ -4,7 +4,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Suspicion.Roles
 {
-    public class SuspicionInnocentRole : SuspicionRole
+    public sealed class SuspicionInnocentRole : SuspicionRole
     {
         public AntagPrototype Prototype { get; }
 

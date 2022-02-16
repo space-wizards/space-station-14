@@ -63,6 +63,8 @@
       - id: PowerDrill
       - id: JawsOfLife
       - id: WelderExperimental
+  - type: NameIdentifier
+    group: Drone
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: Maintenance Drone

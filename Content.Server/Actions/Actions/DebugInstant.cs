@@ -12,7 +12,7 @@ namespace Content.Server.Actions.Actions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class DebugInstant : IInstantAction, IInstantItemAction
+    public sealed class DebugInstant : IInstantAction, IInstantItemAction
     {
         [DataField("message")] public string Message { get; [UsedImplicitly] private set; } = "Instant action used.";
         [DataField("cooldown")] public float Cooldown { get; [UsedImplicitly] private set; }

@@ -22,9 +22,8 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Medical.SuitSensors
 {
-    public class SuitSensorSystem : EntitySystem
+    public sealed class SuitSensorSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
@@ -142,7 +141,7 @@ namespace Content.Server.Medical.SuitSensors
                 return;
 
             // standard interaction checks
-            if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanDrop(args.User))
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             args.Verbs.UnionWith(new[]
