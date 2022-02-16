@@ -9,6 +9,7 @@
     state: industrial-working
   - type: ReagentDispenser
     pack: ChemDispenserStandardInventory
+    emagPack: ChemDispenserEmagInventory
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Construction

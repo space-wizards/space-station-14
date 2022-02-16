@@ -23,7 +23,7 @@ namespace Content.Shared.Chemistry.Dispenser
         /// <summary>
         /// A list of reagents which this may dispense. Defined in yaml prototype, see <see cref="ReagentDispenserInventoryPrototype"/>.
         /// </summary>
-        protected readonly List<ReagentDispenserInventoryEntry> Inventory = new();
+        public readonly List<ReagentDispenserInventoryEntry> Inventory = new();
 
         [Serializable, NetSerializable]
         public class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState

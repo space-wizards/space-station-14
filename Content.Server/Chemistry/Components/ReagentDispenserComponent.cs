@@ -47,6 +47,10 @@ namespace Content.Server.Chemistry.Components
 
         [ViewVariables] [DataField("pack")] private string _packPrototypeId = "";
 
+        [ViewVariables] [DataField("emagPack")] public string EmagPackPrototypeId = "";
+
+        public bool AlreadyEmagged = false;
+
         [DataField("clickSound")]
         private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
@@ -118,6 +122,24 @@ namespace Content.Server.Chemistry.Components
 
             Inventory.Sort(_comparer);
         }
+
+        public void InitializeFromPrototype(string pack)
+        {
+            if (string.IsNullOrEmpty(pack)) return;
+
+            if (!_prototypeManager.TryIndex(pack, out ReagentDispenserInventoryPrototype? packPrototype))
+            {
+                return;
+            }
+
+            foreach (var entry in packPrototype.Inventory)
+            {
+                Inventory.Add(new ReagentDispenserInventoryEntry(entry));
+            }
+
+            Inventory.Sort(_comparer);
+        }
+
 
         private void OnPowerChanged(PowerChangedMessage e)
         {

@@ -19,7 +19,6 @@
   - Sugar
   - JuiceOrange
   - JuiceLime
-  - JuiceWatermelon
   ###Hacked
   #- Fourteen Loko
   #- GrapeSoda
@@ -50,3 +49,18 @@
   #- Patron
   #- JuiceWatermelon
   #- JuiceBerry
+
+
+- type: reagentDispenserInventory
+  id: SodaDispenserEmagInventory
+  inventory:
+    - FourteenLoko
+    - Ephedrine
+    - Histamine
+
+- type: reagentDispenserInventory
+  id: BoozeDispenserEmagInventory
+  inventory:
+    - AtomicBomb
+    - Ethanol
+    - Iron
