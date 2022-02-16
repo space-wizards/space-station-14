@@ -66,6 +66,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnExamined(EntityUid uid, DrinkComponent component, ExaminedEvent args)
         {
+            /*
             if (!component.Opened || !args.IsInDetailsRange)
                 return;
 
@@ -73,6 +74,18 @@ namespace Content.Server.Nutrition.EntitySystems
             var openedText =
                 Loc.GetString(IsEmpty(uid, component) ? "drink-component-on-examine-is-empty" : "drink-component-on-examine-is-opened");
             args.Message.AddMarkup($"\n{Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText))}");
+            */
+
+            if (component.IsOpenable == true)
+            {
+                if (!component.Opened || !args.IsInDetailsRange)
+                    return;
+
+                var color = IsEmpty(uid, component) ? "gray" : "yellow";
+                var openedText =
+                    Loc.GetString(IsEmpty(uid, component) ? "drink-component-on-examine-is-empty" : "drink-component-on-examine-is-opened");
+                args.Message.AddMarkup($"\n{Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText))}");
+            }
         }
 
         private void SetOpen(EntityUid uid, bool opened = false, DrinkComponent? component = null)

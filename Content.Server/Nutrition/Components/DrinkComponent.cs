@@ -26,6 +26,10 @@ namespace Content.Server.Nutrition.Components
         [DataField("isOpen")]
         internal bool DefaultToOpened;
 
+        [ViewVariables]
+        [DataField("isOpenable")]
+        public bool IsOpenable = true;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 TransferAmount { get; [UsedImplicitly] private set; } = FixedPoint2.New(5);
 

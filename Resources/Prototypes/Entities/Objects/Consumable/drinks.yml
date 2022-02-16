@@ -28,7 +28,8 @@
   abstract: true
   components:
   - type: Drink
-    isOpen: true
+    isOpen: false
+    isOpenable: false
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
