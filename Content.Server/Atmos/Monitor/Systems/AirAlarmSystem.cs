@@ -14,7 +14,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Emag.Systems;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -169,7 +168,6 @@ namespace Content.Server.Atmos.Monitor.Systems
             SubscribeLocalEvent<AirAlarmComponent, BoundUIClosedEvent>(OnClose);
             SubscribeLocalEvent<AirAlarmComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<AirAlarmComponent, InteractHandEvent>(OnInteract);
-            SubscribeLocalEvent<AirAlarmComponent, GotEmaggedEvent>(OnEmagged);
         }
 
         private void OnPowerChanged(EntityUid uid, AirAlarmComponent component, PowerChangedEvent args)
@@ -221,15 +219,6 @@ namespace Content.Server.Atmos.Monitor.Systems
             SendAirData(uid);
         }
 
-        private void OnEmagged(EntityUid uid, AirAlarmComponent component, GotEmaggedEvent args)
-        {
-            if(TryComp<AccessReaderComponent>(uid, out var accessReader))
-            {
-                EntityManager.RemoveComponent<AccessReaderComponent>(uid);
-                args.Handled = true;
-            }
-        }
-
         private void OnResyncAll(EntityUid uid, AirAlarmComponent component, AirAlarmResyncAllDevicesMessage args)
         {
             if (AccessCheck(uid, args.Session.AttachedEntity, component))
@@ -270,10 +259,8 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!Resolve(uid, ref component))
                 return false;
 
-            if (user == null) return false;
-
-            if (!EntityManager.TryGetComponent(uid, out AccessReaderComponent reader)) //If there's no access reader anyone can use it
-                return true;
+            if (!EntityManager.TryGetComponent(uid, out AccessReaderComponent reader) || user == null)
+                return false;
 
             if (!_accessSystem.IsAllowed(reader, user.Value) && !component.FullAccess)
             {
