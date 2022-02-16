@@ -9,7 +9,7 @@ namespace Content.Server.AI.Operators.Inventory
     /// <summary>
     /// A Generic interacter; if you need to check stuff then make your own
     /// </summary>
-    public class InteractWithEntityOperator : AiOperator
+    public sealed class InteractWithEntityOperator : AiOperator
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

@@ -11,7 +11,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [Serializable]
     [DataDefinition]
-    public class SpawnEntitiesBehavior : IThresholdBehavior
+    public sealed class SpawnEntitiesBehavior : IThresholdBehavior
     {
         /// <summary>
         ///     Entities spawned on reaching this threshold, from a min to a max.

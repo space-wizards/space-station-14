@@ -14,7 +14,7 @@ namespace Content.Shared.Pulling.Components
     [NetworkedComponent()]
     [Friend(typeof(SharedPullingStateManagementSystem))]
     [RegisterComponent]
-    public class SharedPullableComponent : Component
+    public sealed class SharedPullableComponent : Component
     {
         public float? MaxDistance => PullJoint?.MaxLength;
 
@@ -88,7 +88,7 @@ namespace Content.Shared.Pulling.Components
     }
 
     [Serializable, NetSerializable]
-    public class PullableComponentState : ComponentState
+    public sealed class PullableComponentState : ComponentState
     {
         public readonly EntityUid? Puller;
 

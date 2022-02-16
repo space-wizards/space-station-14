@@ -11,7 +11,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Server.Radar;
 
-public class RadarConsoleSystem : EntitySystem
+public sealed class RadarConsoleSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
 

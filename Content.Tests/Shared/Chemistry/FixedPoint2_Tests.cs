@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Content.Tests.Shared.Chemistry
 {
     [TestFixture, TestOf(typeof(FixedPoint2))]
-    public class FixedPoint2_Tests
+    public sealed class FixedPoint2_Tests
     {
         [Test]
         [TestCase(1, "1")]

@@ -10,7 +10,7 @@ namespace Content.Server.Light.Components
     ///     It doesn't consume any power and can be toggle only by verb.
     /// </summary>
     [RegisterComponent]
-    public class UnpoweredFlashlightComponent : Component
+    public sealed class UnpoweredFlashlightComponent : Component
     {
         [DataField("toggleFlashlightSound")]
         public SoundSpecifier ToggleSound = new SoundPathSpecifier("/Audio/Items/flashlight_pda.ogg");

@@ -209,7 +209,7 @@ public enum DoorVisuals
 }
 
 [Serializable, NetSerializable]
-public class DoorComponentState : ComponentState
+public sealed class DoorComponentState : ComponentState
 {
     public readonly DoorState DoorState;
     public readonly List<EntityUid> CurrentlyCrushing;

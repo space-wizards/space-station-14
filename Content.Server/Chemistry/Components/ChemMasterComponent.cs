@@ -35,7 +35,7 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedChemMasterComponent))]
-    public class ChemMasterComponent : SharedChemMasterComponent, IActivate
+    public sealed class ChemMasterComponent : SharedChemMasterComponent, IActivate
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -162,11 +162,6 @@ namespace Content.Server.Chemistry.Components
             if (playerEntity == default)
                 return false;
 
-            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-
-            //Check if player can interact in their current state
-            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
-                return false;
             //Check if device is powered
             if (needsPower && !Powered)
                 return false;

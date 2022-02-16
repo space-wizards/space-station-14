@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Flash
 {
-    public class FlashSystem : SharedFlashSystem
+    public sealed class FlashSystem : SharedFlashSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;

@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.Stack
 {
     [UsedImplicitly]
-    public class StackSystem : SharedStackSystem
+    public sealed class StackSystem : SharedStackSystem
     {
         public override void Initialize()
         {

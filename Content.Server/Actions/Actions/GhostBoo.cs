@@ -15,7 +15,7 @@ namespace Content.Server.Actions.Actions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class GhostBoo : IInstantAction
+    public sealed class GhostBoo : IInstantAction
     {
         [DataField("radius")] private float _radius = 3;
         [DataField("cooldown")] private float _cooldown = 120;

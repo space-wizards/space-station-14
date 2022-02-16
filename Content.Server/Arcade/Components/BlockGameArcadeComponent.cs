@@ -17,7 +17,7 @@ namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class BlockGameArcadeComponent : Component, IActivate
+    public sealed class BlockGameArcadeComponent : Component, IActivate
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -47,9 +47,6 @@ namespace Content.Server.Arcade.Components
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if(!Powered || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
-                return;
-
-            if(!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return;
 
             UserInterface?.Toggle(actor.PlayerSession);
@@ -130,13 +127,6 @@ namespace Content.Server.Arcade.Components
                 case BlockGameMessages.BlockGamePlayerActionMessage playerActionMessage:
                     if (obj.Session != _player) break;
 
-                    // TODO: Should this check if the Owner can interact...?
-                    if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(Owner))
-                    {
-                        DeactivePlayer(obj.Session);
-                        break;
-                    }
-
                     if (playerActionMessage.PlayerAction == BlockGamePlayerAction.NewGame)
                     {
                         if(_game?.Started == true) _game = new BlockGame(this);
@@ -156,7 +146,7 @@ namespace Content.Server.Arcade.Components
             _game?.GameTick(frameTime);
         }
 
-        private class BlockGame
+        private sealed class BlockGame
         {
             //note: field is 10(0 -> 9) wide and 20(0 -> 19) high
 

@@ -11,7 +11,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Singularity
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class StartSingularityEngineCommand : IConsoleCommand
+    public sealed class StartSingularityEngineCommand : IConsoleCommand
     {
         public string Command => "startsingularityengine";
         public string Description => "Automatically turns on the particle accelerator and containment field emitters.";

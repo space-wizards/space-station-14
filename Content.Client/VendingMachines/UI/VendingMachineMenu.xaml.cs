@@ -14,7 +14,7 @@ using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 namespace Content.Client.VendingMachines.UI
 {
     [GenerateTypedNameReferences]
-    public partial class VendingMachineMenu : DefaultWindow
+    public sealed partial class VendingMachineMenu : DefaultWindow
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

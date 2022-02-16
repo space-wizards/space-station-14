@@ -21,7 +21,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Body.Systems
 {
     [UsedImplicitly]
-    public class RespiratorSystem : EntitySystem
+    public sealed class RespiratorSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSys = default!;
         [Dependency] private readonly AdminLogSystem _logSys = default!;
@@ -192,12 +192,12 @@ namespace Content.Server.Body.Systems
     }
 }
 
-public class InhaleLocationEvent : EntityEventArgs
+public sealed class InhaleLocationEvent : EntityEventArgs
 {
     public GasMixture? Gas;
 }
 
-public class ExhaleLocationEvent : EntityEventArgs
+public sealed class ExhaleLocationEvent : EntityEventArgs
 {
     public GasMixture? Gas;
 }

@@ -7,7 +7,7 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Decals
 {
-    public class DecalSystem : SharedDecalSystem
+    public sealed class DecalSystem : SharedDecalSystem
     {
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
 

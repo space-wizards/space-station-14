@@ -9,7 +9,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Body.Systems
 {
-    public class BrainSystem : EntitySystem
+    public sealed class BrainSystem : EntitySystem
     {
         public override void Initialize()
         {

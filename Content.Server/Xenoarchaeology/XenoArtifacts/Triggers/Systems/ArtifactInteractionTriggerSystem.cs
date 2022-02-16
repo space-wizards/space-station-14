@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
-public class ArtifactInteractionTriggerSystem : EntitySystem
+public sealed class ArtifactInteractionTriggerSystem : EntitySystem
 {
     [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
 

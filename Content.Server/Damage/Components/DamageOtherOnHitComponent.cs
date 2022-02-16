@@ -9,7 +9,7 @@ namespace Content.Server.Damage.Components
 {
     [Friend(typeof(DamageOtherOnHitSystem))]
     [RegisterComponent]
-    public class DamageOtherOnHitComponent : Component
+    public sealed class DamageOtherOnHitComponent : Component
     {
         [DataField("ignoreResistances")]
         [ViewVariables(VVAccess.ReadWrite)]

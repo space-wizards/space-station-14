@@ -9,7 +9,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.GuideGenerator;
 
-public class ReactionJsonGenerator
+public sealed class ReactionJsonGenerator
 {
     public static void PublishJson(StreamWriter file)
     {

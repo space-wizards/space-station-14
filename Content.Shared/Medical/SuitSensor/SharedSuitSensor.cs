@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Medical.SuitSensor
 {
     [Serializable, NetSerializable]
-    public class SuitSensorStatus
+    public sealed class SuitSensorStatus
     {
         public SuitSensorStatus(string name, string job)
         {

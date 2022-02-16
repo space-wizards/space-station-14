@@ -6,6 +6,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 ///     Activate artifact just by touching it.
 /// </summary>
 [RegisterComponent]
-public class ArtifactInteractionTriggerComponent : Component
+public sealed class ArtifactInteractionTriggerComponent : Component
 {
 }

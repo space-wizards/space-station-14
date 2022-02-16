@@ -5,7 +5,7 @@ using System;
 namespace Content.Shared.Traitor.Uplink
 {
     [Serializable, NetSerializable]
-    public class UplinkAccountData
+    public sealed class UplinkAccountData
     {
         public EntityUid? DataAccountHolder;
         public int DataBalance;

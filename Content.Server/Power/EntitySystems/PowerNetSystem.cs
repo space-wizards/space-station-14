@@ -17,7 +17,7 @@ namespace Content.Server.Power.EntitySystems
     ///     Manages power networks, power state, and all power components.
     /// </summary>
     [UsedImplicitly]
-    public class PowerNetSystem : EntitySystem
+    public sealed class PowerNetSystem : EntitySystem
     {
         private readonly PowerState _powerState = new();
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();

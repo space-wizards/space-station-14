@@ -14,7 +14,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Light.EntitySystems
 {
-    public class MatchstickSystem : EntitySystem
+    public sealed class MatchstickSystem : EntitySystem
     {
         private HashSet<MatchstickComponent> _litMatches = new();
         [Dependency]
