@@ -189,6 +189,7 @@ namespace Content.Server.Lock
         private void OnEmagged(EntityUid uid, LockComponent component, GotEmaggedEvent args)
         {
             Unlock(uid, uid, component);
+            args.Handled = true;
         }
     }
 }

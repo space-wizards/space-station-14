@@ -4,7 +4,6 @@
   abstract: true
   components:
   - type: AccessReader
-  - type: Emaggable
   - type: Lock
   - type: Sprite
     netsync: false

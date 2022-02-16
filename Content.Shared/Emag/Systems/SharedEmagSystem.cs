@@ -20,23 +20,23 @@ namespace Content.Shared.Emag.Systems
 
         private void OnAfterInteract(EntityUid uid, EmagComponent component, AfterInteractEvent args)
         {
-            if (!args.CanReach)
+            if (!args.CanReach || args.Target == null)
                 return;
 
             if (component.Charges <= 0)
                 return;
 
-            if (HasComp<EmaggableComponent>(args.Target))
+            var emaggedEvent = new GotEmaggedEvent(args.Target.Value);
+            RaiseLocalEvent(args.Target.Value, emaggedEvent, false);
+            if (emaggedEvent.Handled)
             {
-                var emaggedEvent = new GotEmaggedEvent(args.Target.Value);
-                RaiseLocalEvent(args.Target.Value, emaggedEvent, false);
                 component.Charges--;
                 return;
             }
         }
     }
 
-    public sealed class GotEmaggedEvent : CancellableEntityEventArgs
+    public sealed class GotEmaggedEvent : HandledEntityEventArgs
     {
         public readonly EntityUid TargetUid;
 

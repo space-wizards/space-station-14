@@ -295,7 +295,6 @@
   components:
   - type: AccessReader
     access: [["Security"]]
-  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/sec_gear.rsi
@@ -325,7 +324,6 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
-  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/engicrate_secure.rsi
@@ -355,7 +353,6 @@
   components:
   - type: AccessReader
     access: [["Medical"]]
-  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/medicalcrate_secure.rsi
@@ -384,7 +381,6 @@
   parent: CrateBaseSecure
   components:
   - type: AccessReader
-  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/privatecrate_secure.rsi
@@ -414,7 +410,6 @@
   components:
   - type: AccessReader
     access: [["Research"]]
-  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/scicrate_secure.rsi
@@ -444,7 +439,6 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
-  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/plasma.rsi
@@ -473,7 +467,6 @@
   parent: CrateBaseSecure
   components:
   - type: AccessReader
-  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/secure.rsi
@@ -503,7 +496,6 @@
   components:
   - type: AccessReader
     access: [["Hydroponics"]]
-  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/hydro_secure.rsi
@@ -533,7 +525,6 @@
   components:
   - type: AccessReader
     access: [["Armory"]]
-  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/weapon.rsi
@@ -560,7 +551,6 @@
   components:
   - type: AccessReader
     access: [["Command"]]
-  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/secure.rsi

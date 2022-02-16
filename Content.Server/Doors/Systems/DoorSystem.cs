@@ -315,6 +315,7 @@ public sealed class DoorSystem : SharedDoorSystem
             StartOpening(uid);
         }
         airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
+        args.Handled = true;
     }
 }
 
