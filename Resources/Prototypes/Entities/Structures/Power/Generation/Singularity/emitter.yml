@@ -71,6 +71,7 @@
   - type: Appearance
     visuals:
     - type: EmitterVisualizer
+  - type: Emaggable
   - type: Lock
     locked: false
   - type: AccessReader

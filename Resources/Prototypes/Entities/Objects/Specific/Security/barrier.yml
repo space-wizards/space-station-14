@@ -25,6 +25,7 @@
       mass: 150
   - type: AccessReader
     access: [["Security"]]
+  - type: Emaggable
   - type: Lock
     locked: false
     lockOnClick: true # toggle lock just by clicking on barrier

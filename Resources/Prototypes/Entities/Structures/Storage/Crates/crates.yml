@@ -23,7 +23,7 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
-      
+
 
 - type: entity
   id: CratePlastic
@@ -295,6 +295,7 @@
   components:
   - type: AccessReader
     access: [["Security"]]
+  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/sec_gear.rsi
@@ -324,6 +325,7 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
+  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/engicrate_secure.rsi
@@ -353,6 +355,7 @@
   components:
   - type: AccessReader
     access: [["Medical"]]
+  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/medicalcrate_secure.rsi
@@ -381,6 +384,7 @@
   parent: CrateBaseSecure
   components:
   - type: AccessReader
+  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/privatecrate_secure.rsi
@@ -410,6 +414,7 @@
   components:
   - type: AccessReader
     access: [["Research"]]
+  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/scicrate_secure.rsi
@@ -431,7 +436,7 @@
     - type: StorageVisualizer
       state_open: scicratesecure_open
       state_closed: scicratesecure_door
-    
+
 - type: entity
   id: CratePlasma
   name: plasma crate
@@ -439,6 +444,7 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
+  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/plasma.rsi
@@ -467,6 +473,7 @@
   parent: CrateBaseSecure
   components:
   - type: AccessReader
+  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/secure.rsi
@@ -496,6 +503,7 @@
   components:
   - type: AccessReader
     access: [["Hydroponics"]]
+  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/hydro_secure.rsi
@@ -517,7 +525,7 @@
     - type: StorageVisualizer
       state_open: hydrocratesecure_open
       state_closed: hydrocratesecure_door
-    
+
 - type: entity
   id: CrateWeaponSecure
   name: secure weapon crate
@@ -525,6 +533,7 @@
   components:
   - type: AccessReader
     access: [["Armory"]]
+  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/weapon.rsi
@@ -543,7 +552,7 @@
     - type: StorageVisualizer
       state_open: weaponcrate_open
       state_closed: weaponcrate_door
-      
+
 - type: entity
   id: CrateCommandSecure
   name: command crate
@@ -551,6 +560,7 @@
   components:
   - type: AccessReader
     access: [["Command"]]
+  - type: Emaggable
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/secure.rsi

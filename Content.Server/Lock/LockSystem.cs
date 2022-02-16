@@ -1,6 +1,8 @@
 using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
 using Content.Server.Storage.Components;
+using Content.Server.Emag.Systems;
+using Content.Server.Emag.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Examine;
@@ -33,6 +35,7 @@ namespace Content.Server.Lock
             SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated);
             SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<LockComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleLockVerb);
+            SubscribeLocalEvent<LockComponent, GotEmaggedEvent>(OnEmagged);
         }
 
         private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
@@ -181,6 +184,11 @@ namespace Content.Server.Lock
             verb.Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock");
             // TODO VERB ICONS need padlock open/close icons.
             args.Verbs.Add(verb);
+        }
+
+        private void OnEmagged(EntityUid uid, LockComponent component, GotEmaggedEvent args)
+        {
+            Unlock(uid, uid, component);
         }
     }
 }
