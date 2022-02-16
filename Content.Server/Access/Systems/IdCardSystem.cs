@@ -54,9 +54,12 @@ namespace Content.Server.Access.Systems
                         uid, Filter.Pvs(uid));
                 }
 
-                // Give them a wonderful new access to compensate for everything
-                var random = _random.Pick(_prototypeManager.EnumeratePrototypes<AccessLevelPrototype>().ToArray());
-                access.Tags.Add(random.ID);
+                // Remove only one access if they were lucky enough
+                if (access.Tags.Count > 0)
+                {
+                    var random = _random.Pick(access.Tags.ToArray());
+                    access.Tags.Remove(random);
+                }
             }
         }
 
