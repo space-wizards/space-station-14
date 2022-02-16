@@ -2,7 +2,6 @@ using Content.Shared.Drone;
 using Content.Server.Drone.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
-using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Examine;
@@ -12,7 +11,6 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.Body.Components;
 using Content.Server.UserInterface;
-using Content.Server.Construction.Components;
 using Robust.Shared.Player;
 using Content.Shared.Tag;
 
@@ -26,7 +24,7 @@ namespace Content.Server.Drone
         {
             base.Initialize();
             SubscribeLocalEvent<DroneComponent, InteractionAttemptEvent>(OnInteractionAttempt);
-            SubscribeLocalEvent<ComputerComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
+            SubscribeLocalEvent<DroneComponent, UserOpenActivatableUIAttemptEvent>(OnActivateUIAttempt);
             SubscribeLocalEvent<DroneComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<DroneComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DroneComponent, MindAddedMessage>(OnMindAdded);
@@ -41,12 +39,9 @@ namespace Content.Server.Drone
             }
         }
 
-        private void OnActivateUIAttempt(EntityUid uid, ComputerComponent component, ActivatableUIOpenAttemptEvent args)
+        private void OnActivateUIAttempt(EntityUid uid, DroneComponent component, UserOpenActivatableUIAttemptEvent args)
         {
-            if (HasComp<DroneComponent>(args.User))
-            {
-                args.Cancel();
-            }
+            args.Cancel();
         }
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)
