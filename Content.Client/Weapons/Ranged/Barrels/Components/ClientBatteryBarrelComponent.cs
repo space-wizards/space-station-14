@@ -1,62 +1,39 @@
-using System;
 using Content.Client.Items.Components;
 using Content.Client.Stylesheets;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
     [NetworkedComponent()]
-    public class ClientBatteryBarrelComponent : Component, IItemStatus
+    public sealed class ClientBatteryBarrelComponent : Component, IItemStatus
     {
-        private StatusControl? _statusControl;
-
-        /// <summary>
-        ///     Count of bullets in the magazine.
-        /// </summary>
-        /// <remarks>
-        ///     Null if no magazine is inserted.
-        /// </remarks>
-        [ViewVariables]
-        public (int count, int max)? MagazineCount { get; private set; }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not BatteryBarrelComponentState cast)
-                return;
-
-            MagazineCount = cast.Magazine;
-            _statusControl?.Update();
-        }
+        public StatusControl? ItemStatus;
 
         public Control MakeControl()
         {
-            _statusControl = new StatusControl(this);
-            _statusControl.Update();
-            return _statusControl;
+            ItemStatus = new StatusControl(this);
+
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent appearance))
+                ItemStatus.Update(appearance);
+
+            return ItemStatus;
         }
 
         public void DestroyControl(Control control)
         {
-            if (_statusControl == control)
+            if (ItemStatus == control)
             {
-                _statusControl = null;
+                ItemStatus = null;
             }
         }
 
-        private sealed class StatusControl : Control
+        public sealed class StatusControl : Control
         {
             private readonly ClientBatteryBarrelComponent _parent;
             private readonly BoxContainer _bulletsList;
@@ -104,18 +81,19 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                 });
             }
 
-            public void Update()
+            public void Update(AppearanceComponent appearance)
             {
                 _bulletsList.RemoveAllChildren();
 
-                if (_parent.MagazineCount == null)
+                if (!appearance.TryGetData(MagazineBarrelVisuals.MagLoaded, out bool loaded) || !loaded)
                 {
                     _noBatteryLabel.Visible = true;
                     _ammoCount.Visible = false;
                     return;
                 }
 
-                var (count, capacity) = _parent.MagazineCount.Value;
+                appearance.TryGetData(AmmoVisuals.AmmoCount, out int count);
+                appearance.TryGetData(AmmoVisuals.AmmoMax, out int capacity);
 
                 _noBatteryLabel.Visible = false;
                 _ammoCount.Visible = true;
