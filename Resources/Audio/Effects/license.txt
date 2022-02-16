@@ -15,7 +15,8 @@ poster_broken.ogg taken from https://github.com/tgstation/tgstation/blob/2834383
 
 poster_being_set.ogg taken from https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_ripped.ogg
 
-saw.ogg taken from https://freesound.org/people/derjuli/sounds/448133/ and clipped - CC0-1.0
+saw.ogg taken from https://freesound.org/people/domiscz/sounds/461728/ and clipped - CC0-1.0
+*It's actually an angle grinder
 
 smoke.ogg taken from https://github.com/tgstation/tgstation/blob/a5d362ce84e4f0c61026236d5ec84d3c81553664/sound/effects/smoke.ogg
 

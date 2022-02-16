@@ -18,7 +18,7 @@ namespace Content.Server.Recycling
         [Dependency] private readonly AmbientSoundSystem _ambience = default!;
         [Dependency] private readonly TagSystem _tags = default!;
 
-        private const float RecyclerSoundCooldown = 0.2f;
+        private const float RecyclerSoundCooldown = 0.8f;
 
         public override void Initialize()
         {
@@ -77,7 +77,7 @@ namespace Content.Server.Recycling
 
             if (component.Sound != null && (_timing.CurTime - component.LastSound).TotalSeconds > RecyclerSoundCooldown)
             {
-                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.Sound.GetSound(), AudioHelpers.WithVariation(0.1f));
+                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.Sound.GetSound(), AudioHelpers.WithVariation(0.01f).WithVolume(-3));
                 component.LastSound = _timing.CurTime;
             }
         }

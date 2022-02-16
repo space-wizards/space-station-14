@@ -6,7 +6,7 @@
   components:
   - type: AmbientSound
     enabled: false
-    volume: -5
+    volume: -8
     range: 5
     sound:
       # TODO: https://freesound.org/people/derjuli/sounds/448133/ CC-NC-
