@@ -11,6 +11,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.Body.Components;
+using Content.Server.UserInterface;
 using Content.Server.Construction.Components;
 using Robust.Shared.Player;
 using Content.Shared.Tag;
@@ -25,7 +26,7 @@ namespace Content.Server.Drone
         {
             base.Initialize();
             SubscribeLocalEvent<DroneComponent, InteractionAttemptEvent>(OnInteractionAttempt);
-            SubscribeLocalEvent<ComputerComponent, InteractHandEvent>(OnInteractHand); //This is only raised on the target unfortunately
+            SubscribeLocalEvent<ComputerComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
             SubscribeLocalEvent<DroneComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<DroneComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DroneComponent, MindAddedMessage>(OnMindAdded);
@@ -40,11 +41,11 @@ namespace Content.Server.Drone
             }
         }
 
-        private void OnInteractHand(EntityUid uid, ComputerComponent component, InteractHandEvent args)
+        private void OnActivateUIAttempt(EntityUid uid, ComputerComponent component, ActivatableUIOpenAttemptEvent args)
         {
             if (HasComp<DroneComponent>(args.User))
             {
-                args.Handled = true;
+                args.Cancel();
             }
         }
 
