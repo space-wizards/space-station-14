@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Stack;
 using Content.Shared.Prototypes;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
@@ -25,6 +20,10 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         public void Execute(EntityUid owner, DestructibleSystem system)
         {
             var position = system.EntityManager.GetComponent<TransformComponent>(owner).MapPosition;
+            
+            var offsetPosition = () => position.Offset((
+                (system.Random.NextFloat() * 2 - 1) * Offset,
+                (system.Random.NextFloat() * 2 - 1) * Offset));
 
             foreach (var (entityId, minMax) in Spawn)
             {
@@ -36,8 +35,8 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
                 if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId))
                 {
-                    var spawned = system.EntityManager.SpawnEntity(entityId, position);
-                    var stack = IoCManager.Resolve<IEntityManager>().GetComponent<StackComponent>(spawned);
+                    var spawned = system.EntityManager.SpawnEntity(entityId, offsetPosition());
+                    var stack = system.EntityManager.GetComponent<StackComponent>(spawned);
                     EntitySystem.Get<StackSystem>().SetCount(spawned, count, stack);
                     spawned.RandomOffset(Offset);
                 }
@@ -45,7 +44,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 {
                     for (var i = 0; i < count; i++)
                     {
-                        var spawned = system.EntityManager.SpawnEntity(entityId, position);
+                        var spawned = system.EntityManager.SpawnEntity(entityId, offsetPosition());
                         spawned.RandomOffset(Offset);
                     }
                 }
