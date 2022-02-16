@@ -37,7 +37,7 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedReagentDispenserComponent))]
-    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate
+    public sealed class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate
     {
         private static ReagentInventoryComparer _comparer = new();
         public static string SolutionName = "reagent";
@@ -207,11 +207,6 @@ namespace Content.Server.Chemistry.Components
             if (playerEntity == null)
                 return false;
 
-            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-
-            //Check if player can interact in their current state
-            if (!actionBlocker.CanInteract(playerEntity.Value) || !actionBlocker.CanUse(playerEntity.Value))
-                return false;
             //Check if device is powered
             if (needsPower && !Powered)
                 return false;
@@ -307,7 +302,7 @@ namespace Content.Server.Chemistry.Components
             SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
-        private class ReagentInventoryComparer : Comparer<ReagentDispenserInventoryEntry>
+        private sealed class ReagentInventoryComparer : Comparer<ReagentDispenserInventoryEntry>
         {
             public override int Compare(ReagentDispenserInventoryEntry x, ReagentDispenserInventoryEntry y)
             {

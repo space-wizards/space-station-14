@@ -2,7 +2,7 @@
 
 namespace Content.Client.HUD.UI
 {
-    public class TopNotification : Control
+    public sealed class TopNotification : Control
     {
 
     }

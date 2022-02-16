@@ -20,6 +20,9 @@
     - state: bolted_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseBolted"]
+    - state: emergency_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Wires
@@ -42,3 +45,33 @@
     fixVacuum: true
     airBlockedDirection:
       - South
+
+- type: entity
+  id: AirlockGlassShuttle
+  parent: AirlockShuttle
+  name: external airlock
+  suffix: Glass, Docking
+  description: Necessary for connecting two space craft together.
+  components:
+  - type: Docking
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+    - state: closed_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseUnlit"]
+    - state: welded
+      map: ["enum.DoorVisualLayers.BaseWelded"]
+    - state: bolted_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseBolted"]
+    - state: emergency_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
+    - state: panel_open
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Occluder
+    enabled: false

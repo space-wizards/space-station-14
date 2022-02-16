@@ -47,12 +47,15 @@
   name: broken plate
   parent: BaseItem
   id: FoodPlateTrash
-  description: A large plate, broken and useless.
+  description: A broken plate. Useless.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-trash
     netsync: false
+  - type: Tag
+    tags:
+    - Trash
 
 # Small Plate
 
@@ -84,10 +87,8 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  name: broken plate
-  parent: BaseItem
+  parent: FoodPlateTrash
   id: FoodPlateSmallTrash
-  description: A broken plate. Useless.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi

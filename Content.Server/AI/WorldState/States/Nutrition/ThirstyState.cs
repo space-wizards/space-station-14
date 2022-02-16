@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.AI.WorldState.States.Nutrition
 {
     [UsedImplicitly]
-    public class ThirstyState : StateData<bool>
+    public sealed class ThirstyState : StateData<bool>
     {
         public override string Name => "Thirsty";
 

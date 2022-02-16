@@ -22,6 +22,7 @@
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
     drawdepth: WallMountedItems
+    netsync: false
     layers:
     - state: on
       map: ["enum.PoweredLightLayers.Base"]
@@ -65,7 +66,7 @@
   name: light
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
   id: PoweredlightEmpty
-  suffix: Empty, Powered
+  suffix: Powered, Empty
   parent: WallLight
   components:
   - type: Sprite
@@ -106,7 +107,7 @@
 - type: entity
   id: PoweredlightLED
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix: LED tube, Powered
+  suffix: Powered, LED
   parent: Poweredlight
   components:
   - type: PoweredLight
@@ -114,11 +115,22 @@
     damage:
       types:
         Heat: 20
+     
+- type: entity
+  parent: WallLight
+  id: UnpoweredLightLED
+  suffix: Unpowered, LED
+  components:
+  - type: PointLight
+    radius: 10
+    energy: 2.5
+    softness: 0.9
+    color: "#EEEEFF"
         
 - type: entity
   id: PoweredlightExterior
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix: Exterior tube, Powered
+  suffix: Powered, Exterior Blue
   parent: Poweredlight
   components:
   - type: PoweredLight
@@ -128,9 +140,21 @@
         Heat: 20
         
 - type: entity
+  parent: WallLight
+  id: UnpoweredLightExterior
+  suffix: Unpowered, Exterior Blue
+  components:
+  - type: PointLight
+    radius: 12
+    energy: 4.5
+    softness: 0.5
+    color: "#B4FCF0"
+        
+
+- type: entity
   id: PoweredlightSodium
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix: Sodium tube, Powered
+  suffix: Powered, Sodium Orange
   parent: Poweredlight
   components:
   - type: PoweredLight
@@ -138,6 +162,17 @@
     damage:
       types:
         Heat: 20
+        
+- type: entity
+  parent: WallLight
+  id: UnpoweredLightSodium
+  suffix: Unpowered, Sodium Orange
+  components:
+  - type: PointLight
+    radius: 10
+    energy: 4
+    softness: 0.5
+    color: "#FFAF38"
 
 - type: entity
   name: small light
@@ -183,7 +218,7 @@
   name: small light
   description: "A light fixture. Draws power and produces light when equipped with a light bulb."
   id: PoweredSmallLightEmpty
-  suffix: Empty, Powered
+  suffix: Powered, Empty
   parent: SmallLight
   components:
   - type: Sprite

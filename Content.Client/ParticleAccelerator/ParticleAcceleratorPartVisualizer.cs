@@ -12,7 +12,7 @@ namespace Content.Client.ParticleAccelerator
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class ParticleAcceleratorPartVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class ParticleAcceleratorPartVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         [DataField("baseState", required: true)]
         private string? _baseState;

@@ -246,6 +246,7 @@
     - FireExtinguisher
     - AutolatheMachineCircuitboard
     - ProtolatheMachineCircuitboard
+    - CircuitImprinterMachineCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
 
@@ -277,6 +278,7 @@
     - IndustrialEngineering
   unlockedRecipes:
     - ShuttleConsoleCircuitboard
+    - Drone
 
 # Electromagnetic Theory Technology Tree
 

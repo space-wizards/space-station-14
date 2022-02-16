@@ -1,7 +1,7 @@
 - type: entity
   id: CartridgeLRifleBase
   name: cartridge (.30 rifle)
-  parent: BaseItem
+  parent: BaseCartridge
   abstract: true
   components:
   - type: Ammo
@@ -16,9 +16,6 @@
   - type: Appearance
     visuals:
     - type: SpentAmmoVisualizer
-  - type: Tag
-    tags:
-    - Cartridge
 
 - type: entity
   id: CartridgeLRifle

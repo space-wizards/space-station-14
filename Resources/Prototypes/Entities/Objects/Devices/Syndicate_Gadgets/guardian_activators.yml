@@ -13,7 +13,7 @@
 
 - type: entity
   name: holoparasite box
-  parent: BoxBase
+  parent: BoxCardboard
   id: BoxHoloparasite
   description: A box containing a holoparasite injector
   components:
@@ -21,6 +21,7 @@
     contents:
       - id: HoloparasiteInjector
       - id: HoloparasiteInfo
+      - id: ClothingHeadHatBizarreSoft
   - type: Sprite
     layers:
       - state: box

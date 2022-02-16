@@ -9,7 +9,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 ///     Spawn a random gas with random temperature when artifact activated.
 /// </summary>
 [RegisterComponent]
-public class GasArtifactComponent : Component
+public sealed class GasArtifactComponent : Component
 {
     public override string Name => "GasArtifact";
 

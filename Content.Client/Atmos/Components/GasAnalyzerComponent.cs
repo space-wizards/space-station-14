@@ -12,7 +12,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Atmos.Components
 {
     [RegisterComponent]
-    internal class GasAnalyzerComponent : SharedGasAnalyzerComponent, IItemStatus
+    internal sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent, IItemStatus
     {
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
         [ViewVariables] private GasAnalyzerDanger Danger { get; set; }
@@ -43,7 +43,7 @@ namespace Content.Client.Atmos.Components
                 _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
                 AddChild(_label);
 
-                parent._uiUpdateNeeded = true;
+                Update();
             }
 
             /// <inheritdoc />
@@ -56,6 +56,11 @@ namespace Content.Client.Atmos.Components
                     return;
                 }
 
+                Update();
+            }
+
+            public void Update()
+            {
                 _parent._uiUpdateNeeded = false;
 
                 var color = _parent.Danger switch

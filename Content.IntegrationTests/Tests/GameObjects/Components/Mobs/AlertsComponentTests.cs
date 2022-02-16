@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 {
     [TestFixture]
     [TestOf(typeof(AlertsComponent))]
-    public class AlertsComponentTests : ContentIntegrationTest
+    public sealed class AlertsComponentTests : ContentIntegrationTest
     {
         [Test]
         public async Task AlertsTest()

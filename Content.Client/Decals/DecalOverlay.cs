@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Decals
 {
-    public class DecalOverlay : Overlay
+    public sealed class DecalOverlay : Overlay
     {
         private readonly DecalSystem _system;
         private readonly IMapManager _mapManager;

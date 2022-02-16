@@ -40,7 +40,6 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly UtensilSystem _utensilSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         public override void Initialize()
@@ -49,7 +48,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             SubscribeLocalEvent<FoodComponent, UseInHandEvent>(OnUseFoodInHand);
             SubscribeLocalEvent<FoodComponent, AfterInteractEvent>(OnFeedFood);
-            SubscribeLocalEvent<FoodComponent, GetInteractionVerbsEvent>(AddEatVerb);
+            SubscribeLocalEvent<FoodComponent, GetVerbsEvent<InteractionVerb>>(AddEatVerb);
             SubscribeLocalEvent<SharedBodyComponent, FeedEvent>(OnFeed);
             SubscribeLocalEvent<ForceFeedCancelledEvent>(OnFeedCancelled);
             SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(OnInventoryIngestAttempt);
@@ -79,9 +78,6 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public bool TryFeed(EntityUid user, EntityUid target, FoodComponent food)
         {
-            if (!_actionBlockerSystem.CanInteract(user) || !_actionBlockerSystem.CanUse(user))
-                return false;
-
             // if currently being used to feed, cancel that action.
             if (food.CancelToken != null)
             {
@@ -245,7 +241,7 @@ namespace Content.Server.Nutrition.EntitySystems
             EntityManager.QueueDeleteEntity(component.Owner);
         }
 
-        private void AddEatVerb(EntityUid uid, FoodComponent component, GetInteractionVerbsEvent ev)
+        private void AddEatVerb(EntityUid uid, FoodComponent component, GetVerbsEvent<InteractionVerb> ev)
         {
             if (component.CancelToken != null)
                 return;
@@ -260,7 +256,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
                 return;
 
-            Verb verb = new()
+            InteractionVerb verb = new()
             {
                 Act = () =>
                 {

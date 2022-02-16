@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.GameTicking.Commands
 {
     [AnyCommand]
-    class ToggleReadyCommand : IConsoleCommand
+    sealed class ToggleReadyCommand : IConsoleCommand
     {
         public string Command => "toggleready";
         public string Description => "";

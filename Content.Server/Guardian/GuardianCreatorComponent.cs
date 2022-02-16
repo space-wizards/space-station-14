@@ -10,7 +10,6 @@ namespace Content.Server.Guardian
     /// Creates a GuardianComponent attached to the user's GuardianHost.
     /// </summary>
     [RegisterComponent]
-    [ComponentProtoName("GuardianCreator")]
     public sealed class GuardianCreatorComponent : Component
     {
         /// <summary>

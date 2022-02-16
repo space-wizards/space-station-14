@@ -16,7 +16,7 @@ namespace Content.Server.NodeContainer
     /// </summary>
     [RegisterComponent]
 #pragma warning disable 618
-    public class NodeContainerComponent : Component, IExamine
+    public sealed class NodeContainerComponent : Component, IExamine
 #pragma warning restore 618
     {
         //HACK: THIS BEING readOnly IS A FILTHY HACK AND I HATE IT --moony

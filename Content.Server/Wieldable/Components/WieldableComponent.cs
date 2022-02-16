@@ -9,7 +9,7 @@ namespace Content.Server.Wieldable.Components
     ///     Used for objects that can be wielded in two or more hands,
     /// </summary>
     [RegisterComponent, Friend(typeof(WieldableSystem))]
-    public class WieldableComponent : Component
+    public sealed class WieldableComponent : Component
     {
         [DataField("wieldSound")]
         public SoundSpecifier? WieldSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");

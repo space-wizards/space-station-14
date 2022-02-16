@@ -26,13 +26,13 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem
         SubscribeLocalEvent<GameRunLevelChangedEvent>(RunLevelChanged);
     }
 
-    public override void Added()
+    public override void Started()
     {
         if(GameTicker.RunLevel == GameRunLevel.InRound)
             RestartTimer();
     }
 
-    public override void Removed()
+    public override void Ended()
     {
         RoundMaxTime = TimeSpan.FromMinutes(5);
         RoundEndDelay = TimeSpan.FromMinutes(10);

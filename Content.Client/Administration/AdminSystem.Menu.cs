@@ -19,7 +19,7 @@ using Robust.Shared.Network;
 
 namespace Content.Client.Administration
 {
-    public partial class AdminSystem
+    public sealed partial class AdminSystem
     {
         [Dependency] private readonly INetManager _netManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;

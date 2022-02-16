@@ -31,10 +31,11 @@
 [color=#a4885c]11.[/color] Using information gained outside the game to your advantage is [color=#ff0000]not allowed[/color]. IC and OOC are to be kept separate at all times.
 	- Metacommunication, or communicating with other players via out of game methods (such as Discord) to gain an unfair advantage is also strictly [color=#ff0000]prohibited[/color].
     - This is a roleplaying game, thus IC conflicts must only be resolved with IC (Local) chat, utilizing voice chat, calling across the room, OOC, or other out-of-game communication methods to coordinate in-game actions is forbidden and will result in a [color=#ff0000]appeal-only permanent ban[/color] in most cases.
-	- Random PDA checks are also [color=#ff0000]prohibited[/color] under this rule.
+	- Preemptive spacing or destruction of high-risk items also falls under this rule.
 
 RULES FOR SECURITY
 [color=#a4885c]12.[/color] Security is expected to use non-lethal measures unless faced with lethal force or a situation where non-lethal measures aren't possible. Ideally, do not enter combat mode, as security stun batons do not deal damage, but still stun, when outside of combat mode.
     - If you still manage to kill someone as security, get them cloned immediately, and make sure their stuff is returned.
 
-[color=#a4885c]13.[/color] Locking people in brig (jail) indefinitely is seldom necessary. Prison stays should be at most 5 minutes, and if you have reason to permabrig someone (consistent breakouts, murderous intent, etc.) you likely also have reason to execute.
+[color=#a4885c]13.[/color] Prisoners should not be given sentences longer than 5 minutes. Certain extreme exceptions like bombers or assassins may warrant permabrigging, or [color=#ff0000]in the very worst cases[/color], execution.
+    - Note that employment at a hostile corporation (i.e. traitor status) alone [color=#ff0000]does not[/color] qualify someone for perma or execution.

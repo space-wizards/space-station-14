@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Construction
 {
-    public partial class ConstructionSystem
+    public sealed partial class ConstructionSystem
     {
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
 

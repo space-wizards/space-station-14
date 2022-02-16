@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Kitchen.Components
 {
     [RegisterComponent]
-    public class MicrowaveComponent : SharedMicrowaveComponent
+    public sealed class MicrowaveComponent : SharedMicrowaveComponent
     {
         public IPlayingAudioStream? PlayingStream { get; set; }
 

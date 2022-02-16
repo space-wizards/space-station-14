@@ -33,6 +33,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/containment.rsi
     state: icon
+    netsync: false
   - type: Icon
     sprite: Structures/Power/Generation/Singularity/containment.rsi
     state: icon
@@ -76,6 +77,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/containment_field.rsi
     state: field
+    netsync: false
   - type: Icon
     sprite: Structures/Power/Generation/Singularity/containment_field.rsi
     state: field

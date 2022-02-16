@@ -1,0 +1,113 @@
+- type: entity
+  abstract: true
+  parent: BaseStructure
+  id: BaseLightStructure
+  components:
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "0.17,0.25,-0.17,-0.30"
+      mass: 25
+      layer:
+      - MobImpassable
+      mask:
+      - Impassable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 2
+            max: 4
+      - !type:EmptyAllContainersBehaviour
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+  - type: SignalReceiver
+    inputs:
+      - name: state
+        type: bool
+  - type: UserInterface
+    interfaces:
+      - key: enum.SignalReceiverUiKey.Key
+        type: SignalPortSelectorBoundUserInterface
+
+
+- type: entity
+  parent: BaseLightStructure
+  id: LightPostSmall
+  name: post light
+  description: "An unpowered light."
+  suffix: Unpowered
+  components:
+  - type: Construction
+    graph: LightFixture
+    node: tubeLight
+  - type: Sprite
+    sprite: Structures/Decoration/LightPosts/small_light_post.rsi
+    layers:
+    - state: on
+      map: ["enum.PoweredLightLayers.Base"]
+    state: on
+  - type: PointLight
+    radius: 10
+    energy: 0.8
+    softness: 1
+    offset: "0, -0.5"
+
+
+- type: entity
+  id: PoweredLightPostSmallEmpty
+  name: post light
+  description: "A small light post."
+  suffix: Empty, Powered
+  parent: BaseLightStructure
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/LightPosts/small_light_post.rsi
+    state: off
+  - type: PointLight
+    enabled: false
+  - type: PoweredLight
+    bulb: Tube
+    damage:
+      types:
+        Heat: 20
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: DeviceNetworkComponent
+    deviceNetId: Apc
+  - type: ApcNetworkConnection
+  - type: Construction
+    graph: LightFixture
+    node: groundLight
+  - type: Appearance
+    visuals:
+    - type: PoweredLightVisualizer
+      blinkingSound:
+        path: "/Audio/Machines/light_tube_on.ogg"
+
+- type: entity
+  id: PoweredLightPostSmall
+  name: post light
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Powered
+  parent: PoweredLightPostSmallEmpty
+  components:
+  - type: Sprite
+    state: off
+  - type: PoweredLight
+    hasLampOnSpawn: LightTube
+    damage:
+      types:
+        Heat: 20

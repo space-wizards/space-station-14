@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.MachineLinking.System
 {
-    public class TwoWayLeverSystem : EntitySystem
+    public sealed class TwoWayLeverSystem : EntitySystem
     {
         public override void Initialize()
         {
