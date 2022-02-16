@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: You are now alerted if an AHelp is not received by anyone., type: Add}
-  id: 567
-  time: '2021-11-11T09:47:45.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Increase door prying and door screwing timers from 0.5s / 0.5s to 1.5s
@@ -2961,3 +2956,8 @@ Entries:
   - {message: Moved makeshift cuffs into Tools category, type: Tweak}
   id: 1067
   time: '2022-02-16T03:11:54.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Drones can no longer emote at all. You ruined it., type: Remove}
+  id: 1068
+  time: '2022-02-16T04:00:36.0000000+00:00'
