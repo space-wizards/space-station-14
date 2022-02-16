@@ -14,7 +14,7 @@ using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Client.Parallax
 {
-    public class ParallaxGenerator
+    public sealed class ParallaxGenerator
     {
         private readonly List<Layer> Layers = new();
 

@@ -8,7 +8,7 @@ using System;
 namespace Content.Server.Traitor.Uplink.Components
 {
     [RegisterComponent]
-    public class UplinkComponent : Component
+    public sealed class UplinkComponent : Component
     {
         [ViewVariables]
         [DataField("buySuccessSound")]
@@ -28,7 +28,7 @@ namespace Content.Server.Traitor.Uplink.Components
 
         [Serializable]
         [DataDefinition]
-        public class PresetUplinkInfo
+        public sealed class PresetUplinkInfo
         {
             [DataField("balance")]
             public int StartingBalance;

@@ -18,7 +18,7 @@ namespace Content.Server.Buckle.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrapComponent))]
-    public class StrapComponent : SharedStrapComponent, IInteractHand, ISerializationHooks, IDestroyAct
+    public sealed class StrapComponent : SharedStrapComponent, IInteractHand, ISerializationHooks, IDestroyAct
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 

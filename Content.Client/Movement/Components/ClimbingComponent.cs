@@ -5,7 +5,7 @@ namespace Content.Client.Movement.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedClimbingComponent))]
-    public class ClimbingComponent : SharedClimbingComponent
+    public sealed class ClimbingComponent : SharedClimbingComponent
     {
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {

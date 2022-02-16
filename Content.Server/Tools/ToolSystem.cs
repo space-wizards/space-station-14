@@ -296,7 +296,7 @@ namespace Content.Server.Tools
     ///     Attempt event called *before* any do afters to see if the tool usage should succeed or not.
     ///     You can change the fuel consumption by changing the Fuel property.
     /// </summary>
-    public class ToolUseAttemptEvent : CancellableEntityEventArgs
+    public sealed class ToolUseAttemptEvent : CancellableEntityEventArgs
     {
         public float Fuel { get; set; }
         public EntityUid User { get; }
@@ -312,7 +312,7 @@ namespace Content.Server.Tools
     ///     Attempt event called *after* any do afters to see if the tool usage should succeed or not.
     ///     You can use this event to consume any fuel needed.
     /// </summary>
-    public class ToolUseFinishAttemptEvent : CancellableEntityEventArgs
+    public sealed class ToolUseFinishAttemptEvent : CancellableEntityEventArgs
     {
         public float Fuel { get; }
         public EntityUid User { get; }

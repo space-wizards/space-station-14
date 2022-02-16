@@ -5,7 +5,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Nuke
 {
-    public class NukeCodePaperSystem : EntitySystem
+    public sealed class NukeCodePaperSystem : EntitySystem
     {
         [Dependency] private readonly NukeCodeSystem _codes = default!;
 

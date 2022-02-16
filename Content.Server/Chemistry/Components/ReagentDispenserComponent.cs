@@ -37,7 +37,7 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedReagentDispenserComponent))]
-    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate
+    public sealed class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate
     {
         private static ReagentInventoryComparer _comparer = new();
         public static string SolutionName = "reagent";

@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Examine
 {
     [UsedImplicitly]
-    public class ExamineSystem : ExamineSystemShared
+    public sealed class ExamineSystem : ExamineSystemShared
     {
         private static readonly FormattedMessage _entityNotFoundMessage;
 

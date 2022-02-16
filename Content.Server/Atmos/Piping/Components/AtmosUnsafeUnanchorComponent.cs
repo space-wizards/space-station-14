@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Piping.Components
 {
     [RegisterComponent]
-    public class AtmosUnsafeUnanchorComponent : Component
+    public sealed class AtmosUnsafeUnanchorComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]

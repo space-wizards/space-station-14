@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Kitchen
 {
-    public class RecipeManager
+    public sealed class RecipeManager
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

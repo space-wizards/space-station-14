@@ -11,7 +11,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Resist;
 
-public class ResistLockerSystem : EntitySystem
+public sealed class ResistLockerSystem : EntitySystem
 {
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -90,7 +90,7 @@ public class ResistLockerSystem : EntitySystem
     {
         component.CancelToken?.Cancel();
     }
-    
+
     private class ResistDoAfterComplete : EntityEventArgs
     {
         public readonly EntityUid User;

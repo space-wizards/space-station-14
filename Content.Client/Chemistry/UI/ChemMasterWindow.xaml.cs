@@ -267,7 +267,7 @@ namespace Content.Client.Chemistry.UI
         }
     }
 
-    public class ChemButton : Button
+    public sealed class ChemButton : Button
     {
         public FixedPoint2 Amount { get; set; }
         public bool IsBuffer = true;

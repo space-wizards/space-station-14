@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Weapons.Ranged.Barrels.Components
 {
     [Serializable, NetSerializable]
-    public class BatteryBarrelComponentState : ComponentState
+    public sealed class BatteryBarrelComponentState : ComponentState
     {
         public FireRateSelector FireRateSelector { get; }
         public (int count, int max)? Magazine { get; }

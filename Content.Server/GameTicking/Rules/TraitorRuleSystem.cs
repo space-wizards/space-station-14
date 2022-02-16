@@ -27,7 +27,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
 
-public class TraitorRuleSystem : GameRuleSystem
+public sealed class TraitorRuleSystem : GameRuleSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -41,7 +41,7 @@ public class TraitorRuleSystem : GameRuleSystem
     private readonly List<TraitorRole> _traitors = new ();
 
     private const string TraitorPrototypeID = "Traitor";
-    
+
     public int TotalTraitors => _traitors.Count;
 
     public override void Initialize()
@@ -188,7 +188,7 @@ public class TraitorRuleSystem : GameRuleSystem
                 if (traitor.Mind.TryAddObjective(objective))
                     difficulty += objective.Difficulty;
             }
-            
+
             //give traitors their codewords to keep in their character info menu
             traitor.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ",codewords)));
         }

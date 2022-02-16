@@ -12,7 +12,7 @@ namespace Content.Tests.Server.Jobs
     [TestFixture]
     [TestOf(typeof(Job<>))]
     [TestOf(typeof(JobQueue))]
-    public class JobQueueTest : RobustUnitTest
+    public sealed class JobQueueTest : RobustUnitTest
     {
         /// <summary>
         ///     Test a job that immediately exits with a value.

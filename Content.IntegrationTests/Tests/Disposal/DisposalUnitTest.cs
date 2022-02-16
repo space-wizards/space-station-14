@@ -18,7 +18,7 @@ namespace Content.IntegrationTests.Tests.Disposal
     [TestOf(typeof(DisposalHolderComponent))]
     [TestOf(typeof(DisposalEntryComponent))]
     [TestOf(typeof(DisposalUnitComponent))]
-    public class DisposalUnitTest : ContentIntegrationTest
+    public sealed class DisposalUnitTest : ContentIntegrationTest
     {
         [Reflect(false)]
         private class DisposalUnitTestSystem : EntitySystem

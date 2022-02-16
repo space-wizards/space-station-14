@@ -22,7 +22,7 @@ namespace Content.Server.Chemistry.EntitySystems
     /// <summary>
     /// This event alerts system that the solution was changed
     /// </summary>
-    public class SolutionChangedEvent : EntityEventArgs
+    public sealed class SolutionChangedEvent : EntityEventArgs
     {
     }
 

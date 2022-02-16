@@ -34,7 +34,7 @@ public sealed class RgbLightControllerComponent : Robust.Shared.GameObjects.Comp
 }
 
 [Serializable, NetSerializable]
-public class RgbLightControllerState : ComponentState
+public sealed class RgbLightControllerState : ComponentState
 {
     public readonly float CycleRate;
     public readonly List<int>? Layers;

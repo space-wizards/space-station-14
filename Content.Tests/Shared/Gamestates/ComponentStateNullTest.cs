@@ -9,7 +9,7 @@ using Robust.Shared.Reflection;
 namespace Content.Tests.Shared.Gamestates
 {
     [TestFixture]
-    public class ComponentStateNullTest
+    public sealed class ComponentStateNullTest
     {
         [Test]
         public void HandleComponentState_NullStates_NotThrow()

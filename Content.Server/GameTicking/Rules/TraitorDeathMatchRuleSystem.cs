@@ -32,7 +32,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
-public class TraitorDeathMatchRuleSystem : GameRuleSystem
+public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;

@@ -17,7 +17,7 @@ namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class BlockGameArcadeComponent : Component, IActivate
+    public sealed class BlockGameArcadeComponent : Component, IActivate
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;

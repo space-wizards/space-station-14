@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Body.Components
 {
     [RegisterComponent, Friend(typeof(BrainSystem))]
-    public class BrainComponent : Component
+    public sealed class BrainComponent : Component
     {
     }
 }

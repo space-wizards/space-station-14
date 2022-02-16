@@ -15,7 +15,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Popups
 {
-    public class PopupSystem : SharedPopupSystem
+    public sealed class PopupSystem : SharedPopupSystem
     {
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;

@@ -21,7 +21,7 @@ namespace Content.Client.MainMenu
     ///     Main menu screen that is the first screen to be displayed when the game starts.
     /// </summary>
     // Instantiated dynamically through the StateManager, Dependencies will be resolved.
-    public class MainScreen : Robust.Client.State.State
+    public sealed class MainScreen : Robust.Client.State.State
     {
         private const string PublicServerAddress = "server.spacestation14.io";
 

@@ -9,7 +9,7 @@ namespace Content.Server.Research.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class ResearchPointSourceComponent : ResearchClientComponent
+    public sealed class ResearchPointSourceComponent : ResearchClientComponent
     {
         [DataField("pointspersecond")]
         private int _pointsPerSecond;

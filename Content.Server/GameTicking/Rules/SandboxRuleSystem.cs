@@ -3,7 +3,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Rules;
 
-public class SandboxRuleSystem : GameRuleSystem
+public sealed class SandboxRuleSystem : GameRuleSystem
 {
     [Dependency] private readonly ISandboxManager _sandbox = default!;
 

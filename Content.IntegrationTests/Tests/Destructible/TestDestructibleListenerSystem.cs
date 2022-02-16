@@ -9,7 +9,7 @@ namespace Content.IntegrationTests.Tests.Destructible
     ///     This is just a system for testing destructible thresholds. Whenever any threshold is reached, this will add that
     ///     threshold to a list for checking during testing.
     /// </summary>
-    public class TestDestructibleListenerSystem : EntitySystem
+    public sealed class TestDestructibleListenerSystem : EntitySystem
     {
         public readonly List<DamageThresholdReached> ThresholdsReached = new();
 

@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Benchmarks
 {
     [SimpleJob]
-    public class ComponentFetchBenchmark
+    public sealed class ComponentFetchBenchmark
     {
         [Params(5000)] public int NEnt { get; set; }
 

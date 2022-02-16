@@ -33,7 +33,7 @@ using Range = Robust.Client.UserInterface.Controls.Range;
 
 namespace Content.Client.Preferences.UI
 {
-    public class HighlightedContainer : PanelContainer
+    public sealed class HighlightedContainer : PanelContainer
     {
         public HighlightedContainer()
         {

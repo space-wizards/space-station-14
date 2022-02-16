@@ -11,7 +11,7 @@ using EntryPoint = Content.Server.Entry.EntryPoint;
 
 namespace Content.Tests
 {
-    public class ContentUnitTest : RobustUnitTest
+    public sealed class ContentUnitTest : RobustUnitTest
     {
         protected override void OverrideIoC()
         {

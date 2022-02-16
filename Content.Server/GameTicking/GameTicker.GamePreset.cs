@@ -168,7 +168,7 @@ namespace Content.Server.GameTicking
         }
     }
 
-    public class GhostAttemptHandleEvent : HandledEntityEventArgs
+    public sealed class GhostAttemptHandleEvent : HandledEntityEventArgs
     {
         public Mind.Mind Mind { get; }
         public bool CanReturnGlobal { get; }

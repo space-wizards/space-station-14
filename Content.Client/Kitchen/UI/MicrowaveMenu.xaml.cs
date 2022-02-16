@@ -10,7 +10,7 @@ namespace Content.Client.Kitchen.UI
     [GenerateTypedNameReferences]
     public partial class MicrowaveMenu : DefaultWindow
     {
-        public class MicrowaveCookTimeButton : Button
+        public sealed class MicrowaveCookTimeButton : Button
         {
             public uint CookTime;
         }
