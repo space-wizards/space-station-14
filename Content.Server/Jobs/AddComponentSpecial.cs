@@ -1,10 +1,7 @@
 using Content.Shared.Roles;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Jobs
 {
@@ -19,6 +16,7 @@ namespace Content.Server.Jobs
         public override void AfterEquip(EntityUid mob)
         {
             // now its a registry of components, still throws i bet.
+            // TODO: This is hot garbage and probably needs an engine change to not be a POS.
             var factory = IoCManager.Resolve<IComponentFactory>();
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var serializationManager = IoCManager.Resolve<ISerializationManager>();
