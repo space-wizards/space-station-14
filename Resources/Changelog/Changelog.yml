@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Shuttles can now dock., type: Add}
-  id: 566
-  time: '2021-11-11T09:06:38.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: You are now alerted if an AHelp is not received by anyone., type: Add}
@@ -2961,3 +2956,8 @@ Entries:
     type: Tweak}
   id: 1066
   time: '2022-02-15T11:04:34.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Moved makeshift cuffs into Tools category, type: Tweak}
+  id: 1067
+  time: '2022-02-16T03:11:54.0000000+00:00'
