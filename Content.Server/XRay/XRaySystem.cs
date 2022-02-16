@@ -15,7 +15,7 @@ namespace Content.Server.XRay
 
         private void OnEquipped(EntityUid uid, XRayGlassesComponent component, GotEquippedEvent args)
         {
-            if (args.Slot != component.ActivationSlot)
+            if (args.SlotFlags != component.ActivationSlot)
                 return;
 
             TryComp<EyeComponent>(args.Equipee, out var eyeComponent);
@@ -25,8 +25,6 @@ namespace Content.Server.XRay
 
         private void OnUnequipped(EntityUid uid, XRayGlassesComponent component, GotUnequippedEvent args)
         {
-            if (args.Slot != component.ActivationSlot)
-                return;
             TryComp<EyeComponent>(args.Equipee, out var eyeComponent);
             if (eyeComponent == null) return;
             eyeComponent.DrawFov = true;
