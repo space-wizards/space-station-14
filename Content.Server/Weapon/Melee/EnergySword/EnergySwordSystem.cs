@@ -11,7 +11,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Weapon.Melee.EnergySword
 {
-    internal class EnergySwordSystem : EntitySystem
+    internal sealed class EnergySwordSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _blockerSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;

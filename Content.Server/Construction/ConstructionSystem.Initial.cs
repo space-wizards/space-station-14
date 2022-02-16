@@ -19,7 +19,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Construction
 {
-    public partial class ConstructionSystem
+    public sealed partial class ConstructionSystem
     {
 
         [Dependency] private readonly InventorySystem _inventorySystem = default!;

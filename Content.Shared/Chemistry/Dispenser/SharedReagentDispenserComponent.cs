@@ -15,6 +15,7 @@ namespace Content.Shared.Chemistry.Dispenser
     /// <para>This is useful for machines such as the chemical dispensers, booze dispensers, or soda dispensers.</para>
     /// <para>The chemicals which may be dispensed are defined by specifying a reagent pack. See <see cref="ReagentDispenserInventoryPrototype"/> for more information on that.</para>
     /// </summary>
+    [Virtual]
     public class SharedReagentDispenserComponent : Component
     {
         [DataField("beakerSlot")]
@@ -26,7 +27,7 @@ namespace Content.Shared.Chemistry.Dispenser
         protected readonly List<ReagentDispenserInventoryEntry> Inventory = new();
 
         [Serializable, NetSerializable]
-        public class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly bool HasPower;
             public readonly bool HasBeaker;
@@ -63,7 +64,7 @@ namespace Content.Shared.Chemistry.Dispenser
         /// Message data sent from client to server when a dispenser ui button is pressed.
         /// </summary>
         [Serializable, NetSerializable]
-        public class UiButtonPressedMessage : BoundUserInterfaceMessage
+        public sealed class UiButtonPressedMessage : BoundUserInterfaceMessage
         {
             public readonly UiButton Button;
             public readonly int DispenseIndex; //Index of dispense button / reagent being pressed. Only used when a dispense button is pressed.

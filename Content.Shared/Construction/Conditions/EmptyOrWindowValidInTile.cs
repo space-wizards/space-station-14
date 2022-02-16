@@ -11,7 +11,7 @@ namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class EmptyOrWindowValidInTile : IConstructionCondition
+    public sealed class EmptyOrWindowValidInTile : IConstructionCondition
     {
         [DataField("tileNotBlocked")]
         private readonly TileNotBlocked _tileNotBlocked = new();

@@ -60,7 +60,7 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
-    public class StorageComponentState : ComponentState
+    public sealed class StorageComponentState : ComponentState
     {
         public readonly EntityUid[] StoredEntities;
 
@@ -75,7 +75,7 @@ namespace Content.Shared.Storage
     /// </summary>
     [Serializable, NetSerializable]
 #pragma warning disable 618
-    public class StorageHeldItemsMessage : ComponentMessage
+    public sealed class StorageHeldItemsMessage : ComponentMessage
 #pragma warning restore 618
     {
         public readonly int StorageSizeMax;
@@ -96,7 +96,7 @@ namespace Content.Shared.Storage
     /// </summary>
     [Serializable, NetSerializable]
 #pragma warning disable 618
-    public class InsertEntityMessage : ComponentMessage
+    public sealed class InsertEntityMessage : ComponentMessage
 #pragma warning restore 618
     {
         public InsertEntityMessage()
@@ -110,7 +110,7 @@ namespace Content.Shared.Storage
     /// </summary>
     [Serializable, NetSerializable]
 #pragma warning disable 618
-    public class AnimateInsertingEntitiesMessage : ComponentMessage
+    public sealed class AnimateInsertingEntitiesMessage : ComponentMessage
 #pragma warning restore 618
     {
         public readonly List<EntityUid> StoredEntities;
@@ -128,7 +128,7 @@ namespace Content.Shared.Storage
     /// </summary>
     [Serializable, NetSerializable]
 #pragma warning disable 618
-    public class RemoveEntityMessage : ComponentMessage
+    public sealed class RemoveEntityMessage : ComponentMessage
 #pragma warning restore 618
     {
         public EntityUid EntityUid;
@@ -145,7 +145,7 @@ namespace Content.Shared.Storage
     /// </summary>
     [Serializable, NetSerializable]
 #pragma warning disable 618
-    public class OpenStorageUIMessage : ComponentMessage
+    public sealed class OpenStorageUIMessage : ComponentMessage
 #pragma warning restore 618
     {
         public OpenStorageUIMessage()
@@ -160,7 +160,7 @@ namespace Content.Shared.Storage
     /// </summary>
     [Serializable, NetSerializable]
 #pragma warning disable 618
-    public class CloseStorageUIMessage : ComponentMessage
+    public sealed class CloseStorageUIMessage : ComponentMessage
 #pragma warning restore 618
     {
         public CloseStorageUIMessage()

@@ -26,7 +26,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Explosion.EntitySystems
 {
-    public class ExplosionSystem : EntitySystem
+    public sealed class ExplosionSystem : EntitySystem
     {
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 

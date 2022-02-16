@@ -14,7 +14,7 @@ namespace Content.Server.Alert.Click
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class StopBeingPulled : IAlertClick
+    public sealed class StopBeingPulled : IAlertClick
     {
         public void AlertClicked(EntityUid player)
         {

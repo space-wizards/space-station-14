@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Interactable.Components
 {
     [RegisterComponent]
-    public class InteractionOutlineComponent : Component
+    public sealed class InteractionOutlineComponent : Component
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;

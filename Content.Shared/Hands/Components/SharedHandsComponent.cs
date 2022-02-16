@@ -717,7 +717,7 @@ namespace Content.Shared.Hands.Components
     }
 
     [Serializable, NetSerializable]
-    public class HandsVisualState : ICloneable
+    public sealed class HandsVisualState : ICloneable
     {
         public List<HandVisualState> Hands { get; } = new();
 
@@ -751,7 +751,7 @@ namespace Content.Shared.Hands.Components
     #endregion
 
     [Serializable, NetSerializable]
-    public class Hand
+    public sealed class Hand
     {
         [ViewVariables]
         public string Name { get; }
@@ -804,7 +804,7 @@ namespace Content.Shared.Hands.Components
     /// A message that calls the activate interaction on the item in the specified hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public class ActivateInHandMsg : EntityEventArgs
+    public sealed class ActivateInHandMsg : EntityEventArgs
     {
         public string HandName { get; }
 
@@ -818,7 +818,7 @@ namespace Content.Shared.Hands.Components
     ///     Uses the item in the active hand on the item in the specified hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public class ClientInteractUsingInHandMsg : EntityEventArgs
+    public sealed class ClientInteractUsingInHandMsg : EntityEventArgs
     {
         public string HandName { get; }
 
@@ -832,7 +832,7 @@ namespace Content.Shared.Hands.Components
     ///     Moves an item from one hand to the active hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public class MoveItemFromHandMsg : EntityEventArgs
+    public sealed class MoveItemFromHandMsg : EntityEventArgs
     {
         public string HandName { get; }
 
@@ -852,7 +852,7 @@ namespace Content.Shared.Hands.Components
         Right
     }
 
-    public class HandCountChangedEvent : EntityEventArgs
+    public sealed class HandCountChangedEvent : EntityEventArgs
     {
         public HandCountChangedEvent(EntityUid sender)
         {

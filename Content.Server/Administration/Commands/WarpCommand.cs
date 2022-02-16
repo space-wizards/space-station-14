@@ -14,7 +14,7 @@ using Robust.Shared.Physics;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class WarpCommand : IConsoleCommand
+    public sealed class WarpCommand : IConsoleCommand
     {
         public string Command => "warp";
         public string Description => "Teleports you to predefined areas on the map.";

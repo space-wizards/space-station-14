@@ -26,7 +26,7 @@ namespace Content.Server.AME.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class AMEControllerComponent : SharedAMEControllerComponent, IActivate, IInteractUsing
+    public sealed class AMEControllerComponent : SharedAMEControllerComponent, IActivate, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 

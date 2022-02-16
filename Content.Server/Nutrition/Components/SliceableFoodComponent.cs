@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent, Friend(typeof(SliceableFoodSystem))]
-    internal class SliceableFoodComponent : Component
+    internal sealed class SliceableFoodComponent : Component
     {
         [DataField("slice")]
         [ViewVariables(VVAccess.ReadWrite)]

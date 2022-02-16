@@ -18,7 +18,7 @@ namespace Content.Server.Explosion.Components
     ///     </list>
     /// </remarks>
     [RegisterComponent]
-    public class ExplosiveComponent : Component
+    public sealed class ExplosiveComponent : Component
     {
         [DataField("devastationRange")]
         public int DevastationRange;

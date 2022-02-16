@@ -8,7 +8,7 @@ namespace Content.IntegrationTests.Tests.Atmos
 {
     [TestFixture]
     [TestOf(typeof(AtmosAlarmThreshold))]
-    public class AlarmThresholdTest : ContentIntegrationTest
+    public sealed class AlarmThresholdTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: alarmThreshold

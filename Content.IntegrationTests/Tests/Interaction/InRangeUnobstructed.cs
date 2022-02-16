@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 {
     [TestFixture]
     [TestOf(typeof(SharedInteractionSystem))]
-    public class InRangeUnobstructed : ContentIntegrationTest
+    public sealed class InRangeUnobstructed : ContentIntegrationTest
     {
         private const string HumanId = "MobHumanBase";
 

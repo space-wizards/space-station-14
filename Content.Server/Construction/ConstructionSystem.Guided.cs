@@ -11,7 +11,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Construction
 {
-    public partial class ConstructionSystem
+    public sealed partial class ConstructionSystem
     {
         private readonly Dictionary<ConstructionPrototype, ConstructionGuide> _guideCache = new();
 

@@ -30,7 +30,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Nutrition.EntitySystems
 {
     [UsedImplicitly]
-    public class DrinkSystem : EntitySystem
+    public sealed class DrinkSystem : EntitySystem
     {
         [Dependency] private readonly FoodSystem _foodSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;

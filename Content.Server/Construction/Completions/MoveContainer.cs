@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class MoveContainer : IGraphAction
+    public sealed class MoveContainer : IGraphAction
     {
         [DataField("from")] public string? FromContainer { get; } = null;
         [DataField("to")] public string? ToContainer { get; } = null;

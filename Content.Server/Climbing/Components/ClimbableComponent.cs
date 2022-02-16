@@ -253,7 +253,7 @@ namespace Content.Server.Climbing.Components
 /// <summary>
 ///     Raised on an entity when it is climbed on.
 /// </summary>
-public class ClimbedOnEvent : EntityEventArgs
+public sealed class ClimbedOnEvent : EntityEventArgs
 {
     public EntityUid Climber;
 
@@ -266,7 +266,7 @@ public class ClimbedOnEvent : EntityEventArgs
 /// <summary>
 ///     Raised on an entity when it successfully climbs on something.
 /// </summary>
-public class StartClimbEvent : EntityEventArgs
+public sealed class StartClimbEvent : EntityEventArgs
 {
     public EntityUid Climbable;
 

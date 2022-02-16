@@ -43,7 +43,7 @@ namespace Content.Server.Storage.Components
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
     [ComponentReference(typeof(SharedStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
+    public sealed class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 

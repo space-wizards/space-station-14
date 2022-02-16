@@ -8,7 +8,7 @@ using static Content.Shared.Chemistry.Components.Solution;
 
 namespace Content.Client.Kitchen.UI
 {
-    public class ReagentGrinderBoundUserInterface : BoundUserInterface
+    public sealed class ReagentGrinderBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

@@ -26,7 +26,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Sandbox
 {
     // Layout for the SandboxWindow
-    public class SandboxWindow : DefaultWindow
+    public sealed class SandboxWindow : DefaultWindow
     {
         public readonly Button RespawnButton;
         public readonly Button SpawnEntitiesButton;
@@ -116,7 +116,7 @@ namespace Content.Client.Sandbox
 
     }
 
-    internal class SandboxManager : SharedSandboxManager, ISandboxManager
+    internal sealed class SandboxManager : SharedSandboxManager, ISandboxManager
     {
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;

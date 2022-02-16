@@ -11,7 +11,7 @@ using Robust.Shared.Network;
 namespace Content.IntegrationTests.Tests.Networking
 {
     [TestFixture]
-    class NetworkIdsMatchTest : ContentIntegrationTest
+    sealed class NetworkIdsMatchTest : ContentIntegrationTest
     {
         [Test]
         public async Task TestConnect()
@@ -20,7 +20,7 @@ namespace Content.IntegrationTests.Tests.Networking
             var server = StartServer();
 
             await ConnectNetworking(client, server);
-            
+
             var clientCompFactory = client.ResolveDependency<IComponentFactory>();
             var serverCompFactory = server.ResolveDependency<IComponentFactory>();
 

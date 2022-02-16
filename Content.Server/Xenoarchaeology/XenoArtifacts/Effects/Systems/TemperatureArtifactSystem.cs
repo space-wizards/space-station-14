@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
-public class TemperatureArtifactSystem : EntitySystem
+public sealed class TemperatureArtifactSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 

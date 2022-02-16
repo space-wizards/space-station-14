@@ -199,7 +199,7 @@ namespace Content.Server.Flash
         }
     }
 
-    public class FlashAttemptEvent : CancellableEntityEventArgs
+    public sealed class FlashAttemptEvent : CancellableEntityEventArgs
     {
         public readonly EntityUid Target;
         public readonly EntityUid? User;

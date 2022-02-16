@@ -13,7 +13,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Engineering.EntitySystems
 {
     [UsedImplicitly]
-    public class SpawnAfterInteractSystem : EntitySystem
+    public sealed class SpawnAfterInteractSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;

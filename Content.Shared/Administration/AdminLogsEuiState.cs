@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Administration;
 
 [Serializable, NetSerializable]
-public class AdminLogsEuiState : EuiStateBase
+public sealed class AdminLogsEuiState : EuiStateBase
 {
     public AdminLogsEuiState(int roundId, Dictionary<Guid, string> players)
     {

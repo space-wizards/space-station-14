@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Administration.Logs.Converters;
 
 [AdminLogConverter]
-public class EntityStringRepresentationConverter : AdminLogConverter<EntityStringRepresentation>
+public sealed class EntityStringRepresentationConverter : AdminLogConverter<EntityStringRepresentation>
 {
     public override void Write(Utf8JsonWriter writer, EntityStringRepresentation value, JsonSerializerOptions options)
     {

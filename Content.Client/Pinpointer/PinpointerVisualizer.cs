@@ -8,7 +8,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Pinpointer
 {
     [UsedImplicitly]
-    public class PinpointerVisualizer : AppearanceVisualizer
+    public sealed class PinpointerVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

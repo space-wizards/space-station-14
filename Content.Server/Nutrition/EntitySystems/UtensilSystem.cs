@@ -14,7 +14,7 @@ namespace Content.Server.Nutrition.EntitySystems
     /// <summary>
     /// Handles usage of the utensils on the food items
     /// </summary>
-    internal class UtensilSystem : EntitySystem
+    internal sealed class UtensilSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly FoodSystem _foodSystem = default!;

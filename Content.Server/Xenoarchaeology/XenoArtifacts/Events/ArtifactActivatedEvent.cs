@@ -6,7 +6,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 ///     Invokes when artifact was successfully activated.
 ///     Used to start attached effects.
 /// </summary>
-public class ArtifactActivatedEvent : EntityEventArgs
+public sealed class ArtifactActivatedEvent : EntityEventArgs
 {
     /// <summary>
     ///     Entity that activate this artifact.

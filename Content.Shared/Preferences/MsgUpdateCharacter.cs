@@ -9,7 +9,7 @@ namespace Content.Shared.Preferences
     /// <summary>
     /// The client sends this to update a character profile.
     /// </summary>
-    public class MsgUpdateCharacter : NetMessage
+    public sealed class MsgUpdateCharacter : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
 

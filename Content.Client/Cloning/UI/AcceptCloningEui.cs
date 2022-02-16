@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace Content.Client.Cloning.UI
 {
     [UsedImplicitly]
-    public class AcceptCloningEui : BaseEui
+    public sealed class AcceptCloningEui : BaseEui
     {
         private readonly AcceptCloningWindow _window;
 

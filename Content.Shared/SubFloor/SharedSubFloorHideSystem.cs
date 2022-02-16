@@ -1,4 +1,5 @@
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -26,7 +27,7 @@ namespace Content.Shared.SubFloor
             SubscribeLocalEvent<SubFloorHideComponent, ComponentStartup>(OnSubFloorStarted);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentShutdown>(OnSubFloorTerminating);
             SubscribeLocalEvent<SubFloorHideComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
-            SubscribeLocalEvent<SubFloorHideComponent, InteractUsingEvent>(OnInteractionAttempt);
+            SubscribeLocalEvent<SubFloorHideComponent, GettingInteractedWithAttemptEvent>(OnInteractionAttempt);
         }
 
         public override void Shutdown()
@@ -37,10 +38,11 @@ namespace Content.Shared.SubFloor
             _mapManager.TileChanged -= MapManagerOnTileChanged;
         }
 
-        private void OnInteractionAttempt(EntityUid uid, SubFloorHideComponent component, InteractUsingEvent args)
+        private void OnInteractionAttempt(EntityUid uid, SubFloorHideComponent component, GettingInteractedWithAttemptEvent args)
         {
-            // TODO make this use an interact attempt event or something. Handling an InteractUsing is not going to work in general.
-            args.Handled = component.IsUnderCover;
+            // No interactions with entities hidden under floor tiles.
+            if (component.BlockInteractions && component.IsUnderCover)
+                args.Cancel();
         }
 
         private void OnSubFloorStarted(EntityUid uid, SubFloorHideComponent component, ComponentStartup _)

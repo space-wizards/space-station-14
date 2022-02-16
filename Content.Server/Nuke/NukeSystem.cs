@@ -23,7 +23,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Nuke
 {
-    public class NukeSystem : EntitySystem
+    public sealed class NukeSystem : EntitySystem
     {
         [Dependency] private readonly NukeCodeSystem _codes = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;

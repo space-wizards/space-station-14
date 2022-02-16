@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Instruments.UI
 {
-    public class InstrumentBoundUserInterface : BoundUserInterface
+    public sealed class InstrumentBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private InstrumentMenu? _instrumentMenu;

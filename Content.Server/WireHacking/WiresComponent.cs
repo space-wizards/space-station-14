@@ -30,7 +30,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.WireHacking
 {
     [RegisterComponent]
-    public class WiresComponent : SharedWiresComponent, IInteractUsing
+    public sealed class WiresComponent : SharedWiresComponent, IInteractUsing
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
@@ -202,7 +202,7 @@ namespace Content.Server.WireHacking
             return wire.IsCut;
         }
 
-        public class Wire
+        public sealed class Wire
         {
             /// <summary>
             /// The component that registered the wire.
@@ -251,7 +251,7 @@ namespace Content.Server.WireHacking
         /// <summary>
         /// Used by <see cref="IWires.RegisterWires"/>.
         /// </summary>
-        public class WiresBuilder
+        public sealed class WiresBuilder
         {
             private readonly WiresComponent _wires;
             private readonly IWires _owner;

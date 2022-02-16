@@ -8,7 +8,7 @@ namespace Content.Client.Movement.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IClimbable))]
-    public class ClimbableComponent : SharedClimbableComponent
+    public sealed class ClimbableComponent : SharedClimbableComponent
     {
         public override bool CanDragDropOn(DragDropEvent eventArgs)
         {
