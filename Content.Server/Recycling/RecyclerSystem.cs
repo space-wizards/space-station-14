@@ -22,7 +22,6 @@ namespace Content.Server.Recycling
 
         public override void Initialize()
         {
-            base.Initialize();
             SubscribeLocalEvent<RecyclerComponent, StartCollideEvent>(OnCollide);
         }
 
@@ -55,7 +54,7 @@ namespace Content.Server.Recycling
 
             // Can only recycle things that are recyclable... And also check the safety of the thing to recycle.
             if (!_tags.HasTag(entity, "Recyclable") &&
-                (!EntityManager.TryGetComponent(entity, out recyclable) || !recyclable.Safe && component.Safe))
+                (!TryComp(entity, out recyclable) || !recyclable.Safe && component.Safe))
             {
                 return;
             }
@@ -65,7 +64,7 @@ namespace Content.Server.Recycling
             // Mobs are a special case!
             if (CanGib(component, entity))
             {
-                EntityManager.GetComponent<SharedBodyComponent>(entity).Gib(true);
+                Comp<SharedBodyComponent>(entity).Gib(true);
                 Bloodstain(component);
                 return;
             }
@@ -105,12 +104,12 @@ namespace Content.Server.Recycling
 
                 for (var i = 0; i < Math.Max(component.Amount * efficiency, 1); i++)
                 {
-                    EntityManager.SpawnEntity(component.Prototype, xform.Coordinates);
+                    Spawn(component.Prototype, xform.Coordinates);
                 }
 
             }
 
-            EntityManager.QueueDeleteEntity(component.Owner);
+            QueueDel(component.Owner);
         }
     }
 }
