@@ -5,13 +5,13 @@ using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
-using Content.Shared.Emag.Systems;
 using Content.Server.Doors.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
@@ -305,17 +305,15 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if(!container.Insert(board))
             Logger.Warning($"Couldn't insert board {ToPrettyString(board)} into door {ToPrettyString(uid)}!");
-    }
-
-    private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
+    }    private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
     {
         TryComp<AirlockComponent>(uid, out var airlockComponent);
         if (door.State == DoorState.Closed)
         {
             StartOpening(uid);
+            airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
+            args.Handled = true;
         }
-        airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
-        args.Handled = true;
     }
 }
 
