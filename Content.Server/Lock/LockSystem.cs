@@ -190,7 +190,16 @@ namespace Content.Server.Lock
         {
             if (component.Locked == true)
             {
-                Unlock(uid, uid, component);
+                if (component.UnlockSound != null)
+                {
+                    SoundSystem.Play(Filter.Pvs(component.Owner), component.UnlockSound.GetSound(), component.Owner, AudioParams.Default.WithVolume(-5));
+                }
+
+                if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComp))
+                {
+                    appearanceComp.SetData(StorageVisuals.Locked, false);
+                }
+                EntityManager.RemoveComponent<LockComponent>(uid); //Literally destroys the lock as a tell it was emagged
                 args.Handled = true;
             }
         }
