@@ -119,3 +119,11 @@
     sprite: Clothing/Eyes/Glasses/thermal.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/thermal.rsi
+
+- type: entity
+  parent: ClothingEyesGlassesMeson
+  id: ClothingEyesGlassesMesonXRay
+  suffix: X-Ray
+  components:
+  - type: XRayGlasses
+  - type: FlashImmunity

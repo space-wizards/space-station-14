@@ -196,6 +196,14 @@
   price: 2
 
 - type: uplinkListing
+  id: UplinkClothingEyesXrayMesons
+  category: Armor
+  itemId: ClothingEyesGlassesMesonXRay
+  listingName: x-ray messon goggles
+  description: These let you see everything through walls, and give you flash resistance.
+  price: 5
+
+- type: uplinkListing
   id: UplinkClothingOuterVestWeb
   category: Armor
   itemId: ClothingOuterVestWeb
