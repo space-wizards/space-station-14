@@ -452,14 +452,23 @@
   id: TranexamicAcid
   name: tranexamic acid
   group: Medicine
-  desc: A blood clotting medicine for preventing heavy bleeding.
+  desc: A blood clotting medicine for preventing heavy bleeding. Very dangerous in large quantities.
   physicalDesc: viscous
   color: "#ba7d7d"
   metabolisms:
     Medicine:
       effects:
+      # Medium-large quantities can hurt you instead,
+      # but still technically stop your bleeding.
       - !type:ModifyBleedAmount
         scaled: true
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
+        damage:
+          types:
+            Bloodloss: 3
 
 - type: reagent
   id: Tricordrazine

@@ -57,6 +57,10 @@
       types:
         Bloodloss:
           1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
   - type: Damageable
     damageContainer: Biological
   - type: AtmosExposed

@@ -74,6 +74,11 @@ public sealed class BloodstreamSystem : EntitySystem
 
                 _damageableSystem.TryChangeDamage(uid, amt, true, false);
             }
+            else
+            {
+                // If they're healthy, we'll try and heal some bloodloss instead.
+                _damageableSystem.TryChangeDamage(uid, bloodstream.BloodlossHealDamage * bloodPercentage, true, false);
+            }
         }
     }
 

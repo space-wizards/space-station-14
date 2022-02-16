@@ -49,6 +49,12 @@ namespace Content.Server.Body.Components
         public DamageSpecifier BloodlossDamage = default!;
 
         /// <summary>
+        ///     The base bloodloss damage to be healed if above <see cref="BloodlossThreshold"/>
+        /// </summary>
+        [DataField("bloodlossHealDamage", required: true)]
+        public DamageSpecifier BloodlossHealDamage = default!;
+
+        /// <summary>
         ///     How frequently should this bloodstream update, in seconds?
         /// </summary>
         [DataField("updateInterval")]
