@@ -85,6 +85,14 @@ namespace Content.Server.GameTicking
             return true;
         }
 
+        private void StartGamePresetRules()
+        {
+            foreach (var rule in _addedGameRules)
+            {
+                StartGameRule(rule);
+            }
+        }
+
         public bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal)
         {
             var handleEv = new GhostAttemptHandleEvent(mind, canReturnGlobal);

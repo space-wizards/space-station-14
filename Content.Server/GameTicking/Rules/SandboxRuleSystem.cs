@@ -9,12 +9,12 @@ public class SandboxRuleSystem : GameRuleSystem
 
     public override string Prototype => "Sandbox";
 
-    public override void Added()
+    public override void Started()
     {
         _sandbox.IsSandboxEnabled = true;
     }
 
-    public override void Removed()
+    public override void Ended()
     {
         _sandbox.IsSandboxEnabled = false;
     }

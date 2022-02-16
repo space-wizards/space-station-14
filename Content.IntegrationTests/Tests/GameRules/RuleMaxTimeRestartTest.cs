@@ -38,7 +38,7 @@ namespace Content.IntegrationTests.Tests.GameRules
             {
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
 
-                sGameTicker.AddGameRule(IoCManager.Resolve<IPrototypeManager>().Index<GameRulePrototype>(maxTimeMaxTimeRestartRuleSystem.Prototype));
+                sGameTicker.StartGameRule(IoCManager.Resolve<IPrototypeManager>().Index<GameRulePrototype>(maxTimeMaxTimeRestartRuleSystem.Prototype));
                 maxTimeMaxTimeRestartRuleSystem.RoundMaxTime = TimeSpan.FromSeconds(3);
 
                 sGameTicker.StartRound();

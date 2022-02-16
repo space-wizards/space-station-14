@@ -71,6 +71,8 @@ namespace Content.Server.GameTicking
 
         private void PreRoundSetup()
         {
+            AddGamePresetRules();
+
             DefaultMap = _mapManager.CreateMap();
             _pauseManager.AddUninitializedMap(DefaultMap);
             _startingRound = false;
@@ -188,7 +190,7 @@ namespace Content.Server.GameTicking
 
                 SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
-                AddGamePresetRules();
+                StartGamePresetRules();
 
                 List<IPlayerSession> readyPlayers;
                 if (LobbyEnabled)
@@ -246,6 +248,7 @@ namespace Content.Server.GameTicking
                         ClearGameRules();
                         SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                         AddGamePresetRules();
+                        StartGamePresetRules();
 
                         startAttempt.Uncancel();
                         RaiseLocalEvent(startAttempt);
@@ -508,7 +511,7 @@ namespace Content.Server.GameTicking
             // Clear up any game rules.
             ClearGameRules();
 
-            _gameRules.Clear();
+            _addedGameRules.Clear();
 
             // Round restart cleanup event, so entity systems can reset.
             var ev = new RoundRestartCleanupEvent();

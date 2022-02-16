@@ -53,13 +53,13 @@ public class TraitorRuleSystem : GameRuleSystem
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
 
-    public override void Added()
+    public override void Started()
     {
         // This seems silly, but I'll leave it.
         _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-traitor-added-announcement"));
     }
 
-    public override void Removed()
+    public override void Ended()
     {
         _traitors.Clear();
     }
