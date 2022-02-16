@@ -4,7 +4,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.XRay
 {
-    public class XRaySystem : EntitySystem
+    public sealed class XRaySystem : EntitySystem
     {
         public override void Initialize()
         {
