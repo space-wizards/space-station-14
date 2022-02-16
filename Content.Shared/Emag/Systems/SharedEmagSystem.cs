@@ -1,10 +1,10 @@
-using Content.Server.Emag.Components;
+using Content.Shared.Emag.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Examine;
 
-namespace Content.Server.Emag.Systems
+namespace Content.Shared.Emag.Systems
 {
-    public sealed class EmagSystem : EntitySystem
+    public sealed class SharedEmagSystem : EntitySystem
     {
         public override void Initialize()
         {

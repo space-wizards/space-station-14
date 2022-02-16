@@ -1,8 +1,8 @@
 using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
 using Content.Server.Storage.Components;
-using Content.Server.Emag.Systems;
-using Content.Server.Emag.Components;
+using Content.Shared.Emag.Systems;
+using Content.Shared.Emag.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Examine;

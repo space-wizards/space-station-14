@@ -5,7 +5,7 @@ using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
-using Content.Server.Emag.Systems;
+using Content.Shared.Emag.Systems;
 using Content.Server.Doors.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;

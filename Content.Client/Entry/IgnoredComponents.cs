@@ -288,8 +288,6 @@ namespace Content.Client.Entry
             "AtmosAlarmable",
             "FireAlarm",
             "AirAlarm",
-            "Emag",
-            "Emaggable",
             "RadarConsole",
             "Guardian",
             "GuardianCreator",
