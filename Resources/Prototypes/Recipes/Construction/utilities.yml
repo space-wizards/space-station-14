@@ -188,3 +188,229 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition {}
+
+# ATMOS PIPES
+- type: construction
+  name: gas pipe half
+  id: GasPipeHalf
+  graph: GasPipe
+  startNode: start
+  targetNode: half
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeHalf
+
+- type: construction
+  name: gas pipe straight
+  id: GasPipeStraight
+  graph: GasPipe
+  startNode: start
+  targetNode: straight
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeStraight
+
+- type: construction
+  name: gas pipe bend
+  id: GasPipeBend
+  graph: GasPipe
+  startNode: start
+  targetNode: bend
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeBend
+
+- type: construction
+  name: gas pipe T junction
+  id: GasPipeTJunction
+  graph: GasPipe
+  startNode: start
+  targetNode: tjunction
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeTJunction
+
+- type: construction
+  name: gas pipe fourway
+  id: GasPipeFourway
+  graph: GasPipe
+  startNode: start
+  targetNode: fourway
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeFourway
+
+# ATMOS UNARY
+- type: construction
+  name: air vent
+  id: GasVentPump
+  graph: GasUnary
+  startNode: start
+  targetNode: ventpump
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/vent.rsi
+    state: vent_off
+
+- type: construction
+  name: passive vent
+  id: GasPassiveVent
+  graph: GasUnary
+  startNode: start
+  targetNode: passivevent
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/vent.rsi
+    state: vent_off
+
+- type: construction
+  name: air scrubber
+  id: GasVentScrubber
+  graph: GasUnary
+  startNode: start
+  targetNode: ventscrubber
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/scrubber.rsi
+    state: scrub_off
+
+- type: construction
+  name: air injector
+  id: GasOutletInjector
+  graph: GasUnary
+  startNode: start
+  targetNode: outletinjector
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeHalf
+
+# ATMOS BINARY
+- type: construction
+  name: gas pump
+  id: GasPressurePump
+  graph: GasBinary
+  startNode: start
+  targetNode: pressurepump
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpPressure
+
+- type: construction
+  name: volumetric gas pump
+  id: GasVolumePump
+  graph: GasBinary
+  startNode: start
+  targetNode: volumepump
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpVolume
+
+- type: construction
+  id: GasPassiveGate
+  name: passive gate
+  graph: GasBinary
+  startNode: start
+  targetNode: passivegate
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpPassiveGate
+
+- type: construction
+  id: GasValve
+  name: manual valve
+  graph: GasBinary
+  startNode: start
+  targetNode: valve
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpManualValve
+
+- type: construction
+  id: GasPort
+  name: connector port
+  graph: GasBinary
+  startNode: start
+  targetNode: port
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
+    state: gasCanisterPort
+
+- type: construction
+  id: GasDualPortVentPump
+  name: dual-port air vent
+  graph: GasBinary
+  startNode: start
+  targetNode: dualportventpump
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/vent.rsi
+    state: vent_off
+
+# ATMOS TRINARY
+- type: construction
+  id: GasFilter
+  name: gas filter
+  graph: GasTrinary
+  startNode: start
+  targetNode: filter
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/gasfilter.rsi
+    state: gasFilter
+
+- type: construction
+  id: GasMixer
+  name: gas mixer
+  graph: GasTrinary
+  startNode: start
+  targetNode: mixer
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/gasmixer.rsi
+    state: gasMixer
+  
