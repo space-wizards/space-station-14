@@ -10,8 +10,11 @@
   id: Bee
 
 - type: Tag
+  id: BrassInstrument
+
+- type: Tag
   id: Brutepack
-  
+
 - type: Tag
   id: BodyBag
 
@@ -44,7 +47,7 @@
 
 - type: Tag
   id: CaptainSabre
-  
+
 - type: Tag
   id: Cartridge
 
@@ -98,6 +101,9 @@
 
 - type: Tag
   id: Debug
+
+- type: Tag
+  id: Dice
 
 - type: Tag
   id: Document
@@ -172,6 +178,9 @@
   id: Katana
 
 - type: Tag
+  id: KeyedInstrument
+
+- type: Tag
   id: Knife
 
 - type: Tag
@@ -179,6 +188,15 @@
 
 - type: Tag
   id: Matchstick
+
+- type: Tag
+  id: Metal
+
+- type: Tag
+  id: MicrowaveMachineUnsafe
+
+- type: Tag
+  id: MicrowaveSelfUnsafe
 
 - type: Tag
   id: MonkeyCube
@@ -194,6 +212,12 @@
 
 - type: Tag
   id: Ore
+
+- type: Tag
+  id: PercussionInstrument
+
+- type: Tag
+  id: Plastic
 
 - type: Tag
   id: Pill
@@ -250,8 +274,11 @@
   id: Spear
 
 - type: Tag
+  id: StringInstrument
+
+- type: Tag
   id: Taser
-  
+
 - type: Tag
   id: Trash
 
@@ -259,10 +286,16 @@
   id: Wall
 
 - type: Tag
+  id: Window
+
+- type: Tag
   id: Wirecutter
 
 - type: Tag
   id: Wooden # just like our atmos
+
+- type: Tag
+  id: WoodwindInstrument # even more like our atmos
 
 - type: Tag
   id: Wrench

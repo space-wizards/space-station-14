@@ -11,7 +11,7 @@ using static Content.Shared.Lathe.SharedLatheComponent;
 
 namespace Content.Client.Lathe.UI
 {
-    public class LatheBoundUserInterface : BoundUserInterface
+    public sealed class LatheBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Client.Arcade.UI
 {
-    public class BlockGameBoundUserInterface : BoundUserInterface
+    public sealed class BlockGameBoundUserInterface : BoundUserInterface
     {
         private BlockGameMenu? _menu;
 

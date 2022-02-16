@@ -32,6 +32,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
+    netsync: false
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -152,17 +153,12 @@
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
   - type: Respirator
-    needsGases:
-      Oxygen: 0.00060763888
-    producesGases:
-      Oxygen: 0.00045572916
-      CarbonDioxide: 0.00015190972
     damage:
       types:
-        Asphyxiation: 1
+        Asphyxiation: 3
     damageRecovery:
       types:
-        Asphyxiation: -1
+        Asphyxiation: -1.5
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260

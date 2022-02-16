@@ -19,8 +19,6 @@ namespace Content.Shared.Doors.Components;
 [RegisterComponent]
 public sealed class DoorComponent : Component
 {
-    public override string Name => "Door";
-
     /// <summary>
     /// The current state of the door -- whether it is open, closed, opening, or closing.
     /// </summary>
@@ -206,11 +204,12 @@ public enum DoorVisuals
 {
     State,
     Powered,
-    BoltLights
+    BoltLights,
+    EmergencyLights,
 }
 
 [Serializable, NetSerializable]
-public class DoorComponentState : ComponentState
+public sealed class DoorComponentState : ComponentState
 {
     public readonly DoorState DoorState;
     public readonly List<EntityUid> CurrentlyCrushing;

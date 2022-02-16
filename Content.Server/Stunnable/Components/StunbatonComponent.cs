@@ -6,10 +6,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Stunnable.Components
 {
     [RegisterComponent]
-    public class StunbatonComponent : Component
+    public sealed class StunbatonComponent : Component
     {
-        public override string Name => "Stunbaton";
-
         public bool Activated = false;
 
         [ViewVariables(VVAccess.ReadWrite)]

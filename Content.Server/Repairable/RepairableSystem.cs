@@ -13,7 +13,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Repairable
 {
-    public class RepairableSystem : EntitySystem
+    public sealed class RepairableSystem : EntitySystem
     {
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;

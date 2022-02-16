@@ -16,11 +16,9 @@ namespace Content.Server.Disposal.Unit.Components
 {
     // TODO: Add gas
     [RegisterComponent]
-    public class DisposalHolderComponent : Component, IGasMixtureHolder
+    public sealed class DisposalHolderComponent : Component, IGasMixtureHolder
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "DisposalHolder";
 
         public Container Container = null!;
 

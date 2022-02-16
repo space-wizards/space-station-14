@@ -11,13 +11,11 @@ namespace Content.Shared.Strip.Components
 {
     public abstract class SharedStrippableComponent : Component, IDraggable
     {
-        public override string Name => "Strippable";
-
         public bool CanBeStripped(EntityUid by)
         {
             return by != Owner
                    && IoCManager.Resolve<IEntityManager>().HasComponent<SharedHandsComponent>(@by)
-                   && EntitySystem.Get<ActionBlockerSystem>().CanInteract(@by);
+                   && EntitySystem.Get<ActionBlockerSystem>().CanInteract(@by, Owner);
         }
 
         bool IDraggable.CanDrop(CanDropEvent args)
@@ -37,7 +35,7 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public class StrippingInventoryButtonPressed : BoundUserInterfaceMessage
+    public sealed class StrippingInventoryButtonPressed : BoundUserInterfaceMessage
     {
         public string Slot { get; }
 
@@ -48,7 +46,7 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public class StrippingHandButtonPressed : BoundUserInterfaceMessage
+    public sealed class StrippingHandButtonPressed : BoundUserInterfaceMessage
     {
         public string Hand { get; }
 
@@ -59,7 +57,7 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public class StrippingHandcuffButtonPressed : BoundUserInterfaceMessage
+    public sealed class StrippingHandcuffButtonPressed : BoundUserInterfaceMessage
     {
         public EntityUid Handcuff { get; }
 
@@ -70,7 +68,7 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public class StrippingBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class StrippingBoundUserInterfaceState : BoundUserInterfaceState
     {
         public Dictionary<(string ID, string Name), string> Inventory { get; }
         public Dictionary<string, string> Hands { get; }

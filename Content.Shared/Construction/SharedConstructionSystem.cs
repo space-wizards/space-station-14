@@ -6,14 +6,14 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Construction
 {
-    public class SharedConstructionSystem : EntitySystem
+    public abstract class SharedConstructionSystem : EntitySystem
     {
         /// <summary>
         ///     Sent client -> server to to tell the server that we started building
         ///     a structure-construction.
         /// </summary>
         [Serializable, NetSerializable]
-        public class TryStartStructureConstructionMessage : EntityEventArgs
+        public sealed class TryStartStructureConstructionMessage : EntityEventArgs
         {
             /// <summary>
             ///     Position to start building.
@@ -46,7 +46,7 @@ namespace Content.Shared.Construction
         ///     an item-construction.
         /// </summary>
         [Serializable, NetSerializable]
-        public class TryStartItemConstructionMessage : EntityEventArgs
+        public sealed class TryStartItemConstructionMessage : EntityEventArgs
         {
             /// <summary>
             ///     The construction prototype to start building.
@@ -63,7 +63,7 @@ namespace Content.Shared.Construction
         /// Sent server -> client to tell the client that a ghost has started to be constructed.
         /// </summary>
         [Serializable, NetSerializable]
-        public class AckStructureConstructionMessage : EntityEventArgs
+        public sealed class AckStructureConstructionMessage : EntityEventArgs
         {
             public readonly int GhostId;
 
@@ -77,7 +77,7 @@ namespace Content.Shared.Construction
         /// Sent client -> server to request a specific construction guide.
         /// </summary>
         [Serializable, NetSerializable]
-        public class RequestConstructionGuide : EntityEventArgs
+        public sealed class RequestConstructionGuide : EntityEventArgs
         {
             public readonly string ConstructionId;
 
@@ -91,7 +91,7 @@ namespace Content.Shared.Construction
         /// Sent server -> client as a response to a <see cref="RequestConstructionGuide"/> net message.
         /// </summary>
         [Serializable, NetSerializable]
-        public class ResponseConstructionGuide : EntityEventArgs
+        public sealed class ResponseConstructionGuide : EntityEventArgs
         {
             public readonly string ConstructionId;
             public readonly ConstructionGuide Guide;

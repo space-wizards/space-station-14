@@ -12,7 +12,7 @@ using static Robust.UnitTesting.RobustIntegrationTest;
 
 namespace Content.MapRenderer.Painters;
 
-public class EntityPainter
+public sealed class EntityPainter
 {
     private readonly IResourceCache _cResourceCache;
 

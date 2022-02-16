@@ -13,11 +13,9 @@ namespace Content.Server.Doors.Components
     /// and not being openable on open-hand click.
     /// </summary>
     [RegisterComponent]
-    public class FirelockComponent : Component
+    public sealed class FirelockComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "Firelock";
 
         /// <summary>
         /// Pry time modifier to be used when the firelock is currently closed due to fire or pressure.

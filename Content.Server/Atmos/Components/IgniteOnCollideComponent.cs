@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public class IgniteOnCollideComponent : Component
+    public sealed class IgniteOnCollideComponent : Component
     {
-        public override string Name => "IgniteOnCollide";
-
         [DataField("fireStacks")]
-        public float FireStacks { get; set; } 
+        public float FireStacks { get; set; }
     }
 }

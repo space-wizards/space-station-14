@@ -66,7 +66,7 @@ namespace Content.Shared.Hands
     ///     Raised when an entity item in a hand is deselected.
     /// </summary>
     [PublicAPI]
-    public class HandDeselectedEvent : HandledEntityEventArgs
+    public sealed class HandDeselectedEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that owns the deselected hand.
@@ -89,7 +89,7 @@ namespace Content.Shared.Hands
     ///     Raised when an item entity held by a hand is selected.
     /// </summary>
     [PublicAPI]
-    public class HandSelectedEvent : HandledEntityEventArgs
+    public sealed class HandSelectedEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that owns the selected hand.
@@ -109,7 +109,7 @@ namespace Content.Shared.Hands
     }
 
     [Serializable, NetSerializable]
-    public class RequestSetHandEvent : EntityEventArgs
+    public sealed class RequestSetHandEvent : EntityEventArgs
     {
         /// <summary>
         ///     The hand to be swapped to.
@@ -123,7 +123,7 @@ namespace Content.Shared.Hands
     }
 
     [Serializable, NetSerializable]
-    public class PickupAnimationEvent : EntityEventArgs
+    public sealed class PickupAnimationEvent : EntityEventArgs
     {
         public EntityUid ItemUid { get; }
         public EntityCoordinates InitialPosition { get; }
@@ -142,7 +142,7 @@ namespace Content.Shared.Hands
     ///     Raised directed on both the blocking entity and user when
     ///     a virtual hand item is deleted.
     /// </summary>
-    public class VirtualItemDeletedEvent : EntityEventArgs
+    public sealed class VirtualItemDeletedEvent : EntityEventArgs
     {
         public EntityUid BlockingEntity;
         public EntityUid User;
@@ -158,7 +158,7 @@ namespace Content.Shared.Hands
     ///     Raised when putting an entity into a hand slot
     /// </summary>
     [PublicAPI]
-    public class EquippedHandEvent : HandledEntityEventArgs
+    public sealed class EquippedHandEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that equipped the item.
@@ -187,7 +187,7 @@ namespace Content.Shared.Hands
     ///     Raised when removing an entity from an inventory slot.
     /// </summary>
     [PublicAPI]
-    public class UnequippedHandEvent : HandledEntityEventArgs
+    public sealed class UnequippedHandEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that equipped the item.

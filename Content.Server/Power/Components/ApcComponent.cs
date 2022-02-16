@@ -13,8 +13,7 @@ namespace Content.Server.Power.Components;
 
 [RegisterComponent]
 [Friend(typeof(ApcSystem))]
-[ComponentProtoName("Apc")]
-public class ApcComponent : BaseApcNetComponent
+public sealed class ApcComponent : BaseApcNetComponent
 {
     [DataField("onReceiveMessageSound")]
     public SoundSpecifier OnReceiveMessageSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");

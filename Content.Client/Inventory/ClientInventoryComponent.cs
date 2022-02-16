@@ -17,7 +17,7 @@ namespace Content.Client.Inventory
     [RegisterComponent]
     [ComponentReference(typeof(InventoryComponent))]
     [Friend(typeof(ClientInventorySystem))]
-    public class ClientInventoryComponent : InventoryComponent
+    public sealed class ClientInventoryComponent : InventoryComponent
     {
         public Control BottomLeftButtons = default!;
         public Control BottomRightButtons = default!;

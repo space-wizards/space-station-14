@@ -6,10 +6,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
 [RegisterComponent]
-public class ArtifactComponent : Component
+public sealed class ArtifactComponent : Component
 {
-    public override string Name => "Artifact";
-
     /// <summary>
     ///     Should artifact pick a random trigger on startup?
     /// </summary>

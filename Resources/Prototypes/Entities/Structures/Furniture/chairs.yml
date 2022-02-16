@@ -22,6 +22,7 @@
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
     noRot: true
+    netsync: false
   - type: Strap
     position: Stand
     buckleOffset: "0,0.15"
@@ -125,6 +126,22 @@
     node: chairComfy
 
 - type: entity
+  name: pilot seat
+  id: ChairPilotSeat
+  parent: SeatBase
+  description: The pilot seat of a prestigious ship.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    state: shuttle
+  - type: Construction
+    graph: Seat
+    node: chairPilotSeat
+
+- type: entity
   name: wooden chair
   id: ChairWood
   parent: SeatBase
@@ -156,20 +173,6 @@
   - type: Tag
     tags:
     - Wooden
-
-- type: entity
-  name: pilot seat
-  id: ChairPilotSeat
-  parent: SeatBase
-  description: The pilot seat of a prestigious ship.
-  components:
-  - type: Transform
-    anchored: true
-  - type: Anchorable
-  - type: Rotatable
-  - type: Sprite
-    state: shuttle
-    netsync: false
 
 - type: entity
   name: ritual chair

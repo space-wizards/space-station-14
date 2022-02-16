@@ -24,7 +24,7 @@ using System.Linq;
 
 namespace Content.Server.Salvage
 {
-    public class SalvageSystem : EntitySystem
+    public sealed class SalvageSystem : EntitySystem
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
@@ -278,7 +278,7 @@ namespace Content.Server.Salvage
                 Report("salvage-system-announcement-spawn-no-debris-available");
                 return false;
             }
-            var bp = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath);
+            var bp = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString());
             if (bp == null)
             {
                 Report("salvage-system-announcement-spawn-debris-disintegrated");
@@ -368,7 +368,7 @@ namespace Content.Server.Salvage
         }
     }
 
-    public class SalvageGridState
+    public sealed class SalvageGridState
     {
         public TimeSpan CurrentTime { get; set; }
         public List<SalvageMagnetComponent> ActiveMagnets { get; } = new();

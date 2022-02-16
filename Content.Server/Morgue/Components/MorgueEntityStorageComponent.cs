@@ -31,13 +31,12 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(EntityStorageComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
+    [Virtual]
 #pragma warning disable 618
     public class MorgueEntityStorageComponent : EntityStorageComponent, IExamine
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "MorgueEntityStorage";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("trayPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]

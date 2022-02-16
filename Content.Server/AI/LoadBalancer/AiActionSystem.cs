@@ -7,7 +7,7 @@ namespace Content.Server.AI.LoadBalancer
     /// <summary>
     /// This will queue up an AI's request for an action and give it one when possible
     /// </summary>
-    public class AiActionSystem : EntitySystem
+    public sealed class AiActionSystem : EntitySystem
     {
         private readonly AiActionJobQueue _aiRequestQueue = new();
 

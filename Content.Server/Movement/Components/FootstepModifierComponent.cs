@@ -12,11 +12,8 @@ namespace Content.Server.Movement.Components
     /// Changes footstep sound
     /// </summary>
     [RegisterComponent]
-    public class FootstepModifierComponent : Component
+    public sealed class FootstepModifierComponent : Component
     {
-        /// <inheritdoc />
-        public override string Name => "FootstepModifier";
-
         [DataField("footstepSoundCollection", required: true)]
         public SoundSpecifier SoundCollection = default!;
 

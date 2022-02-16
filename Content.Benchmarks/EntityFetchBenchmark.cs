@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Benchmarks
 {
     [SimpleJob]
-    public class EntityFetchBenchmark
+    public sealed class EntityFetchBenchmark
     {
         [Params(1000)] public int N { get; set; }
 

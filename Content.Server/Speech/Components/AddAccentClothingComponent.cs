@@ -8,10 +8,8 @@ namespace Content.Server.Speech.Components;
 ///     Applies accent to user while they wear entity as a clothing.
 /// </summary>
 [RegisterComponent]
-public class AddAccentClothingComponent : Component
+public sealed class AddAccentClothingComponent : Component
 {
-    public override string Name => "AddAccentClothing";
-
     /// <summary>
     ///     Component name for accent that will be applied.
     /// </summary>

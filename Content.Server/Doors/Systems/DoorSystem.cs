@@ -14,8 +14,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using System.Linq;
@@ -28,13 +26,14 @@ public sealed class DoorSystem : SharedDoorSystem
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<DoorComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ConstructionSystem) });
 
         SubscribeLocalEvent<DoorComponent, PryFinishedEvent>(OnPryFinished);
         SubscribeLocalEvent<DoorComponent, PryCancelledEvent>(OnPryCancelled);
@@ -47,8 +46,8 @@ public sealed class DoorSystem : SharedDoorSystem
         base.OnInit(uid, door, args);
 
         if (door.State == DoorState.Open
-            && door.ChangeAirtight
-            && TryComp(uid, out AirtightComponent? airtight))
+                && door.ChangeAirtight
+                && TryComp(uid, out AirtightComponent? airtight))
         {
             _airtightSystem.SetAirblocked(airtight, false);
         }
@@ -92,10 +91,10 @@ public sealed class DoorSystem : SharedDoorSystem
         }
 
         // send the sound to players.
-        SoundSystem.Play(filter, sound, uid, AudioParams.Default.WithVolume(-5));
+        SoundSystem.Play(filter, sound, uid, audioParams);
     }
 
-    #region DoAfters
+#region DoAfters
     /// <summary>
     ///     Weld or pry open a door.
     /// </summary>
@@ -109,15 +108,13 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if (tool.Qualities.Contains(door.PryingQuality))
         {
-            TryPryDoor(uid, args.Used, args.User, door);
-            args.Handled = true;
+            args.Handled = TryPryDoor(uid, args.Used, args.User, door);
             return;
         }
 
         if (door.Weldable && tool.Qualities.Contains(door.WeldingQuality))
         {
-            TryWeldDoor(uid, args.Used, args.User, door);
-            args.Handled = true;
+            args.Handled = TryWeldDoor(uid, args.Used, args.User, door);
         }
     }
 
@@ -125,40 +122,46 @@ public sealed class DoorSystem : SharedDoorSystem
     ///     Attempt to weld a door shut, or unweld it if it is already welded. This does not actually check if the user
     ///     is holding the correct tool.
     /// </summary>
-    private async void TryWeldDoor(EntityUid target, EntityUid used, EntityUid user, DoorComponent door)
+    private bool TryWeldDoor(EntityUid target, EntityUid used, EntityUid user, DoorComponent door)
     {
         if (!door.Weldable || door.BeingWelded || door.CurrentlyCrushing.Count > 0)
-            return;
+            return false;
 
         // is the door in a weld-able state?
         if (door.State != DoorState.Closed && door.State != DoorState.Welded)
-            return;
+            return false;
 
         // perform a do-after delay
         door.BeingWelded = true;
         _toolSystem.UseTool(used, user, target, 3f, 3f, door.WeldingQuality,
-            new WeldFinishedEvent(), new WeldCancelledEvent(), target);
+                new WeldFinishedEvent(), new WeldCancelledEvent(), target);
+
+        return true; // we might not actually succeeded, but a do-after has started
     }
 
     /// <summary>
     ///     Pry open a door. This does not check if the user is holding the required tool.
     /// </summary>
-    private async void TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door)
+    private bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door)
     {
         if (door.State == DoorState.Welded)
-            return;
+            return false;
 
         var canEv = new BeforeDoorPryEvent(user);
         RaiseLocalEvent(target, canEv, false);
 
         if (canEv.Cancelled)
-            return;
+            // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
+            // under a windoor.
+            return true;
 
         var modEv = new DoorGetPryTimeModifierEvent();
         RaiseLocalEvent(target, modEv, false);
 
         _toolSystem.UseTool(tool, user, target, 0f, modEv.PryTimeModifier * door.PryTime, door.PryingQuality,
                 new PryFinishedEvent(), new PryCancelledEvent(), target);
+
+        return true; // we might not actually succeeded, but a do-after has started
     }
 
     private void OnWeldCancelled(EntityUid uid, DoorComponent door, WeldCancelledEvent args)
@@ -193,7 +196,7 @@ public sealed class DoorSystem : SharedDoorSystem
         else if (door.State == DoorState.Open)
             StartClosing(uid, door);
     }
-    #endregion
+#endregion
 
     /// <summary>
     ///     Does the user have the permissions required to open this door?
@@ -204,6 +207,10 @@ public sealed class DoorSystem : SharedDoorSystem
 
         // if there is no "user" we skip the access checks. Access is also ignored in some game-modes.
         if (user == null || AccessType == AccessTypes.AllowAll)
+            return true;
+
+        // If the door is on emergency access we skip the checks.
+        if (TryComp<SharedAirlockComponent>(uid, out var airlock) && airlock.EmergencyAccess)
             return true;
 
         if (!Resolve(uid, ref access, false))
@@ -234,8 +241,10 @@ public sealed class DoorSystem : SharedDoorSystem
         if (door.State != DoorState.Closed)
             return;
 
-        if (TryComp(args.OtherFixture.Body.Owner, out TagComponent? tags) && tags.HasTag("DoorBumpOpener"))
-            TryOpen(uid, door, args.OtherFixture.Body.Owner);
+        var otherUid = args.OtherFixture.Body.Owner;
+
+        if (_tagSystem.HasTag(otherUid, "DoorBumpOpener"))
+            TryOpen(uid, door, otherUid);
     }
 
     public override void OnPartialOpen(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
@@ -262,7 +271,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (!base.OnPartialClose(uid, door, physics))
             return false;
 
-        // update airtight, if we did not crush something. 
+        // update airtight, if we did not crush something.
         if (door.ChangeAirtight && door.CurrentlyCrushing.Count == 0 && TryComp(uid, out AirtightComponent? airtight))
             _airtightSystem.SetAirblocked(airtight, true);
 
@@ -283,23 +292,20 @@ public sealed class DoorSystem : SharedDoorSystem
 
         var container = uid.EnsureContainer<Container>("board", out var existed);
 
-        /* // TODO ShadowCommander: Re-enable when access is added to boards. Requires map update.
-        if (existed)
+        if (existed & container.ContainedEntities.Count != 0)
         {
             // We already contain a board. Note: We don't check if it's the right one!
-            if (container.ContainedEntities.Count != 0)
-                return;
+            return;
         }
 
-        var board = Owner.EntityManager.SpawnEntity(_boardPrototype, Owner.Transform.Coordinates);
+        var board = EntityManager.SpawnEntity(door.BoardPrototype, Transform(uid).Coordinates);
 
         if(!container.Insert(board))
-            Logger.Warning($"Couldn't insert board {board} into door {Owner}!");
-        */
+            Logger.Warning($"Couldn't insert board {ToPrettyString(board)} into door {ToPrettyString(uid)}!");
     }
 }
 
-public class PryFinishedEvent : EntityEventArgs { }
-public class PryCancelledEvent : EntityEventArgs { }
-public class WeldFinishedEvent : EntityEventArgs { }
-public class WeldCancelledEvent : EntityEventArgs { }
+public sealed class PryFinishedEvent : EntityEventArgs { }
+public sealed class PryCancelledEvent : EntityEventArgs { }
+public sealed class WeldFinishedEvent : EntityEventArgs { }
+public sealed class WeldCancelledEvent : EntityEventArgs { }

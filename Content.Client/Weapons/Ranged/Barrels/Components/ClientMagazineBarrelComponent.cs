@@ -20,7 +20,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
     [NetworkedComponent()]
-    public class ClientMagazineBarrelComponent : Component, IItemStatus
+    public sealed class ClientMagazineBarrelComponent : Component, IItemStatus
     {
         private static readonly Animation AlarmAnimationSmg = new()
         {
@@ -67,9 +67,6 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                 }
             }
         };
-
-        public override string Name => "MagazineBarrel";
-
         private StatusControl? _statusControl;
 
         /// <summary>

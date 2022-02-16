@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Power
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class SetBatteryPercentCommand : IConsoleCommand
+    public sealed class SetBatteryPercentCommand : IConsoleCommand
     {
         public string Command => "setbatterypercent";
         public string Description => "Drains or recharges a battery by entity uid and percentage, i.e.: forall with Battery do setbatterypercent $ID 0";

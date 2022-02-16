@@ -6,7 +6,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
-public class ArtifactSystem : EntitySystem
+public sealed class ArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -36,6 +36,7 @@ public class ArtifactSystem : EntitySystem
         trigger.Owner = uid;
 
         EntityManager.AddComponent(uid, trigger);
+        RaiseLocalEvent(uid, new RandomizeTriggerEvent());
     }
 
     public bool TryActivateArtifact(EntityUid uid, EntityUid? user = null,

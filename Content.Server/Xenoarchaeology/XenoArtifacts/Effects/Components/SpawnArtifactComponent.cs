@@ -13,10 +13,8 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 ///     It could be an angry mob or some random item.
 /// </summary>
 [RegisterComponent]
-public class SpawnArtifactComponent : Component
+public sealed class SpawnArtifactComponent : Component
 {
-    public override string Name => "SpawnArtifact";
-
     [DataField("random")]
     public bool RandomPrototype = true;
 

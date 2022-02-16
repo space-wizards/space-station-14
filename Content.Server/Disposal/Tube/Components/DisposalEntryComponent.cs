@@ -13,13 +13,11 @@ namespace Content.Server.Disposal.Tube.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
-    public class DisposalEntryComponent : DisposalTubeComponent
+    public sealed class DisposalEntryComponent : DisposalTubeComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         private const string HolderPrototypeId = "DisposalHolder";
-
-        public override string Name => "DisposalEntry";
 
         public bool TryInsert(DisposalUnitComponent from)
         {

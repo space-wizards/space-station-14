@@ -12,11 +12,10 @@ namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SolutionAreaEffectComponent))]
-    public class SmokeSolutionAreaEffectComponent : SolutionAreaEffectComponent
+    public sealed class SmokeSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "SmokeSolutionAreaEffect";
         public new const string SolutionName = "solutionArea";
 
         protected override void UpdateVisuals()

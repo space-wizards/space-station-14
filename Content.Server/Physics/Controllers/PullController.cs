@@ -9,7 +9,7 @@ using Robust.Shared.Physics.Controllers;
 
 namespace Content.Server.Physics.Controllers
 {
-    public class PullController : VirtualController
+    public sealed class PullController : VirtualController
     {
         // Parameterization for pulling:
         // Speeds. Note that the speed is mass-independent (multiplied by mass).

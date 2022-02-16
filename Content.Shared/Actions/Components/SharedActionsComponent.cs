@@ -40,8 +40,6 @@ namespace Content.Shared.Actions.Components
         [Dependency]
         protected readonly IEntityManager EntityManager = default!;
 
-        public override string Name => "Actions";
-
         /// <summary>
         /// Actions granted to this entity as soon as they spawn, regardless
         /// of the status of the entity.
@@ -385,7 +383,7 @@ namespace Content.Shared.Actions.Components
     }
 
     [Serializable, NetSerializable]
-    public class ActionComponentState : ComponentState
+    public sealed class ActionComponentState : ComponentState
     {
         public Dictionary<ActionType, ActionState> Actions;
         public Dictionary<EntityUid, Dictionary<ItemActionType, ActionState>> ItemActions;
@@ -490,7 +488,7 @@ namespace Content.Shared.Actions.Components
     /// A message that tells server we want to run the instant action logic.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformInstantActionMessage : PerformActionMessage
+    public sealed class PerformInstantActionMessage : PerformActionMessage
     {
         public override BehaviorType BehaviorType => BehaviorType.Instant;
 
@@ -503,7 +501,7 @@ namespace Content.Shared.Actions.Components
     /// A message that tells server we want to run the instant action logic.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformInstantItemActionMessage : PerformItemActionMessage
+    public sealed class PerformInstantItemActionMessage : PerformItemActionMessage
     {
         public override BehaviorType BehaviorType => BehaviorType.Instant;
 
@@ -537,7 +535,7 @@ namespace Content.Shared.Actions.Components
     /// A message that tells server we want to toggle on the indicated action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformToggleOnActionMessage : PerformActionMessage, IToggleActionMessage
+    public sealed class PerformToggleOnActionMessage : PerformActionMessage, IToggleActionMessage
     {
         public override BehaviorType BehaviorType => BehaviorType.Toggle;
         public bool ToggleOn => true;
@@ -548,7 +546,7 @@ namespace Content.Shared.Actions.Components
     /// A message that tells server we want to toggle off the indicated action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformToggleOffActionMessage : PerformActionMessage, IToggleActionMessage
+    public sealed class PerformToggleOffActionMessage : PerformActionMessage, IToggleActionMessage
     {
         public override BehaviorType BehaviorType => BehaviorType.Toggle;
         public bool ToggleOn => false;
@@ -559,7 +557,7 @@ namespace Content.Shared.Actions.Components
     /// A message that tells server we want to toggle on the indicated action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformToggleOnItemActionMessage : PerformItemActionMessage, IToggleActionMessage
+    public sealed class PerformToggleOnItemActionMessage : PerformItemActionMessage, IToggleActionMessage
     {
         public override BehaviorType BehaviorType => BehaviorType.Toggle;
         public bool ToggleOn => true;
@@ -570,7 +568,7 @@ namespace Content.Shared.Actions.Components
     /// A message that tells server we want to toggle off the indicated action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformToggleOffItemActionMessage : PerformItemActionMessage, IToggleActionMessage
+    public sealed class PerformToggleOffItemActionMessage : PerformItemActionMessage, IToggleActionMessage
     {
         public override BehaviorType BehaviorType => BehaviorType.Toggle;
         public bool ToggleOn => false;
@@ -581,7 +579,7 @@ namespace Content.Shared.Actions.Components
     /// A message that tells server we want to target the provided point with a particular action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformTargetPointActionMessage : PerformActionMessage, ITargetPointActionMessage
+    public sealed class PerformTargetPointActionMessage : PerformActionMessage, ITargetPointActionMessage
     {
         public override BehaviorType BehaviorType => BehaviorType.TargetPoint;
         private readonly EntityCoordinates _target;
@@ -597,7 +595,7 @@ namespace Content.Shared.Actions.Components
     /// A message that tells server we want to target the provided point with a particular action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformTargetPointItemActionMessage : PerformItemActionMessage, ITargetPointActionMessage
+    public sealed class PerformTargetPointItemActionMessage : PerformItemActionMessage, ITargetPointActionMessage
     {
         private readonly EntityCoordinates _target;
         public EntityCoordinates Target => _target;
@@ -613,7 +611,7 @@ namespace Content.Shared.Actions.Components
     /// A message that tells server we want to target the provided entity with a particular action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformTargetEntityActionMessage : PerformActionMessage, ITargetEntityActionMessage
+    public sealed class PerformTargetEntityActionMessage : PerformActionMessage, ITargetEntityActionMessage
     {
         public override BehaviorType BehaviorType => BehaviorType.TargetEntity;
         private readonly EntityUid _target;
@@ -629,7 +627,7 @@ namespace Content.Shared.Actions.Components
     /// A message that tells server we want to target the provided entity with a particular action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformTargetEntityItemActionMessage : PerformItemActionMessage, ITargetEntityActionMessage
+    public sealed class PerformTargetEntityItemActionMessage : PerformItemActionMessage, ITargetEntityActionMessage
     {
         public override BehaviorType BehaviorType => BehaviorType.TargetEntity;
         private readonly EntityUid _target;

@@ -59,7 +59,7 @@ namespace Content.Shared.Actions
         void DoTargetEntityAction(EntityUid player, EntityUid target);
     }
 
-    public class ActionAttempt : IActionAttempt
+    public sealed class ActionAttempt : IActionAttempt
     {
         private readonly ActionPrototype _action;
 
@@ -139,7 +139,7 @@ namespace Content.Shared.Actions
         }
     }
 
-    public class ItemActionAttempt : IActionAttempt
+    public sealed class ItemActionAttempt : IActionAttempt
     {
         private readonly ItemActionPrototype _action;
         private readonly EntityUid _item;

@@ -10,7 +10,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Ghost.Roles
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class MakeGhostRoleCommand : IConsoleCommand
+    public sealed class MakeGhostRoleCommand : IConsoleCommand
     {
         public string Command => "makeghostrole";
         public string Description => "Turns an entity into a ghost role.";

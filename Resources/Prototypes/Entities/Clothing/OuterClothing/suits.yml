@@ -74,18 +74,6 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/rad.rsi
 
-# I think this is a suit? Looks baggy enough
-- type: entity
-  parent: ClothingOuterBase
-  id: ClothingOuterSuitSyndicate
-  name: syndicate suit
-  description: "Has a tag on it 'Totally not property of an enemy corporation, honest!'"
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Suits/syndicate.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Suits/syndicate.rsi
-
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterSuitSpaceninja

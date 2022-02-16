@@ -19,12 +19,14 @@ using Robust.Shared.Player;
 
 namespace Content.Server.RCD.Systems
 {
-    public class RCDSystem : EntitySystem
+    public sealed class RCDSystem : EntitySystem
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         private readonly RcdMode[] _modes = (RcdMode[]) Enum.GetValues(typeof(RcdMode));
 
@@ -60,7 +62,7 @@ namespace Content.Server.RCD.Systems
 
         private async void OnAfterInteract(EntityUid uid, RCDComponent rcd, AfterInteractEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.CanReach)
                 return;
 
             // FIXME: Make this work properly. Right now it relies on the click location being on a grid, which is bad.
@@ -159,7 +161,8 @@ namespace Content.Server.RCD.Systems
             }
 
             var coordinates = mapGrid.ToCoordinates(tile.GridIndices);
-            if (coordinates == EntityCoordinates.Invalid || !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            if (coordinates == EntityCoordinates.Invalid ||
+                !_interactionSystem.InRangeUnobstructed(eventArgs.User, coordinates, ignoreInsideBlocker: true, popup: true))
             {
                 return false;
             }
@@ -189,7 +192,7 @@ namespace Content.Server.RCD.Systems
                         return false;
                     }
                     //They tried to decon a non-turf but it's not in the whitelist
-                    if (eventArgs.Target != null && !eventArgs.Target.Value.HasTag("RCDDeconstructWhitelist"))
+                    if (eventArgs.Target != null && !_tagSystem.HasTag(eventArgs.Target.Value, "RCDDeconstructWhitelist"))
                     {
                         rcd.Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"));
                         return false;

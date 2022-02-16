@@ -5,6 +5,7 @@ using Content.Server.Climbing.Components;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
@@ -32,7 +33,8 @@ namespace Content.Server.Climbing
             base.Initialize();
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<ClimbableComponent, GetAlternativeVerbsEvent>(AddClimbVerb);
+            SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbVerb);
+            SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
         }
 
@@ -44,7 +46,7 @@ namespace Content.Server.Climbing
             UnsetTransitionBoolAfterBufferTime(uid, component);
         }
 
-        private void AddClimbVerb(EntityUid uid, ClimbableComponent component, GetAlternativeVerbsEvent args)
+        private void AddClimbVerb(EntityUid uid, ClimbableComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User))
                 return;
@@ -55,11 +57,17 @@ namespace Content.Server.Climbing
                 return;
 
             // Add a climb verb
-            Verb verb = new();
+            AlternativeVerb verb = new();
             verb.Act = () => component.TryClimb(args.User, args.Target);
             verb.Text = Loc.GetString("comp-climbable-verb-climb");
             // TODO VERBS ICON add a climbing icon?
             args.Verbs.Add(verb);
+        }
+
+        private void OnBuckleChange(EntityUid uid, ClimbingComponent component, BuckleChangeEvent args)
+        {
+            if (args.Buckling)
+                component.IsClimbing = false;
         }
 
         private void OnGlassClimbed(EntityUid uid, GlassTableComponent component, ClimbedOnEvent args)

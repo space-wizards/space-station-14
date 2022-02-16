@@ -7,12 +7,9 @@ using Robust.Shared.Maths;
 namespace Content.Server.Explosion.Components
 {
     [RegisterComponent]
-    public class ExplosionLaunchedComponent : Component, IExAct
+    public sealed class ExplosionLaunchedComponent : Component, IExAct
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "ExplosionLaunched";
-
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {
             if (_entMan.Deleted(Owner))

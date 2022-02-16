@@ -7,10 +7,8 @@ namespace Content.Server.Extinguisher;
 
 [RegisterComponent]
 [Friend(typeof(FireExtinguisherSystem))]
-public class FireExtinguisherComponent : Component
+public sealed class FireExtinguisherComponent : Component
 {
-    public override string Name => "FireExtinguisher";
-
     [DataField("refillSound")] public SoundSpecifier RefillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
 
     [DataField("hasSafety")] public bool HasSafety = true;

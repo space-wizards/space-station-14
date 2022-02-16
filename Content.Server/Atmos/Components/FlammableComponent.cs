@@ -8,10 +8,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public class FlammableComponent : Component
+    public sealed class FlammableComponent : Component
     {
-        public override string Name => "Flammable";
-
         [ViewVariables]
         public bool Resisting = false;
 

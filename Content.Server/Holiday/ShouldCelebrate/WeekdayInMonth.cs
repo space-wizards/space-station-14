@@ -9,7 +9,7 @@ namespace Content.Server.Holiday.ShouldCelebrate
     ///     For a holiday that happens the first instance of a weekday on a month.
     /// </summary>
     [UsedImplicitly]
-    public class WeekdayInMonth : DefaultHolidayShouldCelebrate
+    public sealed class WeekdayInMonth : DefaultHolidayShouldCelebrate
     {
         [DataField("weekday")] private DayOfWeek _weekday = DayOfWeek.Monday;
 

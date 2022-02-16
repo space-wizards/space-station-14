@@ -14,11 +14,10 @@ namespace Content.Server.AI.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IMobMoverComponent))]
+    [Virtual]
     public class AiControllerComponent : Component, IMobMoverComponent, IMoverComponent
     {
         [DataField("logic")] private float _visionRadius = 8.0f;
-
-        public override string Name => "AiController";
 
         // TODO: Need to ECS a lot more of the AI first before we can ECS this
         /// <summary>

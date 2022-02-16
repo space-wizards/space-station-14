@@ -9,7 +9,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lathe.UI
 {
-    public class LatheQueueMenu : DefaultWindow
+    public sealed class LatheQueueMenu : DefaultWindow
     {
         public LatheBoundUserInterface Owner { get; set; }
 

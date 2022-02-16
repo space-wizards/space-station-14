@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -11,8 +11,7 @@ namespace Content.Server.Climbing.Components;
 ///     not very generalized with regards to naming.
 /// </summary>
 [RegisterComponent, Friend(typeof(ClimbSystem))]
-[ComponentProtoName("GlassTable")]
-public class GlassTableComponent : Component
+public sealed class GlassTableComponent : Component
 {
     /// <summary>
     ///     How much damage should be given to the climber?

@@ -9,17 +9,17 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
-public class SpawnArtifactSystem : EntitySystem
+public sealed class SpawnArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SpawnArtifactComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<SpawnArtifactComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SpawnArtifactComponent, ArtifactActivatedEvent>(OnActivate);
     }
-    private void OnInit(EntityUid uid, SpawnArtifactComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, SpawnArtifactComponent component, MapInitEvent args)
     {
         ChooseRandomPrototype(uid, component);
     }

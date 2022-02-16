@@ -9,11 +9,9 @@ namespace Content.Server.Power.Components
 {
     [RegisterComponent]
 #pragma warning disable 618
-    public class ExaminableBatteryComponent : Component, IExamine
+    public sealed class ExaminableBatteryComponent : Component, IExamine
 #pragma warning restore 618
     {
-        public override string Name => "ExaminableBattery";
-
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)

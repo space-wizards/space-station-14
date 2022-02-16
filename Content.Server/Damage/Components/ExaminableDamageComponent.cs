@@ -9,10 +9,8 @@ namespace Content.Server.Damage.Components;
 ///     This component shows entity damage severity when it is examined by player.
 /// </summary>
 [RegisterComponent]
-public class ExaminableDamageComponent : Component
+public sealed class ExaminableDamageComponent : Component
 {
-    public override string Name => "ExaminableDamage";
-
     [DataField("messages", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<ExaminableDamagePrototype>))]
     public string? MessagesProtoId;
 

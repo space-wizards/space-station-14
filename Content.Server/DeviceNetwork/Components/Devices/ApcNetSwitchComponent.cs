@@ -7,10 +7,8 @@ namespace Content.Server.DeviceNetwork.Components.Devices
 {
     [RegisterComponent]
     [Friend(typeof(ApcNetSwitchSystem))]
-    public class ApcNetSwitchComponent : Component
+    public sealed class ApcNetSwitchComponent : Component
     {
-        public override string Name => "ApcNetSwitch";
-
         [ViewVariables] public bool State;
     }
 }

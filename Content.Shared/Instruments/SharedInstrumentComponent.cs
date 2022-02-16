@@ -10,10 +10,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Instruments;
 
 [NetworkedComponent, Friend(typeof(SharedInstrumentSystem))]
-public class SharedInstrumentComponent : Component
+public abstract class SharedInstrumentComponent : Component
 {
-    public override string Name => "Instrument";
-
     [ViewVariables]
     public bool Playing { get; set; }
 
@@ -44,7 +42,7 @@ public class SharedInstrumentComponent : Component
 ///     This message is sent to the client to completely stop midi input and midi playback.
 /// </summary>
 [Serializable, NetSerializable]
-public class InstrumentStopMidiEvent : EntityEventArgs
+public sealed class InstrumentStopMidiEvent : EntityEventArgs
 {
     public EntityUid Uid { get; }
 
@@ -58,7 +56,7 @@ public class InstrumentStopMidiEvent : EntityEventArgs
 ///     This message is sent to the client to start the synth.
 /// </summary>
 [Serializable, NetSerializable]
-public class InstrumentStartMidiEvent : EntityEventArgs
+public sealed class InstrumentStartMidiEvent : EntityEventArgs
 {
     public EntityUid Uid { get; }
 
@@ -72,7 +70,7 @@ public class InstrumentStartMidiEvent : EntityEventArgs
 ///     This message carries a MidiEvent to be played on clients.
 /// </summary>
 [Serializable, NetSerializable]
-public class InstrumentMidiEventEvent : EntityEventArgs
+public sealed class InstrumentMidiEventEvent : EntityEventArgs
 {
     public EntityUid Uid { get; }
     public MidiEvent[] MidiEvent { get; }
@@ -85,7 +83,7 @@ public class InstrumentMidiEventEvent : EntityEventArgs
 }
 
 [Serializable, NetSerializable]
-public class InstrumentState : ComponentState
+public sealed class InstrumentState : ComponentState
 {
     public bool Playing { get; }
     public byte InstrumentProgram { get; }

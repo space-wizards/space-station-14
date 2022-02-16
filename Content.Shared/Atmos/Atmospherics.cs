@@ -255,11 +255,10 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float NormalBodyTemperature = 37f;
 
-        public const float HumanNeededOxygen = MolesCellStandard * BreathPercentage * 0.16f;
-
-        public const float HumanProducedOxygen = HumanNeededOxygen * 0.75f;
-
-        public const float HumanProducedCarbonDioxide = HumanNeededOxygen * 0.25f;
+        /// <summary>
+        ///     I hereby decree. This is Arbitrary Suck my Dick
+        /// </summary>
+        public const float BreathMolesToReagentMultiplier = 1144;
 
         #region Pipes
 

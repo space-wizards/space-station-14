@@ -13,7 +13,7 @@ namespace Content.Shared.Item
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedItemComponent, GetInteractionVerbsEvent>(AddPickupVerb);
+            SubscribeLocalEvent<SharedItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
 
             SubscribeLocalEvent<SharedSpriteComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<SharedSpriteComponent, GotUnequippedEvent>(OnUnequipped);
@@ -36,6 +36,11 @@ namespace Content.Shared.Item
             args.State = new ItemComponentState(component.Size, component.EquippedPrefix);
         }
 
+        // Although netsync is being set to false for items client can still update these
+        // Realistically:
+        // Container should already hide these
+        // Client is the only thing that matters.
+
         private void OnUnequipped(EntityUid uid, SharedSpriteComponent component, GotUnequippedEvent args)
         {
             component.Visible = true;
@@ -46,7 +51,7 @@ namespace Content.Shared.Item
             component.Visible = false;
         }
 
-        private void AddPickupVerb(EntityUid uid, SharedItemComponent component, GetInteractionVerbsEvent args)
+        private void AddPickupVerb(EntityUid uid, SharedItemComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (args.Hands == null ||
                 args.Using != null ||
@@ -55,7 +60,7 @@ namespace Content.Shared.Item
                 !args.Hands.CanPickupEntityToActiveHand(args.Target))
                 return;
 
-            Verb verb = new();
+            InteractionVerb verb = new();
             verb.Act = () => args.Hands.TryPickupEntityToActiveHand(args.Target);
             verb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
 

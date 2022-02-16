@@ -27,7 +27,7 @@
           steps:
             - material: Cable
               amount: 5
-              doAfter: 1
+              doAfter: 2.5
         - to: start
           conditions:
             - !type:EntityAnchored
@@ -39,7 +39,7 @@
             - !type:DeleteEntity {}
           steps:
             - tool: Welding
-              doAfter: 2
+              doAfter: 3
 
     - node: wired
       entity: AirlockAssembly
@@ -54,7 +54,7 @@
               icon:
                 sprite: "Objects/Misc/module.rsi"
                 state: "door_electronics"
-              doAfter: 1
+              doAfter: 3
         - to: assembly
           completed:
             - !type:SpawnPrototype
@@ -62,7 +62,7 @@
               amount: 5
           steps:
             - tool: Cutting
-              doAfter: 1
+              doAfter: 2.5
 
     - node: electronics
       edges:
@@ -71,37 +71,20 @@
             - !type:EntityAnchored {}
           steps:
             - tool: Screwing
-              doAfter: 2
+              doAfter: 2.5
 
     - node: airlock
       entity: Airlock
       edges:
-        - to: wired
+        - to: wired #TODO DOOR ELECTRONICS. If door electronics ever govern access permissions, this step should probably be further down? It makes it too easy to swap permissions around. See also windoor.
           conditions:
             - !type:EntityAnchored {}
             - !type:DoorWelded {}
             - !type:AirlockBolted
               value: false
             - !type:WirePanel {}
-            - !type:ContainerNotEmpty # TODO ShadowCommander: Remove when map gets updated
-              container: board
           completed:
             - !type:EmptyAllContainers {}
           steps:
             - tool: Prying
-              doAfter: 1
-        - to: wired # TODO ShadowCommander: Remove when board spawning is implemented in ServerDoorComponent.cs. Needs a map update.
-          conditions:
-            - !type:EntityAnchored {}
-            - !type:DoorWelded {}
-            - !type:AirlockBolted
-              value: false
-            - !type:WirePanel {}
-            - !type:ContainerEmpty
-              container: board
-          completed:
-            - !type:SpawnPrototype
-              prototype: DoorElectronics
-          steps:
-            - tool: Prying
-              doAfter: 1
+              doAfter: 5

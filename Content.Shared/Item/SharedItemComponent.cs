@@ -20,11 +20,9 @@ namespace Content.Shared.Item
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.
     /// </summary>
     [NetworkedComponent()]
-    public class SharedItemComponent : Component, IInteractHand
+    public abstract class SharedItemComponent : Component, IInteractHand
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "Item";
 
         /// <summary>
         ///     How much big this item is.
@@ -132,7 +130,7 @@ namespace Content.Shared.Item
     }
 
     [Serializable, NetSerializable]
-    public class ItemComponentState : ComponentState
+    public sealed class ItemComponentState : ComponentState
     {
         public int Size { get; }
         public string? EquippedPrefix { get; }
@@ -149,7 +147,7 @@ namespace Content.Shared.Item
     ///     that it can properly update its hands or inventory sprites and GUI.
     /// </summary>
     [Serializable, NetSerializable]
-    public class VisualsChangedEvent : EntityEventArgs
+    public sealed class VisualsChangedEvent : EntityEventArgs
     {
         public readonly EntityUid Item;
         public readonly string ContainerId;

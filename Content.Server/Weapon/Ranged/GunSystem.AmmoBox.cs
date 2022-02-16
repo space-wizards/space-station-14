@@ -19,7 +19,7 @@ public sealed partial class GunSystem
 {
     // Probably needs combining with magazines in future given the common functionality.
 
-    private void OnAmmoBoxAltVerbs(EntityUid uid, AmmoBoxComponent component, GetAlternativeVerbsEvent args)
+    private void OnAmmoBoxAltVerbs(EntityUid uid, AmmoBoxComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (args.Hands == null || !args.CanAccess || !args.CanInteract)
             return;
@@ -27,7 +27,7 @@ public sealed partial class GunSystem
         if (component.AmmoLeft == 0)
             return;
 
-        Verb verb = new()
+        AlternativeVerb verb = new()
         {
             Text = Loc.GetString("dump-vert-get-data-text"),
             IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",

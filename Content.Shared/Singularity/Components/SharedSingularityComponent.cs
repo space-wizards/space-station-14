@@ -10,8 +10,6 @@ namespace Content.Shared.Singularity.Components
     [NetworkedComponent]
     public abstract class SharedSingularityComponent : Component
     {
-        public override string Name => "Singularity";
-
         /// <summary>
         ///     The radiation pulse component's radsPerSecond is set to the singularity's level multiplied by this number.
         /// </summary>

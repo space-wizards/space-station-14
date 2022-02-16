@@ -15,12 +15,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public class MovedByPressureComponent : Component
+    public sealed class MovedByPressureComponent : Component
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "MovedByPressure";
 
         private const float MoveForcePushRatio = 1f;
         private const float MoveForceForcePushRatio = 1f;

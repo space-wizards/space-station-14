@@ -94,6 +94,7 @@
   - type: Sprite
     sprite: Objects/Tools/wrench.rsi
     state: icon
+    netsync: false
   - type: Item
     sprite: Objects/Tools/wrench.rsi
   - type: ItemCooldown
@@ -122,6 +123,7 @@
   - type: Sprite
     sprite: Objects/Tools/crowbar.rsi
     state: icon
+    netsync: false
   - type: Item
     sprite: Objects/Tools/crowbar.rsi
     size: 10

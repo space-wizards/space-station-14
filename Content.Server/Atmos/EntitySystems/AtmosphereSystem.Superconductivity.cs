@@ -4,7 +4,7 @@ using Content.Shared.Atmos;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public partial class AtmosphereSystem
+    public sealed partial class AtmosphereSystem
     {
         private void Superconduct(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
         {

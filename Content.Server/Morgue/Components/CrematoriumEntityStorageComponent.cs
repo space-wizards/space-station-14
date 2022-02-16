@@ -29,13 +29,10 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
 #pragma warning disable 618
-    public class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent, IExamine, ISuicideAct
+    public sealed class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent, IExamine, ISuicideAct
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entities = default!;
-
-        public override string Name => "CrematoriumEntityStorage";
-
         [DataField("cremateStartSound")] private SoundSpecifier _cremateStartSound = new SoundPathSpecifier("/Audio/Items/lighter1.ogg");
         [DataField("crematingSound")] private SoundSpecifier _crematingSound = new SoundPathSpecifier("/Audio/Effects/burning.ogg");
         [DataField("cremateFinishSound")] private SoundSpecifier _cremateFinishSound = new SoundPathSpecifier("/Audio/Machines/ding.ogg");

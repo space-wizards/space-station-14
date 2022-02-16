@@ -10,7 +10,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Construction
 {
-    public partial class ConstructionSystem
+    public sealed partial class ConstructionSystem
     {
         private readonly HashSet<EntityUid> _constructionUpdateQueue = new();
 
@@ -498,7 +498,7 @@ namespace Content.Server.Construction
         ///     This event signals that a construction interaction's DoAfter has completed successfully.
         ///     This wraps the original event and also keeps some custom data that event handlers might need.
         /// </summary>
-        private class ConstructionDoAfterComplete : EntityEventArgs
+        private sealed class ConstructionDoAfterComplete : EntityEventArgs
         {
             public readonly EntityUid TargetUid;
             public readonly object WrappedEvent;
@@ -516,7 +516,7 @@ namespace Content.Server.Construction
         ///     This event signals that a construction interaction's DoAfter has failed or has been cancelled.
         ///     This wraps the original event and also keeps some custom data that event handlers might need.
         /// </summary>
-        private class ConstructionDoAfterCancelled : EntityEventArgs
+        private sealed class ConstructionDoAfterCancelled : EntityEventArgs
         {
             public readonly EntityUid TargetUid;
             public readonly object WrappedEvent;
