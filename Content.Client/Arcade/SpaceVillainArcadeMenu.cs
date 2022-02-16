@@ -92,7 +92,7 @@ namespace Content.Client.Arcade
             _enemyActionLabel.Text = message.EnemyActionMessage;
         }
 
-        private class ActionButton : Button
+        private sealed class ActionButton : Button
         {
             private readonly SpaceVillainArcadeBoundUserInterface _owner;
             private readonly SharedSpaceVillainArcadeComponent.PlayerAction _playerAction;

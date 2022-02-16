@@ -11,7 +11,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    internal class SetAdminOOC : IConsoleCommand
+    internal sealed class SetAdminOOC : IConsoleCommand
     {
         public string Command => "setadminooc";
         public string Description => Loc.GetString("set-admin-ooc-command-description", ("command", Command));

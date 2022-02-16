@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests.Disposal
     public sealed class DisposalUnitTest : ContentIntegrationTest
     {
         [Reflect(false)]
-        private class DisposalUnitTestSystem : EntitySystem
+        private sealed class DisposalUnitTestSystem : EntitySystem
         {
             public override void Initialize()
             {

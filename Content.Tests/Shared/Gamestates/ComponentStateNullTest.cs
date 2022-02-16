@@ -52,7 +52,7 @@ namespace Content.Tests.Shared.Gamestates
             return reflection;
         }
 
-        private class FullReflectionManager : ReflectionManager
+        private sealed class FullReflectionManager : ReflectionManager
         {
             protected override IEnumerable<string> TypePrefixes => Prefixes;
 

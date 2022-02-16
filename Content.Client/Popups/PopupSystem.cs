@@ -139,7 +139,7 @@ namespace Content.Client.Popups
             _aliveLabels.RemoveAll(l => l.Disposed);
         }
 
-        private class PopupLabel : Label
+        private sealed class PopupLabel : Label
         {
             private readonly IEyeManager _eyeManager;
             private readonly IEntityManager _entityManager;

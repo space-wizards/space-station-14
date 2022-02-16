@@ -233,7 +233,7 @@ namespace Content.Client.Storage
         /// <summary>
         /// GUI class for client storage component
         /// </summary>
-        private class StorageWindow : DefaultWindow
+        private sealed class StorageWindow : DefaultWindow
         {
             private Control _vBox;
             private readonly Label _information;

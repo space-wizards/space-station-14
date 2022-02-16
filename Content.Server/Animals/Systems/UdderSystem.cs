@@ -16,7 +16,7 @@ namespace Content.Server.Animals.Systems
     /// <summary>
     ///     Gives ability to living beings with acceptable hunger level to produce milkable reagents.
     /// </summary>
-    internal class UdderSystem : EntitySystem
+    internal sealed class UdderSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -136,7 +136,7 @@ namespace Content.Server.Animals.Systems
             args.Verbs.Add(verb);
         }
 
-        private class MilkingFinishedEvent : EntityEventArgs
+        private sealed class MilkingFinishedEvent : EntityEventArgs
         {
             public EntityUid UserUid;
             public EntityUid ContainerUid;
@@ -148,7 +148,7 @@ namespace Content.Server.Animals.Systems
             }
         }
 
-        private class MilkingFailEvent : EntityEventArgs
+        private sealed class MilkingFailEvent : EntityEventArgs
         { }
     }
 }

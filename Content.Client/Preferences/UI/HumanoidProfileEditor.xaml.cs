@@ -782,7 +782,7 @@ namespace Content.Client.Preferences.UI
             }
         }
 
-        private class JobPrioritySelector : Control
+        private sealed class JobPrioritySelector : Control
         {
             public JobPrototype Job { get; }
             private readonly RadioOptions<int> _optionButton;
@@ -855,7 +855,7 @@ namespace Content.Client.Preferences.UI
             }
         }
 
-        private class AntagPreferenceSelector : Control
+        private sealed class AntagPreferenceSelector : Control
         {
             public AntagPrototype Antag { get; }
             private readonly CheckBox _checkBox;

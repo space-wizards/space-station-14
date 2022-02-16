@@ -116,7 +116,7 @@ namespace Content.Client.Sandbox
 
     }
 
-    internal class SandboxManager : SharedSandboxManager, ISandboxManager
+    internal sealed class SandboxManager : SharedSandboxManager, ISandboxManager
     {
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;

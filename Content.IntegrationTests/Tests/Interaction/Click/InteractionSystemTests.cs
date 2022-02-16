@@ -408,7 +408,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         }
 
         [Reflect(false)]
-        private class TestInteractionSystem : EntitySystem
+        private sealed class TestInteractionSystem : EntitySystem
         {
             public ComponentEventHandler<HandsComponent, ClickAttackEvent>? AttackEvent;
             public EntityEventHandler<InteractUsingEvent>? InteractUsingEvent;

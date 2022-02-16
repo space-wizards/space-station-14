@@ -594,7 +594,7 @@ namespace Content.Server.Atmos.EntitySystems
                 PryTile(mapGrid, tile.GridIndices);
         }
 
-        private class TileAtmosphereComparer : IComparer<TileAtmosphere?>
+        private sealed class TileAtmosphereComparer : IComparer<TileAtmosphere?>
         {
             public int Compare(TileAtmosphere? a, TileAtmosphere? b)
             {

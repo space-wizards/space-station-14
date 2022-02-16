@@ -146,7 +146,7 @@ namespace Content.Server.Arcade.Components
             _game?.GameTick(frameTime);
         }
 
-        private class BlockGame
+        private sealed class BlockGame
         {
             //note: field is 10(0 -> 9) wide and 20(0 -> 19) high
 

@@ -151,7 +151,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
         }
 
 
-        private class ThresholdBoundControl : BoxContainer
+        private sealed class ThresholdBoundControl : BoxContainer
         {
             // raw values to use in thresholds, prefer these
             // over directly setting Modified(Value/LastValue)

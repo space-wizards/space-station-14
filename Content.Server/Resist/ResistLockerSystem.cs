@@ -91,7 +91,7 @@ public sealed class ResistLockerSystem : EntitySystem
         component.CancelToken?.Cancel();
     }
 
-    private class ResistDoAfterComplete : EntityEventArgs
+    private sealed class ResistDoAfterComplete : EntityEventArgs
     {
         public readonly EntityUid User;
         public readonly EntityUid Target;
@@ -102,7 +102,7 @@ public sealed class ResistLockerSystem : EntitySystem
         }
     }
 
-    private class ResistDoAfterCancelled : EntityEventArgs
+    private sealed class ResistDoAfterCancelled : EntityEventArgs
     {
         public readonly EntityUid User;
 

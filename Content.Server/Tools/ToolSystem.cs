@@ -259,7 +259,7 @@ namespace Content.Server.Tools
             UpdateWelders(frameTime);
         }
 
-        private class ToolDoAfterComplete : EntityEventArgs
+        private sealed class ToolDoAfterComplete : EntityEventArgs
         {
             public readonly object CompletedEvent;
             public readonly object? CancelledEvent;
@@ -279,7 +279,7 @@ namespace Content.Server.Tools
             }
         }
 
-        private class ToolDoAfterCancelled : EntityEventArgs
+        private sealed class ToolDoAfterCancelled : EntityEventArgs
         {
             public readonly object Event;
             public readonly EntityUid? EventTarget;

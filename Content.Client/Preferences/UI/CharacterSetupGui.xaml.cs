@@ -138,7 +138,7 @@ namespace Content.Client.Preferences.UI
             Characters.AddChild(_createNewCharacterButton);
         }
 
-        private class CharacterPickerButton : ContainerButton
+        private sealed class CharacterPickerButton : ContainerButton
         {
             private EntityUid _previewDummy;
 

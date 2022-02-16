@@ -302,7 +302,7 @@ namespace Content.Server.Chemistry.Components
             SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
-        private class ReagentInventoryComparer : Comparer<ReagentDispenserInventoryEntry>
+        private sealed class ReagentInventoryComparer : Comparer<ReagentDispenserInventoryEntry>
         {
             public override int Compare(ReagentDispenserInventoryEntry x, ReagentDispenserInventoryEntry y)
             {
