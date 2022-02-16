@@ -305,7 +305,8 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if(!container.Insert(board))
             Logger.Warning($"Couldn't insert board {ToPrettyString(board)} into door {ToPrettyString(uid)}!");
-    }    private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
+    }
+    private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
     {
         TryComp<AirlockComponent>(uid, out var airlockComponent);
         if (door.State == DoorState.Closed)
