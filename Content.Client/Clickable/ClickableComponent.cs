@@ -68,24 +68,28 @@ namespace Content.Client.Clickable
                 if (!spriteLayer.Visible || spriteLayer is not Layer layer)
                     continue;
 
-                // convert to layer-local coordinates
-                layer.GetLayerDrawMatrix(relativeRotation, out var matrix, out var dir, out var rsiState);
-                var inverseMatrix = Matrix3.Invert(matrix);
-                var layerLocal = inverseMatrix.Transform(localPos);
-
                 // Check the layer's texture, if it has one
                 if (layer.Texture != null)
                 {
                     // Convert to image coordinates
-                    var imagePos = (Vector2i) (layerLocal * EyeManager.PixelsPerMeter * (1, -1) + layer.Texture.Size / 2f);
+                    var imagePos = (Vector2i) (localPos * EyeManager.PixelsPerMeter * (1, -1) + layer.Texture.Size / 2f);
 
                     if (_clickMapManager.IsOccluding(layer.Texture, imagePos))
                         return true;
                 }
 
-                // Either there was no texture, or we weren't clicking on it. Check the RSI next
-                if (rsiState == null)
+                // Either we weren't clicking on the texture, or there wasn't one. In which case: check the RSI next
+                if (layer.State == null || layer.ActualRsi is not RSI rsi || !rsi.TryGetState(layer.State, out var rsiState))
                     continue;
+
+                var dir = (rsiState.Directions == RSI.State.DirectionType.Dir1)
+                    ? RSI.State.Direction.South
+                    : relativeRotation.ToRsiDirection(rsiState.Directions);
+
+                // convert to layer-local coordinates
+                layer.GetLayerDrawMatrix(dir, out var matrix);
+                var inverseMatrix = Matrix3.Invert(matrix);
+                var layerLocal = inverseMatrix.Transform(localPos);
 
                 // Convert to image coordinates
                 var layerImagePos = (Vector2i) (layerLocal * EyeManager.PixelsPerMeter * (1, -1) + rsiState.Size / 2f);
