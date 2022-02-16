@@ -5,6 +5,8 @@ using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
+using Content.Server.Emag.Systems;
+using Content.Server.Doors.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Doors;
@@ -39,6 +41,7 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, PryCancelledEvent>(OnPryCancelled);
         SubscribeLocalEvent<DoorComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<DoorComponent, WeldCancelledEvent>(OnWeldCancelled);
+        SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
     }
 
     protected override void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
@@ -153,7 +156,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (canEv.Cancelled)
             // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
             // under a windoor.
-            return true; 
+            return true;
 
         var modEv = new DoorGetPryTimeModifierEvent();
         RaiseLocalEvent(target, modEv, false);
@@ -302,6 +305,16 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if(!container.Insert(board))
             Logger.Warning($"Couldn't insert board {ToPrettyString(board)} into door {ToPrettyString(uid)}!");
+    }
+
+    private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
+    {
+        TryComp<AirlockComponent>(uid, out var airlockComponent);
+        if (door.State == DoorState.Closed)
+        {
+            StartOpening(uid);
+        }
+        airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
     }
 }
 

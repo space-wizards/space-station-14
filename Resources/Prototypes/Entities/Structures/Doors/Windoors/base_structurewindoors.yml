@@ -106,6 +106,7 @@
   - type: Construction
     graph: Windoor
     node: windoor
+  - type: Emaggable
 
 - type: entity
   id: BaseSecureWindoor
@@ -160,3 +161,4 @@
   - type: Construction
     graph: Windoor
     node: windoorSecure
+  - type: Emaggable

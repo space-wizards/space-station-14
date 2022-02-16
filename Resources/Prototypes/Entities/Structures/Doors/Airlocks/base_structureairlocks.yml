@@ -39,6 +39,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+  - type: Emaggable
   - type: Door
     board: DoorElectronics
     crushDamage:
