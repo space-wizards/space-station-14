@@ -68,9 +68,8 @@ namespace Content.Server.Recycling.Components
         /// <summary>
         /// Default sound to play when recycling
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("sound")]
-        public SoundSpecifier? Sound = null;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("sound")]
+        public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Effects/saw.ogg");
 
         // Ratelimit sounds to avoid spam
         public TimeSpan LastSound;
