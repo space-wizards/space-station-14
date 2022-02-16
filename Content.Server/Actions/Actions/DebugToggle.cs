@@ -10,7 +10,7 @@ namespace Content.Server.Actions.Actions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class DebugToggle : IToggleAction, IToggleItemAction
+    public sealed class DebugToggle : IToggleAction, IToggleItemAction
     {
         [DataField("messageOn")] public string MessageOn { get; private set; } = "on!";
         [DataField("messageOff")] public string MessageOff { get; private set; } = "off!";

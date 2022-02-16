@@ -25,11 +25,11 @@ namespace Content.Server.Disposal.Tube
             SubscribeLocalEvent<DisposalTubeComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
 
             SubscribeLocalEvent<DisposalTubeComponent, RelayMovementEntityEvent>(OnRelayMovement);
-            SubscribeLocalEvent<DisposalTaggerComponent, GetInteractionVerbsEvent>(AddOpenUIVerbs);
-            SubscribeLocalEvent<DisposalRouterComponent, GetInteractionVerbsEvent>(AddOpenUIVerbs);
+            SubscribeLocalEvent<DisposalTaggerComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
+            SubscribeLocalEvent<DisposalRouterComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
         }
 
-        private void AddOpenUIVerbs(EntityUid uid, DisposalTaggerComponent component, GetInteractionVerbsEvent args)
+        private void AddOpenUIVerbs(EntityUid uid, DisposalTaggerComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -38,14 +38,14 @@ namespace Content.Server.Disposal.Tube
                 return;
             var player = actor.PlayerSession;
 
-            Verb verb = new();
+            InteractionVerb verb = new();
             verb.Text = Loc.GetString("configure-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             verb.Act = () => component.OpenUserInterface(actor);
             args.Verbs.Add(verb);
         }
 
-        private void AddOpenUIVerbs(EntityUid uid, DisposalRouterComponent component, GetInteractionVerbsEvent args)
+        private void AddOpenUIVerbs(EntityUid uid, DisposalRouterComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -54,7 +54,7 @@ namespace Content.Server.Disposal.Tube
                 return;
             var player = actor.PlayerSession;
 
-            Verb verb = new();
+            InteractionVerb verb = new();
             verb.Text = Loc.GetString("configure-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             verb.Act = () => component.OpenUserInterface(actor);

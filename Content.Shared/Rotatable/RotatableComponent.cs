@@ -6,10 +6,8 @@ using Robust.Shared.Maths;
 namespace Content.Shared.Rotatable
 {
     [RegisterComponent]
-    public class RotatableComponent : Component
+    public sealed class RotatableComponent : Component
     {
-        public override string Name => "Rotatable";
-
         /// <summary>
         ///     If true, this entity can be rotated even while anchored.
         /// </summary>

@@ -25,7 +25,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Stunnable
 {
-    public class StunbatonSystem : EntitySystem
+    public sealed class StunbatonSystem : EntitySystem
     {
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly StutteringSystem _stutteringSystem = default!;
@@ -73,9 +73,6 @@ namespace Content.Server.Stunnable
 
         private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)
         {
-            if (!Get<ActionBlockerSystem>().CanUse(args.User))
-                return;
-
             if (comp.Activated)
             {
                 TurnOff(comp);

@@ -11,10 +11,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Body.Components
 {
     [RegisterComponent, Friend(typeof(BloodstreamSystem))]
-    public class BloodstreamComponent : Component, IGasMixtureHolder
+    public sealed class BloodstreamComponent : Component
     {
-        public override string Name => "Bloodstream";
-
         /// <summary>
         ///     Max volume of internal solution storage
         /// </summary>
@@ -26,9 +24,5 @@ namespace Content.Server.Body.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public Solution Solution = default!;
-
-        [ViewVariables]
-        public GasMixture Air { get; set; } = new(6)
-            { Temperature = Atmospherics.NormalBodyTemperature };
     }
 }

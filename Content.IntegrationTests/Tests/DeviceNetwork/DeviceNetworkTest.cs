@@ -13,7 +13,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
     [TestOf(typeof(DeviceNetworkComponent))]
     [TestOf(typeof(WiredNetworkComponent))]
     [TestOf(typeof(WirelessNetworkComponent))]
-    public class DeviceNetworkTest : ContentIntegrationTest
+    public sealed class DeviceNetworkTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

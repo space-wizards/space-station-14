@@ -11,10 +11,8 @@ namespace Content.Client.Clothing
     [ComponentReference(typeof(SharedItemComponent))]
     [ComponentReference(typeof(ItemComponent))]
     [NetworkedComponent()]
-    public class ClothingComponent : ItemComponent
+    public sealed class ClothingComponent : ItemComponent
     {
-        public override string Name => "Clothing";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("femaleMask")]
         public FemaleClothingMask FemaleMask { get; } = FemaleClothingMask.UniformFull;

@@ -28,6 +28,7 @@
     state: icon
   - type: Spillable
     solution: drink
+  - type: ItemCooldown
 
 - type: entity
   parent: DrinkBaseCup

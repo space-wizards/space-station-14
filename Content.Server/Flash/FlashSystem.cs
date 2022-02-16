@@ -124,7 +124,7 @@ namespace Content.Server.Flash
             {
                 flashable.LastFlash = _gameTiming.CurTime;
                 flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
-                flashable.Dirty();
+                Dirty(flashable);
 
                 _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
                     slowTo, slowTo);
@@ -198,7 +198,7 @@ namespace Content.Server.Flash
         }
     }
 
-    public class FlashAttemptEvent : CancellableEntityEventArgs
+    public sealed class FlashAttemptEvent : CancellableEntityEventArgs
     {
         public readonly EntityUid Target;
         public readonly EntityUid? User;

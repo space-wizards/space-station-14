@@ -12,11 +12,10 @@ namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SolutionAreaEffectComponent))]
-    public class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
+    public sealed class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "FoamSolutionAreaEffect";
         public new const string SolutionName = "solutionArea";
 
         [DataField("foamedMetalPrototype")] private string? _foamedMetalPrototype;

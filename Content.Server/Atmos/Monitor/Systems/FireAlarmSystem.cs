@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Monitor.Systems
 {
-    public class FireAlarmSystem : EntitySystem
+    public sealed class FireAlarmSystem : EntitySystem
     {
         [Dependency] private readonly AtmosMonitorSystem _monitorSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;

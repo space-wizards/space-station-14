@@ -15,11 +15,8 @@ namespace Content.Server.Temperature.Components
     /// and taking fire damage from high temperature.
     /// </summary>
     [RegisterComponent]
-    public class TemperatureComponent : Component
+    public sealed class TemperatureComponent : Component
     {
-        /// <inheritdoc />
-        public override string Name => "Temperature";
-
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentTemperature { get; set; } = Atmospherics.T20C;
 

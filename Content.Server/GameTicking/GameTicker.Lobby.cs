@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         [ViewVariables]
         private readonly Dictionary<IPlayerSession, LobbyPlayerStatus> _playersInLobby = new();
@@ -25,7 +25,7 @@ namespace Content.Server.GameTicking
         private TimeSpan _pauseTime;
 
         [ViewVariables]
-        public bool Paused { get; set; }
+        public new bool Paused { get; set; }
 
         [ViewVariables]
         private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;

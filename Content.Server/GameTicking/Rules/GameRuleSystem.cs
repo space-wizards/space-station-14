@@ -20,15 +20,16 @@ public abstract class GameRuleSystem : EntitySystem
     ///     When the GameRule prototype with this ID is added, this system will be enabled.
     ///     When it gets removed, this system will be disabled.
     /// </summary>
-    public abstract string Prototype { get; }
+    public new abstract string Prototype { get; }
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<GameRuleAddedEvent>(OnGameRuleAdded);
-        SubscribeLocalEvent<GameRuleRemovedEvent>(OnGameRuleRemoved);
 
+        SubscribeLocalEvent<GameRuleStartedEvent>(OnGameRuleStarted);
+        SubscribeLocalEvent<GameRuleEndedEvent>(OnGameRuleEnded);
     }
 
     private void OnGameRuleAdded(GameRuleAddedEvent ev)
@@ -37,25 +38,32 @@ public abstract class GameRuleSystem : EntitySystem
             return;
 
         Enabled = true;
-        Added();
     }
 
-    private void OnGameRuleRemoved(GameRuleRemovedEvent ev)
+    private void OnGameRuleStarted(GameRuleStartedEvent ev)
+    {
+        if (ev.Rule.ID != Prototype)
+            return;
+
+        Started();
+    }
+
+    private void OnGameRuleEnded(GameRuleEndedEvent ev)
     {
         if (ev.Rule.ID != Prototype)
             return;
 
         Enabled = false;
-        Removed();
+        Ended();
     }
 
     /// <summary>
-    ///     Called when the game rule has been added and this system has been enabled.
+    ///     Called when the game rule has been started..
     /// </summary>
-    public abstract void Added();
+    public abstract void Started();
 
     /// <summary>
-    ///     Called when the game rule has been removed and this system has been disabled.
+    ///     Called when the game rule has ended..
     /// </summary>
-    public abstract void Removed();
+    public abstract void Ended();
 }

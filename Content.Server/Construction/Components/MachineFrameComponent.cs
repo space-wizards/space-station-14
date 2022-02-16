@@ -1,27 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
-    public class MachineFrameComponent : Component, IInteractUsing
+    public sealed class MachineFrameComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
         public const string PartContainer = "machine_parts";
         public const string BoardContainer = "machine_board";
-
-        public override string Name => "MachineFrame";
 
         [ViewVariables]
         public bool IsComplete
@@ -238,10 +231,12 @@ namespace Content.Server.Construction.Components
                         _componentProgress[compName]++;
                 }
 
+                var tagSystem = EntitySystem.Get<TagSystem>();
+
                 // I have MANY regrets.
                 foreach (var (tagName, _) in TagRequirements)
                 {
-                    if (!part.HasTag(tagName))
+                    if (!tagSystem.HasTag(part, tagName))
                         continue;
 
                     if (!_tagProgress.ContainsKey(tagName))
@@ -341,12 +336,14 @@ namespace Content.Server.Construction.Components
                     return true;
                 }
 
+                var tags = EntitySystem.Get<TagSystem>();
+
                 foreach (var (tagName, info) in TagRequirements)
                 {
                     if (_tagProgress[tagName] >= info.Amount)
                         continue;
 
-                    if (!eventArgs.Using.HasTag(tagName))
+                    if (!tags.HasTag(eventArgs.Using, tagName))
                         continue;
 
                     if (!eventArgs.Using.TryRemoveFromContainer() || !_partContainer.Insert(eventArgs.Using)) continue;
@@ -360,7 +357,7 @@ namespace Content.Server.Construction.Components
     }
 
     [DataDefinition]
-    public class MachineDeconstructedEvent : EntityEventArgs
+    public sealed class MachineDeconstructedEvent : EntityEventArgs
     {
     }
 }

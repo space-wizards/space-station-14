@@ -27,7 +27,6 @@ namespace Content.Server.Light.EntitySystems
     [UsedImplicitly]
     public sealed class HandheldLightSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
 
@@ -44,7 +43,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<HandheldLightComponent, ComponentGetState>(OnGetState);
 
             SubscribeLocalEvent<HandheldLightComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<HandheldLightComponent, GetActivationVerbsEvent>(AddToggleLightVerb);
+            SubscribeLocalEvent<HandheldLightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerb);
 
             SubscribeLocalEvent<HandheldLightComponent, ActivateInWorldEvent>(OnActivate);
         }
@@ -95,7 +94,6 @@ namespace Content.Server.Light.EntitySystems
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
         public bool ToggleStatus(EntityUid user, HandheldLightComponent component)
         {
-            if (!_blocker.CanUse(user)) return false;
             return component.Activated ? TurnOff(component) : TurnOn(user, component);
         }
 
@@ -124,7 +122,7 @@ namespace Content.Server.Light.EntitySystems
                     continue;
                 }
 
-                if (handheld.Paused) continue;
+                if (Paused(handheld.Owner)) continue;
                 TryUpdate(handheld, frameTime);
             }
 
@@ -134,11 +132,11 @@ namespace Content.Server.Light.EntitySystems
             }
         }
 
-        private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetActivationVerbsEvent args)
+        private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract) return;
 
-            Verb verb = new()
+            ActivationVerb verb = new()
             {
                 Text = Loc.GetString("verb-common-toggle-light"),
                 IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png",

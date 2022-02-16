@@ -29,7 +29,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
             "ss14_round_number",
@@ -56,7 +56,8 @@ namespace Content.Server.GameTicking
             get => _runLevel;
             private set
             {
-                if (_runLevel == value) return;
+                // Game admins can run `restartroundnow` while still in-lobby, which'd break things with this check.
+                // if (_runLevel == value) return;
 
                 var old = _runLevel;
                 _runLevel = value;
@@ -70,6 +71,8 @@ namespace Content.Server.GameTicking
 
         private void PreRoundSetup()
         {
+            AddGamePresetRules();
+
             DefaultMap = _mapManager.CreateMap();
             _pauseManager.AddUninitializedMap(DefaultMap);
             _startingRound = false;
@@ -89,7 +92,7 @@ namespace Content.Server.GameTicking
                     _pauseManager.AddUninitializedMap(toLoad);
                 }
 
-                _mapLoader.LoadMap(toLoad, map.MapPath);
+                _mapLoader.LoadMap(toLoad, map.MapPath.ToString());
 
                 var grids = _mapManager.GetAllMapGrids(toLoad).ToList();
                 var dict = new Dictionary<string, StationId>();
@@ -187,7 +190,7 @@ namespace Content.Server.GameTicking
 
                 SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
-                AddGamePresetRules();
+                StartGamePresetRules();
 
                 List<IPlayerSession> readyPlayers;
                 if (LobbyEnabled)
@@ -245,6 +248,7 @@ namespace Content.Server.GameTicking
                         ClearGameRules();
                         SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                         AddGamePresetRules();
+                        StartGamePresetRules();
 
                         startAttempt.Uncancel();
                         RaiseLocalEvent(startAttempt);
@@ -507,7 +511,7 @@ namespace Content.Server.GameTicking
             // Clear up any game rules.
             ClearGameRules();
 
-            _gameRules.Clear();
+            _addedGameRules.Clear();
 
             // Round restart cleanup event, so entity systems can reset.
             var ev = new RoundRestartCleanupEvent();
@@ -568,7 +572,7 @@ namespace Content.Server.GameTicking
         PostRound = 2
     }
 
-    public class GameRunLevelChangedEvent
+    public sealed class GameRunLevelChangedEvent
     {
         public GameRunLevel Old { get; }
         public GameRunLevel New { get; }
@@ -585,7 +589,7 @@ namespace Content.Server.GameTicking
     ///     Contains a list of game map prototypes to load; modify it if you want to load different maps,
     ///     for example as part of a game rule.
     /// </summary>
-    public class LoadingMapsEvent : EntityEventArgs
+    public sealed class LoadingMapsEvent : EntityEventArgs
     {
         public List<GameMapPrototype> Maps;
 
@@ -599,7 +603,7 @@ namespace Content.Server.GameTicking
     ///     Event raised to refresh the late join status.
     ///     If you want to disallow late joins, listen to this and call Disallow.
     /// </summary>
-    public class RefreshLateJoinAllowedEvent
+    public sealed class RefreshLateJoinAllowedEvent
     {
         public bool DisallowLateJoin { get; private set; } = false;
 
@@ -613,7 +617,7 @@ namespace Content.Server.GameTicking
     ///     Attempt event raised on round start.
     ///     This can be listened to by GameRule systems to cancel round start if some condition is not met, like player count.
     /// </summary>
-    public class RoundStartAttemptEvent : CancellableEntityEventArgs
+    public sealed class RoundStartAttemptEvent : CancellableEntityEventArgs
     {
         public IPlayerSession[] Players { get; }
         public bool Forced { get; }
@@ -630,7 +634,7 @@ namespace Content.Server.GameTicking
     ///     You can use this to spawn people off-station, like in the case of nuke ops or wizard.
     ///     Remove the players you spawned from the PlayerPool and call <see cref="GameTicker.PlayerJoinGame"/> on them.
     /// </summary>
-    public class RulePlayerSpawningEvent
+    public sealed class RulePlayerSpawningEvent
     {
         /// <summary>
         ///     Pool of players to be spawned.
@@ -653,7 +657,7 @@ namespace Content.Server.GameTicking
     ///     Event raised after players were assigned jobs by the GameTicker.
     ///     You can give on-station people special roles by listening to this event.
     /// </summary>
-    public class RulePlayerJobsAssignedEvent
+    public sealed class RulePlayerJobsAssignedEvent
     {
         public IPlayerSession[] Players { get; }
         public IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> Profiles { get; }
@@ -670,7 +674,7 @@ namespace Content.Server.GameTicking
     /// <summary>
     ///     Event raised to allow subscribers to add text to the round end summary screen.
     /// </summary>
-    public class RoundEndTextAppendEvent
+    public sealed class RoundEndTextAppendEvent
     {
         private bool _doNewLine;
 

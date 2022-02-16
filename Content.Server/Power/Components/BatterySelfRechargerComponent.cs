@@ -10,10 +10,8 @@ namespace Content.Server.Power.Components
     ///     Self-recharging battery.
     /// </summary>
     [RegisterComponent]
-    public class BatterySelfRechargerComponent : Component
+    public sealed class BatterySelfRechargerComponent : Component
     {
-        public override string Name => "BatterySelfRecharger";
-
         [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRecharge")] public bool AutoRecharge { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRechargeRate")] public float AutoRechargeRate { get; set; }

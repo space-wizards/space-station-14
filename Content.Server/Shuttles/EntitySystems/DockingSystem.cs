@@ -1,8 +1,10 @@
 using System;
 using Content.Server.Doors.Components;
+using Content.Server.Doors.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Doors;
+using Content.Shared.Doors.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -23,6 +25,7 @@ namespace Content.Server.Shuttles.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+        [Dependency] private readonly DoorSystem _doorSystem = default!;
 
         private const string DockingFixture = "docking";
         private const string DockingJoint = "docking";
@@ -36,7 +39,7 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<DockingComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
 
-            SubscribeLocalEvent<DockingComponent, GetInteractionVerbsEvent>(OnVerb);
+            SubscribeLocalEvent<DockingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
             SubscribeLocalEvent<DockingComponent, BeforeDoorAutoCloseEvent>(OnAutoClose);
         }
 
@@ -47,12 +50,12 @@ namespace Content.Server.Shuttles.EntitySystems
                 args.Cancel();
         }
 
-        private void OnVerb(EntityUid uid, DockingComponent component, GetInteractionVerbsEvent args)
+        private void OnVerb(EntityUid uid, DockingComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (!args.CanInteract ||
                 !args.CanAccess) return;
 
-            Verb? verb;
+            InteractionVerb? verb;
 
             // TODO: Have it open the UI and have the UI do this.
             if (!component.Docked &&
@@ -64,7 +67,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 if (component.Enabled)
                     otherDock = GetDockable(body, xform);
 
-                verb = new Verb
+                verb = new InteractionVerb
                 {
                     Disabled = otherDock == null,
                     Text = Loc.GetString("docking-component-dock"),
@@ -77,7 +80,7 @@ namespace Content.Server.Shuttles.EntitySystems
             }
             else if (component.Docked)
             {
-                verb = new Verb
+                verb = new InteractionVerb
                 {
                     Disabled = !component.Docked,
                     Text = Loc.GetString("docking-component-undock"),
@@ -320,7 +323,7 @@ namespace Content.Server.Shuttles.EntitySystems
         /// <summary>
         /// Docks 2 ports together and assumes it is valid.
         /// </summary>
-        private void Dock(DockingComponent dockA, DockingComponent dockB)
+        public void Dock(DockingComponent dockA, DockingComponent dockB)
         {
             Logger.DebugS("docking", $"Docking between {dockA.Owner} and {dockB.Owner}");
 
@@ -365,16 +368,16 @@ namespace Content.Server.Shuttles.EntitySystems
             dockA.DockJoint = joint;
             dockB.DockJoint = joint;
 
-            if (TryComp(dockA.Owner, out ServerDoorComponent? doorA))
+            if (TryComp(dockA.Owner, out DoorComponent? doorA))
             {
                 doorA.ChangeAirtight = false;
-                doorA.Open();
+                _doorSystem.StartOpening(doorA.Owner, doorA);
             }
 
-            if (TryComp(dockB.Owner, out ServerDoorComponent? doorB))
+            if (TryComp(dockB.Owner, out DoorComponent? doorB))
             {
                 doorB.ChangeAirtight = false;
-                doorB.Open();
+                _doorSystem.StartOpening(doorB.Owner, doorB);
             }
 
             var msg = new DockEvent
@@ -448,16 +451,16 @@ namespace Content.Server.Shuttles.EntitySystems
                 return;
             }
 
-            if (TryComp(dock.Owner, out ServerDoorComponent? doorA))
+            if (TryComp(dock.Owner, out DoorComponent? doorA))
             {
                 doorA.ChangeAirtight = true;
-                doorA.Close();
+                _doorSystem.TryClose(doorA.Owner, doorA);
             }
 
-            if (TryComp(dock.DockedWith, out ServerDoorComponent? doorB))
+            if (TryComp(dock.DockedWith, out DoorComponent? doorB))
             {
                 doorB.ChangeAirtight = true;
-                doorB.Close();
+                _doorSystem.TryClose(doorB.Owner, doorB);
             }
 
             // Could maybe give the shuttle a light push away, or at least if there's no other docks left?

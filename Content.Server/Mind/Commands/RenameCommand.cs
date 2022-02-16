@@ -17,7 +17,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Mind.Commands;
 
 [AdminCommand(AdminFlags.VarEdit)]
-public class RenameCommand : IConsoleCommand
+public sealed class RenameCommand : IConsoleCommand
 {
     public string Command => "rename";
     public string Description => "Renames an entity and its cloner entries, ID cards, and PDAs.";

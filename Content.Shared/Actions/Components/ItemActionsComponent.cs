@@ -24,10 +24,8 @@ namespace Content.Shared.Actions.Components
     /// Currently only maintained server side and not synced to client, as are all the equip/unequip events.
     /// </summary>
     [RegisterComponent]
-    public class ItemActionsComponent : Component
+    public sealed class ItemActionsComponent : Component
     {
-        public override string Name => "ItemActions";
-
         /// <summary>
         /// Configuration for the item actions initially provided by this item. Actions defined here
         /// will be automatically granted unless their state is modified using the methods
@@ -178,34 +176,13 @@ namespace Content.Shared.Actions.Components
         {
             GrantOrUpdate(actionType, toggleOn: toggleOn);
         }
-
-        public void EquippedHand(EntityUid user, Hand hand)
-        {
-            // this entity cannot be granted actions if no actions component
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(user, out var actionsComponent))
-                return;
-            Holder = user;
-            HolderActionsComponent = actionsComponent;
-            IsEquipped = true;
-            InHand = hand;
-            GrantOrUpdateAllToHolder();
-        }
-
-        public void UnequippedHand()
-        {
-            RevokeAllFromHolder();
-            Holder = null;
-            HolderActionsComponent = null;
-            IsEquipped = false;
-            InHand = null;
-        }
     }
 
     /// <summary>
     /// Configuration for an item action provided by an item.
     /// </summary>
     [DataDefinition]
-    public class ItemActionConfig : ISerializationHooks
+    public sealed class ItemActionConfig : ISerializationHooks
     {
         [DataField("actionType", required: true)]
         public ItemActionType ActionType { get; private set; } = ItemActionType.Error;

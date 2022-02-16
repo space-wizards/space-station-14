@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.Nutrition.Components
 {
     [RegisterComponent]
-    public class ThirstComponent : SharedThirstComponent
+    public sealed class ThirstComponent : SharedThirstComponent
     {
         private ThirstThreshold _currentThirstThreshold;
         public override ThirstThreshold CurrentThirstThreshold => _currentThirstThreshold;

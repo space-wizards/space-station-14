@@ -18,7 +18,7 @@ using SharpFont;
 namespace Content.Client.Instruments
 {
     [UsedImplicitly]
-    public class InstrumentSystem : SharedInstrumentSystem
+    public sealed class InstrumentSystem : SharedInstrumentSystem
     {
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IMidiManager _midiManager = default!;

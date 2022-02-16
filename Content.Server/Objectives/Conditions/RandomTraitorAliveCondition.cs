@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
@@ -9,11 +9,12 @@ using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Server.Traitor;
+using Content.Server.Roles;
 
 namespace Content.Server.Objectives.Conditions
 {
     [DataDefinition]
-    public class RandomTraitorAliveCondition : IObjectiveCondition
+    public sealed class RandomTraitorAliveCondition : IObjectiveCondition
     {
         protected Mind.Mind? Target;
 
@@ -38,22 +39,23 @@ namespace Content.Server.Objectives.Conditions
             get
             {
                 var targetName = string.Empty;
+                var jobName = Target?.CurrentJob?.Name ?? "Unknown";
 
                 if (Target == null)
-                    return Loc.GetString("objective-condition-other-traitor-alive-title", ("targetName", targetName));
+                    return Loc.GetString("objective-condition-other-traitor-alive-title", ("targetName", targetName), ("job", jobName));
 
                 if (Target.CharacterName != null)
                     targetName = Target.CharacterName;
                 else if (Target.OwnedEntity is {Valid: true} owned)
                     targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owned).EntityName;
 
-                return Loc.GetString("objective-condition-other-traitor-alive-title", ("targetName", targetName));
+                return Loc.GetString("objective-condition-other-traitor-alive-title", ("targetName", targetName), ("job", jobName));
             }
         }
 
         public string Description => Loc.GetString("objective-condition-other-traitor-alive-description");
 
-        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/bureaucracy.rsi"), "folder_red");
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/bureaucracy.rsi"), "folder-white");
 
         public float Progress => (!Target?.CharacterDeadIC ?? true) ? 1f : 0f;
 

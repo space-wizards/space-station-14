@@ -6,6 +6,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.UserInterface
 {
     [GenerateTypedNameReferences]
+    [Virtual]
     public partial class FancyWindow : BaseWindow
     {
         public FancyWindow()

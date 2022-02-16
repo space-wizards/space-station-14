@@ -11,7 +11,7 @@ using Robust.Shared.Network;
 namespace Content.Server.Info;
 
 [AdminCommand(AdminFlags.Admin)]
-public class ShowRulesCommand : IConsoleCommand
+public sealed class ShowRulesCommand : IConsoleCommand
 {
     public string Command => "showrules";
     public string Description => "Opens the rules popup for the specified player.";

@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Nutrition.Visualizers
 {
     [UsedImplicitly]
-    public class CreamPiedVisualizer : AppearanceVisualizer
+    public sealed class CreamPiedVisualizer : AppearanceVisualizer
     {
         [DataField("state")]
         private string? _state;

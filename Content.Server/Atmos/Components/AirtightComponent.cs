@@ -11,10 +11,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public class AirtightComponent : Component
+    public sealed class AirtightComponent : Component
     {
-        public override string Name => "Airtight";
-
         public (GridId Grid, Vector2i Tile) LastPosition { get; set; }
 
         [DataField("airBlockedDirection", customTypeSerializer: typeof(FlagSerializer<AtmosDirectionFlags>))]

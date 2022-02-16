@@ -40,12 +40,12 @@ namespace Content.Server.Atmos
         }
     }
 
-    public class LowPressureEvent : PressureEvent
+    public sealed class LowPressureEvent : PressureEvent
     {
         public LowPressureEvent(float pressure) : base(pressure) { }
     }
 
-    public class HighPressureEvent : PressureEvent
+    public sealed class HighPressureEvent : PressureEvent
     {
         public HighPressureEvent(float pressure) : base(pressure) { }
     }

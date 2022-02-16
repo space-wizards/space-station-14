@@ -77,13 +77,14 @@ namespace Content.MapRenderer
             {
                 Console.WriteLine($"Painting map {map}");
 
+                int i = 0;
                 await foreach (var grid in MapPainter.Paint(map))
                 {
                     var directory = DirectoryExtensions.MapImages().FullName;
                     Directory.CreateDirectory(directory);
 
                     var fileName = Path.GetFileNameWithoutExtension(map);
-                    var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}.png";
+                    var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}-{i}.png";
 
                     Console.WriteLine($"Writing grid of size {grid.Width}x{grid.Height} to {savePath}");
 
@@ -91,6 +92,7 @@ namespace Content.MapRenderer
                     grid.Dispose();
 
                     mapNames.Add(fileName);
+                    i++;
                 }
             }
 

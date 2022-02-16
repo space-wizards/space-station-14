@@ -16,7 +16,7 @@ using static Content.Shared.Kitchen.Components.SharedKitchenSpikeComponent;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
-    internal class KitchenSpikeSystem : EntitySystem
+    internal sealed class KitchenSpikeSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -81,7 +81,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (args.Handled)
                 return;
-            
+
             if (TryGetPiece(uid, args.User, args.Used))
                 args.Handled = true;
         }
@@ -148,7 +148,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (!Resolve(uid, ref component, ref appearance, false))
                 return;
-            
+
             appearance.SetData(KitchenSpikeVisuals.Status, (component.MeatParts > 0) ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty);
         }
 
@@ -217,7 +217,7 @@ namespace Content.Server.Kitchen.EntitySystems
             return true;
         }
 
-        private class SpikingFinishedEvent : EntityEventArgs
+        private sealed class SpikingFinishedEvent : EntityEventArgs
         {
             public EntityUid VictimUid;
             public EntityUid UserUid;
@@ -229,7 +229,7 @@ namespace Content.Server.Kitchen.EntitySystems
             }
         }
 
-        private class SpikingFailEvent : EntityEventArgs
+        private sealed class SpikingFailEvent : EntityEventArgs
         {
             public EntityUid VictimUid;
 

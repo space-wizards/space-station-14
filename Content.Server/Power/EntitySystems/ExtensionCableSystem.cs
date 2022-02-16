@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Power.Components;
@@ -11,7 +11,6 @@ namespace Content.Server.Power.EntitySystems
 {
     public sealed class ExtensionCableSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityLookup _lookup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override void Initialize()
@@ -261,7 +260,7 @@ namespace Content.Server.Power.EntitySystems
         /// <summary>
         /// Sent when a <see cref="ExtensionCableProviderComponent"/> connects to a <see cref="ExtensionCableReceiverComponent"/>
         /// </summary>
-        public class ProviderConnectedEvent : EntityEventArgs
+        public sealed class ProviderConnectedEvent : EntityEventArgs
         {
             /// <summary>
             /// The <see cref="ExtensionCableProviderComponent"/> that connected.
@@ -276,7 +275,7 @@ namespace Content.Server.Power.EntitySystems
         /// <summary>
         /// Sent when a <see cref="ExtensionCableProviderComponent"/> disconnects from a <see cref="ExtensionCableReceiverComponent"/>
         /// </summary>
-        public class ProviderDisconnectedEvent : EntityEventArgs
+        public sealed class ProviderDisconnectedEvent : EntityEventArgs
         {
             /// <summary>
             /// The <see cref="ExtensionCableProviderComponent"/> that disconnected.
@@ -291,7 +290,7 @@ namespace Content.Server.Power.EntitySystems
         /// <summary>
         /// Sent when a <see cref="ExtensionCableReceiverComponent"/> connects to a <see cref="ExtensionCableProviderComponent"/>
         /// </summary>
-        public class ReceiverConnectedEvent : EntityEventArgs
+        public sealed class ReceiverConnectedEvent : EntityEventArgs
         {
             /// <summary>
             /// The <see cref="ExtensionCableReceiverComponent"/> that connected.
@@ -306,7 +305,7 @@ namespace Content.Server.Power.EntitySystems
         /// <summary>
         /// Sent when a <see cref="ExtensionCableReceiverComponent"/> disconnects from a <see cref="ExtensionCableProviderComponent"/>
         /// </summary>
-        public class ReceiverDisconnectedEvent : EntityEventArgs
+        public sealed class ReceiverDisconnectedEvent : EntityEventArgs
         {
             /// <summary>
             /// The <see cref="ExtensionCableReceiverComponent"/> that disconnected.

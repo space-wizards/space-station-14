@@ -8,10 +8,8 @@ namespace Content.Server.Power.Components
 {
     [RegisterComponent]
     [Friend(typeof(ExtensionCableSystem))]
-    public class ExtensionCableReceiverComponent : Component
+    public sealed class ExtensionCableReceiverComponent : Component
     {
-        public override string Name => "ExtensionCableReceiver";
-
         [ViewVariables]
         public ExtensionCableProviderComponent? Provider { get; set; }
 

@@ -31,12 +31,10 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public class GasTankComponent : Component, IExamine, IGasMixtureHolder, IDropped, IActivate
+    public sealed class GasTankComponent : Component, IExamine, IGasMixtureHolder, IDropped, IActivate
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "GasTank";
 
         private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
@@ -209,11 +207,6 @@ namespace Content.Server.Atmos.Components
 
         internal void ToggleInternals()
         {
-            var user = GetInternalsComponent()?.Owner;
-
-            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user.Value))
-                return;
-
             if (IsConnected)
             {
                 DisconnectFromInternals();
@@ -319,10 +312,13 @@ namespace Content.Server.Atmos.Components
 
     [UsedImplicitly]
     [DataDefinition]
-    public class ToggleInternalsAction : IToggleItemAction
+    public sealed class ToggleInternalsAction : IToggleItemAction
     {
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(args.Performer, args.Item))
+                return false;
+
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<GasTankComponent?>(args.Item, out var gasTankComponent)) return false;
             // no change
             if (gasTankComponent.IsConnected == args.ToggledOn) return false;

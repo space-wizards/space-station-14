@@ -10,7 +10,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Atmos.Overlays
 {
-    public class AtmosDebugOverlay : Overlay
+    public sealed class AtmosDebugOverlay : Overlay
     {
         private readonly AtmosDebugOverlaySystem _atmosDebugOverlaySystem;
 

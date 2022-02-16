@@ -5,11 +5,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
-    public class SingularityGeneratorComponent : Component
+    public sealed class SingularityGeneratorComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "SingularityGenerator";
 
         [ViewVariables] private int _power;
 

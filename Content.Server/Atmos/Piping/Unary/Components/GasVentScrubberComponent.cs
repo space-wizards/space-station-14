@@ -9,10 +9,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
-    public class GasVentScrubberComponent : Component
+    public sealed class GasVentScrubberComponent : Component
     {
-        public override string Name => "GasVentScrubber";
-
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
 

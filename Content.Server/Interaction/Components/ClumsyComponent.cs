@@ -8,11 +8,9 @@ namespace Content.Server.Interaction.Components
     /// A simple clumsy tag-component.
     /// </summary>
     [RegisterComponent]
-    public class ClumsyComponent : Component
+    public sealed class ClumsyComponent : Component
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-
-        public override string Name => "Clumsy";
 
         public bool RollClumsy(float chance)
         {

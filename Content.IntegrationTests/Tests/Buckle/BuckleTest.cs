@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Buckle
     [TestFixture]
     [TestOf(typeof(BuckleComponent))]
     [TestOf(typeof(StrapComponent))]
-    public class BuckleTest : ContentIntegrationTest
+    public sealed class BuckleTest : ContentIntegrationTest
     {
         private const string BuckleDummyId = "BuckleDummy";
         private const string StrapDummyId = "StrapDummy";

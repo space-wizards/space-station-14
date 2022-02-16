@@ -13,8 +13,6 @@ namespace Content.Client.DoAfter
     [RegisterComponent]
     public sealed class DoAfterComponent : SharedDoAfterComponent
     {
-        public override string Name => "DoAfter";
-
         public IReadOnlyDictionary<byte, ClientDoAfter> DoAfters => _doAfters;
         private readonly Dictionary<byte, ClientDoAfter> _doAfters = new();
 

@@ -24,6 +24,7 @@
       startingItem: PowerCellSmallHigh
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
+    netsync: false
     layers:
       - state: flashlight
       - state: flashlight-overlay

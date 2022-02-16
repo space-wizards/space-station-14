@@ -14,7 +14,7 @@ using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 namespace Content.Client.VendingMachines.UI
 {
     [GenerateTypedNameReferences]
-    public partial class VendingMachineMenu : SS14Window
+    public sealed partial class VendingMachineMenu : DefaultWindow
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -51,7 +51,7 @@ namespace Content.Client.VendingMachines.UI
             }
 
             SetSize = (Math.Clamp((longestEntry.Length + 2) * 12, 250, 300),
-                Math.Clamp(VendingContents.Count * 30, 150, 350));
+                Math.Clamp(VendingContents.Count * 50, 150, 350));
         }
 
         public void ItemSelected(ItemList.ItemListSelectedEventArgs args)

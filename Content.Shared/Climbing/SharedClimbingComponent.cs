@@ -15,8 +15,6 @@ namespace Content.Shared.Climbing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public sealed override string Name => "Climbing";
-
         protected bool IsOnClimbableThisFrame
         {
             get
@@ -73,15 +71,15 @@ namespace Content.Shared.Climbing
             }
         }
 
-        protected bool _isClimbing;
+        private bool _isClimbing;
 
         // TODO: Layers need a re-work
         private void ToggleSmallPassable(bool value)
         {
             // Hope the mob has one fixture
-            if (!_entMan.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent) || physicsComponent.Deleted) return;
+            if (!_entMan.TryGetComponent<FixturesComponent>(Owner, out var fixturesComponent) || fixturesComponent.Deleted) return;
 
-            foreach (var fixture in physicsComponent.Fixtures)
+            foreach (var fixture in fixturesComponent.Fixtures.Values)
             {
                 if (value)
                 {

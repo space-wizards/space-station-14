@@ -11,10 +11,8 @@ namespace Content.Shared.Nutrition.Components
     /// Indicates that the entity can be thrown on a kitchen spike for butchering.
     /// </summary>
     [RegisterComponent]
-    public class SharedButcherableComponent : Component, IDraggable
+    public sealed class SharedButcherableComponent : Component, IDraggable
     {
-        public override string Name => "Butcherable";
-
         //TODO: List for sub-products like animal-hides, organs and etc?
         [ViewVariables]
         [DataField("meat", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]

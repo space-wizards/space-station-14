@@ -14,7 +14,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Alerts;
 
 [UsedImplicitly]
-internal class ClientAlertsSystem : AlertsSystem
+internal sealed class ClientAlertsSystem : AlertsSystem
 {
     public AlertOrderPrototype? AlertOrder { get; set; }
 
@@ -37,7 +37,7 @@ internal class ClientAlertsSystem : AlertsSystem
     protected override void LoadPrototypes()
     {
         base.LoadPrototypes();
-        
+
         AlertOrder = _prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
         if (AlertOrder == null)
             Logger.ErrorS("alert", "no alertOrder prototype found, alerts will be in random order");
@@ -76,7 +76,7 @@ internal class ClientAlertsSystem : AlertsSystem
         if (componentAlerts == null) return;
 
         //TODO: Do we really want to send alerts for non-attached entity?
-        component.Alerts = componentAlerts;
+        component.Alerts = new(componentAlerts);
         if (!CurControlled(component.Owner, _playerManager)) return;
 
         SyncAlerts?.Invoke(this, componentAlerts);

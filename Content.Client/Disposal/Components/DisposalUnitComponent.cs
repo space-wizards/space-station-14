@@ -6,7 +6,7 @@ namespace Content.Client.Disposal.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent
+    public sealed class DisposalUnitComponent : SharedDisposalUnitComponent
     {
         public DisposalUnitBoundUserInterfaceState? UiState;
 
@@ -16,11 +16,6 @@ namespace Content.Client.Disposal.Components
             if (curState is not DisposalUnitComponentState state) return;
 
             RecentlyEjected = state.RecentlyEjected;
-        }
-
-        public override bool DragDropOn(DragDropEvent eventArgs)
-        {
-            return false;
         }
     }
 }

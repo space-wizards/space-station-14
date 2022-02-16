@@ -16,7 +16,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Dice
 {
     [UsedImplicitly]
-    public class DiceSystem : EntitySystem
+    public sealed class DiceSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 

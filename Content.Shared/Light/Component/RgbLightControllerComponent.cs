@@ -19,7 +19,6 @@ namespace Content.Shared.Light.Component;
 /// </remarks>
 [NetworkedComponent]
 [RegisterComponent]
-[ComponentProtoName("RgbLightController")]
 [Friend(typeof(SharedRgbLightControllerSystem))]
 public sealed class RgbLightControllerComponent : Robust.Shared.GameObjects.Component
 {
@@ -54,7 +53,7 @@ public sealed class RgbLightControllerComponent : Robust.Shared.GameObjects.Comp
 }
 
 [Serializable, NetSerializable]
-public class RgbLightControllerState : ComponentState
+public sealed class RgbLightControllerState : ComponentState
 {
     public readonly float CycleRate;
     public List<int>? Layers;

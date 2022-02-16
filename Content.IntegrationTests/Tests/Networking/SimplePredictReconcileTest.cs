@@ -30,7 +30,7 @@ namespace Content.IntegrationTests.Tests.Networking
     // the tick where the server *should* have, but did not, acknowledge the state change.
     // Finally, we run two events inside the prediction area to ensure reconciling does for incremental stuff.
     [TestFixture]
-    public class SimplePredictReconcileTest : ContentIntegrationTest
+    public sealed class SimplePredictReconcileTest : ContentIntegrationTest
     {
         [Test]
         public async Task Test()
@@ -392,8 +392,6 @@ namespace Content.IntegrationTests.Tests.Networking
         [NetworkedComponent()]
         private sealed class PredictionTestComponent : Component
         {
-            public override string Name => "PredictionTest";
-
             private bool _foo;
 
             public bool Foo

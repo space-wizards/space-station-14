@@ -9,10 +9,8 @@ namespace Content.Shared.Storage.Components
 {
     [RegisterComponent]
     [Friend(typeof(SharedItemMapperSystem))]
-    public class ItemMapperComponent : Component, ISerializationHooks
+    public sealed class ItemMapperComponent : Component, ISerializationHooks
     {
-        public override string Name => "ItemMapper";
-
         [DataField("mapLayers")] public readonly Dictionary<string, SharedMapLayerData> MapLayers = new();
 
         void ISerializationHooks.AfterDeserialization()

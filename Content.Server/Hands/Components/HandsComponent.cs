@@ -24,7 +24,7 @@ namespace Content.Server.Hands.Components
     [RegisterComponent]
     [ComponentReference(typeof(SharedHandsComponent))]
 #pragma warning disable 618
-    public class HandsComponent : SharedHandsComponent, IBodyPartAdded, IBodyPartRemoved, IDisarmedAct
+    public sealed class HandsComponent : SharedHandsComponent, IBodyPartAdded, IBodyPartRemoved, IDisarmedAct
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
@@ -149,7 +149,7 @@ namespace Content.Server.Hands.Components
         /// <summary>
         ///     Tries to get the ItemComponent off the entity in the active hand.
         /// </summary>
-        public SharedItemComponent? GetActiveHand
+        public SharedItemComponent? GetActiveHandItem
         {
             get
             {
