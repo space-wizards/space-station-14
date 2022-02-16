@@ -207,11 +207,6 @@ namespace Content.Server.Chemistry.Components
             if (playerEntity == null)
                 return false;
 
-            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-
-            //Check if player can interact in their current state
-            if (!actionBlocker.CanInteract(playerEntity.Value) || !actionBlocker.CanUse(playerEntity.Value))
-                return false;
             //Check if device is powered
             if (needsPower && !Powered)
                 return false;
@@ -295,7 +290,7 @@ namespace Content.Server.Chemistry.Components
                 return;
             }
 
-            var activeHandEntity = hands.GetActiveHand?.Owner;
+            var activeHandEntity = hands.GetActiveHandItem?.Owner;
             if (activeHandEntity == null)
             {
                 UserInterface?.Open(actor.PlayerSession);

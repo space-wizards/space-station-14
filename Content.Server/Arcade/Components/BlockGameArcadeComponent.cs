@@ -20,9 +20,6 @@ namespace Content.Server.Arcade.Components
     public class BlockGameArcadeComponent : Component, IActivate
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-
-        public override string Name => "BlockGameArcade";
-
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private bool Powered => _entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var powerReceiverComponent) && powerReceiverComponent.Powered;
@@ -50,9 +47,6 @@ namespace Content.Server.Arcade.Components
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if(!Powered || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
-                return;
-
-            if(!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return;
 
             UserInterface?.Toggle(actor.PlayerSession);
@@ -132,13 +126,6 @@ namespace Content.Server.Arcade.Components
             {
                 case BlockGameMessages.BlockGamePlayerActionMessage playerActionMessage:
                     if (obj.Session != _player) break;
-
-                    // TODO: Should this check if the Owner can interact...?
-                    if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(Owner))
-                    {
-                        DeactivePlayer(obj.Session);
-                        break;
-                    }
 
                     if (playerActionMessage.PlayerAction == BlockGamePlayerAction.NewGame)
                     {

@@ -149,7 +149,7 @@ namespace Content.Server.Hands.Components
         /// <summary>
         ///     Tries to get the ItemComponent off the entity in the active hand.
         /// </summary>
-        public SharedItemComponent? GetActiveHand
+        public SharedItemComponent? GetActiveHandItem
         {
             get
             {

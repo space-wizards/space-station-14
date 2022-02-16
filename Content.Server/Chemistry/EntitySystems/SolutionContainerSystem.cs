@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
@@ -103,8 +104,8 @@ namespace Content.Server.Chemistry.EntitySystems
                 || !Resolve(uid, ref appearanceComponent, false))
                 return;
 
-            var filledVolumeFraction = solution.CurrentVolume.Float() / solution.MaxVolume.Float();
-            appearanceComponent.SetData(SolutionContainerVisuals.VisualState, new SolutionContainerVisualState(solution.Color, filledVolumeFraction));
+            var filledVolumePercent = solution.CurrentVolume.Float() / solution.MaxVolume.Float();
+            appearanceComponent.SetData(SolutionContainerVisuals.VisualState, new SolutionContainerVisualState(solution.Color, filledVolumePercent));
         }
 
         /// <summary>
@@ -213,17 +214,46 @@ namespace Content.Server.Chemistry.EntitySystems
         /// <summary>
         ///     Adds a solution to the container, if it can fully fit.
         /// </summary>
-        /// <param name="targetUid"></param>
-        /// <param name="targetSolution">The container to which we try to add.</param>
-        /// <param name="solution">The solution to try to add.</param>
+        /// <param name="targetUid">entity holding targetSolution</param>
+        ///  <param name="targetSolution">entity holding targetSolution</param>
+        /// <param name="addedSolution">solution being added</param>
         /// <returns>If the solution could be added.</returns>
-        public bool TryAddSolution(EntityUid targetUid, Solution? targetSolution, Solution solution)
+        public bool TryAddSolution(EntityUid targetUid, Solution? targetSolution, Solution addedSolution)
         {
-            if (targetSolution == null || !targetSolution.CanAddSolution(solution) || solution.TotalVolume == 0)
+            if (targetSolution == null
+                || !targetSolution.CanAddSolution(addedSolution) || addedSolution.TotalVolume == 0)
                 return false;
 
-            targetSolution.AddSolution(solution);
+            targetSolution.AddSolution(addedSolution);
             UpdateChemicals(targetUid, targetSolution, true);
+            return true;
+        }
+
+        /// <summary>
+        ///     Adds a solution to the container, overflowing the rest.
+        ///     Unlike TryAddSolution it will ignore size limits.
+        /// </summary>
+        /// <param name="targetUid">entity holding targetSolution</param>
+        /// <param name="targetSolution">The container to which we try to add.</param>
+        /// <param name="addedSolution">solution being added</param>
+        /// <param name="overflowThreshold">After addition this much will be left in targetSolution</param>
+        /// <param name="overflowingSolution">Solution that exceeded overflowThreshold</param>
+        /// <returns></returns>
+        public bool TryMixAndOverflow(EntityUid targetUid, Solution targetSolution,
+            Solution addedSolution,
+            FixedPoint2 overflowThreshold,
+            [NotNullWhen(true)] out Solution? overflowingSolution)
+        {
+            if (addedSolution.TotalVolume == 0)
+            {
+                overflowingSolution = null;
+                return false;
+            }
+
+            targetSolution.AddSolution(addedSolution);
+            UpdateChemicals(targetUid, targetSolution, true);
+            overflowingSolution = targetSolution.SplitSolution(FixedPoint2.Max(FixedPoint2.Zero,
+                targetSolution.CurrentVolume - overflowThreshold));
             return true;
         }
 
@@ -293,19 +323,6 @@ namespace Content.Server.Chemistry.EntitySystems
 
             UpdateChemicals(uid, solution);
             return removedReagent;
-        }
-
-        public void TryRemoveAllReagents(EntityUid uid, Solution solution, List<Solution.ReagentQuantity> removeReagents)
-        {
-            if (removeReagents.Count == 0)
-                return;
-
-            foreach (var reagent in removeReagents)
-            {
-                solution.RemoveReagent(reagent.ReagentId, reagent.Quantity);
-            }
-
-            UpdateChemicals(uid, solution);
         }
 
         public FixedPoint2 GetReagentQuantity(EntityUid owner, string reagentId)

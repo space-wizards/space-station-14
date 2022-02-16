@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "mirrorcult",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+	{
+      "name": "fulltile_overlay"
+    },
+    {
+      "name": "halftile_overlay"
+    },
+    {
+      "name": "halftile_overlay_90"
+    },
+    {
+      "name": "halftile_overlay_180"
+    },
+    {
+      "name": "halftile_overlay_270"
+    },
+    {
+      "name": "quartertile_overlay"
+    },
+    {
+      "name": "quartertile_overlay_90"
+    },
+    {
+      "name": "quartertile_overlay_180"
+    },
+    {
+      "name": "quartertile_overlay_270"
+    },
+    {
+      "name": "checkerNESW"
+    },
+    {
+      "name": "checkerNWSE"
+    }
+  ]
+}

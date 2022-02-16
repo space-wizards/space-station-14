@@ -301,7 +301,7 @@ namespace Content.Server.Construction
             var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
 
             if (args.SenderSession.AttachedEntity is not {Valid: true} user ||
-                !Get<ActionBlockerSystem>().CanInteract(user)) return;
+                !Get<ActionBlockerSystem>().CanInteract(user, null)) return;
 
             if (!EntityManager.TryGetComponent(user, out HandsComponent? hands)) return;
 
@@ -399,8 +399,8 @@ namespace Content.Server.Construction
                 _beingBuilt[args.SenderSession].Remove(ev.Ack);
             }
 
-            if (!Get<ActionBlockerSystem>().CanInteract(user)
-                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHand == null
+            if (!Get<ActionBlockerSystem>().CanInteract(user, null)
+                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHandItem == null
                 || !user.InRangeUnobstructed(ev.Location, ignoreInsideBlocker:constructionPrototype.CanBuildInImpassable))
             {
                 Cleanup();
@@ -417,7 +417,7 @@ namespace Content.Server.Construction
 
             var valid = false;
 
-            if (hands.GetActiveHand?.Owner is not {Valid: true} holding)
+            if (hands.GetActiveHandItem?.Owner is not {Valid: true} holding)
             {
                 Cleanup();
                 return;

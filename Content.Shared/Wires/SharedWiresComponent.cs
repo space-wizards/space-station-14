@@ -11,8 +11,6 @@ namespace Content.Shared.Wires
 {
     public class SharedWiresComponent : Component
     {
-        public override string Name => "Wires";
-
         [Serializable, NetSerializable]
         public enum WiresVisuals
         {

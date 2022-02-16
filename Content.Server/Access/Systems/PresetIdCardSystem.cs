@@ -33,6 +33,7 @@ namespace Content.Server.Access.Systems
 
             // set access for access component
             _accessSystem.TrySetTags(uid, job.Access);
+            _accessSystem.TryAddGroups(uid, job.AccessGroups);
 
             // and also change job title on a card id
             _cardSystem.TryChangeJobTitle(uid, job.Name);

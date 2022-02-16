@@ -30,12 +30,12 @@ namespace Content.Server.Wieldable
             SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
             SubscribeLocalEvent<WieldableComponent, UnequippedHandEvent>(OnItemLeaveHand);
             SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
-            SubscribeLocalEvent<WieldableComponent, GetInteractionVerbsEvent>(AddToggleWieldVerb);
+            SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
 
             SubscribeLocalEvent<IncreaseDamageOnWieldComponent, MeleeHitEvent>(OnMeleeHit);
         }
 
-        private void AddToggleWieldVerb(EntityUid uid, WieldableComponent component, GetInteractionVerbsEvent args)
+        private void AddToggleWieldVerb(EntityUid uid, WieldableComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
@@ -44,7 +44,7 @@ namespace Content.Server.Wieldable
             // verb. Or just don't add it to the list if the action is not executable.
 
             // TODO VERBS ICON + localization
-            Verb verb = new()
+            InteractionVerb verb = new()
             {
                 Text = component.Wielded ? "Unwield" : "Wield",
                 Act = component.Wielded

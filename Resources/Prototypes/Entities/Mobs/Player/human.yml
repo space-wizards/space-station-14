@@ -11,6 +11,13 @@
     context: "human"
   - type: PlayerMobMover
   - type: PlayerInputMover
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 1.5
+    damageRecovery:
+      types:
+        Asphyxiation: -1.5
   - type: Alerts
   - type: Actions
     innateActions:

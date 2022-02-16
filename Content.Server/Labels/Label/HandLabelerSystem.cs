@@ -34,7 +34,7 @@ namespace Content.Server.Labels
 
         private void AfterInteractOn(EntityUid uid, HandLabelerComponent handLabeler, AfterInteractEvent args)
         {
-            if (args.Target is not {Valid: true} target || !handLabeler.Whitelist.IsValid(target))
+            if (args.Target is not {Valid: true} target || !handLabeler.Whitelist.IsValid(target) || !args.CanReach)
                 return;
 
             AddLabelTo(uid, handLabeler, target, out string? result);
@@ -79,21 +79,8 @@ namespace Content.Server.Labels
             args.Handled = true;
         }
 
-        private bool CheckInteract(ICommonSession session)
-        {
-            if (session.AttachedEntity is not {Valid: true } uid
-                || !Get<ActionBlockerSystem>().CanInteract(uid)
-                || !Get<ActionBlockerSystem>().CanUse(uid))
-                return false;
-
-            return true;
-        }
-
         private void OnHandLabelerLabelChanged(EntityUid uid, HandLabelerComponent handLabeler, HandLabelerLabelChangedMessage args)
         {
-            if (!CheckInteract(args.Session))
-                return;
-
             handLabeler.AssignedLabel = args.Label.Trim().Substring(0, Math.Min(handLabeler.MaxLabelChars, args.Label.Length));
             DirtyUI(uid, handLabeler);
         }

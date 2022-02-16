@@ -32,7 +32,7 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         private void OnAfterInteract(EntityUid uid, UtensilComponent component, AfterInteractEvent ev)
         {
-            if (ev.Target == null)
+            if (ev.Target == null || !ev.CanReach)
                 return;
 
             if (TryUseUtensil(ev.User, ev.Target.Value, component))
@@ -54,7 +54,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!user.InRangeUnobstructed(target, popup: true))
                 return false;
 
-            return _foodSystem.TryUseFood(target, user);
+            return _foodSystem.TryFeed(user, target, food);
         }
 
         /// <summary>

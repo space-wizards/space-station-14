@@ -1,19 +1,9 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             Title="{Loc 'microwave-menu-title'}"
             SetSize="512 256"
             MinSize="512 256">
     <BoxContainer Orientation="Horizontal">
-        <ItemList Name="IngredientsListReagents"
-                  Access="Public"
-                  VerticalExpand="True"
-                  HorizontalExpand="True"
-                  SelectMode="Button"
-                  SizeFlagsStretchRatio="2"
-                  MinSize="100 128">
-            <!-- Ingredient reagents are added here by code -->
-        </ItemList>
-        <Control MinSize="0 5" />
         <ItemList Name="IngredientsList"
                   Access="Public"
                   VerticalExpand="True"
@@ -80,4 +70,4 @@
             <gfx:StyleBoxFlat BackgroundColor="#00000099" />
         </PanelContainer.PanelOverride>
     </PanelContainer>
-</SS14Window>
+</DefaultWindow>

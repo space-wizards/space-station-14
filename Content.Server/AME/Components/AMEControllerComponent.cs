@@ -132,7 +132,7 @@ namespace Content.Server.AME.Components
                 return;
             }
 
-            var activeHandEntity = hands.GetActiveHand?.Owner;
+            var activeHandEntity = hands.GetActiveHandItem?.Owner;
             if (activeHandEntity == null)
             {
                 UserInterface?.Open(actor.PlayerSession);
@@ -172,11 +172,6 @@ namespace Content.Server.AME.Components
             if (playerEntity == default)
                 return false;
 
-            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-
-            //Check if player can interact in their current state
-            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
-                return false;
             //Check if device is powered
             if (needsPower && !Powered)
                 return false;
@@ -341,13 +336,13 @@ namespace Content.Server.AME.Components
                 return true;
             }
 
-            if (hands.GetActiveHand == null)
+            if (hands.GetActiveHandItem == null)
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-nothing-in-hands-text"));
                 return false;
             }
 
-            var activeHandEntity = hands.GetActiveHand.Owner;
+            var activeHandEntity = hands.GetActiveHandItem.Owner;
             if (_entities.HasComponent<AMEFuelContainerComponent?>(activeHandEntity))
             {
                 if (HasJar)

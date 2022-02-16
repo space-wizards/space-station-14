@@ -11,8 +11,6 @@ namespace Content.Server.Conveyor
     [Friend(typeof(ConveyorSystem))]
     public class ConveyorComponent : Component
     {
-        public override string Name => "Conveyor";
-
         /// <summary>
         ///     The angle to move entities by in relation to the owner's rotation.
         /// </summary>

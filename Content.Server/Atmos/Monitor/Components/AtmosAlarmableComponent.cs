@@ -28,8 +28,6 @@ namespace Content.Server.Atmos.Monitor.Components
     [RegisterComponent]
     public class AtmosAlarmableComponent : Component
     {
-        public override string Name => "AtmosAlarmable";
-
         [ViewVariables]
         public List<EntityUid> LinkedMonitors { get; set; } = new();
 

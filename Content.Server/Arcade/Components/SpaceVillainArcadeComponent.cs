@@ -77,9 +77,6 @@ namespace Content.Server.Arcade.Components
             if (!Powered || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return;
 
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
-                return;
-
             _game ??= new SpaceVillainGame(this);
 
             if (_entityManager.TryGetComponent<WiresComponent>(Owner, out var wiresComponent) && wiresComponent.IsPanelOpen)

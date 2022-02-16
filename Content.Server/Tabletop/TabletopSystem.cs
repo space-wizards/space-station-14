@@ -28,7 +28,7 @@ namespace Content.Server.Tabletop
             SubscribeLocalEvent<TabletopGameComponent, ComponentShutdown>(OnGameShutdown);
             SubscribeLocalEvent<TabletopGamerComponent, PlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<TabletopGamerComponent, ComponentShutdown>(OnGamerShutdown);
-            SubscribeLocalEvent<TabletopGameComponent, GetActivationVerbsEvent>(AddPlayGameVerb);
+            SubscribeLocalEvent<TabletopGameComponent, GetVerbsEvent<ActivationVerb>>(AddPlayGameVerb);
 
             InitializeMap();
             InitializeDraggable();
@@ -37,7 +37,7 @@ namespace Content.Server.Tabletop
         /// <summary>
         /// Add a verb that allows the player to start playing a tabletop game.
         /// </summary>
-        private void AddPlayGameVerb(EntityUid uid, TabletopGameComponent component, GetActivationVerbsEvent args)
+        private void AddPlayGameVerb(EntityUid uid, TabletopGameComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -45,7 +45,7 @@ namespace Content.Server.Tabletop
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
-            Verb verb = new();
+            ActivationVerb verb = new();
             verb.Text = Loc.GetString("tabletop-verb-play-game");
             verb.IconTexture = "/Textures/Interface/VerbIcons/die.svg.192dpi.png";
             verb.Act = () => OpenSessionFor(actor.PlayerSession, uid);
@@ -58,9 +58,7 @@ namespace Content.Server.Tabletop
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            // Check that the entity can interact with the game board.
-            if(_actionBlockerSystem.CanInteract(args.User))
-                OpenSessionFor(actor.PlayerSession, uid);
+            OpenSessionFor(actor.PlayerSession, uid);
         }
 
         private void OnGameShutdown(EntityUid uid, TabletopGameComponent component, ComponentShutdown args)

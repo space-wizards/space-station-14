@@ -22,6 +22,7 @@
       - MobImpassable
       - VaultImpassable
   - type: Anchorable
+    delay: 2
   - type: Pullable
   - type: Transform
     anchored: true
@@ -37,7 +38,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
-    graph: airlock
+    graph: Airlock
     node: assembly
   placement:
     mode: SnapgridCenter

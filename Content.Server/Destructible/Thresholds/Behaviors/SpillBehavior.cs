@@ -37,7 +37,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
             else if (Solution != null &&
                      solutionContainerSystem.TryGetSolution(owner, Solution, out var behaviorSolution))
             {
-                spillableSystem.SpillAt(behaviorSolution, coordinates, "PuddleSmear", false);
+                spillableSystem.SpillAt(behaviorSolution, coordinates, "PuddleSmear");
             }
         }
     }

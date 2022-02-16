@@ -11,13 +11,11 @@ namespace Content.Shared.Strip.Components
 {
     public abstract class SharedStrippableComponent : Component, IDraggable
     {
-        public override string Name => "Strippable";
-
         public bool CanBeStripped(EntityUid by)
         {
             return by != Owner
                    && IoCManager.Resolve<IEntityManager>().HasComponent<SharedHandsComponent>(@by)
-                   && EntitySystem.Get<ActionBlockerSystem>().CanInteract(@by);
+                   && EntitySystem.Get<ActionBlockerSystem>().CanInteract(@by, Owner);
         }
 
         bool IDraggable.CanDrop(CanDropEvent args)

@@ -1,7 +1,7 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'comp-pda-ui-menu-title'}"
-            MinSize="512 256"
-            SetSize="512 256">
+            MinSize="576 256"
+            SetSize="576 256">
     <TabContainer Name="MasterTabContainer">
         <BoxContainer Orientation="Vertical"
                       VerticalExpand="True"
@@ -23,6 +23,11 @@
                             Text="{Loc 'comp-pda-ui-eject-pen-button'}"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center" />
+                    <Button Name="AccessRingtoneButton"
+                            Access="Public"
+                            Text="{Loc 'comp-pda-ui-ringtone-button'}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
                 </BoxContainer>
             </PanelContainer>
             <Button Name="FlashLightToggleButton"
@@ -34,4 +39,4 @@
                     Text="{Loc 'pda-bound-user-interface-uplink-tab-title'}" />
         </BoxContainer>
     </TabContainer>
-</SS14Window>
+</DefaultWindow>

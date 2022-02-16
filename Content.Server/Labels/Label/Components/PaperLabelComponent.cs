@@ -10,8 +10,6 @@ namespace Content.Server.Labels.Components
     [RegisterComponent]
     public class PaperLabelComponent : Component
     {
-        public override string Name => "PaperLabel";
-
         [DataField("labelSlot")]
         public ItemSlot LabelSlot = new();
     }

@@ -47,7 +47,7 @@
         acts: [ "Destruction" ]
   - type: Climbable
   - type: Construction
-    graph: railing
+    graph: Railing
     node: railing
 
 - type: entity
@@ -107,7 +107,7 @@
         acts: [ "Destruction" ]
   - type: Climbable
   - type: Construction
-    graph: railing
+    graph: Railing
     node: railingCorner
 
 - type: entity
@@ -159,6 +159,6 @@
         acts: [ "Destruction" ]
   - type: Climbable
   - type: Construction
-    graph: railing
+    graph: Railing
     node: railingCornerSmall
 

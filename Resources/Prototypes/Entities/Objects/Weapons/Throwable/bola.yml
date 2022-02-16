@@ -17,5 +17,5 @@
     stunAmount: 1
     knockdownAmount: 3
   - type: Construction
-    graph: bola
+    graph: Bola
     node: bola

@@ -263,6 +263,8 @@ __pycache__/
 # Visual Studio Code workspace settings.
 .vscode/*
 !.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
 
 # Release package files go here:
 release/
@@ -288,5 +290,8 @@ ehthumbs.db
 # Merge driver stuff
 Content.Tools/test/out.yml
 
-# Windows 
+# Windows
 desktop.ini
+
+# Images generated using the MapRenderer
+Resources/MapImages

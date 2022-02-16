@@ -27,6 +27,7 @@ namespace Content.Server.Physics.Controllers
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -49,10 +50,10 @@ namespace Content.Server.Physics.Controllers
             base.UpdateBeforeSolve(prediction, frameTime);
             _excludedMobs.Clear();
 
-            foreach (var (mobMover, mover, physics) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
+            foreach (var (mobMover, mover, physics, xform) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent, TransformComponent>())
             {
                 _excludedMobs.Add(mover.Owner);
-                HandleMobMovement(mover, physics, mobMover);
+                HandleMobMovement(mover, physics, mobMover, xform);
             }
 
             HandleShuttleMovement(frameTime);
@@ -106,7 +107,7 @@ namespace Content.Server.Physics.Controllers
             // then do the movement input once for it.
             foreach (var (shuttle, pilots) in _shuttlePilots)
             {
-                if (shuttle.Paused || !EntityManager.TryGetComponent((shuttle).Owner, out PhysicsComponent? body)) continue;
+                if (Paused(shuttle.Owner) || !TryComp(shuttle.Owner, out PhysicsComponent? body)) continue;
 
                 // Collate movement linear and angular inputs together
                 var linearInput = Vector2.Zero;
@@ -129,7 +130,7 @@ namespace Content.Server.Physics.Controllers
 
                             if (sprint.Equals(Vector2.Zero)) continue;
 
-                            var offsetRotation = EntityManager.GetComponent<TransformComponent>((console).Owner).LocalRotation;
+                            var offsetRotation = EntityManager.GetComponent<TransformComponent>(console.Owner).LocalRotation;
 
                             linearInput += offsetRotation.RotateVec(new Vector2(0f, sprint.Y));
                             angularInput += sprint.X;
@@ -272,7 +273,7 @@ namespace Content.Server.Physics.Controllers
 
         protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)
         {
-            if (!mover.Owner.HasTag("FootstepSound")) return;
+            if (!_tags.HasTag(mover.Owner, "FootstepSound")) return;
 
             var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
             var coordinates = transform.Coordinates;

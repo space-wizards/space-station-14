@@ -56,7 +56,8 @@ namespace Content.Server.GameTicking
             get => _runLevel;
             private set
             {
-                if (_runLevel == value) return;
+                // Game admins can run `restartroundnow` while still in-lobby, which'd break things with this check.
+                // if (_runLevel == value) return;
 
                 var old = _runLevel;
                 _runLevel = value;
@@ -89,7 +90,7 @@ namespace Content.Server.GameTicking
                     _pauseManager.AddUninitializedMap(toLoad);
                 }
 
-                _mapLoader.LoadMap(toLoad, map.MapPath);
+                _mapLoader.LoadMap(toLoad, map.MapPath.ToString());
 
                 var grids = _mapManager.GetAllMapGrids(toLoad).ToList();
                 var dict = new Dictionary<string, StationId>();

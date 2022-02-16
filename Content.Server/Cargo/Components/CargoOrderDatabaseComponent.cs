@@ -14,7 +14,7 @@ namespace Content.Server.Cargo.Components
         {
             base.Initialize();
 
-            Database = EntitySystem.Get<CargoConsoleSystem>().StationOrderDatabase;
+            Database = EntitySystem.Get<CargoSystem>().StationOrderDatabase;
         }
 
         public override ComponentState GetComponentState()

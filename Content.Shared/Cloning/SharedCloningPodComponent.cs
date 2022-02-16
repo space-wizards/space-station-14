@@ -7,8 +7,6 @@ namespace Content.Shared.Cloning
 {
     public class SharedCloningPodComponent : Component
     {
-        public override string Name => "CloningPod";
-
         [Serializable, NetSerializable]
         public class CloningPodBoundUserInterfaceState : BoundUserInterfaceState
         {

@@ -17,9 +17,6 @@ namespace Content.Shared.Storage
     public abstract class SharedStorageComponent : Component, IDraggable
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "Storage";
-
         public abstract IReadOnlyList<EntityUid>? StoredEntities { get; }
 
         /// <summary>
@@ -37,7 +34,7 @@ namespace Content.Shared.Storage
 
         bool IDraggable.Drop(DragDropEvent eventArgs)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User, eventArgs.Target))
             {
                 return false;
             }

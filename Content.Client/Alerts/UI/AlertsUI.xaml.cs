@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Content.Client.Chat.Managers;
 using Content.Client.Chat.UI;
 using Content.Shared.Alert;
@@ -11,6 +12,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Alerts.UI;
 
@@ -20,6 +22,11 @@ public class AlertsFramePresenter : IDisposable
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
 
+    [Dependency] private readonly ILogManager _logMan = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
+    private readonly ISawmill _logger;
+
     private IAlertsFrameView _alertsFrame;
     private ClientAlertsSystem? _alertsSystem;
 
@@ -27,6 +34,9 @@ public class AlertsFramePresenter : IDisposable
     {
         // This is a lot easier than a factory
         IoCManager.InjectDependencies(this);
+
+        _logger = _logMan.GetSawmill("alerts");
+        _logger.Info("Constructor");
 
         _alertsFrame = new AlertsUI(_chatManager);
         _userInterfaceManager.StateRoot.AddChild((AlertsUI) _alertsFrame);
@@ -51,6 +61,7 @@ public class AlertsFramePresenter : IDisposable
     /// <inheritdoc />
     public void Dispose()
     {
+        _logger.Info("Destructor");
         _userInterfaceManager.StateRoot.RemoveChild((AlertsUI) _alertsFrame);
         _alertsFrame.Dispose();
         _alertsFrame = null!;
@@ -62,18 +73,32 @@ public class AlertsFramePresenter : IDisposable
 
     private void OnAlertPressed(object? sender, AlertType e)
     {
+        _logger.Info(_timing.CurTick + "|" +nameof(OnAlertPressed) + ":" + Enum.GetName(e));
         _alertsSystem?.AlertClicked(e);
     }
 
     private void SystemOnClearAlerts(object? sender, EventArgs e)
     {
+        _logger.Info(_timing.CurTick + "|" + nameof(SystemOnClearAlerts));
         _alertsFrame.ClearAllControls();
     }
 
     private void SystemOnSyncAlerts(object? sender, IReadOnlyDictionary<AlertKey, AlertState> e)
     {
         if (sender is ClientAlertsSystem system)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(_timing.CurTick + "|" +nameof(SystemOnSyncAlerts));
+
+            foreach (var kvState in e)
+            {
+                var alertType = kvState.Key.AlertType!.Value;
+                sb.AppendLine("\t" + Enum.GetName(alertType));
+            }
+
+            _logger.Info(sb.ToString());
             _alertsFrame.SyncControls(system, system.AlertOrder, e);
+        }
     }
 
     //TODO: This system binding boilerplate seems to be duplicated between every presenter
@@ -82,16 +107,25 @@ public class AlertsFramePresenter : IDisposable
 
     private void OnSystemLoaded(object? sender, SystemChangedArgs args)
     {
-        if (args.System is ClientAlertsSystem system) SystemBindingChanged(system);
+        if (args.System is ClientAlertsSystem system)
+        {
+            _logger.Info(_timing.CurTick + "|" +nameof(OnSystemLoaded));
+            SystemBindingChanged(system);
+        }
     }
 
     private void OnSystemUnloaded(object? sender, SystemChangedArgs args)
     {
-        if (args.System is ClientAlertsSystem) SystemBindingChanged(null);
+        if (args.System is ClientAlertsSystem)
+        {
+            _logger.Info(_timing.CurTick + "|" +nameof(OnSystemUnloaded));
+            SystemBindingChanged(null);
+        }
     }
 
     private void SystemBindingChanged(ClientAlertsSystem? newSystem)
     {
+        _logger.Info(_timing.CurTick + "|" +nameof(SystemBindingChanged) + ":" + (newSystem is null ? "null" :"notNull"));
         if (newSystem is null)
         {
             if (_alertsSystem is null)
@@ -114,6 +148,7 @@ public class AlertsFramePresenter : IDisposable
 
     private void BindToSystem(ClientAlertsSystem system)
     {
+        _logger.Info(_timing.CurTick + "|" +nameof(BindToSystem));
         _alertsSystem = system;
         system.SyncAlerts += SystemOnSyncAlerts;
         system.ClearAlerts += SystemOnClearAlerts;
@@ -126,6 +161,7 @@ public class AlertsFramePresenter : IDisposable
         if (system is null)
             throw new InvalidOperationException();
 
+        _logger.Info(_timing.CurTick + "|" +nameof(UnbindFromSystem));
         system.SyncAlerts -= SystemOnSyncAlerts;
         system.ClearAlerts -= SystemOnClearAlerts;
     }

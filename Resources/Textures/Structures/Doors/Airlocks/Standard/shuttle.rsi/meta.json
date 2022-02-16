@@ -129,6 +129,15 @@
     },
     {
       "name": "welded"
+    },
+    {
+      "name": "emergency_unlit",
+      "delays": [
+        [
+          0.4,
+          0.4
+        ]
+      ]
     }
   ]
 }

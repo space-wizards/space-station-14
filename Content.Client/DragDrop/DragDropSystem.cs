@@ -5,6 +5,7 @@ using Content.Client.Viewport;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -30,7 +31,7 @@ namespace Content.Client.DragDrop
     /// Handles clientside drag and drop logic
     /// </summary>
     [UsedImplicitly]
-    public class DragDropSystem : EntitySystem
+    public class DragDropSystem : SharedDragDropSystem
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
@@ -428,12 +429,19 @@ namespace Content.Client.DragDrop
         /// <returns>null if the target doesn't support IDragDropOn</returns>
         private bool? ValidDragDrop(DragDropEvent eventArgs)
         {
-            if (!_actionBlockerSystem.CanInteract(eventArgs.User))
+            if (!_actionBlockerSystem.CanInteract(eventArgs.User, eventArgs.Target))
             {
                 return false;
             }
 
-            bool? valid = null;
+            // CanInteract() doesn't support checking a second "target" entity.
+            // Doing so manually:
+            var ev = new GettingInteractedWithAttemptEvent(eventArgs.User, eventArgs.Dragged);
+            RaiseLocalEvent(eventArgs.Dragged, ev);
+            if (ev.Cancelled)
+                return false;
+
+            var valid = CheckDragDropOn(eventArgs);
 
             foreach (var comp in EntityManager.GetComponents<IDragDropOn>(eventArgs.Target))
             {

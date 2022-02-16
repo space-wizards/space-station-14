@@ -10,9 +10,6 @@ namespace Content.Shared.Kitchen.Components
     [NetworkedComponent()]
     public class SharedMicrowaveComponent : Component
     {
-
-        public override string Name => "Microwave";
-
         [Serializable, NetSerializable]
         public class MicrowaveStartCookMessage : BoundUserInterfaceMessage
         {
@@ -66,16 +63,14 @@ namespace Content.Shared.Kitchen.Components
     [NetSerializable, Serializable]
     public class MicrowaveUpdateUserInterfaceState : BoundUserInterfaceState
     {
-        public Solution.ReagentQuantity[] ReagentQuantities;
         public EntityUid[] ContainedSolids;
         public bool IsMicrowaveBusy;
         public int ActiveButtonIndex;
         public uint CurrentCookTime;
 
-        public MicrowaveUpdateUserInterfaceState(Solution.ReagentQuantity[] reagents, EntityUid[] containedSolids,
+        public MicrowaveUpdateUserInterfaceState(EntityUid[] containedSolids,
             bool isMicrowaveBusy, int activeButtonIndex, uint currentCookTime)
         {
-            ReagentQuantities = reagents;
             ContainedSolids = containedSolids;
             IsMicrowaveBusy = isMicrowaveBusy;
             ActiveButtonIndex = activeButtonIndex;
