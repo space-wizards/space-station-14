@@ -1,8 +1,10 @@
 using Content.Shared.Body.Components;
 using Content.Shared.DragDrop;
 using JetBrains.Annotations;
+using Content.Shared.MobState.Components;
+using Robust.Shared.Physics;
 
-namespace Content.Shared.Medical.GeneticScanner
+namespace Content.Shared.Cloning.GeneticScanner
 {
     [UsedImplicitly]
     public abstract class SharedGeneticScannerSystem : EntitySystem
@@ -23,8 +25,8 @@ namespace Content.Shared.Medical.GeneticScanner
 
         public virtual bool CanInsert(SharedGeneticScannerComponent component, EntityUid entity)
         {
-            // if (!EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
-            //     return false;
+            if (!EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
+                return false;
 
             if (!EntityManager.HasComponent<SharedBodyComponent>(entity))
             {
@@ -32,10 +34,10 @@ namespace Content.Shared.Medical.GeneticScanner
             }
 
 
-            // if (!EntityManager.TryGetComponent(entity, out IPhysBody? physics) ||
+            // if (!TryComp<IPhysBody>(entity, out IPhysBody? physics) ||
             //     !physics.CanCollide && storable == null)
             // {
-            //     if (!(EntityManager.TryGetComponent(entity, out MobStateComponent? damageState) && damageState.IsDead()))
+            //     if (!(TryComp<MobStateComponent>(entity, out MobStateComponent? damageState) && damageState.IsDead()))
             //     {
             //         return false;
             //     }

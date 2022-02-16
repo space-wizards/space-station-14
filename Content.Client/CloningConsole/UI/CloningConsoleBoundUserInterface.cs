@@ -1,7 +1,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-using static Content.Shared.Medical.CloningConsole.SharedCloningConsoleComponent;
+using static Content.Shared.Cloning.CloningConsole.SharedCloningConsoleComponent;
 
 namespace Content.Client.CloningConsole.UI
 {

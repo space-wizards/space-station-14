@@ -28,9 +28,9 @@ namespace Content.Server.Cloning
         {
             base.Initialize();
 
+            SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
-            SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
         }
 
         private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)
@@ -43,6 +43,7 @@ namespace Content.Server.Cloning
             if (TryComp<AppearanceComponent>(clonePod.Owner, out AppearanceComponent? appearance))
                 appearance.SetData(CloningPodVisuals.Status, clonePod.Status);
         }
+
         internal void TransferMindToClone(Mind.Mind mind)
         {
             if (!ClonesWaitingForMind.TryGetValue(mind, out var entity) ||
@@ -149,13 +150,16 @@ namespace Content.Server.Cloning
 
                 if (cloning.CapturedMind?.Session?.AttachedEntity == cloning.BodyContainer.ContainedEntity)
                 {
-                    Eject(cloning);
+                    Eject(cloning.Owner, cloning);
                 }
             }
         }
 
-        public void Eject(CloningPodComponent clonePod)
+        public void Eject(EntityUid uid, CloningPodComponent? clonePod)
         {
+            if (!Resolve(uid, ref clonePod))
+                return;
+
             if (clonePod.BodyContainer.ContainedEntity is not {Valid: true} entity || clonePod.CloningProgress < clonePod.CloningTime)
                 return;
 

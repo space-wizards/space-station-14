@@ -9,11 +9,11 @@ using Content.Shared.DragDrop;
 using Content.Shared.Acts;
 using Content.Server.Power.Components;
 using Robust.Shared.Containers;
-using Content.Shared.Medical.GeneticScanner;
+using Content.Shared.Cloning.GeneticScanner;
 
-using static Content.Shared.Medical.GeneticScanner.SharedGeneticScannerComponent;
+using static Content.Shared.Cloning.GeneticScanner.SharedGeneticScannerComponent;
 
-namespace Content.Server.Medical.GeneticScanner
+namespace Content.Server.Cloning.GeneticScanner
 {
     [UsedImplicitly]
     internal sealed class GeneticScannerSystem : SharedGeneticScannerSystem
@@ -111,7 +111,7 @@ namespace Content.Server.Medical.GeneticScanner
             scannerComponent.BodyContainer.Insert(args.Dragged);
         }
 
-        public GeneticScannerStatus GetStatus(GeneticScannerComponent scannerComponent)
+        private GeneticScannerStatus GetStatus(GeneticScannerComponent scannerComponent)
         {
             if (IsPowered(scannerComponent))
             {
@@ -175,15 +175,28 @@ namespace Content.Server.Medical.GeneticScanner
             }
         }
 
-        public void InsertBody(EntityUid user, GeneticScannerComponent scannerComponent)
+        public void InsertBody(EntityUid user, GeneticScannerComponent? scannerComponent)
         {
+            if (!Resolve(user, ref scannerComponent))
+                return;
+
+            if (scannerComponent.BodyContainer == null || scannerComponent.BodyContainer.ContainedEntity != null)
+                return;
+
+            if (!TryComp<MobStateComponent>(user, out MobStateComponent? comp))
+                return;
+
             scannerComponent.BodyContainer.Insert(user);
             UpdateAppearance(scannerComponent.Owner, scannerComponent);
         }
 
-        public void EjectBody(EntityUid uid, GeneticScannerComponent scannerComponent)
+        public void EjectBody(EntityUid uid, GeneticScannerComponent? scannerComponent)
         {
+            if (!Resolve(uid, ref scannerComponent))
+                return;
+
             if (scannerComponent.BodyContainer.ContainedEntity is not {Valid: true} contained) return;
+
             scannerComponent.BodyContainer.Remove(contained);
             UpdateAppearance(scannerComponent.Owner, scannerComponent);
             EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(contained);

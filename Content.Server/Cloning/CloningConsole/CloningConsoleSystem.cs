@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
-using Content.Server.Medical.GeneticScanner;
+using Content.Server.Cloning.GeneticScanner;
 using Robust.Shared.Map;
 using Content.Server.Cloning.Components;
 using Content.Server.Power.Components;
@@ -15,9 +15,9 @@ using Robust.Shared.Network;
 using Robust.Server.Player;
 
 using static Content.Shared.Cloning.SharedCloningPodComponent;
-using static Content.Shared.Medical.CloningConsole.SharedCloningConsoleComponent;
+using static Content.Shared.Cloning.CloningConsole.SharedCloningConsoleComponent;
 
-namespace Content.Server.Medical.CloningConsole
+namespace Content.Server.Cloning.CloningConsole
 {
     [UsedImplicitly]
     internal sealed class CloningConsoleSystem : EntitySystem
@@ -143,7 +143,7 @@ namespace Content.Server.Medical.CloningConsole
         {
             if (consoleComponent.CloningPod == null)
                 return;
-            _cloningSystem.Eject(consoleComponent.CloningPod);
+            _cloningSystem.Eject(uid, consoleComponent.CloningPod);
         }
 
         public void TryClone(EntityUid uid, CloningConsoleComponent consoleComponent)

@@ -2,7 +2,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.DragDrop;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Medical.GeneticScanner
+namespace Content.Shared.Cloning.GeneticScanner
 {
     public abstract class SharedGeneticScannerComponent : Component, IDragDropOn
     {

@@ -1,9 +1,9 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using static Content.Shared.Medical.GeneticScanner.SharedGeneticScannerComponent;
-using static Content.Shared.Medical.GeneticScanner.SharedGeneticScannerComponent.GeneticScannerStatus;
+using static Content.Shared.Cloning.GeneticScanner.SharedGeneticScannerComponent;
+using static Content.Shared.Cloning.GeneticScanner.SharedGeneticScannerComponent.GeneticScannerStatus;
 
-namespace Content.Client.Medical.GeneticScanner
+namespace Content.Client.Cloning.GeneticScanner
 {
     [UsedImplicitly]
     public sealed class GeneticScannerVisualizer : AppearanceVisualizer

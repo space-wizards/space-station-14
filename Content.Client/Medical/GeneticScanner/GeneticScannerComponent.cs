@@ -1,7 +1,7 @@
 ﻿using Content.Shared.DragDrop;
-using Content.Shared.Medical.GeneticScanner;
+using Content.Shared.Cloning.GeneticScanner;
 
-namespace Content.Client.Medical.GeneticScanner
+namespace Content.Client.Cloning.GeneticScanner
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedGeneticScannerComponent))]

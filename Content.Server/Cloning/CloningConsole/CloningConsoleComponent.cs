@@ -1,10 +1,10 @@
 using Content.Server.UserInterface;
 using Robust.Server.GameObjects;
-using Content.Server.Medical.GeneticScanner;
+using Content.Server.Cloning.GeneticScanner;
 using Content.Server.Cloning.Components;
-using Content.Shared.Medical.CloningConsole;
+using Content.Shared.Cloning.CloningConsole;
 
-namespace Content.Server.Medical.CloningConsole
+namespace Content.Server.Cloning.CloningConsole
 {
     [RegisterComponent]
     public sealed class CloningConsoleComponent : SharedCloningConsoleComponent
