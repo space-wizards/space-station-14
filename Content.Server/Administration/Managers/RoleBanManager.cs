@@ -69,13 +69,4 @@ public sealed class RoleBanManager
 
         _cachedRoleBans[userId] = userRoleBans;
     }
-
-    public void Restart()
-    {
-        foreach (var player in _playerManager.ServerSessions)
-        {
-            Task.Run(() => CacheDbRoleBans(player.UserId, player.ConnectedClient.RemoteEndPoint.Address,
-                player.ConnectedClient.UserData.HWId));
-        }
-    }
 }
