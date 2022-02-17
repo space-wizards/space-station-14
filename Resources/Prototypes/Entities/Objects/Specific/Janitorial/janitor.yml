@@ -12,6 +12,9 @@
     size: 10
     sprite: Objects/Specific/Janitorial/mop.rsi
   - type: Absorbent
+  - type: Tag
+    tags:
+      - Mop
   - type: SolutionContainerManager
     solutions:
       absorbed:
@@ -42,6 +45,9 @@
     solution: bucket
   - type: RefillableSolution
     solution: bucket
+  - type: Tag
+    tags:
+      - Wringer
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
