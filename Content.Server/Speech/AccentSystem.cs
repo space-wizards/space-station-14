@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Speech
 {
-    public class AccentSystem : EntitySystem
+    public sealed class AccentSystem : EntitySystem
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
 
@@ -27,7 +27,7 @@ namespace Content.Server.Speech
         }
     }
 
-    public class AccentGetEvent : EntityEventArgs
+    public sealed class AccentGetEvent : EntityEventArgs
     {
         /// <summary>
         ///     The entity to apply the accent to.

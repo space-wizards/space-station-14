@@ -22,7 +22,7 @@ namespace Content.Shared.Actions.Behaviors
         bool DoToggleAction(ToggleActionEventArgs args);
     }
 
-    public class ToggleActionEventArgs : ActionEventArgs
+    public sealed class ToggleActionEventArgs : ActionEventArgs
     {
         /// <summary>
         /// True if the toggle is attempting to be toggled on, false if attempting to toggle off

@@ -34,6 +34,9 @@
     - state: bolted_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseBolted"]
+    - state: emergency_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ApcPowerReceiver
@@ -73,6 +76,7 @@
   - type: Door
     canCrush: false
     weldable: false
+    board: DoorElectronics
     openSound:
       path: /Audio/Machines/windoor_open.ogg
     closeSound:
@@ -123,6 +127,9 @@
     - state: bolted_unlit
       shader: unshaded
       map: [ "enum.DoorVisualLayers.BaseBolted" ]
+    - state: emergency_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false

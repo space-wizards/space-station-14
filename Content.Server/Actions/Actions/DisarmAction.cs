@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Content.Server.Act;
+using Content.Server.Actions.Events;
 using Content.Server.Administration.Logs;
 using Content.Server.Interaction;
 using Content.Server.Popups;
@@ -12,7 +13,6 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Audio;
 using Content.Shared.Cooldown;
 using Content.Shared.Database;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
@@ -31,7 +31,7 @@ namespace Content.Server.Actions.Actions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class DisarmAction : ITargetEntityAction
+    public sealed class DisarmAction : ITargetEntityAction
     {
         [DataField("failProb")] private float _failProb = 0.4f;
         [DataField("pushProb")] private float _pushProb = 0.4f;
@@ -44,13 +44,20 @@ namespace Content.Server.Actions.Actions
         [ViewVariables]
         [DataField("disarmSuccessSound")]
         private SoundSpecifier DisarmSuccessSound { get; } = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
-
         public void DoTargetEntityAction(TargetEntityActionEventArgs args)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
             var disarmedActs = entMan.GetComponents<IDisarmedAct>(args.Target).ToArray();
+            var attemptEvent = new DisarmAttemptEvent(args.Target, args.Performer);
 
-            if (!args.Performer.InRangeUnobstructed(args.Target)) return;
+            entMan.EventBus.RaiseLocalEvent(args.Target, attemptEvent);
+
+            if (attemptEvent.Cancelled)
+                return;
+
+            var sys = EntitySystem.Get<InteractionSystem>();
+
+            if (!sys.InRangeUnobstructed(args.Performer, args.Target)) return;
 
             if (disarmedActs.Length == 0)
             {
@@ -60,7 +67,7 @@ namespace Content.Server.Actions.Actions
                     var player = actor.PlayerSession;
                     var coordinates = entMan.GetComponent<TransformComponent>(args.Target).Coordinates;
                     var target = args.Target;
-                    EntitySystem.Get<InteractionSystem>().HandleUseInteraction(player, coordinates, target);
+                    sys.HandleUseInteraction(player, coordinates, target);
                     return;
                 }
 

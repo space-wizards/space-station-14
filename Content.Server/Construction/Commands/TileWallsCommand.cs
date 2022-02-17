@@ -11,7 +11,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Construction.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    class TileWallsCommand : IConsoleCommand
+    sealed class TileWallsCommand : IConsoleCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "tilewalls";

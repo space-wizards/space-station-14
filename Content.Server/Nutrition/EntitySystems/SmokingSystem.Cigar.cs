@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    public partial class SmokingSystem
+    public sealed partial class SmokingSystem
     {
         private void InitializeCigars()
         {

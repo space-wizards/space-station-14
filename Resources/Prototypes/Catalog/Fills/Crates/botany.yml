@@ -18,6 +18,8 @@
         amount: 2
       - id: NettleSeeds
         amount: 2
+      - id: FlyAmanitaSeeds
+        amount: 2
 #      - id: RainbowBunchSeeds
 #        amount: 2
 #      - id: StrangeSeeds

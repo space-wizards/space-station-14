@@ -11,6 +11,7 @@
         - actionType: ToggleLight
   - type: Sprite
     sprite: Objects/Misc/Lights/lights.rsi
+    netsync: false
   - type: Item
     sprite: Objects/Misc/Lights/lights.rsi
 

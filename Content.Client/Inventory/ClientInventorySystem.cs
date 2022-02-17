@@ -234,7 +234,11 @@ namespace Content.Client.Inventory
                         Title = Loc.GetString("human-inventory-window-title"),
                         Resizable = false
                     };
-                    window.OnClose += () => _gameHud.InventoryButtonDown = false;
+                    window.OnClose += () =>
+                    {
+                        _gameHud.InventoryButtonDown = false;
+                        _gameHud.TopInventoryQuickButtonContainer.Visible = false;
+                    };
                     var windowContents = new LayoutContainer
                     {
                         MinSize = (ButtonSize * 4 + ButtonSeparation * 3 + RightSeparation,
@@ -252,7 +256,7 @@ namespace Content.Client.Inventory
                                 if (e.Function != EngineKeyFunctions.UIClick &&
                                     e.Function != ContentKeyFunctions.ActivateItemInWorld)
                                     return;
-                                RaiseNetworkEvent(new OpenSlotStorageNetworkMessage(entityUid, definition.Name));
+                                RaiseNetworkEvent(new OpenSlotStorageNetworkMessage(definition.Name));
                             }
                         };
                         btn.OnHover = (_) =>
@@ -337,6 +341,7 @@ namespace Content.Client.Inventory
         private void HandleOpenInventoryMenu()
         {
             _gameHud.InventoryButtonDown = !_gameHud.InventoryButtonDown;
+            _gameHud.TopInventoryQuickButtonContainer.Visible = _gameHud.InventoryButtonDown;
         }
     }
 }

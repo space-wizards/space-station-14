@@ -37,7 +37,7 @@ namespace Content.Server.Botany.Components
 {
     [RegisterComponent]
 #pragma warning disable 618
-    public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IExamine
+    public sealed class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IExamine
 #pragma warning restore 618
     {
         public const float HydroponicsSpeedMultiplier = 1f;
@@ -422,7 +422,7 @@ namespace Content.Server.Botany.Components
 
         public bool DoHarvest(EntityUid user)
         {
-            if (Seed == null || _entMan.Deleted(user) || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (Seed == null || _entMan.Deleted(user))
                 return false;
 
             var botanySystem = EntitySystem.Get<BotanySystem>();
@@ -657,7 +657,7 @@ namespace Content.Server.Botany.Components
             var user = eventArgs.User;
             var usingItem = eventArgs.Using;
 
-            if ((!_entMan.EntityExists(usingItem) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(usingItem).EntityLifeStage) >= EntityLifeStage.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if ((!_entMan.EntityExists(usingItem) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(usingItem).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return false;
 
             var botanySystem = EntitySystem.Get<BotanySystem>();
@@ -693,7 +693,9 @@ namespace Content.Server.Botany.Components
                 return false;
             }
 
-            if (usingItem.HasTag("Hoe"))
+            var tagSystem = EntitySystem.Get<TagSystem>();
+
+            if (tagSystem.HasTag(usingItem, "Hoe"))
             {
                 if (WeedLevel > 0)
                 {
@@ -712,7 +714,7 @@ namespace Content.Server.Botany.Components
                 return true;
             }
 
-            if (usingItem.HasTag("Shovel"))
+            if (tagSystem.HasTag(usingItem, "Shovel"))
             {
                 if (Seed != null)
                 {
@@ -764,7 +766,7 @@ namespace Content.Server.Botany.Components
                 return true;
             }
 
-            if (usingItem.HasTag("PlantSampleTaker"))
+            if (tagSystem.HasTag(usingItem, "PlantSampleTaker"))
             {
                 if (Seed == null)
                 {
@@ -800,7 +802,7 @@ namespace Content.Server.Botany.Components
                 return true;
             }
 
-            if (usingItem.HasTag("BotanySharp"))
+            if (tagSystem.HasTag(usingItem, "BotanySharp"))
             {
                 return DoHarvest(user);
             }

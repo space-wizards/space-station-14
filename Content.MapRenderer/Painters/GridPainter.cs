@@ -11,7 +11,7 @@ using static Robust.UnitTesting.RobustIntegrationTest;
 
 namespace Content.MapRenderer.Painters
 {
-    public class GridPainter
+    public sealed class GridPainter
     {
         private readonly EntityPainter _entityPainter;
 

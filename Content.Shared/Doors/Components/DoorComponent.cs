@@ -204,11 +204,12 @@ public enum DoorVisuals
 {
     State,
     Powered,
-    BoltLights
+    BoltLights,
+    EmergencyLights,
 }
 
 [Serializable, NetSerializable]
-public class DoorComponentState : ComponentState
+public sealed class DoorComponentState : ComponentState
 {
     public readonly DoorState DoorState;
     public readonly List<EntityUid> CurrentlyCrushing;

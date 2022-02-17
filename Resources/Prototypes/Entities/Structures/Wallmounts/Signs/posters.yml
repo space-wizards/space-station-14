@@ -3,6 +3,8 @@
   id: PosterBase
   abstract: true
   components:
+  - type: WallMount
+    arc: 360
   - type: Sprite
     drawdepth: WallTops
     sprite: Structures/Wallmounts/posters.rsi

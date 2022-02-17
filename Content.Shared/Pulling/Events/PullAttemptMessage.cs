@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Physics.Pull
 {
-    public class PullAttemptMessage : PullMessage
+    public sealed class PullAttemptMessage : PullMessage
     {
         public PullAttemptMessage(IPhysBody puller, IPhysBody pulled) : base(puller, pulled) { }
 

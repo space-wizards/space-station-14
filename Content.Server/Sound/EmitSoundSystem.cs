@@ -15,7 +15,7 @@ namespace Content.Server.Sound
     /// Will play a sound on various events if the affected entity has a component derived from BaseEmitSoundComponent
     /// </summary>
     [UsedImplicitly]
-    public class EmitSoundSystem : EntitySystem
+    public sealed class EmitSoundSystem : EntitySystem
     {
         /// <inheritdoc />
         public override void Initialize()

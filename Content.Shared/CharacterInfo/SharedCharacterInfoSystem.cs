@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.CharacterInfo;
 
 [Serializable, NetSerializable]
-public class RequestCharacterInfoEvent : EntityEventArgs
+public sealed class RequestCharacterInfoEvent : EntityEventArgs
 {
     public readonly EntityUid EntityUid;
 
@@ -18,7 +18,7 @@ public class RequestCharacterInfoEvent : EntityEventArgs
 }
 
 [Serializable, NetSerializable]
-public class CharacterInfoEvent : EntityEventArgs
+public sealed class CharacterInfoEvent : EntityEventArgs
 {
     public readonly EntityUid EntityUid;
     public readonly string JobTitle;

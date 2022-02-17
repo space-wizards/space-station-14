@@ -10,11 +10,10 @@ using Content.Shared.MobState.Components;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         public const float PresetFailedCooldownIncrease = 30f;
 
@@ -44,6 +43,7 @@ namespace Content.Server.GameTicking
                 ClearGameRules();
                 SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                 AddGamePresetRules();
+                StartGamePresetRules();
 
                 startAttempt.Uncancel();
                 RaiseLocalEvent(startAttempt);
@@ -136,6 +136,14 @@ namespace Content.Server.GameTicking
             return true;
         }
 
+        private void StartGamePresetRules()
+        {
+            foreach (var rule in _addedGameRules)
+            {
+                StartGameRule(rule);
+            }
+        }
+
         public bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal)
         {
             var handleEv = new GhostAttemptHandleEvent(mind, canReturnGlobal);
@@ -211,7 +219,7 @@ namespace Content.Server.GameTicking
         }
     }
 
-    public class GhostAttemptHandleEvent : HandledEntityEventArgs
+    public sealed class GhostAttemptHandleEvent : HandledEntityEventArgs
     {
         public Mind.Mind Mind { get; }
         public bool CanReturnGlobal { get; }

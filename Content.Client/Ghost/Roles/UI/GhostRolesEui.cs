@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace Content.Client.Ghost.Roles.UI
 {
     [UsedImplicitly]
-    public class GhostRolesEui : BaseEui
+    public sealed class GhostRolesEui : BaseEui
     {
         private readonly GhostRolesWindow _window;
         private GhostRoleRulesWindow? _windowRules = null;

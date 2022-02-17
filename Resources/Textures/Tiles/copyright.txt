@@ -5,3 +5,4 @@ steel.png taken from CEV-Eris commit 28e589f0ff72a009adf17db767e90be39054f0f2
 bar.png, laundry.png, mime.png, clown.png and kitchen.png are under CC-BY-SA-3.0
 snow.png taken from TG at commit 67a5373b4649937dd63dd94153e05e8506f40a5d
 grass.png taken from TG at commit 73a638214c94da9b8c485f1c75f615cb79770883
+reinforced.png taken from /tg/ at commit https://github.com/tgstation/tgstation/commit/4e2a36fe7e56fad93495adf01c697f4b5de04e90, licensed under CC-BY-SA-3.0

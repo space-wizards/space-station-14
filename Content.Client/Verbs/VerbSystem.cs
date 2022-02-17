@@ -28,6 +28,7 @@ namespace Content.Client.Verbs
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ExamineSystem _examineSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -147,7 +148,7 @@ namespace Content.Client.Verbs
                         continue;
                     }
 
-                    if (entity.HasTag("HideContextMenu"))
+                    if (_tagSystem.HasTag(entity, "HideContextMenu"))
                         entities.Remove(entity);
                 }
             }
@@ -177,10 +178,18 @@ namespace Content.Client.Verbs
         }
 
         /// <summary>
+        ///     Asks the server to send back a list of server-side verbs, for the given verb type.
+        /// </summary>
+        public SortedSet<Verb> GetVerbs(EntityUid target, EntityUid user, Type type, bool force = false)
+        {
+            return GetVerbs(target, user, new List<Type>() { type }, force);
+        }
+
+        /// <summary>
         ///     Ask the server to send back a list of server-side verbs, and for now return an incomplete list of verbs
         ///     (only those defined locally).
         /// </summary>
-        public Dictionary<VerbType, SortedSet<Verb>> GetVerbs(EntityUid target, EntityUid user, VerbType verbTypes,
+        public SortedSet<Verb> GetVerbs(EntityUid target, EntityUid user, List<Type> verbTypes,
             bool force = false)
         {
             if (!target.IsClientSide())
@@ -197,7 +206,7 @@ namespace Content.Client.Verbs
         /// <remarks>
         ///     Unless this is a client-exclusive verb, this will also tell the server to run the same verb.
         /// </remarks>
-        public void ExecuteVerb(EntityUid target, Verb verb, VerbType verbType)
+        public void ExecuteVerb(EntityUid target, Verb verb)
         {
             var user = _playerManager.LocalPlayer?.ControlledEntity;
             if (user == null)
@@ -217,10 +226,10 @@ namespace Content.Client.Verbs
                 // is this a client exclusive (gui) verb?
                 ExecuteVerb(verb, user.Value, target);
             else
-                EntityManager.RaisePredictiveEvent(new ExecuteVerbEvent(target, verb, verbType));
+                EntityManager.RaisePredictiveEvent(new ExecuteVerbEvent(target, verb));
         }
 
-        public override void ExecuteVerb(Verb verb, EntityUid user, EntityUid target,  bool forced = false)
+        public override void ExecuteVerb(Verb verb, EntityUid user, EntityUid target, bool forced = false)
         {
             // invoke any relevant actions
             verb.Act?.Invoke();

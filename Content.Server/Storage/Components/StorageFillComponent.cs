@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Storage.Components
 {
-    [RegisterComponent, ComponentProtoName("StorageFill"), Friend(typeof(StorageSystem))]
+    [RegisterComponent, Friend(typeof(StorageSystem))]
     public sealed class StorageFillComponent : Component
     {
         [DataField("contents")] public List<EntitySpawnEntry> Contents = new();

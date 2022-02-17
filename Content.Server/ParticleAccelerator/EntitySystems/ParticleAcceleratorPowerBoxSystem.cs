@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.ParticleAccelerator.EntitySystems
 {
     [UsedImplicitly]
-    public class ParticleAcceleratorPowerBoxSystem : EntitySystem
+    public sealed class ParticleAcceleratorPowerBoxSystem : EntitySystem
     {
         public override void Initialize()
         {

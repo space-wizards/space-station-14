@@ -9,7 +9,7 @@ namespace Content.Server.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyPartComponent))]
-    public class BodyPartComponent : SharedBodyPartComponent
+    public sealed class BodyPartComponent : SharedBodyPartComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

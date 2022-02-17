@@ -10,7 +10,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Lathe
 {
     [NetworkedComponent()]
-    public class SharedMaterialStorageComponent : Component, IEnumerable<KeyValuePair<string, int>>
+    public abstract class SharedMaterialStorageComponent : Component, IEnumerable<KeyValuePair<string, int>>
     {
         [ViewVariables]
         protected virtual Dictionary<string, int> Storage { get; set; } = new();
@@ -66,7 +66,7 @@ namespace Content.Shared.Lathe
     }
 
     [NetSerializable, Serializable]
-    public class MaterialStorageState : ComponentState
+    public sealed class MaterialStorageState : ComponentState
     {
         public readonly Dictionary<string, int> Storage;
         public MaterialStorageState(Dictionary<string, int> storage)

@@ -27,7 +27,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         private const string ObserverPrototypeName = "MobObserver";
 
@@ -426,7 +426,7 @@ namespace Content.Server.GameTicking
     ///     You can use this event to spawn a player off-station on late-join but also at round start.
     ///     When this event is handled, the GameTicker will not perform its own player-spawning logic.
     /// </summary>
-    public class PlayerBeforeSpawnEvent : HandledEntityEventArgs
+    public sealed class PlayerBeforeSpawnEvent : HandledEntityEventArgs
     {
         public IPlayerSession Player { get; }
         public HumanoidCharacterProfile Profile { get; }
@@ -449,7 +449,7 @@ namespace Content.Server.GameTicking
     ///     You can use this to handle people late-joining, or to handle people being spawned at round start.
     ///     Can be used to give random players a role, modify their equipment, etc.
     /// </summary>
-    public class PlayerSpawnCompleteEvent : EntityEventArgs
+    public sealed class PlayerSpawnCompleteEvent : EntityEventArgs
     {
         public EntityUid Mob { get; }
         public IPlayerSession Player { get; }

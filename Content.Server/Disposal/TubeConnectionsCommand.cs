@@ -10,7 +10,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Disposal
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class TubeConnectionsCommand : IConsoleCommand
+    public sealed class TubeConnectionsCommand : IConsoleCommand
     {
         public string Command => "tubeconnections";
         public string Description => Loc.GetString("tube-connections-command-description");

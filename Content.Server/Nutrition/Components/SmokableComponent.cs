@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent, Friend(typeof(SmokingSystem))]
-    public class SmokableComponent : Component
+    public sealed class SmokableComponent : Component
     {
         [DataField("solution")]
         public string Solution { get; } = "smokable";
