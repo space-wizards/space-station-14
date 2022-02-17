@@ -37,8 +37,9 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
             sprite.LayerMapReserveBlank(layerKey);
             var layer = sprite.LayerMapGet(layerKey);
             sprite.LayerSetRSI(layer, rsi.RSI);
-            var layerState = component.BaseState + (PipeDirection) layerKey;
+            var layerState = component.State;
             sprite.LayerSetState(layer, layerState);
+            sprite.LayerSetDirOffset(layer, ToOffset(layerKey));
         }
     }
 
@@ -50,11 +51,12 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         if (!args.Component.TryGetData(PipeColorVisuals.Color, out Color color))
             color = Color.White;
 
-        if (!args.Component.TryGetData(PipeVisuals.VisualState, out PipeDirection connectedDirections))
+        if (!args.Component.TryGetData(PipeVisuals.VisualState, out PipeDirection worldConnectedDirections))
             return;
 
-        var rotation = Transform(uid).LocalRotation;
-
+        // transform connected directions to local-coordinates
+        var connectedDirections = worldConnectedDirections.RotatePipeDirection(-Transform(uid).LocalRotation);
+        
         foreach (PipeConnectionLayer layerKey in Enum.GetValues(typeof(PipeConnectionLayer)))
         {
             if (!sprite.LayerMapTryGet(layerKey, out var key))
@@ -68,9 +70,19 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
 
             if (!visible) continue;
 
-            layer.Rotation = -rotation;
             layer.Color = color;
         }
+    }
+
+    private SpriteComponent.DirectionOffset ToOffset(PipeConnectionLayer layer)
+    {
+        return layer switch
+        {
+            PipeConnectionLayer.NorthConnection => SpriteComponent.DirectionOffset.Flip,
+            PipeConnectionLayer.EastConnection => SpriteComponent.DirectionOffset.CounterClockwise,
+            PipeConnectionLayer.WestConnection => SpriteComponent.DirectionOffset.Clockwise,
+            _ => SpriteComponent.DirectionOffset.None,
+        };
     }
 
     private enum PipeConnectionLayer : byte
