@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class LOOCCommand : IConsoleCommand
+    internal sealed class LOOCCommand : IConsoleCommand
     {
         public string Command => "looc";
         public string Description => "Send Local Out Of Character chat messages.";

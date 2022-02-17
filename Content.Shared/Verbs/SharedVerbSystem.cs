@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
@@ -15,6 +16,7 @@ namespace Content.Shared.Verbs
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
+        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
         public override void Initialize()
         {
@@ -63,7 +65,7 @@ namespace Content.Shared.Verbs
             bool canAccess = false;
             if (force || target == user)
                 canAccess = true;
-            else if (EntityManager.EntityExists(target) && _interactionSystem.InRangeUnobstructed(user, target, ignoreInsideBlocker: true))
+            else if (EntityManager.EntityExists(target) && _interactionSystem.InRangeUnobstructed(user, target))
             {
                 if (ContainerSystem.IsInSameOrParentContainer(user, target))
                     canAccess = true;
@@ -74,10 +76,10 @@ namespace Content.Shared.Verbs
 
             // A large number of verbs need to check action blockers. Instead of repeatedly having each system individually
             // call ActionBlocker checks, just cache it for the verb request.
-            var canInteract = force || _actionBlockerSystem.CanInteract(user);
+            var canInteract = force || _actionBlockerSystem.CanInteract(user, target);
 
             EntityUid? @using = null;
-            if (TryComp(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user)))
+            if (TryComp(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUseHeldEntity(user)))
             {
                 hands.TryGetActiveHeldEntity(out @using);
 
@@ -108,6 +110,13 @@ namespace Content.Shared.Verbs
             if (types.Contains(typeof(ActivationVerb)))
             {
                 var verbEvent = new GetVerbsEvent<ActivationVerb>(user, target, @using, hands, canInteract, canAccess);
+                RaiseLocalEvent(target, verbEvent);
+                verbs.UnionWith(verbEvent.Verbs);
+            }
+
+            if (types.Contains(typeof(ExamineVerb)))
+            {
+                var verbEvent = new GetVerbsEvent<ExamineVerb>(user, target, @using, hands, canInteract, canAccess);
                 RaiseLocalEvent(target, verbEvent);
                 verbs.UnionWith(verbEvent.Verbs);
             }

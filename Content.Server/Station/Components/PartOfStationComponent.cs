@@ -12,7 +12,7 @@ namespace Content.Server.Station;
 /// </summary>
 [RegisterComponent]
 [Friend(typeof(GameTicker))]
-public class PartOfStationComponent : Component
+public sealed class PartOfStationComponent : Component
 {
     [DataField("id", required: true)] // does yamllinter even lint maps for required fields?
     [ViewVariables(VVAccess.ReadWrite)]

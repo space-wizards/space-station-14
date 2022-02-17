@@ -27,7 +27,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker : SharedGameTicker
+    public sealed partial class GameTicker : SharedGameTicker
     {
         [ViewVariables] private bool _initialized;
         [ViewVariables] private bool _postInitialized;

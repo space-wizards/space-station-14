@@ -17,7 +17,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameTicking
 {
     [UsedImplicitly]
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 

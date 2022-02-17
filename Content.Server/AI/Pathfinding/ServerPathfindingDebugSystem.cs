@@ -11,7 +11,7 @@ namespace Content.Server.AI.Pathfinding
 {
 #if DEBUG
     [UsedImplicitly]
-    public class ServerPathfindingDebugSystem : EntitySystem
+    public sealed class ServerPathfindingDebugSystem : EntitySystem
     {
         public override void Initialize()
         {

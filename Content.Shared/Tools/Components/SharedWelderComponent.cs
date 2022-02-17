@@ -12,7 +12,7 @@ namespace Content.Shared.Tools.Components
     }
 
     [NetSerializable, Serializable]
-    public class WelderComponentState : ComponentState
+    public sealed class WelderComponentState : ComponentState
     {
         public float FuelCapacity { get; }
         public float Fuel { get; }

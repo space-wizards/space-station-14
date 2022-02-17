@@ -24,7 +24,7 @@ using System.Linq;
 
 namespace Content.Server.Salvage
 {
-    public class SalvageSystem : EntitySystem
+    public sealed class SalvageSystem : EntitySystem
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
@@ -368,7 +368,7 @@ namespace Content.Server.Salvage
         }
     }
 
-    public class SalvageGridState
+    public sealed class SalvageGridState
     {
         public TimeSpan CurrentTime { get; set; }
         public List<SalvageMagnetComponent> ActiveMagnets { get; } = new();

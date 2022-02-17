@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.CustomControls;
 namespace Content.Client.Ghost.Roles.UI
 {
     [GenerateTypedNameReferences]
-    public partial class GhostRolesWindow : DefaultWindow
+    public sealed partial class GhostRolesWindow : DefaultWindow
     {
         public event Action<GhostRoleInfo>? RoleRequested;
 

@@ -9,7 +9,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class RemoveGasCommand : IConsoleCommand
+    public sealed class RemoveGasCommand : IConsoleCommand
     {
         public string Command => "removegas";
         public string Description => "Removes an amount of gases.";

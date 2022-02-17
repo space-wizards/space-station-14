@@ -12,7 +12,7 @@ namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SolutionAreaEffectComponent))]
-    public class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
+    public sealed class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

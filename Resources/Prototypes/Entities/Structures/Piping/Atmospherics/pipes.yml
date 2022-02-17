@@ -40,6 +40,7 @@
     damageContainer: Inorganic
     damageModifierSet: Metallic
   - type: SubFloorHide
+  - type: PipeAppearance
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
@@ -57,9 +58,7 @@
     netsync: false
   - type: Appearance
     visuals:
-    - type: PipeConnectorVisualizer
     - type: PipeColorVisualizer
-    - type: TrayScannerSubFloorVisualizer
   - type: NodeContainer
   - type: AtmosUnsafeUnanchor
   - type: AtmosPipeColor

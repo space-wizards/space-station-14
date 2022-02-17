@@ -11,7 +11,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Eye;
 
-public class EyeLerpingSystem : EntitySystem
+public sealed class EyeLerpingSystem : EntitySystem
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;

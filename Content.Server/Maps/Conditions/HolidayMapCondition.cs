@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Maps.Conditions;
 
-public class HolidayMapCondition : GameMapCondition
+public sealed class HolidayMapCondition : GameMapCondition
 {
     [DataField("holidays")]
     public string[] Holidays { get; } = default!;

@@ -6,7 +6,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Server.Botany.Systems;
 
-public partial class BotanySystem
+public sealed partial class BotanySystem
 {
     public void ProduceGrown(EntityUid uid, ProduceComponent produce)
     {

@@ -28,7 +28,7 @@ namespace Content.Shared.Interaction
         Task<bool> InteractUsing(InteractUsingEventArgs eventArgs);
     }
 
-    public class InteractUsingEventArgs : EventArgs, ITargetedInteractEventArgs
+    public sealed class InteractUsingEventArgs : EventArgs, ITargetedInteractEventArgs
     {
         public InteractUsingEventArgs(EntityUid user, EntityCoordinates clickLocation, EntityUid @using, EntityUid target)
         {
@@ -48,7 +48,7 @@ namespace Content.Shared.Interaction
     ///     Raised when a target entity is interacted with by a user while holding an object in their hand.
     /// </summary>
     [PublicAPI]
-    public class InteractUsingEvent : HandledEntityEventArgs
+    public sealed class InteractUsingEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that triggered the interaction.

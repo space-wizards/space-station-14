@@ -12,7 +12,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.BarSign.Systems
 {
-    public class BarSignSystem : EntitySystem
+    public sealed class BarSignSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;

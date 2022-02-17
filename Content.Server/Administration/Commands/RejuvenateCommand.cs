@@ -17,7 +17,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class RejuvenateCommand : IConsoleCommand
+    public sealed class RejuvenateCommand : IConsoleCommand
     {
         public string Command => "rejuvenate";
 

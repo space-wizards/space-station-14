@@ -163,7 +163,7 @@ public abstract partial class InventorySystem
     public bool CanAccess(EntityUid actor, EntityUid target, EntityUid itemUid)
     {
         // Can the actor reach the target?
-        if (actor != target && !( actor.InRangeUnobstructed(target) && _containerSystem.IsInSameOrParentContainer(actor, target)))
+        if (actor != target && !(_interactionSystem.InRangeUnobstructed(actor, target) && _containerSystem.IsInSameOrParentContainer(actor, target)))
             return false;
 
         // Can the actor reach the item?

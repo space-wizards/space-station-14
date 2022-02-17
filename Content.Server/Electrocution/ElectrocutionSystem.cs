@@ -8,7 +8,6 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
-using Content.Server.Window;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
@@ -21,6 +20,7 @@ using Content.Shared.Pulling.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
+using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -166,12 +166,14 @@ namespace Content.Server.Electrocution
             if (!electrified.Enabled)
                 return false;
 
+            var tagSystem = EntitySystem.Get<TagSystem>();
+
             if (electrified.NoWindowInTile)
             {
                 foreach (var entity in transform.Coordinates.GetEntitiesInTile(
                     LookupFlags.Approximate | LookupFlags.IncludeAnchored, _entityLookup))
                 {
-                    if (EntityManager.HasComponent<WindowComponent>(entity))
+                    if (tagSystem.HasTag(entity, "Window"))
                         return false;
                 }
             }

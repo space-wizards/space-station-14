@@ -14,7 +14,7 @@ namespace Content.Tests.Shared
     [TestOf(typeof(DamageSpecifier))]
     [TestOf(typeof(DamageModifierSetPrototype))]
     [TestOf(typeof(DamageGroupPrototype))]
-    public class DamageTest : ContentUnitTest
+    public sealed class DamageTest : ContentUnitTest
     {
 
         static private Dictionary<string, float> _resistanceCoefficientDict = new()

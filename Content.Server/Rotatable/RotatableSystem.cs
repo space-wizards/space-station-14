@@ -12,7 +12,7 @@ namespace Content.Server.Rotatable
     /// <summary>
     ///     Handles verbs for the <see cref="RotatableComponent"/> and <see cref="FlippableComponent"/> components.
     /// </summary>
-    public class RotatableSystem : EntitySystem
+    public sealed class RotatableSystem : EntitySystem
     {
         public override void Initialize()
         {

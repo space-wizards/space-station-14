@@ -5,6 +5,7 @@ using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -22,7 +23,7 @@ namespace Content.Server.Cuffs.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedCuffableComponent))]
-    public class CuffableComponent : SharedCuffableComponent
+    public sealed class CuffableComponent : SharedCuffableComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -96,7 +97,7 @@ namespace Content.Server.Cuffs.Components
                 return false;
             }
 
-            if (!handcuff.InRangeUnobstructed(Owner))
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(handcuff, Owner))
             {
                 Logger.Warning("Handcuffs being applied to player are obstructed or too far away! This should not happen!");
                 return true;
@@ -210,7 +211,7 @@ namespace Content.Server.Cuffs.Components
                 return;
             }
 
-            if (!isOwner && !user.InRangeUnobstructed(Owner))
+            if (!isOwner && !EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, Owner))
             {
                 user.PopupMessage(Loc.GetString("cuffable-component-cannot-remove-cuffs-too-far-message"));
                 return;

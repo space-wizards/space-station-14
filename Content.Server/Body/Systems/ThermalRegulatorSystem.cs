@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Body.Systems;
 
-public class ThermalRegulatorSystem : EntitySystem
+public sealed class ThermalRegulatorSystem : EntitySystem
 {
     [Dependency] private readonly TemperatureSystem _tempSys = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSys = default!;

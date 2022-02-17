@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Server.Clothing.Components;
 using Content.Server.Light.EntitySystems;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -50,10 +51,11 @@ namespace Content.Server.Light.Components
 
     [UsedImplicitly]
     [DataDefinition]
-    public class ToggleLightAction : IToggleItemAction
+    public sealed class ToggleLightAction : IToggleItemAction
     {
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(args.Performer, args.Item)) return false;
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HandheldLightComponent?>(args.Item, out var lightComponent)) return false;
             if (lightComponent.Activated == args.ToggledOn) return false;
             return EntitySystem.Get<HandheldLightSystem>().ToggleStatus(args.Performer, lightComponent);

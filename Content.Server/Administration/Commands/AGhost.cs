@@ -11,7 +11,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class AGhost : IConsoleCommand
+    public sealed class AGhost : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 

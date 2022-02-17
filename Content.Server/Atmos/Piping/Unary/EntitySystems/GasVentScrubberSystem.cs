@@ -22,7 +22,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasVentScrubberSystem : EntitySystem
+    public sealed class GasVentScrubberSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;

@@ -15,7 +15,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.EscapeMenu.UI.Tabs
 {
     [GenerateTypedNameReferences]
-    public partial class AudioTab : Control
+    public sealed partial class AudioTab : Control
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IClydeAudio _clydeAudio = default!;

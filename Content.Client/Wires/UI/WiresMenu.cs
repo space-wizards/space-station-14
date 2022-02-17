@@ -19,7 +19,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Wires.UI
 {
-    public class WiresMenu : BaseWindow
+    public sealed class WiresMenu : BaseWindow
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 

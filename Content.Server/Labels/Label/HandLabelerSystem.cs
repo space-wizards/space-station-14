@@ -18,7 +18,7 @@ namespace Content.Server.Labels
     /// A hand labeler system that lets an object apply labels to objects with the <see cref="LabelComponent"/> .
     /// </summary>
     [UsedImplicitly]
-    public class HandLabelerSystem : EntitySystem
+    public sealed class HandLabelerSystem : EntitySystem
     {
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
@@ -79,21 +79,8 @@ namespace Content.Server.Labels
             args.Handled = true;
         }
 
-        private bool CheckInteract(ICommonSession session)
-        {
-            if (session.AttachedEntity is not {Valid: true } uid
-                || !Get<ActionBlockerSystem>().CanInteract(uid)
-                || !Get<ActionBlockerSystem>().CanUse(uid))
-                return false;
-
-            return true;
-        }
-
         private void OnHandLabelerLabelChanged(EntityUid uid, HandLabelerComponent handLabeler, HandLabelerLabelChangedMessage args)
         {
-            if (!CheckInteract(args.Session))
-                return;
-
             handLabeler.AssignedLabel = args.Label.Trim().Substring(0, Math.Min(handLabeler.MaxLabelChars, args.Label.Length));
             DirtyUI(uid, handLabeler);
         }
