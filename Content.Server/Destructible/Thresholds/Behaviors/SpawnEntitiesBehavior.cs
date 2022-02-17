@@ -19,10 +19,8 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         public void Execute(EntityUid owner, DestructibleSystem system)
         {
             var position = system.EntityManager.GetComponent<TransformComponent>(owner).MapPosition;
-            
-            var offsetPosition = () => position.Offset((
-                (system.Random.NextFloat() * 2 - 1) * Offset,
-                (system.Random.NextFloat() * 2 - 1) * Offset));
+
+            var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
 
             foreach (var (entityId, minMax) in Spawn)
             {
@@ -34,14 +32,14 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
                 if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.ComponentFactory))
                 {
-                    var spawned = system.EntityManager.SpawnEntity(entityId, offsetPosition());
+                    var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
                     system.StackSystem.SetCount(spawned, count);
                 }
                 else
                 {
                     for (var i = 0; i < count; i++)
                     {
-                        system.EntityManager.SpawnEntity(entityId, offsetPosition());
+                        system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
                     }
                 }
             }
