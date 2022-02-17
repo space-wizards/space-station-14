@@ -1,10 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Gas mixers now have a UI, type: Add}
-  - {message: Gas filters and pumps now need to be anchored to open their UIs, type: Fix}
-  id: 571
-  time: '2021-11-11T22:10:21.0000000+00:00'
 - author: xRiriq
   changes:
   - {message: Hyronalin now is effective against radiation damage, type: Add}
@@ -2963,3 +2957,17 @@ Entries:
       side of the wall in order to interact with them., type: Tweak}
   id: 1071
   time: '2022-02-17T02:40:03.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Bleeding has been added. Weapons that deal brute damage, especially
+      slashing or piercing damage, may cause you to directly lose blood or start bleeding.
+      When bleeding, you will take bloodloss damage, which is now healed by Dexalin
+      and Dexalin Plus.', type: Add}
+  - {message: 'Bloodloss damage is slowly healed over time, as is bleeding and total
+      blood levels.', type: Add}
+  - {message: 'Added Tranexamic Acid, made from inaprovaline, sulfuric acid, and glucose,
+      which helps stop bleeding.', type: Add}
+  - {message: Gauze now actually helps stop bleeding., type: Add}
+  - {message: Iron now replenishes your blood levels., type: Tweak}
+  id: 1072
+  time: '2022-02-17T22:00:42.0000000+00:00'
