@@ -2,8 +2,6 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 
-
-
 namespace Content.Server.Fluids.Components;
 
 /// <summary>
@@ -14,21 +12,17 @@ public sealed class AbsorbentComponent : Component
 {
      public const string SolutionName = "absorbed";
 
-    // Currently there's a separate amount for pickup and dropoff so
-    // Picking up a puddle requires multiple clicks
-    // Dumping in a bucket requires 1 click
-    // Long-term you'd probably use a cooldown and start the pickup once we have some form of global cooldown
     [DataField("pickupAmount")]
     public FixedPoint2 PickupAmount = FixedPoint2.New(10);
 
     /// <summary>
-    ///     When using the mop on an empty floor tile, leave this much reagent as a new puddle.
+    ///     When using this tool on an empty floor tile, leave this much reagent as a new puddle.
     /// </summary>
     [DataField("residueAmount")]
     public FixedPoint2 ResidueAmount = FixedPoint2.New(10); // Should be higher than MopLowerLimit
 
     /// <summary>
-    ///     To leave behind a wet floor, the mop will be unable to take from puddles with a volume less than this amount.
+    ///     To leave behind a wet floor, this tool will be unable to take from puddles with a volume less than this amount.
     /// </summary>
     [DataField("mopLowerLimit")]
     public FixedPoint2 MopLowerLimit = FixedPoint2.New(5);
@@ -40,7 +34,7 @@ public sealed class AbsorbentComponent : Component
     public SoundSpecifier TransferSound = new SoundPathSpecifier("/Audio/Effects/Fluids/watersplash.ogg");
 
     /// <summary>
-    ///     Multiplier for the do_after delay for how fast the mop works.
+    ///     Multiplier for the do_after delay for how quickly the mopping happens.
     /// </summary>
     [ViewVariables]
     [DataField("mopSpeed")] public float MopSpeed = 1;
