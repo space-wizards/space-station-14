@@ -1,10 +1,4 @@
 Entries:
-- author: misnor
-  changes:
-  - {message: Fixed the death timer resetting when returning to body as a ghost.,
-    type: Fix}
-  id: 570
-  time: '2021-11-11T15:17:23.0000000+00:00'
 - author: ike709
   changes:
   - {message: Gas mixers now have a UI, type: Add}
@@ -2961,3 +2955,11 @@ Entries:
     type: Add}
   id: 1070
   time: '2022-02-16T18:07:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being able to interact with entities through walls when the station
+      has a ~45 degree rotation., type: Fix}
+  - {message: Some wall-mounted entities now require the user to to be on a specific
+      side of the wall in order to interact with them., type: Tweak}
+  id: 1071
+  time: '2022-02-17T02:40:03.0000000+00:00'
