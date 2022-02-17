@@ -3,6 +3,7 @@ using Content.Client.Interactable;
 using Content.Client.Interactable.Components;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
+using Content.Shared.Interaction;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -10,8 +11,6 @@ using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Outline;
 
@@ -23,6 +22,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
     public bool Enabled = true;
 
@@ -76,7 +76,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
         var inRange = false;
         if (localPlayer.ControlledEntity != null && entityToClick != null)
         {
-            inRange = localPlayer.InRangeUnobstructed(entityToClick.Value, ignoreInsideBlocker: true);
+            inRange = _interactionSystem.InRangeUnobstructed(localPlayer.ControlledEntity.Value, entityToClick.Value);
         }
 
         InteractionOutlineComponent? outline;

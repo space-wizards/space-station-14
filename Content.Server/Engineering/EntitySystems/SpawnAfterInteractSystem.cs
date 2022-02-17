@@ -37,7 +37,7 @@ namespace Content.Server.Engineering.EntitySystems
 
             bool IsTileClear()
             {
-                return tileRef.Tile.IsEmpty == false && args.User.InRangeUnobstructed(args.ClickLocation, popup: true);
+                return tileRef.Tile.IsEmpty == false;
             }
 
             if (!IsTileClear())

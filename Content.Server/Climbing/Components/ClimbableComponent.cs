@@ -1,4 +1,3 @@
-using System;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
@@ -6,17 +5,10 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Climbing;
 using Content.Shared.DragDrop;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Climbing.Components
 {
@@ -91,7 +83,7 @@ namespace Content.Server.Climbing.Components
                 return false;
             }
 
-            if (!user.InRangeUnobstructed(target, Range))
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, target, Range))
             {
                 reason = Loc.GetString("comp-climbable-cant-reach");
                 return false;
@@ -135,8 +127,9 @@ namespace Content.Server.Climbing.Components
 
             bool Ignored(EntityUid entity) => entity == target || entity == user || entity == dragged;
 
-            if (!user.InRangeUnobstructed(target, Range, predicate: Ignored) ||
-                !user.InRangeUnobstructed(dragged, Range, predicate: Ignored))
+            var sys = EntitySystem.Get<SharedInteractionSystem>();
+            if (!sys.InRangeUnobstructed(user, target, Range, predicate: Ignored) ||
+                !sys.InRangeUnobstructed(user, dragged, Range, predicate: Ignored))
             {
                 reason = Loc.GetString("comp-climbable-cant-reach");
                 return false;
