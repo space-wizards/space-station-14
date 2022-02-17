@@ -1,21 +1,7 @@
-using System.Threading.Tasks;
-using System.Threading;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+
 
 
 namespace Content.Server.Fluids.Components;
@@ -26,8 +12,6 @@ namespace Content.Server.Fluids.Components;
 [RegisterComponent, Friend(typeof(MoppingSystem))]
 public sealed class AbsorbentComponent : Component
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
-
      public const string SolutionName = "absorbed";
 
     // Currently there's a separate amount for pickup and dropoff so
