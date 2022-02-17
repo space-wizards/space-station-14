@@ -51,7 +51,7 @@ namespace Content.Server.GameTicking
 
                                 return priority == i;
                             })
-                            .Where(p => roleBans == null || !roleBans.Contains(p.Key))
+                            .Where(p => roleBans != null && !roleBans.Contains(p.Key))
                             .Select(j => j.Key)
                             .ToList();
 

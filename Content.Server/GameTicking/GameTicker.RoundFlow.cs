@@ -211,6 +211,14 @@ namespace Content.Server.GameTicking
                     readyPlayers = _playersInLobby.Keys.ToList();
                 }
 
+                readyPlayers.RemoveAll(p =>
+                {
+                    if (_roleBanManager.GetRoleBans(p.UserId) != null)
+                        return false;
+                    Logger.ErrorS("RoleBans", $"Role bans for player {p} {p.UserId} have not been loaded yet.");
+                    return true;
+                });
+
                 // Get the profiles for each player for easier lookup.
                 var profiles = _prefsManager.GetSelectedProfilesForPlayers(
                         readyPlayers
