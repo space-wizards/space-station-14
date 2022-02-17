@@ -55,7 +55,7 @@
       mirrorEntity: GasFilterFlipped
     - type: Construction
       graph: GasTrinary
-      node: gasfilter
+      node: filter
 
 - type: entity
   parent: GasFilter
