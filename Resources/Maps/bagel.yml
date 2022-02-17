@@ -81422,7 +81422,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6196
-  type: Decorated Fir Tree
+  type: DecoratedFirTree
   components:
   - pos: -16.5,-29.5
     parent: 41
