@@ -133,14 +133,12 @@ namespace Content.Server.NodeContainer.Nodes
                     return false;
 
                 CurrentPipeDirection = _originalPipeDirection;
-            }
-            else
-            {
-                CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(ev.NewRotation);
+                return true;
             }
 
-            // node connections need to be updated
-            return true;
+            var oldDirection = CurrentPipeDirection;
+            CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(ev.NewRotation);
+            return oldDirection != CurrentPipeDirection;
         }
 
         public override void OnAnchorStateChanged(IEntityManager entityManager, bool anchored)
