@@ -24,9 +24,9 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnEmagged(EntityUid uid, ReagentDispenserComponent comp, GotEmaggedEvent args)
         {
-            if (comp.AlreadyEmagged == false)
+            if (!comp.AlreadyEmagged)
             {
-                comp.InitializeFromPrototype(comp.EmagPackPrototypeId);
+                comp.AddFromPrototype(comp.EmagPackPrototypeId);
                 comp.AlreadyEmagged = true;
                 args.Handled = true;
             }

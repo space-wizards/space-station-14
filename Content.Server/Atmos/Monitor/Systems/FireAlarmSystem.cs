@@ -43,13 +43,15 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnEmagged(EntityUid uid, FireAlarmComponent component, GotEmaggedEvent args)
         {
-            TryComp<AtmosMonitorComponent>(uid, out var atmosMonitor);
-            if (atmosMonitor?.MonitorFire == true)
+            if (TryComp<AtmosMonitorComponent>(uid, out var atmosMonitor))
+            {
+                if (atmosMonitor?.MonitorFire == true)
                 {
                     atmosMonitor.MonitorFire = false;
                     _monitorSystem.Alert(uid, AtmosMonitorAlarmType.Emagged);
                     args.Handled = true;
                 }
+            }
         }
     }
 }

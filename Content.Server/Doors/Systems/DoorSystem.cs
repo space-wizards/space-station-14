@@ -308,12 +308,14 @@ public sealed class DoorSystem : SharedDoorSystem
     }
     private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
     {
-        TryComp<AirlockComponent>(uid, out var airlockComponent);
-        if (door.State == DoorState.Closed)
+        if(TryComp<AirlockComponent>(uid, out var airlockComponent))
         {
-            StartOpening(uid);
-            airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
-            args.Handled = true;
+            if (door.State == DoorState.Closed)
+            {
+                StartOpening(uid);
+                airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
+                args.Handled = true;
+            }
         }
     }
 }

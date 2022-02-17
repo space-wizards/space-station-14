@@ -25,6 +25,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -45,9 +46,9 @@ namespace Content.Server.Chemistry.Components
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
 
-        [ViewVariables] [DataField("pack")] private string _packPrototypeId = "";
+        [ViewVariables] [DataField("pack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))] private string _packPrototypeId = "";
 
-        [ViewVariables] [DataField("emagPack")] public string EmagPackPrototypeId = "";
+        [ViewVariables] [DataField("emagPack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))] public string EmagPackPrototypeId = "";
 
         public bool AlreadyEmagged = false;
 
@@ -123,7 +124,7 @@ namespace Content.Server.Chemistry.Components
             Inventory.Sort(_comparer);
         }
 
-        public void InitializeFromPrototype(string pack)
+        public void AddFromPrototype(string pack)
         {
             if (string.IsNullOrEmpty(pack)) return;
 

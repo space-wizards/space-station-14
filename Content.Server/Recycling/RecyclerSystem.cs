@@ -1,6 +1,5 @@
 using Content.Server.Power.Components;
 using Content.Server.Recycling.Components;
-using Content.Server.Popups;
 using Content.Shared.Body.Components;
 using Content.Shared.Recycling;
 using Content.Shared.Emag.Systems;
@@ -13,7 +12,6 @@ namespace Content.Server.Recycling
 {
     internal sealed class RecyclerSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -65,7 +63,6 @@ namespace Content.Server.Recycling
             {
                 component.Safe = false;
                 args.Handled = true;
-                _popupSystem.PopupEntity(Loc.GetString("emagged-recycler"), uid, Filter.Pvs(uid));
             }
         }
     }
