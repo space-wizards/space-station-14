@@ -291,7 +291,7 @@ namespace Content.Shared.CCVar
         /// Technically client doesn't need to know about it but this may prevent a bug in the distant future so it stays.
         /// </remarks>
         public static readonly CVarDef<bool> MobPushing =
-            CVarDef.Create("physics.mob_pushing", true, CVar.REPLICATED);
+            CVarDef.Create("physics.mob_pushing", false, CVar.REPLICATED);
 
         /*
          * Lobby music
