@@ -254,6 +254,8 @@ namespace Content.Server.Administration
                 {
                     { "parse", Array.Empty<string>() }
                 };
+
+            public WebhookPayload() {}
         }
     }
 }

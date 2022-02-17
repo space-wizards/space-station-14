@@ -3,6 +3,7 @@
   name: fire alarm
   description: A fire alarm. Spicy!
   components:
+  - type: WallMount
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetworkComponent

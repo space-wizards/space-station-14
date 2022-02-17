@@ -79,7 +79,7 @@ namespace Content.Server.Morgue.Components
 
         public override bool CanOpen(EntityUid user, bool silent = false)
         {
-            if (!Owner.InRangeUnobstructed(
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner,
                 _entMan.GetComponent<TransformComponent>(Owner).Coordinates.Offset(_entMan.GetComponent<TransformComponent>(Owner).LocalRotation.GetCardinalDir()),
                 collisionMask: CollisionGroup.Impassable | CollisionGroup.VaultImpassable
             ))

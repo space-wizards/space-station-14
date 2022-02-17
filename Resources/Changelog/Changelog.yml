@@ -1,21 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Increase door prying and door screwing timers from 0.5s / 0.5s to 1.5s
-      / 2.5s, type: Tweak}
-  id: 568
-  time: '2021-11-11T09:48:13.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: pizza boxes are now unable to contain people, type: Fix}
-  id: 569
-  time: '2021-11-11T12:56:38.0000000+00:00'
-- author: misnor
-  changes:
-  - {message: Fixed the death timer resetting when returning to body as a ghost.,
-    type: Fix}
-  id: 570
-  time: '2021-11-11T15:17:23.0000000+00:00'
 - author: ike709
   changes:
   - {message: Gas mixers now have a UI, type: Add}
@@ -2961,3 +2944,22 @@ Entries:
   - {message: Drones can no longer emote at all. You ruined it., type: Remove}
   id: 1068
   time: '2022-02-16T04:00:36.0000000+00:00'
+- author: Memory
+  changes:
+  - {message: Made the clown clumsy again., type: Fix}
+  id: 1069
+  time: '2022-02-16T14:24:38.0000000+00:00'
+- author: You
+  changes:
+  - {message: NanoTrasen has issued a uniform and cloak for their representatives.,
+    type: Add}
+  id: 1070
+  time: '2022-02-16T18:07:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being able to interact with entities through walls when the station
+      has a ~45 degree rotation., type: Fix}
+  - {message: Some wall-mounted entities now require the user to to be on a specific
+      side of the wall in order to interact with them., type: Tweak}
+  id: 1071
+  time: '2022-02-17T02:40:03.0000000+00:00'
