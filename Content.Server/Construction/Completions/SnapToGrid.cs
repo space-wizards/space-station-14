@@ -10,7 +10,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class SnapToGrid : IGraphAction
+    public sealed class SnapToGrid : IGraphAction
     {
         [DataField("southRotation")] public bool SouthRotation { get; private set; } = false;
 

@@ -9,7 +9,7 @@ namespace Content.Client.Wall.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IconSmoothComponent))]
-    public class ReinforcedWallComponent : IconSmoothComponent // whyyyyyyyyy
+    public sealed class ReinforcedWallComponent : IconSmoothComponent // whyyyyyyyyy
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("reinforcedBase")]

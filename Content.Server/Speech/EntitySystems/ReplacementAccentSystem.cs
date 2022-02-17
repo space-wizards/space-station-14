@@ -10,7 +10,7 @@ namespace Content.Server.Speech.EntitySystems
     /// <summary>
     /// Replaces any spoken sentences with a random word.
     /// </summary>
-    public class ReplacementAccentSystem : EntitySystem
+    public sealed class ReplacementAccentSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IRobustRandom _random = default!;

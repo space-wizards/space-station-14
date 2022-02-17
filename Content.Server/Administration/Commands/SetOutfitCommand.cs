@@ -18,7 +18,7 @@ using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class SetOutfitCommand : IConsoleCommand
+    sealed class SetOutfitCommand : IConsoleCommand
     {
         public string Command => "setoutfit";
 

@@ -9,7 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.AI.Pathfinding
 {
-    public class PathfindingChunkUpdateMessage : EntityEventArgs
+    public sealed class PathfindingChunkUpdateMessage : EntityEventArgs
     {
         public PathfindingChunk Chunk { get; }
 
@@ -19,7 +19,7 @@ namespace Content.Server.AI.Pathfinding
         }
     }
 
-    public class PathfindingChunk
+    public sealed class PathfindingChunk
     {
         public TimeSpan LastUpdate { get; private set; }
         public GridId GridId { get; }

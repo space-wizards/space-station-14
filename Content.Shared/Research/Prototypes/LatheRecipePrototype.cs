@@ -13,7 +13,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Research.Prototypes
 {
     [NetSerializable, Serializable, Prototype("latheRecipe")]
-    public class LatheRecipePrototype : IPrototype
+    public sealed class LatheRecipePrototype : IPrototype
     {
         [ViewVariables]
         [DataField("id", required: true)]

@@ -20,7 +20,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Toilet
 {
-    public class ToiletSystem : EntitySystem
+    public sealed class ToiletSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SecretStashSystem _secretStash = default!;
@@ -197,7 +197,7 @@ namespace Content.Server.Toilet
         }
     }
 
-    public class ToiletPryFinished : EntityEventArgs
+    public sealed class ToiletPryFinished : EntityEventArgs
     {
         public EntityUid Uid;
 
@@ -207,7 +207,7 @@ namespace Content.Server.Toilet
         }
     }
 
-    public class ToiletPryInterrupted : EntityEventArgs
+    public sealed class ToiletPryInterrupted : EntityEventArgs
     {
         public EntityUid Uid;
 

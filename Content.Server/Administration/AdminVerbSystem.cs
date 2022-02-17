@@ -38,7 +38,7 @@ namespace Content.Server.Administration
     /// <summary>
     ///     System to provide various global admin/debug verbs
     /// </summary>
-    public class AdminVerbSystem : EntitySystem
+    public sealed class AdminVerbSystem : EntitySystem
     {
         [Dependency] private readonly IConGroupController _groupController = default!;
         [Dependency] private readonly IConsoleHost _console = default!;
@@ -78,7 +78,7 @@ namespace Content.Server.Administration
                         _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");
                     verb.Impact = LogImpact.Low;
                     args.Verbs.Add(verb);
-                    
+
                     // Freeze
                     var frozen = HasComp<AdminFrozenComponent>(args.Target);
                     args.Verbs.Add(new Verb

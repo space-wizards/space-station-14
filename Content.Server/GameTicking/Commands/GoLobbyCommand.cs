@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    public class GoLobbyCommand : IConsoleCommand
+    public sealed class GoLobbyCommand : IConsoleCommand
     {
         public string Command => "golobby";
         public string Description => "Enables the lobby and restarts the round.";

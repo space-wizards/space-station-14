@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public class ReagentTankComponent : Component
+    public sealed class ReagentTankComponent : Component
     {
         [DataField("transferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]

@@ -28,7 +28,6 @@ namespace Content.Server.Light.EntitySystems
     [UsedImplicitly]
     public sealed class HandheldLightSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
 
@@ -96,7 +95,6 @@ namespace Content.Server.Light.EntitySystems
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
         public bool ToggleStatus(EntityUid user, HandheldLightComponent component)
         {
-            if (!_blocker.CanUse(user)) return false;
             return component.Activated ? TurnOff(component) : TurnOn(user, component);
         }
 

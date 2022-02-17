@@ -23,7 +23,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Physics.Controllers
 {
-    public class MoverController : SharedMoverController
+    public sealed class MoverController : SharedMoverController
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;

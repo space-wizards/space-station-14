@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Roles
 {
     [Prototype("startingGear")]
-    public class StartingGearPrototype : IPrototype
+    public sealed class StartingGearPrototype : IPrototype
     {
         // TODO: Custom TypeSerializer for dictionary value prototype IDs
         [DataField("equipment")] private Dictionary<string, string> _equipment = new();

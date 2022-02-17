@@ -1,4 +1,4 @@
-﻿using Content.Server.AI.Utility;
+using Content.Server.AI.Utility;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.Storage.Components;
 using Content.Shared.Interaction;
@@ -54,7 +54,7 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
-            if (_target == default || !_owner.InRangeUnobstructed(_target, popup: true))
+            if (_target == default || !EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(_owner, _target, popup: true))
             {
                 return Outcome.Failed;
             }

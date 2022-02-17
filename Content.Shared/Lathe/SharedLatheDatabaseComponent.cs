@@ -13,7 +13,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Lathe
 {
     [NetworkedComponent()]
-    public class SharedLatheDatabaseComponent : Component, IEnumerable<LatheRecipePrototype>, ISerializationHooks
+    public abstract class SharedLatheDatabaseComponent : Component, IEnumerable<LatheRecipePrototype>, ISerializationHooks
     {
         [DataField("recipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))] private List<string> _recipeIds = new();
 
@@ -122,7 +122,7 @@ namespace Content.Shared.Lathe
     }
 
     [NetSerializable, Serializable]
-    public class LatheDatabaseState : ComponentState
+    public sealed class LatheDatabaseState : ComponentState
     {
         public readonly List<string> Recipes;
         public LatheDatabaseState(List<string> recipes)

@@ -6,7 +6,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
-    public class GasVolumePumpComponent : Component
+    public sealed class GasVolumePumpComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;

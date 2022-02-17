@@ -16,7 +16,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    internal class SliceableFoodSystem : EntitySystem
+    internal sealed class SliceableFoodSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 

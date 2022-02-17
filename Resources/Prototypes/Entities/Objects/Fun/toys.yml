@@ -5,6 +5,8 @@
   id: BasePlushie
   abstract: true
   components:
+  - type: Sprite
+    netsync: false
   - type: EmitSoundOnUse
     sound:
       collection: ToySqueak
@@ -163,6 +165,7 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_vox
+    netsync: false
   - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:

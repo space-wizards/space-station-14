@@ -3,6 +3,6 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Guardian;
 
 [RegisterComponent]
-public class CanHostGuardianComponent : Component
+public sealed class CanHostGuardianComponent : Component
 {
 }

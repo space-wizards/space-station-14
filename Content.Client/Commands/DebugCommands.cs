@@ -1,11 +1,9 @@
-using System;
 using Content.Client.Markers;
 using Content.Client.Popups;
+using Content.Client.SubFloor;
 using Content.Shared.SubFloor;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Commands
@@ -33,8 +31,7 @@ namespace Content.Client.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            EntitySystem.Get<SubFloorHideSystem>()
-                .ShowAll ^= true;
+            EntitySystem.Get<SubFloorHideSystem>().ShowAll ^= true;
         }
     }
 
@@ -47,8 +44,7 @@ namespace Content.Client.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            EntitySystem.Get<SubFloorHideSystem>()
-                .ShowAll = true;
+            EntitySystem.Get<SubFloorHideSystem>().ShowAll = true;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
             var components = entMan.EntityQuery<SubFloorHideComponent>(true);

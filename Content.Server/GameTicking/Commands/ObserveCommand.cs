@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.GameTicking.Commands
 {
     [AnyCommand]
-    class ObserveCommand : IConsoleCommand
+    sealed class ObserveCommand : IConsoleCommand
     {
         public string Command => "observe";
         public string Description => "";

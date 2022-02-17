@@ -21,7 +21,7 @@ namespace Content.Server.Lock
     /// Handles (un)locking and examining of Lock components
     /// </summary>
     [UsedImplicitly]
-    public class LockSystem : EntitySystem
+    public sealed class LockSystem : EntitySystem
     {
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
