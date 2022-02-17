@@ -4,7 +4,6 @@ using Content.Server.Cloning.GeneticScanner;
 using Robust.Shared.Map;
 using Content.Server.Cloning.Components;
 using Content.Server.Power.Components;
-using Content.Server.Cloning;
 using Content.Server.Mind.Components;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Interaction;
@@ -13,6 +12,7 @@ using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
 using Robust.Shared.Network;
 using Robust.Server.Player;
+using Content.Shared.ActionBlocker;
 
 using static Content.Shared.Cloning.SharedCloningPodComponent;
 using static Content.Shared.Cloning.CloningConsole.SharedCloningConsoleComponent;
@@ -27,6 +27,7 @@ namespace Content.Server.Cloning.CloningConsole
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         private const float UpdateRate = 3f;
         private float _updateDif;
         public override void Initialize()
@@ -53,6 +54,9 @@ namespace Content.Server.Cloning.CloningConsole
                 return;
             }
             if (!IsPowered(consoleComponent))
+                return;
+
+            if (!_actionBlockerSystem.CanInteract(args.User) || !_actionBlockerSystem.CanUse(args.User))
                 return;
 
             consoleComponent.UserInterface?.Open(actor.PlayerSession);
@@ -103,13 +107,8 @@ namespace Content.Server.Cloning.CloningConsole
             consoleComponent.UserInterface?.SetState(newState);
         }
 
-
-
-        public void FindDevices(EntityUid Owner, CloningConsoleComponent? cloneConsoleComp = null)
+        private void FindDevices(EntityUid Owner, CloningConsoleComponent cloneConsoleComp)
         {
-            if (!Resolve(Owner, ref cloneConsoleComp))
-                return;
-
             if (!EntityManager.EntityExists(cloneConsoleComp.CloningPod?.Owner))
             {
                 cloneConsoleComp.CloningPod = null;
@@ -168,7 +167,7 @@ namespace Content.Server.Cloning.CloningConsole
                 }
         }
 
-        public CloningConsoleBoundUserInterfaceState GetUserInterfaceState(CloningConsoleComponent consoleComponent)
+        private CloningConsoleBoundUserInterfaceState GetUserInterfaceState(CloningConsoleComponent consoleComponent)
         {
             FindDevices(consoleComponent.Owner, consoleComponent);
 
@@ -195,7 +194,7 @@ namespace Content.Server.Cloning.CloningConsole
                 {
                     TryComp<MindComponent>(scanBody, out var mindComp);
 
-                    if (mobState.IsAlive())
+                    if (!mobState.IsDead())
                     {
                         clonerStatus = ClonerStatusState.ScannerOccupantAlive;
                     }
