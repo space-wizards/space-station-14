@@ -126,11 +126,11 @@ namespace Content.Server.Power.EntitySystems
             ApcComponent? apc=null,
             BatteryComponent? battery=null)
         {
+            if (apc != null && apc.Emagged)
+                return ApcChargeState.Emag;
+
             if (!Resolve(uid, ref apc, ref battery))
                 return ApcChargeState.Lack;
-
-            if (apc.Emagged == true)
-                return ApcChargeState.Emag;
 
             var chargeFraction = battery.CurrentCharge / battery.MaxCharge;
 
