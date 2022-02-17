@@ -55,11 +55,6 @@ public sealed class RoleBanManager
     private async Task CacheDbRoleBans(NetUserId userId, IPAddress? address = null, ImmutableArray<byte>? hwId = null)
     {
         var roleBans = await _db.GetServerRoleBansAsync(address, userId, hwId);
-        if (roleBans.Count == 0)
-        {
-            _cachedRoleBans.Remove(userId);
-            return;
-        }
 
         var userRoleBans = new HashSet<string>();
         foreach (var ban in roleBans)
@@ -68,5 +63,21 @@ public sealed class RoleBanManager
         }
 
         _cachedRoleBans[userId] = userRoleBans;
+    }
+
+    public void Restart()
+    {
+        // Clear out players that have disconnected.
+        var toRemove = new List<NetUserId>();
+        foreach (var player in _cachedRoleBans.Keys)
+        {
+            if (!_playerManager.TryGetSessionById(player, out _))
+                toRemove.Add(player);
+        }
+
+        foreach (var player in toRemove)
+        {
+            _cachedRoleBans.Remove(player);
+        }
     }
 }
