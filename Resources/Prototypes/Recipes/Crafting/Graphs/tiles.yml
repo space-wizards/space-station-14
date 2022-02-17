@@ -42,7 +42,7 @@
             - !type:SetStackCount
               amount: 1
           steps:
-            - material: steeltile
+            - material: FloorTileItemSteel
               amount: 1
     - node: whitetile
       entity: FloorTileItemWhite
@@ -58,7 +58,7 @@
             - !type:SetStackCount
               amount: 1
           steps:
-            - material: steeltile
+            - material: FloorTileItemSteel
               amount: 1
     - node: darktile
       entity: FloorTileItemDark
