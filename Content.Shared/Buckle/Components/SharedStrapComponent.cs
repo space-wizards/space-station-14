@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.DragDrop;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -34,7 +35,7 @@ namespace Content.Shared.Buckle.Components
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged, out SharedBuckleComponent? buckleComponent)) return false;
             bool Ignored(EntityUid entity) => entity == eventArgs.User || entity == eventArgs.Dragged || entity == eventArgs.Target;
 
-            return eventArgs.Target.InRangeUnobstructed(eventArgs.Dragged, buckleComponent.Range, predicate: Ignored);
+            return EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(eventArgs.Target, eventArgs.Dragged, buckleComponent.Range, predicate: Ignored);
         }
 
         public abstract bool DragDropOn(DragDropEvent eventArgs);

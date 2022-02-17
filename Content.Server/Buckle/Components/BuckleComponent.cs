@@ -1,11 +1,10 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
-using Content.Shared.Interaction.Helpers;
+using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
@@ -14,14 +13,8 @@ using Content.Shared.Stunnable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Buckle.Components
 {
@@ -146,7 +139,7 @@ namespace Content.Server.Buckle.Components
             var strapUid = strap.Owner;
             bool Ignored(EntityUid entity) => entity == Owner || entity == user || entity == strapUid;
 
-            if (!Owner.InRangeUnobstructed(strapUid, Range, predicate: Ignored, popup: true))
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, strapUid, Range, predicate: Ignored, popup: true))
             {
                 return false;
             }
@@ -288,7 +281,7 @@ namespace Content.Server.Buckle.Components
                     return false;
                 }
 
-                if (!user.InRangeUnobstructed(oldBuckledTo.Owner, Range, popup: true))
+                if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, oldBuckledTo.Owner, Range, popup: true))
                 {
                     return false;
                 }
