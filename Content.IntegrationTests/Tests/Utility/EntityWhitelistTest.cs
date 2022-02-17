@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests.Utility
 {
     [TestFixture]
     [TestOf(typeof(EntityWhitelist))]
-    public class EntityWhitelistTest : ContentIntegrationTest
+    public sealed class EntityWhitelistTest : ContentIntegrationTest
     {
         private const string InvalidComponent = "Sprite";
         private const string ValidComponent = "Physics";

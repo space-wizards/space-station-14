@@ -88,7 +88,7 @@ namespace Content.Shared.Pulling.Components
     }
 
     [Serializable, NetSerializable]
-    public class PullableComponentState : ComponentState
+    public sealed class PullableComponentState : ComponentState
     {
         public readonly EntityUid? Puller;
 

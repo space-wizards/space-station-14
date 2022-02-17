@@ -18,7 +18,7 @@ namespace Content.Server.Suspicion
 {
     [RegisterComponent]
 #pragma warning disable 618
-    public class SuspicionRoleComponent : SharedSuspicionRoleComponent, IExamine
+    public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent, IExamine
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;

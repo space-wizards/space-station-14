@@ -22,7 +22,7 @@ namespace Content.Server.Fluids.Components
     /// Can a mop click on this entity and dump its fluids
     /// </summary>
     [RegisterComponent]
-    public class BucketComponent : Component, IInteractUsing
+    public sealed class BucketComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -85,7 +85,7 @@ namespace Content.Server.Fluids.Components
             _currentlyUsing.Remove(eventArgs.Using);
 
             if (result == DoAfterStatus.Cancelled || _entMan.Deleted(Owner) || mopComponent.Deleted ||
-                CurrentVolume <= 0 || !Owner.InRangeUnobstructed(mopComponent.Owner))
+                CurrentVolume <= 0 || !EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, mopComponent.Owner))
                 return false;
 
             //Checks if the mop is empty

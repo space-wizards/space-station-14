@@ -22,7 +22,7 @@ namespace Content.Shared.Containers.ItemSlots
     /// <summary>
     ///     A class that handles interactions related to inserting/ejecting items into/from an item slot.
     /// </summary>
-    public class ItemSlotsSystem : EntitySystem
+    public sealed class ItemSlotsSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;

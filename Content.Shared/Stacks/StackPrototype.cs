@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Stacks
 {
     [Prototype("stack")]
-    public class StackPrototype : IPrototype
+    public sealed class StackPrototype : IPrototype
     {
         [ViewVariables]
         [DataField("id", required: true)]

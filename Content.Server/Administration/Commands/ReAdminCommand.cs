@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands
 {
     [AnyCommand]
-    public class ReAdminCommand : IConsoleCommand
+    public sealed class ReAdminCommand : IConsoleCommand
     {
         public string Command => "readmin";
         public string Description => "Re-admins you if you previously de-adminned.";

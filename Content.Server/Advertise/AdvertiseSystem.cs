@@ -12,7 +12,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Advertise
 {
-    public class AdvertiseSystem : EntitySystem
+    public sealed class AdvertiseSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -121,7 +121,7 @@ namespace Content.Server.Advertise
         }
     }
 
-    public class AdvertiseEnableChangeAttemptEvent : CancellableEntityEventArgs
+    public sealed class AdvertiseEnableChangeAttemptEvent : CancellableEntityEventArgs
     {
         public bool NewState { get; }
         public bool OldState { get; }

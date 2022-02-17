@@ -11,7 +11,7 @@ namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class NoWindowsInTile : IConstructionCondition
+    public sealed class NoWindowsInTile : IConstructionCondition
     {
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {

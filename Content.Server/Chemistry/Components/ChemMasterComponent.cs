@@ -35,7 +35,7 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedChemMasterComponent))]
-    public class ChemMasterComponent : SharedChemMasterComponent, IActivate
+    public sealed class ChemMasterComponent : SharedChemMasterComponent, IActivate
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 

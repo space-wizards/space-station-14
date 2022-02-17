@@ -14,7 +14,7 @@ using Content.Server.Roles;
 namespace Content.Server.Objectives.Conditions
 {
     [DataDefinition]
-    public class RandomTraitorAliveCondition : IObjectiveCondition
+    public sealed class RandomTraitorAliveCondition : IObjectiveCondition
     {
         protected Mind.Mind? Target;
 

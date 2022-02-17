@@ -6,6 +6,7 @@ using Content.Server.Explosion.Components;
 using Content.Shared.Acts;
 using Content.Shared.Camera;
 using Content.Shared.Database;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -25,8 +26,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Explosion.EntitySystems
 {
-    public class ExplosionSystem : EntitySystem
+    public sealed class ExplosionSystem : EntitySystem
     {
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+
         /// <summary>
         /// Distance used for camera shake when distance from explosion is (0.0, 0.0).
         /// Avoids getting NaN values down the line from doing math on (0.0, 0.0).
@@ -174,7 +177,7 @@ namespace Content.Server.Explosion.EntitySystems
             var epicenterMapPos = epicenter.ToMap(EntityManager);
             foreach (var (entity, distance) in impassableEntities)
             {
-                if (!entity.InRangeUnobstructed(epicenterMapPos, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
+                if (!_interactionSystem.InRangeUnobstructed(epicenterMapPos, entity, maxRange, predicate: IgnoreExplosivePassable))
                 {
                     continue;
                 }
@@ -186,7 +189,7 @@ namespace Content.Server.Explosion.EntitySystems
             // there are probably more ExplosivePassable entities around
             foreach (var (entity, distance) in nonImpassableEntities)
             {
-                if (!entity.InRangeUnobstructed(epicenterMapPos, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
+                if (!_interactionSystem.InRangeUnobstructed(epicenterMapPos, entity, maxRange, predicate: IgnoreExplosivePassable))
                 {
                     continue;
                 }
@@ -235,7 +238,7 @@ namespace Content.Server.Explosion.EntitySystems
                     continue;
                 }
 
-                if (!tileLoc.ToMap(EntityManager).InRangeUnobstructed(epicenterMapPos, maxRange, ignoreInsideBlocker: false, predicate: IgnoreExplosivePassable))
+                if (!_interactionSystem.InRangeUnobstructed(tileLoc.ToMap(EntityManager), epicenterMapPos, maxRange, predicate: IgnoreExplosivePassable))
                 {
                     continue;
                 }

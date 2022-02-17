@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.Nutrition.Components
 {
     [RegisterComponent]
-    public class HungerComponent : SharedHungerComponent
+    public sealed class HungerComponent : SharedHungerComponent
     {
         private HungerThreshold _currentHungerThreshold;
         public override HungerThreshold CurrentHungerThreshold => _currentHungerThreshold;

@@ -10,7 +10,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
-public class TelepathicArtifactSystem : EntitySystem
+public sealed class TelepathicArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IEntityLookup _lookup = default!;

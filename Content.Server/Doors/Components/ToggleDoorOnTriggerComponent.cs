@@ -3,7 +3,7 @@
 namespace Content.Server.Doors.Components
 {
     [RegisterComponent]
-    public class ToggleDoorOnTriggerComponent : Component
+    public sealed class ToggleDoorOnTriggerComponent : Component
     {
     }
 }

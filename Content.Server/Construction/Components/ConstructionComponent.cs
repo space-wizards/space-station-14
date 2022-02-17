@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Construction.Components
 {
     [RegisterComponent, Friend(typeof(ConstructionSystem))]
-    public class ConstructionComponent : Component
+    public sealed class ConstructionComponent : Component
     {
         [DataField("graph", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>))]
         public string Graph { get; set; } = string.Empty;

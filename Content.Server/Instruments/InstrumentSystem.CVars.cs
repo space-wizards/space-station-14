@@ -2,7 +2,7 @@ using Content.Shared.CCVar;
 
 namespace Content.Server.Instruments;
 
-public partial class InstrumentSystem
+public sealed partial class InstrumentSystem
 {
     public int MaxMidiEventsPerSecond { get; private set; }
     public int MaxMidiEventsPerBatch { get; private set; }

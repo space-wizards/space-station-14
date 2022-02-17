@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Research
 {
     [UsedImplicitly]
-    public class ResearchSystem : EntitySystem
+    public sealed class ResearchSystem : EntitySystem
     {
         private const float ResearchConsoleUIUpdateTime = 30f;
 

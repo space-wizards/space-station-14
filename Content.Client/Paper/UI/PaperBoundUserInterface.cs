@@ -8,7 +8,7 @@ using static Content.Shared.Paper.SharedPaperComponent;
 namespace Content.Client.Paper.UI
 {
     [UsedImplicitly]
-    public class PaperBoundUserInterface : BoundUserInterface
+    public sealed class PaperBoundUserInterface : BoundUserInterface
     {
         private PaperWindow? _window;
 

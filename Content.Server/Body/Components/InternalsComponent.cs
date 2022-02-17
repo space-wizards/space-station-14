@@ -6,7 +6,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Body.Components
 {
     [RegisterComponent]
-    public class InternalsComponent : Component
+    public sealed class InternalsComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

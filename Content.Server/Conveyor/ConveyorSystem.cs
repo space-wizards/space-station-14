@@ -18,7 +18,7 @@ using Robust.Shared.Physics;
 
 namespace Content.Server.Conveyor
 {
-    public class ConveyorSystem : EntitySystem
+    public sealed class ConveyorSystem : EntitySystem
     {
         [Dependency] private StunSystem _stunSystem = default!;
 

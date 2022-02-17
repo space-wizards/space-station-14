@@ -13,7 +13,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Doors
 {
     [UsedImplicitly]
-    public class AirlockVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class AirlockVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -211,10 +211,10 @@ namespace Content.Client.Doors
                 sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
                 if (_emergencyAccessLayer)
                 {
-                    sprite.LayerSetVisible(DoorVisualLayers.BaseEmergencyAccess, 
-                            emergencyLightsVisible 
-                            && state != DoorState.Open 
-                            && state != DoorState.Opening 
+                    sprite.LayerSetVisible(DoorVisualLayers.BaseEmergencyAccess,
+                            emergencyLightsVisible
+                            && state != DoorState.Open
+                            && state != DoorState.Opening
                             && state != DoorState.Closing
                             && unlitVisible);
                 }

@@ -13,6 +13,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.AI.Components
 {
     [RegisterComponent]
+    [Virtual]
     [ComponentReference(typeof(IMobMoverComponent)), ComponentReference(typeof(IMoverComponent))]
     public class AiControllerComponent : Component, IMobMoverComponent, IMoverComponent
     {

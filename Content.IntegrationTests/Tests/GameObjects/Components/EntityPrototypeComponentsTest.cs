@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
     [TestFixture]
     [TestOf(typeof(Client.Entry.IgnoredComponents))]
     [TestOf(typeof(Server.Entry.IgnoredComponents))]
-    public class EntityPrototypeComponentsTest : ContentIntegrationTest
+    public sealed class EntityPrototypeComponentsTest : ContentIntegrationTest
     {
         [Test]
         public async Task PrototypesHaveKnownComponents()

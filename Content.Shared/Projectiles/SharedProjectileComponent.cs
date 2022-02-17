@@ -24,7 +24,7 @@ namespace Content.Shared.Projectiles
         }
 
         [NetSerializable, Serializable]
-        protected class ProjectileComponentState : ComponentState
+        protected sealed class ProjectileComponentState : ComponentState
         {
             public ProjectileComponentState(EntityUid shooter, bool ignoreShooter)
             {

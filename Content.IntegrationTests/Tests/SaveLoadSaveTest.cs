@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests
     ///     Tests that the
     /// </summary>
     [TestFixture]
-    public class SaveLoadSaveTest : ContentIntegrationTest
+    public sealed class SaveLoadSaveTest : ContentIntegrationTest
     {
         [Test]
         public async Task SaveLoadSave()

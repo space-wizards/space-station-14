@@ -13,7 +13,7 @@ using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 namespace Content.Server.TraitorDeathMatch.Components
 {
     [RegisterComponent]
-    public class TraitorDeathMatchRedemptionComponent : Component, IInteractUsing
+    public sealed class TraitorDeathMatchRedemptionComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

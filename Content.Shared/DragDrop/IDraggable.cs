@@ -56,6 +56,7 @@ namespace Content.Shared.DragDrop
         }
     }
 
+    [Virtual]
     public class StartDragDropEvent : HandledEntityEventArgs
     {
         /// <summary>
@@ -80,6 +81,7 @@ namespace Content.Shared.DragDrop
         }
     }
 
+    [Virtual]
     public class CanDropEvent : StartDragDropEvent
     {
         /// <summary>
@@ -100,6 +102,7 @@ namespace Content.Shared.DragDrop
         }
     }
 
+    [Virtual]
     public class DragDropEvent : CanDropEvent
     {
         /// <summary>

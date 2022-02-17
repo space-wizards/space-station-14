@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Engineering.Components
 {
     [RegisterComponent]
-    public class SpawnAfterInteractComponent : Component
+    public sealed class SpawnAfterInteractComponent : Component
     {
         [ViewVariables]
         [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]

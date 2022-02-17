@@ -22,7 +22,7 @@ namespace Content.Server.Cuffs.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedHandcuffComponent))]
-    public class HandcuffComponent : SharedHandcuffComponent, IAfterInteract
+    public sealed class HandcuffComponent : SharedHandcuffComponent, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 

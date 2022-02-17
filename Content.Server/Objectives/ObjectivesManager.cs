@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Objectives
 {
-    public class ObjectivesManager : IObjectivesManager
+    public sealed class ObjectivesManager : IObjectivesManager
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private IRobustRandom _random = default!;
