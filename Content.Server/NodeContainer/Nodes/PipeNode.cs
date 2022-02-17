@@ -143,6 +143,23 @@ namespace Content.Server.NodeContainer.Nodes
             return true;
         }
 
+        public override void OnAnchorStateChanged(IEntityManager entityManager, bool anchored)
+        {
+            if (!anchored)
+                return;
+
+            // update valid pipe directions
+
+            if (!RotationsEnabled)
+            {
+                CurrentPipeDirection = _originalPipeDirection;
+                return;
+            }
+
+            var xform = entityManager.GetComponent<TransformComponent>(Owner);
+            CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(xform.LocalRotation);
+        }
+
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
