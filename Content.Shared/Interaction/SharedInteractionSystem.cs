@@ -387,7 +387,7 @@ namespace Content.Shared.Interaction
             if (!inRange && popup)
             {
                 var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                origin.PopupMessage(message);
+                _popupSystem.PopupEntity(message, origin, Filter.Entities(origin));
             }
 
             return inRange;
@@ -528,7 +528,7 @@ namespace Content.Shared.Interaction
             if (!inRange && popup)
             {
                 var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                origin.PopupMessage(message);
+                _popupSystem.PopupEntity(message, origin, Filter.Entities(origin));
             }
 
             return inRange;
