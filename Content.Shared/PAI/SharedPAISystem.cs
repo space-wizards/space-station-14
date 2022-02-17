@@ -1,4 +1,5 @@
 using System;
+using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -19,6 +20,8 @@ namespace Content.Shared.PAI
     /// </summary>
     public abstract class SharedPAISystem : EntitySystem
     {
+        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -29,10 +32,24 @@ namespace Content.Shared.PAI
             SubscribeLocalEvent<PAIComponent, PickupAttemptEvent>(OnPickupAttempt);
             SubscribeLocalEvent<PAIComponent, MovementAttemptEvent>(OnMoveAttempt);
             SubscribeLocalEvent<PAIComponent, ChangeDirectionAttemptEvent>(OnChangeDirectionAttempt);
+            SubscribeLocalEvent<PAIComponent, ComponentStartup>(OnPAIStartup);
+            SubscribeLocalEvent<PAIComponent, ComponentShutdown>(OnPAIShutdown);
+        }
+
+        private void OnPAIStartup(EntityUid uid, PAIComponent component, ComponentStartup args)
+        {
+            _blocker.RefreshCanMove(uid);
+        }
+
+        private void OnPAIShutdown(EntityUid uid, PAIComponent component, ComponentShutdown args)
+        {
+            _blocker.RefreshCanMove(uid);
         }
 
         private void OnMoveAttempt(EntityUid uid, PAIComponent component, MovementAttemptEvent args)
         {
+            if (component.LifeStage > ComponentLifeStage.Initialized) return;
+
             args.Cancel(); // no more scurrying around on lil robot legs.
         }
 
