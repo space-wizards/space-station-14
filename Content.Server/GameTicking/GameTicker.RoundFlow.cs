@@ -413,6 +413,8 @@ namespace Content.Server.GameTicking
 
             _mapManager.Restart();
 
+            _roleBanManager.Restart();
+
             // Clear up any game rules.
             ClearGameRules();
 
