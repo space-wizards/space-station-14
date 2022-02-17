@@ -19,6 +19,7 @@ public sealed class HealingSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly StackSystem _stacks = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
     public override void Initialize()
     {
@@ -87,7 +88,7 @@ public sealed class HealingSystem : EntitySystem
             return;
 
         if (user != target &&
-            !user.InRangeUnobstructed(target, ignoreInsideBlocker: true, popup: true))
+            !_interactionSystem.InRangeUnobstructed(user, target, popup: true))
         {
             return;
         }

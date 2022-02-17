@@ -22,7 +22,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasFilterSystem : EntitySystem
+    public sealed class GasFilterSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;

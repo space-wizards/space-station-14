@@ -11,7 +11,7 @@ namespace Content.Client.Clothing
     [ComponentReference(typeof(SharedItemComponent))]
     [ComponentReference(typeof(ItemComponent))]
     [NetworkedComponent()]
-    public class ClothingComponent : ItemComponent
+    public sealed class ClothingComponent : ItemComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("femaleMask")]

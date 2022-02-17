@@ -10,7 +10,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class SetAtmosTemperatureCommand : IConsoleCommand
+    public sealed class SetAtmosTemperatureCommand : IConsoleCommand
     {
         public string Command => "setatmostemp";
         public string Description => "Sets a grid's temperature (in kelvin).";

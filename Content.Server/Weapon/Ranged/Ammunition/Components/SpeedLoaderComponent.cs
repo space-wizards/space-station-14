@@ -11,7 +11,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     /// Used to load certain ranged weapons quickly
     /// </summary>
     [RegisterComponent]
-    public class SpeedLoaderComponent : Component
+    public sealed class SpeedLoaderComponent : Component
     {
         [DataField("caliber")] public BallisticCaliber Caliber = BallisticCaliber.Unspecified;
         public int Capacity => _capacity;

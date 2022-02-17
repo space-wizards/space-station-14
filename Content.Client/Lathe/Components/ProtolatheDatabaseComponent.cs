@@ -9,7 +9,7 @@ namespace Content.Client.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
-    public class ProtolatheDatabaseComponent : SharedProtolatheDatabaseComponent
+    public sealed class ProtolatheDatabaseComponent : SharedProtolatheDatabaseComponent
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

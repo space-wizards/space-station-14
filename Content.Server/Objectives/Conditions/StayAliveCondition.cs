@@ -8,7 +8,7 @@ namespace Content.Server.Objectives.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class StayAliveCondition : IObjectiveCondition
+    public sealed class StayAliveCondition : IObjectiveCondition
     {
         private Mind.Mind? _mind;
 

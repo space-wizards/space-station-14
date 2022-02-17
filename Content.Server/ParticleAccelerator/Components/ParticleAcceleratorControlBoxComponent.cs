@@ -34,7 +34,7 @@ namespace Content.Server.ParticleAccelerator.Components
     /// </summary>
     [ComponentReference(typeof(IActivate))]
     [RegisterComponent]
-    public class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IActivate, IWires
+    public sealed class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IActivate, IWires
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;

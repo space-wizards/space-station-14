@@ -25,7 +25,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Stunnable
 {
-    public class StunbatonSystem : EntitySystem
+    public sealed class StunbatonSystem : EntitySystem
     {
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly StutteringSystem _stutteringSystem = default!;

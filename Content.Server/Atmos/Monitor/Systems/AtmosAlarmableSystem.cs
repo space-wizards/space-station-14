@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Atmos.Monitor.Systems
 {
-    public class AtmosAlarmableSystem : EntitySystem
+    public sealed class AtmosAlarmableSystem : EntitySystem
     {
         public override void Initialize()
         {

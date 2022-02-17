@@ -19,7 +19,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.RCD.Systems
 {
-    public class RCDSystem : EntitySystem
+    public sealed class RCDSystem : EntitySystem
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -162,7 +162,7 @@ namespace Content.Server.RCD.Systems
 
             var coordinates = mapGrid.ToCoordinates(tile.GridIndices);
             if (coordinates == EntityCoordinates.Invalid ||
-                !_interactionSystem.InRangeUnobstructed(eventArgs.User, coordinates, ignoreInsideBlocker: true, popup: true))
+                !_interactionSystem.InRangeUnobstructed(eventArgs.User, coordinates, popup: true))
             {
                 return false;
             }

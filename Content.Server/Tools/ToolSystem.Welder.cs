@@ -22,7 +22,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Tools
 {
-    public partial class ToolSystem
+    public sealed partial class ToolSystem
     {
         private readonly HashSet<EntityUid> _activeWelders = new();
 

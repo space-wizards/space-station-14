@@ -25,9 +25,11 @@ public sealed class SolutionChangedEvent : EntityEventArgs
 [UsedImplicitly]
 public sealed partial class SolutionContainerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
+    [Dependency]
+    private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
 
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency]
+    private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {

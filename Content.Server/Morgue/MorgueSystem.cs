@@ -9,7 +9,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Morgue
 {
     [UsedImplicitly]
-    public class MorgueSystem : EntitySystem
+    public sealed class MorgueSystem : EntitySystem
     {
 
         private float _accumulatedFrameTime;

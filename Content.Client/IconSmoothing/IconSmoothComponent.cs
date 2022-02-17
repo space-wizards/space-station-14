@@ -24,6 +24,7 @@ namespace Content.Client.IconSmoothing
     ///     Any objects with the same <c>key</c> will connect.
     /// </remarks>
     [RegisterComponent]
+    [Virtual]
     public class IconSmoothComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;

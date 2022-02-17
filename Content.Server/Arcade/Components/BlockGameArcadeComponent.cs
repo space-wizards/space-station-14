@@ -17,7 +17,7 @@ namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class BlockGameArcadeComponent : Component, IActivate
+    public sealed class BlockGameArcadeComponent : Component, IActivate
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -146,7 +146,7 @@ namespace Content.Server.Arcade.Components
             _game?.GameTick(frameTime);
         }
 
-        private class BlockGame
+        private sealed class BlockGame
         {
             //note: field is 10(0 -> 9) wide and 20(0 -> 19) high
 

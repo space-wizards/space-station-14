@@ -20,7 +20,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Traitor.Uplink
 {
-    public class UplinkSystem : EntitySystem
+    public sealed class UplinkSystem : EntitySystem
     {
         [Dependency]
         private readonly UplinkAccountsSystem _accounts = default!;

@@ -33,7 +33,7 @@ using Range = Robust.Client.UserInterface.Controls.Range;
 
 namespace Content.Client.Preferences.UI
 {
-    public class HighlightedContainer : PanelContainer
+    public sealed class HighlightedContainer : PanelContainer
     {
         public HighlightedContainer()
         {
@@ -49,7 +49,7 @@ namespace Content.Client.Preferences.UI
     }
 
     [GenerateTypedNameReferences]
-    public partial class HumanoidProfileEditor : Control
+    public sealed partial class HumanoidProfileEditor : Control
     {
         private LineEdit _ageEdit => CAgeEdit;
         private LineEdit _nameEdit => CNameEdit;
@@ -782,7 +782,7 @@ namespace Content.Client.Preferences.UI
             }
         }
 
-        private class JobPrioritySelector : Control
+        private sealed class JobPrioritySelector : Control
         {
             public JobPrototype Job { get; }
             private readonly RadioOptions<int> _optionButton;
@@ -855,7 +855,7 @@ namespace Content.Client.Preferences.UI
             }
         }
 
-        private class AntagPreferenceSelector : Control
+        private sealed class AntagPreferenceSelector : Control
         {
             public AntagPrototype Antag { get; }
             private readonly CheckBox _checkBox;

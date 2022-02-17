@@ -18,5 +18,3 @@
     base: state_
   - type: Climbable
   - type: Clickable
-    bounds:
-      all: "-0.5,-0.5,0.5,0.5"

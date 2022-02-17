@@ -25,7 +25,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 namespace Content.Client.Tabletop
 {
     [UsedImplicitly]
-    public class TabletopSystem : SharedTabletopSystem
+    public sealed class TabletopSystem : SharedTabletopSystem
     {
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManger = default!;

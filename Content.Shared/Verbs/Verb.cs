@@ -12,7 +12,7 @@ namespace Content.Shared.Verbs
     ///     events, or networked events. Verbs also provide text, icons, and categories for displaying in the
     ///     context-menu.
     /// </summary>
-    [Serializable, NetSerializable]
+    [Serializable, NetSerializable, Virtual]
     public class Verb : IComparable
     {
         public static string DefaultTextStyleClass = "Verb";
