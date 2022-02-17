@@ -19,8 +19,10 @@ namespace Content.Server.Fluids.EntitySystems;
 public sealed class MoppingSystem : EntitySystem
 {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private SolutionContainerSystem _solutionSystem = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
 
     public override void Initialize()
     {
@@ -36,8 +38,7 @@ public sealed class MoppingSystem : EntitySystem
         var used = args.Used;
         var target = args.Target;
 
-        var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
-        solutionSystem.TryGetSolution(used, "absorbed", out var absorbedSolution);
+        _solutionSystem.TryGetSolution(used, "absorbed", out var absorbedSolution);
 
         var toolAvailableVolume = FixedPoint2.New(0);
         var toolCurrentVolume = FixedPoint2.New(0);
@@ -84,7 +85,7 @@ public sealed class MoppingSystem : EntitySystem
             // Drop some of the absorbed liquid onto the ground
             var releaseAmount = FixedPoint2.Min(absorbent.ResidueAmount, absorbedSolution.CurrentVolume);
             var releasedSolution = _solutionSystem.SplitSolution(absorbent.Owner, absorbedSolution, releaseAmount);
-            EntitySystem.Get<SpillableSystem>().SpillAt(tile, releasedSolution, "PuddleSmear");
+            _spillableSystem.SpillAt(tile, releasedSolution, "PuddleSmear");
         }
         return;
     }
@@ -191,12 +192,9 @@ public sealed class MoppingSystem : EntitySystem
                 }
                 else
                 {
-
-                    var tagSystem = EntitySystem.Get<TagSystem>();
-
                     // Determine transferAmount
-                    if (tagSystem.HasTag(used, "Mop") // if the tool used is a literal mop (and not a sponge, rag, etc.)
-                        && !tagSystem.HasTag(target, "Wringer")) // and if the target does not have a wringer for properly drying the mop
+                    if (_tagSystem.HasTag(used, "Mop") // if the tool used is a literal mop (and not a sponge, rag, etc.)
+                        && !_tagSystem.HasTag(target, "Wringer")) // and if the target does not have a wringer for properly drying the mop
                     {
                         delay = 5.0f; // Should take much longer if you don't have a wringer
 
