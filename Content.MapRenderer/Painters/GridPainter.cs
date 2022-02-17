@@ -120,8 +120,9 @@ namespace Content.MapRenderer.Painters
             {
                 // TODO this needs to use the client entity manager because the client
                 // actually has the correct z-indices for decals for some reason when the server doesn't,
-                // BUT can't do that yet because the client hasn't actually received
-                if (_cEntityManager.TryGetComponent<DecalGridComponent>(grid.GridEntityId, out var comp))
+                // BUT can't do that yet because the client hasn't actually received everything yet
+                // for some reason decal moment i guess.
+                if (_sEntityManager.TryGetComponent<DecalGridComponent>(grid.GridEntityId, out var comp))
                 {
                     foreach (var (_, list) in comp.ChunkCollection.ChunkCollection)
                     {
