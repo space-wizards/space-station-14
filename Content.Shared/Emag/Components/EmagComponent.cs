@@ -10,7 +10,7 @@ namespace Content.Shared.Emag.Components
         public int Charges = 3;
 
         [DataField("rechargeTime")]
-        public float RechargeTime = 60f;
+        public float RechargeTime = 90f;
         public float Accumulator = 0f;
     }
 }

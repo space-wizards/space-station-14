@@ -127,7 +127,8 @@
   itemId: Emag
   description: This sequencer, or "emag", can be used to open or hack a huge variety of items around the station.
   icon: /Textures/Objects/Tools/emag.rsi/icon.png
-  price: 6
+  price: 8
+
 # Bundles
 
 - type: uplinkListing
