@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Solar panels and the related systems will no longer hold state between
-      rounds., type: Fix}
-  id: 577
-  time: '2021-11-12T19:00:39.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Places firelocks on Packed to make it not Atmos Hell. Fixes a number
@@ -2979,3 +2973,8 @@ Entries:
       to being spaced., type: Tweak}
   id: 1077
   time: '2022-02-18T02:43:43.0000000+00:00'
+- author: Slorktainer
+  changes:
+  - {message: Round-end restart time increased to one minute., type: Tweak}
+  id: 1078
+  time: '2022-02-18T02:45:50.0000000+00:00'
