@@ -530,7 +530,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasName("PK_round");
 
                     b.HasIndex("ServerId")
-                        .HasDatabaseName("IX_round__server_id");
+                        .HasDatabaseName("IX_round_server_id");
 
                     b.ToTable("round", (string)null);
                 });
@@ -554,7 +554,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                 });
 
             modelBuilder.Entity("Content.Server.Database.ServerBan", b =>
-            {
+                {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
@@ -808,7 +808,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasForeignKey("ServerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_round_server__server_id");
+                        .HasConstraintName("FK_round_server_server_id");
 
                     b.Navigation("Server");
                 });
@@ -835,19 +835,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                 });
 
             modelBuilder.Entity("Content.Server.Database.ServerUnban", b =>
-            {
-                    b.HasOne("Content.Server.Database.Server", "Server")
-                        .WithMany("Rounds")
-                        .HasForeignKey("ServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_round_server__server_id");
-
-                    b.Navigation("Server");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.ServerUnban", b =>
-            {
+                {
                     b.HasOne("Content.Server.Database.ServerBan", "Ban")
                         .WithOne("Unban")
                         .HasForeignKey("Content.Server.Database.ServerUnban", "BanId")
@@ -856,7 +844,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasConstraintName("FK_server_unban_server_ban_ban_id");
 
                     b.Navigation("Ban");
-            });
+                });
 
             modelBuilder.Entity("PlayerRound", b =>
                 {
@@ -924,16 +912,14 @@ namespace Content.Server.Database.Migrations.Sqlite
             modelBuilder.Entity("Content.Server.Database.Server", b =>
                 {
                     b.Navigation("Rounds");
+                });
 
+            modelBuilder.Entity("Content.Server.Database.ServerBan", b =>
+                {
                     b.Navigation("BanHits");
 
                     b.Navigation("Unban");
                 });
-
-            modelBuilder.Entity("Content.Server.Database.ServerBan", b =>
-            {
-                    b.Navigation("Unban");
-            });
 #pragma warning restore 612, 618
         }
     }
