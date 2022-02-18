@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Content.Server.Database;
@@ -13,7 +14,7 @@ public sealed class RoleBanManager
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-    private readonly Dictionary<NetUserId, HashSet<string>> _cachedRoleBans = new();
+    private readonly Dictionary<NetUserId, HashSet<ServerRoleBanDef>> _cachedRoleBans = new();
 
     public void Initialize()
     {
@@ -36,11 +37,11 @@ public sealed class RoleBanManager
         {
             if (!_cachedRoleBans.TryGetValue(banDef.UserId.Value, out var roleBans))
             {
-                roleBans = new HashSet<string>();
+                roleBans = new HashSet<ServerRoleBanDef>();
                 _cachedRoleBans.Add(banDef.UserId.Value, roleBans);
             }
-            if (!roleBans.Contains(banDef.Role))
-                roleBans.Add(banDef.Role);
+            if (!roleBans.Contains(banDef))
+                roleBans.Add(banDef);
         }
 
         await _db.AddServerRoleBanAsync(banDef);
@@ -49,17 +50,17 @@ public sealed class RoleBanManager
 
     public HashSet<string>? GetRoleBans(NetUserId playerUserId)
     {
-        return _cachedRoleBans.TryGetValue(playerUserId, out var roleBans) ? roleBans : null;
+        return _cachedRoleBans.TryGetValue(playerUserId, out var roleBans) ? roleBans.Select(banDef => banDef.Role).ToHashSet() : null;
     }
 
     private async Task CacheDbRoleBans(NetUserId userId, IPAddress? address = null, ImmutableArray<byte>? hwId = null)
     {
         var roleBans = await _db.GetServerRoleBansAsync(address, userId, hwId, false);
 
-        var userRoleBans = new HashSet<string>();
+        var userRoleBans = new HashSet<ServerRoleBanDef>();
         foreach (var ban in roleBans)
         {
-            userRoleBans.Add(ban.Role);
+            userRoleBans.Add(ban);
         }
 
         _cachedRoleBans[userId] = userRoleBans;
@@ -78,6 +79,12 @@ public sealed class RoleBanManager
         foreach (var player in toRemove)
         {
             _cachedRoleBans.Remove(player);
+        }
+
+        // Check for expired bans
+        foreach (var (_, roleBans) in _cachedRoleBans)
+        {
+            roleBans.RemoveWhere(ban => DateTimeOffset.Now > ban.ExpirationTime);
         }
     }
 }
