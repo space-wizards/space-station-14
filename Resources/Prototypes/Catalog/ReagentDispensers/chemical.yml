@@ -24,3 +24,11 @@
   - Sulfur
   - SulfuricAcid
   - Uranium
+
+- type: reagentDispenserInventory
+  id: ChemDispenserEmaggedInventory
+  inventory: ##Feel free to change this to something more interesting when more chems are added
+  - Napalm
+  - Toxin
+  - Epinephrine
+  - Ultravasculine

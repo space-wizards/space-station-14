@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
-public class ArtifactGasTriggerSystem : EntitySystem
+public sealed class ArtifactGasTriggerSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;

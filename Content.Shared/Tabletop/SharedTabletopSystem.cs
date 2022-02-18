@@ -1,12 +1,7 @@
-﻿using System;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Ghost;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.MobState.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Stunnable;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -15,6 +10,7 @@ namespace Content.Shared.Tabletop
     public abstract class SharedTabletopSystem : EntitySystem
     {
         [Dependency] protected readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         [Serializable, NetSerializable]
         public sealed class TabletopDraggableComponentState : ComponentState
@@ -49,7 +45,7 @@ namespace Content.Shared.Tabletop
                 return false;
             }
 
-            return playerEntity.InRangeUnobstructed(table.Value) && _actionBlockerSystem.CanInteract(playerEntity, table);
+            return _interactionSystem.InRangeUnobstructed(playerEntity, table.Value) && _actionBlockerSystem.CanInteract(playerEntity, table);
         }
 
         protected bool StunnedOrNoHands(EntityUid playerEntity)

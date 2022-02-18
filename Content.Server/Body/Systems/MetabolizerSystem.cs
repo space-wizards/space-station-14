@@ -18,7 +18,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Body.Systems
 {
     [UsedImplicitly]
-    public class MetabolizerSystem : EntitySystem
+    public sealed class MetabolizerSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

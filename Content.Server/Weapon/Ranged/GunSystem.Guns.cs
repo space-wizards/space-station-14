@@ -56,10 +56,10 @@ public sealed partial class GunSystem
         gun.LastFireTime = curTime;
         var coordinates = Transform(gun.Owner).Coordinates;
 
-        if (gun.ClumsyCheck && gun.ClumsyDamage != null && ClumsyComponent.TryRollClumsy(user, gun.ClumsyExplodeChance))
+        if (gun.ClumsyCheck && EntityManager.TryGetComponent<ClumsyComponent>(user, out var clumsyComponent) && ClumsyComponent.TryRollClumsy(user, gun.ClumsyExplodeChance))
         {
             //Wound them
-            _damageable.TryChangeDamage(user, gun.ClumsyDamage);
+            _damageable.TryChangeDamage(user, clumsyComponent.ClumsyDamage);
             _stun.TryParalyze(user, TimeSpan.FromSeconds(3f), true);
 
             // Apply salt to the wound ("Honk!")

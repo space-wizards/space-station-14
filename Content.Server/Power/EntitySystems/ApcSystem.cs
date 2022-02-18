@@ -5,6 +5,7 @@ using Content.Server.Power.Pow3r;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
+using Content.Shared.Emag.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -34,6 +35,7 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcComponent, MapInitEvent>(OnApcInit);
             SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
             SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
+            SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
         }
 
         // Change the APC's state only when the battery state changes, or when it's first created.
@@ -65,6 +67,15 @@ namespace Content.Server.Power.EntitySystems
             {
                 _popupSystem.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
                     Filter.Entities(args.Session.AttachedEntity.Value));
+            }
+        }
+
+        private void OnEmagged(EntityUid uid, ApcComponent comp, GotEmaggedEvent args)
+        {
+            if(!comp.Emagged)
+            {
+                comp.Emagged = true;
+                args.Handled = true;
             }
         }
 
@@ -115,6 +126,9 @@ namespace Content.Server.Power.EntitySystems
             ApcComponent? apc=null,
             BatteryComponent? battery=null)
         {
+            if (apc != null && apc.Emagged)
+                return ApcChargeState.Emag;
+
             if (!Resolve(uid, ref apc, ref battery))
                 return ApcChargeState.Lack;
 

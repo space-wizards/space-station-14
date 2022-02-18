@@ -9,7 +9,7 @@ namespace Content.Server.DeviceNetwork.Components
     [RegisterComponent]
     [Friend(typeof(ApcNetworkSystem))]
     [ComponentProtoName("ApcNetworkConnection")]
-    public class ApcNetworkComponent : Component
+    public sealed class ApcNetworkComponent : Component
     {
         /// <summary>
         /// The node Group the ApcNetworkConnection is connected to

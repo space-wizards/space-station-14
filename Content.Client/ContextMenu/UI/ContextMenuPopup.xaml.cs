@@ -12,7 +12,7 @@ namespace Content.Client.ContextMenu.UI
     ///     The base context-menu pop-up window used for both the entity and verb menus.
     /// </summary>
     [GenerateTypedNameReferences]
-    public partial class ContextMenuPopup : Popup
+    public sealed partial class ContextMenuPopup : Popup
     {
         public const string StyleClassContextMenuPopup = "contextMenuPopup";
 
@@ -52,7 +52,7 @@ namespace Content.Client.ContextMenu.UI
 
             UserInterfaceManager.ModalRoot.AddChild(this);
             MenuBody.OnChildRemoved += ctrl => _presenter.OnRemoveElement(this, ctrl);
-            
+
             if (ParentElement != null)
             {
                 DebugTools.Assert(ParentElement.SubMenu == null);

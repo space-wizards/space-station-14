@@ -86,7 +86,6 @@ public sealed partial class GunSystem : EntitySystem
         // (All of these would be comp references so max you only ever have 2 components on the gun).
         SubscribeLocalEvent<BatteryBarrelComponent, ComponentInit>(OnBatteryInit);
         SubscribeLocalEvent<BatteryBarrelComponent, MapInitEvent>(OnBatteryMapInit);
-        SubscribeLocalEvent<BatteryBarrelComponent, ComponentGetState>(OnBatteryGetState);
         SubscribeLocalEvent<BatteryBarrelComponent, PowerCellChangedEvent>(OnCellSlotUpdated);
 
         SubscribeLocalEvent<BoltActionBarrelComponent, ComponentInit>(OnBoltInit);

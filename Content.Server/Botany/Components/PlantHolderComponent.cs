@@ -37,7 +37,7 @@ namespace Content.Server.Botany.Components
 {
     [RegisterComponent]
 #pragma warning disable 618
-    public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IExamine
+    public sealed class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IExamine
 #pragma warning restore 618
     {
         public const float HydroponicsSpeedMultiplier = 1f;

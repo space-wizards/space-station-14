@@ -22,7 +22,7 @@ using Robust.Client.UserInterface.CustomControls;
 namespace Content.Client.EscapeMenu.UI.Tabs
 {
     [GenerateTypedNameReferences]
-    public partial class KeyRebindTab : Control
+    public sealed partial class KeyRebindTab : Control
     {
         // List of key functions that must be registered as toggle instead.
         private static readonly HashSet<BoundKeyFunction> ToggleFunctions = new()

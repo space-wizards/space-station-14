@@ -15,7 +15,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tools
 {
-    public partial class ToolSystem
+    public sealed partial class ToolSystem
     {
         private void InitializeMultipleTools()
         {

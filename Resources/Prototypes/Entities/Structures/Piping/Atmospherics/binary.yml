@@ -6,6 +6,8 @@
     mode: SnapgridCenter
   components:
   - type: AtmosDevice
+  - type: SubFloorHide
+    blockInteractions: false
   - type: NodeContainer
     nodes:
       inlet:

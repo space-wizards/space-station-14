@@ -99,6 +99,16 @@
     - type: Damageable
       damageContainer: Biological
       damageModifierSet: Slime
+    - type: Bloodstream
+      bloodReagent: Slime # TODO Color slime blood based on their slime color or smth
+      bloodlossDamage:
+        types:
+          Bloodloss:
+            1
+      bloodlossHealDamage:
+        types:
+          Bloodloss:
+            -0.25
     - type: Barotrauma
       damage:
         types:

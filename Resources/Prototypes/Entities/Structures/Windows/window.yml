@@ -8,6 +8,8 @@
     snap:
     - Window
   components:
+  - type: WallMount
+    arc: 360 # interact despite grilles
   - type: Tag
     tags:
       - RCDDeconstructWhitelist
@@ -92,6 +94,8 @@
     snap:
     - Window
   components:
+  - type: WallMount
+    arc: 360 # interact despite grilles
     # Attention! If adding tags here:
     # Keep WindowTintedDirectional in mind
   - type: Tag
@@ -131,6 +135,12 @@
     messages: WindowMessages
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150 #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50

@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Client.Clothing
 {
-    public class MagbootsSystem : EntitySystem
+    public sealed class MagbootsSystem : EntitySystem
     {
         public override void Initialize()
         {

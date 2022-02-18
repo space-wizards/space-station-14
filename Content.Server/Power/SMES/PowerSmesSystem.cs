@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Power.SMES
 {
     [UsedImplicitly]
-    internal class PowerSmesSystem : EntitySystem
+    internal sealed class PowerSmesSystem : EntitySystem
     {
         public override void Update(float frameTime)
         {

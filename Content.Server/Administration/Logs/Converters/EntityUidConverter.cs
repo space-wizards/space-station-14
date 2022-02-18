@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Logs.Converters;
 
 [AdminLogConverter]
-public class EntityUidConverter : AdminLogConverter<EntityUid>
+public sealed class EntityUidConverter : AdminLogConverter<EntityUid>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
 

@@ -15,6 +15,7 @@ namespace Content.Client.ContextMenu.UI
     ///     If this entry has a sub-menu, it also shows a little ">" icon on the right.
     /// </summary>
     [GenerateTypedNameReferences]
+    [Virtual]
     public partial class ContextMenuElement : ContainerButton
     {
         public const string StyleClassContextMenuButton = "contextMenuButton";

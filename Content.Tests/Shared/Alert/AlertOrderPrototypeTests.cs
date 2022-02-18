@@ -10,7 +10,7 @@ using Robust.Shared.Serialization.Manager;
 namespace Content.Tests.Shared.Alert
 {
     [TestFixture, TestOf(typeof(AlertOrderPrototype))]
-    public class AlertOrderPrototypeTests : ContentUnitTest
+    public sealed class AlertOrderPrototypeTests : ContentUnitTest
     {
         const string PROTOTYPES = @"
 - type: alertOrder

@@ -8,7 +8,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.MobState.States
 {
-    public class NormalMobState : SharedNormalMobState
+    public sealed class NormalMobState : SharedNormalMobState
     {
         public override void UpdateState(EntityUid entity, FixedPoint2 threshold, IEntityManager entityManager)
         {

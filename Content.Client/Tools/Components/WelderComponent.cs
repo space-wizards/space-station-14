@@ -14,7 +14,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Tools.Components
 {
     [RegisterComponent, Friend(typeof(ToolSystem), typeof(StatusControl))]
-    public class WelderComponent : SharedWelderComponent, IItemStatus
+    public sealed class WelderComponent : SharedWelderComponent, IItemStatus
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool UiUpdateNeeded { get; set; }

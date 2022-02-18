@@ -22,7 +22,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Cloning.Components
 {
     [RegisterComponent]
-    public class CloningPodComponent : SharedCloningPodComponent
+    public sealed class CloningPodComponent : SharedCloningPodComponent
     {
         [Dependency] private readonly IPlayerManager _playerManager = null!;
         [Dependency] private readonly IEntityManager _entities = default!;

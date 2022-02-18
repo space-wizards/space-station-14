@@ -15,7 +15,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState.EntitySystems
 {
-    public class MobStateSystem : EntitySystem
+    public sealed class MobStateSystem : EntitySystem
     {
         public override void Initialize()
         {
