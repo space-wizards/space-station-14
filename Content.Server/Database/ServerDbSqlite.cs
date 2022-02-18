@@ -190,7 +190,6 @@ namespace Content.Server.Database
                 .Where(b => BanMatches(b, address, userId, hwId))
                 .Select(ConvertRoleBan)
                 .ToList()!;
-
         }
 
         private static async Task<List<ServerRoleBan>> GetAllRoleBans(

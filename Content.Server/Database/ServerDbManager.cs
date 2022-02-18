@@ -102,12 +102,12 @@ namespace Content.Server.Database
         /// <summary>
         ///     Looks up an user's role ban history.
         ///     This will return pardoned role bans based on the <see cref="includeUnbanned"/> bool.
-        ///     One of <see cref="address"/>, <see cref="userId"/>, or <see cref="hwId"/> need to not be null.
+        ///     Requires one of <see cref="address"/>, <see cref="userId"/>, or <see cref="hwId"/> to not be null.
         /// </summary>
-        /// <param name="address">The ip address of the user.</param>
-        /// <param name="userId">The id of the user.</param>
-        /// <param name="hwId">The HWId of the user.</param>
-        /// <param name="includeUnbanned"></param>
+        /// <param name="address">The IP address of the user.</param>
+        /// <param name="userId">The NetUserId of the user.</param>
+        /// <param name="hwId">The Hardware Id of the user.</param>
+        /// <param name="includeUnbanned">Whether expired and pardoned bans are included.</param>
         /// <returns>The user's role ban history.</returns>
         Task<List<ServerRoleBanDef>> GetServerRoleBansAsync(
             IPAddress? address,
