@@ -34,6 +34,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<BloodstreamComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BloodstreamComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
     }
 
     public override void Update(float frameTime)
@@ -132,6 +133,11 @@ public sealed class BloodstreamSystem : EntitySystem
         }
     }
 
+    private void OnBeingGibbed(EntityUid uid, BloodstreamComponent component, BeingGibbedEvent args)
+    {
+        SpillAllSolutions(uid, component);
+    }
+
     /// <summary>
     ///     Attempt to transfer provided solution to internal solution.
     /// </summary>
@@ -192,5 +198,23 @@ public sealed class BloodstreamSystem : EntitySystem
         component.BleedAmount = Math.Clamp(component.BleedAmount, 0, 40);
 
         return true;
+    }
+
+    /// <summary>
+    ///     BLOOD FOR THE BLOOD GOD
+    /// </summary>
+    public void SpillAllSolutions(EntityUid uid, BloodstreamComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        var max = component.BloodSolution.MaxVolume + component.BloodTemporarySolution.MaxVolume +
+                  component.ChemicalSolution.MaxVolume;
+        var tempSol = new Solution() { MaxVolume = max };
+
+        tempSol.AddSolution(component.BloodSolution);
+        tempSol.AddSolution(component.BloodTemporarySolution);
+        tempSol.AddSolution(component.ChemicalSolution);
+        _spillableSystem.SpillAt(uid, tempSol, "PuddleBlood", true);
     }
 }

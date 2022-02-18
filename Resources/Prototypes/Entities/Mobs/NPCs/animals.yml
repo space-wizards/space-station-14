@@ -37,7 +37,7 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 1
   - type: InteractionPopup
     successChance: 0.2
@@ -132,7 +132,7 @@
       crit: dead-0
       dead: dead-0
   - type: Butcherable
-    meat: FoodMeatChicken
+    spawned: FoodMeatChicken
     pieces: 1
   - type: InteractionPopup
     successChance: 0.8
@@ -160,7 +160,7 @@
       crit: dead-0
       dead: dead-0
   - type: Butcherable
-    meat: FoodMeatDuck
+    spawned: FoodMeatDuck
     pieces: 1
   - type: InteractionPopup
     successChance: 0.9
@@ -188,7 +188,7 @@
       crit: dead-1
       dead: dead-1
   - type: Butcherable
-    meat: FoodMeatDuck
+    spawned: FoodMeatDuck
     pieces: 1
   - type: InteractionPopup
     successChance: 0.9
@@ -216,7 +216,7 @@
       crit: dead-2
       dead: dead-2
   - type: Butcherable
-    meat: FoodMeatDuck
+    spawned: FoodMeatDuck
     pieces: 1
   - type: InteractionPopup
     successChance: 0.9
@@ -321,7 +321,7 @@
     quantity: 25
     updateRate: 30
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 5
   - type: Grammar
     attributes:
@@ -365,7 +365,7 @@
       dead: dead
     - type: AsteroidRockVisualizer
   - type: Butcherable
-    meat: FoodMeatCrab
+    spawned: FoodMeatCrab
     pieces: 2
   - type: InteractionPopup
     successChance: 0.5
@@ -403,7 +403,7 @@
     quantity: 25
     updateRate: 20
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 4
   - type: Grammar
     attributes:
@@ -433,7 +433,7 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeatChicken
+    spawned: FoodMeatChicken
     pieces: 2
   - type: InteractionPopup # TODO: Make it so there's a separate chance to make certain animals outright hostile towards you.
     successChance: 0.1 # Yeah, good luck with that.
@@ -473,7 +473,7 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 4
 
 - type: entity
@@ -581,7 +581,8 @@
       sprite: Mobs/Effects/onfire.rsi
       normalState: Monkey_burning
   - type: Butcherable
-    meat: FoodMeat
+    butcheringType: Spike
+    spawned: FoodMeat
     pieces: 3
   - type: MonkeyAccent
 
@@ -645,7 +646,7 @@
         - ReagentId: Nutriment
           Quantity: 5
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 1
   - type: ReplacementAccent
     accent: mouse
@@ -730,7 +731,7 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 1
   - type: InteractionPopup
     successChance: 0.3
@@ -773,7 +774,7 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 1
   - type: InteractionPopup
     successChance: 0.6
@@ -817,7 +818,7 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 1
   - type: InteractionPopup
     successChance: 0.6
@@ -857,7 +858,7 @@
       crit: penguin_dead
       dead: penguin_dead
   - type: Butcherable
-    meat: FoodMeatPenguin
+    spawned: FoodMeatPenguin
     pieces: 3
   - type: InteractionPopup
     successChance: 0.5
@@ -900,7 +901,7 @@
      # dead: dead
      # crit: dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 1
   - type: InteractionPopup
     successChance: 0.6
@@ -942,7 +943,7 @@
       crit: tarantula_dead
       dead: tarantula_dead
   - type: Butcherable
-    meat: FoodMeatSpider
+    spawned: FoodMeatSpider
     pieces: 2
   - type: InteractionPopup
     successChance: 0.5

@@ -76,5 +76,6 @@
       dead: dead
   - type: Puller
   - type: Butcherable
-    meat: FoodMeatXeno
+    spawned: FoodMeatXeno
+    butcheringType: Spike
     pieces: 5

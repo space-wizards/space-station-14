@@ -110,4 +110,5 @@
   - type: Inventory
     speciesId: vox
   - type: Butcherable
-    meat: FoodMeatChicken
+    butcheringType: Spike
+    spawned: FoodMeatChicken

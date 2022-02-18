@@ -71,6 +71,7 @@ namespace Content.Client.Entry
             "Stomach",
             "SpeedLoader",
             "Hitscan",
+            "Sharp",
             "StunOnCollide",
             "ExaminableDamage",
             "RandomPottedPlant",
