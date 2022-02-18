@@ -27,6 +27,7 @@
         Normal: fire_off
         Warning: fire_off # shouldn't be alarming at a warning
         Danger: fire_on
+        Emagged: fire_emagged
       hideOnDepowered: ["fireAlarmState"]
     - type: WiresVisualizer
   - type: UserInterface
