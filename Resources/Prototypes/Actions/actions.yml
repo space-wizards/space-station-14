@@ -59,7 +59,7 @@
   name: "Boo"
   description: "Scare your crew members because of boredom!"
   filters:
-    - ghost
+    - ghost- type: actionactions
   behaviorType: Instant
   behavior: !type:GhostBoo
     radius: 3
@@ -144,4 +144,11 @@
   repeat: true
   behavior: !type:DebugTargetEntity { }
 
-
+- type: action
+  actionType: NoAction
+  icon: Interface/Actions/none.png
+  name: ""
+  description: ""
+  requires: ""
+  behaviorType: Instant
+  behavior: !type:NoAction
