@@ -2,9 +2,11 @@ using Content.Server.Power.Components;
 using Content.Server.Recycling.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Recycling;
+using Content.Shared.Emag.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Player;
 
 namespace Content.Server.Recycling
 {
@@ -14,6 +16,7 @@ namespace Content.Server.Recycling
         {
             base.Initialize();
             SubscribeLocalEvent<RecyclerComponent, StartCollideEvent>(HandleCollide);
+            SubscribeLocalEvent<RecyclerComponent, GotEmaggedEvent>(OnEmagged);
         }
 
         private void HandleCollide(EntityUid uid, RecyclerComponent component, StartCollideEvent args)
@@ -51,6 +54,15 @@ namespace Content.Server.Recycling
             if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(RecyclerVisuals.Bloody, true);
+            }
+        }
+
+        private void OnEmagged(EntityUid uid, RecyclerComponent component, GotEmaggedEvent args)
+        {
+            if (component.Safe == true)
+            {
+                component.Safe = false;
+                args.Handled = true;
             }
         }
     }

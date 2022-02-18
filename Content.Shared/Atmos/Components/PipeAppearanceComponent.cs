@@ -7,5 +7,5 @@ public sealed class PipeAppearanceComponent : Component
     public string RsiPath = "Structures/Piping/Atmospherics/pipe.rsi";
 
     [DataField("baseState")]
-    public string BaseState = "pipeConnector";
+    public string State = "pipeConnector";
 }

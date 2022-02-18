@@ -133,14 +133,29 @@ namespace Content.Server.NodeContainer.Nodes
                     return false;
 
                 CurrentPipeDirection = _originalPipeDirection;
-            }
-            else
-            {
-                CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(ev.NewRotation);
+                return true;
             }
 
-            // node connections need to be updated
-            return true;
+            var oldDirection = CurrentPipeDirection;
+            CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(ev.NewRotation);
+            return oldDirection != CurrentPipeDirection;
+        }
+
+        public override void OnAnchorStateChanged(IEntityManager entityManager, bool anchored)
+        {
+            if (!anchored)
+                return;
+
+            // update valid pipe directions
+
+            if (!RotationsEnabled)
+            {
+                CurrentPipeDirection = _originalPipeDirection;
+                return;
+            }
+
+            var xform = entityManager.GetComponent<TransformComponent>(Owner);
+            CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(xform.LocalRotation);
         }
 
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,

@@ -158,7 +158,7 @@
   id: Dexalin
   name: dexalin
   group: Medicine
-  desc: Used for treating oxygen deprivation. In most cases where it is likely to be needed, the strength of Dexalin Plus will probably be more useful (Results in 1 unit instead of 2).
+  desc: Used for treating oxygen deprivation. In most cases where it is likely to be needed, the strength of Dexalin Plus will probably be more useful.
   physicalDesc: opaque
   color: "#0041a8"
   metabolisms:
@@ -168,12 +168,13 @@
         damage:
           types:
             Asphyxiation: -1
+            Bloodloss: -0.5
 
 - type: reagent
   id: DexalinPlus
   name: dexalin plus
   group: Medicine
-  desc: Used in treatment of extreme cases of oxygen deprivation. Even a single unit immediately counters all oxygen loss, which is hugely useful in many circumstances. Any dose beyond this will continue to counter oxygen loss until it is metabolized, essentially removing the need to breathe.
+  desc: Used in treatment of extreme cases of oxygen deprivation. Effective at healing blood loss damage.
   physicalDesc: cloudy
   color: "#4da0bd"
   metabolisms:
@@ -183,6 +184,7 @@
         damage:
           types:
             Asphyxiation: -3
+            Bloodloss: -2
 
 - type: reagent
   id: Ethylredoxrazine
@@ -299,7 +301,7 @@
   id: Inaprovaline
   name: inaprovaline
   group: Medicine
-  desc: Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients- it stops oxygen loss when the patient is in critical health. It'll also slow down bleeding (internal or external) by half while in the body. Acts as a decent painkiller.
+  desc: Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients- it stops oxygen loss when the patient is in critical health. It'll also slow down bleeding by a good amount. Acts as a decent painkiller.
   physicalDesc: opaque
   color: "#731024"
   metabolisms:
@@ -313,6 +315,8 @@
         damage:
           types:
             Asphyxiation: -5
+      - !type:ModifyBleedAmount
+        amount: -0.25
 
 - type: reagent
   id: Kelotane
@@ -442,6 +446,28 @@
   desc: A simple, yet effective painkiller. Very effective for patients in shock.
   physicalDesc: strong-smelling
   color: "#2f6ed4"
+
+- type: reagent
+  id: TranexamicAcid
+  name: tranexamic acid
+  group: Medicine
+  desc: A blood clotting medicine for preventing heavy bleeding. Very dangerous in large quantities.
+  physicalDesc: viscous
+  color: "#ba7d7d"
+  metabolisms:
+    Medicine:
+      effects:
+      # Medium-large quantities can hurt you instead,
+      # but still technically stop your bleeding.
+      - !type:ModifyBleedAmount
+        amount: -1.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
+        damage:
+          types:
+            Bloodloss: 3
 
 - type: reagent
   id: Tricordrazine
