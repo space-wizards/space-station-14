@@ -38,6 +38,7 @@
     tags:
     - Trash
   - type: ItemCooldown
+  - type: Recyclable
 
 - type: entity
   parent: DrinkCanBaseFull

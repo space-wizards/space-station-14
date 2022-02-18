@@ -1,6 +1,6 @@
 - type: entity
   name: broken bottle
-  parent: BaseItem 
+  parent: BaseItem
   id: BrokenBottle
   description: In Space Glasgow this is called a conversation starter
   components:
@@ -21,4 +21,5 @@
   - type: Tag
     tags:
     - Trash
+  - type: Recyclable
 
