@@ -53,22 +53,28 @@ public sealed class HealthExaminableSystem : EntitySystem
             if (!damage.Damage.DamageDict.TryGetValue(type, out var dmg))
                 continue;
 
+            if (dmg == FixedPoint2.Zero)
+                continue;
+
             FixedPoint2 closest = FixedPoint2.Zero;
 
+            string chosenLocStr = string.Empty;
             foreach (var threshold in component.Thresholds)
             {
+                var str = $"health-examinable-{component.LocPrefix}-{type}-{threshold}";
+                var tempLocStr = Loc.GetString($"health-examinable-{component.LocPrefix}-{type}-{threshold}", ("target", uid));
+
+                // i.e., this string doesn't exist, because theres nothing for that threshold
+                if (tempLocStr == str)
+                    continue;
+
+                chosenLocStr = tempLocStr;
+
                 if (dmg > threshold && threshold > closest)
                     closest = threshold;
             }
 
             if (closest == FixedPoint2.Zero)
-                continue;
-
-            var str = $"health-examinable-{component.LocPrefix}-{type}-{closest}";
-            var locStr = Loc.GetString($"health-examinable-{component.LocPrefix}-{type}-{closest}", ("target", uid));
-
-            // i.e., this string doesn't exist, because theres nothing for that threshold
-            if (locStr == str)
                 continue;
 
             if (!first)
@@ -79,7 +85,7 @@ public sealed class HealthExaminableSystem : EntitySystem
             {
                 first = false;
             }
-            msg.AddMarkup(locStr);
+            msg.AddMarkup(chosenLocStr);
         }
 
         if (msg.IsEmpty)
