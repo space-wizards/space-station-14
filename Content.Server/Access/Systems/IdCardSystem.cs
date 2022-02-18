@@ -41,8 +41,22 @@ namespace Content.Server.Access.Systems
         {
             if (TryComp<AccessComponent>(uid, out var access))
             {
+                float randomPick = _random.NextFloat();
+                // if really unlucky, burn card
+                if (randomPick <= 0.15f)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-burnt", ("id", uid)),
+                        uid, Filter.Pvs(uid));
+                    TryComp<TransformComponent>(uid, out TransformComponent? transformComponent);
+                    EntityManager.QueueDeleteEntity(uid);
+                    if (transformComponent != null)
+                    {
+                        EntityManager.SpawnEntity("FoodBadRecipe",
+                            transformComponent.Coordinates);
+                    }
+                }
                 // If they're unlucky, brick their ID
-                if (_random.Prob(0.25f))
+                if (randomPick <= 0.25f)
                 {
                     _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-bricked", ("id", uid)),
                         uid, Filter.Pvs(uid));
@@ -54,12 +68,9 @@ namespace Content.Server.Access.Systems
                         uid, Filter.Pvs(uid));
                 }
 
-                // Remove only one access if they were lucky enough
-                if (access.Tags.Count > 0)
-                {
-                    var random = _random.Pick(access.Tags.ToArray());
-                    access.Tags.Remove(random);
-                }
+                // Give them a wonderful new access to compensate for everything
+                var random = _random.Pick(_prototypeManager.EnumeratePrototypes<AccessLevelPrototype>().ToArray());
+                access.Tags.Add(random.ID);
             }
         }
 
