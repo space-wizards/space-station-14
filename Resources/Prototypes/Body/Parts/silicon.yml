@@ -27,6 +27,7 @@
   - type: Tag
     tags:
     - Trash
+  - type: Recyclable
 
 - type: entity
   id: RightHandDrone
@@ -48,3 +49,4 @@
   - type: Tag
     tags:
     - Trash
+  - type: Recyclable
