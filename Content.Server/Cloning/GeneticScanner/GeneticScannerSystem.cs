@@ -28,8 +28,8 @@ namespace Content.Server.Cloning.GeneticScanner
 
             SubscribeLocalEvent<GeneticScannerComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<GeneticScannerComponent, RelayMovementEntityEvent>(OnRelayMovement);
-            SubscribeLocalEvent<GeneticScannerComponent, GetInteractionVerbsEvent>(AddInsertOtherVerb);
-            SubscribeLocalEvent<GeneticScannerComponent, GetAlternativeVerbsEvent>(AddAlternativeVerbs);
+            SubscribeLocalEvent<GeneticScannerComponent, GetVerbsEvent<InteractionVerb>>(AddInsertOtherVerb);
+            SubscribeLocalEvent<GeneticScannerComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
             SubscribeLocalEvent<GeneticScannerComponent, DestructionEventArgs>(OnDestroyed);
             SubscribeLocalEvent<GeneticScannerComponent, DragDropEvent>(HandleDragDropOn);
         }
@@ -39,7 +39,7 @@ namespace Content.Server.Cloning.GeneticScanner
             scannerComponent.BodyContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(scannerComponent.Owner, $"{Name}-bodyContainer");
         }
 
-        private void AddInsertOtherVerb(EntityUid uid, GeneticScannerComponent component, GetInteractionVerbsEvent args)
+        private void AddInsertOtherVerb(EntityUid uid, GeneticScannerComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (args.Using == null ||
                 !args.CanAccess ||
@@ -48,14 +48,14 @@ namespace Content.Server.Cloning.GeneticScanner
                 !component.CanInsert(args.Using.Value))
                 return;
 
-            Verb verb = new();
+            InteractionVerb verb = new();
             verb.Act = () => InsertBody(uid, component);
             verb.Category = VerbCategory.Insert;
             verb.Text = EntityManager.GetComponent<MetaDataComponent>(args.Using.Value).EntityName;
             args.Verbs.Add(verb);
         }
 
-        private void AddAlternativeVerbs(EntityUid uid, GeneticScannerComponent component, GetAlternativeVerbsEvent args)
+        private void AddAlternativeVerbs(EntityUid uid, GeneticScannerComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -63,7 +63,7 @@ namespace Content.Server.Cloning.GeneticScanner
             // Eject verb
             if (IsOccupied(component))
             {
-                Verb verb = new();
+                AlternativeVerb verb = new();
                 verb.Act = () => EjectBody(uid, component);
                 verb.Category = VerbCategory.Eject;
                 verb.Text = Loc.GetString("medical-scanner-verb-noun-occupant");
@@ -79,7 +79,7 @@ namespace Content.Server.Cloning.GeneticScanner
                 component.CanInsert(args.User) &&
                 _actionBlockerSystem.CanMove(args.User))
             {
-                Verb verb = new();
+                AlternativeVerb verb = new();
                 verb.Act = () => InsertBody(args.User, component);
                 verb.Text = Loc.GetString("medical-scanner-verb-enter");
                 args.Verbs.Add(verb);
@@ -88,7 +88,7 @@ namespace Content.Server.Cloning.GeneticScanner
 
         private void OnRelayMovement(EntityUid uid, GeneticScannerComponent scannerComponent, RelayMovementEntityEvent args)
         {
-            if (_blocker.CanInteract(args.Entity))
+            if (_blocker.CanInteract(args.Entity, scannerComponent.Owner))
             {
                 if (_gameTiming.CurTime <
                     scannerComponent.LastInternalOpenAttempt + GeneticScannerComponent.InternalOpenAttemptDelay)

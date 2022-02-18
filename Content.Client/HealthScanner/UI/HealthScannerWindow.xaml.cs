@@ -10,7 +10,7 @@ using static Content.Shared.HealthScanner.SharedHealthScannerComponent;
 namespace Content.Client.HealthScanner.UI
 {
     [GenerateTypedNameReferences]
-    public sealed class HealthScannerWindow : DefaultWindow
+    public sealed partial class HealthScannerWindow : DefaultWindow
     {
         public HealthScannerWindow()
         {

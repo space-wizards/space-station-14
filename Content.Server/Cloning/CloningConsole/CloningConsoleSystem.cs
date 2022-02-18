@@ -56,7 +56,7 @@ namespace Content.Server.Cloning.CloningConsole
             if (!IsPowered(consoleComponent))
                 return;
 
-            if (!_actionBlockerSystem.CanInteract(args.User) || !_actionBlockerSystem.CanUse(args.User))
+            if (!_actionBlockerSystem.CanInteract(args.User, consoleComponent.Owner))
                 return;
 
             consoleComponent.UserInterface?.Open(actor.PlayerSession);
