@@ -54,7 +54,7 @@ public sealed class RoleBanManager
 
     private async Task CacheDbRoleBans(NetUserId userId, IPAddress? address = null, ImmutableArray<byte>? hwId = null)
     {
-        var roleBans = await _db.GetServerRoleBansAsync(address, userId, hwId);
+        var roleBans = await _db.GetServerRoleBansAsync(address, userId, hwId, false);
 
         var userRoleBans = new HashSet<string>();
         foreach (var ban in roleBans)
