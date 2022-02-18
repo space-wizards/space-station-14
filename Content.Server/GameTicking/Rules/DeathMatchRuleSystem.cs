@@ -35,14 +35,14 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem
         SubscribeLocalEvent<DamageChangedEvent>(OnHealthChanged);
     }
 
-    public override void Added()
+    public override void Started()
     {
         _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-death-match-added-announcement"));
 
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
     }
 
-    public override void Removed()
+    public override void Ended()
     {
         _deadCheckTimer = null;
         _restartTimer = null;

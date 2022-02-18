@@ -31,7 +31,7 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public class GasTankComponent : Component, IExamine, IGasMixtureHolder, IDropped, IActivate
+    public sealed class GasTankComponent : Component, IExamine, IGasMixtureHolder, IDropped, IActivate
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -312,7 +312,7 @@ namespace Content.Server.Atmos.Components
 
     [UsedImplicitly]
     [DataDefinition]
-    public class ToggleInternalsAction : IToggleItemAction
+    public sealed class ToggleInternalsAction : IToggleItemAction
     {
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {

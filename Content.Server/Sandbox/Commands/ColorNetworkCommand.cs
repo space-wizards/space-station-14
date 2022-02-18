@@ -16,7 +16,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.Sandbox.Commands
 {
     [AnyCommand]
-    public class ColorNetworkCommand : IConsoleCommand
+    public sealed class ColorNetworkCommand : IConsoleCommand
     {
         public string Command => "colornetwork";
         public string Description => Loc.GetString("color-network-command-description");

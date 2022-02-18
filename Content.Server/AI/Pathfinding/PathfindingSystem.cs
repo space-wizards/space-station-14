@@ -27,7 +27,7 @@ namespace Content.Server.AI.Pathfinding
     /// This system handles pathfinding graph updates as well as dispatches to the pathfinder
     /// (90% of what it's doing is graph updates so not much point splitting the 2 roles)
     /// </summary>
-    public class PathfindingSystem : EntitySystem
+    public sealed class PathfindingSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;

@@ -35,7 +35,7 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public class StrippingInventoryButtonPressed : BoundUserInterfaceMessage
+    public sealed class StrippingInventoryButtonPressed : BoundUserInterfaceMessage
     {
         public string Slot { get; }
 
@@ -46,7 +46,7 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public class StrippingHandButtonPressed : BoundUserInterfaceMessage
+    public sealed class StrippingHandButtonPressed : BoundUserInterfaceMessage
     {
         public string Hand { get; }
 
@@ -57,7 +57,7 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public class StrippingHandcuffButtonPressed : BoundUserInterfaceMessage
+    public sealed class StrippingHandcuffButtonPressed : BoundUserInterfaceMessage
     {
         public EntityUid Handcuff { get; }
 
@@ -68,7 +68,7 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public class StrippingBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class StrippingBoundUserInterfaceState : BoundUserInterfaceState
     {
         public Dictionary<(string ID, string Name), string> Inventory { get; }
         public Dictionary<string, string> Hands { get; }

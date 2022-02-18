@@ -17,7 +17,7 @@ namespace Content.Shared.Actions.Behaviors
         void DoTargetPointAction(TargetPointItemActionEventArgs args);
     }
 
-    public class TargetPointItemActionEventArgs : ItemActionEventArgs
+    public sealed class TargetPointItemActionEventArgs : ItemActionEventArgs
     {
         /// <summary>
         /// Local coordinates of the targeted position.

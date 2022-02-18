@@ -252,9 +252,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
                 return;
 
-            if (!args.User.InRangeUnobstructed(canister, SharedInteractionSystem.InteractionRange, popup: true))
-                return;
-
             if (!hands.Drop(args.Used, container))
                 return;
 

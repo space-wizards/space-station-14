@@ -8,6 +8,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Weapon.Melee.Components
 {
     [RegisterComponent]
+    [Virtual]
     public class MeleeWeaponComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]

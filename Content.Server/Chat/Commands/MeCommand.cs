@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class MeCommand : IConsoleCommand
+    internal sealed class MeCommand : IConsoleCommand
     {
         public string Command => "me";
         public string Description => "Perform an action.";

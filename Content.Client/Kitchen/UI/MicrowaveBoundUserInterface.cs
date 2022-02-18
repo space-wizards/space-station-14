@@ -15,7 +15,7 @@ using static Content.Shared.Kitchen.Components.SharedMicrowaveComponent;
 namespace Content.Client.Kitchen.UI
 {
     [UsedImplicitly]
-    public class MicrowaveBoundUserInterface : BoundUserInterface
+    public sealed class MicrowaveBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

@@ -5,7 +5,7 @@ using Robust.Shared.Players;
 namespace Content.Server.Cargo.Components
 {
     [RegisterComponent]
-    public class CargoOrderDatabaseComponent : SharedCargoOrderDatabaseComponent
+    public sealed class CargoOrderDatabaseComponent : SharedCargoOrderDatabaseComponent
     {
         public CargoOrderDatabase? Database { get; set; }
         public bool ConnectedToDatabase => Database != null;

@@ -27,7 +27,7 @@ namespace Content.Server.Disposal.Tube.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IDisposalTubeComponent))]
-    public class DisposalRouterComponent : DisposalJunctionComponent, IActivate
+    public sealed class DisposalRouterComponent : DisposalJunctionComponent, IActivate
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

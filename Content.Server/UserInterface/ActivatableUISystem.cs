@@ -118,7 +118,7 @@ namespace Content.Server.UserInterface
         }
     }
 
-    public class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
+    public sealed class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
     {
         public EntityUid User { get; }
         public ActivatableUIOpenAttemptEvent(EntityUid who)
@@ -127,16 +127,7 @@ namespace Content.Server.UserInterface
         }
     }
 
-    public class UserOpenActivatableUIAttemptEvent : CancellableEntityEventArgs //have to one-up the already stroke-inducing name
-    {
-        public EntityUid User { get; }
-        public UserOpenActivatableUIAttemptEvent(EntityUid who)
-        {
-            User = who;
-        }
-    }
-
-    public class ActivatableUIPlayerChangedEvent : EntityEventArgs
+    public sealed class ActivatableUIPlayerChangedEvent : EntityEventArgs
     {
     }
 }

@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Ghost
 {
     [AnyCommand]
-    public class Ghost : IConsoleCommand
+    public sealed class Ghost : IConsoleCommand
     {
         public string Command => "ghost";
         public string Description => "Give up on life and become a ghost.";

@@ -5,11 +5,13 @@ using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
+using Content.Server.Doors.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
@@ -39,6 +41,7 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, PryCancelledEvent>(OnPryCancelled);
         SubscribeLocalEvent<DoorComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<DoorComponent, WeldCancelledEvent>(OnWeldCancelled);
+        SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
     }
 
     protected override void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
@@ -153,7 +156,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (canEv.Cancelled)
             // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
             // under a windoor.
-            return true; 
+            return true;
 
         var modEv = new DoorGetPryTimeModifierEvent();
         RaiseLocalEvent(target, modEv, false);
@@ -303,9 +306,21 @@ public sealed class DoorSystem : SharedDoorSystem
         if(!container.Insert(board))
             Logger.Warning($"Couldn't insert board {ToPrettyString(board)} into door {ToPrettyString(uid)}!");
     }
+    private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
+    {
+        if(TryComp<AirlockComponent>(uid, out var airlockComponent))
+        {
+            if (door.State == DoorState.Closed)
+            {
+                StartOpening(uid);
+                airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
+                args.Handled = true;
+            }
+        }
+    }
 }
 
-public class PryFinishedEvent : EntityEventArgs { }
-public class PryCancelledEvent : EntityEventArgs { }
-public class WeldFinishedEvent : EntityEventArgs { }
-public class WeldCancelledEvent : EntityEventArgs { }
+public sealed class PryFinishedEvent : EntityEventArgs { }
+public sealed class PryCancelledEvent : EntityEventArgs { }
+public sealed class WeldFinishedEvent : EntityEventArgs { }
+public sealed class WeldCancelledEvent : EntityEventArgs { }

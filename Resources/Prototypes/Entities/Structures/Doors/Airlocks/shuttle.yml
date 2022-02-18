@@ -45,6 +45,9 @@
     fixVacuum: true
     airBlockedDirection:
       - South
+  - type: Tag
+    tags:
+      - ForceNoFixRotations
 
 - type: entity
   id: AirlockGlassShuttle

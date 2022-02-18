@@ -22,7 +22,7 @@ namespace Content.Shared.Interaction
         void Activate(ActivateEventArgs eventArgs);
     }
 
-    public class ActivateEventArgs : EventArgs, ITargetedInteractEventArgs
+    public sealed class ActivateEventArgs : EventArgs, ITargetedInteractEventArgs
     {
         public ActivateEventArgs(EntityUid user, EntityUid target)
         {
@@ -38,7 +38,7 @@ namespace Content.Shared.Interaction
     ///     Raised when an entity is activated in the world.
     /// </summary>
     [PublicAPI]
-    public class ActivateInWorldEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
+    public sealed class ActivateInWorldEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
     {
         /// <summary>
         ///     Entity that activated the target world entity.

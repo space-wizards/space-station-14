@@ -7,7 +7,7 @@ namespace Content.Shared.Speech
     ///     Component required for entities to be able to speak.
     /// </summary>
     [RegisterComponent]
-    public class SharedSpeechComponent : Component
+    public sealed class SharedSpeechComponent : Component
     {
         [DataField("enabled")]
         private bool _enabled = true;

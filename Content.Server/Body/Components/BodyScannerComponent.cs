@@ -11,7 +11,7 @@ namespace Content.Server.Body.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedBodyScannerComponent))]
-    public class BodyScannerComponent : SharedBodyScannerComponent, IActivate
+    public sealed class BodyScannerComponent : SharedBodyScannerComponent, IActivate
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

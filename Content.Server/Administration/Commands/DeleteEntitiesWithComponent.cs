@@ -10,7 +10,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.VarEdit)]
-    class DeleteEntitiesWithComponent : IConsoleCommand
+    sealed class DeleteEntitiesWithComponent : IConsoleCommand
     {
         public string Command => "deleteewc";
 

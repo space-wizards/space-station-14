@@ -14,13 +14,9 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Inventory;
@@ -41,6 +37,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {
@@ -111,7 +108,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!TryGetRequiredUtensils(user, food, out var utensils))
                 return false;
 
-            if (!user.InRangeUnobstructed(food.Owner, popup: true))
+            if (!_interactionSystem.InRangeUnobstructed(user, food.Owner, popup: true))
                 return true;
 
             var forceFeed = user != target;

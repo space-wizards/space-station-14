@@ -65,7 +65,7 @@ public sealed class PowerCellSlotComponent : Component
 /// <summary>
 ///     Raised directed at an entity with a power cell slot when the power cell inside has its charge updated or is ejected/inserted.
 /// </summary>
-public class PowerCellChangedEvent : EntityEventArgs
+public sealed class PowerCellChangedEvent : EntityEventArgs
 {
     public readonly bool Ejected;
 

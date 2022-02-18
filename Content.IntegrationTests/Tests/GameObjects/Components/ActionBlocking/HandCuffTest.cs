@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
     [TestFixture]
     [TestOf(typeof(CuffableComponent))]
     [TestOf(typeof(HandcuffComponent))]
-    public class HandCuffTest : ContentIntegrationTest
+    public sealed class HandCuffTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

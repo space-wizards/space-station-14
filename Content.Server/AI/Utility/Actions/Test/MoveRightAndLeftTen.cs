@@ -13,7 +13,7 @@ namespace Content.Server.AI.Utility.Actions.Test
     /// <summary>
     /// Used for pathfinding debugging
     /// </summary>
-    public class MoveRightAndLeftTen : UtilityAction
+    public sealed class MoveRightAndLeftTen : UtilityAction
     {
         public override bool CanOverride => false;
 
