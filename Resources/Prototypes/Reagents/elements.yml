@@ -109,7 +109,6 @@
     Medicine:
       effects:
       - !type:ModifyBloodLevel
-        scaled: true # scales 2x with the amount of iron you consume
         amount: 2
 
 - type: reagent
