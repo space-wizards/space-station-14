@@ -653,6 +653,9 @@
     tags:
     - Trash
   - type: Recyclable
+  - type: Actions
+    innateActions:
+    - NoAction
 
 
 - type: entity
