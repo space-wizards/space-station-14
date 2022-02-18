@@ -6,7 +6,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Utility.Commands
 {
     [AnyCommand]
-    class EchoCommand : IConsoleCommand
+    sealed class EchoCommand : IConsoleCommand
     {
         public string Command => "echo";
 

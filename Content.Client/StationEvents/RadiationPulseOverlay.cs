@@ -12,7 +12,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.StationEvents
 {
-    public class RadiationPulseOverlay : Overlay
+    public sealed class RadiationPulseOverlay : Overlay
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

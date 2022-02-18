@@ -19,7 +19,7 @@ namespace Content.Shared.Body.Part
     }
 
     [Serializable, NetSerializable]
-    public class BodyPartRemovedEventArgs : EventArgs
+    public sealed class BodyPartRemovedEventArgs : EventArgs
     {
         public BodyPartRemovedEventArgs(string slot, SharedBodyPartComponent part)
         {

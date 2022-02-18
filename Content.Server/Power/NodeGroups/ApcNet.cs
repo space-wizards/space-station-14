@@ -31,7 +31,7 @@ namespace Content.Server.Power.NodeGroups
 
     [NodeGroup(NodeGroupID.Apc)]
     [UsedImplicitly]
-    public class ApcNet : BaseNetConnectorNodeGroup<IApcNet>, IApcNet
+    public sealed class ApcNet : BaseNetConnectorNodeGroup<IApcNet>, IApcNet
     {
         private readonly PowerNetSystem _powerNetSystem = EntitySystem.Get<PowerNetSystem>();
 

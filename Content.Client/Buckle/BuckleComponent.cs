@@ -7,7 +7,7 @@ namespace Content.Client.Buckle
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBuckleComponent))]
-    public class BuckleComponent : SharedBuckleComponent
+    public sealed class BuckleComponent : SharedBuckleComponent
     {
         private bool _buckled;
         private int? _originalDrawDepth;

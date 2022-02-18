@@ -6,7 +6,7 @@ namespace Content.Client.Strip
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrippableComponent))]
-    public class StrippableComponent : SharedStrippableComponent
+    public sealed class StrippableComponent : SharedStrippableComponent
     {
         public override bool Drop(DragDropEvent args)
         {

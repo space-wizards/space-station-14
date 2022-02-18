@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.MachineLinking.System
 {
     [UsedImplicitly]
-    public class SignalButtonSystem : EntitySystem
+    public sealed class SignalButtonSystem : EntitySystem
     {
         public override void Initialize()
         {

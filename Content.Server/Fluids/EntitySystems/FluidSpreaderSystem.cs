@@ -66,17 +66,16 @@ public sealed class FluidSpreaderSystem : EntitySystem
         var remQueue = new RemQueue<EntityUid>();
         foreach (var uid in _fluidSpread)
         {
-            MetaDataComponent? meta = null;
+            if (!TryComp(uid, out MetaDataComponent? meta) || meta.Deleted)
+            {
+                remQueue.Add(uid);
+                continue;
+            }
 
-            if (Paused(uid, meta))
+            if (meta.EntityPaused)
                 continue;
 
-            // If not paused
-            // it's either Deleted or will be via SpreadFluid
             remQueue.Add(uid);
-
-            if (Deleted(uid, meta))
-                continue;
 
             SpreadFluid(uid);
         }

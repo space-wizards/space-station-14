@@ -13,7 +13,7 @@ using static Content.Shared.Wires.SharedWiresComponent;
 namespace Content.Server.VendingMachines
 {
     [RegisterComponent]
-    public class VendingMachineComponent : SharedVendingMachineComponent, IWires
+    public sealed class VendingMachineComponent : SharedVendingMachineComponent, IWires
     {
         public bool Ejecting;
         public TimeSpan AnimationDuration = TimeSpan.Zero;
@@ -58,7 +58,7 @@ namespace Content.Server.VendingMachines
         }
     }
 
-    public class WiresUpdateEventArgs : EventArgs
+    public sealed class WiresUpdateEventArgs : EventArgs
     {
         public readonly object Identifier;
         public readonly WiresAction Action;

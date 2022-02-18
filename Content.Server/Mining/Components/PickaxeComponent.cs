@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Mining.Components
 {
     [RegisterComponent]
-    public class PickaxeComponent : Component
+    public sealed class PickaxeComponent : Component
     {
         [DataField("sound")]
         public SoundSpecifier MiningSound { get; set; } = new SoundPathSpecifier("/Audio/Items/Mining/pickaxe.ogg");

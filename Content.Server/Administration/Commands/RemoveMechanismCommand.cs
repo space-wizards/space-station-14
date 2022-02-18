@@ -9,7 +9,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class RemoveMechanismCommand : IConsoleCommand
+    public sealed class RemoveMechanismCommand : IConsoleCommand
     {
         public string Command => "rmmechanism";
         public string Description => "Removes a given entity from it's containing bodypart, if any.";

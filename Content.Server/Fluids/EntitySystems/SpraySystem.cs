@@ -125,7 +125,7 @@ public sealed class SpraySystem : EntitySystem
     }
 }
 
-public class SprayAttemptEvent : CancellableEntityEventArgs
+public sealed class SprayAttemptEvent : CancellableEntityEventArgs
 {
     public EntityUid User;
 

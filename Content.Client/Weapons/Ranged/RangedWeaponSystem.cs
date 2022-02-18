@@ -16,7 +16,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Weapons.Ranged
 {
     [UsedImplicitly]
-    public class RangedWeaponSystem : EntitySystem
+    public sealed class RangedWeaponSystem : EntitySystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;

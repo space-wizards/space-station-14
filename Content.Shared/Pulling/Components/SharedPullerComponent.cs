@@ -7,7 +7,7 @@ namespace Content.Shared.Pulling.Components
 {
     [RegisterComponent]
     [Friend(typeof(SharedPullingStateManagementSystem))]
-    public class SharedPullerComponent : Component
+    public sealed class SharedPullerComponent : Component
     {
         // Before changing how this is updated, please see SharedPullerSystem.RefreshMovementSpeed
         public float WalkSpeedModifier => Pulling == default ? 1.0f : 0.75f;

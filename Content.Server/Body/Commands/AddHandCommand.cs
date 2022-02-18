@@ -11,7 +11,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    class AddHandCommand : IConsoleCommand
+    sealed class AddHandCommand : IConsoleCommand
     {
         public const string DefaultHandPrototype = "LeftHandHuman";
 

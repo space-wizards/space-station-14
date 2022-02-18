@@ -13,7 +13,7 @@ namespace Content.Server.Power.Components;
 
 [RegisterComponent]
 [Friend(typeof(ApcSystem))]
-public class ApcComponent : BaseApcNetComponent
+public sealed class ApcComponent : BaseApcNetComponent
 {
     [DataField("onReceiveMessageSound")]
     public SoundSpecifier OnReceiveMessageSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
@@ -28,6 +28,8 @@ public class ApcComponent : BaseApcNetComponent
 
     [ViewVariables]
     public bool MainBreakerEnabled = true;
+
+    public bool Emagged = false;
 
     public const float HighPowerThreshold = 0.9f;
     public static TimeSpan VisualsChangeDelay = TimeSpan.FromSeconds(1);

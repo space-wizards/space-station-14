@@ -36,7 +36,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Entry
 {
-    public class EntryPoint : GameServer
+    public sealed class EntryPoint : GameServer
     {
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;

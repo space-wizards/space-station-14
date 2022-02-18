@@ -15,7 +15,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.EscapeMenu.UI.Tabs
 {
     [GenerateTypedNameReferences]
-    public partial class GraphicsTab : Control
+    public sealed partial class GraphicsTab : Control
     {
         private static readonly float[] UIScaleOptions =
         {

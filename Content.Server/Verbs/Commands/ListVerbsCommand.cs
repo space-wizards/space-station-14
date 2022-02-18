@@ -10,7 +10,7 @@ using System.Linq;
 namespace Content.Server.Verbs.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class ListVerbsCommand : IConsoleCommand
+    public sealed class ListVerbsCommand : IConsoleCommand
     {
         public string Command => "listverbs";
         public string Description => Loc.GetString("list-verbs-command-description");

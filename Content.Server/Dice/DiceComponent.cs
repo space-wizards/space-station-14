@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Dice
 {
     [RegisterComponent, Friend(typeof(DiceSystem))]
-    public class DiceComponent : Component
+    public sealed class DiceComponent : Component
     {
         [ViewVariables]
         [DataField("sound")]

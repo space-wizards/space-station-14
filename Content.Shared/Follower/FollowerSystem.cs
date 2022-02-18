@@ -9,7 +9,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Shared.Follower;
 
-public class FollowerSystem : EntitySystem
+public sealed class FollowerSystem : EntitySystem
 {
     public override void Initialize()
     {

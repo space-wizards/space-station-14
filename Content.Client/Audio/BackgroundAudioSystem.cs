@@ -18,7 +18,7 @@ using Robust.Shared.Random;
 namespace Content.Client.Audio
 {
     [UsedImplicitly]
-    public class BackgroundAudioSystem : EntitySystem
+    public sealed class BackgroundAudioSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;

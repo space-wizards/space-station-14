@@ -11,6 +11,7 @@ namespace Content.Client.Entry
             "IngestionBlocker",
             "Charger",
             "CloningPod",
+            "HealthExaminable",
             "Destructible",
             "Temperature",
             "AtmosExposed",

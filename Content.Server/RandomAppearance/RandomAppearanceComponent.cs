@@ -10,7 +10,7 @@ namespace Content.Server.RandomAppearance;
 
 [RegisterComponent]
 [Friend(typeof(RandomAppearanceSystem))]
-public class RandomAppearanceComponent : Component, ISerializationHooks
+public sealed class RandomAppearanceComponent : Component, ISerializationHooks
 {
     [DataField("spriteStates")]
     public string[] SpriteStates = {"0", "1", "2", "3", "4"};

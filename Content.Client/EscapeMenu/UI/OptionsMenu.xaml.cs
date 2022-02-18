@@ -7,7 +7,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.EscapeMenu.UI
 {
     [GenerateTypedNameReferences]
-    public partial class OptionsMenu : DefaultWindow
+    public sealed partial class OptionsMenu : DefaultWindow
     {
         public OptionsMenu()
         {

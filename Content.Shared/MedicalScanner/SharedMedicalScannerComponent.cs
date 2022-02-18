@@ -13,7 +13,7 @@ namespace Content.Shared.MedicalScanner
     public abstract class SharedMedicalScannerComponent : Component, IDragDropOn
     {
         [Serializable, NetSerializable]
-        public class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly EntityUid? Entity;
             public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup;
@@ -67,7 +67,7 @@ namespace Content.Shared.MedicalScanner
         }
 
         [Serializable, NetSerializable]
-        public class UiButtonPressedMessage : BoundUserInterfaceMessage
+        public sealed class UiButtonPressedMessage : BoundUserInterfaceMessage
         {
             public readonly UiButton Button;
 

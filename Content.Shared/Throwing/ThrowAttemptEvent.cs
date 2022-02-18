@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Throwing
 {
-    public class ThrowAttemptEvent : CancellableEntityEventArgs
+    public sealed class ThrowAttemptEvent : CancellableEntityEventArgs
     {
         public ThrowAttemptEvent(EntityUid uid)
         {

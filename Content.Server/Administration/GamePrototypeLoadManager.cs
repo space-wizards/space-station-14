@@ -14,7 +14,7 @@ namespace Content.Server.Administration;
 /// <summary>
 ///     Manages sending runtime-loaded prototypes from game staff to clients.
 /// </summary>
-public class GamePrototypeLoadManager : IGamePrototypeLoadManager
+public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
 {
     [Dependency] private readonly IServerNetManager _netManager = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;

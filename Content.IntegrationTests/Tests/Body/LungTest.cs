@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests.Body
 {
     [TestFixture]
     [TestOf(typeof(LungSystem))]
-    public class LungTest : ContentIntegrationTest
+    public sealed class LungTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

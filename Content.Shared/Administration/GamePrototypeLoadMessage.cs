@@ -3,7 +3,7 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Administration;
 
-public class GamePrototypeLoadMessage : NetMessage
+public sealed class GamePrototypeLoadMessage : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.String;
 

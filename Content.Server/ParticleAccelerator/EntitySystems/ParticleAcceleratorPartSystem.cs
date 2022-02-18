@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.ParticleAccelerator.EntitySystems
 {
     [UsedImplicitly]
-    public class ParticleAcceleratorPartSystem : EntitySystem
+    public sealed class ParticleAcceleratorPartSystem : EntitySystem
     {
         public override void Initialize()
         {

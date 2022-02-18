@@ -12,7 +12,7 @@ namespace Content.Server.Chemistry.TileReactions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class SpillIfPuddlePresentTileReaction : ITileReaction
+    public sealed class SpillIfPuddlePresentTileReaction : ITileReaction
     {
         public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
         {
