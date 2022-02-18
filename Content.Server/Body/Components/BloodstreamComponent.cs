@@ -71,7 +71,7 @@ namespace Content.Server.Body.Components
         ///     How much blood needs to be in the temporary solution in order to create a puddle?
         /// </summary>
         [DataField("bleedPuddleThreshold")]
-        public FixedPoint2 BleedPuddleThreshold = 10.0f;
+        public FixedPoint2 BleedPuddleThreshold = 5.0f;
 
         /// <summary>
         ///     A modifier set prototype ID corresponding to how damage should be modified

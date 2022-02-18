@@ -90,7 +90,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
         component.ChemicalSolution.MaxVolume = component.ChemicalMaxVolume;
         component.BloodSolution.MaxVolume = component.BloodMaxVolume;
-        component.BloodTemporarySolution.MaxVolume = component.BleedPuddleThreshold * 2; // give some leeway
+        component.BloodTemporarySolution.MaxVolume = component.BleedPuddleThreshold * 4; // give some leeway, for chemstream as well
 
         // Fill blood solution with BLOOD
         _solutionContainerSystem.TryAddReagent(uid, component.BloodSolution, component.BloodReagent,
