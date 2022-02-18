@@ -6,17 +6,24 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class ListRoleBans : IConsoleCommand
+public sealed class RoleBanListCommand : IConsoleCommand
 {
     public string Command => "rolebanlist";
     public string Description => "Lists the user's role bans";
-    public string Help => "Usage: <name or user ID>";
+    public string Help => "Usage: <name or user ID> [include unbanned]";
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length != 1)
+        if (args.Length != 1 && args.Length != 2)
         {
             shell.WriteLine($"Invalid amount of args. {Help}");
+            return;
+        }
+
+        var includeUnbanned = true;
+        if (args.Length == 2 && !bool.TryParse(args[1], out includeUnbanned))
+        {
+            shell.WriteLine($"Argument two ({args[1]}) is not a boolean.");
             return;
         }
 
@@ -28,7 +35,7 @@ public sealed class ListRoleBans : IConsoleCommand
         var located = await locator.LookupIdByNameOrIdAsync(target);
         if (located == null)
         {
-            shell.WriteError("Unable to find a player with that name.");
+            shell.WriteError("Unable to find a player with that name or id.");
             return;
         }
 
@@ -36,7 +43,7 @@ public sealed class ListRoleBans : IConsoleCommand
         var targetHWid = located.LastHWId;
         var targetAddress = located.LastAddress;
 
-        var bans = await dbMan.GetServerRoleBansAsync(targetAddress, targetUid, targetHWid, true);
+        var bans = await dbMan.GetServerRoleBansAsync(targetAddress, targetUid, targetHWid, includeUnbanned);
 
         if (bans.Count == 0)
         {
@@ -52,7 +59,7 @@ public sealed class ListRoleBans : IConsoleCommand
                 .Append("Ban ID: ")
                 .Append(ban.Id)
                 .Append("\n")
-                .Append("Banned in ")
+                .Append("Banned on ")
                 .Append(ban.BanTime);
 
             if (ban.ExpirationTime == null)
