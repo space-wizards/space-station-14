@@ -48,6 +48,13 @@
     solution: chemicals
   - type: DrawableSolution
     solution: bloodstream
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
   - type: Bloodstream
     bloodlossDamage:
       types:
