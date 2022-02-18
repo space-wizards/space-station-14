@@ -15,7 +15,7 @@ namespace Content.Shared.Nutrition.Components
     {
         //TODO: List for sub-products like animal-hides, organs and etc?
         [ViewVariables]
-        [DataField("meat", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("spawned", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string SpawnedPrototype = "FoodMeat";
 
         [ViewVariables]
