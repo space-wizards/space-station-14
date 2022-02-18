@@ -1,10 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Places firelocks on Packed to make it not Atmos Hell. Fixes a number
-      of access bugs and broken vents., type: Fix}
-  id: 578
-  time: '2021-11-13T01:31:31.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Docking airlocks have been mapped onto Saltern's arrivals., type: Add}
@@ -2978,3 +2972,10 @@ Entries:
   - {message: Round-end restart time increased to one minute., type: Tweak}
   id: 1078
   time: '2022-02-18T02:45:50.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You can now examine the health of entities by using an examine verb.
+      This means you no longer have to hop in a scanning machine just to judge someone's
+      health., type: Add}
+  id: 1079
+  time: '2022-02-18T03:26:05.0000000+00:00'
