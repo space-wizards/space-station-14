@@ -21,6 +21,8 @@ public sealed class RoleBanManager
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
 
+    private const string JobPrefix = "Job:";
+
     private readonly Dictionary<NetUserId, HashSet<ServerRoleBanDef>> _cachedRoleBans = new();
 
     public void Initialize()
@@ -104,7 +106,7 @@ public sealed class RoleBanManager
             return;
         }
 
-        job = string.Concat("Job:", job);
+        job = string.Concat(JobPrefix, job);
         CreateRoleBan(shell, target, job, reason, minutes);
     }
 
@@ -113,7 +115,7 @@ public sealed class RoleBanManager
         if (!_cachedRoleBans.TryGetValue(playerUserId, out var roleBans))
             return null;
         return roleBans
-            .Where(ban => ban.Role.StartsWith("Job:"))
+            .Where(ban => ban.Role.StartsWith(JobPrefix))
             .Select(ban => ban.Role[4..])
             .ToHashSet();
     }
