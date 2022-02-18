@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Maps;
-using Content.Shared.Window;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -12,7 +11,7 @@ namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class EmptyOrWindowValidInTile : IConstructionCondition
+    public sealed class EmptyOrWindowValidInTile : IConstructionCondition
     {
         [DataField("tileNotBlocked")]
         private readonly TileNotBlocked _tileNotBlocked = new();

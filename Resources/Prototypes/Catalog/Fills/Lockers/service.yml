@@ -83,6 +83,7 @@
         amount: 2
       - id: HydroponicsToolClippers
       - id: ClothingBeltPlant
+      - id: PlantBag ##Some maps don't have nutrivend
       - id: TowercapSeeds
       - id: BananaSeeds
         prob: 0.6

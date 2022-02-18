@@ -18,7 +18,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Items.UI
 {
-    public class ItemStatusPanel : Control
+    public sealed class ItemStatusPanel : Control
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 

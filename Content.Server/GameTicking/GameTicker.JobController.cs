@@ -17,7 +17,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameTicking
 {
     // This code is responsible for the assigning & picking of jobs.
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         [ViewVariables]
         private readonly List<ManifestEntry> _manifest = new();

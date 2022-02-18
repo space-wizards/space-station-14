@@ -7,7 +7,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.Ghost.Roles.UI
 {
     [GenerateTypedNameReferences]
-    public partial class MakeGhostRoleWindow : DefaultWindow
+    public sealed partial class MakeGhostRoleWindow : DefaultWindow
     {
         public delegate void MakeRole(EntityUid uid, string name, string description, string rules, bool makeSentient);
 

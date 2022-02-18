@@ -6,7 +6,7 @@ using static Content.Shared.Configurable.SharedConfigurationComponent;
 
 namespace Content.Client.Configurable.UI
 {
-    public class ConfigurationBoundUserInterface : BoundUserInterface
+    public sealed class ConfigurationBoundUserInterface : BoundUserInterface
     {
         public Regex? Validation { get; internal set; }
 

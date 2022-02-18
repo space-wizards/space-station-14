@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Advertise
 {
     [RegisterComponent, Friend(typeof(AdvertiseSystem))]
-    public class AdvertiseComponent : Component
+    public sealed class AdvertiseComponent : Component
     {
         /// <summary>
         ///     Minimum time in seconds to wait before saying a new ad, in seconds. Has to be larger than or equal to 1.

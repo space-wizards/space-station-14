@@ -14,7 +14,7 @@ namespace Content.Shared.Actions.Prototypes
     /// </summary>
     [Prototype("itemAction")]
     [DataDefinition]
-    public class ItemActionPrototype : BaseActionPrototype, ISerializationHooks
+    public sealed class ItemActionPrototype : BaseActionPrototype, ISerializationHooks
     {
         /// <summary>
         /// Type of item action, no 2 itemAction prototypes should have the same one.

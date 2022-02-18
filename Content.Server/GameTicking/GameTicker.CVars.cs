@@ -4,7 +4,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         [ViewVariables]
         public bool LobbyEnabled { get; private set; } = false;

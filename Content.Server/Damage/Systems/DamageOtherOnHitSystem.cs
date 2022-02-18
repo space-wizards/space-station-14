@@ -7,7 +7,7 @@ using Content.Shared.Throwing;
 
 namespace Content.Server.Damage.Systems
 {
-    public class DamageOtherOnHitSystem : EntitySystem
+    public sealed class DamageOtherOnHitSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;

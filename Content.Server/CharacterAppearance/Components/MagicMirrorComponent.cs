@@ -15,7 +15,7 @@ namespace Content.Server.CharacterAppearance.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class MagicMirrorComponent : SharedMagicMirrorComponent, IActivate
+    public sealed class MagicMirrorComponent : SharedMagicMirrorComponent, IActivate
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly SpriteAccessoryManager _spriteAccessoryManager = default!;

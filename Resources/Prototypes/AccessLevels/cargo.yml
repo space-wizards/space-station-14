@@ -1,8 +1,0 @@
-- type: accessLevel
-  id: Quartermaster
-
-- type: accessLevel
-  id: Cargo
-
-- type: accessLevel
-  id: Salvage

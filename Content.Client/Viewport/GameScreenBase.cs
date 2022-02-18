@@ -21,6 +21,7 @@ namespace Content.Client.Viewport
     // OH GOD.
     // Ok actually it's fine.
     // Instantiated dynamically through the StateManager, Dependencies will be resolved.
+    [Virtual]
     public class GameScreenBase : State, IEntityEventSubscriber
     {
         [Dependency] private readonly IInputManager _inputManager = default!;

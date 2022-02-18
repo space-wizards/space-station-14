@@ -19,7 +19,7 @@ namespace Content.Server.Recycling.Components
     // TODO: Add sound and safe beep
     [RegisterComponent]
     [Friend(typeof(RecyclerSystem))]
-    public class RecyclerComponent : Component, ISuicideAct
+    public sealed class RecyclerComponent : Component, ISuicideAct
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

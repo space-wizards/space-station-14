@@ -8,7 +8,7 @@ namespace Content.Server.Labels.Components
     ///     This component allows you to attach and remove a piece of paper to an entity.
     /// </summary>
     [RegisterComponent]
-    public class PaperLabelComponent : Component
+    public sealed class PaperLabelComponent : Component
     {
         [DataField("labelSlot")]
         public ItemSlot LabelSlot = new();

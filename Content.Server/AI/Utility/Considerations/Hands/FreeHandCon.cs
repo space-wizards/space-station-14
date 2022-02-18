@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Hands
 {
-    public class FreeHandCon : Consideration
+    public sealed class FreeHandCon : Consideration
     {
         protected override float GetScore(Blackboard context)
         {

@@ -6,7 +6,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.AI.Components
 {
     [Prototype("aiFaction")]
-    public class AiFactionPrototype : IPrototype
+    public sealed class AiFactionPrototype : IPrototype
     {
         // These are immutable so any dynamic changes aren't saved back over.
         // AiFactionSystem will just read these and then store them.

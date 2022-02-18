@@ -6,7 +6,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.CharacterInfo
 {
-    public class ProgressTextureRect : TextureRect
+    public sealed class ProgressTextureRect : TextureRect
     {
         public float Progress;
 

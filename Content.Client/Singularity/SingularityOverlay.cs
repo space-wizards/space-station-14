@@ -11,7 +11,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Singularity
 {
-    public class SingularityOverlay : Overlay
+    public sealed class SingularityOverlay : Overlay
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

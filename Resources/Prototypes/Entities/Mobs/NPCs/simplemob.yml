@@ -32,6 +32,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
+    netsync: false
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -52,7 +53,14 @@
       - Opaque
   - type: SolutionContainerManager
   - type: Bloodstream
-    max_volume: 100
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
   - type: Damageable
     damageContainer: Biological
   - type: AtmosExposed

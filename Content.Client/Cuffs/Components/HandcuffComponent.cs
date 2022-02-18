@@ -8,7 +8,7 @@ namespace Content.Client.Cuffs.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedHandcuffComponent))]
-    public class HandcuffComponent : SharedHandcuffComponent
+    public sealed class HandcuffComponent : SharedHandcuffComponent
     {
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {

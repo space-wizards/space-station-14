@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.BarSign
 {
     [RegisterComponent]
-    public class BarSignComponent : Component
+    public sealed class BarSignComponent : Component
     {
         [DataField("current")]
         [ViewVariables(VVAccess.ReadOnly)]

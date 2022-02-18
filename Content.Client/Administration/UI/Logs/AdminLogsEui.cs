@@ -13,7 +13,7 @@ using static Content.Shared.Administration.AdminLogsEuiMsg;
 namespace Content.Client.Administration.UI.Logs;
 
 [UsedImplicitly]
-public class AdminLogsEui : BaseEui
+public sealed class AdminLogsEui : BaseEui
 {
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;

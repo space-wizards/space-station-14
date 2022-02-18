@@ -14,7 +14,7 @@ namespace Content.Shared.Damage
     }
 
     [Serializable, NetSerializable]
-    public class DamageVisualizerGroupData : ICloneable
+    public sealed class DamageVisualizerGroupData : ICloneable
     {
         public List<string> GroupList;
 

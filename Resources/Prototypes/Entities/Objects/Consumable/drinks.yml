@@ -14,6 +14,7 @@
   - type: Drink
   - type: Sprite
     state: icon
+    netsync: false
   - type: Spillable
     solution: drink
   - type: UserInterface
@@ -2120,4 +2121,4 @@
           Quantity: 30
         - ReagentId: CapsaicinOil
           Quantity: 5
-          
+

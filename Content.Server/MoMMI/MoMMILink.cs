@@ -128,7 +128,7 @@ namespace Content.Server.MoMMI
             public object Contents = null!;
         }
 
-        private class MoMMIMessageOOC
+        private sealed class MoMMIMessageOOC
         {
             [JsonInclude] [JsonPropertyName("sender")]
             public string Sender = null!;
@@ -137,7 +137,7 @@ namespace Content.Server.MoMMI
             public string Contents = null!;
         }
 
-        private class OOCPostMessage
+        private sealed class OOCPostMessage
         {
 #pragma warning disable CS0649
             [JsonInclude] [JsonPropertyName("password")]

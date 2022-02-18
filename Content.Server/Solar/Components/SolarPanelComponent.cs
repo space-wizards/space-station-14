@@ -17,7 +17,7 @@ namespace Content.Server.Solar.Components
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(PowerSolarSystem))]
-    public class SolarPanelComponent : Component
+    public sealed class SolarPanelComponent : Component
     {
         /// <summary>
         /// Maximum supply output by this panel (coverage = 1)

@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Inventory.Events;
 
-public class UnequippedEventBase : EntityEventArgs
+public abstract class UnequippedEventBase : EntityEventArgs
 {
     /// <summary>
     /// The entity unequipping.
@@ -27,14 +27,14 @@ public class UnequippedEventBase : EntityEventArgs
     }
 }
 
-public class DidUnequipEvent : UnequippedEventBase
+public sealed class DidUnequipEvent : UnequippedEventBase
 {
     public DidUnequipEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
     {
     }
 }
 
-public class GotUnequippedEvent : UnequippedEventBase
+public sealed class GotUnequippedEvent : UnequippedEventBase
 {
     public GotUnequippedEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
     {
