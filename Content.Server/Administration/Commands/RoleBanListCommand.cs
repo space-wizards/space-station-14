@@ -62,19 +62,16 @@ public sealed class RoleBanListCommand : IConsoleCommand
                 .Append("Banned on ")
                 .Append(ban.BanTime);
 
-            if (ban.ExpirationTime == null)
-            {
-                bansString.Append(".");
-            }
-            else
+            if (ban.ExpirationTime != null)
             {
                 bansString
                     .Append(" until ")
-                    .Append(ban.ExpirationTime.Value)
-                    .Append(".");
+                    .Append(ban.ExpirationTime.Value);
             }
 
-            bansString.Append("\n");
+            bansString
+                .Append(".")
+                .Append("\n");
 
             bansString
                 .Append("Reason: ")
