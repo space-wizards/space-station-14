@@ -52,16 +52,6 @@
     safe: false
   - type: StandingState
   - type: Alerts
-  - type: Bloodstream
-    bloodReagent: Oil
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
 
 - type: entity
   name: drone
