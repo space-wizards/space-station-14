@@ -15,7 +15,7 @@ namespace Content.Server.Cloning.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("cloningTime")]
-        public float CloningTime = 30f;
+        public float CloningTime = 60f;
 
         [ViewVariables]
         public CloningPodStatus Status;
