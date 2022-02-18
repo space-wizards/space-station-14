@@ -1,17 +1,11 @@
-using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.UserInterface
 {
@@ -95,8 +89,10 @@ namespace Content.Server.UserInterface
             // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
             // This is so that stuff can require further conditions (like power).
             var oae = new ActivatableUIOpenAttemptEvent(user);
+            var uae = new UserOpenActivatableUIAttemptEvent(user);
+            RaiseLocalEvent(user, uae, false);
             RaiseLocalEvent((aui).Owner, oae, false);
-            if (oae.Cancelled) return false;
+            if (oae.Cancelled || uae.Cancelled) return false;
 
             SetCurrentSingleUser((aui).Owner, actor.PlayerSession, aui);
             ui.Toggle(actor.PlayerSession);
@@ -131,6 +127,14 @@ namespace Content.Server.UserInterface
         }
     }
 
+    public class UserOpenActivatableUIAttemptEvent : CancellableEntityEventArgs //have to one-up the already stroke-inducing name
+    {
+        public EntityUid User { get; }
+        public UserOpenActivatableUIAttemptEvent(EntityUid who)
+        {
+            User = who;
+        }
+    }
     public sealed class ActivatableUIPlayerChangedEvent : EntityEventArgs
     {
     }
