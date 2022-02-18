@@ -54,6 +54,7 @@ namespace Content.Server.Access.Systems
                         EntityManager.SpawnEntity("FoodBadRecipe",
                             transformComponent.Coordinates);
                     }
+                    return;
                 }
                 // If they're unlucky, brick their ID
                 if (randomPick <= 0.25f)
