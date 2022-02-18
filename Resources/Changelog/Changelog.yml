@@ -1,26 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Docking airlocks have been mapped onto Saltern's arrivals., type: Add}
-  id: 579
-  time: '2021-11-13T01:46:27.0000000+00:00'
-- author: FoLoKe
-  changes:
-  - {message: 'added "one hand" mechanic to the monkeys, improvise', type: Add}
-  - {message: added ability for animals to receive damage from bullets, type: Fix}
-  - {message: offcentered some sprites to match animal physical body, type: Fix}
-  id: 580
-  time: '2021-11-13T01:48:06.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Flipping something no longer anchors or rotates it., type: Fix}
-  id: 581
-  time: '2021-11-13T01:54:04.0000000+00:00'
-- author: Tomeno
-  changes:
-  - {message: Added hard-drop ghosts to Nanotrasen Block Game, type: Add}
-  id: 582
-  time: '2021-11-13T20:43:54.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Fixes firelocks on Packed Station, type: Tweak}
@@ -2979,3 +2957,25 @@ Entries:
       health., type: Add}
   id: 1079
   time: '2022-02-18T03:26:05.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Drones bleed oil, and xenos bleed fluorosulfuric acid.', type: Add}
+  id: 1080
+  time: '2022-02-18T06:00:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'A small amount of reagents from your chemstream are now spilled when
+      losing blood. Use that information wisely, detectives.', type: Tweak}
+  id: 1081
+  time: '2022-02-18T06:00:50.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The recycler should dispose of most of most trash items now., type: Add}
+  id: 1082
+  time: '2022-02-18T06:00:57.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added craftable doors for most materials you can and can't get your
+      hands on, type: Add}
+  id: 1083
+  time: '2022-02-18T06:01:35.0000000+00:00'
