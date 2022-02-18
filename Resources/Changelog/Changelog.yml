@@ -1,16 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Fixes firelocks on Packed Station, type: Tweak}
-  - {message: The solars on Packed Station are now safer., type: Tweak}
-  id: 583
-  time: '2021-11-13T21:41:21.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: It is no longer possible to pull your chair while you're sitting on
-      it. They aren't motorized., type: Fix}
-  id: 584
-  time: '2021-11-13T21:43:37.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: There is now a MIDI volume slider in the options menu., type: Add}
@@ -2979,3 +2967,18 @@ Entries:
       hands on, type: Add}
   id: 1083
   time: '2022-02-18T06:01:35.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones can no longer interact with people at all or use computers.,
+    type: Remove}
+  id: 1084
+  time: '2022-02-18T22:57:31.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Entities that are gibbed now spill all of their blood and chems., type: Add}
+  - {message: 'Smaller butcherable entities like carp or dogs are now butchered using
+      sharp objects (knives, fire axe, etc) rather than the meat spike.', type: Tweak}
+  - {message: 'More items (axes, sabres) can now chop logs or harvest ligenous plants.',
+    type: Tweak}
+  id: 1085
+  time: '2022-02-18T22:57:42.0000000+00:00'
