@@ -316,7 +316,6 @@
           types:
             Asphyxiation: -5
       - !type:ModifyBleedAmount
-        scaled: true
         amount: -0.25
 
 - type: reagent
@@ -461,7 +460,7 @@
       # Medium-large quantities can hurt you instead,
       # but still technically stop your bleeding.
       - !type:ModifyBleedAmount
-        scaled: true
+        amount: -1.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold

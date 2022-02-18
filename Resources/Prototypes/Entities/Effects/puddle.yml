@@ -101,7 +101,7 @@
   - type: Puddle
     slipThreshold: 20
   - type: Evaporation
-    evaporateTime: 20 # 4 times slower than normal
+    evaporateTime: 400 # very slow
   - type: Appearance
     visuals:
     - type: PuddleVisualizer

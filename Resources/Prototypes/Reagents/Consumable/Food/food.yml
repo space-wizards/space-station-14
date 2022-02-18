@@ -48,6 +48,9 @@
           groups:
             Brute: -0.5
             Burn: -0.5
+      # Helps you stop bleeding to an extent.
+      - !type:ModifyBleedAmount
+        amount: -0.25
       - !type:SatiateHunger #Numbers are balanced with this in mind + it helps limit how much healing you can get from food
 
 - type: reagent
@@ -65,5 +68,7 @@
         damage:
           groups:
             Brute: -0.4
+      - !type:ModifyBloodLevel
+        amount: 1 # weaker than iron but pretty good all things considered
       - !type:SatiateHunger
 
