@@ -59,7 +59,7 @@
   name: "Boo"
   description: "Scare your crew members because of boredom!"
   filters:
-    - ghost- type: actionactions
+    - ghost
   behaviorType: Instant
   behavior: !type:GhostBoo
     radius: 3
