@@ -116,7 +116,7 @@ public sealed class RoleBanManager
             return null;
         return roleBans
             .Where(ban => ban.Role.StartsWith(JobPrefix))
-            .Select(ban => ban.Role[4..])
+            .Select(ban => ban.Role[JobPrefix.Length..])
             .ToHashSet();
     }
     #endregion
