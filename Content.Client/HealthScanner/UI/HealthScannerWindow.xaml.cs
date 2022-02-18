@@ -17,20 +17,14 @@ namespace Content.Client.HealthScanner.UI
             RobustXamlLoader.Load(this);
         }
 
-        private string? previousData = null;
 
-        public void Populate()
-        {
-            Diagnostics.Text = previousData;
-        }
-
-        public void BuildString(HealthComponentDamageMessage state)
+        public void Populate(HealthComponentDamageMessage state)
         {
             var text = new StringBuilder();
 
             if (state.TargetName == null || state.IsAlive == null)
             {
-                previousData = Loc.GetString("health-scanner-window-no-patient-data-text");
+                Diagnostics.Text = Loc.GetString("health-scanner-window-no-patient-data-text");
                 SetSize = (250, 600);
             }
             else
@@ -57,11 +51,9 @@ namespace Content.Client.HealthScanner.UI
                     }
                     text.Append('\n');
                 }
-                // Diagnostics.Text = text.ToString();
-                previousData = text.ToString();
+                Diagnostics.Text = text.ToString();
             }
             SetSize = (250, 600);
-            Populate();
         }
     }
 }

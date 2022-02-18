@@ -25,7 +25,6 @@ namespace Content.Client.HealthScanner.UI
             };
             _window.OnClose += Close;
             _window.OpenCentered();
-            _window.Populate();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -41,7 +40,7 @@ namespace Content.Client.HealthScanner.UI
             switch (message)
             {
                 case HealthComponentDamageMessage addrMsg:
-                    _window?.BuildString(addrMsg);
+                    _window?.Populate(addrMsg);
                     break;
             }
         }
