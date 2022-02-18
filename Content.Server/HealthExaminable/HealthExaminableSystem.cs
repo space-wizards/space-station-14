@@ -84,7 +84,7 @@ public sealed class HealthExaminableSystem : EntitySystem
 
         if (msg.IsEmpty)
         {
-            msg.AddMarkup(Loc.GetString("health-examinable-no-wounds"));
+            msg.AddMarkup(Loc.GetString($"health-examinable-{component.LocPrefix}-none"));
         }
 
         return msg;

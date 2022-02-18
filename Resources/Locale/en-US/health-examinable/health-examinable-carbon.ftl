@@ -1,4 +1,6 @@
-﻿health-examinable-carbon-Blunt-25 = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } minor contusions across { POSS-ADJ($target) } body.[/color]
+﻿health-examinable-carbon-none = There are no obvious wounds to be seen.
+
+health-examinable-carbon-Blunt-25 = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } minor contusions across { POSS-ADJ($target) } body.[/color]
 health-examinable-carbon-Blunt-50 = [color=crimson]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } major bruises all over { POSS-ADJ($target) } body![/color]
 health-examinable-carbon-Blunt-75 = [color=crimson]{ CAPITALIZE(POSS-ADJ($target)) } body is completely covered in lesions![/color]
 
