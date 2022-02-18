@@ -170,6 +170,9 @@ public sealed class BloodstreamSystem : EntitySystem
 
         if (component.BloodTemporarySolution.MaxVolume > component.BleedPuddleThreshold)
         {
+            // Pass some of the chemstream into the spilled blood.
+            var temp = component.ChemicalSolution.SplitSolution(component.BloodTemporarySolution.CurrentVolume / 10);
+            component.BloodTemporarySolution.AddSolution(temp);
             _spillableSystem.SpillAt(uid, component.BloodTemporarySolution, "PuddleBlood", false);
             component.BloodTemporarySolution.RemoveAllSolution();
         }
