@@ -43,7 +43,7 @@
       crit: crit
       dead: dead
   - type: Butcherable
-    meat: FoodMeat # TODO: CrapMeat or FishMeat
+    spawned: FoodMeat # TODO: CrapMeat or FishMeat # - 2022-02-17 LMAO crap meat
     pieces: 2
 
 - type: entity
