@@ -19,7 +19,8 @@ namespace Content.Shared.Actions
         DebugTargetEntityRepeat,
         SpellPie,
         ManifestGuardian,
-        PAIMidi
+        PAIMidi,
+        NoAction
     }
 
     /// <summary>
