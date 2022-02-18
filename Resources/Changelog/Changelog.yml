@@ -1,29 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: Expanded default ghost role rules and removed excuses to not see them
-      by adding a 5-second delay, type: Tweak}
-  id: 573
-  time: '2021-11-12T04:23:06.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: You can now vote for a different map to be played next round., type: Add}
-  id: 574
-  time: '2021-11-12T06:25:58.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Added a beta version of Packed Station!, type: Add}
-  id: 575
-  time: '2021-11-12T06:26:05.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'Nanotrasen has extended its outreach, and has finally sent the person
-      who decided to hire people of exactly one skin color out an airlock. Expect
-      more variety in the co-workers you meet.', type: Add}
-  id: 576
-  time: '2021-11-12T09:55:50.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: Solar panels and the related systems will no longer hold state between
       rounds., type: Fix}
   id: 577
@@ -2974,3 +2951,31 @@ Entries:
     type: Add}
   id: 1073
   time: '2022-02-18T01:27:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Drones can now wear hats again. Sorry about the delay., type: Add}
+  id: 1074
+  time: '2022-02-18T02:42:33.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Vitamin now helps with bleeding, and Protein now helps recover your
+      blood level faster.', type: Add}
+  - {message: 'Blood puddles evaporate much, much slower.', type: Tweak}
+  - {message: Iron/tranex tweaked slightly., type: Tweak}
+  id: 1075
+  time: '2022-02-18T02:42:47.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added emags to the traitor uplink., type: Add}
+  id: 1076
+  time: '2022-02-18T02:43:24.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Packed has a bunch of small updates! Bar and kitchen have windoors now
+      so they have better access., type: Tweak}
+  - {message: Medbay has shutters to stop the greytide. Engineering now have drones.
+      Salvage have their own room and spawns now., type: Tweak}
+  - {message: Arrivals has been tweaked to have shuttle docks! And more resistance
+      to being spaced., type: Tweak}
+  id: 1077
+  time: '2022-02-18T02:43:43.0000000+00:00'
