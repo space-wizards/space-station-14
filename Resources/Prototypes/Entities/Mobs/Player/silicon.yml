@@ -64,7 +64,7 @@
       - id: JawsOfLife
       - id: WelderExperimental
   - type: NameIdentifier
-  	group: Drone
+    group: Drone
   - type: Inventory
     templateId: drone
   - type: Strippable
@@ -96,7 +96,6 @@
       sprite: Mobs/Silicon/drone.rsi
     - map: [ "head" ]
       offset: 0, -0.45
-      rotateOffset: false
   - type: MovementIgnoreGravity
   - type: Fixtures
     fixtures:
