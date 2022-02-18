@@ -13,6 +13,7 @@ namespace Content.Client.HealthScanner.UI
 
         public HealthScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
+            SendMessage(new HealthComponentSyncRequestMessage());
         }
 
         protected override void Open()
@@ -24,13 +25,25 @@ namespace Content.Client.HealthScanner.UI
             };
             _window.OnClose += Close;
             _window.OpenCentered();
+            _window.Populate();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
+        }
 
-            _window?.Populate((HealthScannerBoundUserInterfaceState) state);
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        {
+            if (_window == null)
+                return;
+
+            switch (message)
+            {
+                case HealthComponentDamageMessage addrMsg:
+                    _window?.BuildString(addrMsg);
+                    break;
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -23,16 +23,13 @@
   components:
   - type: StorageFill
     contents:
+      - id: HandheldHealthAnalyzer
       - id: ClothingHandsGlovesLatex
-        prob: 1
       - id: ClothingHeadsetMedical
-        prob: 1
      # - id: ClothingEyesHudMedical #Removed until working properly
      #   prob: 1
       - id: ClothingBeltMedical
-        prob: 1
       - id: ClothingHeadHatSurgcapBlue
-        prob: 1
         orGroup: Surgcaps
       - id: ClothingHeadHatSurgcapGreen
         prob: 0.1
@@ -50,7 +47,6 @@
         prob: 0.05
         orGroup: Surgshrubs
       - id: ClothingMaskSterile
-        prob: 1
 
 - type: entity
   id: LockerChemistryFilled

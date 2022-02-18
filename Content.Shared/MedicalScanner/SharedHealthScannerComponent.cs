@@ -9,30 +9,44 @@ namespace Content.Shared.HealthScanner
 {
     public abstract class SharedHealthScannerComponent : Component
     {
-        public override string Name => "HealthScanner";
+        [Serializable, NetSerializable]
+        public class HealthComponentSyncRequestMessage : BoundUserInterfaceMessage
+        {
+        }
+
 
         [Serializable, NetSerializable]
-        public class HealthScannerBoundUserInterfaceState : BoundUserInterfaceState
+        public class HealthComponentDamageMessage : BoundUserInterfaceMessage
         {
             public readonly string? TargetName;
             public readonly bool? IsAlive;
-            public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup;
-            public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerType;
+            public readonly string? TotalDamage;
+            public readonly List<MobDamageGroup> DamageGroups;
 
-            public HealthScannerBoundUserInterfaceState(
+            public HealthComponentDamageMessage(
                 string? targetName,
                 bool? isAlive,
-                DamageableComponent? damageable)
+                string? totalDamage,
+                List<MobDamageGroup> damageGroups)
             {
                 TargetName = targetName;
                 IsAlive = isAlive;
-                DamagePerGroup = damageable?.DamagePerGroup ?? new();
-                DamagePerType = damageable?.Damage?.DamageDict ?? new();
+                TotalDamage = totalDamage;
+                DamageGroups = damageGroups;
             }
+        }
 
-            public bool HasDamage()
+        [Serializable, NetSerializable]
+        public readonly struct MobDamageGroup
+        {
+            public readonly string? GroupName { get; }
+            public readonly string? GroupTotalDamage { get; }
+            public readonly Dictionary<string, string>? GroupedMinorDamages { get; }
+            public MobDamageGroup(string? groupName, string? groupTotalDamage, Dictionary<string, string>? groupedMinorDamages)
             {
-                return DamagePerType.Count > 0;
+                GroupName = groupName;
+                GroupTotalDamage = groupTotalDamage;
+                GroupedMinorDamages = groupedMinorDamages;
             }
         }
 

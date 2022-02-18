@@ -17,49 +17,51 @@ namespace Content.Client.HealthScanner.UI
             RobustXamlLoader.Load(this);
         }
 
-        public void Populate(HealthScannerBoundUserInterfaceState state)
+        private string? previousData = null;
+
+        public void Populate()
+        {
+            Diagnostics.Text = previousData;
+        }
+
+        public void BuildString(HealthComponentDamageMessage state)
         {
             var text = new StringBuilder();
 
             if (state.TargetName == null || state.IsAlive == null)
             {
-                Diagnostics.Text = Loc.GetString("health-scanner-window-no-patient-data-text");
-                SetSize = (250, 100);
+                previousData = Loc.GetString("health-scanner-window-no-patient-data-text");
+                SetSize = (250, 600);
             }
             else
             {
                 text.Append($"{Loc.GetString("health-scanner-window-entity-health-text", ("entityName", state.TargetName))}\n");
+                var totalDamageAmount = state.TotalDamage != null ? state.TotalDamage : "Unknown";
+                text.Append($"{Loc.GetString("health-scanner-window-entity-damage-total-text", ("amount", totalDamageAmount))}\n");
 
-                var totalDamage = state.DamagePerType.Values.Sum();
-
-                text.Append($"{Loc.GetString("health-scanner-window-entity-damage-total-text", ("amount", totalDamage))}\n");
-
-                HashSet<string> shownTypes = new();
 
                 // Show the total damage and type breakdown for each damage group.
-                foreach (var (damageGroupId, damageAmount) in state.DamagePerGroup)
+                foreach (var damageGroup in state.DamageGroups)
                 {
-                    text.Append($"\n{Loc.GetString("health-scanner-window-damage-group-text", ("damageGroup", damageGroupId), ("amount", damageAmount))}");
+                    string damageGroupName = damageGroup.GroupName != null ? damageGroup.GroupName : "Unknown";
+                    string damageGroupTotalDamage = damageGroup.GroupTotalDamage != null ? damageGroup.GroupTotalDamage : "Unknown";
+                    text.Append($"\n{Loc.GetString("health-scanner-window-damage-group-text", ("damageGroup", damageGroupName), ("amount", damageGroupTotalDamage))}");
 
                     // Show the damage for each type in that group.
-                    var group = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(damageGroupId);
-                    foreach (var type in group.DamageTypes)
+                    if (damageGroup.GroupedMinorDamages != null)
                     {
-                        if (state.DamagePerType.TryGetValue(type, out var typeAmount))
+                        foreach (var minorDamage in damageGroup.GroupedMinorDamages)
                         {
-                            // If damage types are allowed to belong to more than one damage group, they may appear twice here. Mark them as duplicate.
-                            if (!shownTypes.Contains(type))
-                            {
-                                shownTypes.Add(type);
-                                text.Append($"\n- {Loc.GetString("health-scanner-window-damage-type-text", ("damageType", type), ("amount", typeAmount))}");
-                            }
+                            text.Append($"\n- {Loc.GetString("health-scanner-window-damage-type-text", ("damageType", minorDamage.Key), ("amount", minorDamage.Value))}");
                         }
                     }
                     text.Append('\n');
                 }
-                Diagnostics.Text = text.ToString();
-                SetSize = (250, 600);
+                // Diagnostics.Text = text.ToString();
+                previousData = text.ToString();
             }
+            SetSize = (250, 600);
+            Populate();
         }
     }
 }
