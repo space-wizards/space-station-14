@@ -1,9 +1,4 @@
 Entries:
-- author: xRiriq
-  changes:
-  - {message: Hyronalin now is effective against radiation damage, type: Add}
-  id: 572
-  time: '2021-11-12T04:22:29.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Expanded default ghost role rules and removed excuses to not see them
@@ -2971,3 +2966,11 @@ Entries:
   - {message: Iron now replenishes your blood levels., type: Tweak}
   id: 1072
   time: '2022-02-17T22:00:42.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Most healthy foods now contain some vitamins and proteins, which have
+      a chance to heal you slightly.', type: Add}
+  - {message: 'There are new recipes using nettles, fly amanita, or plasma sheets.',
+    type: Add}
+  id: 1073
+  time: '2022-02-18T01:27:57.0000000+00:00'
