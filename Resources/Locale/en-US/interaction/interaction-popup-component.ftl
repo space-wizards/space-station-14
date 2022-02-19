@@ -27,7 +27,7 @@ petting-failure-crab = You reach out to pet {THE($target)}, but {SUBJECT($target
 petting-failure-goat = You reach out to pet {THE($target)}, but {SUBJECT($target)} stubbornly refuses!
 petting-failure-goose = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} too horrible!
 petting-failure-sloth = You reach out to pet {THE($target)}, but {SUBJECT($target)} somehow dodge with ludicrous speed!
-petting-failure-holo = You reach out to pet {THE($target)}, but {POSS-ADJ($target) spikes almost impale your hand!
+petting-failure-holo = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} spikes almost impale your hand!
 
 ## Knocking on windows
 
