@@ -17,7 +17,7 @@ public sealed class ArtifactHeatTriggerComponent : Component
     /// </summary>
     [DataField("activationTemperature")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float ActivationTemperature = 573;
+    public float ActivationTemperature = 373;
 
     /// <summary>
     ///     Should artifact be activated by hot items (welders, lighter, etc)?
