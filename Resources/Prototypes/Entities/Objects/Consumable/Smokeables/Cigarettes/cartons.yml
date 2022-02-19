@@ -25,6 +25,7 @@
     tags:
     - Recyclable
     - Trash
+  - type: Recyclable
 
 - type: entity
   id: CigCartonRed

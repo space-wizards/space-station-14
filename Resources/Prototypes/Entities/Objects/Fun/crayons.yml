@@ -11,6 +11,7 @@
     - Crayon
     - Recyclable
     - Trash
+  - type: Recyclable
   - type: UserInterface
     interfaces:
     - key: enum.CrayonUiKey.Key

@@ -14,6 +14,7 @@
     tags:
     - Recyclable
     - Trash
+  - type: Recyclable
 
 # Base for all cigars and cigarettes.
 - type: entity

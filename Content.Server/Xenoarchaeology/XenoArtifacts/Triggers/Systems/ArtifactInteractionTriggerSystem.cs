@@ -1,9 +1,5 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
@@ -20,8 +16,6 @@ public sealed class ArtifactInteractionTriggerSystem : EntitySystem
     private void OnInteract(EntityUid uid, ArtifactInteractionTriggerComponent component, InteractHandEvent args)
     {
         if (args.Handled)
-            return;
-        if (!args.InRangeUnobstructed())
             return;
 
         args.Handled = _artifactSystem.TryActivateArtifact(uid, args.User);

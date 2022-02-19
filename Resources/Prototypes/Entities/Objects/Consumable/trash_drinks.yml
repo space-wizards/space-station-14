@@ -54,6 +54,7 @@
     tags:
     - Recyclable
     - Trash
+  - type: Recyclable
 
 # Containers
 - type: entity

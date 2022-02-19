@@ -101,9 +101,6 @@ namespace Content.Shared.Item
         {
             var user = eventArgs.User;
 
-            if (!user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true))
-                return false;
-
             if (!_entMan.TryGetComponent(user, out SharedHandsComponent hands))
                 return false;
 

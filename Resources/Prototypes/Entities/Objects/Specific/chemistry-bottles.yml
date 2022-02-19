@@ -10,6 +10,7 @@
     - Bottle
     - Recyclable
     - Trash
+  - type: Recyclable
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
     netsync: false

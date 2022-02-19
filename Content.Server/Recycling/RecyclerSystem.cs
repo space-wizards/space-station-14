@@ -23,6 +23,7 @@ namespace Content.Server.Recycling
         public override void Initialize()
         {
             SubscribeLocalEvent<RecyclerComponent, StartCollideEvent>(OnCollide);
+            SubscribeLocalEvent<RecyclerComponent, GotEmaggedEvent>(OnEmagged);
         }
 
         public void EnableRecycler(RecyclerComponent component)
@@ -109,6 +110,15 @@ namespace Content.Server.Recycling
             }
 
             QueueDel(component.Owner);
+        }
+        
+        private void OnEmagged(EntityUid uid, RecyclerComponent component, GotEmaggedEvent args)
+        {
+            if (!args.Handled && component.Safe)
+            {
+                component.Safe = false;
+                args.Handled = true;
+            }
         }
     }
 }

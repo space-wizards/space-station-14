@@ -60,6 +60,7 @@
     - Recyclable
     - RollingPaper
     - Trash
+  - type: Recyclable
 
 - type: entity
   id: CigaretteFilter
@@ -82,3 +83,4 @@
     - CigFilter
     - Recyclable
     - Trash
+  - type: Recyclable

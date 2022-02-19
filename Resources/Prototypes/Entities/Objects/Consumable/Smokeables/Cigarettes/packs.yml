@@ -9,6 +9,7 @@
     - CigPack
     - Recyclable
     - Trash
+  - type: Recyclable
   - type: Storage
     capacity: 6
   - type: Item

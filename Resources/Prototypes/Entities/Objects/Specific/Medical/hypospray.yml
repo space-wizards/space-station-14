@@ -53,6 +53,7 @@
     tags:
     - Recyclable
     - Trash
+  - type: Recyclable
 
 - type: entity
   name: epinephrine medipen
