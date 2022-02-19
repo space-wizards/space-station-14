@@ -111,16 +111,17 @@ public sealed class SharpSystem : EntitySystem
 
         bool disabled = false;
         string? message = null;
-        if (args.Using is null || !TryComp<SharpComponent>(args.Using, out var sharp))
-        {
-            disabled = true;
-            message = Loc.GetString("butcherable-need-knife");
-        }
 
         if (TryComp<MobStateComponent>(uid, out var state) && !state.IsDead())
         {
             disabled = true;
             message = Loc.GetString("butcherable-mob-isnt-dead");
+        }
+
+        if (args.Using is null || !TryComp<SharpComponent>(args.Using, out var sharp))
+        {
+            disabled = true;
+            message = Loc.GetString("butcherable-need-knife");
         }
 
         InteractionVerb verb = new()
@@ -132,6 +133,7 @@ public sealed class SharpSystem : EntitySystem
             },
             Message = message,
             Disabled = disabled,
+            IconTexture = "/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png",
             Text = Loc.GetString("butcherable-verb-name"),
         };
 
