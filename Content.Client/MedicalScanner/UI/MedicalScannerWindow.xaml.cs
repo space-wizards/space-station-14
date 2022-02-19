@@ -14,7 +14,7 @@ using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 namespace Content.Client.MedicalScanner.UI
 {
     [GenerateTypedNameReferences]
-    public partial class MedicalScannerWindow : DefaultWindow
+    public sealed partial class MedicalScannerWindow : DefaultWindow
     {
         public MedicalScannerWindow()
         {

@@ -6,7 +6,7 @@ using Robust.Shared.Reflection;
 
 namespace Content.Server.RandomAppearance;
 
-public class RandomAppearanceSystem : EntitySystem
+public sealed class RandomAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 

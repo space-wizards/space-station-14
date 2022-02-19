@@ -13,7 +13,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Fluids
 {
     [UsedImplicitly]
-    public class PuddleVisualizer : AppearanceVisualizer
+    public sealed class PuddleVisualizer : AppearanceVisualizer
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 

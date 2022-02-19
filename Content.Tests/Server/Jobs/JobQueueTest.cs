@@ -12,7 +12,7 @@ namespace Content.Tests.Server.Jobs
     [TestFixture]
     [TestOf(typeof(Job<>))]
     [TestOf(typeof(JobQueue))]
-    public class JobQueueTest : RobustUnitTest
+    public sealed class JobQueueTest : RobustUnitTest
     {
         /// <summary>
         ///     Test a job that immediately exits with a value.
@@ -128,7 +128,7 @@ namespace Content.Tests.Server.Jobs
             Assert.That(job.Result, Is.Null);
         }
 
-        private class DebugStopwatch : IStopwatch
+        private sealed class DebugStopwatch : IStopwatch
         {
             public TimeSpan Elapsed { get; set; }
 
@@ -143,7 +143,7 @@ namespace Content.Tests.Server.Jobs
             }
         }
 
-        private class ImmediateJob : Job<string>
+        private sealed class ImmediateJob : Job<string>
         {
             public ImmediateJob() : base(0)
             {
@@ -155,7 +155,7 @@ namespace Content.Tests.Server.Jobs
             }
         }
 
-        private class LongJob : Job<string>
+        private sealed class LongJob : Job<string>
         {
             private readonly DebugStopwatch _stopwatch;
             private readonly DebugStopwatch _stopwatchB;
@@ -187,7 +187,7 @@ namespace Content.Tests.Server.Jobs
             }
         }
 
-        private class LongJobQueue : JobQueue
+        private sealed class LongJobQueue : JobQueue
         {
             public LongJobQueue(IStopwatch swB) : base(swB)
             {
@@ -196,7 +196,7 @@ namespace Content.Tests.Server.Jobs
             public override double MaxTime => 0.9;
         }
 
-        private class WaitingJob : Job<string>
+        private sealed class WaitingJob : Job<string>
         {
             private readonly Task _t;
 

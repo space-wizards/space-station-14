@@ -9,7 +9,7 @@ namespace Content.Shared.Nutrition.Components
 {
     [Friend(typeof(SharedCreamPieSystem))]
     [RegisterComponent]
-    public class CreamPiedComponent : Component
+    public sealed class CreamPiedComponent : Component
     {
         [ViewVariables]
         public bool CreamPied { get; set; } = false;

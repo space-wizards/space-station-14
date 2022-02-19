@@ -12,7 +12,7 @@ namespace Content.Server.Nuke
     ///     Nuclear code is generated once per round
     ///     One code works for all nukes
     /// </summary>
-    public class NukeCodeSystem : EntitySystem
+    public sealed class NukeCodeSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IChatManager _chat = default!;

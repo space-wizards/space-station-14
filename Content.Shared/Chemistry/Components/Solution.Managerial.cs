@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Components
 {
-    public partial class Solution
+    public sealed partial class Solution
     {
 
         /// <summary>

@@ -73,7 +73,7 @@ namespace Content.Shared.CharacterAppearance.Systems
 
         // Scaffolding until Body is moved to ECS.
         [Serializable, NetSerializable]
-        public class HumanoidAppearanceBodyPartAddedEvent : EntityEventArgs
+        public sealed class HumanoidAppearanceBodyPartAddedEvent : EntityEventArgs
         {
             public EntityUid Uid { get; }
             public BodyPartAddedEventArgs Args { get; }
@@ -86,7 +86,7 @@ namespace Content.Shared.CharacterAppearance.Systems
         }
 
         [Serializable, NetSerializable]
-        public class HumanoidAppearanceBodyPartRemovedEvent : EntityEventArgs
+        public sealed class HumanoidAppearanceBodyPartRemovedEvent : EntityEventArgs
         {
             public EntityUid Uid { get; }
             public BodyPartRemovedEventArgs Args { get; }
@@ -100,7 +100,7 @@ namespace Content.Shared.CharacterAppearance.Systems
         }
 
         [Serializable, NetSerializable]
-        public class ChangedHumanoidAppearanceEvent : EntityEventArgs
+        public sealed class ChangedHumanoidAppearanceEvent : EntityEventArgs
         {
             public HumanoidCharacterAppearance Appearance { get; }
             public Sex Sex { get; }

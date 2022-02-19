@@ -14,7 +14,7 @@ namespace Content.Shared.Kitchen
     ///    A recipe for space microwaves.
     /// </summary>
     [Prototype("microwaveMealRecipe")]
-    public class FoodRecipePrototype : IPrototype
+    public sealed class FoodRecipePrototype : IPrototype
     {
         [ViewVariables]
         [DataField("id", required: true)]

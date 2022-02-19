@@ -9,7 +9,7 @@ namespace Content.IntegrationTests.Tests.Atmos
 {
     [TestFixture]
     [TestOf(typeof(GasMixture))]
-    public class GasMixtureTest : ContentIntegrationTest
+    public sealed class GasMixtureTest : ContentIntegrationTest
     {
         [Test]
         public async Task TestMerge()

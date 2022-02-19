@@ -15,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Fluids
 {
     [TestFixture]
     [TestOf(typeof(PuddleComponent))]
-    public class PuddleTest : ContentIntegrationTest
+    public sealed class PuddleTest : ContentIntegrationTest
     {
         [Test]
         public async Task TilePuddleTest()

@@ -11,7 +11,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Cargo
 {
-    public class CargoConsoleBoundUserInterface : BoundUserInterface
+    public sealed class CargoConsoleBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private CargoConsoleMenu? _menu;

@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         public const float PresetFailedCooldownIncrease = 30f;
 
@@ -83,6 +83,14 @@ namespace Content.Server.GameTicking
             }
 
             return true;
+        }
+
+        private void StartGamePresetRules()
+        {
+            foreach (var rule in _addedGameRules)
+            {
+                StartGameRule(rule);
+            }
         }
 
         public bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal)
@@ -160,7 +168,7 @@ namespace Content.Server.GameTicking
         }
     }
 
-    public class GhostAttemptHandleEvent : HandledEntityEventArgs
+    public sealed class GhostAttemptHandleEvent : HandledEntityEventArgs
     {
         public Mind.Mind Mind { get; }
         public bool CanReturnGlobal { get; }

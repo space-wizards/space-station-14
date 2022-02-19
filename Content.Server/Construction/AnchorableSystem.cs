@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Construction
 {
-    public class AnchorableSystem : EntitySystem
+    public sealed class AnchorableSystem : EntitySystem
     {
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;

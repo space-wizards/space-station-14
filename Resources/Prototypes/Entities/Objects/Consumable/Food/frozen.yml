@@ -238,6 +238,9 @@
     sprite: Objects/Consumable/Food/frozen.rsi
     state: cone-trash
     netsync: false
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   name: popsicle stick
@@ -252,3 +255,7 @@
     spriteStates:
     - stick
     - stick2
+  - type: Tag
+    tags:
+    - Trash
+  - type: Recyclable

@@ -10,7 +10,7 @@ namespace Content.Shared.Jittering
 {
     [Friend(typeof(SharedJitteringSystem))]
     [RegisterComponent, NetworkedComponent]
-    public class JitteringComponent : Component
+    public sealed class JitteringComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public float Amplitude { get; set; }
@@ -23,7 +23,7 @@ namespace Content.Shared.Jittering
     }
 
     [Serializable, NetSerializable]
-    public class JitteringComponentState : ComponentState
+    public sealed class JitteringComponentState : ComponentState
     {
         public float Amplitude { get; }
         public float Frequency { get; }

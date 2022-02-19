@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Construction.Completions
 {
     [DataDefinition]
-    public class DeleteEntitiesInContainer : IGraphAction
+    public sealed class DeleteEntitiesInContainer : IGraphAction
     {
         [DataField("container")] public string Container { get; } = string.Empty;
 

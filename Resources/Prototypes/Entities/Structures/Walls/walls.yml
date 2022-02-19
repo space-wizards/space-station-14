@@ -27,6 +27,9 @@
   - type: IconSmooth
     key: walls
     base: brick
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
 
 - type: entity
   parent: WallBase

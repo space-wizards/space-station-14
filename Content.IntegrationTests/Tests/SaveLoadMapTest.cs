@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    class SaveLoadMapTest : ContentIntegrationTest
+    sealed class SaveLoadMapTest : ContentIntegrationTest
     {
         [Test]
         public async Task SaveLoadMultiGridMap()

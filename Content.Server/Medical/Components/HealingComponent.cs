@@ -19,6 +19,14 @@ namespace Content.Server.Medical.Components
         public DamageSpecifier Damage = default!;
 
         /// <remarks>
+        ///     This should generally be negative,
+        ///     since you're, like, trying to heal damage.
+        /// </remarks>
+        [DataField("bloodlossModifier")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float BloodlossModifier = 0.0f;
+
+        /// <remarks>
         ///     The supported damage types are specified using a <see cref="DamageContainerPrototype"/>s. For a
         ///     HealingComponent this filters what damage container type this component should work on. If null,
         ///     all damage container types are supported.

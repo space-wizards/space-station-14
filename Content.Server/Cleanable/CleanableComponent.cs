@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Cleanable
 {
     [RegisterComponent]
-    public class CleanableComponent : Component
+    public sealed class CleanableComponent : Component
     {
         [DataField("cleanAmount")]
         private FixedPoint2 _cleanAmount = FixedPoint2.Zero;

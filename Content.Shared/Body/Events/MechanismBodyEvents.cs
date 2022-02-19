@@ -9,7 +9,7 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is added to a body.
     /// </summary>
-    public class AddedToBodyEvent : EntityEventArgs
+    public sealed class AddedToBodyEvent : EntityEventArgs
     {
         public SharedBodyComponent Body;
 
@@ -22,7 +22,7 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is added to a body part.
     /// </summary>
-    public class AddedToPartEvent : EntityEventArgs
+    public sealed class AddedToPartEvent : EntityEventArgs
     {
         public SharedBodyPartComponent Part;
 
@@ -35,7 +35,7 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is added to a body part within a body.
     /// </summary>
-    public class AddedToPartInBodyEvent : EntityEventArgs
+    public sealed class AddedToPartInBodyEvent : EntityEventArgs
     {
         public SharedBodyComponent Body;
         public SharedBodyPartComponent Part;
@@ -50,7 +50,7 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is removed from a body.
     /// </summary>
-    public class RemovedFromBodyEvent : EntityEventArgs
+    public sealed class RemovedFromBodyEvent : EntityEventArgs
     {
         public SharedBodyComponent Old;
 
@@ -63,7 +63,7 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is removed from a body part.
     /// </summary>
-    public class RemovedFromPartEvent : EntityEventArgs
+    public sealed class RemovedFromPartEvent : EntityEventArgs
     {
         public SharedBodyPartComponent Old;
 
@@ -76,7 +76,7 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is removed from a body part within a body.
     /// </summary>
-    public class RemovedFromPartInBodyEvent : EntityEventArgs
+    public sealed class RemovedFromPartInBodyEvent : EntityEventArgs
     {
         public SharedBodyComponent OldBody;
         public SharedBodyPartComponent OldPart;
