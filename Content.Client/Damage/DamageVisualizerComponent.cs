@@ -11,7 +11,7 @@ namespace Content.Client.Damage
     // store it in the entity itself as a separate,
     // dynamically added component.
     [RegisterComponent]
-    public class DamageVisualizerDataComponent : Component
+    public sealed class DamageVisualizerDataComponent : Component
     {
         public List<object> TargetLayerMapKeys = new();
         public bool Disabled = false;

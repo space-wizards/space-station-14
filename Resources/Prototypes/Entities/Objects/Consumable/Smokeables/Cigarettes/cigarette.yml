@@ -15,6 +15,7 @@
     tags:
       - Cigarette
       - Trash
+  - type: Recyclable
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
     Slots: [ mask ]

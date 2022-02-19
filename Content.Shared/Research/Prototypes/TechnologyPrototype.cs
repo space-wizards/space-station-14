@@ -10,7 +10,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Research.Prototypes
 {
     [NetSerializable, Serializable, Prototype("technology")]
-    public class TechnologyPrototype : IPrototype
+    public sealed class TechnologyPrototype : IPrototype
     {
         /// <summary>
         ///     The ID of this technology prototype.

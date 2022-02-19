@@ -1,5 +1,3 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Hands.Components;
@@ -12,6 +10,7 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
+using Content.Shared.Stunnable;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Physics.Pull;
@@ -20,13 +19,9 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
@@ -253,7 +248,10 @@ namespace Content.Server.Hands.Systems
             if (playerSession.AttachedEntity is not {Valid: true} plyEnt || !Exists(plyEnt))
                 return;
 
-            if (!EntityManager.TryGetComponent(plyEnt, out SharedHandsComponent? hands))
+            if (!TryComp<SharedHandsComponent>(plyEnt, out var hands))
+                return;
+
+            if (HasComp<StunnedComponent>(plyEnt))
                 return;
 
             if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||

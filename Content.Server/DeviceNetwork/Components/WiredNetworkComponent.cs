@@ -4,7 +4,7 @@ namespace Content.Server.DeviceNetwork.Components
 {
     [RegisterComponent]
     [ComponentProtoName("WiredNetworkConnection")]
-    public class WiredNetworkComponent : Component
+    public sealed class WiredNetworkComponent : Component
     {
     }
 }

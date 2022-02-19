@@ -7,7 +7,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Weapons.Melee;
 
-public class EnergySwordVisualizer : AppearanceVisualizer
+public sealed class EnergySwordVisualizer : AppearanceVisualizer
 {
     public override void OnChangeData(AppearanceComponent component)
     {

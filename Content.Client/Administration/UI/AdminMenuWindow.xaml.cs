@@ -9,7 +9,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.Administration.UI
 {
     [GenerateTypedNameReferences]
-    public partial class AdminMenuWindow : DefaultWindow
+    public sealed partial class AdminMenuWindow : DefaultWindow
     {
         [Dependency] private readonly IGameHud? _gameHud = default!;
 

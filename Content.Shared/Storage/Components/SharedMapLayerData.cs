@@ -15,7 +15,7 @@ namespace Content.Shared.Storage.Components
 
     [Serializable]
     [DataDefinition]
-    public class SharedMapLayerData
+    public sealed class SharedMapLayerData
     {
         public string Layer = string.Empty;
 
@@ -24,7 +24,7 @@ namespace Content.Shared.Storage.Components
     }
 
     [Serializable, NetSerializable]
-    public class ShowLayerData : ICloneable
+    public sealed class ShowLayerData : ICloneable
     {
         public IReadOnlyList<string> QueuedEntities { get; internal set; }
 

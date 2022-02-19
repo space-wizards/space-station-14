@@ -1,12 +1,8 @@
-using System;
-using Content.Server.PowerCell;
 using Content.Server.Projectiles.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 
 namespace Content.Server.Weapon.Ranged;
@@ -26,15 +22,6 @@ public sealed partial class GunSystem
     private void OnBatteryMapInit(EntityUid uid, BatteryBarrelComponent component, MapInitEvent args)
     {
         UpdateBatteryAppearance(component);
-    }
-
-    private void OnBatteryGetState(EntityUid uid, BatteryBarrelComponent component, ref ComponentGetState args)
-    {
-        (int, int)? count = (component.ShotsLeft, component.Capacity);
-
-        args.State = new BatteryBarrelComponentState(
-            component.FireRateSelector,
-            count);
     }
 
     private void OnCellSlotUpdated(EntityUid uid, BatteryBarrelComponent component, PowerCellChangedEvent args)

@@ -30,7 +30,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Nutrition.EntitySystems
 {
     [UsedImplicitly]
-    public class DrinkSystem : EntitySystem
+    public sealed class DrinkSystem : EntitySystem
     {
         [Dependency] private readonly FoodSystem _foodSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -40,8 +40,8 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly StomachSystem _stomachSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {
@@ -111,22 +111,12 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Handled || args.Target == null || !args.CanReach)
                 return;
 
-            // CanInteract already checked CanInteract
-            if (!_actionBlockerSystem.CanUse(args.User))
-                return;
-
             args.Handled = TryDrink(args.User, args.Target.Value, component);
         }
 
         private void OnUse(EntityUid uid, DrinkComponent component, UseInHandEvent args)
         {
             if (args.Handled) return;
-
-            if (!args.User.InRangeUnobstructed(uid, popup: true))
-            {
-                args.Handled = true;
-                return;
-            }
 
             if (!component.Opened)
             {
@@ -136,10 +126,6 @@ namespace Content.Server.Nutrition.EntitySystems
                 SetOpen(uid, true, component);
                 return;
             }
-
-            // CanUse already checked; trying to keep it consistent if we interact with ourselves.
-            if (!_actionBlockerSystem.CanInteract(args.User))
-                return;
 
             args.Handled = TryDrink(args.User, args.User, component);
         }
@@ -227,7 +213,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (_foodSystem.IsMouthBlocked(target, user))
                 return true;
 
-            if (!user.InRangeUnobstructed(drink.Owner, popup: true))
+            if (!_interactionSystem.InRangeUnobstructed(user, drink.Owner, popup: true))
                 return true;
 
             var forceDrink = user != target;

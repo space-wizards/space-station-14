@@ -83,7 +83,7 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public class DisposalUnitBoundUserInterfaceState : BoundUserInterfaceState, IEquatable<DisposalUnitBoundUserInterfaceState>
+        public sealed class DisposalUnitBoundUserInterfaceState : BoundUserInterfaceState, IEquatable<DisposalUnitBoundUserInterfaceState>
         {
             public readonly string UnitName;
             public readonly string UnitState;
@@ -117,7 +117,7 @@ namespace Content.Shared.Disposal.Components
         ///     Message data sent from client to server when a disposal unit ui button is pressed.
         /// </summary>
         [Serializable, NetSerializable]
-        public class UiButtonPressedMessage : BoundUserInterfaceMessage
+        public sealed class UiButtonPressedMessage : BoundUserInterfaceMessage
         {
             public readonly UiButton Button;
 

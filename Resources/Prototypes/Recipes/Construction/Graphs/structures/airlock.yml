@@ -76,32 +76,15 @@
     - node: airlock
       entity: Airlock
       edges:
-        - to: wired
+        - to: wired #TODO DOOR ELECTRONICS. If door electronics ever govern access permissions, this step should probably be further down? It makes it too easy to swap permissions around. See also windoor.
           conditions:
             - !type:EntityAnchored {}
             - !type:DoorWelded {}
             - !type:AirlockBolted
               value: false
             - !type:WirePanel {}
-            - !type:ContainerNotEmpty # TODO ShadowCommander: Remove when map gets updated
-              container: board
           completed:
             - !type:EmptyAllContainers {}
-          steps:
-            - tool: Prying
-              doAfter: 5
-        - to: wired # TODO ShadowCommander: Remove when board spawning is implemented in ServerDoorComponent.cs. Needs a map update.
-          conditions:
-            - !type:EntityAnchored {}
-            - !type:DoorWelded {}
-            - !type:AirlockBolted
-              value: false
-            - !type:WirePanel {}
-            - !type:ContainerEmpty
-              container: board
-          completed:
-            - !type:SpawnPrototype
-              prototype: DoorElectronics
           steps:
             - tool: Prying
               doAfter: 5

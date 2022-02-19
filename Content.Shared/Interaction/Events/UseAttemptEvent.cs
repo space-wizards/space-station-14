@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Interaction.Events
 {
-    public class UseAttemptEvent : CancellableEntityEventArgs
+    public sealed class UseAttemptEvent : CancellableEntityEventArgs
     {
         public UseAttemptEvent(EntityUid uid)
         {

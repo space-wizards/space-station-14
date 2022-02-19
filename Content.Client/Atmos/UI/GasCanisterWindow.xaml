@@ -37,7 +37,7 @@
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="15 0 0 15" SeparationOverride="5">
                     <Slider Name="ReleasePressureSlider" HorizontalExpand="True"/>
-                    <Label Name="ReleasePressureLabel" Align="Center" HorizontalExpand="True"/>
+                    <FloatSpinBox Name="ReleasePressure" MaxWidth="150" Align="Center"/>
                 </BoxContainer>
             </BoxContainer>
             <BoxContainer Orientation="Horizontal">

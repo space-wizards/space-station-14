@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
 
-public class LungSystem : EntitySystem
+public sealed class LungSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;

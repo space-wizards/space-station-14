@@ -25,9 +25,6 @@
   id: BotanyHoe
 
 - type: Tag
-  id: BotanySharp
-
-- type: Tag
   id: BotanyShovel
 
 - type: Tag
@@ -190,6 +187,15 @@
   id: Matchstick
 
 - type: Tag
+  id: Metal
+
+- type: Tag
+  id: MicrowaveMachineUnsafe
+
+- type: Tag
+  id: MicrowaveSelfUnsafe
+
+- type: Tag
   id: MonkeyCube
 
 - type: Tag
@@ -206,6 +212,9 @@
 
 - type: Tag
   id: PercussionInstrument
+
+- type: Tag
+  id: Plastic
 
 - type: Tag
   id: Pill
@@ -272,6 +281,9 @@
 
 - type: Tag
   id: Wall
+
+- type: Tag
+  id: Window
 
 - type: Tag
   id: Wirecutter

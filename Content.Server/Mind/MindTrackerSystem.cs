@@ -17,7 +17,7 @@ namespace Content.Server.Mind
     /// The Minds themselves contain metadata about their owners.
     /// Anyway, this is because disconnected people and ghost roles have been breaking round end statistics for way too long.
     /// </summary>
-    public class MindTrackerSystem : EntitySystem
+    public sealed class MindTrackerSystem : EntitySystem
     {
         [ViewVariables]
         public readonly HashSet<Mind> AllMinds = new();

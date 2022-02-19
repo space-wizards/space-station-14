@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests.Destructible
     [TestFixture]
     [TestOf(typeof(DamageTypeTrigger))]
     [TestOf(typeof(AndTrigger))]
-    public class DestructibleDamageTypeTest : ContentIntegrationTest
+    public sealed class DestructibleDamageTypeTest : ContentIntegrationTest
     {
         [Test]
         public async Task Test()

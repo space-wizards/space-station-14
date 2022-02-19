@@ -9,6 +9,8 @@
       sprite: Objects/Specific/Hydroponics/seeds.rsi
       state: seed
       netsync: true
+    - type: Item
+      size: 2
 
 - type: entity
   parent: SeedBase

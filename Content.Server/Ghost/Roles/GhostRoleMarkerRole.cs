@@ -7,7 +7,7 @@ namespace Content.Server.Ghost.Roles
     /// This is used for round end display of ghost roles.
     /// It may also be used to ensure some ghost roles count as antagonists in future.
     /// </summary>
-    public class GhostRoleMarkerRole : Role
+    public sealed class GhostRoleMarkerRole : Role
     {
         private readonly string _name;
         public override string Name => _name;

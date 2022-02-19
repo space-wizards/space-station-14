@@ -28,7 +28,7 @@ namespace Content.Shared.Radiation
     /// For syncing the pulse's lifespan between client and server for the overlay
     /// </summary>
     [Serializable, NetSerializable]
-    public class RadiationPulseState : ComponentState
+    public sealed class RadiationPulseState : ComponentState
     {
         // not networking RadsPerSecond because damage is only ever dealt by server-side systems.
 

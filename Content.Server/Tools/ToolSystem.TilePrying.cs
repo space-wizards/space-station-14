@@ -11,6 +11,8 @@ namespace Content.Server.Tools;
 
 public sealed partial class ToolSystem
 {
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+
     private void InitializeTilePrying()
     {
         SubscribeLocalEvent<TilePryingComponent, AfterInteractEvent>(OnTilePryingAfterInteract);
@@ -50,7 +52,7 @@ public sealed partial class ToolSystem
 
         var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
 
-        if (!user.InRangeUnobstructed(coordinates, popup: false))
+        if (!_interactionSystem.InRangeUnobstructed(user, coordinates, popup: false))
             return false;
 
         var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];

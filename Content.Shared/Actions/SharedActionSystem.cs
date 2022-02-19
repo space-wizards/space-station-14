@@ -9,7 +9,7 @@ namespace Content.Shared.Actions
     /// <summary>
     /// Evicts action states with expired cooldowns.
     /// </summary>
-    public class SharedActionSystem : EntitySystem
+    public sealed class SharedActionSystem : EntitySystem
     {
         private const float CooldownCheckIntervalSeconds = 10;
         private float _timeSinceCooldownCheck;

@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Security.Systems
 {
-    public class DeployableBarrierSystem : EntitySystem
+    public sealed class DeployableBarrierSystem : EntitySystem
     {
         public override void Initialize()
         {

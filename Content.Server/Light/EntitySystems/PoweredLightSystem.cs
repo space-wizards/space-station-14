@@ -29,7 +29,7 @@ namespace Content.Server.Light.EntitySystems
     /// <summary>
     ///     System for the PoweredLightComponens
     /// </summary>
-    public class PoweredLightSystem : EntitySystem
+    public sealed class PoweredLightSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;

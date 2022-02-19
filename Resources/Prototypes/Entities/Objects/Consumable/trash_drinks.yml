@@ -53,6 +53,7 @@
   - type: Tag
     tags:
     - Trash
+  - type: Recyclable
 
 # Containers
 - type: entity

@@ -20,7 +20,7 @@ using Robust.Shared.Network;
 namespace Content.Client.Administration
 {
     [UsedImplicitly]
-    public class BwoinkSystem : SharedBwoinkSystem
+    public sealed class BwoinkSystem : SharedBwoinkSystem
     {
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;

@@ -1,25 +1,35 @@
 using Content.Shared.Roles;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Jobs
 {
     [UsedImplicitly]
     public sealed class AddComponentSpecial : JobSpecial
     {
-        // TODO: Type serializer that ensures the component exists.
-        [DataField("component", required:true)]
-        public string Component { get; } = string.Empty;
+
+        [DataField("components")]
+        [AlwaysPushInheritance]
+        public EntityPrototype.ComponentRegistry Components { get; } = new();
 
         public override void AfterEquip(EntityUid mob)
         {
-            // Yes, this will throw if your component is invalid.
-            var component = (Component)IoCManager.Resolve<IComponentFactory>().GetComponent(Component);
-            component.Owner = mob;
+            // now its a registry of components, still throws i bet.
+            // TODO: This is hot garbage and probably needs an engine change to not be a POS.
+            var factory = IoCManager.Resolve<IComponentFactory>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var serializationManager = IoCManager.Resolve<ISerializationManager>();
 
-            IoCManager.Resolve<IEntityManager>().AddComponent(mob, component);
+            foreach (var (name, data) in Components)
+            {
+                var component = (Component) factory.GetComponent(name);
+                component.Owner = mob;
+
+                var copied = (Component?) serializationManager.Copy(data, component, null);
+                if (copied != null)
+                    entityManager.AddComponent(mob, copied);
+            }
         }
     }
 }

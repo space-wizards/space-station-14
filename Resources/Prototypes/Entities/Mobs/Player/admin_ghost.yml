@@ -32,3 +32,6 @@
   - type: Body
     template: AGhostTemplate
     preset: HumanPreset
+  - type: Access
+    groups:
+    - AllAccess

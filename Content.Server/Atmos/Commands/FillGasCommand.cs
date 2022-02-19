@@ -10,7 +10,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class FillGas : IConsoleCommand
+    public sealed class FillGas : IConsoleCommand
     {
         public string Command => "fillgas";
         public string Description => "Adds gas to all tiles in a grid.";

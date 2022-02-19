@@ -15,7 +15,7 @@ namespace Content.Shared.Interaction
         void Dropped(DroppedEventArgs eventArgs);
     }
 
-    public class DroppedEventArgs : EventArgs
+    public sealed class DroppedEventArgs : EventArgs
     {
         public DroppedEventArgs(EntityUid user)
         {
@@ -29,7 +29,7 @@ namespace Content.Shared.Interaction
     ///     Raised when an entity is dropped
     /// </summary>
     [PublicAPI]
-    public class DroppedEvent : HandledEntityEventArgs
+    public sealed class DroppedEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that dropped the item.

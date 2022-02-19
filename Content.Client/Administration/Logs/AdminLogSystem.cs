@@ -2,6 +2,6 @@
 
 namespace Content.Client.Administration.Logs;
 
-public class AdminLogSystem : SharedAdminLogSystem
+public sealed class AdminLogSystem : SharedAdminLogSystem
 {
 }

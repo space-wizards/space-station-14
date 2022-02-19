@@ -26,10 +26,9 @@
           bounds: "-0.3,-0.16,0.3,0.16"
       mass: 25
       layer:
-      - MobMask
-      - Opaque
+      - SmallImpassable
       mask:
-      - MobMask
+      - VaultImpassable
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/microwave.rsi

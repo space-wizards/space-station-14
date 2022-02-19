@@ -4,13 +4,14 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Research.Components
 {
+    [Virtual]
     public class SharedResearchClientComponent : Component
     {
         /// <summary>
         ///     Request that the server updates the client.
         /// </summary>
         [Serializable, NetSerializable]
-        public class ResearchClientSyncMessage : BoundUserInterfaceMessage
+        public sealed class ResearchClientSyncMessage : BoundUserInterfaceMessage
         {
 
             public ResearchClientSyncMessage()
@@ -22,7 +23,7 @@ namespace Content.Shared.Research.Components
         ///     Sent to the server when the client chooses a research server.
         /// </summary>
         [Serializable, NetSerializable]
-        public class ResearchClientServerSelectedMessage : BoundUserInterfaceMessage
+        public sealed class ResearchClientServerSelectedMessage : BoundUserInterfaceMessage
         {
             public int ServerId;
 
@@ -36,7 +37,7 @@ namespace Content.Shared.Research.Components
         ///     Sent to the server when the client deselects a research server.
         /// </summary>
         [Serializable, NetSerializable]
-        public class ResearchClientServerDeselectedMessage : BoundUserInterfaceMessage
+        public sealed class ResearchClientServerDeselectedMessage : BoundUserInterfaceMessage
         {
             public ResearchClientServerDeselectedMessage()
             {

@@ -13,7 +13,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
-    public class RadiationCollectorComponent : Component, IInteractHand, IRadiationAct
+    public sealed class RadiationCollectorComponent : Component, IInteractHand, IRadiationAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;

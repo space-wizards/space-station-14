@@ -22,7 +22,7 @@ namespace Content.Server.Configurable
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedConfigurationComponent))]
-    public class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing, ISerializationHooks
+    public sealed class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -110,9 +110,7 @@ namespace Content.Server.Configurable
                     _config[key] = value;
                 }
 
-#pragma warning disable 618
-                SendMessage(new ConfigUpdatedComponentMessage(config));
-#pragma warning restore 618
+                // TODO raise event.
             }
         }
 

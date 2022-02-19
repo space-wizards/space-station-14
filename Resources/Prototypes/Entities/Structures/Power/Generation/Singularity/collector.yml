@@ -28,6 +28,7 @@
     anchored: true
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/collector.rsi
+    netsync: false
     layers:
       - state: ca_on
         map: ["enum.RadiationCollectorVisualLayers.Main"]

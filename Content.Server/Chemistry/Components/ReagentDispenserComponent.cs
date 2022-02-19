@@ -25,6 +25,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -37,7 +38,7 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedReagentDispenserComponent))]
-    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate
+    public sealed class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate
     {
         private static ReagentInventoryComparer _comparer = new();
         public static string SolutionName = "reagent";
@@ -45,7 +46,11 @@ namespace Content.Server.Chemistry.Components
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
 
-        [ViewVariables] [DataField("pack")] private string _packPrototypeId = "";
+        [ViewVariables] [DataField("pack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))] private string _packPrototypeId = "";
+
+        [ViewVariables] [DataField("emagPack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))] public string EmagPackPrototypeId = "";
+
+        public bool AlreadyEmagged = false;
 
         [DataField("clickSound")]
         private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
@@ -118,6 +123,24 @@ namespace Content.Server.Chemistry.Components
 
             Inventory.Sort(_comparer);
         }
+
+        public void AddFromPrototype(string pack)
+        {
+            if (string.IsNullOrEmpty(pack)) return;
+
+            if (!_prototypeManager.TryIndex(pack, out ReagentDispenserInventoryPrototype? packPrototype))
+            {
+                return;
+            }
+
+            foreach (var entry in packPrototype.Inventory)
+            {
+                Inventory.Add(new ReagentDispenserInventoryEntry(entry));
+            }
+
+            Inventory.Sort(_comparer);
+        }
+
 
         private void OnPowerChanged(PowerChangedMessage e)
         {
@@ -207,11 +230,6 @@ namespace Content.Server.Chemistry.Components
             if (playerEntity == null)
                 return false;
 
-            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-
-            //Check if player can interact in their current state
-            if (!actionBlocker.CanInteract(playerEntity.Value) || !actionBlocker.CanUse(playerEntity.Value))
-                return false;
             //Check if device is powered
             if (needsPower && !Powered)
                 return false;
@@ -307,7 +325,7 @@ namespace Content.Server.Chemistry.Components
             SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
-        private class ReagentInventoryComparer : Comparer<ReagentDispenserInventoryEntry>
+        private sealed class ReagentInventoryComparer : Comparer<ReagentDispenserInventoryEntry>
         {
             public override int Compare(ReagentDispenserInventoryEntry x, ReagentDispenserInventoryEntry y)
             {
