@@ -144,6 +144,7 @@
   mapPath: /Maps/ssreach.yml
   minPlayers: 0
   maxPlayers: 15
+  votable: false
   overflowJobs:
     - Assistant
   availableJobs:
