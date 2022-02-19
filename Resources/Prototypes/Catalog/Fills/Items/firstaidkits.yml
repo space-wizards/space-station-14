@@ -14,7 +14,7 @@
         amount: 2
       # todo 1 Health Analyzer once it exists. Remove brutepack and ointment for suture, gauze, mesh and medipen?
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
-      
+
 - type: entity
   id: MedkitBurnFilled
   suffix: Filled
@@ -28,7 +28,7 @@
         amount: 3
       - id: SyringeInaprovaline
         amount: 1
-        
+
 - type: entity
   id: MedkitBruteFilled
   suffix: Filled
@@ -42,7 +42,7 @@
         amount: 2
       - id: Gauze
         amount: 2
-        
+
 - type: entity
   id: MedkitToxinFilled
   suffix: Filled
@@ -54,7 +54,7 @@
         amount: 1
       - id: PillDylovene
         amount: 3
-        
+
 - type: entity
   id: MedkitOxygenFilled
   suffix: Filled
@@ -62,13 +62,13 @@
   components:
   - type: StorageFill
     contents:
-      - id: EpinephrineMedipen
+      - id: EmergencyMedipen
         amount: 1
       - id: PillDexalin
         amount: 3
       - id: SyringeInaprovaline
         amount: 1
-        
+
 - type: entity
   id: MedkitRadiationFilled
   suffix: Filled
@@ -80,9 +80,9 @@
         amount: 2
       - id: PillHyronalin
         amount: 3
-      - id: EpinephrineMedipen
+      - id: EmergencyMedipen
         amount: 1
-        
+
 - type: entity
   id: MedkitAdvancedFilled
   suffix: Filled
@@ -98,7 +98,7 @@
         amount: 1
       - id: AntiPoisonMedipen
         amount: 1
-        
+
 - type: entity
   id: MedkitCombatFilled
   suffix: Filled
