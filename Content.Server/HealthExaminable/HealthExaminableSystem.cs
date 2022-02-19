@@ -68,10 +68,11 @@ public sealed class HealthExaminableSystem : EntitySystem
                 if (tempLocStr == str)
                     continue;
 
-                chosenLocStr = tempLocStr;
-
                 if (dmg > threshold && threshold > closest)
+                {
+                    chosenLocStr = tempLocStr;
                     closest = threshold;
+                }
             }
 
             if (closest == FixedPoint2.Zero)
@@ -93,6 +94,24 @@ public sealed class HealthExaminableSystem : EntitySystem
             msg.AddMarkup(Loc.GetString($"health-examinable-{component.LocPrefix}-none"));
         }
 
+        // Anything else want to add on to this?
+        RaiseLocalEvent(uid, new HealthBeingExaminedEvent(msg));
+
         return msg;
+    }
+}
+
+/// <summary>
+///     A class raised on an entity whose health is being examined
+///     in order to add special text that is not handled by the
+///     damage thresholds.
+/// </summary>
+public sealed class HealthBeingExaminedEvent
+{
+    public FormattedMessage Message;
+
+    public HealthBeingExaminedEvent(FormattedMessage message)
+    {
+        Message = message;
     }
 }

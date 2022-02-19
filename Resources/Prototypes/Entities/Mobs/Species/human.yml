@@ -283,7 +283,8 @@
       type: StrippableBoundUserInterface
   - type: Puller
   - type: Butcherable
-    meat: FoodMeat
+    butcheringType: Spike # TODO human.
+    spawned: FoodMeat
   - type: Recyclable
     safe: false
   - type: Speech

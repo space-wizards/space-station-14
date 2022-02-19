@@ -7,6 +7,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Fluids.Components;
 using Content.Server.Hands.Components;
+using Content.Server.Kitchen.Components;
 using Content.Server.Plants;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
@@ -802,9 +803,10 @@ namespace Content.Server.Botany.Components
                 return true;
             }
 
-            if (tagSystem.HasTag(usingItem, "BotanySharp"))
+            if (_entMan.HasComponent<SharpComponent>(usingItem))
             {
                 return DoHarvest(user);
+
             }
 
             if (_entMan.TryGetComponent<ProduceComponent?>(usingItem, out var produce))

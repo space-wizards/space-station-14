@@ -32,7 +32,7 @@ namespace Content.Client.Atmos.UI
             _window.OnClose += Close;
             _window.ReleaseValveCloseButtonPressed += OnReleaseValveClosePressed;
             _window.ReleaseValveOpenButtonPressed += OnReleaseValveOpenPressed;
-            _window.ReleasePressureSliderChanged += OnReleasePressurePressed;
+            _window.ReleasePressureSet += OnReleasePressureSet;
             _window.TankEjectButtonPressed += OnTankEjectPressed;
         }
 
@@ -41,7 +41,7 @@ namespace Content.Client.Atmos.UI
             SendMessage(new GasCanisterHoldingTankEjectMessage());
         }
 
-        private void OnReleasePressurePressed(float value)
+        private void OnReleasePressureSet(float value)
         {
             SendMessage(new GasCanisterChangeReleasePressureMessage(value));
         }
