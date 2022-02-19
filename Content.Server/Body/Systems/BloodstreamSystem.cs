@@ -2,6 +2,7 @@
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.HealthExaminable;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -33,7 +34,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
         SubscribeLocalEvent<BloodstreamComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<BloodstreamComponent, DamageChangedEvent>(OnDamageChanged);
-        SubscribeLocalEvent<BloodstreamComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<BloodstreamComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined);
         SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
     }
 
@@ -125,11 +126,23 @@ public sealed class BloodstreamSystem : EntitySystem
         }
     }
 
-    private void OnExamined(EntityUid uid, BloodstreamComponent component, ExaminedEvent args)
+    private void OnHealthBeingExamined(EntityUid uid, BloodstreamComponent component, HealthBeingExaminedEvent args)
     {
+        if (component.BleedAmount > 10)
+        {
+            args.Message.PushNewline();
+            args.Message.AddMarkup(Loc.GetString("bloodstream-component-profusely-bleeding", ("target", uid)));
+        }
+        else if (component.BleedAmount > 0)
+        {
+            args.Message.PushNewline();
+            args.Message.AddMarkup(Loc.GetString("bloodstream-component-bleeding", ("target", uid)));
+        }
+
         if (GetBloodLevelPercentage(uid, component) < component.BloodlossThreshold)
         {
-            args.PushMarkup(Loc.GetString("bloodstream-component-looks-pale", ("target", uid)));
+            args.Message.PushNewline();
+            args.Message.AddMarkup(Loc.GetString("bloodstream-component-looks-pale", ("target", uid)));
         }
     }
 
