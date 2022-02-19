@@ -72,7 +72,7 @@
 
 
 - type: entity
-  name: epinephrine medipen
+  name: anti-poison medipen
   parent: ChemicalMedipen
   id: AntiPoisonMedipen
   description: A rapid dose of anti-poison. Contains ultravasculine and epinephrine.
@@ -83,6 +83,6 @@
         maxVol: 15
         reagents:
         - ReagentId: Ultravasculine
-          Quantity: 5
-        - ReagentId: Epinephrine
           Quantity: 10
+        - ReagentId: Epinephrine
+          Quantity: 5
