@@ -587,7 +587,7 @@
 
 - type: entity
   name: mouse
-  parent: SimpleMobBase
+  parent: HarmlessMobBase
   id: MobMouse
   description: Squeak!
   components:
