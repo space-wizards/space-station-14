@@ -949,3 +949,49 @@
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
     interactFailureString: petting-failure-generic
+
+- type: entity
+  name: possum
+  parent: SimpleMobBase
+  id: MobPossum
+  description: '"O Possum! My Possum!" -- Walt Whitman, 1865'
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/possum.rsi
+    scale: 0.7, 0.7 # Possums are pretty huge on Goonstation, let's scale them down a little.
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: possum
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: possum
+      crit: possum_dead # TODO: Make it so possums can "play dead." Probably need AI changes
+      dead: possum_dead
+  - type: Butcherable
+    spawned: FoodMeat
+    pieces: 3
+  - type: InteractionPopup
+    successChance: 0.2 # Low when undomesticated.
+    interactSuccessString: petting-success-possum # Possums don't really make much noise when they're happy. They make clicking noises as a mating call, but that is NOT the same thing!
+    interactFailureString: petting-failure-possum
+    interactFailureSound:
+      path: /Audio/Animals/cat_hiss.ogg # This sound effect is intended for generic hissing. For easy reference it's named after the animal it came from IRL.
+  - type: Grammar
+    attributes:
+      gender: epicene
