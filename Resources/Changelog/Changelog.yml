@@ -1,15 +1,4 @@
 Entries:
-- author: Tomeno
-  changes:
-  - {message: Made admin message windows stand out more., type: Add}
-  id: 594
-  time: '2021-11-15T11:42:30.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Much more accurate tracking of ghost roles., type: Fix}
-  - {message: Ghost roles can no longer be revived as the original player., type: Tweak}
-  id: 595
-  time: '2021-11-15T18:14:35.0000000+00:00'
 - author: cheesePizza2
   changes:
   - {message: Harm state now has an on/off icon, type: Tweak}
@@ -2988,3 +2977,16 @@ Entries:
   - {message: Mice can no longer harm things., type: Remove}
   id: 1093
   time: '2022-02-19T19:31:22.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added prefilled contents to more first aid kits! Look out around the
+      station for them., type: Add}
+  id: 1094
+  time: '2022-02-19T22:22:21.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Power requirements across the station have been increased. Make sure
+      your engineers are competent., type: Tweak}
+  - {message: AME no longer needs power to start., type: Tweak}
+  id: 1095
+  time: '2022-02-19T22:22:41.0000000+00:00'
