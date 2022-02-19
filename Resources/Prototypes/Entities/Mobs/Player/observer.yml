@@ -22,6 +22,7 @@
       - GhostImpassable
   - type: PlayerInputMover
   - type: OrbitVisuals
+  - type: Appearance
   - type: Eye
     drawFov: false
   - type: Input

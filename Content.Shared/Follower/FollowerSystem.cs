@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Content.Shared.Follower.Components;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Follower;
 
@@ -72,6 +73,11 @@ public sealed class FollowerSystem : EntitySystem
         xform.AttachParent(entity);
         xform.LocalPosition = Vector2.Zero;
 
+        if (TryComp<AppearanceComponent>(follower, out var appearance))
+        {
+            appearance.SetData(OrbitingVisuals.IsOrbiting, true);
+        }
+
         var followerEv = new StartedFollowingEntityEvent(entity, follower);
         var entityEv = new EntityStartedFollowingEvent(entity, follower);
 
@@ -97,6 +103,11 @@ public sealed class FollowerSystem : EntitySystem
         RemComp<FollowerComponent>(uid);
 
         Transform(uid).AttachToGridOrMap();
+
+        if (TryComp<AppearanceComponent>(uid, out var appearance))
+        {
+            appearance.SetData(OrbitingVisuals.IsOrbiting, false);
+        }
 
         var uidEv = new StoppedFollowingEntityEvent(target, uid);
         var targetEv = new EntityStoppedFollowingEvent(target, uid);
@@ -172,3 +183,10 @@ public sealed class EntityStoppedFollowingEvent : FollowEvent
     {
     }
 }
+
+[Serializable, NetSerializable]
+public enum OrbitingVisuals
+{
+    IsOrbiting
+}
+
