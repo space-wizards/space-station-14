@@ -1,10 +1,4 @@
 Entries:
-- author: TimrodDX and xRiriq
-  changes:
-  - {message: Medical and Science can now access the extra scanners in Genetics on
-      Packed., type: Tweak}
-  id: 593
-  time: '2021-11-15T08:12:44.0000000+00:00'
 - author: Tomeno
   changes:
   - {message: Made admin message windows stand out more., type: Add}
@@ -2989,3 +2983,8 @@ Entries:
       for them., type: Remove}
   id: 1092
   time: '2022-02-19T19:25:25.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Mice can no longer harm things., type: Remove}
+  id: 1093
+  time: '2022-02-19T19:31:22.0000000+00:00'
