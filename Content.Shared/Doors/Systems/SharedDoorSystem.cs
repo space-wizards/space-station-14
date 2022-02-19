@@ -6,16 +6,10 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Content.Shared.Doors.Systems;
@@ -59,18 +53,33 @@ public abstract class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
     }
 
-    protected virtual void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
+    private void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
     {
-        // if the door state is not standard (i.e., door starts open), make sure collision & occlusion are properly set.
-        if (door.State == DoorState.Open)
+        if (door.NextStateChange != null)
+            _activeDoors.Add(door);
+        else
         {
-            if (TryComp(uid, out PhysicsComponent? physics))
-                physics.CanCollide = false;
-            
-            if (door.Occludes && TryComp(uid, out OccluderComponent? occluder))
-                occluder.Enabled = false;
+            // Make sure doors are not perpetually stuck opening or closing.
+            if (door.State == DoorState.Opening)
+            {
+                // force to open.
+                door.State = DoorState.Open;
+                door.Partial = false;
+            }
+            if (door.State == DoorState.Closing)
+            {
+                // force to closed.
+                door.State = DoorState.Closed;
+                door.Partial = false;
+            }
         }
 
+        // should this door have collision and the like enabled?
+        var collidable = door.State == DoorState.Closed
+            || door.State == DoorState.Closing && door.Partial
+            || door.State == DoorState.Opening && !door.Partial;
+
+        SetCollidable(uid, collidable, door);
         UpdateAppearance(uid, door);
     }
 
@@ -268,21 +277,17 @@ public abstract class SharedDoorSystem : EntitySystem
     /// <summary>
     /// Called when the door is partially opened. The door becomes transparent and stops colliding with entities.
     /// </summary>
-    public virtual void OnPartialOpen(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
+    public void OnPartialOpen(EntityUid uid, DoorComponent? door = null)
     {
-        if (!Resolve(uid, ref door, ref physics))
+        if (!Resolve(uid, ref door))
             return;
 
-        // we can't be crushing anyone anymore, since we're opening
-        door.CurrentlyCrushing.Clear();
-        physics.CanCollide = false;
+        SetCollidable(uid, false, door);
         door.Partial = true;
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         _activeDoors.Add(door);
         door.Dirty();
 
-        if (door.Occludes && TryComp(uid, out OccluderComponent? occluder))
-            occluder.Enabled = false;
     }
     #endregion
 
@@ -327,11 +332,12 @@ public abstract class SharedDoorSystem : EntitySystem
     /// Called when the door is partially closed. This is when the door becomes "solid". If this process fails (e.g., a
     /// mob entered the door as it was closing), then this returns false. Otherwise, returns true;
     /// </summary>
-    public virtual bool OnPartialClose(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
+    public bool OnPartialClose(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
     {
         if (!Resolve(uid, ref door, ref physics))
             return false;
 
+        SetCollidable(uid, true, door, physics);
         door.Partial = true;
         door.Dirty();
 
@@ -344,13 +350,9 @@ public abstract class SharedDoorSystem : EntitySystem
             return false;
         }
 
-        physics.CanCollide = true;
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         _activeDoors.Add(door);
-
-        if (door.Occludes && TryComp(uid, out OccluderComponent? occluder))
-            occluder.Enabled = true;
-
+        
         // Crush any entities. Note that we don't check airlock safety here. This should have been checked before
         // the door closed.
         Crush(uid, door, physics);
@@ -359,6 +361,24 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     #region Collisions
+    protected virtual void SetCollidable(EntityUid uid, bool collidable,
+        DoorComponent? door = null,
+        PhysicsComponent? physics = null,
+        OccluderComponent? occluder = null)
+    {
+        if (!Resolve(uid, ref door))
+            return;
+
+        if (Resolve(uid, ref physics, false))
+            physics.CanCollide = collidable;
+
+        if (!collidable)
+            door.CurrentlyCrushing.Clear();
+
+        if (door.Occludes && Resolve(uid, ref occluder, false))
+            occluder.Enabled = collidable;
+    }
+
     /// <summary>
     /// Crushes everyone colliding with us by more than <see cref="IntersectPercentage"/>%.
     /// </summary>
