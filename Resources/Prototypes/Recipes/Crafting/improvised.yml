@@ -34,3 +34,16 @@
   icon:
     sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
     state: pneumaticCannon
+
+- type: construction
+  name: gauze
+  id: gauze
+  graph: Gauze
+  startNode: start
+  targetNode: gauze
+  category: Tools
+  objectType: Item
+  description: When you've really got nothing left.
+  icon:
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: gauze
