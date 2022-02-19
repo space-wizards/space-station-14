@@ -71,3 +71,7 @@
     innateActions:
       - CombatMode
   - type: Guardian
+  - type: InteractionPopup
+    interactSuccessString: petting-success-holo
+    interactFailureString: petting-failure-holo
+    successChance: 0.7
