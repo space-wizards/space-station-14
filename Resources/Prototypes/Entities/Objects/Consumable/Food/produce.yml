@@ -196,6 +196,16 @@
   - type: Tag
     tags:
     - Trash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 4
+        reagents:
+        - ReagentId: PulpedBananaPeel
+          Quantity: 4
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Recyclable
 
 - type: entity
   name: carrot
