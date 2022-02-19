@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: There is now a MIDI volume slider in the options menu., type: Add}
-  id: 585
-  time: '2021-11-14T09:44:36.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug where Potassium + Water explosions in the bloodstream would
@@ -2982,3 +2977,11 @@ Entries:
     type: Tweak}
   id: 1085
   time: '2022-02-18T22:57:42.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Health examine now actually accurately assesses damage., type: Fix}
+  - {message: Moved the "is pale" text to health examinations., type: Tweak}
+  - {message: Examining someone's health now will tell you if they are still bleeding.,
+    type: Add}
+  id: 1086
+  time: '2022-02-19T06:03:15.0000000+00:00'
