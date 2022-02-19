@@ -1,13 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Wires on Packed Station are less spaghetti than before., type: Tweak}
-  - {message: The Russians have sent their top atmos tech to fix the air on the DJ
-      satellite., type: Tweak}
-  - {message: The Chef now has a cow. Also made it so Ian spawns correctly in the
-      HoP's office., type: Add}
-  id: 591
-  time: '2021-11-14T19:52:46.0000000+00:00'
 - author: TimrodDX and xRiriq
   changes:
   - {message: Medical and Science can now access the extra scanners in Genetics on
@@ -2990,3 +2981,11 @@ Entries:
       glass. Some decal changes. Other misc fixes., type: Tweak}
   id: 1091
   time: '2022-02-19T19:24:15.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: 'Added security techfabs, which print the security weapons and equipment
+      now instead of the protolathe.', type: Add}
+  - {message: Removed RCD recipe from the protolathe. You can still print more ammo
+      for them., type: Remove}
+  id: 1092
+  time: '2022-02-19T19:25:25.0000000+00:00'
