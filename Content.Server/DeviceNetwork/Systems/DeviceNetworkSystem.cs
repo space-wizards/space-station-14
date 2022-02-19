@@ -13,7 +13,7 @@ namespace Content.Server.DeviceNetwork.Systems
     ///     Device networking allows machines and devices to communicate with each other while adhering to restrictions like range or being connected to the same powernet.
     /// </summary>
     [UsedImplicitly]
-    public class DeviceNetworkSystem : EntitySystem
+    public sealed class DeviceNetworkSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -236,7 +236,7 @@ namespace Content.Server.DeviceNetwork.Systems
     /// Event raised before a device network packet is send.
     /// Subscribed to by other systems to prevent the packet from being sent.
     /// </summary>
-    public class BeforePacketSentEvent : CancellableEntityEventArgs
+    public sealed class BeforePacketSentEvent : CancellableEntityEventArgs
     {
         /// <summary>
         /// The EntityUid of the entity the packet was sent from.
@@ -252,7 +252,7 @@ namespace Content.Server.DeviceNetwork.Systems
     /// <summary>
     /// Event raised when a device network packet gets sent.
     /// </summary>
-    public class PacketSentEvent : EntityEventArgs
+    public sealed class PacketSentEvent : EntityEventArgs
     {
         /// <summary>
         /// The frequency the packet is sent on.

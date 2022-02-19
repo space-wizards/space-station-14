@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.Research.UI
 {
     [GenerateTypedNameReferences]
-    public partial class ResearchClientServerSelectionMenu : DefaultWindow
+    public sealed partial class ResearchClientServerSelectionMenu : DefaultWindow
     {
         private int _serverCount;
         private string[] _serverNames = System.Array.Empty<string>();

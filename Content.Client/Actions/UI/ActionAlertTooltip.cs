@@ -11,7 +11,7 @@ namespace Content.Client.Actions.UI
     /// <summary>
     /// Tooltip for actions or alerts because they are very similar.
     /// </summary>
-    public class ActionAlertTooltip : PanelContainer
+    public sealed class ActionAlertTooltip : PanelContainer
     {
         private const float TooltipTextMaxWidth = 350;
 

@@ -158,7 +158,7 @@ namespace Content.Server.AI.Utility
             npc.AvailableActions.Sort(_comparer);
         }
 
-        private class NpcActionComparer : Comparer<IAiUtility>
+        private sealed class NpcActionComparer : Comparer<IAiUtility>
         {
             public override int Compare(IAiUtility? x, IAiUtility? y)
             {

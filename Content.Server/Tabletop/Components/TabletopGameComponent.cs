@@ -10,7 +10,7 @@ namespace Content.Server.Tabletop.Components
     /// A component that makes an object playable as a tabletop game.
     /// </summary>
     [RegisterComponent, Friend(typeof(TabletopSystem))]
-    public class TabletopGameComponent : Component
+    public sealed class TabletopGameComponent : Component
     {
         [DataField("boardName")]
         public string BoardName { get; } = "tabletop-default-board-name";

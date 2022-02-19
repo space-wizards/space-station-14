@@ -11,7 +11,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Chemistry.ReactionEffects
 {
     [DataDefinition]
-    public class ExplosionReactionEffect : ReagentEffect
+    public sealed class ExplosionReactionEffect : ReagentEffect
     {
         [DataField("devastationRange")]
         [JsonIgnore]
@@ -24,7 +24,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         [DataField("lightImpactRange")]
         [JsonIgnore]
         private float _lightImpactRange = 3;
-        
+
         [DataField("flashRange")]
         [JsonIgnore]
         private float _flashRange;

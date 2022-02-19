@@ -6,7 +6,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Station;
 
 [RegisterComponent, Friend(typeof(StationSystem))]
-public class StationComponent : Component
+public sealed class StationComponent : Component
 {
     [ViewVariables]
     public StationId Station = StationId.Invalid;

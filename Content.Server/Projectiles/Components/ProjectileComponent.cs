@@ -9,7 +9,7 @@ namespace Content.Server.Projectiles.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedProjectileComponent))]
-    public class ProjectileComponent : SharedProjectileComponent
+    public sealed class ProjectileComponent : SharedProjectileComponent
     {
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]

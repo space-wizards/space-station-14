@@ -10,7 +10,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class SetTemperatureCommand : IConsoleCommand
+    public sealed class SetTemperatureCommand : IConsoleCommand
     {
         public string Command => "settemp";
         public string Description => "Sets a tile's temperature (in kelvin).";

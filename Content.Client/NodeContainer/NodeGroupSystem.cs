@@ -59,6 +59,14 @@ namespace Content.Client.NodeContainer
                 Groups.Add(group.NetId, group);
             }
 
+            foreach (var (groupId, debugData) in ev.GroupDataUpdates)
+            {
+                if (Groups.TryGetValue(groupId, out var group))
+                {
+                    group.DebugData = debugData;
+                }
+            }
+
             Entities = Groups.Values
                 .SelectMany(g => g.Nodes, (data, nodeData) => (data, nodeData))
                 .GroupBy(n => n.nodeData.Entity)

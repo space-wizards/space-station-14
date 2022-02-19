@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Administration.Commands.Station;
 
 [AdminCommand(AdminFlags.Admin)]
-public class ListStationsCommand : IConsoleCommand
+public sealed class ListStationsCommand : IConsoleCommand
 {
     public string Command => "lsstations";
 

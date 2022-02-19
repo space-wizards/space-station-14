@@ -9,7 +9,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.Decals;
 
 [AdminCommand(AdminFlags.Mapping)]
-public class EditDecalCommand : IConsoleCommand
+public sealed class EditDecalCommand : IConsoleCommand
 {
     public string Command => "editdecal";
     public string Description => "Edits a decal.";

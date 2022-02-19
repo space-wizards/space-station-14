@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Administration.Managers;
 
-public class GamePrototypeLoadManager : IGamePrototypeLoadManager
+public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
 {
     [Dependency] private readonly IClientNetManager _netManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

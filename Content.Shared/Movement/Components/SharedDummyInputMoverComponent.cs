@@ -5,7 +5,7 @@ namespace Content.Shared.Movement.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IMoverComponent))]
-    public class SharedDummyInputMoverComponent : Component, IMoverComponent
+    public sealed class SharedDummyInputMoverComponent : Component, IMoverComponent
     {
         public bool IgnorePaused => false;
         public float CurrentWalkSpeed => 0f;

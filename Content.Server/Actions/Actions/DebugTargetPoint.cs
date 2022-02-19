@@ -9,7 +9,7 @@ namespace Content.Server.Actions.Actions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class DebugTargetPoint : ITargetPointAction, ITargetPointItemAction
+    public sealed class DebugTargetPoint : ITargetPointAction, ITargetPointItemAction
     {
         public void DoTargetPointAction(TargetPointItemActionEventArgs args)
         {

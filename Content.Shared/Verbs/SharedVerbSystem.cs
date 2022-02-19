@@ -65,7 +65,7 @@ namespace Content.Shared.Verbs
             bool canAccess = false;
             if (force || target == user)
                 canAccess = true;
-            else if (EntityManager.EntityExists(target) && _interactionSystem.InRangeUnobstructed(user, target, ignoreInsideBlocker: true))
+            else if (EntityManager.EntityExists(target) && _interactionSystem.InRangeUnobstructed(user, target))
             {
                 if (ContainerSystem.IsInSameOrParentContainer(user, target))
                     canAccess = true;
@@ -76,10 +76,10 @@ namespace Content.Shared.Verbs
 
             // A large number of verbs need to check action blockers. Instead of repeatedly having each system individually
             // call ActionBlocker checks, just cache it for the verb request.
-            var canInteract = force || _actionBlockerSystem.CanInteract(user);
+            var canInteract = force || _actionBlockerSystem.CanInteract(user, target);
 
             EntityUid? @using = null;
-            if (TryComp(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user)))
+            if (TryComp(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUseHeldEntity(user)))
             {
                 hands.TryGetActiveHeldEntity(out @using);
 

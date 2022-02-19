@@ -15,6 +15,7 @@ namespace Content.Shared.Damage
     /// </summary>
     [DataDefinition]
     [Serializable, NetSerializable]
+    [Virtual]
     public class DamageModifierSet
     {
         [DataField("coefficients", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, DamageTypePrototype>))]

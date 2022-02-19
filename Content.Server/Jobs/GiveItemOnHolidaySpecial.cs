@@ -13,7 +13,7 @@ namespace Content.Server.Jobs
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class GiveItemOnHolidaySpecial : JobSpecial
+    public sealed class GiveItemOnHolidaySpecial : JobSpecial
     {
         [DataField("holiday", customTypeSerializer:typeof(PrototypeIdSerializer<HolidayPrototype>))]
         public string Holiday { get; } = string.Empty;

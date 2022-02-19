@@ -6,7 +6,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Piping.Other.Components
 {
     [RegisterComponent]
-    public class GasMinerComponent : Component
+    public sealed class GasMinerComponent : Component
     {
         public bool Enabled { get; set; } = true;
 

@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Ghost.Roles.UI
 {
-    public class MakeGhostRoleEui : BaseEui
+    public sealed class MakeGhostRoleEui : BaseEui
     {
         public MakeGhostRoleEui(EntityUid entityUid)
         {

@@ -1,4 +1,5 @@
 ﻿using Content.Server.Botany.Components;
+using Content.Server.Kitchen.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Random.Helpers;
@@ -9,8 +10,6 @@ namespace Content.Server.Botany.Systems;
 
 public sealed class LogSystem : EntitySystem
 {
-    [Dependency] private readonly TagSystem _tags = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -20,7 +19,7 @@ public sealed class LogSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, LogComponent component, InteractUsingEvent args)
     {
-        if (_tags.HasTag(args.Used, "BotanySharp"))
+        if (HasComp<SharpComponent>(args.Used))
         {
             for (var i = 0; i < component.SpawnCount; i++)
             {

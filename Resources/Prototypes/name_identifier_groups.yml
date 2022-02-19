@@ -1,0 +1,11 @@
+﻿# Non-fungible apes, anyone?
+- type: nameIdentifierGroup
+  id: Monkey
+  prefix: MK
+
+- type: nameIdentifierGroup
+  id: Drone
+  prefix: DR
+  fullName: true
+  minValue: 10000
+  maxValue: 99999

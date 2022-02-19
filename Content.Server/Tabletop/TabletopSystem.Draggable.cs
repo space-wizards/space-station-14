@@ -10,7 +10,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Server.Tabletop
 {
-    public partial class TabletopSystem
+    public sealed partial class TabletopSystem
     {
         public void InitializeDraggable()
         {

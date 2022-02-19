@@ -12,7 +12,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class DeleteGasCommand : IConsoleCommand
+    public sealed class DeleteGasCommand : IConsoleCommand
     {
         public string Command => "deletegas";
         public string Description => "Removes all gases from a grid, or just of one type if specified.";

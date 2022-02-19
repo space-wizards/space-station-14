@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.Nuke
 {
     [UsedImplicitly]
-    public class NukeBoundUserInterface : BoundUserInterface
+    public sealed class NukeBoundUserInterface : BoundUserInterface
     {
         private NukeMenu? _menu;
 

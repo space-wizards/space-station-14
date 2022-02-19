@@ -63,4 +63,5 @@ public enum LogType
     Emitter = 59,
     GhostRoleTaken = 60,
     Chat = 61,
+    Emag = 69,
 }

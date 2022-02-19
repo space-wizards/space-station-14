@@ -14,7 +14,7 @@ using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Client.Parallax
 {
-    public class ParallaxGenerator
+    public sealed class ParallaxGenerator
     {
         private readonly List<Layer> Layers = new();
 
@@ -69,7 +69,7 @@ namespace Content.Client.Parallax
             public abstract void Apply(Image<Rgba32> bitmap);
         }
 
-        private class LayerNoise : Layer
+        private sealed class LayerNoise : Layer
         {
             private readonly Color InnerColor = Color.White;
             private readonly Color OuterColor = Color.Black;
@@ -197,7 +197,7 @@ namespace Content.Client.Parallax
             }
         }
 
-        private class LayerPoints : Layer
+        private sealed class LayerPoints : Layer
         {
             private readonly int Seed = 1234;
             private readonly int PointCount = 100;

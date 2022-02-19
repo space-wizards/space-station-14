@@ -65,7 +65,7 @@ namespace Content.Shared.Examine
             if (EntityManager.TryGetComponent(examiner, out MobStateComponent mobState) && mobState.IsIncapacitated())
                 return false;
 
-            if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange, ignoreInsideBlocker: true))
+            if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange))
                 return false;
 
             // Is the target hidden in a opaque locker or something? Currently this check allows players to examine
@@ -284,7 +284,7 @@ namespace Content.Shared.Examine
     /// <summary>
     ///     Raised when an entity is examined.
     /// </summary>
-    public class ExaminedEvent : EntityEventArgs
+    public sealed class ExaminedEvent : EntityEventArgs
     {
         /// <summary>
         ///     The message that will be displayed as the examine text.
