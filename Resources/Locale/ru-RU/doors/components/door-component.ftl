@@ -1,1 +1,1 @@
-door-component-examine-is-welded = It has been welded shut.
+door-component-examine-is-welded = Заварена наглухо.

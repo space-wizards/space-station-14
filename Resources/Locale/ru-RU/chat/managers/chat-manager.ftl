@@ -3,13 +3,13 @@
 chat-manager-max-message-length = Ваше сообщение превышает лимит в { $maxMessageLength } символов
 chat-manager-ooc-chat-enabled-message = OOC чат был включен.
 chat-manager-ooc-chat-disabled-message = OOC чат был отключен.
-chat-manager-looc-chat-enabled-message = LOOC chat has been enabled.
-chat-manager-looc-chat-disabled-message = LOOC chat has been disabled.
+chat-manager-looc-chat-enabled-message = LOOC чат был включен.
+chat-manager-looc-chat-disabled-message = LOOC чат был отключен.
 chat-manager-admin-ooc-chat-enabled-message = Админ OOC чат был включен.
 chat-manager-admin-ooc-chat-disabled-message = Админ OOC чат был выключен.
 chat-manager-max-message-length-exceeded-message = Ваше сообщение превышает лимит в { $limit } символов
 chat-manager-no-headset-on-message = У вас нет гарнитуры!
-chat-manager-whisper-headset-on-message = You can't whisper on the radio!
+chat-manager-whisper-headset-on-message = Вы не можете шептать в радио!
 chat-manager-server-wrap-message = СЕРВЕР: { "{0}" }
 chat-manager-sender-announcement-wrap-message =
     Объявление { $sender }:
