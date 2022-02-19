@@ -672,6 +672,8 @@
   icon:
     sprite: Structures/Doors/MineralDoors/paper_door.rsi
     state: closed
+
+- type: construction
   name: airtight plastic flaps
   id: PlasticFlapsClear
   graph: PlasticFlapsGraph
