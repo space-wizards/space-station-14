@@ -1,26 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug where Potassium + Water explosions in the bloodstream would
-      crash the server, type: Fix}
-  id: 586
-  time: '2021-11-14T11:19:42.0000000+00:00'
-- author: Daemon
-  changes:
-  - {message: Handcuff box has too little of a storing size, type: Fix}
-  id: 587
-  time: '2021-11-14T16:29:49.0000000+00:00'
-- author: FoLoKe
-  changes:
-  - {message: Added ability to milk cow., type: Add}
-  id: 588
-  time: '2021-11-14T16:33:16.0000000+00:00'
-- author: Tomeno
-  changes:
-  - {message: Airlocks no longer show orange lights all the time., type: Tweak}
-  - {message: Airlocks now play the access denied animation., type: Fix}
-  id: 589
-  time: '2021-11-14T17:51:02.0000000+00:00'
 - author: cheesePizza2
   changes:
   - {message: Directional windows can now be constructed., type: Add}
@@ -2985,3 +2963,29 @@ Entries:
     type: Add}
   id: 1086
   time: '2022-02-19T06:03:15.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: You will no longer drop items on the ground when trying to smart equip
+      them while stunned., type: Fix}
+  id: 1087
+  time: '2022-02-19T19:16:15.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Warping to an entity using the ghost warp menu will now automatically
+      make you start following the entity., type: Tweak}
+  id: 1088
+  time: '2022-02-19T19:16:27.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Ghosts now orbit around entities they follow, rather than just sitting
+      on top of them.', type: Add}
+  id: 1089
+  time: '2022-02-19T19:16:44.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added more xeno artifact triggers. Test them with hot or electrical
+      objects., type: Add}
+  - {message: Temperature changing artifacts are much deadlier than before. Isolate
+      them as soon as possible., type: Tweak}
+  id: 1090
+  time: '2022-02-19T19:16:50.0000000+00:00'
