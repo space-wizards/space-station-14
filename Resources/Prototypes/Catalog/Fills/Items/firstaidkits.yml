@@ -58,7 +58,7 @@
 - type: entity
   id: MedkitOxygenFilled
   suffix: Filled
-  parent: MedkitOxygen
+  parent: MedkitO2
   components:
   - type: StorageFill
     contents:
