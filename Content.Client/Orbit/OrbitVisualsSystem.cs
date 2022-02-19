@@ -59,6 +59,11 @@ public sealed class OrbitVisualsSystem : VisualizerSystem<OrbitVisualsComponent>
             if (animationPlayer.HasRunningAnimation(_orbitAnimationKey))
                 return;
 
+            if (animationPlayer.HasRunningAnimation(_orbitStopKey))
+            {
+                animationPlayer.Stop(_orbitStopKey);
+            }
+
             animationPlayer.Play(GetOrbitAnimation(component), _orbitAnimationKey);
         }
         else

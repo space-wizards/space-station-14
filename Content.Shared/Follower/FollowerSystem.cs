@@ -107,6 +107,8 @@ public sealed class FollowerSystem : EntitySystem
 
         if (TryComp<AppearanceComponent>(uid, out var appearance))
         {
+            // We don't remove OrbitVisuals here since the OrbitVisualsSystem will handle that itself
+            // during the OnChangeData, which is deferred..
             appearance.SetData(OrbitingVisuals.IsOrbiting, false);
         }
 
@@ -186,7 +188,7 @@ public sealed class EntityStoppedFollowingEvent : FollowEvent
 }
 
 [Serializable, NetSerializable]
-public enum OrbitingVisuals
+public enum OrbitingVisuals : byte
 {
     IsOrbiting
 }
