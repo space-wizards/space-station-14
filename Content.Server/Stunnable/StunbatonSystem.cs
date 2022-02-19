@@ -211,7 +211,7 @@ namespace Content.Server.Stunnable
             {
                 Used = used,
                 User = user
-            });
+            }, false);
         }
     }
 }
