@@ -98,7 +98,7 @@
 
 - type: gameMap
   id: NSSPillar
-  mapName: 'NSS Pillar v4'
+  mapName: 'NSS Pillar v4.1'
   mapNameTemplate: '{0} NSSPillar {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator
@@ -144,6 +144,7 @@
   mapPath: /Maps/ssreach.yml
   minPlayers: 0
   maxPlayers: 15
+  votable: false
   overflowJobs:
     - Assistant
   availableJobs:

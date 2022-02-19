@@ -1,131 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Gas mixers now have a UI, type: Add}
-  - {message: Gas filters and pumps now need to be anchored to open their UIs, type: Fix}
-  id: 571
-  time: '2021-11-11T22:10:21.0000000+00:00'
-- author: xRiriq
-  changes:
-  - {message: Hyronalin now is effective against radiation damage, type: Add}
-  id: 572
-  time: '2021-11-12T04:22:29.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Expanded default ghost role rules and removed excuses to not see them
-      by adding a 5-second delay, type: Tweak}
-  id: 573
-  time: '2021-11-12T04:23:06.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: You can now vote for a different map to be played next round., type: Add}
-  id: 574
-  time: '2021-11-12T06:25:58.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Added a beta version of Packed Station!, type: Add}
-  id: 575
-  time: '2021-11-12T06:26:05.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'Nanotrasen has extended its outreach, and has finally sent the person
-      who decided to hire people of exactly one skin color out an airlock. Expect
-      more variety in the co-workers you meet.', type: Add}
-  id: 576
-  time: '2021-11-12T09:55:50.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Solar panels and the related systems will no longer hold state between
-      rounds., type: Fix}
-  id: 577
-  time: '2021-11-12T19:00:39.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Places firelocks on Packed to make it not Atmos Hell. Fixes a number
-      of access bugs and broken vents., type: Fix}
-  id: 578
-  time: '2021-11-13T01:31:31.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Docking airlocks have been mapped onto Saltern's arrivals., type: Add}
-  id: 579
-  time: '2021-11-13T01:46:27.0000000+00:00'
-- author: FoLoKe
-  changes:
-  - {message: 'added "one hand" mechanic to the monkeys, improvise', type: Add}
-  - {message: added ability for animals to receive damage from bullets, type: Fix}
-  - {message: offcentered some sprites to match animal physical body, type: Fix}
-  id: 580
-  time: '2021-11-13T01:48:06.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Flipping something no longer anchors or rotates it., type: Fix}
-  id: 581
-  time: '2021-11-13T01:54:04.0000000+00:00'
-- author: Tomeno
-  changes:
-  - {message: Added hard-drop ghosts to Nanotrasen Block Game, type: Add}
-  id: 582
-  time: '2021-11-13T20:43:54.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Fixes firelocks on Packed Station, type: Tweak}
-  - {message: The solars on Packed Station are now safer., type: Tweak}
-  id: 583
-  time: '2021-11-13T21:41:21.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: It is no longer possible to pull your chair while you're sitting on
-      it. They aren't motorized., type: Fix}
-  id: 584
-  time: '2021-11-13T21:43:37.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: There is now a MIDI volume slider in the options menu., type: Add}
-  id: 585
-  time: '2021-11-14T09:44:36.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug where Potassium + Water explosions in the bloodstream would
-      crash the server, type: Fix}
-  id: 586
-  time: '2021-11-14T11:19:42.0000000+00:00'
-- author: Daemon
-  changes:
-  - {message: Handcuff box has too little of a storing size, type: Fix}
-  id: 587
-  time: '2021-11-14T16:29:49.0000000+00:00'
-- author: FoLoKe
-  changes:
-  - {message: Added ability to milk cow., type: Add}
-  id: 588
-  time: '2021-11-14T16:33:16.0000000+00:00'
-- author: Tomeno
-  changes:
-  - {message: Airlocks no longer show orange lights all the time., type: Tweak}
-  - {message: Airlocks now play the access denied animation., type: Fix}
-  id: 589
-  time: '2021-11-14T17:51:02.0000000+00:00'
-- author: cheesePizza2
-  changes:
-  - {message: Directional windows can now be constructed., type: Add}
-  id: 590
-  time: '2021-11-14T19:51:36.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Wires on Packed Station are less spaghetti than before., type: Tweak}
-  - {message: The Russians have sent their top atmos tech to fix the air on the DJ
-      satellite., type: Tweak}
-  - {message: The Chef now has a cow. Also made it so Ian spawns correctly in the
-      HoP's office., type: Add}
-  id: 591
-  time: '2021-11-14T19:52:46.0000000+00:00'
-- author: TimrodDX and xRiriq
-  changes:
-  - {message: Medical and Science can now access the extra scanners in Genetics on
-      Packed., type: Tweak}
-  id: 593
-  time: '2021-11-15T08:12:44.0000000+00:00'
 - author: Tomeno
   changes:
   - {message: Made admin message windows stand out more., type: Add}
@@ -2963,3 +2836,155 @@ Entries:
       side of the wall in order to interact with them., type: Tweak}
   id: 1071
   time: '2022-02-17T02:40:03.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Bleeding has been added. Weapons that deal brute damage, especially
+      slashing or piercing damage, may cause you to directly lose blood or start bleeding.
+      When bleeding, you will take bloodloss damage, which is now healed by Dexalin
+      and Dexalin Plus.', type: Add}
+  - {message: 'Bloodloss damage is slowly healed over time, as is bleeding and total
+      blood levels.', type: Add}
+  - {message: 'Added Tranexamic Acid, made from inaprovaline, sulfuric acid, and glucose,
+      which helps stop bleeding.', type: Add}
+  - {message: Gauze now actually helps stop bleeding., type: Add}
+  - {message: Iron now replenishes your blood levels., type: Tweak}
+  id: 1072
+  time: '2022-02-17T22:00:42.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Most healthy foods now contain some vitamins and proteins, which have
+      a chance to heal you slightly.', type: Add}
+  - {message: 'There are new recipes using nettles, fly amanita, or plasma sheets.',
+    type: Add}
+  id: 1073
+  time: '2022-02-18T01:27:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Drones can now wear hats again. Sorry about the delay., type: Add}
+  id: 1074
+  time: '2022-02-18T02:42:33.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Vitamin now helps with bleeding, and Protein now helps recover your
+      blood level faster.', type: Add}
+  - {message: 'Blood puddles evaporate much, much slower.', type: Tweak}
+  - {message: Iron/tranex tweaked slightly., type: Tweak}
+  id: 1075
+  time: '2022-02-18T02:42:47.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added emags to the traitor uplink., type: Add}
+  id: 1076
+  time: '2022-02-18T02:43:24.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Packed has a bunch of small updates! Bar and kitchen have windoors now
+      so they have better access., type: Tweak}
+  - {message: Medbay has shutters to stop the greytide. Engineering now have drones.
+      Salvage have their own room and spawns now., type: Tweak}
+  - {message: Arrivals has been tweaked to have shuttle docks! And more resistance
+      to being spaced., type: Tweak}
+  id: 1077
+  time: '2022-02-18T02:43:43.0000000+00:00'
+- author: Slorktainer
+  changes:
+  - {message: Round-end restart time increased to one minute., type: Tweak}
+  id: 1078
+  time: '2022-02-18T02:45:50.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You can now examine the health of entities by using an examine verb.
+      This means you no longer have to hop in a scanning machine just to judge someone's
+      health., type: Add}
+  id: 1079
+  time: '2022-02-18T03:26:05.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Drones bleed oil, and xenos bleed fluorosulfuric acid.', type: Add}
+  id: 1080
+  time: '2022-02-18T06:00:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'A small amount of reagents from your chemstream are now spilled when
+      losing blood. Use that information wisely, detectives.', type: Tweak}
+  id: 1081
+  time: '2022-02-18T06:00:50.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The recycler should dispose of most of most trash items now., type: Add}
+  id: 1082
+  time: '2022-02-18T06:00:57.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added craftable doors for most materials you can and can't get your
+      hands on, type: Add}
+  id: 1083
+  time: '2022-02-18T06:01:35.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones can no longer interact with people at all or use computers.,
+    type: Remove}
+  id: 1084
+  time: '2022-02-18T22:57:31.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Entities that are gibbed now spill all of their blood and chems., type: Add}
+  - {message: 'Smaller butcherable entities like carp or dogs are now butchered using
+      sharp objects (knives, fire axe, etc) rather than the meat spike.', type: Tweak}
+  - {message: 'More items (axes, sabres) can now chop logs or harvest ligenous plants.',
+    type: Tweak}
+  id: 1085
+  time: '2022-02-18T22:57:42.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Health examine now actually accurately assesses damage., type: Fix}
+  - {message: Moved the "is pale" text to health examinations., type: Tweak}
+  - {message: Examining someone's health now will tell you if they are still bleeding.,
+    type: Add}
+  id: 1086
+  time: '2022-02-19T06:03:15.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: You will no longer drop items on the ground when trying to smart equip
+      them while stunned., type: Fix}
+  id: 1087
+  time: '2022-02-19T19:16:15.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Warping to an entity using the ghost warp menu will now automatically
+      make you start following the entity., type: Tweak}
+  id: 1088
+  time: '2022-02-19T19:16:27.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Ghosts now orbit around entities they follow, rather than just sitting
+      on top of them.', type: Add}
+  id: 1089
+  time: '2022-02-19T19:16:44.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added more xeno artifact triggers. Test them with hot or electrical
+      objects., type: Add}
+  - {message: Temperature changing artifacts are much deadlier than before. Isolate
+      them as soon as possible., type: Tweak}
+  id: 1090
+  time: '2022-02-19T19:16:50.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Pillar V4.1 - Atmos fixed. Misc changes. Exterior airlocks swapped to
+      glass. Some decal changes. Other misc fixes., type: Tweak}
+  id: 1091
+  time: '2022-02-19T19:24:15.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: 'Added security techfabs, which print the security weapons and equipment
+      now instead of the protolathe.', type: Add}
+  - {message: Removed RCD recipe from the protolathe. You can still print more ammo
+      for them., type: Remove}
+  id: 1092
+  time: '2022-02-19T19:25:25.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Mice can no longer harm things., type: Remove}
+  id: 1093
+  time: '2022-02-19T19:31:22.0000000+00:00'

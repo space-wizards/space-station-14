@@ -8,6 +8,8 @@ using Content.Shared.CombatMode;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
@@ -54,6 +56,7 @@ namespace Content.Shared.Interaction
         {
             SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
             SubscribeAllEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
+            SubscribeLocalEvent<UnremoveableComponent, ContainerGettingRemovedAttemptEvent>(OnRemoveAttempt);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.AltActivateItemInWorld,
@@ -90,6 +93,15 @@ namespace Content.Shared.Interaction
                 return;
             }
         }
+
+        /// <summary>
+        ///     Prevents an item with the Unremovable component from being removed from a container by almost any means
+        /// </summary>
+        private void OnRemoveAttempt(EntityUid uid, UnremoveableComponent item, ContainerGettingRemovedAttemptEvent args)
+        {
+            args.Cancel();
+        }
+
 
         /// <summary>
         ///     Handles the event were a client uses an item in their inventory or in their hands, either by

@@ -56,6 +56,7 @@
   - type: Tag
     tags:
     - Trash
+  - type: Recyclable
 
 # Small Plate
 
@@ -131,3 +132,7 @@
     sprite: Objects/Consumable/Food/plates.rsi
     state: tin
     netsync: false
+  - type: Tag
+    tags:
+    - Trash
+  - type: Recyclable

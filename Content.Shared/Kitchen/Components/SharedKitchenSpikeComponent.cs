@@ -14,7 +14,7 @@ namespace Content.Shared.Kitchen.Components
     {
         [ViewVariables]
         [DataField("delay")]
-        public float SpikeDelay = 12.0f;
+        public float SpikeDelay = 7.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sound")]

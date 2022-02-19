@@ -4,6 +4,7 @@
   id: CaptainSabre
   description: A ceremonial weapon belonging to the captain of the station.
   components:
+  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
     state: icon
@@ -24,6 +25,7 @@
   id: Katana
   description: Ancient craftwork made with not so ancient plasteel.
   components:
+  - type: Sharp
   - type: Tag
     tags:
     - Katana
@@ -44,6 +46,7 @@
   id: Machete
   description: A large, vicious looking blade.
   components:
+  - type: Sharp
   - type: Tag
     tags:
     - Machete
@@ -64,6 +67,7 @@
   id: Claymore
   description: An ancient war blade.
   components:
+  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/claymore.rsi
     state: icon

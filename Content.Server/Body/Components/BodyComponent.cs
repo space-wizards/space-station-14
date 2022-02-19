@@ -102,7 +102,12 @@ namespace Content.Server.Body.Components
                 }
             }
 
+            _entMan.EventBus.RaiseLocalEvent(Owner, new BeingGibbedEvent(), false);
             _entMan.QueueDeleteEntity(Owner);
         }
+    }
+
+    public sealed class BeingGibbedEvent : EntityEventArgs
+    {
     }
 }

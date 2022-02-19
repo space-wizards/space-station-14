@@ -12,6 +12,7 @@ namespace Content.Client.Power.APC
         public static readonly Color LackColor = Color.FromHex("#d1332e");
         public static readonly Color ChargingColor = Color.FromHex("#2e8ad1");
         public static readonly Color FullColor = Color.FromHex("#3db83b");
+        public static readonly Color EmagColor = Color.FromHex("#1f48d6");
 
         [UsedImplicitly]
         public override void InitializeEntity(EntityUid entity)
@@ -55,6 +56,9 @@ namespace Content.Client.Power.APC
                     case ApcChargeState.Full:
                         sprite.LayerSetState(Layers.ChargeState, "apco3-2");
                         break;
+                    case ApcChargeState.Emag:
+                        sprite.LayerSetState(Layers.ChargeState, "emag-unlit");
+                        break;
                 }
 
                 if (ent.TryGetComponent(component.Owner, out SharedPointLightComponent? light))
@@ -64,6 +68,7 @@ namespace Content.Client.Power.APC
                         ApcChargeState.Lack => LackColor,
                         ApcChargeState.Charging => ChargingColor,
                         ApcChargeState.Full => FullColor,
+                        ApcChargeState.Emag => EmagColor,
                         _ => LackColor
                     };
                 }
