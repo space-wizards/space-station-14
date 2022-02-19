@@ -8,7 +8,7 @@ namespace Content.Server.AI.Operators.Inventory
     /// <summary>
     /// Will find the item in storage, put it in an active hand, then use it
     /// </summary>
-    public class UseItemInInventoryOperator : AiOperator
+    public sealed class UseItemInInventoryOperator : AiOperator
     {
         private readonly EntityUid _owner;
         private readonly EntityUid _target;

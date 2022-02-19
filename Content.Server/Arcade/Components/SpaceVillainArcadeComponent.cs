@@ -26,7 +26,7 @@ namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IActivate, IWires
+    public sealed class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IActivate, IWires
     {
         [Dependency] private readonly IRobustRandom _random = null!;
 
@@ -75,9 +75,6 @@ namespace Content.Server.Arcade.Components
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!Powered || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
-                return;
-
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return;
 
             _game ??= new SpaceVillainGame(this);
@@ -249,7 +246,7 @@ namespace Content.Server.Arcade.Components
         /// <summary>
         /// A Class to handle all the game-logic of the SpaceVillain-game.
         /// </summary>
-        public class SpaceVillainGame
+        public sealed class SpaceVillainGame
         {
             [Dependency] private readonly IRobustRandom _random = default!;
 

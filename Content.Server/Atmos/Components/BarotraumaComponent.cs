@@ -10,7 +10,7 @@ namespace Content.Server.Atmos.Components
     ///     Barotrauma: injury because of changes in air pressure.
     /// </summary>
     [RegisterComponent]
-    public class BarotraumaComponent : Component
+    public sealed class BarotraumaComponent : Component
     {
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]

@@ -7,7 +7,7 @@ namespace Content.Server.Atmos.Components
     /// Represents that entity can be exposed to Atmos
     /// </summary>
     [RegisterComponent]
-    public class AtmosExposedComponent : Component
+    public sealed class AtmosExposedComponent : Component
     {
     }
 }

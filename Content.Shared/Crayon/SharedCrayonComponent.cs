@@ -22,7 +22,7 @@ namespace Content.Shared.Crayon
     }
 
     [Serializable, NetSerializable]
-    public class CrayonSelectMessage : BoundUserInterfaceMessage
+    public sealed class CrayonSelectMessage : BoundUserInterfaceMessage
     {
         public readonly string State;
         public CrayonSelectMessage(string selected)
@@ -39,7 +39,7 @@ namespace Content.Shared.Crayon
     }
 
     [Serializable, NetSerializable]
-    public class CrayonComponentState : ComponentState
+    public sealed class CrayonComponentState : ComponentState
     {
         public readonly string Color;
         public readonly string State;
@@ -55,7 +55,7 @@ namespace Content.Shared.Crayon
         }
     }
     [Serializable, NetSerializable]
-    public class CrayonBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class CrayonBoundUserInterfaceState : BoundUserInterfaceState
     {
         public string Selected;
         public Color Color;

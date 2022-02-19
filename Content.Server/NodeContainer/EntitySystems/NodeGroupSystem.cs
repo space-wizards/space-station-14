@@ -23,7 +23,7 @@ namespace Content.Server.NodeContainer.EntitySystems
     /// </summary>
     /// <seealso cref="NodeContainerSystem"/>
     [UsedImplicitly]
-    public class NodeGroupSystem : EntitySystem
+    public sealed class NodeGroupSystem : EntitySystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
@@ -36,10 +36,14 @@ namespace Content.Server.NodeContainer.EntitySystems
 
         private readonly HashSet<IPlayerSession> _visPlayers = new();
         private readonly HashSet<BaseNodeGroup> _toRemake = new();
+        private readonly HashSet<BaseNodeGroup> _nodeGroups = new();
         private readonly HashSet<Node> _toRemove = new();
         private readonly List<Node> _toReflood = new();
 
         private ISawmill _sawmill = default!;
+
+        private const float VisDataUpdateInterval = 1;
+        private float _accumulatedFrameTime;
 
         public bool VisEnabled => _visPlayers.Count != 0;
 
@@ -99,6 +103,11 @@ namespace Content.Server.NodeContainer.EntitySystems
             {
                 QueueReflood(node);
             }
+
+            if (group.NodeCount == 0)
+            {
+                _nodeGroups.Remove(group);
+            }
         }
 
         public void QueueReflood(Node node)
@@ -130,7 +139,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             base.Update(frameTime);
 
             DoGroupUpdates();
-            VisDoUpdate();
+            VisDoUpdate(frameTime);
         }
 
         private void DoGroupUpdates()
@@ -235,6 +244,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
                 oldGroup.Removed = true;
                 oldGroup.AfterRemake(newGrouped);
+                _nodeGroups.Remove(oldGroup);
                 if (VisEnabled)
                     _visDeletes.Add(oldGroup.NetId);
             }
@@ -288,6 +298,8 @@ namespace Content.Server.NodeContainer.EntitySystems
 
             newGroup.LoadNodes(groupNodes);
 
+            _nodeGroups.Add(newGroup);
+
             if (VisEnabled)
                 _visSends.Add(newGroup);
 
@@ -340,15 +352,34 @@ namespace Content.Server.NodeContainer.EntitySystems
             }
         }
 
-        private void VisDoUpdate()
+        private void VisDoUpdate(float frametime)
         {
-            if (_visSends.Count == 0 && _visDeletes.Count == 0)
+            if (_visPlayers.Count == 0)
+                return;
+
+            _accumulatedFrameTime += frametime;
+
+            if (_accumulatedFrameTime < VisDataUpdateInterval
+                && _visSends.Count == 0
+                && _visDeletes.Count == 0)
                 return;
 
             var msg = new NodeVis.MsgData();
 
             msg.GroupDeletions.AddRange(_visDeletes);
             msg.Groups.AddRange(_visSends.Select(VisMakeGroupState));
+
+            if (_accumulatedFrameTime > VisDataUpdateInterval)
+            {
+                _accumulatedFrameTime -= VisDataUpdateInterval;
+                foreach (var group in _nodeGroups)
+                {
+                    if (_visSends.Contains(group))
+                        continue;
+
+                    msg.GroupDataUpdates.Add(group.NetId, group.GetDebugData());
+                }
+            }
 
             _visSends.Clear();
             _visDeletes.Clear();
@@ -363,14 +394,7 @@ namespace Content.Server.NodeContainer.EntitySystems
         {
             var msg = new NodeVis.MsgData();
 
-            var allNetworks = EntityManager
-                .EntityQuery<NodeContainerComponent>()
-                .SelectMany(nc => nc.Nodes.Values)
-                .Select(n => (BaseNodeGroup?) n.NodeGroup)
-                .Where(n => n != null)
-                .Distinct();
-
-            foreach (var network in allNetworks)
+            foreach (var network in _nodeGroups)
             {
                 msg.Groups.Add(VisMakeGroupState(network!));
             }
@@ -392,7 +416,8 @@ namespace Content.Server.NodeContainer.EntitySystems
                     Reachable = n.ReachableNodes.Select(r => r.NetId).ToArray(),
                     Entity = n.Owner,
                     Type = n.GetType().Name
-                }).ToArray()
+                }).ToArray(),
+                DebugData = group.GetDebugData()
             };
         }
 

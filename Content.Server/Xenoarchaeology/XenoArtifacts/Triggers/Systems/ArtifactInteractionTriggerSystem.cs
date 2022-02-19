@@ -1,6 +1,5 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Weapons.Melee;
 
@@ -36,7 +35,7 @@ public sealed class ArtifactInteractionTriggerSystem : EntitySystem
 
     private void OnInteract(EntityUid uid, ArtifactInteractionTriggerComponent component, InteractHandEvent args)
     {
-        if (args.Handled || !args.InRangeUnobstructed())
+        if (args.Handled)
             return;
 
         if (!component.EmptyHandActivation)

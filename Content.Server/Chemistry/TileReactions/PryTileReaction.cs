@@ -10,7 +10,7 @@ namespace Content.Server.Chemistry.TileReactions;
 
 [UsedImplicitly]
 [DataDefinition]
-public class PryTileReaction : ITileReaction
+public sealed class PryTileReaction : ITileReaction
 {
     public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
     {

@@ -10,6 +10,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Disposal.Tube.Components
 {
+    [Virtual]
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalJunctionComponent : DisposalTubeComponent

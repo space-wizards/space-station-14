@@ -53,6 +53,15 @@
   components:
   - type: Sprite
     state: copypasta
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 12
+        - ReagentId: Vitamin
+          Quantity: 8
 # Tastes like pasta, bad humor.
 
 - type: entity
@@ -65,6 +74,15 @@
     layers:
     - state: plate
     - state: meatball
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like pasta, meat.
 
 - type: entity
@@ -77,6 +95,15 @@
     layers:
     - state: plate
     - state: spesslaw
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 6
 # Tastes like pasta, meat.
 
 - type: entity
@@ -89,6 +116,15 @@
     layers:
     - state: plate
     - state: chowmein
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 6
 # Tastes like pasta, tomato.
 
 - type: entity
@@ -101,4 +137,13 @@
     layers:
     - state: plate
     - state: butter
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like pasta, butter.

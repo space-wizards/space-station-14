@@ -5,7 +5,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Administration
 {
-    public partial class AdminSystem
+    public sealed partial class AdminSystem
     {
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;

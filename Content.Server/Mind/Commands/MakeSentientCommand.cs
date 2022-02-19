@@ -14,7 +14,7 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Server.Mind.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class MakeSentientCommand : IConsoleCommand
+    public sealed class MakeSentientCommand : IConsoleCommand
     {
         public string Command => "makesentient";
         public string Description => "Makes an entity sentient (able to be controlled by a player)";

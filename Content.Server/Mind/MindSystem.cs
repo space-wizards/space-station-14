@@ -14,7 +14,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Mind;
 
-public class MindSystem : EntitySystem
+public sealed class MindSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;

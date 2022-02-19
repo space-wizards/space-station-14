@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Shared.Damage
 {
-    public class SlowOnDamageSystem : EntitySystem
+    public sealed class SlowOnDamageSystem : EntitySystem
     {
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
 

@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.ReactionEffects
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class SmokeAreaReactionEffect : AreaReactionEffect
+    public sealed class SmokeAreaReactionEffect : AreaReactionEffect
     {
         protected override SolutionAreaEffectComponent? GetAreaEffectComponent(EntityUid entity)
         {

@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Electrocution
 {
-    public class ElectrocutionAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
+    public sealed class ElectrocutionAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
     {
         public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
 
@@ -19,7 +19,7 @@ namespace Content.Shared.Electrocution
         }
     }
 
-    public class ElectrocutedEvent : EntityEventArgs
+    public sealed class ElectrocutedEvent : EntityEventArgs
     {
         public readonly EntityUid TargetUid;
         public readonly EntityUid? SourceUid;

@@ -407,7 +407,7 @@ namespace Content.Shared.Body.Components
     }
 
     [Serializable, NetSerializable]
-    public class BodyComponentState : ComponentState
+    public sealed class BodyComponentState : ComponentState
     {
         private Dictionary<string, SharedBodyPartComponent>? _parts;
 

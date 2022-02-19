@@ -26,7 +26,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Lobby
 {
-    public class LobbyState : Robust.Client.State.State
+    public sealed class LobbyState : Robust.Client.State.State
     {
         [Dependency] private readonly IBaseClient _baseClient = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;

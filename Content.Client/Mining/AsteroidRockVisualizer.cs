@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Mining
 {
     [UsedImplicitly]
-    public class AsteroidRockVisualizer : AppearanceVisualizer
+    public sealed class AsteroidRockVisualizer : AppearanceVisualizer
     {
         [DataField("layer")]
         private int Layer { get; } = 0;

@@ -9,6 +9,10 @@
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
   - type: AiFactionTag
     factions:
     - Xeno
@@ -46,6 +50,16 @@
     damageRecovery:
       types:
         Asphyxiation: -1.5
+  - type: Bloodstream
+    bloodReagent: FluorosulfuricAcid
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
   - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
@@ -62,5 +76,6 @@
       dead: dead
   - type: Puller
   - type: Butcherable
-    meat: FoodMeatXeno
+    spawned: FoodMeatXeno
+    butcheringType: Spike
     pieces: 5

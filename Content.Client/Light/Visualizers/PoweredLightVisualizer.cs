@@ -13,7 +13,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Light.Visualizers
 {
     [UsedImplicitly]
-    public class PoweredLightVisualizer : AppearanceVisualizer
+    public sealed class PoweredLightVisualizer : AppearanceVisualizer
     {
         [DataField("minBlinkingTime")] private float _minBlinkingTime = 0.5f;
         [DataField("maxBlinkingTime")] private float _maxBlinkingTime = 2;

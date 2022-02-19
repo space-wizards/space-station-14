@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    class ForcePresetCommand : IConsoleCommand
+    sealed class ForcePresetCommand : IConsoleCommand
     {
         public string Command => "forcepreset";
         public string Description => "Forces a specific game preset to start for the current lobby.";

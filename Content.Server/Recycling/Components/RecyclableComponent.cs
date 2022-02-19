@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Recycling.Components
 {
     [RegisterComponent]
-    public class RecyclableComponent : Component
+    public sealed class RecyclableComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
