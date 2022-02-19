@@ -53,7 +53,7 @@
         - CrateHydroponicsTools
         - CrateHydroponicsSeeds
       chance: 0.7
-    rarePrototypes:
-      - CrateMaterialPlasma
-      - CrateHydroponicsSeedsExotic
-    rareChance: 0.1
+      rarePrototypes:
+        - CrateMaterialPlasma
+        - CrateHydroponicsSeedsExotic
+      rareChance: 0.1
