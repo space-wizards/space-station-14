@@ -10,6 +10,7 @@
             Slash: 12.5
             Heat: 12.5
             Blunt: -7
+  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     layers:

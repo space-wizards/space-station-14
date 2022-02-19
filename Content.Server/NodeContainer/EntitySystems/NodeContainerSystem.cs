@@ -61,6 +61,8 @@ namespace Content.Server.NodeContainer.EntitySystems
                 if (!node.NeedAnchored)
                     continue;
 
+                node.OnAnchorStateChanged(EntityManager, args.Anchored);
+
                 if (args.Anchored)
                     _nodeGroupSystem.QueueReflood(node);
                 else
@@ -75,14 +77,15 @@ namespace Content.Server.NodeContainer.EntitySystems
                 return;
             }
 
-            var anchored = Transform(uid).Anchored;
+            var xform = Transform(uid);
 
             foreach (var node in container.Nodes.Values)
             {
-                if (node.NeedAnchored && !anchored)
+                if (node is not IRotatableNode rotatableNode)
                     continue;
 
-                if (node is not IRotatableNode rotatableNode)
+                // Don't bother updating nodes that can't even be connected to anything atm.
+                if (!node.Connectable(EntityManager, xform))
                     continue;
 
                 if (rotatableNode.RotateEvent(ref ev))

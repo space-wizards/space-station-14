@@ -26,7 +26,7 @@ namespace Content.Server.RoundEnd
 
         public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);
         public TimeSpan DefaultCountdownDuration { get; set; } = TimeSpan.FromMinutes(4);
-        public TimeSpan DefaultRestartRoundDuration { get; set; } = TimeSpan.FromSeconds(20);
+        public TimeSpan DefaultRestartRoundDuration { get; set; } = TimeSpan.FromMinutes(1);
 
         private CancellationTokenSource? _countdownTokenSource = null;
         private CancellationTokenSource? _cooldownTokenSource = null;

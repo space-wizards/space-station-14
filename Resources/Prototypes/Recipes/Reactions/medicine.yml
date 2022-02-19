@@ -213,6 +213,18 @@
     Inaprovaline: 3
 
 - type: reaction
+  id: TranexamicAcid
+  reactants:
+    Inaprovaline:
+      amount: 1
+    SulfuricAcid:
+      amount: 1
+    Glucose:
+      amount: 1
+  products:
+    TranexamicAcid: 3
+
+- type: reaction
   id: Kelotane
   reactants:
     Silicon:

@@ -44,7 +44,7 @@ public sealed partial class ChemistrySystem
     }
 
     private void UseInjector(EntityUid target, EntityUid user, InjectorComponent component)
-    { 
+    {
         // Handle injecting/drawing for solutions
         if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
         {
@@ -247,7 +247,7 @@ public sealed partial class ChemistrySystem
     private void TryInjectIntoBloodstream(InjectorComponent component, BloodstreamComponent targetBloodstream, EntityUid user)
     {
         // Get transfer amount. May be smaller than _transferAmount if not enough room
-        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetBloodstream.Solution.AvailableVolume);
+        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetBloodstream.ChemicalSolution.AvailableVolume);
 
         if (realTransferAmount <= 0)
         {
@@ -257,9 +257,9 @@ public sealed partial class ChemistrySystem
         }
 
         // Move units from attackSolution to targetSolution
-        var removedSolution = _solutions.SplitSolution(user, targetBloodstream.Solution, realTransferAmount);
+        var removedSolution = _solutions.SplitSolution(user, targetBloodstream.ChemicalSolution, realTransferAmount);
 
-        _blood.TryAddToBloodstream((targetBloodstream).Owner, removedSolution, targetBloodstream);
+        _blood.TryAddToChemicals((targetBloodstream).Owner, removedSolution, targetBloodstream);
 
         removedSolution.DoEntityReaction(targetBloodstream.Owner, ReactionMethod.Injection);
 
