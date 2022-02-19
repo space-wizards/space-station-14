@@ -3,6 +3,7 @@ using Content.Server.Power.Components;
 using Content.Server.Recycling.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Recycling;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
@@ -111,14 +112,12 @@ namespace Content.Server.Recycling
 
             QueueDel(component.Owner);
         }
-        
+
         private void OnEmagged(EntityUid uid, RecyclerComponent component, GotEmaggedEvent args)
         {
-            if (!args.Handled && component.Safe)
-            {
-                component.Safe = false;
-                args.Handled = true;
-            }
+            if (args.Handled || !component.Safe) return;
+            component.Safe = false;
+            args.Handled = true;
         }
     }
 }
