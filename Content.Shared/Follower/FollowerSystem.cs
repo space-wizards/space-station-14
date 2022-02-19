@@ -75,8 +75,15 @@ public sealed class FollowerSystem : EntitySystem
 
         if (TryComp<AppearanceComponent>(follower, out var appearance))
         {
+            EnsureComp<OrbitVisualsComponent>(follower);
             appearance.SetData(OrbitingVisuals.IsOrbiting, true);
         }
+
+        var followerEv = new StartedFollowingEntityEvent(entity, follower);
+        var entityEv = new EntityStartedFollowingEvent(entity, follower);
+
+        RaiseLocalEvent(follower, followerEv);
+        RaiseLocalEvent(entity, entityEv, false);
     }
 
     /// <summary>
@@ -102,6 +109,12 @@ public sealed class FollowerSystem : EntitySystem
         {
             appearance.SetData(OrbitingVisuals.IsOrbiting, false);
         }
+
+        var uidEv = new StoppedFollowingEntityEvent(target, uid);
+        var targetEv = new EntityStoppedFollowingEvent(target, uid);
+
+        RaiseLocalEvent(uid, uidEv);
+        RaiseLocalEvent(target, targetEv, false);
     }
 
     /// <summary>
@@ -117,6 +130,58 @@ public sealed class FollowerSystem : EntitySystem
         {
             StopFollowingEntity(player, uid, followed);
         }
+    }
+}
+
+public abstract class FollowEvent : EntityEventArgs
+{
+    public EntityUid Following;
+    public EntityUid Follower;
+
+    protected FollowEvent(EntityUid following, EntityUid follower)
+    {
+        Following = following;
+        Follower = follower;
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it start following another entity.
+/// </summary>
+public sealed class StartedFollowingEntityEvent : FollowEvent
+{
+    public StartedFollowingEntityEvent(EntityUid following, EntityUid follower) : base(following, follower)
+    {
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it stops following another entity.
+/// </summary>
+public sealed class StoppedFollowingEntityEvent : FollowEvent
+{
+    public StoppedFollowingEntityEvent(EntityUid following, EntityUid follower) : base(following, follower)
+    {
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it start following another entity.
+/// </summary>
+public sealed class EntityStartedFollowingEvent : FollowEvent
+{
+    public EntityStartedFollowingEvent(EntityUid following, EntityUid follower) : base(following, follower)
+    {
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it starts being followed by another entity.
+/// </summary>
+public sealed class EntityStoppedFollowingEvent : FollowEvent
+{
+    public EntityStoppedFollowingEvent(EntityUid following, EntityUid follower) : base(following, follower)
+    {
     }
 }
 

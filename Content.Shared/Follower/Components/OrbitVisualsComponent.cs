@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Animations;
 
-namespace Content.Client.Orbit;
+namespace Content.Shared.Follower.Components;
 
 [RegisterComponent]
 public sealed class OrbitVisualsComponent : Component
@@ -18,12 +18,6 @@ public sealed class OrbitVisualsComponent : Component
     public float OrbitDistance = 1.0f;
 
     /// <summary>
-    ///     Does this entity rotate clockwise or counterclockwise?
-    ///     Always randomized.
-    /// </summary>
-    public bool Clockwise = false;
-
-    /// <summary>
     ///     How long should the orbit stop animation last in seconds?
     /// </summary>
     [DataField("orbitStopLength")]
@@ -34,6 +28,4 @@ public sealed class OrbitVisualsComponent : Component
     /// </summary>
     [Animatable]
     public float Orbit { get; set; } = 0.0f;
-
-    public bool Orbiting = false;
 }

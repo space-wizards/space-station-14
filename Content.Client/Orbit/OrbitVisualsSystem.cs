@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Follower;
+using Content.Shared.Follower.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
@@ -35,9 +36,6 @@ public sealed class OrbitVisualsSystem : VisualizerSystem<OrbitVisualsComponent>
 
         foreach (var (orbit, sprite) in EntityManager.EntityQuery<OrbitVisualsComponent, ISpriteComponent>())
         {
-            if (!orbit.Orbiting)
-                continue;
-
             var angle = new Angle(Math.PI * 2 * orbit.Orbit);
             var vec = angle.RotateVec(new Vector2(orbit.OrbitDistance, 0));
 
@@ -58,18 +56,14 @@ public sealed class OrbitVisualsSystem : VisualizerSystem<OrbitVisualsComponent>
 
         if (orbiting)
         {
-            if (component.Orbiting)
+            if (animationPlayer.HasRunningAnimation(_orbitAnimationKey))
                 return;
 
-            component.Orbiting = true;
             animationPlayer.Play(GetOrbitAnimation(component), _orbitAnimationKey);
         }
         else
         {
-            if (!component.Orbiting)
-                return;
-
-            component.Orbiting = false;
+            RemComp<OrbitVisualsComponent>(uid);
             if (animationPlayer.HasRunningAnimation(_orbitAnimationKey))
             {
                 animationPlayer.Stop(_orbitAnimationKey);
