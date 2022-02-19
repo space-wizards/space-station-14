@@ -44,16 +44,21 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
     }
 
-    protected override void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
+    protected override void SetCollidable(EntityUid uid, bool collidable,
+        DoorComponent? door = null,
+        PhysicsComponent? physics = null,
+        OccluderComponent? occluder = null)
     {
-        base.OnInit(uid, door, args);
+        if (!Resolve(uid, ref door))
+            return;
 
-        if (door.State == DoorState.Open
-                && door.ChangeAirtight
-                && TryComp(uid, out AirtightComponent? airtight))
-        {
-            _airtightSystem.SetAirblocked(airtight, false);
-        }
+        if (door.ChangeAirtight && TryComp(uid, out AirtightComponent? airtight))
+            _airtightSystem.SetAirblocked(airtight, collidable);
+
+        // Pathfinding / AI stuff.
+        RaiseLocalEvent(new AccessReaderChangeMessage(uid, collidable));
+
+        base.SetCollidable(uid, collidable, door, physics, occluder);
     }
 
     // TODO AUDIO PREDICT Figure out a better way to handle sound and prediction. For now, this works well enough?
@@ -248,39 +253,6 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if (_tagSystem.HasTag(otherUid, "DoorBumpOpener"))
             TryOpen(uid, door, otherUid);
-    }
-
-    public override void OnPartialOpen(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
-    {
-        if (!Resolve(uid, ref door, ref physics))
-            return;
-
-        base.OnPartialOpen(uid, door, physics);
-
-        if (door.ChangeAirtight && TryComp(uid, out AirtightComponent? airtight))
-        {
-            _airtightSystem.SetAirblocked(airtight, false);
-        }
-
-        // Path-finding. Has nothing directly to do with access readers.
-        RaiseLocalEvent(new AccessReaderChangeMessage(uid, false));
-    }
-
-    public override bool OnPartialClose(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
-    {
-        if (!Resolve(uid, ref door, ref physics))
-            return false;
-
-        if (!base.OnPartialClose(uid, door, physics))
-            return false;
-
-        // update airtight, if we did not crush something.
-        if (door.ChangeAirtight && door.CurrentlyCrushing.Count == 0 && TryComp(uid, out AirtightComponent? airtight))
-            _airtightSystem.SetAirblocked(airtight, true);
-
-        // Path-finding. Has nothing directly to do with access readers.
-        RaiseLocalEvent(new AccessReaderChangeMessage(uid, true));
-        return true;
     }
 
     private void OnMapInit(EntityUid uid, DoorComponent door, MapInitEvent args)

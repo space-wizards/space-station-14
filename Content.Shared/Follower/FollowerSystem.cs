@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Content.Shared.Follower.Components;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Follower;
 
@@ -71,6 +72,18 @@ public sealed class FollowerSystem : EntitySystem
         var xform = Transform(follower);
         xform.AttachParent(entity);
         xform.LocalPosition = Vector2.Zero;
+
+        if (TryComp<AppearanceComponent>(follower, out var appearance))
+        {
+            EnsureComp<OrbitVisualsComponent>(follower);
+            appearance.SetData(OrbitingVisuals.IsOrbiting, true);
+        }
+
+        var followerEv = new StartedFollowingEntityEvent(entity, follower);
+        var entityEv = new EntityStartedFollowingEvent(entity, follower);
+
+        RaiseLocalEvent(follower, followerEv);
+        RaiseLocalEvent(entity, entityEv, false);
     }
 
     /// <summary>
@@ -89,7 +102,21 @@ public sealed class FollowerSystem : EntitySystem
         if (followed.Following.Count == 0)
             RemComp<FollowedComponent>(target);
         RemComp<FollowerComponent>(uid);
+
         Transform(uid).AttachToGridOrMap();
+
+        if (TryComp<AppearanceComponent>(uid, out var appearance))
+        {
+            // We don't remove OrbitVisuals here since the OrbitVisualsSystem will handle that itself
+            // during the OnChangeData, which is deferred..
+            appearance.SetData(OrbitingVisuals.IsOrbiting, false);
+        }
+
+        var uidEv = new StoppedFollowingEntityEvent(target, uid);
+        var targetEv = new EntityStoppedFollowingEvent(target, uid);
+
+        RaiseLocalEvent(uid, uidEv);
+        RaiseLocalEvent(target, targetEv, false);
     }
 
     /// <summary>
@@ -107,3 +134,62 @@ public sealed class FollowerSystem : EntitySystem
         }
     }
 }
+
+public abstract class FollowEvent : EntityEventArgs
+{
+    public EntityUid Following;
+    public EntityUid Follower;
+
+    protected FollowEvent(EntityUid following, EntityUid follower)
+    {
+        Following = following;
+        Follower = follower;
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it start following another entity.
+/// </summary>
+public sealed class StartedFollowingEntityEvent : FollowEvent
+{
+    public StartedFollowingEntityEvent(EntityUid following, EntityUid follower) : base(following, follower)
+    {
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it stops following another entity.
+/// </summary>
+public sealed class StoppedFollowingEntityEvent : FollowEvent
+{
+    public StoppedFollowingEntityEvent(EntityUid following, EntityUid follower) : base(following, follower)
+    {
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it start following another entity.
+/// </summary>
+public sealed class EntityStartedFollowingEvent : FollowEvent
+{
+    public EntityStartedFollowingEvent(EntityUid following, EntityUid follower) : base(following, follower)
+    {
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it starts being followed by another entity.
+/// </summary>
+public sealed class EntityStoppedFollowingEvent : FollowEvent
+{
+    public EntityStoppedFollowingEvent(EntityUid following, EntityUid follower) : base(following, follower)
+    {
+    }
+}
+
+[Serializable, NetSerializable]
+public enum OrbitingVisuals : byte
+{
+    IsOrbiting
+}
+

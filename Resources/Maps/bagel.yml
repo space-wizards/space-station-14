@@ -47181,7 +47181,7 @@ entities:
     parent: 41
     type: Transform
 - uid: 2342
-  type: PosterContrabandDonutCorp.
+  type: PosterContrabandDonutCorp
   components:
   - pos: -33.5,-1.5
     parent: 41
@@ -80990,7 +80990,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 6150
-  type: PosterContrabandEAT.
+  type: PosterContrabandEAT
   components:
   - pos: -8.5,-39.5
     parent: 41
