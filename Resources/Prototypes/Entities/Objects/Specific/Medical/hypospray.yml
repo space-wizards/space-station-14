@@ -66,4 +66,6 @@
         maxVol: 15
         reagents:
         - ReagentId: Epinephrine
-          Quantity: 15
+          Quantity: 12
+        - ReagentId: TranexamicAcid
+          Quantity: 3
