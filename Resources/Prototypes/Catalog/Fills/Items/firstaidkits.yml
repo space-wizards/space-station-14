@@ -96,6 +96,8 @@
         amount: 1
       - id: PillTricordrazine
         amount: 1
+      - id: AntiPoisonMedipen
+        amount: 1
         
 - type: entity
   id: MedkitCombatFilled
@@ -109,4 +111,6 @@
       - id: SyringeTranexamicAcid
         amount: 1
       - id: PillTricordrazine
+        amount: 1
+      - id: AntiPoisonMedipen
         amount: 1
