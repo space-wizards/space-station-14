@@ -11,7 +11,7 @@ namespace Content.Shared.Tabletop.Events
     /// <see cref="SharedTabletopDraggableComponent"/> has been moved.
     /// </summary>
     [Serializable, NetSerializable]
-    public class TabletopMoveEvent : EntityEventArgs
+    public sealed class TabletopMoveEvent : EntityEventArgs
     {
         /// <summary>
         /// The UID of the entity being moved.

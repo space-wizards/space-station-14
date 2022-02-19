@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Info
 {
-    public class ServerInfo : BoxContainer
+    public sealed class ServerInfo : BoxContainer
     {
         private readonly RichTextLabel _richTextLabel;
 

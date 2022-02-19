@@ -9,7 +9,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public class GasTankSystem : EntitySystem
+    public sealed class GasTankSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
@@ -19,15 +19,15 @@ namespace Content.Server.Atmos.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<GasTankComponent, GetActivationVerbsEvent>(AddOpenUIVerb);
+            SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUIVerb);
         }
 
-        private void AddOpenUIVerb(EntityUid uid, GasTankComponent component, GetActivationVerbsEvent args)
+        private void AddOpenUIVerb(EntityUid uid, GasTankComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess ||  !EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
-            Verb verb = new();
+            ActivationVerb verb = new();
             verb.Act = () => component.OpenInterface(actor.PlayerSession);
             verb.Text = Loc.GetString("control-verb-open-control-panel-text");
             // TODO VERBS add "open UI" icon?

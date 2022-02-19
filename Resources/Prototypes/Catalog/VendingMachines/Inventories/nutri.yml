@@ -4,6 +4,7 @@
   spriteName: nutri
   startingInventory:
     HydroponicsToolSpade: 3
+    PlantBag: 2
     PlantBGoneSpray: 20
     WeedSpray: 20
     PestSpray: 20
@@ -13,5 +14,4 @@
     #cultivator
     #secateurs
     #plant analyzer
-    #plant bag
 

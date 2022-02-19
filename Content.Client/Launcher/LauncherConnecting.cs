@@ -6,7 +6,7 @@ using Robust.Shared.Network;
 
 namespace Content.Client.Launcher
 {
-    public class LauncherConnecting : Robust.Client.State.State
+    public sealed class LauncherConnecting : Robust.Client.State.State
     {
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IClientNetManager _clientNetManager = default!;

@@ -19,7 +19,7 @@ namespace Content.Server.Tiles
 {
     [RegisterComponent]
     [ComponentProtoName("FloorTile")]
-    public class FloorTileItemComponent : Component, IAfterInteract
+    public sealed class FloorTileItemComponent : Component, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;

@@ -10,7 +10,7 @@ namespace Content.Shared.Access.Components
     // networked.
     [RegisterComponent]
     [Friend(typeof(SharedIdCardSystem), typeof(SharedPDASystem))]
-    public class IdCardComponent : Component
+    public sealed class IdCardComponent : Component
     {
         [DataField("originalOwnerName")]
         public string OriginalOwnerName = default!;

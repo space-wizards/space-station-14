@@ -13,6 +13,7 @@
       path: /Audio/Effects/Fluids/splat.ogg
     recolor: true
   - type: Clickable
+  - type: Evaporation
   - type: Slippery
   - type: Physics
   - type: Fixtures
@@ -67,7 +68,6 @@
     state: smear-0
     netsync: false
   - type: Puddle
-  - type: Evaporation
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
@@ -84,10 +84,29 @@
     state: splatter-0
     netsync: false
   - type: Puddle
-  - type: Evaporation
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
+
+- type: entity
+  id: PuddleBlood
+  name: blood
+  description: This can't be a good sign.
+  parent: PuddleBase
+  components:
+  - type: Sprite
+    sprite: Fluids/splatter.rsi # Placeholder
+    state: splatter-0
+    netsync: false
+  - type: Puddle
+    slipThreshold: 20
+    overflowVolume: 50
+  - type: Evaporation
+    evaporateTime: 400 # very slow
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
+      recolor: true
 
 - type: entity
   name: vomit
@@ -146,7 +165,6 @@
     state: writing-0
     netsync: false
   - type: Puddle
-  - type: Evaporation
     evaporateTime: 10
   - type: Appearance
     visuals:

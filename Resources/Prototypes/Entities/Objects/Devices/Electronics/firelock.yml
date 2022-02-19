@@ -10,3 +10,4 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: mainboard
+      netsync: false

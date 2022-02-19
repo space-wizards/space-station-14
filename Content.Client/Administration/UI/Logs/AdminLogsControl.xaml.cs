@@ -16,7 +16,7 @@ using static Robust.Client.UserInterface.Controls.LineEdit;
 namespace Content.Client.Administration.UI.Logs;
 
 [GenerateTypedNameReferences]
-public partial class AdminLogsControl : Control
+public sealed partial class AdminLogsControl : Control
 {
     private readonly Comparer<AdminLogTypeButton> _adminLogTypeButtonComparer =
         Comparer<AdminLogTypeButton>.Create((a, b) =>

@@ -10,6 +10,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Research.Components
 {
     [RegisterComponent]
+    [Virtual]
     public class ResearchClientComponent : SharedResearchClientComponent, IActivate
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;

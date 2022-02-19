@@ -7,3 +7,4 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
+      netsync: false

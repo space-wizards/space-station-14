@@ -9,7 +9,7 @@ namespace Content.Client.Explosion
 {
     [UsedImplicitly]
     // ReSharper disable once InconsistentNaming
-    public class ClusterGrenadeVisualizer : AppearanceVisualizer
+    public sealed class ClusterGrenadeVisualizer : AppearanceVisualizer
     {
         [DataField("state")]
         private string? _state;

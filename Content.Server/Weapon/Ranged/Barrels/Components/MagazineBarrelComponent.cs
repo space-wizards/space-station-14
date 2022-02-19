@@ -14,7 +14,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
-    [RegisterComponent, NetworkedComponent, ComponentProtoName("MagazineBarrel"), ComponentReference(typeof(ServerRangedBarrelComponent))]
+    [RegisterComponent, NetworkedComponent, ComponentReference(typeof(ServerRangedBarrelComponent))]
     public sealed class MagazineBarrelComponent : ServerRangedBarrelComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;

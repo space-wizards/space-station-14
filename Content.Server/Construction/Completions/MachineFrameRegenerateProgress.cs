@@ -9,7 +9,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class MachineFrameRegenerateProgress : IGraphAction
+    public sealed class MachineFrameRegenerateProgress : IGraphAction
     {
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {

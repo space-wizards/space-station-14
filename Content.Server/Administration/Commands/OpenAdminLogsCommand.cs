@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Logs)]
-public class OpenAdminLogsCommand : IConsoleCommand
+public sealed class OpenAdminLogsCommand : IConsoleCommand
 {
     public string Command => "adminlogs";
     public string Description => "Opens the admin logs panel.";

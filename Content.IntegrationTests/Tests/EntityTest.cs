@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
     [TestOf(typeof(EntityUid))]
-    public class EntityTest : ContentIntegrationTest
+    public sealed class EntityTest : ContentIntegrationTest
     {
         [Test]
         public async Task SpawnTest()

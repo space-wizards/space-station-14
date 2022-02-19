@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.Info;
 
 [GenerateTypedNameReferences]
-public partial class RulesControl : BoxContainer
+public sealed partial class RulesControl : BoxContainer
 {
     [Dependency] private readonly IResourceCache _resourceManager = default!;
 

@@ -4,8 +4,8 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Sprite.Components
 {
-    [RegisterComponent, ComponentProtoName("RandomSpriteState")]
-    public class RandomSpriteStateComponent : Component
+    [RegisterComponent]
+    public sealed class RandomSpriteStateComponent : Component
     {
         [DataField("spriteStates")] public List<string>? SpriteStates;
 

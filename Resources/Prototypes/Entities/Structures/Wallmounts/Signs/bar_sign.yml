@@ -3,6 +3,7 @@
   parent: BaseStructure
   name: bar sign
   components:
+  - type: WallMount
   - type: Physics
   - type: Fixtures
     fixtures:

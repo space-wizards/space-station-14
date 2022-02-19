@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         [ViewVariables]
         private readonly Dictionary<IPlayerSession, LobbyPlayerStatus> _playersInLobby = new();

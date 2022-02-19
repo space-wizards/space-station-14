@@ -120,6 +120,18 @@
 
 - type: entity
   parent: IDCardStandard
+  id: SalvageIDCard
+  name: salvage ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idshaftminer
+  - type: PresetIdCard
+    job: SalvageSpecialist
+
+- type: entity
+  parent: IDCardStandard
   id: QuartermasterIDCard
   name: quartermaster ID card
   components:
@@ -335,28 +347,8 @@
     jobTitle: Central Commander
   - type: Access
     #GOD DEAR FUCKING GOD WE NEED AN ALL-ACCESS FLAG
-    tags:
-    - Maintenance
-    - Cargo
-  #  - Quartermaster
-    - Engineering
-  #  - ChiefEngineer
-    - Medical
-  #  - ChiefMedicalOfficer
-    - Research
-  #  - ResearchDirector
-    - Security
-    - Service
-    - Captain
-    - Command
-    - External
-    #- HeadOfSecurity
-    - HeadOfPersonnel
-    - Bar
-    #- Hydroponics
-    #- Kitchen
-    - Janitor
-    - Theatre
+    groups:
+    - AllAccess
 
 - type: entity
   parent: IDCardStandard

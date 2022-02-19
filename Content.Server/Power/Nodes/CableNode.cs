@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
-using Content.Server.Power.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -10,7 +9,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Power.Nodes
 {
     [DataDefinition]
-    public class CableNode : Node
+    public sealed class CableNode : Node
     {
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
@@ -69,13 +68,6 @@ namespace Content.Server.Power.Nodes
 
                 yield return node;
             }
-        }
-
-        public override void OnPostRebuild()
-        {
-            base.OnPostRebuild();
-
-            EntitySystem.Get<CableVisSystem>().QueueUpdate(Owner);
         }
     }
 }

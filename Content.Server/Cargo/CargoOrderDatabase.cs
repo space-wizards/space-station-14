@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Cargo
 {
-    public class CargoOrderDatabase
+    public sealed class CargoOrderDatabase
     {
         private readonly Dictionary<int, CargoOrderData> _orders = new();
         private int _orderNumber = 0;

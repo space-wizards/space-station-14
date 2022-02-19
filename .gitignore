@@ -263,6 +263,8 @@ __pycache__/
 # Visual Studio Code workspace settings.
 .vscode/*
 !.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
 
 # Release package files go here:
 release/

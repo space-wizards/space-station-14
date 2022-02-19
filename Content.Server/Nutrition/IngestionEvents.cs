@@ -17,16 +17,16 @@ public sealed class IngestionAttemptEvent : CancellableEntityEventArgs
 }
 
 /// <summary>
-///     Raised directed at the food after a successful force-feed do-after.
+///     Raised directed at the food after a successful feed do-after.
 /// </summary>
-public sealed class ForceFeedEvent : EntityEventArgs
+public sealed class FeedEvent : EntityEventArgs
 {
     public readonly EntityUid User;
     public readonly FoodComponent Food;
     public readonly Solution FoodSolution;
     public readonly List<UtensilComponent> Utensils;
 
-    public ForceFeedEvent(EntityUid user, FoodComponent food, Solution foodSolution, List<UtensilComponent> utensils)
+    public FeedEvent(EntityUid user, FoodComponent food, Solution foodSolution, List<UtensilComponent> utensils)
     {
         User = user;
         Food = food;
@@ -51,13 +51,13 @@ public sealed class ForceFeedCancelledEvent : EntityEventArgs
 /// <summary>
 ///     Raised directed at the drink after a successful force-drink do-after.
 /// </summary>
-public sealed class ForceDrinkEvent : EntityEventArgs
+public sealed class DrinkEvent : EntityEventArgs
 {
     public readonly EntityUid User;
     public readonly DrinkComponent Drink;
     public readonly Solution DrinkSolution;
 
-    public ForceDrinkEvent(EntityUid user, DrinkComponent drink, Solution drinkSolution)
+    public DrinkEvent(EntityUid user, DrinkComponent drink, Solution drinkSolution)
     {
         User = user;
         Drink = drink;
@@ -68,11 +68,11 @@ public sealed class ForceDrinkEvent : EntityEventArgs
 /// <summary>
 ///     Raised directed at the food after a failed force-dink do-after.
 /// </summary>
-public sealed class ForceDrinkCancelledEvent : EntityEventArgs
+public sealed class DrinkCancelledEvent : EntityEventArgs
 {
     public readonly DrinkComponent Drink;
 
-    public ForceDrinkCancelledEvent(DrinkComponent drink)
+    public DrinkCancelledEvent(DrinkComponent drink)
     {
         Drink = drink;
     }

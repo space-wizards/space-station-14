@@ -34,7 +34,7 @@ namespace Content.Server.ParticleAccelerator.Components
     /// </summary>
     [ComponentReference(typeof(IActivate))]
     [RegisterComponent]
-    public class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IActivate, IWires
+    public sealed class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IActivate, IWires
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -146,13 +146,6 @@ namespace Content.Server.ParticleAccelerator.Components
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
             if (!ConsolePowered)
-            {
-                return;
-            }
-
-
-            if (obj.Session.AttachedEntity is not {Valid: true} attached ||
-                !EntitySystem.Get<ActionBlockerSystem>().CanInteract(attached))
             {
                 return;
             }

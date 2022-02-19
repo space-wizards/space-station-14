@@ -1,17 +1,9 @@
-using System;
-using Content.Server.Administration.Logs;
 using Content.Server.Damage.Components;
 using Content.Server.Stunnable;
-using Content.Server.Stunnable.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
-using Content.Shared.Database;
-using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -26,7 +18,6 @@ namespace Content.Server.Damage.Systems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -55,10 +46,7 @@ namespace Content.Server.Damage.Systems
 
             var damageScale = (speed / component.MinimumSpeed) * component.Factor;
 
-            var dmg = _damageableSystem.TryChangeDamage(uid, component.Damage * damageScale);
-
-            if (dmg != null)
-                _logSystem.Add(LogType.Damaged, $"{ToPrettyString(component.Owner):entity} took {dmg.Total:damage} damage from a high speed collision");
+            _damageableSystem.TryChangeDamage(uid, component.Damage * damageScale);
         }
     }
 }

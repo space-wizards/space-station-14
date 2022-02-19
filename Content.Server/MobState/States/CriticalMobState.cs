@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.MobState.States
 {
-    public class CriticalMobState : SharedCriticalMobState
+    public sealed class CriticalMobState : SharedCriticalMobState
     {
         public override void EnterState(EntityUid uid, IEntityManager entityManager)
         {

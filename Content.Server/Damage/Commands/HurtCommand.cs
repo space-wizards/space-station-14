@@ -14,7 +14,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Damage.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    class HurtCommand : IConsoleCommand
+    sealed class HurtCommand : IConsoleCommand
     {
         public string Command => "hurt";
         public string Description => "Ouch";

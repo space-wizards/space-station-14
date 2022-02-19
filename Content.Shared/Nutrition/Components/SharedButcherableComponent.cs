@@ -11,16 +11,22 @@ namespace Content.Shared.Nutrition.Components
     /// Indicates that the entity can be thrown on a kitchen spike for butchering.
     /// </summary>
     [RegisterComponent]
-    public class SharedButcherableComponent : Component, IDraggable
+    public sealed class SharedButcherableComponent : Component, IDraggable
     {
         //TODO: List for sub-products like animal-hides, organs and etc?
         [ViewVariables]
-        [DataField("meat", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string MeatPrototype = "FoodMeat";
+        [DataField("spawned", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string SpawnedPrototype = "FoodMeat";
 
         [ViewVariables]
         [DataField("pieces")]
         public int Pieces = 5;
+
+        [DataField("butcherDelay")]
+        public float ButcherDelay = 8.0f;
+
+        [DataField("butcheringType")]
+        public ButcheringType Type = ButcheringType.Knife;
 
         /// <summary>
         /// Prevents butchering same entity on two and more spikes simultaneously and multiple doAfters on the same Spike
@@ -32,7 +38,14 @@ namespace Content.Shared.Nutrition.Components
         // CanDropOn behaviors as well (IDragDropOn)
         bool IDraggable.CanDrop(CanDropEvent args)
         {
-            return true;
+            return Type != ButcheringType.Knife;
         }
+    }
+
+    public enum ButcheringType
+    {
+        Knife, // e.g. goliaths
+        Spike, // e.g. monkeys
+        Gibber // e.g. humans. TODO
     }
 }

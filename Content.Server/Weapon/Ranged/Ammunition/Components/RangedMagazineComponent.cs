@@ -10,8 +10,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
-    [RegisterComponent, ComponentProtoName("RangedMagazine")]
-    public class RangedMagazineComponent : Component
+    [RegisterComponent]
+    public sealed class RangedMagazineComponent : Component
     {
         public readonly Stack<EntityUid> SpawnedAmmo = new();
         public Container AmmoContainer = default!;
