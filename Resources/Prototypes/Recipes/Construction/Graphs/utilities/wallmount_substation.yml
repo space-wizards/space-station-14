@@ -11,6 +11,7 @@
           doAfter: 2
 
     - node: frame
+      entity: BaseSubstationWallFrame
       edges:
       - to: start
         steps:
