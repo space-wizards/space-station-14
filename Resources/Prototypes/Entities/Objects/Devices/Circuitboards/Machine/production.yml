@@ -30,23 +30,6 @@
           ExamineName: Glass Beaker
 
 - type: entity
-  id: CircuitImprinterMachineCircuitboard
-  parent: BaseMachineCircuitboard
-  name: Circuit Imprinter (Machine Board)
-  components:
-  - type: MachineBoard
-    prototype: CircuitImprinter
-    requirements:
-      MatterBin: 1
-      Manipulator: 1
-    tagRequirements:
-      GlassBeaker:
-        Amount: 2
-        DefaultPrototype: Beaker
-        ExamineName: Glass Beaker
-
-
-- type: entity
   id: CloningPodMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: Cloning Pod (Machine Board)
@@ -152,42 +135,30 @@
       materialRequirements:
         CableMV: 5
         CableHV: 5
-
+        
 - type: entity
+  id: GeneratorPlasmaMachineCircuitboard
   parent: BaseMachineCircuitboard
-  id: DawInstrumentMachineCircuitboard
-  name: Digital Audio Workstation (Machine Board)
+  name: generator (plasma) machine board
   components:
     - type: MachineBoard
-      prototype: DawInstrument
+      prototype: GeneratorPlasma
       requirements:
-        Capacitor: 4
-        ScanningModule: 5
+        Capacitor: 1
       materialRequirements:
-        Glass: 1
-      tagRequirements:
-#      One instrument to bring them all and in the darkness bind them...
-       KeyedInstrument:
-          Amount: 1
-          DefaultPrototype: SynthesizerInstrument
-          ExamineName: Keyed Instrument
-       StringInstrument:
-          Amount: 1
-          DefaultPrototype: AcousticGuitarInstrument
-          ExamineName: String Instrument
-       PercussionInstrument:
-          Amount: 1
-          DefaultPrototype: GlockenspielInstrument
-          ExamineName: Percussion Instrument
-       BrassInstrument:
-          Amount: 1
-          DefaultPrototype: TrumpetInstrument
-          ExamineName: Brass Instrument
-       WoodwindInstrument:
-          Amount: 1
-          DefaultPrototype: SaxophoneInstrument
-          ExamineName: Woodwind Instrument
-
+        CableHV: 5
+        
+- type: entity
+  id: GeneratorUraniumMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: generator (uranium) machine board
+  components:
+    - type: MachineBoard
+      prototype: GeneratorUranium
+      requirements:
+        Capacitor: 2
+      materialRequirements:
+        CableHV: 10
 
 - type: entity
   id: KitchenReagentGrinderMachineCircuitboard #unsure why the reagent grinder has 'kitchen' in the id name when multiple departments use it but that's for another time
