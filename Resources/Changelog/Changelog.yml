@@ -1,19 +1,4 @@
 Entries:
-- author: cheesePizza2
-  changes:
-  - {message: Harm state now has an on/off icon, type: Tweak}
-  id: 596
-  time: '2021-11-15T19:26:59.0000000+00:00'
-- author: Clyybber
-  changes:
-  - {message: Disarm action now has an on/off icon, type: Tweak}
-  id: 597
-  time: '2021-11-16T05:03:34.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Pneumatic cannons obey the concept of audio location now., type: Fix}
-  id: 598
-  time: '2021-11-16T21:05:19.0000000+00:00'
 - author: xRiriq
   changes:
   - {message: hardsuits and hardsuit helmets now are bigger and no longer fit in pockets,
@@ -2990,3 +2975,28 @@ Entries:
   - {message: AME no longer needs power to start., type: Tweak}
   id: 1095
   time: '2022-02-19T22:22:41.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: A scene in a recent stage play where a clown tragically sacrifices his
+      last banana peel to the grinder to save his mime friend from bleeding out has
+      popularized the concept of using pulped banana peels to treat bleeding., type: Add}
+  - {message: Tricordrazine no longer heals people with more than 50 damage., type: Tweak}
+  - {message: All status effect removals from chemicals are 3-4 times as effective
+      as they were before., type: Tweak}
+  - {message: Epinephrine medipens changed from 15 epinephrine to 12 epinephrine and
+      3u tranexamic acid., type: Tweak}
+  - {message: 'Anti-poison medipens changes from 5 epinephrine, 5 inaprovaline, 5
+      ultravasculine to 10 ultravasculine, 5 epinephrine.', type: Tweak}
+  id: 1096
+  time: '2022-02-19T23:56:08.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Ghost roles window layout was improved., type: Tweak}
+  id: 1097
+  time: '2022-02-19T23:56:22.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added random crate spawners. Expect to see some variation when they're
+      mapped in., type: Add}
+  id: 1098
+  time: '2022-02-19T23:56:48.0000000+00:00'
