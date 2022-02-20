@@ -56,7 +56,7 @@ public sealed class MineableSystem : EntitySystem
             return;
 
         _damageableSystem.TryChangeDamage(ev.Rock, pickaxe.Damage);
-        SoundSystem.Play(Filter.Pvs(ev.Rock), pickaxe.MiningSound.GetSound(), AudioParams.Default);
+        SoundSystem.Play(Filter.Pvs(ev.Rock), pickaxe.MiningSound.GetSound(), ev.Rock, AudioParams.Default);
         pickaxe.MiningEntities.Remove(ev.Rock);
     }
 

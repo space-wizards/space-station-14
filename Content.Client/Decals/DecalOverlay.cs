@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using Content.Shared.Decals;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Utility;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -11,15 +10,27 @@ namespace Content.Client.Decals
 {
     public sealed class DecalOverlay : Overlay
     {
-        private readonly DecalSystem _system;
+        private readonly DecalSystem _decals;
+        private readonly SharedTransformSystem _transform;
+        private readonly SpriteSystem _sprites;
+        private readonly IEntityManager _entManager;
         private readonly IMapManager _mapManager;
         private readonly IPrototypeManager _prototypeManager;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
 
-        public DecalOverlay(DecalSystem system, IMapManager mapManager, IPrototypeManager prototypeManager)
+        public DecalOverlay(
+            DecalSystem decals,
+            SharedTransformSystem transforms,
+            SpriteSystem sprites,
+            IEntityManager entManager,
+            IMapManager mapManager,
+            IPrototypeManager prototypeManager)
         {
-            _system = system;
+            _decals = decals;
+            _transform = transforms;
+            _sprites = sprites;
+            _entManager = entManager;
             _mapManager = mapManager;
             _prototypeManager = prototypeManager;
         }
@@ -40,16 +51,25 @@ namespace Content.Client.Decals
                 return spriteSpecifier;
             }
 
-            foreach (var (gridId, zIndexDictionary) in _system.DecalRenderIndex)
+            var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+
+            foreach (var (gridId, zIndexDictionary) in _decals.DecalRenderIndex)
             {
-                var grid = _mapManager.GetGrid(gridId);
-                handle.SetTransform(grid.WorldMatrix);
+                var gridUid = _mapManager.GetGridEuid(gridId);
+                var xform = xformQuery.GetComponent(gridUid);
+
+                handle.SetTransform(_transform.GetWorldMatrix(xform));
+
                 foreach (var (_, decals) in zIndexDictionary)
                 {
                     foreach (var (_, decal) in decals)
                     {
                         var spriteSpecifier = GetSpriteSpecifier(decal.Id);
-                        handle.DrawTexture(spriteSpecifier.Frame0(), decal.Coordinates, decal.Angle, decal.Color);
+
+                        if (decal.Angle.Equals(Angle.Zero))
+                            handle.DrawTexture(_sprites.Frame0(spriteSpecifier), decal.Coordinates, decal.Color);
+                        else
+                            handle.DrawTexture(_sprites.Frame0(spriteSpecifier), decal.Coordinates, decal.Angle, decal.Color);
                     }
                 }
             }
