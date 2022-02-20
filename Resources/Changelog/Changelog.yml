@@ -1,17 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Fires no longer instantly kill you if you walk near them. They''ll
-      now kill you in at most 10 seconds, usually slower for colder fires.', type: Tweak}
-  - {message: Hardsuits and firesuits now protect you against temperature increases.,
-    type: Add}
-  id: 602
-  time: '2021-11-19T06:08:30.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Vending machine adverts no longer get stored in your chat box., type: Tweak}
-  id: 603
-  time: '2021-11-19T06:36:26.0000000+00:00'
 - author: Clyybber
   changes:
   - {message: Changed Harm and Disarm icons., type: Tweak}
@@ -3000,3 +2987,14 @@ Entries:
   - {message: Fixed the round-end counter., type: Tweak}
   id: 1101
   time: '2022-02-20T00:42:16.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: High-capacity water tanks have arrived! Botanists no longer have to
+      scavenge for water., type: Add}
+  id: 1102
+  time: '2022-02-20T01:07:08.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Holoparasites now have a unique name identifier., type: Tweak}
+  id: 1103
+  time: '2022-02-20T01:07:28.0000000+00:00'
