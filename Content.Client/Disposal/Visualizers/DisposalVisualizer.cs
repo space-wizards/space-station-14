@@ -10,7 +10,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Disposal.Visualizers
 {
     [UsedImplicitly]
-    public class DisposalVisualizer : AppearanceVisualizer
+    public sealed class DisposalVisualizer : AppearanceVisualizer
     {
         [DataField("state_free")]
         private string? _stateFree;

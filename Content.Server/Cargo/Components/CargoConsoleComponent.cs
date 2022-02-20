@@ -19,7 +19,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Cargo.Components
 {
     [RegisterComponent]
-    public class CargoConsoleComponent : SharedCargoConsoleComponent
+    public sealed class CargoConsoleComponent : SharedCargoConsoleComponent
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;

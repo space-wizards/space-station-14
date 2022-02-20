@@ -18,7 +18,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tools
 {
-    public partial class ToolSystem : EntitySystem
+    public sealed partial class ToolSystem : EntitySystem
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -259,7 +259,7 @@ namespace Content.Server.Tools
             UpdateWelders(frameTime);
         }
 
-        private class ToolDoAfterComplete : EntityEventArgs
+        private sealed class ToolDoAfterComplete : EntityEventArgs
         {
             public readonly object CompletedEvent;
             public readonly object? CancelledEvent;
@@ -279,7 +279,7 @@ namespace Content.Server.Tools
             }
         }
 
-        private class ToolDoAfterCancelled : EntityEventArgs
+        private sealed class ToolDoAfterCancelled : EntityEventArgs
         {
             public readonly object Event;
             public readonly EntityUid? EventTarget;
@@ -296,7 +296,7 @@ namespace Content.Server.Tools
     ///     Attempt event called *before* any do afters to see if the tool usage should succeed or not.
     ///     You can change the fuel consumption by changing the Fuel property.
     /// </summary>
-    public class ToolUseAttemptEvent : CancellableEntityEventArgs
+    public sealed class ToolUseAttemptEvent : CancellableEntityEventArgs
     {
         public float Fuel { get; set; }
         public EntityUid User { get; }
@@ -312,7 +312,7 @@ namespace Content.Server.Tools
     ///     Attempt event called *after* any do afters to see if the tool usage should succeed or not.
     ///     You can use this event to consume any fuel needed.
     /// </summary>
-    public class ToolUseFinishAttemptEvent : CancellableEntityEventArgs
+    public sealed class ToolUseFinishAttemptEvent : CancellableEntityEventArgs
     {
         public float Fuel { get; }
         public EntityUid User { get; }

@@ -17,7 +17,7 @@ using Content.Server.Kitchen.Components;
 
 namespace Content.Server.PowerCell;
 
-public class PowerCellSystem : SharedPowerCellSystem
+public sealed class PowerCellSystem : SharedPowerCellSystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;

@@ -12,7 +12,7 @@ using SysVector4 = System.Numerics.Vector4;
 namespace Content.Benchmarks
 {
     [DisassemblyDiagnoser]
-    public class ColorInterpolateBenchmark
+    public sealed class ColorInterpolateBenchmark
     {
 #if NETCOREAPP
         private const MethodImplOptions AggressiveOpt = MethodImplOptions.AggressiveOptimization;

@@ -22,7 +22,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Medical.SuitSensors
 {
-    public class SuitSensorSystem : EntitySystem
+    public sealed class SuitSensorSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;

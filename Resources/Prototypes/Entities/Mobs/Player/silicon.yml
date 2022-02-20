@@ -17,6 +17,16 @@
   - type: Clickable
   - type: Damageable
     damageContainer: Inorganic
+  - type: Bloodstream
+    bloodReagent: Oil
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
@@ -65,6 +75,13 @@
       - id: WelderExperimental
   - type: NameIdentifier
     group: Drone
+  - type: Inventory
+    templateId: drone
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: Maintenance Drone
@@ -87,6 +104,8 @@
     layers:
     - state: shell
       sprite: Mobs/Silicon/drone.rsi
+    - map: [ "head" ]
+      offset: 0, -0.45
   - type: MovementIgnoreGravity
   - type: Fixtures
     fixtures:

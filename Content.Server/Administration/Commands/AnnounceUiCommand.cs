@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class AnnounceUiCommand : IConsoleCommand
+    public sealed class AnnounceUiCommand : IConsoleCommand
     {
         public string Command => "announceui";
 

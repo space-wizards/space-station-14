@@ -8,7 +8,7 @@ namespace Content.Shared.Examine
     public static class ExamineSystemMessages
     {
         [Serializable, NetSerializable]
-        public class RequestExamineInfoMessage : EntityEventArgs
+        public sealed class RequestExamineInfoMessage : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
 
@@ -22,7 +22,7 @@ namespace Content.Shared.Examine
         }
 
         [Serializable, NetSerializable]
-        public class ExamineInfoResponseMessage : EntityEventArgs
+        public sealed class ExamineInfoResponseMessage : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
             public readonly FormattedMessage Message;

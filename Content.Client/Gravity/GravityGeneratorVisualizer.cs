@@ -11,7 +11,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Gravity
 {
     [UsedImplicitly]
-    public class GravityGeneratorVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class GravityGeneratorVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         [DataField("spritemap")]
         private Dictionary<string, string> _rawSpriteMap = new();

@@ -13,7 +13,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.Construction.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    class FixRotationsCommand : IConsoleCommand
+    sealed class FixRotationsCommand : IConsoleCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "fixrotations";

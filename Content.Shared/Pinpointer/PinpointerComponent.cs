@@ -12,7 +12,7 @@ namespace Content.Shared.Pinpointer
     [RegisterComponent]
     [NetworkedComponent]
     [Friend(typeof(SharedPinpointerSystem))]
-    public class PinpointerComponent : Component
+    public sealed class PinpointerComponent : Component
     {
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist;

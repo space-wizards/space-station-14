@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests.AI
 {
     [TestFixture]
     [TestOf(typeof(BehaviorSetPrototype))]
-    public class BehaviorSetsTest : ContentIntegrationTest
+    public sealed class BehaviorSetsTest : ContentIntegrationTest
     {
         [Test]
         public async Task TestBehaviorSets()

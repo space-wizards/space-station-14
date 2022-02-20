@@ -10,7 +10,7 @@ namespace Content.Server.Power.Components
     ///     Draws power directly from an MV or HV wire it is on top of.
     /// </summary>
     [RegisterComponent]
-    public class PowerConsumerComponent : BaseNetConnectorComponent<IBasePowerNet>
+    public sealed class PowerConsumerComponent : BaseNetConnectorComponent<IBasePowerNet>
     {
         /// <summary>
         ///     How much power this needs to be fully powered.

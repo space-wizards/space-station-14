@@ -10,7 +10,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class DestroyEntity : IGraphAction
+    public sealed class DestroyEntity : IGraphAction
     {
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {

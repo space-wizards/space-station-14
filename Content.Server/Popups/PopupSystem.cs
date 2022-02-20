@@ -6,7 +6,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Popups
 {
-    public class PopupSystem : SharedPopupSystem
+    public sealed class PopupSystem : SharedPopupSystem
     {
         public override void PopupCursor(string message, Filter filter)
         {

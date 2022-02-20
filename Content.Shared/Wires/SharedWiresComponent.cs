@@ -9,6 +9,7 @@ using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Shared.Wires
 {
+    [Virtual]
     public class SharedWiresComponent : Component
     {
         [Serializable, NetSerializable]
@@ -110,7 +111,7 @@ namespace Content.Shared.Wires
         }
 
         [Serializable, NetSerializable]
-        public class WiresBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class WiresBoundUserInterfaceState : BoundUserInterfaceState
         {
             public string BoardName { get; }
             public string? SerialNumber { get; }
@@ -148,7 +149,7 @@ namespace Content.Shared.Wires
 
 
         [Serializable, NetSerializable]
-        public class ClientWire
+        public sealed class ClientWire
         {
             public int Id;
             public bool IsCut;
@@ -165,7 +166,7 @@ namespace Content.Shared.Wires
         }
 
         [Serializable, NetSerializable]
-        public class WiresActionMessage : BoundUserInterfaceMessage
+        public sealed class WiresActionMessage : BoundUserInterfaceMessage
         {
             public readonly int Id;
             public readonly WiresAction Action;

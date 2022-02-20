@@ -21,7 +21,7 @@ namespace Content.Server.Construction
     /// The server-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
-    public partial class ConstructionSystem : SharedConstructionSystem
+    public sealed partial class ConstructionSystem : SharedConstructionSystem
     {
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

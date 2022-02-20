@@ -267,7 +267,7 @@
 - type: entity
   parent: AirlockExternalGlass
   id: AirlockExternalGlassLocked
-  suffix: External, Locked
+  suffix: External, Glass, Locked
   components:
   - type: AccessReader
     access: [["External"]]
@@ -605,7 +605,7 @@
 - type: entity
   parent: AirlockGlassShuttle
   id: AirlockExternalGlassShuttleLocked
-  suffix: External, Docking, Locked
+  suffix: External, Glass, Docking, Locked
   components:
   - type: AccessReader
     access: [["External"]]

@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
-    public class PopupMessage : ReagentEffect
+    public sealed class PopupMessage : ReagentEffect
     {
         [DataField("messages", required: true)]
         public string[] Messages = default!;

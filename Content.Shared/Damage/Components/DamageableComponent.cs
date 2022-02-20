@@ -25,7 +25,7 @@ namespace Content.Shared.Damage
     [RegisterComponent]
     [NetworkedComponent()]
     [Friend(typeof(DamageableSystem))]
-    public class DamageableComponent : Component, IRadiationAct, IExAct
+    public sealed class DamageableComponent : Component, IRadiationAct, IExAct
     {
         /// <summary>
         ///     This <see cref="DamageContainerPrototype"/> specifies what damage types are supported by this component.
@@ -116,7 +116,7 @@ namespace Content.Shared.Damage
     }
 
     [Serializable, NetSerializable]
-    public class DamageableComponentState : ComponentState
+    public sealed class DamageableComponentState : ComponentState
     {
         public readonly Dictionary<string, FixedPoint2> DamageDict;
         public readonly string? ModifierSetId;

@@ -9,7 +9,7 @@ namespace Content.Server.Power.Components
 {
     [RegisterComponent]
     [Friend(typeof(ExtensionCableSystem))]
-    public class ExtensionCableProviderComponent : Component
+    public sealed class ExtensionCableProviderComponent : Component
     {
         /// <summary>
         ///     The max distance this can connect to <see cref="ExtensionCableReceiverComponent"/>s from.

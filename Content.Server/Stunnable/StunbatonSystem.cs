@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Content.Server.Power.Events;
 using Content.Server.PowerCell;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
@@ -25,7 +26,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Stunnable
 {
-    public class StunbatonSystem : EntitySystem
+    public sealed class StunbatonSystem : EntitySystem
     {
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly StutteringSystem _stutteringSystem = default!;
@@ -56,6 +57,7 @@ namespace Content.Server.Stunnable
             foreach (EntityUid entity in args.HitEntities)
             {
                 StunEntity(entity, comp);
+                SendPowerPulse(entity, args.User, uid);
             }
         }
 
@@ -69,6 +71,7 @@ namespace Content.Server.Stunnable
 
             args.CanInteract = true;
             StunEntity(args.Entity, comp);
+            SendPowerPulse(args.Entity, args.User, uid);
         }
 
         private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)
@@ -92,6 +95,7 @@ namespace Content.Server.Stunnable
                 return;
 
             StunEntity(args.Target, comp);
+            SendPowerPulse(args.Target, args.User, uid);
         }
 
         private void OnPowerCellChanged(EntityUid uid, StunbatonComponent comp, PowerCellChangedEvent args)
@@ -196,6 +200,15 @@ namespace Content.Server.Stunnable
             item.EquippedPrefix = "on";
             sprite.LayerSetState(0, "stunbaton_on");
             comp.Activated = true;
+        }
+
+        private void SendPowerPulse(EntityUid target, EntityUid? user, EntityUid used)
+        {
+            RaiseLocalEvent(target, new PowerPulseEvent()
+            {
+                Used = used,
+                User = user
+            }, false);
         }
     }
 }

@@ -16,7 +16,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
-    class MappingCommand : IConsoleCommand
+    sealed class MappingCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
