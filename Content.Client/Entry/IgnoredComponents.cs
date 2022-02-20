@@ -259,7 +259,7 @@ namespace Content.Client.Entry
             "BeingCloned",
             "Advertise",
             "Bible",
-            "Bed",
+            "HealOnBuckle",
             "StasisBed",
             "PowerNetworkBattery",
             "BatteryCharger",

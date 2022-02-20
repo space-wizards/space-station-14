@@ -2,7 +2,7 @@
   name: bed
   id: Bed
   parent: BaseStructure
-  description: This is used to lie in, sleep in or strap on.
+  description: This is used to lie in, sleep in or strap on. Resting here provides extremely slow healing.
   components:
   - type: HealOnBuckle
     damage:
@@ -64,11 +64,11 @@
   parent: Bed
   id: MedicalBed
   name: medical bed
-  description: A hospital bed for patients to recover in.
+  description: A hospital bed for patients to recover in. Resting here provides fairly slow healing.
   components:
   - type: Sprite
     state: bed-MED
-  - type: HealOnbuckle
+  - type: HealOnBuckle
     damage:
       types:
         Blunt: -0.2
