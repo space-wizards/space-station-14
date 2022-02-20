@@ -36,7 +36,7 @@
 - type: construction
   name: dark tile
   id: tileDark
-  graph: tile
+  graph: tileDark
   startNode: start
   targetNode: darktile
   category: Tiles
