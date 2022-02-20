@@ -10,7 +10,7 @@ namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
 #pragma warning disable 618
-    public class MachinePartComponent : Component, IExamine
+    public sealed class MachinePartComponent : Component, IExamine
 #pragma warning restore 618
     {
         // I'm so sorry for hard-coding this. But trust me, it should make things less painful.

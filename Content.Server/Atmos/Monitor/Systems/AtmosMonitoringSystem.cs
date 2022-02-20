@@ -23,7 +23,7 @@ namespace Content.Server.Atmos.Monitor.Systems
     // to it via local APC net, and starts sending updates of the
     // current atmosphere. Monitors fire (which always triggers as
     // a danger), and atmos (which triggers based on set thresholds).
-    public class AtmosMonitorSystem : EntitySystem
+    public sealed class AtmosMonitorSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly AtmosDeviceSystem _atmosDeviceSystem = default!;
@@ -475,7 +475,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         }
     }
 
-    public class AtmosMonitorAlarmEvent : EntityEventArgs
+    public sealed class AtmosMonitorAlarmEvent : EntityEventArgs
     {
         public AtmosMonitorAlarmType Type { get; }
         public AtmosMonitorAlarmType HighestNetworkType { get; }

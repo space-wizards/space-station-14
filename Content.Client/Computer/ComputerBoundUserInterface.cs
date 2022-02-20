@@ -9,6 +9,7 @@ namespace Content.Client.Computer
     /// ComputerBoundUserInterface shunts all sorts of responsibilities that are in the BoundUserInterface for architectural reasons into the Window.
     /// NOTE: Despite the name, ComputerBoundUserInterface does not and will not care about things like power.
     /// </summary>
+    [Virtual]
     public class ComputerBoundUserInterface<TWindow, TState> : ComputerBoundUserInterfaceBase where TWindow : BaseWindow, IComputerWindow<TState>, new() where TState : BoundUserInterfaceState
     {
         [Dependency] private readonly IDynamicTypeFactory _dynamicTypeFactory = default!;
@@ -54,6 +55,7 @@ namespace Content.Client.Computer
     /// This class is to avoid a lot of <> being written when we just want to refer to SendMessage.
     /// We could instead qualify a lot of generics even further, but that is a waste of time.
     /// </summary>
+    [Virtual]
     public class ComputerBoundUserInterfaceBase : BoundUserInterface
     {
         public ComputerBoundUserInterfaceBase(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}

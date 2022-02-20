@@ -15,7 +15,7 @@ namespace Content.Server.Administration.Commands
     ///     Command that allows you to edit an existing solution by adding (or removing) reagents.
     /// </summary>
     [AdminCommand(AdminFlags.Fun)]
-    public class AddReagent : IConsoleCommand
+    public sealed class AddReagent : IConsoleCommand
     {
         public string Command => "addreagent";
         public string Description => "Add (or remove) some amount of reagent from some solution.";

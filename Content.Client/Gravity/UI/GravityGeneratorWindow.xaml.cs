@@ -15,7 +15,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Gravity.UI
 {
     [GenerateTypedNameReferences]
-    public partial class GravityGeneratorWindow : FancyWindow
+    public sealed partial class GravityGeneratorWindow : FancyWindow
     {
         private readonly ButtonGroup _buttonGroup = new();
 

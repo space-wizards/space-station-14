@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.NodeContainer.Nodes
 {
     [DataDefinition]
-    public class PortPipeNode : PipeNode
+    public sealed class PortPipeNode : PipeNode
     {
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,

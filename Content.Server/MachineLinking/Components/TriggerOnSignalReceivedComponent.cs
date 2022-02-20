@@ -3,7 +3,7 @@
 namespace Content.Server.MachineLinking.Components
 {
     [RegisterComponent]
-    public class TriggerOnSignalReceivedComponent : Component
+    public sealed class TriggerOnSignalReceivedComponent : Component
     {
     }
 }

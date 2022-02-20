@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Shared.StatusEffect
 {
     [Prototype("statusEffect")]
-    public class StatusEffectPrototype : IPrototype
+    public sealed class StatusEffectPrototype : IPrototype
     {
         [DataField("id", required: true)]
         public string ID { get; } = default!;

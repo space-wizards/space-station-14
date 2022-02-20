@@ -31,7 +31,7 @@ namespace Content.Server.Kitchen.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISuicideAct, IBreakAct
+    public sealed class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISuicideAct, IBreakAct
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -550,7 +550,7 @@ namespace Content.Server.Kitchen.Components
         }
     }
 
-    public class BeingMicrowavedEvent : HandledEntityEventArgs
+    public sealed class BeingMicrowavedEvent : HandledEntityEventArgs
     {
         public EntityUid Microwave;
 

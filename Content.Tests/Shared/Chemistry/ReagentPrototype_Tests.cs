@@ -12,7 +12,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Tests.Shared.Chemistry
 {
     [TestFixture, TestOf(typeof(ReagentPrototype))]
-    public class ReagentPrototype_Tests : ContentUnitTest
+    public sealed class ReagentPrototype_Tests : ContentUnitTest
     {
         [Test]
         public void DeserializeReagentPrototype()

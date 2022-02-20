@@ -6,7 +6,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Stunnable.Components
 {
     [RegisterComponent]
-    public class StunbatonComponent : Component
+    public sealed class StunbatonComponent : Component
     {
         public bool Activated = false;
 

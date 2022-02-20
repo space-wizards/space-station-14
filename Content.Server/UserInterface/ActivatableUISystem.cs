@@ -1,24 +1,17 @@
-using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.UserInterface
 {
     [UsedImplicitly]
     internal sealed class ActivatableUISystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
 
         public override void Initialize()
@@ -82,12 +75,6 @@ namespace Content.Server.UserInterface
 
             if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return false;
 
-            if (!HasComp<GhostComponent>(user) && !_actionBlockerSystem.CanInteract(user))
-            {
-                user.PopupMessageCursor(Loc.GetString("base-computer-ui-component-cannot-interact"));
-                return true;
-            }
-
             var ui = aui.UserInterface;
             if (ui == null) return false;
 
@@ -102,8 +89,10 @@ namespace Content.Server.UserInterface
             // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
             // This is so that stuff can require further conditions (like power).
             var oae = new ActivatableUIOpenAttemptEvent(user);
+            var uae = new UserOpenActivatableUIAttemptEvent(user);
+            RaiseLocalEvent(user, uae, false);
             RaiseLocalEvent((aui).Owner, oae, false);
-            if (oae.Cancelled) return false;
+            if (oae.Cancelled || uae.Cancelled) return false;
 
             SetCurrentSingleUser((aui).Owner, actor.PlayerSession, aui);
             ui.Toggle(actor.PlayerSession);
@@ -129,7 +118,7 @@ namespace Content.Server.UserInterface
         }
     }
 
-    public class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
+    public sealed class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
     {
         public EntityUid User { get; }
         public ActivatableUIOpenAttemptEvent(EntityUid who)
@@ -138,7 +127,15 @@ namespace Content.Server.UserInterface
         }
     }
 
-    public class ActivatableUIPlayerChangedEvent : EntityEventArgs
+    public class UserOpenActivatableUIAttemptEvent : CancellableEntityEventArgs //have to one-up the already stroke-inducing name
+    {
+        public EntityUid User { get; }
+        public UserOpenActivatableUIAttemptEvent(EntityUid who)
+        {
+            User = who;
+        }
+    }
+    public sealed class ActivatableUIPlayerChangedEvent : EntityEventArgs
     {
     }
 }

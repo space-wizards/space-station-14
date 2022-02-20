@@ -21,7 +21,7 @@ namespace Content.Server.Atmos.EntitySystems
     ///     This is our SSAir equivalent, if you need to interact with or query atmos in any way, go through this.
     /// </summary>
     [UsedImplicitly]
-    public partial class AtmosphereSystem : SharedAtmosphereSystem
+    public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AdminLogSystem _adminLog = default!;
@@ -85,9 +85,15 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var (exposed, transform) in EntityManager.EntityQuery<AtmosExposedComponent, TransformComponent>())
             {
-                var tile = GetTileMixture(transform.Coordinates);
-                if (tile == null) continue;
-                var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, tile);
+                // Used for things like disposals/cryo to change which air people are exposed to.
+                var airEvent = new AtmosExposedGetAirEvent();
+                RaiseLocalEvent(exposed.Owner, ref airEvent, false);
+
+                airEvent.Gas ??= GetTileMixture(transform.Coordinates);
+                if (airEvent.Gas == null)
+                    continue;
+
+                var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, airEvent.Gas);
                 RaiseLocalEvent(exposed.Owner, ref updateEvent);
             }
 

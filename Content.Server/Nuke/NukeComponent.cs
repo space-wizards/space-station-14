@@ -16,7 +16,7 @@ namespace Content.Server.Nuke
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(NukeSystem))]
-    public class NukeComponent : Component
+    public sealed class NukeComponent : Component
     {
         /// <summary>
         ///     Default bomb timer value in seconds.

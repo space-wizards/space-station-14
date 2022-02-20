@@ -8,7 +8,6 @@
       Acidic: [Touch]
   - type: Input
     context: "human"
-  - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -18,6 +17,16 @@
   - type: Clickable
   - type: Damageable
     damageContainer: Inorganic
+  - type: Bloodstream
+    bloodReagent: Oil
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
@@ -64,6 +73,15 @@
       - id: PowerDrill
       - id: JawsOfLife
       - id: WelderExperimental
+  - type: NameIdentifier
+    group: Drone
+  - type: Inventory
+    templateId: drone
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: Maintenance Drone
@@ -74,8 +92,8 @@
      2. You may not harm any being, regardless of intent or circumstance.
      3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.
   - type: MovementSpeedModifier
-    baseWalkSpeed : 6
-    baseSprintSpeed : 6
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -86,6 +104,9 @@
     layers:
     - state: shell
       sprite: Mobs/Silicon/drone.rsi
+    - map: [ "head" ]
+      offset: 0, -0.45
+  - type: MovementIgnoreGravity
   - type: Fixtures
     fixtures:
     - shape:

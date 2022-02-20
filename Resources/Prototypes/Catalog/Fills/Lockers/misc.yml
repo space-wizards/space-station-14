@@ -20,6 +20,8 @@
         prob: 0.4
       - id: OxygenTankFilled
         prob: 0.2
+      - id: MedkitOxygenFilled
+        prob: 0.2
       - id: FlareGun
         prob: 0.05
         

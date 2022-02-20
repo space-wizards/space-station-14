@@ -17,7 +17,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.UserInterface
 {
     [RegisterComponent]
-    public class ActivatableUIComponent : Component,
+    public sealed class ActivatableUIComponent : Component,
             ISerializationHooks
     {
         [ViewVariables]

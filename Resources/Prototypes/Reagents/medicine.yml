@@ -52,14 +52,14 @@
         amount: -3.0
       - !type:GenericStatusEffect
         key: Jitter
-        time: 1.0
+        time: 3.0
         type: Remove
 
 - type: reagent
   id: Arithrazine
   name: arithrazine
   group: Medicine
-  desc: A slightly unstable medication used for the most extreme any serious case of radiation poisoning. Lowers radiation level at over twice the rate Hyronalin does and will heal toxin damage at the same time. Deals very minor brute damage to the patient over time, but the patient's body will typically out-regenerate it easily.
+  desc: A slightly unstable medication used for the most extreme case of radiation poisoning. Lowers radiation level at over twice the rate Hyronalin does and will heal toxin damage at the same time. Deals very minor brute damage to the patient over time, but the patient's body will typically out-regenerate it easily.
   physicalDesc: cloudy
   color: "#bd5902"
   metabolisms:
@@ -158,7 +158,7 @@
   id: Dexalin
   name: dexalin
   group: Medicine
-  desc: Used for treating oxygen deprivation. In most cases where it is likely to be needed, the strength of Dexalin Plus will probably be more useful (Results in 1 unit instead of 2).
+  desc: Used for treating oxygen deprivation. In most cases where it is likely to be needed, the strength of Dexalin Plus will probably be more useful.
   physicalDesc: opaque
   color: "#0041a8"
   metabolisms:
@@ -168,12 +168,13 @@
         damage:
           types:
             Asphyxiation: -1
+            Bloodloss: -0.5
 
 - type: reagent
   id: DexalinPlus
   name: dexalin plus
   group: Medicine
-  desc: Used in treatment of extreme cases of oxygen deprivation. Even a single unit immediately counters all oxygen loss, which is hugely useful in many circumstances. Any dose beyond this will continue to counter oxygen loss until it is metabolized, essentially removing the need to breathe.
+  desc: Used in treatment of extreme cases of oxygen deprivation. Effective at healing blood loss damage.
   physicalDesc: cloudy
   color: "#4da0bd"
   metabolisms:
@@ -183,6 +184,7 @@
         damage:
           types:
             Asphyxiation: -3
+            Bloodloss: -2
 
 - type: reagent
   id: Ethylredoxrazine
@@ -247,11 +249,11 @@
         amount: 4
       - !type:GenericStatusEffect
         key: Stun
-        time: 0.25
+        time: 0.75
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 0.25
+        time: 0.75
         type: Remove
 
 - type: reagent
@@ -299,7 +301,7 @@
   id: Inaprovaline
   name: inaprovaline
   group: Medicine
-  desc: Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients- it stops oxygen loss when the patient is in critical health. It'll also slow down bleeding (internal or external) by half while in the body. Acts as a decent painkiller.
+  desc: Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients- it stops oxygen loss when the patient is in critical health. It'll also slow down bleeding by a good amount. Acts as a decent painkiller.
   physicalDesc: opaque
   color: "#731024"
   metabolisms:
@@ -313,6 +315,8 @@
         damage:
           types:
             Asphyxiation: -5
+      - !type:ModifyBleedAmount
+        amount: -0.25
 
 - type: reagent
   id: Kelotane
@@ -397,6 +401,19 @@
   # TODO: Hallucinations.
 
 - type: reagent
+  id: PulpedBananaPeel
+  name: pulped banana peel
+  group: Medicine
+  desc: Pulped banana peels have some effectiveness against bleeding.
+  physicalDesc: pulpy
+  color: "#FFE774"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ModifyBleedAmount
+        amount: -0.5
+
+- type: reagent
   id: Ryetalyn
   name: ryetalyn
   group: Medicine
@@ -405,12 +422,49 @@
   color: "#532fd4"
 
 - type: reagent
+  id: Siderlac
+  name: siderlac
+  group: Medicine
+  desc: A powerful anti-caustic medicine derived from plants.
+  physicalDesc: milky
+  color: "#f4dab8"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Caustic: -5
+
+- type: reagent
   id: Spaceacillin
   name: spaceacillin
   group: Medicine
   desc: A theta-lactam antibiotic. A common and very useful medicine, effective against many diseases likely to be encountered in space. Slows progression of diseases.
   physicalDesc: opaque
   color: "#9942f5"
+
+- type: reagent
+  id: Stellibinin
+  name: stellibinin
+  group: Medicine
+  desc: A natual antitoxin with particular effectiveness against amatoxin.
+  physicalDesc: starry
+  color: "#2b2f77"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -1
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Amatoxin
+          min: 1
+        reagent: Amatoxin
+        amount: -3
 
 - type: reagent
   id: Synaptizine
@@ -428,11 +482,11 @@
             Poison: 3
       - !type:GenericStatusEffect
         key: Stun
-        time: 1.0
+        time: 3.0
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 1.0
+        time: 3.0
         type: Remove
 
 - type: reagent
@@ -442,6 +496,28 @@
   desc: A simple, yet effective painkiller. Very effective for patients in shock.
   physicalDesc: strong-smelling
   color: "#2f6ed4"
+
+- type: reagent
+  id: TranexamicAcid
+  name: tranexamic acid
+  group: Medicine
+  desc: A blood clotting medicine for preventing heavy bleeding. Very dangerous in large quantities.
+  physicalDesc: viscous
+  color: "#ba7d7d"
+  metabolisms:
+    Medicine:
+      effects:
+      # Medium-large quantities can hurt you instead,
+      # but still technically stop your bleeding.
+      - !type:ModifyBleedAmount
+        amount: -1.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
+        damage:
+          types:
+            Bloodloss: 3
 
 - type: reagent
   id: Tricordrazine
@@ -454,6 +530,9 @@
     Medicine:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
         damage:
           groups:
             Burn: -1
@@ -560,40 +639,3 @@
           min: 1
         reagent: Ultravasculine
         amount: 0.5
-
-- type: reagent
-  id: Stellibinin
-  name: stellibinin
-  group: Medicine
-  desc: A natual antitoxin with particular effectiveness against amatoxin.
-  physicalDesc: starry
-  color: "#2b2f77"
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: -1
-      - !type:AdjustReagent
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Amatoxin
-          min: 1
-        reagent: Amatoxin
-        amount: -3
-
-- type: reagent
-  id: Siderlac
-  name: siderlac
-  group: Medicine
-  desc: A powerful anti-caustic medicine derived from plants.
-  physicalDesc: milky
-  color: "#f4dab8"
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          groups:
-            Caustic: -5

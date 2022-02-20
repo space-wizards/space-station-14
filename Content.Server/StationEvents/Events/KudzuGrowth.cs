@@ -8,7 +8,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public class KudzuGrowth : StationEvent
+public sealed class KudzuGrowth : StationEvent
 {
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private IEntityManager _entityManager = default!;

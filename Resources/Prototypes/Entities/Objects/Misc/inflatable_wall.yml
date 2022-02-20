@@ -85,3 +85,5 @@
   - type: DisassembleOnAltVerb
     prototype: InflatableDoorStack1
     doAfter: 3
+  - type: Occluder
+    enabled: false

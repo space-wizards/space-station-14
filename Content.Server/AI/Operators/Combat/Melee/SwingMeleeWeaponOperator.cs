@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Combat.Melee
 {
-    public class SwingMeleeWeaponOperator : AiOperator
+    public sealed class SwingMeleeWeaponOperator : AiOperator
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

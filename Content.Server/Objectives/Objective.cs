@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Objectives
 {
-    public class Objective : IEquatable<Objective>
+    public sealed class Objective : IEquatable<Objective>
     {
         [ViewVariables]
         public readonly Mind.Mind Mind;

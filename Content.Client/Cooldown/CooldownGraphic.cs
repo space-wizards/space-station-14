@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Cooldown
 {
 
-    public class CooldownGraphic : Control
+    public sealed class CooldownGraphic : Control
     {
 
         [Dependency] private readonly IPrototypeManager _protoMan = default!;

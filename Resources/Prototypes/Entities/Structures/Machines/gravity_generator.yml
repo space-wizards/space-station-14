@@ -51,8 +51,8 @@
       - !type:DoActsBehavior
         acts: ["Breakage"]
   - type: GravityGenerator
-    idlePower: 15
-    activePower: 500
+    idlePower: 50
+    activePower: 2500
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
   - type: UserInterface

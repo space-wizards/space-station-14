@@ -37,7 +37,7 @@ namespace Content.Server.Fluids.Components
         public FixedPoint2 LowerLimit = FixedPoint2.Zero;
 
         /// <summary>
-        ///     Upper limit below which puddle won't evaporate. Useful when wanting to make sure large puddle will
+        ///     Upper limit above which puddle won't evaporate. Useful when wanting to make sure large puddle will
         ///     remain forever. Defaults to 100.
         /// </summary>
         [DataField("upperLimit")]

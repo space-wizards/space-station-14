@@ -18,7 +18,7 @@ namespace Content.Shared.Damage.Prototypes
     /// </remarks>
     [Prototype("damageContainer")]
     [Serializable, NetSerializable]
-    public class DamageContainerPrototype : IPrototype
+    public sealed class DamageContainerPrototype : IPrototype
     {
         [ViewVariables]
         [DataField("id", required: true)]

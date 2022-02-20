@@ -13,7 +13,7 @@ using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototy
 
 namespace Content.IntegrationTests.Tests.Destructible
 {
-    public class DestructibleDestructionTest : ContentIntegrationTest
+    public sealed class DestructibleDestructionTest : ContentIntegrationTest
     {
         [Test]
         public async Task Test()

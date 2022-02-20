@@ -27,7 +27,7 @@ namespace Content.Client.Actions.UI
     /// Action selection menu, allows filtering and searching over all possible
     /// actions and populating those actions into the hotbar.
     /// </summary>
-    public class ActionMenu : DefaultWindow
+    public sealed class ActionMenu : DefaultWindow
     {
         private const string ItemTag = "item";
         private const string NotItemTag = "not item";

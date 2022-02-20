@@ -14,11 +14,11 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.ReagentEffects
 {
     [UsedImplicitly]
-    public class FlammableReaction : ReagentEffect
+    public sealed class FlammableReaction : ReagentEffect
     {
         [DataField("multiplier")]
         public float Multiplier = 0.05f;
-        
+
         public override bool ShouldLog => true;
         public override LogImpact LogImpact => LogImpact.Medium;
 

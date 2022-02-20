@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Nutrition.EntitySystems
 {
     [UsedImplicitly]
-    public class ThirstSystem : EntitySystem
+    public sealed class ThirstSystem : EntitySystem
     {
         private float _accumulatedFrameTime;
 

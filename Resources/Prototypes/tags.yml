@@ -25,9 +25,6 @@
   id: BotanyHoe
 
 - type: Tag
-  id: BotanySharp
-
-- type: Tag
   id: BotanyShovel
 
 - type: Tag
@@ -284,6 +281,9 @@
 
 - type: Tag
   id: Wall
+
+- type: Tag
+  id: Window
 
 - type: Tag
   id: Wirecutter

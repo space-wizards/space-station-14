@@ -10,7 +10,7 @@ namespace Content.Shared.Friction
 {
     [RegisterComponent]
     [ComponentProtoName("TileFrictionModifier")]
-    public class SharedTileFrictionModifier : Component
+    public sealed class SharedTileFrictionModifier : Component
     {
         /// <summary>
         ///     Multiply the tilefriction cvar by this to get the body's actual tilefriction.
@@ -43,7 +43,7 @@ namespace Content.Shared.Friction
         }
 
         [NetSerializable, Serializable]
-        protected class TileFrictionComponentState : ComponentState
+        protected sealed class TileFrictionComponentState : ComponentState
         {
             public float Modifier;
 

@@ -5,7 +5,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos.Piping.EntitySystems
 {
-    public class AtmosPipeColorSystem : EntitySystem
+    public sealed class AtmosPipeColorSystem : EntitySystem
     {
         public override void Initialize()
         {

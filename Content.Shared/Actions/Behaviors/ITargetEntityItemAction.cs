@@ -15,7 +15,7 @@ namespace Content.Shared.Actions.Behaviors
         void DoTargetEntityAction(TargetEntityItemActionEventArgs args);
     }
 
-    public class TargetEntityItemActionEventArgs : ItemActionEventArgs
+    public sealed class TargetEntityItemActionEventArgs : ItemActionEventArgs
     {
         /// <summary>
         /// Entity being targeted

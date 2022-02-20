@@ -11,7 +11,7 @@ using static Robust.Shared.Utility.SpriteSpecifier;
 namespace Content.Client.Storage.Visualizers
 {
     [UsedImplicitly]
-    public class BagOpenCloseVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class BagOpenCloseVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string OpenIcon = "openIcon";
         [DataField(OpenIcon)]
