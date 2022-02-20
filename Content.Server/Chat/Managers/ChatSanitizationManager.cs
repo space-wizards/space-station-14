@@ -9,7 +9,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Chat.Managers;
 
-public class ChatSanitizationManager : IChatSanitizationManager
+public sealed class ChatSanitizationManager : IChatSanitizationManager
 {
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 

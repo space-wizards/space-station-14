@@ -7,7 +7,7 @@ using static Content.Shared.AME.SharedAMEShieldComponent;
 namespace Content.Client.AME.Visualizers
 {
     [UsedImplicitly]
-    public class AMEVisualizer : AppearanceVisualizer
+    public sealed class AMEVisualizer : AppearanceVisualizer
     {
         public override void InitializeEntity(EntityUid entity)
         {

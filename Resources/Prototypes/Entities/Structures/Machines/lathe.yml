@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
+    netsync: false
     layers:
     - state: icon
       map: ["enum.AutolatheVisualLayers.Base"]
@@ -84,6 +85,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/protolathe.rsi
+    netsync: false
     layers:
     - state: icon
       map: ["enum.ProtolatheVisualLayers.Base"]
@@ -142,7 +144,6 @@
       - CableMVStack
       - CableHVStack
       - ConveyorBeltAssembly
-      - RCD
       - RCDAmmo
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
@@ -162,18 +163,6 @@
       - PillCanister
       - Drone
       - Flash
-      - Handcuffs
-      - Stunbaton
-      - CartridgePistol
-      - ShellShotgun
-      - CartridgeLRifle
-      - CartridgeMagnum
-      - ShellShotgunBeanbag
-      - CartridgePistolRubber
-      - CartridgeMagnumRubber
-      - CartridgeClRifleRubber
-      - CartridgeLRifleRubber
-      - CartridgeSRifleRubber
       - MicroManipulatorStockPart
       - ScanningModuleStockPart
       - MicroLaserStockPart
@@ -182,23 +171,8 @@
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
-      - SMESMachineCircuitboard
-      - SubstationMachineCircuitboard
       - AirAlarmElectronics
       - FireAlarmElectronics
-      - CloningPodMachineCircuitboard
-      - MedicalScannerMachineCircuitboard
-      - ChemMasterMachineCircuitboard
-      - ChemDispenserMachineCircuitboard
-      - HydroponicsTrayMachineCircuitboard
-      - SolarControlComputerCircuitboard
-      - AutolatheMachineCircuitboard
-      - ProtolatheMachineCircuitboard
-      - KitchenReagentGrinderMachineCircuitboard
-      - CrewMonitoringComputerCircuitboard
-      - ShuttleConsoleCircuitboard
-      - DawInstrumentMachineCircuitboard
-      - SynthesizerInstrument
       - Bucket
       - MopItem
       - SprayBottle
@@ -220,3 +194,78 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+
+- type: entity
+  parent: Protolathe
+  id: CircuitImprinter
+  name: Circuit Imprinter
+  description: Prints circuit boards for machines.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/circuit_imprinter.rsi
+    layers:
+    - state: icon
+      map: ["enum.ProtolatheVisualLayers.Base"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
+    - state: icon
+      map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: ProtolatheDatabase
+    protolatherecipes:
+      - SMESMachineCircuitboard
+      - SubstationMachineCircuitboard
+      - CloningPodMachineCircuitboard
+      - MedicalScannerMachineCircuitboard
+      - ChemMasterMachineCircuitboard
+      - ChemDispenserMachineCircuitboard
+      - HydroponicsTrayMachineCircuitboard
+      - SolarControlComputerCircuitboard
+      - AutolatheMachineCircuitboard
+      - ProtolatheMachineCircuitboard
+      - KitchenReagentGrinderMachineCircuitboard
+      - CrewMonitoringComputerCircuitboard
+      - ShuttleConsoleCircuitboard
+      - CircuitImprinterMachineCircuitboard
+      - DawInstrumentMachineCircuitboard
+  - type: Machine
+    board: CircuitImprinterMachineCircuitboard
+
+- type: entity
+  parent: Protolathe
+  id: SecurityTechFab
+  name: Security TechFab
+  description: Prints security equipment and some basics.
+  components:
+  - type: ProtolatheDatabase
+    protolatherecipes:
+      - Flash
+      - Handcuffs
+      - Stunbaton
+      - CartridgePistol
+      - ShellShotgun
+      - CartridgeLRifle
+      - CartridgeMagnum
+      - ShellShotgunBeanbag
+      - CartridgePistolRubber
+      - CartridgeMagnumRubber
+      - CartridgeClRifleRubber
+      - CartridgeLRifleRubber
+      - CartridgeSRifleRubber #Everything below this is shared with other lathes
+      - FlashlightLantern
+      - Bucket
+      - MopItem
+      - SprayBottle
+      - FireExtinguisher
+      - LightTube
+      - LightBulb
+      - SheetSteel
+      - SheetGlass1
+      - SheetRGlass
+      - SheetPlastic
+      - CableStack
+      - CableMVStack
+      - CableHVStack

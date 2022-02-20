@@ -11,7 +11,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Storage.EntitySystems
 {
-    public class SecretStashSystem : EntitySystem
+    public sealed class SecretStashSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 

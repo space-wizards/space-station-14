@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
 [TestOf(typeof(AdminLogSystem))]
-public class FilterTests : ContentIntegrationTest
+public sealed class FilterTests : ContentIntegrationTest
 {
     [Test]
     [TestCase(DateOrder.Ascending)]

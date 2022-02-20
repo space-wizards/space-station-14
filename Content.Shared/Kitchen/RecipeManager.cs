@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Kitchen
 {
-    public class RecipeManager
+    public sealed class RecipeManager
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -38,7 +38,7 @@ namespace Content.Shared.Kitchen
             return false;
         }
 
-        private class RecipeComparer : Comparer<FoodRecipePrototype>
+        private sealed class RecipeComparer : Comparer<FoodRecipePrototype>
         {
             public override int Compare(FoodRecipePrototype? x, FoodRecipePrototype? y)
             {

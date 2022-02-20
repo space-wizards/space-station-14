@@ -6,7 +6,7 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Chemistry.UI
 {
     [UsedImplicitly]
-    public class TransferAmountBoundUserInterface : BoundUserInterface
+    public sealed class TransferAmountBoundUserInterface : BoundUserInterface
     {
         private TransferAmountWindow? _window;
 

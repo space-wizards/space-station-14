@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Light.EntitySystems
 {
-    public class MatchboxSystem : EntitySystem
+    public sealed class MatchboxSystem : EntitySystem
     {
         public override void Initialize()
         {

@@ -27,7 +27,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Ghost.Roles
 {
     [UsedImplicitly]
-    public class GhostRoleSystem : EntitySystem
+    public sealed class GhostRoleSystem : EntitySystem
     {
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -259,7 +259,7 @@ namespace Content.Server.Ghost.Roles
     }
 
     [AnyCommand]
-    public class GhostRoles : IConsoleCommand
+    public sealed class GhostRoles : IConsoleCommand
     {
         public string Command => "ghostroles";
         public string Description => "Opens the ghost role request window.";

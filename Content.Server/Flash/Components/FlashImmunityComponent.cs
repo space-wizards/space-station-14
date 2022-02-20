@@ -6,7 +6,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Flash.Components
 {
     [RegisterComponent, Friend(typeof(FlashSystem))]
-    public class FlashImmunityComponent : Component
+    public sealed class FlashImmunityComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]

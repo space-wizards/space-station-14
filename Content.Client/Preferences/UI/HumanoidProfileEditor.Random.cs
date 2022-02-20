@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Preferences.UI
 {
-    public partial class HumanoidProfileEditor
+    public sealed partial class HumanoidProfileEditor
     {
         private readonly IRobustRandom _random;
         private readonly IPrototypeManager _prototypeManager;

@@ -20,7 +20,7 @@ namespace Content.Server.Actions.Actions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class ScreamAction : IInstantAction, ISerializationHooks
+    public sealed class ScreamAction : IInstantAction, ISerializationHooks
     {
         private const float Variation = 0.125f;
         private const float Volume = 4f;

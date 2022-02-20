@@ -16,7 +16,7 @@ using static Content.Shared.Kitchen.Components.SharedKitchenSpikeComponent;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
-    internal class KitchenSpikeSystem : EntitySystem
+    internal sealed class KitchenSpikeSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -81,7 +81,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (args.Handled)
                 return;
-            
+
             if (TryGetPiece(uid, args.User, args.Used))
                 args.Handled = true;
         }
@@ -92,7 +92,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable))
                 return;
 
-            component.MeatPrototype = butcherable.MeatPrototype;
+            component.MeatPrototype = butcherable.SpawnedPrototype;
             component.MeatParts = butcherable.Pieces;
 
             // This feels not okay, but entity is getting deleted on "Spike", for now...
@@ -148,7 +148,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (!Resolve(uid, ref component, ref appearance, false))
                 return;
-            
+
             appearance.SetData(KitchenSpikeVisuals.Status, (component.MeatParts > 0) ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty);
         }
 
@@ -164,7 +164,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return false;
             }
 
-            if (!Resolve(victimUid, ref butcherable, false) || butcherable.MeatPrototype == null)
+            if (!Resolve(victimUid, ref butcherable, false) || butcherable.SpawnedPrototype == null)
             {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victimUid), ("this", uid)), victimUid, Filter.Entities(userUid));
                 return false;
@@ -178,6 +178,9 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (!Resolve(uid, ref component) || component.InUse ||
                 !Resolve(victimUid, ref butcherable) || butcherable.BeingButchered)
+                return false;
+
+            if (butcherable.Type != ButcheringType.Spike)
                 return false;
 
             // THE WHAT? (again)
@@ -201,7 +204,7 @@ namespace Content.Server.Kitchen.EntitySystems
             butcherable.BeingButchered = true;
             component.InUse = true;
 
-            var doAfterArgs = new DoAfterEventArgs(userUid, component.SpikeDelay, default, uid)
+            var doAfterArgs = new DoAfterEventArgs(userUid, component.SpikeDelay + butcherable.ButcherDelay, default, uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -217,7 +220,7 @@ namespace Content.Server.Kitchen.EntitySystems
             return true;
         }
 
-        private class SpikingFinishedEvent : EntityEventArgs
+        private sealed class SpikingFinishedEvent : EntityEventArgs
         {
             public EntityUid VictimUid;
             public EntityUid UserUid;
@@ -229,7 +232,7 @@ namespace Content.Server.Kitchen.EntitySystems
             }
         }
 
-        private class SpikingFailEvent : EntityEventArgs
+        private sealed class SpikingFailEvent : EntityEventArgs
         {
             public EntityUid VictimUid;
 

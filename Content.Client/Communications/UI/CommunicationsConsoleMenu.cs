@@ -10,7 +10,7 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Communications.UI
 {
-    public class CommunicationsConsoleMenu : DefaultWindow
+    public sealed class CommunicationsConsoleMenu : DefaultWindow
     {
         private CommunicationsConsoleBoundUserInterface Owner { get; set; }
         private readonly CancellationTokenSource _timerCancelTokenSource = new();

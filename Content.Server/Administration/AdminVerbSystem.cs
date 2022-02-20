@@ -14,6 +14,8 @@ using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
+using Content.Server.Xenoarchaeology.XenoArtifacts;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Database;
@@ -38,7 +40,7 @@ namespace Content.Server.Administration
     /// <summary>
     ///     System to provide various global admin/debug verbs
     /// </summary>
-    public class AdminVerbSystem : EntitySystem
+    public sealed class AdminVerbSystem : EntitySystem
     {
         [Dependency] private readonly IConGroupController _groupController = default!;
         [Dependency] private readonly IConsoleHost _console = default!;
@@ -47,6 +49,7 @@ namespace Content.Server.Administration
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
+        [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
 
         private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
 
@@ -78,7 +81,7 @@ namespace Content.Server.Administration
                         _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");
                     verb.Impact = LogImpact.Low;
                     args.Verbs.Add(verb);
-                    
+
                     // Freeze
                     var frozen = HasComp<AdminFrozenComponent>(args.Target);
                     args.Verbs.Add(new Verb
@@ -97,6 +100,29 @@ namespace Content.Server.Administration
                                 EnsureComp<AdminFrozenComponent>(args.Target);
                         },
                         Impact = LogImpact.Medium,
+                    });
+                }
+
+                // XenoArcheology
+                if (TryComp<ArtifactComponent>(args.Target, out var artifact))
+                {
+                    // make artifact always active (by adding timer trigger)
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("artifact-verb-make-always-active"),
+                        Category = VerbCategory.Admin,
+                        Act = () => EntityManager.AddComponent<ArtifactTimerTriggerComponent>(args.Target),
+                        Disabled = EntityManager.HasComponent<ArtifactTimerTriggerComponent>(args.Target),
+                        Impact = LogImpact.High
+                    });
+
+                    // force to activate artifact ignoring timeout
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("artifact-verb-activate"),
+                        Category = VerbCategory.Admin,
+                        Act = () => _artifactSystem.ForceActivateArtifact(args.Target, component: artifact),
+                        Impact = LogImpact.High
                     });
                 }
 

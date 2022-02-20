@@ -7,6 +7,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.VendingMachines
 {
+    [Virtual]
     [NetworkedComponent()]
     public class SharedVendingMachineComponent : Component
     {
@@ -30,7 +31,7 @@ namespace Content.Shared.VendingMachines
         }
 
         [Serializable, NetSerializable]
-        public class VendingMachineEjectMessage : BoundUserInterfaceMessage
+        public sealed class VendingMachineEjectMessage : BoundUserInterfaceMessage
         {
             public readonly string ID;
             public VendingMachineEjectMessage(string id)
@@ -46,12 +47,12 @@ namespace Content.Shared.VendingMachines
         }
 
         [Serializable, NetSerializable]
-        public class InventorySyncRequestMessage : BoundUserInterfaceMessage
+        public sealed class InventorySyncRequestMessage : BoundUserInterfaceMessage
         {
         }
 
         [Serializable, NetSerializable]
-        public class VendingMachineInventoryMessage : BoundUserInterfaceMessage
+        public sealed class VendingMachineInventoryMessage : BoundUserInterfaceMessage
         {
             public readonly List<VendingMachineInventoryEntry> Inventory;
             public VendingMachineInventoryMessage(List<VendingMachineInventoryEntry> inventory)
@@ -61,7 +62,7 @@ namespace Content.Shared.VendingMachines
         }
 
         [Serializable, NetSerializable]
-        public class VendingMachineInventoryEntry
+        public sealed class VendingMachineInventoryEntry
         {
             [ViewVariables(VVAccess.ReadWrite)]
             public string ID;

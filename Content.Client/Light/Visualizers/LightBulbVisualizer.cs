@@ -8,7 +8,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Light.Visualizers
 {
     [UsedImplicitly]
-    public class LightBulbVisualizer : AppearanceVisualizer
+    public sealed class LightBulbVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

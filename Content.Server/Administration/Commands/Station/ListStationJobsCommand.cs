@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands.Station;
 
 [AdminCommand(AdminFlags.Admin)]
-public class ListStationJobsCommand : IConsoleCommand
+public sealed class ListStationJobsCommand : IConsoleCommand
 {
     public string Command => "lsstationjobs";
 

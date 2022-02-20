@@ -8,7 +8,7 @@ using Content.Server.GameTicking.Rules;
 namespace Content.Server.Objectives.Requirements
 {
     [DataDefinition]
-    public class MultipleTraitorsRequirement : IObjectiveRequirement
+    public sealed class MultipleTraitorsRequirement : IObjectiveRequirement
     {
         [DataField("traitors")]
         private readonly int _requiredTraitors = 2;

@@ -166,7 +166,7 @@ namespace Content.Client.Chat.UI
         }
     }
 
-    public class TextSpeechBubble : SpeechBubble
+    public sealed class TextSpeechBubble : SpeechBubble
 
     {
         public TextSpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager, string speechStyleClass)

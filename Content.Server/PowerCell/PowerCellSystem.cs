@@ -13,10 +13,11 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Kitchen.Components;
 
 namespace Content.Server.PowerCell;
 
-public class PowerCellSystem : SharedPowerCellSystem
+public sealed class PowerCellSystem : SharedPowerCellSystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
@@ -31,6 +32,26 @@ public class PowerCellSystem : SharedPowerCellSystem
         SubscribeLocalEvent<PowerCellComponent, SolutionChangedEvent>(OnSolutionChange);
 
         SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
+
+        // funny
+        SubscribeLocalEvent<PowerCellSlotComponent, BeingMicrowavedEvent>(OnSlotMicrowaved);
+        SubscribeLocalEvent<BatteryComponent, BeingMicrowavedEvent>(OnMicrowaved);
+    }
+
+    private void OnSlotMicrowaved(EntityUid uid, PowerCellSlotComponent component, BeingMicrowavedEvent args)
+    {
+        if (component.CellSlot.Item == null)
+            return;
+
+        RaiseLocalEvent(component.CellSlot.Item.Value, args, false);
+    }
+
+    private void OnMicrowaved(EntityUid uid, BatteryComponent component, BeingMicrowavedEvent args)
+    {
+        args.Handled = true;
+
+        // What the fuck are you doing???
+        Explode(uid, component);
     }
 
     private void OnChargeChanged(EntityUid uid, PowerCellComponent component, ChargeChangedEvent args)

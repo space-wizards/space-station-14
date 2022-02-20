@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Storage.EntitySystems
 {
     [UsedImplicitly]
-    public class ItemCounterSystem : SharedItemCounterSystem
+    public sealed class ItemCounterSystem : SharedItemCounterSystem
     {
         protected override int? GetCount(ContainerModifiedMessage msg, ItemCounterComponent itemCounter)
         {

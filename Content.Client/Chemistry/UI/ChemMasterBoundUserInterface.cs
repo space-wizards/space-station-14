@@ -11,7 +11,7 @@ namespace Content.Client.Chemistry.UI
     /// Initializes a <see cref="ChemMasterWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public class ChemMasterBoundUserInterface : BoundUserInterface
+    public sealed class ChemMasterBoundUserInterface : BoundUserInterface
     {
         private ChemMasterWindow? _window;
 
@@ -76,7 +76,7 @@ namespace Content.Client.Chemistry.UI
                 SendMessage(new UiActionMessage(action, button.Amount, button.Id, button.IsBuffer, null, null, null, null));
             }
             else
-            { 
+            {
                 SendMessage(new UiActionMessage(action, null, null, null, label, pillType, pillAmount, bottleAmount));
             }
         }

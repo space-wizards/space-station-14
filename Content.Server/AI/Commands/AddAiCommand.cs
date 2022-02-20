@@ -11,7 +11,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.AI.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddAiCommand : IConsoleCommand
+    public sealed class AddAiCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 

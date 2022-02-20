@@ -7,7 +7,7 @@ using SixLabors.ImageSharp.PixelFormats;
 namespace Content.Tests.Client
 {
     [TestFixture]
-    public class ClickMapTest
+    public sealed class ClickMapTest
     {
         [Test]
         public void TestBasic()

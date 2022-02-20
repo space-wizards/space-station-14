@@ -4,7 +4,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Inventory
 {
-    public class DropEntityOperator : AiOperator
+    public sealed class DropEntityOperator : AiOperator
     {
         private readonly EntityUid _owner;
         private readonly EntityUid _entity;

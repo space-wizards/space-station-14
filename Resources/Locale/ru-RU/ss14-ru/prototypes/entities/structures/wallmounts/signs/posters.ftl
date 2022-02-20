@@ -26,10 +26,10 @@ ent-PosterContrabandRIPBadger = RIP Badger
     .desc = This seditious poster references Nanotrasen's genocide of a space station full of badgers.
 ent-PosterContrabandAmbrosiaVulgaris = Ambrosia Vulgaris
     .desc = This poster is lookin' pretty trippy man.
-ent-PosterContrabandDonutCorp. = Donut Corp.
+ent-PosterContrabandDonutCorp = Donut Corp.
 
   .desc = This poster is an unauthorized advertisement for Donut Corp.
-ent-PosterContrabandEAT. = EAT.
+ent-PosterContrabandEAT = EAT.
 
   .desc = This poster promotes rank gluttony.
 ent-PosterContrabandTools = Tools

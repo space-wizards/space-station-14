@@ -71,3 +71,5 @@
     innateActions:
       - CombatMode
   - type: Guardian
+  - type: NameIdentifier
+    group: Holoparasite
