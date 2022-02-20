@@ -1,6 +1,6 @@
 using System;
 using Content.Server.Interaction;
-using Content.Server.Items;
+using Content.Shared.Item;
 using Content.Shared.MobState.Components;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
@@ -41,24 +41,18 @@ namespace Content.Server.Throwing
                 return;
             }
 
-            if (physicsComponent.BodyType == BodyType.Static)
+            if (physicsComponent.BodyType != BodyType.Dynamic)
             {
-                Logger.Warning("Tried to throw entity {entity} but can't throw static bodies!");
-                return;
-            }
-
-            if (entities.HasComponent<MobStateComponent>(entity))
-            {
-                Logger.Warning("Throwing not supported for mobs!");
+                Logger.Warning($"Tried to throw entity {entities.ToPrettyString(entity)} but can't throw {physicsComponent.BodyType} bodies!");
                 return;
             }
 
             var comp = entity.EnsureComponent<ThrownItemComponent>();
-            if (entities.HasComponent<ItemComponent>(entity))
+            if (entities.HasComponent<SharedItemComponent>(entity))
             {
                 comp.Thrower = user;
                 // Give it a l'il spin.
-                if (!entity.HasTag("NoSpinOnThrow"))
+                if (!EntitySystem.Get<TagSystem>().HasTag(entity, "NoSpinOnThrow"))
                 {
                     physicsComponent.ApplyAngularImpulse(ThrowAngularImpulse);
                 }

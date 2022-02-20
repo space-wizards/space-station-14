@@ -15,7 +15,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState.EntitySystems
 {
-    public class MobStateSystem : EntitySystem
+    public sealed class MobStateSystem : EntitySystem
     {
         public override void Initialize()
         {
@@ -26,10 +26,9 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, InteractionAttemptEvent>(OnInteractAttempt);
             SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(OnThrowAttempt);
             SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(OnSpeakAttempt);
-            SubscribeLocalEvent<MobStateComponent, EquipAttemptEvent>(OnEquipAttempt);
+            SubscribeLocalEvent<MobStateComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<MobStateComponent, EmoteAttemptEvent>(OnEmoteAttempt);
-            SubscribeLocalEvent<MobStateComponent, UnequipAttemptEvent>(OnUnequipAttempt);
-            SubscribeLocalEvent<MobStateComponent, AttackAttemptEvent>(OnAttackAttempt);
+            SubscribeLocalEvent<MobStateComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
             SubscribeLocalEvent<MobStateComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<MobStateComponent, PickupAttemptEvent>(OnPickupAttempt);
             SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(OnStartPullAttempt);
@@ -77,9 +76,11 @@ namespace Content.Shared.MobState.EntitySystems
             CheckAct(uid, component, args);
         }
 
-        private void OnEquipAttempt(EntityUid uid, MobStateComponent component, EquipAttemptEvent args)
+        private void OnEquipAttempt(EntityUid uid, MobStateComponent component, IsEquippingAttemptEvent args)
         {
-            CheckAct(uid, component, args);
+            // is this a self-equip, or are they being stripped?
+            if (args.Equipee == uid)
+                CheckAct(uid, component, args);
         }
 
         private void OnEmoteAttempt(EntityUid uid, MobStateComponent component, EmoteAttemptEvent args)
@@ -87,14 +88,11 @@ namespace Content.Shared.MobState.EntitySystems
             CheckAct(uid, component, args);
         }
 
-        private void OnUnequipAttempt(EntityUid uid, MobStateComponent component, UnequipAttemptEvent args)
+        private void OnUnequipAttempt(EntityUid uid, MobStateComponent component, IsUnequippingAttemptEvent args)
         {
-            CheckAct(uid, component, args);
-        }
-
-        private void OnAttackAttempt(EntityUid uid, MobStateComponent component, AttackAttemptEvent args)
-        {
-            CheckAct(uid, component, args);
+            // is this a self-equip, or are they being stripped?
+            if (args.Unequipee == uid)
+                CheckAct(uid, component, args);
         }
 
         private void OnDropAttempt(EntityUid uid, MobStateComponent component, DropAttemptEvent args)
@@ -111,7 +109,7 @@ namespace Content.Shared.MobState.EntitySystems
 
         private void OnStartPullAttempt(EntityUid uid, MobStateComponent component, StartPullAttemptEvent args)
         {
-            if(component.IsIncapacitated())
+            if (component.IsIncapacitated())
                 args.Cancel();
         }
 
@@ -135,7 +133,7 @@ namespace Content.Shared.MobState.EntitySystems
 
         private void OnStandAttempt(EntityUid uid, MobStateComponent component, StandAttemptEvent args)
         {
-            if(component.IsIncapacitated())
+            if (component.IsIncapacitated())
                 args.Cancel();
         }
     }

@@ -7,6 +7,7 @@
   - type: Tag
     tags:
     - FireAxe
+  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
@@ -14,17 +15,20 @@
     damage:
       types:
         # axes are kinda like sharp hammers, you know?
-        Blunt: 7
-        Slash: 7
+        Blunt: 4
+        Slash: 10
   - type: Wieldable
   - type: IncreaseDamageOnWield
     modifiers:
       flatReductions:
-        Blunt: -5 # negative reductions = increases
-        Slash: -5
+        Blunt: -2 # negative reductions = increases
+        Slash: -8
   - type: Clothing
     size: 20
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     QuickEquip: false
     Slots:
     - back
+  - type: Tool
+    qualities:
+      - Prying

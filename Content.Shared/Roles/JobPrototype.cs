@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Shared.Access;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
@@ -12,7 +13,7 @@ namespace Content.Shared.Roles
     ///     Describes information for a single job on the station.
     /// </summary>
     [Prototype("job")]
-    public class JobPrototype : IPrototype
+    public sealed class JobPrototype : IPrototype
     {
         private string _name = string.Empty;
 
@@ -48,7 +49,7 @@ namespace Content.Shared.Roles
         [DataField("head")]
         public bool IsHead { get; private set; }
 
-        [DataField("startingGear")]
+        [DataField("startingGear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
         public string? StartingGear { get; private set; }
 
         [DataField("icon")] public string Icon { get; } = string.Empty;
@@ -61,5 +62,8 @@ namespace Content.Shared.Roles
 
         [DataField("access", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
         public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
+
+        [DataField("accessGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessGroupPrototype>))]
+        public IReadOnlyCollection<string> AccessGroups { get; } = Array.Empty<string>();
     }
 }

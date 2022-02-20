@@ -5,7 +5,7 @@
   completetime: 500
   materials:
      Steel: 50
-     Glass: 50
+     Plastic: 50
 
 - type: latheRecipe
   id: DoorElectronics
@@ -14,7 +14,7 @@
   completetime: 500
   materials:
      Steel: 50
-     Glass: 50
+     Plastic: 50
 
 - type: latheRecipe
   id: APCElectronics
@@ -23,7 +23,43 @@
   completetime: 500
   materials:
      Steel: 50
-     Glass: 50
+     Plastic: 50
+
+- type: latheRecipe
+  id: AirAlarmElectronics
+  icon: Objects/Misc/module.rsi/airalarm_electronics.png
+  result: AirAlarmElectronics
+  completetime: 500
+  materials:
+     Steel: 50
+     Plastic: 50
+
+- type: latheRecipe
+  id: FireAlarmElectronics
+  icon: Objects/Misc/module.rsi/door_electronics.png
+  result: FireAlarmElectronics
+  completetime: 500
+  materials:
+     Steel: 50
+     Plastic: 50
+
+- type: latheRecipe
+  id: SubstationMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SubstationMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 50
+     Glass: 450
+
+- type: latheRecipe
+  id: SMESMachineCircuitboard
+  icon: Objects/Misc/module.rsi/power_mod.png
+  result: SMESMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 900
 
 - type: latheRecipe
   id: CloningPodMachineCircuitboard
@@ -32,7 +68,18 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
+  id: ThermomachineFreezerMachineCircuitBoard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ThermomachineFreezerMachineCircuitBoard
+  completetime: 1000
+  materials:
+    Steel: 150
+    Glass: 900
+    Gold: 50
 
 - type: latheRecipe
   id: MedicalScannerMachineCircuitboard
@@ -41,7 +88,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Glass: 900
 
 - type: latheRecipe
   id: ChemMasterMachineCircuitboard
@@ -50,7 +97,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Glass: 900
 
 - type: latheRecipe
   id: ChemDispenserMachineCircuitboard
@@ -59,7 +106,8 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Glass: 900
+     Gold: 100
 
 - type: latheRecipe
   id: SolarControlComputerCircuitboard
@@ -68,7 +116,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Glass: 900
 
 - type: latheRecipe
   id: HydroponicsTrayMachineCircuitboard
@@ -77,7 +125,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Glass: 900
 
 - type: latheRecipe
   id: AutolatheMachineCircuitboard
@@ -86,7 +134,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Glass: 900
 
 - type: latheRecipe
   id: ProtolatheMachineCircuitboard
@@ -95,4 +143,59 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: CircuitImprinterMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: CircuitImprinterMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: UniformPrinterMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: UniformPrinterMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: ReagentGrinderMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ReagentGrinderMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: CrewMonitoringComputerCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: CrewMonitoringComputerCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: ShuttleConsoleCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ShuttleConsoleCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
+  id: DawInstrumentMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: DawInstrumentMachineCircuitboard
+  completetime: 1000
+  materials:
+    Steel: 100
+    Glass: 900

@@ -1,0 +1,14 @@
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingShoesBase
+  components:
+  - type: Clothing
+    Slots:
+    - FEET
+  - type: Sprite
+    state: icon
+  - type: Butcherable
+    butcheringType: Knife
+    spawned: MaterialCloth1
+    pieces: 1

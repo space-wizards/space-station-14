@@ -1,4 +1,4 @@
-﻿<SS14Window Title="Make Ghost Role"
+﻿<DefaultWindow Title="Make Ghost Role"
             xmlns="https://spacestation14.io">
 
     <BoxContainer Orientation="Vertical">
@@ -27,4 +27,4 @@
         </BoxContainer>
     </BoxContainer>
 
-</SS14Window>
+</DefaultWindow>

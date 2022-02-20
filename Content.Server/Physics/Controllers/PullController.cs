@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using Content.Shared.Pulling;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
 
 namespace Content.Server.Physics.Controllers
 {
-    public class PullController : VirtualController
+    public sealed class PullController : VirtualController
     {
         // Parameterization for pulling:
         // Speeds. Note that the speed is mass-independent (multiplied by mass).
@@ -33,15 +34,13 @@ namespace Content.Server.Physics.Controllers
         // Velocity change of -LinearVelocity * frameTime * this
         private const float SettleShutdownMultiplier = 20.0f;
 
-        private SharedPullingSystem _pullableSystem = default!;
-
-        public override List<Type> UpdatesAfter => new() {typeof(MoverController)};
+        [Dependency] private readonly SharedPullingSystem _pullableSystem = default!;
 
         public override void Initialize()
         {
-            base.Initialize();
+            UpdatesAfter.Add(typeof(MoverController));
 
-            _pullableSystem = EntitySystem.Get<SharedPullingSystem>();
+            base.Initialize();
         }
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -115,12 +114,6 @@ namespace Content.Server.Physics.Controllers
                 physics.WakeBody();
                 var impulse = accel * physics.Mass * frameTime;
                 physics.ApplyLinearImpulse(impulse);
-
-                if (EntityManager.TryGetComponent<PhysicsComponent?>(puller, out var pullerPhysics))
-                {
-                    pullerPhysics.WakeBody();
-                    pullerPhysics.ApplyLinearImpulse(-impulse);
-                }
             }
         }
     }

@@ -10,7 +10,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class SetMindCommand : IConsoleCommand
+    sealed class SetMindCommand : IConsoleCommand
     {
         public string Command => "setmind";
 

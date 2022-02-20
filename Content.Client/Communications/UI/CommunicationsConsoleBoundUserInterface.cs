@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Communications.UI
 {
-    public class CommunicationsConsoleBoundUserInterface : BoundUserInterface
+    public sealed class CommunicationsConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 

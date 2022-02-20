@@ -86,3 +86,14 @@
     sprite: Clothing/Neck/Cloaks/herald.rsi
   - type: Clothing
     sprite: Clothing/Neck/Cloaks/herald.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakNanotrasen
+  name: nanotrasen cloak
+  description: A stately blue cloak to represent NanoTrasen.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/nanotrasen.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Cloaks/nanotrasen.rsi

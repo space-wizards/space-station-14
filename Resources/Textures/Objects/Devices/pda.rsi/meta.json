@@ -21,12 +21,6 @@
       "name": "light_overlay"
     },
     {
-      "name": "pai_off_overlay"
-    },
-    {
-      "name": "pai_overlay"
-    },
-    {
       "name": "pda"
     },
     {
@@ -147,6 +141,9 @@
     },
     {
       "name": "pda-warden"
+    },
+    {
+      "name": "pda-musician"
     }
   ]
 }

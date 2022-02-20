@@ -13,7 +13,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.HealthOverlay.UI
 {
-    public class HealthOverlayGui : BoxContainer
+    public sealed class HealthOverlayGui : BoxContainer
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;

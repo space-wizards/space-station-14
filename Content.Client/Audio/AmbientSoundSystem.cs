@@ -19,7 +19,7 @@ namespace Content.Client.Audio
     /// </summary>
     public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     {
-        [Dependency] private IEntityLookup _lookup = default!;
+        [Dependency] private EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -42,6 +42,7 @@ namespace Content.Client.Audio
         public override void Initialize()
         {
             base.Initialize();
+            UpdatesOutsidePrediction = true;
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.AmbientCooldown, SetCooldown, true);
             configManager.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);

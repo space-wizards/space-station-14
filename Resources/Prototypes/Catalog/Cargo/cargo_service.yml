@@ -45,3 +45,27 @@
   cost: 1000
   category: Service
   group: market
+
+- type: cargoProduct
+  name: "bureaucracy crate"
+  id: ServiceBureaucracy
+  description: "Several stacks of paper and a few pens, what more can you ask for."
+  icon:
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen
+  product: CrateServiceBureaucracy
+  cost: 1000
+  category: Service
+  group: market
+  
+- type: cargoProduct
+  name: "personnel crate"
+  id: ServicePersonnel
+  description: "Contains a box of blank ID cards and PDAs"
+  icon:
+    sprite: Objects/Misc/id_cards.rsi
+    state: default
+  product: CrateServicePersonnel
+  cost: 1000
+  category: Service
+  group: market

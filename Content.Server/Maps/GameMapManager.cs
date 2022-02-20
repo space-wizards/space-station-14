@@ -14,14 +14,13 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Maps;
 
-public class GameMapManager : IGameMapManager
+public sealed class GameMapManager : IGameMapManager
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IMapLoader _mapLoader = default!;
 
     private GameMapPrototype _currentMap = default!;
     private bool _currentMapForced;
@@ -111,7 +110,9 @@ public class GameMapManager : IGameMapManager
 
     private bool IsMapEligible(GameMapPrototype map)
     {
-        return map.MaxPlayers >= _playerManager.PlayerCount && map.MinPlayers <= _playerManager.PlayerCount;
+        return map.MaxPlayers >= _playerManager.PlayerCount &&
+               map.MinPlayers <= _playerManager.PlayerCount &&
+               map.Conditions.All(x => x.Check(map));
     }
 
     private bool TryLookupMap(string gameMap, [NotNullWhen(true)] out GameMapPrototype? map)

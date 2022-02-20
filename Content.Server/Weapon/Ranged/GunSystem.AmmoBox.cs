@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Clothing.Components;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
@@ -19,21 +20,7 @@ public sealed partial class GunSystem
 {
     // Probably needs combining with magazines in future given the common functionality.
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<AmmoBoxComponent, ComponentInit>(OnAmmoBoxInit);
-        SubscribeLocalEvent<AmmoBoxComponent, MapInitEvent>(OnAmmoBoxMapInit);
-        SubscribeLocalEvent<AmmoBoxComponent, ExaminedEvent>(OnAmmoBoxExamine);
-
-        SubscribeLocalEvent<AmmoBoxComponent, InteractUsingEvent>(OnAmmoBoxInteractUsing);
-        SubscribeLocalEvent<AmmoBoxComponent, UseInHandEvent>(OnAmmoBoxUse);
-        SubscribeLocalEvent<AmmoBoxComponent, InteractHandEvent>(OnAmmoBoxInteractHand);
-        SubscribeLocalEvent<AmmoBoxComponent, GetAlternativeVerbsEvent>(OnAmmoBoxAltVerbs);
-    }
-
-    private void OnAmmoBoxAltVerbs(EntityUid uid, AmmoBoxComponent component, GetAlternativeVerbsEvent args)
+    private void OnAmmoBoxAltVerbs(EntityUid uid, AmmoBoxComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (args.Hands == null || !args.CanAccess || !args.CanInteract)
             return;
@@ -41,7 +28,7 @@ public sealed partial class GunSystem
         if (component.AmmoLeft == 0)
             return;
 
-        Verb verb = new()
+        AlternativeVerb verb = new()
         {
             Text = Loc.GetString("dump-vert-get-data-text"),
             IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",
@@ -68,7 +55,7 @@ public sealed partial class GunSystem
     {
         if (args.Handled) return;
 
-        if (EntityManager.TryGetComponent(args.Used, out AmmoComponent? ammoComponent))
+        if (TryComp(args.Used, out AmmoComponent? ammoComponent))
         {
             if (TryInsertAmmo(args.User, args.Used, component, ammoComponent))
             {
@@ -78,18 +65,18 @@ public sealed partial class GunSystem
             return;
         }
 
-        if (!EntityManager.TryGetComponent(args.Used, out RangedMagazineComponent? rangedMagazine)) return;
+        if (!TryComp(args.Used, out RangedMagazineComponent? rangedMagazine)) return;
 
         for (var i = 0; i < Math.Max(10, rangedMagazine.ShotsLeft); i++)
         {
-            if (rangedMagazine.TakeAmmo() is not {Valid: true} ammo)
+            if (TakeAmmo(rangedMagazine) is not {Valid: true} ammo)
             {
                 continue;
             }
 
             if (!TryInsertAmmo(args.User, ammo, component))
             {
-                rangedMagazine.TryInsertAmmo(args.User, ammo);
+                TryInsertAmmo(args.User, ammo, rangedMagazine);
                 args.Handled = true;
                 return;
             }
@@ -149,13 +136,13 @@ public sealed partial class GunSystem
             ejectAmmo.Add(ammo);
         }
 
-        ServerRangedBarrelComponent.EjectCasings(ejectAmmo);
+        EjectCasings(ejectAmmo);
         UpdateAmmoBoxAppearance(ammoBox.Owner, ammoBox);
     }
 
     private bool TryUse(EntityUid user, AmmoBoxComponent ammoBox)
     {
-        if (!EntityManager.TryGetComponent(user, out HandsComponent? handsComponent))
+        if (!TryComp(user, out HandsComponent? handsComponent))
         {
             return false;
         }
@@ -165,7 +152,7 @@ public sealed partial class GunSystem
             return false;
         }
 
-        if (EntityManager.TryGetComponent(ammo, out ItemComponent? item))
+        if (TryComp(ammo, out ItemComponent? item))
         {
             if (!handsComponent.CanPutInHand(item))
             {

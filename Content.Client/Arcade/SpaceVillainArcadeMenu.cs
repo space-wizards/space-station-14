@@ -7,7 +7,7 @@ using Vector2 = Robust.Shared.Maths.Vector2;
 
 namespace Content.Client.Arcade
 {
-    public class SpaceVillainArcadeMenu : SS14Window
+    public sealed class SpaceVillainArcadeMenu : DefaultWindow
     {
         public SpaceVillainArcadeBoundUserInterface Owner { get; set; }
 
@@ -92,7 +92,7 @@ namespace Content.Client.Arcade
             _enemyActionLabel.Text = message.EnemyActionMessage;
         }
 
-        private class ActionButton : Button
+        private sealed class ActionButton : Button
         {
             private readonly SpaceVillainArcadeBoundUserInterface _owner;
             private readonly SharedSpaceVillainArcadeComponent.PlayerAction _playerAction;

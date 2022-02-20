@@ -19,7 +19,7 @@ namespace Content.Client.DragDrop
     /// If for any reason the drag is ended, OnEndDrag is invoked.
     /// </summary>
     /// <typeparam name="T">thing being dragged and dropped</typeparam>
-    public class DragDropHelper<T>
+    public sealed class DragDropHelper<T>
     {
         private const float DefaultDragDeadzone = 2f;
 

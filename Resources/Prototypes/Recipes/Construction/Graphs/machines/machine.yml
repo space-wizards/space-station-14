@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: machine
+  id: Machine
   start: start
   graph:
     - node: start
@@ -12,6 +12,11 @@
           completed:
             - !type:SetAnchor
               value: false
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 2.5
+        - to: destroyedMachineFrame
           steps:
             - material: Steel
               amount: 5
@@ -98,3 +103,15 @@
             - tool: Prying
               doAfter: 0.25
 
+    - node: destroyedMachineFrame
+      entity: MachineFrameDestroyed
+      edges:
+        - to: start
+          steps:
+            - tool: Welding
+              doAfter: 5            
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 3
+            - !type:DeleteEntity {}

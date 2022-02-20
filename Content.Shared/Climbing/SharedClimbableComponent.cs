@@ -11,8 +11,6 @@ namespace Content.Shared.Climbing
 
     public abstract class SharedClimbableComponent : Component, IClimbable, IDragDropOn
     {
-        public sealed override string Name => "Climbable";
-
         /// <summary>
         ///     The range from which this entity can be climbed.
         /// </summary>

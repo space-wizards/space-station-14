@@ -2,48 +2,48 @@
 
 - type: construction
   name: steel tile
-  id: tileSteel
-  graph: tileSteel
+  id: TileSteel
+  graph: TileSteel
   startNode: start
   targetNode: steeltile
   category: Tiles
-  description: "A steel station tile."
+  description: "Four steel station tiles."
   icon: Objects/Tiles/tile.rsi/steel.png
   objectType: Item
 
 - type: construction
   name: wood floor
-  id: tileWood
-  graph: tileWood
+  id: TileWood
+  graph: TileWood
   startNode: start
   targetNode: woodtile
   category: Tiles
-  description: "A piece of wooden station flooring."
+  description: "Four pieces of wooden station flooring."
   icon: Objects/Tiles/tile.rsi/wood.png
   objectType: Item
 
-# - type: construction
-#   name: white tile
-#   id: tileWhite
-#   graph: tileWhite
-#   startNode: start
-#   targetNode: whitetile
-#   category: Tiles
-#   description: "A white station tile."
-#   icon: Objects/Tiles/tile.rsi/white.png
-#   objectType: Item
-#
-# - type: construction
-#   name: dark tile
-#   id: tileDark
-#   graph: tile
-#   startNode: start
-#   targetNode: darktile
-#   category: Tiles
-#   description: "A dark station tile."
-#   icon: Objects/Tiles/tile.rsi/dark.png
-#   objectType: Item
-#
+- type: construction
+  name: white tile
+  id: TileWhite
+  graph: TileWhite
+  startNode: start
+  targetNode: whitetile
+  category: Tiles
+  description: "Four white station tiles."
+  icon: Objects/Tiles/tile.rsi/white.png
+  objectType: Item
+
+- type: construction
+  name: dark tile
+  id: TileDark
+  graph: TileDark
+  startNode: start
+  targetNode: darktile
+  category: Tiles
+  description: "Four dark station tiles."
+  icon: Objects/Tiles/tile.rsi/dark.png
+  objectType: Item
+
 # - type: construction
 #   name: techmaint floor
 #   id: tileTechmaint

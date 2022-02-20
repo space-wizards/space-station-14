@@ -13,9 +13,6 @@ namespace Content.Shared.Stacks
     [NetworkedComponent, Friend(typeof(SharedStackSystem))]
     public abstract class SharedStackComponent : Component, ISerializationHooks
     {
-        public sealed override string Name => "Stack";
-
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
         public string StackTypeId { get; private set; } = string.Empty;

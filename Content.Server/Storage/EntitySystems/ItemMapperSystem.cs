@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Storage.EntitySystems
 {
     [UsedImplicitly]
-    public class ItemMapperSystem : SharedItemMapperSystem
+    public sealed class ItemMapperSystem : SharedItemMapperSystem
     {
         protected override bool TryGetLayers(ContainerModifiedMessage msg,
             ItemMapperComponent itemMapper,

@@ -11,10 +11,8 @@ namespace Content.Server.Kudzu;
 /// Currently does not support growing in space.
 /// </summary>
 [RegisterComponent, Friend(typeof(SpreaderSystem))]
-public class SpreaderComponent : Component
+public sealed class SpreaderComponent : Component
 {
-    public override string Name => "Spreader";
-
     /// <summary>
     /// Chance for it to grow on any given tick, after the normal growth rate-limit (if it doesn't grow, SpreaderSystem will pick another one.).
     /// </summary>

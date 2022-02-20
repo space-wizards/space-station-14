@@ -1,4 +1,6 @@
 ﻿using System;
+using Content.Shared.Item;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Players;
@@ -11,7 +13,6 @@ namespace Content.Shared.Hands.Components
     public sealed class HandVirtualItemComponent : Component
     {
         private EntityUid _blockingEntity;
-        public override string Name => "HandVirtualItem";
 
         /// <summary>
         ///     The entity blocking this hand.
@@ -37,6 +38,10 @@ namespace Content.Shared.Hands.Components
                 return;
 
             _blockingEntity = pullState.BlockingEntity;
+
+            // update hands GUI with new entity.
+            if (Owner.TryGetContainer(out var containter))
+                EntitySystem.Get<SharedItemSystem>().VisualsChanged(Owner);
         }
 
         [Serializable, NetSerializable]

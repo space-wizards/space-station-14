@@ -4,6 +4,7 @@ using Content.Client.Stylesheets;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -15,8 +16,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Popups
 {
-    public class PopupSystem : SharedPopupSystem
+    public sealed class PopupSystem : SharedPopupSystem
     {
+        [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
@@ -34,7 +36,7 @@ namespace Content.Client.Popups
 
         public void PopupCursor(string message)
         {
-            PopupMessage(message, _userInterfaceManager.MousePositionScaled);
+            PopupMessage(message, _inputManager.MouseScreenPosition);
         }
 
         public void PopupCoordinates(string message, EntityCoordinates coordinates)
@@ -51,7 +53,7 @@ namespace Content.Client.Popups
             PopupMessage(message, _eyeManager.CoordinatesToScreen(transform.Coordinates));
         }
 
-        public void PopupMessage(string message, ScreenCoordinates coordinates, EntityUid entity = default)
+        public void PopupMessage(string message, ScreenCoordinates coordinates, EntityUid? entity = null)
         {
             var label = new PopupLabel(_eyeManager, EntityManager)
             {
@@ -62,9 +64,8 @@ namespace Content.Client.Popups
 
             _userInterfaceManager.PopupRoot.AddChild(label);
             label.Measure(Vector2.Infinity);
-            var minimumSize = label.DesiredSize;
 
-            label.InitialPos = coordinates.Position / label.UIScale - minimumSize / 2;
+            label.InitialPos = coordinates.Position / label.UIScale - label.DesiredSize / 2;
             LayoutContainer.SetPosition(label, label.InitialPos);
             _aliveLabels.Add(label);
         }
@@ -139,14 +140,14 @@ namespace Content.Client.Popups
             _aliveLabels.RemoveAll(l => l.Disposed);
         }
 
-        private class PopupLabel : Label
+        private sealed class PopupLabel : Label
         {
             private readonly IEyeManager _eyeManager;
             private readonly IEntityManager _entityManager;
 
             public float TimeLeft { get; private set; }
             public Vector2 InitialPos { get; set; }
-            public EntityUid Entity { get; set; }
+            public EntityUid? Entity { get; set; }
 
             public PopupLabel(IEyeManager eyeManager, IEntityManager entityManager)
             {
@@ -161,9 +162,9 @@ namespace Content.Client.Popups
             {
                 TimeLeft += eventArgs.DeltaSeconds;
 
-                var position = Entity == default
+                var position = Entity == null
                     ? InitialPos
-                    : (_eyeManager.CoordinatesToScreen(_entityManager.GetComponent<TransformComponent>(Entity).Coordinates).Position / UIScale) - DesiredSize / 2;
+                    : (_eyeManager.CoordinatesToScreen(_entityManager.GetComponent<TransformComponent>(Entity.Value).Coordinates).Position / UIScale) - DesiredSize / 2;
 
                 LayoutContainer.SetPosition(this, position - (0, 20 * (TimeLeft * TimeLeft + TimeLeft)));
 

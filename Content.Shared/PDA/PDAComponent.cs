@@ -9,10 +9,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.PDA
 {
     [RegisterComponent]
-    public class PDAComponent : Component
+    public sealed class PDAComponent : Component
     {
-        public override string Name => "PDA";
-
         [DataField("idSlot")]
         public ItemSlot IdSlot = new();
 
@@ -22,7 +20,7 @@ namespace Content.Shared.PDA
         // Really this should just be using ItemSlot.StartingItem. However, seeing as we have so many different starting
         // PDA's and no nice way to inherit the other fields from the ItemSlot data definition, this makes the yaml much
         // nicer to read.
-        [DataField("idCard", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? IdCard;
 
         [ViewVariables] public IdCardComponent? ContainedID;

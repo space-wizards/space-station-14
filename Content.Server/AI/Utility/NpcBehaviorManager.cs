@@ -28,7 +28,6 @@ namespace Content.Server.AI.Utility
     internal sealed class NpcBehaviorManager : INpcBehaviorManager
     {
         [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private readonly NpcActionComparer _comparer = new();
 
@@ -159,7 +158,7 @@ namespace Content.Server.AI.Utility
             npc.AvailableActions.Sort(_comparer);
         }
 
-        private class NpcActionComparer : Comparer<IAiUtility>
+        private sealed class NpcActionComparer : Comparer<IAiUtility>
         {
             public override int Compare(IAiUtility? x, IAiUtility? y)
             {

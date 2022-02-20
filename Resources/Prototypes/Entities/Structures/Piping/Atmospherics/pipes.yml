@@ -41,6 +41,7 @@
     damageContainer: Inorganic
     damageModifierSet: Metallic
   - type: SubFloorHide
+  - type: PipeAppearance
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
@@ -58,9 +59,7 @@
     netsync: false
   - type: Appearance
     visuals:
-    - type: PipeConnectorVisualizer
     - type: PipeColorVisualizer
-    - type: TrayScannerSubFloorVisualizer
   - type: NodeContainer
   - type: AtmosUnsafeUnanchor
   - type: AtmosPipeColor
@@ -85,6 +84,9 @@
     layers:
       - state: pipeHalf
         map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+  - type: Construction
+    graph: GasPipe
+    node: half
 
 - type: entity
   parent: GasPipeBase
@@ -101,6 +103,9 @@
     layers:
       - state: pipeStraight
         map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+  - type: Construction
+    graph: GasPipe
+    node: straight
 
 - type: entity
   parent: GasPipeBase
@@ -117,6 +122,9 @@
     layers:
       - state: pipeBend
         map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+  - type: Construction
+    graph: GasPipe
+    node: bend
 
 - type: entity
   parent: GasPipeBase
@@ -133,6 +141,9 @@
     layers:
       - state: pipeTJunction
         map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+  - type: Construction
+    graph: GasPipe
+    node: tjunction
 
 - type: entity
   parent: GasPipeBase
@@ -151,3 +162,6 @@
     layers:
       - state: pipeFourway
         map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+  - type: Construction
+    graph: GasPipe
+    node: fourway

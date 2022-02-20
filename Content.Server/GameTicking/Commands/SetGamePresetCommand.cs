@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    class SetGamePresetCommand : IConsoleCommand
+    sealed class SetGamePresetCommand : IConsoleCommand
     {
         public string Command => "setgamepreset";
         public string Description => "";
@@ -23,7 +23,7 @@ namespace Content.Server.GameTicking.Commands
 
             var ticker = EntitySystem.Get<GameTicker>();
 
-            ticker.SetStartPreset(args[0]);
+            ticker.SetGamePreset(args[0]);
         }
     }
 }

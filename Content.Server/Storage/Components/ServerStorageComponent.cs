@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
-using Content.Server.Items;
 using Content.Shared.Acts;
+using Content.Shared.Coordinates;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
@@ -42,7 +42,8 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
+    [ComponentReference(typeof(SharedStorageComponent))]
+    public sealed class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -121,6 +122,7 @@ namespace Content.Server.Storage.Components
         private void RecalculateStorageUsed()
         {
             _storageUsed = 0;
+            _sizeCache.Clear();
 
             if (Storage == null)
             {
@@ -131,6 +133,7 @@ namespace Content.Server.Storage.Components
             {
                 var item = _entityManager.GetComponent<SharedItemComponent>(entity);
                 _storageUsed += item.Size;
+                _sizeCache.Add(entity, item.Size);
             }
         }
 
@@ -219,7 +222,7 @@ namespace Content.Server.Storage.Components
 
             if (!_sizeCache.TryGetValue(message.Entity, out var size))
             {
-                Logger.WarningS(LoggerName, $"Removed entity {message.Entity} without a cached size from storage {Owner} at {_entityManager.GetComponent<TransformComponent>(Owner).MapPosition}");
+                Logger.WarningS(LoggerName, $"Removed entity {_entityManager.ToPrettyString(message.Entity)} without a cached size from storage {_entityManager.ToPrettyString(Owner)} at {_entityManager.GetComponent<TransformComponent>(Owner).MapPosition}");
 
                 RecalculateStorageUsed();
                 return;
@@ -240,12 +243,12 @@ namespace Content.Server.Storage.Components
             EnsureInitialCalculated();
 
             if (!_entityManager.TryGetComponent(player, out HandsComponent? hands) ||
-                hands.GetActiveHand == null)
+                hands.GetActiveHandItem == null)
             {
                 return false;
             }
 
-            var toInsert = hands.GetActiveHand;
+            var toInsert = hands.GetActiveHandItem;
 
             if (!hands.Drop(toInsert.Owner))
             {
@@ -434,6 +437,7 @@ namespace Content.Server.Storage.Components
             Storage = Owner.EnsureContainer<Container>("storagebase");
             Storage.OccludesLight = _occludesLight;
             UpdateStorageVisualization();
+            EnsureInitialCalculated();
         }
 
         [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
@@ -471,7 +475,7 @@ namespace Content.Server.Storage.Components
                         break;
                     }
 
-                    if (!_entityManager.TryGetComponent(remove.EntityUid, out ItemComponent? item) || !_entityManager.TryGetComponent(player, out HandsComponent? hands))
+                    if (!_entityManager.TryGetComponent(remove.EntityUid, out SharedItemComponent? item) || !_entityManager.TryGetComponent(player, out HandsComponent? hands))
                     {
                         break;
                     }
@@ -494,7 +498,7 @@ namespace Content.Server.Storage.Components
                         break;
                     }
 
-                    if (!player.InRangeUnobstructed(Owner, popup: true))
+                    if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player, Owner, popup: true))
                     {
                         break;
                     }
@@ -540,18 +544,10 @@ namespace Content.Server.Storage.Components
         /// </summary>
         /// <param name="eventArgs"></param>
         /// <returns></returns>
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             EnsureInitialCalculated();
             OpenStorageUI(eventArgs.User);
-            return false;
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-#pragma warning disable 618
-            ((IUse) this).UseEntity(new UseEntityEventArgs(eventArgs.User));
-#pragma warning restore 618
         }
 
         /// <summary>
@@ -562,14 +558,14 @@ namespace Content.Server.Storage.Components
         /// <returns></returns>
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return false;
+            if (!eventArgs.CanReach) return false;
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
             if (_areaInsert && (eventArgs.Target == null || !_entityManager.HasComponent<SharedItemComponent>(eventArgs.Target.Value)))
             {
                 var validStorables = new List<EntityUid>();
-                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius, LookupFlags.None))
+                foreach (var entity in EntitySystem.Get<EntityLookupSystem>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius, LookupFlags.None))
                 {
                     if (entity.IsInContainer()
                         || entity == eventArgs.User

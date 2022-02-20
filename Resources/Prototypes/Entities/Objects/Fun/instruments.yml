@@ -4,10 +4,13 @@
   id: BaseHandheldInstrument
   description: That's an instrument.
   components:
+  - type: Sprite
+    netsync: false
   - type: Instrument
   - type: ActivatableUI
     inHandsOnly: true
     singleUser: true
+    verbText: verb-instrument-openui
     key: enum.InstrumentUiKey.Key
   - type: UserInterface
     interfaces:
@@ -29,19 +32,29 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+  - type: Tag
+    tags:
+    - KeyedInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
   id: AcousticGuitarInstrument
   name: acoustic guitar
+  description: Anyway, here's Wonderwall.
   components:
   - type: Instrument
     program: 25
   - type: Sprite
     sprite: Objects/Fun/Instruments/guitar.rsi
     state: icon
-  - type: Item
+  - type: Tag
+    tags:
+    - StringInstrument
+  - type: Clothing
     size: 24
+    QuickEquip: false
+    Slots:
+    - back
     sprite: Objects/Fun/Instruments/guitar.rsi
 
 - type: entity
@@ -57,6 +70,9 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/violin.rsi
+  - type: Tag
+    tags:
+    - StringInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -71,6 +87,9 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/trumpet.rsi
+  - type: Tag
+    tags:
+    - BrassInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -86,6 +105,9 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/gunpet.rsi
+  - type: Tag
+    tags:
+    - BrassInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -100,6 +122,9 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/eguitar.rsi
+  - type: Tag
+    tags:
+    - StringInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -114,6 +139,9 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/accordion.rsi
+  - type: Tag
+    tags:
+    - KeyedInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -128,6 +156,9 @@
   - type: Item
     size: 10
     sprite: Objects/Fun/Instruments/harmonica.rsi
+  - type: Tag
+    tags:
+    - WoodwindInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -142,6 +173,9 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/recorder.rsi
+  - type: Tag
+    tags:
+    - WoodwindInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -156,6 +190,9 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/trombone.rsi
+  - type: Tag
+    tags:
+    - BrassInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -171,6 +208,9 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/saxophone.rsi
+  - type: Tag
+    tags:
+    - WoodwindInstrument
   - type: Extractable
     grindableSolutionName: sax
   - type: SolutionContainerManager
@@ -179,7 +219,6 @@
         reagents:
           - ReagentId: Saxoite
             Quantity: 10
-
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -194,6 +233,9 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/glockenspiel.rsi
+  - type: Tag
+    tags:
+    - PercussionInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -208,6 +250,9 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/banjo.rsi
+  - type: Tag
+    tags:
+    - StringInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -221,6 +266,9 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/bike_horn.rsi
     state: icon
+  - type: Tag
+    tags:
+    - BrassInstrument #Go figure.
   - type: Clothing
     size: 24
     sprite: Objects/Fun/Instruments/bike_horn.rsi
@@ -236,6 +284,7 @@
   - type: Instrument
     allowPercussion: true
     allowProgramChange: true
+    respectMidiLimits: false
   - type: Sprite
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: icon
@@ -254,3 +303,22 @@
   - type: Sprite
     sprite: Structures/Furniture/instruments.rsi
     state: xylophone
+  - type: Tag
+    tags:
+    - PercussionInstrument
+
+- type: entity
+  parent: BaseHandheldInstrument
+  id: PhoneInstrument
+  name: red phone
+  description: Should anything ever go wrong...
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/otherinstruments.rsi
+    state: red_phone
+  - type: EmitSoundOnLand
+    sound:
+       path: /Audio/Items/ring.ogg
+  - type: Instrument
+    program: 124
+

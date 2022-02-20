@@ -8,22 +8,25 @@ using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Cloning;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
+using Content.Shared.Species;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cloning.Components
 {
     [RegisterComponent]
-    public class CloningPodComponent : SharedCloningPodComponent
+    public sealed class CloningPodComponent : SharedCloningPodComponent
     {
         [Dependency] private readonly IPlayerManager _playerManager = null!;
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
 
         [Dependency] private readonly EuiManager _euiManager = null!;
 
@@ -138,7 +141,8 @@ namespace Content.Server.Cloning.Components
                         return; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
                     }
 
-                    var mob = _entities.SpawnEntity("MobHuman", _entities.GetComponent<TransformComponent>(Owner).MapPosition);
+                    var speciesProto = _prototype.Index<SpeciesPrototype>(dna.Profile.Species).Prototype;
+                    var mob = _entities.SpawnEntity(speciesProto, _entities.GetComponent<TransformComponent>(Owner).MapPosition);
 
 
                     EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, dna.Profile);

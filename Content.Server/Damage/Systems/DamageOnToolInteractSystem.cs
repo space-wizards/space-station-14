@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Damage.Systems
 {
-    public class DamageOnToolInteractSystem : EntitySystem
+    public sealed class DamageOnToolInteractSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
@@ -29,7 +29,8 @@ namespace Content.Server.Damage.Systems
 
             if (component.WeldingDamage is {} weldingDamage
                 && EntityManager.TryGetComponent<WelderComponent?>(args.Used, out var welder)
-                && welder.Lit)
+                && welder.Lit
+                && !welder.TankSafe)
             {
                 var dmg = _damageableSystem.TryChangeDamage(args.Target, weldingDamage);
 

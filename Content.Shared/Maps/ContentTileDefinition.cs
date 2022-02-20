@@ -4,7 +4,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using Content.Shared.Atmos;
 
@@ -14,9 +13,6 @@ namespace Content.Shared.Maps
     [Prototype("tile")]
     public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
-        [ViewVariables]
-        string IPrototype.ID => Name;
-
         [DataField("parent", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
         public string? Parent { get; private set; }
 
@@ -26,11 +22,11 @@ namespace Content.Shared.Maps
 
         public string Path => "/Textures/Tiles/";
 
-        [DataField("name", required: true)] public string Name { get; } = string.Empty;
+        [DataField("id", required: true)] public string ID { get; } = string.Empty;
 
         public ushort TileId { get; private set; }
 
-        [DataField("display_name")] public string DisplayName { get; } = string.Empty;
+        [DataField("name")] public string Name { get; } = string.Empty;
 
         [DataField("texture")] public string SpriteName { get; } = string.Empty;
 
@@ -43,6 +39,13 @@ namespace Content.Shared.Maps
         [DataField("footstep_sounds")] public SoundSpecifier? FootstepSounds { get; }
 
         [DataField("friction")] public float Friction { get; set; }
+
+        [DataField("variants")] public byte Variants { get; set; } = 1;
+
+        /// <summary>
+        /// This controls what variants the `variantize` command is allowed to use.
+        /// </summary>
+        [DataField("placementVariants")] public byte[] PlacementVariants { get; set; } = new byte[1] { 0 };
 
         [DataField("thermalConductivity")] public float ThermalConductivity { get; set; } = 0.05f;
 

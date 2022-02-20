@@ -5,6 +5,7 @@
   completetime: 500
   materials:
     Steel: 200
+    Plastic: 50
 
 - type: latheRecipe
   id: Screwdriver
@@ -15,6 +16,7 @@
   completetime: 500
   materials:
     Steel: 200
+    Plastic: 50
 
 - type: latheRecipe
   id: Welder
@@ -132,3 +134,12 @@
   materials:
     Steel: 500
     Plastic: 250
+
+- type: latheRecipe
+  id: HandheldGPSBasic
+  icon: Objects/Devices/gps.rsi/icon.png
+  result: HandheldGPSBasic
+  completetime: 2000
+  materials:
+    Steel: 800
+    Glass: 300

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
@@ -11,6 +12,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Voting.Managers
@@ -56,8 +58,8 @@ namespace Content.Server.Voting.Managers
                     (Loc.GetString("ui-vote-restart-no"), false)
                 },
                 Duration = alone
-                    ? TimeSpan.FromSeconds(10)
-                    : TimeSpan.FromSeconds(30),
+                    ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
+                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerRestart)),
                 InitiatorTimeout = TimeSpan.FromMinutes(3)
             };
 
@@ -105,21 +107,23 @@ namespace Content.Server.Voting.Managers
 
         private void CreatePresetVote(IPlayerSession? initiator)
         {
-            var presets = new Dictionary<string, string>
+            var presets = new Dictionary<string, string>();
+
+            foreach (var preset in _prototypeManager.EnumeratePrototypes<GamePresetPrototype>())
             {
-                ["traitor"] = "mode-traitor",
-                ["extended"] = "mode-extended",
-                ["sandbox"] = "mode-sandbox",
-                ["suspicion"] = "mode-suspicion",
-            };
+                if(!preset.ShowInVote)
+                    continue;
+
+                presets[preset.ID] = preset.ModeTitle;
+            }
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
             {
                 Title = Loc.GetString("ui-vote-gamemode-title"),
                 Duration = alone
-                    ? TimeSpan.FromSeconds(10)
-                    : TimeSpan.FromSeconds(30)
+                    ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
+                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerPreset))
             };
 
             if (alone)
@@ -150,7 +154,7 @@ namespace Content.Server.Voting.Managers
                         Loc.GetString("ui-vote-gamemode-win", ("winner", Loc.GetString(presets[picked]))));
                 }
 
-                EntitySystem.Get<GameTicker>().SetStartPreset(picked);
+                EntitySystem.Get<GameTicker>().SetGamePreset(picked);
             };
         }
 
@@ -163,8 +167,8 @@ namespace Content.Server.Voting.Managers
             {
                 Title = Loc.GetString("ui-vote-map-title"),
                 Duration = alone
-                    ? TimeSpan.FromSeconds(10)
-                    : TimeSpan.FromSeconds(180)
+                    ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
+                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerMap))
             };
 
             if (alone)

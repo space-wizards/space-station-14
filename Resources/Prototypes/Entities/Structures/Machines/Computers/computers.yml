@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ComputerBase
   id: ComputerAlert
   name: alerts computer
@@ -9,6 +9,8 @@
     - type: ComputerVisualizer
       key: atmos_key
       screen: "alert-2"
+  - type: Computer
+    board: AlertsComputerCircuitboard
 
 - type: entity
   parent: ComputerBase
@@ -18,8 +20,6 @@
   abstract: true
   components:
   - type: ShuttleConsole
-  - type: ApcPowerReceiver
-    powerLoad: 200
   - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.5
@@ -39,6 +39,8 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: shuttle
+  - type: Computer
+    board: ShuttleConsoleCircuitboard
 
 - type: entity
   parent: ComputerShuttleBase
@@ -71,6 +73,8 @@
     radius: 1.5
     energy: 1.6
     color: "#c9c042"
+  - type: Computer
+    board: PowerComputerCircuitboard
 
 - type: entity
   parent: ComputerBase
@@ -87,6 +91,56 @@
     radius: 1.5
     energy: 1.6
     color: "#1f8c28"
+  - type: Computer
+    board: MedicalRecordsComputerCircuitboard
+    
+- type: entity
+  parent: ComputerBase
+  id: ComputerCriminalRecords
+  name: criminal records computer
+  description: This can be used to check criminal records.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: security_key
+      screen: security
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#1f8c28"
+  - type: Computer
+    board: CriminalRecordsComputerCircuitboard
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerCrewMonitoring
+  name: crew monitoring console
+  description: Used to monitor active health sensors built into most of the crew's uniforms.
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: med_key
+          screen: crew
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#006400"
+    - type: Computer
+      board: CrewMonitoringComputerCircuitboard
+    - type: ActivatableUI
+      key: enum.CrewMonitoringUIKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.CrewMonitoringUIKey.Key
+          type: CrewMonitoringBoundUserInterface
+    - type: CrewMonitoringConsole
+    - type: DeviceNetworkComponent
+      deviceNetId: Wireless
+    - type: WirelessNetworkConnection
+      range: 500
 
 - type: entity
   parent: ComputerBase
@@ -109,7 +163,7 @@
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
   - type: ApcPowerReceiver
-    powerLoad: 200
+    powerLoad: 1000
     priority: Low
   - type: ExtensionCableReceiver
   - type: Computer
@@ -181,6 +235,8 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: generic
+  - type: ApcPowerReceiver
+    powerLoad: 500
   - type: Computer
     board: BodyScannerComputerCircuitboard
   - type: PointLight
@@ -241,6 +297,32 @@
     color: "#e6e227"
 
 - type: entity
+  parent: ComputerBase
+  id: ComputerRadar
+  name: mass scanner computer
+  description: A computer for detecting nearby bodies, displaying them by position and mass.
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: generic_key
+          screen: solar_screen
+    - type: RadarConsole
+    - type: ActivatableUI
+      key: enum.RadarConsoleUiKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.RadarConsoleUiKey.Key
+          type: RadarConsoleBoundUserInterface
+    - type: Computer
+      board: RadarConsoleCircuitboard
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#e6e227"
+
+- type: entity
   id: ComputerSupplyOrdering
   parent: ComputerBase
   name: Cargo ordering computer
@@ -276,11 +358,16 @@
       - HydroponicsSeedsExotic
       - LivestockMonkeyCube
       - LivestockCow
+      - LivestockChicken
+      - LivestockDuck
+      - LivestockGoat
       - FoodPizza
       - ServiceJanitorial
       - ServiceLightsReplacement
       - ServiceSmokeables
       - ServiceCustomSmokable
+      - ServiceBureaucracy
+      - ServicePersonnel
       - EngineeringCableLv
       - EngineeringCableMv
       - EngineeringCableHv
@@ -292,6 +379,7 @@
       - FunPlushies
       - FunArtSupplies
       - FunInstruments
+      - FunBoardGames
       - MaterialSteel
       - MaterialGlass
       - MaterialPlastic

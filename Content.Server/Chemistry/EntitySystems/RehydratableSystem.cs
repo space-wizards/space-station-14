@@ -9,7 +9,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
-    public class RehydratableSystem : EntitySystem
+    public sealed class RehydratableSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         public override void Initialize()

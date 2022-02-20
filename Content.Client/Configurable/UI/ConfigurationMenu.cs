@@ -10,7 +10,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Configurable.UI
 {
-    public class ConfigurationMenu : SS14Window
+    public sealed class ConfigurationMenu : DefaultWindow
     {
         public ConfigurationBoundUserInterface Owner { get; }
 

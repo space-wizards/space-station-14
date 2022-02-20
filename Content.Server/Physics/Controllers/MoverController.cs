@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
+using System.Diagnostics;
 using Content.Server.Movement.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.EntitySystems;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Maps;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
@@ -24,10 +24,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Physics.Controllers
 {
-    public class MoverController : SharedMoverController
+    public sealed class MoverController : SharedMoverController
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -50,10 +51,10 @@ namespace Content.Server.Physics.Controllers
             base.UpdateBeforeSolve(prediction, frameTime);
             _excludedMobs.Clear();
 
-            foreach (var (mobMover, mover, physics) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
+            foreach (var (mobMover, mover, physics, xform) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent, TransformComponent>())
             {
                 _excludedMobs.Add(mover.Owner);
-                HandleMobMovement(mover, physics, mobMover);
+                HandleMobMovement(mover, physics, mobMover, xform);
             }
 
             HandleShuttleMovement(frameTime);
@@ -107,7 +108,7 @@ namespace Content.Server.Physics.Controllers
             // then do the movement input once for it.
             foreach (var (shuttle, pilots) in _shuttlePilots)
             {
-                if (shuttle.Paused || !EntityManager.TryGetComponent((shuttle).Owner, out PhysicsComponent? body)) continue;
+                if (Paused(shuttle.Owner) || !TryComp(shuttle.Owner, out PhysicsComponent? body)) continue;
 
                 // Collate movement linear and angular inputs together
                 var linearInput = Vector2.Zero;
@@ -130,7 +131,7 @@ namespace Content.Server.Physics.Controllers
 
                             if (sprint.Equals(Vector2.Zero)) continue;
 
-                            var offsetRotation = EntityManager.GetComponent<TransformComponent>((console).Owner).LocalRotation;
+                            var offsetRotation = EntityManager.GetComponent<TransformComponent>(console.Owner).LocalRotation;
 
                             linearInput += offsetRotation.RotateVec(new Vector2(0f, sprint.Y));
                             angularInput += sprint.X;
@@ -170,16 +171,21 @@ namespace Content.Server.Physics.Controllers
                 if (linearInput.Length.Equals(0f))
                 {
                     thrusterSystem.DisableLinearThrusters(shuttle);
-                    body.LinearDamping = shuttleSystem.ShuttleIdleLinearDamping;
+                    body.LinearDamping = shuttleSystem.ShuttleIdleLinearDamping * body.InvMass;
+                    if (body.LinearVelocity.Length < 0.08)
+                    {
+                        body.LinearVelocity = Vector2.Zero;
+                    }
                 }
                 else
                 {
-                    body.LinearDamping = shuttleSystem.ShuttleMovingLinearDamping;
-
+                    body.LinearDamping = 0;
                     var angle = linearInput.ToWorldAngle();
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
-                    var shuttleNorth = EntityManager.GetComponent<TransformComponent>((body).Owner).WorldRotation.ToWorldVec();
+                    var shuttleNorth = EntityManager.GetComponent<TransformComponent>(body.Owner).WorldRotation.ToWorldVec();
+
+                    var totalForce = new Vector2();
 
                     // Won't just do cardinal directions.
                     foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
@@ -203,20 +209,25 @@ namespace Content.Server.Physics.Controllers
                         }
 
                         float length;
+                        Angle thrustAngle;
 
                         switch (dir)
                         {
                             case DirectionFlag.North:
                                 length = linearInput.Y;
+                                thrustAngle = new Angle(MathF.PI);
                                 break;
                             case DirectionFlag.South:
                                 length = -linearInput.Y;
+                                thrustAngle = new Angle(0f);
                                 break;
                             case DirectionFlag.East:
                                 length = linearInput.X;
+                                thrustAngle = new Angle(MathF.PI / 2f);
                                 break;
                             case DirectionFlag.West:
                                 length = -linearInput.X;
+                                thrustAngle = new Angle(-MathF.PI / 2f);
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
@@ -225,41 +236,38 @@ namespace Content.Server.Physics.Controllers
                         thrusterSystem.EnableLinearThrustDirection(shuttle, dir);
 
                         var index = (int) Math.Log2((int) dir);
-                        var speed = shuttle.LinearThrusterImpulse[index] * length;
+                        var force = thrustAngle.RotateVec(shuttleNorth) * shuttle.LinearThrust[index] * length;
 
-                        if (body.LinearVelocity.LengthSquared < 0.5f)
-                        {
-                            speed *= 5f;
-                        }
-
-                        body.ApplyLinearImpulse(
-                            angle.RotateVec(shuttleNorth) *
-                            speed *
-                            frameTime);
+                        totalForce += force;
                     }
+
+                    var dragForce = body.LinearVelocity * (totalForce.Length / shuttleSystem.ShuttleMaxLinearSpeed);
+                    body.ApplyLinearImpulse((totalForce - dragForce) * frameTime);
                 }
 
                 if (MathHelper.CloseTo(angularInput, 0f))
                 {
                     thrusterSystem.SetAngularThrust(shuttle, false);
-                    body.AngularDamping = shuttleSystem.ShuttleIdleAngularDamping;
+                    body.AngularDamping = shuttleSystem.ShuttleIdleAngularDamping * body.InvI;
+                    body.SleepingAllowed = true;
+
+                    if (Math.Abs(body.AngularVelocity) < 0.01f)
+                    {
+                        body.AngularVelocity = 0f;
+                    }
                 }
                 else
                 {
-                    body.AngularDamping = shuttleSystem.ShuttleMovingAngularDamping;
-                    var angularSpeed = shuttle.AngularThrust;
+                    body.AngularDamping = 0;
+                    body.SleepingAllowed = false;
 
-                    if (body.AngularVelocity < 0.5f)
-                    {
-                        angularSpeed *= 5f;
-                    }
+                    var maxSpeed = Math.Min(shuttleSystem.ShuttleMaxAngularMomentum * body.InvI, shuttleSystem.ShuttleMaxAngularSpeed);
+                    var maxTorque = body.Inertia * shuttleSystem.ShuttleMaxAngularAcc;
 
-                    // Scale rotation by mass just to make rotating larger things a bit more bearable.
-                    body.ApplyAngularImpulse(
-                        -angularInput *
-                        angularSpeed *
-                        frameTime *
-                        body.Mass / 100f);
+                    var torque = Math.Min(shuttle.AngularThrust, maxTorque);
+                    var dragTorque = body.AngularVelocity * (torque / maxSpeed);
+
+                    body.ApplyAngularImpulse((-angularInput * torque - dragTorque) * frameTime);
 
                     thrusterSystem.SetAngularThrust(shuttle, true);
                 }
@@ -268,7 +276,7 @@ namespace Content.Server.Physics.Controllers
 
         protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)
         {
-            if (!mover.Owner.HasTag("FootstepSound")) return;
+            if (!_tags.HasTag(mover.Owner, "FootstepSound")) return;
 
             var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
             var coordinates = transform.Coordinates;
@@ -302,9 +310,10 @@ namespace Content.Server.Physics.Controllers
 
             mobMover.StepSoundDistance -= distanceNeeded;
 
-            if (EntityManager.TryGetComponent<InventoryComponent?>(mover.Owner, out var inventory)
-                && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
-                && EntityManager.TryGetComponent<FootstepModifierComponent?>(item.Owner, out var modifier))
+            var invSystem = EntitySystem.Get<InventorySystem>();
+
+            if (invSystem.TryGetSlotEntity(mover.Owner, "shoes", out var shoes) &&
+                EntityManager.TryGetComponent<FootstepModifierComponent>(shoes, out var modifier))
             {
                 modifier.PlayFootstep();
             }

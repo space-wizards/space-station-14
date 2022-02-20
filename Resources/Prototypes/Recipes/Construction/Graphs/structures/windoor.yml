@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: windoor
+  id: Windoor
   start: start
   graph:
   - node: start
@@ -112,8 +112,6 @@
       - !type:AirlockBolted
         value: false
       - !type:WirePanel {}
-      - !type:ContainerNotEmpty # TODO ShadowCommander: Remove when map gets updated
-        container: board
       completed:
       - !type:EmptyAllContainers {}
       steps:

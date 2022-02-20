@@ -1,7 +1,9 @@
-﻿- type: tile
-  name: floor_steel
-  display_name: steel floor
+- type: tile
+  id: floor_steel
+  name: steel floor
   texture: "steel"
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
   base_turfs:
   - plating
   is_subfloor: false
@@ -14,11 +16,12 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_wood
-  display_name: wood
+  id: floor_wood
+  name: wood
   texture: "wood"
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -30,9 +33,11 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_white
-  display_name: white floor
+  id: floor_white
+  name: white floor
   texture: "white"
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
   base_turfs:
   - plating
   is_subfloor: false
@@ -45,9 +50,11 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_dark
-  display_name: dark floor
+  id: floor_dark
+  name: dark floor
   texture: "dark"
+  variants: 4
+  placementVariants: [ 0, 1, 2, 3 ]
   base_turfs:
   - plating
   is_subfloor: false
@@ -60,8 +67,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_techmaint
-  display_name: techmaint floor
+  id: floor_techmaint
+  name: techmaint floor
   texture: "tech_maint"
   base_turfs:
   - plating
@@ -75,8 +82,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_reinforced
-  display_name: reinforced floor
+  id: floor_reinforced
+  name: reinforced floor
   texture: "reinforced"
   base_turfs:
   - plating
@@ -90,8 +97,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_mono
-  display_name: mono floor
+  id: floor_mono
+  name: mono floor
   texture: "mono"
   base_turfs:
   - plating
@@ -105,8 +112,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_lino
-  display_name: linoleum floor
+  id: floor_lino
+  name: linoleum floor
   texture: "lino"
   base_turfs:
   - plating
@@ -120,8 +127,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_steel_dirty
-  display_name: dirty steel floor
+  id: floor_steel_dirty
+  name: dirty steel floor
   texture: "steel_dirty"
   base_turfs:
   - plating
@@ -135,8 +142,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_elevator_shaft
-  display_name: elevator shaft
+  id: floor_elevator_shaft
+  name: elevator shaft
   texture: "elevator_shaft"
   base_turfs:
   - plating
@@ -150,8 +157,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_rock_vault
-  display_name: rock floor
+  id: floor_rock_vault
+  name: rock floor
   texture: "rock_vault"
   base_turfs:
   - plating
@@ -165,8 +172,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_blue
-  display_name: blue tile
+  id: floor_blue
+  name: blue tile
   texture: blue
   base_turfs:
   - plating
@@ -174,14 +181,15 @@
   can_crowbar: true
   footstep_sounds:
     collection: footstep_floor
+  friction: 0.30
   item_drop: FloorTileItemBlue
   thermalConductivity: 0.04
   heatCapacity: 10000
 
 # Departamental
 - type: tile
-  name: floor_freezer
-  display_name: freezer
+  id: floor_freezer
+  name: freezer
   texture: "freezer"
   base_turfs:
   - plating
@@ -195,8 +203,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_showroom
-  display_name: showroom floor
+  id: floor_showroom
+  name: showroom floor
   texture: "showroom"
   base_turfs:
   - plating
@@ -210,8 +218,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_hydro
-  display_name: hydro floor
+  id: floor_hydro
+  name: hydro floor
   texture: "hydro"
   base_turfs:
   - plating
@@ -225,9 +233,11 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_bar
-  display_name: bar floor
+  id: floor_bar
+  name: bar floor
   texture: "bar"
+  variants: 4
+  placementVariants: [ 0, 1, 2, 3 ]
   base_turfs:
   - plating
   is_subfloor: false
@@ -240,8 +250,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_clown
-  display_name: clown floor
+  id: floor_clown
+  name: clown floor
   texture: "clown"
   base_turfs:
   - plating
@@ -255,8 +265,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_mime
-  display_name: mime floor
+  id: floor_mime
+  name: mime floor
   texture: "mime"
   base_turfs:
   - plating
@@ -270,8 +280,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_kitchen
-  display_name: kitchen floor
+  id: floor_kitchen
+  name: kitchen floor
   texture: "kitchen"
   base_turfs:
   - plating
@@ -285,8 +295,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_laundry
-  display_name: laundry floor
+  id: floor_laundry
+  name: laundry floor
   texture: "laundry"
   base_turfs:
   - plating
@@ -299,10 +309,133 @@
   thermalConductivity: 0.04
   heatCapacity: 10000
 
+# Carpets (non smoothing)
+- type: tile
+  id: FloorArcadeBlue
+  name: blue arcade floor
+  texture: arcadeblue
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.40
+  item_drop: FloorTileItemArcadeBlue
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorArcadeRed
+  name: red arcade floor
+  texture: arcadered
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.40
+  item_drop: FloorTileItemArcadeRed
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorEighties
+  name: eighties floor
+  texture: eighties
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.40
+  item_drop: FloorTileItemEighties
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+# Shuttle
+- type: tile
+  id: FloorShuttleWhite
+  name: white shuttle floor
+  texture: shuttlewhite
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemShuttleWhite
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorShuttleBlue
+  name: blue shuttle floor
+  texture: shuttleblue
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemShuttleBlue
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorShuttleOrange
+  name: orange shuttle floor
+  texture: shuttleorange
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemShuttleOrange
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorShuttlePurple
+  name: purple shuttle floor
+  texture: shuttlepurple
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemShuttlePurple
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorShuttleRed
+  name: red shuttle floor
+  texture: shuttlered
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemShuttleRed
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+
 # Materials
 - type: tile
-  name: floor_gold
-  display_name: gold tile
+  id: floor_gold
+  name: gold tile
   texture: gold
   base_turfs:
   - plating
@@ -316,8 +449,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_silver
-  display_name: silver tile
+  id: floor_silver
+  name: silver tile
   texture: silver
   base_turfs:
   - plating
@@ -331,8 +464,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_glass
-  display_name: glass floor
+  id: floor_glass
+  name: glass floor
   texture: glass
   base_turfs:
   - plating
@@ -346,8 +479,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_rglass
-  display_name: reinforced glass floor
+  id: floor_rglass
+  name: reinforced glass floor
   texture: rglass
   base_turfs:
   - plating
@@ -362,8 +495,8 @@
 
 # Circuits
 - type: tile
-  name: floor_green_circuit
-  display_name: green circuit floor
+  id: floor_green_circuit
+  name: green circuit floor
   texture: "green_circuit"
   base_turfs:
   - plating
@@ -377,8 +510,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_blue_circuit
-  display_name: blue circuit floor
+  id: floor_blue_circuit
+  name: blue circuit floor
   texture: "blue_circuit"
   base_turfs:
   - plating
@@ -393,8 +526,8 @@
 
 # Terrain
 - type: tile
-  name: floor_snow
-  display_name: snow
+  id: floor_snow
+  name: snow
   texture: snow
   base_turfs:
   - plating
@@ -408,8 +541,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_grass
-  display_name: grass floor
+  id: floor_grass
+  name: grass floor
   texture: "grass"
   base_turfs:
   - plating
@@ -422,10 +555,25 @@
   thermalConductivity: 0.04
   heatCapacity: 10000
 
+- type: tile
+  id: FloorGrassJungle
+  name: jungle grass floor
+  texture: grassjungle
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemGrassJungle
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
 # Asteroid
 - type: tile
-  name: floor_asteroid_sand
-  display_name: asteroid floor
+  id: floor_asteroid_sand
+  name: asteroid floor
   texture: Asteroid/asteroid_sand
   base_turfs:
   - space
@@ -438,8 +586,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_asteroid_tile
-  display_name: asteroid tile
+  id: floor_asteroid_tile
+  name: asteroid tile
   texture: Asteroid/asteroid_tile
   base_turfs:
   - plating
@@ -452,9 +600,11 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_asteroid_coarse_sand0
-  display_name: asteroid coarse sand 0
-  texture: Asteroid/asteroid_coarse_sand0
+  id: floor_asteroid_coarse_sand0
+  name: asteroid coarse sand
+  texture: Asteroid/asteroid_coarse_sand
+  variants: 3
+  placementVariants: [ 0, 1, 2 ]
   base_turfs:
   - space
   is_subfloor: false
@@ -466,9 +616,11 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_asteroid_coarse_sand1
-  display_name: asteroid coarse sand 1
-  texture: Asteroid/asteroid_coarse_sand1
+  id: floor_asteroid_coarse_sand1
+  name: asteroid coarse sand [DO NOT USE]
+  texture: Asteroid/asteroid_coarse_sand
+  variants: 3
+  placementVariants: [ 0, 1, 2 ]
   base_turfs:
   - space
   is_subfloor: false
@@ -480,9 +632,11 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_asteroid_coarse_sand2
-  display_name: asteroid coarse sand 2
-  texture: Asteroid/asteroid_coarse_sand2
+  id: floor_asteroid_coarse_sand2
+  name: asteroid coarse sand [DO NOT USE]
+  texture: Asteroid/asteroid_coarse_sand
+  variants: 3
+  placementVariants: [ 0, 1, 2 ]
   base_turfs:
   - space
   is_subfloor: false
@@ -494,8 +648,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_asteroid_coarse_sand_dug
-  display_name: asteroid dug coarse sand
+  id: floor_asteroid_coarse_sand_dug
+  name: asteroid dug coarse sand
   texture: Asteroid/asteroid_coarse_sand_dug
   base_turfs:
   - space
@@ -506,3 +660,60 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+
+- type: tile
+  id: FloorAsteroidIronsand1
+  name: asteroid ironsand
+  texture: ironsand1
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds:
+    collection: footstep_asteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorAsteroidIronsand2
+  name: asteroid ironsand pebbles
+  texture: ironsand2
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds:
+    collection: footstep_asteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorAsteroidIronsand3
+  name: asteroid ironsand pebbles 2
+  texture: ironsand3
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds:
+    collection: footstep_asteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorAsteroidIronsand4
+  name: asteroid ironsand rock
+  texture: ironsand4
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds:
+    collection: footstep_asteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+

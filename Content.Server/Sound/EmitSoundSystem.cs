@@ -3,6 +3,7 @@ using Content.Server.Sound.Components;
 using Content.Server.Throwing;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -15,7 +16,7 @@ namespace Content.Server.Sound
     /// Will play a sound on various events if the affected entity has a component derived from BaseEmitSoundComponent
     /// </summary>
     [UsedImplicitly]
-    public class EmitSoundSystem : EntitySystem
+    public sealed class EmitSoundSystem : EntitySystem
     {
         /// <inheritdoc />
         public override void Initialize()
@@ -34,6 +35,9 @@ namespace Content.Server.Sound
 
         private void HandleEmitSoundOnUseInHand(EntityUid eUI, BaseEmitSoundComponent component, UseInHandEvent arg)
         {
+            if (arg.Handled) return;
+
+            arg.Handled = true;
             TryEmitSound(component);
         }
 
@@ -44,6 +48,9 @@ namespace Content.Server.Sound
 
         private void HandleEmitSoundOnActivateInWorld(EntityUid eUI, BaseEmitSoundComponent component, ActivateInWorldEvent arg)
         {
+            if (arg.Handled) return;
+
+            arg.Handled = true;
             TryEmitSound(component);
         }
 
