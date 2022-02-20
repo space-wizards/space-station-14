@@ -71,8 +71,7 @@ public sealed class FollowerSystem : EntitySystem
         followerComp.Following = entity;
 
         var followedComp = EnsureComp<FollowedComponent>(entity);
-        if (!followedComp.Following.Add(follower))
-            return;
+        followedComp.Following.Add(follower);
 
         var xform = Transform(follower);
         xform.AttachParent(entity);
