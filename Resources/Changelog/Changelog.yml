@@ -1,9 +1,4 @@
 Entries:
-- author: Clyybber
-  changes:
-  - {message: Changed Harm and Disarm icons., type: Tweak}
-  id: 604
-  time: '2021-11-19T06:36:32.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Shards now do slightly less damage when thrown., type: Fix}
@@ -2998,3 +2993,8 @@ Entries:
   - {message: Holoparasites now have a unique name identifier., type: Tweak}
   id: 1103
   time: '2022-02-20T01:07:28.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones can no longer throw., type: Remove}
+  id: 1104
+  time: '2022-02-20T06:02:06.0000000+00:00'
