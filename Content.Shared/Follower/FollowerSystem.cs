@@ -71,18 +71,13 @@ public sealed class FollowerSystem : EntitySystem
         followerComp.Following = entity;
 
         var followedComp = EnsureComp<FollowedComponent>(entity);
-        if (!followedComp.Following.Add(follower))
-            return;
+        followedComp.Following.Add(follower);
 
         var xform = Transform(follower);
         xform.AttachParent(entity);
         xform.LocalPosition = Vector2.Zero;
 
-        if (TryComp<AppearanceComponent>(follower, out var appearance))
-        {
-            EnsureComp<OrbitVisualsComponent>(follower);
-            appearance.SetData(OrbitingVisuals.IsOrbiting, true);
-        }
+        EnsureComp<OrbitVisualsComponent>(follower);
 
         var followerEv = new StartedFollowingEntityEvent(entity, follower);
         var entityEv = new EntityStartedFollowingEvent(entity, follower);
@@ -110,12 +105,7 @@ public sealed class FollowerSystem : EntitySystem
 
         Transform(uid).AttachToGridOrMap();
 
-        if (TryComp<AppearanceComponent>(uid, out var appearance))
-        {
-            // We don't remove OrbitVisuals here since the OrbitVisualsSystem will handle that itself
-            // during the OnChangeData, which is deferred..
-            appearance.SetData(OrbitingVisuals.IsOrbiting, false);
-        }
+        RemComp<OrbitVisualsComponent>(uid);
 
         var uidEv = new StoppedFollowingEntityEvent(target, uid);
         var targetEv = new EntityStoppedFollowingEvent(target, uid);
@@ -191,10 +181,3 @@ public sealed class EntityStoppedFollowingEvent : FollowEvent
     {
     }
 }
-
-[Serializable, NetSerializable]
-public enum OrbitingVisuals : byte
-{
-    IsOrbiting
-}
-
