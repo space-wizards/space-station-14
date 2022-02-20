@@ -47,28 +47,27 @@ namespace Content.Server.Bed
             if (!TryComp<SharedBodyComponent>(args.BuckledEntity, out var body))
                 return;
 
-            bool shouldUpdate = args.Buckling;
             var metabolizers = _bodySystem.GetComponentsOnMechanisms<MetabolizerComponent>(args.BuckledEntity, body);
             var stomachs = _bodySystem.GetComponentsOnMechanisms<StomachComponent>(args.BuckledEntity, body);
             /// There's probably some way to concatanate all of these and do it in 1 go but it's beyond me
 
             foreach (var meta in metabolizers)
             {
-                if (!HasComp<LungComponent>(meta.Comp.Owner))
+                if (!HasComp<LungComponent>(meta.Comp.Owner)) //There might be a better way to deal with the suffocation issue, especially because lung has metabolisms for poison and medicine etc
                 {
-                    var metaEvent = new ApplyStasisMultiplierEvent() {Uid = meta.Comp.Owner, StasisBed = component, Update = shouldUpdate};
+                    var metaEvent = new ApplyStasisMultiplierEvent() {Uid = meta.Comp.Owner, StasisBed = component, Update = args.Buckling};
                     RaiseLocalEvent(meta.Comp.Owner, metaEvent, false);
                 }
             }
             foreach (var stomach in stomachs)
             {
-                var stomachEvent = new ApplyStasisMultiplierEvent() {Uid = stomach.Comp.Owner, StasisBed = component, Update = shouldUpdate};
+                var stomachEvent = new ApplyStasisMultiplierEvent() {Uid = stomach.Comp.Owner, StasisBed = component, Update = args.Buckling};
                 RaiseLocalEvent(stomach.Comp.Owner, stomachEvent, false);
             }
 
             if (TryComp<BloodstreamComponent>(args.BuckledEntity, out var blood))
             {
-                var bloodEvent = new ApplyStasisMultiplierEvent() {Uid = blood.Owner, StasisBed = component, Update = shouldUpdate};
+                var bloodEvent = new ApplyStasisMultiplierEvent() {Uid = blood.Owner, StasisBed = component, Update = args.Buckling};
                 RaiseLocalEvent(blood.Owner, bloodEvent, false);
             }
         }

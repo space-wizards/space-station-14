@@ -1,14 +1,11 @@
-﻿using System.Linq;
-using Content.Server.Body.Components;
+﻿using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.HealthExaminable;
 using Content.Server.Bed;
-using Content.Shared.Buckle.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Audio;
@@ -156,12 +153,10 @@ public sealed class BloodstreamSystem : EntitySystem
 
     private void OnApplyStasisMultiplier(EntityUid uid, BloodstreamComponent component, ApplyStasisMultiplierEvent args)
     {
-        Logger.Error("Starting Apply Multiplier (blood)");
         if (args.Update)
         {
             component.UpdateIntervalReset = component.UpdateInterval;
             component.UpdateInterval *= args.StasisBed.Multiplier;
-            Logger.Error("Updated (blood)");
             return;
         }
         // This way we don't have to worry about it breaking if the stasis bed component is destroyed

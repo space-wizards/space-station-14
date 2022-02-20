@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Bed.Components;
 using Content.Server.Bed;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
@@ -53,12 +52,10 @@ namespace Content.Server.Body.Systems
 
         private void OnApplyStasisMulitplier(EntityUid uid, MetabolizerComponent component, ApplyStasisMultiplierEvent args)
         {
-            Logger.Error("Starting Apply Multiplier (meta) args.Update is {0}", args.Update);
             if (args.Update)
             {
                 component.UpdateFrequency = component.UpdateFrequencyReset;
                 component.UpdateFrequency *= args.StasisBed.Multiplier;
-                Logger.Error("Updated (meta)");
                 return;
             }
             // This way we don't have to worry about it breaking if the stasis bed component is destroyed

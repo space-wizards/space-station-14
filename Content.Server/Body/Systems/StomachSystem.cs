@@ -78,12 +78,10 @@ namespace Content.Server.Body.Systems
 
     private void OnApplyStasisMulitplier(EntityUid uid, StomachComponent component, ApplyStasisMultiplierEvent args)
     {
-        Logger.Error("Starting Apply Multiplier (stomach) args.Update is {0}", args.Update);
         if (args.Update)
         {
             component.UpdateIntervalReset = component.UpdateInterval;
             component.UpdateInterval *= args.StasisBed.Multiplier;
-            Logger.Error("Updated (stomach)");
             return;
         }
         // This way we don't have to worry about it breaking if the stasis bed component is destroyed

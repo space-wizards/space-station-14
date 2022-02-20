@@ -91,6 +91,9 @@
   components:
   - type: StasisBed
     multiplier: 10
+  - type: Sprite
+    sprite: Structures/Machines/stasis_bed.rsi
+    state: icon
 
 - type: entity
   parent: Bed
