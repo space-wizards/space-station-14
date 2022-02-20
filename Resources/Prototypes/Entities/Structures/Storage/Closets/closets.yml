@@ -9,6 +9,7 @@
     visuals:
     - type: StorageVisualizer
       state: eng
+      state_open: eng_open
       state_closed: eng_tool_door
 
 # Radiation suit closet
@@ -16,12 +17,13 @@
   id: ClosetRadiationSuit
   name: radiation suit closet
   parent: ClosetBase
-  description: It's a storage unit for rad-protective suits.
+  description: "More comfortable than radiation poisioning."
   components:
   - type: Appearance
     visuals:
     - type: StorageVisualizer
       state: eng
+      state_open: eng_open
       state_closed: eng_rad_door
 
 # Emergency closet
@@ -35,6 +37,8 @@
     visuals:
     - type: StorageVisualizer
       state: emergency
+      state_open: emergency_open
+      state_closed: emergency_door
 
 # Fire safety closet
 - type: entity
@@ -47,6 +51,8 @@
     visuals:
     - type: StorageVisualizer
       state: fire
+      state_open: fire_open
+      state_closed: fire_door
 
 # EOD closet
 - type: entity
@@ -59,6 +65,8 @@
     visuals:
     - type: StorageVisualizer
       state: bomb
+      state_open: bomb_open
+      state_closed: bomb_door
 
 # Biohazard
 
@@ -73,6 +81,8 @@
     visuals:
     - type: StorageVisualizer
       state: bio
+      state_open: bio_open
+      state_closed: bio_door
 
 # Virology variant
 - type: entity
@@ -83,6 +93,8 @@
     visuals:
     - type: StorageVisualizer
       state: bio_viro
+      state_open: bio_viro_open
+      state_closed: bio_viro_door
 
 # Security variant
 - type: entity
@@ -93,6 +105,8 @@
     visuals:
     - type: StorageVisualizer
       state: bio_sec
+      state_open: bio_sec_open
+      state_closed: bio_sec_door
 
 # Janitor variant
 - type: entity
@@ -103,11 +117,13 @@
     visuals:
     - type: StorageVisualizer
       state: bio_jan
+      state_open: bio_jan_open
+      state_closed: bio_jan_door
 
 # Maintenance closet
 - type: entity
   id: ClosetMaintenance
-  name: maintenance closet 
+  name: maintenance closet
   parent: ClosetBase
   description: It's a storage unit.
   components:

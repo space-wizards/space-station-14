@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Alert;
 using JetBrains.Annotations;
@@ -13,13 +13,13 @@ namespace Content.Server.Alert.Click
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class ResistFire : IAlertClick
+    public sealed class ResistFire : IAlertClick
     {
-        public void AlertClicked(ClickAlertEventArgs args)
+        public void AlertClicked(EntityUid player)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Player, out FlammableComponent? flammable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out FlammableComponent? flammable))
             {
-                EntitySystem.Get<FlammableSystem>().Resist(args.Player, flammable);
+                EntitySystem.Get<FlammableSystem>().Resist(player, flammable);
             }
         }
     }

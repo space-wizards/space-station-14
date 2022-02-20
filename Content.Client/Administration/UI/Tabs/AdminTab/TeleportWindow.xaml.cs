@@ -11,7 +11,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
 {
     [GenerateTypedNameReferences]
     [UsedImplicitly]
-    public partial class TeleportWindow : SS14Window
+    public sealed partial class TeleportWindow : DefaultWindow
     {
         private PlayerInfo? _selectedPlayer;
 

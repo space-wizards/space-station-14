@@ -23,7 +23,7 @@
   - type: Rotatable
   - type: Anchorable
   - type: Construction
-    graph: computer
+    graph: Computer
     node: frameUnsecured
   - type: Sprite
     sprite: Structures/Machines/parts.rsi
@@ -52,7 +52,7 @@
   description: This computer has seen better days.
   components:
   - type: Construction
-    graph: computer
+    graph: Computer
     node: monitorBroken
   - type: Sprite
     sprite: Structures/Machines/computers.rsi

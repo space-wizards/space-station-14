@@ -29,7 +29,7 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/medical.rsi
-    
+
 - type: entity
   parent: Airlock
   id: AirlockChemistry
@@ -86,6 +86,21 @@
     enabled: false
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/glass.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+      mass: 100
+      mask:
+      - Impassable
+      layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+
+
 
 - type: entity
   parent: AirlockGlass

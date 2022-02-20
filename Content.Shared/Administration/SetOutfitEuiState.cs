@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Shared.Administration
 {
     [Serializable, NetSerializable]
-    public class SetOutfitEuiState : EuiStateBase
+    public sealed class SetOutfitEuiState : EuiStateBase
     {
         public EntityUid TargetEntityId;
     }

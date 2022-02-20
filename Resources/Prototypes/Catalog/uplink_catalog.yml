@@ -31,12 +31,14 @@
 #  itemId: CrossbowEnergyMini
 #  price: 8
 
-# bug swept to make
-#- type: uplinkListing
-#  id: UplinkESword
-#  category: Weapons
-#  itemId: ESword
-#  price: 8
+
+- type: uplinkListing
+  id: UplinkEsword
+  category: Weapons
+  itemId: EnergySword
+  listingName: Energy Sword
+  description: A very dangerous energy sword. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
+  price: 8
 
 # bug swept to make
 #- type: uplinkListing
@@ -45,12 +47,13 @@
 #  itemId: DoubleBladedESword
 #  price: 16
 
-# bug swept to make
-#- type: uplinkListing
-#  id: UplinkEnergyDagger
-#  category: Weapons
-#  itemId: EnergyDagger
-#  price: 2
+- type: uplinkListing
+  id: UplinkEnergyDagger
+  category: Weapons
+  itemId: EnergyDagger
+  listingName: Energy Dagger
+  description: A small energy blade conveniently disguised in the form of a pen.
+  price: 2
 
 # Explosives
 
@@ -107,42 +110,61 @@
   price: 2
   icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl.rsi/icon.png
 
+#Utility
+
+- type: uplinkListing
+  id: UplinkHoloparaKit
+  category: Utility
+  itemId: BoxHoloparasite
+  listingName: Holoparasite Kit
+  description: The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active. The guardian can punch rapidly and is immune to hazardous environments and bullets, but shares any damage it takes with the user.
+  icon: /Textures/Objects/Misc/guardian_info.rsi/icon.png
+  price: 14
+
+- type: uplinkListing
+  id: UplinkEmag
+  category: Utility
+  itemId: Emag
+  description: This sequencer, or "emag", can be used to open or hack a huge variety of items around the station.
+  icon: /Textures/Objects/Tools/emag.rsi/icon.png
+  price: 8
+
 # Bundles
 
 - type: uplinkListing
   id: UplinkC20RBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledSMG
-  price: 14
+  price: 25
   icon: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkBojevicBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledShotgun
-  price: 13
+  price: 25
   icon: /Textures/Objects/Weapons/Guns/Shotguns/bojevic.rsi/icon.png
-
-- type: uplinkListing
-  id: UplinkL6SawBundle
-  category: Bundles
-  itemId: ClothingBackpackDuffelSyndicateFilledLMG
-  price: 18
-  icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkGrenadeLauncherBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
-  price: 25
+  price: 30
   icon: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi/icon.png
 
 - type: uplinkListing
-  id: UplinkCarbineBundle
+  id: UplinkL6SawBundle
   category: Bundles
-  itemId: ClothingBackpackDuffelSyndicateFilledCarbine
-  price: 35
-  icon: /Textures/Objects/Weapons/Guns/Rifles/carbine.rsi/icon.png
+  itemId: ClothingBackpackDuffelSyndicateFilledLMG
+  price: 40
+  icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
+
+#- type: uplinkListing
+#  id: UplinkCarbineBundle
+#  category: Bundles
+#  itemId: ClothingBackpackDuffelSyndicateFilledCarbine
+#  price: 35
+#  icon: /Textures/Objects/Weapons/Guns/Rifles/carbine.rsi/icon.png
 
 # Tools
 
@@ -177,6 +199,8 @@
   id: UplinkClothingNoSlipsShoes
   category: Armor
   itemId: ClothingShoesChameleonNoSlips
+  listingName: no-slip shoes
+  description: These protect you from slips while looking like normal sneakers.
   price: 2
 
 - type: uplinkListing
@@ -209,6 +233,8 @@
   id: UplinkDecoyDisk
   category: Misc
   itemId: NukeDiskFake
+  listingName: Decoy nuclear disk
+  description: A piece of plastic with a lenticular printing, made to look like a nuclear auth disk.
   price: 1
 
 - type: uplinkListing
@@ -224,6 +250,12 @@
   price: 2
 
 - type: uplinkListing
+  id: UplinkCigarettes
+  category: Misc
+  itemId: CigPackSyndicate
+  price: 2
+
+- type: uplinkListing
   id: UplinkSoapSyndie
   category: Misc
   itemId: SoapSyndie
@@ -235,16 +267,20 @@
   itemId: lanternextrabright
   price: 2
 
-# Pointless
-
 - type: uplinkListing
   id: UplinkCostumeCentcom
-  category: Pointless
+  category: Misc
   itemId: ClothingBackpackDuffelSyndicateCostumeCentcom
   price: 4
 
 - type: uplinkListing
   id: UplinkCostumeClown
-  category: Pointless
+  category: Misc
   itemId: ClothingBackpackDuffelSyndicateCostumeClown
+  price: 4
+
+- type: uplinkListing
+  id: UplinkCostumePyjama
+  category: Misc
+  itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
   price: 4

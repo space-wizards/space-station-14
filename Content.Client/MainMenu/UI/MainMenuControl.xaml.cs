@@ -12,7 +12,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.MainMenu.UI
 {
     [GenerateTypedNameReferences]
-    public partial class MainMenuControl : Control
+    public sealed partial class MainMenuControl : Control
         {
             public MainMenuControl(IResourceCache resCache, IConfigurationManager configMan)
             {

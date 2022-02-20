@@ -6,7 +6,6 @@ namespace Content.Shared.Body.Components
 {
     public abstract class SharedBodyScannerComponent : Component
     {
-        public override string Name => "BodyScanner";
     }
 
     [Serializable, NetSerializable]
@@ -16,7 +15,7 @@ namespace Content.Shared.Body.Components
     }
 
     [Serializable, NetSerializable]
-    public class BodyScannerUIState : BoundUserInterfaceState
+    public sealed class BodyScannerUIState : BoundUserInterfaceState
     {
         public readonly EntityUid Uid;
 

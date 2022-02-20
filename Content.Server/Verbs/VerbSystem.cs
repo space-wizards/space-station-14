@@ -1,13 +1,13 @@
+using Content.Server.Administration.Managers;
 using Content.Server.Popups;
+using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
+using System.Linq;
 
 namespace Content.Server.Verbs
 {
@@ -15,6 +15,7 @@ namespace Content.Server.Verbs
     {
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly IAdminManager _adminMgr = default!;
 
         public override void Initialize()
         {
@@ -43,7 +44,22 @@ namespace Content.Server.Verbs
             // this, and some verbs (e.g. view variables) won't even care about whether an entity is accessible through
             // the entity menu or not.
 
-            var response = new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(args.EntityUid, attached, args.Type));
+            var force = args.AdminRequest && eventArgs.SenderSession is IPlayerSession playerSession &&
+                        _adminMgr.HasAdminFlag(playerSession, AdminFlags.Admin);
+
+            List<Type> verbTypes = new();
+            foreach (var key in args.VerbTypes)
+            {
+                var type = Verb.VerbTypes.FirstOrDefault(x => x.Name == key);
+
+                if (type != null)
+                    verbTypes.Add(type);
+                else
+                    Logger.Error($"Unknown verb type received: {key}");
+            }
+
+            var response =
+                new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(args.EntityUid, attached, verbTypes, force));
             RaiseNetworkEvent(response, player.ConnectedClient);
         }
 

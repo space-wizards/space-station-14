@@ -28,7 +28,7 @@ namespace Content.Shared.Interaction
         Task<bool> InteractUsing(InteractUsingEventArgs eventArgs);
     }
 
-    public class InteractUsingEventArgs : EventArgs, ITargetedInteractEventArgs
+    public sealed class InteractUsingEventArgs : EventArgs, ITargetedInteractEventArgs
     {
         public InteractUsingEventArgs(EntityUid user, EntityCoordinates clickLocation, EntityUid @using, EntityUid target)
         {
@@ -48,7 +48,7 @@ namespace Content.Shared.Interaction
     ///     Raised when a target entity is interacted with by a user while holding an object in their hand.
     /// </summary>
     [PublicAPI]
-    public class InteractUsingEvent : HandledEntityEventArgs
+    public sealed class InteractUsingEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that triggered the interaction.
@@ -70,12 +70,19 @@ namespace Content.Shared.Interaction
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
 
-        public InteractUsingEvent(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation)
+        /// <summary>
+        ///     If true, this prediction is also being predicted client-side. So care has to be taken to avoid audio
+        ///     duplication.
+        /// </summary>
+        public bool Predicted { get; }
+
+        public InteractUsingEvent(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation, bool predicted = false)
         {
             User = user;
             Used = used;
             Target = target;
             ClickLocation = clickLocation;
+            Predicted = predicted;
         }
     }
 }

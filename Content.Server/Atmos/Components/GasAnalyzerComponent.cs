@@ -18,7 +18,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IUse
+    [ComponentReference(typeof(IActivate))]
+    [ComponentReference(typeof(SharedGasAnalyzerComponent))]
+    public sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IActivate
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -165,7 +167,7 @@ namespace Content.Server.Atmos.Components
                 if (!_entities.TryGetComponent(playerEntity, out HandsComponent? handsComponent))
                     return;
 
-                if (handsComponent?.GetActiveHand?.Owner is not {Valid: true} activeHandEntity ||
+                if (handsComponent?.GetActiveHandItem?.Owner is not {Valid: true} activeHandEntity ||
                     !_entities.TryGetComponent(activeHandEntity, out GasAnalyzerComponent? gasAnalyzer))
                 {
                     return;
@@ -232,7 +234,7 @@ namespace Content.Server.Atmos.Components
                         return;
                     }
 
-                    if (handsComponent.GetActiveHand?.Owner is not {Valid: true} activeHandEntity ||
+                    if (handsComponent.GetActiveHandItem?.Owner is not {Valid: true} activeHandEntity ||
                         !_entities.TryGetComponent(activeHandEntity, out GasAnalyzerComponent? gasAnalyzer))
                     {
                         serverMsg.Session.AttachedEntity.Value.PopupMessage(Loc.GetString("gas-analyzer-component-need-gas-analyzer-in-hand-message"));
@@ -271,14 +273,14 @@ namespace Content.Server.Atmos.Components
             }
         }
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 ToggleInterface(actor.PlayerSession);
-                return true;
+                return;
             }
-            return false;
+            return;
         }
     }
 }

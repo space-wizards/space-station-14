@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
+    netsync: false
     layers:
     - state: icon
       map: ["enum.AutolatheVisualLayers.Base"]
@@ -32,7 +33,7 @@
       - Opaque
       - MobImpassable
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -53,8 +54,6 @@
   - type: LatheDatabase
     static: true
     recipes:
-      - Brutepack
-      - Ointment
       - Wirecutter
       - Screwdriver
       - Welder
@@ -86,6 +85,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/protolathe.rsi
+    netsync: false
     layers:
     - state: icon
       map: ["enum.ProtolatheVisualLayers.Base"]
@@ -113,7 +113,7 @@
       - MobImpassable
   - type: ResearchClient
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -137,52 +137,42 @@
       - LightTube
       - LightBulb
       - SheetSteel
-      - GlassStack
+      - SheetGlass1
       - SheetRGlass
       - SheetPlastic
       - CableStack
       - CableMVStack
       - CableHVStack
-      - ConveyorAssembly
-      - RCD
+      - ConveyorBeltAssembly
       - RCDAmmo
-      - Scythe
-      - Hatchet
+      - HydroponicsToolScythe
+      - HydroponicsToolHatchet
       - Shovel
+      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
       - Drill
-      - BoneSaw
+      - Saw
       - Hemostat
       - Beaker
       - LargeBeaker
       - CryostasisBeaker
       - Dropper
       - Syringe
+      - PillCanister
+      - Drone
       - Flash
-      - Handcuffs
-      - Stunbaton
-      - CartridgePistolBase
-      - ShellShotgunBase
-      - CartridgeLRifleBase
-      - CartridgeMagnumBase
-      - FirelockElectronics
       - MicroManipulatorStockPart
       - ScanningModuleStockPart
       - MicroLaserStockPart
       - MatterBinStockPart
       - CapacitorStockPart
+      - FirelockElectronics
       - DoorElectronics
       - APCElectronics
-      - CloningPodMachineCircuitboard
-      - MedicalScannerMachineCircuitboard
-      - ChemMasterMachineCircuitboard
-      - ChemDispenserMachineCircuitboard
-      - HydroponicsTrayMachineCircuitboard
-      - SolarControlComputerCircuitboard
-      - AutolatheMachineCircuitboard
-      - ProtolatheMachineCircuitboard
+      - AirAlarmElectronics
+      - FireAlarmElectronics
       - Bucket
       - MopItem
       - SprayBottle
@@ -204,3 +194,78 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+
+- type: entity
+  parent: Protolathe
+  id: CircuitImprinter
+  name: Circuit Imprinter
+  description: Prints circuit boards for machines.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/circuit_imprinter.rsi
+    layers:
+    - state: icon
+      map: ["enum.ProtolatheVisualLayers.Base"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
+    - state: icon
+      map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: ProtolatheDatabase
+    protolatherecipes:
+      - SMESMachineCircuitboard
+      - SubstationMachineCircuitboard
+      - CloningPodMachineCircuitboard
+      - MedicalScannerMachineCircuitboard
+      - ChemMasterMachineCircuitboard
+      - ChemDispenserMachineCircuitboard
+      - HydroponicsTrayMachineCircuitboard
+      - SolarControlComputerCircuitboard
+      - AutolatheMachineCircuitboard
+      - ProtolatheMachineCircuitboard
+      - KitchenReagentGrinderMachineCircuitboard
+      - CrewMonitoringComputerCircuitboard
+      - ShuttleConsoleCircuitboard
+      - CircuitImprinterMachineCircuitboard
+      - DawInstrumentMachineCircuitboard
+  - type: Machine
+    board: CircuitImprinterMachineCircuitboard
+
+- type: entity
+  parent: Protolathe
+  id: SecurityTechFab
+  name: Security TechFab
+  description: Prints security equipment and some basics.
+  components:
+  - type: ProtolatheDatabase
+    protolatherecipes:
+      - Flash
+      - Handcuffs
+      - Stunbaton
+      - CartridgePistol
+      - ShellShotgun
+      - CartridgeLRifle
+      - CartridgeMagnum
+      - ShellShotgunBeanbag
+      - CartridgePistolRubber
+      - CartridgeMagnumRubber
+      - CartridgeClRifleRubber
+      - CartridgeLRifleRubber
+      - CartridgeSRifleRubber #Everything below this is shared with other lathes
+      - FlashlightLantern
+      - Bucket
+      - MopItem
+      - SprayBottle
+      - FireExtinguisher
+      - LightTube
+      - LightBulb
+      - SheetSteel
+      - SheetGlass1
+      - SheetRGlass
+      - SheetPlastic
+      - CableStack
+      - CableMVStack
+      - CableHVStack

@@ -1,13 +1,10 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.Temperature.Components;
-using Content.Server.Temperature.Systems;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -16,10 +13,12 @@ namespace Content.Server.Atmos.EntitySystems
     ///     This is our SSAir equivalent, if you need to interact with or query atmos in any way, go through this.
     /// </summary>
     [UsedImplicitly]
-    public partial class AtmosphereSystem : SharedAtmosphereSystem
+    public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AdminLogSystem _adminLog = default!;
+        [Dependency] private readonly SharedContainerSystem _containers = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         private const float ExposedUpdateDelay = 1f;
         private float _exposedTimer = 0f;
@@ -31,6 +30,7 @@ namespace Content.Server.Atmos.EntitySystems
             UpdatesAfter.Add(typeof(NodeGroupSystem));
 
             InitializeGases();
+            InitializeCommands();
             InitializeCVars();
             InitializeGrid();
 
@@ -47,6 +47,8 @@ namespace Content.Server.Atmos.EntitySystems
             base.Shutdown();
 
             _mapManager.TileChanged -= OnTileChanged;
+
+            ShutdownCommands();
         }
 
         private void OnTileChanged(object? sender, TileChangedEventArgs eventArgs)
@@ -68,6 +70,7 @@ namespace Content.Server.Atmos.EntitySystems
             base.Update(frameTime);
 
             UpdateProcessing(frameTime);
+            UpdateHighPressure(frameTime);
 
             _exposedTimer += frameTime;
 
@@ -76,9 +79,15 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var (exposed, transform) in EntityManager.EntityQuery<AtmosExposedComponent, TransformComponent>())
             {
-                var tile = GetTileMixture(transform.Coordinates);
-                if (tile == null) continue;
-                var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, tile);
+                // Used for things like disposals/cryo to change which air people are exposed to.
+                var airEvent = new AtmosExposedGetAirEvent();
+                RaiseLocalEvent(exposed.Owner, ref airEvent, false);
+
+                airEvent.Gas ??= GetTileMixture(transform.Coordinates);
+                if (airEvent.Gas == null)
+                    continue;
+
+                var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, airEvent.Gas);
                 RaiseLocalEvent(exposed.Owner, ref updateEvent);
             }
 

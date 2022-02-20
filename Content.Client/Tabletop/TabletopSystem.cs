@@ -25,7 +25,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 namespace Content.Client.Tabletop
 {
     [UsedImplicitly]
-    public class TabletopSystem : SharedTabletopSystem
+    public sealed class TabletopSystem : SharedTabletopSystem
     {
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManger = default!;
@@ -38,11 +38,13 @@ namespace Content.Client.Tabletop
         private float _timePassed; // Time passed since last update sent to the server.
         private EntityUid? _draggedEntity; // Entity being dragged
         private ScalingViewport? _viewport; // Viewport currently being used
-        private SS14Window? _window; // Current open tabletop window (only allow one at a time)
+        private DefaultWindow? _window; // Current open tabletop window (only allow one at a time)
         private EntityUid? _table; // The table entity of the currently open game session
 
         public override void Initialize()
         {
+            UpdatesOutsidePrediction = true;
+
             CommandBinds.Builder
                         .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false))
                         .Register<TabletopSystem>();
@@ -223,7 +225,7 @@ namespace Content.Client.Tabletop
         /// <param name="viewport">The viewport in which we are dragging.</param>
         private void StartDragging(EntityUid draggedEntity, ScalingViewport viewport)
         {
-            RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(draggedEntity, _playerManager.LocalPlayer?.UserId));
+            RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(draggedEntity, true));
 
             if (EntityManager.TryGetComponent<AppearanceComponent>(draggedEntity, out var appearance))
             {
@@ -244,7 +246,7 @@ namespace Content.Client.Tabletop
             // Set the dragging player on the component to noone
             if (broadcast && _draggedEntity != null && EntityManager.HasComponent<TabletopDraggableComponent>(_draggedEntity.Value))
             {
-                RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(_draggedEntity.Value, null));
+                RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(_draggedEntity.Value, false));
             }
 
             _draggedEntity = null;

@@ -13,10 +13,10 @@ namespace Content.Server.Database
 {
     public sealed class ServerDbPostgres : ServerDbBase
     {
-        private readonly DbContextOptions<ServerDbContext> _options;
+        private readonly DbContextOptions<PostgresServerDbContext> _options;
         private readonly Task _dbReadyTask;
 
-        public ServerDbPostgres(DbContextOptions<ServerDbContext> options)
+        public ServerDbPostgres(DbContextOptions<PostgresServerDbContext> options)
         {
             _options = options;
 
@@ -59,8 +59,7 @@ namespace Content.Server.Database
 
             await using var db = await GetDbImpl();
 
-            var query = MakeBanLookupQuery(address, userId, hwId, db)
-                .Where(p => p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.Now))
+            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned: false)
                 .OrderByDescending(b => b.BanTime);
 
             var ban = await query.FirstOrDefaultAsync();
@@ -68,10 +67,9 @@ namespace Content.Server.Database
             return ConvertBan(ban);
         }
 
-        public override async Task<List<ServerBanDef>> GetServerBansAsync(
-            IPAddress? address,
+        public override async Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId)
+            ImmutableArray<byte>? hwId, bool includeUnbanned)
         {
             if (address == null && userId == null && hwId == null)
             {
@@ -80,7 +78,7 @@ namespace Content.Server.Database
 
             await using var db = await GetDbImpl();
 
-            var query = MakeBanLookupQuery(address, userId, hwId, db);
+            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned);
 
             var queryBans = await query.ToArrayAsync();
             var bans = new List<ServerBanDef>(queryBans.Length);
@@ -98,13 +96,14 @@ namespace Content.Server.Database
             return bans;
         }
 
-        private static IQueryable<PostgresServerBan> MakeBanLookupQuery(
+        private static IQueryable<ServerBan> MakeBanLookupQuery(
             IPAddress? address,
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
-            DbGuardImpl db)
+            DbGuardImpl db,
+            bool includeUnbanned)
         {
-            IQueryable<PostgresServerBan>? query = null;
+            IQueryable<ServerBan>? query = null;
 
             if (userId is { } uid)
             {
@@ -133,11 +132,17 @@ namespace Content.Server.Database
                 query = query == null ? newQ : query.Union(newQ);
             }
 
+            if (!includeUnbanned)
+            {
+                query = query?.Where(p =>
+                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.Now));
+            }
+
             query = query!.Distinct();
             return query;
         }
 
-        private static ServerBanDef? ConvertBan(PostgresServerBan? ban)
+        private static ServerBanDef? ConvertBan(ServerBan? ban)
         {
             if (ban == null)
             {
@@ -170,7 +175,7 @@ namespace Content.Server.Database
                 unbanDef);
         }
 
-        private static ServerUnbanDef? ConvertUnban(PostgresServerUnban? unban)
+        private static ServerUnbanDef? ConvertUnban(ServerUnban? unban)
         {
             if (unban == null)
             {
@@ -193,7 +198,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
-            db.PgDbContext.Ban.Add(new PostgresServerBan
+            db.PgDbContext.Ban.Add(new ServerBan
             {
                 Address = serverBan.Address,
                 HWId = serverBan.HWId?.ToArray(),
@@ -211,7 +216,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
-            db.PgDbContext.Unban.Add(new PostgresServerUnban
+            db.PgDbContext.Unban.Add(new ServerUnban
             {
                  BanId = serverUnban.BanId,
                  UnbanningAdmin = serverUnban.UnbanningAdmin?.UserId,
@@ -232,24 +237,30 @@ namespace Content.Server.Database
                 record.LastSeenHWId?.ToImmutableArray());
         }
 
-        public override async Task AddConnectionLogAsync(
+        public override async Task<int> AddConnectionLogAsync(
             NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId)
+            ImmutableArray<byte> hwId,
+            ConnectionDenyReason? denied)
         {
             await using var db = await GetDbImpl();
 
-            db.PgDbContext.ConnectionLog.Add(new PostgresConnectionLog
+            var connectionLog = new ConnectionLog
             {
                 Address = address,
                 Time = DateTime.UtcNow,
                 UserId = userId.UserId,
                 UserName = userName,
-                HWId = hwId.ToArray()
-            });
+                HWId = hwId.ToArray(),
+                Denied = denied,
+            };
+
+            db.PgDbContext.ConnectionLog.Add(connectionLog);
 
             await db.PgDbContext.SaveChangesAsync();
+
+            return connectionLog.Id;
         }
 
         public override async Task<((Admin, string? lastUserName)[] admins, AdminRank[])>

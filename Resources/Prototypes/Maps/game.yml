@@ -5,9 +5,9 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/saltern.yml
+  mapPath: /Maps/saltern.yml
   minPlayers: 0
-  maxPlayers: 20
+  maxPlayers: 25
   fallback: true
   overflowJobs:
     - Assistant
@@ -31,6 +31,8 @@
     Scientist: [ 2, 3 ]
     HeadOfSecurity: [ 1, 1 ]
     SecurityOfficer: [ 2, 3 ]
+    Chaplain: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
 
 - type: gameMap
   id: packedstation
@@ -39,8 +41,13 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: 'VG'
-  mapPath: Maps/packedstation.yml
+  mapPath: /Maps/packedstation.yml
   minPlayers: 15
+  maxPlayers: 55
+  conditions:
+    - !type:HolidayMapCondition
+      inverted: true
+      holidays: [ "Christmas" ]
   overflowJobs:
     - Assistant
   availableJobs:
@@ -65,6 +72,8 @@
     SecurityOfficer: [ 2, 3 ]
     Chaplain: [ 1, 1 ]
     Warden: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
+    Lawyer: [ 1, 2 ]
 
 - type: gameMap
   id: knightship
@@ -73,7 +82,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/knightship.yml
+  mapPath: /Maps/knightship.yml
   minPlayers: 0
   maxPlayers: 8
   overflowJobs: []
@@ -86,3 +95,101 @@
     MedicalDoctor: [ 1, 1 ]
     ResearchDirector: [ 1, 1 ]
     Botanist: [ 1, 1 ]
+
+- type: gameMap
+  id: NSSPillar
+  mapName: 'NSS Pillar v4.1'
+  mapNameTemplate: '{0} NSSPillar {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: /Maps/nss_pillar.yml
+  minPlayers: 40
+  overflowJobs:
+    - Assistant
+  availableJobs:
+    Assistant: [ -1, -1 ]
+    CargoTechnician: [ 4, 6 ]
+    Bartender: [ 2, 2 ]
+    Botanist: [ 2, 4 ]
+    Chef: [ 2, 4 ]
+    Clown: [ 1, 2 ]
+    Janitor: [ 2, 4 ]
+    Mime: [ 1, 2 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 6, 10 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 6, 10 ]
+    Chemist: [ 2, 3 ]
+    ResearchDirector: [ 1, 1 ]
+    Scientist: [ 3, 8 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 6, 10 ]
+    Chaplain: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
+    Lawyer: [ 1, 2 ]
+    Warden: [ 1, 1 ]
+    Quartermaster: [ 1, 1 ]
+    SalvageSpecialist: [ 4, 6 ] 
+
+- type: gameMap
+  id: ssreach
+  mapName: 'Reach'
+  mapNameTemplate: '{0} Reach {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: /Maps/ssreach.yml
+  minPlayers: 0
+  maxPlayers: 15
+  votable: false
+  overflowJobs:
+    - Assistant
+  availableJobs:
+    CargoTechnician: [ 1, 1 ]
+    Assistant: [ 4, 8 ]
+    Bartender: [ 1, 1 ]
+    Botanist: [ 1, 1 ]
+    Chef: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 1, 2 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 1, 1 ]
+    Chemist: [ 1, 1 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 2, 4 ]
+    Janitor: [ 1, 1 ]
+
+- type: gameMap
+  id: dart
+  mapName: 'Dart'
+  mapNameTemplate: '{0} Dart {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: /Maps/dart.yml
+  minPlayers: 0
+  votable: false
+  overflowJobs: []
+  availableJobs:
+    Captain: [ 1, 1 ]
+
+- type: gameMap
+  id: moonrise
+  mapName: 'Moonrise ERC'
+  mapNameTemplate: '{0} Moonrise {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: 'VG'
+  mapPath: /Maps/moonrise.yml
+  minPlayers: 0
+  votable: false
+  overflowJobs: []
+  availableJobs:
+    Captain: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    SecurityOfficer: [ 3, 6 ]

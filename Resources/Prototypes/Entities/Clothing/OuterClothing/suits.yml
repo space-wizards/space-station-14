@@ -61,7 +61,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterSuitRad
-  name: rad suit
+  name: radiation suit
   description: "A suit that protects against radiation. The label reads, 'Made with lead. Please do not consume insulation.'"
   components:
   - type: Sprite
@@ -73,18 +73,6 @@
         Radiation: 0.05
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/rad.rsi
-
-# I think this is a suit? Looks baggy enough
-- type: entity
-  parent: ClothingOuterBase
-  id: ClothingOuterSuitSyndicate
-  name: syndicate suit
-  description: "Has a tag on it 'Totally not property of an enemy corporation, honest!'"
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Suits/syndicate.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Suits/syndicate.rsi
 
 - type: entity
   parent: ClothingOuterBase

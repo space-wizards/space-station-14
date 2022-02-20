@@ -8,6 +8,7 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
+using Content.Shared.Pointing;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -33,6 +34,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
 
@@ -127,8 +129,9 @@ namespace Content.Server.Pointing.EntitySystems
             var layer = (int) VisibilityFlags.Normal;
             if (TryComp(player, out VisibilityComponent? playerVisibility))
             {
-                var arrowVisibility = arrow.EnsureComponent<VisibilityComponent>();
-                layer = arrowVisibility.Layer = playerVisibility.Layer;
+                var arrowVisibility = EntityManager.EnsureComponent<VisibilityComponent>(arrow);
+                layer = playerVisibility.Layer;
+                _visibilitySystem.SetLayer(arrowVisibility, layer);
             }
 
             // Get players that are in range and whose visibility layer matches the arrow's.
@@ -176,9 +179,9 @@ namespace Content.Server.Pointing.EntitySystems
 
                 var tileDef = _tileDefinitionManager[tileRef?.Tile.TypeId ?? 0];
 
-                selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", tileDef.DisplayName));
+                selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", tileDef.Name));
 
-                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", playerName), ("tileName", tileDef.DisplayName));
+                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", playerName), ("tileName", tileDef.Name));
             }
 
             _pointers[session] = _gameTiming.CurTime;
@@ -192,7 +195,7 @@ namespace Content.Server.Pointing.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddPointingVerb);
+            SubscribeNetworkEvent<PointingAttemptEvent>(OnPointAttempt);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
@@ -201,26 +204,9 @@ namespace Content.Server.Pointing.EntitySystems
                 .Register<PointingSystem>();
         }
 
-        private void AddPointingVerb(GetOtherVerbsEvent args)
+        private void OnPointAttempt(PointingAttemptEvent ev, EntitySessionEventArgs args)
         {
-            if (args.Hands == null)
-                return;
-
-            //Check if the object is already being pointed at
-            if (HasComp<PointingArrowComponent>(args.Target))
-                return;
-
-            var transform = Transform(args.Target);
-
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor)  ||
-                !InRange(args.User, transform.Coordinates))
-                return;
-
-            Verb verb = new();
-            verb.Text = Loc.GetString("pointing-verb-get-data-text");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
-            verb.Act = () => TryPoint(actor.PlayerSession, transform.Coordinates, args.Target);
-            args.Verbs.Add(verb);
+            TryPoint(args.SenderSession, Transform(ev.Target).Coordinates, ev.Target);
         }
 
         public override void Shutdown()

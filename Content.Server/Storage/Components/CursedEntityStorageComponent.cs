@@ -15,12 +15,10 @@ namespace Content.Server.Storage.Components
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
     [RegisterComponent]
-    public class CursedEntityStorageComponent : EntityStorageComponent
+    public sealed class CursedEntityStorageComponent : EntityStorageComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
-        public override string Name => "CursedEntityStorage";
 
         [DataField("cursedSound")] private SoundSpecifier _cursedSound = new SoundPathSpecifier("/Audio/Effects/teleport_departure.ogg");
         [DataField("cursedLockerSound")] private SoundSpecifier _cursedLockerSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
@@ -37,9 +35,9 @@ namespace Content.Server.Storage.Components
             if (lockers.Contains(Owner))
                 lockers.Remove(Owner);
 
-            var lockerEnt = _robustRandom.Pick(lockers);
+            if (lockers.Count == 0) return;
 
-            if (lockerEnt == null) return; // No valid lockers anywhere.
+            var lockerEnt = _robustRandom.Pick(lockers);
 
             var locker = _entMan.GetComponent<EntityStorageComponent>(lockerEnt);
 

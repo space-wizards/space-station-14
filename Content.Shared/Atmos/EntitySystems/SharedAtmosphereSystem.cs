@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Atmos.EntitySystems
 {
-    public class SharedAtmosphereSystem : EntitySystem
+    public abstract class SharedAtmosphereSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

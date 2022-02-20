@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Access.Systems;
 using Content.Server.AI.Components;
 using Content.Server.AI.Pathfinding;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.CPUJob.JobQueues;
+using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -28,6 +29,7 @@ namespace Content.Server.AI.Steering
         [Dependency] private readonly IPauseManager _pauseManager = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         /// <summary>
         /// Whether we try to avoid non-blocking physics objects
@@ -283,7 +285,7 @@ namespace Content.Server.AI.Steering
             if (targetDistance <= steeringRequest.ArrivalDistance && steeringRequest.TimeUntilInteractionCheck <= 0.0f)
             {
                 if (!steeringRequest.RequiresInRangeUnobstructed ||
-                    entity.InRangeUnobstructed(steeringRequest.TargetMap, steeringRequest.ArrivalDistance, popup: true))
+                    _interactionSystem.InRangeUnobstructed(entity, steeringRequest.TargetMap, steeringRequest.ArrivalDistance, popup: true))
                 {
                     // TODO: Need cruder LOS checks for ranged weaps
                     controller.VelocityDir = Vector2.Zero;

@@ -7,7 +7,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Administration
 {
-    internal class AdminNameOverlay : Overlay
+    internal sealed class AdminNameOverlay : Overlay
     {
         private readonly AdminSystem _system;
         private readonly IEntityManager _entityManager;
@@ -62,8 +62,8 @@ namespace Content.Client.Administration
                 {
                     args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), "ANTAG", Color.OrangeRed);
                 }
-                args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, Color.Yellow);
-                args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, Color.Aquamarine);
+                args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, playerInfo.Connected ? Color.Yellow : Color.White);
+                args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, playerInfo.Connected ? Color.Aquamarine : Color.White);
             }
         }
     }

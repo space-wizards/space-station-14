@@ -9,7 +9,7 @@ namespace Content.Client.Actions.Assignments
     /// <summary>
     /// Tracks and manages the hotbar assignments for actions.
     /// </summary>
-    public class ActionAssignments
+    public sealed class ActionAssignments
     {
         // the slots and assignments fields hold client's assignments (what action goes in what slot),
         // which are completely client side and independent of what actions they've actually been granted and

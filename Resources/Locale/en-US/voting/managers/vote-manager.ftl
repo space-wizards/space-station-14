@@ -16,8 +16,3 @@ ui-vote-gamemode-win = { $winner } won the gamemode vote!
 ui-vote-map-title = Next map
 ui-vote-map-tie = Tie for map vote! Picking... { $picked }
 ui-vote-map-win = { $winner } won the map vote!
-
-mode-traitor = Traitor
-mode-extended = Extended
-mode-sandbox = Sandbox
-mode-suspicion = Suspicion

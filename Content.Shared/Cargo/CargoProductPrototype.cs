@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Cargo
 {
     [NetSerializable, Serializable, Prototype("cargoProduct")]
-    public class CargoProductPrototype : IPrototype
+    public sealed class CargoProductPrototype : IPrototype
     {
         [DataField("name")] private string _name = string.Empty;
 

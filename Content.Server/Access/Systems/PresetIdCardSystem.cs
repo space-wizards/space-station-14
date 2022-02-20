@@ -1,4 +1,5 @@
 using Content.Server.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -8,7 +9,7 @@ using System;
 
 namespace Content.Server.Access.Systems
 {
-    public class PresetIdCardSystem : EntitySystem
+    public sealed class PresetIdCardSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IdCardSystem _cardSystem = default!;
@@ -32,6 +33,7 @@ namespace Content.Server.Access.Systems
 
             // set access for access component
             _accessSystem.TrySetTags(uid, job.Access);
+            _accessSystem.TryAddGroups(uid, job.AccessGroups);
 
             // and also change job title on a card id
             _cardSystem.TryChangeJobTitle(uid, job.Name);

@@ -1,32 +1,30 @@
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
-using Content.Shared.Interaction.Helpers;
+using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Construction
 {
-    public partial class ConstructionSystem
+    public sealed partial class ConstructionSystem
     {
+
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -61,11 +59,12 @@ namespace Content.Server.Construction
                 }
             }
 
-            if (EntityManager.TryGetComponent(user!, out InventoryComponent? inventory))
+            if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
             {
-                foreach (var held in inventory.GetAllHeldItems())
+                while (containerSlotEnumerator.MoveNext(out var containerSlot))
                 {
-                    if (EntityManager.TryGetComponent(held, out ServerStorageComponent? storage))
+                    if(!containerSlot.ContainedEntity.HasValue) continue;
+                    if (EntityManager.TryGetComponent(containerSlot.ContainedEntity.Value, out ServerStorageComponent? storage))
                     {
                         foreach (var storedEntity in storage.StoredEntities!)
                         {
@@ -73,7 +72,7 @@ namespace Content.Server.Construction
                         }
                     }
 
-                    yield return held;
+                    yield return containerSlot.ContainedEntity.Value;
                 }
             }
 
@@ -298,7 +297,7 @@ namespace Content.Server.Construction
             var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
 
             if (args.SenderSession.AttachedEntity is not {Valid: true} user ||
-                !Get<ActionBlockerSystem>().CanInteract(user)) return;
+                !Get<ActionBlockerSystem>().CanInteract(user, null)) return;
 
             if (!EntityManager.TryGetComponent(user, out HandsComponent? hands)) return;
 
@@ -329,9 +328,8 @@ namespace Content.Server.Construction
                 }
             }
 
-            if (await Construct(user, "item_construction", constructionGraph, edge, targetNode) is {Valid: true} item &&
-                EntityManager.TryGetComponent(item, out ItemComponent? itemComp))
-                hands.PutInHandOrDrop(itemComp);
+            if (await Construct(user, "item_construction", constructionGraph, edge, targetNode) is {Valid: true} item)
+                hands.PutInHandOrDrop(item);
         }
 
         // LEGACY CODE. See warning at the top of the file!
@@ -397,15 +395,23 @@ namespace Content.Server.Construction
                 _beingBuilt[args.SenderSession].Remove(ev.Ack);
             }
 
-            if (!Get<ActionBlockerSystem>().CanInteract(user)
-                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHand == null
-                || !user.InRangeUnobstructed(ev.Location, ignoreInsideBlocker:constructionPrototype.CanBuildInImpassable))
+            if (!_actionBlocker.CanInteract(user, null)
+                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHandItem == null)
             {
                 Cleanup();
                 return;
             }
 
-            if(pathFind == null)
+            var mapPos = ev.Location.ToMap(EntityManager);
+            var predicate = GetPredicate(constructionPrototype.CanBuildInImpassable, mapPos);
+
+            if (!_interactionSystem.InRangeUnobstructed(user, mapPos, predicate: predicate))
+            {
+                Cleanup();
+                return;
+            }
+
+            if (pathFind == null)
                 throw new InvalidDataException($"Can't find path from starting node to target node in construction! Recipe: {ev.PrototypeName}");
 
             var edge = startNode.GetEdge(pathFind[0].Name);
@@ -415,7 +421,7 @@ namespace Content.Server.Construction
 
             var valid = false;
 
-            if (hands.GetActiveHand?.Owner is not {Valid: true} holding)
+            if (hands.GetActiveHandItem?.Owner is not {Valid: true} holding)
             {
                 Cleanup();
                 return;

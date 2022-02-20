@@ -19,7 +19,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Wires.UI
 {
-    public class WiresMenu : BaseWindow
+    public sealed class WiresMenu : BaseWindow
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
@@ -184,7 +184,7 @@ namespace Content.Client.Wires.UI
                     }),
                     (CloseButton = new TextureButton
                     {
-                        StyleClasses = {SS14Window.StyleClassWindowCloseButton},
+                        StyleClasses = {DefaultWindow.StyleClassWindowCloseButton},
                         VerticalAlignment = VAlignment.Center
                     })
                 }

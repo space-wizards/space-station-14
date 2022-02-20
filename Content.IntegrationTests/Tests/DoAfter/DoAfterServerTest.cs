@@ -11,7 +11,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
 {
     [TestFixture]
     [TestOf(typeof(DoAfterComponent))]
-    public class DoAfterServerTest : ContentIntegrationTest
+    public sealed class DoAfterServerTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

@@ -8,10 +8,8 @@ namespace Content.Shared.Strip.Components
     ///     Give to an entity to say they can strip another entity.
     /// </summary>
     [RegisterComponent]
-    public class SharedStrippingComponent : Component, IDragDropOn
+    public sealed class SharedStrippingComponent : Component, IDragDropOn
     {
-        public override string Name => "Stripping";
-
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged, out SharedStrippableComponent? strippable)) return false;

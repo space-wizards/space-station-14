@@ -4,6 +4,7 @@ using Content.Client.Stylesheets;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Prototypes;
+using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -24,7 +25,7 @@ namespace Content.Client.Actions.UI
     /// A slot in the action hotbar. Not extending BaseButton because
     /// its needs diverged too much.
     /// </summary>
-    public class ActionSlot : PanelContainer
+    public sealed class ActionSlot : PanelContainer
     {
         // shorter than default tooltip delay so user can more easily
         // see what actions they've been given
@@ -231,7 +232,7 @@ namespace Content.Client.Actions.UI
             {
                 ActionPrototype actionPrototype => new ActionAttempt(actionPrototype),
                 ItemActionPrototype itemActionPrototype =>
-                    (Item != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemActionsComponent?>(Item, out var itemActions)) ?
+                    Item.HasValue && IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemActionsComponent?>(Item, out var itemActions) ?
                         new ItemActionAttempt(itemActionPrototype, Item.Value, itemActions) : null,
                 _ => null
             };

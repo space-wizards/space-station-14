@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Roles
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class RemoveRoleCommand : IConsoleCommand
+    public sealed class RemoveRoleCommand : IConsoleCommand
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

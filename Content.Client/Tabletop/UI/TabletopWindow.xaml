@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:viewport="clr-namespace:Content.Client.Viewport">
     <viewport:ScalingViewport Name="ScalingVp" MouseFilter="Stop" RenderScaleMode="CeilInt">
         <Button Name="FlipButton"
@@ -8,4 +8,4 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top" />
     </viewport:ScalingViewport>
-</SS14Window>
+</DefaultWindow>

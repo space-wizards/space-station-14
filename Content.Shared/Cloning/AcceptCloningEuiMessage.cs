@@ -12,7 +12,7 @@ namespace Content.Shared.Cloning
     }
 
     [Serializable, NetSerializable]
-    public class AcceptCloningChoiceMessage : EuiMessageBase
+    public sealed class AcceptCloningChoiceMessage : EuiMessageBase
     {
         public readonly AcceptCloningUiButton Button;
 

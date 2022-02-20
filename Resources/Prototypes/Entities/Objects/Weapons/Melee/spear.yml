@@ -7,6 +7,7 @@
   - type: Tag
     tags:
     - Spear
+  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
     state: spear
@@ -24,10 +25,11 @@
   - type: Clothing
     size: 24
     sprite: Objects/Weapons/Melee/spear.rsi
+    QuickEquip: false
     Slots:
     - back
   - type: Construction
-    graph: spear
+    graph: Spear
     node: spear
   - type: ItemCooldown
   - type: MeleeChemicalInjector
@@ -39,6 +41,11 @@
     solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    modifiers:
+      flatReductions:
+        Piercing: -7
 
 - type: MeleeWeaponAnimation
   id: spear

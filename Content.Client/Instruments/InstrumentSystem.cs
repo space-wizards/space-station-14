@@ -18,7 +18,7 @@ using SharpFont;
 namespace Content.Client.Instruments
 {
     [UsedImplicitly]
-    public class InstrumentSystem : SharedInstrumentSystem
+    public sealed class InstrumentSystem : SharedInstrumentSystem
     {
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IMidiManager _midiManager = default!;
@@ -37,6 +37,8 @@ namespace Content.Client.Instruments
         public override void Initialize()
         {
             base.Initialize();
+
+            UpdatesOutsidePrediction = true;
 
             _cfg.OnValueChanged(CCVars.MaxMidiEventsPerBatch, OnMaxMidiEventsPerBatchChanged, true);
             _cfg.OnValueChanged(CCVars.MaxMidiEventsPerSecond, OnMaxMidiEventsPerSecondChanged, true);

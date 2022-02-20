@@ -7,6 +7,7 @@ using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -20,12 +21,13 @@ namespace Content.Server.Construction
     /// The server-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
-    public partial class ConstructionSystem : SharedConstructionSystem
+    public sealed partial class ConstructionSystem : SharedConstructionSystem
     {
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
 
@@ -38,10 +40,12 @@ namespace Content.Server.Construction
 
             _sawmill = _logManager.GetSawmill(SawmillName);
 
+            InitializeComputer();
             InitializeGraphs();
             InitializeGuided();
             InitializeInteractions();
             InitializeInitial();
+            InitializeMachines();
 
             SubscribeLocalEvent<ConstructionComponent, ComponentInit>(OnConstructionInit);
             SubscribeLocalEvent<ConstructionComponent, ComponentStartup>(OnConstructionStartup);

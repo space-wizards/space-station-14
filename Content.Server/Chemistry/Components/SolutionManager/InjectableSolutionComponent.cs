@@ -8,9 +8,8 @@ namespace Content.Server.Chemistry.Components.SolutionManager
     ///     Denotes a solution which can be added with syringes.
     /// </summary>
     [RegisterComponent]
-    public class InjectableSolutionComponent : Component
+    public sealed class InjectableSolutionComponent : Component
     {
-        public override string Name => "InjectableSolution";
 
         /// <summary>
         /// Solution name which can be added with syringes.

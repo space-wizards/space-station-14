@@ -13,7 +13,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Kudzu;
 
 // Future work includes making the growths per interval thing not global, but instead per "group"
-public class SpreaderSystem : EntitySystem
+public sealed class SpreaderSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;

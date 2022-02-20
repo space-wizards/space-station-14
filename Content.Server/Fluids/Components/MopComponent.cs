@@ -22,11 +22,10 @@ namespace Content.Server.Fluids.Components
     /// For cleaning up puddles
     /// </summary>
     [RegisterComponent]
-    public class MopComponent : Component, IAfterInteract
+    public sealed class MopComponent : Component, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
-        public override string Name => "Mop";
         public const string SolutionName = "mop";
 
         /// <summary>
@@ -34,6 +33,7 @@ namespace Content.Server.Fluids.Components
         /// </summary>
         public bool Mopping { get; private set; }
 
+        // MopSolution Object stores whatever solution the mop has absorbed.
         public Solution? MopSolution
         {
             get
@@ -43,6 +43,7 @@ namespace Content.Server.Fluids.Components
             }
         }
 
+        // MaxVolume is the Maximum volume the mop can absorb (however, this is defined in janitor.yml)
         public FixedPoint2 MaxVolume
         {
             get => MopSolution?.MaxVolume ?? FixedPoint2.Zero;
@@ -56,7 +57,11 @@ namespace Content.Server.Fluids.Components
             }
         }
 
+        // CurrentVolume is the volume the mop has absorbed.
         public FixedPoint2 CurrentVolume => MopSolution?.CurrentVolume ?? FixedPoint2.Zero;
+
+        // AvailableVolume is the remaining volume capacity of the mop.
+        public FixedPoint2 AvailableVolume => MopSolution?.AvailableVolume ?? FixedPoint2.Zero;
 
         // Currently there's a separate amount for pickup and dropoff so
         // Picking up a puddle requires multiple clicks
@@ -66,10 +71,16 @@ namespace Content.Server.Fluids.Components
         public FixedPoint2 PickupAmount { get; } = FixedPoint2.New(10);
 
         /// <summary>
-        ///     After cleaning a floor tile, leave this much reagent as a puddle. I.e., leave behind a wet floor.
+        ///     When using the mop on an empty floor tile, leave this much reagent as a new puddle.
         /// </summary>
         [DataField("residueAmount")]
-        public FixedPoint2 ResidueAmount { get; } = FixedPoint2.New(5);
+        public FixedPoint2 ResidueAmount { get; } = FixedPoint2.New(10); // Should be higher than MopLowerLimit
+
+        /// <summary>
+        ///     To leave behind a wet floor, the mop will be unable to take from puddles with a volume less than this amount.
+        /// </summary>
+        [DataField("mopLowerLimit")]
+        public FixedPoint2 MopLowerLimit { get; } = FixedPoint2.New(5);
 
         [DataField("pickup_sound")]
         private SoundSpecifier _pickupSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
@@ -92,16 +103,10 @@ namespace Content.Server.Fluids.Components
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
             var spillableSystem = EntitySystem.Get<SpillableSystem>();
 
-            if (!solutionSystem.TryGetSolution(Owner, SolutionName, out var contents ) ||
-                Mopping ||
-                !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            if (!eventArgs.CanReach ||
+                !solutionSystem.TryGetSolution(Owner, SolutionName, out var contents ) ||
+                Mopping)
             {
-                return false;
-            }
-
-            if (CurrentVolume <= 0)
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("mop-component-mop-is-dry-message"));
                 return false;
             }
 
@@ -117,8 +122,23 @@ namespace Content.Server.Fluids.Components
                 !solutionSystem.TryGetSolution((puddleComponent).Owner, puddleComponent.SolutionName, out var puddleSolution))
                 return false;
 
-            // So if the puddle has 20 units we mop in 2 seconds. Don't just store CurrentVolume given it can change so need to re-calc it anyway.
-            var doAfterArgs = new DoAfterEventArgs(eventArgs.User, _mopSpeed * puddleSolution.CurrentVolume.Float() / 10.0f,
+            // if the puddle is too small for the mop to effectively take any more solution
+            if (puddleSolution.TotalVolume <= MopLowerLimit)
+            {
+                // Transfers solution from the mop to the puddle
+                solutionSystem.TryAddSolution(target, puddleSolution, solutionSystem.SplitSolution(Owner, contents, FixedPoint2.Min(ResidueAmount,CurrentVolume)));
+                return true;
+            }
+
+            // if the mop is full
+            if(AvailableVolume <= 0)
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("mop-component-mop-is-full-message"));
+                return false;
+            }
+
+            // Mopping duration (aka delay) should scale with PickupAmount and not puddle volume, because we are picking up a constant volume of solution with each click.
+            var doAfterArgs = new DoAfterEventArgs(eventArgs.User, _mopSpeed * PickupAmount.Float() / 10.0f,
                 target: target)
             {
                 BreakOnUserMove = true,
@@ -134,35 +154,27 @@ namespace Content.Server.Fluids.Components
                 puddleComponent.Deleted)
                 return false;
 
-
+            // The volume the mop will take from the puddle
             FixedPoint2 transferAmount;
             // does the puddle actually have reagents? it might not if its a weird cosmetic entity.
             if (puddleSolution.TotalVolume == 0)
-                transferAmount = FixedPoint2.Min(PickupAmount, CurrentVolume);
-            else
-                transferAmount = FixedPoint2.Min(PickupAmount, puddleSolution.TotalVolume, CurrentVolume);
-
-            // is the puddle cleaned?
-            if (puddleSolution.TotalVolume - transferAmount <= 0)
-            {
-                _entities.DeleteEntity(puddleComponent.Owner);
-
-                // After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
-                // we do this WITHOUT adding to the existing puddle. Otherwise we have might have water puddles with the vomit sprite.
-                var splitSolution = solutionSystem.SplitSolution(Owner, contents, transferAmount)
-                    .SplitSolution(ResidueAmount);
-                spillableSystem.SpillAt(splitSolution, eventArgs.ClickLocation, "PuddleSmear", combine: false);
-            }
+                transferAmount = FixedPoint2.Min(PickupAmount, AvailableVolume);
             else
             {
-                // remove solution from the puddle
-                solutionSystem.SplitSolution(target, puddleSolution, transferAmount);
+                transferAmount = FixedPoint2.Min(PickupAmount, puddleSolution.TotalVolume, AvailableVolume);
 
-                // and from the mop
-                solutionSystem.SplitSolution(Owner, contents, transferAmount);
+                if ((puddleSolution.TotalVolume - transferAmount) < MopLowerLimit) // If the transferAmount would bring the puddle below the MopLowerLimit
+                    transferAmount = puddleSolution.TotalVolume - MopLowerLimit; // Then the transferAmount should bring the puddle down to the MopLowerLimit exactly
             }
+
+            // Transfers solution from the puddle to the mop
+            solutionSystem.TryAddSolution(Owner, contents, solutionSystem.SplitSolution(target, puddleSolution, transferAmount));
 
             SoundSystem.Play(Filter.Pvs(Owner), _pickupSound.GetSound(), Owner);
+
+            // if the mop became full after that puddle, let the player know.
+            if(AvailableVolume <= 0)
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("mop-component-mop-is-now-full-message"));
 
             return true;
         }

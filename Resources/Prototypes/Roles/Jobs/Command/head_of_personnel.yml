@@ -14,6 +14,8 @@
   - HeadOfPersonnel
   - Security # HoPcurity strikes again
   - Service
+  - Quartermaster
+  - Salvage
   - Cargo
   - Maintenance
   - Janitor
@@ -26,11 +28,11 @@
 - type: startingGear
   id: HoPGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitHoP
-    backpack: ClothingBackpackFilled
+    jumpsuit: ClothingUniformJumpsuitHoP
+    back: ClothingBackpackFilled
     shoes: ClothingShoesColorBrown
     head: ClothingHeadHatHopcap
-    idcard: HoPPDA
+    id: HoPPDA
     ears: ClothingHeadsetAltCommand
   innerclothingskirt: ClothingUniformJumpskirtHoP
   satchel: ClothingBackpackSatchelFilled

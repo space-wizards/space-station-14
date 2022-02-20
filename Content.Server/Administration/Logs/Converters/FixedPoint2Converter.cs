@@ -4,7 +4,7 @@ using Content.Shared.FixedPoint;
 namespace Content.Server.Administration.Logs.Converters;
 
 [AdminLogConverter]
-public class FixedPoint2Converter : AdminLogConverter<FixedPoint2>
+public sealed class FixedPoint2Converter : AdminLogConverter<FixedPoint2>
 {
     public override void Write(Utf8JsonWriter writer, FixedPoint2 value, JsonSerializerOptions options)
     {

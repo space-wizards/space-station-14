@@ -9,10 +9,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Emoting
 {
     [RegisterComponent, NetworkedComponent]
-    public class SharedEmotingComponent : Component
+    public sealed class SharedEmotingComponent : Component
     {
         [DataField("enabled")] private bool _enabled = true;
-        public override string Name => "Emoting";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled

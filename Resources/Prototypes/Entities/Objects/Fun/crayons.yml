@@ -9,6 +9,8 @@
     tags:
     - Write
     - Crayon
+    - Trash
+  - type: Recyclable
   - type: UserInterface
     interfaces:
     - key: enum.CrayonUiKey.Key
@@ -36,6 +38,7 @@
     - Write
     - Crayon
     - CrayonWhite
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -57,6 +60,7 @@
     - Write
     - Crayon
     - CrayonWhite
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -78,6 +82,7 @@
     - Write
     - Crayon
     - CrayonBlack
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -99,6 +104,7 @@
     - Write
     - Crayon
     - CrayonRed
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -120,6 +126,7 @@
     - Write
     - Crayon
     - CrayonOrange
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -141,6 +148,7 @@
     - Write
     - Crayon
     - CrayonYellow
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -162,6 +170,7 @@
     - Write
     - Crayon
     - CrayonGreen
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -183,6 +192,7 @@
     - Write
     - Crayon
     - CrayonBlue
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -204,9 +214,10 @@
     - Write
     - Crayon
     - CrayonPurple
+    - Trash
 
 - type: entity
-  parent: BaseItem
+  parent: BoxCardboard
   id: CrayonBox
   name: crayon box
   description: "It's a box of crayons."
@@ -219,7 +230,7 @@
     capacity: 7
   - type: Item
     sprite: Objects/Fun/crayons.rsi
-    size: 9999
+    size: 7
     HeldPrefix: box
   - type: StorageFill
     contents:

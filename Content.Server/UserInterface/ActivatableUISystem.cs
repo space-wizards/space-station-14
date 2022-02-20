@@ -1,22 +1,17 @@
-using System.Linq;
 using Content.Server.Administration.Managers;
-using Content.Shared.ActionBlocker;
+using Content.Server.Ghost.Components;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.UserInterface
 {
     [UsedImplicitly]
     internal sealed class ActivatableUISystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
 
         public override void Initialize()
@@ -30,6 +25,23 @@ namespace Content.Server.UserInterface
             // *THIS IS A BLATANT WORKAROUND!* RATIONALE: Microwaves need it
             SubscribeLocalEvent<ActivatableUIComponent, EntParentChangedMessage>(OnParentChanged);
             SubscribeLocalEvent<ActivatableUIComponent, BoundUIClosedEvent>(OnUIClose);
+
+            SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
+        }
+
+        private void AddOpenUiVerb(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<ActivationVerb> args)
+        {
+            if (!args.CanAccess)
+                return;
+
+            if (!args.CanInteract && !HasComp<GhostComponent>(args.User))
+                return;
+
+            ActivationVerb verb = new();
+            verb.Act = () => InteractUI(args.User, component);
+            verb.Text = Loc.GetString("ui-verb-toggle-open");
+            // TODO VERBS add "open UI" icon?
+            args.Verbs.Add(verb);
         }
 
         private void OnActivate(EntityUid uid, ActivatableUIComponent component, ActivateInWorldEvent args)
@@ -63,12 +75,6 @@ namespace Content.Server.UserInterface
 
             if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return false;
 
-            if (!_actionBlockerSystem.CanInteract(user))
-            {
-                user.PopupMessageCursor(Loc.GetString("base-computer-ui-component-cannot-interact"));
-                return true;
-            }
-
             var ui = aui.UserInterface;
             if (ui == null) return false;
 
@@ -83,8 +89,10 @@ namespace Content.Server.UserInterface
             // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
             // This is so that stuff can require further conditions (like power).
             var oae = new ActivatableUIOpenAttemptEvent(user);
+            var uae = new UserOpenActivatableUIAttemptEvent(user);
+            RaiseLocalEvent(user, uae, false);
             RaiseLocalEvent((aui).Owner, oae, false);
-            if (oae.Cancelled) return false;
+            if (oae.Cancelled || uae.Cancelled) return false;
 
             SetCurrentSingleUser((aui).Owner, actor.PlayerSession, aui);
             ui.Toggle(actor.PlayerSession);
@@ -103,27 +111,6 @@ namespace Content.Server.UserInterface
             RaiseLocalEvent(uid, new ActivatableUIPlayerChangedEvent(), false);
         }
 
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-
-            foreach (var component in EntityManager.EntityQuery<ActivatableUIComponent>(true))
-            {
-                var ui = component.UserInterface;
-                if (ui == null) continue;
-                // Done to skip an allocation on anything that's not in use.
-                if (ui.SubscribedSessions.Count == 0) continue;
-                // Must ToList in order to close things safely.
-                foreach (var session in ui.SubscribedSessions.ToArray())
-                {
-                    if (session.AttachedEntity == null || !_actionBlockerSystem.CanInteract(session.AttachedEntity.Value))
-                    {
-                        ui.Close(session);
-                    }
-                }
-            }
-        }
-
         public void CloseAll(EntityUid uid, ActivatableUIComponent? aui = null)
         {
             if (!Resolve(uid, ref aui, false)) return;
@@ -131,7 +118,7 @@ namespace Content.Server.UserInterface
         }
     }
 
-    public class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
+    public sealed class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
     {
         public EntityUid User { get; }
         public ActivatableUIOpenAttemptEvent(EntityUid who)
@@ -140,7 +127,15 @@ namespace Content.Server.UserInterface
         }
     }
 
-    public class ActivatableUIPlayerChangedEvent : EntityEventArgs
+    public class UserOpenActivatableUIAttemptEvent : CancellableEntityEventArgs //have to one-up the already stroke-inducing name
+    {
+        public EntityUid User { get; }
+        public UserOpenActivatableUIAttemptEvent(EntityUid who)
+        {
+            User = who;
+        }
+    }
+    public sealed class ActivatableUIPlayerChangedEvent : EntityEventArgs
     {
     }
 }

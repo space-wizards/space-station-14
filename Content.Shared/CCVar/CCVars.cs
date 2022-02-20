@@ -85,7 +85,7 @@ namespace Content.Shared.CCVar
         ///     Controls the default game preset.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
+            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "suspicion", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if the game can force a different preset if the current preset's criteria are not met.
@@ -97,7 +97,7 @@ namespace Content.Shared.CCVar
         ///     The preset for the game to fall back to if the selected preset could not be used, and fallback is enabled.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
+            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "sandbox", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if people can win the game in Suspicion or Deathmatch.
@@ -155,6 +155,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
 
         /*
+         * Discord
+         */
+
+        public static readonly CVarDef<string> DiscordAHelpWebhook =
+            CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY);
+
+        /*
          * Suspicion
          */
 
@@ -193,7 +200,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitor.starting_balance", 20);
 
         public static readonly CVarDef<int> TraitorMaxDifficulty =
-            CVarDef.Create("traitor.max_difficulty", 6);
+            CVarDef.Create("traitor.max_difficulty", 5);
 
         public static readonly CVarDef<int> TraitorMaxPicks =
             CVarDef.Create("traitor.max_picks", 20);
@@ -375,12 +382,6 @@ namespace Content.Shared.CCVar
             CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
 
         /// <summary>
-        ///     The sound that plays when space wind occurs.
-        /// </summary>
-        public static readonly CVarDef<string> SpaceWindSound =
-            CVarDef.Create("atmos.space_wind_sound", "/Audio/Effects/space_wind.ogg", CVar.SERVERONLY);
-
-        /// <summary>
         ///     Whether monstermos tile equalization is enabled.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosEqualization =
@@ -433,13 +434,13 @@ namespace Content.Shared.CCVar
         ///     Maximum time in milliseconds that atmos can take processing.
         /// </summary>
         public static readonly CVarDef<float> AtmosMaxProcessTime =
-            CVarDef.Create("atmos.max_process_time", 5f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.max_process_time", 3f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Atmos tickrate in TPS. Atmos processing will happen every 1/TPS seconds.
         /// </summary>
         public static readonly CVarDef<float> AtmosTickRate =
-            CVarDef.Create("atmos.tickrate", 26f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.tickrate", 15f, CVar.SERVERONLY);
 
         /*
          * MIDI instruments
@@ -479,9 +480,28 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
 
         /*
+         * LOOC
+         */
+
+        public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY);
+
+        public static readonly CVarDef<bool> AdminLoocEnabled =
+            CVarDef.Create("looc.enabled_admin", true, CVar.NOTIFY);
+
+        /*
          * Entity Menu Grouping Types
          */
         public static readonly CVarDef<int> EntityMenuGroupingType = CVarDef.Create("entity_menu", 0, CVar.CLIENTONLY);
+
+        /*
+         * Whitelist
+         */
+
+        /// <summary>
+        ///     Controls whether the server will deny any players that are not whitelisted in the DB.
+        /// </summary>
+        public static readonly CVarDef<bool> WhitelistEnabled =
+            CVarDef.Create("whitelist.enabled", false, CVar.SERVERONLY);
 
         /*
          * VOTE
@@ -522,6 +542,32 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> VoteSameTypeTimeout =
             CVarDef.Create("vote.same_type_timeout", 240f, CVar.SERVERONLY);
+
+
+        /// <summary>
+        ///     Sets the duration of the map vote timer.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerMap = CVarDef.Create("vote.timermap", 90, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Sets the duration of the restart vote timer.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerRestart = CVarDef.Create("vote.timerrestart", 30, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Sets the duration of the gamemode/preset vote timer.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerPreset = CVarDef.Create("vote.timerpreset", 30, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Sets the duration of the map vote timer when ALONE.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerAlone = CVarDef.Create("vote.timeralone", 10, CVar.SERVERONLY);
+
 
         /*
          * BAN
@@ -586,5 +632,32 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> RestrictedNames =
             CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
+
+        /*
+         * Salvage
+         */
+
+        /// <summary>
+        ///     Forced salvage map prototype name (if empty, randomly selected)
+        /// </summary>
+        public static readonly CVarDef<string>
+            SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
+
+        /*
+         * Rules
+         */
+
+        /// <summary>
+        /// Time that players have to wait before rules can be accepted.
+        /// </summary>
+        public static readonly CVarDef<float> RulesWaitTime =
+            CVarDef.Create("rules.time", 45f, CVar.SERVER | CVar.REPLICATED);
+
+        /*
+         * Autogeneration
+         */
+
+        public static readonly CVarDef<string> DestinationFile =
+            CVarDef.Create("autogen.destination_file", "", CVar.SERVER | CVar.SERVERONLY);
     }
 }

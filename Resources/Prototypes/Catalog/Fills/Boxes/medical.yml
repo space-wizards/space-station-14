@@ -1,6 +1,6 @@
 - type: entity
   name: syringe box
-  parent: BoxBase
+  parent: BoxCardboard
   id: BoxSyringe
   description: A box full of syringes.
   components:
@@ -12,14 +12,14 @@
     layers:
       - state: box
       - state: syringe
-
   - type: Item
+    size: 30
   - type: Storage
     capacity: 30
-    
+
 - type: entity
   name: pill canister box
-  parent: BoxBase
+  parent: BoxCardboard
   id: BoxPillCanister
   description: A box full of pill canisters.
   components:
@@ -31,14 +31,14 @@
     layers:
       - state: box
       - state: pillbox
-
   - type: Item
+    size: 30
   - type: Storage
     capacity: 30
 
 - type: entity
   name: sterile box
-  parent: BoxBase
+  parent: BoxCardboard
   id: BoxSterile
   description: This box contains sterile medical masks.
   components:
@@ -51,13 +51,9 @@
       - state: box
       - state: sterile
 
-  - type: Item
-  - type: Storage
-    capacity: 20
-
 - type: entity
   name: latex box
-  parent: BoxBase
+  parent: BoxCardboard
   id: BoxLatex
   description: Contains sterile latex gloves.
   components:
@@ -69,7 +65,25 @@
     layers:
       - state: box
       - state: latex
-
+      
+- type: entity
+  name: body bag box
+  parent: BoxCardboard
+  id: BoxBodyBag
+  description: Contains body bags.
+  components:
+  - type: StorageFill
+    contents:
+      - id: BodyBag_Folded
+        amount: 5
   - type: Item
+    size: 30
   - type: Storage
-    capacity: 20
+    capacity: 30
+  - type: Sprite
+    layers:
+      - state: box
+      - state: bodybags
+    whitelist:
+      tags:
+        - BodyBag

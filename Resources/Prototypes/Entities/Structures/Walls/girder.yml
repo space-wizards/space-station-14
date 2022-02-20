@@ -20,7 +20,7 @@
       - VaultImpassable
   - type: InteractionOutline
   - type: Construction
-    graph: girder
+    graph: Girder
     node: girder
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
@@ -33,6 +33,12 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50

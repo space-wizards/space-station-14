@@ -1,5 +1,6 @@
 using Content.Server.Body.Components;
 using Content.Shared.Administration;
+using Content.Shared.Body.Components;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -8,7 +9,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddMechanismCommand : IConsoleCommand
+    public sealed class AddMechanismCommand : IConsoleCommand
     {
         public string Command => "addmechanism";
         public string Description => "Adds a given entity to a containing body.";

@@ -13,11 +13,11 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
-    public class RadiationCollectorComponent : Component, IInteractHand, IRadiationAct
+    public sealed class RadiationCollectorComponent : Component, IInteractHand, IRadiationAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "RadiationCollector";
         private bool _enabled;
         private TimeSpan _coolDownEnd;
 
@@ -32,7 +32,8 @@ namespace Content.Server.Singularity.Components
             }
         }
 
-        [ComponentDependency] private readonly BatteryComponent? _batteryComponent = default!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ChargeModifier = 30000f;
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
@@ -66,9 +67,9 @@ namespace Content.Server.Singularity.Components
             // But the previous logic would also make the radiation collectors never ever stop providing energy.
             // And since frameTime was used there, I'm assuming that this is what the intent was.
             // This still won't stop things being potentially hilarously unbalanced though.
-            if (_batteryComponent != null)
+            if (_entMan.TryGetComponent<BatteryComponent>(Owner, out var batteryComponent))
             {
-                _batteryComponent!.CurrentCharge += frameTime * radiation.RadsPerSecond * 3000f;
+                batteryComponent.CurrentCharge += frameTime * radiation.RadsPerSecond * ChargeModifier;
             }
         }
 

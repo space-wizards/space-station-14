@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Movement
 {
-    public class MovementAttemptEvent : CancellableEntityEventArgs
+    public sealed class MovementAttemptEvent : CancellableEntityEventArgs
     {
         public MovementAttemptEvent(EntityUid uid)
         {

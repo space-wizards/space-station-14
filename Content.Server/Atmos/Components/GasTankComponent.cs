@@ -31,19 +31,17 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public class GasTankComponent : Component, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
+    public sealed class GasTankComponent : Component, IExamine, IGasMixtureHolder, IDropped, IActivate
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "GasTank";
 
         private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
         private int _integrity = 3;
 
-        [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         [ViewVariables] private BoundUserInterface? _userInterface;
 
@@ -155,13 +153,6 @@ namespace Content.Server.Atmos.Components
             return air;
         }
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor)) return false;
-            OpenInterface(actor.PlayerSession);
-            return true;
-        }
-
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor)) return;
@@ -197,8 +188,8 @@ namespace Content.Server.Atmos.Components
                     CanConnectInternals = IsFunctional && internals != null
                 });
 
-            if (internals == null) return;
-            _itemActions?.GrantOrUpdate(ItemActionType.ToggleInternals, IsFunctional, IsConnected);
+            if (internals == null || !_entityManager.TryGetComponent<ItemActionsComponent>(Owner, out var itemActions)) return;
+            itemActions.GrantOrUpdate(ItemActionType.ToggleInternals, IsFunctional, IsConnected);
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -216,11 +207,6 @@ namespace Content.Server.Atmos.Components
 
         internal void ToggleInternals()
         {
-            var user = GetInternalsComponent()?.Owner;
-
-            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user.Value))
-                return;
-
             if (IsConnected)
             {
                 DisconnectFromInternals();
@@ -326,10 +312,13 @@ namespace Content.Server.Atmos.Components
 
     [UsedImplicitly]
     [DataDefinition]
-    public class ToggleInternalsAction : IToggleItemAction
+    public sealed class ToggleInternalsAction : IToggleItemAction
     {
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(args.Performer, args.Item))
+                return false;
+
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<GasTankComponent?>(args.Item, out var gasTankComponent)) return false;
             // no change
             if (gasTankComponent.IsConnected == args.ToggledOn) return false;

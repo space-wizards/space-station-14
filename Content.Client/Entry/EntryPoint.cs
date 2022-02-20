@@ -52,7 +52,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Entry
 {
-    public class EntryPoint : GameClient
+    public sealed class EntryPoint : GameClient
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
@@ -84,6 +84,7 @@ namespace Content.Client.Entry
             factory.RegisterClass<SharedGravityGeneratorComponent>();
             factory.RegisterClass<SharedAMEControllerComponent>();
 
+            prototypes.RegisterIgnore("accent");
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
             prototypes.RegisterIgnore("gasReaction");
@@ -97,6 +98,9 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("advertisementsPack");
             prototypes.RegisterIgnore("metabolizerType");
             prototypes.RegisterIgnore("metabolismGroup");
+            prototypes.RegisterIgnore("salvageMap");
+            prototypes.RegisterIgnore("gamePreset");
+            prototypes.RegisterIgnore("gameRule");
 
             ClientContentIoC.Register();
 
@@ -186,7 +190,6 @@ namespace Content.Client.Entry
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();
             IoCManager.Resolve<EuiManager>().Initialize();
-            IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<IVoteManager>().Initialize();
             IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();

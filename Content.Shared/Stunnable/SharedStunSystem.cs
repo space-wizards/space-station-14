@@ -1,5 +1,4 @@
 using System;
-using Content.Shared.Alert;
 using Content.Shared.Audio;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
@@ -56,8 +55,8 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<StunnedComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<StunnedComponent, PickupAttemptEvent>(OnPickupAttempt);
             SubscribeLocalEvent<StunnedComponent, AttackAttemptEvent>(OnAttackAttempt);
-            SubscribeLocalEvent<StunnedComponent, EquipAttemptEvent>(OnEquipAttempt);
-            SubscribeLocalEvent<StunnedComponent, UnequipAttemptEvent>(OnUnequipAttempt);
+            SubscribeLocalEvent<StunnedComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
+            SubscribeLocalEvent<StunnedComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
         }
 
         private void OnSlowGetState(EntityUid uid, SlowedDownComponent component, ref ComponentGetState args)
@@ -119,8 +118,7 @@ namespace Content.Shared.Stunnable
         ///     Stuns the entity, disallowing it from doing many interactions temporarily.
         /// </summary>
         public bool TryStun(EntityUid uid, TimeSpan time, bool refresh,
-            StatusEffectsComponent? status = null,
-            SharedAlertsComponent? alerts = null)
+            StatusEffectsComponent? status = null)
         {
             if (time <= TimeSpan.Zero)
                 return false;
@@ -128,17 +126,14 @@ namespace Content.Shared.Stunnable
             if (!Resolve(uid, ref status, false))
                 return false;
 
-            Resolve(uid, ref alerts, false);
-
-            return _statusEffectSystem.TryAddStatusEffect<StunnedComponent>(uid, "Stun", time, refresh, alerts: alerts);
+            return _statusEffectSystem.TryAddStatusEffect<StunnedComponent>(uid, "Stun", time, refresh);
         }
 
         /// <summary>
         ///     Knocks down the entity, making it fall to the ground.
         /// </summary>
         public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh,
-            StatusEffectsComponent? status = null,
-            SharedAlertsComponent? alerts = null)
+            StatusEffectsComponent? status = null)
         {
             if (time <= TimeSpan.Zero)
                 return false;
@@ -146,25 +141,19 @@ namespace Content.Shared.Stunnable
             if (!Resolve(uid, ref status, false))
                 return false;
 
-            Resolve(uid, ref alerts, false);
-
-            return _statusEffectSystem.TryAddStatusEffect<KnockedDownComponent>(uid, "KnockedDown", time, refresh, alerts: alerts);
+            return _statusEffectSystem.TryAddStatusEffect<KnockedDownComponent>(uid, "KnockedDown", time, refresh);
         }
 
         /// <summary>
         ///     Applies knockdown and stun to the entity temporarily.
         /// </summary>
         public bool TryParalyze(EntityUid uid, TimeSpan time, bool refresh,
-            StatusEffectsComponent? status = null,
-            SharedAlertsComponent? alerts = null)
+            StatusEffectsComponent? status = null)
         {
-            if (!Resolve(uid, ref status))
+            if (!Resolve(uid, ref status, false))
                 return false;
 
-            // Optional component.
-            Resolve(uid, ref alerts, false);
-
-            return TryKnockdown(uid, time, refresh, status, alerts) && TryStun(uid, time, refresh, status, alerts);
+            return TryKnockdown(uid, time, refresh, status) && TryStun(uid, time, refresh, status);
         }
 
         /// <summary>
@@ -172,19 +161,15 @@ namespace Content.Shared.Stunnable
         /// </summary>
         public bool TrySlowdown(EntityUid uid, TimeSpan time, bool refresh,
             float walkSpeedMultiplier = 1f, float runSpeedMultiplier = 1f,
-            StatusEffectsComponent? status = null,
-            SharedAlertsComponent? alerts = null)
+            StatusEffectsComponent? status = null)
         {
-            if (!Resolve(uid, ref status))
+            if (!Resolve(uid, ref status, false))
                 return false;
-
-            // "Optional" component.
-            Resolve(uid, ref alerts, false);
 
             if (time <= TimeSpan.Zero)
                 return false;
 
-            if (_statusEffectSystem.TryAddStatusEffect<SlowedDownComponent>(uid, "SlowedDown", time, refresh, status, alerts))
+            if (_statusEffectSystem.TryAddStatusEffect<SlowedDownComponent>(uid, "SlowedDown", time, refresh, status))
             {
                 var slowed = EntityManager.GetComponent<SlowedDownComponent>(uid);
                 // Doesn't make much sense to have the "TrySlowdown" method speed up entities now does it?
@@ -256,14 +241,18 @@ namespace Content.Shared.Stunnable
             args.Cancel();
         }
 
-        private void OnEquipAttempt(EntityUid uid, StunnedComponent stunned, EquipAttemptEvent args)
+        private void OnEquipAttempt(EntityUid uid, StunnedComponent stunned, IsEquippingAttemptEvent args)
         {
-            args.Cancel();
+            // is this a self-equip, or are they being stripped?
+            if (args.Equipee == uid)
+                args.Cancel();
         }
 
-        private void OnUnequipAttempt(EntityUid uid, StunnedComponent stunned, UnequipAttemptEvent args)
+        private void OnUnequipAttempt(EntityUid uid, StunnedComponent stunned, IsUnequippingAttemptEvent args)
         {
-            args.Cancel();
+            // is this a self-equip, or are they being stripped?
+            if (args.Unequipee == uid)
+                args.Cancel();
         }
 
         #endregion

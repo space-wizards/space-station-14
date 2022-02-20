@@ -23,7 +23,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Nuke
 {
-    public class NukeSystem : EntitySystem
+    public sealed class NukeSystem : EntitySystem
     {
         [Dependency] private readonly NukeCodeSystem _codes = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
@@ -46,8 +46,7 @@ namespace Content.Server.Nuke
             // anchoring logic
             SubscribeLocalEvent<NukeComponent, AnchorAttemptEvent>(OnAnchorAttempt);
             SubscribeLocalEvent<NukeComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
-            SubscribeLocalEvent<NukeComponent, AnchoredEvent>(OnWasAnchored);
-            SubscribeLocalEvent<NukeComponent, UnanchoredEvent>(OnWasUnanchored);
+            SubscribeLocalEvent<NukeComponent, AnchorStateChangedEvent>(OnAnchorChanged);
 
             // ui events
             SubscribeLocalEvent<NukeComponent, NukeEjectMessage>(OnEjectButtonPressed);
@@ -118,12 +117,6 @@ namespace Content.Server.Nuke
             if (args.Handled)
                 return;
 
-            // standard interactions check
-            if (!args.InRangeUnobstructed())
-                return;
-            if (!_actionBlocker.CanInteract(args.User) || !_actionBlocker.CanUse(args.User))
-                return;
-
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
@@ -154,12 +147,7 @@ namespace Content.Server.Nuke
             }
         }
 
-        private void OnWasUnanchored(EntityUid uid, NukeComponent component, UnanchoredEvent args)
-        {
-            UpdateUserInterface(uid, component);
-        }
-
-        private void OnWasAnchored(EntityUid uid, NukeComponent component, AnchoredEvent args)
+        private void OnAnchorChanged(EntityUid uid, NukeComponent component, ref AnchorStateChangedEvent args)
         {
             UpdateUserInterface(uid, component);
         }

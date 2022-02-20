@@ -10,23 +10,22 @@ using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
 using Content.Server.CPUJob.JobQueues;
-using Content.Shared.MobState;
 using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.AI.Utility.AiLogic
 {
     // TODO: Need to split out the IMover stuff for NPC to a generic one that can be used for hoomans as well.
     [RegisterComponent]
+    [ComponentProtoName("UtilityAI")]
     [ComponentReference(typeof(AiControllerComponent)), ComponentReference(typeof(IMoverComponent))]
     public sealed class UtilityAi : AiControllerComponent, ISerializationHooks
     {
-        public override string Name => "UtilityAI";
-
         // TODO: Look at having ParallelOperators (probably no more than that as then you'd have a full-blown BT)
         // Also RepeatOperators (e.g. if we're following an entity keep repeating MoveToEntity)
         private AiActionSystem _planner = default!;
@@ -36,7 +35,7 @@ namespace Content.Server.AI.Utility.AiLogic
         /// <summary>
         ///     The sum of all BehaviorSets gives us what actions the AI can take
         /// </summary>
-        [DataField("behaviorSets")]
+        [DataField("behaviorSets", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<BehaviorSetPrototype>))]
         public HashSet<string> BehaviorSets { get; } = new();
 
         public List<IAiUtility> AvailableActions { get; set; } = new();

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Robust.Client.UserInterface;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Client.ContextMenu.UI
@@ -12,6 +13,7 @@ namespace Content.Client.ContextMenu.UI
     /// <remarks>
     ///     This largely involves setting up timers to open and close sub-menus when hovering over other menu elements.
     /// </remarks>
+    [Virtual]
     public class ContextMenuPresenter : IDisposable
     {
         public static readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
@@ -71,6 +73,10 @@ namespace Content.Client.ContextMenu.UI
             {
                 Menus.Pop().Close();
             }
+
+            // ensure no accidental double-closing happens.
+            CancelClose?.Cancel();
+            CancelClose = null;
         }
 
         /// <summary>
@@ -78,7 +84,11 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public virtual void OnMouseEntered(ContextMenuElement element)
         {
-            var topMenu = Menus.Peek();
+            if (!Menus.TryPeek(out var topMenu))
+            {
+                Logger.Error("Context Menu: Mouse entered menu without any open menus?");
+                return;
+            }
 
             if (element.ParentMenu == topMenu || element.SubMenu == topMenu)
                 CancelClose?.Cancel();
@@ -120,8 +130,14 @@ namespace Content.Client.ContextMenu.UI
         /// </remarks>
         public virtual void OpenSubMenu(ContextMenuElement element)
         {
+            if (!Menus.TryPeek(out var topMenu))
+            {
+                Logger.Error("Context Menu: Attempting to open sub menu without any open menus?");
+                return;
+            }
+
             // If This is already the top most menu, do nothing.
-            if (element.SubMenu == Menus.Peek())
+            if (element.SubMenu == topMenu)
                 return;
 
             // Was the parent menu closed or disposed before an open timer completed?
@@ -131,6 +147,10 @@ namespace Content.Client.ContextMenu.UI
             // Close any currently open sub-menus up to this element's parent menu.
             CloseSubMenus(element.ParentMenu);
 
+            // cancel any queued openings to prevent weird double-open scenarios.
+            CancelOpen?.Cancel();
+            CancelOpen = null;
+
             if (element.SubMenu == null)
                 return;
 
@@ -138,8 +158,6 @@ namespace Content.Client.ContextMenu.UI
             // which depends on the panel container style margins.
             var altPos = element.GlobalPosition;
             var pos = altPos + (element.Width + 2*ContextMenuElement.ElementMargin, - 2*ContextMenuElement.ElementMargin);
-            element.SubMenu.Open(UIBox2.FromDimensions(pos, (1, 1)), altPos);
-            element.SubMenu.Close();
             element.SubMenu.Open(UIBox2.FromDimensions(pos, (1, 1)), altPos);
 
             // draw on top of other menus
@@ -162,7 +180,7 @@ namespace Content.Client.ContextMenu.UI
         }
 
         /// <summary>
-        ///     Removes event subscriptions when an element is removed from a menu, 
+        ///     Removes event subscriptions when an element is removed from a menu,
         /// </summary>
         public void OnRemoveElement(ContextMenuPopup menu, Control control)
         {

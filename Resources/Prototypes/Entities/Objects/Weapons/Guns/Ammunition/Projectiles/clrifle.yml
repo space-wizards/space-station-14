@@ -18,7 +18,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 27
+        Blunt: 3
 
 - type: entity
   id: BulletClRifleHV
