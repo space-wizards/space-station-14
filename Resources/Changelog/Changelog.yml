@@ -1,21 +1,4 @@
 Entries:
-- author: xRiriq
-  changes:
-  - {message: hardsuits and hardsuit helmets now are bigger and no longer fit in pockets,
-    type: Tweak}
-  id: 599
-  time: '2021-11-17T00:05:41.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Atmos on Packed Station no longer pumps plasma by default., type: Tweak}
-  - {message: Surgery on Packed Station once again starts powered., type: Tweak}
-  id: 600
-  time: '2021-11-17T00:06:26.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: Added a little 'ding' when a vote happens., type: Add}
-  id: 601
-  time: '2021-11-18T09:45:36.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Fires no longer instantly kill you if you walk near them. They''ll
@@ -3000,3 +2983,20 @@ Entries:
       mapped in., type: Add}
   id: 1098
   time: '2022-02-19T23:56:48.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Being in disposals no longer exposes you to the air above the disposal
+      tube--you will now inhale, exhale, and be exposed to the gas inside the tube
+      itself.', type: Tweak}
+  id: 1099
+  time: '2022-02-20T00:42:02.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Orbiting/following works properly again., type: Tweak}
+  id: 1100
+  time: '2022-02-20T00:42:11.0000000+00:00'
+- author: Sergal
+  changes:
+  - {message: Fixed the round-end counter., type: Tweak}
+  id: 1101
+  time: '2022-02-20T00:42:16.0000000+00:00'
