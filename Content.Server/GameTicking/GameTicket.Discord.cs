@@ -36,12 +36,32 @@ namespace Content.Server.GameTicking
             }
         }
 
+        private async void SendDiscordStartRoundAlert()
+        {
+            var sendsWebhook = DiscordWebhook != string.Empty;
+            if (sendsWebhook)
+            {
+                var map = _gameMapManager.GetSelectedMap();
+                var text = Loc.GetString("discord-round-start",
+                    ("id", RoundId),
+                    ("map", map.MapName));
+
+                var payload = new WebhookPayload()
+                {
+                    Content = text,
+                };
+
+                SendDiscordMessage(payload);
+            }
+        }
+
         private async void SendDiscordEndRoundAlert(TimeSpan roundDuration)
         {
             var sendsWebhook = DiscordWebhook != string.Empty;
             if (sendsWebhook)
             {
                 var text = Loc.GetString("discord-round-end",
+                    ("id", RoundId),
                     ("hours", roundDuration.Hours),
                     ("minutes", roundDuration.Minutes),
                     ("seconds", roundDuration.Seconds));

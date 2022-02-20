@@ -232,6 +232,8 @@ namespace Content.Server.GameTicking
 
                 var presetTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
 
+                SendDiscordStartRoundAlert();
+
                 void FailedPresetRestart()
                 {
                     SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart",
