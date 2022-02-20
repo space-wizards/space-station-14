@@ -1008,3 +1008,47 @@
     attributes:
       proper: true
       gender: male
+
+- type: entity
+  name: raccoon
+  parent: SimpleMobBase
+  id: MobRaccoon
+  description: Trash panda!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/raccoon.rsi
+    scale: 0.7, 0.7
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: raccoon
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: raccoon
+      crit: raccoon_dead
+      dead: raccoon_dead
+  - type: Butcherable
+    spawned: FoodMeat
+    pieces: 3
+  - type: InteractionPopup
+    successChance: 0.2 # Low when undomesticated.
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+  - type: Grammar
+    attributes:
+      gender: epicene
