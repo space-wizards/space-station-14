@@ -129,6 +129,13 @@
   icon: /Textures/Objects/Tools/emag.rsi/icon.png
   price: 8
 
+- type: uplinkListing
+  id: UplinkHypopen
+  category: Utility
+  itemId: Hypopen
+  description: A chemical hypospray disguised as a pen, capable of instatly injecting up to 15u of reagents. Starts empty.
+  price: 4
+
 # Bundles
 
 - type: uplinkListing
@@ -242,12 +249,6 @@
   category: Misc
   itemId: RevolverCapGun
   price: 4
-
-- type: uplinkListing
-  id: UplinkPen
-  category: Misc
-  itemId: Pen
-  price: 2
 
 - type: uplinkListing
   id: UplinkCigarettes
