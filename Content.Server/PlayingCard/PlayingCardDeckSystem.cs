@@ -17,7 +17,7 @@ namespace Content.Server.PlayingCard
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        public static readonly int PullCardLimit = 10;
+        public static readonly int PickupMultipleCardLimit = 10;
 
         public override void Initialize()
         {
@@ -48,6 +48,7 @@ namespace Content.Server.PlayingCard
         private void OnInteractUsing(EntityUid uid, PlayingCardDeckComponent cardDeckComponent, InteractUsingEvent args)
         {
             // if deck of cards, add all, else add single card to list and destroy the entity
+            AddCards(uid, args.Used, args.User,  cardDeckComponent);
         }
 
         private void OnInteractHand(EntityUid uid, PlayingCardDeckComponent cardDeckComponent, InteractHandEvent args)
@@ -57,39 +58,21 @@ namespace Content.Server.PlayingCard
 
         private void AddAltVerb(EntityUid uid, PlayingCardDeckComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-
             //  add verbs for picking up deck and taking cards out
-        //  if (!args.CanInteract)
-        //         return;
+          if (!args.CanInteract)
+                 return;
 
-        //     AlternativeVerb verb = new()
-        //     {
-        //         Act = () =>
-        //         {
-        //             AttemptDisassemble(uid, args.User, args.Target, component);
-        //         },
-        //         Text = Loc.GetString("disassemble-system-verb-disassemble"),
-        //         Priority = 2
-        //     };
-        //     args.Verbs.Add(verb);
+            AlternativeVerb verb = new()
+            {
+                Act = () =>
+                {
+                    PickupMultipleCards(uid, args.User, component);
+                },
+                Text = Loc.GetString("playing-card-deck-component-pickup-multiple-verb"),
+                Priority = 2
+            };
+            args.Verbs.Add(verb);
         }
-
-        // private void AddPickupVerb(EntityUid uid, DisassembleOnAltVerbComponent component, GetVerbsEvent<AlternativeVerb> args)
-        // {
-        //  if (!args.CanInteract)
-        //         return;
-
-        //     AlternativeVerb verb = new()
-        //     {
-        //         Act = () =>
-        //         {
-        //             AttemptDisassemble(uid, args.User, args.Target, component);
-        //         },
-        //         Text = Loc.GetString("disassemble-system-verb-disassemble"),
-        //         Priority = 2
-        //     };
-        //     args.Verbs.Add(verb);
-        // }
 
         public void Shuffle(EntityUid uid, EntityUid user, PlayingCardDeckComponent cardDeckComponent)
         {
@@ -107,6 +90,32 @@ namespace Content.Server.PlayingCard
             _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-shuffle", ("user", user)),
                 uid, Filter.Pvs(uid));
             SoundSystem.Play(Filter.Pvs(uid), cardDeckComponent.ShuffleSound.GetSound(), uid);
+        }
+
+        public void AddCards(EntityUid uid, EntityUid addedEntity, EntityUid user, PlayingCardDeckComponent cardDeckComponent)
+        {
+            // CHECK CARD IDS FIRST
+            if (TryComp<PlayingCardHandComponent>(addedEntity, out PlayingCardHandComponent? handComp))
+            {
+                handComp.CardList.Reverse();
+                cardDeckComponent.CardList.AddRange(handComp.CardList);
+            }
+            if (TryComp<PlayingCardComponent>(addedEntity, out PlayingCardComponent? cardComp))
+            {
+                // this needs to be card ID
+                cardDeckComponent.CardList.Add(cardComp.CardName);
+            }
+        }
+
+        public void PickupSingleCard(EntityUid uid, EntityUid user, PlayingCardDeckComponent cardDeckComponent)
+        {
+
+        }
+
+        public void PickupMultipleCards(EntityUid uid, EntityUid user, PlayingCardDeckComponent cardDeckComponent)
+        {
+
+            // this creates cardhandcomponents
         }
     }
 }

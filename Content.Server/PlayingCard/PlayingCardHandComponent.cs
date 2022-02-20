@@ -7,7 +7,7 @@ namespace Content.Server.PlayingCard
 {
     [RegisterComponent, Friend(typeof(PlayingCardSystem))]
     [ComponentReference(typeof(SharedPlayingCardComponent))]
-    public class PlayingCardHandComponent : SharedPlayingCardComponent
+    public class PlayingCardHandComponent : SharedMultiplePlayingCardComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ThrowIndividually { get; set; } = false;

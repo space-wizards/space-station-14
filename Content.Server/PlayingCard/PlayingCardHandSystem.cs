@@ -36,25 +36,38 @@ namespace Content.Server.PlayingCard
         {
             base.Initialize();
 
-            // SubscribeLocalEvent<PlayingCardComponent, InteractUsingEvent>(OnStackInteractUsing);
-            // // SubscribeLocalEvent<PlayingCardComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
-            // // SubscribeLocalEvent<PlayingCardComponent, UseInHandEvent>(OnUseInHand);
-            // // SubscribeLocalEvent<PlayingCardComponent, ExaminedEvent(examine);
-
+            SubscribeLocalEvent<PlayingCardHandComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<PlayingCardHandComponent, UseInHandEvent>(OnUseInHand);
+            SubscribeLocalEvent<PlayingCardHandComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<PlayingCardHandComponent, CardListSyncRequestMessage>(OnCardListSyncRequest);
+            SubscribeLocalEvent<PlayingCardHandComponent, PickSingleCardMessage>(PickSingleCardMessage);
         }
 
-
-        private void OnUiseInHand(EntityUid uid, PlayingCardHandComponent cardComponent, UseInHandEvent args)
+        private void OnInteractUsing(EntityUid uid, PlayingCardHandComponent cardComponent, InteractUsingEvent args)
         {
-            // if (single)
-            // flip
+            // Add cards
+        }
 
-            // if deck
-            // shuffle
-
-            // if not deck and more than 1 card
+        private void OnUseInHand(EntityUid uid, PlayingCardHandComponent cardComponent, UseInHandEvent args)
+        {
             // view interface
         }
+
+        private void OnExamine(EntityUid uid, PlayingCardHandComponent cardComponent, ExaminedEvent args)
+        {
+            // List last 5 cards
+        }
+
+        private void OnCardListSyncRequest(EntityUid uid, PlayingCardHandComponent cardComponent, CardListSyncRequestMessage args)
+        {
+
+        }
+
+        private void PickSingleCardMessage(EntityUid uid, PlayingCardHandComponent cardComponent, PickSingleCardMessage args)
+        {
+
+        }
+
 
         // Should inspect upright cards if they they're less than 10
     }
