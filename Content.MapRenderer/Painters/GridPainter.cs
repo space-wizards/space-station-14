@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
 using static Robust.UnitTesting.RobustIntegrationTest;
 
@@ -26,7 +27,7 @@ namespace Content.MapRenderer.Painters
         private readonly IMapManager _sMapManager;
 
         private readonly ConcurrentDictionary<GridId, List<EntityData>> _entities;
-        private readonly ConcurrentDictionary<GridId, List<DecalData>> _decals;
+        private readonly Dictionary<GridId, List<DecalData>> _decals;
 
         public GridPainter(ClientIntegrationInstance client, ServerIntegrationInstance server)
         {
@@ -109,12 +110,12 @@ namespace Content.MapRenderer.Painters
             return components;
         }
 
-        private ConcurrentDictionary<GridId, List<DecalData>> GetDecals()
+        private Dictionary<GridId, List<DecalData>> GetDecals()
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var decals = new ConcurrentDictionary<GridId, List<DecalData>>();
+            var decals = new Dictionary<GridId, List<DecalData>>();
 
             foreach (var grid in _sMapManager.GetAllGrids())
             {
@@ -129,7 +130,7 @@ namespace Content.MapRenderer.Painters
                         foreach (var (_, decal) in list)
                         {
                             var (x, y) = TransformLocalPosition(decal.Coordinates, grid);
-                            decals.GetOrAdd(grid.Index, _ => new List<DecalData>()).Add(new DecalData(decal, x, y));
+                            decals.GetOrNew(grid.Index).Add(new DecalData(decal, x, y));
                         }
                     }
                 }
