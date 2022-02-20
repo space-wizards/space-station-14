@@ -231,6 +231,13 @@
 # Misc
 
 - type: uplinkListing
+  id: UplinkCyberpen
+  category: Misc
+  itemId: CyberPen
+  description: Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
+  price: 4
+
+- type: uplinkListing
   id: UplinkBalloon
   category: Misc
   itemId: BalloonSyn
