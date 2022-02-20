@@ -56,7 +56,7 @@ namespace Content.Server.Nuke
         public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/angry_beep.ogg");
 
         [DataField("alertSound")]
-        public SoundSpecifier AlertSound = new SoundPathSpecifier("/Audio/Machines/alarm.ogg");
+        public SoundSpecifier AlertSound = new SoundPathSpecifier("/Audio/Machines/Nuke/nuke_alarm.ogg");
 
         [DataField("armSound")]
         public SoundSpecifier ArmSound = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
