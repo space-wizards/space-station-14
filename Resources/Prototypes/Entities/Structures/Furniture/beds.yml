@@ -4,7 +4,7 @@
   parent: BaseStructure
   description: This is used to lie in, sleep in or strap on.
   components:
-  - type: Bed
+  - type: HealOnBuckle
     damage:
       types:
         Blunt: -0.1
@@ -68,7 +68,7 @@
   components:
   - type: Sprite
     state: bed-MED
-  - type: Bed
+  - type: HealOnbuckle
     damage:
       types:
         Blunt: -0.2

@@ -4,7 +4,7 @@ namespace Content.Server.Bed.Components
 {
     [RegisterComponent]
 
-    public sealed class BedComponent : Component
+    public sealed class HealOnBuckleComponent : Component
     {
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]

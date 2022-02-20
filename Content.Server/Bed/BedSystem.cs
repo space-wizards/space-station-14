@@ -26,7 +26,7 @@ namespace Content.Server.Bed
         {
             base.Update(frameTime);
 
-            foreach (var (bedComponent, strapComponent) in EntityManager.EntityQuery<BedComponent, StrapComponent>())
+            foreach (var (bedComponent, strapComponent) in EntityManager.EntityQuery<HealOnBuckleComponent, StrapComponent>())
             {
                 if (strapComponent.BuckledEntities.Count == 0)
                 {
@@ -64,7 +64,7 @@ namespace Content.Server.Bed
             if (!TryComp<SharedBodyComponent>(args.BuckledEntity, out var body))
                 return;
 
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && power.Powered == false && args.Buckling == true)
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered && args.Buckling)
                 return;
 
             SendArgs(args.BuckledEntity, body, component, args.Buckling);
@@ -112,7 +112,6 @@ namespace Content.Server.Bed
                 RaiseLocalEvent(blood.Owner, bloodEvent, false);
             }
         }
-
     }
 
     public sealed class ApplyStasisMultiplierEvent : EntityEventArgs
