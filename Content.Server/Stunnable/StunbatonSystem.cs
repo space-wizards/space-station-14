@@ -94,8 +94,10 @@ namespace Content.Server.Stunnable
             if (!_cellSystem.TryGetBatteryFromSlot(uid, out var battery) || !battery.TryUseCharge(comp.EnergyPerUse))
                 return;
 
-            StunEntity(args.Target, comp);
             SendPowerPulse(args.Target, args.User, uid);
+
+            if (_robustRandom.Prob(comp.OnThrowStunChance))
+                StunEntity(args.Target, comp);
         }
 
         private void OnPowerCellChanged(EntityUid uid, StunbatonComponent comp, PowerCellChangedEvent args)
