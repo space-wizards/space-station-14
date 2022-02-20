@@ -141,6 +141,7 @@
   parent: BaseToolSurgery
   description: For cutting wood and other objects to pieces. Or sawing bones, in case of emergency.
   components:
+  - type: Sharp
   - type: Utensil
     types:
       - Knife

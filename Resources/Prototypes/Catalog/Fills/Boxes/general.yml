@@ -141,7 +141,7 @@
     contents:
       - id: ClothingMaskBreath
       - id: EmergencyOxygenTankFilled
-      - id: EpinephrineMedipen
+      - id: EmergencyMedipen
       - id: Flare
       - id: FoodSnackChocolate
   - type: Sprite

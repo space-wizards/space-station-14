@@ -19,6 +19,7 @@ namespace Content.Server.NodeContainer.Nodes
     ///     correctly correspond.
     /// </summary>
     [DataDefinition]
+    [Virtual]
     public class PipeNode : Node, IGasMixtureHolder, IRotatableNode
     {
         /// <summary>
@@ -38,20 +39,22 @@ namespace Content.Server.NodeContainer.Nodes
 
         public void AddAlwaysReachable(PipeNode pipeNode)
         {
-            if (NodeGroup == null) return;
             if (pipeNode.NodeGroupID != NodeGroupID) return;
             _alwaysReachable ??= new();
             _alwaysReachable.Add(pipeNode);
-            EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
+
+            if (NodeGroup != null)
+                EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
         }
 
         public void RemoveAlwaysReachable(PipeNode pipeNode)
         {
             if (_alwaysReachable == null) return;
-            if (NodeGroup == null) return;
-            if (pipeNode.NodeGroupID != NodeGroupID) return;
+
             _alwaysReachable.Remove(pipeNode);
-            EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
+
+            if (NodeGroup != null)
+                EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
         }
 
         /// <summary>
@@ -130,14 +133,29 @@ namespace Content.Server.NodeContainer.Nodes
                     return false;
 
                 CurrentPipeDirection = _originalPipeDirection;
-            }
-            else
-            {
-                CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(ev.NewRotation);
+                return true;
             }
 
-            // node connections need to be updated
-            return true;
+            var oldDirection = CurrentPipeDirection;
+            CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(ev.NewRotation);
+            return oldDirection != CurrentPipeDirection;
+        }
+
+        public override void OnAnchorStateChanged(IEntityManager entityManager, bool anchored)
+        {
+            if (!anchored)
+                return;
+
+            // update valid pipe directions
+
+            if (!RotationsEnabled)
+            {
+                CurrentPipeDirection = _originalPipeDirection;
+                return;
+            }
+
+            var xform = entityManager.GetComponent<TransformComponent>(Owner);
+            CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(xform.LocalRotation);
         }
 
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,

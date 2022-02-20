@@ -72,8 +72,20 @@
     Wood: 100
 
 - type: latheRecipe
+  id: Drone
+  icon:
+    sprite: Mobs/Silicon/drone.rsi
+    state: shell
+  result: Drone
+  completetime: 1500
+  materials:
+    Steel: 500
+    Glass: 500
+    Plastic: 500
+
+- type: latheRecipe
   id: SynthesizerInstrument
-  icon: 
+  icon:
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: icon
   result: SynthesizerInstrument

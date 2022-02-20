@@ -11,7 +11,7 @@ namespace Content.Server.Nuke.Commands
 {
     [UsedImplicitly]
     [AdminCommand(AdminFlags.Fun)]
-    public class ToggleNukeCommand : IConsoleCommand
+    public sealed class ToggleNukeCommand : IConsoleCommand
     {
         public string Command => "nukearm";
         public string Description => "Toggle nuclear bomb timer. You can set timer directly. Uid is optional.";

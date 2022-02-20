@@ -1,0 +1,11 @@
+- type: vendingMachineInventory
+  id: LawDrobeInventory
+  name: LawDrobe
+  spriteName: lawdrobe
+  startingInventory:
+    ClothingUniformJumpsuitLawyerBlue: 1
+    ClothingUniformJumpsuitLawyerPurple: 1
+    ClothingUniformJumpsuitLawyerRed: 1
+    ClothingUniformJumpsuitLawyerBlack: 1
+    ClothingShoesColorBlack: 2
+    ClothingHeadsetService: 2

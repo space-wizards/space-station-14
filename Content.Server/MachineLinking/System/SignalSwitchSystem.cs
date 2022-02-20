@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.MachineLinking.System
 {
-    public class SignalSwitchSystem : EntitySystem
+    public sealed class SignalSwitchSystem : EntitySystem
     {
         public override void Initialize()
         {

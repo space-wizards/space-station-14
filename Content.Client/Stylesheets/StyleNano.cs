@@ -7,6 +7,7 @@ using Content.Client.Resources;
 using Content.Client.Targeting;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
+using Content.Shared.Verbs;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -97,6 +98,12 @@ namespace Content.Client.Stylesheets
         public static readonly Color ButtonColorContextHover = Color.DarkSlateGray;
         public static readonly Color ButtonColorContextPressed = Color.LightSlateGray;
         public static readonly Color ButtonColorContextDisabled = Color.Black;
+
+        // Examine button colors
+        public static readonly Color ExamineButtonColorContext = Color.Transparent;
+        public static readonly Color ExamineButtonColorContextHover = Color.DarkSlateGray;
+        public static readonly Color ExamineButtonColorContextPressed = Color.LightSlateGray;
+        public static readonly Color ExamineButtonColorContextDisabled = Color.FromHex("#5A5A5A");
 
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
@@ -615,16 +622,16 @@ namespace Content.Client.Stylesheets
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorContextDisabled),
 
                 // Context Menu Labels
-                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbInteractionText)
+                Element<RichTextLabel>().Class(InteractionVerb.DefaultTextStyleClass)
                     .Prop(Label.StylePropertyFont, notoSansBoldItalic12),
 
-                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbActivationText)
+                Element<RichTextLabel>().Class(ActivationVerb.DefaultTextStyleClass)
                     .Prop(Label.StylePropertyFont, notoSansBold12),
 
-                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbAlternativeText)
+                Element<RichTextLabel>().Class(AlternativeVerb.DefaultTextStyleClass)
                     .Prop(Label.StylePropertyFont, notoSansItalic12),
 
-                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbOtherText)
+                Element<RichTextLabel>().Class(Verb.DefaultTextStyleClass)
                     .Prop(Label.StylePropertyFont, notoSans12),
 
                 Element<TextureRect>().Class(ContextMenuElement.StyleClassContextMenuExpansionTexture)
@@ -652,6 +659,26 @@ namespace Content.Client.Stylesheets
                 Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
+
+                // Examine buttons
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContext),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextHover),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextPressed),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextDisabled),
 
                 // Thin buttons (No padding nor vertical margin)
                 Element<EntityContainerButton>().Class(StyleClassStorageButton)

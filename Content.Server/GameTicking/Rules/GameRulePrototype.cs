@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.GameTicking.Rules;
 
 [Prototype("gameRule")]
-public class GameRulePrototype : IPrototype
+public sealed class GameRulePrototype : IPrototype
 {
     [DataField("id", required:true)]
     public string ID { get; } = default!;

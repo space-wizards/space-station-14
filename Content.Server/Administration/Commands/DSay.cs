@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class DSay : IConsoleCommand
+    sealed class DSay : IConsoleCommand
     {
         public string Command => "dsay";
 

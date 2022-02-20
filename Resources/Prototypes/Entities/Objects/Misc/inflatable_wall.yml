@@ -8,6 +8,7 @@
   - type: Sprite
     sprite: Objects/Misc/inflatable_wall.rsi
     state: inflatable_wall
+    netsync: false
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -84,3 +85,5 @@
   - type: DisassembleOnAltVerb
     prototype: InflatableDoorStack1
     doAfter: 3
+  - type: Occluder
+    enabled: false

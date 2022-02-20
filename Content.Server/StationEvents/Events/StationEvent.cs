@@ -58,6 +58,8 @@ namespace Content.Server.StationEvents.Events
         /// </summary>
         public virtual string? EndAudio { get; } = null;
 
+        public virtual AudioParams AudioParams { get; } = AudioParams.Default.WithVolume(-10f);
+
         /// <summary>
         ///     In minutes, when is the first round time this event can start
         /// </summary>
@@ -135,7 +137,7 @@ namespace Content.Server.StationEvents.Events
 
             if (StartAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), StartAudio, AudioParams.Default.WithVolume(-10f));
+                SoundSystem.Play(Filter.Broadcast(), StartAudio, AudioParams);
             }
 
             Announced = true;
@@ -158,7 +160,7 @@ namespace Content.Server.StationEvents.Events
 
             if (EndAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), EndAudio, AudioParams.Default.WithVolume(-10f));
+                SoundSystem.Play(Filter.Broadcast(), EndAudio, AudioParams);
             }
 
             Started = false;

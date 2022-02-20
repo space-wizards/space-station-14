@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Client.MachineLinking.UI
 {
-    public class SignalPortSelectorBoundUserInterface : BoundUserInterface
+    public sealed class SignalPortSelectorBoundUserInterface : BoundUserInterface
     {
         private SignalPortSelectorMenu? _menu;
 

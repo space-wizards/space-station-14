@@ -20,7 +20,7 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedGasAnalyzerComponent))]
-    public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IActivate
+    public sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IActivate
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 

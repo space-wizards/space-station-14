@@ -22,7 +22,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasFilterSystem : EntitySystem
+    public sealed class GasFilterSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
@@ -39,6 +39,21 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterToggleStatusMessage>(OnToggleStatusMessage);
+
+            SubscribeLocalEvent<GasFilterComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+        }
+
+        private void OnAnchorChanged(EntityUid uid, GasFilterComponent component, ref AnchorStateChangedEvent args)
+        {
+            if (args.Anchored)
+                return;
+
+            component.Enabled = false;
+            if (TryComp(uid, out AppearanceComponent? appearance))
+                appearance.SetData(FilterVisuals.Enabled, false);
+
+            DirtyUI(uid, component);
+            _userInterfaceSystem.TryCloseAll(uid, GasFilterUiKey.Key);
         }
 
         private void OnFilterUpdated(EntityUid uid, GasFilterComponent filter, AtmosDeviceUpdateEvent args)

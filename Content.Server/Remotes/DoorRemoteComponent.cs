@@ -5,7 +5,7 @@ namespace Content.Server.Remotes
 {
     [RegisterComponent]
     [Friend(typeof(DoorRemoteSystem))]
-    public class DoorRemoteComponent : Component
+    public sealed class DoorRemoteComponent : Component
     {
         public override string Name => "DoorRemote";
 

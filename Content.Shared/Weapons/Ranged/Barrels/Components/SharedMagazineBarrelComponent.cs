@@ -26,7 +26,7 @@ namespace Content.Shared.Weapons.Ranged.Barrels.Components
     }
 
     [Serializable, NetSerializable]
-    public class MagazineBarrelComponentState : ComponentState
+    public sealed class MagazineBarrelComponentState : ComponentState
     {
         public bool Chambered { get; }
         public FireRateSelector FireRateSelector { get; }

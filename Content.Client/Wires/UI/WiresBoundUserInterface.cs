@@ -4,7 +4,7 @@ using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Client.Wires.UI
 {
-    public class WiresBoundUserInterface : BoundUserInterface
+    public sealed class WiresBoundUserInterface : BoundUserInterface
     {
         private WiresMenu? _menu;
 

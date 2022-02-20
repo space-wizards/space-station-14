@@ -1,29 +1,30 @@
 using Content.Server.DoAfter;
 using Content.Server.Engineering.Components;
 using Content.Server.Hands.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using JetBrains.Annotations;
 namespace Content.Server.Engineering.EntitySystems
 {
     [UsedImplicitly]
-    public class DisassembleOnAltVerbSystem : EntitySystem
+    public sealed class DisassembleOnAltVerbSystem : EntitySystem
     {
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<DisassembleOnAltVerbComponent, GetAlternativeVerbsEvent>(AddDisassembleVerb);
+            SubscribeLocalEvent<DisassembleOnAltVerbComponent, GetVerbsEvent<AlternativeVerb>>(AddDisassembleVerb);
         }
-        private void AddDisassembleVerb(EntityUid uid, DisassembleOnAltVerbComponent component, GetAlternativeVerbsEvent args)
+        private void AddDisassembleVerb(EntityUid uid, DisassembleOnAltVerbComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-         if (!args.CanInteract)
+            if (!args.CanInteract || !args.CanAccess)
                 return;
 
-            Verb verb = new()
+            AlternativeVerb verb = new()
             {
                 Act = () =>
                 {
@@ -40,8 +41,6 @@ namespace Content.Server.Engineering.EntitySystems
             if (!Resolve(uid, ref component))
                 return;
             if (string.IsNullOrEmpty(component.Prototype))
-                return;
-            if (!user.InRangeUnobstructed(target))
                 return;
 
             if (component.DoAfterTime > 0 && TryGet<DoAfterSystem>(out var doAfterSystem))

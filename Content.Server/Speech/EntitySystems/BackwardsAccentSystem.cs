@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Speech.EntitySystems
 {
-    public class BackwardsAccentSystem : EntitySystem
+    public sealed class BackwardsAccentSystem : EntitySystem
     {
         public override void Initialize()
         {

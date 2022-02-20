@@ -14,13 +14,9 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Inventory;
@@ -40,8 +36,8 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly UtensilSystem _utensilSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {
@@ -49,7 +45,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             SubscribeLocalEvent<FoodComponent, UseInHandEvent>(OnUseFoodInHand);
             SubscribeLocalEvent<FoodComponent, AfterInteractEvent>(OnFeedFood);
-            SubscribeLocalEvent<FoodComponent, GetInteractionVerbsEvent>(AddEatVerb);
+            SubscribeLocalEvent<FoodComponent, GetVerbsEvent<InteractionVerb>>(AddEatVerb);
             SubscribeLocalEvent<SharedBodyComponent, FeedEvent>(OnFeed);
             SubscribeLocalEvent<ForceFeedCancelledEvent>(OnFeedCancelled);
             SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(OnInventoryIngestAttempt);
@@ -79,9 +75,6 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public bool TryFeed(EntityUid user, EntityUid target, FoodComponent food)
         {
-            if (!_actionBlockerSystem.CanInteract(user) || !_actionBlockerSystem.CanUse(user))
-                return false;
-
             // if currently being used to feed, cancel that action.
             if (food.CancelToken != null)
             {
@@ -115,7 +108,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!TryGetRequiredUtensils(user, food, out var utensils))
                 return false;
 
-            if (!user.InRangeUnobstructed(food.Owner, popup: true))
+            if (!_interactionSystem.InRangeUnobstructed(user, food.Owner, popup: true))
                 return true;
 
             var forceFeed = user != target;
@@ -245,7 +238,7 @@ namespace Content.Server.Nutrition.EntitySystems
             EntityManager.QueueDeleteEntity(component.Owner);
         }
 
-        private void AddEatVerb(EntityUid uid, FoodComponent component, GetInteractionVerbsEvent ev)
+        private void AddEatVerb(EntityUid uid, FoodComponent component, GetVerbsEvent<InteractionVerb> ev)
         {
             if (component.CancelToken != null)
                 return;
@@ -260,7 +253,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
                 return;
 
-            Verb verb = new()
+            InteractionVerb verb = new()
             {
                 Act = () =>
                 {

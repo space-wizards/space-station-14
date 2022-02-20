@@ -6,7 +6,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Server.Tabletop
 {
-    public partial class TabletopSystem
+    public sealed partial class TabletopSystem
     {
         /// <summary>
         ///     Separation between tabletops in the tabletop map.

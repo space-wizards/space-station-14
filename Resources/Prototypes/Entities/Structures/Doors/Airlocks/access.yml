@@ -79,7 +79,6 @@
   - type: AccessReader
     access: [["Kitchen"], ["Hydroponics"]]
 
-
 - type: entity
   parent: AirlockEngineering
   id: AirlockEngineeringLocked
@@ -266,6 +265,14 @@
     access: [["Bar"]]
 
 - type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassLocked
+  suffix: External, Glass, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]
+
+- type: entity
   parent: AirlockGlass
   id: AirlockKitchenGlassLocked
   suffix: Kitchen, Locked
@@ -354,6 +361,54 @@
     access: [["Command"]]
 
 - type: entity
+  parent: AirlockCommandGlass
+  id: AirlockCaptainGlassLocked
+  suffix: Captain, Locked
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockChiefMedicalOfficerGlassLocked
+  suffix: ChiefMedicalOfficer, Locked
+  components:
+  - type: AccessReader
+    access: [["ChiefMedicalOfficer"]]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockChiefEngineerGlassLocked
+  suffix: ChiefEngineer, Locked
+  components:
+  - type: AccessReader
+    access: [["ChiefEngineer"]]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockHeadOfSecurityGlassLocked
+  suffix: HeadOfSecurity, Locked
+  components:
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockResearchDirectorGlassLocked
+  suffix: ResearchDirector, Locked
+  components:
+  - type: AccessReader
+    access: [["ResearchDirector"]]
+    
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockHeadOfPersonnelGlassLocked
+  suffix: HeadOfPersonnel, Locked
+  components:
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+    
+- type: entity
   parent: AirlockSecurityGlass
   id: AirlockSecurityGlassLocked
   suffix: Security, Locked
@@ -368,6 +423,14 @@
   components:
   - type: AccessReader
     access: [["Brig"]]
+    
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockArmoryGlassLocked
+  suffix: Armory, Locked
+  components:
+  - type: AccessReader
+    access: [["Armory"]]
   
 - type: entity
   parent: AirlockEVALocked
@@ -534,7 +597,15 @@
 - type: entity
   parent: AirlockShuttle
   id: AirlockExternalShuttleLocked
-  suffix: External, Locked
+  suffix: External, Docking, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockExternalGlassShuttleLocked
+  suffix: External, Glass, Docking, Locked
   components:
   - type: AccessReader
     access: [["External"]]

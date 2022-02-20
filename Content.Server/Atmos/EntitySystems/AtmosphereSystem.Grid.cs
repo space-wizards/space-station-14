@@ -20,7 +20,7 @@ using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public partial class AtmosphereSystem
+    public sealed partial class AtmosphereSystem
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly GasTileOverlaySystem _gasTileOverlaySystem = default!;
@@ -193,7 +193,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="mapGrid">The grid where to get the tile.</param>
         /// <param name="tile">The indices of the tile.</param>
         /// <returns></returns>
-        public virtual IEnumerable<AirtightComponent> GetObstructingComponents(IMapGrid mapGrid, Vector2i tile)
+        public IEnumerable<AirtightComponent> GetObstructingComponents(IMapGrid mapGrid, Vector2i tile)
         {
             foreach (var uid in mapGrid.GetAnchoredEntities(tile))
             {

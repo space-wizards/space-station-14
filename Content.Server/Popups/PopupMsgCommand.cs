@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Popups
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class PopupMsgCommand : IConsoleCommand
+    public sealed class PopupMsgCommand : IConsoleCommand
     {
         public string Command => "srvpopupmsg";
         public string Description => "";

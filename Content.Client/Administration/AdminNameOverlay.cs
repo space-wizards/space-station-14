@@ -7,7 +7,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Administration
 {
-    internal class AdminNameOverlay : Overlay
+    internal sealed class AdminNameOverlay : Overlay
     {
         private readonly AdminSystem _system;
         private readonly IEntityManager _entityManager;

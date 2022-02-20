@@ -8,7 +8,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Atmos.EntitySystems
 {
     /* doesn't seem to be a use for this at the moment, so it's disabled
-    public class AtmosExposedSystem : EntitySystem
+    public sealed class AtmosExposedSystem : EntitySystem
     {}
     */
 
@@ -23,5 +23,11 @@ namespace Content.Server.Atmos.EntitySystems
             Coordinates = coordinates;
             GasMixture = mixture;
         }
+    }
+
+    [ByRefEvent]
+    public struct AtmosExposedGetAirEvent
+    {
+        public GasMixture? Gas;
     }
 }

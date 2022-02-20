@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Client.Medical.CrewMonitoring
 {
-    public class CrewMonitoringBoundUserInterface : BoundUserInterface
+    public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
     {
         private CrewMonitoringWindow? _menu;
 

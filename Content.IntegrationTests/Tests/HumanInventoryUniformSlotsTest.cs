@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests
     // i.e. the interaction between uniforms and the pocket/ID slots.
     // and also how big items don't fit in pockets.
     [TestFixture]
-    public class HumanInventoryUniformSlotsTest : ContentIntegrationTest
+    public sealed class HumanInventoryUniformSlotsTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

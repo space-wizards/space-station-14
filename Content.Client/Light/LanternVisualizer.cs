@@ -8,7 +8,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.Light
 {
     [UsedImplicitly]
-    public class LanternVisualizer : AppearanceVisualizer
+    public sealed class LanternVisualizer : AppearanceVisualizer
     {
         private readonly Animation _radiatingLightAnimation = new()
         {

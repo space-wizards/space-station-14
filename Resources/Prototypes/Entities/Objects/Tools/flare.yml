@@ -8,6 +8,7 @@
     tags:
     - Flare
     - Trash
+  - type: Recyclable
   - type: ExpendableLight
     spentName: spent flare
     spentDesc: It looks like this flare has burnt out. What a bummer.

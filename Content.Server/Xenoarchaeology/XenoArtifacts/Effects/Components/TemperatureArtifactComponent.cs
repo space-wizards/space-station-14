@@ -1,6 +1,4 @@
 ﻿using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 
@@ -8,7 +6,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 ///     Change atmospherics temperature until it reach target.
 /// </summary>
 [RegisterComponent]
-public class TemperatureArtifactComponent : Component
+public sealed class TemperatureArtifactComponent : Component
 {
     public override string Name => "TemperatureArtifact";
 
@@ -20,4 +18,11 @@ public class TemperatureArtifactComponent : Component
 
     [DataField("maxTempDif")]
     public float MaxTemperatureDifference = 1;
+
+    /// <summary>
+    ///     If true, artifact will heat/cool not only its current tile, but surrounding tiles too.
+    ///     This will change room temperature much faster.
+    /// </summary>
+    [DataField("effectAdjacent")]
+    public bool EffectAdjacentTiles = true;
 }
