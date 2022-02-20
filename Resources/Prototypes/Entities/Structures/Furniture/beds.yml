@@ -94,6 +94,10 @@
   - type: Sprite
     sprite: Structures/Machines/stasis_bed.rsi
     state: icon
+    netsync: false
+  - type: ApcPowerReceiver
+    powerLoad: 3500
+  - type: ExtensionCableReceiver
 
 - type: entity
   parent: Bed

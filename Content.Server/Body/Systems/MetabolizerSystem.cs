@@ -52,7 +52,7 @@ namespace Content.Server.Body.Systems
 
         private void OnApplyStasisMulitplier(EntityUid uid, MetabolizerComponent component, ApplyStasisMultiplierEvent args)
         {
-            if (args.Update)
+            if (args.Apply)
             {
                 component.UpdateFrequency = component.UpdateFrequencyReset;
                 component.UpdateFrequency *= args.StasisBed.Multiplier;

@@ -5,6 +5,7 @@ using Content.Server.Body.Systems;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Body.Components;
 using Content.Server.Body.Components;
+using Content.Server.Power.Components;
 
 namespace Content.Server.Bed
 {
@@ -17,6 +18,7 @@ namespace Content.Server.Bed
         {
             base.Initialize();
             SubscribeLocalEvent<StasisBedComponent, BuckleChangeEvent>(OnBuckleChange);
+            SubscribeLocalEvent<StasisBedComponent, PowerChangedEvent>(OnPowerChanged);
         }
         public override void Update(float frameTime)
         {
@@ -47,27 +49,49 @@ namespace Content.Server.Bed
             if (!TryComp<SharedBodyComponent>(args.BuckledEntity, out var body))
                 return;
 
-            var metabolizers = _bodySystem.GetComponentsOnMechanisms<MetabolizerComponent>(args.BuckledEntity, body);
-            var stomachs = _bodySystem.GetComponentsOnMechanisms<StomachComponent>(args.BuckledEntity, body);
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && power.Powered == false && args.Buckling == true)
+                return;
+
+            SendArgs(args.BuckledEntity, body, component, args.Buckling);
+        }
+
+        private void OnPowerChanged(EntityUid uid, StasisBedComponent component, PowerChangedEvent args)
+        {
+            if (!TryComp<StrapComponent>(uid, out var strap) || strap.BuckledEntities.Count == 0)
+                return;
+
+            foreach (var buckledEntity in strap.BuckledEntities)
+            {
+                if (!TryComp<SharedBodyComponent>(buckledEntity, out var body))
+                    return;
+
+                SendArgs(buckledEntity, body, component, args.Powered);
+            }
+        }
+
+        private void SendArgs(EntityUid buckledEntity, SharedBodyComponent body, StasisBedComponent stasisBed, bool shouldApply)
+        {
+            var metabolizers = _bodySystem.GetComponentsOnMechanisms<MetabolizerComponent>(buckledEntity, body);
+            var stomachs = _bodySystem.GetComponentsOnMechanisms<StomachComponent>(buckledEntity, body);
             /// There's probably some way to concatanate all of these and do it in 1 go but it's beyond me
 
             foreach (var meta in metabolizers)
             {
                 if (!HasComp<LungComponent>(meta.Comp.Owner)) //There might be a better way to deal with the suffocation issue, especially because lung has metabolisms for poison and medicine etc
                 {
-                    var metaEvent = new ApplyStasisMultiplierEvent() {Uid = meta.Comp.Owner, StasisBed = component, Update = args.Buckling};
+                    var metaEvent = new ApplyStasisMultiplierEvent() {Uid = meta.Comp.Owner, StasisBed = stasisBed, Apply = shouldApply};
                     RaiseLocalEvent(meta.Comp.Owner, metaEvent, false);
                 }
             }
             foreach (var stomach in stomachs)
             {
-                var stomachEvent = new ApplyStasisMultiplierEvent() {Uid = stomach.Comp.Owner, StasisBed = component, Update = args.Buckling};
+                var stomachEvent = new ApplyStasisMultiplierEvent() {Uid = stomach.Comp.Owner, StasisBed = stasisBed, Apply = shouldApply};
                 RaiseLocalEvent(stomach.Comp.Owner, stomachEvent, false);
             }
 
-            if (TryComp<BloodstreamComponent>(args.BuckledEntity, out var blood))
+            if (TryComp<BloodstreamComponent>(buckledEntity, out var blood))
             {
-                var bloodEvent = new ApplyStasisMultiplierEvent() {Uid = blood.Owner, StasisBed = component, Update = args.Buckling};
+                var bloodEvent = new ApplyStasisMultiplierEvent() {Uid = blood.Owner, StasisBed = stasisBed, Apply = shouldApply};
                 RaiseLocalEvent(blood.Owner, bloodEvent, false);
             }
         }
@@ -78,6 +102,6 @@ namespace Content.Server.Bed
     {
         public  EntityUid Uid;
         public  StasisBedComponent StasisBed = default!;
-        public bool Update;
+        public bool Apply;
     }
 }

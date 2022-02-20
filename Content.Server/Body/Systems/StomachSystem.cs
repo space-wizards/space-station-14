@@ -78,7 +78,7 @@ namespace Content.Server.Body.Systems
 
     private void OnApplyStasisMulitplier(EntityUid uid, StomachComponent component, ApplyStasisMultiplierEvent args)
     {
-        if (args.Update)
+        if (args.Apply)
         {
             component.UpdateIntervalReset = component.UpdateInterval;
             component.UpdateInterval *= args.StasisBed.Multiplier;

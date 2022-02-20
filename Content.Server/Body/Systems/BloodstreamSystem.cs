@@ -153,7 +153,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
     private void OnApplyStasisMultiplier(EntityUid uid, BloodstreamComponent component, ApplyStasisMultiplierEvent args)
     {
-        if (args.Update)
+        if (args.Apply)
         {
             component.UpdateIntervalReset = component.UpdateInterval;
             component.UpdateInterval *= args.StasisBed.Multiplier;
