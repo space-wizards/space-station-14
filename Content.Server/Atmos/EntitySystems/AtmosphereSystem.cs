@@ -87,7 +87,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 // Used for things like disposals/cryo to change which air people are exposed to.
                 var airEvent = new AtmosExposedGetAirEvent();
-                RaiseLocalEvent(exposed.Owner, ref airEvent);
+                RaiseLocalEvent(exposed.Owner, ref airEvent, false);
 
                 airEvent.Gas ??= GetTileMixture(transform.Coordinates);
                 if (airEvent.Gas == null)
