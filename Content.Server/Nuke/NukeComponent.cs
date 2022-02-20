@@ -1,17 +1,13 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nuke;
 using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Nuke
 {
     /// <summary>
-    ///     Nuclear device that can devistate an entire station.
-    ///     Basicaly a station self-destruction mechanism.
+    ///     Nuclear device that can devastate an entire station.
+    ///     Basically a station self-destruction mechanism.
     ///     To activate it, user needs to insert an authorization disk and enter a secret code.
     /// </summary>
     [RegisterComponent]
@@ -71,7 +67,7 @@ namespace Content.Server.Nuke
         public float RemainingTime;
 
         /// <summary>
-        ///     Curent nuclear code buffer. Entered manually by players.
+        ///     Current nuclear code buffer. Entered manually by players.
         ///     If valid it will allow arm/disarm bomb.
         /// </summary>
         [ViewVariables]
