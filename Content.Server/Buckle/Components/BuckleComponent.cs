@@ -230,8 +230,9 @@ namespace Content.Server.Buckle.Components
 
             UpdateBuckleStatus();
 
-            var ev = new BuckleChangeEvent() { Buckling = true, Strap = BuckledTo.Owner };
+            var ev = new BuckleChangeEvent() { Buckling = true, Strap = BuckledTo.Owner, BuckledEntity = Owner };
             _entMan.EventBus.RaiseLocalEvent(Owner, ev, false);
+            _entMan.EventBus.RaiseLocalEvent(BuckledTo.Owner, ev, false);
 
             if (_entMan.TryGetComponent(Owner, out SharedPullableComponent? ownerPullable))
             {
@@ -322,8 +323,9 @@ namespace Content.Server.Buckle.Components
             oldBuckledTo.Remove(this);
             SoundSystem.Play(Filter.Pvs(Owner), oldBuckledTo.UnbuckleSound.GetSound(), Owner);
 
-            var ev = new BuckleChangeEvent() { Buckling = false, Strap = oldBuckledTo.Owner };
+            var ev = new BuckleChangeEvent() { Buckling = false, Strap = oldBuckledTo.Owner, BuckledEntity = Owner };
             _entMan.EventBus.RaiseLocalEvent(Owner, ev, false);
+            _entMan.EventBus.RaiseLocalEvent(oldBuckledTo.Owner, ev, false);
 
             return true;
         }

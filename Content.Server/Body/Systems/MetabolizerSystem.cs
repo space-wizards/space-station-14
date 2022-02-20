@@ -2,6 +2,8 @@ using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Bed.Components;
+using Content.Server.Bed;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
@@ -10,8 +12,6 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -30,6 +30,7 @@ namespace Content.Server.Body.Systems
             base.Initialize();
 
             SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
+            SubscribeLocalEvent<MetabolizerComponent, ApplyStasisMultiplierEvent>(OnApplyStasisMulitplier);
         }
 
         private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
@@ -50,6 +51,22 @@ namespace Content.Server.Body.Systems
             }
         }
 
+        private void OnApplyStasisMulitplier(EntityUid uid, MetabolizerComponent component, ApplyStasisMultiplierEvent args)
+        {
+            Logger.Error("Starting Apply Multiplier (meta) args.Update is {0}", args.Update);
+            if (args.Update)
+            {
+                component.UpdateFrequency = component.UpdateFrequencyReset;
+                component.UpdateFrequency *= args.StasisBed.Multiplier;
+                Logger.Error("Updated (meta)");
+                return;
+            }
+            // This way we don't have to worry about it breaking if the stasis bed component is destroyed
+            component.UpdateFrequency = component.UpdateFrequencyReset;
+            // Reset the accumulator properly
+            if (component.AccumulatedFrametime >= component.UpdateFrequency)
+                component.AccumulatedFrametime = component.UpdateFrequency;
+        }
         public override void Update(float frameTime)
         {
             base.Update(frameTime);

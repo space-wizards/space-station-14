@@ -3,6 +3,8 @@ using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.HealthExaminable;
+using Content.Server.Bed;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -36,6 +38,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BloodstreamComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined);
         SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
+        SubscribeLocalEvent<BloodstreamComponent, ApplyStasisMultiplierEvent>(OnApplyStasisMultiplier);
     }
 
     public override void Update(float frameTime)
@@ -149,6 +152,23 @@ public sealed class BloodstreamSystem : EntitySystem
     private void OnBeingGibbed(EntityUid uid, BloodstreamComponent component, BeingGibbedEvent args)
     {
         SpillAllSolutions(uid, component);
+    }
+
+    private void OnApplyStasisMultiplier(EntityUid uid, BloodstreamComponent component, ApplyStasisMultiplierEvent args)
+    {
+        Logger.Error("Starting Apply Multiplier (blood)");
+        if (args.Update)
+        {
+            component.UpdateIntervalReset = component.UpdateInterval;
+            component.UpdateInterval *= args.StasisBed.Multiplier;
+            Logger.Error("Updated (blood)");
+            return;
+        }
+        // This way we don't have to worry about it breaking if the stasis bed component is destroyed
+        component.UpdateInterval = component.UpdateIntervalReset;
+        // Reset the accumulator properly
+        if (component.AccumulatedFrametime >= component.UpdateInterval)
+            component.AccumulatedFrametime = component.UpdateInterval;
     }
 
     /// <summary>

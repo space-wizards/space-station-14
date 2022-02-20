@@ -21,6 +21,11 @@ namespace Content.Server.Body.Components
         public float UpdateInterval = 1.0f;
 
         /// <summary>
+        /// What should the update interval reset to, if needed?
+        // </summary>
+        public float UpdateIntervalReset = 1.0f;
+
+        /// <summary>
         ///     What solution should this stomach push reagents into, on the body?
         /// </summary>
         [DataField("bodySolutionName")]

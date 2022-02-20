@@ -1,10 +1,9 @@
 ﻿using Content.Server.Body.Components;
+using Content.Server.Bed;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems
@@ -18,6 +17,7 @@ namespace Content.Server.Body.Systems
         public override void Initialize()
         {
             SubscribeLocalEvent<StomachComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<StomachComponent, ApplyStasisMultiplierEvent>(OnApplyStasisMulitplier);
         }
 
         public override void Update(float frameTime)
@@ -75,6 +75,23 @@ namespace Content.Server.Body.Systems
                 _solutionContainerSystem.TryAddSolution((mech.Body).Owner, bodySolution, transferSolution);
             }
         }
+
+    private void OnApplyStasisMulitplier(EntityUid uid, StomachComponent component, ApplyStasisMultiplierEvent args)
+    {
+        Logger.Error("Starting Apply Multiplier (stomach) args.Update is {0}", args.Update);
+        if (args.Update)
+        {
+            component.UpdateIntervalReset = component.UpdateInterval;
+            component.UpdateInterval *= args.StasisBed.Multiplier;
+            Logger.Error("Updated (stomach)");
+            return;
+        }
+        // This way we don't have to worry about it breaking if the stasis bed component is destroyed
+        component.UpdateInterval = component.UpdateIntervalReset;
+        // Reset the accumulator properly
+        if (component.AccumulatedFrameTime >= component.UpdateInterval)
+            component.AccumulatedFrameTime = component.UpdateInterval;
+    }
 
         private void OnComponentInit(EntityUid uid, StomachComponent component, ComponentInit args)
         {

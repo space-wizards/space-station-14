@@ -27,6 +27,11 @@ namespace Content.Server.Body.Components
         public float UpdateFrequency = 1.0f;
 
         /// <summary>
+        ///     What to reset the update frequency to if needed
+        /// </summary>
+        public float UpdateFrequencyReset = 1.0f;
+
+        /// <summary>
         ///     From which solution will this metabolizer attempt to metabolize chemicals
         /// </summary>
         [DataField("solution")]

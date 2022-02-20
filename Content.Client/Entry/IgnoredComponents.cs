@@ -260,6 +260,7 @@ namespace Content.Client.Entry
             "Advertise",
             "Bible",
             "Bed",
+            "StasisBed",
             "PowerNetworkBattery",
             "BatteryCharger",
             "UnpoweredFlashlight",
