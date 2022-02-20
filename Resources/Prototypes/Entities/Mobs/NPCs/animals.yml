@@ -1052,3 +1052,16 @@
   - type: Grammar
     attributes:
       gender: epicene
+
+- type: entity
+  name: Morticia
+  parent: MobRaccoon
+  id: MobRaccoonMorticia
+  description: A powerful creature of the night. Her eyeshadow is always on point.
+  components:
+  - type: InteractionPopup
+    successChance: 0.7
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
