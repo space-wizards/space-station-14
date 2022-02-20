@@ -21,6 +21,7 @@
       mask:
       - GhostImpassable
   - type: PlayerInputMover
+  - type: Appearance
   - type: Eye
     drawFov: false
   - type: Input

@@ -50,7 +50,7 @@
       #- name: GrenadeChem
       #- name: GrenadeChem
       - id: FlashlightLantern
-      
+
 - type: entity
   id: ClothingBeltMedicalFilled
   parent: ClothingBeltMedical
@@ -62,8 +62,8 @@
         amount: 3
       - id: Ointment
         amount: 3
-      - id: EpinephrineMedipen #You never know what people are going to latejoin into
-      
+      - id: EmergencyMedipen #You never know what people are going to latejoin into
+
 - type: entity
   id: ClothingBeltPlantFilled
   parent: ClothingBeltPlant

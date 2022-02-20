@@ -16,7 +16,7 @@ namespace Content.Server.Entry
             "Icon",
             "ClientEntitySpawner",
             "CharacterInfo",
-            "ItemCabinetVisuals"
+            "ItemCabinetVisuals",
         };
     }
 }

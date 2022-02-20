@@ -18,8 +18,6 @@
   abstract: true
   components:
   - type: ShuttleConsole
-  - type: ApcPowerReceiver
-    powerLoad: 200
   - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.5
@@ -141,7 +139,7 @@
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
   - type: ApcPowerReceiver
-    powerLoad: 200
+    powerLoad: 1000
     priority: Low
   - type: ExtensionCableReceiver
   - type: Computer
@@ -213,6 +211,8 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: generic
+  - type: ApcPowerReceiver
+    powerLoad: 500
   - type: Computer
     board: BodyScannerComputerCircuitboard
   - type: PointLight
