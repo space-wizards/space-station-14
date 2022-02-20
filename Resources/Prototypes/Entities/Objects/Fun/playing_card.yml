@@ -18,60 +18,26 @@
   - type: PlayingCardVisuals
   - type: Appearance
 
-
-# - type: entity
-#   parent: BasePlayingCard
-#   id: PlayingCard
-#   name: playing card
-
 - type: entity
   parent: BasePlayingCard
   id: PlayingCard
   name: playing card
   description: A test
 
-
-
-  # - type: Appearance
-  #   visuals:
-  #   - type: VendingMachineVisualizer
-  #     normalUnshaded: true
-  #     broken: true
-
-
-      # Functionality:
-      # show flipped sprite on use
-      # change description on flipped
-
-
-# - type: entity
-#   abstract: true
-#   parent: BaseItem
-#   id: BasePlayingCardDeck
-#   components:
-#   # - type: Sprite
-#   #   sprite: Objects/Fun/dice.rsi
-#   #   noRot: true # If their sprites rotate, the number becomes even more illegible than usual.
-#   # - type: Tag
-#   #   tags:
-#   #   - Dice
-#   - type: Item
-#     size: 2
-#   - type: Sprite
-#     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
-#     # layers:
-#     # - state: "off"
-#     #   map: ["enum.VendingMachineVisualLayers.Unlit"]
-#     # - state: "off"
-#     #   map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-#     #   shader: unshaded
-#     # - state: panel
-#     #   map: ["enum.WiresVisualLayers.MaintenancePanel"]
-#   - type: Appearance
-#     visuals:
-#     - type: VendingMachineVisualizer
-#       normalUnshaded: true
-#       broken: true
+- type: entity
+  parent: BaseItem
+  id: playingCardDeck
+  name: playing card deck
+  description: A test
+  components:
+  - type: PlayingCardDeck
+  - type: Sprite
+    sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
+    layers:
+    - state: deck_nanotrasen_full
+      map: ["enum.PlayingCardDeckVisualLayers.Base"]
+  - type: PlayingCardDeckVisuals
+  - type: Appearance
 
 - type: entity
   parent: BaseItem
@@ -108,11 +74,3 @@
   - type: PlayingCardHandVisuals
   - type: Appearance
 
-# - type: entity
-#   parent: BasePlayingCard
-#   id: playingCardDeck
-#   name: playing card deck
-#   description: A test
-#   components:
-#   - type: Sprite
-#     state: deck_nanotrasen_full
