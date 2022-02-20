@@ -1,29 +1,42 @@
-# - type: entity
-#   abstract: true
-#   parent: BaseItem
-#   id: BasePlayingCard
-#   components:
-#   # - type: Sprite
-#   #   sprite: Objects/Fun/dice.rsi
-#   #   noRot: true # If their sprites rotate, the number becomes even more illegible than usual.
-#   # - type: Tag
-#   #   tags:
-#   #   - Dice
-#   - type: Item
-#     size: 2
-#   - type: Sprite
-#     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
-#     # layers:
-#     # - state: "off"
-#     #   map: ["enum.VendingMachineVisualLayers.Unlit"]
-#     # - state: "off"
-#     #   map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BasePlayingCard
+  components:
+  - type: Item
+    size: 2
+  - type: PlayingCard
+  - type: Sprite
+    sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
+    layers:
+    - state: "sc_3 of Spades_nanotrasen"
+      map: ["enum.PlayingCardVisualLayers.Base"]
+    - state: "sc_3 of Spades_nanotrasen"
+      map: ["enum.PlayingCardVisualLayers.Details"]
+    - state: "singlecard_down_nanotrasen"
+      map: ["enum.PlayingCardVisualLayers.FlippedDown"]
+  - type: PlayingCardVisuals
+  - type: Appearance
 
-#   - type: Appearance
-#     visuals:
-#     - type: VendingMachineVisualizer
-#       normalUnshaded: true
-#       broken: true
+
+# - type: entity
+#   parent: BasePlayingCard
+#   id: PlayingCard
+#   name: playing card
+
+- type: entity
+  parent: BasePlayingCard
+  id: PlayingCard
+  name: playing card
+  description: A test
+
+
+
+  # - type: Appearance
+  #   visuals:
+  #   - type: VendingMachineVisualizer
+  #     normalUnshaded: true
+  #     broken: true
 
 
       # Functionality:
