@@ -114,12 +114,6 @@ namespace Content.Server.Physics.Controllers
                 physics.WakeBody();
                 var impulse = accel * physics.Mass * frameTime;
                 physics.ApplyLinearImpulse(impulse);
-
-                if (EntityManager.TryGetComponent<PhysicsComponent?>(puller, out var pullerPhysics))
-                {
-                    pullerPhysics.WakeBody();
-                    pullerPhysics.ApplyLinearImpulse(-impulse);
-                }
             }
         }
     }
