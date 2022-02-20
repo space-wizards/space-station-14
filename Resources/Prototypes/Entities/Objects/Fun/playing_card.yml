@@ -1,29 +1,29 @@
-- type: entity
-  abstract: true
-  parent: BaseItem
-  id: BasePlayingCard
-  components:
-  # - type: Sprite
-  #   sprite: Objects/Fun/dice.rsi
-  #   noRot: true # If their sprites rotate, the number becomes even more illegible than usual.
-  # - type: Tag
-  #   tags:
-  #   - Dice
-  - type: Item
-    size: 2
-  - type: Sprite
-    sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
-    # layers:
-    # - state: "off"
-    #   map: ["enum.VendingMachineVisualLayers.Unlit"]
-    # - state: "off"
-    #   map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+# - type: entity
+#   abstract: true
+#   parent: BaseItem
+#   id: BasePlayingCard
+#   components:
+#   # - type: Sprite
+#   #   sprite: Objects/Fun/dice.rsi
+#   #   noRot: true # If their sprites rotate, the number becomes even more illegible than usual.
+#   # - type: Tag
+#   #   tags:
+#   #   - Dice
+#   - type: Item
+#     size: 2
+#   - type: Sprite
+#     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
+#     # layers:
+#     # - state: "off"
+#     #   map: ["enum.VendingMachineVisualLayers.Unlit"]
+#     # - state: "off"
+#     #   map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
 
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
+#   - type: Appearance
+#     visuals:
+#     - type: VendingMachineVisualizer
+#       normalUnshaded: true
+#       broken: true
 
 
       # Functionality:
@@ -31,37 +31,37 @@
       # change description on flipped
 
 
-- type: entity
-  abstract: true
-  parent: BaseItemb
-  id: BasePlayingCardDeck
-  components:
-  # - type: Sprite
-  #   sprite: Objects/Fun/dice.rsi
-  #   noRot: true # If their sprites rotate, the number becomes even more illegible than usual.
-  # - type: Tag
-  #   tags:
-  #   - Dice
-  - type: Item
-    size: 2
-  - type: Sprite
-    sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
-    # layers:
-    # - state: "off"
-    #   map: ["enum.VendingMachineVisualLayers.Unlit"]
-    # - state: "off"
-    #   map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-    #   shader: unshaded
-    # - state: panel
-    #   map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
+# - type: entity
+#   abstract: true
+#   parent: BaseItem
+#   id: BasePlayingCardDeck
+#   components:
+#   # - type: Sprite
+#   #   sprite: Objects/Fun/dice.rsi
+#   #   noRot: true # If their sprites rotate, the number becomes even more illegible than usual.
+#   # - type: Tag
+#   #   tags:
+#   #   - Dice
+#   - type: Item
+#     size: 2
+#   - type: Sprite
+#     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
+#     # layers:
+#     # - state: "off"
+#     #   map: ["enum.VendingMachineVisualLayers.Unlit"]
+#     # - state: "off"
+#     #   map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+#     #   shader: unshaded
+#     # - state: panel
+#     #   map: ["enum.WiresVisualLayers.MaintenancePanel"]
+#   - type: Appearance
+#     visuals:
+#     - type: VendingMachineVisualizer
+#       normalUnshaded: true
+#       broken: true
 
 - type: entity
-  parent: BasePlayingCard
+  parent: BaseItem
   id: playingCardHand
   name: playing cards
   description: A test
@@ -69,25 +69,37 @@
   - type: Sprite
     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
     layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-- type: entity
-  parent: BasePlayingCard
-  id: playingCardDeck
-  name: playing card deck
-  description: A test
-  components:
-  - type: Sprite
-    state: deck_nanotrasen_full
+    - state: nanotrasen_hand5
+      visible: false
+      map: ["enum.PlayingCardHandVisualLayers.ManyCardHandBase"]
+    # - state: nanotrasen_hand5
+    #   visible: false
+    #   map: ["enum.PlayingCardHandVisualLayers.FourthCardBase"]
+    - state: sc_10 of Hearts_nanotrasen
+      visible: false
+      map: ["enum.PlayingCardHandVisualLayers.FourthCardDetails"]
+    # - state: nanotrasen_hand5
+    #   visible: false
+    #   map: ["enum.PlayingCardHandVisualLayers.ThirdCardBase"]
+    - state: sc_9 of Diamonds_nanotrasen
+      visible: false
+      map: ["enum.PlayingCardHandVisualLayers.ThirdCardDetails"]
+    # - state: sc_4 of Clubs_nanotrasen
+    #   map: ["enum.PlayingCardHandVisualLayers.SecondCardBase"]
+    - state: sc_4 of Clubs_nanotrasen
+      map: ["enum.PlayingCardHandVisualLayers.SecondCardDetails"]
+    # - state: sc_6 of Diamonds_nanotrasen
+    #   map: ["enum.PlayingCardHandVisualLayers.FirstCardBase"]
+    - state: sc_6 of Diamonds_nanotrasen
+      map: ["enum.PlayingCardHandVisualLayers.FirstCardDetails"]
+  - type: PlayingCardHandVisuals
+  - type: Appearance
+
+# - type: entity
+#   parent: BasePlayingCard
+#   id: playingCardDeck
+#   name: playing card deck
+#   description: A test
+#   components:
+#   - type: Sprite
+#     state: deck_nanotrasen_full

@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.PlayingCard
 {
     [Serializable, NetSerializable]
-    public enum PlayingCardVisuals : byte
+    public enum PlayingCardHandVisuals : byte
     {
         /// <summary>
         /// The amount of elements in the stack
