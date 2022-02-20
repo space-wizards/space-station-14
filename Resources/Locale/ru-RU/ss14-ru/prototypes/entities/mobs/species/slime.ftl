@@ -4,5 +4,3 @@ ent-MobSlimePersonBase = Urist McSlime
 ent-MobSlimePersonDummy = Urist McHands
     .desc = A dummy slime meant to be used in character setup.
     .suffix = { "" }
-ent-BaseSlimePerson = Слизечеловек
-    .desc = Жалкая кучка слизи.

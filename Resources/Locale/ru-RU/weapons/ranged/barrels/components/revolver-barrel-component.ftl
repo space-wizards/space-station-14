@@ -2,8 +2,6 @@
 
 revolver-barrel-component-try-insert-bullet-wrong-caliber = Wrong caliber
 revolver-barrel-component-try-insert-bullet-ammo-full = Ammo full
-revolver-barrel-component-try-inser-bullet-wrong-caliber = Неправильный калибр
-revolver-barrel-component-try-inser-bullet-ammo-full = Полный боезапас
 
 ## SpinRevolverVerb
 

@@ -10,5 +10,3 @@ ent-EmergencyMedipen = emergency medipen
 ent-AntiPoisonMedipen = anti-poison medipen
     .desc = A rapid dose of anti-poison. Contains ultravasculine and epinephrine.
     .suffix = { "" }
-ent-EpinephrineMedipen = epinephrine medipen
-    .desc = A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Beware, as it's easy to overdose on epinephrine.

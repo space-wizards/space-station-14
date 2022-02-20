@@ -8,7 +8,7 @@ verb-self-target-pronoun = Вы
 
 verb-categories-admin = Админ
 verb-categories-debug = Debug
-verb-categories-examine = Examine
+verb-categories-examine = Осмотреть
 verb-categories-eject = Извлечь
 verb-categories-insert = Вставить
 verb-categories-buckle = Пристегнуть

@@ -1,4 +1,4 @@
 ### Verbs
 
-artifact-verb-make-always-active = Make artifact always active
-artifact-verb-activate = Activate artifact
+artifact-verb-make-always-active = Сделать артефакт всегда активным
+artifact-verb-activate = Активировать артефакт

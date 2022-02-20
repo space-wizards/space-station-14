@@ -14,7 +14,7 @@ microwave-component-suicide-message = Вы зажариваете свою го�
 ## Bound UI
 
 microwave-bound-user-interface-instant-button = МГНОВЕННО
-microwave-bound-user-interface-cook-time-label = ВРЕМЯ ПРИГОТОВЛЕНИЯ: { $time }
+microwave-bound-user-interface-cook-time-label = ВРЕМЯ: { $time }
 
 ## UI
 
