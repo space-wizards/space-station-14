@@ -11,6 +11,7 @@
     netsync: false
     sprite: Structures/plastic_flaps.rsi
     state: plasticflaps
+    drawdepth: Mobs
   - type: Physics
   - type: Transform
     anchored: true
