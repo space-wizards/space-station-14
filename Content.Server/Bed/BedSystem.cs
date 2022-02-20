@@ -4,6 +4,7 @@ using Content.Server.Buckle.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Bed;
 using Content.Server.Body.Components;
 using Content.Server.Power.Components;
 
@@ -17,6 +18,7 @@ namespace Content.Server.Bed
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<StasisBedComponent, ComponentStartup>(OnComponentStartup);
             SubscribeLocalEvent<StasisBedComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<StasisBedComponent, PowerChangedEvent>(OnPowerChanged);
         }
@@ -44,6 +46,19 @@ namespace Content.Server.Bed
                 }
             }
         }
+
+        private void OnComponentStartup(EntityUid uid, StasisBedComponent component, ComponentStartup args)
+        {
+            UpdateAppeance(uid, true);
+        }
+
+        private void UpdateAppeance(EntityUid uid, bool isOn)
+        {
+            if (!TryComp<AppearanceComponent>(uid, out var appearance))
+                return;
+
+            appearance.SetData(StasisBedVisuals.IsOn, isOn);
+        }
         private void OnBuckleChange(EntityUid uid, StasisBedComponent component, BuckleChangeEvent args)
         {
             if (!TryComp<SharedBodyComponent>(args.BuckledEntity, out var body))
@@ -57,6 +72,8 @@ namespace Content.Server.Bed
 
         private void OnPowerChanged(EntityUid uid, StasisBedComponent component, PowerChangedEvent args)
         {
+            UpdateAppeance(uid, args.Powered);
+
             if (!TryComp<StrapComponent>(uid, out var strap) || strap.BuckledEntities.Count == 0)
                 return;
 

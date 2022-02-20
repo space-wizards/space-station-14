@@ -93,8 +93,14 @@
     multiplier: 10
   - type: Sprite
     sprite: Structures/Machines/stasis_bed.rsi
-    state: icon
     netsync: false
+    layers:
+    - state: icon
+    - state: unlit
+      shader: unshaded
+      map: ["enum.StasisBedVisualLayers.IsOn"]
+  - type: StasisBedVisuals
+  - type: Appearance
   - type: ApcPowerReceiver
     powerLoad: 3500
   - type: ExtensionCableReceiver
