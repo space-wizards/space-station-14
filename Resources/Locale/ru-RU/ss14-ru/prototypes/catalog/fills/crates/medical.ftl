@@ -1,10 +1,15 @@
 ent-CrateMedicalDefib = defibrillator crate
     .desc = { ent-CrateMedical.desc }
+    .suffix = { "" }
 ent-CrateMedicalSupplies = medical supplies crate
     .desc = { ent-CrateMedical.desc }
+    .suffix = { "" }
 ent-CrateChemistrySupplies = chemistry supplies crate
     .desc = { ent-CrateMedical.desc }
+    .suffix = { "" }
 ent-CrateMedicalSurgery = surgical supplies crate
     .desc = { ent-CrateSurgery.desc }
+    .suffix = { "" }
 ent-CrateMedicalScrubs = medical scrubs crate
     .desc = { ent-CrateMedical.desc }
+    .suffix = { "" }

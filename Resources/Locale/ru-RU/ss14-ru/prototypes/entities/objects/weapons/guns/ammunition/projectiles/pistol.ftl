@@ -1,10 +1,15 @@
 ent-BulletPistol = bullet (.35 auto)
     .desc = { ent-BulletBase.desc }
+    .suffix = { "" }
 ent-BulletPistolFlash = bullet (.35 auto flash)
     .desc = { ent-BulletBaseFlash.desc }
+    .suffix = { "" }
 ent-BulletPistolHV = bullet (.35 auto high-velocity)
     .desc = { ent-BulletBaseHV.desc }
+    .suffix = { "" }
 ent-BulletPistolPractice = bullet (.35 auto practice)
     .desc = { ent-BulletBasePractice.desc }
+    .suffix = { "" }
 ent-BulletPistolRubber = bullet (.35 auto rubber)
     .desc = { ent-BulletBaseRubber.desc }
+    .suffix = { "" }

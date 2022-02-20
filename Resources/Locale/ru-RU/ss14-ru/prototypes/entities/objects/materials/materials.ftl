@@ -1,5 +1,6 @@
 ent-MaterialBase = { ent-BaseItem }
     .desc = Сырьё.
+    .suffix = { "" }
 ent-MaterialBananium = бананиум
     .suffix = Полный
     .desc = { ent-MaterialBase.desc }
@@ -56,7 +57,10 @@ ent-MaterialWoodPlank1 = { ent-MaterialWoodPlank }
     .desc = { ent-MaterialWoodPlank.desc }
 ent-MaterialHideBear = медвежья шкура
     .desc = { ent-MaterialBase.desc }
+    .suffix = { "" }
 ent-MaterialHideCat = кошачья шкура
     .desc = { ent-MaterialBase.desc }
+    .suffix = { "" }
 ent-MaterialHideCorgi = шкура корги
     .desc = { ent-MaterialBase.desc }
+    .suffix = { "" }

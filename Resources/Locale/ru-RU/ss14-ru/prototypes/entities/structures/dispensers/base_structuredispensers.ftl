@@ -1,0 +1,3 @@
+ent-ReagentDispenserBase = { "" }
+    .desc = { "" }
+    .suffix = { "" }

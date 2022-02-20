@@ -1,4 +1,9 @@
 ent-BarSign = bar sign
     .desc = { ent-BaseStructure.desc }
+    .suffix = { "" }
+ent-LargeBarSign = large bar sign
+    .desc = { "" }
+    .suffix = { "" }
 ent-BarSignEngineChange = The Engine Change
     .desc = { ent-BarSign.desc }
+    .suffix = { "" }

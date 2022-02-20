@@ -120,20 +120,39 @@ class KeyFinder:
         self.write_to_ru_files(ru_file, ru_file_parsed, en_file_parsed)
         self.log_not_exist_en_files(en_file, ru_file_parsed, en_file_parsed)
 
+
     def write_to_ru_files(self, ru_file, ru_file_parsed, en_file_parsed):
         for idx, en_message in enumerate(en_file_parsed.body):
             if isinstance(en_message, ast.ResourceComment) or isinstance(en_message, ast.GroupComment) or isinstance(en_message, ast.Comment):
                 continue
 
-            ru_message_analog = py_.find(ru_file_parsed.body, lambda ru_message: self.find_duplicate_message_id_name(ru_message, en_message))
-            if not ru_message_analog:
+            ru_message_analog_idx = py_.find_index(ru_file_parsed.body, lambda ru_message: self.find_duplicate_message_id_name(ru_message, en_message))
+            have_changes = False
+
+            # Attributes
+            if getattr(en_message, 'attributes', None) and ru_message_analog_idx != -1:
+                if not ru_file_parsed.body[ru_message_analog_idx].attributes:
+                    ru_file_parsed.body[ru_message_analog_idx].attributes = en_message.attributes
+                    have_changes = True
+                else:
+                    for en_attr in en_message.attributes:
+                        ru_attr_analog = py_.find(ru_file_parsed.body[ru_message_analog_idx].attributes, lambda ru_attr: ru_attr.id.name == en_attr.id.name)
+                        if not ru_attr_analog:
+                            ru_file_parsed.body[ru_message_analog_idx].attributes.append(en_attr)
+                            have_changes = True
+
+            # New elements
+            if ru_message_analog_idx == -1:
                 ru_file_body = ru_file_parsed.body
                 if (len(ru_file_body) >= idx + 1):
-                    serialized = self.append_message(ru_file_parsed, en_message, idx)
-                    self.save_and_log_file(ru_file, serialized, en_message)
+                    ru_file_parsed = self.append_message(ru_file_parsed, en_message, idx)
                 else:
-                    serialized = self.push_message(ru_file_parsed, en_message)
-                    self.save_and_log_file(ru_file, serialized, en_message)
+                    ru_file_parsed = self.push_message(ru_file_parsed, en_message)
+                have_changes = True
+
+            if have_changes:
+                serialized = serializer.serialize(ru_file_parsed)
+                self.save_and_log_file(ru_file, serialized, en_message)
 
     def log_not_exist_en_files(self, en_file, ru_file_parsed, en_file_parsed):
         for idx, ru_message in enumerate(ru_file_parsed.body):
@@ -145,8 +164,6 @@ class KeyFinder:
             if not en_message_analog:
                 logging.warning(f'Ключ "{FluentAstAbstract.get_id_name(ru_message)}" не имеет английского аналога по пути {en_file.full_path}"')
 
-
-
     def append_message(self, ru_file_parsed, en_message, en_message_idx):
         ru_message_part_1 = ru_file_parsed.body[0:en_message_idx]
         ru_message_part_middle = [en_message]
@@ -154,11 +171,11 @@ class KeyFinder:
         new_body = py_.flatten_depth([ru_message_part_1, ru_message_part_middle, ru_message_part_2], depth=1)
         ru_file_parsed.body = new_body
 
-        return serializer.serialize(ru_file_parsed)
+        return ru_file_parsed
 
     def push_message(self,  ru_file_parsed, en_message):
         ru_file_parsed.body.append(en_message)
-        return serializer.serialize(ru_file_parsed)
+        return ru_file_parsed
 
     def save_and_log_file(self, file, file_data, message):
         file.save_data(file_data)

@@ -1,5 +1,6 @@
 ent-GasPipeBase = pipe
     .desc = Holds gas.
+    .suffix = { "" }
 ent-GasPipeHalf = { ent-GasPipeBase }
     .suffix = Half
     .desc = { ent-GasPipeBase.desc }

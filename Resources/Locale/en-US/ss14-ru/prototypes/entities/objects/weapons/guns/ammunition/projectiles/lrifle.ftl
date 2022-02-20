@@ -1,10 +1,15 @@
 ent-BulletLRifle = bullet (.20 rifle)
     .desc = { ent-BulletBase.desc }
+    .suffix = { "" }
 ent-BulletLRifleFlash = bullet (.20 rifle flash)
     .desc = { ent-BulletBaseFlash.desc }
+    .suffix = { "" }
 ent-BulletLRifleHV = bullet (.20 rifle high-velocity)
     .desc = { ent-BulletBaseHV.desc }
+    .suffix = { "" }
 ent-BulletLRiflePractice = bullet (.20 rifle practice)
     .desc = { ent-BulletBasePractice.desc }
+    .suffix = { "" }
 ent-BulletLRifleRubber = bullet (.20 rifle rubber)
     .desc = { ent-BulletBaseRubber.desc }
+    .suffix = { "" }

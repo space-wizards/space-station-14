@@ -1,6 +1,9 @@
 ent-BaseThruster = двигатель
     .desc = Он делает ньооооооом.
+    .suffix = { "" }
 ent-Thruster = двигатель
     .desc = Он делает ньооооооом.
+    .suffix = { "" }
 ent-Gyroscope = Гироскоп
     .desc = Увеличивает потенциальное угловое вращение шаттла.
+    .suffix = { "" }

@@ -10,3 +10,6 @@ ent-WaterTank = water tank
 ent-WaterTankFull = { ent-WaterTank }
     .suffix = Full
     .desc = { ent-WaterTank.desc }
+ent-WaterTankHighCapacity = high-capacity water tank
+    .desc = A highly pressurized water tank made to hold gargantuan amounts of water.
+    .suffix = Full

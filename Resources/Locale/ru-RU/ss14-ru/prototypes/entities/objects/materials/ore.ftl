@@ -1,5 +1,6 @@
 ent-OreBase = { ent-BaseItem }
     .desc = A piece of unrefined ore.
+    .suffix = { "" }
 ent-AdamantineOre = adamantine ore
     .suffix = Full
     .desc = { ent-OreBase.desc }

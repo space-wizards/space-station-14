@@ -1,0 +1,3 @@
+bloodstream-component-looks-pale = [color=bisque]{ CAPITALIZE(SUBJECT($target)) } looks pale.[/color]
+bloodstream-component-bleeding = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-BE($target) } bleeding.[/color]
+bloodstream-component-profusely-bleeding = [color=crimson]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-BE($target) } profusely bleeding![/color]

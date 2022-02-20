@@ -1,5 +1,6 @@
 ent-SheetGlassBase = { ent-BaseItem }
     .desc = A sheet of glass, used often on the station in various applications.
+    .suffix = { "" }
 ent-SheetGlass = glass
     .suffix = Full
     .desc = { ent-SheetGlassBase.desc }

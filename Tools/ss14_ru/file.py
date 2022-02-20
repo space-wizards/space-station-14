@@ -10,7 +10,7 @@ class File:
         self.full_path = full_path
 
     def read_data(self):
-        file = open(self.full_path, 'r')
+        file = open(self.full_path, 'r', encoding='utf8')
         # replace необходим для того, чтобы 1-е сообщение не считалось ast.Junk
         file_data = file.read().replace('﻿', '')
         file.close()
@@ -19,12 +19,12 @@ class File:
 
     def save_data(self, file_data: typing.AnyStr):
         os.makedirs(os.path.dirname(self.full_path), exist_ok=True)
-        file = open(self.full_path, 'w')
+        file = open(self.full_path, 'w', encoding='utf8')
         file.write(file_data)
         file.close()
 
     def get_relative_path(self, base_path):
-        return self.full_path.replace(f'{base_path}/', '')
+        return os.path.relpath(self.full_path, base_path)
 
     def get_relative_path_without_extension(self, base_path):
         return self.get_relative_path(base_path).split('.', maxsplit=1)[0]
@@ -33,13 +33,10 @@ class File:
         return os.path.relpath(self.get_parent_dir(), base_path)
 
     def get_parent_dir(self):
-        splitted_path = self.full_path.split('/')[0:-1]
-        return '/'.join(splitted_path)
+        return os.path.dirname(self.full_path)
 
     def get_name(self):
-        relative_path_without_extension = self.get_relative_path_without_extension(self.full_path).split('/')
-
-        return relative_path_without_extension[len(relative_path_without_extension) - 1]
+        return os.path.basename(self.full_path).split('.')[0]
 
 
 class FluentFile(File):
