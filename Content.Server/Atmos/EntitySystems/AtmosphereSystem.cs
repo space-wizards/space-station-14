@@ -85,9 +85,15 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var (exposed, transform) in EntityManager.EntityQuery<AtmosExposedComponent, TransformComponent>())
             {
-                var tile = GetTileMixture(transform.Coordinates);
-                if (tile == null) continue;
-                var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, tile);
+                // Used for things like disposals/cryo to change which air people are exposed to.
+                var airEvent = new AtmosExposedGetAirEvent();
+                RaiseLocalEvent(exposed.Owner, ref airEvent, false);
+
+                airEvent.Gas ??= GetTileMixture(transform.Coordinates);
+                if (airEvent.Gas == null)
+                    continue;
+
+                var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, airEvent.Gas);
                 RaiseLocalEvent(exposed.Owner, ref updateEvent);
             }
 
