@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Shards now do slightly less damage when thrown., type: Fix}
-  id: 605
-  time: '2021-11-19T06:37:35.408797+00:00'
 - author: 20kdc
   changes:
   - {message: 'Added a new map, "Knightship", meant for very low populations.', type: Add}
@@ -2998,3 +2993,9 @@ Entries:
   - {message: Drones can no longer throw., type: Remove}
   id: 1104
   time: '2022-02-20T06:02:06.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Using ctrl+rightclick to move pulled objects should no longer feel slightly
+      weird., type: Tweak}
+  id: 1105
+  time: '2022-02-20T06:17:49.0000000+00:00'
