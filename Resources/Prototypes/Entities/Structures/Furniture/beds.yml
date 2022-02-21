@@ -104,6 +104,8 @@
   - type: ApcPowerReceiver
     powerLoad: 3500
   - type: ExtensionCableReceiver
+  - type: PlaceableSurface ## Required for emag
+    isPlaceable: false
 
 - type: entity
   parent: Bed
