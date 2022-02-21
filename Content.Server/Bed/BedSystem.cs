@@ -43,7 +43,7 @@ namespace Content.Server.Bed
                 bedComponent.Accumulator -= bedComponent.HealTime;
                 foreach (EntityUid healedEntity in strapComponent.BuckledEntities)
                 {
-                _damageableSystem.TryChangeDamage(healedEntity, bedComponent.Damage, true);
+                    _damageableSystem.TryChangeDamage(healedEntity, bedComponent.Damage, true);
                 }
             }
         }
@@ -68,7 +68,8 @@ namespace Content.Server.Bed
             if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered && args.Buckling)
                 return;
 
-            var metabolicEvent = new ApplyMetabolicMultiplierEvent() {Uid = args.BuckledEntity, Multiplier = component.Multiplier, Apply = args.Buckling};
+            var metabolicEvent = new ApplyMetabolicMultiplierEvent()
+                {Uid = args.BuckledEntity, Multiplier = component.Multiplier, Apply = args.Buckling};
             RaiseLocalEvent(args.BuckledEntity, metabolicEvent, false);
         }
 
@@ -81,10 +82,8 @@ namespace Content.Server.Bed
 
             foreach (var buckledEntity in strap.BuckledEntities)
             {
-                if (!TryComp<SharedBodyComponent>(buckledEntity, out var body))
-                    return;
-
-                var metabolicEvent = new ApplyMetabolicMultiplierEvent() {Uid = buckledEntity, Multiplier = component.Multiplier, Apply = args.Powered};
+                var metabolicEvent = new ApplyMetabolicMultiplierEvent()
+                    {Uid = buckledEntity, Multiplier = component.Multiplier, Apply = args.Powered};
                 RaiseLocalEvent(buckledEntity, metabolicEvent, false);
             }
         }
