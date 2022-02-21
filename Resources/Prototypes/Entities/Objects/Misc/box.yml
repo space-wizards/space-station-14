@@ -10,5 +10,5 @@
     sprite: Objects/Storage/boxes.rsi
     size: 25
   - type: Storage
-    capacity: 60
+    capacity: 30
     size: 10
