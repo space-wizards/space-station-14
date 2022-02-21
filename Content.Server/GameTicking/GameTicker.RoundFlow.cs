@@ -74,7 +74,7 @@ namespace Content.Server.GameTicking
             AddGamePresetRules();
 
             DefaultMap = _mapManager.CreateMap();
-            _pauseManager.AddUninitializedMap(DefaultMap);
+            _mapManager.AddUninitializedMap(DefaultMap);
             _startingRound = false;
             var startTime = _gameTiming.RealTime;
             var maps = new List<GameMapPrototype>() { _gameMapManager.GetSelectedMapChecked(true) };
@@ -89,7 +89,7 @@ namespace Content.Server.GameTicking
                 {
                     // Create other maps for the others since we need to.
                     toLoad = _mapManager.CreateMap();
-                    _pauseManager.AddUninitializedMap(toLoad);
+                    _mapManager.AddUninitializedMap(toLoad);
                 }
 
                 _mapLoader.LoadMap(toLoad, map.MapPath.ToString());
@@ -273,7 +273,7 @@ namespace Content.Server.GameTicking
                 }
 
                 // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
-                _pauseManager.DoMapInitialize(DefaultMap);
+                _mapManager.DoMapInitialize(DefaultMap);
 
                 // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
                 RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));

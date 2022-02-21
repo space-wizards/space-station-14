@@ -121,6 +121,14 @@
   icon: /Textures/Objects/Misc/guardian_info.rsi/icon.png
   price: 14
 
+- type: uplinkListing
+  id: UplinkEmag
+  category: Utility
+  itemId: Emag
+  description: This sequencer, or "emag", can be used to open or hack a huge variety of items around the station.
+  icon: /Textures/Objects/Tools/emag.rsi/icon.png
+  price: 8
+
 # Bundles
 
 - type: uplinkListing

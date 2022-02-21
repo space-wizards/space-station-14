@@ -34,7 +34,7 @@
       crit: corgi_dead
       dead: corgi_dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 3
   - type: ReplacementAccent
     accent: dog
@@ -211,7 +211,7 @@
       crit: cat_dead
       dead: cat_dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 2
   - type: ReplacementAccent
     accent: cat
@@ -333,7 +333,7 @@
       crit: sloth_dead
       dead: sloth_dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 3
   - type: InteractionPopup
     successChance: 0.9

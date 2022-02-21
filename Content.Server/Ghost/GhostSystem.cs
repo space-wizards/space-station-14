@@ -8,6 +8,7 @@ using Content.Server.Players;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Examine;
+using Content.Shared.Follower;
 using Content.Shared.Ghost;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.EntitySystems;
@@ -30,6 +31,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
+        [Dependency] private readonly FollowerSystem _followerSystem = default!;
 
         public override void Initialize()
         {
@@ -158,6 +160,7 @@ namespace Content.Server.Ghost
             if (FindLocation(msg.Name) is { } warp)
             {
                 EntityManager.GetComponent<TransformComponent>(ghost.Owner).Coordinates = EntityManager.GetComponent<TransformComponent>(warp.Owner).Coordinates;
+                return;
             }
 
             Logger.Warning($"User {args.SenderSession.Name} tried to warp to an invalid warp: {msg.Name}");
@@ -178,7 +181,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            EntityManager.GetComponent<TransformComponent>(ghost.Owner).Coordinates = EntityManager.GetComponent<TransformComponent>(msg.Target).Coordinates;
+            _followerSystem.StartFollowingEntity(ghost.Owner, msg.Target);
         }
 
         private void DeleteEntity(EntityUid uid)

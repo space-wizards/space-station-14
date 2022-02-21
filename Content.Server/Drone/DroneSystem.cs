@@ -1,16 +1,20 @@
 using Content.Shared.Drone;
 using Content.Server.Drone.Components;
-using Content.Shared.Drone.Components;
 using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Examine;
 using Content.Server.Popups;
 using Content.Server.Mind.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.Body.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Emoting;
 using Robust.Shared.Player;
 using Content.Shared.Tag;
+using Content.Shared.Throwing;
 
 namespace Content.Server.Drone
 {
@@ -21,11 +25,27 @@ namespace Content.Server.Drone
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<DroneComponent, InteractionAttemptEvent>(OnInteractionAttempt);
+            SubscribeLocalEvent<DroneComponent, UserOpenActivatableUIAttemptEvent>(OnActivateUIAttempt);
             SubscribeLocalEvent<DroneComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<DroneComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DroneComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<DroneComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<DroneComponent, EmoteAttemptEvent>(OnEmoteAttempt);
+            SubscribeLocalEvent<DroneComponent, ThrowAttemptEvent>(OnThrowAttempt);
+        }
+
+        private void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
+        {
+            if (HasComp<MobStateComponent>(args.Target) && !HasComp<DroneComponent>(args.Target))
+            {
+                args.Cancel();
+            }
+        }
+
+        private void OnActivateUIAttempt(EntityUid uid, DroneComponent component, UserOpenActivatableUIAttemptEvent args)
+        {
+            args.Cancel();
         }
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)
@@ -75,7 +95,7 @@ namespace Content.Server.Drone
                    foreach (var entry in drone.Tools)
                     {
                         var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
-                        AddComp<DroneToolComponent>(item);
+                        AddComp<UnremoveableComponent>(item);
                         hands.PutInHand(item);
                         drone.ToolUids.Add(item);
                     }
@@ -95,6 +115,11 @@ namespace Content.Server.Drone
         private void OnEmoteAttempt(EntityUid uid, DroneComponent component, EmoteAttemptEvent args)
         {
             // No.
+            args.Cancel();
+        }
+
+        private void OnThrowAttempt(EntityUid uid, DroneComponent drone, ThrowAttemptEvent args)
+        {
             args.Cancel();
         }
 

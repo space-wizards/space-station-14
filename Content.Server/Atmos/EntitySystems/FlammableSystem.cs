@@ -111,7 +111,7 @@ namespace Content.Server.Atmos.EntitySystems
             args.IsHot = flammable.OnFire;
         }
 
-        private void OnTileFireEvent(EntityUid uid, FlammableComponent flammable, TileFireEvent args)
+        private void OnTileFireEvent(EntityUid uid, FlammableComponent flammable, ref TileFireEvent args)
         {
             var tempDelta = args.Temperature - MinIgnitionTemperature;
 

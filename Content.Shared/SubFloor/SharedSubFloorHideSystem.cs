@@ -13,7 +13,7 @@ namespace Content.Shared.SubFloor
     [UsedImplicitly]
     public abstract class SharedSubFloorHideSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] protected readonly IMapManager MapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly TrayScannerSystem _trayScannerSystem = default!;
 
@@ -21,8 +21,8 @@ namespace Content.Shared.SubFloor
         {
             base.Initialize();
 
-            _mapManager.GridChanged += MapManagerOnGridChanged;
-            _mapManager.TileChanged += MapManagerOnTileChanged;
+            MapManager.GridChanged += MapManagerOnGridChanged;
+            MapManager.TileChanged += MapManagerOnTileChanged;
 
             SubscribeLocalEvent<SubFloorHideComponent, ComponentStartup>(OnSubFloorStarted);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentShutdown>(OnSubFloorTerminating);
@@ -34,8 +34,8 @@ namespace Content.Shared.SubFloor
         {
             base.Shutdown();
 
-            _mapManager.GridChanged -= MapManagerOnGridChanged;
-            _mapManager.TileChanged -= MapManagerOnTileChanged;
+            MapManager.GridChanged -= MapManagerOnGridChanged;
+            MapManager.TileChanged -= MapManagerOnTileChanged;
         }
 
         private void OnInteractionAttempt(EntityUid uid, SubFloorHideComponent component, GettingInteractedWithAttemptEvent args)
@@ -89,7 +89,7 @@ namespace Content.Shared.SubFloor
             if (e.NewTile.Tile.IsEmpty)
                 return; // Anything that was here will be unanchored anyways.
 
-            UpdateTile(_mapManager.GetGrid(e.NewTile.GridIndex), e.NewTile.GridIndices);
+            UpdateTile(MapManager.GetGrid(e.NewTile.GridIndex), e.NewTile.GridIndices);
         }
 
         private void MapManagerOnGridChanged(object? sender, GridChangedEventArgs e)
@@ -108,7 +108,7 @@ namespace Content.Shared.SubFloor
             if (!Resolve(uid, ref component, ref xform))
                 return;
 
-            if (xform.Anchored && _mapManager.TryGetGrid(xform.GridID, out var grid))
+            if (xform.Anchored && MapManager.TryGetGrid(xform.GridID, out var grid))
                 component.IsUnderCover = HasFloorCover(grid, grid.TileIndicesFor(xform.Coordinates));
             else
                 component.IsUnderCover = false;
@@ -116,7 +116,7 @@ namespace Content.Shared.SubFloor
             UpdateAppearance(uid, component);
         }
 
-        private bool HasFloorCover(IMapGrid grid, Vector2i position)
+        public bool HasFloorCover(IMapGrid grid, Vector2i position)
         {
             // TODO Redo this function. Currently wires on an asteroid are always "below the floor"
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[grid.GetTileRef(position).Tile.TypeId];
