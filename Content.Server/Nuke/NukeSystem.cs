@@ -8,7 +8,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nuke;
 using Content.Shared.Sound;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -197,6 +196,17 @@ namespace Content.Server.Nuke
         {
             if (!Resolve(uid, ref nuke))
                 return;
+
+            nuke.CooldownTime -= frameTime;
+            if (nuke.CooldownTime <= 0)
+            {
+                // reset nuke to default state
+                nuke.CooldownTime = 0;
+                nuke.Status = NukeStatus.AWAIT_ARM;
+                UpdateStatus(uid, nuke);
+            }
+
+            UpdateUserInterface(nuke.Owner, nuke);
         }
 
         private void TickTimer(EntityUid uid, float frameTime, NukeComponent? nuke = null)
@@ -216,11 +226,11 @@ namespace Content.Server.Nuke
             if (nuke.RemainingTime <= 0)
             {
                 nuke.RemainingTime = 0;
-                ActivateBomb(nuke.Owner, nuke);
+                ActivateBomb(uid, nuke);
             }
             else
             {
-                UpdateUserInterface(nuke.Owner, nuke);
+                UpdateUserInterface(uid, nuke);
             }
         }
 
@@ -292,7 +302,8 @@ namespace Content.Server.Nuke
                 IsAnchored = anchored,
                 AllowArm = allowArm,
                 EnteredCodeLength = component.EnteredCode.Length,
-                MaxCodeLength = _codes.Code.Length
+                MaxCodeLength = _codes.Code.Length,
+                CooldownTime = (int) component.CooldownTime
             };
 
             ui.SetState(state);
@@ -356,7 +367,10 @@ namespace Content.Server.Nuke
             component.PlayedAlertSound = false;
             component.AlertAudioStream?.Stop();
 
-            component.Status = NukeStatus.AWAIT_ARM;
+            // start bomb cooldown
+            component.Status = NukeStatus.COOLDOWN;
+            component.CooldownTime = component.Cooldown;
+
             UpdateUserInterface(uid, component);
         }
 
