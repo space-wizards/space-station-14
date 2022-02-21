@@ -11,5 +11,7 @@ namespace Content.Server.PlayingCard
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ThrowIndividually { get; set; } = false;
+
+        public string RsiPath = "";
     }
 }

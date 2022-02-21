@@ -3,7 +3,7 @@ using Content.Shared.PlayingCard;
 using Robust.Client.GameObjects;
 using static Content.Shared.PlayingCard.SharedPlayingCardHandComponent;
 
-namespace Content.Client.VendingMachines
+namespace Content.Client.PlayingCard
 {
     public class PlayingCardHandBoundUserInterface : BoundUserInterface
     {

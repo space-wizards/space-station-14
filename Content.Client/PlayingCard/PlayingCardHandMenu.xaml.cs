@@ -31,10 +31,17 @@ namespace Content.Client.PlayingCard.UI
 
             Owner = owner;
             VendingContents.OnItemSelected += ItemSelected;
+            // NEED TO GRAB SPRITE COMPONENT OF PLAYING CARD
+            // EntityView.Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
+            // EntityView.Sprite =
+            var sprite1 = new SpriteComponent();
+            sprite1.LayerSetState();
+
         }
 
         public void Populate(List<String> cardList)
         {
+            // populate 5 entries
             VendingContents.Clear();
             _cachedInventory = inventory;
             var longestEntry = "";

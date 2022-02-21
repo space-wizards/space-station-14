@@ -3,4 +3,7 @@
               SizeFlagsStretchRatio="8"
               VerticalExpand="True">
     </ItemList>
+
+    <SpriteView Name="EntityView" SetSize="96 96" OverrideDirection="South" />
+
 </DefaultWindow>
