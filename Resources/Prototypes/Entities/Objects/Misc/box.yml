@@ -8,7 +8,7 @@
     sprite: Objects/Storage/boxes.rsi
   - type: Item
     sprite: Objects/Storage/boxes.rsi
-    size: 25
+    size: 31
   - type: Storage
     capacity: 30
     size: 10
