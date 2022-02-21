@@ -2,11 +2,8 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.HealthExaminable;
-<<<<<<< HEAD
 using Content.Server.Bed;
-=======
 using Content.Server.Popups;
->>>>>>> 1cacaebf2d711c1b951d5d8c3c2d118c09cac3a3
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
