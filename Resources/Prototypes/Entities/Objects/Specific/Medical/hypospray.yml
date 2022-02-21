@@ -51,13 +51,15 @@
       emptySpriteName: medipen_empty
   - type: Tag
     tags:
+    - Recyclable
     - Trash
+  - type: Recyclable
 
 - type: entity
-  name: epinephrine medipen
+  name: emergency medipen
   parent: ChemicalMedipen
-  id: EpinephrineMedipen
-  description: A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Beware, as it's easy to overdose on epinephrine.
+  id: EmergencyMedipen
+  description: A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Beware, as it's easy to overdose on epinephrine and tranexmic acid.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -65,4 +67,23 @@
         maxVol: 15
         reagents:
         - ReagentId: Epinephrine
-          Quantity: 15
+          Quantity: 12
+        - ReagentId: TranexamicAcid
+          Quantity: 3
+
+
+- type: entity
+  name: anti-poison medipen
+  parent: ChemicalMedipen
+  id: AntiPoisonMedipen
+  description: A rapid dose of anti-poison. Contains ultravasculine and epinephrine.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 15
+        reagents:
+        - ReagentId: Ultravasculine
+          Quantity: 10
+        - ReagentId: Epinephrine
+          Quantity: 5

@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class WhisperCommand : IConsoleCommand
+    internal sealed class WhisperCommand : IConsoleCommand
     {
         public string Command => "whisper";
         public string Description => "Send chat messages to the local channel as a whisper";

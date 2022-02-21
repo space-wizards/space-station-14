@@ -15,7 +15,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.Crayon.UI
 {
     [GenerateTypedNameReferences]
-    public partial class CrayonWindow : DefaultWindow
+    public sealed partial class CrayonWindow : DefaultWindow
     {
         public CrayonBoundUserInterface Owner { get; }
 

@@ -7,7 +7,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [Serializable]
     [DataDefinition]
-    public class ChangeConstructionNodeBehavior : IThresholdBehavior
+    public sealed class ChangeConstructionNodeBehavior : IThresholdBehavior
     {
         [DataField("node")]
         public string Node { get; private set; } = string.Empty;

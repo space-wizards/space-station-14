@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class RemoveEntityStorageCommand : IConsoleCommand
+    public sealed class RemoveEntityStorageCommand : IConsoleCommand
     {
         public string Command => "rmstorage";
         public string Description => "Removes a given entity from it's containing storage, if any.";

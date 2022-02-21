@@ -7,7 +7,7 @@ using Robust.Shared.Players;
 namespace Content.Server.Research.Components
 {
     [RegisterComponent]
-    public class  TechnologyDatabaseComponent : SharedTechnologyDatabaseComponent
+    public sealed class  TechnologyDatabaseComponent : SharedTechnologyDatabaseComponent
     {
         public override ComponentState GetComponentState()
         {

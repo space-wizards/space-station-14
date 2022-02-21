@@ -27,7 +27,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker : SharedGameTicker
+    public sealed partial class GameTicker : SharedGameTicker
     {
         [ViewVariables] private bool _initialized;
         [ViewVariables] private bool _postInitialized;
@@ -90,7 +90,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IBaseServer _baseServer = default!;
         [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
-        [Dependency] private readonly IPauseManager _pauseManager = default!;
 #if EXCEPTION_TOLERANCE
         [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 #endif

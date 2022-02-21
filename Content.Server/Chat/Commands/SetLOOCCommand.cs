@@ -9,7 +9,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Chat.Commands;
 
 [AdminCommand(AdminFlags.Server)]
-public class SetLOOCCommand : IConsoleCommand
+public sealed class SetLOOCCommand : IConsoleCommand
 {
     public string Command => "setlooc";
     public string Description => Loc.GetString("set-looc-command-description");

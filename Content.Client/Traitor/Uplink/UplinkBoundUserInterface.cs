@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.Traitor.Uplink
 {
     [UsedImplicitly]
-    public class UplinkBoundUserInterface : BoundUserInterface
+    public sealed class UplinkBoundUserInterface : BoundUserInterface
     {
         private UplinkMenu? _menu;
 

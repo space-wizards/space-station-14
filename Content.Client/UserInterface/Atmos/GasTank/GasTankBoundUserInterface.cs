@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.UserInterface.Atmos.GasTank
 {
     [UsedImplicitly]
-    public class GasTankBoundUserInterface
+    public sealed class GasTankBoundUserInterface
         : BoundUserInterface
     {
         public GasTankBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) :

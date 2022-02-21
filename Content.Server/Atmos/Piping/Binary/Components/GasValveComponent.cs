@@ -6,7 +6,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
-    public class GasValveComponent : Component
+    public sealed class GasValveComponent : Component
     {
         [ViewVariables]
         [DataField("open")]

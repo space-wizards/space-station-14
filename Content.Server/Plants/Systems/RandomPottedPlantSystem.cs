@@ -6,7 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Plants.Systems
 {
-    public class RandomPottedPlantSystem : EntitySystem
+    public sealed class RandomPottedPlantSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 

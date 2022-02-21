@@ -159,7 +159,7 @@ namespace Content.Shared.Slippery
     /// <summary>
     ///     Raised on an entity to determine if it can slip or not.
     /// </summary>
-    public class SlipAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
+    public sealed class SlipAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
     {
         public SlotFlags TargetSlots { get; } = SlotFlags.FEET;
     }

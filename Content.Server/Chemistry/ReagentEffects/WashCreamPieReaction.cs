@@ -12,7 +12,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.ReagentEffects
 {
     [UsedImplicitly]
-    public class WashCreamPieReaction : ReagentEffect
+    public sealed class WashCreamPieReaction : ReagentEffect
     {
         public override void Effect(ReagentEffectArgs args)
         {

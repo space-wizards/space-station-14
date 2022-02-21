@@ -9,7 +9,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.AI.Operators.Nutrition
 {
-    public class UseDrinkInInventoryOperator : AiOperator
+    public sealed class UseDrinkInInventoryOperator : AiOperator
     {
         private readonly EntityUid _owner;
         private readonly EntityUid _target;

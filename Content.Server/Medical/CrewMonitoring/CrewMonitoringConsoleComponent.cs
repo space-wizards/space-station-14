@@ -8,7 +8,7 @@ namespace Content.Server.Medical.CrewMonitoring
 {
     [RegisterComponent]
     [Friend(typeof(CrewMonitoringConsoleSystem))]
-    public class CrewMonitoringConsoleComponent : Component
+    public sealed class CrewMonitoringConsoleComponent : Component
     {
         /// <summary>
         ///     List of all currently connected sensors to this console.

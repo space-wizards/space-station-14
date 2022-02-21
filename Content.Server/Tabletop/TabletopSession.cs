@@ -9,7 +9,7 @@ namespace Content.Server.Tabletop
     /// <summary>
     ///     A class for storing data about a running tabletop game.
     /// </summary>
-    public class TabletopSession
+    public sealed class TabletopSession
     {
         /// <summary>
         ///     The center position of this session.

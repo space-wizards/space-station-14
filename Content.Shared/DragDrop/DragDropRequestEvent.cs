@@ -9,7 +9,7 @@ namespace Content.Shared.DragDrop
     /// Requests a drag / drop interaction to be performed
     /// </summary>
     [Serializable, NetSerializable]
-    public class DragDropRequestEvent : EntityEventArgs
+    public sealed class DragDropRequestEvent : EntityEventArgs
     {
         /// <summary>
         ///     Location that the entity was dropped.

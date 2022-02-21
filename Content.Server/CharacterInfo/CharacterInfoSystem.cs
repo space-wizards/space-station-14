@@ -8,7 +8,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.CharacterInfo;
 
-public class CharacterInfoSystem : EntitySystem
+public sealed class CharacterInfoSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -52,7 +52,7 @@ public class CharacterInfoSystem : EntitySystem
                 jobTitle = role.Name;
                 break;
             }
-            
+
             // Get briefing
             briefing = mind.Briefing;
         }

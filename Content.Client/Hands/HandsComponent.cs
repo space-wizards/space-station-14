@@ -8,7 +8,7 @@ namespace Content.Client.Hands
     [RegisterComponent]
     [ComponentReference(typeof(SharedHandsComponent))]
     [Friend(typeof(HandsSystem))]
-    public class HandsComponent : SharedHandsComponent
+    public sealed class HandsComponent : SharedHandsComponent
     {
         public HandsGui? Gui { get; set; }
     }

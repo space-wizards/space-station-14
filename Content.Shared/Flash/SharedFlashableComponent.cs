@@ -14,7 +14,7 @@ namespace Content.Shared.Flash
     }
 
     [Serializable, NetSerializable]
-    public class FlashableComponentState : ComponentState
+    public sealed class FlashableComponentState : ComponentState
     {
         public float Duration { get; }
         public TimeSpan Time { get; }

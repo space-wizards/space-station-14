@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Flash.Components
 {
     [RegisterComponent, Friend(typeof(FlashSystem))]
-    public class FlashComponent : Component
+    public sealed class FlashComponent : Component
     {
         [DataField("duration")]
         [ViewVariables(VVAccess.ReadWrite)]

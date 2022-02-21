@@ -9,7 +9,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class AddObjectiveCommand : IConsoleCommand
+    public sealed class AddObjectiveCommand : IConsoleCommand
     {
         public string Command => "addobjective";
         public string Description => "Adds an objective to the player's mind.";

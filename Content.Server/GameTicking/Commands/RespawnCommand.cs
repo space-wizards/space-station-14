@@ -7,7 +7,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.GameTicking.Commands
 {
-    class RespawnCommand : IConsoleCommand
+    sealed class RespawnCommand : IConsoleCommand
     {
         public string Command => "respawn";
         public string Description => "Respawns a player, kicking them back to the lobby.";

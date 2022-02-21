@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands.Station;
 
 [AdminCommand(AdminFlags.Admin)]
-public class RenameStationCommand : IConsoleCommand
+public sealed class RenameStationCommand : IConsoleCommand
 {
     public string Command => "renamestation";
 

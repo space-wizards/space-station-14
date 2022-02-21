@@ -13,7 +13,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Chemistry.EntitySystems
 {
 	[UsedImplicitly]
-    public class SolutionTransferSystem : EntitySystem
+    public sealed class SolutionTransferSystem : EntitySystem
     {
         /// <summary>
         ///     Default transfer amounts for the set-transfer verb.

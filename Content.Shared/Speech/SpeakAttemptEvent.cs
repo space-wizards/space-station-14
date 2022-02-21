@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Speech
 {
-    public class SpeakAttemptEvent : CancellableEntityEventArgs
+    public sealed class SpeakAttemptEvent : CancellableEntityEventArgs
     {
         public SpeakAttemptEvent(EntityUid uid)
         {
