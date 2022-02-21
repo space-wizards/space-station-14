@@ -1,15 +1,4 @@
 Entries:
-- author: Tomeno
-  changes:
-  - {message: Fixed thermoregulation by sweating., type: Fix}
-  - {message: Rebalanced fire damage., type: Tweak}
-  id: 607
-  time: '2021-11-19T16:54:02.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Fixed some missing floor tiles on Knightship., type: Fix}
-  id: 608
-  time: '2021-11-19T16:54:25.0000000+00:00'
 - author: Mith-randalf
   changes:
   - {message: Added a new sound for poppin pills., type: Add}
@@ -2999,3 +2988,18 @@ Entries:
   - {message: Small amounts of liquids don't turn to cum stains, type: Fix}
   id: 1106
   time: '2022-02-20T19:54:06.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Thermomachines can now actually be constructed, and their machine board
+      can be unlocked through research.', type: Add}
+  - {message: Thermomachines now function properly., type: Fix}
+  id: 1107
+  time: '2022-02-21T00:17:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Blood puddles are now a darker red and much more opaque., type: Tweak}
+  - {message: Your bleeding can now alternatively be stopped by cauterizing the wounds
+      using heat damage., type: Add}
+  - {message: Bloodloss from bleeding has been lowered slightly., type: Tweak}
+  id: 1108
+  time: '2022-02-21T00:18:24.0000000+00:00'
