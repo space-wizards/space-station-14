@@ -115,7 +115,7 @@ namespace Content.Server.Recycling
 
         private void OnEmagged(EntityUid uid, RecyclerComponent component, GotEmaggedEvent args)
         {
-            if (args.Handled || !component.Safe) return;
+            if (!component.Safe) return;
             component.Safe = false;
             args.Handled = true;
         }
