@@ -18,6 +18,8 @@ namespace Content.Server.Body.Components
         [DataField("saturation")]
         public float Saturation = 5.0f;
 
+        public float SaturationReset = 5.0f;
+
         /// <summary>
         ///     At what level of saturation will you begin to suffocate?
         /// </summary>

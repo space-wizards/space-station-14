@@ -99,6 +99,7 @@ namespace Content.Server.Body.Systems
         public void OnComponentInit(EntityUid uid, RespiratorComponent component, ComponentInit args)
         {
             component.CycleDelayReset = component.CycleDelay;
+            component.SaturationReset = component.Saturation;
         }
 
         public void Inhale(EntityUid uid, SharedBodyComponent? body=null)
@@ -202,13 +203,18 @@ namespace Content.Server.Body.Systems
             if (args.Apply)
             {
                 component.CycleDelay *= args.Multiplier;
+                component.Saturation *= args.Multiplier;
                 return;
             }
             // This way we don't have to worry about it breaking if the stasis bed component is destroyed
             component.CycleDelay = component.CycleDelayReset;
+            component.Saturation = component.SaturationReset;
             // Reset the accumulator properly
             if (component.AccumulatedFrametime >= component.CycleDelayReset)
                 component.AccumulatedFrametime = component.CycleDelayReset;
+
+            if (component.Saturation >= component.SaturationReset)
+                component.Saturation = component.SaturationReset;
         }
     }
 }
