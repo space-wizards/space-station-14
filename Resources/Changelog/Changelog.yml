@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Medical scanners and cloning pods will now not push you into walls.,
-    type: Fix}
-  id: 610
-  time: '2021-11-20T01:03:10.0000000+00:00'
 - author: cheesePizza2
   changes:
   - {message: Shakers are no longer breakable and do not spill contents, type: Tweak}
@@ -3004,3 +2998,8 @@ Entries:
       UI scales., type: Fix}
   id: 1109
   time: '2022-02-21T03:42:16.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Added the Musician job. Get out there and entertain us!, type: Add}
+  id: 1110
+  time: '2022-02-21T04:38:48.0000000+00:00'
