@@ -120,13 +120,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             DirtyUI(uid, component);
         }
 
-        private void DirtyUI(EntityUid uid, GasThermoMachineComponent? thermo)
+        private void DirtyUI(EntityUid uid, GasThermoMachineComponent? thermo, ServerUserInterfaceComponent? ui=null)
         {
-            if (!Resolve(uid, ref thermo))
+            if (!Resolve(uid, ref thermo, ref ui, false))
                 return;
 
             _userInterfaceSystem.TrySetUiState(uid, ThermomachineUiKey.Key,
-                new GasThermomachineBoundUserInterfaceState(thermo.MinTemperature, thermo.MaxTemperature, thermo.TargetTemperature, thermo.Enabled));
+                new GasThermomachineBoundUserInterfaceState(thermo.MinTemperature, thermo.MaxTemperature, thermo.TargetTemperature, thermo.Enabled), null, ui);
         }
     }
 }
