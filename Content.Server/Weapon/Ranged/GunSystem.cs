@@ -34,7 +34,6 @@ namespace Content.Server.Weapon.Ranged;
 public sealed partial class GunSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ActionBlockerSystem  _blocker = default!;
     [Dependency] private readonly AdminLogSystem _logs = default!;
