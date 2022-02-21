@@ -109,7 +109,7 @@ namespace Content.Server.Communications
                     }
 
                     message += $"\nSent by {author}";
-                    _chatManager.DispatchStationAnnouncement(message, "Communications Console");
+                    _chatManager.DispatchStationAnnouncement(message, "Communications Console", true, Color.Gold);
                     break;
             }
         }

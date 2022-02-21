@@ -109,19 +109,19 @@ namespace Content.Server.Chat.Managers
             DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-admin-ooc-chat-enabled-message" : "chat-manager-admin-ooc-chat-disabled-message"));
         }
 
-        public void DispatchServerAnnouncement(string message)
+        public void DispatchServerAnnouncement(string message, Color colorOverride = default)
         {
             var messageWrap = Loc.GetString("chat-manager-server-wrap-message");
-            NetMessageToAll(ChatChannel.Server, message, messageWrap);
+            NetMessageToAll(ChatChannel.Server, message, messageWrap, colorOverride);
             Logger.InfoS("SERVER", message);
 
             _logs.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
         }
 
-        public void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true)
+        public void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true, Color colorOverride = default)
         {
             var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
-            NetMessageToAll(ChatChannel.Radio, message, messageWrap);
+            NetMessageToAll(ChatChannel.Radio, message, messageWrap, colorOverride);
             if (playDefaultSound)
             {
                 SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
@@ -596,12 +596,16 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendMessage(msg, client);
         }
 
-        public void NetMessageToAll(ChatChannel channel, string message, string messageWrap)
+        public void NetMessageToAll(ChatChannel channel, string message, string messageWrap, Color colorOverride = default)
         {
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = channel;
             msg.Message = message;
             msg.MessageWrap = messageWrap;
+            if (colorOverride != default)
+            {
+                msg.MessageColorOverride = colorOverride;
+            }
             _netManager.ServerSendToAll(msg);
         }
 
