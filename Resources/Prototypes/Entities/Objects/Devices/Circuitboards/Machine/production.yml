@@ -47,6 +47,40 @@
 
 
 - type: entity
+  id: ThermomachineFreezerMachineCircuitBoard
+  parent: BaseMachineCircuitboard
+  name: Freezer Thermomachine (Machine Board)
+  description: Looks like you could use a screwdriver to change the board type.
+  components:
+  - type: MachineBoard
+    prototype: GasThermoMachineFreezer
+    requirements:
+      MatterBin: 3
+      Laser: 3
+    materialRequirements:
+      Cable: 5
+  - type: Construction
+    graph: ThermomachineBoard
+    node: freezer
+
+- type: entity
+  id: ThermomachineHeaterMachineCircuitBoard
+  parent: BaseMachineCircuitboard
+  name: Heater Thermomachine (Machine Board)
+  description: Looks like you could use a screwdriver to change the board type.
+  components:
+  - type: MachineBoard
+    prototype: GasThermoMachineHeater
+    requirements:
+      MatterBin: 3
+      Laser: 3
+    materialRequirements:
+      Cable: 5
+  - type: Construction
+    graph: ThermomachineBoard
+    node: heater
+
+- type: entity
   id: CloningPodMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: Cloning Pod (Machine Board)

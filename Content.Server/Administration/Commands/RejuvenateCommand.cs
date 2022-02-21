@@ -1,5 +1,7 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Administration;
@@ -58,6 +60,7 @@ namespace Content.Server.Administration.Commands
             entMan.GetComponentOrNull<HungerComponent>(targetUid)?.ResetFood();
             entMan.GetComponentOrNull<ThirstComponent>(targetUid)?.ResetThirst();
 
+            // TODO holy shit make this an event my man!
             EntitySystem.Get<StatusEffectsSystem>().TryRemoveAllStatusEffects(target);
 
             if (entMan.TryGetComponent(target, out FlammableComponent? flammable))
@@ -73,6 +76,13 @@ namespace Content.Server.Administration.Commands
             if (entMan.TryGetComponent(target, out CreamPiedComponent? creamPied))
             {
                 EntitySystem.Get<CreamPieSystem>().SetCreamPied(target, creamPied, false);
+            }
+
+            if (entMan.TryGetComponent(target, out BloodstreamComponent? bloodStream))
+            {
+                var sys = EntitySystem.Get<BloodstreamSystem>();
+                sys.TryModifyBleedAmount(target, -bloodStream.BleedAmount, bloodStream);
+                sys.TryModifyBloodLevel(target, bloodStream.BloodSolution.AvailableVolume, bloodStream);
             }
 
             if (entMan.HasComponent<JitteringComponent>(target))

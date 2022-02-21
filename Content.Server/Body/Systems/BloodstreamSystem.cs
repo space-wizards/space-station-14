@@ -2,7 +2,11 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.HealthExaminable;
+<<<<<<< HEAD
 using Content.Server.Bed;
+=======
+using Content.Server.Popups;
+>>>>>>> 1cacaebf2d711c1b951d5d8c3c2d118c09cac3a3
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -20,6 +24,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -63,7 +68,7 @@ public sealed class BloodstreamSystem : EntitySystem
             // as well as stop their bleeding to a certain extent.
             if (bloodstream.BleedAmount > 0)
             {
-                TryModifyBloodLevel(uid, (-bloodstream.BleedAmount) / 10, bloodstream);
+                TryModifyBloodLevel(uid, (-bloodstream.BleedAmount) / 20, bloodstream);
                 TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
             }
 
@@ -114,17 +119,28 @@ public sealed class BloodstreamSystem : EntitySystem
         if (bloodloss.Empty)
             return;
 
+        var oldBleedAmount = component.BleedAmount;
         var total = bloodloss.Total;
         var totalFloat = total.Float();
         TryModifyBleedAmount(uid, totalFloat, component);
 
         var prob = Math.Clamp(totalFloat / 50, 0, 1);
-        if (_robustRandom.Prob(prob))
+        var healPopupProb = Math.Clamp(Math.Abs(totalFloat) / 25, 0, 1);
+        if (totalFloat > 0 && _robustRandom.Prob(prob))
         {
-            // This is gonna hurt.
             TryModifyBloodLevel(uid, (-total) / 5, component);
             SoundSystem.Play(Filter.Pvs(uid), component.InstantBloodSound.GetSound(), uid, AudioParams.Default);
         }
+        else if (totalFloat < 0 && oldBleedAmount > 0 && _robustRandom.Prob(healPopupProb))
+        {
+            // Magically, this damage has healed some bleeding, likely
+            // because it's burn damage that cauterized their wounds.
+
+            // We'll play a special sound and popup for feedback.
+            SoundSystem.Play(Filter.Pvs(uid), component.BloodHealedSound.GetSound(), uid, AudioParams.Default);
+            _popupSystem.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), uid,
+                Filter.Entities(uid));
+;       }
     }
 
     private void OnHealthBeingExamined(EntityUid uid, BloodstreamComponent component, HealthBeingExaminedEvent args)
@@ -223,7 +239,7 @@ public sealed class BloodstreamSystem : EntitySystem
             return false;
 
         component.BleedAmount += amount;
-        component.BleedAmount = Math.Clamp(component.BleedAmount, 0, 40);
+        component.BleedAmount = Math.Clamp(component.BleedAmount, 0, component.MaxBleedAmount);
 
         return true;
     }

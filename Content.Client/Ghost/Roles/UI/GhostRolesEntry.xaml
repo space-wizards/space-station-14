@@ -1,15 +1,13 @@
 <BoxContainer xmlns="https://spacestation14.io"
-              Orientation="Horizontal"
-              SeparationOverride="10"
-              HorizontalExpand="True">
-    <BoxContainer Orientation="Vertical"
-                  HorizontalExpand="True">
-        <RichTextLabel Name="Title" />
-        <RichTextLabel Name="Description" />
-    </BoxContainer>
+              Orientation="Vertical"
+              HorizontalExpand="True"
+              Margin="0 0 8 8">
+    <Label Name="Title"
+           StyleClasses="LabelKeyText"/>
+    <PanelContainer StyleClasses="HighDivider" />
+    <RichTextLabel Name="Description"
+                   Margin="0 4"/>
     <Button Name="RequestButton"
             Text="{Loc 'ghost-roles-window-request-role-button'}"
-            TextAlign="Center"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Center" />
+            HorizontalAlignment="Left"/>
 </BoxContainer>
