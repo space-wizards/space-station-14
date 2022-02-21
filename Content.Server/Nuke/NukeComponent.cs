@@ -22,6 +22,13 @@ namespace Content.Server.Nuke
         public int Timer = 180;
 
         /// <summary>
+        ///     How long bomb wouldn't arm again after deactivation.
+        ///     Used to prevent announcements spam.
+        /// </summary>
+        [DataField("cooldown")]
+        public int Cooldown = 30;
+
+        /// <summary>
         ///     The <see cref="ItemSlot"/> that stores the nuclear disk. The entity whitelist, sounds, and some other
         ///     behaviours are specified by this <see cref="ItemSlot"/> definition. Make sure the whitelist, is correct
         ///     otherwise a blank bit of paper will work as a "disk".
@@ -65,6 +72,12 @@ namespace Content.Server.Nuke
         /// </summary>
         [ViewVariables]
         public float RemainingTime;
+
+        /// <summary>
+        ///     Time until bomb cooldown will expire in seconds.
+        /// </summary>
+        [ViewVariables]
+        public float CooldownTime;
 
         /// <summary>
         ///     Current nuclear code buffer. Entered manually by players.

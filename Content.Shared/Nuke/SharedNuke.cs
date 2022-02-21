@@ -15,7 +15,8 @@ namespace Content.Shared.Nuke
         AWAIT_DISK,
         AWAIT_CODE,
         AWAIT_ARM,
-        ARMED
+        ARMED,
+        COOLDOWN
     }
 
     [Serializable, NetSerializable]
