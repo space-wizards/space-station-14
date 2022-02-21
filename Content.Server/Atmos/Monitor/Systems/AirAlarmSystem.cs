@@ -194,7 +194,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnInteract(EntityUid uid, AirAlarmComponent component, InteractHandEvent args)
         {
-            if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target, ignoreInsideBlocker: true))
+            if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
                 return;
 
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
