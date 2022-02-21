@@ -13,10 +13,8 @@ namespace Content.Server.Nutrition.EntitySystems;
 ///     masks), then this component might become redundant.
 /// </remarks>
 [RegisterComponent, Friend(typeof(FoodSystem), typeof(DrinkSystem))]
-public class IngestionBlockerComponent : Component
+public sealed class IngestionBlockerComponent : Component
 {
-    public override string Name => "IngestionBlocker";
-
     /// <summary>
     ///     Is this component currently blocking consumption.
     /// </summary>

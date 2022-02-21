@@ -17,7 +17,7 @@ namespace Content.Server.AME
     /// Node group class for handling the Antimatter Engine's console and parts.
     /// </summary>
     [NodeGroup(NodeGroupID.AMEngine)]
-    public class AMENodeGroup : BaseNodeGroup
+    public sealed class AMENodeGroup : BaseNodeGroup
     {
         /// <summary>
         /// The AME controller which is currently in control of this node group.

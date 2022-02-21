@@ -10,7 +10,7 @@ namespace Content.Client.PDA
 {
     [UsedImplicitly]
     // ReSharper disable once InconsistentNaming
-    public class PDAVisualizer : AppearanceVisualizer
+    public sealed class PDAVisualizer : AppearanceVisualizer
     {
         /// <summary>
         /// The base PDA sprite state, eg. "pda", "pda-clown"

@@ -19,7 +19,7 @@ namespace Content.Client.Administration.UI
     /// This window connects to a BwoinkSystem channel. BwoinkSystem manages the rest.
     /// </summary>
     [GenerateTypedNameReferences]
-    public partial class BwoinkWindow : DefaultWindow
+    public sealed partial class BwoinkWindow : DefaultWindow
     {
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IClientConsoleHost _console = default!;

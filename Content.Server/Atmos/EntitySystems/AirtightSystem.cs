@@ -10,7 +10,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public class AirtightSystem : EntitySystem
+    public sealed class AirtightSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -51,9 +51,6 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             SetAirblocked(airtight, false, xform);
-
-            InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum);
-            RaiseLocalEvent(new AirtightChanged(airtight));
         }
 
         private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent airtight, ref AnchorStateChangedEvent args)
@@ -135,7 +132,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
     }
 
-    public class AirtightChanged : EntityEventArgs
+    public sealed class AirtightChanged : EntityEventArgs
     {
         public AirtightComponent Airtight;
 

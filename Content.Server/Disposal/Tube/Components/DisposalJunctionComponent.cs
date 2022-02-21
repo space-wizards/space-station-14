@@ -10,6 +10,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Disposal.Tube.Components
 {
+    [Virtual]
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalJunctionComponent : DisposalTubeComponent
@@ -23,8 +24,6 @@ namespace Content.Server.Disposal.Tube.Components
         [ViewVariables]
         [DataField("degrees")]
         private List<Angle> _degrees = new();
-
-        public override string Name => "DisposalJunction";
 
         protected override Direction[] ConnectableDirections()
         {

@@ -22,7 +22,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasVentPumpSystem : EntitySystem
+    public sealed class GasVentPumpSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
@@ -100,7 +100,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 if (molesDelta > 0)
                 {
                     var removed = environment.Remove(molesDelta);
-                    pipe.AssumeAir(removed);
+                    _atmosphereSystem.Merge(pipe.Air, removed);
                 }
             }
         }

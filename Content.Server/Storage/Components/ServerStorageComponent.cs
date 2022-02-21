@@ -7,6 +7,7 @@ using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Shared.Acts;
+using Content.Shared.Coordinates;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
@@ -42,7 +43,7 @@ namespace Content.Server.Storage.Components
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
     [ComponentReference(typeof(SharedStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
+    public sealed class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -121,6 +122,7 @@ namespace Content.Server.Storage.Components
         private void RecalculateStorageUsed()
         {
             _storageUsed = 0;
+            _sizeCache.Clear();
 
             if (Storage == null)
             {
@@ -131,6 +133,7 @@ namespace Content.Server.Storage.Components
             {
                 var item = _entityManager.GetComponent<SharedItemComponent>(entity);
                 _storageUsed += item.Size;
+                _sizeCache.Add(entity, item.Size);
             }
         }
 
@@ -219,7 +222,7 @@ namespace Content.Server.Storage.Components
 
             if (!_sizeCache.TryGetValue(message.Entity, out var size))
             {
-                Logger.WarningS(LoggerName, $"Removed entity {message.Entity} without a cached size from storage {Owner} at {_entityManager.GetComponent<TransformComponent>(Owner).MapPosition}");
+                Logger.WarningS(LoggerName, $"Removed entity {_entityManager.ToPrettyString(message.Entity)} without a cached size from storage {_entityManager.ToPrettyString(Owner)} at {_entityManager.GetComponent<TransformComponent>(Owner).MapPosition}");
 
                 RecalculateStorageUsed();
                 return;
@@ -434,6 +437,7 @@ namespace Content.Server.Storage.Components
             Storage = Owner.EnsureContainer<Container>("storagebase");
             Storage.OccludesLight = _occludesLight;
             UpdateStorageVisualization();
+            EnsureInitialCalculated();
         }
 
         [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
@@ -494,7 +498,7 @@ namespace Content.Server.Storage.Components
                         break;
                     }
 
-                    if (!player.InRangeUnobstructed(Owner, popup: true))
+                    if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player, Owner, popup: true))
                     {
                         break;
                     }
@@ -554,7 +558,7 @@ namespace Content.Server.Storage.Components
         /// <returns></returns>
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return false;
+            if (!eventArgs.CanReach) return false;
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible

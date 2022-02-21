@@ -21,7 +21,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasVolumePumpSystem : EntitySystem
+    public sealed class GasVolumePumpSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -95,7 +95,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 }
             }
 
-            outlet.AssumeAir(removed);
+            _atmosphereSystem.Merge(outlet.Air, removed);
         }
 
         private void OnPumpInteractHand(EntityUid uid, GasVolumePumpComponent component, InteractHandEvent args)

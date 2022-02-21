@@ -16,7 +16,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.TileReactions;
 
 [DataDefinition]
-public class CreateEntityTileReaction : ITileReaction
+public sealed class CreateEntityTileReaction : ITileReaction
 {
     [DataField("entity", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Entity = default!;

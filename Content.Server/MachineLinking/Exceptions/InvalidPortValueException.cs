@@ -2,7 +2,7 @@ using System;
 
 namespace Content.Server.MachineLinking.Exceptions
 {
-    public class InvalidPortValueException : Exception
+    public sealed class InvalidPortValueException : Exception
     {
 
     }

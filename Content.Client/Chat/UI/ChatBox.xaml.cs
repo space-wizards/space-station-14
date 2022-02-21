@@ -22,6 +22,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Chat.UI
 {
     [GenerateTypedNameReferences]
+    [Virtual]
     public partial class ChatBox : Control
     {
         [Dependency] protected readonly IChatManager ChatMgr = default!;

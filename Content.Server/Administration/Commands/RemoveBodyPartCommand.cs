@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class RemoveBodyPartCommand : IConsoleCommand
+    public sealed class RemoveBodyPartCommand : IConsoleCommand
     {
         public string Command => "rmbodypart";
         public string Description => "Removes a given entity from it's containing body, if any.";

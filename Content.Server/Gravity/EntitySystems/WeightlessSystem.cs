@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Gravity.EntitySystems
 {
     [UsedImplicitly]
-    public class WeightlessSystem : EntitySystem
+    public sealed class WeightlessSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;

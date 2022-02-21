@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Shared.Tools;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Tools.Components
 {
-    [RegisterComponent, ComponentProtoName("TilePrying")]
+    [RegisterComponent]
     public sealed class TilePryingComponent : Component
     {
         [ViewVariables]

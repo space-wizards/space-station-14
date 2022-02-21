@@ -6,10 +6,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Movement.Components;
 
 [NetworkedComponent, RegisterComponent]
-public class SlowContactsComponent : Component
+public sealed class SlowContactsComponent : Component
 {
-    public override string Name => "SlowContacts";
-
     [ViewVariables, DataField("walkSpeedModifier")]
     public float WalkSpeedModifier { get; private set; } = 1.0f;
 

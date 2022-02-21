@@ -381,6 +381,22 @@
   physicalDesc: strong-smelling
   color: "#FF8CFF"
   spritePath: doctorsdelightglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:SatiateHunger
+        factor: -2
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -1
+            Brute: -1
+            Airloss: -1
+            Toxin: -1
 
 - type: reagent
   id: DriestMartini

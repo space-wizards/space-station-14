@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Clothing.Components;
-using Content.Server.Coordinates.Helpers;
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -13,17 +12,13 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fluids.EntitySystems;
 
 [UsedImplicitly]
-public class SpillableSystem : EntitySystem
+public sealed class SpillableSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
@@ -36,7 +31,7 @@ public class SpillableSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
-        SubscribeLocalEvent<SpillableComponent, GetOtherVerbsEvent>(AddSpillVerb);
+        SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
     }
 
@@ -61,7 +56,6 @@ public class SpillableSystem : EntitySystem
         // spill all solution on the player
         var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.DrainAvailable);
         SpillAt(args.Equipee, drainedSolution, "PuddleSmear");
-
     }
 
     /// <summary>
@@ -98,7 +92,7 @@ public class SpillableSystem : EntitySystem
         SpillAt(drainedSolution, EntityManager.GetComponent<TransformComponent>(uid).Coordinates, "PuddleSmear");
     }
 
-    private void AddSpillVerb(EntityUid uid, SpillableComponent component, GetOtherVerbsEvent args)
+    private void AddSpillVerb(EntityUid uid, SpillableComponent component, GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
@@ -174,10 +168,13 @@ public class SpillableSystem : EntitySystem
         if (!noTileReact)
         {
             // First, do all tile reactions
-            foreach (var (reagentId, quantity) in solution.Contents)
+            for (var i = 0; i < solution.Contents.Count; i++)
             {
+                var (reagentId, quantity) = solution.Contents[i];
                 var proto = _prototypeManager.Index<ReagentPrototype>(reagentId);
-                proto.ReactionTile(tileRef, quantity);
+                var removed = proto.ReactionTile(tileRef, quantity);
+                if (removed <= FixedPoint2.Zero) continue;
+                solution.RemoveReagent(reagentId, removed);
             }
         }
 
@@ -188,40 +185,34 @@ public class SpillableSystem : EntitySystem
         // Get normalized co-ordinate for spill location and spill it in the centre
         // TODO: Does SnapGrid or something else already do this?
         var spillGridCoords = mapGrid.GridTileToWorld(tileRef.GridIndices);
-
-        var spillEntities = _entityLookup.GetEntitiesIntersecting(mapGrid.ParentMapId, spillGridCoords.Position).ToArray();
-        foreach (var spillEntity in spillEntities)
-        {
-            if (_solutionContainerSystem.TryGetRefillableSolution(spillEntity, out var solutionContainerComponent))
-            {
-                _solutionContainerSystem.Refill(spillEntity, solutionContainerComponent,
-                    solution.SplitSolution(FixedPoint2.Min(
-                        solutionContainerComponent.AvailableVolume,
-                        solutionContainerComponent.MaxSpillRefill))
-                );
-            }
-        }
+        var startEntity = EntityUid.Invalid;
+        PuddleComponent? puddleComponent = null;
 
         if (combine)
         {
+            var spillEntities = _entityLookup.GetEntitiesIntersecting(tileRef).ToArray();
+
             foreach (var spillEntity in spillEntities)
             {
-                if (!EntityManager.TryGetComponent(spillEntity, out PuddleComponent? puddleComponent)) continue;
+                if (!EntityManager.TryGetComponent(spillEntity, out puddleComponent)) continue;
 
                 if (!overflow && _puddleSystem.WouldOverflow(puddleComponent.Owner, solution, puddleComponent))
                     return null;
 
-                if (!_puddleSystem.TryAddSolution(puddleComponent.Owner, solution, sound)) continue;
+                if (!_puddleSystem.TryAddSolution(puddleComponent.Owner, solution, sound, overflow)) continue;
 
-                return puddleComponent;
+                startEntity = puddleComponent.Owner;
+                break;
             }
         }
 
-        var puddleEnt = EntityManager.SpawnEntity(prototype, spillGridCoords);
-        var newPuddleComponent = EntityManager.GetComponent<PuddleComponent>(puddleEnt);
+        if (startEntity != EntityUid.Invalid)
+            return puddleComponent;
 
-        _puddleSystem.TryAddSolution(newPuddleComponent.Owner, solution, sound);
+        startEntity = EntityManager.SpawnEntity(prototype, spillGridCoords);
+        puddleComponent = EntityManager.EnsureComponent<PuddleComponent>(startEntity);
+        _puddleSystem.TryAddSolution(startEntity, solution, sound, overflow);
 
-        return newPuddleComponent;
+        return puddleComponent;
     }
 }

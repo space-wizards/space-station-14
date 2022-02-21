@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Pulling
 {
-    public class PullableMoveMessage : EntityEventArgs
+    public sealed class PullableMoveMessage : EntityEventArgs
     {
     }
 }

@@ -81,6 +81,17 @@
   components:
   - type: Sprite
     state: nachos-cheesy
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 3
+        - ReagentId: TableSalt
+          Quantity: 1
 # Tastes like nachos, cheese.
 
 - type: entity
@@ -91,6 +102,17 @@
   components:
   - type: Sprite
     state: nachos-cuban
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: CapsaicinOil
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like nachos, hot pepper.
 
 - type: entity
@@ -119,6 +141,15 @@
   components:
   - type: Sprite
     state: eggplantparm
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2
 # Tastes like eggplant, cheese.
 
 - type: entity
@@ -139,6 +170,15 @@
   components:
   - type: Sprite
     state: cubancarp
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: CapsaicinOil
+          Quantity: 3
 # Tastes like fish, batter, hot peppers.
 
 - type: entity
@@ -149,6 +189,15 @@
   components:
   - type: Sprite
     state: cornedbeef
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like meat, cabbage.
 
 - type: entity
@@ -159,6 +208,15 @@
   components:
   - type: Sprite
     state: bearsteak
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 5
 # Tastes like meat, salmon.
 
 - type: entity
@@ -169,6 +227,15 @@
   components:
   - type: Sprite
     state: pigblanket
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like meat, butter.
 
 - type: entity
@@ -179,6 +246,17 @@
   components:
   - type: Sprite
     state: ribs
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 10
+        - ReagentId: BbqSauce
+          Quantity: 10
 # Tastes like meat, smokey sauce.
 
 - type: entity
@@ -189,16 +267,32 @@
   components:
   - type: Sprite
     state: benedict
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like eggs, bacon, bun.
 
-- type: entity # FUCK THE FRENCH
-  name: omelette du fromage
+- type: entity
+  name: cheese omelette
   parent: FoodMealBase
   id: FoodMealOmelette
-  description: That's all you can say!
+  description: Cheesy.
   components:
   - type: Sprite
     state: omelette
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 9
 # Tastes like egg, cheese.
 
 - type: entity
@@ -209,6 +303,17 @@
   components:
   - type: Sprite
     state: friedegg
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: TableSalt
+          Quantity: 1
+        - ReagentId: Blackpepper
+          Quantity: 1
 # Tastes like egg, salt, pepper.
 
 - type: entity
@@ -239,6 +344,17 @@
   components:
   - type: Sprite
     state: saltysweet
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 9
+        - ReagentId: Water
+          Quantity: 10
+        - ReagentId: Blackpepper
+          Quantity: 3
 # Tastes awesome.
 
 - type: entity
@@ -259,4 +375,13 @@
   components:
     - type: Sprite
       state: enchiladas
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 10
+          reagents:
+          - ReagentId: Nutriment
+            Quantity: 8
+          - ReagentId: CapsaicinOil
+            Quantity: 6
 # What do Europeans eat instead of enchiladas? 25.4 millimeter-iladas.

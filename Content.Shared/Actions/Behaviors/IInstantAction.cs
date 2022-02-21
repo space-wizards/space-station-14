@@ -16,7 +16,7 @@ namespace Content.Shared.Actions.Behaviors
         void DoInstantAction(InstantActionEventArgs args);
     }
 
-    public class InstantActionEventArgs : ActionEventArgs
+    public sealed class InstantActionEventArgs : ActionEventArgs
     {
         public InstantActionEventArgs(EntityUid performer, ActionType actionType) : base(performer, actionType)
         {

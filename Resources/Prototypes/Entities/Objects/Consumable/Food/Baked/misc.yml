@@ -58,7 +58,7 @@
     state: muffin-bluecherry
 
 - type: entity
-  name: honey bun
+  name: honey bun #TODO honey
   parent: FoodBakedBase
   id: FoodBakedBunHoney
   description: A sticky pastry bun glazed with honey.
@@ -83,6 +83,15 @@
   components:
   - type: Sprite
     state: bun-meat
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2
 
 # Cookies
 
@@ -114,6 +123,15 @@
   components:
   - type: Sprite
     state: cookie-oatmeal
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 8
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 1
 
 - type: entity
   name: raisin cookie
@@ -123,6 +141,15 @@
   components:
   - type: Sprite
     state: cookie-raisin
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 8
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 1
 
 - type: entity
   name: sugar cookie
@@ -157,6 +184,17 @@
       - lizard
       - star
       - corgi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 8
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1
 
 # Waffles/Pancakes
 
@@ -274,7 +312,9 @@
         maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 1
 
 - type: entity
   name: soy waffles
@@ -286,6 +326,15 @@
     layers:
       - state: tray
       - state: waffles-soy
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 1
 
 - type: entity
   name: soylent waffles
@@ -297,6 +346,15 @@
     layers:
       - state: tray
       - state: waffles-soylent
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 1
 
 - type: entity
   name: roffle waffles
@@ -308,6 +366,15 @@
     layers:
       - state: tray
       - state: waffles-roffle
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 2
 
 # Misc
 
@@ -334,4 +401,6 @@
         maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 1

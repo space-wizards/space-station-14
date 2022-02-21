@@ -6,9 +6,9 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Research.Components
 {
     [NetworkedComponent()]
+    [Virtual]
     public class SharedResearchConsoleComponent : Component
     {
-        public override string Name => "ResearchConsole";
 
         [NetSerializable, Serializable]
         public enum ResearchConsoleUiKey
@@ -17,7 +17,7 @@ namespace Content.Shared.Research.Components
         }
 
         [Serializable, NetSerializable]
-        public class ConsoleUnlockTechnologyMessage : BoundUserInterfaceMessage
+        public sealed class ConsoleUnlockTechnologyMessage : BoundUserInterfaceMessage
         {
             public string Id;
 
@@ -28,14 +28,14 @@ namespace Content.Shared.Research.Components
         }
 
         [Serializable, NetSerializable]
-        public class ConsoleServerSyncMessage : BoundUserInterfaceMessage
+        public sealed class ConsoleServerSyncMessage : BoundUserInterfaceMessage
         {
             public ConsoleServerSyncMessage()
             {}
         }
 
         [Serializable, NetSerializable]
-        public class ConsoleServerSelectionMessage : BoundUserInterfaceMessage
+        public sealed class ConsoleServerSelectionMessage : BoundUserInterfaceMessage
         {
             public ConsoleServerSelectionMessage()
             {}

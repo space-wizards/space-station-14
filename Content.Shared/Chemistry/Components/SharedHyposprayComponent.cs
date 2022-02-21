@@ -11,8 +11,6 @@ namespace Content.Shared.Chemistry.Components
     [NetworkedComponent()]
     public abstract class SharedHyposprayComponent : Component
     {
-        public sealed override string Name => "Hypospray";
-
         [DataField("solutionName")]
         public string SolutionName = "hypospray";
 

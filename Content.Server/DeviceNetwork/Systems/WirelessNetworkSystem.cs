@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.DeviceNetwork.Systems
 {
     [UsedImplicitly]
-    public class WirelessNetworkSystem : EntitySystem
+    public sealed class WirelessNetworkSystem : EntitySystem
     {
         public override void Initialize()
         {

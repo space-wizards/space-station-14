@@ -13,7 +13,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class PlantClonexadone : ReagentEffect
+    public sealed class PlantClonexadone : ReagentEffect
     {
         public override void Effect(ReagentEffectArgs args)
         {

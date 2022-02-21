@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Server.Administration.Managers;
+using Content.Shared.Administration;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 
 namespace Content.Server.Decals
 {
-    public class DecalSystem : SharedDecalSystem
+    public sealed class DecalSystem : SharedDecalSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
 
         private readonly Dictionary<GridId, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<IPlayerSession, Dictionary<GridId, HashSet<Vector2i>>> _previousSentChunks = new();
@@ -26,6 +24,9 @@ namespace Content.Server.Decals
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             MapManager.TileChanged += OnTileChanged;
+
+            SubscribeNetworkEvent<RequestDecalPlacementEvent>(OnDecalPlacementRequest);
+            SubscribeNetworkEvent<RequestDecalRemovalEvent>(OnDecalRemovalRequest);
         }
 
         public override void Shutdown()
@@ -79,6 +80,45 @@ namespace Content.Server.Decals
             }
         }
 
+        private void OnDecalPlacementRequest(RequestDecalPlacementEvent ev, EntitySessionEventArgs eventArgs)
+        {
+            if (eventArgs.SenderSession is not IPlayerSession session)
+                return;
+
+            // bad
+            if (!_adminManager.HasAdminFlag(session, AdminFlags.Spawn))
+                return;
+
+            if (!ev.Coordinates.IsValid(EntityManager))
+                return;
+
+            TryAddDecal(ev.Decal, ev.Coordinates, out _);
+        }
+
+        private void OnDecalRemovalRequest(RequestDecalRemovalEvent ev, EntitySessionEventArgs eventArgs)
+        {
+            if (eventArgs.SenderSession is not IPlayerSession session)
+                return;
+
+            // bad
+            if (!_adminManager.HasAdminFlag(session, AdminFlags.Spawn))
+                return;
+
+            if (!ev.Coordinates.IsValid(EntityManager))
+                return;
+
+            var gridId = ev.Coordinates.GetGridId(EntityManager);
+
+            if (!gridId.IsValid())
+                return;
+
+            // remove all decals on the same tile
+            foreach (var decal in GetDecalsInRange(gridId, ev.Coordinates.Position))
+            {
+                RemoveDecal(gridId, decal);
+            }
+        }
+
         protected override void DirtyChunk(GridId id, Vector2i chunkIndices)
         {
             if(!_dirtyChunks.ContainsKey(id))
@@ -89,15 +129,27 @@ namespace Content.Server.Decals
         public bool TryAddDecal(string id, EntityCoordinates coordinates, [NotNullWhen(true)] out uint? uid, Color? color = null, Angle? rotation = null, int zIndex = 0, bool cleanable = false)
         {
             uid = 0;
-            if (!PrototypeManager.HasIndex<DecalPrototype>(id))
-                return false;
-
-            var gridId = coordinates.GetGridId(EntityManager);
-            if (MapManager.GetGrid(gridId).GetTileRef(coordinates).IsSpace())
-                return false;
 
             rotation ??= Angle.Zero;
             var decal = new Decal(coordinates.Position, id, color, rotation.Value, zIndex, cleanable);
+
+            return TryAddDecal(decal, coordinates, out uid);
+        }
+
+        public bool TryAddDecal(Decal decal, EntityCoordinates coordinates, [NotNull] out uint? uid)
+        {
+            uid = 0;
+
+            if (!PrototypeManager.HasIndex<DecalPrototype>(decal.Id))
+                return false;
+
+            var gridId = coordinates.GetGridId(EntityManager);
+            if (!gridId.IsValid())
+                return false;
+
+            if (MapManager.GetGrid(gridId).GetTileRef(coordinates).IsSpace())
+                return false;
+
             var chunkCollection = DecalGridChunkCollection(gridId);
             uid = chunkCollection.NextUid++;
             var chunkIndices = GetChunkIndices(decal.Coordinates);
@@ -106,6 +158,7 @@ namespace Content.Server.Decals
             chunkCollection.ChunkCollection[chunkIndices][uid.Value] = decal;
             ChunkIndex[gridId][uid.Value] = chunkIndices;
             DirtyChunk(gridId, chunkIndices);
+
             return true;
         }
 

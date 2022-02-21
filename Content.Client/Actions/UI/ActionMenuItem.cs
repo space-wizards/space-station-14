@@ -10,7 +10,7 @@ namespace Content.Client.Actions.UI
     /// <summary>
     /// An individual action visible in the action menu.
     /// </summary>
-    public class ActionMenuItem : ContainerButton
+    public sealed class ActionMenuItem : ContainerButton
     {
         // shorter than default tooltip delay so user can
         // quickly explore what each action is

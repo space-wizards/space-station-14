@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems
 {
-    public class StomachSystem : EntitySystem
+    public sealed class StomachSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 

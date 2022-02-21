@@ -26,8 +26,6 @@ namespace Content.Shared.Hands.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public sealed override string Name => "Hands";
-
         /// <summary>
         ///     The name of the currently active hand.
         /// </summary>
@@ -389,7 +387,8 @@ namespace Content.Shared.Hands.Components
                 target = new MapCoordinates(origin.Position + dropVector, target.MapId);
             }
 
-            var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, target, ignoredEnt: Owner);
+
+            var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, target, predicate: e => e == Owner);
 
             if (dropLength < requestedDropDistance)
                 return origin.Position + dropVector.Normalized * dropLength;
@@ -533,7 +532,7 @@ namespace Content.Shared.Hands.Components
 
             handSys.PickupAnimation(entity, initialPosition, finalPosition, animateUser ? null : Owner);
             handSys.PutEntityIntoHand(Owner, hand, entity, this);
-            
+
             return true;
         }
 
@@ -563,7 +562,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Attempts to interact with the item in a hand using the active held item.
         /// </summary>
-        public async void InteractHandWithActiveHand(string handName)
+        public void InteractHandWithActiveHand(string handName)
         {
             if (!TryGetActiveHeldEntity(out var activeHeldEntity))
                 return;
@@ -574,7 +573,7 @@ namespace Content.Shared.Hands.Components
             if (activeHeldEntity == heldEntity)
                 return;
 
-            await EntitySystem.Get<SharedInteractionSystem>()
+            EntitySystem.Get<SharedInteractionSystem>()
                 .InteractUsing(Owner, activeHeldEntity.Value, heldEntity.Value, EntityCoordinates.Invalid);
         }
 
@@ -587,7 +586,7 @@ namespace Content.Shared.Hands.Components
             if (altInteract)
                 sys.AltInteract(Owner, heldEntity.Value);
             else
-                sys.TryUseInteraction(Owner, heldEntity.Value);
+                sys.UseInHandInteraction(Owner, heldEntity.Value);
         }
 
         public void ActivateHeldEntity(string handName)
@@ -596,7 +595,7 @@ namespace Content.Shared.Hands.Components
                 return;
 
             EntitySystem.Get<SharedInteractionSystem>()
-                .TryInteractionActivate(Owner, heldEntity);
+                .InteractionActivate(Owner, heldEntity.Value);
         }
 
         /// <summary>
@@ -718,7 +717,7 @@ namespace Content.Shared.Hands.Components
     }
 
     [Serializable, NetSerializable]
-    public class HandsVisualState
+    public sealed class HandsVisualState : ICloneable
     {
         public List<HandVisualState> Hands { get; } = new();
 
@@ -726,10 +725,15 @@ namespace Content.Shared.Hands.Components
         {
             Hands = hands;
         }
+
+        public object Clone()
+        {
+            return new HandsVisualState(new List<HandVisualState>(Hands));
+        }
     }
 
     [Serializable, NetSerializable]
-    public class HandVisualState
+    public struct HandVisualState
     {
         public string RsiPath { get; }
         public string? EquippedPrefix { get; }
@@ -747,7 +751,7 @@ namespace Content.Shared.Hands.Components
     #endregion
 
     [Serializable, NetSerializable]
-    public class Hand
+    public sealed class Hand
     {
         [ViewVariables]
         public string Name { get; }
@@ -800,7 +804,7 @@ namespace Content.Shared.Hands.Components
     /// A message that calls the activate interaction on the item in the specified hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public class ActivateInHandMsg : EntityEventArgs
+    public sealed class ActivateInHandMsg : EntityEventArgs
     {
         public string HandName { get; }
 
@@ -814,7 +818,7 @@ namespace Content.Shared.Hands.Components
     ///     Uses the item in the active hand on the item in the specified hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public class ClientInteractUsingInHandMsg : EntityEventArgs
+    public sealed class ClientInteractUsingInHandMsg : EntityEventArgs
     {
         public string HandName { get; }
 
@@ -828,7 +832,7 @@ namespace Content.Shared.Hands.Components
     ///     Moves an item from one hand to the active hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public class MoveItemFromHandMsg : EntityEventArgs
+    public sealed class MoveItemFromHandMsg : EntityEventArgs
     {
         public string HandName { get; }
 
@@ -848,7 +852,7 @@ namespace Content.Shared.Hands.Components
         Right
     }
 
-    public class HandCountChangedEvent : EntityEventArgs
+    public sealed class HandCountChangedEvent : EntityEventArgs
     {
         public HandCountChangedEvent(EntityUid sender)
         {

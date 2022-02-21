@@ -644,6 +644,120 @@
   - type: Sprite
     state: xenolab
 
+- type: entity
+  parent: BaseSign
+  id: SignSecureMedRed
+  name: red secure sign
+  components:
+  - type: Sprite
+    state: medium_secure_red
+
+- type: entity
+  parent: BaseSign
+  id: SignSecureSmall
+  name: small secure sign
+  components:
+  - type: Sprite
+    state: small_secure
+
+- type: entity
+  parent: BaseSign
+  id: SignSecureSmallRed
+  name: small red secure sign
+  components:
+  - type: Sprite
+    state: small_secure_red
+
+- type: entity
+  parent: BaseSign
+  id: SignBlankMed
+  name: blank sign
+  components:
+  - type: Sprite
+    state: medium_blank
+
+- type: entity
+  parent: BaseSign
+  id: SignMagneticsMed
+  name: magnetics sign
+  components:
+  - type: Sprite
+    state: medium_magnetics
+
+- type: entity
+  parent: BaseSign
+  id: SignDangerMed
+  name: danger sign
+  components:
+  - type: Sprite
+    state: medium_danger
+
+- type: entity
+  parent: BaseSign
+  id: ExplosivesSignMed
+  name: explosives sign
+  components:
+  - type: Sprite
+    state: medium_explosives
+
+- type: entity
+  parent: BaseSign
+  id: SignCryogenicsMed
+  name: cryogenics sign
+  components:
+  - type: Sprite
+    state: medium_cryogenics
+
+- type: entity
+  parent: BaseSign
+  id: SignElectricalMed
+  name: electrical sign
+  components:
+  - type: Sprite
+    state: medium_electrical
+
+- type: entity
+  parent: BaseSign
+  id: SignBiohazardMed
+  name: biohazard sign
+  components:
+  - type: Sprite
+    state: medium_biohazard
+
+- type: entity
+  parent: BaseSign
+  id: SignRadiationMed
+  name: radiation sign
+  components:
+  - type: Sprite
+    state: medium_radiation
+
+- type: entity
+  parent: BaseSign
+  id: SignFlammableMed
+  name: flammable sign #when flammable component is done, this sign needs it
+  components:
+  - type: Sprite
+    state: medium_flammable
+
+- type: entity
+  parent: BaseSign
+  id: SignLaserMed
+  name: laser sign
+  components:
+  - type: Sprite
+    state: medium_laser
+
+- type: entity
+  parent: BaseSign
+  id: SignSecureMed
+  name: secure sign
+  components:
+  - type: Sprite
+    state: medium_secure
+
+
+
 # Atmos Warnings
 
 - type: entity
@@ -699,6 +813,15 @@
   components:
   - type: Sprite
     state: atmos_plasma
+    
+- type: entity
+  parent: BaseSign
+  id: WarningTritium
+  name: tritium waste sign
+  description: WARNING! Tritium flow tube. Ensure the flow is disengaged before working.
+  components:
+  - type: Sprite
+    state: atmos_tritium
 
 - type: entity
   parent: BaseSign

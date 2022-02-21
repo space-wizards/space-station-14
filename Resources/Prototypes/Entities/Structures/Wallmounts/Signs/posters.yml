@@ -3,6 +3,8 @@
   id: PosterBase
   abstract: true
   components:
+  - type: WallMount
+    arc: 360
   - type: Sprite
     drawdepth: WallTops
     sprite: Structures/Wallmounts/posters.rsi
@@ -157,7 +159,7 @@
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandDonutCorp.
+  id: PosterContrabandDonutCorp
   name: "Donut Corp."
   description: "This poster is an unauthorized advertisement for Donut Corp."
   components:
@@ -166,7 +168,7 @@
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandEAT.
+  id: PosterContrabandEAT
   name: "EAT."
   description: "This poster promotes rank gluttony."
   components:

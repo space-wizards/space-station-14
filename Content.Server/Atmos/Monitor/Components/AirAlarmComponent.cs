@@ -18,7 +18,7 @@ using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
 namespace Content.Server.Atmos.Monitor.Components
 {
     [RegisterComponent]
-    public class AirAlarmComponent : Component, IWires
+    public sealed class AirAlarmComponent : Component, IWires
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -28,8 +28,6 @@ namespace Content.Server.Atmos.Monitor.Components
 
         // Remember to null this afterwards.
         [ViewVariables] public IAirAlarmModeUpdate? CurrentModeUpdater { get; set; }
-
-        public override string Name => "AirAlarm";
 
         public Dictionary<string, IAtmosDeviceData> DeviceData = new();
 

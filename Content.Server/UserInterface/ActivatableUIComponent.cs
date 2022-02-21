@@ -17,11 +17,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.UserInterface
 {
     [RegisterComponent]
-    public class ActivatableUIComponent : Component,
+    public sealed class ActivatableUIComponent : Component,
             ISerializationHooks
     {
-        public override string Name => "ActivatableUI";
-
         [ViewVariables]
         public Enum? Key { get; set; }
 

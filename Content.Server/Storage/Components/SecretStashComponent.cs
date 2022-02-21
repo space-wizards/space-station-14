@@ -17,10 +17,8 @@ namespace Content.Server.Storage.Components
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(SecretStashSystem))]
-    public class SecretStashComponent : Component
+    public sealed class SecretStashComponent : Component
     {
-        public override string Name => "SecretStash";
-
         /// <summary>
         ///     Max item size that can be fitted into secret stash.
         /// </summary>

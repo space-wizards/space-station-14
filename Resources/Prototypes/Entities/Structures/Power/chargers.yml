@@ -59,6 +59,7 @@
   - type: Icon
     sprite: Structures/Power/wall_recharger.rsi
     state: empty
+  - type: WallMount
   - type: Charger
     transferEfficiency: 0.95
     chargerSlot:

@@ -13,7 +13,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class RobustHarvest : ReagentEffect
+    public sealed class RobustHarvest : ReagentEffect
     {
         public override void Effect(ReagentEffectArgs args)
         {

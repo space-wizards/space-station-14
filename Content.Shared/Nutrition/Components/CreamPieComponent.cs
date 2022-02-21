@@ -9,10 +9,8 @@ namespace Content.Shared.Nutrition.Components
 {
     [Friend(typeof(SharedCreamPieSystem))]
     [RegisterComponent]
-    public class CreamPieComponent : Component
+    public sealed class CreamPieComponent : Component
     {
-        public override string Name => "CreamPie";
-
         [ViewVariables]
         [DataField("paralyzeTime")]
         public float ParalyzeTime { get; } = 1f;

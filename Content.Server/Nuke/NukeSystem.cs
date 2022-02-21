@@ -23,10 +23,9 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Nuke
 {
-    public class NukeSystem : EntitySystem
+    public sealed class NukeSystem : EntitySystem
     {
         [Dependency] private readonly NukeCodeSystem _codes = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
         [Dependency] private readonly IEntityLookup _lookup = default!;
@@ -115,12 +114,6 @@ namespace Content.Server.Nuke
         private void OnActivate(EntityUid uid, NukeComponent component, ActivateInWorldEvent args)
         {
             if (args.Handled)
-                return;
-
-            // standard interactions check
-            if (!args.InRangeUnobstructed())
-                return;
-            if (!_actionBlocker.CanInteract(args.User) || !_actionBlocker.CanUse(args.User))
                 return;
 
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))

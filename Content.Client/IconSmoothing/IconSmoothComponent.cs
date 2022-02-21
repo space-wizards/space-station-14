@@ -24,6 +24,7 @@ namespace Content.Client.IconSmoothing
     ///     Any objects with the same <c>key</c> will connect.
     /// </remarks>
     [RegisterComponent]
+    [Virtual]
     public class IconSmoothComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -31,8 +32,6 @@ namespace Content.Client.IconSmoothing
 
         [DataField("mode")]
         private IconSmoothingMode _mode = IconSmoothingMode.Corners;
-
-        public override string Name => "IconSmooth";
 
         internal ISpriteComponent? Sprite { get; private set; }
 

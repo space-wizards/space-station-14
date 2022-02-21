@@ -14,7 +14,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Clothing;
 
-public class ClothingSystem : EntitySystem
+public sealed class ClothingSystem : EntitySystem
 {
     /// <summary>
     /// This is a shitty hotfix written by me (Paul) to save me from renaming all files.

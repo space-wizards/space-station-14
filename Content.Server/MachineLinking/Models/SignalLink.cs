@@ -2,7 +2,7 @@
 
 namespace Content.Server.MachineLinking.Models
 {
-    public class SignalLink
+    public sealed class SignalLink
     {
         public readonly SignalTransmitterComponent TransmitterComponent;
         public readonly SignalReceiverComponent ReceiverComponent;

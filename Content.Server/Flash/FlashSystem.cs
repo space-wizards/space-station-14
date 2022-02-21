@@ -28,6 +28,7 @@ namespace Content.Server.Flash
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {
@@ -124,7 +125,7 @@ namespace Content.Server.Flash
             {
                 flashable.LastFlash = _gameTiming.CurTime;
                 flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
-                flashable.Dirty();
+                Dirty(flashable);
 
                 _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
                     slowTo, slowTo);
@@ -153,7 +154,7 @@ namespace Content.Server.Flash
             foreach (var entity in flashableEntities)
             {
                 // Check for unobstructed entities while ignoring the mobs with flashable components.
-                if (!transform.InRangeUnobstructed(entity, range, CollisionGroup.Opaque, (e) => flashableEntities.Contains(e)))
+                if (!_interactionSystem.InRangeUnobstructed(entity, transform.MapPosition, range, CollisionGroup.Opaque, (e) => flashableEntities.Contains(e)))
                     continue;
 
                 Flash(entity, user, source, duration, slowTo, displayPopup);
@@ -198,7 +199,7 @@ namespace Content.Server.Flash
         }
     }
 
-    public class FlashAttemptEvent : CancellableEntityEventArgs
+    public sealed class FlashAttemptEvent : CancellableEntityEventArgs
     {
         public readonly EntityUid Target;
         public readonly EntityUid? User;

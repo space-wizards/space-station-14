@@ -17,7 +17,7 @@ namespace Content.Server.Construction.Components
     /// For example, glass shard can be refined to glass sheet.
     /// </summary>
     [RegisterComponent]
-    public class WelderRefinableComponent : Component, IInteractUsing
+    public sealed class WelderRefinableComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -34,8 +34,6 @@ namespace Content.Server.Construction.Components
         private string _qualityNeeded = "Welding";
 
         private bool _beingWelded;
-
-        public override string Name => "WelderRefinable";
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {

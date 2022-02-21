@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodBase
   id: FoodSnackBase
   abstract: true
   components:
@@ -208,7 +208,9 @@
     HeldPrefix: packet
   - type: Tag
     tags:
+    - Recyclable
     - Trash
+  - type: Recyclable
 
 - type: entity
   abstract: true

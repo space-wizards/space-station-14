@@ -13,11 +13,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Spawners.Components
 {
     [RegisterComponent]
-    public class TimedSpawnerComponent : Component, ISerializationHooks
+    public sealed class TimedSpawnerComponent : Component, ISerializationHooks
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
-        public override string Name => "TimedSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("prototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]

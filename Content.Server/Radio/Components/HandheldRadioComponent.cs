@@ -15,16 +15,15 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Radio.Components
 {
     [RegisterComponent]
+    [ComponentProtoName("Radio")]
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
     [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public class HandheldRadioComponent : Component, IListen, IRadio, IActivate, IExamine
+    public sealed class HandheldRadioComponent : Component, IListen, IRadio, IActivate, IExamine
 #pragma warning restore 618
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
-        public override string Name => "Radio";
-
         private RadioSystem _radioSystem = default!;
 
         private bool _radioOn;
@@ -78,7 +77,7 @@ namespace Content.Server.Radio.Components
         public bool CanListen(string message, EntityUid source)
         {
             return RadioOn &&
-                   Owner.InRangeUnobstructed(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(source).Coordinates, range: ListenRange);
+                   EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
         }
 
         public void Receive(string message, int channel, EntityUid speaker)

@@ -18,9 +18,6 @@ namespace Content.Shared.Body.Components
     public abstract class SharedBodyPartComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "BodyPart";
-
         private SharedBodyComponent? _body;
 
         // TODO BODY Remove
@@ -306,7 +303,7 @@ namespace Content.Shared.Body.Components
     }
 
     [Serializable, NetSerializable]
-    public class BodyPartComponentState : ComponentState
+    public sealed class BodyPartComponentState : ComponentState
     {
         [NonSerialized] private List<MechanismComponent>? _mechanisms;
 

@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddBodyPartCommand : IConsoleCommand
+    public sealed class AddBodyPartCommand : IConsoleCommand
     {
         public string Command => "addbodypart";
         public string Description => "Adds a given entity to a containing body.";

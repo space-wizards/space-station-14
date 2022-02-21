@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Extinguisher
 {
     [UsedImplicitly]
-    public class FireExtinguisherVisualizer : AppearanceVisualizer
+    public sealed class FireExtinguisherVisualizer : AppearanceVisualizer
     {
         [DataField("safety_on_state")]
         private string? _safetyOnState;

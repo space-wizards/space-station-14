@@ -17,10 +17,8 @@ namespace Content.Server.Light.Components
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent, Friend(typeof(PoweredLightSystem))]
-    public class PoweredLightComponent : Component
+    public sealed class PoweredLightComponent : Component
     {
-        public override string Name => "PoweredLight";
-
         [DataField("burnHandSound")]
         public SoundSpecifier BurnHandSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 

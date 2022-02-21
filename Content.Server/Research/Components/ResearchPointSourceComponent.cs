@@ -9,10 +9,8 @@ namespace Content.Server.Research.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class ResearchPointSourceComponent : ResearchClientComponent
+    public sealed class ResearchPointSourceComponent : ResearchClientComponent
     {
-        public override string Name => "ResearchPointSource";
-
         [DataField("pointspersecond")]
         private int _pointsPerSecond;
         [DataField("active")]
