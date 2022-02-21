@@ -16,8 +16,21 @@ namespace Content.Shared.PlayingCard
         [DataField("cardDescription")]
         public string CardDescription = "a playing card";
         [DataField("cardList")]
-        public List<String> CardList = new();
+        public Dictionary<String, CardDetails> CardList = new();
     }
+
+
+        public struct CardDetails
+        {
+            public string Name;
+            public string Description;
+
+            public CardDetails(string name, string description)
+            {
+                Name = name;
+                Description = description;
+            }
+        }
 
         [Serializable, NetSerializable]
         public class PickSingleCardMessage : BoundUserInterfaceMessage
