@@ -22,6 +22,7 @@ namespace Content.Server.Body.Systems
         {
             base.Initialize();
             SubscribeLocalEvent<BodyComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+            SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
 
         private void OnRelayMoveInput(EntityUid uid, BodyComponent component, RelayMoveInputEvent args)
@@ -38,6 +39,16 @@ namespace Content.Server.Body.Systems
 
                 _ticker.OnGhostAttempt(mind.Mind!, true);
             }
+        }
+
+        private void OnApplyMetabolicMultiplier(EntityUid uid, BodyComponent component, ApplyMetabolicMultiplierEvent args)
+        {
+            var metabolicEvent = args;
+            foreach (var (part, _) in component.Parts)
+                foreach (var mechanism in part.Mechanisms)
+                {
+                    RaiseLocalEvent(mechanism.Owner, metabolicEvent, false);
+                }
         }
 
         /// <summary>

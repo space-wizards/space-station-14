@@ -29,11 +29,13 @@ namespace Content.Server.Body.Systems
             base.Initialize();
 
             SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
-            SubscribeLocalEvent<MetabolizerComponent, ApplyStasisMultiplierEvent>(OnApplyStasisMulitplier);
+            SubscribeLocalEvent<MetabolizerComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
 
         private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
         {
+            /// Cache initial update frequency so it can be safely reset
+            component.UpdateFrequencyReset = component.UpdateFrequency;
             if (!component.SolutionOnBody)
             {
                 _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
@@ -50,12 +52,11 @@ namespace Content.Server.Body.Systems
             }
         }
 
-        private void OnApplyStasisMulitplier(EntityUid uid, MetabolizerComponent component, ApplyStasisMultiplierEvent args)
+        private void OnApplyMetabolicMultiplier(EntityUid uid, MetabolizerComponent component, ApplyMetabolicMultiplierEvent args)
         {
             if (args.Apply)
             {
-                component.UpdateFrequency = component.UpdateFrequencyReset;
-                component.UpdateFrequency *= args.StasisBed.Multiplier;
+                component.UpdateFrequency *= args.Multiplier;
                 return;
             }
             // This way we don't have to worry about it breaking if the stasis bed component is destroyed
@@ -198,5 +199,14 @@ namespace Content.Server.Body.Systems
                     _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId, mostToRemove);
             }
         }
+    }
+    public sealed class ApplyMetabolicMultiplierEvent : EntityEventArgs
+    {
+        // The entity whose metabolism is being modified
+        public  EntityUid Uid;
+        // What the metabolism's update rate will be multiplied by
+        public  float Multiplier;
+        // Apply this multiplier or ignore / reset it?
+        public bool Apply;
     }
 }

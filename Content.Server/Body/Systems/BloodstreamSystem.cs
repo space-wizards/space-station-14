@@ -35,7 +35,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BloodstreamComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined);
         SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
-        SubscribeLocalEvent<BloodstreamComponent, ApplyStasisMultiplierEvent>(OnApplyStasisMultiplier);
+        SubscribeLocalEvent<BloodstreamComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
     }
 
     public override void Update(float frameTime)
@@ -86,6 +86,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
     private void OnComponentInit(EntityUid uid, BloodstreamComponent component, ComponentInit args)
     {
+        component.UpdateIntervalReset = component.UpdateInterval;
         component.ChemicalSolution = _solutionContainerSystem.EnsureSolution(uid, BloodstreamComponent.DefaultChemicalsSolutionName);
         component.BloodSolution = _solutionContainerSystem.EnsureSolution(uid, BloodstreamComponent.DefaultBloodSolutionName);
         component.BloodTemporarySolution = _solutionContainerSystem.EnsureSolution(uid, BloodstreamComponent.DefaultBloodTemporarySolutionName);
@@ -151,12 +152,11 @@ public sealed class BloodstreamSystem : EntitySystem
         SpillAllSolutions(uid, component);
     }
 
-    private void OnApplyStasisMultiplier(EntityUid uid, BloodstreamComponent component, ApplyStasisMultiplierEvent args)
+    private void OnApplyMetabolicMultiplier(EntityUid uid, BloodstreamComponent component, ApplyMetabolicMultiplierEvent args)
     {
         if (args.Apply)
         {
-            component.UpdateIntervalReset = component.UpdateInterval;
-            component.UpdateInterval *= args.StasisBed.Multiplier;
+            component.UpdateInterval *= args.Multiplier;
             return;
         }
         // This way we don't have to worry about it breaking if the stasis bed component is destroyed

@@ -38,6 +38,8 @@ namespace Content.Server.Body.Systems
 
             // We want to process lung reagents before we inhale new reagents.
             UpdatesAfter.Add(typeof(MetabolizerSystem));
+            SubscribeLocalEvent<RespiratorComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
 
         public override void Update(float frameTime)
@@ -92,6 +94,11 @@ namespace Content.Server.Body.Systems
                 StopSuffocation(uid, respirator);
                 respirator.SuffocationCycles = 0;
             }
+        }
+
+        public void OnComponentInit(EntityUid uid, RespiratorComponent component, ComponentInit args)
+        {
+            component.CycleDelayReset = component.CycleDelay;
         }
 
         public void Inhale(EntityUid uid, SharedBodyComponent? body=null)
@@ -188,6 +195,20 @@ namespace Content.Server.Body.Systems
             respirator.Saturation += amount;
             respirator.Saturation =
                 Math.Clamp(respirator.Saturation, respirator.MinSaturation, respirator.MaxSaturation);
+        }
+
+        private void OnApplyMetabolicMultiplier(EntityUid uid, RespiratorComponent component, ApplyMetabolicMultiplierEvent args)
+        {
+            if (args.Apply)
+            {
+                component.CycleDelay *= args.Multiplier;
+                return;
+            }
+            // This way we don't have to worry about it breaking if the stasis bed component is destroyed
+            component.CycleDelay = component.CycleDelayReset;
+            // Reset the accumulator properly
+            if (component.AccumulatedFrametime >= component.CycleDelayReset)
+                component.AccumulatedFrametime = component.CycleDelayReset;
         }
     }
 }

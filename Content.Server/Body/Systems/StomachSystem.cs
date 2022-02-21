@@ -17,7 +17,7 @@ namespace Content.Server.Body.Systems
         public override void Initialize()
         {
             SubscribeLocalEvent<StomachComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<StomachComponent, ApplyStasisMultiplierEvent>(OnApplyStasisMulitplier);
+            SubscribeLocalEvent<StomachComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
 
         public override void Update(float frameTime)
@@ -76,12 +76,11 @@ namespace Content.Server.Body.Systems
             }
         }
 
-    private void OnApplyStasisMulitplier(EntityUid uid, StomachComponent component, ApplyStasisMultiplierEvent args)
+    private void OnApplyMetabolicMultiplier(EntityUid uid, StomachComponent component, ApplyMetabolicMultiplierEvent args)
     {
         if (args.Apply)
         {
-            component.UpdateIntervalReset = component.UpdateInterval;
-            component.UpdateInterval *= args.StasisBed.Multiplier;
+            component.UpdateInterval *= args.Multiplier;
             return;
         }
         // This way we don't have to worry about it breaking if the stasis bed component is destroyed
@@ -93,6 +92,7 @@ namespace Content.Server.Body.Systems
 
         private void OnComponentInit(EntityUid uid, StomachComponent component, ComponentInit args)
         {
+            component.UpdateIntervalReset = component.UpdateInterval;
             var solution = _solutionContainerSystem.EnsureSolution(uid, DefaultSolutionName);
             solution.MaxVolume = component.InitialMaxVolume;
         }

@@ -67,7 +67,8 @@ namespace Content.Server.Bed
             if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered && args.Buckling)
                 return;
 
-            SendArgs(args.BuckledEntity, body, component, args.Buckling);
+            var metabolicEvent = new ApplyMetabolicMultiplierEvent() {Uid = args.BuckledEntity, Multiplier = component.Multiplier, Apply = args.Buckling};
+            RaiseLocalEvent(args.BuckledEntity, metabolicEvent, false);
         }
 
         private void OnPowerChanged(EntityUid uid, StasisBedComponent component, PowerChangedEvent args)
@@ -82,42 +83,10 @@ namespace Content.Server.Bed
                 if (!TryComp<SharedBodyComponent>(buckledEntity, out var body))
                     return;
 
-                SendArgs(buckledEntity, body, component, args.Powered);
+                var metabolicEvent = new ApplyMetabolicMultiplierEvent() {Uid = buckledEntity, Multiplier = component.Multiplier, Apply = args.Powered};
+                RaiseLocalEvent(buckledEntity, metabolicEvent, false);
             }
         }
-
-        private void SendArgs(EntityUid buckledEntity, SharedBodyComponent body, StasisBedComponent stasisBed, bool shouldApply)
-        {
-            var metabolizers = _bodySystem.GetComponentsOnMechanisms<MetabolizerComponent>(buckledEntity, body);
-            var stomachs = _bodySystem.GetComponentsOnMechanisms<StomachComponent>(buckledEntity, body);
-            /// There's probably some way to concatanate all of these and do it in 1 go but it's beyond me
-
-            foreach (var meta in metabolizers)
-            {
-                if (!HasComp<LungComponent>(meta.Comp.Owner)) //There might be a better way to deal with the suffocation issue, especially because lung has metabolisms for poison and medicine etc
-                {
-                    var metaEvent = new ApplyStasisMultiplierEvent() {Uid = meta.Comp.Owner, StasisBed = stasisBed, Apply = shouldApply};
-                    RaiseLocalEvent(meta.Comp.Owner, metaEvent, false);
-                }
-            }
-            foreach (var stomach in stomachs)
-            {
-                var stomachEvent = new ApplyStasisMultiplierEvent() {Uid = stomach.Comp.Owner, StasisBed = stasisBed, Apply = shouldApply};
-                RaiseLocalEvent(stomach.Comp.Owner, stomachEvent, false);
-            }
-
-            if (TryComp<BloodstreamComponent>(buckledEntity, out var blood))
-            {
-                var bloodEvent = new ApplyStasisMultiplierEvent() {Uid = blood.Owner, StasisBed = stasisBed, Apply = shouldApply};
-                RaiseLocalEvent(blood.Owner, bloodEvent, false);
-            }
-        }
-    }
-
-    public sealed class ApplyStasisMultiplierEvent : EntityEventArgs
-    {
-        public  EntityUid Uid;
-        public  StasisBedComponent StasisBed = default!;
-        public bool Apply;
     }
 }
+

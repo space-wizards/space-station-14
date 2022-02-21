@@ -64,6 +64,8 @@ namespace Content.Server.Body.Components
         [DataField("cycleDelay")]
         public float CycleDelay = 2.0f;
 
+        public float CycleDelayReset = 2.0f;
+
         public float AccumulatedFrametime;
     }
 }
