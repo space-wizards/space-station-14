@@ -29,6 +29,11 @@
       - material: Steel
         amount: 2
         doAfter: 1
+    - to: dualportventpump
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
   - node: pressurepump
     entity: GasPressurePump
     edges:
