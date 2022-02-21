@@ -7,11 +7,6 @@
   - type: Sprite
     layers:
       - state: box
-  - type: Item
-    size: 20
-  - type: Storage
-    capacity: 20
-    size: 20
 
 - type: entity
   name: lightbulb box
