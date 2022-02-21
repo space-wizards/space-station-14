@@ -146,7 +146,7 @@ namespace Content.Client.Examine
 
             if (openAtOldTooltip && oldTooltipPos != null)
             {
-                popupPos = oldTooltipPos.Value;
+                popupPos = _userInterfaceManager.ScreenToUIPosition(oldTooltipPos.Value);
             }
             else if (centeredOnCursor)
             {
@@ -155,6 +155,7 @@ namespace Content.Client.Examine
             else
             {
                 popupPos = _eyeManager.CoordinatesToScreen(Transform(target).Coordinates);
+                popupPos = _userInterfaceManager.ScreenToUIPosition(popupPos);
             }
 
             // Actually open the tooltip.

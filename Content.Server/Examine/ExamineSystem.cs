@@ -38,7 +38,6 @@ namespace Content.Server.Examine
 
             var session = actor.PlayerSession;
 
-
             SortedSet<Verb>? verbs = null;
             if (getVerbs)
                 verbs = _verbSystem.GetLocalVerbs(target, player, typeof(ExamineVerb));
