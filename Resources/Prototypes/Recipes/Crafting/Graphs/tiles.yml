@@ -12,7 +12,7 @@
             - material: Steel
               amount: 1
     - node: steeltile
-      entity: floor_steel
+      entity: FloorTileItemSteel
 
 - type: constructionGraph
   id: tileWood
@@ -58,7 +58,7 @@
             - !type:SetStackCount
               amount: 1
           steps:
-            - material: steeltile
+            - material: floor_steel
               amount: 1
     - node: darktile
       entity: FloorTileItemDark
