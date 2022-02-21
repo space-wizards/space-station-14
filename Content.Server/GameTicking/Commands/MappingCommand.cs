@@ -88,9 +88,8 @@ namespace Content.Server.GameTicking.Commands
             shell.RemoteExecuteCommand("showmarkers");
 
             var newGrid = mapManager.GetAllGrids().OrderByDescending(g => (int) g.Index).First();
-            var pauseManager = IoCManager.Resolve<IPauseManager>();
 
-            pauseManager.SetMapPaused(newGrid.ParentMapId, true);
+            mapManager.SetMapPaused(newGrid.ParentMapId, true);
 
             shell.WriteLine($"Created unloaded map from file {mapName} with id {mapId}. Use \"savebp {newGrid.Index} foo.yml\" to save the new grid as a map.");
         }

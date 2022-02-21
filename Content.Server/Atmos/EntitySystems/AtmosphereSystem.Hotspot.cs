@@ -170,7 +170,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var entity in _lookup.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
-                RaiseLocalEvent(entity, fireEvent, false);
+                RaiseLocalEvent(entity, ref fireEvent, false);
             }
         }
     }
