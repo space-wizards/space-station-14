@@ -264,6 +264,19 @@
     - SheetRGlass
     - SheetGlass1
 
+- type: technology
+  name: advanced atmospherics technology
+  id: AdvancedAtmosTechnology
+  description: As if it can get more advanced.
+  icon:
+    sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+    state: freezer_off
+  requiredPoints: 3000
+  requiredTechnologies:
+  - IndustrialEngineering
+  unlockedRecipes:
+  - ThermomachineFreezerMachineCircuitBoard
+
 # Avionics Circuitry Technology Tree
 
 - type: technology
