@@ -81,7 +81,7 @@
   - type: StorageFill
     contents:
       - id: BoxSurvival
-      
+
 - type: entity
   abstract: true
   parent: ClothingBackpackSatchel
@@ -91,3 +91,15 @@
     contents:
       - id: BoxSurvival
       - id: Bible
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelMusicianFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: AcousticGuitarInstrument
+        - id: RecorderInstrument
+        - id: SaxophoneInstrument

@@ -1,0 +1,22 @@
+- type: job
+  id: Musician
+  name: "musician"
+  startingGear: MusicianGear
+  departments:
+  - Civilian
+  icon: "Musician"
+  supervisors: "whoever hires you"
+  access:
+  - Maintenance # TODO Remove maint access for all gimmick jobs once access work is completed
+
+- type: startingGear
+  id: MusicianGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerPurple
+    back: ClothingBackpackMusicianFilled
+    eyes: ClothingEyesGlassesSunglasses
+    shoes: ClothingShoesColorBlack
+    id: AssistantPDA
+    ears: ClothingHeadsetService
+  satchel: ClothingBackpackSatchelMusicianFilled
+  duffelbag: ClothingBackpackDuffelMusicianFilled

@@ -9,6 +9,7 @@
     sprite: Objects/Misc/utensils.rsi
   - type: Tag
     tags:
+    - Recyclable
     - Trash
   - type: Recyclable
 
