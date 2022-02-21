@@ -406,3 +406,14 @@
     sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadCapCentcomBlack
+  name: black special operations officer cap
+  description: The NanoTrasen gold-engraved special cap of the higher ranks, which has long gone through more than one blitzkrieg...
+  components:
+    - type: Sprite
+      sprite: Clothing/Head/Hats/centcom_officer_black.rsi
+    - type: Clothing
+      sprite: Clothing/Head/Hats/centcom_officer_black.rsi

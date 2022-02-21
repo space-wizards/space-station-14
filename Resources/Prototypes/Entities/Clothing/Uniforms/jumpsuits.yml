@@ -661,7 +661,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSuperstarCop
@@ -727,3 +727,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/nanotrasen.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/nanotrasen.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCentcomOfficerBlack
+  name: black special operations officer uniform
+  description: Black Special Operations Officer uniform, nothing like that. Although... If you have time to read this, it's too late...
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/centcom_officer_black.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/centcom_officer_black.rsi

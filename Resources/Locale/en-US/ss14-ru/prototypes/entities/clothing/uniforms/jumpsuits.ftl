@@ -193,3 +193,6 @@ ent-ClothingUniformJumpsuitPyjamaSyndicateRed = red syndicate pyjamas
 ent-ClothingUniformJumpsuitNanotrasen = nanotrasen jumpsuit
     .desc = A stately blue jumpsuit to represent NanoTrasen.
     .suffix = { "" }
+ent-ClothingUniformJumpsuitCentcomOfficerBlack = black special operations officer uniform
+    .desc = Black Special Operations Officer uniform, nothing like that. Although... If you have time to read this, it's too late...
+    .suffix = { "" }

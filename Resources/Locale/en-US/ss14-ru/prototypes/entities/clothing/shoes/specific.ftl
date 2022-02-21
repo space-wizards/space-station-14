@@ -28,3 +28,6 @@ ent-ClothingShoesGreenLizardskin = green lizardskin shoes
 ent-ClothingShoesAerostatic = aerostatic boots
     .desc = A crisp, clean set of boots for working long hours on the beat.
     .suffix = { "" }
+ent-ClothingShoesCentcomBlack = special operations officer shoes
+    .desc = Leather, black, high-quality shoes, you can hardly find similar ones on the black market...
+    .suffix = { "" }

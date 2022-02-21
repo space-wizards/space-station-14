@@ -110,3 +110,14 @@
       sprite: Clothing/Shoes/Misc/kim.rsi
     - type: Clothing
       sprite: Clothing/Shoes/Misc/kim.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesCentcomBlack
+  name: special operations officer shoes
+  description: Leather, black, high-quality shoes, you can hardly find similar ones on the black market...
+  components:
+    - type: Sprite
+      sprite: Clothing/Shoes/Specific/centcom_officer_black.rsi
+    - type: Clothing
+      sprite: Clothing/Shoes/Specific/centcom_officer_black.rsi

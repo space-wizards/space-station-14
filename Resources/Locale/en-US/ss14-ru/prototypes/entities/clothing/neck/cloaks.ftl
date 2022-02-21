@@ -25,3 +25,6 @@ ent-ClothingNeckCloakHerald = Herald's cloak
 ent-ClothingNeckCloakNanotrasen = nanotrasen cloak
     .desc = A stately blue cloak to represent NanoTrasen.
     .suffix = { "" }
+ent-ClothingNeckCloakCentcomBlack = special operations officer cloak
+    .desc = The NanoTrasen logo embroidered in gold speaks for itself.
+    .suffix = { "" }
