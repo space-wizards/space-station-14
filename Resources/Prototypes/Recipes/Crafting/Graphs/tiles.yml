@@ -30,3 +30,35 @@
               amount: 1
     - node: woodtile
       entity: FloorTileItemWood
+
+- type: constructionGraph
+  id: tileWhite
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: whitetile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: steeltile
+      entity: FloorTileItemWhite
+
+- type: constructionGraph
+  id: tileDark
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: darktile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: steeltile
+      entity: FloorTileItemDark
