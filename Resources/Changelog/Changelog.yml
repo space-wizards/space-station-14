@@ -1,9 +1,4 @@
 Entries:
-- author: Mith-randalf
-  changes:
-  - {message: Added a new sound for poppin pills., type: Add}
-  id: 609
-  time: '2021-11-20T01:02:49.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Medical scanners and cloning pods will now not push you into walls.,
@@ -3003,3 +2998,9 @@ Entries:
   - {message: Bloodloss from bleeding has been lowered slightly., type: Tweak}
   id: 1108
   time: '2022-02-21T00:18:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fixed a bug where examine tooltips would pop up incorrectly on different
+      UI scales., type: Fix}
+  id: 1109
+  time: '2022-02-21T03:42:16.0000000+00:00'
