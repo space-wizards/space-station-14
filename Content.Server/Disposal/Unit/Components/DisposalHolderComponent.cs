@@ -63,7 +63,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         [ViewVariables]
         [DataField("air")]
-        public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
+        public GasMixture Air { get; set; } = new (70);
 
         protected override void Initialize()
         {

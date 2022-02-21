@@ -33,11 +33,11 @@
       - !type:Jitter
       - !type:GenericStatusEffect
         key: Stun
-        time: 1
+        time: 3
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 1
+        time: 3
         type: Remove
 
 - type: reagent
@@ -66,11 +66,11 @@
       - !type:Jitter
       - !type:GenericStatusEffect
         key: Stun
-        time: 0.25
+        time: 1
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 0.25
+        time: 1
         type: Remove
       - !type:PopupMessage
         messages: ["ephedrine-effect-tight-pain", "ephedrine-effect-heart-pounds"]

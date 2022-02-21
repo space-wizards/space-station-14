@@ -13,7 +13,7 @@ namespace Content.Client.Ghost.Roles.UI
         {
             RobustXamlLoader.Load(this);
 
-            Title.SetMessage(info.Name);
+            Title.Text = info.Name;
             Description.SetMessage(info.Description);
             RequestButton.OnPressed += requestAction;
         }
