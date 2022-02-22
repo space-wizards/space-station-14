@@ -82,30 +82,9 @@
         Poison: -0.2
         Radiation: -0.2
         Cellular: -0.2
-
-- type: entity
-  parent: MedicalBed
-  id: StasisBed
-  name: stasis bed
-  description: A bed that massively slows down the patient's metabolism, allowing more time to administer a proper treatment for stabilization.
-  components:
-  - type: StasisBed
-    multiplier: 10
-  - type: Sprite
-    sprite: Structures/Machines/stasis_bed.rsi
-    netsync: false
-    layers:
-    - state: icon
-    - state: unlit
-      shader: unshaded
-      map: ["enum.StasisBedVisualLayers.IsOn"]
-  - type: StasisBedVisuals
-  - type: Appearance
-  - type: ApcPowerReceiver
-    powerLoad: 3500
-  - type: ExtensionCableReceiver
-  - type: PlaceableSurface ## Required for emag
-    isPlaceable: false
+  - type: Construction
+    graph: bed
+    node: medicalbed
 
 - type: entity
   parent: Bed
