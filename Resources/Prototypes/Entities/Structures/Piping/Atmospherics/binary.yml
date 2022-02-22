@@ -177,7 +177,7 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
-          map: [ "enum.VentVisualLayers.Vent", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.VentVisualLayers.Vent", "enum.SubfloorLayers.FirstLayer" ]
     - type: NodeContainer
       nodes:
         pipe:
@@ -202,7 +202,7 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
-          map: [ "enum.VentVisualLayers.Vent", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.PassiveVentVisuals.FirstLayer" ]
     - type: NodeContainer
       nodes:
         pipe:
@@ -227,7 +227,7 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: scrub_off
-          map: [ "enum.ScrubberVisualLayers.Scrubber", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.ScrubberVisualLayers.Scrubber", "enum.SubfloorLayers.FirstLayer" ]
     - type: NodeContainer
       nodes:
         pipe:
