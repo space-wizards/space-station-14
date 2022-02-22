@@ -86,9 +86,9 @@
   - type: Sprite
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
-    sprite: Fluids/splatter.rsi # Placeholder
-    state: splatter-0
-    netsync: false
+      sprite: Fluids/splatter.rsi # Placeholder
+      state: splatter-0
+      netsync: false
     - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
       sprite: Fluids/wet_floor_sparkles.rsi
       state: sparkles
@@ -106,9 +106,9 @@
   - type: Sprite
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
-    sprite: Fluids/splatter.rsi # Placeholder
-    state: splatter-0
-    netsync: false
+      sprite: Fluids/splatter.rsi # Placeholder
+      state: splatter-0
+      netsync: false
     - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
       sprite: Fluids/wet_floor_sparkles.rsi
       state: sparkles
@@ -131,9 +131,9 @@
   - type: Sprite
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
-    sprite: Fluids/vomit.rsi
-    state: vomit-0
-    netsync: false
+      sprite: Fluids/vomit.rsi
+      state: vomit-0
+      netsync: false
     - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
       sprite: Fluids/wet_floor_sparkles.rsi
       state: sparkles
@@ -160,9 +160,9 @@
   - type: Sprite
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
-    sprite: Fluids/vomit_toxin.rsi
-    state: vomit_toxin-0
-    netsync: false
+      sprite: Fluids/vomit_toxin.rsi
+      state: vomit_toxin-0
+      netsync: false
     - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
       sprite: Fluids/wet_floor_sparkles.rsi
       state: sparkles
@@ -189,9 +189,9 @@
   - type: Sprite
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
-    sprite: Fluids/writing.rsi # Placeholder
-    state: writing-0
-    netsync: false
+      sprite: Fluids/writing.rsi # Placeholder
+      state: writing-0
+      netsync: false
     - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
       sprite: Fluids/wet_floor_sparkles.rsi
       state: sparkles
