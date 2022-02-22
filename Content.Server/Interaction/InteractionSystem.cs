@@ -48,12 +48,8 @@ namespace Content.Server.Interaction
             SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropRequestEvent);
 
             CommandBinds.Builder
-                .Bind(EngineKeyFunctions.Use,
-                    new PointerInputCmdHandler(HandleUseInteraction))
                 .Bind(ContentKeyFunctions.WideAttack,
                     new PointerInputCmdHandler(HandleWideAttack))
-                .Bind(ContentKeyFunctions.ActivateItemInWorld,
-                    new PointerInputCmdHandler(HandleActivateItemInWorld))
                 .Bind(ContentKeyFunctions.TryPullObject,
                     new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<InteractionSystem>();
@@ -146,23 +142,6 @@ namespace Content.Server.Interaction
         }
         #endregion
 
-        #region ActivateItemInWorld
-        private bool HandleActivateItemInWorld(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-        {
-            if (!ValidateClientInput(session, coords, uid, out var user))
-            {
-                Logger.InfoS("system.interaction", $"ActivateItemInWorld input validation failed");
-                return false;
-            }
-
-            if (Deleted(uid))
-                return false;
-
-            InteractionActivate(user.Value, uid);
-            return true;
-        }
-        #endregion
-
         private bool HandleWideAttack(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
@@ -193,20 +172,6 @@ namespace Content.Server.Interaction
             UserInteraction(entity, coords, uid);
         }
 
-        public bool HandleUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-        {
-            // client sanitization
-            if (!ValidateClientInput(session, coords, uid, out var userEntity))
-            {
-                Logger.InfoS("system.interaction", $"Use input validation failed");
-                return true;
-            }
-
-            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null);
-
-            return true;
-        }
-
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             if (!ValidateClientInput(session, coords, uid, out var userEntity))
@@ -228,68 +193,6 @@ namespace Content.Server.Interaction
                 return false;
 
             return _pullSystem.TogglePull(userEntity.Value, pull);
-        }
-
-        /// <summary>
-        /// Uses an empty hand on an entity
-        /// Finds components with the InteractHand interface and calls their function
-        /// NOTE: Does not have any range or can-interact checks. These should all have been done before this function is called.
-        /// </summary>
-        public override void InteractHand(EntityUid user, EntityUid target)
-        {
-            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-
-            // all interactions should only happen when in range / unobstructed, so no range check is needed
-            var message = new InteractHandEvent(user, target);
-            RaiseLocalEvent(target, message);
-            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
-            if (message.Handled)
-                return;
-
-            var interactHandEventArgs = new InteractHandEventArgs(user, target);
-
-            var interactHandComps = AllComps<IInteractHand>(target).ToList();
-            foreach (var interactHandComp in interactHandComps)
-            {
-                // If an InteractHand returns a status completion we finish our interaction
-#pragma warning disable 618
-                if (interactHandComp.InteractHand(interactHandEventArgs))
-#pragma warning restore 618
-                    return;
-            }
-
-            // Else we run Activate.
-            InteractionActivate(user, target,
-                checkCanInteract: false,
-                checkUseDelay: true,
-                checkAccess: false);
-        }
-
-        /// <summary>
-        /// Will have two behaviors, either "uses" the used entity at range on the target entity if it is capable of accepting that action
-        /// Or it will use the used entity itself on the position clicked, regardless of what was there
-        /// </summary>
-        public override void InteractUsingRanged(
-            EntityUid user,
-            EntityUid used,
-            EntityUid? target,
-            EntityCoordinates clickLocation,
-            bool inRangeUnobstructed)
-        {
-            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-            if (RangedInteractDoBefore(user, used, target, clickLocation, inRangeUnobstructed))
-                return;
-
-            if (target != null)
-            {
-                var rangedMsg = new RangedInteractEvent(user, used, target.Value, clickLocation);
-                RaiseLocalEvent(target.Value, rangedMsg);
-
-                if (rangedMsg.Handled)
-                    return;
-            }
-
-            InteractDoAfter(user, used, target, clickLocation, inRangeUnobstructed);
         }
 
         public override void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack, EntityUid? target = null)

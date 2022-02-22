@@ -25,6 +25,7 @@ using Robust.Shared.Serialization;
 using Content.Shared.Wall;
 using Content.Shared.Item;
 using Robust.Shared.Player;
+using Robust.Shared.Input;
 
 #pragma warning disable 618
 
@@ -61,6 +62,10 @@ namespace Content.Shared.Interaction
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.AltActivateItemInWorld,
                     new PointerInputCmdHandler(HandleAltUseInteraction))
+                .Bind(EngineKeyFunctions.Use,
+                    new PointerInputCmdHandler(HandleUseInteraction))
+                .Bind(ContentKeyFunctions.ActivateItemInWorld,
+                    new PointerInputCmdHandler(HandleActivateItemInWorld))
                 .Register<SharedInteractionSystem>();
         }
 
@@ -142,6 +147,20 @@ namespace Content.Shared.Interaction
             UserInteraction(user.Value, coords, uid, altInteract: true);
 
             return false;
+        }
+
+        public bool HandleUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        {
+            // client sanitization
+            if (!ValidateClientInput(session, coords, uid, out var userEntity))
+            {
+                Logger.InfoS("system.interaction", $"Use input validation failed");
+                return true;
+            }
+
+            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null);
+
+            return true;
         }
 
         /// <summary>
@@ -237,9 +256,32 @@ namespace Content.Shared.Interaction
                 inRangeUnobstructed);
         }
 
-        public virtual void InteractHand(EntityUid user, EntityUid target)
+        public void InteractHand(EntityUid user, EntityUid target)
         {
-            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
+            // all interactions should only happen when in range / unobstructed, so no range check is needed
+            var message = new InteractHandEvent(user, target);
+            RaiseLocalEvent(target, message);
+            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
+            if (message.Handled)
+                return;
+
+            var interactHandEventArgs = new InteractHandEventArgs(user, target);
+
+            var interactHandComps = AllComps<IInteractHand>(target).ToList();
+            foreach (var interactHandComp in interactHandComps)
+            {
+                // If an InteractHand returns a status completion we finish our interaction
+#pragma warning disable 618
+                if (interactHandComp.InteractHand(interactHandEventArgs))
+#pragma warning restore 618
+                    return;
+            }
+
+            // Else we run Activate.
+            InteractionActivate(user, target,
+                checkCanInteract: false,
+                checkUseDelay: true,
+                checkAccess: false);
         }
 
         public virtual void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack,
@@ -248,10 +290,22 @@ namespace Content.Shared.Interaction
             // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
         }
 
-        public virtual void InteractUsingRanged(EntityUid user, EntityUid used, EntityUid? target,
+        public void InteractUsingRanged(EntityUid user, EntityUid used, EntityUid? target,
             EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
-            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
+            if (RangedInteractDoBefore(user, used, target, clickLocation, inRangeUnobstructed))
+                return;
+
+            if (target != null)
+            {
+                var rangedMsg = new RangedInteractEvent(user, used, target.Value, clickLocation);
+                RaiseLocalEvent(target.Value, rangedMsg);
+
+                if (rangedMsg.Handled)
+                    return;
+            }
+
+            InteractDoAfter(user, used, target, clickLocation, inRangeUnobstructed);
         }
 
         protected bool ValidateInteractAndFace(EntityUid user, EntityCoordinates coordinates)
@@ -630,6 +684,21 @@ namespace Content.Shared.Interaction
         }
 
         #region ActivateItemInWorld
+        private bool HandleActivateItemInWorld(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        {
+            if (!ValidateClientInput(session, coords, uid, out var user))
+            {
+                Logger.InfoS("system.interaction", $"ActivateItemInWorld input validation failed");
+                return false;
+            }
+
+            if (Deleted(uid))
+                return false;
+
+            InteractionActivate(user.Value, uid);
+            return true;
+        }
+
         /// <summary>
         /// Raises <see cref="ActivateInWorldEvent"/> events and activates the IActivate behavior of an object.
         /// </summary>
