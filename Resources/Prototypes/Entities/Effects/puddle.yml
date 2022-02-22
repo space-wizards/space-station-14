@@ -35,11 +35,6 @@
   - type: PuddleVisuals
 
 - type: entity
-  name: puddle
-  id: PuddleGeneric
-  parent: PuddleSmear
-
-- type: entity
   name: gibblets
   id: PuddleGibblet
   parent: PuddleBase
