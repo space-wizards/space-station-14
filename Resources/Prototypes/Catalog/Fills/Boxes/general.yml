@@ -164,20 +164,6 @@
       - state: heart
   - type: Item
     HeldPrefix: hug
-<<<<<<< HEAD
-
-- type: entity
-  parent: FoodBoxDonut
-  id: FoodBoxDonutFilled
-  suffix: Filled
-  components:
-  - type: StorageFill
-    contents:
-      - id: FoodDonutPlain
-        amount: 5
-      - id: FoodDonutPink
-        amount: 1
-=======
   - type: StorageFill
     contents:
       - id: Brutepack
@@ -202,4 +188,15 @@
     layers:
       - state: box
       - state: writing
->>>>>>> master
+
+- type: entity
+  parent: FoodBoxDonut
+  id: FoodBoxDonutFilled
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: FoodDonutPlain
+        amount: 5
+      - id: FoodDonutPink
+        amount: 1
