@@ -61,10 +61,9 @@
   description: A puddle of liquid.
   components:
   - type: Sprite
-    - map: ["enum.PuddleVisualLayers.Puddle"]
-      sprite: Fluids/smear.rsi # Placeholder
-      state: smear-0
-      netsync: false
+    sprite: Fluids/smear.rsi # Placeholder
+    state: smear-0
+    netsync: false
   - type: Puddle
   - type: Appearance
   - type: PuddleVisuals
@@ -76,10 +75,9 @@
   description: A puddle of liquid.
   components:
   - type: Sprite
-    - map: ["enum.PuddleVisualLayers.Puddle"]
-      sprite: Fluids/splatter.rsi # Placeholder
-      state: splatter-0
-      netsync: false
+    sprite: Fluids/splatter.rsi # Placeholder
+    state: splatter-0
+    netsync: false
   - type: Puddle
   - type: Appearance
   - type: PuddleVisuals
@@ -91,10 +89,9 @@
   parent: PuddleBase
   components:
   - type: Sprite
-    - map: ["enum.PuddleVisualLayers.Puddle"]
-      sprite: Fluids/splatter.rsi # Placeholder
-      state: splatter-0
-      netsync: false
+    sprite: Fluids/splatter.rsi # Placeholder
+    state: splatter-0
+    netsync: false
   - type: Puddle
     slipThreshold: 20
     overflowVolume: 50
@@ -111,10 +108,9 @@
   description: Gross.
   components:
   - type: Sprite
-    - map: ["enum.PuddleVisualLayers.Puddle"]
-      sprite: Fluids/vomit.rsi
-      state: vomit-0
-      netsync: false
+    sprite: Fluids/vomit.rsi
+    state: vomit-0
+    netsync: false
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
@@ -135,10 +131,9 @@
   description: You probably don't want to get too close to this.
   components:
   - type: Sprite
-    - map: ["enum.PuddleVisualLayers.Puddle"]
-      sprite: Fluids/vomit_toxin.rsi
-      state: vomit_toxin-0
-      netsync: false
+    sprite: Fluids/vomit_toxin.rsi
+    state: vomit_toxin-0
+    netsync: false
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
@@ -159,10 +154,9 @@
   description: A bit of liquid.
   components:
   - type: Sprite
-    - map: ["enum.PuddleVisualLayers.Puddle"]
-      sprite: Fluids/writing.rsi # Placeholder
-      state: writing-0
-      netsync: false
+    sprite: Fluids/writing.rsi # Placeholder
+    state: writing-0
+    netsync: false
   - type: Puddle
     evaporateTime: 10
   - type: Appearance
