@@ -70,6 +70,18 @@ namespace Content.Server.Bed
             if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered && args.Buckling)
                 return;
 
+            if (power != null)
+            {
+                if (args.Buckling)
+                {
+                    power.Load += component.AddLoadOnBuckle;
+                } else
+                {
+                    power.Load -= component.AddLoadOnBuckle;
+                }
+            }
+
+
             var metabolicEvent = new ApplyMetabolicMultiplierEvent()
                 {Uid = args.BuckledEntity, Multiplier = component.Multiplier, Apply = args.Buckling};
             RaiseLocalEvent(args.BuckledEntity, metabolicEvent, false);
