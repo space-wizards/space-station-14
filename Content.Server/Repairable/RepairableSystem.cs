@@ -34,10 +34,10 @@ namespace Content.Server.Repairable
             if (!await _toolSystem.UseTool(args.Used, args.User, uid, component.FuelCost, component.DoAfterDelay, component.QualityNeeded))
                 return;
 
-            if (component.Heal != null)
+            if (component.Damage != null)
             {
-                var healed = _damageableSystem.TryChangeDamage(uid, component.Heal, true, false);
-                _logSystem.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} by {healed?.Total}");
+                var damageChanged = _damageableSystem.TryChangeDamage(uid, component.Damage, true, false);
+                _logSystem.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} by {damageChanged?.Total}");
             }
             else
             {

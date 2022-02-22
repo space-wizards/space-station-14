@@ -11,14 +11,14 @@ namespace Content.Server.Repairable
     public sealed class RepairableComponent : Component
     {
         /// <summary>
-        ///     All the damage to heal information is stored in this <see cref="DamageSpecifier"/>.
+        ///     All the damage to change information is stored in this <see cref="DamageSpecifier"/>.
         /// </summary>
         /// <remarks>
-        ///     If this data-field is specified, it will heal by this amount instead of fully.
-        ///     to heal the values have to be negative.
+        ///     If this data-field is specified, it will change damage by this amount instead of setting all damage to 0.
+        ///     in order to heal/repair the damage values have to be negative.
         /// </remarks>
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("heal")]
-        public DamageSpecifier? Heal;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("damage")]
+        public DamageSpecifier? Damage;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("fuelCost")]
         public int FuelCost = 5;
