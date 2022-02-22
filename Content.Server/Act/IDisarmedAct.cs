@@ -24,17 +24,17 @@ namespace Content.Server.Act
         int Priority => 0;
     }
 
-    public class DisarmedActEvent : HandledEntityEventArgs
+    public sealed class DisarmedActEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     The entity being disarmed.
         /// </summary>
-        public IEntity? Target { get; init; }
+        public EntityUid Target { get; init; }
 
         /// <summary>
         ///     The entity performing the disarm.
         /// </summary>
-        public IEntity? Source { get; init; }
+        public EntityUid Source { get; init; }
 
         /// <summary>
         ///     Probability for push/knockdown.

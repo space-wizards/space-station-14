@@ -7,6 +7,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
@@ -30,7 +31,7 @@ namespace Content.Server.Power.NodeGroups
 
     [NodeGroup(NodeGroupID.Apc)]
     [UsedImplicitly]
-    public class ApcNet : BaseNetConnectorNodeGroup<IApcNet>, IApcNet
+    public sealed class ApcNet : BaseNetConnectorNodeGroup<IApcNet>, IApcNet
     {
         private readonly PowerNetSystem _powerNetSystem = EntitySystem.Get<PowerNetSystem>();
 
@@ -66,7 +67,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void AddApc(ApcComponent apc)
         {
-            if (apc.Owner.TryGetComponent(out PowerNetworkBatteryComponent? netBattery))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(apc.Owner, out PowerNetworkBatteryComponent? netBattery))
                 netBattery.NetworkBattery.LinkedNetworkDischarging = default;
 
             QueueNetworkReconnect();
@@ -75,7 +76,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void RemoveApc(ApcComponent apc)
         {
-            if (apc.Owner.TryGetComponent(out PowerNetworkBatteryComponent? netBattery))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(apc.Owner, out PowerNetworkBatteryComponent? netBattery))
                 netBattery.NetworkBattery.LinkedNetworkDischarging = default;
 
             QueueNetworkReconnect();
@@ -118,6 +119,22 @@ namespace Content.Server.Power.NodeGroups
         protected override void SetNetConnectorNet(IBaseNetConnectorComponent<IApcNet> netConnectorComponent)
         {
             netConnectorComponent.Net = this;
+        }
+
+        public override string? GetDebugData()
+        {
+            // This is just recycling the multi-tool examine.
+
+            var ps = _powerNetSystem.GetNetworkStatistics(NetworkNode);
+
+            float storageRatio = ps.InStorageCurrent / Math.Max(ps.InStorageMax, 1.0f);
+            float outStorageRatio = ps.OutStorageCurrent / Math.Max(ps.OutStorageMax, 1.0f);
+            return @$"Current Supply: {ps.SupplyCurrent:G3}
+From Batteries: {ps.SupplyBatteries:G3}
+Theoretical Supply: {ps.SupplyTheoretical:G3}
+Ideal Consumption: {ps.Consumption:G3}
+Input Storage: {ps.InStorageCurrent:G3} / {ps.InStorageMax:G3} ({storageRatio:P1})
+Output Storage: {ps.OutStorageCurrent:G3} / {ps.OutStorageMax:G3} ({outStorageRatio:P1})";
         }
     }
 }

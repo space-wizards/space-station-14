@@ -9,6 +9,6 @@ namespace Content.Shared.Roles
     [ImplicitDataDefinitionForInheritors]
     public abstract class JobSpecial
     {
-        public abstract void AfterEquip(IEntity mob);
+        public abstract void AfterEquip(EntityUid mob);
     }
 }

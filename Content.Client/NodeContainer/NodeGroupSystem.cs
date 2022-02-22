@@ -18,7 +18,6 @@ namespace Content.Client.NodeContainer
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         public bool VisEnabled { get; private set; }
@@ -60,6 +59,14 @@ namespace Content.Client.NodeContainer
                 Groups.Add(group.NetId, group);
             }
 
+            foreach (var (groupId, debugData) in ev.GroupDataUpdates)
+            {
+                if (Groups.TryGetValue(groupId, out var group))
+                {
+                    group.DebugData = debugData;
+                }
+            }
+
             Entities = Groups.Values
                 .SelectMany(g => g.Nodes, (data, nodeData) => (data, nodeData))
                 .GroupBy(n => n.nodeData.Entity)
@@ -83,7 +90,6 @@ namespace Content.Client.NodeContainer
                     _entityLookup,
                     _mapManager,
                     _inputManager,
-                    _eyeManager,
                     _resourceCache,
                     EntityManager);
 

@@ -4,13 +4,13 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Communications
 {
+    [Virtual]
     public class SharedCommunicationsConsoleComponent : Component
     {
-        public override string Name => "CommunicationsConsole";
     }
 
     [Serializable, NetSerializable]
-    public class CommunicationsConsoleInterfaceState : BoundUserInterfaceState
+    public sealed class CommunicationsConsoleInterfaceState : BoundUserInterfaceState
     {
         public readonly bool CanAnnounce;
         public readonly bool CanCall;
@@ -27,7 +27,7 @@ namespace Content.Shared.Communications
     }
 
     [Serializable, NetSerializable]
-    public class CommunicationsConsoleAnnounceMessage : BoundUserInterfaceMessage
+    public sealed class CommunicationsConsoleAnnounceMessage : BoundUserInterfaceMessage
     {
         public readonly string Message;
 
@@ -38,12 +38,12 @@ namespace Content.Shared.Communications
     }
 
     [Serializable, NetSerializable]
-    public class CommunicationsConsoleCallEmergencyShuttleMessage : BoundUserInterfaceMessage
+    public sealed class CommunicationsConsoleCallEmergencyShuttleMessage : BoundUserInterfaceMessage
     {
     }
 
     [Serializable, NetSerializable]
-    public class CommunicationsConsoleRecallEmergencyShuttleMessage : BoundUserInterfaceMessage
+    public sealed class CommunicationsConsoleRecallEmergencyShuttleMessage : BoundUserInterfaceMessage
     {
     }
 

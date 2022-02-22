@@ -5,9 +5,9 @@ using Robust.Shared.Players;
 namespace Content.Server.Cargo.Components
 {
     [RegisterComponent]
-    public class GalacticMarketComponent : SharedGalacticMarketComponent
+    public sealed class GalacticMarketComponent : SharedGalacticMarketComponent
     {
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new GalacticMarketState(GetProductIdList());
         }

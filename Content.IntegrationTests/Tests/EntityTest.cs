@@ -6,6 +6,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -14,15 +15,15 @@ using Robust.Shared.Timing;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    [TestOf(typeof(Entity))]
-    public class EntityTest : ContentIntegrationTest
+    [TestOf(typeof(EntityUid))]
+    public sealed class EntityTest : ContentIntegrationTest
     {
         [Test]
         public async Task SpawnTest()
         {
             var options = new ServerContentIntegrationOption()
             {
-                CVarOverrides = {{CCVars.AIMaxUpdates.Name, int.MaxValue.ToString()}}
+                CVarOverrides = {{CCVars.NPCMaxUpdates.Name, int.MaxValue.ToString()}}
             };
 
             var server = StartServer(options);
@@ -31,12 +32,11 @@ namespace Content.IntegrationTests.Tests
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityMan = server.ResolveDependency<IEntityManager>();
             var prototypeMan = server.ResolveDependency<IPrototypeManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
             var prototypes = new List<EntityPrototype>();
             IMapGrid grid = default;
-            IEntity testEntity;
+            EntityUid testEntity;
 
             //Build up test environment
             server.Post(() =>
@@ -44,7 +44,7 @@ namespace Content.IntegrationTests.Tests
                 // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
 
-                pauseManager.AddUninitializedMap(mapId);
+                mapManager.AddUninitializedMap(mapId);
 
                 var gridId = new GridId(1);
 
@@ -59,7 +59,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid.SetTile(coordinates, tile);
 
-                pauseManager.DoMapInitialize(mapId);
+                mapManager.DoMapInitialize(mapId);
             });
 
             server.Assert(() =>
@@ -87,8 +87,8 @@ namespace Content.IntegrationTests.Tests
                                 Logger.LogS(LogLevel.Debug, "EntityTest", $"Testing: {prototype.ID}");
                                 testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
                                 server.RunTicks(2);
-                                Assert.That(testEntity.Initialized);
-                                entityMan.DeleteEntity(testEntity.Uid);
+                                if(!entityMan.Deleted(testEntity))
+                                    entityMan.DeleteEntity(testEntity);
                             }, "Entity '{0}' threw an exception.",
                             prototype.ID);
                     }
@@ -125,7 +125,6 @@ namespace Content.IntegrationTests.Tests
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
@@ -136,7 +135,7 @@ namespace Content.IntegrationTests.Tests
                 // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
 
-                pauseManager.AddUninitializedMap(mapId);
+                mapManager.AddUninitializedMap(mapId);
 
                 var gridId = new GridId(1);
 
@@ -151,7 +150,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid.SetTile(coordinates, tile);
 
-                pauseManager.DoMapInitialize(mapId);
+                mapManager.DoMapInitialize(mapId);
             });
 
             server.Assert(() =>
@@ -172,11 +171,11 @@ namespace Content.IntegrationTests.Tests
 
                         var entity = entityManager.SpawnEntity("AllComponentsOneToOneDeleteTestEntity", testLocation);
 
-                        Assert.That(entity.Initialized);
+                        Assert.That(entityManager.GetComponent<MetaDataComponent>(entity).EntityInitialized);
 
                         // The component may already exist if it is a mandatory component
                         // such as MetaData or Transform
-                        if (entity.HasComponent(type))
+                        if (entityManager.HasComponent(entity, type))
                         {
                             continue;
                         }
@@ -193,7 +192,7 @@ namespace Content.IntegrationTests.Tests
 
                         server.RunTicks(2);
 
-                        entityManager.DeleteEntity(entity.Uid);
+                        entityManager.DeleteEntity(entity);
                     }
                 });
             });
@@ -229,7 +228,6 @@ namespace Content.IntegrationTests.Tests
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
@@ -240,7 +238,7 @@ namespace Content.IntegrationTests.Tests
                 // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
 
-                pauseManager.AddUninitializedMap(mapId);
+                mapManager.AddUninitializedMap(mapId);
 
                 var gridId = new GridId(1);
 
@@ -255,7 +253,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid.SetTile(coordinates, tile);
 
-                pauseManager.DoMapInitialize(mapId);
+                mapManager.DoMapInitialize(mapId);
             });
 
             var distinctComponents = new List<(List<Type> components, List<Type> references)>
@@ -301,14 +299,14 @@ namespace Content.IntegrationTests.Tests
                         var testLocation = grid.ToCoordinates();
                         var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
 
-                        Assert.That(entity.Initialized);
+                        Assert.That(entityManager.GetComponent<MetaDataComponent>(entity).EntityInitialized);
 
                         foreach (var type in distinct.components)
                         {
                             var component = (Component) componentFactory.GetComponent(type);
 
                             // If the entity already has this component, if it was ensured or added by another
-                            if (entity.HasComponent(component.GetType()))
+                            if (entityManager.HasComponent(entity, component.GetType()))
                             {
                                 continue;
                             }
@@ -335,7 +333,7 @@ namespace Content.IntegrationTests.Tests
                         }
 
                         server.RunTicks(2);
-                        entityManager.DeleteEntity(entity.Uid);
+                        entityManager.DeleteEntity(entity);
                     }
                 });
             });

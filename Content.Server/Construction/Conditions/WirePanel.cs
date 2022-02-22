@@ -5,6 +5,7 @@ using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -13,7 +14,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class WirePanel : IGraphCondition
+    public sealed class WirePanel : IGraphCondition
     {
         [DataField("open")] public bool Open { get; private set; } = true;
 
@@ -29,7 +30,7 @@ namespace Content.Server.Construction.Conditions
         {
             var entity = args.Examined;
 
-            if (!entity.TryGetComponent(out WiresComponent? wires)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out WiresComponent? wires)) return false;
 
             switch (Open)
             {

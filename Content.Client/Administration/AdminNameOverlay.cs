@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Administration.Events;
-using Robust.Client.Graphics;
+﻿using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Administration
 {
-    internal class AdminNameOverlay : Overlay
+    internal sealed class AdminNameOverlay : Overlay
     {
         private readonly AdminSystem _system;
         private readonly IEntityManager _entityManager;
@@ -35,13 +34,14 @@ namespace Content.Client.Administration
             foreach (var playerInfo in _system.PlayerList)
             {
                 // Otherwise the entity can not exist yet
-                if (!_entityManager.TryGetEntity(playerInfo.EntityUid, out var entity))
+                var entity = playerInfo.EntityUid;
+                if (!_entityManager.EntityExists(entity))
                 {
                     continue;
                 }
 
                 // if not on the same map, continue
-                if (entity.Transform.MapID != _eyeManager.CurrentMap)
+                if (_entityManager.GetComponent<TransformComponent>(entity).MapID != _eyeManager.CurrentMap)
                 {
                     continue;
                 }
@@ -62,8 +62,8 @@ namespace Content.Client.Administration
                 {
                     args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), "ANTAG", Color.OrangeRed);
                 }
-                args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, Color.Yellow);
-                args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, Color.Aquamarine);
+                args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, playerInfo.Connected ? Color.Yellow : Color.White);
+                args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, playerInfo.Connected ? Color.Aquamarine : Color.White);
             }
         }
     }

@@ -19,17 +19,16 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 // ReSharper disable once RedundantUsingDirective
-using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
+        [Robust.Shared.IoC.Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         /// <summary>
         ///     The tiles that have had their atmos data updated since last tick
@@ -190,24 +189,24 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        private List<GasOverlayChunk> GetChunksInRange(IEntity entity)
+        private List<GasOverlayChunk> GetChunksInRange(EntityUid entity)
         {
             var inRange = new List<GasOverlayChunk>();
 
             // This is the max in any direction that we can get a chunk (e.g. max 2 chunks away of data).
             var (maxXDiff, maxYDiff) = ((int) (_updateRange / ChunkSize) + 1, (int) (_updateRange / ChunkSize) + 1);
 
-            var worldBounds = Box2.CenteredAround(entity.Transform.WorldPosition,
+            var worldBounds = Box2.CenteredAround(EntityManager.GetComponent<TransformComponent>(entity).WorldPosition,
                 new Vector2(_updateRange, _updateRange));
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(entity.Transform.MapID, worldBounds))
+            foreach (var grid in _mapManager.FindGridsIntersecting(EntityManager.GetComponent<TransformComponent>(entity).MapID, worldBounds))
             {
                 if (!_overlay.TryGetValue(grid.Index, out var chunks))
                 {
                     continue;
                 }
 
-                var entityTile = grid.GetTileRef(entity.Transform.Coordinates).GridIndices;
+                var entityTile = grid.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates).GridIndices;
 
                 for (var x = -maxXDiff; x <= maxXDiff; x++)
                 {
@@ -311,10 +310,10 @@ namespace Content.Server.Atmos.EntitySystems
             // Afterwards we reset all the chunk data for the next time we tick.
             foreach (var (session, overlay) in _knownPlayerChunks)
             {
-                if (session.AttachedEntity == null) continue;
+                if (session.AttachedEntity is not {Valid: true} entity) continue;
 
                 // Get chunks in range and update if we've moved around or the chunks have new overlay data
-                var chunksInRange = GetChunksInRange(session.AttachedEntity);
+                var chunksInRange = GetChunksInRange(entity);
                 var knownChunks = overlay.GetKnownChunks();
                 var chunksToRemove = new List<GasOverlayChunk>();
                 var chunksToAdd = new List<GasOverlayChunk>();

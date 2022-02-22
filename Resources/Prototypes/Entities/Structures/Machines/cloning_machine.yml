@@ -12,6 +12,7 @@
       - state: pod_0
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -23,7 +24,7 @@
       mask:
       - MobMask
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -41,6 +42,8 @@
   - type: Wires
     BoardName: "CloningPod"
     LayoutId: CloningPod
+  - type: ApcPowerReceiver
+    powerLoad: 2000
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer

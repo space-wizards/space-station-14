@@ -10,16 +10,20 @@ using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IUse
+    [ComponentReference(typeof(IActivate))]
+    [ComponentReference(typeof(SharedGasAnalyzerComponent))]
+    public sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IActivate
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         private GasAnalyzerDanger _pressureDanger;
         private float _timeSinceSync;
         private const float TimeBetweenSyncs = 2f;
@@ -39,10 +43,10 @@ namespace Content.Server.Atmos.Components
                 UserInterface.OnClosed += UserInterfaceOnClose;
             }
 
-            Owner.TryGetComponent(out _appearance);
+            _entities.TryGetComponent(Owner, out _appearance);
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new GasAnalyzerComponentState(_pressureDanger);
         }
@@ -122,7 +126,7 @@ namespace Content.Server.Atmos.Components
         {
             // Already get the pressure before Dirty(), because we can't get the EntitySystem in that thread or smth
             var pressure = 0f;
-            var tile = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates);
+            var tile = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(_entities.GetComponent<TransformComponent>(Owner).Coordinates);
             if (tile != null)
             {
                 pressure = tile.Pressure;
@@ -157,24 +161,24 @@ namespace Content.Server.Atmos.Components
             // Check if the player is still holding the gas analyzer => if not, don't update
             foreach (var session in UserInterface.SubscribedSessions)
             {
-                if (session.AttachedEntity == null)
+                if (session.AttachedEntity is not {Valid: true} playerEntity)
                     return;
 
-                if (!session.AttachedEntity.TryGetComponent(out HandsComponent? handsComponent))
+                if (!_entities.TryGetComponent(playerEntity, out HandsComponent? handsComponent))
                     return;
 
-                var activeHandEntity = handsComponent?.GetActiveHand?.Owner;
-                if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent? gasAnalyzer))
+                if (handsComponent?.GetActiveHandItem?.Owner is not {Valid: true} activeHandEntity ||
+                    !_entities.TryGetComponent(activeHandEntity, out GasAnalyzerComponent? gasAnalyzer))
                 {
                     return;
                 }
             }
 
-            var pos = Owner.Transform.Coordinates;
+            var pos = _entities.GetComponent<TransformComponent>(Owner).Coordinates;
             if (!_checkPlayer && _position.HasValue)
             {
                 // Check if position is out of range => don't update
-                if (!_position.Value.InRange(Owner.EntityManager, pos, SharedInteractionSystem.InteractionRange))
+                if (!_position.Value.InRange(_entities, pos, SharedInteractionSystem.InteractionRange))
                     return;
 
                 pos = _position.Value;
@@ -219,22 +223,21 @@ namespace Content.Server.Atmos.Components
             switch (message)
             {
                 case GasAnalyzerRefreshMessage msg:
-                    var player = serverMsg.Session.AttachedEntity;
-                    if (player == null)
+                    if (serverMsg.Session.AttachedEntity is not {Valid: true} player)
                     {
                         return;
                     }
 
-                    if (!player.TryGetComponent(out HandsComponent? handsComponent))
+                    if (!_entities.TryGetComponent(player, out HandsComponent? handsComponent))
                     {
                         Owner.PopupMessage(player, Loc.GetString("gas-analyzer-component-player-has-no-hands-message"));
                         return;
                     }
 
-                    var activeHandEntity = handsComponent.GetActiveHand?.Owner;
-                    if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent? gasAnalyzer))
+                    if (handsComponent.GetActiveHandItem?.Owner is not {Valid: true} activeHandEntity ||
+                        !_entities.TryGetComponent(activeHandEntity, out GasAnalyzerComponent? gasAnalyzer))
                     {
-                        serverMsg.Session.AttachedEntity?.PopupMessage(Loc.GetString("gas-analyzer-component-need-gas-analyzer-in-hand-message"));
+                        serverMsg.Session.AttachedEntity.Value.PopupMessage(Loc.GetString("gas-analyzer-component-need-gas-analyzer-in-hand-message"));
                         return;
                     }
 
@@ -252,7 +255,7 @@ namespace Content.Server.Atmos.Components
                 return true;
             }
 
-            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 OpenInterface(actor.PlayerSession, eventArgs.ClickLocation);
             }
@@ -264,20 +267,20 @@ namespace Content.Server.Atmos.Components
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 CloseInterface(actor.PlayerSession);
             }
         }
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 ToggleInterface(actor.PlayerSession);
-                return true;
+                return;
             }
-            return false;
+            return;
         }
     }
 }

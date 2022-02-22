@@ -7,10 +7,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Dice
 {
     [RegisterComponent, Friend(typeof(DiceSystem))]
-    public class DiceComponent : Component
+    public sealed class DiceComponent : Component
     {
-        public override string Name => "Dice";
-
         [ViewVariables]
         [DataField("sound")]
         public SoundSpecifier Sound { get; } = new SoundCollectionSpecifier("Dice");

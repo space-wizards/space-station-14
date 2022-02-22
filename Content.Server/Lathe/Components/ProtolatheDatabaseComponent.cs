@@ -11,13 +11,11 @@ namespace Content.Server.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
-    public class ProtolatheDatabaseComponent : SharedProtolatheDatabaseComponent
+    public sealed class ProtolatheDatabaseComponent : SharedProtolatheDatabaseComponent
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public override string Name => "ProtolatheDatabase";
-
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ProtolatheDatabaseState(GetRecipeIdList());
         }
@@ -27,7 +25,7 @@ namespace Content.Server.Lathe.Components
         /// </summary>
         public void Sync()
         {
-            if (!Owner.TryGetComponent(out TechnologyDatabaseComponent? database)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out TechnologyDatabaseComponent? database)) return;
 
             foreach (var technology in database.Technologies)
             {

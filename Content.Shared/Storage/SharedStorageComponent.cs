@@ -7,6 +7,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Placeable;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -15,26 +16,25 @@ namespace Content.Shared.Storage
     [NetworkedComponent()]
     public abstract class SharedStorageComponent : Component, IDraggable
     {
-        public override string Name => "Storage";
-
-        public abstract IReadOnlyList<IEntity>? StoredEntities { get; }
+        [Dependency] private readonly IEntityManager _entMan = default!;
+        public abstract IReadOnlyList<EntityUid>? StoredEntities { get; }
 
         /// <summary>
         ///     Removes from the storage container and updates the stored value
         /// </summary>
         /// <param name="entity">The entity to remove</param>
         /// <returns>True if no longer in storage, false otherwise</returns>
-        public abstract bool Remove(IEntity entity);
+        public abstract bool Remove(EntityUid entity);
 
         bool IDraggable.CanDrop(CanDropEvent args)
         {
-            return args.Target.TryGetComponent(out PlaceableSurfaceComponent? placeable) &&
+            return _entMan.TryGetComponent(args.Target, out PlaceableSurfaceComponent? placeable) &&
                    placeable.IsPlaceable;
         }
 
         bool IDraggable.Drop(DragDropEvent eventArgs)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User, eventArgs.Target))
             {
                 return false;
             }
@@ -51,7 +51,7 @@ namespace Content.Shared.Storage
             {
                 if (Remove(storedEntity))
                 {
-                    storedEntity.Transform.WorldPosition = eventArgs.DropLocation.Position;
+                    _entMan.GetComponent<TransformComponent>(storedEntity).WorldPosition = eventArgs.DropLocation.Position;
                 }
             }
 
@@ -60,7 +60,7 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
-    public class StorageComponentState : ComponentState
+    public sealed class StorageComponentState : ComponentState
     {
         public readonly EntityUid[] StoredEntities;
 
@@ -75,7 +75,7 @@ namespace Content.Shared.Storage
     /// </summary>
     [Serializable, NetSerializable]
 #pragma warning disable 618
-    public class StorageHeldItemsMessage : ComponentMessage
+    public sealed class StorageHeldItemsMessage : ComponentMessage
 #pragma warning restore 618
     {
         public readonly int StorageSizeMax;
@@ -96,7 +96,7 @@ namespace Content.Shared.Storage
     /// </summary>
     [Serializable, NetSerializable]
 #pragma warning disable 618
-    public class InsertEntityMessage : ComponentMessage
+    public sealed class InsertEntityMessage : ComponentMessage
 #pragma warning restore 618
     {
         public InsertEntityMessage()
@@ -110,7 +110,7 @@ namespace Content.Shared.Storage
     /// </summary>
     [Serializable, NetSerializable]
 #pragma warning disable 618
-    public class AnimateInsertingEntitiesMessage : ComponentMessage
+    public sealed class AnimateInsertingEntitiesMessage : ComponentMessage
 #pragma warning restore 618
     {
         public readonly List<EntityUid> StoredEntities;
@@ -128,7 +128,7 @@ namespace Content.Shared.Storage
     /// </summary>
     [Serializable, NetSerializable]
 #pragma warning disable 618
-    public class RemoveEntityMessage : ComponentMessage
+    public sealed class RemoveEntityMessage : ComponentMessage
 #pragma warning restore 618
     {
         public EntityUid EntityUid;
@@ -145,7 +145,7 @@ namespace Content.Shared.Storage
     /// </summary>
     [Serializable, NetSerializable]
 #pragma warning disable 618
-    public class OpenStorageUIMessage : ComponentMessage
+    public sealed class OpenStorageUIMessage : ComponentMessage
 #pragma warning restore 618
     {
         public OpenStorageUIMessage()
@@ -160,7 +160,7 @@ namespace Content.Shared.Storage
     /// </summary>
     [Serializable, NetSerializable]
 #pragma warning disable 618
-    public class CloseStorageUIMessage : ComponentMessage
+    public sealed class CloseStorageUIMessage : ComponentMessage
 #pragma warning restore 618
     {
         public CloseStorageUIMessage()

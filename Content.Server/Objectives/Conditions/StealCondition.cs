@@ -3,6 +3,7 @@ using Content.Server.Containers;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -15,7 +16,7 @@ namespace Content.Server.Objectives.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class StealCondition : IObjectiveCondition, ISerializationHooks
+    public sealed class StealCondition : IObjectiveCondition, ISerializationHooks
     {
         private Mind.Mind? _mind;
         [DataField("prototype")] private string _prototypeId = string.Empty;
@@ -56,15 +57,15 @@ namespace Content.Server.Objectives.Conditions
         {
             get
             {
-                if (_mind?.OwnedEntity == null) return 0f;
-                if (!_mind.OwnedEntity.TryGetComponent<ContainerManagerComponent>(out var containerManagerComponent)) return 0f;
+                if (_mind?.OwnedEntity is not {Valid: true} owned) return 0f;
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainerManagerComponent?>(owned, out var containerManagerComponent)) return 0f;
 
                 float count = containerManagerComponent.CountPrototypeOccurencesRecursive(_prototypeId);
                 return count/_amount;
             }
         }
 
-        public float Difficulty => 1f;
+        public float Difficulty => 2.25f;
 
         public bool Equals(IObjectiveCondition? other)
         {

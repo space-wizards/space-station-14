@@ -7,6 +7,7 @@ using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Species;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
@@ -22,7 +23,7 @@ namespace Content.Server.Preferences.Managers
     /// Sends <see cref="MsgPreferencesAndSettings"/> before the client joins the lobby.
     /// Receives <see cref="MsgSelectCharacter"/> and <see cref="MsgUpdateCharacter"/> at any time.
     /// </summary>
-    public class ServerPreferencesManager : IServerPreferencesManager
+    public sealed class ServerPreferencesManager : IServerPreferencesManager
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -262,13 +263,22 @@ namespace Content.Server.Preferences.Managers
                 {
                     case HumanoidCharacterProfile hp:
                     {
+                        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+                        var selectedSpecies = SpeciesManager.DefaultSpecies;
+
+                        if (prototypeManager.TryIndex<SpeciesPrototype>(hp.Species, out var species) && species.RoundStart)
+                        {
+                            selectedSpecies = hp.Species;
+                        }
+
                         newProf = hp
                             .WithJobPriorities(
                                 hp.JobPriorities.Where(job =>
                                     _protos.HasIndex<JobPrototype>(job.Key)))
                             .WithAntagPreferences(
                                 hp.AntagPreferences.Where(antag =>
-                                    _protos.HasIndex<AntagPrototype>(antag)));
+                                    _protos.HasIndex<AntagPrototype>(antag)))
+                            .WithSpecies(selectedSpecies);
                         break;
                     }
                     default:

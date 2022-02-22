@@ -13,11 +13,11 @@ namespace Content.Shared.Popups
         /// <param name="source">The entity above which the message will appear.</param>
         /// <param name="viewer">The entity that will see the message.</param>
         /// <param name="message">The message to show.</param>
-        public static void PopupMessage(this IEntity source, IEntity viewer, string message)
+        public static void PopupMessage(this EntityUid source, EntityUid viewer, string message)
         {
             var popupSystem = EntitySystem.Get<SharedPopupSystem>();
 
-            popupSystem.PopupEntity(message, source.Uid, Filter.Entities(viewer.Uid));
+            popupSystem.PopupEntity(message, source, Filter.Entities(viewer));
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Content.Shared.Popups
         /// </summary>
         /// <param name="viewer">The entity that will see the message.</param>
         /// <param name="message">The message to be seen.</param>
-        public static void PopupMessage(this IEntity viewer, string message)
+        public static void PopupMessage(this EntityUid viewer, string message)
         {
             viewer.PopupMessage(viewer, message);
         }
@@ -36,10 +36,10 @@ namespace Content.Shared.Popups
         /// <param name="coordinates">Location on a grid that the message floats up from.</param>
         /// <param name="viewer">The client attached entity that the message is being sent to.</param>
         /// <param name="message">Text contents of the message.</param>
-        public static void PopupMessage(this EntityCoordinates coordinates, IEntity viewer, string message)
+        public static void PopupMessage(this EntityCoordinates coordinates, EntityUid viewer, string message)
         {
             var popupSystem = EntitySystem.Get<SharedPopupSystem>();
-            popupSystem.PopupCoordinates(message, coordinates, Filter.Entities(viewer.Uid));
+            popupSystem.PopupCoordinates(message, coordinates, Filter.Entities(viewer));
         }
 
         /// <summary>
@@ -49,10 +49,10 @@ namespace Content.Shared.Popups
         ///     The client attached entity that the message is being sent to.
         /// </param>
         /// <param name="message">Text contents of the message.</param>
-        public static void PopupMessageCursor(this IEntity viewer, string message)
+        public static void PopupMessageCursor(this EntityUid viewer, string message)
         {
             var popupSystem = EntitySystem.Get<SharedPopupSystem>();
-            popupSystem.PopupCursor(message, Filter.Entities(viewer.Uid));
+            popupSystem.PopupCursor(message, Filter.Entities(viewer));
         }
     }
 }

@@ -7,13 +7,9 @@ using Content.Server.Power.Components;
 using Content.Server.RoundEnd;
 using Content.Server.UserInterface;
 using Content.Shared.Communications;
-using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
@@ -21,11 +17,14 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Server.Communications
 {
     [RegisterComponent]
-    public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent
+    public sealed class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent, IEntityEventSubscriber
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
+        private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private RoundEndSystem RoundEndSystem => EntitySystem.Get<RoundEndSystem>();
 
@@ -44,10 +43,7 @@ namespace Content.Server.Communications
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            RoundEndSystem.OnRoundEndCountdownStarted += UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownCancelled += UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownFinished += UpdateBoundInterface;
-            RoundEndSystem.OnCallCooldownEnded += UpdateBoundInterface;
+            _entityManager.EventBus.SubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this, (s) => UpdateBoundInterface());
         }
 
         protected override void Startup()
@@ -78,9 +74,7 @@ namespace Content.Server.Communications
 
         protected override void OnRemove()
         {
-            RoundEndSystem.OnRoundEndCountdownStarted -= UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownCancelled -= UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownFinished -= UpdateBoundInterface;
+            _entityManager.EventBus.UnsubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this);
             base.OnRemove();
         }
 
@@ -109,8 +103,7 @@ namespace Content.Server.Communications
                     var message = msg.Message.Length <= 256 ? msg.Message.Trim() : $"{msg.Message.Trim().Substring(0, 256)}...";
 
                     var author = "Unknown";
-                    var mob = obj.Session.AttachedEntity;
-                    if (mob != null && mob.TryGetHeldId(out var id))
+                    if (obj.Session.AttachedEntity is {Valid: true} mob && mob.TryGetHeldId(out var id))
                     {
                         author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
                     }

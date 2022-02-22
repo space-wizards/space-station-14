@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "copyright": "Made with love by Shaeone",
+  "license": "CC-BY-SA-3.0",
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "balls"
+    },
+    {
+      "name": "lights",
+      "delays":[
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ]
+    }
+  ]
+}

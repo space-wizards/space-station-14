@@ -28,6 +28,14 @@
     intensity: 5
 
 - type: shader
+  id: Radiation
+  kind: source
+  path: "/Textures/Shaders/radiation.swsl"
+  params:
+    positionInput: 0,0
+    life: 0
+
+- type: shader
   id: Texture
   kind: source
   path: "/Textures/Shaders/texture.swsl"

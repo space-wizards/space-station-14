@@ -4,7 +4,7 @@
     "x": 32,
     "y": 32
   },
-  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/tree/23e73e051a838bc190a589d6d464a318c641b6a5",
+  "copyright": "Made with love by Shaeone",
   "license": "CC-BY-SA-3.0",
   "states": [
     {
@@ -20,8 +20,6 @@
           0.1,
           0.1,
           0.1,
-          0.1,
-          0.1,
           0.1
         ]
       ]
@@ -30,8 +28,6 @@
       "name": "thrust_burn_unshaded",
       "delays": [
         [
-          0.1,
-          0.1,
           0.1,
           0.1,
           0.1,

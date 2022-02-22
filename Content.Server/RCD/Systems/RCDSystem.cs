@@ -1,3 +1,5 @@
+using System;
+using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.RCD.Components;
 using Content.Shared.Coordinates;
@@ -14,17 +16,17 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using System;
-using System.Threading;
 
 namespace Content.Server.RCD.Systems
 {
-    public class RCDSystem : EntitySystem
+    public sealed class RCDSystem : EntitySystem
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         private readonly RcdMode[] _modes = (RcdMode[]) Enum.GetValues(typeof(RcdMode));
 
@@ -60,7 +62,7 @@ namespace Content.Server.RCD.Systems
 
         private async void OnAfterInteract(EntityUid uid, RCDComponent rcd, AfterInteractEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.CanReach)
                 return;
 
             // FIXME: Make this work properly. Right now it relies on the click location being on a grid, which is bad.
@@ -118,18 +120,21 @@ namespace Content.Server.RCD.Systems
                     }
                     else //Delete what the user targeted
                     {
-                        args.Target?.Delete();
+                        if (args.Target is {Valid: true} target)
+                        {
+                            EntityManager.DeleteEntity(target);
+                        }
                     }
                     break;
                 //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile,
                 // thus we early return to avoid the tile set code.
                 case RcdMode.Walls:
                     var ent = EntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
-                    ent.Transform.LocalRotation = Angle.Zero; // Walls always need to point south.
+                    EntityManager.GetComponent<TransformComponent>(ent).LocalRotation = Angle.Zero; // Walls always need to point south.
                     break;
                 case RcdMode.Airlock:
                     var airlock = EntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));
-                    airlock.Transform.LocalRotation = rcd.Owner.Transform.LocalRotation; //Now apply icon smoothing.
+                    EntityManager.GetComponent<TransformComponent>(airlock).LocalRotation = EntityManager.GetComponent<TransformComponent>(rcd.Owner).LocalRotation; //Now apply icon smoothing.
                     break;
                 default:
                     args.Handled = true;
@@ -156,7 +161,8 @@ namespace Content.Server.RCD.Systems
             }
 
             var coordinates = mapGrid.ToCoordinates(tile.GridIndices);
-            if (coordinates == EntityCoordinates.Invalid || !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            if (coordinates == EntityCoordinates.Invalid ||
+                !_interactionSystem.InRangeUnobstructed(eventArgs.User, coordinates, popup: true))
             {
                 return false;
             }
@@ -186,7 +192,7 @@ namespace Content.Server.RCD.Systems
                         return false;
                     }
                     //They tried to decon a non-turf but it's not in the whitelist
-                    if (eventArgs.Target != null && !eventArgs.Target.HasTag("RCDDeconstructWhitelist"))
+                    if (eventArgs.Target != null && !_tagSystem.HasTag(eventArgs.Target.Value, "RCDDeconstructWhitelist"))
                     {
                         rcd.Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"));
                         return false;
@@ -224,7 +230,7 @@ namespace Content.Server.RCD.Systems
             }
         }
 
-        private void NextMode(EntityUid uid, RCDComponent rcd, IEntity? user)
+        private void NextMode(EntityUid uid, RCDComponent rcd, EntityUid user)
         {
             SoundSystem.Play(Filter.Pvs(uid), rcd.SwapModeSound.GetSound(), uid);
 
@@ -232,11 +238,8 @@ namespace Content.Server.RCD.Systems
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             rcd.Mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
 
-            if (user != null)
-            {
-                var msg = Loc.GetString("rcd-component-change-mode", ("mode", rcd.Mode.ToString()));
-                rcd.Owner.PopupMessage(user, msg); //Prints an overhead message above the RCD
-            }
+            var msg = Loc.GetString("rcd-component-change-mode", ("mode", rcd.Mode.ToString()));
+            rcd.Owner.PopupMessage(user, msg); //Prints an overhead message above the RCD
         }
     }
 }

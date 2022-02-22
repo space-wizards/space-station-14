@@ -1,6 +1,4 @@
-using Content.Server.Body;
 using Content.Server.Body.Components;
-using Content.Server.Body.Part;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -10,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class RemoveBodyPartCommand : IConsoleCommand
+    public sealed class RemoveBodyPartCommand : IConsoleCommand
     {
         public string Command => "rmbodypart";
         public string Description => "Removes a given entity from it's containing body, if any.";

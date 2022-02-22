@@ -1,4 +1,6 @@
+using Content.Shared.Clothing;
 using Content.Shared.Gravity;
+using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -9,20 +11,21 @@ namespace Content.Shared.Movement.Components
     [RegisterComponent]
     public sealed class MovementIgnoreGravityComponent : Component
     {
-        public override string Name => "MovementIgnoreGravity";
     }
 
     public static class GravityExtensions
     {
-        public static bool IsWeightless(this IEntity entity, PhysicsComponent? body = null, EntityCoordinates? coords = null, IMapManager? mapManager = null, IEntityManager? entityManager = null)
+        public static bool IsWeightless(this EntityUid entity, PhysicsComponent? body = null, EntityCoordinates? coords = null, IMapManager? mapManager = null, IEntityManager? entityManager = null)
         {
-            if (body == null)
-                entity.TryGetComponent(out body);
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
 
-            if (entity.HasComponent<MovementIgnoreGravityComponent>() ||
+            if (body == null)
+                entityManager.TryGetComponent(entity, out body);
+
+            if (entityManager.HasComponent<MovementIgnoreGravityComponent>(entity) ||
                 (body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0) return false;
 
-            var transform = entity.Transform;
+            var transform = entityManager.GetComponent<TransformComponent>(entity);
             var gridId = transform.GridID;
 
             if (!gridId.IsValid())
@@ -34,18 +37,22 @@ namespace Content.Shared.Movement.Components
 
             mapManager ??= IoCManager.Resolve<IMapManager>();
             var grid = mapManager.GetGrid(gridId);
-            var gridEntityId = grid.GridEntityId;
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
-            var gridEntity = entityManager.GetEntity(gridEntityId);
+            var invSys = EntitySystem.Get<InventorySystem>();
 
-            if (!gridEntity.GetComponent<GravityComponent>().Enabled)
+            if (invSys.TryGetSlotEntity(entity, "shoes", out var ent))
+            {
+                if (entityManager.TryGetComponent<SharedMagbootsComponent>(ent, out var boots) && boots.On)
+                    return false;
+            }
+
+            if (!entityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
             {
                 return true;
             }
 
             coords ??= transform.Coordinates;
 
-            if (!coords.Value.IsValid(entity.EntityManager))
+            if (!coords.Value.IsValid(entityManager))
             {
                 return true;
             }

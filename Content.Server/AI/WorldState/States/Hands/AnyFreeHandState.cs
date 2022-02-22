@@ -1,15 +1,17 @@
 using Content.Server.Hands.Components;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Hands
 {
     [UsedImplicitly]
-    public class AnyFreeHandState : StateData<bool>
+    public sealed class AnyFreeHandState : StateData<bool>
     {
         public override string Name => "AnyFreeHand";
         public override bool GetValue()
         {
-            if (!Owner.TryGetComponent(out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent))
             {
                 return false;
             }

@@ -10,7 +10,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Disposal
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class TubeConnectionsCommand : IConsoleCommand
+    public sealed class TubeConnectionsCommand : IConsoleCommand
     {
         public string Command => "tubeconnections";
         public string Description => Loc.GetString("tube-connections-command-description");
@@ -38,13 +38,13 @@ namespace Content.Server.Disposal
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            if (!entityManager.TryGetEntity(id, out var entity))
+            if (!entityManager.EntityExists(id))
             {
                 shell.WriteLine(Loc.GetString("shell-could-not-find-entity-with-uid",("uid", id)));
                 return;
             }
 
-            if (!entity.TryGetComponent(out IDisposalTubeComponent? tube))
+            if (!entityManager.TryGetComponent(id, out IDisposalTubeComponent? tube))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-with-uid-lacks-component",
                                               ("uid", id),
@@ -52,7 +52,7 @@ namespace Content.Server.Disposal
                 return;
             }
 
-            tube.PopupDirections(player.AttachedEntity);
+            tube.PopupDirections(player.AttachedEntity.Value);
         }
     }
 }

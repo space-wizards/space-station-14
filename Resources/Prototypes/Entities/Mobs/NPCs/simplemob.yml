@@ -8,6 +8,7 @@
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
+      Acidic: [Touch, Ingestion]
   - type: UtilityAI
     behaviorSets:
     # - Clothing
@@ -21,6 +22,13 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 4
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
     damage:
@@ -31,10 +39,12 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
+    netsync: false
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
     bodyType: KinematicController # Same for all inheritors
+  - type: Fixtures
     fixtures:
     - shape:
         # Circles, cuz rotation of rectangles looks very bad
@@ -50,7 +60,14 @@
       - Opaque
   - type: SolutionContainerManager
   - type: Bloodstream
-    max_volume: 100
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
   - type: Damageable
     damageContainer: Biological
   - type: AtmosExposed
@@ -64,6 +81,9 @@
     heatDamageThreshold: 360
     coldDamageThreshold: 260
     currentTemperature: 310.15
+    coldDamage:
+      types:
+        Cold : 1 #per second, scales with temperature & other constants
     specificHeat: 42
     heatDamage:
       types:
@@ -111,8 +131,6 @@
   - type: Buckle
   - type: Recyclable
     safe: false
-  - type: Butcherable
-    meat: FoodMeat
   - type: StandingState
   - type: Alerts
 
@@ -140,7 +158,7 @@
     damage:
       types:
         Blunt: 1 #per second, scales with pressure and other constants.
-  - type: Respirator
+  - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
     implicitHeatRegulation: 250
@@ -148,17 +166,13 @@
     shiveringHeatRegulation: 500
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
-    needsGases:
-      Oxygen: 0.00060763888
-    producesGases:
-      Oxygen: 0.00045572916
-      CarbonDioxide: 0.00015190972
+  - type: Respirator
     damage:
       types:
-        Asphyxiation: 1
+        Asphyxiation: 3
     damageRecovery:
       types:
-        Asphyxiation: -1
+        Asphyxiation: -1.5
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260

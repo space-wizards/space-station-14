@@ -1,4 +1,5 @@
-﻿using Robust.Server.Player;
+﻿using Content.Server.Mind.Commands;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -13,6 +14,12 @@ namespace Content.Server.Ghost.Roles.Components
         [DataField("description")] private string _roleDescription = "Unknown";
 
         [DataField("rules")] private string _roleRules = "";
+
+        /// <summary>
+        /// Whether the <see cref="MakeSentientCommand"/> should run on the mob.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("makeSentient")]
+        protected bool MakeSentient = true;
 
         // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
 
@@ -50,10 +57,17 @@ namespace Content.Server.Ghost.Roles.Components
         }
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public bool Taken { get; protected set; }
+        public bool Taken { get; set; }
 
         [ViewVariables]
         public uint Identifier { get; set; }
+
+        /// <summary>
+        /// Reregisters the ghost role when the current player ghosts.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("reregister")]
+        public bool ReregisterOnGhost { get; set; } = true;
 
         protected override void Initialize()
         {

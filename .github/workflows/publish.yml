@@ -1,5 +1,8 @@
 name: Publish
 
+concurrency:
+  group: publish
+
 on:
   push:
     branches: [ master ]
@@ -42,7 +45,7 @@ jobs:
         username: wizards-build-push
         key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
         source: "release/${{ github.sha }}"
-        target: "/mnt/ext/wizards-builds/builds/"
+        target: "/home/wizards-build-push/builds_dir/builds/"
         strip_components: 1
 
     - name: Update manifest JSON

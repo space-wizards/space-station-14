@@ -13,7 +13,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Cloning.UI
 {
-    public sealed class CloningPodWindow : SS14Window
+    public sealed class CloningPodWindow : DefaultWindow
     {
         private Dictionary<int, string?> _scanManager;
 
@@ -208,7 +208,7 @@ namespace Content.Client.Cloning.UI
         }
 
         [DebuggerDisplay("cloningbutton {" + nameof(Index) + "}")]
-        private class CloningScanButton : Control
+        private sealed class CloningScanButton : Control
         {
             public string Scan { get; set; } = default!;
             public int Id { get; set; }

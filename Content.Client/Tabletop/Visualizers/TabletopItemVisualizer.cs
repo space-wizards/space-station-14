@@ -2,16 +2,18 @@ using Content.Shared.Tabletop;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Tabletop.Visualizers
 {
     [UsedImplicitly]
-    public class TabletopItemVisualizer : AppearanceVisualizer
+    public sealed class TabletopItemVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent appearance)
         {
-            if (!appearance.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent<ISpriteComponent>(appearance.Owner, out var sprite))
             {
                 return;
             }

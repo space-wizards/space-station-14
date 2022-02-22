@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Content.Shared.Database;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Administration.Logs;

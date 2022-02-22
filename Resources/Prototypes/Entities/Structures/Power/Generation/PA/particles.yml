@@ -17,6 +17,7 @@
         types:
           Radiation: 10
     - type: Physics
+    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb

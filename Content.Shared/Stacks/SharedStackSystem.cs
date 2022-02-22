@@ -48,10 +48,10 @@ namespace Content.Shared.Stacks
 
             // Queue delete stack if count reaches zero.
             if(component.Count <= 0)
-                EntityManager.QueueDeleteEntity(uid);
+                QueueDel(uid);
 
             // Change appearance data.
-            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (TryComp(uid, out AppearanceComponent? appearance))
                 appearance.SetData(StackVisuals.Actual, component.Count);
 
             RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count), false);
@@ -83,7 +83,7 @@ namespace Content.Shared.Stacks
 
         private void OnStackStarted(EntityUid uid, SharedStackComponent component, ComponentStartup args)
         {
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (!TryComp(uid, out AppearanceComponent? appearance))
                 return;
 
             appearance.SetData(StackVisuals.Actual, component.Count);
@@ -123,7 +123,7 @@ namespace Content.Shared.Stacks
     /// <summary>
     ///     Event raised when a stack's count has changed.
     /// </summary>
-    public class StackCountChangedEvent : EntityEventArgs
+    public sealed class StackCountChangedEvent : EntityEventArgs
     {
         /// <summary>
         ///     The old stack count.

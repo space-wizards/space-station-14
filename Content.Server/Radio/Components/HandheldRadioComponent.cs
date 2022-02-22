@@ -15,15 +15,15 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Radio.Components
 {
     [RegisterComponent]
+    [ComponentProtoName("Radio")]
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
+    [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public class HandheldRadioComponent : Component, IUse, IListen, IRadio, IActivate, IExamine
+    public sealed class HandheldRadioComponent : Component, IListen, IRadio, IActivate, IExamine
 #pragma warning restore 618
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
-        public override string Name => "Radio";
-
         private RadioSystem _radioSystem = default!;
 
         private bool _radioOn;
@@ -63,7 +63,7 @@ namespace Content.Server.Radio.Components
             _chatManager.EntitySay(Owner, message);
         }
 
-        public bool Use(IEntity user)
+        public bool Use(EntityUid user)
         {
             RadioOn = !RadioOn;
 
@@ -74,18 +74,13 @@ namespace Content.Server.Radio.Components
             return true;
         }
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            return Use(eventArgs.User);
-        }
-
-        public bool CanListen(string message, IEntity source)
+        public bool CanListen(string message, EntityUid source)
         {
             return RadioOn &&
-                   Owner.InRangeUnobstructed(source.Transform.Coordinates, range: ListenRange);
+                   EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
         }
 
-        public void Receive(string message, int channel, IEntity speaker)
+        public void Receive(string message, int channel, EntityUid speaker)
         {
             if (RadioOn)
             {
@@ -93,12 +88,12 @@ namespace Content.Server.Radio.Components
             }
         }
 
-        public void Listen(string message, IEntity speaker)
+        public void Listen(string message, EntityUid speaker)
         {
             Broadcast(message, speaker);
         }
 
-        public void Broadcast(string message, IEntity speaker)
+        public void Broadcast(string message, EntityUid speaker)
         {
             _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
         }

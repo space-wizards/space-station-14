@@ -7,10 +7,8 @@ namespace Content.Shared.Kitchen.Components
 {
     public abstract class SharedReagentGrinderComponent : Component
     {
-        public override string Name => "ReagentGrinder";
-
         [Serializable, NetSerializable]
-        public class ReagentGrinderGrindStartMessage : BoundUserInterfaceMessage
+        public sealed class ReagentGrinderGrindStartMessage : BoundUserInterfaceMessage
         {
             public ReagentGrinderGrindStartMessage()
             {
@@ -18,7 +16,7 @@ namespace Content.Shared.Kitchen.Components
         }
 
         [Serializable, NetSerializable]
-        public class ReagentGrinderJuiceStartMessage : BoundUserInterfaceMessage
+        public sealed class ReagentGrinderJuiceStartMessage : BoundUserInterfaceMessage
         {
             public ReagentGrinderJuiceStartMessage()
             {
@@ -26,7 +24,7 @@ namespace Content.Shared.Kitchen.Components
         }
 
         [Serializable, NetSerializable]
-        public class ReagentGrinderEjectChamberAllMessage : BoundUserInterfaceMessage
+        public sealed class ReagentGrinderEjectChamberAllMessage : BoundUserInterfaceMessage
         {
             public ReagentGrinderEjectChamberAllMessage()
             {
@@ -34,7 +32,7 @@ namespace Content.Shared.Kitchen.Components
         }
 
         [Serializable, NetSerializable]
-        public class ReagentGrinderEjectBeakerMessage : BoundUserInterfaceMessage
+        public sealed class ReagentGrinderEjectBeakerMessage : BoundUserInterfaceMessage
         {
             public ReagentGrinderEjectBeakerMessage()
             {
@@ -42,7 +40,7 @@ namespace Content.Shared.Kitchen.Components
         }
 
         [Serializable, NetSerializable]
-        public class ReagentGrinderEjectChamberContentMessage : BoundUserInterfaceMessage
+        public sealed class ReagentGrinderEjectChamberContentMessage : BoundUserInterfaceMessage
         {
             public EntityUid EntityID;
             public ReagentGrinderEjectChamberContentMessage(EntityUid entityID)
@@ -52,7 +50,7 @@ namespace Content.Shared.Kitchen.Components
         }
 
         [Serializable, NetSerializable]
-        public class ReagentGrinderWorkStartedMessage : BoundUserInterfaceMessage
+        public sealed class ReagentGrinderWorkStartedMessage : BoundUserInterfaceMessage
         {
             public GrinderProgram GrinderProgram;
             public ReagentGrinderWorkStartedMessage(GrinderProgram grinderProgram)
@@ -62,7 +60,7 @@ namespace Content.Shared.Kitchen.Components
         }
 
         [Serializable, NetSerializable]
-        public class ReagentGrinderWorkCompleteMessage : BoundUserInterfaceMessage
+        public sealed class ReagentGrinderWorkCompleteMessage : BoundUserInterfaceMessage
         {
             public ReagentGrinderWorkCompleteMessage()
             {

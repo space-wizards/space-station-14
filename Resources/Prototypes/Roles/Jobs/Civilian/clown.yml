@@ -1,7 +1,6 @@
 - type: job
   id: Clown
   name: "clown"
-  positions: 1
   startingGear: ClownGear
   departments:
   - Civilian
@@ -12,17 +11,24 @@
   - Maintenance
   special:
   - !type:AddComponentSpecial
-    component: Clumsy # Adds ClumsyComponent to the mob.
+    components:
+    - type: Clumsy
+      clumsyDamage:
+        types: #literally just picked semi random valus. i tested this once and tweaked it.
+          Blunt: 5
+          Piercing: 4
+        groups:
+          Burn: 3
 
 - type: startingGear
   id: ClownGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitClown
-    backpack: ClothingBackpackClownFilled
+    jumpsuit: ClothingUniformJumpsuitClown
+    back: ClothingBackpackClownFilled
     shoes: ClothingShoesClown
     mask: ClothingMaskClown
     pocket1: BikeHorn
-    idcard: ClownPDA
+    id: ClownPDA
     ears: ClothingHeadsetService
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelClownFilled

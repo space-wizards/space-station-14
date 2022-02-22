@@ -1,3 +1,4 @@
+using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -17,10 +18,8 @@ namespace Content.Server.Explosion.Components
     ///     </list>
     /// </remarks>
     [RegisterComponent]
-    public class ExplosiveComponent : Component
+    public sealed class ExplosiveComponent : Component
     {
-        public override string Name => "Explosive";
-
         [DataField("devastationRange")]
         public int DevastationRange;
         [DataField("heavyImpactRange")]

@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Actions
 {
     [UsedImplicitly]
-    public class ActionsSystem : EntitySystem
+    public sealed class ActionsSystem : EntitySystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
@@ -85,7 +85,7 @@ namespace Content.Client.Actions
                 {
                     var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
                     if (playerEntity == null ||
-                        !playerEntity.TryGetComponent<ClientActionsComponent>(out var actionsComponent)) return false;
+                        !EntityManager.TryGetComponent<ClientActionsComponent?>(playerEntity.Value, out var actionsComponent)) return false;
 
                     actionsComponent.HandleHotbarKeybind(slot, args);
                     return true;
@@ -98,8 +98,7 @@ namespace Content.Client.Actions
             return new((in PointerInputCmdHandler.PointerInputCmdArgs args) =>
                 {
                     var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
-                    if (playerEntity == null ||
-                        !playerEntity.TryGetComponent<ClientActionsComponent>( out var actionsComponent)) return false;
+                    if (!EntityManager.TryGetComponent<ClientActionsComponent?>(playerEntity, out var actionsComponent)) return false;
 
                     actionsComponent.HandleChangeHotbarKeybind(hotbar, args);
                     return true;
@@ -110,8 +109,7 @@ namespace Content.Client.Actions
         private bool TargetingOnUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
             var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (playerEntity == null ||
-                !playerEntity.TryGetComponent<ClientActionsComponent>( out var actionsComponent)) return false;
+            if (!EntityManager.TryGetComponent<ClientActionsComponent?>(playerEntity, out var actionsComponent)) return false;
 
             return actionsComponent.TargetingOnUse(args);
         }
@@ -119,8 +117,7 @@ namespace Content.Client.Actions
         private void ToggleActionsMenu()
         {
             var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (playerEntity == null ||
-                !playerEntity.TryGetComponent<ClientActionsComponent>( out var actionsComponent)) return;
+            if (!EntityManager.TryGetComponent<ClientActionsComponent?>(playerEntity, out var actionsComponent)) return;
 
             actionsComponent.ToggleActionsMenu();
         }

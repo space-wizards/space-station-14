@@ -1,19 +1,20 @@
-﻿using Content.Shared.Buckle.Components;
+using Content.Shared.Buckle.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Buckle
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBuckleComponent))]
-    public class BuckleComponent : SharedBuckleComponent
+    public sealed class BuckleComponent : SharedBuckleComponent
     {
         private bool _buckled;
         private int? _originalDrawDepth;
 
         public override bool Buckled => _buckled;
 
-        public override bool TryBuckle(IEntity? user, IEntity to)
+        public override bool TryBuckle(EntityUid user, EntityUid to)
         {
             // TODO: Prediction
             return false;
@@ -29,8 +30,7 @@ namespace Content.Client.Buckle
             _buckled = buckle.Buckled;
             LastEntityBuckledTo = buckle.LastEntityBuckledTo;
             DontCollide = buckle.DontCollide;
-
-            if (!Owner.TryGetComponent(out SpriteComponent? ownerSprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? ownerSprite))
             {
                 return;
             }

@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Camera;
+using Content.Server.Administration.Logs;
 using Content.Server.Explosion.Components;
 using Content.Shared.Acts;
+using Content.Shared.Camera;
+using Content.Shared.Database;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -16,14 +19,17 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Explosion.EntitySystems
 {
-    public class ExplosionSystem : EntitySystem
+    public sealed class ExplosionSystem : EntitySystem
     {
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+
         /// <summary>
         /// Distance used for camera shake when distance from explosion is (0.0, 0.0).
         /// Avoids getting NaN values down the line from doing math on (0.0, 0.0).
@@ -48,10 +54,13 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly ActSystem _acts = default!;
         [Dependency] private readonly EffectSystem _effects = default!;
         [Dependency] private readonly TriggerSystem _triggers = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
 
-        private bool IgnoreExplosivePassable(IEntity e)
+        private bool IgnoreExplosivePassable(EntityUid e)
         {
-            return e.HasTag("ExplosivePassable");
+            return _tags.HasTag(e, "ExplosivePassable");
         }
 
         private ExplosionSeverity CalculateSeverity(float distance, float devastationRange, float heavyRange)
@@ -78,12 +87,13 @@ namespace Content.Server.Explosion.EntitySystems
 
             foreach (var player in players)
             {
-                if (player.AttachedEntity == null || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent? recoil))
+                if (player.AttachedEntity is not {Valid: true} playerEntity ||
+                    !EntityManager.HasComponent<CameraRecoilComponent>(playerEntity))
                 {
                     continue;
                 }
 
-                var playerPos = player.AttachedEntity.Transform.WorldPosition;
+                var playerPos = EntityManager.GetComponent<TransformComponent>(playerEntity).WorldPosition;
                 var delta = epicenter.ToMapPos(EntityManager) - playerPos;
 
                 //Change if zero. Will result in a NaN later breaking camera shake if not changed
@@ -95,7 +105,7 @@ namespace Content.Server.Explosion.EntitySystems
                 if (effect > 0.01f)
                 {
                     var kick = -delta.Normalized * effect;
-                    recoil.Kick(kick);
+                    _cameraRecoil.KickCamera(player.AttachedEntity.Value, kick);
                 }
             }
         }
@@ -118,26 +128,31 @@ namespace Content.Server.Explosion.EntitySystems
         {
             var entitiesInRange = _entityLookup.GetEntitiesInRange(mapId, boundingBox, 0).ToList();
 
-            var impassableEntities = new List<(IEntity, float)>();
-            var nonImpassableEntities = new List<(IEntity, float)>();
+            var impassableEntities = new List<(EntityUid, float)>();
+            var nonImpassableEntities = new List<(EntityUid, float)>();
             // TODO: Given this seems to rely on physics it should just query directly like everything else.
 
             // The entities are paired with their distance to the epicenter
             // and splitted into two lists based on if they are Impassable or not
             foreach (var entity in entitiesInRange)
             {
-                if (entity.Deleted || entity.IsInContainer())
+                if (Deleted(entity) || entity.IsInContainer())
                 {
                     continue;
                 }
 
-                if (!entity.Transform.Coordinates.TryDistance(EntityManager, epicenter, out var distance) ||
+                if (!EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, epicenter, out var distance) ||
                     distance > maxRange)
                 {
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out PhysicsComponent? body) || body.Fixtures.Count < 1)
+                if (!EntityManager.TryGetComponent(entity, out FixturesComponent? fixturesComp) || fixturesComp.Fixtures.Count < 1)
+                {
+                    continue;
+                }
+
+                if (!EntityManager.TryGetComponent(entity, out PhysicsComponent? body))
                 {
                     continue;
                 }
@@ -162,24 +177,24 @@ namespace Content.Server.Explosion.EntitySystems
             var epicenterMapPos = epicenter.ToMap(EntityManager);
             foreach (var (entity, distance) in impassableEntities)
             {
-                if (!entity.InRangeUnobstructed(epicenterMapPos, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
+                if (!_interactionSystem.InRangeUnobstructed(epicenterMapPos, entity, maxRange, predicate: IgnoreExplosivePassable))
                 {
                     continue;
                 }
 
-                _acts.HandleExplosion(epicenter, entity.Uid, CalculateSeverity(distance, devastationRange, heavyRange));
+                _acts.HandleExplosion(epicenter, entity, CalculateSeverity(distance, devastationRange, heavyRange));
             }
 
             // Impassable entities were handled first so NonImpassable entities have a bigger chance to get hit. As now
             // there are probably more ExplosivePassable entities around
             foreach (var (entity, distance) in nonImpassableEntities)
             {
-                if (!entity.InRangeUnobstructed(epicenterMapPos, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
+                if (!_interactionSystem.InRangeUnobstructed(epicenterMapPos, entity, maxRange, predicate: IgnoreExplosivePassable))
                 {
                     continue;
                 }
 
-                _acts.HandleExplosion(epicenter, entity.Uid, CalculateSeverity(distance, devastationRange, heavyRange));
+                _acts.HandleExplosion(epicenter, entity, CalculateSeverity(distance, devastationRange, heavyRange));
             }
         }
 
@@ -223,7 +238,7 @@ namespace Content.Server.Explosion.EntitySystems
                     continue;
                 }
 
-                if (!tileLoc.ToMap(EntityManager).InRangeUnobstructed(epicenterMapPos, maxRange, ignoreInsideBlocker: false, predicate: IgnoreExplosivePassable))
+                if (!_interactionSystem.InRangeUnobstructed(tileLoc.ToMap(EntityManager), epicenterMapPos, maxRange, predicate: IgnoreExplosivePassable))
                 {
                     continue;
                 }
@@ -290,6 +305,7 @@ namespace Content.Server.Explosion.EntitySystems
             int heavyImpactRange = 0,
             int lightImpactRange = 0,
             int flashRange = 0,
+            EntityUid? user = null,
             ExplosiveComponent? explosive = null,
             TransformComponent? transform = null)
         {
@@ -302,13 +318,13 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (explosive is { Exploding: false })
             {
-                _triggers.Explode(entity, explosive);
+                _triggers.Explode(entity, explosive, user);
             }
             else
             {
-                while (EntityManager.TryGetEntity(entity, out var e) && e.TryGetContainer(out var container))
+                while (EntityManager.EntityExists(entity) && entity.TryGetContainer(out var container))
                 {
-                    entity = container.Owner.Uid;
+                    entity = container.Owner;
                 }
 
                 if (!EntityManager.TryGetComponent(entity, out transform))
@@ -318,7 +334,7 @@ namespace Content.Server.Explosion.EntitySystems
 
                 var epicenter = transform.Coordinates;
 
-                SpawnExplosion(epicenter, devastationRange, heavyImpactRange, lightImpactRange, flashRange);
+                SpawnExplosion(epicenter, devastationRange, heavyImpactRange, lightImpactRange, flashRange, entity, user);
             }
         }
 
@@ -327,12 +343,31 @@ namespace Content.Server.Explosion.EntitySystems
             int devastationRange = 0,
             int heavyImpactRange = 0,
             int lightImpactRange = 0,
-            int flashRange = 0)
+            int flashRange = 0,
+            EntityUid? entity = null,
+            EntityUid? user = null)
         {
             var mapId = epicenter.GetMapId(EntityManager);
             if (mapId == MapId.Nullspace)
             {
                 return;
+            }
+
+            // logging
+            var range = $"{devastationRange}/{heavyImpactRange}/{lightImpactRange}/{flashRange}";
+            if (entity == null || !entity.Value.IsValid())
+            {
+                _logSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with range {range}");
+            }
+            else if (user == null || !user.Value.IsValid())
+            {
+                _logSystem.Add(LogType.Explosion, LogImpact.High,
+                    $"{ToPrettyString(entity.Value):entity} exploded at {epicenter:coordinates} with range {range}");
+            }
+            else
+            {
+                _logSystem.Add(LogType.Explosion, LogImpact.High,
+                    $"{ToPrettyString(user.Value):user} caused {ToPrettyString(entity.Value):entity} to explode at {epicenter:coordinates} with range {range}");
             }
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);

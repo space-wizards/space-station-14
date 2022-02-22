@@ -14,7 +14,9 @@
     HeldPrefix: default
   - type: Access
   - type: IdCard
-  - type: DoorBumpOpener
+  - type: Tag
+    tags:
+    - DoorBumpOpener
 
 #IDs with layers
 
@@ -56,17 +58,17 @@
   - type: PresetIdCard
     job: SecurityOfficer
 
-# - type: entity
-#   parent: IDCardStandard
-#   id: WardenIDCard
-#   name: warden ID card
-#   components:
-#     - type: Sprite
-#       layers:
-#         - state: default
-#         - state: idwarden
-#     - type: PresetIdCard
-#       job: Warden
+- type: entity
+  parent: IDCardStandard
+  id: WardenIDCard
+  name: warden ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idwarden
+    - type: PresetIdCard
+      job: Warden
 
 - type: entity
   parent: IDCardStandard
@@ -116,17 +118,29 @@
   - type: PresetIdCard
     job: CargoTechnician
 
-#- type: entity
-#  parent: IDCardStandard
-#  id: QuartermasterIDCard
-#  name: quartermaster ID card
-#  components:
-#    - type: Sprite
-#      layers:
-#        - state: default
-#        - state: idquartermaster
-#    - type: PresetIdCard
-#      job: Quartermaster
+- type: entity
+  parent: IDCardStandard
+  id: SalvageIDCard
+  name: salvage ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idshaftminer
+  - type: PresetIdCard
+    job: SalvageSpecialist
+
+- type: entity
+  parent: IDCardStandard
+  id: QuartermasterIDCard
+  name: quartermaster ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idquartermaster
+    - type: PresetIdCard
+      job: Quartermaster
 
 - type: entity
   parent: IDCardStandard
@@ -164,19 +178,17 @@
   - type: PresetIdCard
     job: Mime
 
-#- type: entity
-#  parent: IDCardStandard
-#  id: ChaplainIDCard
-#  name: chaplain ID card
-#  components:
-#    - type: Sprite
-#      layers:
-#        - state: default
-#
-#        - state: idchaplain
-#
-#    - type: PresetIdCard
-#      job: Chaplain
+- type: entity
+  parent: IDCardStandard
+  id: ChaplainIDCard
+  name: chaplain ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idchaplain
+    - type: PresetIdCard
+      job: Chaplain
 
 - type: entity
   parent: IDCardStandard
@@ -225,6 +237,30 @@
         - state: idbotanist
     - type: PresetIdCard
       job: Botanist
+
+- type: entity
+  parent: IDCardStandard
+  id: LibrarianIDCard
+  name: librarian ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idcurator
+    - type: PresetIdCard
+      job: Librarian
+
+- type: entity
+  parent: IDCardStandard
+  id: LawyerIDCard
+  name: lawyer ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idlawyer
+    - type: PresetIdCard
+      job: Lawyer
 
 - type: entity
   parent: IDCardStandard
@@ -311,28 +347,8 @@
     jobTitle: Central Commander
   - type: Access
     #GOD DEAR FUCKING GOD WE NEED AN ALL-ACCESS FLAG
-    tags:
-    - Maintenance
-    - Cargo
-    - Quartermaster
-    - Engineering
-    - ChiefEngineer
-    - Medical
-    - ChiefMedicalOfficer
-    - Research
-    - ResearchDirector
-    - Security
-    - Service
-    - Captain
-    - Command
-    - External
-    - HeadOfSecurity
-    - HeadOfPersonnel
-    - Bar
-    - Hydroponics
-    - Kitchen
-    - Janitor
-    - Theatre
+    groups:
+    - AllAccess
 
 - type: entity
   parent: IDCardStandard

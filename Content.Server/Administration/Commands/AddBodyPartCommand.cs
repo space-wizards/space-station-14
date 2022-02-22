@@ -1,7 +1,4 @@
-using Content.Server.Body;
 using Content.Server.Body.Components;
-using Content.Server.Body.Part;
-using Content.Server.Storage.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -11,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddBodyPartCommand : IConsoleCommand
+    public sealed class AddBodyPartCommand : IConsoleCommand
     {
         public string Command => "addbodypart";
         public string Description => "Adds a given entity to a containing body.";

@@ -10,20 +10,18 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Lathe
 {
     [NetworkedComponent()]
-    public class SharedMaterialStorageComponent : Component, IEnumerable<KeyValuePair<string, int>>
+    public abstract class SharedMaterialStorageComponent : Component, IEnumerable<KeyValuePair<string, int>>
     {
-        public override string Name => "MaterialStorage";
-
         [ViewVariables]
         protected virtual Dictionary<string, int> Storage { get; set; } = new();
 
-        public int this[string ID]
+        public int this[string id]
         {
             get
             {
-                if (!Storage.ContainsKey(ID))
+                if (!Storage.ContainsKey(id))
                     return 0;
-                return Storage[ID];
+                return Storage[id];
             }
         }
 
@@ -31,10 +29,10 @@ namespace Content.Shared.Lathe
         {
             get
             {
-                var ID = material.ID;
-                if (!Storage.ContainsKey(ID))
+                var id = material.ID;
+                if (!Storage.ContainsKey(id))
                     return 0;
-                return Storage[ID];
+                return Storage[id];
             }
         }
 
@@ -68,7 +66,7 @@ namespace Content.Shared.Lathe
     }
 
     [NetSerializable, Serializable]
-    public class MaterialStorageState : ComponentState
+    public sealed class MaterialStorageState : ComponentState
     {
         public readonly Dictionary<string, int> Storage;
         public MaterialStorageState(Dictionary<string, int> storage)

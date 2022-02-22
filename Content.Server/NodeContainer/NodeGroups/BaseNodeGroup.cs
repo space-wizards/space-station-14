@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 
@@ -32,11 +33,14 @@ namespace Content.Server.NodeContainer.NodeGroups
         // In theory, the SS13 curse ensures this method will never be called.
         void AfterRemake(IEnumerable<IGrouping<INodeGroup?, Node>> newGroups);
 
-        // TODO: Why is this method needed?
-        void QueueRemake();
+        /// <summary>
+        ///     Return any additional data to display for the node-visualizer debug overlay.
+        /// </summary>
+        string? GetDebugData();
     }
 
     [NodeGroup(NodeGroupID.Default, NodeGroupID.WireNet)]
+    [Virtual]
     public class BaseNodeGroup : INodeGroup
     {
         public bool Remaking { get; set; }
@@ -76,7 +80,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         public virtual void Initialize(Node sourceNode)
         {
             // TODO: Can we get rid of this GridId?
-            GridId = sourceNode.Owner.Transform.GridID;
+            GridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sourceNode.Owner).GridID;
         }
 
         /// <summary>
@@ -110,9 +114,9 @@ namespace Content.Server.NodeContainer.NodeGroups
         /// <param name="newGroups">A list of new groups for this group's former nodes.</param>
         public virtual void AfterRemake(IEnumerable<IGrouping<INodeGroup?, Node>> newGroups) { }
 
-        public void QueueRemake()
+        public virtual string? GetDebugData()
         {
-            EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup(this);
+            return null;
         }
     }
 }

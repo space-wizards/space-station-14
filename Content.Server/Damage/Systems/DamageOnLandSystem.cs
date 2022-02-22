@@ -1,8 +1,6 @@
 using Content.Server.Damage.Components;
 using Content.Shared.Damage;
 using Content.Shared.Throwing;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Damage.Systems
 {

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Ghost.Roles
 {
     [Serializable, NetSerializable]
-    public class MakeGhostRoleWindowClosedMessage : EuiMessageBase
+    public sealed class MakeGhostRoleWindowClosedMessage : EuiMessageBase
     {
     }
 }

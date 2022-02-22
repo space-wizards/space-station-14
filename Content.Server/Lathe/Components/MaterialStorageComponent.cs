@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.Lathe;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
@@ -9,7 +9,7 @@ namespace Content.Server.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMaterialStorageComponent))]
-    public class MaterialStorageComponent : SharedMaterialStorageComponent
+    public sealed class MaterialStorageComponent : SharedMaterialStorageComponent
     {
         [ViewVariables]
         protected override Dictionary<string, int> Storage { get; set; } = new();
@@ -22,7 +22,7 @@ namespace Content.Server.Lathe.Components
         [DataField("StorageLimit")]
         private int _storageLimit = -1;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new MaterialStorageState(Storage);
         }
@@ -40,28 +40,28 @@ namespace Content.Server.Lathe.Components
         /// <summary>
         ///     Checks if it can insert a material.
         /// </summary>
-        /// <param name="ID">Material ID</param>
+        /// <param name="id">Material ID</param>
         /// <param name="amount">How much to insert</param>
         /// <returns>Whether it can insert the material or not.</returns>
-        public bool CanInsertMaterial(string ID, int amount)
+        public bool CanInsertMaterial(string id, int amount)
         {
-            return (CanTakeAmount(amount) || StorageLimit < 0) && (!Storage.ContainsKey(ID) || Storage[ID] + amount >= 0);
+            return (CanTakeAmount(amount) || StorageLimit < 0) && (!Storage.ContainsKey(id) || Storage[id] + amount >= 0);
         }
 
         /// <summary>
         ///     Inserts material into the storage.
         /// </summary>
-        /// <param name="ID">Material ID</param>
+        /// <param name="id">Material ID</param>
         /// <param name="amount">How much to insert</param>
         /// <returns>Whether it inserted it or not.</returns>
-        public bool InsertMaterial(string ID, int amount)
+        public bool InsertMaterial(string id, int amount)
         {
-            if (!CanInsertMaterial(ID, amount)) return false;
+            if (!CanInsertMaterial(id, amount)) return false;
 
-            if (!Storage.ContainsKey(ID))
-                Storage.Add(ID, 0);
+            if (!Storage.ContainsKey(id))
+                Storage.Add(id, 0);
 
-            Storage[ID] += amount;
+            Storage[id] += amount;
 
             Dirty();
 
@@ -71,12 +71,12 @@ namespace Content.Server.Lathe.Components
         /// <summary>
         ///     Removes material from the storage.
         /// </summary>
-        /// <param name="ID">Material ID</param>
+        /// <param name="id">Material ID</param>
         /// <param name="amount">How much to remove</param>
         /// <returns>Whether it removed it or not.</returns>
-        public bool RemoveMaterial(string ID, int amount)
+        public bool RemoveMaterial(string id, int amount)
         {
-            return InsertMaterial(ID, -amount);
+            return InsertMaterial(id, -amount);
         }
     }
 }

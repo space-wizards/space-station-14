@@ -11,6 +11,6 @@ namespace Content.Server.Disposal.Tube.Components
 
         Direction NextDirection(DisposalHolderComponent holder);
         bool CanConnect(Direction direction, IDisposalTubeComponent with);
-        void PopupDirections(IEntity entity);
+        void PopupDirections(EntityUid entity);
     }
 }

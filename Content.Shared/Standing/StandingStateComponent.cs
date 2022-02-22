@@ -14,8 +14,6 @@ namespace Content.Shared.Standing
     [RegisterComponent, NetworkedComponent]
     public sealed class StandingStateComponent : Component
     {
-        public override string Name => "StandingState";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("downSoundCollection")]
         public SoundSpecifier DownSoundCollection { get; } = new SoundCollectionSpecifier("BodyFall");
@@ -24,7 +22,7 @@ namespace Content.Shared.Standing
         [DataField("standing")]
         public bool Standing { get; set; } = true;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new StandingComponentState(Standing);
         }

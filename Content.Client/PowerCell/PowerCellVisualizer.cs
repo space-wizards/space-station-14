@@ -2,21 +2,22 @@ using Content.Shared.PowerCell;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.PowerCell
 {
     [UsedImplicitly]
-    public class PowerCellVisualizer : AppearanceVisualizer
+    public sealed class PowerCellVisualizer : AppearanceVisualizer
     {
         [DataField("prefix")]
         private string? _prefix;
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            var sprite = entity.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
             if (_prefix != null)
             {
@@ -29,7 +30,7 @@ namespace Content.Client.PowerCell
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
             if (component.TryGetData(PowerCellVisuals.ChargeLevel, out byte level))
             {
                 var adjustedLevel = level * 25;

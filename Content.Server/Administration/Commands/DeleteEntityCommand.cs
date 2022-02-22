@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Spawn)]
-    public class DeleteEntityCommand : IConsoleCommand
+    public sealed class DeleteEntityCommand : IConsoleCommand
     {
         public string Command => "deleteentity";
         public string Description => "Deletes an entity with the given id.";
@@ -28,13 +28,13 @@ namespace Content.Server.Administration.Commands
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!entityManager.TryGetEntity(id, out var entity))
+            if (!entityManager.EntityExists(id))
             {
                 shell.WriteLine($"No entity found with id {id}.");
                 return;
             }
 
-            entity.Delete();
+            entityManager.DeleteEntity(id);
             shell.WriteLine($"Deleted entity with id {id}.");
         }
     }

@@ -1,15 +1,14 @@
+using System;
 using Content.Server.RCD.Components;
 using Content.Shared.Examine;
-using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using System;
 
 namespace Content.Server.RCD.Systems
 {
-    public class RCDAmmoSystem : EntitySystem
+    public sealed class RCDAmmoSystem : EntitySystem
     {
         public override void Initialize()
         {
@@ -29,7 +28,8 @@ namespace Content.Server.RCD.Systems
             if (args.Handled || !args.CanReach)
                 return;
 
-            if (args.Target == null || !EntityManager.TryGetComponent(args.Target.Uid, out RCDComponent? rcdComponent))
+            if (args.Target is not {Valid: true} target ||
+                !EntityManager.TryGetComponent(target, out RCDComponent? rcdComponent))
                 return;
 
             if (rcdComponent.MaxAmmo - rcdComponent.CurrentAmmo < component.RefillAmmo)

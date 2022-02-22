@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class EmptyContainer : IGraphAction
+    public sealed class EmptyContainer : IGraphAction
     {
         [DataField("container")] public string Container { get; private set; } = string.Empty;
 
@@ -25,8 +25,9 @@ namespace Content.Server.Construction.Completions
             foreach (var contained in container.ContainedEntities.ToArray())
             {
                 container.ForceRemove(contained);
-                contained.Transform.Coordinates = transform.Coordinates;
-                contained.Transform.AttachToGridOrMap();
+                var cTransform = entityManager.GetComponent<TransformComponent>(contained);
+                cTransform.Coordinates = transform.Coordinates;
+                cTransform.AttachToGridOrMap();
             }
         }
     }

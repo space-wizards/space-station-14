@@ -10,12 +10,11 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Atmos.Overlays
 {
-    public class AtmosDebugOverlay : Overlay
+    public sealed class AtmosDebugOverlay : Overlay
     {
         private readonly AtmosDebugOverlaySystem _atmosDebugOverlaySystem;
 
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -30,8 +29,8 @@ namespace Content.Client.Atmos.Overlays
         {
             var drawHandle = args.WorldHandle;
 
-            var mapId = _eyeManager.CurrentMap;
-            var worldBounds = _eyeManager.GetWorldViewbounds();
+            var mapId = args.Viewport.Eye!.Position.MapId;
+            var worldBounds = args.WorldBounds;
 
             // IF YOU ARE ABOUT TO INTRODUCE CHUNKING OR SOME OTHER OPTIMIZATION INTO THIS CODE:
             //  -- THINK! --

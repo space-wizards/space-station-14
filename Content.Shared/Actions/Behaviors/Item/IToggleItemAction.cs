@@ -22,7 +22,7 @@ namespace Content.Shared.Actions.Behaviors.Item
         bool DoToggleAction(ToggleItemActionEventArgs args);
     }
 
-    public class ToggleItemActionEventArgs : ItemActionEventArgs
+    public sealed class ToggleItemActionEventArgs : ItemActionEventArgs
     {
         /// <summary>
         /// True if the toggle was toggled on, false if it was toggled off
@@ -33,7 +33,7 @@ namespace Content.Shared.Actions.Behaviors.Item
         /// </summary>
         public bool ToggledOff => !ToggledOn;
 
-        public ToggleItemActionEventArgs(IEntity performer, bool toggledOn, IEntity item,
+        public ToggleItemActionEventArgs(EntityUid performer, bool toggledOn, EntityUid item,
             ItemActionType actionType) : base(performer, item, actionType)
         {
             ToggledOn = toggledOn;

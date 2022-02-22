@@ -1,9 +1,9 @@
 using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -16,7 +16,6 @@ namespace Content.Shared.Shuttles.Components
     [NetworkedComponent]
     public sealed class PilotComponent : Component
     {
-        public override string Name => "Pilot";
         [ViewVariables] public SharedShuttleConsoleComponent? Console { get; set; }
 
         /// <summary>
@@ -31,25 +30,27 @@ namespace Content.Shared.Shuttles.Components
             base.HandleComponentState(curState, nextState);
             if (curState is not PilotComponentState state) return;
 
-            if (state.Console == null)
+            var console = state.Console.GetValueOrDefault();
+            if (!console.IsValid())
             {
                 Console = null;
                 return;
             }
 
-            if (!Owner.EntityManager.TryGetEntity(state.Console.Value, out var consoleEnt) ||
-                !consoleEnt.TryGetComponent(out SharedShuttleConsoleComponent? shuttleConsoleComponent))
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+
+            if (!entityManager.TryGetComponent(console, out SharedShuttleConsoleComponent? shuttleConsoleComponent))
             {
-                Logger.Warning($"Unable to set Helmsman console to {state.Console.Value}");
+                Logger.Warning($"Unable to set Helmsman console to {console}");
                 return;
             }
 
             Console = shuttleConsoleComponent;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
-            return new PilotComponentState(Console?.OwnerUid);
+            return Console == null ? new PilotComponentState(null) : new PilotComponentState(Console.Owner);
         }
 
         [Serializable, NetSerializable]

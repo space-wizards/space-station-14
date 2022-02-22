@@ -8,8 +8,8 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Server)]
-    public class ReadyAll : IConsoleCommand
+    [AdminCommand(AdminFlags.Round)]
+    public sealed class ReadyAll : IConsoleCommand
     {
         public string Command => "readyall";
         public string Description => "Readies up all players in the lobby, except for observers.";

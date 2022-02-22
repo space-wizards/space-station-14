@@ -1,15 +1,15 @@
-﻿using Content.Shared.Pointing.Components;
+using Content.Shared.Pointing.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Server.Pointing.Components
 {
     [RegisterComponent]
-    public class PointingArrowComponent : SharedPointingArrowComponent
+    [ComponentReference(typeof(SharedPointingArrowComponent))]
+    public sealed class PointingArrowComponent : SharedPointingArrowComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         /// <summary>
         ///     The current amount of seconds left on this arrow.
         /// </summary>
@@ -57,7 +57,7 @@ namespace Content.Server.Pointing.Components
         {
             base.Startup();
 
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite))
             {
                 sprite.DrawDepth = (int) DrawDepth.Overlays;
             }
@@ -66,7 +66,7 @@ namespace Content.Server.Pointing.Components
         public void Update(float frameTime)
         {
             var movement = _speed * frameTime * (_up ? 1 : -1);
-            Owner.Transform.LocalPosition += (0, movement);
+            _entMan.GetComponent<TransformComponent>(Owner).LocalPosition += (0, movement);
 
             _duration -= frameTime;
             _currentStep -= frameTime;
@@ -75,12 +75,12 @@ namespace Content.Server.Pointing.Components
             {
                 if (_rogue)
                 {
-                    Owner.RemoveComponent<PointingArrowComponent>();
-                    Owner.AddComponent<RoguePointingArrowComponent>();
+                    _entMan.RemoveComponent<PointingArrowComponent>(Owner);
+                    _entMan.AddComponent<RoguePointingArrowComponent>(Owner);
                     return;
                 }
 
-                Owner.Delete();
+                _entMan.DeleteEntity(Owner);
                 return;
             }
 

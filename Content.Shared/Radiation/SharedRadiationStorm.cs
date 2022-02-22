@@ -2,15 +2,15 @@ using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Radiation
 {
     [NetworkedComponent()]
     public abstract class SharedRadiationPulseComponent : Component
     {
-        public override string Name => "RadiationPulse";
-
-        public virtual float RadsPerSecond { get; set; }
+        [DataField("radsPerSecond")]
+        public float RadsPerSecond { get; set; } = 1;
 
         /// <summary>
         /// Radius of the pulse from its position
@@ -20,6 +20,7 @@ namespace Content.Shared.Radiation
         public virtual bool Decay { get; set; }
         public virtual bool Draw { get; set; }
 
+        public virtual TimeSpan StartTime { get; }
         public virtual TimeSpan EndTime { get; }
     }
 
@@ -27,20 +28,22 @@ namespace Content.Shared.Radiation
     /// For syncing the pulse's lifespan between client and server for the overlay
     /// </summary>
     [Serializable, NetSerializable]
-    public class RadiationPulseState : ComponentState
+    public sealed class RadiationPulseState : ComponentState
     {
-        public readonly float RadsPerSecond;
+        // not networking RadsPerSecond because damage is only ever dealt by server-side systems.
+
         public readonly float Range;
         public readonly bool Draw;
         public readonly bool Decay;
+        public readonly TimeSpan StartTime;
         public readonly TimeSpan EndTime;
 
-        public RadiationPulseState(float radsPerSecond, float range, bool draw, bool decay, TimeSpan endTime)
+        public RadiationPulseState(float range, bool draw, bool decay, TimeSpan startTime, TimeSpan endTime)
         {
-            RadsPerSecond = radsPerSecond;
             Range = range;
             Draw = draw;
             Decay = decay;
+            StartTime = startTime;
             EndTime = endTime;
         }
     }

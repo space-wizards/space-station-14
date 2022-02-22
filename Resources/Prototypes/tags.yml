@@ -1,22 +1,28 @@
 # Alphabetical order is now apparently required.
 
 - type: Tag
+  id: AirAlarmElectronics
+
+- type: Tag
   id: Baguette
 
 - type: Tag
   id: Bee
 
 - type: Tag
+  id: BrassInstrument
+
+- type: Tag
   id: Brutepack
+
+- type: Tag
+  id: BodyBag
 
 - type: Tag
   id: BotanyHatchet
 
 - type: Tag
   id: BotanyHoe
-
-- type: Tag
-  id: BotanySharp
 
 - type: Tag
   id: BotanyShovel
@@ -38,6 +44,12 @@
 
 - type: Tag
   id: CaptainSabre
+
+- type: Tag
+  id: Cartridge
+
+- type: Tag
+  id: CigFilter
 
 - type: Tag
   id: CigPack
@@ -88,7 +100,19 @@
   id: Debug
 
 - type: Tag
+  id: Dice
+
+- type: Tag
+  id: Document
+
+- type: Tag
+  id: DoorBumpOpener
+
+- type: Tag
   id: DoorElectronics
+
+- type: Tag
+  id: DonkPocket
 
 - type: Tag
   id: Donut
@@ -101,6 +125,9 @@
 
 - type: Tag
   id: ExplosivePassable
+
+- type: Tag
+  id: FireAlarmElectronics
 
 - type: Tag
   id: FireAxe
@@ -148,6 +175,9 @@
   id: Katana
 
 - type: Tag
+  id: KeyedInstrument
+
+- type: Tag
   id: Knife
 
 - type: Tag
@@ -155,6 +185,15 @@
 
 - type: Tag
   id: Matchstick
+
+- type: Tag
+  id: Metal
+
+- type: Tag
+  id: MicrowaveMachineUnsafe
+
+- type: Tag
+  id: MicrowaveSelfUnsafe
 
 - type: Tag
   id: MonkeyCube
@@ -172,7 +211,16 @@
   id: Ore
 
 - type: Tag
+  id: PercussionInstrument
+
+- type: Tag
+  id: Plastic
+
+- type: Tag
   id: Pill
+
+- type: Tag
+  id: PillCanister
 
 - type: Tag
   id: Pipe
@@ -191,6 +239,10 @@
 
 - type: Tag
   id: Powerdrill
+
+# Give this to something that doesn't need any special recycler behavior and just needs deleting.
+- type: Tag
+  id: Recyclable
 
 - type: Tag
   id: RCDDeconstructWhitelist
@@ -223,16 +275,28 @@
   id: Spear
 
 - type: Tag
+  id: StringInstrument
+
+- type: Tag
   id: Taser
 
 - type: Tag
+  id: Trash
+
+- type: Tag
   id: Wall
+
+- type: Tag
+  id: Window
 
 - type: Tag
   id: Wirecutter
 
 - type: Tag
   id: Wooden # just like our atmos
+
+- type: Tag
+  id: WoodwindInstrument # even more like our atmos
 
 - type: Tag
   id: Wrench

@@ -1,0 +1,50 @@
+﻿- type: reaction
+  id: Napalm
+  reactants:
+    Oil:
+      amount: 1
+    WeldingFuel:
+      amount: 1
+    Ethanol:
+      amount: 1
+  products:
+    Napalm: 3
+
+- type: reaction
+  id: Phlogiston
+  reactants:
+    Phosphorus:
+      amount: 1
+    SulfuricAcid:
+      amount: 1
+    Plasma:
+      amount: 1
+  effects:
+  - !type:CreateGas
+    gas: Plasma
+  - !type:PopupMessage
+    messages: [ "phlogiston-plasma-created" ]
+    type: Pvs
+  products:
+    Phlogiston: 3
+
+- type: reaction
+  id: ChlorineTrifluoride
+  reactants:
+    Chlorine:
+      amount: 1
+    Fluorine:
+      amount: 3
+  effects:
+  # TODO electro's pretty explosions PR make this big and firey!!
+  # TODO solution temperature!!
+  - !type:ExplosionReactionEffect
+    devastationRange: 0
+    heavyImpactRange: 0
+    lightImpactRange: 2
+    scaled: false
+  - !type:PopupMessage
+    messages: [ "clf3-explosion" ]
+    type: Pvs
+  products:
+    ChlorineTrifluoride: 4

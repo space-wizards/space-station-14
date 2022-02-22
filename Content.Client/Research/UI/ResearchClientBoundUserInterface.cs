@@ -4,7 +4,7 @@ using static Content.Shared.Research.Components.SharedResearchClientComponent;
 
 namespace Content.Client.Research.UI
 {
-    public class ResearchClientBoundUserInterface : BoundUserInterface
+    public sealed class ResearchClientBoundUserInterface : BoundUserInterface
     {
         private ResearchClientServerSelectionMenu? _menu;
 
@@ -37,6 +37,13 @@ namespace Content.Client.Research.UI
             base.UpdateState(state);
             if (state is not ResearchClientBoundInterfaceState rState) return;
             _menu?.Populate(rState.ServerCount, rState.ServerNames, rState.ServerIds, rState.SelectedServerId);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing) return;
+            _menu?.Dispose();
         }
     }
 }

@@ -2,17 +2,19 @@ using Content.Shared.Security;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Security
 {
     [UsedImplicitly]
-    public class DeployableBarrierVisualizer : AppearanceVisualizer
+    public sealed class DeployableBarrierVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out SpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
                 return;
 
             if (!component.TryGetData(DeployableBarrierVisuals.State, out DeployableBarrierState state))

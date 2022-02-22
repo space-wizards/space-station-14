@@ -46,6 +46,7 @@
       damageModifierSet: Metallic
     - type: Physics
       bodyType: Dynamic
+    - type: Fixtures
       fixtures:
         - shape:
             !type:PhysShapeAabb
@@ -372,6 +373,7 @@
       state: grey-1
     - type: Physics
       bodyType: Dynamic
+    - type: Fixtures
       fixtures:
         - shape:
             !type:PhysShapeAabb

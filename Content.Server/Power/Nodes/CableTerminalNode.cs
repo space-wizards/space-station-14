@@ -1,35 +1,37 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Power.Nodes
 {
     [DataDefinition]
-    public class CableTerminalNode : CableDeviceNode
+    public sealed class CableTerminalNode : CableDeviceNode
     {
-        public override IEnumerable<Node> GetReachableNodes()
+        public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            EntityQuery<TransformComponent> xformQuery,
+            IMapGrid? grid,
+            IEntityManager entMan)
         {
-            if (Owner.Transform.GridID == GridId.Invalid)
-                yield break; // No funny nodes in spess.
+            if (!xform.Anchored || grid == null)
+                yield break;
 
+            var gridIndex = grid.TileIndicesFor(xform.Coordinates);
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
-            var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
+            var dir = xform.LocalRotation.GetDir();
+            var targetIdx = gridIndex.Offset(dir);
 
-            var dir = Owner.Transform.LocalRotation.GetDir();
-            var targetIdx = gridIndex + NodeHelpers.TileOffsetForDir(dir);
-
-            foreach (var node in NodeHelpers.GetNodesInTile(entMan, grid, targetIdx))
+            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, targetIdx))
             {
                 if (node is CableTerminalPortNode)
                     yield return node;
             }
 
-            foreach (var node in base.GetReachableNodes())
+            foreach (var node in base.GetReachableNodes(xform, nodeQuery, xformQuery, grid, entMan))
             {
                 yield return node;
             }

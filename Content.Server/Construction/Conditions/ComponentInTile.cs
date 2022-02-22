@@ -20,7 +20,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class ComponentInTile : IGraphCondition
+    public sealed class ComponentInTile : IGraphCondition
     {
         /// <summary>
         ///     If true, any entity on the tile must have the component.
@@ -56,7 +56,7 @@ namespace Content.Server.Construction.Conditions
 
             foreach (var ent in entities)
             {
-                if (ent.HasComponent(type))
+                if (entityManager.HasComponent(ent, type))
                     return HasEntity;
             }
 

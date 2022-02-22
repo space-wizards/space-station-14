@@ -9,8 +9,8 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Server)]
-    public class CallShuttleCommand : IConsoleCommand
+    [AdminCommand(AdminFlags.Round)]
+    public sealed class CallShuttleCommand : IConsoleCommand
     {
         public string Command => "callshuttle";
         public string Description => Loc.GetString("call-shuttle-command-description");
@@ -36,8 +36,8 @@ namespace Content.Server.Administration.Commands
         }
     }
 
-    [AdminCommand(AdminFlags.Server)]
-    public class RecallShuttleCommand : IConsoleCommand
+    [AdminCommand(AdminFlags.Round)]
+    public sealed class RecallShuttleCommand : IConsoleCommand
     {
         public string Command => "recallshuttle";
         public string Description => Loc.GetString("recall-shuttle-command-description");

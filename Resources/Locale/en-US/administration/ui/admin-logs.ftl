@@ -1,4 +1,5 @@
 ﻿admin-logs-title = Admin Logs Panel
+admin-logs-pop-out = Pop Out
 
 # Round
 admin-logs-round = Round{" "}

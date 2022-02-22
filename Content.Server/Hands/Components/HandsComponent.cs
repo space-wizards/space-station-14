@@ -3,22 +3,19 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Act;
-using Content.Server.Interaction;
-using Content.Server.Items;
 using Content.Server.Popups;
 using Content.Server.Pulling;
 using Content.Shared.Audio;
 using Content.Shared.Body.Part;
 using Content.Shared.Hands.Components;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Sound;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -27,40 +24,15 @@ namespace Content.Server.Hands.Components
     [RegisterComponent]
     [ComponentReference(typeof(SharedHandsComponent))]
 #pragma warning disable 618
-    public class HandsComponent : SharedHandsComponent, IBodyPartAdded, IBodyPartRemoved, IDisarmedAct
+    public sealed class HandsComponent : SharedHandsComponent, IBodyPartAdded, IBodyPartRemoved, IDisarmedAct
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         [DataField("disarmedSound")] SoundSpecifier _disarmedSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 
         int IDisarmedAct.Priority => int.MaxValue; // We want this to be the last disarm act to run.
-
-        protected override void OnHeldEntityRemovedFromHand(IEntity heldEntity, HandState handState)
-        {
-            if (heldEntity.TryGetComponent(out ItemComponent? item))
-            {
-                item.RemovedFromSlot();
-                _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, heldEntity, handState);
-            }
-            if (heldEntity.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.RenderOrder = heldEntity.EntityManager.CurrentTick.Value;
-            }
-        }
-
-        protected override void HandlePickupAnimation(IEntity entity)
-        {
-            var initialPosition = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
-
-            var finalPosition = Owner.Transform.LocalPosition;
-
-            if (finalPosition.EqualsApprox(initialPosition.Position))
-                return;
-
-            Owner.EntityManager.EntityNetManager!.SendSystemNetworkMessage(
-                new PickupAnimationMessage(entity.Uid, finalPosition, initialPosition));
-        }
 
         #region Pull/Disarm
 
@@ -98,23 +70,17 @@ namespace Content.Server.Hands.Components
             var source = @event.Source;
             var target = @event.Target;
 
-            if (source != null)
-            {
-                SoundSystem.Play(Filter.Pvs(source), _disarmedSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(Filter.Pvs(source), _disarmedSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
 
-                if (target != null)
-                {
-                    if (ActiveHand != null && Drop(ActiveHand, false))
-                    {
-                        source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", source.Name), ("disarmed", target.Name)));
-                        source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", target.Name)));
-                    }
-                    else
-                    {
-                        source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", source.Name), ("shoved", target.Name)));
-                        source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", target.Name)));
-                    }
-                }
+            if (ActiveHand != null && Drop(ActiveHand, false))
+            {
+                source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", _entities.GetComponent<MetaDataComponent>(source).EntityName), ("disarmed", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+                source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+            }
+            else
+            {
+                source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", _entities.GetComponent<MetaDataComponent>(source).EntityName), ("shoved", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+                source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
             }
 
             return true;
@@ -123,8 +89,8 @@ namespace Content.Server.Hands.Components
         private bool BreakPulls()
         {
             // What is this API??
-            if (!Owner.TryGetComponent(out SharedPullerComponent? puller)
-                || puller.Pulling == null || !puller.Pulling.TryGetComponent(out SharedPullableComponent? pullable))
+            if (!_entities.TryGetComponent(Owner, out SharedPullerComponent? puller)
+                || puller.Pulling is not {Valid: true} pulling || !_entities.TryGetComponent(puller.Pulling.Value, out SharedPullableComponent? pullable))
                 return false;
 
             return _entitySystemManager.GetEntitySystem<PullingSystem>().TryStopPull(pullable);
@@ -158,68 +124,50 @@ namespace Content.Server.Hands.Components
         /// <summary>
         ///     Tries to get the ItemComponent on the entity held by a hand.
         /// </summary>
-        public ItemComponent? GetItem(string handName)
+        public SharedItemComponent? GetItem(string handName)
         {
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return null;
 
-            heldEntity.TryGetComponent(out ItemComponent? item);
+            _entities.TryGetComponent(heldEntity, out SharedItemComponent? item);
             return item;
         }
 
         /// <summary>
         ///     Tries to get the ItemComponent on the entity held by a hand.
         /// </summary>
-        public bool TryGetItem(string handName, [NotNullWhen(true)] out ItemComponent? item)
+        public bool TryGetItem(string handName, [NotNullWhen(true)] out SharedItemComponent? item)
         {
             item = null;
 
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return false;
 
-            return heldEntity.TryGetComponent(out item);
+            return _entities.TryGetComponent(heldEntity, out item);
         }
 
         /// <summary>
         ///     Tries to get the ItemComponent off the entity in the active hand.
         /// </summary>
-        public ItemComponent? GetActiveHand
+        public SharedItemComponent? GetActiveHandItem
         {
             get
             {
                 if (!TryGetActiveHeldEntity(out var heldEntity))
                     return null;
 
-                heldEntity.TryGetComponent(out ItemComponent? item);
+                _entities.TryGetComponent(heldEntity, out SharedItemComponent? item);
                 return item;
             }
         }
 
-        public IEnumerable<ItemComponent> GetAllHeldItems()
+        public IEnumerable<SharedItemComponent> GetAllHeldItems()
         {
             foreach (var entity in GetAllHeldEntities())
             {
-                if (entity.TryGetComponent(out ItemComponent? item))
+                if (_entities.TryGetComponent(entity, out SharedItemComponent? item))
                     yield return item;
             }
-        }
-
-        /// <summary>
-        ///     Checks if any hand can pick up an item.
-        /// </summary>
-        public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
-        {
-            var entity = item.Owner;
-
-            if (mobCheck && !PlayerCanPickup())
-                return false;
-
-            foreach (var hand in Hands)
-            {
-                if (CanInsertEntityIntoHand(hand, entity))
-                    return true;
-            }
-            return false;
         }
         #endregion
     }

@@ -5,12 +5,13 @@
   components:
   - type: InteractionOutline
   - type: Construction
-    graph: barricade
+    graph: Barricade
     node: barricadewooden
   - type: Sprite
     sprite: Structures/Walls/barricades.rsi
     state: barricadewooden
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}

@@ -111,7 +111,7 @@
 
 - type: entity
   name: cowelding tool
-  parent: BaseItem
+  parent: Welder
   id: Cowelder
   description: "Melts anything as long as it's fueled, don't forget your eye protection! Moo!"
   components:
@@ -126,28 +126,13 @@
     size: 10
     sprite: Objects/Tools/Cowtools/cowelder.rsi
     HeldPrefix: off
-  - type: ItemCooldown
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 10
-  - type: ItemStatus
-  - type: SolutionContainerManager
-    solutions:
-      welder:
-        maxVol: 50
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 100
-  - type: RefillableSolution
-    solution: welder
-  - type: Welder
-    weldSoundCollection: Welder
+  - type: Tool
     speed: 0.05
-  - type: PointLight
-    enabled: false
-    radius: 1.5
-    color: orange
+  - type: Welder
+    litMeleeDamageBonus:
+      types: # When lit, negate standard melee damage and replace with heat
+        Heat: 0.5
+        Blunt: -10
 
 - type: entity
   name: milkalyzer

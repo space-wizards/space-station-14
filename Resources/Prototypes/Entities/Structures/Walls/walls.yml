@@ -27,6 +27,9 @@
   - type: IconSmooth
     key: walls
     base: brick
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
 
 - type: entity
   parent: WallBase
@@ -342,10 +345,16 @@
     sprite: Structures/Walls/solid.rsi
     state: rgeneric
   - type: Construction
-    graph: girder
+    graph: Girder
     node: reinforcedWall
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1200 #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 600
@@ -465,12 +474,18 @@
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
   - type: Construction
-    graph: girder
+    graph: Girder
     node: wall
   - type: Icon
     sprite: Structures/Walls/solid.rsi
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600 # #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 300

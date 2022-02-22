@@ -1,18 +1,18 @@
 using Content.Server.Construction;
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Stack;
 using Content.Shared.Acts;
 using Content.Shared.Damage;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Destructible
 {
     [UsedImplicitly]
-    public class DestructibleSystem : EntitySystem
+    public sealed class DestructibleSystem : EntitySystem
     {
         [Dependency] public readonly IRobustRandom Random = default!;
         public new IEntityManager EntityManager => base.EntityManager;
@@ -21,6 +21,9 @@ namespace Content.Server.Destructible
         [Dependency] public readonly AudioSystem AudioSystem = default!;
         [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;
         [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;
+        [Dependency] public readonly StackSystem StackSystem = default!;
+        [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
+        [Dependency] public readonly IComponentFactory ComponentFactory = default!;
 
         public override void Initialize()
         {
@@ -41,6 +44,10 @@ namespace Content.Server.Destructible
 
                     threshold.Execute(uid, this, EntityManager);
                 }
+
+                // if destruction behavior (or some other deletion effect) occurred, don't run other triggers.
+                if (EntityManager.IsQueuedForDeletion(uid) || Deleted(uid))
+                    return;
             }
         }
     }
@@ -49,7 +56,7 @@ namespace Content.Server.Destructible
     /// <summary>
     ///     Event raised when a <see cref="DamageThreshold"/> is reached.
     /// </summary>
-    public class DamageThresholdReached : EntityEventArgs
+    public sealed class DamageThresholdReached : EntityEventArgs
     {
         public readonly DestructibleComponent Parent;
 

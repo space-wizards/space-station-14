@@ -1,6 +1,7 @@
 ﻿using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -10,8 +11,6 @@ namespace Content.Shared.Climbing
 
     public abstract class SharedClimbableComponent : Component, IClimbable, IDragDropOn
     {
-        public sealed override string Name => "Climbable";
-
         /// <summary>
         ///     The range from which this entity can be climbed.
         /// </summary>
@@ -19,7 +18,7 @@ namespace Content.Shared.Climbing
 
         public virtual bool CanDragDropOn(DragDropEvent eventArgs)
         {
-            return eventArgs.Dragged.HasComponent<SharedClimbingComponent>();
+            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedClimbingComponent>(eventArgs.Dragged);
         }
 
         public abstract bool DragDropOn(DragDropEvent eventArgs);

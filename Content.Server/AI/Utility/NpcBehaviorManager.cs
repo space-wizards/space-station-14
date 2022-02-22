@@ -28,7 +28,6 @@ namespace Content.Server.AI.Utility
     internal sealed class NpcBehaviorManager : INpcBehaviorManager
     {
         [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private readonly NpcActionComparer _comparer = new();
 
@@ -84,9 +83,9 @@ namespace Content.Server.AI.Utility
             if (rebuild)
                 RebuildActions(npc);
 
-            if (npc.BehaviorSets.Count == 1 && !EntitySystem.Get<AiSystem>().IsAwake(npc))
+            if (npc.BehaviorSets.Count == 1 && !npc.Awake)
             {
-                _entityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(npc, false));
+                EntitySystem.Get<NPCSystem>().WakeNPC(npc);
             }
         }
 
@@ -113,9 +112,9 @@ namespace Content.Server.AI.Utility
             if (rebuild)
                 RebuildActions(npc);
 
-            if (npc.BehaviorSets.Count == 0 && EntitySystem.Get<AiSystem>().IsAwake(npc))
+            if (npc.BehaviorSets.Count == 0 && npc.Awake)
             {
-                _entityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(npc, true));
+                EntitySystem.Get<NPCSystem>().SleepNPC(npc);
             }
         }
 
@@ -159,7 +158,7 @@ namespace Content.Server.AI.Utility
             npc.AvailableActions.Sort(_comparer);
         }
 
-        private class NpcActionComparer : Comparer<IAiUtility>
+        private sealed class NpcActionComparer : Comparer<IAiUtility>
         {
             public override int Compare(IAiUtility? x, IAiUtility? y)
             {

@@ -12,7 +12,7 @@ namespace Content.Server.Nuke
     ///     Nuclear code is generated once per round
     ///     One code works for all nukes
     /// </summary>
-    public class NukeCodeSystem : EntitySystem
+    public sealed class NukeCodeSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IChatManager _chat = default!;
@@ -67,7 +67,7 @@ namespace Content.Server.Nuke
             var consoles = EntityManager.EntityQuery<CommunicationsConsoleComponent>();
             foreach (var console in consoles)
             {
-                if (!EntityManager.TryGetComponent(console.OwnerUid, out TransformComponent? transform))
+                if (!EntityManager.TryGetComponent((console).Owner, out TransformComponent? transform))
                     continue;
 
                 var consolePos = transform.MapPosition;

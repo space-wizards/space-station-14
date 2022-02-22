@@ -1,12 +1,13 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 
 namespace Content.Client.MedicalScanner.UI
 {
     [UsedImplicitly]
-    public class MedicalScannerBoundUserInterface : BoundUserInterface
+    public sealed class MedicalScannerBoundUserInterface : BoundUserInterface
     {
         private MedicalScannerWindow? _window;
 
@@ -19,7 +20,7 @@ namespace Content.Client.MedicalScanner.UI
             base.Open();
             _window = new MedicalScannerWindow
             {
-                Title = Owner.Owner.Name,
+                Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
             _window.OnClose += Close;
             _window.ScanButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.ScanDNA));

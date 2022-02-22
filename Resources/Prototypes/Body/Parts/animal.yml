@@ -10,7 +10,6 @@
   components:
   - type: Damageable
     damageContainer: Biological
-  - type: BiologicalSurgeryData
 
 # For primates mainly
 - type: entity
@@ -24,7 +23,6 @@
     size: 1
     compatibility: Biological
     symmetry: Left
-  - type: Grasp
 
 - type: entity
   id: LegsAnimal
@@ -83,8 +81,15 @@
   - type: Mechanism
     size: 1
     compatibility: Biological
-    behaviors:
-    - !type:LungBehavior {}
+  - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Animal ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
 
 - type: entity
   id: OrganAnimalStomach

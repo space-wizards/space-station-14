@@ -9,10 +9,8 @@ namespace Content.Server.Chemistry.Components.SolutionManager
     ///     Think pouring this or draining from a water tank.
     /// </summary>
     [RegisterComponent]
-    public class DrainableSolutionComponent : Component
+    public sealed class DrainableSolutionComponent : Component
     {
-        public override string Name => "DrainableSolution";
-
         /// <summary>
         /// Solution name that can be drained.
         /// </summary>

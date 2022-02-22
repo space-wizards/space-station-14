@@ -64,3 +64,26 @@
         reagents:
         - ReagentId: Water
           Quantity: 1500
+
+- type: entity
+  parent: StorageTank
+  id: WaterTankHighCapacity
+  name: high-capacity water tank
+  suffix: Full
+  description: A highly pressurized water tank made to hold gargantuan amounts of water.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/tanks.rsi
+    state: highwatertank
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+#         This is *100, 000* on /tg/
+          Quantity: 10000
+        maxVol: 10000
+#   It is pressurized...
+  - type: ReagentTank
+    transferAmount: 100
+    

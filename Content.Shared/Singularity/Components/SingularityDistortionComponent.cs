@@ -10,10 +10,8 @@ namespace Content.Shared.Singularity.Components
 {
     [RegisterComponent]
     [NetworkedComponent]
-    public class SingularityDistortionComponent : Component
+    public sealed class SingularityDistortionComponent : Component
     {
-        public override string Name => "SingularityDistortion";
-
         [DataField("intensity")]
         private float _intensity = 0.25f;
 
@@ -34,7 +32,7 @@ namespace Content.Shared.Singularity.Components
             set => this.SetAndDirtyIfChanged(ref _falloff, value);
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new SingularityDistortionComponentState(Intensity, Falloff);
         }
@@ -54,7 +52,7 @@ namespace Content.Shared.Singularity.Components
     }
 
     [Serializable, NetSerializable]
-    public class SingularityDistortionComponentState : ComponentState
+    public sealed class SingularityDistortionComponentState : ComponentState
     {
         public SingularityDistortionComponentState(float intensity, float falloff)
         {

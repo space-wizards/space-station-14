@@ -1,4 +1,4 @@
-using Content.Client.Administration.Managers;
+using Content.Client.Alerts.UI;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
 using Content.Client.Chat.UI;
@@ -8,10 +8,12 @@ using Content.Client.HUD;
 using Content.Client.HUD.UI;
 using Content.Client.Voting;
 using Content.Shared.Chat;
+using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -20,7 +22,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Viewport
 {
-    public class GameScreen : GameScreenBase, IMainViewportState
+    public sealed class GameScreen : GameScreenBase, IMainViewportState
     {
         public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
 
@@ -31,9 +33,14 @@ namespace Content.Client.Viewport
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         [ViewVariables] private ChatBox? _gameChat;
         private ConstructionMenuPresenter? _constructionMenu;
+        private AlertsFramePresenter? _alertsFramePresenter;
+
+        private FpsCounter _fpsCounter = default!;
 
         public MainViewport Viewport { get; private set; } = default!;
 
@@ -74,6 +81,11 @@ namespace Content.Client.Viewport
             _eyeManager.MainViewport = Viewport.Viewport;
 
             _overlayManager.AddOverlay(new ShowHandItemOverlay());
+
+            _fpsCounter = new FpsCounter(_gameTiming);
+            _userInterfaceManager.StateRoot.AddChild(_fpsCounter);
+            _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
+            _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
         }
 
         public override void Shutdown()
@@ -88,6 +100,7 @@ namespace Content.Client.Viewport
             _gameHud.RootControl.Orphan();
             // Clear viewport to some fallback, whatever.
             _eyeManager.MainViewport = _userInterfaceManager.MainViewport;
+            _fpsCounter.Dispose();
         }
 
         /// <summary>
@@ -95,6 +108,10 @@ namespace Content.Client.Viewport
         /// </summary>
         private void SetupPresenters()
         {
+            // HUD
+            _alertsFramePresenter = new AlertsFramePresenter();
+
+            // Windows
             _constructionMenu = new ConstructionMenuPresenter(_gameHud);
         }
 
@@ -103,7 +120,11 @@ namespace Content.Client.Viewport
         /// </summary>
         private void DisposePresenters()
         {
+            // Windows
             _constructionMenu?.Dispose();
+
+            // HUD
+            _alertsFramePresenter?.Dispose();
         }
 
         internal static void FocusChat(ChatBox chat)

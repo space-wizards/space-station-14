@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public class DummyIconTest : ContentIntegrationTest
+    public sealed class DummyIconTest : ContentIntegrationTest
     {
         [Test]
         public async Task Test()

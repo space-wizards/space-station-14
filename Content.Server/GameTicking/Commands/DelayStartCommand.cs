@@ -7,8 +7,8 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Commands
 {
-    [AdminCommand(AdminFlags.Server)]
-    class DelayStartCommand : IConsoleCommand
+    [AdminCommand(AdminFlags.Round)]
+    sealed class DelayStartCommand : IConsoleCommand
     {
         public string Command => "delaystart";
         public string Description => "Delays the round start.";

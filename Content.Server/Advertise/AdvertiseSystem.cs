@@ -3,7 +3,6 @@ using Content.Server.Advertisements;
 using Content.Server.Chat.Managers;
 using Content.Server.Power.Components;
 using Content.Server.VendingMachines;
-using Content.Shared.Acts;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -13,7 +12,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Advertise
 {
-    public class AdvertiseSystem : EntitySystem
+    public sealed class AdvertiseSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -117,12 +116,12 @@ namespace Content.Server.Advertise
                 if (advertise.NextAdvertisementTime > curTime)
                     continue;
 
-                SayAdvertisement(advertise.Owner.Uid, true, advertise);
+                SayAdvertisement(advertise.Owner, true, advertise);
             }
         }
     }
 
-    public class AdvertiseEnableChangeAttemptEvent : CancellableEntityEventArgs
+    public sealed class AdvertiseEnableChangeAttemptEvent : CancellableEntityEventArgs
     {
         public bool NewState { get; }
         public bool OldState { get; }

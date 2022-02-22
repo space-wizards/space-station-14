@@ -5,9 +5,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -25,36 +25,36 @@ namespace Content.Server.Disposal.Tube
             SubscribeLocalEvent<DisposalTubeComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
 
             SubscribeLocalEvent<DisposalTubeComponent, RelayMovementEntityEvent>(OnRelayMovement);
-            SubscribeLocalEvent<DisposalTaggerComponent, GetInteractionVerbsEvent>(AddOpenUIVerbs);
-            SubscribeLocalEvent<DisposalRouterComponent, GetInteractionVerbsEvent>(AddOpenUIVerbs);
+            SubscribeLocalEvent<DisposalTaggerComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
+            SubscribeLocalEvent<DisposalRouterComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
         }
-        
-        private void AddOpenUIVerbs(EntityUid uid, DisposalTaggerComponent component, GetInteractionVerbsEvent args)
+
+        private void AddOpenUIVerbs(EntityUid uid, DisposalTaggerComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!args.User.TryGetComponent<ActorComponent>(out var actor))
+            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
             var player = actor.PlayerSession;
 
-            Verb verb = new();
+            InteractionVerb verb = new();
             verb.Text = Loc.GetString("configure-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             verb.Act = () => component.OpenUserInterface(actor);
-            args.Verbs.Add(verb);            
+            args.Verbs.Add(verb);
         }
 
-        private void AddOpenUIVerbs(EntityUid uid, DisposalRouterComponent component, GetInteractionVerbsEvent args)
+        private void AddOpenUIVerbs(EntityUid uid, DisposalRouterComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!args.User.TryGetComponent<ActorComponent>(out var actor))
+            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
             var player = actor.PlayerSession;
 
-            Verb verb = new();
+            InteractionVerb verb = new();
             verb.Text = Loc.GetString("configure-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             verb.Act = () => component.OpenUserInterface(actor);
@@ -68,9 +68,8 @@ namespace Content.Server.Disposal.Tube
                 return;
             }
 
-            var entity = EntityManager.GetEntity(uid);
             component.LastClang = _gameTiming.CurTime;
-            SoundSystem.Play(Filter.Pvs(entity), component.ClangSound.GetSound(), entity);
+            SoundSystem.Play(Filter.Pvs(uid), component.ClangSound.GetSound(), uid);
         }
 
         private static void BodyTypeChanged(
@@ -87,8 +86,8 @@ namespace Content.Server.Disposal.Tube
                 return null;
             var oppositeDirection = nextDirection.GetOpposite();
 
-            var grid = _mapManager.GetGrid(targetTube.Owner.Transform.GridID);
-            var position = targetTube.Owner.Transform.Coordinates;
+            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(targetTube.Owner).GridID);
+            var position = EntityManager.GetComponent<TransformComponent>(targetTube.Owner).Coordinates;
             foreach (var entity in grid.GetInDir(position, nextDirection))
             {
                 if (!EntityManager.TryGetComponent(entity, out IDisposalTubeComponent? tube))

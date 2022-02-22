@@ -1,6 +1,7 @@
 ﻿using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -8,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems
 {
-    public class StomachSystem : EntitySystem
+    public sealed class StomachSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
@@ -35,11 +36,11 @@ namespace Content.Server.Body.Systems
                 stomach.AccumulatedFrameTime -= stomach.UpdateInterval;
 
                 // Get our solutions
-                if (!_solutionContainerSystem.TryGetSolution(stomach.OwnerUid, DefaultSolutionName,
+                if (!_solutionContainerSystem.TryGetSolution((stomach).Owner, DefaultSolutionName,
                     out var stomachSolution, sol))
                     continue;
 
-                if (!_solutionContainerSystem.TryGetSolution(mech.Body.OwnerUid, stomach.BodySolutionName,
+                if (!_solutionContainerSystem.TryGetSolution((mech.Body).Owner, stomach.BodySolutionName,
                     out var bodySolution))
                     continue;
 
@@ -56,7 +57,7 @@ namespace Content.Server.Body.Systems
                             if (quant > delta.Quantity)
                                 quant = delta.Quantity;
 
-                            _solutionContainerSystem.TryRemoveReagent(stomach.OwnerUid, stomachSolution,
+                            _solutionContainerSystem.TryRemoveReagent((stomach).Owner, stomachSolution,
                                 delta.ReagentId, quant);
                             transferSolution.AddReagent(delta.ReagentId, quant);
                         }
@@ -71,7 +72,7 @@ namespace Content.Server.Body.Systems
                 }
 
                 // Transfer everything to the body solution!
-                _solutionContainerSystem.TryAddSolution(mech.Body.OwnerUid, bodySolution, transferSolution);
+                _solutionContainerSystem.TryAddSolution((mech.Body).Owner, bodySolution, transferSolution);
             }
         }
 
