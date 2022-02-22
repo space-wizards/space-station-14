@@ -197,3 +197,39 @@
     ChiefEngineer: [ 1, 1 ]
     ChiefMedicalOfficer: [ 1, 1 ]
     SecurityOfficer: [ 3, 6 ]
+
+- type: gameMap
+  id: boxstation
+  mapName: 'Boxstation'
+  mapNameTemplate: '{0} Boxstation {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: Maps/boxstation.yml
+  minPlayers: 0
+  votable: false
+  overflowJobs: []
+  availableJobs:
+    CargoTechnician: [ 2, 3 ]
+    Assistant: [ -1, -1 ]
+    Bartender: [ 1, 1 ]
+    Botanist: [ 2, 2 ]
+    Chef: [ 1, 1 ]
+    Clown: [ 1, 1 ]
+    Janitor: [ 1, 1 ]
+    Mime: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 4, 6 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 3, 4 ]
+    Chemist: [ 2, 2 ]
+    ResearchDirector: [ 1, 1 ]
+    Scientist: [ 3, 4 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 2, 3 ]
+    Chaplain: [ 1, 1 ]
+    Warden: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
+    Lawyer: [ 1, 2 ]
