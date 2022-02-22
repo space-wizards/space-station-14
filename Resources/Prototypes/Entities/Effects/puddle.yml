@@ -7,11 +7,16 @@
     anchored: true
   - type: Sprite
     drawdepth: FloorObjects
+    layers:
+    - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
+    - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
+      sprite: Fluids/wet_floor_sparkles.rsi
+      state: sparkles
+      visible: false # until set to true by the client-side PuddleVisualsSystem.
   - type: SolutionContainerManager
   - type: Puddle
     spillSound:
       path: /Audio/Effects/Fluids/splat.ogg
-    recolor: true
   - type: Clickable
   - type: Evaporation
   - type: Slippery
@@ -27,9 +32,7 @@
       - SmallImpassable
       hard: false
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      recolor: true
+  - type: PuddleVisuals
 
 - type: entity
   name: puddle
@@ -54,8 +57,7 @@
         - ReagentId: Water
           Quantity: 10
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisuals
 
 - type: entity
   name: puddle
@@ -69,9 +71,7 @@
     netsync: false
   - type: Puddle
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      recolor: true
+  - type: PuddleVisuals
 
 - type: entity
   name: puddle
@@ -85,8 +85,7 @@
     netsync: false
   - type: Puddle
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisuals
 
 - type: entity
   id: PuddleBlood
@@ -104,9 +103,7 @@
   - type: Evaporation
     evaporateTime: 400 # very slow
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      recolor: true
+  - type: PuddleVisuals
 
 - type: entity
   name: vomit
@@ -128,8 +125,8 @@
         - ReagentId: Water
           Quantity: 5
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisuals
+
 
 - type: entity
   name: toxins vomit
@@ -151,8 +148,8 @@
         - ReagentId: Water
           Quantity: 5
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisuals
+
 
 - type: entity
   name: writing
@@ -167,6 +164,6 @@
   - type: Puddle
     evaporateTime: 10
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisuals
+
 

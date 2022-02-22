@@ -393,8 +393,7 @@
   - type: Evaporation
     lowerLimit: 0 # todo: reimplement stain behaviour, ideally in a way that doesn't use evaporation lowerLimit
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisuals
 
 - type: entity
   name: eggplant

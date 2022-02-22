@@ -82,8 +82,7 @@
           Quantity: 2
   - type: Evaporation
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisuals
 
 - type: entity
   name: eggshells
