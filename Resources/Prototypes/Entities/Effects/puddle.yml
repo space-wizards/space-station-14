@@ -7,12 +7,6 @@
     anchored: true
   - type: Sprite
     drawdepth: FloorObjects
-    layers:
-    - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
-    - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
-      sprite: Fluids/wet_floor_sparkles.rsi
-      state: sparkles
-      visible: false # until set to true by the client-side PuddleVisualsSystem.
   - type: SolutionContainerManager
   - type: Puddle
     spillSound:
@@ -41,9 +35,14 @@
   description: Gross.
   components:
   - type: Sprite
-    sprite: Fluids/gibblet.rsi # Placeholder
-    state: gibblet-0
-    netsync: false
+    - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
+      sprite: Fluids/gibblet.rsi # Placeholder
+      state: gibblet-0
+      netsync: false
+    - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
+      sprite: Fluids/wet_floor_sparkles.rsi
+      state: sparkles
+      visible: false # until set to true by the client-side PuddleVisualsSystem.
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
@@ -61,9 +60,14 @@
   description: A puddle of liquid.
   components:
   - type: Sprite
-    sprite: Fluids/smear.rsi # Placeholder
-    state: smear-0
-    netsync: false
+    - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
+      sprite: Fluids/smear.rsi # Placeholder
+      state: smear-0
+      netsync: false
+    - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
+      sprite: Fluids/wet_floor_sparkles.rsi
+      state: sparkles
+      visible: false # until set to true by the client-side PuddleVisualsSystem.
   - type: Puddle
   - type: Appearance
   - type: PuddleVisuals
@@ -75,9 +79,14 @@
   description: A puddle of liquid.
   components:
   - type: Sprite
+    - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
     sprite: Fluids/splatter.rsi # Placeholder
     state: splatter-0
     netsync: false
+    - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
+      sprite: Fluids/wet_floor_sparkles.rsi
+      state: sparkles
+      visible: false # until set to true by the client-side PuddleVisualsSystem.
   - type: Puddle
   - type: Appearance
   - type: PuddleVisuals
@@ -89,9 +98,14 @@
   parent: PuddleBase
   components:
   - type: Sprite
+    - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
     sprite: Fluids/splatter.rsi # Placeholder
     state: splatter-0
     netsync: false
+    - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
+      sprite: Fluids/wet_floor_sparkles.rsi
+      state: sparkles
+      visible: false # until set to true by the client-side PuddleVisualsSystem.
   - type: Puddle
     slipThreshold: 20
     overflowVolume: 50
@@ -108,9 +122,14 @@
   description: Gross.
   components:
   - type: Sprite
+    - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
     sprite: Fluids/vomit.rsi
     state: vomit-0
     netsync: false
+    - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
+      sprite: Fluids/wet_floor_sparkles.rsi
+      state: sparkles
+      visible: false # until set to true by the client-side PuddleVisualsSystem.
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
@@ -131,9 +150,14 @@
   description: You probably don't want to get too close to this.
   components:
   - type: Sprite
+    - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
     sprite: Fluids/vomit_toxin.rsi
     state: vomit_toxin-0
     netsync: false
+    - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
+      sprite: Fluids/wet_floor_sparkles.rsi
+      state: sparkles
+      visible: false # until set to true by the client-side PuddleVisualsSystem.
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
@@ -154,9 +178,14 @@
   description: A bit of liquid.
   components:
   - type: Sprite
+    - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
     sprite: Fluids/writing.rsi # Placeholder
     state: writing-0
     netsync: false
+    - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
+      sprite: Fluids/wet_floor_sparkles.rsi
+      state: sparkles
+      visible: false # until set to true by the client-side PuddleVisualsSystem.
   - type: Puddle
     evaporateTime: 10
   - type: Appearance
