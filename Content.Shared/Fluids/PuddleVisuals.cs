@@ -6,8 +6,9 @@ namespace Content.Shared.Fluids
     [Serializable, NetSerializable]
     public enum PuddleVisuals : byte
     {
+        VisualSeed,
         VolumeScale,
         SolutionColor,
-        ForceWetFloorSprite
+        WetFloorEffect
     }
 }

@@ -40,10 +40,10 @@ namespace Content.Server.Fluids.Components
 
         /// <summary>
         /// Puddles with volume below this threshold will have their sprite changed to a wet floor effect,
-        /// provided they can evaporate down to zero.
+        /// provided they are in the process of evaporating.
         /// </summary>
         [DataField("wetFloorEffectThreshold")]
-        public FixedPoint2 WetFloorEffectThreshold = FixedPoint2.New(5);
+        public FixedPoint2 WetFloorEffectThreshold = FixedPoint2.New(5); //Todo: Integrate this better into MoppingSystem. Ideally there would be a MopLowerLimit that is set per puddle, for any AbsorbentComponent that also has its own LowerLimit.
 
         [DataField("spillSound")]
         public SoundSpecifier SpillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
