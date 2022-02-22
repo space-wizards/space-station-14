@@ -69,12 +69,12 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         public int RoundId { get; private set; }
 
-        private void PreRoundSetup()
+        private void LoadMaps()
         {
             AddGamePresetRules();
 
             DefaultMap = _mapManager.CreateMap();
-            _pauseManager.AddUninitializedMap(DefaultMap);
+            _mapManager.AddUninitializedMap(DefaultMap);
             _startingRound = false;
             var startTime = _gameTiming.RealTime;
             var maps = new List<GameMapPrototype>() { _gameMapManager.GetSelectedMapChecked(true) };
@@ -89,7 +89,7 @@ namespace Content.Server.GameTicking
                 {
                     // Create other maps for the others since we need to.
                     toLoad = _mapManager.CreateMap();
-                    _pauseManager.AddUninitializedMap(toLoad);
+                    _mapManager.AddUninitializedMap(toLoad);
                 }
 
                 _mapLoader.LoadMap(toLoad, map.MapPath.ToString());
@@ -192,6 +192,14 @@ namespace Content.Server.GameTicking
 
                 StartGamePresetRules();
 
+                RoundLengthMetric.Set(0);
+
+                var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
+                RoundId = await _db.AddNewRound(playerIds);
+
+                var startingEvent = new RoundStartingEvent();
+                RaiseLocalEvent(startingEvent);
+
                 List<IPlayerSession> readyPlayers;
                 if (LobbyEnabled)
                 {
@@ -203,13 +211,13 @@ namespace Content.Server.GameTicking
                     readyPlayers = _playersInLobby.Keys.ToList();
                 }
 
-                RoundLengthMetric.Set(0);
-
-                var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
-                RoundId = await _db.AddNewRound(playerIds);
-
-                var startingEvent = new RoundStartingEvent();
-                RaiseLocalEvent(startingEvent);
+                readyPlayers.RemoveAll(p =>
+                {
+                    if (_roleBanManager.GetRoleBans(p.UserId) != null)
+                        return false;
+                    Logger.ErrorS("RoleBans", $"Role bans for player {p} {p.UserId} have not been loaded yet.");
+                    return true;
+                });
 
                 // Get the profiles for each player for easier lookup.
                 var profiles = _prefsManager.GetSelectedProfilesForPlayers(
@@ -227,106 +235,13 @@ namespace Content.Server.GameTicking
 
                 var origReadyPlayers = readyPlayers.ToArray();
 
-                var startAttempt = new RoundStartAttemptEvent(origReadyPlayers, force);
-                RaiseLocalEvent(startAttempt);
-
-                var presetTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
-
-                void FailedPresetRestart()
-                {
-                    SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart",
-                        ("failedGameMode", presetTitle)));
-                    RestartRound();
-                    DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
-                }
-
-                if (startAttempt.Cancelled)
-                {
-                    if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
-                    {
-                        var oldPreset = _preset;
-                        ClearGameRules();
-                        SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
-                        AddGamePresetRules();
-                        StartGamePresetRules();
-
-                        startAttempt.Uncancel();
-                        RaiseLocalEvent(startAttempt);
-
-                        _chatManager.DispatchServerAnnouncement(
-                            Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
-                                ("failedGameMode", presetTitle),
-                                ("fallbackMode", Loc.GetString(_preset!.ModeTitle))));
-
-                        if (startAttempt.Cancelled)
-                        {
-                            FailedPresetRestart();
-                        }
-
-                        RefreshLateJoinAllowed();
-                    }
-                    else
-                    {
-                        FailedPresetRestart();
-                        return;
-                    }
-                }
+                if (!StartPreset(origReadyPlayers, force))
+                    return;
 
                 // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
-                _pauseManager.DoMapInitialize(DefaultMap);
+                _mapManager.DoMapInitialize(DefaultMap);
 
-                // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
-                RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
-
-                var assignedJobs = AssignJobs(readyPlayers, profiles);
-
-                // For players without jobs, give them the overflow job if they have that set...
-                foreach (var player in origReadyPlayers)
-                {
-                    if (assignedJobs.ContainsKey(player))
-                    {
-                        continue;
-                    }
-
-                    var profile = profiles[player.UserId];
-                    if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
-                    {
-                        // Pick a random station
-                        var stations = _stationSystem.StationInfo.Keys.ToList();
-                        _robustRandom.Shuffle(stations);
-
-                        if (stations.Count == 0)
-                        {
-                            assignedJobs.Add(player, (FallbackOverflowJob, StationId.Invalid));
-                            continue;
-                        }
-
-                        foreach (var station in stations)
-                        {
-                            // Pick a random overflow job from that station
-                            var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone();
-                            _robustRandom.Shuffle(overflows);
-
-                            // Stations with no overflow slots should simply get skipped over.
-                            if (overflows.Count == 0)
-                                continue;
-
-                            // If the overflow exists, put them in as it.
-                            assignedJobs.Add(player, (overflows[0], stations[0]));
-                        }
-                    }
-                }
-
-                // Spawn everybody in!
-                foreach (var (player, (job, station)) in assignedJobs)
-                {
-                    SpawnPlayer(player, profiles[player.UserId], station, job, false);
-                }
-
-                RefreshLateJoinAllowed();
-
-                // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
-                RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
+                SpawnPlayers(readyPlayers, origReadyPlayers, profiles, force);
 
                 _roundStartDateTime = DateTime.UtcNow;
                 RunLevel = GameRunLevel.InRound;
@@ -458,7 +373,7 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.PreRoundLobby;
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             ResettingCleanup();
-            PreRoundSetup();
+            LoadMaps();
 
             if (!LobbyEnabled)
             {
@@ -507,6 +422,8 @@ namespace Content.Server.GameTicking
             _startingRound = false;
 
             _mapManager.Restart();
+
+            _roleBanManager.Restart();
 
             // Clear up any game rules.
             ClearGameRules();
