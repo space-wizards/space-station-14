@@ -13,8 +13,6 @@ namespace Content.Server.Bed
     public sealed class BedSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly BodySystem _bodySystem = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -69,7 +67,7 @@ namespace Content.Server.Bed
 
             if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered && args.Buckling)
                 return;
-
+            // Make the machine draw more power while someone is inside it
             if (power != null)
             {
                 if (args.Buckling)
@@ -80,7 +78,6 @@ namespace Content.Server.Bed
                     power.Load -= component.AddLoadOnBuckle;
                 }
             }
-
 
             var metabolicEvent = new ApplyMetabolicMultiplierEvent()
                 {Uid = args.BuckledEntity, Multiplier = component.Multiplier, Apply = args.Buckling};
