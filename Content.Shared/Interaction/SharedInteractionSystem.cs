@@ -43,8 +43,8 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly UseDelaySystem _useDelay = default!;
         [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-        [Dependency] protected readonly UseDelaySystem UseDelay = default!;
 
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
@@ -265,19 +265,22 @@ namespace Content.Shared.Interaction
             if (message.Handled)
                 return;
 
-            if (DoIInteractHand(user, target))
-                return;
+            var interactHandEventArgs = new InteractHandEventArgs(user, target);
+            var interactHandComps = AllComps<IInteractHand>(target).ToList();
+            foreach (var interactHandComp in interactHandComps)
+            {
+                // If an InteractHand returns a status completion we finish our interaction
+#pragma warning disable 618
+                if (interactHandComp.InteractHand(interactHandEventArgs))
+#pragma warning restore 618
+                    return;
+            }
 
             // Else we run Activate.
             InteractionActivate(user, target,
                 checkCanInteract: false,
                 checkUseDelay: true,
                 checkAccess: false);
-        }
-
-        protected virtual bool DoIInteractHand(EntityUid user, EntityUid target)
-        {
-            return true;
         }
 
         public virtual void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack,
@@ -637,19 +640,17 @@ namespace Content.Shared.Interaction
             if (interactUsingEvent.Handled)
                 return;
 
-            if (await DoIInteractUsing(user, used, target, clickLocation))
-                return;
+            var interactUsingEventArgs = new InteractUsingEventArgs(user, clickLocation, used, target);
+            var interactUsings = AllComps<IInteractUsing>(target).OrderByDescending(x => x.Priority);
+
+            foreach (var interactUsing in interactUsings)
+            {
+                // If an InteractUsing returns a status completion we finish our interaction
+                if (await interactUsing.InteractUsing(interactUsingEventArgs))
+                    return;
+            }
 
             InteractDoAfter(user, used, target, clickLocation, canReach: true);
-        }
-
-        protected virtual async Task<bool> DoIInteractUsing(
-            EntityUid user,
-            EntityUid used,
-            EntityUid target,
-            EntityCoordinates clickLocation)
-        {
-            return true;
         }
 
         /// <summary>
@@ -665,19 +666,20 @@ namespace Content.Shared.Interaction
             if (afterInteractEvent.Handled)
                 return;
 
-            if (await DoIAfterInteract(user, used, target, clickLocation, canReach))
-                return;
+            var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, target, canReach);
+            var afterInteracts = AllComps<IAfterInteract>(used).OrderByDescending(x => x.Priority).ToList();
+
+            foreach (var afterInteract in afterInteracts)
+            {
+                if (await afterInteract.AfterInteract(afterInteractEventArgs))
+                    return;
+            }
 
             if (target == null)
                 return;
 
             var afterInteractUsingEvent = new AfterInteractUsingEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(target.Value, afterInteractUsingEvent, false);
-        }
-
-        protected async virtual Task<bool> DoIAfterInteract(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
-        {
-            return true;
         }
 
         #region ActivateItemInWorld
@@ -731,16 +733,20 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, activateMsg);
             if (activateMsg.Handled)
             {
-                UseDelay.BeginDelay(used, delayComponent);
+                _useDelay.BeginDelay(used, delayComponent);
                 _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
                 return true;
             }
+            
+            var activatable = AllComps<IActivate>(used).FirstOrDefault();
+            if (activatable == null)
+                return false;
 
-            return DoIActivate(user, used, delayComponent);
-        }
+            activatable.Activate(new ActivateEventArgs(user, used));
 
-        protected virtual bool DoIActivate(EntityUid user, EntityUid used, UseDelayComponent? delayComponent)
-        {
+            // No way to check success.
+            _useDelay.BeginDelay(used, delayComponent);
+            _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;
         }
         #endregion
@@ -776,20 +782,25 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, useMsg);
             if (useMsg.Handled)
             {
-                UseDelay.BeginDelay(used, delayComponent);
+                _useDelay.BeginDelay(used, delayComponent);
                 return true;
             }
 
-            if (DoIUse(user, used, delayComponent))
-                return true;
+            var uses = AllComps<IUse>(used).ToList();
+
+            // Try to use item on any components which have the interface
+            foreach (var use in uses)
+            {
+                // If a Use returns a status completion we finish our interaction
+                if (use.UseEntity(new UseEntityEventArgs(user)))
+                {
+                    _useDelay.BeginDelay(used, delayComponent);
+                    return true;
+                }
+            }
 
             // else, default to activating the item
             return InteractionActivate(user, used, false, false, false);
-        }
-
-        protected virtual bool DoIUse(EntityUid user, EntityUid used, UseDelayComponent? delayComponent)
-        {
-            return true; // client will assume an DoIUse occurd to avoid mis-predicts.
         }
 
         /// <summary>
