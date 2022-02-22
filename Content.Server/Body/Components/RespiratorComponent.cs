@@ -18,8 +18,6 @@ namespace Content.Server.Body.Components
         [DataField("saturation")]
         public float Saturation = 5.0f;
 
-        public float SaturationReset = 5.0f;
-
         /// <summary>
         ///     At what level of saturation will you begin to suffocate?
         /// </summary>
@@ -65,8 +63,6 @@ namespace Content.Server.Body.Components
 
         [DataField("cycleDelay")]
         public float CycleDelay = 2.0f;
-
-        public float CycleDelayReset = 2.0f;
 
         public float AccumulatedFrametime;
     }

@@ -62,6 +62,8 @@ namespace Content.Server.Bed
         }
         private void OnBuckleChange(EntityUid uid, StasisBedComponent component, BuckleChangeEvent args)
         {
+            // In testing this also received an unbuckle event when the bed is destroyed
+            // So don't worry about that
             if (!TryComp<SharedBodyComponent>(args.BuckledEntity, out var body))
                 return;
 
@@ -76,34 +78,30 @@ namespace Content.Server.Bed
         private void OnPowerChanged(EntityUid uid, StasisBedComponent component, PowerChangedEvent args)
         {
             UpdateAppeance(uid, args.Powered);
-
-            if (!TryComp<StrapComponent>(uid, out var strap) || strap.BuckledEntities.Count == 0)
-                return;
-
-            foreach (var buckledEntity in strap.BuckledEntities)
-            {
-                var metabolicEvent = new ApplyMetabolicMultiplierEvent()
-                    {Uid = buckledEntity, Multiplier = component.Multiplier, Apply = args.Powered};
-                RaiseLocalEvent(buckledEntity, metabolicEvent, false);
-            }
+            UpdateMetabolisms(uid, component, args.Powered);
         }
 
         private void OnEmagged(EntityUid uid, StasisBedComponent component, GotEmaggedEvent args)
         {
             ///Repeatable
+            ///Reset any metabolisms first so they receive the multiplier correctly
+            UpdateMetabolisms(uid, component, false);
             component.Multiplier = 1 / component.Multiplier;
+            UpdateMetabolisms(uid, component, true);
+            args.Handled = true;
+        }
 
+        private void UpdateMetabolisms(EntityUid uid, StasisBedComponent component, bool shouldApply)
+        {
             if (!TryComp<StrapComponent>(uid, out var strap) || strap.BuckledEntities.Count == 0)
                 return;
 
             foreach (var buckledEntity in strap.BuckledEntities)
             {
                 var metabolicEvent = new ApplyMetabolicMultiplierEvent()
-                    {Uid = buckledEntity, Multiplier = component.Multiplier, Apply = true};
+                    {Uid = buckledEntity, Multiplier = component.Multiplier, Apply = shouldApply};
                 RaiseLocalEvent(buckledEntity, metabolicEvent, false);
             }
-
-            args.Handled = true;
         }
     }
 }

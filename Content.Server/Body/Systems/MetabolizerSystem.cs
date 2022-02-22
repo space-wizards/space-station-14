@@ -34,8 +34,6 @@ namespace Content.Server.Body.Systems
 
         private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
         {
-            /// Cache initial update frequency so it can be safely reset
-            component.UpdateFrequencyReset = component.UpdateFrequency;
             if (!component.SolutionOnBody)
             {
                 _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
@@ -59,8 +57,7 @@ namespace Content.Server.Body.Systems
                 component.UpdateFrequency *= args.Multiplier;
                 return;
             }
-            // This way we don't have to worry about it breaking if the stasis bed component is destroyed
-            component.UpdateFrequency = component.UpdateFrequencyReset;
+            component.UpdateFrequency /= args.Multiplier;
             // Reset the accumulator properly
             if (component.AccumulatedFrametime >= component.UpdateFrequency)
                 component.AccumulatedFrametime = component.UpdateFrequency;

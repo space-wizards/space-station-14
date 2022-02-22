@@ -88,7 +88,6 @@ public sealed class BloodstreamSystem : EntitySystem
 
     private void OnComponentInit(EntityUid uid, BloodstreamComponent component, ComponentInit args)
     {
-        component.UpdateIntervalReset = component.UpdateInterval;
         component.ChemicalSolution = _solutionContainerSystem.EnsureSolution(uid, BloodstreamComponent.DefaultChemicalsSolutionName);
         component.BloodSolution = _solutionContainerSystem.EnsureSolution(uid, BloodstreamComponent.DefaultBloodSolutionName);
         component.BloodTemporarySolution = _solutionContainerSystem.EnsureSolution(uid, BloodstreamComponent.DefaultBloodTemporarySolutionName);
@@ -172,8 +171,7 @@ public sealed class BloodstreamSystem : EntitySystem
             component.UpdateInterval *= args.Multiplier;
             return;
         }
-        // This way we don't have to worry about it breaking if the stasis bed component is destroyed
-        component.UpdateInterval = component.UpdateIntervalReset;
+        component.UpdateInterval /= args.Multiplier;
         // Reset the accumulator properly
         if (component.AccumulatedFrametime >= component.UpdateInterval)
             component.AccumulatedFrametime = component.UpdateInterval;

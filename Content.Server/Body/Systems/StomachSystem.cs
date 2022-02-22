@@ -84,7 +84,7 @@ namespace Content.Server.Body.Systems
             return;
         }
         // This way we don't have to worry about it breaking if the stasis bed component is destroyed
-        component.UpdateInterval = component.UpdateIntervalReset;
+        component.UpdateInterval /= args.Multiplier;
         // Reset the accumulator properly
         if (component.AccumulatedFrameTime >= component.UpdateInterval)
             component.AccumulatedFrameTime = component.UpdateInterval;
@@ -92,7 +92,6 @@ namespace Content.Server.Body.Systems
 
         private void OnComponentInit(EntityUid uid, StomachComponent component, ComponentInit args)
         {
-            component.UpdateIntervalReset = component.UpdateInterval;
             var solution = _solutionContainerSystem.EnsureSolution(uid, DefaultSolutionName);
             solution.MaxVolume = component.InitialMaxVolume;
         }

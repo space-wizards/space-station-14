@@ -66,11 +66,6 @@ namespace Content.Server.Body.Components
         [DataField("updateInterval")]
         public float UpdateInterval = 5.0f;
 
-        /// <summary>
-        ///     What should the update interval reset to if needed?
-        /// </summary>
-        public float UpdateIntervalReset = 5f;
-
         // TODO shouldn't be hardcoded, should just use some organ simulation like bone marrow or smth.
         /// <summary>
         ///     How much reagent of blood should be restored each update interval?
