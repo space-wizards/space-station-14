@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests.Damageable
     [TestFixture]
     [TestOf(typeof(DamageableComponent))]
     [TestOf(typeof(DamageableSystem))]
-    public class DamageableTest : ContentIntegrationTest
+    public sealed class DamageableTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 # Define some damage groups

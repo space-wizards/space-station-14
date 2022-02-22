@@ -9,7 +9,7 @@ namespace Content.Shared.Preferences
     /// <summary>
     /// The server sends this before the client joins the lobby.
     /// </summary>
-    public class MsgPreferencesAndSettings : NetMessage
+    public sealed class MsgPreferencesAndSettings : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
 

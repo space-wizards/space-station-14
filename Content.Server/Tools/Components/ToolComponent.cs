@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Tools.Components
 {
     [RegisterComponent, Friend(typeof(ToolSystem))]
-    public class ToolComponent : Component
+    public sealed class ToolComponent : Component
     {
         [DataField("qualities")]
         public PrototypeFlags<ToolQualityPrototype> Qualities { get; set; } = new();

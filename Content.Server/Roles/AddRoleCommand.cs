@@ -11,7 +11,7 @@ using System.Linq;
 namespace Content.Server.Roles
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddRoleCommand : IConsoleCommand
+    public sealed class AddRoleCommand : IConsoleCommand
     {
         public string Command => "addrole";
 

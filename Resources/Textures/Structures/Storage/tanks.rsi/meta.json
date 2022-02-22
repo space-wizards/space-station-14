@@ -1,25 +1,20 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/8442af39ee82b813194f71db82edd2923d97818d",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "watertank",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "watertank"
     },
     {
-      "name": "fueltank",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "fueltank"
+    },
+    {
+      "name": "highwatertank"
     }
   ]
 }

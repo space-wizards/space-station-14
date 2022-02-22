@@ -18,7 +18,7 @@ using SharpFont;
 namespace Content.Client.Instruments
 {
     [UsedImplicitly]
-    public class InstrumentSystem : SharedInstrumentSystem
+    public sealed class InstrumentSystem : SharedInstrumentSystem
     {
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IMidiManager _midiManager = default!;
@@ -108,7 +108,7 @@ namespace Content.Client.Instruments
 
         public override void EndRenderer(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? component = null)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component, false))
                 return;
 
             if (component is not InstrumentComponent instrument)

@@ -1,0 +1,11 @@
+- type: entity
+  parent: BaseItem
+  id: Emag
+  name: cryptographic sequencer
+  description: The iconic card of ill omen.
+  components:
+  - type: Emag
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Tools/emag.rsi
+    state: icon

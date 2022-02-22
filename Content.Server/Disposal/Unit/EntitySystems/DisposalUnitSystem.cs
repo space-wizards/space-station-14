@@ -184,11 +184,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            if (!_actionBlockerSystem.CanInteract(player) || !_actionBlockerSystem.CanUse(player))
-            {
-                return;
-            }
-
             switch (args.Button)
             {
                 case SharedDisposalUnitComponent.UiButton.Eject:
@@ -241,11 +236,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             args.Handled = true;
-
-            if (IsValidInteraction(args))
-            {
-                component.Owner.GetUIOrNull(SharedDisposalUnitComponent.DisposalUnitUiKey.Key)?.Open(actor.PlayerSession);
-            }
+            component.Owner.GetUIOrNull(SharedDisposalUnitComponent.DisposalUnitUiKey.Key)?.Open(actor.PlayerSession);
         }
 
         private void HandleAfterInteractUsing(EntityUid uid, DisposalUnitComponent component, AfterInteractUsingEvent args)
@@ -439,30 +430,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             return state == SharedDisposalUnitComponent.PressureState.Ready && component.RecentlyEjected.Count == 0;
         }
 
-        private bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
-        {
-            if (!Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
-            {
-                eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-cannot=interact"));
-                return false;
-            }
-
-            if (eventArgs.User.IsInContainer())
-            {
-                eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-cannot-reach"));
-                return false;
-            }
-            // This popup message doesn't appear on clicks, even when code was seperate. Unsure why.
-
-            if (!EntityManager.HasComponent<HandsComponent>(eventArgs.User))
-            {
-                eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-no-hands"));
-                return false;
-            }
-
-            return true;
-        }
-
         public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid userId, DisposalUnitComponent? unit = null)
         {
             if (!Resolve(unitId, ref unit))
@@ -519,7 +486,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (_atmosSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates, true) is {Temperature: > 0} environment)
             {
-                var transferMoles = 0.1f * (0.05f * Atmospherics.OneAtmosphere * 1.01f - air.Pressure) * air.Volume / (environment.Temperature * Atmospherics.R);
+                var transferMoles = 0.1f * (0.25f * Atmospherics.OneAtmosphere * 1.01f - air.Pressure) * air.Volume / (environment.Temperature * Atmospherics.R);
 
                 component.Air = environment.Remove(transferMoles);
             }

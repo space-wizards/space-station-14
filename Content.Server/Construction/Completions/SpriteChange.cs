@@ -10,7 +10,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class SpriteChange : IGraphAction
+    public sealed class SpriteChange : IGraphAction
     {
         [DataField("layer")] public int Layer { get; private set; } = 0;
         [DataField("specifier")]  public SpriteSpecifier? SpriteSpecifier { get; private set; } = SpriteSpecifier.Invalid;

@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.MachineLinking.Events
 {
-    public class LinkAttemptEvent : CancellableEntityEventArgs
+    public sealed class LinkAttemptEvent : CancellableEntityEventArgs
     {
         public readonly EntityUid Attemptee;
         public readonly SignalTransmitterComponent TransmitterComponent;

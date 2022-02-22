@@ -12,7 +12,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class PopupUser : IGraphAction
+    public sealed class PopupUser : IGraphAction
     {
         [DataField("cursor")] public bool Cursor { get; } = false;
         [DataField("text")] public string Text { get; } = string.Empty;

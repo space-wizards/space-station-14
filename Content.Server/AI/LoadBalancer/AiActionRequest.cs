@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.LoadBalancer
 {
-    public class AiActionRequest
+    public sealed class AiActionRequest
     {
         public EntityUid EntityUid { get; }
         public Blackboard? Context { get; }

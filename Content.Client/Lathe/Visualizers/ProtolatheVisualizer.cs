@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Lathe.Visualizers
 {
     [UsedImplicitly]
-    public class ProtolatheVisualizer : AppearanceVisualizer
+    public sealed class ProtolatheVisualizer : AppearanceVisualizer
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

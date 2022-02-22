@@ -9,7 +9,7 @@ using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent.Medical
 namespace Content.Client.MedicalScanner
 {
     [UsedImplicitly]
-    public class MedicalScannerVisualizer : AppearanceVisualizer
+    public sealed class MedicalScannerVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

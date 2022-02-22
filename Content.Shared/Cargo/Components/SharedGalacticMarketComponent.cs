@@ -13,7 +13,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Cargo.Components
 {
     [NetworkedComponent()]
-    public class SharedGalacticMarketComponent : Component, IEnumerable<CargoProductPrototype>, ISerializationHooks
+    public abstract class SharedGalacticMarketComponent : Component, IEnumerable<CargoProductPrototype>, ISerializationHooks
     {
         [DataField("products", customTypeSerializer: typeof(PrototypeIdListSerializer<CargoProductPrototype>))]
         protected List<string> _productIds = new();
@@ -95,7 +95,7 @@ namespace Content.Shared.Cargo.Components
     }
 
     [Serializable, NetSerializable]
-    public class GalacticMarketState : ComponentState
+    public sealed class GalacticMarketState : ComponentState
     {
         public List<string> Products;
         public GalacticMarketState(List<string> technologies)

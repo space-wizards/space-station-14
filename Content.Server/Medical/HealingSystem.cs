@@ -1,5 +1,6 @@
 using System.Threading;
 using Content.Server.Administration.Logs;
+using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
 using Content.Server.Stack;
@@ -14,11 +15,12 @@ namespace Content.Server.Medical;
 
 public sealed class HealingSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly AdminLogSystem _logs = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly StackSystem _stacks = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
     public override void Initialize()
     {
@@ -35,6 +37,12 @@ public sealed class HealingSystem : EntitySystem
 
         if (component.DamageContainerID is not null &&
             !component.DamageContainerID.Equals(component.DamageContainerID)) return;
+
+        if (args.Component.BloodlossModifier != 0)
+        {
+            // Heal some bloodloss damage.
+            _bloodstreamSystem.TryModifyBleedAmount(uid, args.Component.BloodlossModifier);
+        }
 
         var healed = _damageable.TryChangeDamage(uid, args.Component.Damage, true);
 
@@ -87,7 +95,7 @@ public sealed class HealingSystem : EntitySystem
             return;
 
         if (user != target &&
-            !user.InRangeUnobstructed(target, ignoreInsideBlocker: true, popup: true))
+            !_interactionSystem.InRangeUnobstructed(user, target, popup: true))
         {
             return;
         }

@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
-    public class SolutionAreaEffectSystem : EntitySystem
+    public sealed class SolutionAreaEffectSystem : EntitySystem
     {
         public override void Update(float frameTime)
         {

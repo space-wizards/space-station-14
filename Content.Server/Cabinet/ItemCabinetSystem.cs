@@ -12,7 +12,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Cabinet
 {
-    public class ItemCabinetSystem : EntitySystem
+    public sealed class ItemCabinetSystem : EntitySystem
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 

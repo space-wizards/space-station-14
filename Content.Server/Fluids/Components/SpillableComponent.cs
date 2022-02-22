@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Fluids.Components;
 
 [RegisterComponent]
-public class SpillableComponent : Component
+public sealed class SpillableComponent : Component
 {
     [DataField("solution")]
     public string SolutionName = "puddle";

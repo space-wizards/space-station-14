@@ -44,16 +44,26 @@
       types:
         Blunt: 2
   # Organs
-  - type: SolutionContainerManager
-    solutions:
-      bloodstream:
-        maxVol: 250
   - type: InjectableSolution
-    solution: bloodstream
+    solution: chemicals
   - type: DrawableSolution
     solution: bloodstream
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
   - type: Bloodstream
-    max_volume: 100
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
   - type: StatusEffects
     allowed:
     - Stun
@@ -273,15 +283,17 @@
       type: StrippableBoundUserInterface
   - type: Puller
   - type: Butcherable
-    meat: FoodMeat
-  - type: Recyclable
-    safe: false
+    butcheringType: Spike # TODO human.
+    spawned: FoodMeat
+#  - type: Recyclable Turns out turning off recycler safeties without considering the instagib is a bad idea
+#    safe: false
   - type: Speech
   - type: Emoting
   - type: Grammar
     attributes:
       proper: true
   - type: StandingState
+
 - type: entity
   save: false
   name: Urist McHands

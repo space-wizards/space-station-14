@@ -11,7 +11,7 @@ namespace Content.Shared.Actions
     /// <summary>
     /// Provides access to all configured actions by action type.
     /// </summary>
-    public class ActionManager
+    public sealed class ActionManager
     {
         [Dependency]
         private readonly IPrototypeManager _prototypeManager = default!;

@@ -9,7 +9,7 @@ namespace Content.Server.Actions.Actions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class DebugTargetEntity : ITargetEntityAction, ITargetEntityItemAction
+    public sealed class DebugTargetEntity : ITargetEntityAction, ITargetEntityItemAction
     {
         public void DoTargetEntityAction(TargetEntityItemActionEventArgs args)
         {

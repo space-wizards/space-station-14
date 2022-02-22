@@ -11,7 +11,7 @@ namespace Content.Tests.Shared
     // Also a thinly veiled excuse to bloat the test count.
 
     [TestFixture]
-    public class WireHackingTest : RobustUnitTest
+    public sealed class WireHackingTest : RobustUnitTest
     {
         public static IEnumerable<WireColor> ColorValues = (WireColor[]) Enum.GetValues(typeof(WireColor));
         public static IEnumerable<WireLetter> LetterValues = (WireLetter[]) Enum.GetValues(typeof(WireLetter));

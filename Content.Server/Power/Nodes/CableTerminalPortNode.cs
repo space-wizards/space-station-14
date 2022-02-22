@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Power.Nodes
 {
     [DataDefinition]
-    public class CableTerminalPortNode : Node
+    public sealed class CableTerminalPortNode : Node
     {
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,

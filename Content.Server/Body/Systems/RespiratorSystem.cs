@@ -21,7 +21,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Body.Systems
 {
     [UsedImplicitly]
-    public class RespiratorSystem : EntitySystem
+    public sealed class RespiratorSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSys = default!;
         [Dependency] private readonly AdminLogSystem _logSys = default!;
@@ -139,7 +139,10 @@ namespace Content.Server.Body.Systems
             if (ev.Gas == null)
             {
                 ev.Gas = _atmosSys.GetTileMixture(Transform(uid).Coordinates);
-                if (ev.Gas == null) return;
+
+                // Walls and grids without atmos comp return null. I guess it makes sense to not be able to exhale in walls,
+                // but this also means you cannot exhale on some grids.
+                ev.Gas ??= GasMixture.SpaceGas;
             }
 
             var outGas = new GasMixture(ev.Gas.Volume);
@@ -189,12 +192,12 @@ namespace Content.Server.Body.Systems
     }
 }
 
-public class InhaleLocationEvent : EntityEventArgs
+public sealed class InhaleLocationEvent : EntityEventArgs
 {
     public GasMixture? Gas;
 }
 
-public class ExhaleLocationEvent : EntityEventArgs
+public sealed class ExhaleLocationEvent : EntityEventArgs
 {
     public GasMixture? Gas;
 }

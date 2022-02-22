@@ -8,7 +8,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Tools
 {
-    public class Map
+    public sealed class Map
     {
         public Map(string path)
         {

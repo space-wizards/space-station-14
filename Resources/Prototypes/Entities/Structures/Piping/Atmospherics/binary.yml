@@ -36,8 +36,6 @@
       map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer", "enum.PressurePumpVisualizer+Layers.Enabled" ]
   - type: Appearance
     visuals:
-    - type: SubFloorShowLayerVisualizer
-    - type: PipeConnectorVisualizer
     - type: PipeColorVisualizer
     - type: PressurePumpVisualizer
       disabledState: pumpPressure
@@ -67,8 +65,6 @@
           map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasVolumePump
     - type: UserInterface
@@ -95,8 +91,6 @@
           map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasPassiveGate
 
@@ -120,8 +114,6 @@
           map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer", "enum.GasValveVisualizer+Layers.Enabled" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: GasValveVisualizer
           disabledState: pumpManualValve
@@ -159,8 +151,6 @@
           map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasPort
     - type: NodeContainer
