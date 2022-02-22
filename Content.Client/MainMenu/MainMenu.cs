@@ -178,9 +178,6 @@ namespace Content.Client.MainMenu
         {
             _isConnecting = state;
             _mainMenuControl.DirectConnectButton.Disabled = state;
-#if FULL_RELEASE
-            _mainMenuControl.JoinPublicServerButton.Disabled = state;
-#endif
         }
     }
 }
