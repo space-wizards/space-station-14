@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
@@ -6,13 +5,11 @@ using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
-using Content.Server.Timing;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Timing;
@@ -20,11 +17,7 @@ using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 
@@ -39,7 +32,6 @@ namespace Content.Server.Interaction
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
-        [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
         public override void Initialize()
         {
@@ -61,6 +53,84 @@ namespace Content.Server.Interaction
             base.Shutdown();
         }
 
+        protected override bool DoIUse(EntityUid user, EntityUid used, UseDelayComponent? delayComponent)
+        {
+            var uses = AllComps<IUse>(used).ToList();
+
+            // Try to use item on any components which have the interface
+            foreach (var use in uses)
+            {
+                // If a Use returns a status completion we finish our interaction
+                if (use.UseEntity(new UseEntityEventArgs(user)))
+                {
+                    UseDelay.BeginDelay(used, delayComponent);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        protected override bool DoIActivate(EntityUid user, EntityUid used, UseDelayComponent? delayComponent)
+        {
+            if (!TryComp(used, out IActivate? activateComp))
+                return false;
+
+            var activateEventArgs = new ActivateEventArgs(user, used);
+            activateComp.Activate(activateEventArgs);
+            UseDelay.BeginDelay(used, delayComponent);
+            _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}"); // No way to check success.
+            return true;
+        }
+
+        protected async override Task<bool> DoIAfterInteract(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
+        {
+            var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, target, canReach);
+            var afterInteracts = AllComps<IAfterInteract>(used).OrderByDescending(x => x.Priority).ToList();
+
+            foreach (var afterInteract in afterInteracts)
+            {
+                if (await afterInteract.AfterInteract(afterInteractEventArgs))
+                    return true;
+            }
+
+            return false;
+        }
+
+        protected override bool DoIInteractHand(EntityUid user, EntityUid target)
+        {
+            var interactHandEventArgs = new InteractHandEventArgs(user, target);
+            var interactHandComps = AllComps<IInteractHand>(target).ToList();
+            foreach (var interactHandComp in interactHandComps)
+            {
+                // If an InteractHand returns a status completion we finish our interaction
+#pragma warning disable 618
+                if (interactHandComp.InteractHand(interactHandEventArgs))
+#pragma warning restore 618
+                    return true;
+            }
+
+            return false;
+        }
+
+        protected override async Task<bool> DoIInteractUsing(
+            EntityUid user,
+            EntityUid used,
+            EntityUid target,
+            EntityCoordinates clickLocation)
+        {
+            var interactUsingEventArgs = new InteractUsingEventArgs(user, clickLocation, used, target);
+            var interactUsings = AllComps<IInteractUsing>(target).OrderByDescending(x => x.Priority);
+            foreach (var interactUsing in interactUsings)
+            {
+                // If an InteractUsing returns a status completion we finish our interaction
+                if (await interactUsing.InteractUsing(interactUsingEventArgs))
+                    return true;
+            }
+
+            return false;
+        }
+
         public override bool CanAccessViaStorage(EntityUid user, EntityUid target)
         {
             if (Deleted(target))
@@ -80,11 +150,6 @@ namespace Content.Server.Interaction
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
             return storage.SubscribedSessions.Contains(actor.PlayerSession);
-        }
-
-        protected override void BeginDelay(UseDelayComponent? component = null)
-        {
-            _useDelay.BeginDelay(component);
         }
 
         #region Drag drop
