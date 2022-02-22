@@ -8,9 +8,6 @@
   - type: Sprite
     netsync: false
     drawdepth: FloorObjects
-    layers:
-    - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
-    - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
   - type: SolutionContainerManager
   - type: Puddle
     spillSound:
