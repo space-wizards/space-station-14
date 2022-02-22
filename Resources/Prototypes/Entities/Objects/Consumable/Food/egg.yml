@@ -71,13 +71,10 @@
   components:
   - type: Sprite
     layers:
-    - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
+    - map: ["enum.PuddleVisualLayers.Puddle"]
       sprite: Fluids/egg_splat.rsi
       state: egg-0
-    - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
-      sprite: Fluids/wet_floor_sparkles.rsi
-      state: sparkles
-      visible: false # until set to true by the client-side PuddleVisualsSystem.
+    - map: ["enum.PuddleVisualLayers.WetFloorEffect"]
   - type: Puddle
   - type: SolutionContainerManager
     solutions:

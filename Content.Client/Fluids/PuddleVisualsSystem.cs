@@ -9,7 +9,6 @@ namespace Content.Client.Fluids
     [UsedImplicitly]
     public sealed class PuddleVisualsSystem : VisualizerSystem<PuddleVisualsComponent>
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -74,8 +73,11 @@ namespace Content.Client.Fluids
                     sprite.LayerSetVisible(PuddleVisualLayers.Puddle, false);
 
                     // Shows the wet floor sprite layers
+                    sprite.LayerSetRSI(PuddleVisualLayers.WetFloorEffect, "Fluids/wet_floor_sparkles.rsi");
+                    sprite.LayerSetState(PuddleVisualLayers.WetFloorEffect, "sparkles");
                     sprite.LayerSetColor(PuddleVisualLayers.WetFloorEffect, newColor.WithAlpha(0.25f)); //Sparkles inherit the color of the puddle's solution, except they should be mostly transparent.
                     sprite.LayerSetVisible(PuddleVisualLayers.WetFloorEffect, true);
+
                 }
                 else
                 {
