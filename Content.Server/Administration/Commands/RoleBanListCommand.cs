@@ -58,7 +58,10 @@ public sealed class RoleBanListCommand : IConsoleCommand
             bansString
                 .Append("Ban ID: ")
                 .Append(ban.Id)
-                .Append("\n")
+                .Append('\n')
+                .Append("Role: ")
+                .Append(ban.Role)
+                .Append('\n')
                 .Append("Banned on ")
                 .Append(ban.BanTime);
 
@@ -70,8 +73,7 @@ public sealed class RoleBanListCommand : IConsoleCommand
             }
 
             bansString
-                .Append(".")
-                .Append("\n");
+                .Append('\n');
 
             bansString
                 .Append("Reason: ")
