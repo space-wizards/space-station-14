@@ -37,7 +37,7 @@ public sealed class InteractionPopupSystem : EntitySystem
             return;
 
         string msg = ""; // Stores the text to be shown in the popup message
-        string sfx = ""; // Stores the filepath of the sound to be played
+        string? sfx = null; // Stores the filepath of the sound to be played
 
         if (_random.Prob(component.SuccessChance))
         {
@@ -61,7 +61,7 @@ public sealed class InteractionPopupSystem : EntitySystem
         else
             _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User)); //play only for the initiating entity.
 
-        if (sfx != "") //not all cases will have sound.
+        if (sfx is not null) //not all cases will have sound.
         {
             if (component.SoundPerceivedByOthers)
                 SoundSystem.Play(Filter.Pvs(args.Target), sfx, args.Target); //play for everyone in range
