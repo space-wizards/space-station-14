@@ -71,8 +71,6 @@
   - type: Sprite
     layers:
       - state: box_beanbag
-  - type: Storage
-    capacity: 30
 
 - type: entity
   name: box of lethal shots
@@ -87,5 +85,3 @@
   - type: Sprite
     layers:
       - state: box_lethalshot
-  - type: Storage
-    capacity: 30
