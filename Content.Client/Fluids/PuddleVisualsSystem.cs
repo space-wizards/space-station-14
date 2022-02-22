@@ -38,15 +38,11 @@ namespace Content.Client.Fluids
 
             if (maxStates is not { Length: > 0 }) return;
 
-            int intVisualSeed = ((int) (visualSeed * 1000000)); //uses the float seed to generate an arbitrarily large int seed. It is retyped to int for use in the Modulo function.
-
-            int selectedState = intVisualSeed % maxStates.Length; // uses the visualSeed to randomly select an index for which RSI state to use. Modulo is used to get the remainder, so the value will always be between 0 and maxStates.Length.
+            int selectedState = (int) Math.Floor(visualSeed * maxStates.Length); // uses the visualSeed to randomly select an index for which RSI state to use.
             sprite.LayerSetState(PuddleVisualLayers.Puddle, maxStates[selectedState].StateId); // sets the sprite's state via our randomly selected index.
 
-            int rotationDegrees = intVisualSeed % 360; // uses the visualSeed to randomly select a rotation for our puddle sprite.
+            int rotationDegrees = (int) Math.Floor(visualSeed * 360); // uses the visualSeed to randomly select a rotation for our puddle sprite.
             sprite.Rotation = Angle.FromDegrees(rotationDegrees); // sets the sprite's rotation to the one we randomly selected.
-
-
         }
 
 
