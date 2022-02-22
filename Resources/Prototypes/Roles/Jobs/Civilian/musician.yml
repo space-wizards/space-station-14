@@ -8,6 +8,10 @@
   supervisors: "whoever hires you"
   access:
   - Maintenance # TODO Remove maint access for all gimmick jobs once access work is completed
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: PerformersDay
+    prototype: BoxPerformer
 
 - type: startingGear
   id: MusicianGear

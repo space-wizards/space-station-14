@@ -177,3 +177,16 @@
     layers:
       - state: box
       - state: writing
+
+- type: entity
+  name: performer's day box
+  parent: BoxCardboard
+  id: BoxPerformer
+  description: Happy Performer's Day!
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingShoesBootsPerformer
+      - id: ClothingUniformJumpskirtPerformer
+      - id: FoodMealMemoryleek
+        amount: 2
