@@ -344,7 +344,7 @@
       - plating
       - FloorArcadeBlue
   - type: Stack
-    stackType: FloorArcadeBlue
+    stackType: FloorTileStackArcadeBlue
       
 - type: entity
   name: red arcade floor
@@ -360,7 +360,7 @@
       - plating
       - FloorArcadeRed
   - type: Stack
-    stackType: FloorArcadeRed
+    stackType: FloorTileStackArcadeRed
       
 - type: entity
   name: eighties floor
@@ -376,7 +376,7 @@
       - plating
       - FloorEighties
   - type: Stack
-    stackType: FloorEighties
+    stackType: FloorTileStackEighties
 
 # Shuttles
 - type: entity
@@ -393,7 +393,7 @@
       - plating
       - FloorShuttleWhite
   - type: Stack
-    stackType: FloorShuttleWhite
+    stackType: FloorTileStackShuttleWhite
     
 - type: entity
   name: blue shuttle floor
@@ -409,7 +409,7 @@
       - plating
       - FloorShuttleBlue
   - type: Stack
-    stackType: FloorShuttleBlue
+    stackType: FloorTileStackShuttleBlue
     
 - type: entity
   name: orange shuttle floor
@@ -425,7 +425,7 @@
       - plating
       - FloorShuttleOrange
   - type: Stack
-    stackType: FloorShuttleOrange
+    stackType: FloorTileStackShuttleOrange
     
 - type: entity
   name: purple shuttle floor
@@ -441,7 +441,7 @@
       - plating
       - FloorShuttlePurple
   - type: Stack
-    stackType: FloorShuttlePurple
+    stackType: FloorTileStackShuttlePurple
     
 - type: entity
   name: red shuttle floor
@@ -457,7 +457,7 @@
       - plating
       - FloorShuttleRed
   - type: Stack
-    stackType: FloorShuttleRed
+    stackType: FloorTileStackShuttleRed
 
 # Materials
 - type: entity
