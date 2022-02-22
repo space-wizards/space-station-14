@@ -7,6 +7,9 @@
     anchored: true
   - type: Sprite
     drawdepth: FloorObjects
+    layers:
+    - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
+    - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
   - type: SolutionContainerManager
   - type: Puddle
     spillSound:
@@ -35,6 +38,7 @@
   description: Gross.
   components:
   - type: Sprite
+    layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
       sprite: Fluids/gibblet.rsi # Placeholder
       state: gibblet-0
@@ -60,6 +64,7 @@
   description: A puddle of liquid.
   components:
   - type: Sprite
+    layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
       sprite: Fluids/smear.rsi # Placeholder
       state: smear-0
@@ -79,6 +84,7 @@
   description: A puddle of liquid.
   components:
   - type: Sprite
+    layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
     sprite: Fluids/splatter.rsi # Placeholder
     state: splatter-0
@@ -98,6 +104,7 @@
   parent: PuddleBase
   components:
   - type: Sprite
+    layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
     sprite: Fluids/splatter.rsi # Placeholder
     state: splatter-0
@@ -122,6 +129,7 @@
   description: Gross.
   components:
   - type: Sprite
+    layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
     sprite: Fluids/vomit.rsi
     state: vomit-0
@@ -150,6 +158,7 @@
   description: You probably don't want to get too close to this.
   components:
   - type: Sprite
+    layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
     sprite: Fluids/vomit_toxin.rsi
     state: vomit_toxin-0
@@ -178,6 +187,7 @@
   description: A bit of liquid.
   components:
   - type: Sprite
+    layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
     sprite: Fluids/writing.rsi # Placeholder
     state: writing-0
