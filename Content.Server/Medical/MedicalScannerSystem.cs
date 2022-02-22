@@ -1,7 +1,7 @@
 using Content.Server.Medical.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Verbs;
 using Content.Shared.Movement;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -22,27 +22,27 @@ namespace Content.Server.Medical
             base.Initialize();
 
             SubscribeLocalEvent<MedicalScannerComponent, RelayMovementEntityEvent>(OnRelayMovement);
-            SubscribeLocalEvent<MedicalScannerComponent, GetInteractionVerbsEvent>(AddInsertOtherVerb);
-            SubscribeLocalEvent<MedicalScannerComponent, GetAlternativeVerbsEvent>(AddAlternativeVerbs);
+            SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<InteractionVerb>>(AddInsertOtherVerb);
+            SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
         }
 
-        private void AddInsertOtherVerb(EntityUid uid, MedicalScannerComponent component, GetInteractionVerbsEvent args)
+        private void AddInsertOtherVerb(EntityUid uid, MedicalScannerComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (args.Using == null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
                 component.IsOccupied ||
-                !component.CanInsert(args.Using))
+                !component.CanInsert(args.Using.Value))
                 return;
 
-            Verb verb = new();
-            verb.Act = () => component.InsertBody(args.Using);
+            InteractionVerb verb = new();
+            verb.Act = () => component.InsertBody(args.Using.Value);
             verb.Category = VerbCategory.Insert;
-            verb.Text = args.Using.Name;
+            verb.Text = EntityManager.GetComponent<MetaDataComponent>(args.Using.Value).EntityName;
             args.Verbs.Add(verb);
         }
 
-        private void AddAlternativeVerbs(EntityUid uid, MedicalScannerComponent component, GetAlternativeVerbsEvent args)
+        private void AddAlternativeVerbs(EntityUid uid, MedicalScannerComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -50,7 +50,7 @@ namespace Content.Server.Medical
             // Eject verb
             if (component.IsOccupied)
             {
-                Verb verb = new();
+                AlternativeVerb verb = new();
                 verb.Act = () => component.EjectBody();
                 verb.Category = VerbCategory.Eject;
                 verb.Text = Loc.GetString("medical-scanner-verb-noun-occupant");
@@ -60,9 +60,9 @@ namespace Content.Server.Medical
             // Self-insert verb
             if (!component.IsOccupied &&
                 component.CanInsert(args.User) &&
-                _actionBlockerSystem.CanMove(args.User.Uid))
+                _actionBlockerSystem.CanMove(args.User))
             {
-                Verb verb = new();
+                AlternativeVerb verb = new();
                 verb.Act = () => component.InsertBody(args.User);
                 verb.Text = Loc.GetString("medical-scanner-verb-enter");
                 // TODO VERN ICON
@@ -75,7 +75,7 @@ namespace Content.Server.Medical
 
         private void OnRelayMovement(EntityUid uid, MedicalScannerComponent component, RelayMovementEntityEvent args)
         {
-            if (_blocker.CanInteract(args.Entity.Uid))
+            if (_blocker.CanInteract(args.Entity, null))
             {
                 if (_gameTiming.CurTime <
                     component.LastInternalOpenAttempt + MedicalScannerComponent.InternalOpenAttemptDelay)

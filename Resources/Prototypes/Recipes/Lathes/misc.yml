@@ -26,9 +26,9 @@
     Glass: 100
 
 - type: latheRecipe
-  id: GlowStickRed
+  id: GlowstickRed
   icon: Objects/Misc/glowstick.rsi
-  result: GlowStickRed
+  result: GlowstickRed
   completetime: 500
   materials:
     Plastic: 50
@@ -70,3 +70,27 @@
   completetime: 10
   materials:
     Wood: 100
+
+- type: latheRecipe
+  id: Drone
+  icon:
+    sprite: Mobs/Silicon/drone.rsi
+    state: shell
+  result: Drone
+  completetime: 1500
+  materials:
+    Steel: 500
+    Glass: 500
+    Plastic: 500
+
+- type: latheRecipe
+  id: SynthesizerInstrument
+  icon:
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+    state: icon
+  result: SynthesizerInstrument
+  completetime: 1000
+  materials:
+    Steel: 300
+    Plastic: 300
+    Glass: 100

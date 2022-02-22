@@ -15,7 +15,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Atmos.Piping.EntitySystems
 {
     [UsedImplicitly]
-    public class AtmosUnsafeUnanchorSystem : EntitySystem
+    public sealed class AtmosUnsafeUnanchorSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -31,7 +31,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
-            if (_atmosphereSystem.GetTileMixture(component.Owner.Transform.Coordinates) is not {} environment)
+            if (_atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates) is not {} environment)
                 return;
 
             foreach (var node in nodes.Nodes.Values)
@@ -52,7 +52,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
-            if (_atmosphereSystem.GetTileMixture(component.Owner.Transform.Coordinates, true) is not {} environment)
+            if (_atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates, true) is not {} environment)
                 environment = GasMixture.SpaceGas;
 
             var lost = 0f;

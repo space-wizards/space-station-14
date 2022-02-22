@@ -1,9 +1,7 @@
 using System;
 using System.Text;
 using System.Text.RegularExpressions;
-using Content.Server.Alert;
 using Content.Server.Speech.Components;
-using Content.Shared.Alert;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Robust.Shared.GameObjects;
@@ -12,7 +10,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems
 {
-    public class StutteringSystem : SharedStutteringSystem
+    public sealed class StutteringSystem : SharedStutteringSystem
     {
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -28,15 +26,12 @@ namespace Content.Server.Speech.EntitySystems
             SubscribeLocalEvent<StutteringAccentComponent, AccentGetEvent>(OnAccent);
         }
 
-        public override void DoStutter(EntityUid uid, TimeSpan time, StatusEffectsComponent? status = null, SharedAlertsComponent? alerts = null)
+        public override void DoStutter(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null)
         {
             if (!Resolve(uid, ref status, false))
                 return;
 
-            if (!_statusEffectsSystem.HasStatusEffect(uid, StutterKey, status))
-                _statusEffectsSystem.TryAddStatusEffect<StutteringAccentComponent>(uid, StutterKey, time, status, alerts);
-            else
-                _statusEffectsSystem.TryAddTime(uid, StutterKey, time, status);
+            _statusEffectsSystem.TryAddStatusEffect<StutteringAccentComponent>(uid, StutterKey, time, refresh, status);
         }
 
         private void OnAccent(EntityUid uid, StutteringAccentComponent component, AccentGetEvent args)

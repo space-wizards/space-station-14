@@ -14,10 +14,8 @@ namespace Content.Shared.CharacterAppearance.Components
     [RegisterComponent]
     [Friend(typeof(SharedHumanoidAppearanceSystem), typeof(SharedMagicMirrorComponent))]
     [NetworkedComponent]
-    public class HumanoidAppearanceComponent : Component
+    public sealed class HumanoidAppearanceComponent : Component
     {
-        public override string Name => "HumanoidAppearance";
-
         [ViewVariables]
         public HumanoidCharacterAppearance Appearance { get; set; } = HumanoidCharacterAppearance.Default();
 
@@ -42,6 +40,14 @@ namespace Content.Shared.CharacterAppearance.Components
         [ViewVariables]
         [DataField("canColorFacialHair")]
         public bool CanColorFacialHair { get; set; } = true;
+
+        [ViewVariables]
+        [DataField("hairMatchesSkin")]
+        public bool HairMatchesSkin { get; set; } = false;
+
+        [ViewVariables]
+        [DataField("hairAlpha")]
+        public float HairAlpha { get; set; } = 1.0f;
     }
 
     [Serializable, NetSerializable]

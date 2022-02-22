@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.VarEdit)]
-    public class DeleteComponent : IConsoleCommand
+    public sealed class DeleteComponent : IConsoleCommand
     {
         public string Command => "deletecomponent";
         public string Description => "Deletes all instances of the specified component.";
@@ -37,7 +37,7 @@ namespace Content.Server.Administration.Commands
 
                     foreach (var component in components)
                     {
-                        var uid = component.Owner.Uid;
+                        var uid = component.Owner;
                         entityManager.RemoveComponent(uid, component);
                         i++;
                     }

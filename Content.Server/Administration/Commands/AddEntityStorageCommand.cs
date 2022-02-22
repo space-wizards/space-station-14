@@ -1,4 +1,3 @@
-using Content.Server.Body.Part;
 using Content.Server.Storage.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -9,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddEntityStorageCommand : IConsoleCommand
+    public sealed class AddEntityStorageCommand : IConsoleCommand
     {
         public string Command => "addstorage";
         public string Description => "Adds a given entity to a containing storage.";
@@ -39,7 +38,7 @@ namespace Content.Server.Administration.Commands
 
             if (entityManager.TryGetComponent<EntityStorageComponent>(storageUid, out var storage))
             {
-                storage.Insert(entityManager.GetEntity(entityUid));
+                storage.Insert(entityUid);
             }
             else
             {

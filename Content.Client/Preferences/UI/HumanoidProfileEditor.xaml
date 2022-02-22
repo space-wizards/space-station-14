@@ -76,6 +76,15 @@
                                     </BoxContainer>
                                 </prefUi:HighlightedContainer>
                             </BoxContainer>
+                            <BoxContainer Orientation="Horizontal" SeparationOverride="10">
+                                <!-- Species -->
+                                <prefUi:HighlightedContainer>
+                                    <BoxContainer Orientation="Horizontal">
+                                        <Label Text="{Loc 'humanoid-profile-editor-species-label'}" />
+                                        <OptionButton Name="CSpeciesButton" />
+                                    </BoxContainer>
+                                </prefUi:HighlightedContainer>
+                            </BoxContainer>
                             <!-- Skin -->
                             <prefUi:HighlightedContainer>
                                 <BoxContainer HorizontalExpand="True">

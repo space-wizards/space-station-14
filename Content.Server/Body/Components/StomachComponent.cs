@@ -10,10 +10,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Body.Components
 {
     [RegisterComponent, Friend(typeof(StomachSystem))]
-    public class StomachComponent : Component
+    public sealed class StomachComponent : Component
     {
-        public override string Name => "Stomach";
-
         public float AccumulatedFrameTime;
 
         /// <summary>
@@ -26,7 +24,7 @@ namespace Content.Server.Body.Components
         ///     What solution should this stomach push reagents into, on the body?
         /// </summary>
         [DataField("bodySolutionName")]
-        public string BodySolutionName = SharedBloodstreamComponent.DefaultSolutionName;
+        public string BodySolutionName = BloodstreamComponent.DefaultChemicalsSolutionName;
 
         /// <summary>
         ///     Initial internal solution storage volume
@@ -36,7 +34,7 @@ namespace Content.Server.Body.Components
 
         /// <summary>
         ///     Time in seconds between reagents being ingested and them being
-        ///     transferred to <see cref="SharedBloodstreamComponent"/>
+        ///     transferred to <see cref="BloodstreamComponent"/>
         /// </summary>
         [DataField("digestionDelay")]
         public float DigestionDelay = 20;
@@ -50,7 +48,7 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     Used to track quantity changes when ingesting & digesting reagents
         /// </summary>
-        public class ReagentDelta
+        public sealed class ReagentDelta
         {
             public readonly string ReagentId;
             public readonly FixedPoint2 Quantity;

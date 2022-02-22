@@ -1,13 +1,11 @@
 ﻿using System;
-using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;
 
 namespace Content.Tests.Shared.Chemistry
 {
     [TestFixture, TestOf(typeof(FixedPoint2))]
-    public class FixedPoint2_Tests
+    public sealed class FixedPoint2_Tests
     {
         [Test]
         [TestCase(1, "1")]
@@ -108,7 +106,7 @@ namespace Content.Tests.Shared.Chemistry
         [TestCase(2.005f, 201)]
         public void FloatRoundingTest(float a, int expected)
         {
-            var result = (int) MathF.Round(a * (float) MathF.Pow(10, 2), MidpointRounding.AwayFromZero);
+            var result = (int) MathF.Round(a * MathF.Pow(10, 2), MidpointRounding.AwayFromZero);
             Assert.That(result, Is.EqualTo(expected));
         }
 

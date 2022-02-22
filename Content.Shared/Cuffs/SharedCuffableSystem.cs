@@ -18,8 +18,8 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<SharedCuffableComponent, MovementAttemptEvent>(HandleMoveAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, UseAttemptEvent>(OnUseAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, InteractionAttemptEvent>(OnInteractAttempt);
-            SubscribeLocalEvent<SharedCuffableComponent, EquipAttemptEvent>(OnEquipAttempt);
-            SubscribeLocalEvent<SharedCuffableComponent, UnequipAttemptEvent>(OnUnequipAttempt);
+            SubscribeLocalEvent<SharedCuffableComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
+            SubscribeLocalEvent<SharedCuffableComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, AttackAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, PickupAttemptEvent>(OnPickupAttempt);
@@ -35,9 +35,9 @@ namespace Content.Shared.Cuffs
 
         private void HandleStopPull(EntityUid uid, SharedCuffableComponent component, StopPullingEvent args)
         {
-            if (args.User == null || !EntityManager.TryGetEntity(args.User.Value, out var user)) return;
+            if (args.User == null || !EntityManager.EntityExists(args.User.Value)) return;
 
-            if (user == component.Owner && !component.CanStillInteract)
+            if (args.User.Value == component.Owner && !component.CanStillInteract)
             {
                 args.Cancel();
             }
@@ -61,14 +61,18 @@ namespace Content.Shared.Cuffs
             CheckAct(uid, component, args);
         }
 
-        private void OnEquipAttempt(EntityUid uid, SharedCuffableComponent component, EquipAttemptEvent args)
+        private void OnEquipAttempt(EntityUid uid, SharedCuffableComponent component, IsEquippingAttemptEvent args)
         {
-            CheckAct(uid, component, args);
+            // is this a self-equip, or are they being stripped?
+            if (args.Equipee == uid)
+                CheckAct(uid, component, args);
         }
 
-        private void OnUnequipAttempt(EntityUid uid, SharedCuffableComponent component, UnequipAttemptEvent args)
+        private void OnUnequipAttempt(EntityUid uid, SharedCuffableComponent component, IsUnequippingAttemptEvent args)
         {
-            CheckAct(uid, component, args);
+            // is this a self-equip, or are they being stripped?
+            if (args.Unequipee == uid)
+                CheckAct(uid, component, args);
         }
 
         private void OnAttackAttempt(EntityUid uid, SharedCuffableComponent component, AttackAttemptEvent args)

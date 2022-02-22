@@ -1,11 +1,12 @@
 ﻿using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems
 {
     [UsedImplicitly]
-    public class ParticleAcceleratorPartSystem : EntitySystem
+    public sealed class ParticleAcceleratorPartSystem : EntitySystem
     {
         public override void Initialize()
         {
@@ -23,9 +24,9 @@ namespace Content.Server.ParticleAccelerator.EntitySystems
             component.OnAnchorChanged();
         }
 
-        private static void RotateEvent(ref RotateEvent ev)
+        private void RotateEvent(ref RotateEvent ev)
         {
-            if (ev.Sender.TryGetComponent(out ParticleAcceleratorPartComponent? part))
+            if (EntityManager.TryGetComponent(ev.Sender, out ParticleAcceleratorPartComponent? part))
             {
                 part.Rotated();
             }

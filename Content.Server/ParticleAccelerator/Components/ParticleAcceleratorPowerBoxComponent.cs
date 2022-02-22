@@ -6,9 +6,8 @@ namespace Content.Server.ParticleAccelerator.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(ParticleAcceleratorPartComponent))]
-    public class ParticleAcceleratorPowerBoxComponent : ParticleAcceleratorPartComponent
+    public sealed class ParticleAcceleratorPowerBoxComponent : ParticleAcceleratorPartComponent
     {
-        public override string Name => "ParticleAcceleratorPowerBox";
         [ViewVariables] public PowerConsumerComponent? PowerConsumerComponent;
 
         protected override void Initialize()

@@ -1,19 +1,18 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Client.Alerts;
 using Content.Client.Alerts.UI;
-using Content.Server.Alert;
 using Content.Shared.Alert;
 using NUnit.Framework;
 using Robust.Client.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.IoC;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 {
     [TestFixture]
-    [TestOf(typeof(ClientAlertsComponent))]
-    [TestOf(typeof(ServerAlertsComponent))]
-    public class AlertsComponentTests : ContentIntegrationTest
+    [TestOf(typeof(AlertsComponent))]
+    public sealed class AlertsComponentTests : ContentIntegrationTest
     {
         [Test]
         public async Task AlertsTest()
@@ -24,17 +23,18 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await client.WaitIdleAsync();
 
             var serverPlayerManager = server.ResolveDependency<IPlayerManager>();
+            var alertsSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AlertsSystem>();
 
             await server.WaitAssertion(() =>
             {
-                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
-                Assert.NotNull(playerEnt);
-                var alertsComponent = playerEnt.GetComponent<ServerAlertsComponent>();
+                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
+                Assert.That(playerEnt != default);
+                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AlertsComponent>(playerEnt);
                 Assert.NotNull(alertsComponent);
 
                 // show 2 alerts
-                alertsComponent.ShowAlert(AlertType.Debug1);
-                alertsComponent.ShowAlert(AlertType.Debug2);
+                alertsSystem.ShowAlert(alertsComponent.Owner, AlertType.Debug1, null, null);
+                alertsSystem.ShowAlert(alertsComponent.Owner, AlertType.Debug2, null, null);
             });
 
             await server.WaitRunTicks(5);
@@ -49,7 +49,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.NotNull(local);
                 var controlled = local.ControlledEntity;
                 Assert.NotNull(controlled);
-                var alertsComponent = controlled.GetComponent<ClientAlertsComponent>();
+                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AlertsComponent>(controlled.Value);
                 Assert.NotNull(alertsComponent);
 
                 // find the alertsui
@@ -67,12 +67,12 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
             await server.WaitAssertion(() =>
             {
-                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity;
-                Assert.NotNull(playerEnt);
-                var alertsComponent = playerEnt.GetComponent<ServerAlertsComponent>();
+                var playerEnt = serverPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
+                Assert.That(playerEnt, Is.Not.EqualTo(default));
+                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AlertsComponent>(playerEnt);
                 Assert.NotNull(alertsComponent);
 
-                alertsComponent.ClearAlert(AlertType.Debug1);
+                alertsSystem.ClearAlert(alertsComponent.Owner, AlertType.Debug1);
             });
             await server.WaitRunTicks(5);
             await client.WaitRunTicks(5);
@@ -84,7 +84,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.NotNull(local);
                 var controlled = local.ControlledEntity;
                 Assert.NotNull(controlled);
-                var alertsComponent = controlled.GetComponent<ClientAlertsComponent>();
+                var alertsComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AlertsComponent>(controlled.Value);
                 Assert.NotNull(alertsComponent);
 
                 // find the alertsui

@@ -1,10 +1,11 @@
 using System;
 using Content.Server.Interaction;
-using Content.Server.Items;
+using Content.Shared.Item;
 using Content.Shared.MobState.Components;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -29,44 +30,39 @@ namespace Content.Server.Throwing
         /// <param name="direction">A vector pointing from the entity to its destination.</param>
         /// <param name="strength">How much the direction vector should be multiplied for velocity.</param>
         /// <param name="user"></param>
-        /// <param name="pushbackRatio">The ratio of impulse applied to the thrower</param>
-        internal static void TryThrow(this IEntity entity, Vector2 direction, float strength = 1.0f, IEntity? user = null, float pushbackRatio = 1.0f)
+        /// <param name="pushbackRatio">The ratio of impulse applied to the thrower - defaults to 10 because otherwise it's not enough to properly recover from getting spaced</param>
+        internal static void TryThrow(this EntityUid entity, Vector2 direction, float strength = 1.0f, EntityUid? user = null, float pushbackRatio = 10.0f)
         {
-            if (entity.Deleted ||
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (entities.GetComponent<MetaDataComponent>(entity).EntityDeleted ||
                 strength <= 0f ||
-                !entity.TryGetComponent(out PhysicsComponent? physicsComponent))
+                !entities.TryGetComponent(entity, out PhysicsComponent? physicsComponent))
             {
                 return;
             }
 
-            if (physicsComponent.BodyType == BodyType.Static)
+            if (physicsComponent.BodyType != BodyType.Dynamic)
             {
-                Logger.Warning("Tried to throw entity {entity} but can't throw static bodies!");
-                return;
-            }
-
-            if (entity.HasComponent<MobStateComponent>())
-            {
-                Logger.Warning("Throwing not supported for mobs!");
+                Logger.Warning($"Tried to throw entity {entities.ToPrettyString(entity)} but can't throw {physicsComponent.BodyType} bodies!");
                 return;
             }
 
             var comp = entity.EnsureComponent<ThrownItemComponent>();
-            if (entity.HasComponent<ItemComponent>())
+            if (entities.HasComponent<SharedItemComponent>(entity))
             {
                 comp.Thrower = user;
                 // Give it a l'il spin.
-                if (!entity.HasTag("NoSpinOnThrow"))
+                if (!EntitySystem.Get<TagSystem>().HasTag(entity, "NoSpinOnThrow"))
                 {
                     physicsComponent.ApplyAngularImpulse(ThrowAngularImpulse);
                 }
                 else if(direction != Vector2.Zero)
                 {
-                    entity.Transform.LocalRotation = direction.ToWorldAngle() - Math.PI;
+                    entities.GetComponent<TransformComponent>(entity).LocalRotation = direction.ToWorldAngle() - Math.PI;
                 }
 
                 if (user != null)
-                    EntitySystem.Get<InteractionSystem>().ThrownInteraction(user, entity);
+                    EntitySystem.Get<InteractionSystem>().ThrownInteraction(user.Value, entity);
             }
 
             var impulseVector = direction.Normalized * strength * physicsComponent.Mass;
@@ -93,10 +89,10 @@ namespace Content.Server.Throwing
             }
 
             // Give thrower an impulse in the other direction
-            if (user != null && pushbackRatio > 0.0f && user.TryGetComponent(out IPhysBody? body))
+            if (user != null && pushbackRatio > 0.0f && entities.TryGetComponent(user.Value, out IPhysBody? body))
             {
                 var msg = new ThrowPushbackAttemptEvent();
-                body.Owner.EntityManager.EventBus.RaiseLocalEvent(body.Owner.Uid, msg);
+                entities.EventBus.RaiseLocalEvent(body.Owner, msg);
 
                 if (!msg.Cancelled)
                 {

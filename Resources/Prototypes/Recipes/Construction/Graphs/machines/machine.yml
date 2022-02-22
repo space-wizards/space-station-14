@@ -1,0 +1,117 @@
+﻿- type: constructionGraph
+  id: Machine
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:SpawnPrototype
+          prototype: SheetSteel1
+        - !type:DeleteEntity
+      edges:
+        - to: missingWires
+          completed:
+            - !type:SetAnchor
+              value: false
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 2.5
+        - to: destroyedMachineFrame
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 2.5
+
+    - node: missingWires
+      entity: UnfinishedMachineFrame
+      actions:
+        - !type:SpriteStateChange
+          state: "box_0"
+        - !type:EmptyAllContainers
+      edges:
+        - to: machineFrame
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - material: Cable
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 5
+            - !type:DeleteEntity
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+    - node: machineFrame
+      entity: MachineFrame
+      actions:
+        - !type:MachineFrameRegenerateProgress
+      edges:
+        - to: machine
+          conditions:
+            - !type:EntityAnchored
+            - !type:MachineFrameComplete
+              guideIconBoard:
+                sprite: Objects/Misc/module.rsi
+                state: id_mod
+              guideIconParts:
+                sprite: Objects/Misc/stock_parts.rsi
+                state: scan_module
+          completed:
+            # Yes, this is snowflaked so we don't have to make an unique graph per machine. You're welcome.
+            - !type:BuildMachine
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+        - to: missingWires
+          conditions:
+            - !type:EntityAnchored
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+          steps:
+            - tool: Prying
+              doAfter: 2
+              completed:
+                - !type:EmptyAllContainers
+                - !type:MachineFrameRegenerateProgress
+            - tool: Cutting
+              doAfter: 0.25
+
+    - node: machine
+      actions:
+        - !type:AddContainer
+          container: machine_parts
+        - !type:AddContainer
+          container: machine_board
+      edges:
+        - to: machineFrame
+          completed:
+            - !type:RaiseEvent
+              event: !type:MachineDeconstructedEvent
+              broadcast: false
+          conditions:
+            - !type:EntityAnchored
+            - !type:WirePanel
+          steps:
+            - tool: Prying
+              doAfter: 0.25
+
+    - node: destroyedMachineFrame
+      entity: MachineFrameDestroyed
+      edges:
+        - to: start
+          steps:
+            - tool: Welding
+              doAfter: 5            
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 3
+            - !type:DeleteEntity {}

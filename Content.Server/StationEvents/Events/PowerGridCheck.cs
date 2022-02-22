@@ -1,11 +1,7 @@
-using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Power.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Timer = Robust.Shared.Timing.Timer;
@@ -28,7 +24,7 @@ namespace Content.Server.StationEvents.Events
 
         private CancellationTokenSource? _announceCancelToken;
 
-        private readonly List<IEntity> _powered = new();
+        private readonly List<EntityUid> _powered = new();
 
         public override void Announce()
         {
@@ -51,11 +47,13 @@ namespace Content.Server.StationEvents.Events
 
         public override void Shutdown()
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
             foreach (var entity in _powered)
             {
-                if (entity.Deleted) continue;
+                if (entMan.Deleted(entity)) continue;
 
-                if (entity.TryGetComponent(out ApcPowerReceiverComponent? powerReceiverComponent))
+                if (entMan.TryGetComponent(entity, out ApcPowerReceiverComponent? powerReceiverComponent))
                 {
                     powerReceiverComponent.PowerDisabled = false;
                 }
@@ -66,7 +64,7 @@ namespace Content.Server.StationEvents.Events
             _announceCancelToken = new CancellationTokenSource();
             Timer.Spawn(3000, () =>
             {
-                SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/power_on.ogg");
+                SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/power_on.ogg", AudioParams);
             }, _announceCancelToken.Token);
             _powered.Clear();
 

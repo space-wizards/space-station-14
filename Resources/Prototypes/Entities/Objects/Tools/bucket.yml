@@ -15,12 +15,12 @@
     size: 100
     sprite: Objects/Tools/bucket.rsi
     Slots:
-    - Helmet
+    - HEAD
   - type: Bucket
   - type: SolutionContainerManager
     solutions:
       bucket:
-        maxVol: 500
+        maxVol: 100
   - type: SolutionTransfer
     transferAmount: 50
     maxTransferAmount: 100
@@ -32,6 +32,7 @@
       type: TransferAmountBoundUserInterface
   - type: Physics
     bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

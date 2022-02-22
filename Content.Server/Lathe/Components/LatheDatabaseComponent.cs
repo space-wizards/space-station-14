@@ -9,7 +9,7 @@ namespace Content.Server.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
-    public class LatheDatabaseComponent : SharedLatheDatabaseComponent
+    public sealed class LatheDatabaseComponent : SharedLatheDatabaseComponent
     {
         /// <summary>
         ///     Whether new recipes can be added to this database or not.
@@ -18,7 +18,7 @@ namespace Content.Server.Lathe.Components
         [DataField("static")]
         public bool Static { get; private set; } = false;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new LatheDatabaseState(GetRecipeIdList());
         }

@@ -9,14 +9,12 @@ namespace Content.Shared.Flash
     [NetworkedComponent, Friend(typeof(SharedFlashSystem))]
     public abstract class SharedFlashableComponent : Component
     {
-        public override string Name => "Flashable";
-
         public float Duration { get; set; }
         public TimeSpan LastFlash { get; set; }
     }
 
     [Serializable, NetSerializable]
-    public class FlashableComponentState : ComponentState
+    public sealed class FlashableComponentState : ComponentState
     {
         public float Duration { get; }
         public TimeSpan Time { get; }

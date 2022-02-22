@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration;
 
 [Serializable, NetSerializable]
-public class AdminLogsEuiState : EuiStateBase
+public sealed class AdminLogsEuiState : EuiStateBase
 {
     public AdminLogsEuiState(int roundId, Dictionary<Guid, string> players)
     {
@@ -32,13 +33,13 @@ public static class AdminLogsEuiMsg
     [Serializable, NetSerializable]
     public sealed class NewLogs : EuiMessageBase
     {
-        public NewLogs(SharedAdminLog[] logs, bool replace)
+        public NewLogs(List<SharedAdminLog> logs, bool replace)
         {
             Logs = logs;
             Replace = replace;
         }
 
-        public SharedAdminLog[] Logs { get; set; }
+        public List<SharedAdminLog> Logs { get; set; }
         public bool Replace { get; set; }
     }
 
@@ -47,8 +48,8 @@ public static class AdminLogsEuiMsg
     {
         public LogsRequest(
             int? roundId,
-            List<LogType>? types,
-            List<LogImpact>? impacts,
+            HashSet<LogType>? types,
+            HashSet<LogImpact>? impacts,
             DateTime? before,
             DateTime? after,
             Guid[]? anyPlayers,
@@ -68,8 +69,8 @@ public static class AdminLogsEuiMsg
         }
 
         public int? RoundId { get; set; }
-        public List<LogType>? Types { get; set; }
-        public List<LogImpact>? Impacts { get; set; }
+        public HashSet<LogType>? Types { get; set; }
+        public HashSet<LogImpact>? Impacts { get; set; }
         public DateTime? Before { get; set; }
         public DateTime? After { get; set; }
         public Guid[]? AnyPlayers { get; set; }

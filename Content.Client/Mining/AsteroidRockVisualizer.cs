@@ -2,28 +2,29 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Mining
 {
     [UsedImplicitly]
-    public class AsteroidRockVisualizer : AppearanceVisualizer
+    public sealed class AsteroidRockVisualizer : AppearanceVisualizer
     {
         [DataField("layer")]
         private int Layer { get; } = 0;
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            entity.GetComponentOrNull<SpriteComponent>()?.LayerMapReserveBlank(Layer);
+            IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SpriteComponent>(entity)?.LayerMapReserveBlank(Layer);
         }
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out SpriteComponent? sprite))
             {
                 return;
             }

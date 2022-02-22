@@ -11,7 +11,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasOutletInjectorSystem : EntitySystem
+    public sealed class GasOutletInjectorSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
@@ -35,7 +35,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!nodeContainer.TryGetNode(injector.InletName, out PipeNode? inlet))
                 return;
 
-            var environment = _atmosphereSystem.GetTileMixture(injector.Owner.Transform.Coordinates, true);
+            var environment = _atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(injector.Owner).Coordinates, true);
 
             if (environment == null)
                 return;

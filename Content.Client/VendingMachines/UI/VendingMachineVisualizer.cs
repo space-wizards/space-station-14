@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
@@ -116,14 +117,11 @@ namespace Content.Client.VendingMachines.UI
             flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(key, 0f));
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            if (!entity.HasComponent<AnimationPlayerComponent>())
-            {
-                entity.AddComponent<AnimationPlayerComponent>();
-            }
+            IoCManager.Resolve<IEntityManager>().EnsureComponent<AnimationPlayerComponent>(entity);
         }
 
         private void HideLayers(ISpriteComponent spriteComponent)
@@ -140,8 +138,9 @@ namespace Content.Client.VendingMachines.UI
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var sprite = entMan.GetComponent<ISpriteComponent>(component.Owner);
+            var animPlayer = entMan.GetComponent<AnimationPlayerComponent>(component.Owner);
             if (!component.TryGetData(VendingMachineVisuals.VisualState, out VendingMachineVisualState state))
             {
                 state = VendingMachineVisualState.Normal;

@@ -2,11 +2,12 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Wall
 {
     [UsedImplicitly]
-    public class ReinforcedWallVisualizer : AppearanceVisualizer
+    public sealed class ReinforcedWallVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {
@@ -22,7 +23,8 @@ namespace Content.Client.Wall
         {
             var entity = component.Owner;
 
-            if (!entity.TryGetComponent(out ISpriteComponent? sprite)) return;
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(entity, out ISpriteComponent? sprite)) return;
 
             if (stage < 0)
             {

@@ -26,6 +26,9 @@
     - type: Appearance
       visuals:
         - type: LanternVisualizer
+    - type: PowerCellSlot
+      cellSlot:
+        startingItem: PowerCellSmallHigh
 
 - type: entity
   name: extra-bright lantern

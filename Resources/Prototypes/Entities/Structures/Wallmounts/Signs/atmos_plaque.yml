@@ -3,7 +3,9 @@
   id: PlaqueAtmos
   name: atmos plaque
   components:
+  - type: WallMount
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

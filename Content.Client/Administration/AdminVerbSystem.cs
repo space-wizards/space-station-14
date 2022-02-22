@@ -1,27 +1,25 @@
-using Content.Client.Administration.UI.Tabs.AtmosTab;
 using Content.Shared.Verbs;
 using Robust.Client.Console;
 using Robust.Client.ViewVariables;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 
 namespace Content.Client.Verbs
 {
     /// <summary>
     ///     Client-side admin verb system. These usually open some sort of UIs.
     /// </summary>
-    class AdminVerbSystem : EntitySystem
+    sealed class AdminVerbSystem : EntitySystem
     {
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
-        [Dependency] private readonly IViewVariablesManager _viewVariablesManager = default!;
+        [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddAdminVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddAdminVerbs);
         }
 
-        private void AddAdminVerbs(GetOtherVerbsEvent args)
+        private void AddAdminVerbs(GetVerbsEvent<Verb> args)
         {
             // Currently this is only the ViewVariables verb, but more admin-UI related verbs can be added here.
 
@@ -32,7 +30,8 @@ namespace Content.Client.Verbs
                 verb.Category = VerbCategory.Debug;
                 verb.Text = "View Variables";
                 verb.IconTexture = "/Textures/Interface/VerbIcons/vv.svg.192dpi.png";
-                verb.Act = () => _viewVariablesManager.OpenVV(args.Target);
+                verb.Act = () => _clientConsoleHost.ExecuteCommand($"vv {args.Target}");
+                verb.ClientExclusive = true; // opening VV window is client-side. Don't ask server to run this verb.
                 args.Verbs.Add(verb);
             }
         }

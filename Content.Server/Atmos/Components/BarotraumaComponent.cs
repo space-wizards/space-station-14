@@ -10,10 +10,8 @@ namespace Content.Server.Atmos.Components
     ///     Barotrauma: injury because of changes in air pressure.
     /// </summary>
     [RegisterComponent]
-    public class BarotraumaComponent : Component
+    public sealed class BarotraumaComponent : Component
     {
-        public override string Name => "Barotrauma";
-
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
@@ -21,5 +19,10 @@ namespace Content.Server.Atmos.Components
         [DataField("maxDamage")]
         [ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 MaxDamage = 200;
+
+        /// <summary>
+        ///     Used to keep track of when damage starts/stops. Useful for logs.
+        /// </summary>
+        public bool TakingDamage = false;
     }
 }

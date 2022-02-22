@@ -1,40 +1,42 @@
-﻿using System;
+using System;
 using Content.Shared.Rotation;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Rotation
 {
     [UsedImplicitly]
-    public class RotationVisualizer : AppearanceVisualizer
+    public sealed class RotationVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            if (component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state))
+            // if TryGet fails, state defaults to RotationState.Vertical.
+            component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state);
+
+            switch (state)
             {
-                switch (state)
-                {
-                    case RotationState.Vertical:
-                        SetRotation(component, 0);
-                        break;
-                    case RotationState.Horizontal:
-                        SetRotation(component, Angle.FromDegrees(90));
-                        break;
-                }
+                case RotationState.Vertical:
+                    SetRotation(component, 0);
+                    break;
+                case RotationState.Horizontal:
+                    SetRotation(component, Angle.FromDegrees(90));
+                    break;
             }
         }
 
         private void SetRotation(AppearanceComponent component, Angle rotation)
         {
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var sprite = entMan.GetComponent<ISpriteComponent>(component.Owner);
 
-            if (!sprite.Owner.TryGetComponent(out AnimationPlayerComponent? animation))
+            if (!entMan.TryGetComponent(sprite.Owner, out AnimationPlayerComponent? animation))
             {
                 sprite.Rotation = rotation;
                 return;

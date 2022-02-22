@@ -8,24 +8,25 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using System;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Light.EntitySystems
 {
-    public class UnpoweredFlashlightSystem : EntitySystem
+    public sealed class UnpoweredFlashlightSystem : EntitySystem
     {
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<UnpoweredFlashlightComponent, GetActivationVerbsEvent>(AddToggleLightVerbs);
+            SubscribeLocalEvent<UnpoweredFlashlightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerbs);
         }
 
-        private void AddToggleLightVerbs(EntityUid uid, UnpoweredFlashlightComponent component, GetActivationVerbsEvent args)
+        private void AddToggleLightVerbs(EntityUid uid, UnpoweredFlashlightComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            Verb verb = new();
+            ActivationVerb verb = new();
             verb.Text = Loc.GetString("toggle-flashlight-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
             verb.Act = () => ToggleLight(component);
@@ -36,18 +37,18 @@ namespace Content.Server.Light.EntitySystems
 
         public void ToggleLight(UnpoweredFlashlightComponent flashlight)
         {
-            if (!flashlight.Owner.TryGetComponent(out PointLightComponent? light))
+            if (!EntityManager.TryGetComponent(flashlight.Owner, out PointLightComponent? light))
                 return;
 
             flashlight.LightOn = !flashlight.LightOn;
             light.Enabled = flashlight.LightOn;
 
-            if (flashlight.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(flashlight.Owner, out AppearanceComponent? appearance))
                 appearance.SetData(UnpoweredFlashlightVisuals.LightOn, flashlight.LightOn);
 
             SoundSystem.Play(Filter.Pvs(light.Owner), flashlight.ToggleSound.GetSound(), flashlight.Owner);
 
-            RaiseLocalEvent(flashlight.Owner.Uid, new LightToggleEvent(flashlight.LightOn));
+            RaiseLocalEvent(flashlight.Owner, new LightToggleEvent(flashlight.LightOn));
         }
 
     }

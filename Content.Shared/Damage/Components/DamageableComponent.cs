@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.Acts;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Radiation;
 using Robust.Shared.Analyzers;
@@ -26,10 +25,8 @@ namespace Content.Shared.Damage
     [RegisterComponent]
     [NetworkedComponent()]
     [Friend(typeof(DamageableSystem))]
-    public class DamageableComponent : Component, IRadiationAct, IExAct
+    public sealed class DamageableComponent : Component, IRadiationAct, IExAct
     {
-        public override string Name => "Damageable";
-
         /// <summary>
         ///     This <see cref="DamageContainerPrototype"/> specifies what damage types are supported by this component.
         ///     If null, all damage types will be supported.
@@ -93,7 +90,7 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeID, damageValue);
             }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, damage);
         }
 
         // TODO EXPLOSION Remove this.
@@ -114,12 +111,12 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeID, damageValue);
             }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, damage);
         }
     }
 
     [Serializable, NetSerializable]
-    public class DamageableComponentState : ComponentState
+    public sealed class DamageableComponentState : ComponentState
     {
         public readonly Dictionary<string, FixedPoint2> DamageDict;
         public readonly string? ModifierSetId;

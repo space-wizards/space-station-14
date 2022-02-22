@@ -1,0 +1,9 @@
+﻿- type: inventoryTemplate
+  id: drone
+  slots:
+  - name: head
+    slotTexture: head
+    slotFlags: HEAD
+    uiContainer: BottomLeft
+    uiWindowPos: 0,0
+    displayName: Head

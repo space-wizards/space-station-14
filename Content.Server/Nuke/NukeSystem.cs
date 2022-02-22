@@ -1,32 +1,31 @@
+using System.Collections.Generic;
+using Content.Server.Chat.Managers;
 using Content.Server.Construction.Components;
+using Content.Server.Coordinates.Helpers;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Nuke;
-using Content.Server.Chat.Managers;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using System.Collections.Generic;
-using Content.Server.Coordinates.Helpers;
-using Content.Shared.Audio;
-using Content.Shared.Sound;
-using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 
 namespace Content.Server.Nuke
 {
-    public class NukeSystem : EntitySystem
+    public sealed class NukeSystem : EntitySystem
     {
         [Dependency] private readonly NukeCodeSystem _codes = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
         [Dependency] private readonly IEntityLookup _lookup = default!;
@@ -46,8 +45,7 @@ namespace Content.Server.Nuke
             // anchoring logic
             SubscribeLocalEvent<NukeComponent, AnchorAttemptEvent>(OnAnchorAttempt);
             SubscribeLocalEvent<NukeComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
-            SubscribeLocalEvent<NukeComponent, AnchoredEvent>(OnWasAnchored);
-            SubscribeLocalEvent<NukeComponent, UnanchoredEvent>(OnWasUnanchored);
+            SubscribeLocalEvent<NukeComponent, AnchorStateChangedEvent>(OnAnchorChanged);
 
             // ui events
             SubscribeLocalEvent<NukeComponent, NukeEjectMessage>(OnEjectButtonPressed);
@@ -62,6 +60,9 @@ namespace Content.Server.Nuke
         {
             component.RemainingTime = component.Timer;
             _itemSlots.AddItemSlot(uid, component.Name, component.DiskSlot);
+
+            UpdateStatus(uid, component);
+            UpdateUserInterface(uid, component);
         }
 
         public override void Update(float frameTime)
@@ -101,6 +102,8 @@ namespace Content.Server.Nuke
 
         private void OnItemSlotChanged(EntityUid uid, NukeComponent component, ContainerModifiedMessage args)
         {
+            if (!component.Initialized) return;
+
             if (args.Container.ID != component.DiskSlot.ID)
                 return;
 
@@ -113,13 +116,7 @@ namespace Content.Server.Nuke
             if (args.Handled)
                 return;
 
-            // standard interactions check
-            if (!args.InRangeUnobstructed())
-                return;
-            if (!_actionBlocker.CanInteract(args.User.Uid) || !_actionBlocker.CanUse(args.User.Uid))
-                return;
-
-            if (!EntityManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             ShowUI(uid, actor.PlayerSession, component);
@@ -149,12 +146,7 @@ namespace Content.Server.Nuke
             }
         }
 
-        private void OnWasUnanchored(EntityUid uid, NukeComponent component, UnanchoredEvent args)
-        {
-            UpdateUserInterface(uid, component);
-        }
-
-        private void OnWasAnchored(EntityUid uid, NukeComponent component, AnchoredEvent args)
+        private void OnAnchorChanged(EntityUid uid, NukeComponent component, ref AnchorStateChangedEvent args)
         {
             UpdateUserInterface(uid, component);
         }
@@ -166,7 +158,7 @@ namespace Content.Server.Nuke
             if (!component.DiskSlot.HasItem)
                 return;
 
-            _itemSlots.TryEjectToHands(uid, component.DiskSlot, args.Session.AttachedEntityUid);
+            _itemSlots.TryEjectToHands(uid, component.DiskSlot, args.Session.AttachedEntity);
         }
 
         private async void OnAnchorButtonPressed(EntityUid uid, NukeComponent component, NukeAnchorMessage args)
@@ -413,7 +405,7 @@ namespace Content.Server.Nuke
             var ents = _lookup.GetEntitiesInRange(pos, component.BlastRadius);
             foreach (var ent in ents)
             {
-                var entUid = ent.Uid;
+                var entUid = ent;
                 if (!EntityManager.EntityExists(entUid))
                     continue;;
 

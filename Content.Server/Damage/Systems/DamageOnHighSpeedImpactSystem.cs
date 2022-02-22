@@ -1,14 +1,9 @@
-using System;
 using Content.Server.Damage.Components;
 using Content.Server.Stunnable;
-using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
-using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -47,9 +42,10 @@ namespace Content.Server.Damage.Systems
             component.LastHit = _gameTiming.CurTime;
 
             if (_robustRandom.Prob(component.StunChance))
-                _stunSystem.TryStun(uid, TimeSpan.FromSeconds(component.StunSeconds));
+                _stunSystem.TryStun(uid, TimeSpan.FromSeconds(component.StunSeconds), true);
 
             var damageScale = (speed / component.MinimumSpeed) * component.Factor;
+
             _damageableSystem.TryChangeDamage(uid, component.Damage * damageScale);
         }
     }

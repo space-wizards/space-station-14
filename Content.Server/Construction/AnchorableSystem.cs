@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Construction
 {
-    public class AnchorableSystem : EntitySystem
+    public sealed class AnchorableSystem : EntitySystem
     {
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
@@ -30,10 +30,11 @@ namespace Content.Server.Construction
                 return;
 
             // If the used entity doesn't have a tool, return early.
-            if (!EntityManager.TryGetComponent(args.UsedUid, out ToolComponent? usedTool))
+            if (!TryComp(args.Used, out ToolComponent? usedTool) || !usedTool.Qualities.Contains(anchorable.Tool))
                 return;
 
-            args.Handled = await TryToggleAnchor(uid, args.UserUid, args.UsedUid, anchorable, usingTool:usedTool);
+            args.Handled = true;
+            await TryToggleAnchor(uid, args.User, args.Used, anchorable, usingTool:usedTool);
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace Content.Server.Construction
             if (attempt.Cancelled)
                 return false;
 
-            return await _toolSystem.UseTool(usingUid, userUid, uid, 0f, 0.5f + attempt.Delay, anchorable.Tool, toolComponent:usingTool);
+            return await _toolSystem.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay + attempt.Delay, anchorable.Tool, toolComponent:usingTool);
         }
 
         /// <summary>
@@ -77,7 +78,7 @@ namespace Content.Server.Construction
                 return false;
 
             // Optional resolves.
-            Resolve(uid, ref pullable);
+            Resolve(uid, ref pullable, false);
 
             if (!Resolve(usingUid, ref usingTool))
                 return false;
@@ -103,7 +104,7 @@ namespace Content.Server.Construction
 
             transform.Anchored = true;
 
-            RaiseLocalEvent(uid, new AnchoredEvent(userUid, usingUid), false);
+            RaiseLocalEvent(uid, new UserAnchoredEvent(userUid, usingUid), false);
 
             return true;
         }
@@ -132,7 +133,7 @@ namespace Content.Server.Construction
 
             transform.Anchored = false;
 
-            RaiseLocalEvent(uid, new UnanchoredEvent(userUid, usingUid), false);
+            RaiseLocalEvent(uid, new UserUnanchoredEvent(userUid, usingUid), false);
 
             return true;
         }

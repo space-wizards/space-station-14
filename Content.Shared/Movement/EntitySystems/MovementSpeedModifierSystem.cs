@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -25,6 +26,7 @@ namespace Content.Shared.Movement.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+            UpdatesOutsidePrediction = true;
             SubscribeLocalEvent<MovementSpeedModifierComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<MovementSpeedModifierComponent, ComponentHandleState>(OnHandleState);
         }
@@ -35,6 +37,8 @@ namespace Content.Shared.Movement.EntitySystems
             {
                 BaseWalkSpeed = component.BaseWalkSpeed,
                 BaseSprintSpeed = component.BaseSprintSpeed,
+                WalkSpeedModifier = component.WalkSpeedModifier,
+                SprintSpeedModifier = component.SprintSpeedModifier
             };
         }
 
@@ -43,6 +47,8 @@ namespace Content.Shared.Movement.EntitySystems
             if (args.Current is not MovementSpeedModifierComponentState state) return;
             component.BaseWalkSpeed = state.BaseWalkSpeed;
             component.BaseSprintSpeed = state.BaseSprintSpeed;
+            component.WalkSpeedModifier = state.WalkSpeedModifier;
+            component.SprintSpeedModifier = state.SprintSpeedModifier;
         }
 
         public void RefreshMovementSpeedModifiers(EntityUid uid)
@@ -69,6 +75,8 @@ namespace Content.Shared.Movement.EntitySystems
         {
             public float BaseWalkSpeed;
             public float BaseSprintSpeed;
+            public float WalkSpeedModifier;
+            public float SprintSpeedModifier;
         }
     }
 
@@ -77,8 +85,10 @@ namespace Content.Shared.Movement.EntitySystems
     ///     should hook into this event and set it then. If you want this event to be raised,
     ///     call <see cref="MovementSpeedModifierSystem.RefreshMovementSpeedModifiers"/>.
     /// </summary>
-    public class RefreshMovementSpeedModifiersEvent : EntityEventArgs
+    public sealed class RefreshMovementSpeedModifiersEvent : EntityEventArgs, IInventoryRelayEvent
     {
+        public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
+
         public float WalkSpeedModifier { get; private set; } = 1.0f;
         public float SprintSpeedModifier { get; private set; } = 1.0f;
 

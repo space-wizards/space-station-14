@@ -7,8 +7,8 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Commands
 {
-    [AdminCommand(AdminFlags.Server)]
-    class StartRoundCommand : IConsoleCommand
+    [AdminCommand(AdminFlags.Round)]
+    sealed class StartRoundCommand : IConsoleCommand
     {
         public string Command => "startround";
         public string Description => "Ends PreRoundLobby state and starts the round.";

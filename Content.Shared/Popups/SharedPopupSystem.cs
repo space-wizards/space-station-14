@@ -53,7 +53,7 @@ namespace Content.Shared.Popups
     ///     Network event for displaying a popup on the user's cursor.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PopupCursorEvent : PopupEvent
+    public sealed class PopupCursorEvent : PopupEvent
     {
         public PopupCursorEvent(string message) : base(message)
         {
@@ -64,7 +64,7 @@ namespace Content.Shared.Popups
     ///     Network event for displaying a popup at a world location.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PopupCoordinatesEvent : PopupEvent
+    public sealed class PopupCoordinatesEvent : PopupEvent
     {
         public EntityCoordinates Coordinates { get; }
 
@@ -78,7 +78,7 @@ namespace Content.Shared.Popups
     ///     Network event for displaying a popup above an entity.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PopupEntityEvent : PopupEvent
+    public sealed class PopupEntityEvent : PopupEvent
     {
         public EntityUid Uid { get; }
 

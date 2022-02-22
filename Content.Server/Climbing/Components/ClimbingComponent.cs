@@ -11,16 +11,17 @@ namespace Content.Server.Climbing.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedClimbingComponent))]
-    public class ClimbingComponent : SharedClimbingComponent
+    public sealed class ClimbingComponent : SharedClimbingComponent
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override bool IsClimbing
         {
             get => base.IsClimbing;
             set
             {
-                if (_isClimbing == value)
+                if (base.IsClimbing == value)
                     return;
 
                 base.IsClimbing = value;
@@ -52,28 +53,12 @@ namespace Content.Server.Climbing.Components
             }
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case BuckleMessage msg:
-                    if (msg.Buckled)
-                        IsClimbing = false;
-
-                    break;
-            }
-        }
-
         /// <summary>
         /// Make the owner climb from one point to another
         /// </summary>
         public void TryMoveTo(Vector2 from, Vector2 to)
         {
-            if (Body == null) return;
+            if (!_entityManager.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent)) return;
 
             var velocity = (to - from).Length;
 
@@ -81,11 +66,11 @@ namespace Content.Server.Climbing.Components
 
             // Since there are bodies with different masses:
             // mass * 5 seems enough to move entity
-            // instead of launching cats like rockets against the walls with constant impulse value.  
-            Body.ApplyLinearImpulse((to - from).Normalized * velocity * Body.Mass * 5);
+            // instead of launching cats like rockets against the walls with constant impulse value.
+            physicsComponent.ApplyLinearImpulse((to - from).Normalized * velocity * physicsComponent.Mass * 5);
             OwnerIsTransitioning = true;
 
-            EntitySystem.Get<ClimbSystem>().UnsetTransitionBoolAfterBufferTime(OwnerUid, this);
+            EntitySystem.Get<ClimbSystem>().UnsetTransitionBoolAfterBufferTime(Owner, this);
         }
 
         public void Update()
@@ -99,9 +84,9 @@ namespace Content.Server.Climbing.Components
                 IsClimbing = false;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
-            return new ClimbModeComponentState(_isClimbing, OwnerIsTransitioning);
+            return new ClimbModeComponentState(base.IsClimbing, OwnerIsTransitioning);
         }
     }
 }

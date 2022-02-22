@@ -9,6 +9,7 @@
       anchored: true
     - type: Physics
       bodyType: Static
+    - type: Fixtures
       fixtures:
         - shape:
             !type:PhysShapeAabb
@@ -28,7 +29,7 @@
     - type: Anchorable
     - type: Pullable
     - type: Construction
-      graph: disposalMachine
+      graph: DisposalMachine
       node: frame
     - type: Damageable
       damageContainer: Inorganic

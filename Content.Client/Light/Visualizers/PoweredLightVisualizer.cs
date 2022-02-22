@@ -7,14 +7,13 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Light.Visualizers
 {
     [UsedImplicitly]
-    public class PoweredLightVisualizer : AppearanceVisualizer
+    public sealed class PoweredLightVisualizer : AppearanceVisualizer
     {
         [DataField("minBlinkingTime")] private float _minBlinkingTime = 0.5f;
         [DataField("maxBlinkingTime")] private float _maxBlinkingTime = 2;
@@ -28,7 +27,8 @@ namespace Content.Client.Light.Visualizers
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite)) return;
             if (!component.TryGetData(PoweredLightVisuals.BulbState, out PoweredLightState state)) return;
 
             switch (state)

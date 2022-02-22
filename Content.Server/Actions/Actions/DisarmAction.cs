@@ -1,5 +1,10 @@
+using System;
+using System.Linq;
 using Content.Server.Act;
+using Content.Server.Actions.Events;
+using Content.Server.Administration.Logs;
 using Content.Server.Interaction;
+using Content.Server.Popups;
 using Content.Server.Weapon.Melee;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -7,7 +12,8 @@ using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Components;
 using Content.Shared.Audio;
 using Content.Shared.Cooldown;
-using Content.Shared.Interaction.Helpers;
+using Content.Shared.Database;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -20,18 +26,12 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Linq;
-using Content.Server.Administration.Logs;
-using Content.Server.Popups;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Popups;
 
 namespace Content.Server.Actions.Actions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class DisarmAction : ITargetEntityAction
+    public sealed class DisarmAction : ITargetEntityAction
     {
         [DataField("failProb")] private float _failProb = 0.4f;
         [DataField("pushProb")] private float _pushProb = 0.4f;
@@ -44,35 +44,43 @@ namespace Content.Server.Actions.Actions
         [ViewVariables]
         [DataField("disarmSuccessSound")]
         private SoundSpecifier DisarmSuccessSound { get; } = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
-
         public void DoTargetEntityAction(TargetEntityActionEventArgs args)
         {
-            var disarmedActs = args.Target.GetAllComponents<IDisarmedAct>().ToArray();
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var disarmedActs = entMan.GetComponents<IDisarmedAct>(args.Target).ToArray();
+            var attemptEvent = new DisarmAttemptEvent(args.Target, args.Performer);
 
-            if (!args.Performer.InRangeUnobstructed(args.Target)) return;
+            entMan.EventBus.RaiseLocalEvent(args.Target, attemptEvent);
+
+            if (attemptEvent.Cancelled)
+                return;
+
+            var sys = EntitySystem.Get<InteractionSystem>();
+
+            if (!sys.InRangeUnobstructed(args.Performer, args.Target)) return;
 
             if (disarmedActs.Length == 0)
             {
-                if (args.Performer.TryGetComponent(out ActorComponent? actor))
+                if (entMan.TryGetComponent(args.Performer, out ActorComponent? actor))
                 {
                     // Fall back to a normal interaction with the entity
                     var player = actor.PlayerSession;
-                    var coordinates = args.Target.Transform.Coordinates;
-                    var target = args.Target.Uid;
-                    EntitySystem.Get<InteractionSystem>().HandleUseInteraction(player, coordinates, target);
+                    var coordinates = entMan.GetComponent<TransformComponent>(args.Target).Coordinates;
+                    var target = args.Target;
+                    sys.HandleUseInteraction(player, coordinates, target);
                     return;
                 }
 
                 return;
             }
 
-            if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
-            if (args.Target == args.Performer || !EntitySystem.Get<ActionBlockerSystem>().CanAttack(args.Performer.Uid)) return;
+            if (!entMan.TryGetComponent<SharedActionsComponent?>(args.Performer, out var actions)) return;
+            if (args.Target == args.Performer || !EntitySystem.Get<ActionBlockerSystem>().CanAttack(args.Performer)) return;
 
             var random = IoCManager.Resolve<IRobustRandom>();
             var system = EntitySystem.Get<MeleeWeaponSystem>();
 
-            var diff = args.Target.Transform.MapPosition.Position - args.Performer.Transform.MapPosition.Position;
+            var diff = entMan.GetComponent<TransformComponent>(args.Target).MapPosition.Position - entMan.GetComponent<TransformComponent>(args.Performer).MapPosition.Position;
             var angle = Angle.FromWorldVec(diff);
 
             actions.Cooldown(ActionType.Disarm, Cooldowns.SecondsFromNow(_cooldown));
@@ -82,10 +90,10 @@ namespace Content.Server.Actions.Actions
                 SoundSystem.Play(Filter.Pvs(args.Performer), PunchMissSound.GetSound(), args.Performer, AudioHelpers.WithVariation(0.025f));
 
                 args.Performer.PopupMessageOtherClients(Loc.GetString("disarm-action-popup-message-other-clients",
-                                                                      ("performerName", args.Performer.Name),
-                                                                      ("targetName", args.Target.Name)));
+                                                                      ("performerName", entMan.GetComponent<MetaDataComponent>(args.Performer).EntityName),
+                                                                      ("targetName", entMan.GetComponent<MetaDataComponent>(args.Target).EntityName)));
                 args.Performer.PopupMessageCursor(Loc.GetString("disarm-action-popup-message-cursor",
-                                                                ("targetName", args.Target.Name)));
+                                                                ("targetName", entMan.GetComponent<MetaDataComponent>(args.Target).EntityName)));
                 system.SendLunge(angle, args.Performer);
                 return;
             }
@@ -94,9 +102,9 @@ namespace Content.Server.Actions.Actions
 
             var eventArgs = new DisarmedActEvent() { Target = args.Target, Source = args.Performer, PushProbability = _pushProb };
 
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(args.Target.Uid, eventArgs);
+            entMan.EventBus.RaiseLocalEvent(args.Target, eventArgs);
 
-            EntitySystem.Get<AdminLogSystem>().Add(LogType.DisarmedAction, LogImpact.Low, $"{args.Performer:performer} used disarm on {args.Target:target}");
+            EntitySystem.Get<AdminLogSystem>().Add(LogType.DisarmedAction, LogImpact.Low, $"{entMan.ToPrettyString(args.Performer):user} used disarm on {entMan.ToPrettyString(args.Target):target}");
 
             // Check if the event has been handled, and if so, do nothing else!
             if (eventArgs.Handled)
@@ -112,7 +120,7 @@ namespace Content.Server.Actions.Actions
                     return;
             }
 
-            SoundSystem.Play(Filter.Pvs(args.Performer), DisarmSuccessSound.GetSound(), args.Performer.Transform.Coordinates, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(Filter.Pvs(args.Performer), DisarmSuccessSound.GetSound(), entMan.GetComponent<TransformComponent>(args.Performer).Coordinates, AudioHelpers.WithVariation(0.025f));
         }
     }
 }

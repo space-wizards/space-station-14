@@ -2,11 +2,12 @@ using Content.Shared.Atmos.Piping.Unary.Visuals;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
-    public class ScrubberVisualizer : AppearanceVisualizer
+    public sealed class ScrubberVisualizer : AppearanceVisualizer
     {
         private string _offState = "scrub_off";
         private string _scrubState = "scrub_on";
@@ -18,7 +19,8 @@ namespace Content.Client.Atmos.Visualizers
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
                 return;
 
             if (!component.TryGetData(ScrubberVisuals.State, out ScrubberState state))

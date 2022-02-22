@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  id: BaseApc
+  id: BaseAPC
   name: APC
   description: A control terminal for the area's electrical systems.
   placement:
@@ -13,6 +13,7 @@
     sound:
       path: /Audio/Ambience/Objects/hdd_buzz.ogg
   - type: PointLight
+    netsync: false
     radius: 1.5
     energy: 1.6
     color: "#3db83b"
@@ -22,6 +23,7 @@
     access: [["Engineering"]]
   - type: InteractionOutline
   - type: Physics
+  - type: Fixtures
     fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -39,7 +41,7 @@
     - type: ApcVisualizer
   - type: Battery
     maxCharge: 10000
-    startingCharge: 10000
+    startingCharge: 0
   - type: ExaminableBattery
   - type: NodeContainer
     examinable: true
@@ -61,8 +63,12 @@
     interfaces:
     - key: enum.ApcUiKey.Key
       type: ApcBoundUserInterface
+  - type: ActivatableUI
+    inHandsOnly: false
+    singleUser: true
+    key: enum.ApcUiKey.Key
   - type: Construction
-    graph: apc
+    graph: APC
     node: apc
   - type: PowerNetworkBattery
     maxSupply: 10000

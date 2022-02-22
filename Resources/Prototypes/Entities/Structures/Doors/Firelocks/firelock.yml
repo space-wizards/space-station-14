@@ -4,6 +4,16 @@
   name: firelock
   description: Apply crowbar.
   components:
+    - type: AtmosAlarmable
+      alarmedBy:
+      - FireAlarm
+      - AirAlarm
+    - type: ApcPowerReceiver
+    - type: ExtensionCableReceiver
+    - type: DeviceNetworkComponent
+      deviceNetId: Apc
+      frequency: 1621
+    - type: ApcNetworkConnection
     - type: InteractionOutline
     - type: Damageable
       damageContainer: Inorganic
@@ -32,8 +42,7 @@
           map: ["enum.DoorVisualLayers.BaseBolted"]
         - state: panel_open
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - type: Physics
-      canCollide: false
+    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -52,9 +61,9 @@
       closeTimeTwo: 0.6
       openTimeOne: 0.1
       openTimeTwo: 0.6
-      startOpen: true
+      state: Open
       bumpOpen: false
-      inhibitCrush: false
+      clickOpen: false
       crushDamage:
         types:
           Blunt: 15
@@ -69,6 +78,7 @@
       visuals:
         - type: AirlockVisualizer
           animationTime: 0.6
+          emergencyAccessLayer: false
         - type: WiresVisualizer
     - type: Wires
       BoardName: "Firelock Control"
@@ -79,8 +89,6 @@
           type: WiresBoundUserInterface
     - type: Airtight
       fixVacuum: true
-    - type: Occluder
-      enabled: false
     - type: Construction
       graph: Firelock
       node: Firelock
@@ -90,14 +98,6 @@
   parent: Firelock
   name: glass firelock
   components:
-    - type: Door
-      occludes: false
-      inhibitCrush: false
-      crushDamage:
-        types:
-          Blunt: 15
-    - type: Occluder
-      enabled: false
     - type: Sprite
       sprite: Structures/Doors/Airlocks/Glass/firelock.rsi
 
@@ -106,12 +106,6 @@
   parent: Firelock
   name: firelock
   components:
-    - type: Door
-      occludes: false
-      inhibitCrush: false
-      crushDamage:
-        types:
-          Blunt: 15
     - type: Sprite
       sprite: Structures/Doors/edge_door_hazard.rsi
     - type: Airtight
@@ -119,7 +113,7 @@
       noAirWhenFullyAirBlocked: false
       airBlockedDirection:
         - South
-    - type: Physics
+    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb

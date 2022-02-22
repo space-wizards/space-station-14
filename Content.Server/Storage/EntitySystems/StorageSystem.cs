@@ -1,24 +1,26 @@
 using System.Collections.Generic;
 using Content.Server.Hands.Components;
-using Content.Server.Interaction;
 using Content.Server.Storage.Components;
-using Content.Shared.Verbs;
+using Content.Shared.Interaction;
 using Content.Shared.Movement;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Timing;
 using Robust.Shared.Localization;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Storage.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class StorageSystem : EntitySystem
+    public sealed partial class StorageSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         private readonly List<IPlayerSession> _sessionCache = new();
 
@@ -30,24 +32,26 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleEntityRemovedFromContainer);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
 
-            SubscribeLocalEvent<EntityStorageComponent, GetInteractionVerbsEvent>(AddToggleOpenVerb);
-            SubscribeLocalEvent<ServerStorageComponent, GetActivationVerbsEvent>(AddOpenUiVerb);
+            SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
+            SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
             SubscribeLocalEvent<EntityStorageComponent, RelayMovementEntityEvent>(OnRelayMovement);
+
+            SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
         }
 
         private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, RelayMovementEntityEvent args)
         {
-            if (EntityManager.HasComponent<HandsComponent>(args.Entity.Uid))
-            {
-                if (_gameTiming.CurTime <
-                    component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)
-                {
-                    return;
-                }
+            if (!EntityManager.HasComponent<HandsComponent>(args.Entity))
+                return;
 
-                component.LastInternalOpenAttempt = _gameTiming.CurTime;
-                component.TryOpenStorage(args.Entity);
+            if (_gameTiming.CurTime <
+                component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)
+            {
+                return;
             }
+
+            component.LastInternalOpenAttempt = _gameTiming.CurTime;
+            component.TryOpenStorage(args.Entity);
         }
 
         /// <inheritdoc />
@@ -59,7 +63,7 @@ namespace Content.Server.Storage.EntitySystems
             }
         }
 
-        private void AddToggleOpenVerb(EntityUid uid, EntityStorageComponent component, GetInteractionVerbsEvent args)
+        private void AddToggleOpenVerb(EntityUid uid, EntityStorageComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -67,7 +71,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!component.CanOpen(args.User, silent: true))
                 return;
 
-            Verb verb = new();
+            InteractionVerb verb = new();
             if (component.Open)
             {
                 verb.Text = Loc.GetString("verb-common-close");
@@ -82,7 +86,7 @@ namespace Content.Server.Storage.EntitySystems
             args.Verbs.Add(verb);
         }
 
-        private void AddOpenUiVerb(EntityUid uid, ServerStorageComponent component, GetActivationVerbsEvent args)
+        private void AddOpenUiVerb(EntityUid uid, ServerStorageComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -91,14 +95,14 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             // Get the session for the user
-            var session = args.User.GetComponentOrNull<ActorComponent>()?.PlayerSession;
+            var session = EntityManager.GetComponentOrNull<ActorComponent>(args.User)?.PlayerSession;
             if (session == null)
                 return;
 
             // Does this player currently have the storage UI open?
             var uiOpen = component.SubscribedSessions.Contains(session);
 
-            Verb verb = new();
+            ActivationVerb verb = new();
             verb.Act = () => component.OpenStorageUI(args.User);
             if (uiOpen)
             {
@@ -113,21 +117,21 @@ namespace Content.Server.Storage.EntitySystems
             args.Verbs.Add(verb);
         }
 
-        private static void HandleEntityRemovedFromContainer(EntRemovedFromContainerMessage message)
+        private void HandleEntityRemovedFromContainer(EntRemovedFromContainerMessage message)
         {
             var oldParentEntity = message.Container.Owner;
 
-            if (oldParentEntity.TryGetComponent(out ServerStorageComponent? storageComp))
+            if (EntityManager.TryGetComponent(oldParentEntity, out ServerStorageComponent? storageComp))
             {
                 storageComp.HandleEntityMaybeRemoved(message);
             }
         }
 
-        private static void HandleEntityInsertedIntoContainer(EntInsertedIntoContainerMessage message)
+        private void HandleEntityInsertedIntoContainer(EntInsertedIntoContainerMessage message)
         {
             var oldParentEntity = message.Container.Owner;
 
-            if (oldParentEntity.TryGetComponent(out ServerStorageComponent? storageComp))
+            if (EntityManager.TryGetComponent(oldParentEntity, out ServerStorageComponent? storageComp))
             {
                 storageComp.HandleEntityMaybeInserted(message);
             }
@@ -143,22 +147,20 @@ namespace Content.Server.Storage.EntitySystems
             if (_sessionCache.Count == 0)
                 return;
 
-            var storagePos = storageComp.Owner.Transform.WorldPosition;
-            var storageMap = storageComp.Owner.Transform.MapID;
+            var storagePos = EntityManager.GetComponent<TransformComponent>(storageComp.Owner).WorldPosition;
+            var storageMap = EntityManager.GetComponent<TransformComponent>(storageComp.Owner).MapID;
 
             foreach (var session in _sessionCache)
             {
-                var attachedEntity = session.AttachedEntity;
-
                 // The component manages the set of sessions, so this invalid session should be removed soon.
-                if (attachedEntity == null || !attachedEntity.IsValid())
+                if (session.AttachedEntity is not {} attachedEntity || !EntityManager.EntityExists(attachedEntity))
                     continue;
 
-                if (storageMap != attachedEntity.Transform.MapID)
+                if (storageMap != EntityManager.GetComponent<TransformComponent>(attachedEntity).MapID)
                     continue;
 
-                var distanceSquared = (storagePos - attachedEntity.Transform.WorldPosition).LengthSquared;
-                if (distanceSquared > InteractionSystem.InteractionRangeSquared)
+                var distanceSquared = (storagePos - EntityManager.GetComponent<TransformComponent>(attachedEntity).WorldPosition).LengthSquared;
+                if (distanceSquared > SharedInteractionSystem.InteractionRangeSquared)
                 {
                     storageComp.UnsubscribeSession(session);
                 }

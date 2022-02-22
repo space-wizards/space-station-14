@@ -8,6 +8,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/mixer.rsi
+    netsync: false
     layers:
     - state: mixer_empty
     - state: mixer_screens
@@ -23,6 +24,7 @@
         - FitsInDispenser
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -47,6 +49,8 @@
     interfaces:
     - key: enum.ChemMasterUiKey.Key
       type: ChemMasterBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 250
   # Machine / Construction stuff
   - type: Wires
     BoardName: "chem_master"
@@ -55,6 +59,6 @@
     board: ChemMasterMachineCircuitboard
   - type: MaterialStorage
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
 

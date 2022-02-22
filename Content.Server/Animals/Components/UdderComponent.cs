@@ -1,23 +1,23 @@
 using System;
 using Content.Server.Animals.Systems;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Animals.Components
 {
     [RegisterComponent, Friend(typeof(UdderSystem))]
-    internal class UdderComponent : Component
+    internal sealed class UdderComponent : Component
     {
-        public override string Name => "Udder";
-
         /// <summary>
         ///     The reagent to produce.
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
-        [DataField("reagentId")]
+        [DataField("reagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
         public string ReagentId = "Milk";
 
         /// <summary>

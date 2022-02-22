@@ -15,10 +15,8 @@ namespace Content.Server.Body.Components
     ///     Handles metabolizing various reagents with given effects.
     /// </summary>
     [RegisterComponent, Friend(typeof(MetabolizerSystem))]
-    public class MetabolizerComponent : Component
+    public sealed class MetabolizerComponent : Component
     {
-        public override string Name => "Metabolizer";
-
         public float AccumulatedFrametime = 0.0f;
 
         /// <summary>
@@ -32,7 +30,7 @@ namespace Content.Server.Body.Components
         ///     From which solution will this metabolizer attempt to metabolize chemicals
         /// </summary>
         [DataField("solution")]
-        public string SolutionName { get; set; } = SharedBloodstreamComponent.DefaultSolutionName;
+        public string SolutionName { get; set; } = BloodstreamComponent.DefaultChemicalsSolutionName;
 
         /// <summary>
         ///     Does this component use a solution on it's parent entity (the body) or itself
@@ -76,7 +74,7 @@ namespace Content.Server.Body.Components
     ///     This allows metabolizers to remove certain groups much faster, or not at all.
     /// </summary>
     [DataDefinition]
-    public class MetabolismGroupEntry
+    public sealed class MetabolismGroupEntry
     {
         [DataField("id", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<MetabolismGroupPrototype>))]
         public string Id = default!;

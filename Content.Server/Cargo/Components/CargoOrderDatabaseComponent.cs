@@ -5,7 +5,7 @@ using Robust.Shared.Players;
 namespace Content.Server.Cargo.Components
 {
     [RegisterComponent]
-    public class CargoOrderDatabaseComponent : SharedCargoOrderDatabaseComponent
+    public sealed class CargoOrderDatabaseComponent : SharedCargoOrderDatabaseComponent
     {
         public CargoOrderDatabase? Database { get; set; }
         public bool ConnectedToDatabase => Database != null;
@@ -14,10 +14,10 @@ namespace Content.Server.Cargo.Components
         {
             base.Initialize();
 
-            Database = EntitySystem.Get<CargoConsoleSystem>().StationOrderDatabase;
+            Database = EntitySystem.Get<CargoSystem>().StationOrderDatabase;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             if (!ConnectedToDatabase)
                 return new CargoOrderDatabaseState(null);

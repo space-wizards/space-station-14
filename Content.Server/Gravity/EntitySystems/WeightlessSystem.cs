@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Content.Server.Alert;
+using System.Collections.Generic;
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;
 using Content.Shared.Gravity;
@@ -12,11 +11,12 @@ using Robust.Shared.Utility;
 namespace Content.Server.Gravity.EntitySystems
 {
     [UsedImplicitly]
-    public class WeightlessSystem : EntitySystem
+    public sealed class WeightlessSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
-        private readonly Dictionary<GridId, List<ServerAlertsComponent>> _alerts = new();
+        private readonly Dictionary<GridId, List<AlertsComponent>> _alerts = new();
 
         public override void Initialize()
         {
@@ -25,6 +25,7 @@ namespace Content.Server.Gravity.EntitySystems
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GravityChangedMessage>(GravityChanged);
             SubscribeLocalEvent<EntParentChangedMessage>(EntParentChanged);
+            SubscribeLocalEvent<AlertsComponent, AlertSyncEvent>(HandleAlertSyncEvent);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -32,30 +33,29 @@ namespace Content.Server.Gravity.EntitySystems
             _alerts.Clear();
         }
 
-        public void AddAlert(ServerAlertsComponent status)
+        public void AddAlert(AlertsComponent status)
         {
-            var gridId = status.Owner.Transform.GridID;
+            var gridId = EntityManager.GetComponent<TransformComponent>(status.Owner).GridID;
             var alerts = _alerts.GetOrNew(gridId);
 
             alerts.Add(status);
 
-            if (_mapManager.TryGetGrid(status.Owner.Transform.GridID, out var grid))
+            if (_mapManager.TryGetGrid(EntityManager.GetComponent<TransformComponent>(status.Owner).GridID, out var grid))
             {
-                var gridEntity = EntityManager.GetEntity(grid.GridEntityId);
-                if (gridEntity.GetComponent<GravityComponent>().Enabled)
+                if (EntityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
                 {
-                    RemoveWeightless(status);
+                    RemoveWeightless(status.Owner);
                 }
                 else
                 {
-                    AddWeightless(status);
+                    AddWeightless(status.Owner);
                 }
             }
         }
 
-        public void RemoveAlert(ServerAlertsComponent status)
+        public void RemoveAlert(AlertsComponent status)
         {
-            var grid = status.Owner.Transform.GridID;
+            var grid = EntityManager.GetComponent<TransformComponent>(status.Owner).GridID;
             if (!_alerts.TryGetValue(grid, out var statuses))
             {
                 return;
@@ -75,37 +75,37 @@ namespace Content.Server.Gravity.EntitySystems
             {
                 foreach (var status in statuses)
                 {
-                    RemoveWeightless(status);
+                    RemoveWeightless(status.Owner);
                 }
             }
             else
             {
                 foreach (var status in statuses)
                 {
-                    AddWeightless(status);
+                    AddWeightless(status.Owner);
                 }
             }
         }
 
-        private void AddWeightless(ServerAlertsComponent status)
+        private void AddWeightless(EntityUid euid)
         {
-            status.ShowAlert(AlertType.Weightless);
+            _alertsSystem.ShowAlert(euid, AlertType.Weightless);
         }
 
-        private void RemoveWeightless(ServerAlertsComponent status)
+        private void RemoveWeightless(EntityUid euid)
         {
-            status.ClearAlert(AlertType.Weightless);
+            _alertsSystem.ClearAlert(euid, AlertType.Weightless);
         }
 
         private void EntParentChanged(ref EntParentChangedMessage ev)
         {
-            if (!ev.Entity.TryGetComponent(out ServerAlertsComponent? status))
+            if (!EntityManager.TryGetComponent(ev.Entity, out AlertsComponent? status))
             {
                 return;
             }
 
-            if (ev.OldParent != null &&
-                ev.OldParent.TryGetComponent(out IMapGridComponent? mapGrid))
+            if (ev.OldParent is {Valid: true} old &&
+                EntityManager.TryGetComponent(old, out IMapGridComponent? mapGrid))
             {
                 var oldGrid = mapGrid.GridIndex;
 
@@ -115,10 +115,23 @@ namespace Content.Server.Gravity.EntitySystems
                 }
             }
 
-            var newGrid = ev.Entity.Transform.GridID;
+            var newGrid = EntityManager.GetComponent<TransformComponent>(ev.Entity).GridID;
             var newStatuses = _alerts.GetOrNew(newGrid);
 
             newStatuses.Add(status);
+        }
+
+        private void HandleAlertSyncEvent(EntityUid uid, AlertsComponent component, AlertSyncEvent args)
+        {
+            switch (component.LifeStage)
+            {
+                case ComponentLifeStage.Starting:
+                    AddAlert(component);
+                    break;
+                case ComponentLifeStage.Removing:
+                    RemoveAlert(component);
+                    break;
+            }
         }
     }
 }

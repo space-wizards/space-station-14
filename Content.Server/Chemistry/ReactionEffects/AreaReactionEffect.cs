@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -46,13 +45,6 @@ namespace Content.Server.Chemistry.ReactionEffects
         [DataField("reagentDilutionFactor")] private float _reagentDilutionFactor = 1f;
 
         /// <summary>
-        /// Used to calculate concentration. Reagents get linearly more concentrated as the range goes from
-        /// _reagentDilutionStart to zero. When the range is zero the reagents volume gets multiplied by this.
-        /// </summary>
-        [DataField("reagentMaxConcentrationFactor")]
-        private float _reagentMaxConcentrationFactor = 2;
-
-        /// <summary>
         /// How many seconds will the effect stay, counting after fully spreading.
         /// </summary>
         [DataField("duration")] private float _duration = 10;
@@ -77,6 +69,9 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// Sound that will get played when this reaction effect occurs.
         /// </summary>
         [DataField("sound", required: true)] private SoundSpecifier _sound = default!;
+
+        public override bool ShouldLog => true;
+        public override LogImpact LogImpact => LogImpact.High;
 
         void ISerializationHooks.AfterDeserialization()
         {
@@ -117,7 +112,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (areaEffectComponent == null)
             {
                 Logger.Error("Couldn't get AreaEffectComponent from " + _prototypeId);
-                ent.QueueDelete();
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(ent);
                 return;
             }
 
@@ -127,6 +122,6 @@ namespace Content.Server.Chemistry.ReactionEffects
             SoundSystem.Play(Filter.Pvs(args.SolutionEntity), _sound.GetSound(), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }
 
-        protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(IEntity entity);
+        protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(EntityUid entity);
     }
 }

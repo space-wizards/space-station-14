@@ -15,7 +15,7 @@ using static Content.Shared.Kitchen.Components.SharedMicrowaveComponent;
 namespace Content.Client.Kitchen.UI
 {
     [UsedImplicitly]
-    public class MicrowaveBoundUserInterface : BoundUserInterface
+    public sealed class MicrowaveBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -40,11 +40,6 @@ namespace Content.Client.Kitchen.UI
             _menu.IngredientsList.OnItemSelected += args =>
             {
                 SendMessage(new MicrowaveEjectSolidIndexedMessage(_solids[args.ItemIndex]));
-            };
-
-            _menu.IngredientsListReagents.OnItemSelected += args =>
-            {
-                SendMessage(new MicrowaveVaporizeReagentIndexedMessage(_reagents[args.ItemIndex]));
             };
 
             _menu.OnCookTimeSelected += (args,buttonIndex) =>
@@ -77,7 +72,7 @@ namespace Content.Client.Kitchen.UI
             }
 
             _menu?.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy);
-            RefreshContentsDisplay(cState.ReagentQuantities, cState.ContainedSolids);
+            RefreshContentsDisplay(cState.ContainedSolids);
 
             if (_menu == null) return;
 
@@ -90,42 +85,27 @@ namespace Content.Client.Kitchen.UI
                                                          ("time", cookTime));
         }
 
-        private void RefreshContentsDisplay(Solution.ReagentQuantity[] reagents, EntityUid[] containedSolids)
+        private void RefreshContentsDisplay(EntityUid[] containedSolids)
         {
             _reagents.Clear();
 
             if (_menu == null) return;
 
-            _menu.IngredientsListReagents.Clear();
-            for (var i = 0; i < reagents.Length; i++)
-            {
-                if (!_prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype? proto)) continue;
-
-                var reagentAdded = _menu.IngredientsListReagents.AddItem($"{reagents[i].Quantity} {proto.Name}");
-                var reagentIndex = _menu.IngredientsListReagents.IndexOf(reagentAdded);
-                _reagents.Add(reagentIndex, reagents[i]);
-            }
-
             _solids.Clear();
             _menu.IngredientsList.Clear();
-            foreach (var t in containedSolids)
+            foreach (var entity in containedSolids)
             {
-                if (!_entityManager.TryGetEntity(t, out var entity))
+                if (_entityManager.Deleted(entity))
                 {
                     return;
                 }
 
-                if (entity.Deleted)
-                {
-                    continue;
-                }
-
                 Texture? texture;
-                if (entity.TryGetComponent(out IconComponent? iconComponent))
+                if (_entityManager.TryGetComponent(entity, out IconComponent? iconComponent))
                 {
                     texture = iconComponent.Icon?.Default;
                 }
-                else if (entity.TryGetComponent(out SpriteComponent? spriteComponent))
+                else if (_entityManager.TryGetComponent(entity, out SpriteComponent? spriteComponent))
                 {
                     texture = spriteComponent.Icon?.Default;
                 }
@@ -134,9 +114,9 @@ namespace Content.Client.Kitchen.UI
                     continue;
                 }
 
-                var solidItem = _menu.IngredientsList.AddItem(entity.Name, texture);
+                var solidItem = _menu.IngredientsList.AddItem(_entityManager.GetComponent<MetaDataComponent>(entity).EntityName, texture);
                 var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
-                _solids.Add(solidIndex, t);
+                _solids.Add(solidIndex, entity);
             }
         }
     }

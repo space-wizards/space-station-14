@@ -16,22 +16,22 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IActivate, IWires
+    public sealed class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IActivate, IWires
     {
         [Dependency] private readonly IRobustRandom _random = null!;
 
-        [ComponentDependency] private readonly ApcPowerReceiverComponent? _powerReceiverComponent = default!;
-        [ComponentDependency] private readonly WiresComponent? _wiresComponent = default!;
-
-        private bool Powered => _powerReceiverComponent != null && _powerReceiverComponent.Powered;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        private bool Powered => _entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var powerReceiverComponent) && powerReceiverComponent.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SpaceVillainArcadeUiKey.Key);
         [ViewVariables] private bool _overflowFlag;
@@ -64,7 +64,7 @@ namespace Content.Server.Arcade.Components
             "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn"
         };
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("possibleRewards")]
+        [DataField("possibleRewards", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
         private List<string> _possibleRewards = new List<string>()
         {
             "ToyMouse", "ToyAi", "ToyNuke", "ToyAssistant", "ToyGriffin", "ToyHonk", "ToyIan",
@@ -74,17 +74,14 @@ namespace Content.Server.Arcade.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!Powered || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
-                return;
-
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
+            if (!Powered || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return;
 
             _game ??= new SpaceVillainGame(this);
 
-            if (_wiresComponent?.IsPanelOpen == true)
+            if (_entityManager.TryGetComponent<WiresComponent>(Owner, out var wiresComponent) && wiresComponent.IsPanelOpen)
             {
-                _wiresComponent.OpenInterface(actor.PlayerSession);
+                wiresComponent.OpenInterface(actor.PlayerSession);
             }
             else
             {
@@ -203,13 +200,15 @@ namespace Content.Server.Arcade.Components
 
         public void IndicatorUpdate()
         {
-            _wiresComponent?.SetStatus(Indicators.HealthManager,
+            if (!_entityManager.TryGetComponent<WiresComponent>(Owner, out var wiresComponent)) return;
+
+            wiresComponent.SetStatus(Indicators.HealthManager,
                 new SharedWiresComponent.StatusLightData(Color.Purple,
                     _playerInvincibilityFlag || _enemyInvincibilityFlag
                         ? SharedWiresComponent.StatusLightState.BlinkingSlow
                         : SharedWiresComponent.StatusLightState.On,
                     "MNGR"));
-            _wiresComponent?.SetStatus(Indicators.HealthLimiter,
+            wiresComponent.SetStatus(Indicators.HealthLimiter,
                 new SharedWiresComponent.StatusLightData(Color.Red,
                     _overflowFlag
                         ? SharedWiresComponent.StatusLightState.BlinkingSlow
@@ -223,7 +222,7 @@ namespace Content.Server.Arcade.Components
         public void ProcessWin()
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            entityManager.SpawnEntity(_random.Pick(_possibleRewards), Owner.Transform.MapPosition);
+            entityManager.SpawnEntity(_random.Pick(_possibleRewards), entityManager.GetComponent<TransformComponent>(Owner).MapPosition);
         }
 
         /// <summary>
@@ -247,7 +246,7 @@ namespace Content.Server.Arcade.Components
         /// <summary>
         /// A Class to handle all the game-logic of the SpaceVillain-game.
         /// </summary>
-        public class SpaceVillainGame
+        public sealed class SpaceVillainGame
         {
             [Dependency] private readonly IRobustRandom _random = default!;
 

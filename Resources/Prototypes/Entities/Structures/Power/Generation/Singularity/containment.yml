@@ -9,6 +9,7 @@
   - type: Clickable
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         # Using a circle here makes it a lot easier to pull it all the way from Cargo
@@ -32,6 +33,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/containment.rsi
     state: icon
+    netsync: false
   - type: Icon
     sprite: Structures/Power/Generation/Singularity/containment.rsi
     state: icon
@@ -56,6 +58,7 @@
   - type: Clickable
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -74,6 +77,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/containment_field.rsi
     state: field
+    netsync: false
   - type: Icon
     sprite: Structures/Power/Generation/Singularity/containment_field.rsi
     state: field

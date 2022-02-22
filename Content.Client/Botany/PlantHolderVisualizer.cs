@@ -2,18 +2,19 @@ using Content.Shared.Botany;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Botany
 {
     [UsedImplicitly]
-    public class PlantHolderVisualizer : AppearanceVisualizer
+    public sealed class PlantHolderVisualizer : AppearanceVisualizer
     {
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            var sprite = entity.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
             sprite.LayerMapReserveBlank(PlantHolderLayers.Plant);
             sprite.LayerMapReserveBlank(PlantHolderLayers.HealthLight);
@@ -55,14 +56,20 @@ namespace Content.Client.Botany
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
-            if (component.TryGetData<SpriteSpecifier>(PlantHolderVisuals.Plant, out var specifier))
+            if (component.TryGetData<string>(PlantHolderVisuals.PlantRsi, out var rsi)
+                && component.TryGetData<string>(PlantHolderVisuals.PlantState, out var state))
             {
-                var valid = !specifier.Equals(SpriteSpecifier.Invalid);
+                var valid = !string.IsNullOrWhiteSpace(state);
+
                 sprite.LayerSetVisible(PlantHolderLayers.Plant, valid);
+
                 if(valid)
-                    sprite.LayerSetSprite(PlantHolderLayers.Plant, specifier);
+                {
+                    sprite.LayerSetRSI(PlantHolderLayers.Plant, rsi);
+                    sprite.LayerSetState(PlantHolderLayers.Plant, state);
+                }
             }
 
             if (component.TryGetData<bool>(PlantHolderVisuals.HealthLight, out var health))

@@ -14,7 +14,7 @@ using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Client.Parallax
 {
-    public class ParallaxGenerator
+    public sealed class ParallaxGenerator
     {
         private readonly List<Layer> Layers = new();
 
@@ -69,7 +69,7 @@ namespace Content.Client.Parallax
             public abstract void Apply(Image<Rgba32> bitmap);
         }
 
-        private class LayerNoise : Layer
+        private sealed class LayerNoise : Layer
         {
             private readonly Color InnerColor = Color.White;
             private readonly Color OuterColor = Color.Black;
@@ -182,7 +182,7 @@ namespace Content.Client.Parallax
                         // Threshold
                         noiseVal = MathF.Max(0, noiseVal - Threshold);
                         noiseVal *= threshVal;
-                        noiseVal = (float) MathF.Pow(noiseVal, powFactor);
+                        noiseVal = MathF.Pow(noiseVal, powFactor);
 
                         // Get colors based on noise values.
                         var srcColor = Color.InterpolateBetween(OuterColor, InnerColor, noiseVal)
@@ -197,7 +197,7 @@ namespace Content.Client.Parallax
             }
         }
 
-        private class LayerPoints : Layer
+        private sealed class LayerPoints : Layer
         {
             private readonly int Seed = 1234;
             private readonly int PointCount = 100;
@@ -408,7 +408,7 @@ namespace Content.Client.Parallax
                     // Threshold
                     noiseVal = MathF.Max(0, noiseVal - MaskThreshold);
                     noiseVal *= threshVal;
-                    noiseVal = (float) MathF.Pow(noiseVal, powFactor);
+                    noiseVal = MathF.Pow(noiseVal, powFactor);
 
                     var randomThresh = random.NextFloat();
                     if (randomThresh > noiseVal)

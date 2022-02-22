@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.ReagentEffectConditions;
 
 [UsedImplicitly]
-public class HasTag : ReagentEffectCondition
+public sealed class HasTag : ReagentEffectCondition
 {
     [DataField("tag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
     public string Tag = default!;
@@ -18,7 +18,7 @@ public class HasTag : ReagentEffectCondition
     public override bool Condition(ReagentEffectArgs args)
     {
         if (args.EntityManager.TryGetComponent<TagComponent>(args.SolutionEntity, out var tag))
-            return tag.HasTag(Tag) ^ Invert;
+            return EntitySystem.Get<TagSystem>().HasTag(tag, Tag) ^ Invert;
 
         return false;
     }

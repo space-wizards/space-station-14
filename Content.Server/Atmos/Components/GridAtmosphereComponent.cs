@@ -18,10 +18,9 @@ namespace Content.Server.Atmos.Components
     /// </summary>
     [ComponentReference(typeof(IAtmosphereComponent))]
     [RegisterComponent, Serializable]
+    [Virtual]
     public class GridAtmosphereComponent : Component, IAtmosphereComponent, ISerializationHooks
     {
-        public override string Name => "GridAtmosphere";
-
         public virtual bool Simulated => true;
 
         [ViewVariables]

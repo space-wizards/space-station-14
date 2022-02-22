@@ -15,7 +15,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
     public sealed class PickUpMeleeWeapon : UtilityAction
     {
-        public IEntity Target { get; set; } = default!;
+        public EntityUid Target { get; set; } = default!;
 
         public override void SetupOperators(Blackboard context)
         {

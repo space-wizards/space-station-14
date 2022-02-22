@@ -1,9 +1,10 @@
 ﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Administration.UI.CustomControls;
 
-public class AdminLogImpactButton : Button
+public sealed class AdminLogImpactButton : Button
 {
     public AdminLogImpactButton(LogImpact impact)
     {

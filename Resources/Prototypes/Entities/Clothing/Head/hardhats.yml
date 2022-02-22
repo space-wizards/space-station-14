@@ -4,6 +4,7 @@
   abstract: true
   components:
   - type: Sprite
+    netsync: true
     layers:
     - state: icon
     - state: light-icon
@@ -11,7 +12,6 @@
       visible: false
   - type: Clothing
     HeldPrefix: off
-    ClothingPrefix: off
   - type: PointLight
     enabled: false
     radius: 3
@@ -23,6 +23,8 @@
     actions:
       - actionType: ToggleLight
   - type: PowerCellSlot
+    cellSlot:
+      startingItem: PowerCellSmallHigh
 
 - type: entity
   parent: ClothingHeadHatHardhatBase

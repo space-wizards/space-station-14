@@ -17,10 +17,58 @@
       "name": "gcircuit"
     },
     {
-      "name": "hydro"
+      "name": "bar"
     },
     {
-      "name": "plating"
+      "name": "blue"
+    },
+    {
+      "name": "clown"
+    },
+    {
+      "name": "grass"
+    },
+    {
+      "name": "kitchen"
+    },
+    {
+      "name": "laundry"
+    },
+    {
+      "name": "lino"
+    },
+    {
+      "name": "mime"
+    },
+    {
+      "name": "bcircuit"
+    },
+    {
+      "name": "carpet-black"
+    },
+    {
+      "name": "carpet-blue"
+    },
+    {
+      "name": "carpet-skyblue"
+    },
+    {
+      "name": "carpet-green"
+    },
+    {
+      "name": "carpet-orange"
+    },
+    {
+      "name": "carpet-purple"
+    },
+    {
+      "name": "carpet-red"
+    },
+    {
+      "name": "carpet-pink"
+    },
+    {
+      "name": "hydro"
     },
     {
       "name": "reinforced"
@@ -41,40 +89,114 @@
       "name": "steel"
     },
     {
-      "name": "steel_techfloor_grid"
-    },
-    {
       "name": "silver"
     },
     {
-      "name": "dark_techfloor_grid"
+      "name": "techfloor"
     },
     {
       "name": "white"
     },
     {
-      "name": "white_monofloor"
+      "name": "monofloor"
     },
     {
       "name": "wood"
     },
     {
-      "name": "carpet"
-    },
-    {
-      "name": "brown-inhand-left",
+      "name": "bcircuit-inhand-left",
       "directions": 4
     },
     {
-      "name": "brown-inhand-right",
+      "name": "bcircuit-inhand-right",
       "directions": 4
     },
     {
-      "name": "carpet-inhand-left",
+      "name": "carpet-black-inhand-left",
       "directions": 4
     },
     {
-      "name": "carpet-inhand-right",
+      "name": "carpet-black-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "carpet-blue-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "carpet-blue-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "carpet-skyblue-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "carpet-skyblue-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "carpet-green-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "carpet-green-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "carpet-orange-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "carpet-orange-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "carpet-purple-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "carpet-purple-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "carpet-red-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "carpet-red-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "carpet-pink-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "carpet-pink-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "grass-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "grass-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "snow-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "snow-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "dirty-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "dirty-inhand-right",
       "directions": 4
     },
     {
@@ -142,11 +264,11 @@
       "directions": 4
     },
     {
-      "name": "inhand-right",
+      "name": "generic-inhand-right",
       "directions": 4
     },
     {
-      "name": "inhand-left",
+      "name": "generic-inhand-left",
       "directions": 4
     },
     {
@@ -164,6 +286,6 @@
     {
       "name": "hydro-inhand-left",
       "directions": 4
-    },
+    }
   ]
 }

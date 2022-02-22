@@ -148,7 +148,7 @@ namespace Content.Shared.Maps
 
             //Actually spawn the relevant tile item at the right position and give it some random offset.
             var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, indices.ToEntityCoordinates(tileRef.GridIndex, mapManager).Offset(new Vector2(x, y)));
-            entityManager.GetComponent<TransformComponent>(tileItem.Uid).LocalRotation = robustRandom.NextDouble() * Math.Tau;
+            entityManager.GetComponent<TransformComponent>(tileItem).LocalRotation = robustRandom.NextDouble() * Math.Tau;
 
             return true;
         }
@@ -157,12 +157,12 @@ namespace Content.Shared.Maps
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTile(this TileRef turf, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
         {
             lookupSystem ??= IoCManager.Resolve<IEntityLookup>();
 
             if (!GetWorldTileBox(turf, out var worldBox))
-                return Enumerable.Empty<IEntity>();
+                return Enumerable.Empty<EntityUid>();
 
             return lookupSystem.GetEntitiesIntersecting(turf.MapIndex, worldBox, flags);
         }
@@ -170,12 +170,12 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this EntityCoordinates coordinates, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTile(this EntityCoordinates coordinates, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
         {
             var turf = coordinates.GetTileRef();
 
             if (turf == null)
-                return Enumerable.Empty<IEntity>();
+                return Enumerable.Empty<EntityUid>();
 
             return GetEntitiesInTile(turf.Value, flags, lookupSystem);
         }
@@ -183,7 +183,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this Vector2i indices, GridId gridId, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTile(this Vector2i indices, GridId gridId, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
         {
             return GetEntitiesInTile(indices.GetTileRef(gridId), flags, lookupSystem);
         }

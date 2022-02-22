@@ -3,3 +3,6 @@
 
 - type: reactiveGroup
   id: Extinguish
+
+- type: reactiveGroup
+  id: Acidic

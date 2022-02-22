@@ -9,11 +9,13 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Utility;
 using Content.Server.CPUJob.JobQueues;
 using Content.Shared.AI;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI.LoadBalancer
 {
-    public class AiActionRequestJob : Job<UtilityAction>
+    public sealed class AiActionRequestJob : Job<UtilityAction>
     {
 #if DEBUG
         public static event Action<SharedAiDebug.UtilityAiDebugMessage>? FoundAction;
@@ -37,7 +39,7 @@ namespace Content.Server.AI.LoadBalancer
 
             var entity = _request.Context.GetState<SelfState>().GetValue();
 
-            if (entity == null || !entity.HasComponent<AiControllerComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AiControllerComponent>(entity))
             {
                 return null;
             }
@@ -122,7 +124,7 @@ namespace Content.Server.AI.LoadBalancer
                 DebugTools.AssertNotNull(selfState);
 
                 FoundAction?.Invoke(new SharedAiDebug.UtilityAiDebugMessage(
-                    selfState!.Uid,
+                    selfState!,
                     DebugTime,
                     cutoff,
                     foundAction.GetType().Name,

@@ -57,3 +57,36 @@
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
     color: red
+
+- type: entity
+  name: zipties
+  description: Tough single-use plastic zipties, ideal for restraining rowdy prisoners.
+  id: Zipties
+  parent: Handcuffs
+  components:
+  - type: Item
+    size: 2
+  - type: Handcuff
+    cuffTime: 3.5
+    uncuffTime: 3.5
+    stunBonus: 2.0
+    breakoutTime: 17.5 #halfway between improvised cablecuffs and metal ones
+    cuffedRSI: Objects/Misc/cablecuffs.rsi #cablecuffs will look fine
+    bodyIconState: body-overlay
+    breakOnRemove: true
+    brokenIconState: cuff-broken
+    brokenName: broken zipties
+    brokenDesc: These zipties look like they tried to manage the wrong cables.
+    startCuffSound:
+      path: /Audio/Items/Handcuffs/ziptie_start.ogg
+    endCuffSound:
+      path: /Audio/Items/Handcuffs/ziptie_end.ogg
+    startUncuffSound:
+      path: /Audio/Items/Handcuffs/rope_start.ogg
+    endUncuffSound:
+      path: /Audio/Items/Handcuffs/rope_breakout.ogg
+    startBreakoutSound:
+      path: /Audio/Items/Handcuffs/rope_takeoff.ogg
+  - type: Sprite
+    sprite: Objects/Misc/zipties.rsi
+    state: cuff

@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Damage.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class GodModeCommand : IConsoleCommand
+    public sealed class GodModeCommand : IConsoleCommand
     {
         public string Command => "godmode";
         public string Description => "Makes your entity or another invulnerable to almost anything. May have irreversible changes.";
@@ -31,13 +31,13 @@ namespace Content.Server.Damage.Commands
                         return;
                     }
 
-                    if (player.AttachedEntityUid == null)
+                    if (player.AttachedEntity == null)
                     {
                         shell.WriteLine("An entity needs to be specified when you aren't attached to an entity.");
                         return;
                     }
 
-                    entity = player.AttachedEntityUid.Value;
+                    entity = player.AttachedEntity.Value;
                     break;
                 case 1:
                     if (!EntityUid.TryParse(args[0], out var id))

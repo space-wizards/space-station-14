@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public partial class AtmosphereSystem
+    public sealed partial class AtmosphereSystem
     {
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
@@ -20,7 +21,13 @@ namespace Content.Server.Atmos.EntitySystems
         ///     List of gas reactions ordered by priority.
         /// </summary>
         public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions!;
+
+        /// <summary>
+        ///     Cached array of gas specific heats.
+        /// </summary>
         public float[] GasSpecificHeats => _gasSpecificHeats;
+
+        public string?[] GasReagents = new string[Atmospherics.TotalNumberOfGases];
 
         private void InitializeGases()
         {
@@ -32,26 +39,60 @@ namespace Content.Server.Atmos.EntitySystems
             for (var i = 0; i < GasPrototypes.Length; i++)
             {
                 _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat;
+                GasReagents[i] = GasPrototypes[i].Reagent;
             }
         }
 
+        /// <summary>
+        ///     Calculates the heat capacity for a gas mixture.
+        /// </summary>
         public float GetHeatCapacity(GasMixture mixture)
         {
-            Span<float> tmp = stackalloc float[mixture.Moles.Length];
-            NumericsHelpers.Multiply(mixture.Moles, GasSpecificHeats, tmp);
+            return GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
+        }
+
+        /// <summary>
+        ///     Calculates the heat capacity for a gas mixture, using the archived values.
+        /// </summary>
+        public float GetHeatCapacityArchived(GasMixture mixture)
+        {
+            return GetHeatCapacityCalculation(mixture.MolesArchived, mixture.Immutable);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private float GetHeatCapacityCalculation(float[] moles, bool immutable)
+        {
+            // Little hack to make space gas mixtures have heat capacity, therefore allowing them to cool down rooms.
+            if (immutable && MathHelper.CloseTo(NumericsHelpers.HorizontalAdd(moles), 0f))
+            {
+                return Atmospherics.SpaceHeatCapacity;
+            }
+
+            Span<float> tmp = stackalloc float[moles.Length];
+            NumericsHelpers.Multiply(moles, GasSpecificHeats, tmp);
             return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
         }
 
+        /// <summary>
+        ///     Calculates the thermal energy for a gas mixture.
+        /// </summary>
         public float GetThermalEnergy(GasMixture mixture)
         {
             return mixture.Temperature * GetHeatCapacity(mixture);
         }
 
+        /// <summary>
+        ///     Calculates the thermal energy for a gas mixture, using a cached heat capacity value.
+        /// </summary>
         public float GetThermalEnergy(GasMixture mixture, float cachedHeatCapacity)
         {
             return mixture.Temperature * cachedHeatCapacity;
         }
 
+        /// <summary>
+        ///     Merges the <see cref="giver"/> gas mixture into the <see cref="receiver"/> gas mixture.
+        ///     The <see cref="giver"/> gas mixture is not modified by this method.
+        /// </summary>
         public void Merge(GasMixture receiver, GasMixture giver)
         {
             if (receiver.Immutable) return;
@@ -70,9 +111,12 @@ namespace Content.Server.Atmos.EntitySystems
             NumericsHelpers.Add(receiver.Moles, giver.Moles);
         }
 
+        /// <summary>
+        ///     Shares gas between two gas mixtures. Part of LINDA.
+        /// </summary>
         public float Share(GasMixture receiver, GasMixture sharer, int atmosAdjacentTurfs)
         {
-            var temperatureDelta = receiver.Temperature - sharer.Temperature;
+            var temperatureDelta = receiver.TemperatureArchived - sharer.TemperatureArchived;
             var absTemperatureDelta = Math.Abs(temperatureDelta);
             var oldHeatCapacity = 0f;
             var oldSharerHeatCapacity = 0f;
@@ -123,12 +167,12 @@ namespace Content.Server.Atmos.EntitySystems
                 // Transfer of thermal energy (via changed heat capacity) between self and sharer.
                 if (!receiver.Immutable && newHeatCapacity > Atmospherics.MinimumHeatCapacity)
                 {
-                    receiver.Temperature = ((oldHeatCapacity * receiver.Temperature) - (heatCapacityToSharer * receiver.Temperature) + (heatCapacitySharerToThis * sharer.Temperature)) / newHeatCapacity;
+                    receiver.Temperature = ((oldHeatCapacity * receiver.Temperature) - (heatCapacityToSharer * receiver.TemperatureArchived) + (heatCapacitySharerToThis * sharer.TemperatureArchived)) / newHeatCapacity;
                 }
 
                 if (!sharer.Immutable && newSharerHeatCapacity > Atmospherics.MinimumHeatCapacity)
                 {
-                    sharer.Temperature = ((oldSharerHeatCapacity * sharer.Temperature) - (heatCapacitySharerToThis * sharer.Temperature) + (heatCapacityToSharer*receiver.Temperature)) / newSharerHeatCapacity;
+                    sharer.Temperature = ((oldSharerHeatCapacity * sharer.Temperature) - (heatCapacitySharerToThis * sharer.TemperatureArchived) + (heatCapacityToSharer*receiver.TemperatureArchived)) / newSharerHeatCapacity;
                 }
 
                 // Thermal energy of the system (self and sharer) is unchanged.
@@ -147,17 +191,20 @@ namespace Content.Server.Atmos.EntitySystems
             var moles = receiver.TotalMoles;
             var theirMoles = sharer.TotalMoles;
 
-            return (receiver.Temperature * (moles + movedMoles)) - (sharer.Temperature * (theirMoles - movedMoles)) * Atmospherics.R / receiver.Volume;
+            return (receiver.TemperatureArchived * (moles + movedMoles)) - (sharer.TemperatureArchived * (theirMoles - movedMoles)) * Atmospherics.R / receiver.Volume;
 
         }
 
+        /// <summary>
+        ///     Shares temperature between two mixtures, taking a conduction coefficient into account.
+        /// </summary>
         public float TemperatureShare(GasMixture receiver, GasMixture sharer, float conductionCoefficient)
         {
-            var temperatureDelta = receiver.Temperature - sharer.Temperature;
+            var temperatureDelta = receiver.TemperatureArchived - sharer.TemperatureArchived;
             if (MathF.Abs(temperatureDelta) > Atmospherics.MinimumTemperatureDeltaToConsider)
             {
-                var heatCapacity = GetHeatCapacity(receiver);
-                var sharerHeatCapacity = GetHeatCapacity(sharer);
+                var heatCapacity = GetHeatCapacityArchived(receiver);
+                var sharerHeatCapacity = GetHeatCapacityArchived(sharer);
 
                 if (sharerHeatCapacity > Atmospherics.MinimumHeatCapacity && heatCapacity > Atmospherics.MinimumHeatCapacity)
                 {
@@ -174,12 +221,15 @@ namespace Content.Server.Atmos.EntitySystems
             return sharer.Temperature;
         }
 
+        /// <summary>
+        ///     Shares temperature between a gas mixture and an abstract sharer, taking a conduction coefficient into account.
+        /// </summary>
         public float TemperatureShare(GasMixture receiver, float conductionCoefficient, float sharerTemperature, float sharerHeatCapacity)
         {
-            var temperatureDelta = receiver.Temperature - sharerTemperature;
+            var temperatureDelta = receiver.TemperatureArchived - sharerTemperature;
             if (MathF.Abs(temperatureDelta) > Atmospherics.MinimumTemperatureDeltaToConsider)
             {
-                var heatCapacity = GetHeatCapacity(receiver);
+                var heatCapacity = GetHeatCapacityArchived(receiver);
 
                 if (sharerHeatCapacity > Atmospherics.MinimumHeatCapacity && heatCapacity > Atmospherics.MinimumHeatCapacity)
                 {
@@ -253,6 +303,9 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
+        /// <summary>
+        ///     Scrubs specified gases from a gas mixture into a <see cref="destination"/> gas mixture.
+        /// </summary>
         public void ScrubInto(GasMixture mixture, GasMixture destination, IReadOnlyCollection<Gas> filterGases)
         {
             var buffer = new GasMixture(mixture.Volume){Temperature = mixture.Temperature};
@@ -266,6 +319,9 @@ namespace Content.Server.Atmos.EntitySystems
             Merge(destination, buffer);
         }
 
+        /// <summary>
+        ///     Performs reactions for a given gas mixture on an optional holder.
+        /// </summary>
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
         {
             var reaction = ReactionResult.NoReaction;
@@ -282,7 +338,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var doReaction = true;
                 for (var i = 0; i < prototype.MinimumRequirements.Length; i++)
                 {
-                    if(i > Atmospherics.TotalNumberOfGases)
+                    if(i >= Atmospherics.TotalNumberOfGases)
                         throw new IndexOutOfRangeException("Reaction Gas Minimum Requirements Array Prototype exceeds total number of gases!");
 
                     var req = prototype.MinimumRequirements[i];

@@ -7,10 +7,8 @@ namespace Content.Server.Electrocution
     ///     Component for things that shock users on touch.
     /// </summary>
     [RegisterComponent]
-    public class ElectrifiedComponent : Component
+    public sealed class ElectrifiedComponent : Component
     {
-        public override string Name => "Electrified";
-
         [DataField("enabled")]
         public bool Enabled { get; set; } = true;
 
@@ -25,6 +23,9 @@ namespace Content.Server.Electrocution
 
         [DataField("onHandInteract")]
         public bool OnHandInteract { get; set; } = true;
+
+        [DataField("onInteractUsing")]
+        public bool OnInteractUsing { get; set; } = true;
 
         [DataField("requirePower")]
         public bool RequirePower { get; } = true;
@@ -57,7 +58,7 @@ namespace Content.Server.Electrocution
         ///     Shock time, in seconds.
         /// </summary>
         [DataField("shockTime")]
-        public float ShockTime { get; } = 30f;
+        public float ShockTime { get; } = 8f;
 
         [DataField("siemensCoefficient")]
         public float SiemensCoefficient { get; } = 1f;

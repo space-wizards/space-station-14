@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
-using Content.Server.Power.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -10,23 +9,25 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Power.Nodes
 {
     [DataDefinition]
-    public class CableNode : Node
+    public sealed class CableNode : Node
     {
-        public override IEnumerable<Node> GetReachableNodes()
+        public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            EntityQuery<TransformComponent> xformQuery,
+            IMapGrid? grid,
+            IEntityManager entMan)
         {
-            if (!Anchored)
+            if (!xform.Anchored || grid == null)
                 yield break;
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
-            var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
+            var gridIndex = grid.TileIndicesFor(xform.Coordinates);
 
             // While we go over adjacent nodes, we build a list of blocked directions due to
             // incoming or outgoing wire terminals.
             var terminalDirs = 0;
             List<(Direction, Node)> nodeDirs = new();
 
-            foreach (var (dir, node) in NodeHelpers.GetCardinalNeighborNodes(entMan, grid, gridIndex))
+            foreach (var (dir, node) in NodeHelpers.GetCardinalNeighborNodes(nodeQuery, grid, gridIndex))
             {
                 if (node is CableNode && node != this)
                 {
@@ -44,11 +45,11 @@ namespace Content.Server.Power.Nodes
                     if (dir == Direction.Invalid)
                     {
                         // On own tile, block direction it faces
-                        terminalDirs |= 1 << (int) node.Owner.Transform.LocalRotation.GetCardinalDir();
+                        terminalDirs |= 1 << (int) xformQuery.GetComponent(node.Owner).LocalRotation.GetCardinalDir();
                     }
                     else
                     {
-                        var terminalDir = node.Owner.Transform.LocalRotation.GetCardinalDir();
+                        var terminalDir = xformQuery.GetComponent(node.Owner).LocalRotation.GetCardinalDir();
                         if (terminalDir.GetOpposite() == dir)
                         {
                             // Target tile has a terminal towards us, block the direction.
@@ -67,13 +68,6 @@ namespace Content.Server.Power.Nodes
 
                 yield return node;
             }
-        }
-
-        public override void OnPostRebuild()
-        {
-            base.OnPostRebuild();
-
-            EntitySystem.Get<CableVisSystem>().QueueUpdate(Owner.Uid);
         }
     }
 }

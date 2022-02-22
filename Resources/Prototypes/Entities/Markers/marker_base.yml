@@ -1,6 +1,8 @@
 - type: entity
   id: MarkerBase
   abstract: true
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Transform
     anchored: true
@@ -9,8 +11,7 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: Markers/cross.rsi
+    netsync: false
 # If serialization was cool this would work.
 #    layers:
 #      - state: blue
-  placement:
-    mode: SnapgridCenter

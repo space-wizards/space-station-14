@@ -10,7 +10,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Electrocution
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class ElectrocuteCommand : IConsoleCommand
+    public sealed class ElectrocuteCommand : IConsoleCommand
     {
         public string Command => "electrocute";
         public string Description => Loc.GetString("electrocute-command-description");
@@ -52,7 +52,7 @@ namespace Content.Server.Electrocution
             }
 
             entityManager.EntitySysManager.GetEntitySystem<ElectrocutionSystem>()
-                .TryDoElectrocution(uid, null, damage, TimeSpan.FromSeconds(seconds));
+                .TryDoElectrocution(uid, null, damage, TimeSpan.FromSeconds(seconds), true);
         }
     }
 }

@@ -1,22 +1,30 @@
+#Burger bun
+- type: microwaveMealRecipe
+  id: RecipeBun
+  name: bun recipe
+  result: FoodBreadBun
+  time: 5
+  solids:
+    FoodDoughSlice: 1 # one third of a standard bread dough recipe
+
 #Burgers
 - type: microwaveMealRecipe
   id: RecipeCheeseburger
   name: cheeseburger recipe
   result: FoodBurgerCheese
   time: 5
-  reagents:
-    Flour: 5
   solids:
+    FoodBreadBun: 1
     FoodMeat: 1
+    FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeClownBurger
   name: clownburger recipe
   result: FoodBurgerClown
   time: 5
-  reagents:
-    Flour: 5
   solids:
+    FoodBreadBun: 1
     ClothingMaskClown: 1
 
 # - type: microwaveMealRecipe
@@ -34,9 +42,8 @@
   name: xenoburger recipe
   result: FoodBurgerXeno
   time: 5
-  reagents:
-    Flour: 5
   solids:
+    FoodBreadBun: 1
     FoodMeatXeno: 1
 
 #- type: microwaveMealRecipe
@@ -54,14 +61,24 @@
 #    FoodTomato: 4
 #    FoodEgg: 2
 
+- type: microwaveMealRecipe
+  id: RecipeEmpoweredBurger
+  name: empowered burger recipe
+  result: FoodBurgerEmpowered
+  time: 5
+  solids:
+    FoodBreadBun: 1
+    SheetPlasma1: 2
+
+
 #Breads & Sandwiches
 - type: microwaveMealRecipe
   id: RecipeBread
   name: bread recipe
   result: FoodBreadPlain
   time: 15
-  reagents:
-    Flour: 15
+  solids:
+    FoodDough: 1
 
 # - type: microwaveMealRecipe
 #   id: RecipeSandwich
@@ -105,9 +122,8 @@
   name: cream cheese bread recipe
   result: FoodBreadCreamcheese
   time: 20
-  reagents:
-    Flour: 15
   solids:
+    FoodDough: 1
     FoodCheeseSlice: 2
 
 - type: microwaveMealRecipe
@@ -115,12 +131,18 @@
   name: banana bread recipe
   result: FoodBreadBanana
   time: 25
-  reagents:
-    Flour: 15
-    Milk: 5
   solids:
-    FoodEgg: 3
+    FoodDough: 1
     FoodBanana: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMoldyBreadSlice
+  name: moldy bread slice recipe
+  result: FoodBreadMoldySlice
+  time: 5
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodFlyAmanita: 1
 
 #Pizzas
 - type: microwaveMealRecipe
@@ -128,9 +150,8 @@
   name: margherita pizza recipe
   result: FoodPizzaMargherita
   time: 30
-  reagents:
-    Flour: 10
   solids:
+    FoodDough: 1
     FoodCheeseSlice: 4
     FoodTomato: 1
 
@@ -139,9 +160,8 @@
   name: mushroom pizza recipe
   result: FoodPizzaMushroom
   time: 25
-  reagents:
-    Flour: 10
   solids:
+    FoodDough: 1
     FoodMushroom: 5
 
 - type: microwaveMealRecipe
@@ -149,9 +169,8 @@
   name: meat pizza recipe
   result: FoodPizzaMeat
   time: 30
-  reagents:
-    Flour: 10
   solids:
+    FoodDough: 1
     FoodMeat: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
@@ -161,12 +180,33 @@
   name: vegetable pizza recipe
   result: FoodPizzaVegetable
   time: 30
-  reagents:
-    Flour: 10
   solids:
+    FoodDough: 1
     FoodEggplant: 1
     FoodCarrot: 1
     FoodCorn: 1
+    FoodTomato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDankPizza
+  name: dank pizza recipe
+  result: FoodPizzaDank
+  time: 30
+  solids:
+    FoodDough: 1
+    FoodAmbrosiaVulgaris: 3
+    FoodCheeseSlice: 1
+    FoodTomato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketPizza
+  name: donk-pocket pizza recipe
+  result: FoodPizzaDonkpocket
+  time: 30
+  solids:
+    FoodDough: 1
+    FoodDonkpocketWarm: 3
+    FoodCheeseSlice: 1
     FoodTomato: 1
 
 #Italian
@@ -298,17 +338,28 @@
     FoodCarrot: 1
     FoodPotato: 1
 
-#- type: microwaveMealRecipe
-#  id: RecipeNettleSoup
-#  name: nettle soup recipe
-#  result: FoodNettleSoup
-#  time: 10
-#  reagents:
-#    Water: 10
-#  solids:
-#    FoodNettle: 1
-#    FoodEgg: 1
-#    FoodPotato: 1
+- type: microwaveMealRecipe
+  id: RecipeNettleSoup
+  name: nettle soup recipe
+  result: FoodSoupNettle
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    Nettle: 1
+    FoodEgg: 1
+    FoodPotato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeAmanitaJelly
+  name: amanita jelly recipe
+  result: FoodJellyAmanita
+  time: 10
+  reagents:
+    Water: 5
+    Vodka: 5
+  solids:
+    FoodFlyAmanita: 3
 
 #Other
 #- type: microwaveMealRecipe
@@ -365,10 +416,18 @@
   name: banana cream pie
   result: FoodPieBananaCream
   time: 15
-  reagents:
-    Flour: 10
   solids:
+    FoodCakeBatter: 1 # should really be pie pastry or whatever. Good enough.
     FoodBanana: 3
+
+- type: microwaveMealRecipe
+  id: RecipeAmanitaPie
+  name: amanita pie
+  result: FoodPieAmanita
+  time: 15
+  solids:
+    FoodCakeBatter: 1
+    FoodFlyAmanita: 1
 
 #Donks i guess
 - type: microwaveMealRecipe
@@ -435,6 +494,71 @@
   solids:
     FoodDonkpocketGondola: 1
 
+- type: microwaveMealRecipe
+  id: RecipeHotChili
+  name: hot chili recipe
+  result: FoodSoupChiliHot
+  time: 20
+  solids:
+    FoodChili: 1
+    FoodMeatCutlet: 1
+    FoodOnionSlice: 1
+    FoodTomato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeChiliClown
+  name: chili con carnival recipe
+  result: FoodSoupChiliClown
+  time: 30
+  solids:
+    FoodChili: 1
+    FoodMeatCutlet: 1
+    FoodOnionSlice: 1
+    FoodTomato: 1
+    ClothingShoesClown: 1
+
+- type: microwaveMealRecipe
+  id: RecipeQueso
+  name: queso recipe
+  result: FoodMealQueso
+  time: 15
+  #todo Add blackpepper
+  #reagents:
+    #blackpepper: 5
+  solids:
+    FoodChili: 1
+    FoodCheeseSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeEnchiladas
+  name: enchiladas recipe
+  result: FoodMealEnchiladas
+  time: 20
+  solids:
+    FoodChili: 2
+    FoodMeatCutlet: 1
+    FoodCorn: 1
+
+# SALADS: These should be moved out of the microwave as soon as possible
+- type: microwaveMealRecipe
+  id: RecipeHerbSalad
+  name: herb salad recipe
+  result: FoodSaladHerb
+  time: 5
+  solids:
+    FoodAmbrosiaVulgaris: 3
+    FoodApple: 1
+
+- type: microwaveMealRecipe
+  id: RecipeValidSalad
+  name: valid salad recipe
+  result: FoodSaladValid
+  time: 5
+  solids:
+    FoodAmbrosiaVulgaris: 3
+    FoodPotato: 1
+    FoodMeatMeatball: 1
+
 # NOT ACTUAL FOOD
 
 - type: microwaveMealRecipe
@@ -452,3 +576,11 @@
   time: 10
   solids:
     LeavesCannabis: 1
+
+- type: microwaveMealRecipe
+  id: RecipeAloeCream
+  name: aloe cream recipe
+  result: AloeCream
+  time: 10
+  solids:
+    FoodAloe: 1

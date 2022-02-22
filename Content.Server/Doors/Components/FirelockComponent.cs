@@ -1,7 +1,9 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Shared.Doors;
+using Content.Server.Doors.Systems;
+using Content.Shared.Doors.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Doors.Components
@@ -11,12 +13,9 @@ namespace Content.Server.Doors.Components
     /// and not being openable on open-hand click.
     /// </summary>
     [RegisterComponent]
-    public class FirelockComponent : Component
+    public sealed class FirelockComponent : Component
     {
-        public override string Name => "Firelock";
-
-        [ComponentDependency]
-        public readonly ServerDoorComponent? DoorComponent = null;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         /// <summary>
         /// Pry time modifier to be used when the firelock is currently closed due to fire or pressure.
@@ -27,10 +26,15 @@ namespace Content.Server.Doors.Components
 
         public bool EmergencyPressureStop()
         {
-            if (DoorComponent != null && DoorComponent.State == SharedDoorComponent.DoorState.Open && DoorComponent.CanCloseGeneric())
+            var doorSys = EntitySystem.Get<DoorSystem>();
+            if (_entMan.TryGetComponent<DoorComponent>(Owner, out var door) &&
+                door.State == DoorState.Open &&
+                doorSys.CanClose(Owner, door))
             {
-                DoorComponent.Close();
-                if (Owner.TryGetComponent(out AirtightComponent? airtight))
+                doorSys.StartClosing(Owner, door);
+
+                // Door system also sets airtight, but only after a delay. We want it to be immediate.
+                if (_entMan.TryGetComponent(Owner, out AirtightComponent? airtight))
                 {
                     EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);
                 }
@@ -46,7 +50,7 @@ namespace Content.Server.Doors.Components
             var minMoles = float.MaxValue;
             var maxMoles = 0f;
 
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(Owner.Transform.Coordinates))
+            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(_entMan.GetComponent<TransformComponent>(Owner).Coordinates))
             {
                 var moles = adjacent.TotalMoles;
                 if (moles < minMoles)
@@ -62,7 +66,7 @@ namespace Content.Server.Doors.Components
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            if (!atmosphereSystem.TryGetGridAndTile(Owner.Transform.Coordinates, out var tuple))
+            if (!atmosphereSystem.TryGetGridAndTile(_entMan.GetComponent<TransformComponent>(Owner).Coordinates, out var tuple))
                 return false;
 
             if (atmosphereSystem.GetTileMixture(tuple.Value.Grid, tuple.Value.Tile) == null)
@@ -71,7 +75,7 @@ namespace Content.Server.Doors.Components
             if (atmosphereSystem.IsHotspotActive(tuple.Value.Grid, tuple.Value.Tile))
                 return true;
 
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTiles(Owner.Transform.Coordinates))
+            foreach (var adjacent in atmosphereSystem.GetAdjacentTiles(_entMan.GetComponent<TransformComponent>(Owner).Coordinates))
             {
                 if (atmosphereSystem.IsHotspotActive(tuple.Value.Grid, adjacent))
                     return true;

@@ -11,6 +11,7 @@
     layers:
     - state: assembly
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -39,7 +40,7 @@
             min: 1
             max: 3
   - type: Construction
-    graph: windoor
+    graph: Windoor
     node: assembly
   placement:
     mode: SnapgridCenter
@@ -70,6 +71,6 @@
             min: 1
             max: 2
   - type: Construction
-    graph: windoor
+    graph: Windoor
     node: assemblySecure
 

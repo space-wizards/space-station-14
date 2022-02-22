@@ -1,4 +1,4 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:s="clr-namespace:Content.Client.Stylesheets"
             MinSize="200 120" Title="Volume Pump">
@@ -20,4 +20,4 @@
             <Button Name="SetTransferRateButton" Text="{Loc comp-gas-pump-ui-pump-set-rate}" HorizontalAlignment="Right" Disabled="True"/>
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

@@ -12,10 +12,8 @@ namespace Content.Shared.Placeable
 {
     [RegisterComponent, NetworkedComponent]
     [Friend(typeof(PlaceableSurfaceSystem))]
-    public class PlaceableSurfaceComponent : Component
+    public sealed class PlaceableSurfaceComponent : Component
     {
-        public override string Name => "PlaceableSurface";
-
         [ViewVariables]
         [DataField("isPlaceable")]
         public bool IsPlaceable { get; set; } = true;
@@ -28,14 +26,14 @@ namespace Content.Shared.Placeable
         [DataField("positionOffset")]
         public Vector2 PositionOffset { get; set; }
 
-        public override ComponentState GetComponentState(ICommonSession session)
+        public override ComponentState GetComponentState()
         {
             return new PlaceableSurfaceComponentState(IsPlaceable,PlaceCentered, PositionOffset);
         }
     }
 
     [Serializable, NetSerializable]
-    public class PlaceableSurfaceComponentState : ComponentState
+    public sealed class PlaceableSurfaceComponentState : ComponentState
     {
         public readonly bool IsPlaceable;
         public readonly bool PlaceCentered;

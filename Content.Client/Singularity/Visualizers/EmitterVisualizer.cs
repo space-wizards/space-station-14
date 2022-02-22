@@ -4,11 +4,12 @@ using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Singularity.Visualizers
 {
     [UsedImplicitly]
-    public class EmitterVisualizer : AppearanceVisualizer
+    public sealed class EmitterVisualizer : AppearanceVisualizer
     {
         private const string OverlayBeam = "beam";
         private const string OverlayUnderPowered = "underpowered";
@@ -17,7 +18,8 @@ namespace Content.Client.Singularity.Visualizers
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
             {
                 return;
             }

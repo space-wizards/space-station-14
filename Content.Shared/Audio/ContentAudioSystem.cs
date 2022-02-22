@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Audio
 {
-    public class ContentAudioSystem : EntitySystem
+    public sealed class ContentAudioSystem : EntitySystem
     {
         public override void Initialize()
         {

@@ -14,11 +14,12 @@ namespace Content.Server.Nutrition.EntitySystems
     /// <summary>
     /// Handles usage of the utensils on the food items
     /// </summary>
-    internal class UtensilSystem : EntitySystem
+    internal sealed class UtensilSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly FoodSystem _foodSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {
@@ -32,36 +33,36 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         private void OnAfterInteract(EntityUid uid, UtensilComponent component, AfterInteractEvent ev)
         {
-            if (ev.Target == null)
+            if (ev.Target == null || !ev.CanReach)
                 return;
 
-            if (TryUseUtensil(ev.UserUid, ev.Target.Uid, component))
+            if (TryUseUtensil(ev.User, ev.Target.Value, component))
                 ev.Handled = true;
         }
 
-        private bool TryUseUtensil(EntityUid userUid, EntityUid targetUid, UtensilComponent component)
+        private bool TryUseUtensil(EntityUid user, EntityUid target, UtensilComponent component)
         {
-            if (!EntityManager.TryGetComponent(targetUid, out FoodComponent food))
+            if (!EntityManager.TryGetComponent(target, out FoodComponent food))
                 return false;
 
             //Prevents food usage with a wrong utensil
             if ((food.Utensil & component.Types) == 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", food.Owner), ("utensil", component.Owner)), userUid, Filter.Entities(userUid));
+                _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", food.Owner), ("utensil", component.Owner)), user, Filter.Entities(user));
                 return false;
             }
 
-            if (!userUid.InRangeUnobstructed(targetUid, popup: true))
+            if (!_interactionSystem.InRangeUnobstructed(user, target, popup: true))
                 return false;
 
-            return _foodSystem.TryUseFood(targetUid, userUid, userUid);
+            return _foodSystem.TryFeed(user, target, food);
         }
 
         /// <summary>
         /// Attempt to break the utensil after interaction.
         /// </summary>
         /// <param name="uid">Utensil.</param>
-        /// <param name="userUid">User of the utensil.</param> 
+        /// <param name="userUid">User of the utensil.</param>
         public void TryBreak(EntityUid uid, EntityUid userUid, UtensilComponent? component = null)
         {
             if (!Resolve(uid, ref component))
@@ -70,7 +71,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (_robustRandom.Prob(component.BreakChance))
             {
                 SoundSystem.Play(Filter.Pvs(userUid), component.BreakSound.GetSound(), userUid, AudioParams.Default.WithVolume(-2f));
-                component.Owner.Delete();
+                EntityManager.DeleteEntity(component.Owner);
             }
         }
     }

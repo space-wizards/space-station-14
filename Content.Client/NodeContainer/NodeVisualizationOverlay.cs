@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using Content.Client.Resources;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Content.Shared.NodeContainer.NodeVis;
@@ -22,7 +17,6 @@ namespace Content.Client.NodeContainer
         private readonly IEntityLookup _lookup;
         private readonly IMapManager _mapManager;
         private readonly IInputManager _inputManager;
-        private readonly IEyeManager _eyeManager;
         private readonly IEntityManager _entityManager;
 
         private readonly Dictionary<(int, int), NodeRenderData> _nodeIndex = new();
@@ -30,6 +24,7 @@ namespace Content.Client.NodeContainer
 
         private readonly Font _font;
 
+        private Vector2 _mouseWorldPos = default;
         private (int group, int node)? _hovered;
         private float _time;
 
@@ -40,7 +35,6 @@ namespace Content.Client.NodeContainer
             IEntityLookup lookup,
             IMapManager mapManager,
             IInputManager inputManager,
-            IEyeManager eyeManager,
             IResourceCache cache,
             IEntityManager entityManager)
         {
@@ -48,7 +42,6 @@ namespace Content.Client.NodeContainer
             _lookup = lookup;
             _mapManager = mapManager;
             _inputManager = inputManager;
-            _eyeManager = eyeManager;
             _entityManager = entityManager;
 
             _font = cache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
@@ -68,6 +61,12 @@ namespace Content.Client.NodeContainer
 
         private void DrawScreen(in OverlayDrawArgs args)
         {
+            var mousePos = _inputManager.MouseScreenPosition.Position;
+            _mouseWorldPos = args
+                .ViewportControl!
+                .ScreenToMap(new Vector2(mousePos.X, mousePos.Y))
+                .Position;
+
             if (_hovered == null)
                 return;
 
@@ -76,20 +75,18 @@ namespace Content.Client.NodeContainer
             var group = _system.Groups[groupId];
             var node = _system.NodeLookup[(groupId, nodeId)];
 
-            var mousePos = _inputManager.MouseScreenPosition.Position;
 
-            var entity = _entityManager.GetEntity(node.Entity);
-
-            var gridId = entity.Transform.GridID;
+            var gridId = _entityManager.GetComponent<TransformComponent>(node.Entity).GridID;
             var grid = _mapManager.GetGrid(gridId);
-            var gridTile = grid.TileIndicesFor(entity.Transform.Coordinates);
+            var gridTile = grid.TileIndicesFor(_entityManager.GetComponent<TransformComponent>(node.Entity).Coordinates);
 
             var sb = new StringBuilder();
-            sb.Append($"entity: {entity}\n");
+            sb.Append($"entity: {node.Entity}\n");
             sb.Append($"group id: {group.GroupId}\n");
             sb.Append($"node: {node.Name}\n");
             sb.Append($"type: {node.Type}\n");
             sb.Append($"grid pos: {gridTile}\n");
+            sb.Append(group.DebugData);
 
             args.ScreenHandle.DrawString(_font, mousePos + (20, -20), sb.ToString());
         }
@@ -105,24 +102,21 @@ namespace Content.Client.NodeContainer
             if (map == MapId.Nullspace)
                 return;
 
-            var mouseScreenPos = _inputManager.MouseScreenPosition;
-            var mouseWorldPos = _eyeManager.ScreenToMap(mouseScreenPos).Position;
-
             _hovered = default;
 
-            var cursorBox = Box2.CenteredAround(mouseWorldPos, (nodeSize, nodeSize));
+            var cursorBox = Box2.CenteredAround(_mouseWorldPos, (nodeSize, nodeSize));
 
             // Group visible nodes by grid tiles.
             var worldAABB = overlayDrawArgs.WorldAABB;
             _lookup.FastEntitiesIntersecting(map, ref worldAABB, entity =>
             {
-                if (!_system.Entities.TryGetValue(entity.Uid, out var nodeData))
+                if (!_system.Entities.TryGetValue(entity, out var nodeData))
                     return;
 
-                var gridId = entity.Transform.GridID;
+                var gridId = _entityManager.GetComponent<TransformComponent>(entity).GridID;
                 var grid = _mapManager.GetGrid(gridId);
                 var gridDict = _gridIndex.GetOrNew(gridId);
-                var coords = entity.Transform.Coordinates;
+                var coords = _entityManager.GetComponent<TransformComponent>(entity).Coordinates;
 
                 // TODO: This probably shouldn't be capable of returning NaN...
                 if (float.IsNaN(coords.Position.X) || float.IsNaN(coords.Position.Y))
@@ -142,6 +136,7 @@ namespace Content.Client.NodeContainer
             foreach (var (gridId, gridDict) in _gridIndex)
             {
                 var grid = _mapManager.GetGrid(gridId);
+                var lCursorBox = grid.InvWorldMatrix.TransformBox(cursorBox);
                 foreach (var (pos, list) in gridDict)
                 {
                     var centerPos = (Vector2) pos + grid.TileSize / 2f;
@@ -152,7 +147,7 @@ namespace Content.Client.NodeContainer
                     foreach (var (group, node) in list)
                     {
                         var nodePos = centerPos + (offset, offset);
-                        if (cursorBox.Contains(nodePos))
+                        if (lCursorBox.Contains(nodePos))
                             _hovered = (group.NetId, node.NetId);
 
                         _nodeIndex[(group.NetId, node.NetId)] = new NodeRenderData(group, node, nodePos);

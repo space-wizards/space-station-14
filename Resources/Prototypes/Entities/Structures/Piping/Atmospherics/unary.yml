@@ -6,6 +6,8 @@
     mode: SnapgridCenter
   components:
     - type: AtmosDevice
+    - type: SubFloorHide
+      blockInteractions: false
     - type: NodeContainer
       nodes:
         pipe:
@@ -21,6 +23,15 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: ApcPowerReceiver
+    - type: ExtensionCableReceiver
+    - type: DeviceNetworkComponent
+      deviceNetId: Apc
+      frequency: 1621
+    - type: ApcNetworkConnection
+    - type: AtmosAlarmable
+      alarmedBy:
+      - AirAlarm
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects
@@ -30,11 +41,9 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
-          map: [ "enum.VentVisualLayers.Vent", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.VentVisualLayers.Vent", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: VentPumpVisualizer
     - type: GasVentPump
@@ -57,11 +66,9 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
-          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasPassiveVent
 
@@ -73,6 +80,15 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: ApcPowerReceiver
+    - type: ExtensionCableReceiver
+    - type: DeviceNetworkComponent
+      deviceNetId: Apc
+      frequency: 1621
+    - type: ApcNetworkConnection
+    - type: AtmosAlarmable
+      alarmedBy:
+      - AirAlarm
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects
@@ -82,11 +98,9 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: scrub_off
-          map: [ "enum.ScrubberVisualLayers.Scrubber", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.ScrubberVisualLayers.Scrubber", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: ScrubberVisualizer
     - type: AtmosDevice
@@ -108,11 +122,9 @@
       layers:
         - state: pipeHalf
           sprite: Structures/Piping/Atmospherics/pipe.rsi
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasOutletInjector
 
@@ -131,12 +143,17 @@
       noRot: true
     - type: Appearance
       visuals:
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: Rotatable
     - type: GasThermoMachine
     - type: AtmosPipeColor
     - type: AtmosDevice
+    - type: Construction
+      graph: Machine
+      node: machine
+    - type: Wires
+      BoardName: "Thermomachine"
+      LayoutId: Thermomachine
     - type: NodeContainer
       nodes:
         pipe:
@@ -159,7 +176,6 @@
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - type: Appearance
       visuals:
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: ThermoMachineVisualizer
           disabledState: freezer_off
@@ -167,6 +183,8 @@
     - type: GasThermoMachine
       mode: Freezer
       minTemperature: 73.15
+    - type: Machine
+      board: ThermomachineFreezerMachineCircuitBoard
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -183,7 +201,6 @@
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - type: Appearance
       visuals:
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: ThermoMachineVisualizer
           disabledState: heater_off
@@ -191,3 +208,5 @@
     - type: GasThermoMachine
       mode: Heater
       maxTemperature: 573.15 # This is changed when parts are refreshed.
+    - type: Machine
+      board: ThermomachineHeaterMachineCircuitBoard

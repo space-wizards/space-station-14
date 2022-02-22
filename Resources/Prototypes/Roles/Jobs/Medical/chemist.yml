@@ -1,8 +1,6 @@
 - type: job
   id: Chemist
   name: "chemist"
-  positions: 2
-  spawnPositions: 2
   startingGear: ChemistGear
   departments:
   - Medical
@@ -11,15 +9,16 @@
   access:
   - Medical
   - Chemistry
+  - Maintenance
 
 - type: startingGear
   id: ChemistGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitChemistry
-    backpack: ClothingBackpackChemistryFilled
+    jumpsuit: ClothingUniformJumpsuitChemistry
+    back: ClothingBackpackChemistryFilled
     shoes: ClothingShoesColorWhite
-    outerclothing: ClothingOuterCoatLabChem
-    idcard: ChemistryPDA
+    outerClothing: ClothingOuterCoatLabChem
+    id: ChemistryPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedical
     pocket1: HandLabeler

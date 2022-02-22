@@ -1,14 +1,12 @@
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Chemistry.UI
 {
     [UsedImplicitly]
-    public class TransferAmountBoundUserInterface : BoundUserInterface
+    public sealed class TransferAmountBoundUserInterface : BoundUserInterface
     {
         private TransferAmountWindow? _window;
 
@@ -31,6 +29,13 @@ namespace Content.Client.Chemistry.UI
 
         public TransferAmountBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing) return;
+            _window?.Dispose();
         }
     }
 }

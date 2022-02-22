@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.MachineLinking
 {
     [Serializable, NetSerializable]
-    public class SignalPortsState : BoundUserInterfaceState
+    public sealed class SignalPortsState : BoundUserInterfaceState
     {
         /// <summary>
         /// A Dictionary containing all ports and wether or not they can be selected.
@@ -25,7 +25,7 @@ namespace Content.Shared.MachineLinking
     }
 
     [Serializable, NetSerializable]
-    public class SignalPortSelected : BoundUserInterfaceMessage
+    public sealed class SignalPortSelected : BoundUserInterfaceMessage
     {
         public readonly string Port;
 

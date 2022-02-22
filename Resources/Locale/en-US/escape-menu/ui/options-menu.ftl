@@ -47,6 +47,7 @@ ui-options-vp-integer-scaling-tooltip = If this option is enabled, the viewport 
                                         means that black bars appear at the top/bottom of the screen or that part
                                         of the viewport is not visible.
 ui-options-vp-low-res = Low-resolution viewport
+ui-options-fps-counter = Show FPS counter
 
 ## Controls menu
 
@@ -64,6 +65,9 @@ ui-options-header-misc = Miscellaneous
 ui-options-header-hotbar = Hotbar
 ui-options-header-map-editor = Map Editor
 ui-options-header-dev = Development
+ui-options-header-general = General
+
+ui-options-hotkey-keymap = Use US QWERTY Keys
 
 ui-options-function-move-up = Move Up
 ui-options-function-move-left = Move Left
@@ -91,6 +95,7 @@ ui-options-function-point = Point at location
 
 ui-options-function-focus-chat-input-window = Focus chat
 ui-options-function-focus-local-chat-window = Focus chat (IC)
+ui-options-function-focus-whisper-chat-window = Focus chat (Whisper)
 ui-options-function-focus-radio-window = Focus chat (Radio)
 ui-options-function-focus-ooc-window = Focus chat (OOC)
 ui-options-function-focus-admin-chat-window = Focus chat (Admin)
@@ -107,6 +112,7 @@ ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-open-entity-spawn-window = Open entity spawn menu
 ui-options-function-open-sandbox-window = Open sandbox menu
 ui-options-function-open-tile-spawn-window = Open tile spawn menu
+ui-options-function-open-decal-spawn-window = Open decal spawn menu
 ui-options-function-open-admin-menu = Open admin menu
 
 ui-options-function-take-screenshot = Take screenshot

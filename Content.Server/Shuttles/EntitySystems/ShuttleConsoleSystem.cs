@@ -1,4 +1,5 @@
-using Content.Server.Alert;
+using System;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
 using Content.Shared.ActionBlocker;
@@ -8,25 +9,81 @@ using Content.Shared.Popups;
 using Content.Shared.Shuttles;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
+using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.EntitySystems
 {
     internal sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
 
         public override void Initialize()
         {
             base.Initialize();
+
             SubscribeLocalEvent<ShuttleConsoleComponent, ComponentShutdown>(HandleConsoleShutdown);
-            SubscribeLocalEvent<PilotComponent, ComponentShutdown>(HandlePilotShutdown);
             SubscribeLocalEvent<ShuttleConsoleComponent, ActivateInWorldEvent>(HandleConsoleInteract);
-            SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
             SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(HandlePowerChange);
+            SubscribeLocalEvent<ShuttleConsoleComponent, GetVerbsEvent<InteractionVerb>>(OnConsoleInteract);
+
+            SubscribeLocalEvent<PilotComponent, ComponentShutdown>(HandlePilotShutdown);
+            SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
+        }
+
+        private void OnConsoleInteract(EntityUid uid, ShuttleConsoleComponent component, GetVerbsEvent<InteractionVerb> args)
+        {
+            if (!args.CanAccess ||
+                !args.CanInteract)
+                return;
+
+            var xform = EntityManager.GetComponent<TransformComponent>(uid);
+
+            // Maybe move mode onto the console instead?
+            if (!_mapManager.TryGetGrid(xform.GridID, out var grid) ||
+                !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttle)) return;
+
+            InteractionVerb verb = new()
+            {
+                Text = Loc.GetString("shuttle-mode-toggle"),
+                Act = () => ToggleShuttleMode(args.User, component, shuttle),
+                Disabled = !xform.Anchored || EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? receiver) && !receiver.Powered,
+            };
+
+            args.Verbs.Add(verb);
+        }
+
+        private void ToggleShuttleMode(EntityUid user, ShuttleConsoleComponent consoleComponent, ShuttleComponent shuttleComponent, TransformComponent? consoleXform = null)
+        {
+            // Re-validate
+            if (EntityManager.TryGetComponent(consoleComponent.Owner, out ApcPowerReceiverComponent? receiver) && !receiver.Powered) return;
+
+            if (!Resolve(consoleComponent.Owner, ref consoleXform)) return;
+
+            if (!consoleXform.Anchored || consoleXform.GridID != EntityManager.GetComponent<TransformComponent>(shuttleComponent.Owner).GridID) return;
+
+            switch (shuttleComponent.Mode)
+            {
+                case ShuttleMode.Cruise:
+                    shuttleComponent.Mode = ShuttleMode.Docking;
+                    _popup.PopupEntity(Loc.GetString("shuttle-mode-docking"), consoleComponent.Owner, Filter.Entities(user));
+                    break;
+                case ShuttleMode.Docking:
+                    shuttleComponent.Mode = ShuttleMode.Cruise;
+                    _popup.PopupEntity(Loc.GetString("shuttle-mode-cruise"), consoleComponent.Owner, Filter.Entities(user));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public override void Update(float frameTime)
@@ -39,7 +96,7 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 if (comp.Console == null) continue;
 
-                if (!_blocker.CanInteract(comp.OwnerUid))
+                if (!_blocker.CanInteract(comp.Owner, comp.Console.Owner))
                 {
                     toRemove.Add(comp);
                 }
@@ -91,12 +148,12 @@ namespace Content.Server.Shuttles.EntitySystems
         /// </summary>
         private void HandleConsoleInteract(EntityUid uid, ShuttleConsoleComponent component, ActivateInWorldEvent args)
         {
-            if (!args.User.HasTag("CanPilot"))
+            if (!_tags.HasTag(args.User, "CanPilot"))
             {
                 return;
             }
 
-            var pilotComponent = EntityManager.EnsureComponent<PilotComponent>(args.User.Uid);
+            var pilotComponent = EntityManager.EnsureComponent<PilotComponent>(args.User);
 
             if (!component.Enabled)
             {
@@ -130,25 +187,26 @@ namespace Content.Server.Shuttles.EntitySystems
             ClearPilots(component);
         }
 
-        public void AddPilot(IEntity entity, ShuttleConsoleComponent component)
+        public void AddPilot(EntityUid entity, ShuttleConsoleComponent component)
         {
-            if (!_blocker.CanInteract(entity.Uid) ||
-                !entity.TryGetComponent(out PilotComponent? pilotComponent) ||
+            if (!EntityManager.TryGetComponent(entity, out PilotComponent? pilotComponent) ||
                 component.SubscribedPilots.Contains(pilotComponent))
             {
                 return;
             }
 
+            if (TryComp<SharedEyeComponent>(entity, out var eye))
+            {
+                eye.Zoom = component.Zoom;
+            }
+
             component.SubscribedPilots.Add(pilotComponent);
 
-            if (entity.TryGetComponent(out ServerAlertsComponent? alertsComponent))
-            {
-                alertsComponent.ShowAlert(AlertType.PilotingShuttle);
-            }
+            _alertsSystem.ShowAlert(entity, AlertType.PilotingShuttle);
 
             entity.PopupMessage(Loc.GetString("shuttle-pilot-start"));
             pilotComponent.Console = component;
-            pilotComponent.Position = EntityManager.GetComponent<TransformComponent>(entity.Uid).Coordinates;
+            pilotComponent.Position = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
             pilotComponent.Dirty();
         }
 
@@ -161,22 +219,24 @@ namespace Content.Server.Shuttles.EntitySystems
             pilotComponent.Console = null;
             pilotComponent.Position = null;
 
+            if (TryComp<SharedEyeComponent>(pilotComponent.Owner, out var eye))
+            {
+                eye.Zoom = new(1.0f, 1.0f);
+            }
+
             if (!helmsman.SubscribedPilots.Remove(pilotComponent)) return;
 
-            if (pilotComponent.Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
-            {
-                alertsComponent.ClearAlert(AlertType.PilotingShuttle);
-            }
+            _alertsSystem.ClearAlert(pilotComponent.Owner, AlertType.PilotingShuttle);
 
             pilotComponent.Owner.PopupMessage(Loc.GetString("shuttle-pilot-end"));
 
             if (pilotComponent.LifeStage < ComponentLifeStage.Stopping)
-                EntityManager.RemoveComponent<PilotComponent>(pilotComponent.Owner.Uid);
+                EntityManager.RemoveComponent<PilotComponent>(pilotComponent.Owner);
         }
 
-        public void RemovePilot(IEntity entity)
+        public void RemovePilot(EntityUid entity)
         {
-            if (!entity.TryGetComponent(out PilotComponent? pilotComponent)) return;
+            if (!EntityManager.TryGetComponent(entity, out PilotComponent? pilotComponent)) return;
 
             RemovePilot(pilotComponent);
         }

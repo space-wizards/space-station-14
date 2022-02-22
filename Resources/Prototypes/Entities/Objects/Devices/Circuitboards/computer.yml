@@ -1,4 +1,4 @@
-﻿# TODO: Add descriptions (10)
+# TODO: Add descriptions (10)
 
 - type: entity
   parent: BaseItem
@@ -37,6 +37,14 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: CrewMonitoringComputerCircuitboard
+  name: crew monitoring console board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerCrewMonitoring
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: IDComputerCircuitboard
   name: ID card terminal board
   components:
@@ -58,6 +66,14 @@
   components:
     - type: ComputerBoard
       prototype: ComputerComms
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: RadarConsoleCircuitboard
+  name: radar console computer board
+  components:
+  - type: ComputerBoard
+    prototype: ComputerRadar
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -91,3 +107,19 @@
   components:
     - type: ComputerBoard
       prototype: ParticleAcceleratorControlBoxUnfinished
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ShuttleConsoleCircuitboard
+  name: Shuttle Console Board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerShuttle
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SyndicateShuttleConsoleCircuitboard
+  name: syndicate shuttle console board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerShuttleSyndie

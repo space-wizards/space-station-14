@@ -1,5 +1,6 @@
 ﻿using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Weapons.Melee.Components
@@ -7,8 +8,6 @@ namespace Content.Client.Weapons.Melee.Components
     [RegisterComponent]
     public sealed class MeleeLungeComponent : Component
     {
-        public override string Name => "MeleeLunge";
-
         private const float ResetTime = 0.3f;
         private const float BaseOffset = 0.25f;
 
@@ -38,14 +37,16 @@ namespace Content.Client.Weapons.Melee.Components
                 offset *= (ResetTime - _time) / ResetTime;
             }
 
-            if (Owner.TryGetComponent(out ISpriteComponent? spriteComponent))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (entMan.TryGetComponent(Owner, out ISpriteComponent? spriteComponent))
             {
                 spriteComponent.Offset = offset;
             }
 
             if (deleteSelf)
             {
-                Owner.RemoveComponent<MeleeLungeComponent>();
+                entMan.RemoveComponent<MeleeLungeComponent>(Owner);
             }
         }
     }

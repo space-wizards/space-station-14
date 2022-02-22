@@ -8,6 +8,7 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.Nutrition.Components;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Nutrition
@@ -31,7 +32,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Nutrition
 
             foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
             {
-                if (!entity.HasComponent<DrinkComponent>())
+                if (!IoCManager.Resolve<IEntityManager>().HasComponent<DrinkComponent>(entity))
                 {
                     continue;
                 }

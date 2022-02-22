@@ -12,7 +12,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public partial class AtmosphereSystem
+    public sealed partial class AtmosphereSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -108,14 +108,13 @@ namespace Content.Server.Atmos.EntitySystems
                     tile.Air ??= new GasMixture(volume){Temperature = Atmospherics.T20C};
                 }
 
-                // By removing the active tile, we effectively remove its excited group, if any.
-                RemoveActiveTile(atmosphere, tile);
-
-                // Then we activate the tile again.
+                // We activate the tile.
                 AddActiveTile(atmosphere, tile);
 
-                // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity
-                tile.ThermalConductivity = tile.Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.5f;
+                // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity and heat capacity
+                var tileDef = GetTile(tile)?.Tile.GetContentTileDefinition(_tileDefinitionManager);
+                tile.ThermalConductivity = tileDef?.ThermalConductivity ?? 0.5f;
+                tile.HeatCapacity = tileDef?.HeatCapacity ?? float.PositiveInfinity;
                 InvalidateVisuals(mapGrid.Index, indices);
 
                 for (var i = 0; i < Atmospherics.Directions; i++)
@@ -221,9 +220,13 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.HighPressureDelta);
 
             var number = 0;
+            var bodies = EntityManager.GetEntityQuery<PhysicsComponent>();
+            var xforms = EntityManager.GetEntityQuery<TransformComponent>();
+            var pressureQuery = EntityManager.GetEntityQuery<MovedByPressureComponent>();
+
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                HighPressureMovements(atmosphere, tile);
+                HighPressureMovements(atmosphere, tile, bodies, xforms, pressureQuery);
                 tile.PressureDifference = 0f;
                 tile.PressureSpecificTarget = null;
                 atmosphere.HighPressureDelta.Remove(tile);
@@ -315,7 +318,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunAtmosDevices.TryDequeue(out var device))
             {
-                RaiseLocalEvent(device.Owner.Uid, _updateEvent, false);
+                RaiseLocalEvent(device.Owner, _updateEvent, false);
                 device.LastProcess = time;
 
                 if (number++ < LagCheckIterations) continue;
@@ -348,7 +351,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var atmosphere = _currentRunAtmosphere[_currentRunAtmosphereIndex];
 
-                if (atmosphere.Paused || !atmosphere.Simulated || atmosphere.LifeStage >= ComponentLifeStage.Stopping)
+                if (atmosphere.LifeStage >= ComponentLifeStage.Stopping || Paused(atmosphere.Owner) || !atmosphere.Simulated)
                     continue;
 
                 atmosphere.Timer += frameTime;

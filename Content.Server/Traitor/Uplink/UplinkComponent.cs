@@ -8,10 +8,8 @@ using System;
 namespace Content.Server.Traitor.Uplink.Components
 {
     [RegisterComponent]
-    public class UplinkComponent : Component
+    public sealed class UplinkComponent : Component
     {
-        public override string Name => "Uplink";
-
         [ViewVariables]
         [DataField("buySuccessSound")]
         public SoundSpecifier BuySuccessSound = new SoundPathSpecifier("/Audio/Effects/kaching.ogg");
@@ -30,7 +28,7 @@ namespace Content.Server.Traitor.Uplink.Components
 
         [Serializable]
         [DataDefinition]
-        public class PresetUplinkInfo
+        public sealed class PresetUplinkInfo
         {
             [DataField("balance")]
             public int StartingBalance;

@@ -9,10 +9,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent, Friend(typeof(UtensilSystem))]
-    public class UtensilComponent : Component
+    public sealed class UtensilComponent : Component
     {
-        public override string Name => "Utensil";
-
         [DataField("types")]
         private UtensilType _types = UtensilType.None;
 

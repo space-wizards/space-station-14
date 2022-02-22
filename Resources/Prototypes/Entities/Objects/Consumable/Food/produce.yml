@@ -26,6 +26,7 @@
     state: produce
   - type: Produce
   - type: Extractable
+    grindableSolutionName: food
 
 # Subclasses
 
@@ -103,6 +104,37 @@
   - type: Log
 
 - type: entity
+  name: nettle
+  description: Stingy little prick.
+  id: Nettle
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/nettle.rsi
+  - type: Item
+    size: 10
+    sprite: Objects/Specific/Hydroponics/nettle.rsi
+    prefix: inhand
+  - type: MeleeWeapon
+    damage:
+      types:
+        Heat: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Histamine
+          Quantity: 25
+  - type: Produce
+    seed: nettle
+  - type: MeleeChemicalInjector
+    transferAmount: 6 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
+  - type: Extractable
+    grindableSolutionName: food
+  - type: InjectableSolution
+    solution: food
+
+- type: entity
   name: banana
   parent: FoodProduceBase
   id: FoodBanana
@@ -116,7 +148,9 @@
         maxVol: 6
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 2
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
   - type: Produce
@@ -144,6 +178,7 @@
     enabled: false
   - type: Physics
     bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -158,6 +193,20 @@
       mass: 5
       mask:
         - SmallImpassable
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 4
+        reagents:
+        - ReagentId: PulpedBananaPeel
+          Quantity: 4
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Recyclable
 
 - type: entity
   name: carrot
@@ -171,10 +220,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 9
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/carrot.rsi
   - type: Produce
@@ -194,10 +245,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 9
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemon.rsi
   - type: Produce
@@ -217,10 +270,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 16
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Water
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
   - type: Produce
@@ -243,9 +300,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/potato.rsi
   - type: Produce
@@ -265,9 +325,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomato.rsi
   - type: Produce
@@ -329,7 +392,7 @@
         - ReagentId: JuiceTomato
           Quantity: 10
   - type: Evaporation
-    lowerLimit: 2
+    lowerLimit: 0 # todo: reimplement stain behaviour, ideally in a way that doesn't use evaporation lowerLimit
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
@@ -343,9 +406,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/eggplant.rsi
   - type: Produce
@@ -360,10 +426,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
   - type: Produce
@@ -385,14 +453,23 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
     seed: corn
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Cornoil
+        Quantity: 3
+      - ReagentId: Enzyme
+        Quantity: 2
 
 - type: entity
   name: corn cob
@@ -416,9 +493,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion.rsi
   - type: Produce
@@ -436,9 +516,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
   - type: Produce
@@ -515,3 +598,187 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
+
+- type: entity
+  name: chili
+  parent: FoodProduceBase
+  id: FoodChili
+  description: Spicy, best not touch your eyes.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 18
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 4
+            - ReagentId: CapsaicinOil
+              Quantity: 10
+            - ReagentId: Vitamin
+              Quantity: 4
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/chili.rsi
+    - type: Produce
+      seed: chili
+
+- type: entity
+  name: aloe
+  parent: FoodProduceBase
+  id: FoodAloe
+  description: A fragrant plant with soothing properties.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20 ##I'm pretty sure this has to match the total of 100 potency yields
+        reagents:
+        - ReagentId: Aloe
+          Quantity: 10
+        - ReagentId: Kelotane
+          Quantity: 10
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/aloe.rsi
+  - type: Produce
+    seed: aloe
+  - type: Extractable
+    grindableSolutionName: food
+
+- type: entity
+  name: poppy
+  parent: FoodProduceBase
+  id: FoodPoppy
+  description: A flower with extracts often used in the production of medicine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Bicaridine
+          Quantity: 10
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/poppy.rsi
+  - type: Produce
+    seed: poppy
+  - type: Extractable
+    grindableSolutionName: food
+
+- type: entity
+  name: lingzhi
+  parent: FoodProduceBase
+  id: FoodLingzhi
+  description: A potent medicinal mushroom. Don't go overboard.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Ultravasculine
+          Quantity: 20
+        - ReagentId: Epinephrine
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lingzhi.rsi
+  - type: Produce
+    seed: lingzhi
+  - type: Extractable
+    grindableSolutionName: food
+
+- type: entity
+  name: ambrosia vulgaris
+  parent: FoodProduceBase
+  id: FoodAmbrosiaVulgaris
+  description: A medicinal plant. May make you feel a little funny.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 10
+        - ReagentId: Kelotane
+          Quantity: 10
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Desoxyephedrine
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 2
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+  - type: Produce
+    seed: ambrosiaVulgaris
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+    Slots:
+    - HEAD
+
+- type: entity
+  name: galaxythistle
+  parent: FoodProduceBase
+  id: FoodGalaxythistle
+  description: A medicinal plant used for its antitoxin.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Stellibinin
+          Quantity: 25
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
+  - type: Produce
+    seed: galaxythistle
+  - type: Extractable
+    grindableSolutionName: food
+
+- type: entity
+  name: fly amanita
+  parent: FoodProduceBase
+  id: FoodFlyAmanita
+  description: A delicious-looking mushroom like you see in those cartoons.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Amatoxin
+          Quantity: 25
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
+  - type: Produce
+    seed: flyAmanita
+  - type: Extractable
+    grindableSolutionName: food
+
+- type: entity
+  name: gatfruit
+  parent: FoodProduceBase
+  id: FoodGatfruit
+  description: A delicious, gun-shaped fruit with a thick wooden stem.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Sulfur
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/gatfruit.rsi
+  - type: Produce
+    seed: gatfruit
+  - type: Food
+    trash: RevolverPredator

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -11,19 +11,21 @@ namespace Content.Server.Power.Nodes
     ///     Type of node that connects to a <see cref="CableNode"/> below it.
     /// </summary>
     [DataDefinition]
+    [Virtual]
     public class CableDeviceNode : Node
     {
-        public override IEnumerable<Node> GetReachableNodes()
+        public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            EntityQuery<TransformComponent> xformQuery,
+            IMapGrid? grid,
+            IEntityManager entMan)
         {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            // If we're in an invalid grid, such as grid 0, we cannot connect to anything.
-            if(!IoCManager.Resolve<IMapManager>().TryGetGrid(Owner.Transform.GridID, out var grid))
+            if (!xform.Anchored || grid == null)
                 yield break;
 
-            var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
+            var gridIndex = grid.TileIndicesFor(xform.Coordinates);
 
-            foreach (var node in NodeHelpers.GetNodesInTile(entMan, grid, gridIndex))
+            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, gridIndex))
             {
                 if (node is CableNode)
                     yield return node;

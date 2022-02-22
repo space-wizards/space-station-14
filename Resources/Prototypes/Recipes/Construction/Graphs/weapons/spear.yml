@@ -1,0 +1,17 @@
+﻿- type: constructionGraph
+  id: Spear
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: spear
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+            - material: Glass
+              amount: 2
+              doAfter: 2
+
+    - node: spear
+      entity: Spear

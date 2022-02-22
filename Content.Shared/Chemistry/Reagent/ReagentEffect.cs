@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -19,17 +22,31 @@ namespace Content.Shared.Chemistry.Reagent
     [MeansImplicitUse]
     public abstract class ReagentEffect
     {
+        [JsonPropertyName("id")] private protected string _id => this.GetType().Name;
         /// <summary>
         ///     The list of conditions required for the effect to activate. Not required.
         /// </summary>
+        [JsonPropertyName("conditions")]
         [DataField("conditions")]
         public ReagentEffectCondition[]? Conditions;
 
         /// <summary>
         ///     What's the chance, from 0 to 1, that this effect will occur?
         /// </summary>
+        [JsonPropertyName("probability")]
         [DataField("probability")]
         public float Probability = 1.0f;
+
+        [JsonIgnore]
+        [DataField("logImpact")]
+        public virtual LogImpact LogImpact { get; } = LogImpact.Low;
+
+        /// <summary>
+        ///     Should this reagent effect log at all?
+        /// </summary>
+        [JsonIgnore]
+        [DataField("shouldLog")]
+        public virtual bool ShouldLog { get; } = false;
 
         public abstract void Effect(ReagentEffectArgs args);
     }

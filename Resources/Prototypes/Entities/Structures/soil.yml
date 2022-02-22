@@ -8,6 +8,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -38,6 +39,7 @@
   - type: Sprite
     sprite: Structures/Hydroponics/misc.rsi
     state: soil
+    netsync: false
   - type: PlantHolder
     drawWarnings: false
   - type: SolutionContainerManager
@@ -46,6 +48,7 @@
         maxVol: 200
   - type: RefillableSolution
     solution: soil
+    maxRefill: 50
   - type: Transform
     anchored: true
   - type: Reactive

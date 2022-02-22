@@ -2,12 +2,13 @@ using Content.Shared.Extinguisher;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Extinguisher
 {
     [UsedImplicitly]
-    public class FireExtinguisherVisualizer : AppearanceVisualizer
+    public sealed class FireExtinguisherVisualizer : AppearanceVisualizer
     {
         [DataField("safety_on_state")]
         private string? _safetyOnState;
@@ -26,7 +27,7 @@ namespace Content.Client.Extinguisher
 
         private void SetSafety(AppearanceComponent component, bool safety)
         {
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
             sprite.LayerSetState(FireExtinguisherVisualLayers.Base, safety ? _safetyOnState : _safetyOffState);
         }

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Content.Server.Hands.Components;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Hands
 {
@@ -13,7 +15,7 @@ namespace Content.Server.AI.WorldState.States.Hands
         {
             var result = new List<string>();
 
-            if (!Owner.TryGetComponent(out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent))
             {
                 return result;
             }

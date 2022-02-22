@@ -7,8 +7,8 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Commands
 {
-    [AdminCommand(AdminFlags.Server)]
-    class EndRoundCommand : IConsoleCommand
+    [AdminCommand(AdminFlags.Round)]
+    sealed class EndRoundCommand : IConsoleCommand
     {
         public string Command => "endround";
         public string Description => "Ends the round and moves the server to PostRound.";

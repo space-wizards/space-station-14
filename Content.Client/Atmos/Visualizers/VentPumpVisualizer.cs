@@ -2,11 +2,12 @@ using Content.Shared.Atmos.Visuals;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
-    public class VentPumpVisualizer : AppearanceVisualizer
+    public sealed class VentPumpVisualizer : AppearanceVisualizer
     {
         private string _offState = "vent_off";
         private string _inState = "vent_in";
@@ -17,7 +18,8 @@ namespace Content.Client.Atmos.Visualizers
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
                 return;
 
             if (!component.TryGetData(VentPumpVisuals.State, out VentPumpState state))
