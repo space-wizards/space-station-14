@@ -381,11 +381,11 @@
   description: Splat.
   components:
   - type: Sprite
+    netsync: false
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
       sprite: Fluids/tomato_splat.rsi
       state: puddle-0
-      netsync: false
     - map: ["enum.PuddleVisualLayers.WetFloorEffect"] # The layer for wet floor effects.
       sprite: Fluids/wet_floor_sparkles.rsi
       state: sparkles
