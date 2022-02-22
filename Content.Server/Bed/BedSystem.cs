@@ -90,7 +90,19 @@ namespace Content.Server.Bed
 
         private void OnEmagged(EntityUid uid, StasisBedComponent component, GotEmaggedEvent args)
         {
+            ///Repeatable
             component.Multiplier = 1 / component.Multiplier;
+
+            if (!TryComp<StrapComponent>(uid, out var strap) || strap.BuckledEntities.Count == 0)
+                return;
+
+            foreach (var buckledEntity in strap.BuckledEntities)
+            {
+                var metabolicEvent = new ApplyMetabolicMultiplierEvent()
+                    {Uid = buckledEntity, Multiplier = component.Multiplier, Apply = true};
+                RaiseLocalEvent(buckledEntity, metabolicEvent, false);
+            }
+
             args.Handled = true;
         }
     }
