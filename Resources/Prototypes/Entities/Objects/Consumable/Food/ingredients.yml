@@ -9,10 +9,11 @@
   description: Call the janitor.
   components:
   - type: Sprite
+    netsync: false
+    drawdepth: FloorObjects
     sprite: Fluids/powder.rsi
     state: powder
     color: white
-    netsync: false
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
