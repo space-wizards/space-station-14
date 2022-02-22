@@ -9,22 +9,6 @@
 
 - type: entity
   parent: Airlock
-  id: AirlockServiceBarLocked
-  suffix: Bar, Locked
-  components:
-  - type: AccessReader
-    access: [["Bar"]]
-
-- type: entity
-  parent: Airlock
-  id: AirlockServiceCaptainLocked
-  suffix: Captain, Locked
-  components:
-  - type: AccessReader
-    access: [["Captain"]]
-
-- type: entity
-  parent: Airlock
   id: AirlockTheatreLocked
   suffix: Theatre, Locked
   components:
@@ -70,6 +54,14 @@
   components:
   - type: AccessReader
     access: [["Hydroponics"]]
+
+- type: entity
+  parent: Airlock
+  id: AirlockServiceCaptainLocked
+  suffix: Captain, Locked
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
 
 - type: entity
   parent: AirlockExternal
@@ -176,14 +168,6 @@
   components:
   - type: AccessReader
     access: [["Captain"]]
-
-- type: entity
-  parent: AirlockCommand
-  id: AirlockHoPLocked
-  suffix: HoP, Locked
-  components:
-  - type: AccessReader
-    access: [["HeadOfPersonnel"]]
 
 - type: entity
   parent: AirlockCommand
@@ -499,14 +483,6 @@
 
 - type: entity
   parent: AirlockMaint
-  id: AirlockMaintCaptainLocked
-  suffix: Captain, Locked
-  components:
-  - type: AccessReader
-    access: [["Captain"]]
-
-- type: entity
-  parent: AirlockMaint
   id: AirlockMaintCommonLocked
   suffix: Common, Locked
   components:
@@ -625,6 +601,14 @@
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
 
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintCaptainLocked
+  suffix: Captain, Locked
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
+
 # Shuttle airlocks
 - type: entity
   parent: AirlockShuttle
@@ -641,3 +625,6 @@
   components:
   - type: AccessReader
     access: [["External"]]
+
+
+
