@@ -6,6 +6,7 @@
   - type: Transform
     anchored: true
   - type: Sprite
+    netsync: false
     drawdepth: FloorObjects
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
@@ -38,7 +39,6 @@
   description: Gross.
   components:
   - type: Sprite
-    netsync: false
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
       sprite: Fluids/gibblet.rsi # Placeholder
@@ -64,7 +64,6 @@
   description: A puddle of liquid.
   components:
   - type: Sprite
-    netsync: false
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
       sprite: Fluids/smear.rsi # Placeholder
@@ -84,7 +83,6 @@
   description: A puddle of liquid.
   components:
   - type: Sprite
-    netsync: false
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
       sprite: Fluids/splatter.rsi # Placeholder
@@ -104,7 +102,6 @@
   parent: PuddleBase
   components:
   - type: Sprite
-    netsync: false
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
       sprite: Fluids/splatter.rsi # Placeholder
@@ -130,7 +127,6 @@
   description: Gross.
   components:
   - type: Sprite
-    netsync: false
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
       sprite: Fluids/vomit.rsi
@@ -159,7 +155,6 @@
   description: You probably don't want to get too close to this.
   components:
   - type: Sprite
-    netsync: false
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
       sprite: Fluids/vomit_toxin.rsi
@@ -188,7 +183,6 @@
   description: A bit of liquid.
   components:
   - type: Sprite
-    netsync: false
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
       sprite: Fluids/writing.rsi # Placeholder

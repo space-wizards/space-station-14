@@ -381,7 +381,6 @@
   description: Splat.
   components:
   - type: Sprite
-    netsync: false
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
       sprite: Fluids/tomato_splat.rsi

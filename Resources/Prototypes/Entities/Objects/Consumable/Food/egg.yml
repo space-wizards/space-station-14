@@ -70,7 +70,6 @@
   description: If the floor was a little hotter this would fry.
   components:
   - type: Sprite
-    netsync: false
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"] # The layer for the puddle itself.
       sprite: Fluids/egg_splat.rsi
