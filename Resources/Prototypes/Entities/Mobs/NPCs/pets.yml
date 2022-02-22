@@ -23,7 +23,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -200,7 +199,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -322,7 +320,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
