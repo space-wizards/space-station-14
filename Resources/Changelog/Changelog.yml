@@ -1,20 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Item cabinet verbs have been updated., type: Tweak}
-  - {message: Clown PDA pen slot has been updated., type: Tweak}
-  id: 613
-  time: '2021-11-20T05:26:01.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: The litterbugs have been summoned to PackedStation to give the Janitor
-      something to do. If they like it is not under consideration., type: Add}
-  - {message: The delivery delay causing welding tanks in PackedStation to not be
-      fuelled has been solved., type: Fix}
-  - {message: A light in PackedStation no longer occupies the interior of a wall.,
-    type: Fix}
-  id: 614
-  time: '2021-11-20T05:26:57.0000000+00:00'
 - author: Efruit
   changes:
   - {message: The previous Chief Engineer of Packed Station was fired. The new C.E.
@@ -3003,3 +2987,15 @@ Entries:
     type: Tweak}
   id: 1112
   time: '2022-02-22T00:13:18.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Reduced the size and capacity of all cardboard boxes. No more hardsuits
+      in boxes., type: Tweak}
+  id: 1113
+  time: '2022-02-22T05:01:31.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added buildable plastic flaps for pushing items through and keeping
+      people out., type: Add}
+  id: 1114
+  time: '2022-02-22T05:01:58.0000000+00:00'
