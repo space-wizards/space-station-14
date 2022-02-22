@@ -53,8 +53,14 @@ public sealed class RoleBanListCommand : IConsoleCommand
 
         var bansString = new StringBuilder("Bans in record:\n");
 
+        var first = true;
         foreach (var ban in bans)
         {
+            if (!first)
+                bansString.Append("\n\n");
+            else
+                first = false;
+
             bansString
                 .Append("Ban ID: ")
                 .Append(ban.Id)
@@ -77,8 +83,7 @@ public sealed class RoleBanListCommand : IConsoleCommand
 
             bansString
                 .Append("Reason: ")
-                .Append(ban.Reason)
-                .Append('\n');
+                .Append(ban.Reason);
         }
 
         shell.WriteLine(bansString.ToString());
