@@ -343,6 +343,8 @@
     outputs:
       - plating
       - FloorArcadeBlue
+  - type: Stack
+    stackType: FloorArcadeBlue
       
 - type: entity
   name: red arcade floor
@@ -357,6 +359,8 @@
     outputs:
       - plating
       - FloorArcadeRed
+  - type: Stack
+    stackType: FloorArcadeRed
       
 - type: entity
   name: eighties floor
@@ -371,6 +375,8 @@
     outputs:
       - plating
       - FloorEighties
+  - type: Stack
+    stackType: FloorEighties
 
 # Shuttles
 - type: entity

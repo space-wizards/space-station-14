@@ -67,3 +67,43 @@
   id: FloorTileDirty
   name: dirty tile
   spawn: FloorTileItemDirty
+
+- type: stack
+  id: FloorTileShuttleWhite
+  name: white shuttle tile
+  spawn: FloorTileItemShuttleWhite
+  
+- type: stack
+  id: FloorTileShuttleBlue
+  name: blue shuttle tile
+  spawn: FloorTileItemShuttleBlue
+  
+- type: stack
+  id: FloorTileShuttleOrange
+  name: orange shuttle tile
+  spawn: FloorTileItemShuttleOrange
+  
+- type: stack
+  id: FloorTileShuttlePurple
+  name: purple shuttle tile
+  spawn: FloorTileItemShuttlePurple
+  
+- type: stack
+  id: FloorTileShuttleRed
+  name: red shuttle tile
+  spawn: FloorTileItemShuttleRed
+  
+- type: stack
+  id: FloorTileEighties
+  name: eighties floor tile
+  spawn: FloorTileItemEighties
+  
+- type: stack
+  id: FloorTileArcadeBlue
+  name: blue arcade tile
+  spawn: FloorTileItemArcadeBlue
+  
+- type: stack
+  id: FloorTileArcadeRed
+  name: red arcade tile
+  spawn: FloorTileItemArcadeRed
