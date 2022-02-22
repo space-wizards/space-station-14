@@ -8,6 +8,7 @@ using Content.Shared.Slippery;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Server.Fluids.EntitySystems
 {
@@ -16,6 +17,8 @@ namespace Content.Server.Fluids.EntitySystems
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        float visualSeed = 0; // given a random value on puddle initialization, to be used as a seed for rotation and sprite selection.
 
         public override void Initialize()
         {
@@ -23,47 +26,71 @@ namespace Content.Server.Fluids.EntitySystems
 
             SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
-            SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnUpdate);
-            SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnSolutionUpdate);
+            SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
         }
 
-        private void OnInit(EntityUid uid, PuddleComponent component, ComponentInit args)
+        private void OnPuddleInit(EntityUid uid, PuddleComponent component, ComponentInit args)
         {
             var solution = _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
             solution.MaxVolume = FixedPoint2.New(1000);
+
+            visualSeed = _random.NextFloat();
+
+            InitializeAppearance(uid, component);
+
         }
 
-        private void OnUpdate(EntityUid uid, PuddleComponent component, SolutionChangedEvent args)
+        private void OnSolutionUpdate(EntityUid uid, PuddleComponent component, SolutionChangedEvent args)
         {
             UpdateSlip(uid, component);
-            UpdateVisuals(uid, component);
+            UpdateAppearance(uid, component);
         }
 
-        private void UpdateVisuals(EntityUid uid, PuddleComponent puddleComponent)
+        /// <summary>
+        /// Called once when we initialize the puddle.
+        /// </summary>
+        /// <param name="uid">Puddle we have initialized</param>
+        /// <param name="puddle">PuddleComponent of the puddle we have initialized</param>
+        /// <param name="appearance">AppearanceComponent of the puddle we have initialized</param>
+        private void InitializeAppearance(EntityUid uid,
+            PuddleComponent? puddle = null,
+            AppearanceComponent? appearance = null)
         {
-            if (Deleted(puddleComponent.Owner) || EmptyHolder(uid, puddleComponent) ||
-                !EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearanceComponent))
+            if (!Resolve(uid, ref puddle, ref appearance, false))
+                return;
+
+            appearance.SetData(PuddleVisuals.VisualSeed, visualSeed); // This only needs to be set once, when the puddle is initialized.
+
+            UpdateAppearance(uid, puddle);
+        }
+
+        private void UpdateAppearance(EntityUid uid,
+            PuddleComponent? puddle = null,
+            AppearanceComponent? appearance = null)
+        {
+            if (!Resolve(uid, ref puddle, ref appearance, false)
+                || EmptyHolder(uid, puddle))
             {
                 return;
             }
 
             // Opacity based on level of fullness to overflow
             // Hard-cap lower bound for visibility reasons
-            var volumeScale = puddleComponent.CurrentVolume.Float() / puddleComponent.OverflowVolume.Float();
-            var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddleComponent.SolutionName);
+            var volumeScale = puddle.CurrentVolume.Float() / puddle.OverflowVolume.Float();
+            var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddle.SolutionName);
 
+            bool useWetFloorEffect = false; // Assume it won't by default, then check if it will.
 
-            bool hasEvaporationComponent = EntityManager.TryGetComponent<EvaporationComponent>(uid, out var evaporationComponent);
-            bool canEvaporate = (hasEvaporationComponent &&
-                                (evaporationComponent.LowerLimit == 0 || puddleComponent.CurrentVolume > evaporationComponent.LowerLimit));
+            if (TryComp(uid, out EvaporationComponent? evaporation) && evaporation.EvaporationToggle// if puddle is evaporating.
+                && puddle.CurrentVolume <= puddle.WetFloorEffectThreshold) // if puddle's volume is below a certain threshold. TODO: By default this threshold is hardcoded at what a standard mop can pick up -- need to make this more robust.
+            {
+                useWetFloorEffect = true;
+            }
 
-            // "Does this puddle's sprite need changing to the wet floor effect sprite?"
-            bool changeToWetFloor = (puddleComponent.CurrentVolume <= puddleComponent.WetFloorEffectThreshold
-                                    && canEvaporate);
-
-            appearanceComponent.SetData(PuddleVisuals.VolumeScale, volumeScale);
-            appearanceComponent.SetData(PuddleVisuals.SolutionColor, puddleSolution.Color);
-            appearanceComponent.SetData(PuddleVisuals.ForceWetFloorSprite, changeToWetFloor);
+            appearance.SetData(PuddleVisuals.VolumeScale, volumeScale);
+            appearance.SetData(PuddleVisuals.SolutionColor, puddleSolution.Color);
+            appearance.SetData(PuddleVisuals.WetFloorEffect, useWetFloorEffect);
         }
 
         private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)
