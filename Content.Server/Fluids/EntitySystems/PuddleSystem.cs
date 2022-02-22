@@ -78,8 +78,8 @@ namespace Content.Server.Fluids.EntitySystems
             // Opacity based on level of fullness to overflow
             // Hard-cap lower bound for visibility reasons
 
-            var volumeScale = puddleComponent.CurrentVolume.Float() / puddleComponent.OverflowVolume.Float() * puddleComponent.OpacityModifier;
-            var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddleComponent.SolutionName);
+            var volumeScale = puddle.CurrentVolume.Float() / puddle.OverflowVolume.Float() * puddle.OpacityModifier;
+            var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddle.SolutionName);
 
             bool useWetFloorEffect = false; // Assume it won't by default, then check if it will.
 
