@@ -1,12 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: Tweaked right-click entity menu. The entity lookup range is smaller
-      and the entity grouping has been changed., type: Tweak}
-  id: 612
-  time: '2021-11-20T05:25:29.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Item cabinet verbs have been updated., type: Tweak}
   - {message: Clown PDA pen slot has been updated., type: Tweak}
   id: 613
@@ -3003,3 +2997,9 @@ Entries:
   - {message: Role bans have been implemented, type: Add}
   id: 1111
   time: '2022-02-21T22:11:39.0000000+00:00'
+- author: Xenomorph queen
+  changes:
+  - {message: 'Xenos are ghost roles by default now, and even have their own accent!',
+    type: Tweak}
+  id: 1112
+  time: '2022-02-22T00:13:18.0000000+00:00'
