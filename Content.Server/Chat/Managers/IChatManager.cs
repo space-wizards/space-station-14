@@ -14,7 +14,7 @@ namespace Content.Server.Chat.Managers
         /// </summary>
         /// <param name="message"></param>
         /// <param name="colorOverride">Override the color of the message being sent.</param>
-        void DispatchServerAnnouncement(string message, Color colorOverride = default);
+        void DispatchServerAnnouncement(string message, Color? colorOverride = null);
 
         /// <summary>
         ///     Station announcement to every player
@@ -23,7 +23,7 @@ namespace Content.Server.Chat.Managers
         /// <param name="sender"></param>
         /// <param name="playDefaultSound">If the default 'PA' sound should be played.</param>
         /// <param name="colorOverride">Override the color of the message being sent.</param>
-        void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true, Color colorOverride = default);
+        void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true, Color? colorOverride = null);
 
         void DispatchServerMessage(IPlayerSession player, string message);
 

@@ -109,7 +109,7 @@ namespace Content.Server.Chat.Managers
             DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-admin-ooc-chat-enabled-message" : "chat-manager-admin-ooc-chat-disabled-message"));
         }
 
-        public void DispatchServerAnnouncement(string message, Color colorOverride = default)
+        public void DispatchServerAnnouncement(string message, Color? colorOverride = null)
         {
             var messageWrap = Loc.GetString("chat-manager-server-wrap-message");
             NetMessageToAll(ChatChannel.Server, message, messageWrap, colorOverride);
@@ -118,7 +118,7 @@ namespace Content.Server.Chat.Managers
             _logs.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
         }
 
-        public void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true, Color colorOverride = default)
+        public void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true, Color? colorOverride = null)
         {
             var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
             NetMessageToAll(ChatChannel.Radio, message, messageWrap, colorOverride);
@@ -596,15 +596,15 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendMessage(msg, client);
         }
 
-        public void NetMessageToAll(ChatChannel channel, string message, string messageWrap, Color colorOverride = default)
+        public void NetMessageToAll(ChatChannel channel, string message, string messageWrap, Color? colorOverride = null)
         {
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = channel;
             msg.Message = message;
             msg.MessageWrap = messageWrap;
-            if (colorOverride != default)
+            if (colorOverride != null)
             {
-                msg.MessageColorOverride = colorOverride;
+                msg.MessageColorOverride = colorOverride.Value;
             }
             _netManager.ServerSendToAll(msg);
         }
