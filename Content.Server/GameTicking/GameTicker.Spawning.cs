@@ -112,6 +112,9 @@ namespace Content.Server.GameTicking
         {
             var character = GetPlayerProfile(player);
 
+            var jobBans = _roleBanManager.GetJobBans(player.UserId);
+            if (jobBans == null || (jobId != null && jobBans.Contains(jobId)))
+                return;
             SpawnPlayer(player, character, station, jobId, lateJoin);
             UpdateJobsAvailable();
         }
