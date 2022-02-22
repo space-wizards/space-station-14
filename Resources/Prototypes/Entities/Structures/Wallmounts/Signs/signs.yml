@@ -123,8 +123,6 @@
   - type: Sprite
     state: bar
 
-<<<<<<< HEAD
-=======
 - type: entity
   parent: BaseSign
   id: SignHydro1
@@ -149,7 +147,6 @@
   - type: Sprite
     state: hydro3
 
->>>>>>> master
 - type: entity
   parent: BaseSign
   id: SignLibrary
