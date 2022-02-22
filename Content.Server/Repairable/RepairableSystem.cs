@@ -34,9 +34,18 @@ namespace Content.Server.Repairable
             if (!await _toolSystem.UseTool(args.Used, args.User, uid, component.FuelCost, component.DoAfterDelay, component.QualityNeeded))
                 return;
 
-            // Repair all damage
-            _damageableSystem.SetAllDamage(damageable, 0);
-            _logSystem.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired ${ToPrettyString(uid):target} back to full health");
+            if (component.Heal != null)
+            {
+                var healed = _damageableSystem.TryChangeDamage(uid, component.Heal, true, false);
+                _logSystem.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} by {healed?.Total}");
+            }
+            else
+            {
+                // Repair all damage
+                _damageableSystem.SetAllDamage(damageable, 0);
+                _logSystem.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} back to full health");
+            }
+
 
             component.Owner.PopupMessage(args.User,
                 Loc.GetString("comp-repairable-repair",
