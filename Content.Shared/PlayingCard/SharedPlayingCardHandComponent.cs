@@ -7,16 +7,14 @@ namespace Content.Shared.PlayingCard
     public abstract class SharedPlayingCardHandComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        // [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
         [DataField("stackId")]
         public string StackTypeId { get; private set; } = string.Empty;
 
-        [DataField("cardName")]
-        public string CardName = "Playing Card";
-        [DataField("cardDescription")]
-        public string CardDescription = "a playing card";
+        [DataField("cardPrototype")]
+        public string CardPrototype { get; private set; } = string.Empty;
+
         [DataField("cardList")]
-        public Dictionary<String, CardDetails> CardList = new();
+        public List<string> CardList = new();
     }
 
 
