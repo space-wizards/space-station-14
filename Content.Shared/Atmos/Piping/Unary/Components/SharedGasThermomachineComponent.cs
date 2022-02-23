@@ -11,6 +11,14 @@ public enum ThermomachineUiKey
 
 [Serializable]
 [NetSerializable]
+public enum ThermoMachineMode : byte
+{
+    Freezer = 0,
+    Heater = 1,
+}
+
+[Serializable]
+[NetSerializable]
 public sealed class GasThermomachineToggleMessage : BoundUserInterfaceMessage
 {
 }
@@ -35,12 +43,14 @@ public sealed class GasThermomachineBoundUserInterfaceState : BoundUserInterface
     public float MaxTemperature { get; }
     public float Temperature { get; }
     public bool Enabled { get; }
+    public ThermoMachineMode Mode { get; }
 
-    public GasThermomachineBoundUserInterfaceState(float minTemperature, float maxTemperature, float temperature, bool enabled)
+    public GasThermomachineBoundUserInterfaceState(float minTemperature, float maxTemperature, float temperature, bool enabled, ThermoMachineMode mode)
     {
         MinTemperature = minTemperature;
         MaxTemperature = maxTemperature;
         Temperature = temperature;
         Enabled = enabled;
+        Mode = mode;
     }
 }
