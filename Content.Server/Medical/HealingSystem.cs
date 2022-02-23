@@ -113,7 +113,7 @@ public sealed class HealingSystem : EntitySystem
 
         if (component.HealingBeginSound != null)
         {
-            SoundSystem.Play(Filter.Pvs(uid), component.HealingBeginSound.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+            SoundSystem.Play(Filter.Pvs(uid, entityManager:EntityManager), component.HealingBeginSound.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
         }
 
         _doAfter.DoAfter(new DoAfterEventArgs(user, component.Delay, component.CancelToken.Token, target)
