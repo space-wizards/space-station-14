@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Shuttles now require thrust., type: Add}
-  id: 620
-  time: '2021-11-21T06:09:49.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Reaction effects (potas/water, smoke, foam) have been refactored slightly,
@@ -2993,3 +2988,10 @@ Entries:
       and don't have all-access., type: Tweak}
   id: 1119
   time: '2022-02-23T09:22:19.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: 'Added Possums, Raccoons and Ferrets, with a couple of new sound effects.',
+    type: Add}
+  - {message: Added a named Possum (Morty) and Raccoon (Morticia), type: Add}
+  id: 1120
+  time: '2022-02-23T18:40:31.0000000+00:00'
