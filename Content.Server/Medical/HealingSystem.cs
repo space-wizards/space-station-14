@@ -4,12 +4,10 @@ using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
 using Content.Server.Stack;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -18,7 +16,6 @@ namespace Content.Server.Medical;
 
 public sealed class HealingSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly AdminLogSystem _logs = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
@@ -63,7 +60,7 @@ public sealed class HealingSystem : EntitySystem
 
         if (args.Component.HealingEndSound != null)
         {
-            SoundSystem.Play(Filter.Pvs(uid), args.Component.HealingEndSound.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+            SoundSystem.Play(Filter.Pvs(uid, entityManager:EntityManager), args.Component.HealingEndSound.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
         }
     }
 
