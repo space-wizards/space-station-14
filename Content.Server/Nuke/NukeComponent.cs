@@ -22,7 +22,7 @@ namespace Content.Server.Nuke
         public int Timer = 180;
 
         /// <summary>
-        ///     How long bomb wouldn't arm again after deactivation.
+        ///     How long until the bomb can arm again after deactivation.
         ///     Used to prevent announcements spam.
         /// </summary>
         [DataField("cooldown")]
