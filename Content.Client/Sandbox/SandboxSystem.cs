@@ -121,6 +121,7 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
         public bool SandboxAllowed { get; private set; }
 
@@ -135,6 +136,7 @@ namespace Content.Client.Sandbox
             SubscribeNetworkEvent<MsgSandboxStatus>(OnSandboxStatus);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
 
+            _adminManager.AdminStatusUpdated += OnAdminStatus;
             _gameHud.SandboxButtonToggled += SandboxButtonPressed;
 
             // Do these need cleanup?
@@ -148,18 +150,44 @@ namespace Content.Client.Sandbox
                 InputCmdHandler.FromDelegate(session => ToggleDecalsWindow()));
         }
 
-        private void Cleanup()
+        private void OnAdminStatus()
         {
+            if (CanSandbox())
+                Enable();
+            else
+                Disable();
+        }
+
+        private bool CanSandbox()
+        {
+            return SandboxAllowed || _adminManager.IsActive();
+        }
+
+        /// <summary>
+        /// Run when sandbox is disabled
+        /// </summary>
+        private void Disable()
+        {
+            _gameHud.SandboxButtonVisible = false;
             _sandboxWindow?.Close();
+            _sandboxWindow = null;
             _spawnWindow?.Close();
             _tilesSpawnWindow?.Close();
             _decalSpawnWindow?.Close();
         }
 
+        private void Enable()
+        {
+            _gameHud.SandboxButtonVisible = true;
+        }
+
         private void OnRoundRestart(RoundRestartCleanupEvent ev)
         {
-            // TODO: Need to suppress admin key for this in UI + check it below but also useful for when `deadmin` is run.
-            Cleanup();
+            // Go through and cleanup windows (even if they remain adminned better to just shut them).
+            Disable();
+
+            if (CanSandbox())
+                Enable();
         }
 
         public override void Shutdown()
@@ -167,6 +195,7 @@ namespace Content.Client.Sandbox
             base.Shutdown();
             // TODO: Gamehud moment
             _gameHud.SandboxButtonToggled -= SandboxButtonPressed;
+            _adminManager.AdminStatusUpdated -= OnAdminStatus;
         }
 
         private void OnSandboxStatus(MsgSandboxStatus ev)
@@ -186,7 +215,7 @@ namespace Content.Client.Sandbox
 
         private void UpdateSandboxWindowVisibility()
         {
-            if (SandboxAllowed && _sandboxWindow?.IsOpen != true)
+            if (CanSandbox() && _sandboxWindow?.IsOpen != true)
                 OpenSandboxWindow();
             else
                 _sandboxWindow?.Close();
@@ -195,18 +224,13 @@ namespace Content.Client.Sandbox
         private void SetAllowed(bool newAllowed)
         {
             if (newAllowed == SandboxAllowed)
-            {
                 return;
-            }
 
             SandboxAllowed = newAllowed;
-            _gameHud.SandboxButtonVisible = newAllowed;
+            _gameHud.SandboxButtonVisible = CanSandbox();
 
-            if (!newAllowed)
-            {
-                // Sandbox permission revoked, close window.
-                _sandboxWindow?.Close();
-            }
+            if (!CanSandbox())
+                Disable();
         }
 
         private void OpenSandboxWindow()
@@ -320,6 +344,8 @@ namespace Content.Client.Sandbox
         {
             if (_spawnWindow == null)
             {
+                if (!CanSandbox()) return;
+
                 _spawnWindow = new EntitySpawnWindow(_placementManager, PrototypeManager, _resourceCache);
                 _spawnWindow.OpenToLeft();
                 return;
@@ -339,6 +365,8 @@ namespace Content.Client.Sandbox
         {
             if (_tilesSpawnWindow == null)
             {
+                if (!CanSandbox()) return;
+
                 _tilesSpawnWindow = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
                 _tilesSpawnWindow.OpenToLeft();
                 return;
@@ -358,6 +386,8 @@ namespace Content.Client.Sandbox
         {
             if (_decalSpawnWindow == null)
             {
+                if (!CanSandbox()) return;
+
                 _decalSpawnWindow = new DecalPlacerWindow(PrototypeManager);
                 _decalSpawnWindow.OpenToLeft();
                 return;
@@ -373,6 +403,7 @@ namespace Content.Client.Sandbox
             }
         }
 
+        // TODO: need to cleanup these
         private void ToggleLight()
         {
             _consoleHost.ExecuteCommand("togglelight");
