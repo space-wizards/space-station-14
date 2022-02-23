@@ -112,6 +112,22 @@ namespace Content.Server.Database
             modelBuilder.Entity<ServerBan>()
                 .HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
 
+            modelBuilder.Entity<ServerRoleBan>()
+                .HasIndex(p => p.UserId);
+
+            modelBuilder.Entity<ServerRoleBan>()
+                .HasIndex(p => p.Address);
+
+            modelBuilder.Entity<ServerRoleBan>()
+                .HasIndex(p => p.UserId);
+
+            modelBuilder.Entity<ServerRoleUnban>()
+                .HasIndex(p => p.BanId)
+                .IsUnique();
+
+            modelBuilder.Entity<ServerRoleBan>()
+                .HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
+
             modelBuilder.Entity<Player>()
                 .HasIndex(p => p.UserId)
                 .IsUnique();

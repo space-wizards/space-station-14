@@ -99,7 +99,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (args.Current is not DoorComponentState state)
             return;
 
-        door.CurrentlyCrushing = state.CurrentlyCrushing;
+        door.CurrentlyCrushing = new(state.CurrentlyCrushing);
         door.State = state.DoorState;
         door.NextStateChange = state.NextStateChange;
         door.Partial = state.Partial;
@@ -337,7 +337,6 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door, ref physics))
             return false;
 
-        SetCollidable(uid, true, door, physics);
         door.Partial = true;
         door.Dirty();
 
@@ -350,6 +349,7 @@ public abstract class SharedDoorSystem : EntitySystem
             return false;
         }
 
+        SetCollidable(uid, true, door, physics);
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         _activeDoors.Add(door);
         
@@ -421,16 +421,22 @@ public abstract class SharedDoorSystem : EntitySystem
         // TODO SLOTH fix electro's code.
         var doorAABB = physics.GetWorldAABB();
 
-        foreach (var body in _physicsSystem.GetCollidingEntities(Transform(uid).MapID, doorAABB))
+        foreach (var otherPhysics in _physicsSystem.GetCollidingEntities(Transform(uid).MapID, doorAABB))
         {
-            // static bodies (e.g., furniture) shouldn't stop airlocks/windoors from closing.
-            if (body.BodyType == BodyType.Static)
+            if (otherPhysics == physics)
                 continue;
 
-            if (body.GetWorldAABB().IntersectPercentage(doorAABB) < IntersectPercentage)
+            if (!otherPhysics.CanCollide)
                 continue;
 
-            yield return body.Owner;
+            if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0
+                && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
+                continue;
+
+            if (otherPhysics.GetWorldAABB().IntersectPercentage(doorAABB) < IntersectPercentage)
+                continue;
+
+            yield return otherPhysics.Owner;
         }
     }
 
