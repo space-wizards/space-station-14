@@ -5,16 +5,20 @@ using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.Medical;
 
 public sealed class HealingSystem : EntitySystem
 {
+    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly AdminLogSystem _logs = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
@@ -56,6 +60,11 @@ public sealed class HealingSystem : EntitySystem
             _logs.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(uid):target} for {healed.Total:damage} damage");
         else
             _logs.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {healed.Total:damage} damage");
+
+        if (args.Component.HealingEndSound != null)
+        {
+            SoundSystem.Play(Filter.Pvs(uid), args.Component.HealingEndSound.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+        }
     }
 
     private static void OnHealingCancelled(HealingCancelledEvent ev)
@@ -68,7 +77,7 @@ public sealed class HealingSystem : EntitySystem
         if (args.Handled) return;
 
         args.Handled = true;
-        Heal(args.User, args.User, component);
+        Heal(uid, args.User, args.User, component);
     }
 
     private void OnHealingAfterInteract(EntityUid uid, HealingComponent component, AfterInteractEvent args)
@@ -76,10 +85,10 @@ public sealed class HealingSystem : EntitySystem
         if (args.Handled || !args.CanReach || args.Target == null) return;
 
         args.Handled = true;
-        Heal(args.User, args.Target.Value, component);
+        Heal(uid, args.User, args.Target.Value, component);
     }
 
-    private void Heal(EntityUid user, EntityUid target, HealingComponent component)
+    private void Heal(EntityUid uid, EntityUid user, EntityUid target, HealingComponent component)
     {
         if (component.CancelToken != null)
         {
@@ -104,6 +113,11 @@ public sealed class HealingSystem : EntitySystem
             return;
 
         component.CancelToken = new CancellationTokenSource();
+
+        if (component.HealingBeginSound != null)
+        {
+            SoundSystem.Play(Filter.Pvs(uid), component.HealingBeginSound.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+        }
 
         _doAfter.DoAfter(new DoAfterEventArgs(user, component.Delay, component.CancelToken.Token, target)
         {
