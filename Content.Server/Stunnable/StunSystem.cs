@@ -26,10 +26,10 @@ namespace Content.Server.Stunnable
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StatusEffectsComponent, DisarmedActEvent>(OnDisarmed);
+            SubscribeLocalEvent<StatusEffectsComponent, DisarmedEvent>(OnDisarmed);
         }
 
-        private void OnDisarmed(EntityUid uid, StatusEffectsComponent status, DisarmedActEvent args)
+        private void OnDisarmed(EntityUid uid, StatusEffectsComponent status, DisarmedEvent args)
         {
             if (args.Handled || !_random.Prob(args.PushProbability))
                 return;

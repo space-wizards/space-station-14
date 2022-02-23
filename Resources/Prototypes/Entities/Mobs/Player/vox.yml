@@ -11,11 +11,13 @@
     - type: Alerts
     - type: Actions
       innateActions:
-        - VoxScream
         - Disarm
     - type: Eye
     - type: CameraRecoil
     - type: Examiner
+    - type: Vocal
+      maleScream: /Audio/Voice/Vox/shriek1.ogg
+      femaleScream: /Audio/Voice/Vox/shriek2.ogg
     - type: AiFactionTag
       factions:
         - NanoTrasen

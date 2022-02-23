@@ -13,9 +13,6 @@
   - type: DoAfter
   - type: CombatMode
   - type: Actions
-    innateActions:
-    - CombatMode
-    - GhostBoo
   - type: PlayerInputMover
   - type: Physics
     bodyType: Kinematic

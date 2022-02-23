@@ -1,22 +1,16 @@
-using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Content.Client.Actions.Assignments;
 using Content.Client.DragDrop;
 using Content.Client.HUD;
 using Content.Client.Stylesheets;
 using Content.Shared.Actions;
-using Content.Shared.Actions.Prototypes;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Timing;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
@@ -29,28 +23,35 @@ namespace Content.Client.Actions.UI
     /// </summary>
     public sealed class ActionMenu : DefaultWindow
     {
-        private const string ItemTag = "item";
-        private const string NotItemTag = "not item";
-        private const string InstantActionTag = "instant";
-        private const string ToggleActionTag = "toggle";
-        private const string TargetActionTag = "target";
-        private const string AllActionsTag = "all";
-        private const string GrantedActionsTag = "granted";
+        // Pre-defined global filters that can be used to select actions based on their properties (as opposed to their
+        // own yaml-defined filters).
+        // TODO LOC STRINGs
+        private const string AllFilter = "all";
+        private const string ItemFilter = "item";
+        private const string InnateFilter = "innate";
+        private const string EnabledFilter = "enabled";
+        private const string InstantFilter = "instant";
+        private const string TargetedFilter = "targeted";
+
+        private readonly string[] _filters =
+        {
+            AllFilter,
+            ItemFilter,
+            InnateFilter,
+            EnabledFilter,
+            InstantFilter,
+            TargetedFilter
+        };
+
         private const int MinSearchLength = 3;
         private static readonly Regex NonAlphanumeric = new Regex(@"\W", RegexOptions.Compiled);
         private static readonly Regex Whitespace = new Regex(@"\s+", RegexOptions.Compiled);
-        private static readonly BaseActionPrototype[] EmptyActionList = Array.Empty<BaseActionPrototype>();
 
         /// <summary>
         /// Is an action currently being dragged from this window?
         /// </summary>
         public bool IsDragging => _dragDropHelper.IsDragging;
 
-        // parallel list of actions currently selectable in itemList
-        private BaseActionPrototype[] _actionList = new BaseActionPrototype[0];
-
-        private readonly ActionManager _actionManager;
-        private readonly ClientActionsComponent _actionsComponent;
         private readonly ActionsUI _actionsUI;
         private readonly LineEdit _searchBar;
         private readonly MultiselectOptionButton<string> _filterButton;
@@ -62,11 +63,9 @@ namespace Content.Client.Actions.UI
         private readonly DragDropHelper<ActionMenuItem> _dragDropHelper;
 
 
-        public ActionMenu(ClientActionsComponent actionsComponent, ActionsUI actionsUI)
+        public ActionMenu(ActionsUI actionsUI)
         {
-            _actionsComponent = actionsComponent;
             _actionsUI = actionsUI;
-            _actionManager = IoCManager.Resolve<ActionManager>();
             _gameHud = IoCManager.Resolve<IGameHud>();
 
             Title = Loc.GetString("ui-actionmenu-title");
@@ -115,23 +114,7 @@ namespace Content.Client.Actions.UI
                 }
             });
 
-            // populate filters from search tags
-            var filterTags = new List<string>();
-            foreach (var action in _actionManager.EnumerateActions())
-            {
-                filterTags.AddRange(action.Filters);
-            }
-
-            // special one to filter to only include item actions
-            filterTags.Add(ItemTag);
-            filterTags.Add(NotItemTag);
-            filterTags.Add(InstantActionTag);
-            filterTags.Add(ToggleActionTag);
-            filterTags.Add(TargetActionTag);
-            filterTags.Add(AllActionsTag);
-            filterTags.Add(GrantedActionsTag);
-
-            foreach (var tag in filterTags.Distinct().OrderBy(tag => tag))
+            foreach (var tag in _filters)
             {
                 _filterButton.AddItem( CultureInfo.CurrentCulture.TextInfo.ToTitleCase(tag), tag);
             }
@@ -199,7 +182,7 @@ namespace Content.Client.Actions.UI
 
         private bool OnBeginActionDrag()
         {
-            _dragShadow.Texture = _dragDropHelper.Dragged!.Action.Icon.Frame0();
+            _dragShadow.Texture = _dragDropHelper.Dragged?.Action?.Icon?.Frame0();
             // don't make visible until frameupdate, otherwise it'll flicker
             LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled.Position - (32, 32));
             return true;
@@ -244,47 +227,7 @@ namespace Content.Client.Actions.UI
                     return;
                 }
 
-                // drag and drop
-                switch (_dragDropHelper.Dragged.Action)
-                {
-                    // assign the dragged action to the target slot
-                    case ActionPrototype actionPrototype:
-                        _actionsComponent.Assignments.AssignSlot(_actionsUI.SelectedHotbar, targetSlot.SlotIndex, ActionAssignment.For(actionPrototype.ActionType));
-                        break;
-                    case ItemActionPrototype itemActionPrototype:
-                        // the action menu doesn't show us if the action has an associated item,
-                        // so when we perform the assignment, we should check if we currently have an unassigned state
-                        // for this item and assign it tied to that item if so, otherwise assign it "itemless"
-
-                        // this is not particularly efficient but we don't maintain an index from
-                        // item action type to its action states, and this method should be pretty infrequent so it's probably fine
-                        var assigned = false;
-                        foreach (var (item, itemStates) in _actionsComponent.ItemActionStates())
-                        {
-                            foreach (var (actionType, _) in itemStates)
-                            {
-                                if (actionType != itemActionPrototype.ActionType) continue;
-                                var assignment = ActionAssignment.For(actionType, item);
-                                if (_actionsComponent.Assignments.HasAssignment(assignment)) continue;
-                                // no assignment for this state, assign tied to the item
-                                assigned = true;
-                                _actionsComponent.Assignments.AssignSlot(_actionsUI.SelectedHotbar, targetSlot.SlotIndex, assignment);
-                                break;
-                            }
-
-                            if (assigned)
-                            {
-                                break;
-                            }
-                        }
-
-                        if (!assigned)
-                        {
-                            _actionsComponent.Assignments.AssignSlot(_actionsUI.SelectedHotbar, targetSlot.SlotIndex, ActionAssignment.For(itemActionPrototype.ActionType));
-                        }
-                        break;
-                }
-
+                _actionsUI.System.Assignments.AssignSlot(_actionsUI.SelectedHotbar, targetSlot.SlotIndex, _dragDropHelper.Dragged.Action);
                 _actionsUI.UpdateUI();
             }
 
@@ -300,19 +243,8 @@ namespace Content.Client.Actions.UI
         private void OnItemPressed(ButtonEventArgs args)
         {
             if (args.Button is not ActionMenuItem actionMenuItem) return;
-            switch (actionMenuItem.Action)
-            {
-                case ActionPrototype actionPrototype:
-                    _actionsComponent.Assignments.AutoPopulate(ActionAssignment.For(actionPrototype.ActionType), _actionsUI.SelectedHotbar);
-                    break;
-                case ItemActionPrototype itemActionPrototype:
-                    _actionsComponent.Assignments.AutoPopulate(ActionAssignment.For(itemActionPrototype.ActionType), _actionsUI.SelectedHotbar);
-                    break;
-                default:
-                    Logger.ErrorS("action", "unexpected action prototype {0}", actionMenuItem.Action);
-                    break;
-            }
 
+            _actionsUI.System.Assignments.AutoPopulate(actionMenuItem.Action, _actionsUI.SelectedHotbar);
             _actionsUI.UpdateUI();
         }
 
@@ -341,7 +273,7 @@ namespace Content.Client.Actions.UI
                 return;
             }
 
-            var matchingActions = _actionManager.EnumerateActions()
+            var matchingActions = _actionsUI.Component.Actions
                 .Where(a => MatchesSearchCriteria(a, search, _filterButton.SelectedKeys));
 
             PopulateActions(matchingActions);
@@ -361,7 +293,7 @@ namespace Content.Client.Actions.UI
             }
         }
 
-        private bool MatchesSearchCriteria(BaseActionPrototype action, string standardizedSearch,
+        private bool MatchesSearchCriteria(ActionType action, string standardizedSearch,
             IReadOnlyList<string> selectedFilterTags)
         {
             // check filter tag match first - each action must contain all filter tags currently selected.
@@ -377,18 +309,6 @@ namespace Content.Client.Actions.UI
                 return true;
             }
 
-            if (Standardize(ActionTypeString(action)).Contains(standardizedSearch))
-            {
-                return true;
-            }
-
-            // allows matching by typing spaces between the enum case changes, like "xeno spit" if the
-            // actiontype is "XenoSpit"
-            if (Standardize(ActionTypeString(action), true).Contains(standardizedSearch))
-            {
-                return true;
-            }
-
             if (Standardize(action.Name.ToString()).Contains(standardizedSearch))
             {
                 return true;
@@ -398,34 +318,18 @@ namespace Content.Client.Actions.UI
 
         }
 
-        private string ActionTypeString(BaseActionPrototype baseActionPrototype)
-        {
-            if (baseActionPrototype is ActionPrototype actionPrototype)
-            {
-                return actionPrototype.ActionType.ToString();
-            }
-            if (baseActionPrototype is ItemActionPrototype itemActionPrototype)
-            {
-                return itemActionPrototype.ActionType.ToString();
-            }
-            throw new InvalidOperationException();
-        }
-
-        private bool ActionMatchesFilterTag(BaseActionPrototype action, string tag)
+        private bool ActionMatchesFilterTag(ActionType action, string tag)
         {
             return tag switch
             {
-                AllActionsTag => true,
-                GrantedActionsTag => _actionsComponent.IsGranted(action),
-                ItemTag => action is ItemActionPrototype,
-                NotItemTag => action is ActionPrototype,
-                InstantActionTag => action.BehaviorType == BehaviorType.Instant,
-                TargetActionTag => action.IsTargetAction,
-                ToggleActionTag => action.BehaviorType == BehaviorType.Toggle,
-                _ => action.Filters.Contains(tag)
+                EnabledFilter => action.Enabled,
+                ItemFilter => action.Provider != null && action.Provider != _actionsUI.Component.Owner,
+                InnateFilter => action.Provider == null || action.Provider == _actionsUI.Component.Owner,
+                InstantFilter => action is InstantAction,
+                TargetedFilter => action is TargetedAction,
+                _ => true
             };
         }
-
 
         /// <summary>
         /// Standardized form is all lowercase, no non-alphanumeric characters (converted to whitespace),
@@ -472,16 +376,15 @@ namespace Content.Client.Actions.UI
             return newText.ToString();
         }
 
-        private void PopulateActions(IEnumerable<BaseActionPrototype> actions)
+        private void PopulateActions(IEnumerable<ActionType> actions)
         {
             ClearList();
 
-            _actionList = actions.ToArray();
-            foreach (var action in _actionList.OrderBy(act => act.Name.ToString()))
+            foreach (var action in actions)
             {
                 var actionItem = new ActionMenuItem(action, OnItemFocusExited);
                 _resultsGrid.Children.Add(actionItem);
-                actionItem.SetActionState(_actionsComponent.IsGranted(action));
+                actionItem.SetActionState(action.Enabled);
                 actionItem.OnButtonDown += OnItemButtonDown;
                 actionItem.OnButtonUp += OnItemButtonUp;
                 actionItem.OnPressed += OnItemPressed;
@@ -496,7 +399,6 @@ namespace Content.Client.Actions.UI
                 ((ActionMenuItem) actionItem).OnPressed -= OnItemPressed;
             }
             _resultsGrid.Children.Clear();
-            _actionList = EmptyActionList;
         }
 
         /// <summary>
@@ -508,7 +410,7 @@ namespace Content.Client.Actions.UI
             foreach (var actionItem in _resultsGrid.Children)
             {
                 var actionMenuItem = ((ActionMenuItem) actionItem);
-                actionMenuItem.SetActionState(_actionsComponent.IsGranted(actionMenuItem.Action));
+                actionMenuItem.SetActionState(actionMenuItem.Action.Enabled);
             }
         }
 

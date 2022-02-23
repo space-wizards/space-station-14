@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using Content.Client.Stylesheets;
-using Content.Shared.Actions.Prototypes;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Actions.UI
 {
@@ -16,14 +18,14 @@ namespace Content.Client.Actions.UI
         // quickly explore what each action is
         private const float CustomTooltipDelay = 0.2f;
 
-        public BaseActionPrototype Action { get; private set; }
+        public ActionType Action;
 
         private Action<ActionMenuItem> _onControlFocusExited;
 
-        public ActionMenuItem(BaseActionPrototype action, Action<ActionMenuItem> onControlFocusExited)
+        public ActionMenuItem(ActionType action, Action<ActionMenuItem> onControlFocusExited)
         {
-            _onControlFocusExited = onControlFocusExited;
             Action = action;
+            _onControlFocusExited = onControlFocusExited;
 
             MinSize = (64, 64);
             VerticalAlignment = VAlignment.Top;
@@ -33,7 +35,7 @@ namespace Content.Client.Actions.UI
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 Stretch = TextureRect.StretchMode.Scale,
-                Texture = action.Icon.Frame0()
+                Texture = action.Icon?.Frame0()
             });
 
             TooltipDelay = CustomTooltipDelay;
@@ -48,7 +50,15 @@ namespace Content.Client.Actions.UI
 
         private Control SupplyTooltip(Control? sender)
         {
-            return new ActionAlertTooltip(Action.Name, Action.Description, Action.Requires);
+            var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(Action.Name));
+            var decr = FormattedMessage.FromMarkupPermissive(Loc.GetString(Action.Description));
+
+            var tooltip = new ActionAlertTooltip(name, decr);
+
+            if (Action.Enabled && (Action.Charges == null || Action.Charges != 0))
+                tooltip.Cooldown = Action.Cooldown;
+
+            return tooltip;
         }
 
         /// <summary>
@@ -72,5 +82,9 @@ namespace Content.Client.Actions.UI
             }
         }
 
+        internal void SetActionState(object enabled)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
