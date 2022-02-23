@@ -1,11 +1,10 @@
-using System;
 using Content.Client.Decals.UI;
 using Content.Client.HUD;
 using Content.Client.Markers;
 using Content.Client.SubFloor;
+using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
-using Content.Shared.SubFloor;
 using Robust.Client.Console;
 using Robust.Client.Debugging;
 using Robust.Client.Graphics;
@@ -14,13 +13,8 @@ using Robust.Client.Placement;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Sandbox
@@ -116,20 +110,16 @@ namespace Content.Client.Sandbox
 
     }
 
-    internal sealed class SandboxManager : SharedSandboxManager, ISandboxManager
+    public sealed class SandboxSystem : SharedSandboxSystem
     {
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
-        [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
 
         public bool SandboxAllowed { get; private set; }
-
-        public event Action<bool>? AllowedChanged;
 
         private SandboxWindow? _window;
         private EntitySpawnWindow? _spawnWindow;
@@ -137,20 +127,15 @@ namespace Content.Client.Sandbox
         private DecalPlacerWindow? _decalSpawnWindow;
         private bool _sandboxWindowToggled;
 
-        public void Initialize()
+        public override void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgSandboxStatus>(message => SetAllowed(message.SandboxAllowed));
-
-            _netManager.RegisterNetMessage<MsgSandboxGiveAccess>();
-
-            _netManager.RegisterNetMessage<MsgSandboxRespawn>();
-
-            _netManager.RegisterNetMessage<MsgSandboxGiveAghost>();
-
-            _netManager.RegisterNetMessage<MsgSandboxSuicide>();
+            base.Initialize();
+            SubscribeNetworkEvent<MsgSandboxStatus>(OnSandboxStatus);
+            SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
 
             _gameHud.SandboxButtonToggled += SandboxButtonPressed;
 
+            // Do these need cleanup?
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,
                 InputCmdHandler.FromDelegate(session => ToggleEntitySpawnWindow()));
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenSandboxWindow,
@@ -159,6 +144,26 @@ namespace Content.Client.Sandbox
                 InputCmdHandler.FromDelegate(session => ToggleTilesWindow()));
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenDecalSpawnWindow,
                 InputCmdHandler.FromDelegate(session => ToggleDecalsWindow()));
+        }
+
+        private void OnRoundRestart(RoundRestartCleanupEvent ev)
+        {
+            _window?.Close();
+            _spawnWindow?.Close();
+            _tilesSpawnWindow?.Close();
+            _decalSpawnWindow?.Close();
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            // TODO: Gamehud moment
+            _gameHud.SandboxButtonToggled -= SandboxButtonPressed;
+        }
+
+        private void OnSandboxStatus(MsgSandboxStatus ev)
+        {
+            SetAllowed(ev.SandboxAllowed);
         }
 
         private void SandboxButtonPressed(bool newValue)
@@ -196,8 +201,6 @@ namespace Content.Client.Sandbox
                 // Sandbox permission revoked, close window.
                 _window?.Close();
             }
-
-            AllowedChanged?.Invoke(newAllowed);
         }
 
         private void OpenWindow()
@@ -237,7 +240,7 @@ namespace Content.Client.Sandbox
 
         private void OnRespawnButtonOnOnPressed(BaseButton.ButtonEventArgs args)
         {
-            _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxRespawn>());
+            RaiseNetworkEvent(new MsgSandboxRespawn());
         }
 
         private void OnSpawnEntitiesButtonClicked(BaseButton.ButtonEventArgs args)
@@ -291,24 +294,25 @@ namespace Content.Client.Sandbox
 
         private void OnGiveAdminAccessButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxGiveAccess>());
+            RaiseNetworkEvent(new MsgSandboxGiveAccess());
         }
 
         private void OnGiveAghostButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxGiveAghost>());
+            RaiseNetworkEvent(new MsgSandboxGiveAghost());
         }
 
         private void OnSuicideButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxSuicide>());
+            RaiseNetworkEvent(new MsgSandboxSuicide());
         }
 
-        private void ToggleEntitySpawnWindow()
+        // TODO: These should check for command perms + be reset if the round is over.
+        public void ToggleEntitySpawnWindow()
         {
             if (_spawnWindow == null)
             {
-                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
+                _spawnWindow = new EntitySpawnWindow(_placementManager, PrototypeManager, _resourceCache);
                 _spawnWindow.OpenToLeft();
                 return;
             }
@@ -323,7 +327,7 @@ namespace Content.Client.Sandbox
             }
         }
 
-        private void ToggleTilesWindow()
+        public void ToggleTilesWindow()
         {
             if (_tilesSpawnWindow == null)
             {
@@ -342,11 +346,11 @@ namespace Content.Client.Sandbox
             }
         }
 
-        private void ToggleDecalsWindow()
+        public void ToggleDecalsWindow()
         {
             if (_decalSpawnWindow == null)
             {
-                _decalSpawnWindow = new DecalPlacerWindow(_prototypeManager);
+                _decalSpawnWindow = new DecalPlacerWindow(PrototypeManager);
                 _decalSpawnWindow.OpenToLeft();
                 return;
             }
