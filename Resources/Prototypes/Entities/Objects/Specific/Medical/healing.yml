@@ -63,7 +63,7 @@
 - type: entity
   name: roll of gauze
   description: Some sterile gauze to wrap around bloody stumps.
-  parent: Ointment
+  parent: BaseHealingItem
   id: Gauze
   components:
   - type: Tag
