@@ -10,11 +10,12 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Examine;
 using Robust.Shared.Audio;
 using Content.Shared.Item;
+using System.Linq;
 
 namespace Content.Server.PlayingCard
 {
     [UsedImplicitly]
-    public class PlayingCardDeckSystem : SharedPlayingCardDeckSystem
+    public class PlayingCardDeckSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -130,10 +131,12 @@ namespace Content.Server.PlayingCard
 
             if (TryComp<HandsComponent>(user, out var hands))
             {
+                string topCard = cardDeckComponent.CardList.First();
                 EntityUid playingCard = Spawn(cardDeckComponent.CardPrototype, transformComp.Coordinates);
                 if (TryComp<SharedItemComponent>(playingCard, out var item))
                 {
                     hands.PutInHand(item);
+                    cardDeckComponent.CardList.RemoveAt(0);
                     _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pick-up-single", ("user", user)),
                         uid, Filter.Pvs(uid));
                 }
@@ -165,12 +168,14 @@ namespace Content.Server.PlayingCard
 
             if (TryComp<HandsComponent>(user, out var hands))
             {
+                var topCards = cardDeckComponent.CardList.Take(givenCardAmount);
                 EntityUid playingCards = Spawn(cardDeckComponent.CardHandPrototype, transformComp.Coordinates);
                 if (TryComp<SharedItemComponent>(playingCards, out var item))
                 {
                     hands.PutInHand(item);
                     _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pick-up-multiple", ("user", user), ("count", givenCardAmount)),
                         uid, Filter.Pvs(uid));
+                    cardDeckComponent.CardList.RemoveRange(0, givenCardAmount);
                 }
             }
             _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-full-hand-fail"),

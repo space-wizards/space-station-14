@@ -4,7 +4,8 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.PlayingCard
 {
-    public abstract class SharedPlayingCardComponent : Component, ISerializationHooks
+    [RegisterComponent]
+    public sealed class PlayingCardComponent : Component, ISerializationHooks
     {
         [ViewVariables(VVAccess.ReadWrite)]
         // [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]

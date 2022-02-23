@@ -1,7 +1,7 @@
 using Content.Shared.Interaction;
 using Content.Shared.PlayingCard;
 
-namespace Content.Server.PlayingCard.EntitySystems;
+namespace Content.Shared.PlayingCard.EntitySystems;
 
 public sealed class PlayingCardSystem : EntitySystem
 {

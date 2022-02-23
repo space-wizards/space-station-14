@@ -8,6 +8,7 @@ namespace Content.Shared.PlayingCard
     [RegisterComponent]
     public sealed class PlayingCardDeckComponent : Component, ISerializationHooks
     {
+        [DataField("stackId")]
         public string StackTypeId { get; private set; } = string.Empty;
 
         [DataField("cardPrototype")]

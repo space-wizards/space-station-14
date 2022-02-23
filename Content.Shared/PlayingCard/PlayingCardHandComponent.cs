@@ -4,7 +4,8 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.PlayingCard
 {
-    public abstract class SharedPlayingCardHandComponent : Component
+    [RegisterComponent]
+    public sealed class PlayingCardHandComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("stackId")]

@@ -25,7 +25,7 @@ namespace Content.Server.PlayingCard
     ///     This is a good example for learning how to code in an ECS manner.
     /// </summary>
     [UsedImplicitly]
-    public class PlayingCardSystem : SharedPlayingCardSystem
+    public class PlayingCardSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -43,32 +43,72 @@ namespace Content.Server.PlayingCard
             SubscribeLocalEvent<PlayingCardHandComponent, PickSingleCardMessage>(PickSingleCardMessage);
         }
 
-        private void OnInteractUsing(EntityUid uid, PlayingCardHandComponent cardComponent, InteractUsingEvent args)
+        private void OnInteractUsing(EntityUid uid, PlayingCardHandComponent cardHandComponent, InteractUsingEvent args)
         {
-            // Add cards
+            if (TryComp<PlayingCardComponent>(args.Used, out PlayingCardComponent? cardComp))
+            {
+                cardHandComponent.CardList.Add(cardComp.CardName);
+                EntityManager.QueueDeleteEntity(cardComp.Owner);
+                // ADDED CARD VISUAL
+            }
         }
 
-        private void OnUseInHand(EntityUid uid, PlayingCardHandComponent cardComponent, UseInHandEvent args)
+        private void OnUseInHand(EntityUid uid, PlayingCardHandComponent cardHandComponent, UseInHandEvent args)
         {
             // view interface
         }
 
-        private void OnExamine(EntityUid uid, PlayingCardHandComponent cardComponent, ExaminedEvent args)
+        private void OnExamine(EntityUid uid, PlayingCardHandComponent cardHandComponent, ExaminedEvent args)
         {
             // List last 5 cards
+
+            args.PushText(Loc.GetString("playing-card-hand-component-examine", ("count", cardHandComponent.CardList.Last())));
         }
 
-        private void OnCardListSyncRequest(EntityUid uid, PlayingCardHandComponent cardComponent, CardListSyncRequestMessage args)
+        private void OnCardListSyncRequest(EntityUid uid, PlayingCardHandComponent cardHandComponent, CardListSyncRequestMessage args)
         {
 
         }
 
-        private void PickSingleCardMessage(EntityUid uid, PlayingCardHandComponent cardComponent, PickSingleCardMessage args)
+        private void PickSingleCardMessage(EntityUid uid, PlayingCardHandComponent cardHandComponent, PickSingleCardMessage args)
         {
 
         }
 
+        public void RemoveSingleCard(EntityUid uid, EntityUid user, int cardIndex, PlayingCardHandComponent cardHandComponent, PickSingleCardMessage args)
+        {
+            if (cardHandComponent.CardList.Count <= 0)
+            {
+                return;
+            }
 
-        // Should inspect upright cards if they they're less than 10
+            if (!TryComp<TransformComponent>(cardHandComponent.Owner, out var transformComp))
+                return;
+
+            if (TryComp<HandsComponent>(user, out var hands))
+            {
+                EntityUid playingCard = Spawn(cardHandComponent.CardPrototype, transformComp.Coordinates);
+                // GRAB NAME FROM LIST
+                string name = cardHandComponent.CardList[cardIndex];
+                cardHandComponent.CardList.RemoveAt(cardIndex);
+                if (TryComp<SharedItemComponent>(playingCard, out var item))
+                {
+                    hands.PutInHand(item);
+                    if (cardHandComponent.CardList.Count < 2)
+                    {
+                        string lastCardName = cardHandComponent.CardList[cardIndex];
+                        cardHandComponent.CardList.RemoveAt(cardIndex);
+                        EntityUid lastPlayingCard = Spawn(cardHandComponent.CardPrototype, transformComp.Coordinates);
+                        EntityManager.QueueDeleteEntity(cardHandComponent.Owner);
+                        if (TryComp<SharedItemComponent>(lastPlayingCard, out var lastCardItem))
+                        {
+                            hands.PutInHand(lastCardItem);
+                        }
+                    }
+                }
+            }
+            _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-full-hand-fail"),
+                uid, Filter.Entities(uid));
+        }
     }
 }

@@ -3,9 +3,9 @@
   parent: BaseItem
   id: BasePlayingCard
   components:
+  - type: PlayingCard
   - type: Item
     size: 2
-  - type: PlayingCard
   - type: Sprite
     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
     layers:
@@ -31,6 +31,63 @@
   description: A test
   components:
   - type: PlayingCardDeck
+    stackId: test
+    cardPrototype: BasePlayingCard
+    cardHandPrototype: playingCardHand
+    cardList: [
+      sc_6 of Hearts,
+      sc_6 of Spades,
+      sc_7 of Clubs,
+      sc_7 of Diamonds,
+      sc_7 of Hearts,
+      sc_7 of Spades,
+      sc_8 of Clubs,
+      sc_8 of Diamonds,
+      sc_8 of Hearts,
+      sc_8 of Spades,
+      sc_10 of Clubs,
+      sc_9 of Clubs,
+      sc_10 of Diamonds,
+      sc_9 of Diamonds,
+      sc_10 of Hearts,
+      sc_9 of Hearts,
+      sc_10 of Spades,
+      sc_9 of Spades,
+      sc_2 of Clubs,
+      sc_Ace of Clubs,
+      sc_2 of Diamonds,
+      sc_Ace of Diamonds,
+      sc_2 of Hearts,
+      sc_Ace of Hearts,
+      sc_2 of Spades,
+      sc_Ace of Spades,
+      sc_3 of Clubs,
+      sc_Jack of Clubs,
+      sc_3 of Diamonds,
+      sc_Jack of Diamonds,
+      sc_3 of Hearts,
+      sc_Jack of Hearts,
+      sc_3 of Spades,
+      sc_Jack of Spades,
+      sc_4 of Clubs,
+      sc_King of Clubs,
+      sc_4 of Diamonds,
+      sc_King of Diamonds,
+      sc_4 of Hearts,
+      sc_King of Hearts,
+      sc_4 of Spades,
+      sc_King of Spades,
+      sc_5 of Clubs,
+      sc_Queen of Clubs,
+      sc_5 of Diamonds,
+      sc_Queen of Diamonds,
+      sc_5 of Hearts,
+      sc_Queen of Hearts,
+      sc_5 of Spades,
+      sc_Queen of Spades,
+      sc_6 of Clubs,
+      sc_6 of Diamonds,
+    ]
   - type: Sprite
     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
     layers:
@@ -45,6 +102,7 @@
   name: playing cards
   description: A test
   components:
+  - type: PlayingCardHand
   - type: Sprite
     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
     layers:
