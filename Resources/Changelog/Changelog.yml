@@ -1,9 +1,4 @@
 Entries:
-- author: Mith-randalf
-  changes:
-  - {message: Fixed skintone on feet., type: Fix}
-  id: 617
-  time: '2021-11-20T23:17:16.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Pretty much every chemical in the game has received new metabolism
@@ -2996,3 +2991,8 @@ Entries:
   - {message: A new holiday has been added on March 9th., type: Add}
   id: 1116
   time: '2022-02-22T20:15:11.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Thermomachines now have a proper UI., type: Add}
+  id: 1117
+  time: '2022-02-23T04:09:02.0000000+00:00'
