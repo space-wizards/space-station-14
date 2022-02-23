@@ -316,7 +316,7 @@ namespace Content.Server.Nuke
                 return;
 
             SoundSystem.Play(Filter.Pvs(uid), sound.GetSound(),
-                uid, AudioHelpers.WithVariation(varyPitch));
+                uid, AudioHelpers.WithVariation(varyPitch).WithVolume(-5f));
         }
 
         #region Public API
