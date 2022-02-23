@@ -1,13 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Pretty much every chemical in the game has received new metabolism
-      effects. Some examples: meth & ephedrine make you jitter, histamine makes you
-      itch and take poison damage, leporazines regulate your body temperature, acids
-      burn your insides, cryoxadone heals you when you''re cold, and a lot more.',
-    type: Add}
-  id: 618
-  time: '2021-11-20T23:47:53.0000000+00:00'
 - author: AJCM-git
   changes:
   - {message: You can no longer use the E key to interact with things outside lockers/crates
@@ -2996,3 +2987,9 @@ Entries:
   - {message: Thermomachines now have a proper UI., type: Add}
   id: 1117
   time: '2022-02-23T04:09:02.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Chargers, beds and bookshelves can be dragged and anchored now.', type: Tweak}
+  - {message: Racks can be vaulted over., type: Tweak}
+  id: 1118
+  time: '2022-02-23T04:58:36.0000000+00:00'
