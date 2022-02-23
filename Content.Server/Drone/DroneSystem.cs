@@ -1,23 +1,20 @@
 using Content.Shared.Drone;
 using Content.Server.Drone.Components;
-using Content.Shared.Drone.Components;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Inventory.Events;
-using Content.Shared.MobState.Components;
 using Content.Shared.MobState;
-using Content.Shared.DragDrop;
+using Content.Shared.MobState.Components;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Examine;
 using Content.Server.Popups;
 using Content.Server.Mind.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.Body.Components;
-using Content.Server.Actions.Events;
-using Robust.Shared.IoC;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
+using Content.Server.UserInterface;
+using Content.Shared.Emoting;
 using Robust.Shared.Player;
 using Content.Shared.Tag;
+using Content.Shared.Throwing;
 
 namespace Content.Server.Drone
 {
@@ -28,12 +25,27 @@ namespace Content.Server.Drone
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<DroneComponent, InteractionAttemptEvent>(OnInteractionAttempt);
+            SubscribeLocalEvent<DroneComponent, UserOpenActivatableUIAttemptEvent>(OnActivateUIAttempt);
             SubscribeLocalEvent<DroneComponent, MobStateChangedEvent>(OnMobStateChanged);
-            SubscribeLocalEvent<DroneComponent, DisarmAttemptEvent>(OnDisarmAttempt);
-            SubscribeLocalEvent<DroneComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<DroneComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DroneComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<DroneComponent, MindRemovedMessage>(OnMindRemoved);
+            SubscribeLocalEvent<DroneComponent, EmoteAttemptEvent>(OnEmoteAttempt);
+            SubscribeLocalEvent<DroneComponent, ThrowAttemptEvent>(OnThrowAttempt);
+        }
+
+        private void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
+        {
+            if (HasComp<MobStateComponent>(args.Target) && !HasComp<DroneComponent>(args.Target))
+            {
+                args.Cancel();
+            }
+        }
+
+        private void OnActivateUIAttempt(EntityUid uid, DroneComponent component, UserOpenActivatableUIAttemptEvent args)
+        {
+            args.Cancel();
         }
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)
@@ -66,16 +78,6 @@ namespace Content.Server.Drone
             }
         }
 
-        private void OnDisarmAttempt(EntityUid uid, DroneComponent drone, DisarmAttemptEvent args)
-        {
-            TryComp<HandsComponent>(args.TargetUid, out var hands);
-            var item = hands?.GetActiveHandItem;
-            if (TryComp<DroneToolComponent>(item?.Owner, out var itemInHand))
-            {
-                args.Cancel();
-            }
-        }
-
         private void OnMindAdded(EntityUid uid, DroneComponent drone, MindAddedMessage args)
         {
             UpdateDroneAppearance(uid, DroneStatus.On);
@@ -93,7 +95,7 @@ namespace Content.Server.Drone
                    foreach (var entry in drone.Tools)
                     {
                         var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
-                        AddComp<DroneToolComponent>(item);
+                        AddComp<UnremoveableComponent>(item);
                         hands.PutInHand(item);
                         drone.ToolUids.Add(item);
                     }
@@ -110,14 +112,15 @@ namespace Content.Server.Drone
             EnsureComp<GhostTakeoverAvailableComponent>(uid);
         }
 
-        private void OnDropAttempt(EntityUid uid, DroneComponent drone, DropAttemptEvent args)
+        private void OnEmoteAttempt(EntityUid uid, DroneComponent component, EmoteAttemptEvent args)
         {
-            TryComp<HandsComponent>(uid, out var hands);
-            var item = hands?.GetActiveHandItem;
-            if (TryComp<DroneToolComponent>(item?.Owner, out var itemInHand))
-            {
-                args.Cancel();
-            }
+            // No.
+            args.Cancel();
+        }
+
+        private void OnThrowAttempt(EntityUid uid, DroneComponent drone, ThrowAttemptEvent args)
+        {
+            args.Cancel();
         }
 
         private void UpdateDroneAppearance(EntityUid uid, DroneStatus status)

@@ -14,7 +14,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasDualPortVentPumpSystem : EntitySystem
+    public sealed class GasDualPortVentPumpSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 

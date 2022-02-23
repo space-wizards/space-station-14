@@ -4,11 +4,10 @@
     <Label Name="NoRolesMessage"
            Text="{Loc 'ghost-roles-window-no-roles-available-label'}"
            VerticalAlignment="Top" />
-    <ScrollContainer HorizontalExpand="True"
-                     VerticalExpand="True">
+    <ScrollContainer VerticalExpand="True"
+                     HScrollEnabled="False">
         <BoxContainer Orientation="Vertical"
                       Name="EntryContainer"
-                      HorizontalExpand="True"
                       VerticalExpand="True">
             <!-- Ghost role entries are added here by code -->
         </BoxContainer>

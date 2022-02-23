@@ -36,7 +36,7 @@ namespace Content.Server.Afk
     }
 
     [UsedImplicitly]
-    public class AfkManager : IAfkManager, IEntityEventSubscriber
+    public sealed class AfkManager : IAfkManager, IEntityEventSubscriber
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;

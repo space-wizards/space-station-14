@@ -9,7 +9,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Camera;
 
 [UsedImplicitly]
-public class CameraRecoilSystem : EntitySystem
+public sealed class CameraRecoilSystem : EntitySystem
 {
     /// <summary>
     ///     Maximum rate of magnitude restore towards 0 kick.
@@ -33,7 +33,7 @@ public class CameraRecoilSystem : EntitySystem
 
     private readonly ISawmill _log;
 
-    protected CameraRecoilSystem(IEntityManager entityManager)
+    private CameraRecoilSystem(IEntityManager entityManager)
     : base(entityManager)
     {
         _log = Logger.GetSawmill($"ecs.systems.{nameof(CameraRecoilSystem)}");
@@ -119,7 +119,7 @@ public class CameraRecoilSystem : EntitySystem
 
 [Serializable]
 [NetSerializable]
-public class CameraKickEvent : EntityEventArgs
+public sealed class CameraKickEvent : EntityEventArgs
 {
     public readonly EntityUid Euid;
     public readonly Vector2 Recoil;

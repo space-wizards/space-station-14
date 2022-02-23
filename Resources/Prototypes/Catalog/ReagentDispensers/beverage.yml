@@ -1,7 +1,6 @@
 - type: reagentDispenserInventory
   id: SodaDispenserInventory
   inventory:
-  - Water
   - Ice
   - Coffee
   - Cream
@@ -51,3 +50,18 @@
   #- Patron
   #- JuiceWatermelon
   #- JuiceBerry
+
+
+- type: reagentDispenserInventory
+  id: SodaDispenserEmagInventory
+  inventory:
+    - FourteenLoko
+    - Ephedrine
+    - Histamine
+
+- type: reagentDispenserInventory
+  id: BoozeDispenserEmagInventory
+  inventory:
+    - AtomicBomb
+    - Ethanol
+    - Iron

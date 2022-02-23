@@ -15,7 +15,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Administration.UI.Tabs.PlayerTab
 {
     [GenerateTypedNameReferences]
-    public partial class PlayerTab : Control
+    public sealed partial class PlayerTab : Control
     {
         private readonly AdminSystem _adminSystem;
 

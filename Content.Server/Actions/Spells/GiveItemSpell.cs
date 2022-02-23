@@ -22,7 +22,7 @@ namespace Content.Server.Actions.Spells
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class GiveItemSpell : IInstantAction
+    public sealed class GiveItemSpell : IInstantAction
     {   //TODO: Needs to be an EntityPrototype for proper validation
         [ViewVariables] [DataField("castMessage")] public string? CastMessage { get; set; } = default!;
         [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
@@ -45,7 +45,7 @@ namespace Content.Server.Actions.Spells
                 return;
             }
 
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(caster)) return;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(caster, null)) return;
 
             // TODO: Nix when we get EntityPrototype serializers
             if (!IoCManager.Resolve<IPrototypeManager>().HasIndex<EntityPrototype>(ItemProto))

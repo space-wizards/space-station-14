@@ -224,7 +224,7 @@
 - type: entity
   name: pill
   parent: BaseItem
-  id: pill
+  id: Pill
   description: It's not a suppository.
   components:
   - type: Sprite

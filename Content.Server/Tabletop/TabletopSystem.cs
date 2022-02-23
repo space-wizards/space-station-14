@@ -16,7 +16,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public partial class TabletopSystem : SharedTabletopSystem
+    public sealed partial class TabletopSystem : SharedTabletopSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
@@ -58,9 +58,7 @@ namespace Content.Server.Tabletop
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            // Check that the entity can interact with the game board.
-            if(_actionBlockerSystem.CanInteract(args.User))
-                OpenSessionFor(actor.PlayerSession, uid);
+            OpenSessionFor(actor.PlayerSession, uid);
         }
 
         private void OnGameShutdown(EntityUid uid, TabletopGameComponent component, ComponentShutdown args)

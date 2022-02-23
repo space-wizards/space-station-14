@@ -13,7 +13,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Pathfinding
 {
-    public class PathfindingNode
+    public sealed class PathfindingNode
     {
         public PathfindingChunk ParentChunk => _parentChunk;
         private readonly PathfindingChunk _parentChunk;

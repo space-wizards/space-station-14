@@ -7,7 +7,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Shared.Placeable
 {
-    public class PlaceableSurfaceSystem : EntitySystem
+    public sealed class PlaceableSurfaceSystem : EntitySystem
     {
         public override void Initialize()
         {

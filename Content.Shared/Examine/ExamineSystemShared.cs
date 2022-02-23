@@ -54,13 +54,18 @@ namespace Content.Shared.Examine
         public const float ExamineRange = 16f;
         protected const float ExamineDetailsRange = 3f;
 
-        private bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
+        /// <summary>
+        ///     Creates a new examine tooltip with arbitrary info.
+        /// </summary>
+        public abstract void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor);
+
+        public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
             // check if the mob is in ciritcal or dead
             if (EntityManager.TryGetComponent(examiner, out MobStateComponent mobState) && mobState.IsIncapacitated())
                 return false;
 
-            if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange, ignoreInsideBlocker: true))
+            if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange))
                 return false;
 
             // Is the target hidden in a opaque locker or something? Currently this check allows players to examine
@@ -279,7 +284,7 @@ namespace Content.Shared.Examine
     /// <summary>
     ///     Raised when an entity is examined.
     /// </summary>
-    public class ExaminedEvent : EntityEventArgs
+    public sealed class ExaminedEvent : EntityEventArgs
     {
         /// <summary>
         ///     The message that will be displayed as the examine text.

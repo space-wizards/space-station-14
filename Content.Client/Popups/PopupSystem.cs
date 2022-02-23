@@ -15,7 +15,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Popups
 {
-    public class PopupSystem : SharedPopupSystem
+    public sealed class PopupSystem : SharedPopupSystem
     {
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -139,7 +139,7 @@ namespace Content.Client.Popups
             _aliveLabels.RemoveAll(l => l.Disposed);
         }
 
-        private class PopupLabel : Label
+        private sealed class PopupLabel : Label
         {
             private readonly IEyeManager _eyeManager;
             private readonly IEntityManager _entityManager;

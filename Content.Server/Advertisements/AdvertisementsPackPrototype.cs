@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Advertisements
 {
     [Serializable, Prototype("advertisementsPack")]
-    public class AdvertisementsPackPrototype : IPrototype
+    public sealed class AdvertisementsPackPrototype : IPrototype
     {
         [ViewVariables]
         [DataField("id", required: true)]

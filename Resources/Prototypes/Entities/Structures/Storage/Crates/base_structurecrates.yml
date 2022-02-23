@@ -28,7 +28,6 @@
       mass: 25
       mask:
       - Impassable
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -93,7 +92,6 @@
       mass: 25
       mask:
       - Impassable
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque

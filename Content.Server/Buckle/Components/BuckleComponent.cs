@@ -1,11 +1,10 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
-using Content.Shared.Interaction.Helpers;
+using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
@@ -14,14 +13,8 @@ using Content.Shared.Stunnable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Buckle.Components
 {
@@ -30,7 +23,7 @@ namespace Content.Server.Buckle.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedBuckleComponent))]
-    public class BuckleComponent : SharedBuckleComponent
+    public sealed class BuckleComponent : SharedBuckleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -138,12 +131,6 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-            {
-                popupSystem.PopupEntity(Loc.GetString("buckle-component-cannot-do-that-message"), user, Filter.Entities(user));
-                return false;
-            }
-
             if (!_entMan.TryGetComponent(to, out strap))
             {
                 return false;
@@ -152,7 +139,7 @@ namespace Content.Server.Buckle.Components
             var strapUid = strap.Owner;
             bool Ignored(EntityUid entity) => entity == Owner || entity == user || entity == strapUid;
 
-            if (!Owner.InRangeUnobstructed(strapUid, Range, predicate: Ignored, popup: true))
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, strapUid, Range, predicate: Ignored, popup: true))
             {
                 return false;
             }
@@ -243,9 +230,8 @@ namespace Content.Server.Buckle.Components
 
             UpdateBuckleStatus();
 
-#pragma warning disable 618
-            SendMessage(new BuckleMessage(Owner, to));
-#pragma warning restore 618
+            var ev = new BuckleChangeEvent() { Buckling = true, Strap = BuckledTo.Owner };
+            _entMan.EventBus.RaiseLocalEvent(Owner, ev, false);
 
             if (_entMan.TryGetComponent(Owner, out SharedPullableComponent? ownerPullable))
             {
@@ -295,14 +281,7 @@ namespace Content.Server.Buckle.Components
                     return false;
                 }
 
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    var popupSystem = EntitySystem.Get<SharedPopupSystem>();
-                    popupSystem.PopupEntity(Loc.GetString("buckle-component-cannot-do-that-message"), user, Filter.Entities(user));
-                    return false;
-                }
-
-                if (!user.InRangeUnobstructed(oldBuckledTo.Owner, Range, popup: true))
+                if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, oldBuckledTo.Owner, Range, popup: true))
                 {
                     return false;
                 }
@@ -343,9 +322,8 @@ namespace Content.Server.Buckle.Components
             oldBuckledTo.Remove(this);
             SoundSystem.Play(Filter.Pvs(Owner), oldBuckledTo.UnbuckleSound.GetSound(), Owner);
 
-#pragma warning disable 618
-            SendMessage(new UnbuckleMessage(Owner, oldBuckledTo.Owner));
-#pragma warning restore 618
+            var ev = new BuckleChangeEvent() { Buckling = false, Strap = oldBuckledTo.Owner };
+            _entMan.EventBus.RaiseLocalEvent(Owner, ev, false);
 
             return true;
         }

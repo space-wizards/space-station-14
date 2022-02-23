@@ -12,7 +12,7 @@ namespace Content.Tests.Shared.Alert
 {
     [TestFixture]
     [TestOf(typeof(AlertsComponent))]
-    public class ServerAlertsComponentTests : ContentUnitTest
+    public sealed class ServerAlertsComponentTests : ContentUnitTest
     {
         const string PROTOTYPES = @"
 - type: alert

@@ -15,7 +15,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Atmos.Piping.EntitySystems
 {
     [UsedImplicitly]
-    public class AtmosUnsafeUnanchorSystem : EntitySystem
+    public sealed class AtmosUnsafeUnanchorSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;

@@ -52,6 +52,10 @@
     castShadows: false
     radius: 1.5
   - type: LitOnPowered
+  - type: ApcPowerReceiver
+    powerLoad: 200
+    priority: Low
+  
 
 - type: entity
   parent: VendingMachine

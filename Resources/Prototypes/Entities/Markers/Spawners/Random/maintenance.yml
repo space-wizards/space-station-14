@@ -1,0 +1,106 @@
+- type: entity
+  name: Maint Loot Spawner
+  suffix: Fluff+Clothes
+  id: MaintenanceFluffSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - texture: Clothing/Eyes/Glasses/gar.rsi/icon-super.png
+    - type: RandomSpawner
+      rarePrototypes:
+        - CigarGold
+        - ClothingNeckCloakHerald
+        - ClothingHeadHelmetTemplar
+        - ToySkeleton
+        - Basketball
+        - Football
+        - BalloonCorgi
+        - SingularityToy
+        - PonderingOrb
+        - Skub
+      rareChance: 0.01
+      prototypes:
+        - Lighter
+        - CigCartonBlue
+        - ClothingEyesGlassesGarGiga
+        - ClothingEyesGlassesGarOrange
+        - ClothingEyesGlassesGar
+        - ClothingHeadHatCake
+        - ClothingHeadHatSkub
+        - ClothingHeadHatCone
+        - ClothingNeckBling
+        - ClothingHeadHelmetCosmonaut
+        - ClothingHeadHelmetScaf
+        - ClothingShoeSlippersDuck
+        - ClothingUnderSocksBee
+        - ClothingUnderSocksCoder
+      chance: 0.6
+      offset: 0.0
+      
+      
+- type: entity
+  name: Maint Loot Spawner
+  suffix: Tools+Cells+Mats
+  id: MaintenanceToolSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - texture: Objects/Power/PowerCells/power_cell_large_sup.rsi/l_sup.png
+    - type: RandomSpawner
+      rarePrototypes:
+        - lanternextrabright
+        - PowerCellMediumSuper
+        - PowerCellSmallSuper
+        - PowerCellLargeSuper
+        - PowerCellSmallAutorecharge
+      rareChance: 0.08
+      prototypes:
+        - FlashlightLantern
+        - YellowOxygenTankFilled
+        - DoubleEmergencyOxygenTankFilled
+        - ToolboxEmergencyFilled
+        - ToolboxElectricalFilled
+        - ToolboxMechanicalFilled
+        - ClothingBeltUtilityFilled
+        - Shovel
+        - Welder
+        - FlareGun
+        - IngotIron
+        - SheetSteel
+        - SheetPlastic
+      chance: 0.6
+      offset: 0.0
+      
+- type: entity
+  name: Maint Loot Spawner
+  suffix: Scrap+Weapons
+  id: MaintenanceWeaponSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - texture: Objects/Weapons/Melee/machete.rsi/icon.png
+    - type: RandomSpawner
+      rarePrototypes:
+        - Machete
+        - BaseBallBat
+        - CombatKnife
+      rareChance: 0.05
+      prototypes:
+        - FlashlightLantern
+        - YellowOxygenTankFilled
+        - DoubleEmergencyOxygenTankFilled
+        - Lighter
+        - Matchbox
+        - Crowbar
+        - Shovel
+        - Welder
+        - FlareGun
+        - Spear
+      chance: 0.6
+      offset: 0.0

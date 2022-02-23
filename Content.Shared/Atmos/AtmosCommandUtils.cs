@@ -2,7 +2,7 @@ using System;
 
 namespace Content.Shared.Atmos
 {
-    public class AtmosCommandUtils
+    public sealed class AtmosCommandUtils
     {
         /// <summary>
         /// Gas ID parser for atmospherics commands.

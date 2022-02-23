@@ -7,7 +7,7 @@ namespace Content.Server.Interaction.Components
     /// Simple sound emitter that emits sound on UseInHand
     /// </summary>
     [RegisterComponent]
-    public class EmitSoundOnUseComponent : BaseEmitSoundComponent
+    public sealed class EmitSoundOnUseComponent : BaseEmitSoundComponent
     {
     }
 }

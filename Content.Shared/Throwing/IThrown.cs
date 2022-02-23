@@ -7,7 +7,7 @@ namespace Content.Shared.Throwing
     ///     Raised when throwing the entity in your hands.
     /// </summary>
     [PublicAPI]
-    public class ThrownEvent : HandledEntityEventArgs
+    public sealed class ThrownEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that threw the item.

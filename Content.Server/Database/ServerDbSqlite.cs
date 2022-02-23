@@ -46,6 +46,7 @@ namespace Content.Server.Database
             }
         }
 
+        #region Ban
         public override async Task<ServerBanDef?> GetServerBanAsync(int id)
         {
             await using var db = await GetDbImpl();
@@ -159,6 +160,162 @@ namespace Content.Server.Database
 
             await db.SqliteDbContext.SaveChangesAsync();
         }
+        #endregion
+
+        #region Role Ban
+        public override async Task<ServerRoleBanDef?> GetServerRoleBanAsync(int id)
+        {
+            await using var db = await GetDbImpl();
+
+            var ban = await db.SqliteDbContext.RoleBan
+                .Include(p => p.Unban)
+                .Where(p => p.Id == id)
+                .SingleOrDefaultAsync();
+
+            return ConvertRoleBan(ban);
+        }
+
+        public override async Task<List<ServerRoleBanDef>> GetServerRoleBansAsync(IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned)
+        {
+            await using var db = await GetDbImpl();
+
+            // SQLite can't do the net masking stuff we need to match IP address ranges.
+            // So just pull down the whole list into memory.
+            var queryBans = await GetAllRoleBans(db.SqliteDbContext, includeUnbanned);
+
+            return queryBans
+                .Where(b => RoleBanMatches(b, address, userId, hwId))
+                .Select(ConvertRoleBan)
+                .ToList()!;
+        }
+
+        private static async Task<List<ServerRoleBan>> GetAllRoleBans(
+            SqliteServerDbContext db,
+            bool includeUnbanned)
+        {
+            IQueryable<ServerRoleBan> query = db.RoleBan.Include(p => p.Unban);
+            if (!includeUnbanned)
+            {
+                query = query.Where(p =>
+                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow));
+            }
+
+            return await query.ToListAsync();
+        }
+
+        private static bool RoleBanMatches(
+            ServerRoleBan ban,
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId)
+        {
+            if (address != null && ban.Address is not null && IPAddressExt.IsInSubnet(address, ban.Address.Value))
+            {
+                return true;
+            }
+
+            if (userId is { } id && ban.UserId == id.UserId)
+            {
+                return true;
+            }
+
+            if (hwId is { } hwIdVar && hwIdVar.AsSpan().SequenceEqual(ban.HWId))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public override async Task AddServerRoleBanAsync(ServerRoleBanDef serverBan)
+        {
+            await using var db = await GetDbImpl();
+
+            db.SqliteDbContext.RoleBan.Add(new ServerRoleBan
+            {
+                Address = serverBan.Address,
+                Reason = serverBan.Reason,
+                BanningAdmin = serverBan.BanningAdmin?.UserId,
+                HWId = serverBan.HWId?.ToArray(),
+                BanTime = serverBan.BanTime.UtcDateTime,
+                ExpirationTime = serverBan.ExpirationTime?.UtcDateTime,
+                UserId = serverBan.UserId?.UserId,
+                RoleId = serverBan.Role,
+            });
+
+            await db.SqliteDbContext.SaveChangesAsync();
+        }
+
+        public override async Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverUnban)
+        {
+            await using var db = await GetDbImpl();
+
+            db.SqliteDbContext.RoleUnban.Add(new ServerRoleUnban
+            {
+                BanId = serverUnban.BanId,
+                UnbanningAdmin = serverUnban.UnbanningAdmin?.UserId,
+                UnbanTime = serverUnban.UnbanTime.UtcDateTime
+            });
+
+            await db.SqliteDbContext.SaveChangesAsync();
+        }
+
+        private static ServerRoleBanDef? ConvertRoleBan(ServerRoleBan? ban)
+        {
+            if (ban == null)
+            {
+                return null;
+            }
+
+            NetUserId? uid = null;
+            if (ban.UserId is { } guid)
+            {
+                uid = new NetUserId(guid);
+            }
+
+            NetUserId? aUid = null;
+            if (ban.BanningAdmin is { } aGuid)
+            {
+                aUid = new NetUserId(aGuid);
+            }
+
+            var unban = ConvertRoleUnban(ban.Unban);
+
+            return new ServerRoleBanDef(
+                ban.Id,
+                uid,
+                ban.Address,
+                ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
+                ban.BanTime,
+                ban.ExpirationTime,
+                ban.Reason,
+                aUid,
+                unban,
+                ban.RoleId);
+        }
+
+        private static ServerRoleUnbanDef? ConvertRoleUnban(ServerRoleUnban? unban)
+        {
+            if (unban == null)
+            {
+                return null;
+            }
+
+            NetUserId? aUid = null;
+            if (unban.UnbanningAdmin is { } aGuid)
+            {
+                aUid = new NetUserId(aGuid);
+            }
+
+            return new ServerRoleUnbanDef(
+                unban.Id,
+                aUid,
+                unban.UnbanTime);
+        }
+        #endregion
 
         protected override PlayerRecord MakePlayerRecord(Player record)
         {

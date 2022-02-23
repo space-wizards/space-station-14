@@ -9,6 +9,7 @@
       path: /Audio/Items/welder_drop.ogg
   - type: Sprite
     sprite: Objects/Tools/welder.rsi
+    netsync: false
     layers:
     - state: icon
     - state: welder_flame

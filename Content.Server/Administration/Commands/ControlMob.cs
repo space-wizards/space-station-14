@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class ControlMob : IConsoleCommand
+    sealed class ControlMob : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
