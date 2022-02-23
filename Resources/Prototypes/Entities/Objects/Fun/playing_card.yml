@@ -4,6 +4,7 @@
   id: BasePlayingCard
   components:
   - type: PlayingCard
+    cardHandPrototype: PlayingCardHand
   - type: Item
     size: 2
   - type: Sprite
@@ -33,7 +34,7 @@
   - type: PlayingCardDeck
     stackId: test
     cardPrototype: BasePlayingCard
-    cardHandPrototype: playingCardHand
+    cardHandPrototype: PlayingCardHand
     cardList: [
       sc_6 of Hearts,
       sc_6 of Spades,
@@ -88,6 +89,8 @@
       sc_6 of Clubs,
       sc_6 of Diamonds,
     ]
+  - type: Item
+    size: 3
   - type: Sprite
     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
     layers:
@@ -98,7 +101,7 @@
 
 - type: entity
   parent: BaseItem
-  id: playingCardHand
+  id: PlayingCardHand
   name: playing cards
   description: A test
   components:
@@ -131,4 +134,5 @@
       map: ["enum.PlayingCardHandVisualLayers.FirstCardDetails"]
   - type: PlayingCardHandVisuals
   - type: Appearance
-
+  - type: Item
+    size: 5

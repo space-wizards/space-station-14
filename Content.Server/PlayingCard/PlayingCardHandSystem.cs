@@ -30,8 +30,6 @@ namespace Content.Server.PlayingCard
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
-        public static readonly int PullCardLimit = 10;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -45,12 +43,7 @@ namespace Content.Server.PlayingCard
 
         private void OnInteractUsing(EntityUid uid, PlayingCardHandComponent cardHandComponent, InteractUsingEvent args)
         {
-            if (TryComp<PlayingCardComponent>(args.Used, out PlayingCardComponent? cardComp))
-            {
-                cardHandComponent.CardList.Add(cardComp.CardName);
-                EntityManager.QueueDeleteEntity(cardComp.Owner);
-                // ADDED CARD VISUAL
-            }
+            AddCards(uid, args.Used, args.User, cardHandComponent);
         }
 
         private void OnUseInHand(EntityUid uid, PlayingCardHandComponent cardHandComponent, UseInHandEvent args)
@@ -62,20 +55,48 @@ namespace Content.Server.PlayingCard
         {
             // List last 5 cards
 
-            args.PushText(Loc.GetString("playing-card-hand-component-examine", ("count", cardHandComponent.CardList.Last())));
+            args.PushText(Loc.GetString("playing-card-hand-component-examine", ("cards", cardHandComponent.CardList.Last())));
         }
 
         private void OnCardListSyncRequest(EntityUid uid, PlayingCardHandComponent cardHandComponent, CardListSyncRequestMessage args)
         {
-
+            cardHandComponent.UserInterface?.SendMessage(new CardListMessage(cardHandComponent.CardList));
         }
 
         private void PickSingleCardMessage(EntityUid uid, PlayingCardHandComponent cardHandComponent, PickSingleCardMessage args)
         {
-
+            RemoveSingleCard(uid, args.Entity, args.ID, cardHandComponent);
         }
 
-        public void RemoveSingleCard(EntityUid uid, EntityUid user, int cardIndex, PlayingCardHandComponent cardHandComponent, PickSingleCardMessage args)
+        public void AddCards(EntityUid uid, EntityUid addedEntity, EntityUid user, PlayingCardHandComponent cardHandComponent)
+        {
+            if (TryComp<PlayingCardHandComponent>(addedEntity, out PlayingCardHandComponent? handComp))
+            {
+                if (handComp.StackTypeId != cardHandComponent.StackTypeId)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("playing-card-hand-component-merge-card-id-fail"),
+                        uid, Filter.Entities(uid));
+                    return;
+                }
+                // handComp.CardList.Reverse();
+                int addCount = handComp.CardList.Count;
+                cardHandComponent.CardList.AddRange(handComp.CardList);
+                EntityManager.QueueDeleteEntity(handComp.Owner);
+            }
+            if (TryComp<PlayingCardComponent>(addedEntity, out PlayingCardComponent? cardComp))
+            {
+                if (cardComp.StackTypeId != cardHandComponent.StackTypeId)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("playing-card-hand-component-merge-card-id-fail"),
+                        uid, Filter.Entities(uid));
+                    return;
+                }
+                cardHandComponent.CardList.Add(cardComp.CardName);
+                EntityManager.QueueDeleteEntity(cardComp.Owner);
+            }
+        }
+
+        public void RemoveSingleCard(EntityUid uid, EntityUid user, int cardIndex, PlayingCardHandComponent cardHandComponent)
         {
             if (cardHandComponent.CardList.Count <= 0)
             {

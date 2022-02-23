@@ -18,5 +18,7 @@ namespace Content.Shared.PlayingCard
         public string CardDescription = "a playing card";
         [DataField("isFacingUp")]
         public bool FacingUp = false;
+        [DataField("cardHandPrototype")]
+        public string CardHandPrototype { get; private set; } = string.Empty;
     }
 }

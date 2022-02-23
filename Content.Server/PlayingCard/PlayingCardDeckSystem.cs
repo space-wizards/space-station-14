@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
@@ -112,6 +111,12 @@ namespace Content.Server.PlayingCard
             }
             if (TryComp<PlayingCardComponent>(addedEntity, out PlayingCardComponent? cardComp))
             {
+                if (cardComp.StackTypeId != cardDeckComponent.StackTypeId)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-merge-card-id-fail"),
+                        uid, Filter.Entities(uid));
+                    return;
+                }
                 cardDeckComponent.CardList.Add(cardComp.CardName);
                 EntityManager.QueueDeleteEntity(cardComp.Owner);
                 _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-add-single", ("user", user)),

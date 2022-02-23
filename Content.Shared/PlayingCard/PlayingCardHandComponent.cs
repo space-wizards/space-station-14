@@ -1,11 +1,8 @@
 using Robust.Shared.Serialization;
-using Robust.Shared.GameStates;
-
 
 namespace Content.Shared.PlayingCard
 {
-    [RegisterComponent]
-    public sealed class PlayingCardHandComponent : Component
+    public abstract class SharedPlayingCardHandComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("stackId")]
@@ -17,7 +14,6 @@ namespace Content.Shared.PlayingCard
         [DataField("cardList")]
         public List<string> CardList = new();
     }
-
 
         public struct CardDetails
         {
@@ -34,8 +30,8 @@ namespace Content.Shared.PlayingCard
         [Serializable, NetSerializable]
         public class PickSingleCardMessage : BoundUserInterfaceMessage
         {
-            public readonly string ID;
-            public PickSingleCardMessage(string id)
+            public readonly int ID;
+            public PickSingleCardMessage(int id)
             {
                 ID = id;
             }
