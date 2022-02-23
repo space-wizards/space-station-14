@@ -28,7 +28,7 @@
       mass: 5
       mask:
       - Impassable
-      - VaultImpassable
+      - SmallImpassable
       restitution: 0.3  # fite me
       friction: 0.2
   - type: Sprite

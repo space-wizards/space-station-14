@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.Models;
 using Content.Server.Power.Components;
+using Content.Server.Recycling;
+using Content.Server.Recycling.Components;
 using Content.Server.Stunnable;
 using Content.Shared.Conveyor;
 using Content.Shared.Item;
@@ -20,6 +22,7 @@ namespace Content.Server.Conveyor
 {
     public sealed class ConveyorSystem : EntitySystem
     {
+        [Dependency] private RecyclerSystem _recycler = default!;
         [Dependency] private StunSystem _stunSystem = default!;
 
         public override void Initialize()
@@ -87,6 +90,15 @@ namespace Content.Server.Conveyor
                 TwoWayLeverSignal.Right => ConveyorState.Forward,
                 _ => ConveyorState.Off
             };
+
+            if (TryComp<RecyclerComponent>(component.Owner, out var recycler))
+            {
+                if (component.State != ConveyorState.Off)
+                    _recycler.EnableRecycler(recycler);
+                else
+                    _recycler.DisableRecycler(recycler);
+            }
+
             UpdateAppearance(component);
         }
 

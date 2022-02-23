@@ -32,7 +32,6 @@ namespace Content.IntegrationTests.Tests
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityMan = server.ResolveDependency<IEntityManager>();
             var prototypeMan = server.ResolveDependency<IPrototypeManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
             var prototypes = new List<EntityPrototype>();
@@ -45,7 +44,7 @@ namespace Content.IntegrationTests.Tests
                 // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
 
-                pauseManager.AddUninitializedMap(mapId);
+                mapManager.AddUninitializedMap(mapId);
 
                 var gridId = new GridId(1);
 
@@ -60,7 +59,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid.SetTile(coordinates, tile);
 
-                pauseManager.DoMapInitialize(mapId);
+                mapManager.DoMapInitialize(mapId);
             });
 
             server.Assert(() =>
@@ -126,7 +125,6 @@ namespace Content.IntegrationTests.Tests
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
@@ -137,7 +135,7 @@ namespace Content.IntegrationTests.Tests
                 // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
 
-                pauseManager.AddUninitializedMap(mapId);
+                mapManager.AddUninitializedMap(mapId);
 
                 var gridId = new GridId(1);
 
@@ -152,7 +150,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid.SetTile(coordinates, tile);
 
-                pauseManager.DoMapInitialize(mapId);
+                mapManager.DoMapInitialize(mapId);
             });
 
             server.Assert(() =>
@@ -230,7 +228,6 @@ namespace Content.IntegrationTests.Tests
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
@@ -241,7 +238,7 @@ namespace Content.IntegrationTests.Tests
                 // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
 
-                pauseManager.AddUninitializedMap(mapId);
+                mapManager.AddUninitializedMap(mapId);
 
                 var gridId = new GridId(1);
 
@@ -256,7 +253,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid.SetTile(coordinates, tile);
 
-                pauseManager.DoMapInitialize(mapId);
+                mapManager.DoMapInitialize(mapId);
             });
 
             var distinctComponents = new List<(List<Type> components, List<Type> references)>

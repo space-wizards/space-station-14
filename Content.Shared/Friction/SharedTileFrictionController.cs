@@ -59,7 +59,7 @@ namespace Content.Shared.Friction
                     Mover.UseMobMovement(body.Owner)) continue;
 
                 var surfaceFriction = GetTileFriction(body);
-                var bodyModifier = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedTileFrictionModifier>(body.Owner)?.Modifier ?? 1.0f;
+                var bodyModifier = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<TileFrictionModifierComponent>(body.Owner)?.Modifier ?? 1.0f;
                 var friction = _frictionModifier * surfaceFriction * bodyModifier;
 
                 ReduceLinearVelocity(prediction, body, friction, frameTime);
