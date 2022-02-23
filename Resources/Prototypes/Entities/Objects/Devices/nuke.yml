@@ -20,8 +20,6 @@
         mass: 150
         layer:
         - SmallImpassable
-        mask:
-        - VaultImpassable
     - type: Nuke
       diskSlot:
         name: Disk
