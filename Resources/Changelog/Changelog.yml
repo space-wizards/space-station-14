@@ -1,10 +1,4 @@
 Entries:
-- author: AJCM-git
-  changes:
-  - {message: You can no longer use the E key to interact with things outside lockers/crates
-      while inside one., type: Fix}
-  id: 619
-  time: '2021-11-21T05:06:44.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Shuttles now require thrust., type: Add}
@@ -2993,3 +2987,9 @@ Entries:
   - {message: Racks can be vaulted over., type: Tweak}
   id: 1118
   time: '2022-02-23T04:58:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Drones can now go under doors. They also are no longer considered flying
+      and don't have all-access., type: Tweak}
+  id: 1119
+  time: '2022-02-23T09:22:19.0000000+00:00'
