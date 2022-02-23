@@ -29,3 +29,6 @@
     QuickEquip: false
     Slots:
     - back
+  - type: Tool
+    qualities:
+      - Prying
