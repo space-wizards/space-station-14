@@ -182,13 +182,13 @@
     Assistant: [ 5, 5 ]
 
 - type: gameMap
-  id: infiltrator
+  id: infiltratororig
   mapName: 'Infiltrator'
   mapNameTemplate: '{0} Infiltrator {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: /Maps/infiltrator.yml
+  mapPath: /Maps/infiltrator_orig.yml
   minPlayers: 0
   votable: false
   overflowJobs: []
