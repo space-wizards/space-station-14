@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
-    public class EmitterComponent : Component
+    public sealed class EmitterComponent : Component
     {
         public CancellationTokenSource? TimerCancel;
 

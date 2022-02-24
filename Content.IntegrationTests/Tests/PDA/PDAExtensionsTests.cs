@@ -13,7 +13,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.PDA
 {
-    public class PDAExtensionsTests : ContentIntegrationTest
+    public sealed class PDAExtensionsTests : ContentIntegrationTest
     {
         private const string IdCardDummy = "DummyIdCard";
         private const string PdaDummy = "DummyPda";

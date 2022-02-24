@@ -7,7 +7,7 @@ namespace Content.Client.Tabletop.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedTabletopDraggableComponent))]
-    public class TabletopDraggableComponent : SharedTabletopDraggableComponent
+    public sealed class TabletopDraggableComponent : SharedTabletopDraggableComponent
     {
         // The player dragging the piece
         [ViewVariables]

@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Body.Components;
 
 [RegisterComponent, Friend(typeof(LungSystem))]
-public class LungComponent : Component
+public sealed class LungComponent : Component
 {
     [DataField("air")]
     public GasMixture Air { get; set; } = new()
@@ -19,9 +19,6 @@ public class LungComponent : Component
         Volume = 6,
         Temperature = Atmospherics.NormalBodyTemperature
     };
-
-    [DataField("validReagentGases", required: true)]
-    public HashSet<Gas> ValidGases = default!;
 
     [ViewVariables]
     public Solution LungSolution = default!;

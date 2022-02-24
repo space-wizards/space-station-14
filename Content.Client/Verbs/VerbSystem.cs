@@ -178,6 +178,14 @@ namespace Content.Client.Verbs
         }
 
         /// <summary>
+        ///     Asks the server to send back a list of server-side verbs, for the given verb type.
+        /// </summary>
+        public SortedSet<Verb> GetVerbs(EntityUid target, EntityUid user, Type type, bool force = false)
+        {
+            return GetVerbs(target, user, new List<Type>() { type }, force);
+        }
+
+        /// <summary>
         ///     Ask the server to send back a list of server-side verbs, and for now return an incomplete list of verbs
         ///     (only those defined locally).
         /// </summary>

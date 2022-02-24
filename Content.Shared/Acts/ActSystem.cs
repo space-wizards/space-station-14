@@ -17,9 +17,9 @@ namespace Content.Shared.Acts
         void OnDestroy(DestructionEventArgs eventArgs);
     }
 
-    public class DestructionEventArgs : EntityEventArgs { }
+    public sealed class DestructionEventArgs : EntityEventArgs { }
 
-    public class BreakageEventArgs : EntityEventArgs { }
+    public sealed class BreakageEventArgs : EntityEventArgs { }
 
     public interface IBreakAct
     {
@@ -37,7 +37,7 @@ namespace Content.Shared.Acts
         void OnExplosion(ExplosionEventArgs eventArgs);
     }
 
-    public class ExplosionEventArgs : EventArgs
+    public sealed class ExplosionEventArgs : EventArgs
     {
         public EntityCoordinates Source { get; set; }
         public EntityUid Target { get; set; }

@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public class AddAccentClothingSystem : EntitySystem
+public sealed class AddAccentClothingSystem : EntitySystem
 {
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
 

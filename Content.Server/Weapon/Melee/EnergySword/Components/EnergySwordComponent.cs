@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Weapon.Melee.EnergySword
 {
     [RegisterComponent]
-    internal class EnergySwordComponent : Component
+    internal sealed class EnergySwordComponent : Component
     {
         public Color BladeColor = Color.DodgerBlue;
 

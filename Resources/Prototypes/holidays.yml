@@ -56,6 +56,12 @@
   beginMonth: February
 
 - type: holiday
+  id: MikuDay
+  name: Hatsune Miku Day
+  beginDay: 9
+  beginMonth: March
+
+- type: holiday
   id: PiDay
   name: Pi Day
   beginDay: 14

@@ -9,6 +9,17 @@
     damageContainer: Inorganic
     damageModifierSet: Metallic
   - type: PlaceableSurface
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.45"
+      mass: 50
+      layer:
+      - VaultImpassable
+      mask:
+      - Impassable
+      - SmallImpassable
   - type: Sprite
     netsync: false
   - type: Icon
@@ -18,5 +29,3 @@
     base: state_
   - type: Climbable
   - type: Clickable
-    bounds:
-      all: "-0.5,-0.5,0.5,0.5"

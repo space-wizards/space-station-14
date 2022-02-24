@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Singularity.Visualizers
 {
     [UsedImplicitly]
-    public class SingularityVisualizer : AppearanceVisualizer
+    public sealed class SingularityVisualizer : AppearanceVisualizer
     {
         [DataField("layer")]
         private int Layer { get; } = 0;

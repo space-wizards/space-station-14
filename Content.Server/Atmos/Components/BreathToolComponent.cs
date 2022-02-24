@@ -13,7 +13,7 @@ namespace Content.Server.Atmos.Components
     /// </summary>
     [RegisterComponent]
     [ComponentProtoName("BreathMask")]
-    public class BreathToolComponent : Component
+    public sealed class BreathToolComponent : Component
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 

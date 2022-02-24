@@ -7,7 +7,7 @@ namespace Content.Server.DeviceNetwork.Components
 {
     [RegisterComponent]
     [ComponentProtoName("DeviceNetworkComponent")]
-    public class DeviceNetworkComponent : Component
+    public sealed class DeviceNetworkComponent : Component
     {
         /// <summary>
         ///  Valid device network NetIDs.

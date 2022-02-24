@@ -27,7 +27,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
     [TestOf(typeof(ClientActionsComponent))]
     [TestOf(typeof(ServerActionsComponent))]
     [TestOf(typeof(ItemActionsComponent))]
-    public class ActionsComponentTests : ContentIntegrationTest
+    public sealed class ActionsComponentTests : ContentIntegrationTest
     {
         const string Prototypes = @"
 - type: entity

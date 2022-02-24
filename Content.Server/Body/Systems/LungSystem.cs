@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
 
-public class LungSystem : EntitySystem
+public sealed class LungSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -54,7 +54,7 @@ public class LungSystem : EntitySystem
 
     public void GasToReagent(EntityUid uid, LungComponent lung)
     {
-        foreach (var gas in lung.ValidGases)
+        foreach (var gas in Enum.GetValues<Gas>())
         {
             var i = (int) gas;
             var moles = lung.Air.Moles[i];

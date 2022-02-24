@@ -19,7 +19,7 @@ namespace Content.Shared.Interaction
         bool InteractHand(InteractHandEventArgs eventArgs);
     }
 
-    public class InteractHandEventArgs : EventArgs, ITargetedInteractEventArgs
+    public sealed class InteractHandEventArgs : EventArgs, ITargetedInteractEventArgs
     {
         public InteractHandEventArgs(EntityUid user, EntityUid target)
         {
@@ -35,7 +35,7 @@ namespace Content.Shared.Interaction
     ///     Raised directed on a target entity when it is interacted with by a user with an empty hand.
     /// </summary>
     [PublicAPI]
-    public class InteractHandEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
+    public sealed class InteractHandEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
     {
         /// <summary>
         ///     Entity that triggered the interaction.

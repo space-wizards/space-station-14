@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Content.Tests.Shared.Administration.Logs;
 
 [TestFixture]
-public class LogTypeTests
+public sealed class LogTypeTests
 {
     [Test]
     public void Unique()

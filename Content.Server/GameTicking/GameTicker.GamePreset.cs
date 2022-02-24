@@ -7,16 +7,67 @@ using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.MobState.Components;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         public const float PresetFailedCooldownIncrease = 30f;
 
         private GamePresetPrototype? _preset;
+
+        private bool StartPreset(IPlayerSession[] origReadyPlayers, bool force)
+        {
+            var startAttempt = new RoundStartAttemptEvent(origReadyPlayers, force);
+            RaiseLocalEvent(startAttempt);
+
+            if (!startAttempt.Cancelled)
+                return true;
+
+            var presetTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
+
+            void FailedPresetRestart()
+            {
+                SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart",
+                    ("failedGameMode", presetTitle)));
+                RestartRound();
+                DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
+            }
+
+            if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
+            {
+                var oldPreset = _preset;
+                ClearGameRules();
+                SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
+                AddGamePresetRules();
+                StartGamePresetRules();
+
+                startAttempt.Uncancel();
+                RaiseLocalEvent(startAttempt);
+
+                _chatManager.DispatchServerAnnouncement(
+                    Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
+                        ("failedGameMode", presetTitle),
+                        ("fallbackMode", Loc.GetString(_preset!.ModeTitle))));
+
+                if (startAttempt.Cancelled)
+                {
+                    FailedPresetRestart();
+                }
+
+                RefreshLateJoinAllowed();
+            }
+            else
+            {
+                FailedPresetRestart();
+                return false;
+            }
+
+            return true;
+        }
 
         private void InitializeGamePreset()
         {
@@ -83,6 +134,14 @@ namespace Content.Server.GameTicking
             }
 
             return true;
+        }
+
+        private void StartGamePresetRules()
+        {
+            foreach (var rule in _addedGameRules)
+            {
+                StartGameRule(rule);
+            }
         }
 
         public bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal)
@@ -160,7 +219,7 @@ namespace Content.Server.GameTicking
         }
     }
 
-    public class GhostAttemptHandleEvent : HandledEntityEventArgs
+    public sealed class GhostAttemptHandleEvent : HandledEntityEventArgs
     {
         public Mind.Mind Mind { get; }
         public bool CanReturnGlobal { get; }

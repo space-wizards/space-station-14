@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -24,13 +21,12 @@ namespace Content.Shared.DoAfter
     }
 
     [Serializable, NetSerializable]
-#pragma warning disable 618
-    public sealed class CancelledDoAfterMessage : ComponentMessage
-#pragma warning restore 618
+    public sealed class CancelledDoAfterMessage : EntityEventArgs
     {
+        public EntityUid Uid;
         public byte ID { get; }
 
-        public CancelledDoAfterMessage(byte id)
+        public CancelledDoAfterMessage(EntityUid uid, byte id)
         {
             ID = id;
         }

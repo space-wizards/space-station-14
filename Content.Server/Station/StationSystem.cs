@@ -16,7 +16,7 @@ namespace Content.Server.Station;
 /// <summary>
 /// System that manages the jobs available on a station, and maybe other things later.
 /// </summary>
-public class StationSystem : EntitySystem
+public sealed class StationSystem : EntitySystem
 {
     [Dependency] private GameTicker _gameTicker = default!;
     [Dependency] private IChatManager _chatManager = default!;
@@ -44,7 +44,7 @@ public class StationSystem : EntitySystem
             _stationInfo = new();
     }
 
-    public class StationInfoData
+    public sealed class StationInfoData
     {
         public string Name;
 

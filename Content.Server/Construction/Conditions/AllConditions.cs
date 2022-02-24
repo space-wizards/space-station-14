@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class AllConditions : IGraphCondition
+    public sealed class AllConditions : IGraphCondition
     {
         [DataField("conditions")]
         public IGraphCondition[] Conditions { get; } = Array.Empty<IGraphCondition>();

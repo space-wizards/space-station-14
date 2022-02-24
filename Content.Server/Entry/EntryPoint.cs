@@ -36,7 +36,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Entry
 {
-    public class EntryPoint : GameServer
+    public sealed class EntryPoint : GameServer
     {
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
@@ -112,7 +112,6 @@ namespace Content.Server.Entry
             }
             else
             {
-                IoCManager.Resolve<ISandboxManager>().Initialize();
                 IoCManager.Resolve<RecipeManager>().Initialize();
                 IoCManager.Resolve<ActionManager>().Initialize();
                 IoCManager.Resolve<BlackboardManager>().Initialize();
@@ -126,6 +125,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IGameMapManager>().Initialize();
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
                 IoCManager.Resolve<IBqlQueryManager>().DoAutoRegistrations();
+                IoCManager.Resolve<RoleBanManager>().Initialize();
             }
         }
 
