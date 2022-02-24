@@ -6,6 +6,7 @@
   components:
     - type: Tag
       tags:
+      - Recyclable
       - Trash
     - type: Recyclable
     - type: ExpendableLight

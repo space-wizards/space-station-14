@@ -31,3 +31,6 @@ ent-MobCatCaracal = каракаловая кошка
 ent-MobSloth = ленивец
     .desc = Очень медлительное животное. Для людей с низкой энергией.
     .suffix = { "" }
+ent-MobFerret = ferret
+    .desc = Just a silly little guy!
+    .suffix = { "" }

@@ -12,7 +12,7 @@ namespace Content.Server.AI.Utility.Considerations.Hands
         {
             var owner = context.GetState<SelfState>().GetValue();
 
-            if (owner == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out HandsComponent? handsComponent))
+            if (!owner.IsValid() || !IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out HandsComponent? handsComponent))
             {
                 return 0.0f;
             }

@@ -44,7 +44,7 @@ public sealed class EntityPainter
             Run(canvas, entity);
         }
 
-        Console.WriteLine($"{nameof(GridPainter)} painted {entities.Count} entities in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+        Console.WriteLine($"{nameof(EntityPainter)} painted {entities.Count} entities in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
     }
 
     public void Run(Image canvas, EntityData entity)

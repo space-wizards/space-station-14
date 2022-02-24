@@ -45,6 +45,32 @@
       - MobCorgi
       - MobCorgiOld
 
+- type: entity
+  name: Possum Morty Spawner
+  id: SpawnMobPossumMorty
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobPossumMorty
+
+- type: entity
+  name: Raccoon Morticia Spawner
+  id: SpawnMobRaccoonMorticia
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRaccoonMorticia
+
 ## Player-controlled
 
 - type: entity
