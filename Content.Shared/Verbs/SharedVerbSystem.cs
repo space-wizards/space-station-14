@@ -47,16 +47,16 @@ namespace Content.Shared.Verbs
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
         ///     does not request verbs from the server.
         /// </summary>
-        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, Type type, bool force = false, bool all = false)
+        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, Type type, bool force = false)
         {
-            return GetLocalVerbs(target, user, new List<Type>() { type }, force, all);
+            return GetLocalVerbs(target, user, new List<Type>() { type }, force);
         }
 
         /// <summary>
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
         ///     does not request verbs from the server.
         /// </summary>
-        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, List<Type> types, bool force = false, bool all = false)
+        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, List<Type> types, bool force = false)
         {
             SortedSet<Verb> verbs = new();
 
@@ -96,6 +96,15 @@ namespace Content.Shared.Verbs
             {
                 var verbEvent = new GetVerbsEvent<InteractionVerb>(user, target, @using, hands, canInteract, canAccess);
                 RaiseLocalEvent(target, verbEvent);
+                verbs.UnionWith(verbEvent.Verbs);
+            }
+
+            if (types.Contains(typeof(UtilityVerb))
+                && @using != null
+                && @using != target)
+            {
+                var verbEvent = new GetVerbsEvent<UtilityVerb>(user, target, @using, hands, canInteract, canAccess);
+                RaiseLocalEvent(@using.Value, verbEvent); // directed at used, not at target
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
