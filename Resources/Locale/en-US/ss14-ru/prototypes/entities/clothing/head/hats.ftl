@@ -109,6 +109,6 @@ ent-ClothingHeadPyjamaSyndicatePink = syndicate pink pyjama hat
 ent-ClothingHeadPyjamaSyndicateRed = syndicate red pyjama hat
     .desc = For keeping that traitor head of yours warm.
     .suffix = { "" }
-ent-ClothingHeadCapCentcomBlack = black special operations officer cap
+ent-ClothingHeadCapCentcomBlack = special operations officer cap
     .desc = The NanoTrasen gold-engraved special cap of the higher ranks, which has long gone through more than one blitzkrieg...
     .suffix = { "" }

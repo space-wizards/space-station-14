@@ -410,7 +410,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadCapCentcomBlack
-  name: black special operations officer cap
+  name: special operations officer cap
   description: The NanoTrasen gold-engraved special cap of the higher ranks, which has long gone through more than one blitzkrieg...
   components:
     - type: Sprite
