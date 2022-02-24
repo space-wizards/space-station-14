@@ -2,5 +2,5 @@ Taken from tgstation at https://github.com/tgstation/tgstation/commit/505e441495
 
 This lightning image is just a placeholder beam effect until we get better beam/particle support.
 
-That commit/DMI has a bunch of beam effects, with lots of lighting pieces.
+The mentioned commit/DMI has a bunch of beam effects, with lots of lighting-beam pieces that can be joined together, which might be nice to support.
 

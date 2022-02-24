@@ -6,6 +6,7 @@
   description: action-description-spell-lightning
   charges: 10
   useDelay: 4
+  range: -1
   speech: action-speech-spell-lightning
   itemIconStyle: BigAction
   checkCanAccess: false
@@ -22,6 +23,7 @@
   description: action-description-spell-taser
   charges: 10
   useDelay: 2
+  range: -1
   itemIconStyle: BigAction
   checkCanAccess: false
   repeat: true

@@ -6,6 +6,7 @@
   description: action-description-spell-fireball
   charges: 5
   useDelay: 10
+  range: -1
   speech: action-speech-spell-fireball
   itemIconStyle: BigAction
   checkCanAccess: false

@@ -6,6 +6,8 @@
   description: action-description-spell-teleport
   charges: 3
   useDelay: 10
+  range: 16 # default examine-range.
+  # ^ should probably add better validation that the clicked location is on the users screen somewhere,
   itemIconStyle: BigAction
   checkCanAccess: false
   repeat: true
