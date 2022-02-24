@@ -309,12 +309,15 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return false;
 
-        var ev = new BeforeDoorClosedEvent();
+        var ev = new BeforeDoorClosedEvent(door.PerformCollisionCheck);
         RaiseLocalEvent(uid, ev, false);
         if (ev.Cancelled)
             return false;
 
-        return HasAccess(uid, user);
+        if (!HasAccess(uid, user))
+            return false;
+
+        return !ev.PerformCollisionCheck || !GetColliding(uid).Any();
     }
 
     public virtual void StartClosing(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
@@ -387,11 +390,10 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return;
 
-        // is this door capable of crushing? NOT the same as an airlock safety check. The door will still close.
         if (!door.CanCrush)
             return;
 
-        // Crush
+        // Find entities and apply curshing effects
         var stunTime = door.DoorStunTime + door.OpenTimeOne;
         foreach (var entity in GetColliding(uid, physics))
         {
