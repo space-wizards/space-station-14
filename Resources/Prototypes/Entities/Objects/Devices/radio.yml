@@ -10,7 +10,6 @@
   parent: RadioBase
   id: RadioHandheld
   components:
-  - type: Radio
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     layers:
