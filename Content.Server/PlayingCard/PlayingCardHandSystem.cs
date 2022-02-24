@@ -38,6 +38,7 @@ public class PlayingCardHandSystem : EntitySystem
         SubscribeLocalEvent<PlayingCardHandComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<PlayingCardHandComponent, CardListSyncRequestMessage>(OnCardListSyncRequest);
         SubscribeLocalEvent<PlayingCardHandComponent, PickSingleCardMessage>(PickSingleCardMessage);
+        // ON INTERACT OTHER, ATTEMPT TO MERGE
     }
 
     private void OnInteractUsing(EntityUid uid, PlayingCardHandComponent cardHandComponent, InteractUsingEvent args)
@@ -142,7 +143,6 @@ public class PlayingCardHandSystem : EntitySystem
                 if (lastPlayingCardEnt == null)
                     return;
 
-                cardHandComponent.CardList.RemoveAt(cardIndex);
                 EntityManager.QueueDeleteEntity(cardHandComponent.Owner);
 
                 if (!TryComp<SharedItemComponent>(lastPlayingCardEnt, out var lastCardItem))
@@ -179,6 +179,8 @@ public class PlayingCardHandSystem : EntitySystem
         if (TryComp<AppearanceComponent>(cardHandComponent.Owner, out AppearanceComponent? appearance))
         {
             appearance.SetData(PlayingCardHandVisuals.CardCount, cardHandComponent.CardList.Count);
+            // grab 5 highest cards for front appearance
+            appearance.SetData(PlayingCardHandVisuals.CardList, cardHandComponent.CardList.Take(5).ToList());
         }
     }
 

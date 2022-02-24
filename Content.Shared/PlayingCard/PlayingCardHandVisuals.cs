@@ -6,6 +6,7 @@ namespace Content.Shared.PlayingCard
     [Serializable, NetSerializable]
     public enum PlayingCardHandVisuals : byte
     {
-        CardCount
+        CardCount,
+        CardList
     }
 }
