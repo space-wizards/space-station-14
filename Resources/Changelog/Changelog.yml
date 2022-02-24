@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Reaction effects (potas/water, smoke, foam) have been refactored slightly,
-      so report any bugs you find with them.', type: Tweak}
-  id: 621
-  time: '2021-11-21T07:35:02.0000000+00:00'
 - author: FoLoKe
   changes:
   - {message: Added "eat" action for food., type: Add}
@@ -2995,3 +2989,10 @@ Entries:
   - {message: Added a named Possum (Morty) and Raccoon (Morticia), type: Add}
   id: 1120
   time: '2022-02-23T18:40:31.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Nuclear bomb now has cooldown time after deactivation. Wait for 30 seconds
+      before you can arm bomb again., type: Tweak}
+  - {message: Iconic nuclear alarm sound is back., type: Fix}
+  id: 1121
+  time: '2022-02-24T00:00:51.0000000+00:00'
