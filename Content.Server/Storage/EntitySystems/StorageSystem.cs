@@ -139,7 +139,6 @@ namespace Content.Server.Storage.EntitySystems
                 UtilityVerb verb = new()
                 {
                     Text = Loc.GetString("storage-component-transfer-verb"),
-                    IconEntity = args.Using,
                     Act = () => TransferEntities(uid, args.Target, component, lockComponent, targetStorage, targetLock)
                 };
 
@@ -153,7 +152,6 @@ namespace Content.Server.Storage.EntitySystems
             UtilityVerb dispose = new()
             {
                 Text = Loc.GetString("storage-component-dispose-verb"),
-                IconEntity = args.Using,
                 Act = () => DisposeEntities(args.User, uid, args.Target, component, lockComponent, disposal)
             };
 
