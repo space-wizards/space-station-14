@@ -25,19 +25,18 @@
   - type: Input
     context: "human"
   - type: PAI
-  - type: Examiner
-  - type: GhostRadio
-  - type: DoAfter
-  - type: Actions
-    innateActions:
-    - !type:InstantAction
+    midiAction:
       name: action-name-pai-play-midi
       checkCanInteract: false
       icon: Interface/Actions/pai-midi.png
       description: action-description-pai-play-midi
       event: !type:OpenUiActionEvent
         key: enum.InstrumentUiKey.Key
-    # MobState has to be installed because otherwise they're not "alive",
+  - type: Examiner
+  - type: GhostRadio
+  - type: DoAfter
+  - type: Actions
+    # This has to be installed because otherwise they're not "alive",
     #  so they can ghost and come back.
     # Note that the personal AI never "dies".
   - type: MobState

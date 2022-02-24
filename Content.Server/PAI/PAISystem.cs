@@ -32,6 +32,19 @@ namespace Content.Server.PAI
             SubscribeLocalEvent<PAIComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<PAIComponent, GetVerbsEvent<ActivationVerb>>(AddWipeVerb);
+
+            SubscribeLocalEvent<PAIComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<PAIComponent, ComponentShutdown>(OnShutdown);
+        }
+
+        private void OnStartup(EntityUid uid, PAIComponent component, ComponentStartup args)
+        {
+            _actionsSystem.AddAction(uid, component.MidiAction, null);
+        }
+
+        private void OnShutdown(EntityUid uid, PAIComponent component, ComponentShutdown args)
+        {
+            _actionsSystem.RemoveAction(uid, component.MidiAction);
         }
 
         private void OnExamined(EntityUid uid, PAIComponent component, ExaminedEvent args)

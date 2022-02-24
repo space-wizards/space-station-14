@@ -1,3 +1,4 @@
+using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.PAI
@@ -15,6 +16,8 @@ namespace Content.Shared.PAI
     [RegisterComponent, NetworkedComponent]
     public sealed class PAIComponent : Component
     {
+        [DataField("midiAction", required: true, serverOnly: true)]
+        public InstantAction MidiAction = default!;
     }
 }
 
