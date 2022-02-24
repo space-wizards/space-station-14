@@ -10,11 +10,11 @@
   - type: Sprite
     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
     layers:
-    - state: "sc_3 of Spades_nanotrasen"
+    - state: "8 of Clubs"
       map: ["enum.PlayingCardVisualLayers.Base"]
-    - state: "sc_3 of Spades_nanotrasen"
+    - state: "8 of Clubs"
       map: ["enum.PlayingCardVisualLayers.Details"]
-    - state: "singlecard_down_nanotrasen"
+    - state: "singlecard_down"
       map: ["enum.PlayingCardVisualLayers.FlippedDown"]
   - type: PlayingCardVisuals
   - type: Appearance
@@ -36,58 +36,58 @@
     cardPrototype: BasePlayingCard
     cardHandPrototype: PlayingCardHand
     cardList: [
-      sc_6 of Hearts,
-      sc_6 of Spades,
-      sc_7 of Clubs,
-      sc_7 of Diamonds,
-      sc_7 of Hearts,
-      sc_7 of Spades,
-      sc_8 of Clubs,
-      sc_8 of Diamonds,
-      sc_8 of Hearts,
-      sc_8 of Spades,
-      sc_10 of Clubs,
-      sc_9 of Clubs,
-      sc_10 of Diamonds,
-      sc_9 of Diamonds,
-      sc_10 of Hearts,
-      sc_9 of Hearts,
-      sc_10 of Spades,
-      sc_9 of Spades,
-      sc_2 of Clubs,
-      sc_Ace of Clubs,
-      sc_2 of Diamonds,
-      sc_Ace of Diamonds,
-      sc_2 of Hearts,
-      sc_Ace of Hearts,
-      sc_2 of Spades,
-      sc_Ace of Spades,
-      sc_3 of Clubs,
-      sc_Jack of Clubs,
-      sc_3 of Diamonds,
-      sc_Jack of Diamonds,
-      sc_3 of Hearts,
-      sc_Jack of Hearts,
-      sc_3 of Spades,
-      sc_Jack of Spades,
-      sc_4 of Clubs,
-      sc_King of Clubs,
-      sc_4 of Diamonds,
-      sc_King of Diamonds,
-      sc_4 of Hearts,
-      sc_King of Hearts,
-      sc_4 of Spades,
-      sc_King of Spades,
-      sc_5 of Clubs,
-      sc_Queen of Clubs,
-      sc_5 of Diamonds,
-      sc_Queen of Diamonds,
-      sc_5 of Hearts,
-      sc_Queen of Hearts,
-      sc_5 of Spades,
-      sc_Queen of Spades,
-      sc_6 of Clubs,
-      sc_6 of Diamonds,
+      6 of Hearts,
+      6 of Spades,
+      7 of Clubs,
+      7 of Diamonds,
+      7 of Hearts,
+      7 of Spades,
+      8 of Clubs,
+      8 of Diamonds,
+      8 of Hearts,
+      8 of Spades,
+      10 of Clubs,
+      9 of Clubs,
+      10 of Diamonds,
+      9 of Diamonds,
+      10 of Hearts,
+      9 of Hearts,
+      10 of Spades,
+      9 of Spades,
+      2 of Clubs,
+      Ace of Clubs,
+      2 of Diamonds,
+      Ace of Diamonds,
+      2 of Hearts,
+      Ace of Hearts,
+      2 of Spades,
+      Ace of Spades,
+      3 of Clubs,
+      Jack of Clubs,
+      3 of Diamonds,
+      Jack of Diamonds,
+      3 of Hearts,
+      Jack of Hearts,
+      3 of Spades,
+      Jack of Spades,
+      4 of Clubs,
+      King of Clubs,
+      4 of Diamonds,
+      King of Diamonds,
+      4 of Hearts,
+      King of Hearts,
+      4 of Spades,
+      King of Spades,
+      5 of Clubs,
+      Queen of Clubs,
+      5 of Diamonds,
+      Queen of Diamonds,
+      5 of Hearts,
+      Queen of Hearts,
+      5 of Spades,
+      Queen of Spades,
+      6 of Clubs,
+      6 of Diamonds,
     ]
   - type: Item
     size: 3
@@ -115,22 +115,22 @@
     # - state: nanotrasen_hand5
     #   visible: false
     #   map: ["enum.PlayingCardHandVisualLayers.FourthCardBase"]
-    - state: sc_10 of Hearts_nanotrasen
+    - state: 5 of Hearts
       visible: false
       map: ["enum.PlayingCardHandVisualLayers.FourthCardDetails"]
     # - state: nanotrasen_hand5
     #   visible: false
     #   map: ["enum.PlayingCardHandVisualLayers.ThirdCardBase"]
-    - state: sc_9 of Diamonds_nanotrasen
+    - state:  8 of Clubs
       visible: false
       map: ["enum.PlayingCardHandVisualLayers.ThirdCardDetails"]
     # - state: sc_4 of Clubs_nanotrasen
     #   map: ["enum.PlayingCardHandVisualLayers.SecondCardBase"]
-    - state: sc_4 of Clubs_nanotrasen
+    - state: 7 of Spades
       map: ["enum.PlayingCardHandVisualLayers.SecondCardDetails"]
     # - state: sc_6 of Diamonds_nanotrasen
     #   map: ["enum.PlayingCardHandVisualLayers.FirstCardBase"]
-    - state: sc_6 of Diamonds_nanotrasen
+    - state: 4 of Diamonds
       map: ["enum.PlayingCardHandVisualLayers.FirstCardDetails"]
   - type: PlayingCardHandVisuals
   - type: Appearance

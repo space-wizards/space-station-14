@@ -114,24 +114,41 @@ public class PlayingCardHandSystem : EntitySystem
 
         if (TryComp<HandsComponent>(user, out var hands))
         {
-            EntityUid playingCard = Spawn(cardHandComponent.CardPrototype, transformComp.Coordinates);
+            EntityUid playingCardEnt = Spawn(cardHandComponent.CardPrototype, transformComp.Coordinates);
             // GRAB NAME FROM LIST
-            string name = cardHandComponent.CardList[cardIndex];
+            string cardName = cardHandComponent.CardList[cardIndex];
             cardHandComponent.CardList.RemoveAt(cardIndex);
-            if (TryComp<SharedItemComponent>(playingCard, out var item))
+            if (!TryComp<SharedItemComponent>(playingCardEnt, out var item))
+                return;
+
+            if (!TryComp<PlayingCardComponent>(playingCardEnt, out PlayingCardComponent? playingCardComp))
             {
-                hands.PutInHand(item);
-                if (cardHandComponent.CardList.Count < 2)
+                EntityManager.DeleteEntity(playingCardEnt);
+                return;
+            }
+
+            playingCardComp.CardName = cardName;
+            hands.PutInHand(item);
+
+            // destroy hand, now single card
+            if (cardHandComponent.CardList.Count < 2)
+            {
+                string lastCardName = cardHandComponent.CardList[cardIndex];
+                cardHandComponent.CardList.RemoveAt(cardIndex);
+                EntityUid lastPlayingCardEnt = Spawn(cardHandComponent.CardPrototype, transformComp.Coordinates);
+                EntityManager.QueueDeleteEntity(cardHandComponent.Owner);
+
+                if (!TryComp<SharedItemComponent>(lastPlayingCardEnt, out var lastCardItem))
+                    return;
+
+                if (!TryComp<PlayingCardComponent>(lastPlayingCardEnt, out PlayingCardComponent? lastPlayingCardComp))
                 {
-                    string lastCardName = cardHandComponent.CardList[cardIndex];
-                    cardHandComponent.CardList.RemoveAt(cardIndex);
-                    EntityUid lastPlayingCard = Spawn(cardHandComponent.CardPrototype, transformComp.Coordinates);
-                    EntityManager.QueueDeleteEntity(cardHandComponent.Owner);
-                    if (TryComp<SharedItemComponent>(lastPlayingCard, out var lastCardItem))
-                    {
-                        hands.PutInHand(lastCardItem);
-                    }
+                    EntityManager.DeleteEntity(lastPlayingCardEnt);
+                    return;
                 }
+
+                lastPlayingCardComp.CardName = lastCardName;
+                hands.PutInHand(lastCardItem);
             }
         }
         _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-full-hand-fail"),

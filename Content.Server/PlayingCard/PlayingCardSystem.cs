@@ -5,6 +5,7 @@ using Content.Server.Hands.Components;
 using Content.Shared.Item;
 using Robust.Shared.Player;
 using Content.Server.PlayingCard.EntitySystems;
+using Content.Shared.Examine;
 
 namespace Content.Server.PlayingCard.EntitySystems;
 
@@ -17,7 +18,7 @@ public sealed class PlayingCardSystem : EntitySystem
     {
         SubscribeLocalEvent<PlayingCardComponent, UseInHandEvent>(OnUseInhand);
         SubscribeLocalEvent<PlayingCardComponent, InteractUsingEvent>(OnInteractUsing);
-
+        SubscribeLocalEvent<PlayingCardComponent, ExaminedEvent>(OnExamined);
     }
 
     private void OnUseInhand(EntityUid uid, PlayingCardComponent cardComponent, UseInHandEvent args)
@@ -30,6 +31,14 @@ public sealed class PlayingCardSystem : EntitySystem
     private void OnInteractUsing(EntityUid uid, PlayingCardComponent cardComponent, InteractUsingEvent args)
     {
         CombineCards(uid, args.Used, args.User, cardComponent);
+    }
+
+    private void OnExamined(EntityUid uid, PlayingCardComponent cardComponent, ExaminedEvent args)
+    {
+        if (cardComponent.FacingUp)
+            args.PushText(cardComponent.CardName);
+        // else
+            // args.PushText(Loc.GetString("playing-card-deck-component-examine-multiple", ("count", cardDeckComponent.CardList.Count)));
     }
 
     public void CombineCards(EntityUid uid, EntityUid itemUsed, EntityUid user, PlayingCardComponent cardComponent)

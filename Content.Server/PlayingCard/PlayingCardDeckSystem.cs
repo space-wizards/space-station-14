@@ -134,20 +134,32 @@ namespace Content.Server.PlayingCard
             if (!TryComp<TransformComponent>(cardDeckComponent.Owner, out var transformComp))
                 return;
 
-            if (TryComp<HandsComponent>(user, out var hands))
+            if (!TryComp<HandsComponent>(user, out var hands))
             {
-                string topCard = cardDeckComponent.CardList.First();
-                EntityUid playingCard = Spawn(cardDeckComponent.CardPrototype, transformComp.Coordinates);
-                if (TryComp<SharedItemComponent>(playingCard, out var item))
-                {
-                    hands.PutInHand(item);
-                    cardDeckComponent.CardList.RemoveAt(0);
-                    _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pick-up-single", ("user", user)),
-                        uid, Filter.Pvs(uid));
-                }
-            }
-            _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-full-hand-fail"),
+                _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-full-hand-fail"),
                 uid, Filter.Entities(uid));
+                return;
+            }
+
+            string topCard = cardDeckComponent.CardList.First();
+            EntityUid playingCard = Spawn(cardDeckComponent.CardPrototype, transformComp.Coordinates);
+
+            if (!TryComp<SharedItemComponent>(playingCard, out var item))
+                return;
+
+            if (!TryComp<PlayingCardComponent>(playingCard, out PlayingCardComponent? playingCardComp))
+            {
+                EntityManager.DeleteEntity(playingCard);
+                return;
+            }
+
+            playingCardComp.CardName = topCard;
+            // ALSO ASSIGN DESCRIPTION
+            hands.PutInHand(item);
+            cardDeckComponent.CardList.RemoveAt(0);
+            _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pick-up-single", ("user", user)),
+                uid, Filter.Pvs(uid));
+
         }
 
         public void PickupMultipleCards(EntityUid uid, EntityUid user, PlayingCardDeckComponent cardDeckComponent)
