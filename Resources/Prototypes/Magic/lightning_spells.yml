@@ -13,10 +13,10 @@
   icon:
     sprite: Interface/Actions/spells.rsi
     state: lightning
-  event: !type:ProjectileSpellEvent
+  serverEvent: !type:ProjectileSpellEvent
     projectile: Lightning # god this look awful.
 
-- type: worldSpell
+- type: worldTargetAction
   id: Taser
   name: action-name-spell-taser
   description: action-description-spell-taser
@@ -28,5 +28,5 @@
   icon:
     sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
     state: spark
-  event: !type:ProjectileSpellEvent
+  serverEvent: !type:ProjectileSpellEvent
     projectile: BulletTaser

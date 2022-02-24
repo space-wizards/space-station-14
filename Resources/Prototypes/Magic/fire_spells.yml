@@ -12,7 +12,7 @@
   icon:
     sprite: Objects/Magic/Spells/fireball.rsi
     state: fireball
-  event: !type:ProjectileSpellEvent
+  serverEvent: !type:ProjectileSpellEvent
     projectile: Fireball
 
 - type: entityTargetAction
@@ -32,7 +32,7 @@
   whitelist:
     components:
     - Flammable 
-  event: !type:ReagentEffectSpellEvent
+  serverEvent: !type:ReagentEffectSpellEvent
     quantity: 5 # 5 "units" of reagent
     effects:
     - !type:FlammableReaction

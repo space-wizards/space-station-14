@@ -12,7 +12,7 @@
   icon:
     sprite: Interface/Actions/spells.rsi
     state: teleport
-  event: !type:TeleportSpellEvent
+  serverEvent: !type:TeleportSpellEvent
 
 - type: entityTargetAction
   id: Haste
@@ -28,7 +28,7 @@
   icon:
     sprite: Interface/Actions/spells.rsi
     state: blink
-  event: !type:ReagentEffectSpellEvent
+  serverEvent: !type:ReagentEffectSpellEvent
     quantity: 1
     effects:
     - !type:MovespeedModifier
