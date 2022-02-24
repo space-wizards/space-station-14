@@ -4,7 +4,6 @@
   id: Fireball
   name: action-name-spell-fireball
   description: action-description-spell-fireball
-  charges: 5
   useDelay: 10
   range: -1
   speech: action-speech-spell-fireball
@@ -24,7 +23,6 @@
   icon: 
     sprite: Effects/fire.rsi
     state: fire
-  charges: 3
   useDelay: 10
   # speech: action-spell-fireball
   itemIconStyle: BigAction

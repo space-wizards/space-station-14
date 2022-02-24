@@ -4,7 +4,6 @@
   id: Lightning
   name: action-name-spell-lightning
   description: action-description-spell-lightning
-  charges: 10
   useDelay: 4
   range: -1
   speech: action-speech-spell-lightning
@@ -21,7 +20,6 @@
   id: Taser
   name: action-name-spell-taser
   description: action-description-spell-taser
-  charges: 10
   useDelay: 2
   range: -1
   itemIconStyle: BigAction

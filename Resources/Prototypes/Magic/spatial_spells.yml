@@ -4,7 +4,6 @@
   id: Teleport
   name: action-name-spell-teleport
   description: action-description-spell-teleport
-  charges: 3
   useDelay: 10
   range: 16 # default examine-range.
   # ^ should probably add better validation that the clicked location is on the users screen somewhere,
@@ -20,7 +19,6 @@
   id: Haste
   name: action-name-spell-haste
   description: action-description-spell-haste
-  charges: 5
   useDelay: 90
   itemIconStyle: BigAction
   checkCanAccess: false
