@@ -19,7 +19,7 @@ namespace Content.Server.Tiles
 {
     [RegisterComponent]
     [ComponentProtoName("FloorTile")]
-    public class FloorTileItemComponent : Component, IAfterInteract
+    public sealed class FloorTileItemComponent : Component, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
@@ -56,7 +56,7 @@ namespace Content.Server.Tiles
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            if (!eventArgs.CanReach)
                 return true;
 
             if (!_entMan.TryGetComponent(Owner, out StackComponent? stack))

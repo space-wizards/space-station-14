@@ -6,14 +6,12 @@
   - type: StorageFill
     contents:
       - id: ClothingOuterArmorBulletproof
-        prob: 0.5
       - id: ShotgunSawn
-        prob: 0.8
       - id: DrinkShaker
-        prob: 1
       - id: ClothingEyesGlassesBeer
-        prob: 1
-      - id: DrinkBeer
+      - id: DrinkBottleBeer
+        prob: 0.5
+      - id: DrinkBottleBeer
         prob: 0.5
       - id: DrinkBottleBeer
         prob: 0.5
@@ -68,7 +66,7 @@
   - type: StorageFill
     contents:
       - id: BriefcaseBrownFilled
-        prob: 0.75
+        prob: 0.80
 
 - type: entity
   id: LockerBotanistFilled
@@ -78,28 +76,39 @@
   - type: StorageFill
     contents:
       - id: ClothingHandsGlovesLeather
-        prob: 1
-      - id: ClothingHandsGlovesLeather
-        prob: 0.8
+        amount: 2
       - id: ClothingOuterApronBotanist
-        prob: 1
-      - id: ClothingOuterApronBotanist
-        prob: 0.8
+        amount: 2
+      - id: HatBandBotany
+        amount: 2
       - id: HydroponicsToolClippers
-        prob: 0.5
       - id: ClothingBeltPlant
-        prob: 1
+      - id: PlantBag ##Some maps don't have nutrivend
       - id: TowercapSeeds
-        prob: 1
       - id: BananaSeeds
-        prob: 0.8
+        prob: 0.6
       - id: EggySeeds
         prob: 0.5
       - id: AppleSeeds
         prob: 0.8
       - id: TomatoSeeds
-        prob: 1
       - id: ClothingUniformOveralls
-        prob: 1
       - id: ClothingHeadHatTrucker
         prob: 0.1
+
+- type: entity
+  id: LockerBotanistLoot
+  suffix: Loot
+  parent: LockerBotanist
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformOveralls
+      - id: ClothingHeadHatTrucker
+        prob: 0.3
+      - id: GatfruitSeeds
+        prob: 0.1
+      - id: FlyAmanitaSeeds
+        prob: 0.5
+      - id: NettleSeeds
+        prob: 0.7

@@ -208,7 +208,7 @@ namespace Content.Client.Cloning.UI
         }
 
         [DebuggerDisplay("cloningbutton {" + nameof(Index) + "}")]
-        private class CloningScanButton : Control
+        private sealed class CloningScanButton : Control
         {
             public string Scan { get; set; } = default!;
             public int Id { get; set; }

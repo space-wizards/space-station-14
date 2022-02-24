@@ -33,11 +33,14 @@ namespace Content.Server.NodeContainer.NodeGroups
         // In theory, the SS13 curse ensures this method will never be called.
         void AfterRemake(IEnumerable<IGrouping<INodeGroup?, Node>> newGroups);
 
-        // TODO: Why is this method needed?
-        void QueueRemake();
+        /// <summary>
+        ///     Return any additional data to display for the node-visualizer debug overlay.
+        /// </summary>
+        string? GetDebugData();
     }
 
     [NodeGroup(NodeGroupID.Default, NodeGroupID.WireNet)]
+    [Virtual]
     public class BaseNodeGroup : INodeGroup
     {
         public bool Remaking { get; set; }
@@ -111,9 +114,9 @@ namespace Content.Server.NodeContainer.NodeGroups
         /// <param name="newGroups">A list of new groups for this group's former nodes.</param>
         public virtual void AfterRemake(IEnumerable<IGrouping<INodeGroup?, Node>> newGroups) { }
 
-        public void QueueRemake()
+        public virtual string? GetDebugData()
         {
-            EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup(this);
+            return null;
         }
     }
 }

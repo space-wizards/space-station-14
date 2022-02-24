@@ -4,22 +4,40 @@
   name: recycler
   description: A large crushing machine used to recycle small items inefficiently. There are lights on the side.
   components:
+  - type: AmbientSound
+    enabled: false
+    volume: -8
+    range: 5
+    sound:
+      # TODO: https://freesound.org/people/derjuli/sounds/448133/ CC-NC-
+      path: /Audio/Ambience/Objects/circular_saw.ogg
   - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49"
+          bounds: "-0.2,-0.2,0.2,0.2"
+      id: brrt
       hard: false
       layer:
       - Opaque
       - Impassable
       - MobImpassable
       - VaultImpassable
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+      id: collision
+      hard: true
+      mask:
+      - Impassable
+      layer:
+        - Opaque
   - type: Transform
     anchored: true
   - type: Sprite
     netsync: false
+    drawdepth: Doors
     sprite: Structures/Machines/recycling.rsi
     layers:
     - state: grinder-o0

@@ -11,7 +11,7 @@ namespace Content.Server.Containers
     /// Empties a list of containers when the machine is deconstructed via MachineDeconstructedEvent.
     /// </summary>
     [RegisterComponent]
-    public class EmptyOnMachineDeconstructComponent : Component
+    public sealed class EmptyOnMachineDeconstructComponent : Component
     {
         [ViewVariables]
         [DataField("containers")]

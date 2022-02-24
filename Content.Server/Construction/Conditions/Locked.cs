@@ -14,7 +14,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class Locked : IGraphCondition
+    public sealed class Locked : IGraphCondition
     {
         [DataField("locked")]
         public bool IsLocked { get; private set; } = true;

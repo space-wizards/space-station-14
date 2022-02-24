@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Commands
 {
     [AnyCommand]
-    public class ToggleOutlineCommand : IConsoleCommand
+    public sealed class ToggleOutlineCommand : IConsoleCommand
     {
         public string Command => "toggleoutline";
 

@@ -21,8 +21,7 @@ namespace Content.Server.Speech.Components
     /// Replaces any spoken sentences with a random word.
     /// </summary>
     [RegisterComponent]
-    [ComponentProtoName("ReplacementAccent")]
-    public class ReplacementAccentComponent : Component
+    public sealed class ReplacementAccentComponent : Component
     {
         [DataField("accent", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>), required: true)]
         public string Accent = default!;

@@ -15,7 +15,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.AI.LoadBalancer
 {
-    public class AiActionRequestJob : Job<UtilityAction>
+    public sealed class AiActionRequestJob : Job<UtilityAction>
     {
 #if DEBUG
         public static event Action<SharedAiDebug.UtilityAiDebugMessage>? FoundAction;

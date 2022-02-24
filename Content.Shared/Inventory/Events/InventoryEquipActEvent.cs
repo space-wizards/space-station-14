@@ -8,7 +8,7 @@ namespace Content.Shared.Inventory.Events;
 /// This event is used to tell the server-inventorysystem someone wants to equip something
 /// </summary>
 [NetSerializable, Serializable]
-public class InventoryEquipActEvent : EntityEventArgs
+public sealed class InventoryEquipActEvent : EntityEventArgs
 {
     public readonly EntityUid Uid;
     public readonly EntityUid ItemUid;

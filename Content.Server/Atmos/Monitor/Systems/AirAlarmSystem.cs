@@ -32,7 +32,7 @@ namespace Content.Server.Atmos.Monitor.Systems
     // data key. In response, a packet will be transmitted
     // with the response type as its command, and the
     // response data in its data key.
-    public class AirAlarmSystem : EntitySystem
+    public sealed class AirAlarmSystem : EntitySystem
     {
         [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
         [Dependency] private readonly AtmosMonitorSystem _atmosMonitorSystem = default!;

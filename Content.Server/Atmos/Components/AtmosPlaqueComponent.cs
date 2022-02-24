@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Components
 {
-    [RegisterComponent, ComponentProtoName("AtmosPlaque")]
+    [RegisterComponent]
     public sealed class AtmosPlaqueComponent : Component
     {
         [DataField("plaqueType")] public PlaqueType Type = PlaqueType.Unset;

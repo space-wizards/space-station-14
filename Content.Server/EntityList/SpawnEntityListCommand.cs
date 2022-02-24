@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.EntityList
 {
     [AdminCommand(AdminFlags.Spawn)]
-    public class SpawnEntityListCommand : IConsoleCommand
+    public sealed class SpawnEntityListCommand : IConsoleCommand
     {
         public string Command => "spawnentitylist";
         public string Description => "Spawns a list of entities around you";

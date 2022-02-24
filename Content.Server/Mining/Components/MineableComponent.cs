@@ -7,9 +7,9 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Mining.Components;
 
-[RegisterComponent, ComponentProtoName("Mineable")]
+[RegisterComponent]
 [Friend(typeof(MineableSystem))]
-public class MineableComponent : Component
+public sealed class MineableComponent : Component
 {
     [DataField("baseMineTime")]
     public float BaseMineTime = 1.0f;

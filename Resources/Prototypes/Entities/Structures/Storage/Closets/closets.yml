@@ -81,8 +81,8 @@
     visuals:
     - type: StorageVisualizer
       state: bio
-      state_open: bio_sec_open
-      false: bio_sec_door
+      state_open: bio_open
+      state_closed: bio_door
 
 # Virology variant
 - type: entity

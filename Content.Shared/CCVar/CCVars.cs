@@ -415,13 +415,13 @@ namespace Content.Shared.CCVar
         ///     Maximum time in milliseconds that atmos can take processing.
         /// </summary>
         public static readonly CVarDef<float> AtmosMaxProcessTime =
-            CVarDef.Create("atmos.max_process_time", 5f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.max_process_time", 3f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Atmos tickrate in TPS. Atmos processing will happen every 1/TPS seconds.
         /// </summary>
         public static readonly CVarDef<float> AtmosTickRate =
-            CVarDef.Create("atmos.tickrate", 30f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.tickrate", 15f, CVar.SERVERONLY);
 
         /*
          * MIDI instruments
@@ -523,6 +523,32 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> VoteSameTypeTimeout =
             CVarDef.Create("vote.same_type_timeout", 240f, CVar.SERVERONLY);
+
+
+        /// <summary>
+        ///     Sets the duration of the map vote timer.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerMap = CVarDef.Create("vote.timermap", 90, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Sets the duration of the restart vote timer.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerRestart = CVarDef.Create("vote.timerrestart", 30, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Sets the duration of the gamemode/preset vote timer.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerPreset = CVarDef.Create("vote.timerpreset", 30, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Sets the duration of the map vote timer when ALONE.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerAlone = CVarDef.Create("vote.timeralone", 10, CVar.SERVERONLY);
+
 
         /*
          * BAN

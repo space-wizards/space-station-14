@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Pathfinding.Pathfinders
 {
-    public class AStarPathfindingJob : Job<Queue<TileRef>>
+    public sealed class AStarPathfindingJob : Job<Queue<TileRef>>
     {
 #if DEBUG
         public static event Action<SharedAiDebug.AStarRouteDebug>? DebugRoute;

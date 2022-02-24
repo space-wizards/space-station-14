@@ -12,7 +12,7 @@ using static Robust.UnitTesting.RobustIntegrationTest;
 
 namespace Content.MapRenderer.Painters;
 
-public class EntityPainter
+public sealed class EntityPainter
 {
     private readonly IResourceCache _cResourceCache;
 
@@ -44,7 +44,7 @@ public class EntityPainter
             Run(canvas, entity);
         }
 
-        Console.WriteLine($"{nameof(GridPainter)} painted {entities.Count} entities in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+        Console.WriteLine($"{nameof(EntityPainter)} painted {entities.Count} entities in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
     }
 
     public void Run(Image canvas, EntityData entity)

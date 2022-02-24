@@ -7,7 +7,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
     /// A group of homogenous PathfindingNodes inside a single chunk
     /// </summary>
     /// Makes the graph smaller and quicker to traverse
-    public class PathfindingRegion : IEquatable<PathfindingRegion>
+    public sealed class PathfindingRegion : IEquatable<PathfindingRegion>
     {
         /// <summary>
         /// Bottom-left reference node of the region

@@ -15,7 +15,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
-    [RegisterComponent, ComponentProtoName("RevolverBarrel"), NetworkedComponent, ComponentReference(typeof(ServerRangedBarrelComponent))]
+    [RegisterComponent, NetworkedComponent, ComponentReference(typeof(ServerRangedBarrelComponent))]
     public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent, ISerializationHooks
     {
         [ViewVariables]

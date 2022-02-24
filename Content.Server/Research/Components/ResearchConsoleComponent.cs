@@ -20,7 +20,7 @@ namespace Content.Server.Research.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class ResearchConsoleComponent : SharedResearchConsoleComponent, IActivate
+    public sealed class ResearchConsoleComponent : SharedResearchConsoleComponent, IActivate
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

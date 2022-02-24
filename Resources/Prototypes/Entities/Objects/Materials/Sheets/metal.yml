@@ -13,6 +13,7 @@
   - type: Tag
     tags:
     - Sheet
+    - Metal
 
 - type: entity
   parent: SheetMetalBase

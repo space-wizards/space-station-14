@@ -13,7 +13,7 @@ namespace Content.Shared.Lathe
 {
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
     [NetworkedComponent()]
-    public class SharedProtolatheDatabaseComponent : SharedLatheDatabaseComponent, ISerializationHooks
+    public abstract class SharedProtolatheDatabaseComponent : SharedLatheDatabaseComponent, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -36,7 +36,7 @@ namespace Content.Shared.Lathe
     }
 
     [NetSerializable, Serializable]
-    public class ProtolatheDatabaseState : ComponentState
+    public sealed class ProtolatheDatabaseState : ComponentState
     {
         public readonly List<string> Recipes;
         public ProtolatheDatabaseState(List<string> recipes)

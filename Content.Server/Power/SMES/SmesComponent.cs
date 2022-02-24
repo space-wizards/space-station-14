@@ -16,7 +16,7 @@ namespace Content.Server.Power.SMES
     ///     Code interfacing with the powernet is handled in <see cref="BatteryStorageComponent"/> and <see cref="BatteryDischargerComponent"/>.
     /// </summary>
     [RegisterComponent]
-    public class SmesComponent : Component
+    public sealed class SmesComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;

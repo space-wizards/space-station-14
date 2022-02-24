@@ -1,14 +1,13 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Server.Atmos
+﻿namespace Content.Server.Atmos
 {
     /// <summary>
     ///     Event raised directed to an entity when it is standing on a tile that's on fire.
     /// </summary>
-    public class TileFireEvent : EntityEventArgs
+    [ByRefEvent]
+    public readonly struct TileFireEvent
     {
-        public float Temperature { get; }
-        public float Volume { get; }
+        public readonly float Temperature;
+        public readonly float Volume;
 
         public TileFireEvent(float temperature, float volume)
         {

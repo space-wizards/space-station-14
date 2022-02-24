@@ -19,3 +19,15 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsSalvage
+  name: salvage boots
+  description: Steel-toed salvage boots for salvaging in hazardous environments.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/explorer.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/explorer.rsi
+

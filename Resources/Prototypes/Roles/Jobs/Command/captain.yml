@@ -10,32 +10,8 @@
   joinNotifyCrew: true
   supervisors: "Nanotrasen officials"
   canBeAntag: false
-  access:
-  - Captain
-  - HeadOfPersonnel
-  - ChiefEngineer
-  - ChiefMedicalOfficer
-  - HeadOfSecurity
-  - ResearchDirector
-  - Command
-  - Security
-  - Armory
-  - Brig
-  - Engineering
-  - Medical
-  - Quartermaster
-  - Cargo
-  - Research
-  - Service
-  - Maintenance
-  - External
-  - Janitor
-  - Theatre
-  - Bar
-  - Chemistry
-  - Kitchen
-  - Chapel
-  - Hydroponics
+  accessGroups:
+  - AllAccess
 
 - type: startingGear
   id: CaptainGear

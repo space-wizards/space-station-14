@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Inventory
 {
-    public class TargetInOurInventoryCon : Consideration
+    public sealed class TargetInOurInventoryCon : Consideration
     {
         protected override float GetScore(Blackboard context)
         {

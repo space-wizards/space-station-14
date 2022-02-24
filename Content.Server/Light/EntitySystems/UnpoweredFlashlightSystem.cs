@@ -12,21 +12,21 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Light.EntitySystems
 {
-    public class UnpoweredFlashlightSystem : EntitySystem
+    public sealed class UnpoweredFlashlightSystem : EntitySystem
     {
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<UnpoweredFlashlightComponent, GetActivationVerbsEvent>(AddToggleLightVerbs);
+            SubscribeLocalEvent<UnpoweredFlashlightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerbs);
         }
 
-        private void AddToggleLightVerbs(EntityUid uid, UnpoweredFlashlightComponent component, GetActivationVerbsEvent args)
+        private void AddToggleLightVerbs(EntityUid uid, UnpoweredFlashlightComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            Verb verb = new();
+            ActivationVerb verb = new();
             verb.Text = Loc.GetString("toggle-flashlight-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
             verb.Act = () => ToggleLight(component);

@@ -11,7 +11,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public class PostMapInitTest : ContentIntegrationTest
+    public sealed class PostMapInitTest : ContentIntegrationTest
     {
         public const bool SkipTestMaps = true;
         public const string TestMapsPath = "/Maps/Test/";

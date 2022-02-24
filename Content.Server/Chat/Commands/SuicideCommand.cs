@@ -23,7 +23,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class SuicideCommand : IConsoleCommand
+    internal sealed class SuicideCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 

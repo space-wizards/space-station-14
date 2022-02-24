@@ -12,7 +12,7 @@ namespace Content.Shared.Chemistry.Components
     /// <see cref="Dispenser.SharedReagentDispenserComponent"/>
     [RegisterComponent]
     [NetworkedComponent] // only needed for white-lists. Client doesn't actually need Solution data;
-    public class FitsInDispenserComponent : Component
+    public sealed class FitsInDispenserComponent : Component
     {
         /// <summary>
         /// Solution name that will interact with ReagentDispenserComponent.

@@ -258,7 +258,6 @@
     magazineTypes:
     - Pistol
     magFillPrototype: MagazineClRiflePistol
-    autoEjectMag: true
     canMuzzleFlash: false # Dat in-built suppressor
     minAngle: 0
     maxAngle: 45

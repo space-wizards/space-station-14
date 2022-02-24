@@ -33,7 +33,8 @@
   - Quartermaster
   special:
   - !type:AddComponentSpecial
-    component: BibleUser #Lets them heal with bibles
+    components:
+    - type: BibleUser #Lets them heal with bibles
 
 - type: startingGear
   id: ChaplainGear

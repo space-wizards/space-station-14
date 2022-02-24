@@ -39,6 +39,7 @@
   - type: Sprite
     sprite: Structures/Hydroponics/misc.rsi
     state: soil
+    netsync: false
   - type: PlantHolder
     drawWarnings: false
   - type: SolutionContainerManager

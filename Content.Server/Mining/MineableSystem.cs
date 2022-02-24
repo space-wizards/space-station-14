@@ -12,7 +12,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Mining;
 
-public class MineableSystem : EntitySystem
+public sealed class MineableSystem : EntitySystem
 {
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
@@ -61,7 +61,7 @@ public class MineableSystem : EntitySystem
             return;
 
         _damageableSystem.TryChangeDamage(ev.Rock, pickaxe.Damage);
-        SoundSystem.Play(Filter.Pvs(ev.Rock), pickaxe.MiningSound.GetSound(), AudioParams.Default);
+        SoundSystem.Play(Filter.Pvs(ev.Rock), pickaxe.MiningSound.GetSound(), ev.Rock, AudioParams.Default);
         pickaxe.MiningEntities.Remove(ev.Rock);
     }
 
@@ -99,13 +99,13 @@ public class MineableSystem : EntitySystem
 }
 
 // grumble grumble
-public class MiningDoafterSuccess : EntityEventArgs
+public sealed class MiningDoafterSuccess : EntityEventArgs
 {
     public EntityUid Pickaxe;
     public EntityUid Rock;
 }
 
-public class MiningDoafterCancel : EntityEventArgs
+public sealed class MiningDoafterCancel : EntityEventArgs
 {
     public EntityUid Pickaxe;
     public EntityUid Rock;

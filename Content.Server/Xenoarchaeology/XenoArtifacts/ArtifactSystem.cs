@@ -1,12 +1,10 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
-public class ArtifactSystem : EntitySystem
+public sealed class ArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -26,7 +24,7 @@ public class ArtifactSystem : EntitySystem
         }
     }
 
-    public void AddRandomTrigger(EntityUid uid, ArtifactComponent? component = null)
+    private void AddRandomTrigger(EntityUid uid, ArtifactComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -36,6 +34,7 @@ public class ArtifactSystem : EntitySystem
         trigger.Owner = uid;
 
         EntityManager.AddComponent(uid, trigger);
+        RaiseLocalEvent(uid, new RandomizeTriggerEvent());
     }
 
     public bool TryActivateArtifact(EntityUid uid, EntityUid? user = null,

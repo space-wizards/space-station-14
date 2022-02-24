@@ -12,7 +12,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Monitor.Components
 {
     [RegisterComponent]
-    public class AtmosMonitorComponent : Component
+    public sealed class AtmosMonitorComponent : Component
     {
         // Whether this monitor can send alarms,
         // or recieve atmos command events.

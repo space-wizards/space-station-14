@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Body.Events
 {
-    public class ShiverAttemptEvent : CancellableEntityEventArgs
+    public sealed class ShiverAttemptEvent : CancellableEntityEventArgs
     {
         public ShiverAttemptEvent(EntityUid uid)
         {

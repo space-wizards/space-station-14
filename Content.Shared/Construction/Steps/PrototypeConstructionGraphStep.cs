@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
-    public class PrototypeConstructionGraphStep : ArbitraryInsertConstructionGraphStep
+    public sealed class PrototypeConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
         [DataField("prototype")] public string Prototype { get; } = string.Empty;
 

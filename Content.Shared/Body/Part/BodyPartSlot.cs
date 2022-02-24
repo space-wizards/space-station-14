@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Body.Part
 {
-    public class BodyPartSlot
+    public sealed class BodyPartSlot
     {
         public BodyPartSlot(string id, BodyPartType partType, IEnumerable<BodyPartSlot> connections)
         {

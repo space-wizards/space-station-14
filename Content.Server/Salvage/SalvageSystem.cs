@@ -24,10 +24,9 @@ using System.Linq;
 
 namespace Content.Server.Salvage
 {
-    public class SalvageSystem : EntitySystem
+    public sealed class SalvageSystem : EntitySystem
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IPauseManager _pauseManager = default!;
         [Dependency] private readonly IMapLoader _mapLoader = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -346,7 +345,7 @@ namespace Content.Server.Salvage
                 var gridId = gridIdAndState.Key;
                 // Not handling the case where the salvage we spawned got paused
                 // They both need to be paused, or it doesn't make sense
-                if (_pauseManager.IsGridPaused(gridId)) continue;
+                if (_mapManager.IsGridPaused(gridId)) continue;
                 state.CurrentTime += secondsPassed;
 
                 var deleteQueue = new RemQueue<SalvageMagnetComponent>();
@@ -368,7 +367,7 @@ namespace Content.Server.Salvage
         }
     }
 
-    public class SalvageGridState
+    public sealed class SalvageGridState
     {
         public TimeSpan CurrentTime { get; set; }
         public List<SalvageMagnetComponent> ActiveMagnets { get; } = new();

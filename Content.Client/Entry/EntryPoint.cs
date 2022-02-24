@@ -52,7 +52,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Entry
 {
-    public class EntryPoint : GameClient
+    public sealed class EntryPoint : GameClient
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;

@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Chemistry.Reaction;
 
 [RegisterComponent]
-public class ReactiveComponent : Component
+public sealed class ReactiveComponent : Component
 {
     /// <summary>
     ///     A dictionary of reactive groups -> methods that work on them.
@@ -27,7 +27,7 @@ public class ReactiveComponent : Component
 }
 
 [DataDefinition]
-public class ReactiveReagentEffectEntry
+public sealed class ReactiveReagentEffectEntry
 {
     [DataField("methods")]
     public HashSet<ReactionMethod> Methods = default!;

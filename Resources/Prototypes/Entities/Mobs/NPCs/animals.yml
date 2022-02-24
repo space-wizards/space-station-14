@@ -26,7 +26,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -37,8 +36,12 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.2
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-bat
 
 - type: entity
   name: bee
@@ -68,7 +71,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -86,6 +88,28 @@
   - type: Tag
     tags:
     - Bee
+
+- type: entity
+  name: bee
+  suffix: Angry
+  parent: MobBee
+  id: MobAngryBee
+  description: How nice a bee. Oh no, it looks angry and wants my pizza.
+  components:
+  - type: UnarmedCombat
+    range: 0.3
+    arcwidth: 0
+    arc: bite
+    damage:
+      types:
+        Poison: 2
+        Piercing: 1
+  - type: UtilityAI
+    behaviorSets:
+    - UnarmedAttackHostiles
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
 
 - type: entity
   name: chicken
@@ -106,8 +130,14 @@
       crit: dead-0
       dead: dead-0
   - type: Butcherable
-    meat: FoodMeatChicken
+    spawned: FoodMeatChicken
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.8
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/chicken_cluck_happy.ogg
 
 - type: entity
   name: mallard duck #Quack
@@ -128,8 +158,14 @@
       crit: dead-0
       dead: dead-0
   - type: Butcherable
-    meat: FoodMeatDuck
+    spawned: FoodMeatDuck
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
 
 - type: entity
   name: white duck #Quack
@@ -150,8 +186,14 @@
       crit: dead-1
       dead: dead-1
   - type: Butcherable
-    meat: FoodMeatDuck
+    spawned: FoodMeatDuck
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
 
 - type: entity
   name: brown duck #Quack
@@ -172,8 +214,14 @@
       crit: dead-2
       dead: dead-2
   - type: Butcherable
-    meat: FoodMeatDuck
+    spawned: FoodMeatDuck
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
 
 - type: entity
   name: butterfly
@@ -200,7 +248,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -248,7 +295,6 @@
       mask:
       - Impassable
       - MobImpassable
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -271,8 +317,15 @@
     quantity: 25
     updateRate: 30
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 5
+  - type: Grammar
+    attributes:
+      gender: female # Here because of UdderComponent
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
 
 - type: entity
   name: crab
@@ -296,7 +349,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets!?
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -308,14 +360,18 @@
       dead: dead
     - type: AsteroidRockVisualizer
   - type: Butcherable
-    meat: FoodMeatCrab
+    spawned: FoodMeatCrab
     pieces: 2
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-crab
+    interactFailureString: petting-failure-crab
 
 - type: entity
   name: goat
   parent: SimpleMobBase
   id: MobGoat
-  description: His spine consists of long sharp segments, no wonder he is so grumpy.
+  description: Her spine consists of long sharp segments, no wonder she is so grumpy.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -329,9 +385,28 @@
       normal: goat
       crit: dead
       dead: dead
+  - type: SolutionContainerManager
+    solutions:
+      udder:
+        maxVol: 250
+        reagents:
+        - ReagentId: MilkGoat
+          Quantity: 30
+  - type: Udder
+    reagentId: MilkGoat
+    targetSolution: udder
+    quantity: 25
+    updateRate: 20
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 4
+  - type: Grammar
+    attributes:
+      gender: female # Here because of UdderComponent
+  - type: InteractionPopup
+    successChance: 0.2
+    interactSuccessString: petting-success-goat
+    interactFailureString: petting-failure-goat
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -353,8 +428,12 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeatChicken
+    spawned: FoodMeatChicken
     pieces: 2
+  - type: InteractionPopup # TODO: Make it so there's a separate chance to make certain animals outright hostile towards you.
+    successChance: 0.1 # Yeah, good luck with that.
+    interactSuccessString: petting-success-goose
+    interactFailureString: petting-failure-goose
 
 - type: entity
   name: gorilla
@@ -378,7 +457,6 @@
       mask:
       - Impassable
       - MobImpassable
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -389,7 +467,7 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 4
 
 - type: entity
@@ -400,7 +478,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed: 4
-    baseSprintSpeed: 7
+    baseSprintSpeed: 6
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -417,7 +495,6 @@
         mask:
           - Impassable
           - MobImpassable #Bullets?!
-          - VaultImpassable
           - SmallImpassable
         layer:
           - Opaque
@@ -467,6 +544,8 @@
   parent: SimpleMobBase
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
+  - type: NameIdentifier
+    group: Monkey
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: monkey
@@ -495,7 +574,8 @@
       sprite: Mobs/Effects/onfire.rsi
       normalState: Monkey_burning
   - type: Butcherable
-    meat: FoodMeat
+    butcheringType: Spike
+    spawned: FoodMeat
     pieces: 3
   - type: MonkeyAccent
 
@@ -531,7 +611,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -559,10 +638,16 @@
         - ReagentId: Nutriment
           Quantity: 5
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 1
   - type: ReplacementAccent
     accent: mouse
+  - type: Tag
+    tags:
+    - Trash
+  - type: Recyclable
+  - type: Actions # TODO: Remove CombatMode when Prototype Composition is added
+    innateActions: []
 
 
 - type: entity
@@ -629,7 +714,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -640,8 +724,12 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.3
+    interactSuccessString: petting-success-reptile
+    interactFailureString: petting-failure-generic
 
 - type: entity
   name: frog
@@ -668,7 +756,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -679,8 +766,12 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-frog
+    interactFailureString: petting-failure-generic
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
@@ -708,7 +799,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -719,8 +809,12 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
 
 - type: entity
   name: penguin
@@ -744,7 +838,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -755,8 +848,12 @@
       crit: penguin_dead
       dead: penguin_dead
   - type: Butcherable
-    meat: FoodMeatPenguin
+    spawned: FoodMeatPenguin
     pieces: 3
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
 
 - type: entity
   name: snake
@@ -780,7 +877,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -794,8 +890,12 @@
      # dead: dead
      # crit: dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 1
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-reptile
+    interactFailureString: petting-failure-generic
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -821,7 +921,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -832,5 +931,9 @@
       crit: tarantula_dead
       dead: tarantula_dead
   - type: Butcherable
-    meat: FoodMeatSpider
+    spawned: FoodMeatSpider
     pieces: 2
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-tarantula
+    interactFailureString: petting-failure-generic

@@ -13,15 +13,12 @@ namespace Content.Server.Database
 {
     public sealed class SqliteServerDbContext : ServerDbContext
     {
-        public SqliteServerDbContext()
+        public SqliteServerDbContext(DbContextOptions<SqliteServerDbContext> options) : base(options)
         {
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            if (!InitializedWithOptions)
-                options.UseSqlite("dummy connection string");
-
             ((IDbContextOptionsBuilderInfrastructure) options).AddOrUpdateExtension(new SnakeCaseExtension());
 
             options.ConfigureWarnings(x =>
@@ -61,6 +58,12 @@ namespace Content.Server.Database
                 .HasColumnType("TEXT")
                 .HasConversion(ipMaskConverter);
 
+            modelBuilder
+                .Entity<ServerRoleBan>()
+                .Property(e => e.Address)
+                .HasColumnType("TEXT")
+                .HasConversion(ipMaskConverter);
+
             var jsonConverter = new ValueConverter<JsonDocument, string>(
                 v => JsonDocumentToString(v),
                 v => StringToJsonDocument(v));
@@ -68,10 +71,6 @@ namespace Content.Server.Database
             modelBuilder.Entity<AdminLog>()
                 .Property(log => log.Json)
                 .HasConversion(jsonConverter);
-        }
-
-        public SqliteServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
-        {
         }
 
         private static string InetToString(IPAddress address, int mask) {

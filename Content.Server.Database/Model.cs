@@ -11,20 +11,8 @@ namespace Content.Server.Database
 {
     public abstract class ServerDbContext : DbContext
     {
-        /// <summary>
-        /// The "dotnet ef" CLI tool uses the parameter-less constructor.
-        /// When that happens we want to supply the <see cref="DbContextOptions"/> via <see cref="DbContext.OnConfiguring"/>.
-        /// To use the context within the application, the options need to be passed the constructor instead.
-        /// </summary>
-        protected readonly bool InitializedWithOptions;
-
-        public ServerDbContext()
+        protected ServerDbContext(DbContextOptions options) : base(options)
         {
-        }
-
-        public ServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
-        {
-            InitializedWithOptions = true;
         }
 
         public DbSet<Preference> Preference { get; set; } = null!;
@@ -40,6 +28,9 @@ namespace Content.Server.Database
         public DbSet<ServerBan> Ban { get; set; } = default!;
         public DbSet<ServerUnban> Unban { get; set; } = default!;
         public DbSet<ConnectionLog> ConnectionLog { get; set; } = default!;
+        public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
+        public DbSet<ServerRoleBan> RoleBan { get; set; } = default!;
+        public DbSet<ServerRoleUnban> RoleUnban { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -119,6 +110,22 @@ namespace Content.Server.Database
                 .IsUnique();
 
             modelBuilder.Entity<ServerBan>()
+                .HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
+
+            modelBuilder.Entity<ServerRoleBan>()
+                .HasIndex(p => p.UserId);
+
+            modelBuilder.Entity<ServerRoleBan>()
+                .HasIndex(p => p.Address);
+
+            modelBuilder.Entity<ServerRoleBan>()
+                .HasIndex(p => p.UserId);
+
+            modelBuilder.Entity<ServerRoleUnban>()
+                .HasIndex(p => p.BanId)
+                .IsUnique();
+
+            modelBuilder.Entity<ServerRoleBan>()
                 .HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
 
             modelBuilder.Entity<Player>()
@@ -346,6 +353,8 @@ namespace Content.Server.Database
         public Guid? BanningAdmin { get; set; }
 
         public ServerUnban? Unban { get; set; }
+
+        public List<ServerBanHit> BanHits { get; set; } = null!;
     }
 
     [Table("server_unban")]
@@ -373,5 +382,60 @@ namespace Content.Server.Database
 
         public IPAddress Address { get; set; } = null!;
         public byte[]? HWId { get; set; }
+
+        public ConnectionDenyReason? Denied { get; set; }
+
+        public List<ServerBanHit> BanHits { get; set; } = null!;
+    }
+
+    public enum ConnectionDenyReason : byte
+    {
+        Ban = 0,
+        Whitelist = 1,
+        Full = 2,
+    }
+
+    public class ServerBanHit
+    {
+        public int Id { get; set; }
+
+        public int BanId { get; set; }
+        public int ConnectionId { get; set; }
+
+        public ServerBan Ban { get; set; } = null!;
+        public ConnectionLog Connection { get; set; } = null!;
+    }
+
+    [Table("server_role_ban")]
+    public sealed class ServerRoleBan
+    {
+        public int Id { get; set; }
+        public Guid? UserId { get; set; }
+        [Column(TypeName = "inet")] public (IPAddress, int)? Address { get; set; }
+        public byte[]? HWId { get; set; }
+
+        public DateTime BanTime { get; set; }
+
+        public DateTime? ExpirationTime { get; set; }
+
+        public string Reason { get; set; } = null!;
+        public Guid? BanningAdmin { get; set; }
+
+        public ServerRoleUnban? Unban { get; set; }
+
+        public string RoleId { get; set; } = null!;
+    }
+
+    [Table("server_role_unban")]
+    public sealed class ServerRoleUnban
+    {
+        [Column("role_unban_id")] public int Id { get; set; }
+
+        public int BanId { get; set; }
+        public ServerBan Ban { get; set; } = null!;
+
+        public Guid? UnbanningAdmin { get; set; }
+
+        public DateTime UnbanTime { get; set; }
     }
 }
