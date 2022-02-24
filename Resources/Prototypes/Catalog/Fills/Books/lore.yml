@@ -1,0 +1,17 @@
+﻿# ---- Library Salvage Fills ----
+
+- type: entity
+  name: demonomicon
+  parent: BookBase
+  id: BookDemonomicon
+  description: 'Who knows what may be contained in these pages?'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: demonomicon
+  # todo kara add text
+
+# todo kara add like 6 or 7 more of these
+
+# ---- End Library Salvage Fills
