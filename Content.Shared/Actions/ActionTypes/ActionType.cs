@@ -46,7 +46,7 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     public string Description = string.Empty;
 
     /// <summary>
-    ///     Keywords that can be used to search this item in action menu.
+    ///     Keywords that can be used to search for this action in the action menu.
     /// </summary>
     [DataField("keywords")]
     public HashSet<string> Keywords = new();
@@ -169,7 +169,8 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
 
     /// <summary>
     ///     If not null, this string will be appended to the pop-up localization strings when the action was toggled on
-    ///     after execution.
+    ///     after execution. Exists to make it easy to have a different pop-up for turning the action on or off (e.g.,
+    ///     combat mode toggle).
     /// </summary>
     [DataField("popupToggleSuffix")]
     public string? PopupToggleSuffix = null;
@@ -178,6 +179,10 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     ///     Compares two actions based on their properties. This is used to determine equality when the client requests the
     ///     server to perform some action. Also determines the order in which actions are automatically added to the action bar.
     /// </summary>
+    /// <remarks>
+    ///     Basically: if an action has the same priority, name, and is enabled by the same entity, then the actions are considered equal.
+    ///     The entity-check is required to avoid toggling all flashlights simultaneously whenever a flashlight-hoarder uses an action.
+    /// </remarks>
     public virtual int CompareTo(object? obj)
     {
         if (obj is not ActionType otherAction)
@@ -206,18 +211,11 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
         return 0;
     }
 
-    public ActionType() { }
-
     /// <summary>
     ///     Proper client-side state handling requires the ability to clone an action from the component state.
     ///     Otherwise modifying the action can lead to modifying the stored server state.
     /// </summary>
     public abstract object Clone();
-
-    public ActionType(ActionType toClone)
-    {
-        CopyFrom(toClone);
-    }
 
     public virtual void CopyFrom(object objectToClone)
     {

@@ -47,12 +47,6 @@ public abstract class TargetedAction : ActionType
     [DataField("targetingIndicator")]
     public bool TargetingIndicator = true;
 
-    public TargetedAction() { }
-
-    public TargetedAction(TargetedAction toClone)
-    {
-        CopyFrom(toClone);
-    }
     public override void CopyFrom(object objectToClone)
     {
         base.CopyFrom(objectToClone);
