@@ -11,6 +11,16 @@ public sealed class ActionsComponent : Component
 {
     [ViewVariables]
     public SortedSet<ActionType> Actions = new();
+
+    /// <summary>
+    ///     Actions innate to this entity.
+    /// </summary>
+    /// <remarks>
+    ///     Kept separate from the general <see cref="Actions"/> set, so that actions don't get double-serialized
+    ///     accidentally.
+    /// </remarks>
+    [DataField("innateActions", serverOnly: true)]
+    public List<ActionType> InnateActions = new();
 }
 
 [Serializable, NetSerializable]

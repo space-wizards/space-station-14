@@ -30,6 +30,8 @@ public abstract class SharedActionsSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ActionsComponent, ComponentInit>(OnInit);
+
         SubscribeLocalEvent<ActionsComponent, DidEquipEvent>(OnDidEquip);
         SubscribeLocalEvent<ActionsComponent, DidEquipHandEvent>(OnHandEquipped);
         SubscribeLocalEvent<ActionsComponent, DidUnequipEvent>(OnDidUnequip);
@@ -39,6 +41,11 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<ActionsComponent, ComponentGetStateAttemptEvent>(OnCanGetState);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
+    }
+
+    private void OnInit(EntityUid uid, ActionsComponent component, ComponentInit args)
+    {
+        component.Actions.UnionWith(component.InnateActions);
     }
 
     #region ComponentStateManagement
@@ -330,8 +337,11 @@ public abstract class SharedActionsSystem : EntitySystem
             action.AttachedEntity = comp.Owner;
         }
 
-        // Sometimes the client receives actions from the server, before predicting that newly added components will add their own shared actions.
+        // Sometimes the client receives actions from the server, before predicting that newly added components will add
+        // their own shared actions. Just in case those systems ever decided to directly access action properties (e.g.,
+        // action.Toggled), we will remove duplicates:
         comp.Actions.ExceptWith(actions);
+
         comp.Actions.UnionWith(actions);
 
         if (dirty)
