@@ -1,0 +1,1 @@
+examine-spellbook-wieldable = You have to open the book before you can use its magics.

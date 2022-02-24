@@ -1,12 +1,9 @@
-using System.Collections.Generic;
-using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Damage;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Atmos.Components
+namespace Content.Shared.Atmos.Components
 {
+    // This component is in shared so that it can be used in entity-whitelists.
+
     [RegisterComponent]
     public sealed class FlammableComponent : Component
     {

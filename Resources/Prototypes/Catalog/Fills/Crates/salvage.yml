@@ -72,6 +72,12 @@
         #  - Skub
       - id: Skub
         prob: 0.001
+      - id: FireSpellbook
+        prob: 0.001
+      - id: LightningSpellbook
+        prob: 0.001
+      - id: SpatialSpellbook
+        prob: 0.001
         # TRAITOR EQUIPMENT (0.01%)
       - id: Telecrystal10
         prob: 0.0001

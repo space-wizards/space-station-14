@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
@@ -27,7 +27,7 @@ namespace Content.Server.Chemistry.ReagentEffects
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out FlammableComponent? flammable)) return;
 
             EntitySystem.Get<FlammableSystem>().AdjustFireStacks(args.SolutionEntity, args.Quantity.Float() * Multiplier, flammable);
-            args.Source?.RemoveReagent(args.Reagent.ID, args.Quantity);
+            if (args.Reagent != null) args.Source?.RemoveReagent(args.Reagent.ID, args.Quantity);
         }
     }
 }

@@ -1,0 +1,29 @@
+
+- type: entity
+  id: Fireball
+  name: fireball
+  parent: BulletRocket
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Magic/Spells/fireball.rsi
+    state: fireball
+  - type: Explosive
+    devastationRange: 1
+    heavyImpactRange: 3
+    lightImpactRange: 4
+    
+- type: entity
+  id: Lightning
+  name: lightning
+  abstract: true
+  components:
+  - type: Hitscan
+    damage:
+      types:
+        Heat: 20
+        Shock: 20
+    # there are lots of lighting beam variations to choose from.
+    # sadly no support for randomly choosing beam bits
+    spriteName: Objects/Magic/Spells/beams/lightning.png

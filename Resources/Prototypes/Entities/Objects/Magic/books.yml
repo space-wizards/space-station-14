@@ -1,0 +1,66 @@
+- type: entity
+  id: FireSpellbook
+  name: fire spellbook
+  parent: BaseItem
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Magic/spellbook.rsi
+    state: fire
+  - type: Wieldable
+    wieldTime: 0.75
+  - type: Spellbook
+    worldSpells:
+      Fireball: 3
+    entitySpells:
+      Ignite: 3
+
+- type: entity
+  id: LightningSpellBook
+  name: lightning spellbook
+  parent: BaseItem
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Magic/spellbook.rsi
+    state: lightning
+  - type: Wieldable
+    wieldTime: 0.75
+  - type: Spellbook
+    worldSpells:
+      Lightning: 5
+      Taser: 5
+
+- type: entity
+  id: SpatialSpellBook
+  name: spatial spellbook
+  parent: BaseItem
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Magic/spellbook.rsi
+    state: spatial
+  - type: Wieldable
+    wieldTime: 0.75
+  - type: Spellbook
+    worldSpells:
+      Teleport: 3
+    entitySpells:
+      Haste: 5
+
+- type: entity
+  id: RandomSpellBox
+  parent: BoxCardboard
+  components:
+  - type: StorageFill
+    contents:
+    # the probabilities are weird, but because of how orGroups work, this ensures that any one book spawns with equal probability
+    - id: FireSpellbook
+      prob: 0.333
+      orGroup: books
+    - id: LightningSpellBook
+      prob: 0.5
+      orGroup: books
+    - id: SpatialSpellBook
+      prob: 1
+      orGroup: books

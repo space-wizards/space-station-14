@@ -1,0 +1,40 @@
+# TODO: Sound effects
+
+- type: worldTargetAction
+  id: Fireball
+  name: action-name-spell-fireball
+  description: action-description-spell-fireball
+  charges: 5
+  useDelay: 10
+  speech: action-speech-spell-fireball
+  itemIconStyle: BigAction
+  checkCanAccess: false
+  icon:
+    sprite: Objects/Magic/Spells/fireball.rsi
+    state: fireball
+  event: !type:ProjectileSpellEvent
+    projectile: Fireball
+
+- type: entityTargetAction
+  id: Ignite
+  name: action-name-spell-ignite
+  description: action-description-spell-ignite
+  # this is a pretty shitty icon for this
+  icon: 
+    sprite: Effects/fire.rsi
+    state: fire
+  charges: 3
+  useDelay: 10
+  # speech: action-spell-fireball
+  itemIconStyle: BigAction
+  range: 5
+  deselectOnMiss: false
+  whitelist:
+    components:
+    - Flammable 
+  event: !type:ReagentEffectSpellEvent
+    quantity: 5 # 5 "units" of reagent
+    effects:
+    - !type:FlammableReaction
+      multiplier: 1
+    - !type:Ignite

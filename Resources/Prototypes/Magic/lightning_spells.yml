@@ -1,0 +1,32 @@
+# TODO: Sound effects
+
+- type: worldTargetAction
+  id: Lightning
+  name: action-name-spell-lightning
+  description: action-description-spell-lightning
+  charges: 10
+  useDelay: 4
+  speech: action-speech-spell-lightning
+  itemIconStyle: BigAction
+  checkCanAccess: false
+  repeat: true
+  icon:
+    sprite: Interface/Actions/spells.rsi
+    state: lightning
+  event: !type:ProjectileSpellEvent
+    projectile: Lightning # god this look awful.
+
+- type: worldSpell
+  id: Taser
+  name: action-name-spell-taser
+  description: action-description-spell-taser
+  charges: 10
+  useDelay: 2
+  itemIconStyle: BigAction
+  checkCanAccess: false
+  repeat: true
+  icon:
+    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
+    state: spark
+  event: !type:ProjectileSpellEvent
+    projectile: BulletTaser

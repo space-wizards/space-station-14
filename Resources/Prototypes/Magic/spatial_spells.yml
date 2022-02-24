@@ -1,0 +1,37 @@
+# TODO: Sound effects
+
+- type: worldTargetAction
+  id: Teleport
+  name: action-name-spell-teleport
+  description: action-description-spell-teleport
+  charges: 3
+  useDelay: 10
+  itemIconStyle: BigAction
+  checkCanAccess: false
+  repeat: true
+  icon:
+    sprite: Interface/Actions/spells.rsi
+    state: teleport
+  event: !type:TeleportSpellEvent
+
+- type: entityTargetAction
+  id: Haste
+  name: action-name-spell-haste
+  description: action-description-spell-haste
+  charges: 5
+  useDelay: 90
+  itemIconStyle: BigAction
+  checkCanAccess: false
+  whitelist:
+    components:
+    - MovementSpeedModifier 
+  icon:
+    sprite: Interface/Actions/spells.rsi
+    state: blink
+  event: !type:ReagentEffectSpellEvent
+    quantity: 1
+    effects:
+    - !type:MovespeedModifier
+      walkSpeedModifier: 1.6
+      sprintSpeedModifier: 1.4
+      statusLifetime: 60

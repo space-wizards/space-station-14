@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.CombatMode;
+using Content.Server.Explosion.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction.Components;
 using Content.Server.Projectiles.Components;
@@ -119,12 +120,16 @@ public sealed partial class GunSystem
         // This section probably needs tweaking so there can be caseless hitscan etc.
         if (TryComp(projectile, out HitscanComponent? hitscan))
         {
-            FireHitscan(shooter, hitscan, component, angle);
+            FireHitscan(shooter, projectile, angle, hitscan);
         }
         else if (HasComp<ProjectileComponent>(projectile) &&
                  TryComp(ammo, out AmmoComponent? ammoComponent))
         {
-            FireProjectiles(shooter, projectile, component, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity, ammo!.Value);
+            var spread = component.SpreadRatio * ammoComponent.EvenSpreadAngle;
+            var fired = FireProjectiles(shooter, projectile, ammoComponent.ProjectilesFired, spread, angle, ammoComponent.Velocity);
+
+            EntityManager.EventBus.RaiseLocalEvent(component.Owner, new Barrels.Components.GunShotEvent(fired));
+            EntityManager.EventBus.RaiseLocalEvent(ammo!.Value, new AmmoShotEvent(fired));
 
             if (component.CanMuzzleFlash)
             {
@@ -152,13 +157,12 @@ public sealed partial class GunSystem
     /// <summary>
     /// Handles firing one or many projectiles
     /// </summary>
-    private void FireProjectiles(EntityUid shooter, EntityUid baseProjectile, ServerRangedBarrelComponent component, int count, float evenSpreadAngle, Angle angle, float velocity, EntityUid ammo)
+    public EntityUid[] FireProjectiles(EntityUid shooter, EntityUid baseProjectile, int count, float spread, Angle angle, float velocity)
     {
         List<Angle>? sprayAngleChange = null;
         if (count > 1)
         {
-            evenSpreadAngle *= component.SpreadRatio;
-            sprayAngleChange = Linspace(-evenSpreadAngle / 2, evenSpreadAngle / 2, count);
+            sprayAngleChange = Linspace(-spread / 2, spread / 2, count);
         }
 
         var firedProjectiles = new EntityUid[count];
@@ -210,8 +214,7 @@ public sealed partial class GunSystem
             Transform(projectile).WorldRotation = projectileAngle + MathHelper.PiOver2;
         }
 
-        EntityManager.EventBus.RaiseLocalEvent(component.Owner, new Barrels.Components.GunShotEvent(firedProjectiles));
-        EntityManager.EventBus.RaiseLocalEvent(ammo, new AmmoShotEvent(firedProjectiles));
+        return firedProjectiles;
     }
 
     /// <summary>
@@ -233,10 +236,13 @@ public sealed partial class GunSystem
     /// <summary>
     /// Fires hitscan entities and then displays their effects
     /// </summary>
-    private void FireHitscan(EntityUid shooter, HitscanComponent hitscan, ServerRangedBarrelComponent component, Angle angle)
+    public bool FireHitscan(EntityUid shooter, EntityUid projectile, Angle angle, HitscanComponent? hitscan = null)
     {
-        var ray = new CollisionRay(Transform(component.Owner).WorldPosition, angle.ToVec(), (int) hitscan.CollisionMask);
-        var rayCastResults = _physics.IntersectRay(Transform(component.Owner).MapID, ray, hitscan.MaxLength, shooter, false).ToList();
+        if (!Resolve(projectile, ref hitscan, false))
+            return false;
+
+        var ray = new CollisionRay(Transform(shooter).WorldPosition, angle.ToVec(), (int) hitscan.CollisionMask);
+        var rayCastResults = _physics.IntersectRay(Transform(shooter).MapID, ray, hitscan.MaxLength, shooter, false).ToList();
 
         if (rayCastResults.Count >= 1)
         {
@@ -252,6 +258,8 @@ public sealed partial class GunSystem
         {
             hitscan.FireEffects(shooter, hitscan.MaxLength, angle);
         }
+
+        return true;
     }
     #endregion
 }
