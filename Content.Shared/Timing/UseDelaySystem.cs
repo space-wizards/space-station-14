@@ -26,16 +26,20 @@ public sealed class UseDelaySystem : EntitySystem
     {
         if (args.Paused)
         {
+            // This entity just got paused, but wasn't before
             if (component.DelayEndTime != null)
                 component.RemainingDelay = _gameTiming.CurTime - component.DelayEndTime;
 
             _activeDelays.Remove(component);
         }
-        else
-
-        if (component.RemainingDelay == null)
+        else if (component.RemainingDelay == null)
+        {
+            // Got unpaused, but had no active delay
             return;
+        }
 
+        // We got unpaused, resume the delay/cooldown. Currently this takes for granted that ItemCooldownComponent
+        // handles the pausing on its own. I'm not even gonna check, because I CBF fixing it if it doesn't.
         component.DelayEndTime = _gameTiming.CurTime + component.RemainingDelay;
         Dirty(component);
         _activeDelays.Add(component);
