@@ -314,15 +314,14 @@ public abstract class SharedActionsSystem : EntitySystem
 
     #region AddRemoveActions
     /// <summary>
-    ///     Add actions to an action component.
+    ///     Add actions to an action component. If the entity has no action component, this will give them one.
     /// </summary>
     /// <param name="uid">Entity to receive the actions</param>
     /// <param name="actions">The actions</param>
     /// <param name="provider">The entity that enables these actions (e.g., flashlight). May be null (innate actions).</param>
     public virtual void AddActions(EntityUid uid, IEnumerable<ActionType> actions, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
     {
-        if (!Resolve(uid, ref comp, false))
-            return;
+        comp ??= EnsureComp<ActionsComponent>(uid);
 
         foreach (var action in actions)
         {
@@ -330,14 +329,22 @@ public abstract class SharedActionsSystem : EntitySystem
             action.AttachedEntity = comp.Owner;
         }
 
-        // Sometimes the client receives actions from the server, before predicting that newly added components will add their own shared actions.
+        // Sometimes the client receives actions from the server, before predicting that newly added components will add
+        // their own shared actions. Just in case those systems ever decided to directly access action properties (e.g.,
+        // action.Toggled), we will remove duplicates:
         comp.Actions.ExceptWith(actions);
+
         comp.Actions.UnionWith(actions);
 
+        // for client-exclusive actions, the client shouldn't mark the comp as dirty. Otherwise that just leads to
+        // unnecessary prediction resetting and state handling.
         if (dirty)
             Dirty(comp);
     }
 
+    /// <summary>
+    ///     Remove any actions that were enabled by some other entity. Useful when unequiping items that grant actions.
+    /// </summary>
     public void RemoveProvidedActions(EntityUid uid, EntityUid provider, ActionsComponent? comp = null)
     {
         if (!Resolve(uid, ref comp, false))
