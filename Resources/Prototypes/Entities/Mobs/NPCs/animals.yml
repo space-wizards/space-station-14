@@ -552,13 +552,19 @@
     description: Ook ook!
     rules: |
       Being a monkey does NOT give you a free pass to kill, RDM or self-antag.
-
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: monkey
       sprite: Mobs/Animals/monkey.rsi
+  - type: Inventory
+    templateId: monkey
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: Hands
   - type: Body
     template: PrimateTemplate
