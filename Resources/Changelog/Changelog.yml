@@ -1,10 +1,4 @@
 Entries:
-- author: FoLoKe
-  changes:
-  - {message: Added "eat" action for food., type: Add}
-  - {message: Fixed soup eating with a knife or fork., type: Fix}
-  id: 622
-  time: '2021-11-21T07:35:10.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Opening a docked airlock no longer depressurizes the room/shuttle.,
@@ -2996,3 +2990,10 @@ Entries:
   - {message: Iconic nuclear alarm sound is back., type: Fix}
   id: 1121
   time: '2022-02-24T00:00:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'While holding a storage entity (backpacks, boxes, etc) you can now
+      right click on other storage entities or disposal units and transfer contents.',
+    type: Add}
+  id: 1122
+  time: '2022-02-24T10:48:53.0000000+00:00'
