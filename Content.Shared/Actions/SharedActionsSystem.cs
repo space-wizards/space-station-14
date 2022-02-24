@@ -32,8 +32,8 @@ public abstract class SharedActionsSystem : EntitySystem
 
         SubscribeLocalEvent<ActionsComponent, DidEquipEvent>(OnDidEquip);
         SubscribeLocalEvent<ActionsComponent, DidEquipHandEvent>(OnHandEquipped);
-        SubscribeLocalEvent<ActionsComponent, DidUnequipHandEvent>((uid, comp, args) => RemoveProvidedActions(uid, args.Unequipped, comp));
-        SubscribeLocalEvent<ActionsComponent, DidUnequipEvent>((uid, comp, args) => RemoveProvidedActions(uid, args.Equipment, comp));
+        SubscribeLocalEvent<ActionsComponent, DidUnequipEvent>(OnDidUnequip);
+        SubscribeLocalEvent<ActionsComponent, DidUnequipHandEvent>(OnHandUnequipped);
 
         SubscribeLocalEvent<ActionsComponent, ComponentGetState>(GetState);
         SubscribeLocalEvent<ActionsComponent, ComponentGetStateAttemptEvent>(OnCanGetState);
@@ -391,6 +391,16 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         AddActions(args.User, ev.Actions, args.Equipped, component);
+    }
+
+    private void OnDidUnequip(EntityUid uid, ActionsComponent component, DidUnequipEvent args)
+    {
+        RemoveProvidedActions(uid, args.Equipment, component);
+    }
+
+    private void OnHandUnequipped(EntityUid uid, ActionsComponent component, DidUnequipHandEvent args)
+    {
+        RemoveProvidedActions(uid, args.Unequipped, component);
     }
     #endregion
 }
