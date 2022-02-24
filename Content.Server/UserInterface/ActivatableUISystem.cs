@@ -34,12 +34,15 @@ namespace Content.Server.UserInterface
             if (!args.CanAccess)
                 return;
 
+            if (component.InHandsOnly && args.Using != uid)
+                return;
+
             if (!args.CanInteract && !HasComp<GhostComponent>(args.User))
                 return;
 
             ActivationVerb verb = new();
             verb.Act = () => InteractUI(args.User, component);
-            verb.Text = Loc.GetString("ui-verb-toggle-open");
+            verb.Text = Loc.GetString(component.VerbText);
             // TODO VERBS add "open UI" icon?
             args.Verbs.Add(verb);
         }

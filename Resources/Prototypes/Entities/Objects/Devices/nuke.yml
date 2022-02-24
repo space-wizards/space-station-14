@@ -31,6 +31,8 @@
           tags:
           - NukeDisk
     - type: InteractionOutline
+    - type: ActivatableUI
+      key: enum.NukeUiKey.Key
     - type: UserInterface
       interfaces:
         - key: enum.NukeUiKey.Key
