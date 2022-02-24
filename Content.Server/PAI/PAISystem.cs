@@ -39,12 +39,14 @@ namespace Content.Server.PAI
 
         private void OnStartup(EntityUid uid, PAIComponent component, ComponentStartup args)
         {
-            _actionsSystem.AddAction(uid, component.MidiAction, null);
+            if (component.MidiAction != null)
+                _actionsSystem.AddAction(uid, component.MidiAction, null);
         }
 
         private void OnShutdown(EntityUid uid, PAIComponent component, ComponentShutdown args)
         {
-            _actionsSystem.RemoveAction(uid, component.MidiAction);
+            if (component.MidiAction != null)
+                _actionsSystem.RemoveAction(uid, component.MidiAction);
         }
 
         private void OnExamined(EntityUid uid, PAIComponent component, ExaminedEvent args)
