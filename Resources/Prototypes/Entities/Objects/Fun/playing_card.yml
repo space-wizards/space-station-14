@@ -32,7 +32,7 @@
   description: A test
   components:
   - type: PlayingCardDeck
-    stackId: test
+    # stackId: test
     cardPrototype: BasePlayingCard
     cardHandPrototype: PlayingCardHand
     cardList: [
@@ -136,3 +136,7 @@
   - type: Appearance
   - type: Item
     size: 5
+  - type: UserInterface
+    interfaces:
+    - key: enum.PlayingCardHandUiKey.Key
+      type: PlayingCardHandBoundUserInterface

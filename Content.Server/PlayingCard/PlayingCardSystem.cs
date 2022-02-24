@@ -4,12 +4,15 @@ using Content.Server.Popups;
 using Content.Server.Hands.Components;
 using Content.Shared.Item;
 using Robust.Shared.Player;
+using Content.Server.PlayingCard.EntitySystems;
 
 namespace Content.Server.PlayingCard.EntitySystems;
 
 public sealed class PlayingCardSystem : EntitySystem
 {
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly PlayingCardHandSystem _playingCardHandSystem = default!;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<PlayingCardComponent, UseInHandEvent>(OnUseInhand);
@@ -52,8 +55,12 @@ public sealed class PlayingCardSystem : EntitySystem
                 if (!TryComp<SharedItemComponent>(cardHand, out var cardHandEnt))
                     return;
 
+                // THIS SHOULD BE INITIATED WITH LIST
+                // _playingCardHandSystem.AddCards(cardHand, itemUsed, user, null);
                 EntityManager.QueueDeleteEntity(itemUsed);
                 EntityManager.QueueDeleteEntity(cardComponent.Owner);
+                // _playingCardHandSystem.AddCards(cardHand, itemUsed, user, null);
+
                 hands.PutInHand(cardHandEnt);
             }
     }

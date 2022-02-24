@@ -1,0 +1,11 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Horizontal"
+    VerticalExpand="True"
+    HorizontalExpand="True"
+    MinSize="50 50">
+        <ItemList Name="CardList"
+                  SizeFlagsStretchRatio="8"
+                  HorizontalExpand="True"
+                  VerticalExpand="True" />
+    </BoxContainer>
+</DefaultWindow>
