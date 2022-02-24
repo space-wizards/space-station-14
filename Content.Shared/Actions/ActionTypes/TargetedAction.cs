@@ -21,10 +21,13 @@ public abstract class TargetedAction : ActionType
     public bool DeselectOnMiss;
 
     /// <summary>
-    ///     Whether the action system should block this action if the user cannot actually access the target (in range
-    ///     unobstructed, in inventory, in backpack, etc). Some spells or abilities may want to disable this and
+    ///     Whether the action system should block this action if the user cannot actually access the target
+    ///     (unobstructed, in inventory, in backpack, etc). Some spells or abilities may want to disable this and
     ///     implement their own checks.
     /// </summary>
+    /// <remarks>
+    ///     Even if this is false, the <see cref="Range"/> will still be checked.
+    /// </remarks>
     [DataField("checkCanAccess")]
     public bool CheckCanAccess = true;
 

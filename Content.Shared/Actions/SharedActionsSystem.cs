@@ -216,7 +216,19 @@ public abstract class SharedActionsSystem : EntitySystem
             return action.CanTargetSelf;
 
         if (!action.CheckCanAccess)
-            return true;
+        {
+            // even if we don't check for obstructions, we may still need to check the range.
+            var xform = Transform(user);
+            var targetXform = Transform(target);
+
+            if (xform.MapID != targetXform.MapID)
+                return false;
+
+            if (action.Range <= 0)
+                return true;
+
+            return (xform.WorldPosition - targetXform.WorldPosition).Length <= action.Range;
+        }
 
         if (_interactionSystem.InRangeUnobstructed(user, target, range: action.Range)
             && _containerSystem.IsInSameOrParentContainer(user, target))
@@ -235,7 +247,21 @@ public abstract class SharedActionsSystem : EntitySystem
         if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
             return false;
 
-        return !action.CheckCanAccess || _interactionSystem.InRangeUnobstructed(user, coords, range: action.Range);
+        if (!action.CheckCanAccess)
+        {
+            // even if we don't check for obstructions, we may still need to check the range.
+            var xform = Transform(user);
+
+            if (xform.MapID != coords.MapId)
+                return false;
+
+            if (action.Range <= 0)
+                return true;
+
+            return (xform.WorldPosition - coords.Position).Length <= action.Range;
+        }
+
+        return _interactionSystem.InRangeUnobstructed(user, coords, range: action.Range);
     }
 
     protected void PerformAction(ActionsComponent component, ActionType action, PerformActionEvent? actionEvent, TimeSpan curTime)
