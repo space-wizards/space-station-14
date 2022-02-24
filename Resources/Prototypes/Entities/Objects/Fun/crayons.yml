@@ -9,7 +9,6 @@
     tags:
     - Write
     - Crayon
-    - Recyclable
     - Trash
   - type: Recyclable
   - type: UserInterface
@@ -39,7 +38,6 @@
     - Write
     - Crayon
     - CrayonWhite
-    - Recyclable
     - Trash
 
 - type: entity
@@ -62,7 +60,6 @@
     - Write
     - Crayon
     - CrayonWhite
-    - Recyclable
     - Trash
 
 - type: entity
@@ -85,7 +82,6 @@
     - Write
     - Crayon
     - CrayonBlack
-    - Recyclable
     - Trash
 
 - type: entity
@@ -108,7 +104,6 @@
     - Write
     - Crayon
     - CrayonRed
-    - Recyclable
     - Trash
 
 - type: entity
@@ -131,7 +126,6 @@
     - Write
     - Crayon
     - CrayonOrange
-    - Recyclable
     - Trash
 
 - type: entity
@@ -154,7 +148,6 @@
     - Write
     - Crayon
     - CrayonYellow
-    - Recyclable
     - Trash
 
 - type: entity
@@ -177,7 +170,6 @@
     - Write
     - Crayon
     - CrayonGreen
-    - Recyclable
     - Trash
 
 - type: entity
@@ -200,7 +192,6 @@
     - Write
     - Crayon
     - CrayonBlue
-    - Recyclable
     - Trash
 
 - type: entity
@@ -223,7 +214,6 @@
     - Write
     - Crayon
     - CrayonPurple
-    - Recyclable
     - Trash
 
 - type: entity

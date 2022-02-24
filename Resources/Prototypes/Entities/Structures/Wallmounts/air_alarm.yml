@@ -77,7 +77,6 @@
   name: air alarm assembly
   description: An air alarm. Doesn't look like it'll be alarming air any time soon.
   components:
-  - type: WallMount
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite

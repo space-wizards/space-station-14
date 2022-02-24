@@ -7,7 +7,6 @@
   - type: Tag
     tags:
     - CigPack
-    - Recyclable
     - Trash
   - type: Recyclable
   - type: Storage

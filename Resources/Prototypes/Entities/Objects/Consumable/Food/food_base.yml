@@ -7,7 +7,6 @@
   abstract: true
   components:
   - type: Food
-  - type: Recyclable
   - type: Sprite
     netsync: false
 

@@ -31,6 +31,11 @@ namespace Content.Client.MainMenu.UI
                 var currentUserName = configMan.GetCVar(CVars.PlayerName);
                 UsernameBox.Text = currentUserName;
 
+#if !FULL_RELEASE
+                JoinPublicServerButton.Disabled = true;
+                JoinPublicServerButton.ToolTip = Loc.GetString("main-menu-join-public-server-button-tooltip");
+#endif
+
                 LayoutContainer.SetAnchorPreset(VersionLabel, LayoutContainer.LayoutPreset.BottomRight);
                 LayoutContainer.SetGrowHorizontal(VersionLabel, LayoutContainer.GrowDirection.Begin);
                 LayoutContainer.SetGrowVertical(VersionLabel, LayoutContainer.GrowDirection.Begin);

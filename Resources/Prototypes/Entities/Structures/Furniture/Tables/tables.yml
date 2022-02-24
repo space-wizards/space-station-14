@@ -17,7 +17,7 @@
       mass: 50
       mask:
       - Impassable
-      - SmallImpassable
+      - VaultImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

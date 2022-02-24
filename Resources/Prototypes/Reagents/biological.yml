@@ -3,7 +3,7 @@
   name: blood
   group: Biological
   desc: I hope this is ketchup.
-  color: "#800000"
+  color: "#9e1010"
   physicalDesc: ferrous
   metabolisms:
     Drink:

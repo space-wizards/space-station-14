@@ -18,6 +18,7 @@ namespace Content.Server.PDA.Ringer
 {
     public sealed class RingerSystem : SharedRingerSystem
     {
+        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()

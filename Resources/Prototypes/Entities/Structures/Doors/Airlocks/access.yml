@@ -14,7 +14,7 @@
   components:
   - type: AccessReader
     access: [["Theatre"]]
-
+    
 - type: entity
   parent: Airlock
   id: AirlockChapelLocked
@@ -22,7 +22,7 @@
   components:
   - type: AccessReader
     access: [["Chapel"]]
-
+    
 - type: entity
   parent: Airlock
   id: AirlockJanitorLocked
@@ -38,7 +38,7 @@
   components:
   - type: AccessReader
     access: [["Kitchen"]]
-
+    
 - type: entity
   parent: Airlock
   id: AirlockBarLocked
@@ -46,7 +46,7 @@
   components:
   - type: AccessReader
     access: [["Bar"]]
-
+    
 - type: entity
   parent: Airlock
   id: AirlockHydroponicsLocked
@@ -54,14 +54,6 @@
   components:
   - type: AccessReader
     access: [["Hydroponics"]]
-
-- type: entity
-  parent: Airlock
-  id: AirlockServiceCaptainLocked
-  suffix: Captain, Locked
-  components:
-  - type: AccessReader
-    access: [["Captain"]]
 
 - type: entity
   parent: AirlockExternal
@@ -110,7 +102,7 @@
   components:
   - type: AccessReader
     access: [["Salvage"]]
-
+    
 - type: entity
   parent: AirlockCargo
   id: AirlockQuartermasterLocked
@@ -142,7 +134,7 @@
   components:
   - type: AccessReader
     access: [["Research"]]
-
+    
 - type: entity
   parent: AirlockScience
   id: AirlockMedicalScienceLocked
@@ -200,7 +192,7 @@
   components:
   - type: AccessReader
     access: [["ResearchDirector"]]
-
+    
 - type: entity
   parent: AirlockCommand
   id: AirlockHeadOfPersonnelLocked
@@ -218,7 +210,7 @@
     access: [["Security"]]
   - type: Wires
     LayoutId: AirlockSecurity
-
+    
 - type: entity
   parent: AirlockSecurity
   id: AirlockBrigLocked
@@ -407,7 +399,7 @@
   components:
   - type: AccessReader
     access: [["ResearchDirector"]]
-
+    
 - type: entity
   parent: AirlockCommandGlass
   id: AirlockHeadOfPersonnelGlassLocked
@@ -415,7 +407,7 @@
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
-
+    
 - type: entity
   parent: AirlockSecurityGlass
   id: AirlockSecurityGlassLocked
@@ -423,7 +415,7 @@
   components:
   - type: AccessReader
     access: [["Security"]]
-
+    
 - type: entity
   parent: AirlockSecurityGlass
   id: AirlockBrigGlassLocked
@@ -431,7 +423,7 @@
   components:
   - type: AccessReader
     access: [["Brig"]]
-
+    
 - type: entity
   parent: AirlockSecurityGlass
   id: AirlockArmoryGlassLocked
@@ -439,7 +431,7 @@
   components:
   - type: AccessReader
     access: [["Armory"]]
-
+  
 - type: entity
   parent: AirlockEVALocked
   id: AirlockEVAGlassLocked
@@ -536,7 +528,7 @@
   components:
   - type: AccessReader
     access: [["Theatre"]]
-
+    
 - type: entity
   parent: AirlockMaint
   id: AirlockMaintKitchenLocked
@@ -601,14 +593,6 @@
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
 
-- type: entity
-  parent: AirlockMaint
-  id: AirlockMaintCaptainLocked
-  suffix: Captain, Locked
-  components:
-  - type: AccessReader
-    access: [["Captain"]]
-
 # Shuttle airlocks
 - type: entity
   parent: AirlockShuttle
@@ -625,6 +609,3 @@
   components:
   - type: AccessReader
     access: [["External"]]
-
-
-

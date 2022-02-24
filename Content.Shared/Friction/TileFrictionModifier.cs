@@ -9,7 +9,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Friction
 {
     [RegisterComponent]
-    public sealed class TileFrictionModifierComponent : Component
+    [ComponentProtoName("TileFrictionModifier")]
+    public sealed class SharedTileFrictionModifier : Component
     {
         /// <summary>
         ///     Multiply the tilefriction cvar by this to get the body's actual tilefriction.
@@ -42,7 +43,7 @@ namespace Content.Shared.Friction
         }
 
         [NetSerializable, Serializable]
-        private sealed class TileFrictionComponentState : ComponentState
+        protected sealed class TileFrictionComponentState : ComponentState
         {
             public float Modifier;
 

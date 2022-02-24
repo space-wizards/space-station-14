@@ -7,6 +7,11 @@
   - type: Sprite
     layers:
       - state: box
+  - type: Item
+    size: 20
+  - type: Storage
+    capacity: 20
+    size: 20
 
 - type: entity
   name: lightbulb box
@@ -143,6 +148,9 @@
     layers:
       - state: box
       - state: writing
+  - type: Storage
+    capacity: 30
+    size: 30
 
 - type: entity
   name: box of hugs
@@ -160,6 +168,9 @@
     contents:
       - id: Brutepack
         amount: 6
+  - type: Storage
+    capacity: 30
+    size: 30
 
 - type: entity
   name: inflatable wall box

@@ -16,22 +16,22 @@ namespace Content.Server.Objectives.Conditions
     [DataDefinition]
     public sealed class RandomTraitorAliveCondition : IObjectiveCondition
     {
-        private Mind.Mind? _target;
+        protected Mind.Mind? Target;
 
         public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
-            var allOtherTraitors = new List<Mind.Mind>();
+            List<Mind.Mind> _allOtherTraitors = new List<Mind.Mind>();
 
             foreach (var targetMind in entityMgr.EntityQuery<MindComponent>())
             {
                 if (targetMind.Mind?.CharacterDeadIC == false && targetMind.Mind != mind && targetMind.Mind?.HasRole<TraitorRole>() == true)
                 {
-                        allOtherTraitors.Add(targetMind.Mind);
+                        _allOtherTraitors.Add(targetMind.Mind);
                 }
             }
 
-            return new RandomTraitorAliveCondition {_target = IoCManager.Resolve<IRobustRandom>().Pick(allOtherTraitors)};
+            return new RandomTraitorAliveCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(_allOtherTraitors)};
         }
 
         public string Title
@@ -39,14 +39,14 @@ namespace Content.Server.Objectives.Conditions
             get
             {
                 var targetName = string.Empty;
-                var jobName = _target?.CurrentJob?.Name ?? "Unknown";
+                var jobName = Target?.CurrentJob?.Name ?? "Unknown";
 
-                if (_target == null)
+                if (Target == null)
                     return Loc.GetString("objective-condition-other-traitor-alive-title", ("targetName", targetName), ("job", jobName));
 
-                if (_target.CharacterName != null)
-                    targetName = _target.CharacterName;
-                else if (_target.OwnedEntity is {Valid: true} owned)
+                if (Target.CharacterName != null)
+                    targetName = Target.CharacterName;
+                else if (Target.OwnedEntity is {Valid: true} owned)
                     targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owned).EntityName;
 
                 return Loc.GetString("objective-condition-other-traitor-alive-title", ("targetName", targetName), ("job", jobName));
@@ -57,13 +57,13 @@ namespace Content.Server.Objectives.Conditions
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/bureaucracy.rsi"), "folder-white");
 
-        public float Progress => (!_target?.CharacterDeadIC ?? true) ? 1f : 0f;
+        public float Progress => (!Target?.CharacterDeadIC ?? true) ? 1f : 0f;
 
         public float Difficulty => 1.75f;
 
         public bool Equals(IObjectiveCondition? other)
         {
-            return other is RandomTraitorAliveCondition kpc && Equals(_target, kpc._target);
+            return other is RandomTraitorAliveCondition kpc && Equals(Target, kpc.Target);
         }
 
         public override bool Equals(object? obj)
@@ -75,7 +75,7 @@ namespace Content.Server.Objectives.Conditions
 
         public override int GetHashCode()
         {
-            return _target?.GetHashCode() ?? 0;
+            return Target?.GetHashCode() ?? 0;
         }
     }
 }

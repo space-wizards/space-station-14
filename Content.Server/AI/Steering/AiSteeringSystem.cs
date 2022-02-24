@@ -26,6 +26,7 @@ namespace Content.Server.AI.Steering
     {
         // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IPauseManager _pauseManager = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
@@ -263,7 +264,7 @@ namespace Content.Server.AI.Steering
                 return SteeringStatus.NoPath;
             }
 
-            if (_mapManager.IsGridPaused(EntityManager.GetComponent<TransformComponent>(entity).GridID))
+            if (_pauseManager.IsGridPaused(EntityManager.GetComponent<TransformComponent>(entity).GridID))
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.Pending;

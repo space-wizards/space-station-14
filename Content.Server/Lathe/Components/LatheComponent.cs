@@ -35,7 +35,7 @@ namespace Content.Server.Lathe.Components
 
         private LatheState _state = LatheState.Base;
 
-        private LatheState State
+        protected LatheState State
         {
             get => _state;
             set => _state = value;
@@ -228,7 +228,7 @@ namespace Content.Server.Lathe.Components
             return queue;
         }
 
-        private enum LatheState : byte
+        protected enum LatheState
         {
             Base,
             Inserting,

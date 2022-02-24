@@ -37,12 +37,6 @@ namespace Content.Server.Body.Components
         public float BleedReductionAmount = 1.0f;
 
         /// <summary>
-        ///     How high can <see cref="BleedAmount"/> go?
-        /// </summary>
-        [DataField("maxBleedAmount")]
-        public float MaxBleedAmount = 20.0f;
-
-        /// <summary>
         ///     What percentage of current blood is necessary to avoid dealing blood loss damage?
         /// </summary>
         [DataField("bloodlossThreshold")]
@@ -94,12 +88,6 @@ namespace Content.Server.Body.Components
         /// </summary>
         [DataField("instantBloodSound")]
         public SoundSpecifier InstantBloodSound = new SoundCollectionSpecifier("blood");
-
-        /// <summary>
-        ///     The sound to be played when some damage actually heals bleeding rather than starting it.
-        /// </summary>
-        [DataField("bloodHealedSound")]
-        public SoundSpecifier BloodHealedSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
         // TODO probably damage bleed thresholds.
 

@@ -33,7 +33,7 @@ public sealed class CameraRecoilSystem : EntitySystem
 
     private readonly ISawmill _log;
 
-    private CameraRecoilSystem(IEntityManager entityManager)
+    protected CameraRecoilSystem(IEntityManager entityManager)
     : base(entityManager)
     {
         _log = Logger.GetSawmill($"ecs.systems.{nameof(CameraRecoilSystem)}");

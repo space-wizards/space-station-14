@@ -15,6 +15,7 @@ namespace Content.Server.Medical;
 
 public sealed class HealingSystem : EntitySystem
 {
+    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly AdminLogSystem _logs = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;

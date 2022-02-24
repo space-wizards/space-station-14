@@ -1,7 +1,4 @@
-using System.Linq;
-using Content.Server.Verbs;
 using Content.Shared.Examine;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -14,8 +11,6 @@ namespace Content.Server.Examine
     [UsedImplicitly]
     public sealed class ExamineSystem : ExamineSystemShared
     {
-        [Dependency] private readonly VerbSystem _verbSystem = default!;
-
         private static readonly FormattedMessage _entityNotFoundMessage;
 
         static ExamineSystem()
@@ -38,12 +33,8 @@ namespace Content.Server.Examine
 
             var session = actor.PlayerSession;
 
-            SortedSet<Verb>? verbs = null;
-            if (getVerbs)
-                verbs = _verbSystem.GetLocalVerbs(target, player, typeof(ExamineVerb));
-
             var ev = new ExamineSystemMessages.ExamineInfoResponseMessage(
-                target, message, verbs?.ToList(), centerAtCursor
+                target, message, getVerbs, centerAtCursor
             );
 
             RaiseNetworkEvent(ev, session.ConnectedClient);
@@ -60,16 +51,12 @@ namespace Content.Server.Examine
                 || !CanExamine(playerEnt, request.EntityUid))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                    request.EntityUid, _entityNotFoundMessage), channel);
+                    request.EntityUid, _entityNotFoundMessage, request.GetVerbs), channel);
                 return;
             }
 
-            SortedSet<Verb>? verbs = null;
-            if (request.GetVerbs)
-                verbs = _verbSystem.GetLocalVerbs(request.EntityUid, playerEnt, typeof(ExamineVerb));
-
             var text = GetExamineText(request.EntityUid, player.AttachedEntity);
-            RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text, verbs?.ToList()), channel);
+            RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text, request.GetVerbs), channel);
         }
     }
 }

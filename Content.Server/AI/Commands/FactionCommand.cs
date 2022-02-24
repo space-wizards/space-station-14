@@ -87,6 +87,8 @@ namespace Content.Server.AI.Commands
                     shell.WriteLine(Loc.GetString("faction-command-unknown-faction-argument-error"));
                     break;
             }
+
+            return;
         }
     }
 }

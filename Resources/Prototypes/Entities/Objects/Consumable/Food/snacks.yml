@@ -208,7 +208,6 @@
     HeldPrefix: packet
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
 

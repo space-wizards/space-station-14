@@ -33,7 +33,7 @@ namespace Content.Server.Cuffs.Components
         [ViewVariables]
         public int CuffedHandCount => Container.ContainedEntities.Count * 2;
 
-        private EntityUid LastAddedCuffs => Container.ContainedEntities[^1];
+        protected EntityUid LastAddedCuffs => Container.ContainedEntities[^1];
 
         public IReadOnlyList<EntityUid> StoredEntities => Container.ContainedEntities;
 

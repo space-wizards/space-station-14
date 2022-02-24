@@ -218,7 +218,6 @@
     protolatherecipes:
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
-      - ThermomachineFreezerMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - ChemMasterMachineCircuitboard

@@ -1,5 +1,4 @@
 using Content.Shared.Atmos;
-using Content.Shared.Atmos.Piping.Unary.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -42,5 +41,11 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             InitialMinTemperature = MinTemperature;
             InitialMaxTemperature = MaxTemperature;
         }
+    }
+
+    public enum ThermoMachineMode : byte
+    {
+        Freezer = 0,
+        Heater = 1,
     }
 }

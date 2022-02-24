@@ -31,6 +31,3 @@ ent-MobCatCaracal = caracal cat
 ent-MobSloth = sloth
     .desc = Very slow animal. For people with low energy.
     .suffix = { "" }
-ent-MobFerret = ferret
-    .desc = Just a silly little guy!
-    .suffix = { "" }

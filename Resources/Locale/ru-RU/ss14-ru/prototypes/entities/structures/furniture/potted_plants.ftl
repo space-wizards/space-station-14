@@ -9,7 +9,6 @@ ent-PottedPlantRandomPlastic = plastic potted plant
     .suffix = { "" }
 ent-PottedPlantRD = RD's potted plant
     .desc = A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says "Y'all come back now, y'hear?" It doesn't look very healthy...
-    .suffix = { "" }
 ent-PottedPlantBioluminscent = bioluminescent potted plant
     .desc = It produces light!
     .suffix = { "" }

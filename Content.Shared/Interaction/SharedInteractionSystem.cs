@@ -216,12 +216,6 @@ namespace Content.Shared.Interaction
             if (checkCanUse && !_actionBlockerSystem.CanUseHeldEntity(user))
                 return;
 
-            if (target == hand.HeldEntity)
-            {
-                UseInHandInteraction(user, target.Value, checkCanUse: false, checkCanInteract: false);
-                return;
-            }
-
             if (inRangeUnobstructed && target != null)
             {
                 InteractUsing(

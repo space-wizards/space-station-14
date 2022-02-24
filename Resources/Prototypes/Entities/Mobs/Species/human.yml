@@ -285,15 +285,14 @@
   - type: Butcherable
     butcheringType: Spike # TODO human.
     spawned: FoodMeat
-#  - type: Recyclable Turns out turning off recycler safeties without considering the instagib is a bad idea
-#    safe: false
+  - type: Recyclable
+    safe: false
   - type: Speech
   - type: Emoting
   - type: Grammar
     attributes:
       proper: true
   - type: StandingState
-
 - type: entity
   save: false
   name: Urist McHands

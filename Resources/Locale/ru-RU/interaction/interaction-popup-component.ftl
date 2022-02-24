@@ -13,7 +13,6 @@ petting-success-dog = You pet { THE($target) } on { POSS-ADJ($target) } soft flo
 petting-success-frog = You pet { THE($target) } on { POSS-ADJ($target) } slippery little head.
 petting-success-goat = You pet { THE($target) } on { POSS-ADJ($target) } horned floofy head.
 petting-success-goose = Against all odds, you manage to pet { THE($target) } on { POSS-ADJ($target) } horrible little head.
-petting-success-possum = You pet { THE($target) } on { POSS-ADJ($target) } horrible little head.
 petting-success-reptile = You pet { THE($target) } on { POSS-ADJ($target) } scaly little head.
 petting-success-sloth = You pet { THE($target) } on { POSS-ADJ($target) } slow moving head.
 petting-success-space-cat = You pet { THE($target) } on { POSS-ADJ($target) } glass domed head.
@@ -24,7 +23,6 @@ petting-failure-corrupted-corgi = You reach out to pet { THE($target) }, but thi
 petting-failure-crab = You reach out to pet { THE($target) }, but { SUBJECT($target) } snaps { POSS-ADJ($target) } claws in your general direction!
 petting-failure-goat = You reach out to pet { THE($target) }, but { SUBJECT($target) } stubbornly refuses!
 petting-failure-goose = You reach out to pet { THE($target) }, but { SUBJECT($target) } { CONJUGATE-BE($target) } too horrible!
-petting-failure-possum = You reach out to pet { THE($target) }, but are met with hisses and snarls!
 petting-failure-sloth = You reach out to pet { THE($target) }, but { SUBJECT($target) } somehow dodge with ludicrous speed!
 
 ## Knocking on windows

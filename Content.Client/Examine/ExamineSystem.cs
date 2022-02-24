@@ -40,6 +40,7 @@ namespace Content.Client.Examine
             SubscribeLocalEvent<GetVerbsEvent<ExamineVerb>>(AddExamineVerb);
 
             SubscribeNetworkEvent<ExamineSystemMessages.ExamineInfoResponseMessage>(OnExamineInfoResponse);
+            SubscribeNetworkEvent<VerbsResponseEvent>(OnVerbsResponse);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine, outsidePrediction: true))
@@ -116,13 +117,29 @@ namespace Content.Client.Examine
             // opening at the old tooltip rather than the cursor/another entity,
             // since there's probably one open already if it's coming in from the server.
             OpenTooltip(player.Value, ev.EntityUid, ev.CenterAtCursor, ev.OpenAtOldTooltip);
-            UpdateTooltipInfo(player.Value, ev.EntityUid, ev.Message, ev.Verbs);
+            UpdateTooltipInfo(player.Value, ev.EntityUid, ev.Message, ev.GetVerbs);
+        }
+
+        private void OnVerbsResponse(VerbsResponseEvent ev)
+        {
+            if (ev.Verbs == null || _examineTooltipOpen == null)
+                return;
+
+            var verbs = new List<ExamineVerb>();
+
+            foreach (var verb in ev.Verbs)
+            {
+                if (verb is ExamineVerb ex)
+                    verbs.Add(ex);
+            }
+
+            AddVerbsToTooltip(verbs);
         }
 
         public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor)
         {
             OpenTooltip(player, target, centerAtCursor, false);
-            UpdateTooltipInfo(player, target, message);
+            UpdateTooltipInfo(player, target, message, getVerbs);
         }
 
         /// <summary>
@@ -146,7 +163,7 @@ namespace Content.Client.Examine
 
             if (openAtOldTooltip && oldTooltipPos != null)
             {
-                popupPos = _userInterfaceManager.ScreenToUIPosition(oldTooltipPos.Value);
+                popupPos = oldTooltipPos.Value;
             }
             else if (centeredOnCursor)
             {
@@ -155,7 +172,6 @@ namespace Content.Client.Examine
             else
             {
                 popupPos = _eyeManager.CoordinatesToScreen(Transform(target).Coordinates);
-                popupPos = _userInterfaceManager.ScreenToUIPosition(popupPos);
             }
 
             // Actually open the tooltip.
@@ -205,7 +221,7 @@ namespace Content.Client.Examine
         /// <summary>
         ///     Fills the examine tooltip with a message and buttons if applicable.
         /// </summary>
-        public void UpdateTooltipInfo(EntityUid player, EntityUid target, FormattedMessage message, List<Verb>? verbs=null)
+        public void UpdateTooltipInfo(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs = true)
         {
             var vBox = _examineTooltipOpen?.GetChild(0).GetChild(0);
             if (vBox == null)
@@ -223,11 +239,12 @@ namespace Content.Client.Examine
                 break;
             }
 
-            verbs ??= new List<Verb>();
-            var totalVerbs = _verbSystem.GetLocalVerbs(target, player, typeof(ExamineVerb));
-            totalVerbs.UnionWith(verbs);
-
-            AddVerbsToTooltip(totalVerbs);
+            if (getVerbs)
+            {
+                // Get verbs
+                var set = _verbSystem.GetVerbs(target, player, typeof(ExamineVerb));
+                AddVerbsToTooltip(set);
+            }
         }
 
         private void AddVerbsToTooltip(IEnumerable<Verb> verbs)

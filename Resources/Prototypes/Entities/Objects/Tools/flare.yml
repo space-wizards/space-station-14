@@ -7,7 +7,6 @@
   - type: Tag
     tags:
     - Flare
-    - Recyclable
     - Trash
   - type: Recyclable
   - type: ExpendableLight

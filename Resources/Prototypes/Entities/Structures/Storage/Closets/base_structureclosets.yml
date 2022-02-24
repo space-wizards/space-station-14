@@ -35,6 +35,7 @@
       mass: 70
       mask:
       - Impassable
+      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque

@@ -66,7 +66,7 @@ namespace Content.Server.StationEvents.Events
 
             if (_timeUntilPulse <= 0.0f)
             {
-                var mapManager = IoCManager.Resolve<IMapManager>();
+                var pauseManager = IoCManager.Resolve<IPauseManager>();
                 // Account for split stations by just randomly picking a piece of it.
                 var possibleTargets = _entityManager.EntityQuery<StationComponent>()
                     .Where(x => x.Station == _target).ToArray();
@@ -76,7 +76,7 @@ namespace Content.Server.StationEvents.Events
                 if (!_entityManager.TryGetComponent<IMapGridComponent>(stationEnt, out var grid))
                     return;
 
-                if (mapManager.IsGridPaused(grid.GridIndex))
+                if (pauseManager.IsGridPaused(grid.GridIndex))
                     return;
 
                 SpawnPulse(grid.Grid);

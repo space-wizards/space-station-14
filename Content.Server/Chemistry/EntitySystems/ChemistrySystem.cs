@@ -10,6 +10,7 @@ namespace Content.Server.Chemistry.EntitySystems;
 
 public sealed partial class ChemistrySystem : EntitySystem
 {
+    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly AdminLogSystem _logs = default!;
     [Dependency] private readonly BloodstreamSystem _blood = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;

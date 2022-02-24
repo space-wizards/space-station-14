@@ -33,7 +33,6 @@
     SecurityOfficer: [ 2, 3 ]
     Chaplain: [ 1, 1 ]
     Librarian: [ 1, 1 ]
-    Musician: [1, 1]
 
 - type: gameMap
   id: packedstation
@@ -75,7 +74,6 @@
     Warden: [ 1, 1 ]
     Librarian: [ 1, 1 ]
     Lawyer: [ 1, 2 ]
-    Musician: [1, 1]
 
 - type: gameMap
   id: knightship
@@ -134,8 +132,7 @@
     Lawyer: [ 1, 2 ]
     Warden: [ 1, 1 ]
     Quartermaster: [ 1, 1 ]
-    SalvageSpecialist: [ 4, 6 ]
-    Musician: [1, 1]
+    SalvageSpecialist: [ 4, 6 ] 
 
 - type: gameMap
   id: ssreach
@@ -165,7 +162,6 @@
     HeadOfSecurity: [ 1, 1 ]
     SecurityOfficer: [ 2, 4 ]
     Janitor: [ 1, 1 ]
-    Musician: [1, 1]
 
 - type: gameMap
   id: syndiesbase
@@ -182,13 +178,13 @@
     Assistant: [ 5, 5 ]
 
 - type: gameMap
-  id: infiltratororig
+  id: infiltrator
   mapName: 'Infiltrator'
   mapNameTemplate: '{0} Infiltrator {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: /Maps/infiltrator_orig.yml
+  mapPath: /Maps/infiltrator.yml
   minPlayers: 0
   votable: false
   overflowJobs: []

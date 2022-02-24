@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -6,10 +7,12 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Station;
 using Robust.Server.Player;
+using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
@@ -22,18 +25,17 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private readonly Dictionary<string, int> _spawnedPositions = new();
 
-        private Dictionary<IPlayerSession, (string, StationId)> AssignJobs(List<IPlayerSession> availablePlayers,
+        private Dictionary<IPlayerSession, (string, StationId)> AssignJobs(List<IPlayerSession> available,
             Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
         {
             var assigned = new Dictionary<IPlayerSession, (string, StationId)>();
 
             List<(IPlayerSession, List<string>)> GetPlayersJobCandidates(bool heads, JobPriority i)
             {
-                return availablePlayers.Select(player =>
+                return available.Select(player =>
                     {
                         var profile = profiles[player.UserId];
 
-                        var roleBans = _roleBanManager.GetJobBans(player.UserId);
                         var availableJobs = profile.JobPriorities
                             .Where(j =>
                             {
@@ -51,7 +53,6 @@ namespace Content.Server.GameTicking
 
                                 return priority == i;
                             })
-                            .Where(p => roleBans != null && !roleBans.Contains(p.Key))
                             .Select(j => j.Key)
                             .ToList();
 
@@ -84,7 +85,7 @@ namespace Content.Server.GameTicking
                     }
                 }
 
-                availablePlayers.RemoveAll(a => assigned.ContainsKey(a));
+                available.RemoveAll(a => assigned.ContainsKey(a));
             }
 
             // Current strategy is to fill each station one by one.
@@ -105,17 +106,14 @@ namespace Content.Server.GameTicking
             return assigned;
         }
 
-        private string? PickBestAvailableJob(IPlayerSession playerSession, HumanoidCharacterProfile profile,
-            StationId station)
+        private string? PickBestAvailableJob(HumanoidCharacterProfile profile, StationId station)
         {
             var available = _stationSystem.StationInfo[station].JobList;
 
             bool TryPick(JobPriority priority, [NotNullWhen(true)] out string? jobId)
             {
-                var roleBans = _roleBanManager.GetJobBans(playerSession.UserId);
                 var filtered = profile.JobPriorities
                     .Where(p => p.Value == priority)
-                    .Where(p => roleBans != null && !roleBans.Contains(p.Key))
                     .Select(p => p.Key)
                     .ToList();
 

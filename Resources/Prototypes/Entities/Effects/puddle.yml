@@ -101,7 +101,6 @@
   - type: Puddle
     slipThreshold: 20
     overflowVolume: 50
-    opacityModifier: 8
   - type: Evaporation
     evaporateTime: 400 # very slow
   - type: Appearance

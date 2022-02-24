@@ -8,7 +8,6 @@
   - type: Tag
     tags:
     - Bottle
-    - Recyclable
     - Trash
   - type: Recyclable
   - type: Sprite

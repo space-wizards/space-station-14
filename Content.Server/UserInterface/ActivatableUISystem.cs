@@ -127,7 +127,7 @@ namespace Content.Server.UserInterface
         }
     }
 
-    public sealed class UserOpenActivatableUIAttemptEvent : CancellableEntityEventArgs //have to one-up the already stroke-inducing name
+    public class UserOpenActivatableUIAttemptEvent : CancellableEntityEventArgs //have to one-up the already stroke-inducing name
     {
         public EntityUid User { get; }
         public UserOpenActivatableUIAttemptEvent(EntityUid who)

@@ -23,6 +23,7 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
+      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -199,6 +200,7 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
+      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -320,6 +322,7 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
+      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -336,53 +339,6 @@
     successChance: 0.9
     interactSuccessString: petting-success-sloth
     interactFailureString: petting-failure-sloth
-  - type: Grammar
-    attributes:
-      gender: epicene
-
-- type: entity
-  name: ferret
-  parent: SimpleMobBase
-  id: MobFerret
-  description: Just a silly little guy!
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/ferret.rsi
-    scale: 0.7, 0.7
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: ferret
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      mass: 10
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: ferret
-      crit: ferret_dead
-      dead: ferret_dead
-  - type: Butcherable
-    spawned: FoodMeat
-    pieces: 3
-  - type: InteractionPopup
-    successChance: 0.8
-    interactDelay: 1.5 # Avoids overlapping SFX due to spam - these SFX are a little longer than the typical 1 second.
-    interactSuccessString: petting-success-soft-floofy
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/ferret_happy.ogg
   - type: Grammar
     attributes:
       gender: epicene

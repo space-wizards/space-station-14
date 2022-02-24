@@ -11,6 +11,7 @@ namespace Content.Server.Chemistry.EntitySystems
     [UsedImplicitly]
     public sealed class ReagentDispenserSystem : SharedReagentDispenserSystem
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         public override void Initialize()
         {
             base.Initialize();

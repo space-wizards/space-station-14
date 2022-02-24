@@ -17,7 +17,6 @@
   - type: Tag
     tags:
     - Matchstick
-    - Recyclable
     - Trash
   - type: Recyclable
   - type: Sprite
@@ -81,6 +80,5 @@
           - matchbox3
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable

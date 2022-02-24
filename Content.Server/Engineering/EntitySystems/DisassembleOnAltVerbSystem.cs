@@ -11,6 +11,8 @@ namespace Content.Server.Engineering.EntitySystems
     [UsedImplicitly]
     public sealed class DisassembleOnAltVerbSystem : EntitySystem
     {
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();

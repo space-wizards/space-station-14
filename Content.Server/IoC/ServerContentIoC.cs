@@ -53,7 +53,6 @@ namespace Content.Server.IoC
             IoCManager.Register<IGameMapManager, GameMapManager>();
             IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
             IoCManager.Register<RulesManager, RulesManager>();
-            IoCManager.Register<RoleBanManager, RoleBanManager>();
         }
     }
 }

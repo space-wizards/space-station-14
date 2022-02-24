@@ -82,7 +82,7 @@
     Piercing: 2.0
     Shock: 0.0
     Cold: 0.0
-    Heat: -0.25 # heat damage cauterizes wounds!
+    Heat: 0.0
     Poison: 0.0
     Radiation: 0.0
     Asphyxiation: 0.0

@@ -148,19 +148,6 @@
     - type: GasThermoMachine
     - type: AtmosPipeColor
     - type: AtmosDevice
-    - type: UserInterface
-      interfaces:
-      - key: enum.ThermomachineUiKey.Key
-        type: GasThermomachineBoundUserInterface
-    - type: ActivatableUI
-      inHandsOnly: false
-      key: enum.ThermomachineUiKey.Key
-    - type: Construction
-      graph: Machine
-      node: machine
-    - type: Wires
-      BoardName: "Thermomachine"
-      LayoutId: Thermomachine
     - type: NodeContainer
       nodes:
         pipe:
@@ -190,8 +177,6 @@
     - type: GasThermoMachine
       mode: Freezer
       minTemperature: 73.15
-    - type: Machine
-      board: ThermomachineFreezerMachineCircuitBoard
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -215,5 +200,3 @@
     - type: GasThermoMachine
       mode: Heater
       maxTemperature: 573.15 # This is changed when parts are refreshed.
-    - type: Machine
-      board: ThermomachineHeaterMachineCircuitBoard

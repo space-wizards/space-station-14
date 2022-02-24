@@ -140,7 +140,7 @@ public sealed class DoorComponent : Component, ISerializationHooks
     /// List of EntityUids of entities we're currently crushing. Cleared in OnPartialOpen().
     /// </summary>
     [DataField("currentlyCrushing")]
-    public HashSet<EntityUid> CurrentlyCrushing = new();
+    public List<EntityUid> CurrentlyCrushing = new();
     #endregion
 
     #region Serialization
@@ -238,7 +238,7 @@ public enum DoorVisuals
 public sealed class DoorComponentState : ComponentState
 {
     public readonly DoorState DoorState;
-    public readonly HashSet<EntityUid> CurrentlyCrushing;
+    public readonly List<EntityUid> CurrentlyCrushing;
     public readonly TimeSpan? NextStateChange;
     public readonly bool Partial;
 

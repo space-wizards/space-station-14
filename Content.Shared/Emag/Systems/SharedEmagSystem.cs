@@ -27,14 +27,7 @@ namespace Content.Shared.Emag.Systems
 
         private void OnExamine(EntityUid uid, EmagComponent component, ExaminedEvent args)
         {
-            float timeRemaining = component.RechargeTime - component.Accumulator;
             args.PushMarkup(Loc.GetString("emag-charges-remaining", ("charges", component.Charges)));
-            if (component.Charges == component.MaxCharges)
-            {
-                args.PushMarkup(Loc.GetString("emag-max-charges"));
-                return;
-            }
-            args.PushMarkup(Loc.GetString("emag-recharging", ("seconds", Math.Round(timeRemaining))));
         }
 
         private void OnAfterInteract(EntityUid uid, EmagComponent component, AfterInteractEvent args)

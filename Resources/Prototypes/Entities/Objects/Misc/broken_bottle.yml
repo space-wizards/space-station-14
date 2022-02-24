@@ -20,7 +20,6 @@
         Slash: 2
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
 
