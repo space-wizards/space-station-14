@@ -4,8 +4,8 @@ using Content.Server.Popups;
 using Content.Server.Hands.Components;
 using Content.Shared.Item;
 using Robust.Shared.Player;
-using Content.Server.PlayingCard.EntitySystems;
 using Content.Shared.Examine;
+using Robust.Shared.Map;
 
 namespace Content.Server.PlayingCard.EntitySystems;
 
@@ -16,6 +16,7 @@ public sealed class PlayingCardSystem : EntitySystem
 
     public override void Initialize()
     {
+        // ON INIT, set card sprite
         SubscribeLocalEvent<PlayingCardComponent, UseInHandEvent>(OnUseInhand);
         SubscribeLocalEvent<PlayingCardComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlayingCardComponent, ExaminedEvent>(OnExamined);
@@ -59,16 +60,18 @@ public sealed class PlayingCardSystem : EntitySystem
                 if (!TryComp<TransformComponent>(cardComponent.Owner, out var transformComp))
                 return;
 
-                EntityUid cardHand = Spawn(cardComponent.CardHandPrototype, transformComp.Coordinates);
-                // ADD LIST OF CARDS
-                if (!TryComp<SharedItemComponent>(cardHand, out var cardHandEnt))
+
+                List<string> cardsToAdd = new();
+                cardsToAdd.Add(incomingCardComp.CardName);
+                cardsToAdd.Add(cardComponent.CardName);
+
+                EntityUid? cardHand =  _playingCardHandSystem.CreateCardHand(cardsToAdd, cardComponent.CardHandPrototype, transformComp.Coordinates);
+
+                if (cardHand == null || !TryComp<SharedItemComponent>(cardHand, out var cardHandEnt))
                     return;
 
-                // THIS SHOULD BE INITIATED WITH LIST
-                // _playingCardHandSystem.AddCards(cardHand, itemUsed, user, null);
                 EntityManager.QueueDeleteEntity(itemUsed);
                 EntityManager.QueueDeleteEntity(cardComponent.Owner);
-                // _playingCardHandSystem.AddCards(cardHand, itemUsed, user, null);
 
                 hands.PutInHand(cardHandEnt);
             }
@@ -96,5 +99,22 @@ public sealed class PlayingCardSystem : EntitySystem
             // assign proper name
             // assign proper description
         }
+    }
+
+    public EntityUid? CreateCard(string cardName, string cardPrototype, EntityCoordinates coords)
+    {
+
+        EntityUid playingCardEnt = EntityManager.SpawnEntity(cardPrototype, coords);
+        if (!TryComp<PlayingCardComponent>(playingCardEnt, out PlayingCardComponent? playingCardComp))
+        {
+            EntityManager.DeleteEntity(playingCardEnt);
+            return null;
+        }
+        playingCardComp.CardName = cardName;
+        if (TryComp<AppearanceComponent>(playingCardEnt, out AppearanceComponent? appearance))
+        {
+            appearance.SetData(PlayingCardVisuals.CardSprite, cardName);
+        }
+        return playingCardEnt;
     }
 }

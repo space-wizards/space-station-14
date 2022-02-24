@@ -6,6 +6,7 @@ namespace Content.Shared.PlayingCard
     [Serializable, NetSerializable]
     public enum PlayingCardVisuals : byte
     {
-        FacingUp
+        FacingUp,
+        CardSprite
     }
 }
