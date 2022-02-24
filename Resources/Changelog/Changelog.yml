@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: It is clearer which side of a docking airlock that something should
-      dock to., type: Fix}
-  id: 624
-  time: '2021-11-21T13:26:19.0000000+00:00'
 - author: xRiriq
   changes:
   - {message: altered names of command clothing and hardsuits to be consistent, type: Fix}
@@ -2997,3 +2991,8 @@ Entries:
     type: Fix}
   id: 1123
   time: '2022-02-24T11:10:12.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: Added crafting for pipes, type: Add}
+  id: 1124
+  time: '2022-02-24T15:05:10.0000000+00:00'
