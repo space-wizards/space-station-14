@@ -188,7 +188,7 @@ namespace Content.Client.Actions.UI
             _beingHovered = false;
             CancelPress();
             DrawModeChanged();
-            _actionsUI.System.StopHighlightingItemSlots();
+            _actionsUI.System.StopHighlightingItemSlot();
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)

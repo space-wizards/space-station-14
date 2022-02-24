@@ -60,7 +60,7 @@ namespace Content.Client.Actions
         public bool UIDirty;
 
         public ActionsUI? Ui;
-        private EntityUid _highlightedEntity;
+        private EntityUid? _highlightedEntity;
 
         public override void Initialize()
         {
@@ -173,7 +173,7 @@ namespace Content.Client.Actions
         /// <param name="item"></param>
         public void HighlightItemSlot(EntityUid item)
         {
-            StopHighlightingItemSlots();
+            StopHighlightingItemSlot();
 
             _highlightedEntity = item;
             _itemSlotManager.HighlightEntity(item);
@@ -182,13 +182,13 @@ namespace Content.Client.Actions
         /// <summary>
         /// Stops highlighting any item slots we are currently highlighting.
         /// </summary>H
-        public void StopHighlightingItemSlots()
+        public void StopHighlightingItemSlot()
         {
-            if (_highlightedEntity == default)
+            if (_highlightedEntity == null)
                 return;
 
-            _itemSlotManager.UnHighlightEntity(_highlightedEntity);
-            _highlightedEntity = default;
+            _itemSlotManager.UnHighlightEntity(_highlightedEntity.Value);
+            _highlightedEntity = null;
         }
 
         public override void AddActions(EntityUid uid, IEnumerable<ActionType> actions, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
