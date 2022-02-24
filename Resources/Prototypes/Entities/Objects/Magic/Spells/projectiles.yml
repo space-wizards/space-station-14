@@ -10,7 +10,7 @@
     sprite: Objects/Magic/Spells/fireball.rsi
     state: fireball
   - type: Explosive
-    devastationRange: 1
+    devastationRange: 0
     heavyImpactRange: 2
     lightImpactRange: 3
     
