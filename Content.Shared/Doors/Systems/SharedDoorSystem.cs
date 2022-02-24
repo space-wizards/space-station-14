@@ -162,13 +162,10 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     #region Interactions
-    private void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
+    protected virtual void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
     {
-        if (args.Handled || !door.ClickOpen)
-            return;
-
-        TryToggleDoor(uid, door, args.User);
-        args.Handled = true;
+        // avoid client-mispredicts, as the server will definitely handle this event
+        args.Handled = true; 
     }
 
     private void OnExamine(EntityUid uid, DoorComponent door, ExaminedEvent args)
