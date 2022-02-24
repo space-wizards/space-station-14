@@ -2,8 +2,12 @@ The following sounds were used from freesound:
 
 cat_meow.ogg: modified from "Meow 4.wav" by freesound user "TRNGLE" (https://freesound.org/people/TRNGLE/sounds/368006/) licensed under CCBY 3.0. The original audio was trimmed, split to mono, and converted from WAV to OGG format.
 
+cat_hiss.ogg: modified from "catHisses1.wav" by freesound user "Zabuhailo" (https://freesound.org/people/Zabuhailo/sounds/146963/) licensed under CC0 1.0 (public domain). The original audio was trimmed and converted from WAV to OGG format.
+
 small_dog_bark_happy.ogg: modified from "Dog bark2.wav" by freesound user "MisterTood" (https://freesound.org/people/MisterTood/sounds/9032/) licensed under CC0 1.0 (public domain). The original audio was trimmed and converted from WAV to OGG format.
 
 duck_quack_happy.ogg: modified from "Duck Quack - Sound Effect (HD).mp3" by freesound user "Tabby+Gus." (https://freesound.org/people/Tabby+Gus./sounds/515408/) licensed under CC0 1.0 (public domain). The original audio was trimmed, looped, split to mono, and converted from MP3 to OGG format.
 
 chicken_cluck_happy.ogg: modified from "Chicken Single Alarm Call" by freesound user "Rudmer_Rotteveel" (https://freesound.org/people/Rudmer_Rotteveel/sounds/316920/) licensed under CC0 1.0 (public domain). The original audio was trimmed and converted from WAV to OGG format.
+
+ferret_happy.ogg: modified from "Ferret" by freesound user "J.Zazvurek" (https://freesound.org/people/J.Zazvurek/sounds/155115/) licensed under CC BY 3.0. The original audio was trimmed and converted from WAV to OGG format.

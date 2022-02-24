@@ -51,6 +51,7 @@
       emptySpriteName: medipen_empty
   - type: Tag
     tags:
+    - Recyclable
     - Trash
   - type: Recyclable
 

@@ -26,7 +26,6 @@ namespace Content.Server.Nuke
     public sealed class NukeSystem : EntitySystem
     {
         [Dependency] private readonly NukeCodeSystem _codes = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
         [Dependency] private readonly IEntityLookup _lookup = default!;
