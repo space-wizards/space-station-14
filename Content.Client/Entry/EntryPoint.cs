@@ -186,7 +186,6 @@ namespace Content.Client.Entry
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
 
             IoCManager.Resolve<IChatManager>().Initialize();
-            IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();
             IoCManager.Resolve<EuiManager>().Initialize();

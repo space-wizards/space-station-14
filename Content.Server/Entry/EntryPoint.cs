@@ -112,7 +112,6 @@ namespace Content.Server.Entry
             }
             else
             {
-                IoCManager.Resolve<ISandboxManager>().Initialize();
                 IoCManager.Resolve<RecipeManager>().Initialize();
                 IoCManager.Resolve<ActionManager>().Initialize();
                 IoCManager.Resolve<BlackboardManager>().Initialize();
