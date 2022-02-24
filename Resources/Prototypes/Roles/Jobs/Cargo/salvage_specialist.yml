@@ -7,10 +7,7 @@
   - Cargo
   supervisors: "the quartermaster and head of personnel"
   access:
-  - Cargo
-  - Salvage
-  - Maintenance
-  - External
+    - AllAccess
 
 - type: startingGear
   id: SalvageSpecialistGear

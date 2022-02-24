@@ -13,29 +13,7 @@
   supervisors: "the captain"
   canBeAntag: false
   access:
-    - Captain
-    - HeadOfPersonnel
-    - ChiefEngineer
-    - ChiefMedicalOfficer
-    - HeadOfSecurity
-    - ResearchDirector
-    - Command
-    - Security
-    - Armory
-    - Engineering
-    - Medical
-    - Cargo
-    - Research
-    - Service
-    - Maintenance
-    - External
-    - Janitor
-    - Theatre
-    - Bar
-    - Chemistry
-    - Kitchen
-    - Chapel
-    - Hydroponics
+    - AllAccess
 
 - type: startingGear
   id: CMOGear

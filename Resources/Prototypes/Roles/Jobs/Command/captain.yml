@@ -11,7 +11,7 @@
   supervisors: "Nanotrasen officials"
   canBeAntag: false
   accessGroups:
-  - AllAccess
+    - AllAccess
 
 - type: startingGear
   id: CaptainGear

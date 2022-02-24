@@ -6,7 +6,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/knightship.yml
+  mapPath: /Maps/knightship.yml
   minPlayers: 0
   overflowJobs: []
   availableJobs:
@@ -27,7 +27,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: 'OR'
-  mapPath: Maps/dredger.yml
+  mapPath: /Maps/dredger.yml
   minPlayers: 0
   overflowJobs: []
   availableJobs:
@@ -48,7 +48,7 @@
   nameGenerator:
     !type:IndependentNameGenerator
     prefixCreator: 'OR'
-  mapPath: Maps/gladius.yml
+  mapPath: /Maps/gladius.yml
   minPlayers: 0
   overflowJobs: []
   availableJobs:
@@ -61,7 +61,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/saltern.yml
+  mapPath: /Maps/saltern.yml
   minPlayers: 0
   maxPlayers: 20
   votable: false
@@ -85,51 +85,5 @@
     Chemist: [ 1, 1 ]
     ResearchDirector: [ 1, 1 ]
     Scientist: [ 2, 3 ]
-    HeadOfSecurity: [ 1, 1 ]
-    SecurityOfficer: [ 2, 3 ]
-
-- type: gameMap
-  id: ssreach
-  mapName: 'Reach'
-  mapNameTemplate: '{0} Reach {1}'
-  nameGenerator:
-    !type:NanotrasenNameGenerator
-    prefixCreator: '14'
-  mapPath: Maps/ssreach.yml
-  minPlayers: 8
-  maxPlayers: 25
-  overflowJobs:
-    - Assistant
-  availableJobs:
-    CargoTechnician: [ 1, 1 ]
-    Assistant: [ 4, 8 ]
-    Bartender: [ 1, 1 ]
-    Botanist: [ 1, 1 ]
-    Chef: [ 1, 1 ]
-    Captain: [ 1, 1 ]
-    ChiefEngineer: [ 1, 1 ]
-    StationEngineer: [ 1, 2 ]
-    ChiefMedicalOfficer: [ 1, 1 ]
-    MedicalDoctor: [ 1, 1 ]
-    Chemist: [ 1, 1 ]
-    HeadOfSecurity: [ 1, 1 ]
-    SecurityOfficer: [ 2, 4 ]
-    Janitor: [ 1, 1 ]
-
-- type: gameMap
-  id: dart
-  mapName: 'Dart'
-  mapNameTemplate: '{0} Dart {1}'
-  nameGenerator:
-    !type:NanotrasenNameGenerator
-    prefixCreator: '14'
-  mapPath: Maps/dart.yml
-  minPlayers: 0
-  votable: false
-  overflowJobs: []
-  availableJobs:
-    Captain: [ 1, 1 ]
-    ChiefEngineer: [ 1, 1 ]
-    ChiefMedicalOfficer: [ 1, 1 ]
     HeadOfSecurity: [ 1, 1 ]
     SecurityOfficer: [ 2, 3 ]

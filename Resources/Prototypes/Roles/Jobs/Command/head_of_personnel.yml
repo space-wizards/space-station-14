@@ -10,20 +10,7 @@
   supervisors: "the captain"
   canBeAntag: false
   access:
-  - Command
-  - HeadOfPersonnel
-  - Security # HoPcurity strikes again
-  - Service
-  - Quartermaster
-  - Salvage
-  - Cargo
-  - Maintenance
-  - Janitor
-  - Theatre
-  - Kitchen
-  - Chapel
-  - Hydroponics
-  # I mean they'll give themselves the rest of the access levels *anyways*.
+    - AllAccess
 
 - type: startingGear
   id: HoPGear

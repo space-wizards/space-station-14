@@ -8,30 +8,7 @@
   supervisors: "the head of security"
   canBeAntag: false
   access:
-    - Captain
-    - HeadOfPersonnel
-    - ChiefEngineer
-    - ChiefMedicalOfficer
-    - HeadOfSecurity
-    - ResearchDirector
-    - Command
-    - Security
-    - Armory
-    - Engineering
-    - Medical
-    - Cargo
-    - Research
-    - Service
-    - Maintenance
-    - External
-    - Janitor
-    - Theatre
-    - Bar
-    - Chemistry
-    - Kitchen
-    - Chapel
-    - Hydroponics
-    - Quartermaster
+    - AllAccess
 
 - type: startingGear
   id: WardenGear
