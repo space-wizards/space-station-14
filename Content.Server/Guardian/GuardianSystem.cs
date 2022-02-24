@@ -161,9 +161,6 @@ namespace Content.Server.Guardian
                 return;
             }
 
-            // Can't work without actions
-            EntityManager.EnsureComponent<ActionsComponent>(target);
-
             if (component.Injecting) return;
 
             component.Injecting = true;
@@ -185,8 +182,7 @@ namespace Content.Server.Guardian
                 comp.Used ||
                 !TryComp<HandsComponent>(ev.User, out var hands) ||
                 !hands.IsHolding(comp.Owner) ||
-                HasComp<GuardianHostComponent>(ev.Target) ||
-                !TryComp<ActionsComponent>(ev.Target, out var actions))
+                HasComp<GuardianHostComponent>(ev.Target))
             {
                 comp.Injecting = false;
                 return;
@@ -204,8 +200,6 @@ namespace Content.Server.Guardian
             {
                 guardianComponent.Host = ev.Target;
 
-                // Grant the user the recall action and notify them
-                //actions.Grant(ActionType.ManifestGuardian);
                 SoundSystem.Play(Filter.Entities(ev.Target), "/Audio/Effects/guardian_inject.ogg", ev.Target);
 
                 _popupSystem.PopupEntity(Loc.GetString("guardian-created"), ev.Target, Filter.Entities(ev.Target));
