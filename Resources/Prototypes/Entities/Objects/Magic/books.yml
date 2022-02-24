@@ -50,11 +50,12 @@
 
 - type: entity
   id: RandomSpellBox
+  suffix: spellbooks
   parent: BoxCardboard
   components:
   - type: StorageFill
     contents:
-    # the probabilities are weird, but because of how orGroups work, this ensures that any one book spawns with equal probability
+    # the probabilities are weird, but because of how orGroups work, this ensures that we are guaranteed for a book to spawn, and that each one has equal probability
     - id: FireSpellbook
       prob: 0.333
       orGroup: books

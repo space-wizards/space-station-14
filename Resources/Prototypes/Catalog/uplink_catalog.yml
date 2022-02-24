@@ -285,13 +285,13 @@
   itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
   price: 4
 
-- type: uplinkListing
-  id: UplinkSpellBook
-  category: Misc  
-  listingName: Mystery Book
-  description: Light reading provided though the courtesy of the Space Wizard Federation.
-  itemId: RandomSpellBox
-  icon:
-    sprite: Objects/Magic/spellbook.rsi
-    state: random_book
-  price: 14
+#- type: uplinkListing
+#  id: UplinkSpellBook
+#  category: Misc  
+#  listingName: Mystery Book
+#  description: Light reading provided though the courtesy of the Space Wizard Federation.
+#  itemId: RandomSpellBox
+#  icon:
+#    sprite: Objects/Magic/spellbook.rsi
+#    state: random_book
+#  price: 14
