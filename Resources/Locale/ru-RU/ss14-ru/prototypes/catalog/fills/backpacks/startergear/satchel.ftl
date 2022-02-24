@@ -25,3 +25,6 @@ ent-ClothingBackpackSatchelChemistryFilled = { ent-ClothingBackpackSatchelChemis
 ent-ClothingBackpackSatchelChaplainFilled = { ent-ClothingBackpackSatchel }
     .desc = { ent-ClothingBackpackSatchel.desc }
     .suffix = { "" }
+ent-ClothingBackpackSatchelMusicianFilled = { ent-ClothingBackpackSatchel }
+    .desc = { ent-ClothingBackpackSatchel.desc }
+    .suffix = { "" }
