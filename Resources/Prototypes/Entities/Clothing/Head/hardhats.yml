@@ -19,12 +19,9 @@
     visuals:
       - type: FlashLightVisualizer
   - type: HandheldLight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
+  - type: ItemActions
+    actions:
+      - actionType: ToggleLight
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellSmallHigh

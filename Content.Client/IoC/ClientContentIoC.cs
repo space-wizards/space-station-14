@@ -36,6 +36,7 @@ namespace Content.Client.IoC
             IoCManager.Register<IScreenshotHook, ScreenshotHook>();
             IoCManager.Register<IClickMapManager, ClickMapManager>();
             IoCManager.Register<IStationEventManager, StationEventManager>();
+            IoCManager.Register<ActionManager, ActionManager>();
             IoCManager.Register<IClientAdminManager, ClientAdminManager>();
             IoCManager.Register<EuiManager, EuiManager>();
             IoCManager.Register<IVoteManager, VoteManager>();

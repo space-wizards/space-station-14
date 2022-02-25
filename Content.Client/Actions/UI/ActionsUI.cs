@@ -1,18 +1,23 @@
+using System.Collections.Generic;
+using Content.Client.Actions.Assignments;
 using Content.Client.DragDrop;
 using Content.Client.HUD;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Actions.Prototypes;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Actions.UI
@@ -22,15 +27,12 @@ namespace Content.Client.Actions.UI
     /// </summary>
     public sealed class ActionsUI : Container
     {
-        private const float DragDeadZone = 10f;
         private const float CustomTooltipDelay = 0.4f;
-        internal readonly ActionsSystem System;
+        private readonly ClientActionsComponent _actionsComponent;
+        private readonly ActionManager _actionManager;
+        private readonly IEntityManager _entityManager;
+        private readonly IGameTiming _gameTiming;
         private readonly IGameHud _gameHud;
-
-        /// <summary>
-        ///     The action component of the currently attached entity.
-        /// </summary>
-        public readonly ActionsComponent Component;
 
         private readonly ActionSlot[] _slots;
 
@@ -73,13 +75,15 @@ namespace Content.Client.Actions.UI
         /// </summary>
         public IEnumerable<ActionSlot> Slots => _slots;
 
-        public ActionsUI(ActionsSystem system, ActionsComponent component)
+        public ActionsUI(ClientActionsComponent actionsComponent)
         {
             SetValue(LayoutContainer.DebugProperty, true);
-            System = system;
-            Component = component;
+            _actionsComponent = actionsComponent;
+            _actionManager = IoCManager.Resolve<ActionManager>();
+            _entityManager = IoCManager.Resolve<IEntityManager>();
+            _gameTiming = IoCManager.Resolve<IGameTiming>();
             _gameHud = IoCManager.Resolve<IGameHud>();
-            _menu = new ActionMenu(this);
+            _menu = new ActionMenu(_actionsComponent, this);
 
             LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.End);
             LayoutContainer.SetGrowVertical(this, LayoutContainer.GrowDirection.Constrain);
@@ -192,7 +196,7 @@ namespace Content.Client.Actions.UI
             _loadoutContainer.AddChild(nextHotbarIcon);
             _loadoutContainer.AddChild(new Control { HorizontalExpand = true, SizeFlagsStretchRatio = 1 });
 
-            _slots = new ActionSlot[ActionsSystem.Slots];
+            _slots = new ActionSlot[ClientActionsComponent.Slots];
 
             _dragShadow = new TextureRect
             {
@@ -203,14 +207,14 @@ namespace Content.Client.Actions.UI
             };
             UserInterfaceManager.PopupRoot.AddChild(_dragShadow);
 
-            for (byte i = 0; i < ActionsSystem.Slots; i++)
+            for (byte i = 0; i < ClientActionsComponent.Slots; i++)
             {
-                var slot = new ActionSlot(this, _menu, i);
+                var slot = new ActionSlot(this, _menu, actionsComponent, i);
                 _slotContainer.AddChild(slot);
                 _slots[i] = slot;
             }
 
-            DragDropHelper = new DragDropHelper<ActionSlot>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag, DragDeadZone);
+            DragDropHelper = new DragDropHelper<ActionSlot>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
 
             MinSize = (10, 400);
         }
@@ -281,46 +285,156 @@ namespace Content.Client.Actions.UI
 
             foreach (var actionSlot in Slots)
             {
-                var action = System.Assignments[SelectedHotbar, actionSlot.SlotIndex];
-
-                if (action == null)
+                var assignedActionType = _actionsComponent.Assignments[SelectedHotbar, actionSlot.SlotIndex];
+                if (!assignedActionType.HasValue)
                 {
-                    if (SelectingTargetFor == actionSlot)
-                        StopTargeting(true);
                     actionSlot.Clear();
                     continue;
                 }
 
-                // This shouldn't happen, but could possible occur if theres some bug. Really the fact that the
-                // assignments aren't stored directly on the components or actions is just bad design and needs fixing.
-                DebugTools.Assert(Component.Actions.TryGetValue(action, out var compAction) && compAction == action);
-
-                UpdateActionSlot(action, actionSlot);
+                if (assignedActionType.Value.TryGetAction(out var actionType))
+                {
+                    UpdateActionSlot(actionType, actionSlot, assignedActionType);
+                }
+                else if (assignedActionType.Value.TryGetItemActionWithoutItem(out var itemlessActionType))
+                {
+                    UpdateActionSlot(itemlessActionType, actionSlot, assignedActionType);
+                }
+                else if (assignedActionType.Value.TryGetItemActionWithItem(out var itemActionType, out var item))
+                {
+                    UpdateActionSlot(item, itemActionType, actionSlot, assignedActionType);
+                }
+                else
+                {
+                    Logger.ErrorS("action", "unexpected Assignment type {0}",
+                        assignedActionType.Value.Assignment);
+                    actionSlot.Clear();
+                }
             }
         }
 
-        private void UpdateActionSlot(ActionType action, ActionSlot actionSlot)
+        private void UpdateActionSlot(ActionType actionType, ActionSlot actionSlot, ActionAssignment? assignedActionType)
         {
-            actionSlot.Assign(action);
-
-            if (!action.Enabled)
+            if (_actionManager.TryGet(actionType, out var action))
             {
+                actionSlot.Assign(action, true);
+            }
+            else
+            {
+                Logger.ErrorS("action", "unrecognized actionType {0}", assignedActionType);
+                actionSlot.Clear();
+                return;
+            }
+
+            if (!_actionsComponent.TryGetActionState(actionType, out var actionState) || !actionState.Enabled)
+            {
+                // action is currently disabled
+
                 // just revoked an action we were trying to target with, stop targeting
                 if (SelectingTargetFor?.Action != null && SelectingTargetFor.Action == action)
                 {
                     StopTargeting();
                 }
 
-                actionSlot.Disable();
+                actionSlot.DisableAction();
+                actionSlot.Cooldown = null;
             }
             else
             {
-                actionSlot.Enable();
+                // action is currently granted
+                actionSlot.EnableAction();
+                actionSlot.Cooldown = actionState.Cooldown;
+
+                // if we are targeting for this action and it's now on cooldown, stop targeting if we're supposed to
+                if (SelectingTargetFor?.Action != null && SelectingTargetFor.Action == action &&
+                    actionState.IsOnCooldown(_gameTiming) && action.DeselectOnCooldown)
+                {
+                    StopTargeting();
+                }
             }
 
-            actionSlot.UpdateIcons();
-            actionSlot.DrawModeChanged();
+            // check if we need to toggle it
+            if (action.BehaviorType == BehaviorType.Toggle)
+            {
+                actionSlot.ToggledOn = actionState.ToggledOn;
+            }
         }
+
+        private void UpdateActionSlot(ItemActionType itemlessActionType, ActionSlot actionSlot,
+            ActionAssignment? assignedActionType)
+        {
+            if (_actionManager.TryGet(itemlessActionType, out var action))
+            {
+                actionSlot.Assign(action);
+            }
+            else
+            {
+                Logger.ErrorS("action", "unrecognized actionType {0}", assignedActionType);
+                actionSlot.Clear();
+            }
+            actionSlot.Cooldown = null;
+        }
+
+        private void UpdateActionSlot(EntityUid item, ItemActionType itemActionType, ActionSlot actionSlot,
+            ActionAssignment? assignedActionType)
+        {
+            if (!_entityManager.EntityExists(item)) return;
+            if (_actionManager.TryGet(itemActionType, out var action))
+            {
+                actionSlot.Assign(action, item, true);
+            }
+            else
+            {
+                Logger.ErrorS("action", "unrecognized actionType {0}", assignedActionType);
+                actionSlot.Clear();
+                return;
+            }
+
+            if (!_actionsComponent.TryGetItemActionState(itemActionType, item, out var actionState))
+            {
+                // action is no longer tied to an item, this should never happen as we
+                // check this at the start of this method. But just to be safe
+                // we will restore our assignment here to the correct state
+                Logger.ErrorS("action", "coding error, expected actionType {0} to have" +
+                                          " a state but it didn't", assignedActionType);
+                _actionsComponent.Assignments.AssignSlot(SelectedHotbar, actionSlot.SlotIndex,
+                    ActionAssignment.For(itemActionType));
+                actionSlot.Assign(action);
+                return;
+            }
+
+            if (!actionState.Enabled)
+            {
+                // just disabled an action we were trying to target with, stop targeting
+                if (SelectingTargetFor?.Action != null && SelectingTargetFor.Action == action)
+                {
+                    StopTargeting();
+                }
+
+                actionSlot.DisableAction();
+            }
+            else
+            {
+                // action is currently granted
+                actionSlot.EnableAction();
+
+                // if we are targeting with an action now on cooldown, stop targeting if we should
+                if (SelectingTargetFor?.Action != null && SelectingTargetFor.Action == action &&
+                    SelectingTargetFor.Item == item &&
+                    actionState.IsOnCooldown(_gameTiming) && action.DeselectOnCooldown)
+                {
+                    StopTargeting();
+                }
+            }
+            actionSlot.Cooldown = actionState.Cooldown;
+
+            // check if we need to toggle it
+            if (action.BehaviorType == BehaviorType.Toggle)
+            {
+                actionSlot.ToggledOn = actionState.ToggledOn;
+            }
+        }
+
 
         private void OnHotbarPaginate(GUIBoundKeyEventArgs args)
         {
@@ -331,11 +445,11 @@ namespace Content.Client.Actions.UI
             var rightness = args.RelativePosition.X / _loadoutContainer.Width;
             if (rightness > 0.5)
             {
-                ChangeHotbar((byte) ((SelectedHotbar + 1) % ActionsSystem.Hotbars));
+                ChangeHotbar((byte) ((SelectedHotbar + 1) % ClientActionsComponent.Hotbars));
             }
             else
             {
-                var newBar = SelectedHotbar == 0 ? ActionsSystem.Hotbars - 1 : SelectedHotbar - 1;
+                var newBar = SelectedHotbar == 0 ? ClientActionsComponent.Hotbars - 1 : SelectedHotbar - 1;
                 ChangeHotbar((byte) newBar);
             }
         }
@@ -369,41 +483,36 @@ namespace Content.Client.Actions.UI
         /// </summary>
         private void StartTargeting(ActionSlot actionSlot)
         {
-            if (actionSlot.Action == null)
-                return;
-
             // If we were targeting something else we should stop
             StopTargeting();
 
             SelectingTargetFor = actionSlot;
 
-            if (actionSlot.Action is TargetedAction targetAction)
-                System.StartTargeting(targetAction);
-
-            UpdateUI();
+            // show it as toggled on to indicate we are currently selecting a target for it
+            if (!actionSlot.ToggledOn)
+            {
+                actionSlot.ToggledOn = true;
+            }
         }
 
         /// <summary>
         /// Switch out of targeting mode if currently selecting target for an action
         /// </summary>
-        public void StopTargeting(bool updating = false)
+        public void StopTargeting()
         {
-            if (SelectingTargetFor == null)
-                return;
-
+            if (SelectingTargetFor == null) return;
+            if (SelectingTargetFor.ToggledOn)
+            {
+                SelectingTargetFor.ToggledOn = false;
+            }
             SelectingTargetFor = null;
-            System.StopTargeting();
-
-            // Sometimes targeting gets stopped mid-UI update.
-            // in that case, don't need to do a nested UI refresh.
-            if (!updating)
-                UpdateUI();
         }
 
         private void OnToggleActionsMenu(BaseButton.ButtonEventArgs args)
         {
             ToggleActionsMenu();
         }
+
 
         private void OnToggleActionsMenuTopButton(bool open)
         {
@@ -434,7 +543,7 @@ namespace Content.Client.Actions.UI
             // only initiate the drag if the slot has an action in it
             if (Locked || DragDropHelper.Dragged?.Action == null) return false;
 
-            _dragShadow.Texture = DragDropHelper.Dragged.Action.Icon?.Frame0();
+            _dragShadow.Texture = DragDropHelper.Dragged.Action.Icon.Frame0();
             LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled.Position - (32, 32));
             DragDropHelper.Dragged.CancelPress();
             return true;
@@ -465,7 +574,6 @@ namespace Content.Client.Actions.UI
         {
             var actionSlot = _slots[slot];
             actionSlot.Depress(args.State == BoundKeyState.Down);
-            actionSlot.DrawModeChanged();
         }
 
         /// <summary>
