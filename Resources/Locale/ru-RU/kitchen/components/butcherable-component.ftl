@@ -1,1 +1,1 @@
-butcherable-knife-butchered-success = You butcher { THE($target) } with { THE($knife) }.
+butcherable-knife-butchered-success = Вы разделываете ($target) с помощью ($knife).
