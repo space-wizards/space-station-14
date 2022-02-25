@@ -16,7 +16,6 @@ namespace Content.Client.Entry
             "Temperature",
             "AtmosExposed",
             "Explosive",
-            "Vocal",
             "OnUseTimerTrigger",
             "WarpPoint",
             "EmitSoundOnUse",

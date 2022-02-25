@@ -15,12 +15,9 @@
     sprite: Objects/Tanks/generic.rsi
     QuickEquip: false
   - type: GasTank
-    toggleAction:
-      name: action-name-internals-toggle
-      description: action-description-internals-toggle
-      icon: Interface/Actions/internal0.png
-      iconOn: Interface/Actions/internal1.png
-      event: !type:ToggleActionEvent
+  - type: ItemActions
+    actions:
+    - actionType: ToggleInternals
 
 - type: entity
   parent: GasTankBase

@@ -92,11 +92,10 @@ namespace Content.Shared.Hands
 
             hands.Dirty();
 
-            var gotUnequipped = new GotUnequippedHandEvent(uid, entity, hand);
-            RaiseLocalEvent(entity, gotUnequipped, false);
-
-            var didUnequip = new DidUnequipHandEvent(uid, entity, hand);
-            RaiseLocalEvent(uid, didUnequip);
+            var unequippedHandMessage = new UnequippedHandEvent(uid, entity, hand);
+            RaiseLocalEvent(entity, unequippedHandMessage);
+            if (unequippedHandMessage.Handled)
+                return;
 
             if (hand.Name == hands.ActiveHand)
                 RaiseLocalEvent(entity, new HandDeselectedEvent(uid, entity), false);
@@ -124,15 +123,11 @@ namespace Content.Shared.Hands
 
             hands.Dirty();
 
-            var didEquip = new DidEquipHandEvent(uid, entity, hand);
-            RaiseLocalEvent(uid, didEquip, false);
+            var equippedHandMessage = new EquippedHandEvent(uid, entity, hand);
+            RaiseLocalEvent(entity, equippedHandMessage);
 
-            var gotEquipped = new GotEquippedHandEvent(uid, entity, hand);
-            RaiseLocalEvent(entity, gotEquipped);
-
-            // TODO this should REALLY be a cancellable thing, not a handled event.
             // If one of the interactions resulted in the item being dropped, return early.
-            if (gotEquipped.Handled)
+            if (equippedHandMessage.Handled)
                 return;
 
             if (hand.Name == hands.ActiveHand)
