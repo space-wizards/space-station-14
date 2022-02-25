@@ -120,14 +120,22 @@ namespace Content.Client.Actions
 
         protected override void Dirty(ActionType action)
         {
+            // Should only ever receive component states for attached player's component.
+            // --> lets not bother unnecessarily dirtying and prediction-resetting actions for other players.
+            if (action.AttachedEntity != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
             base.Dirty(action);
-            if (action.AttachedEntity == _playerManager.LocalPlayer?.ControlledEntity)
-                UIDirty = true;
+            UIDirty = true;
         }
 
         private void HandleState(EntityUid uid, ActionsComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not ActionsComponentState state)
+                return;
+
+            // Client only needs to care about local player.
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
 
             var serverActions = new SortedSet<ActionType>(state.Actions);
@@ -204,17 +212,23 @@ namespace Content.Client.Actions
             comp.Actions.Add(action);
         }
 
-        public override void AddActions(EntityUid uid, IEnumerable<ActionType> actions, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
+        public override void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
         {
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
             if (!Resolve(uid, ref comp, false))
                 return;
 
-            base.AddActions(uid, actions, provider, comp, dirty);
+            base.AddAction(uid, action, provider, comp, dirty);
             UIDirty = true;
         }
 
         public override void RemoveActions(EntityUid uid, IEnumerable<ActionType> actions, ActionsComponent? comp = null, bool dirty = true)
         {
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
             if (!Resolve(uid, ref comp, false))
                 return;
 
@@ -574,7 +588,7 @@ namespace Content.Client.Actions
             _targetOutline.Enable(range, entityAction.CheckCanAccess, predicate, entityAction.Whitelist, null);
         }
 
-        internal void TryFillSlot(ActionSlot slot, byte hotbar, byte index)
+        internal void TryFillSlot(byte hotbar, byte index)
         {
             if (Ui == null)
                 return;
