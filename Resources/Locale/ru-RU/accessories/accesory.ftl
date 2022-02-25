@@ -1,2 +1,2 @@
-accessory-HairBald = Bald
-accessory-FacialHairShaved = Shaved
+accessory-HairBald = Лысый
+accessory-FacialHairShaved = Бритый
