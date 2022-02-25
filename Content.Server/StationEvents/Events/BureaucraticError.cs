@@ -55,7 +55,6 @@ public sealed class BureaucraticError : StationEvent
                     continue;
 
                 var adj = Math.Max(chosenStation.JobList[chosenJob] + _random.Next(-3, 6), 0);
-                Logger.DebugS("events", $"Setting {chosenJob} to {adj} slots");
                 chosenStation.AdjustJobAmount(chosenJob, adj);
             }
         }

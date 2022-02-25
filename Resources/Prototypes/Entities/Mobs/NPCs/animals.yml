@@ -943,6 +943,19 @@
     interactFailureString: petting-failure-generic
 
 - type: entity
+  name: tarantula
+  parent: MobGiantSpider
+  id: MobGiantSpiderAngry
+  components:
+    - type: AiFactionTag
+      factions:
+        - Xeno
+    - type: UtilityAI
+      behaviorSets:
+        - Idle
+        - UnarmedAttackHostiles
+
+- type: entity
   name: possum
   parent: SimpleMobBase
   id: MobPossum
