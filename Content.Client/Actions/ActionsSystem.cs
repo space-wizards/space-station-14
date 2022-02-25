@@ -46,9 +46,7 @@ namespace Content.Client.Actions
         [Dependency] private readonly InteractionOutlineSystem _interactionOutline = default!;
         [Dependency] private readonly TargetOutlineSystem _targetOutline = default!;
 
-        // TODO Move assignments to the component? Would be required for full game state save/load.
-        // But some actions are client-only, and the sever doesn't know about them....
-
+        // TODO Redo assignments, including allowing permanent user configurable slot assignments.
         /// <summary>
         /// Current assignments for all hotbars / slots for this entity.
         /// </summary>
@@ -142,6 +140,7 @@ namespace Content.Client.Actions
                 if (!serverActions.TryGetValue(act, out var serverAct))
                 {
                     component.Actions.Remove(act);
+                    Assignments.Remove(act);
                     continue;
                 }
 
@@ -191,6 +190,20 @@ namespace Content.Client.Actions
             _highlightedEntity = null;
         }
 
+        protected override void AddActionInternal(ActionsComponent comp, ActionType action)
+        {
+            // Sometimes the client receives actions from the server, before predicting that newly added components will add
+            // their own shared actions. Just in case those systems ever decided to directly access action properties (e.g.,
+            // action.Toggled), we will remove duplicates:
+            if (comp.Actions.TryGetValue(action, out var existing))
+            {
+                comp.Actions.Remove(existing);
+                Assignments.Replace(existing, action);
+            }
+
+            comp.Actions.Add(action);
+        }
+
         public override void AddActions(EntityUid uid, IEnumerable<ActionType> actions, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
         {
             if (!Resolve(uid, ref comp, false))
@@ -206,6 +219,12 @@ namespace Content.Client.Actions
                 return;
 
             base.RemoveActions(uid, actions, comp, dirty);
+
+            foreach (var act in actions)
+            {
+                Assignments.Remove(act);
+            }
+
             UIDirty = true;
         }
 

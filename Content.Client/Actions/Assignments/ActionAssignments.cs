@@ -46,6 +46,24 @@ namespace Content.Client.Actions.Assignments
             _slots = new ActionType?[numHotbars, numSlots];
         }
 
+        public bool Remove(ActionType action) => Replace(action, null);
+
+        internal bool Replace(ActionType action, ActionType? newAction)
+        {
+            if (!Assignments.Remove(action, out var assigns))
+                return false;
+
+            if (newAction != null)
+                Assignments[newAction] = assigns;
+
+            foreach (var (bar, slot) in assigns)
+            {
+                _slots[bar, slot] = newAction;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Assigns the indicated hotbar slot to the specified action type.
         /// </summary>

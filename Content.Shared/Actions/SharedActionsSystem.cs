@@ -58,18 +58,27 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public void SetToggled(ActionType action, bool toggled)
     {
+        if (action.Toggled == toggled)
+            return;
+
         action.Toggled = toggled;
         Dirty(action);
     }
 
     public void SetEnabled(ActionType action, bool enabled)
     {
+        if (action.Enabled == enabled)
+            return;
+
         action.Enabled = enabled;
         Dirty(action);
     }
 
     public void SetCharges(ActionType action, int? charges)
     {
+        if (action.Charges == charges)
+            return;
+
         action.Charges = charges;
         Dirty(action);
     }
@@ -340,10 +349,34 @@ public abstract class SharedActionsSystem : EntitySystem
 
     #region AddRemoveActions
     /// <summary>
+    ///     Add an action to an action component. If the entity has no action component, this will give them one.
+    /// </summary>
+    /// <param name="uid">Entity to receive the actions</param>
+    /// <param name="action">The action to add</param>
+    /// <param name="provider">The entity that enables these actions (e.g., flashlight). May be null (innate actions).</param>
+    public void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
+    {
+        comp ??= EnsureComp<ActionsComponent>(uid);
+        action.Provider = provider;
+        action.AttachedEntity = comp.Owner;
+        AddActionInternal(comp, action);
+
+        // for client-exclusive actions, the client shouldn't mark the comp as dirty. Otherwise that just leads to
+        // unnecessary prediction resetting and state handling.
+        if (dirty)
+            Dirty(comp);
+    }
+
+    protected virtual void AddActionInternal(ActionsComponent comp, ActionType action)
+    {
+        comp.Actions.Add(action);
+    }
+
+    /// <summary>
     ///     Add actions to an action component. If the entity has no action component, this will give them one.
     /// </summary>
     /// <param name="uid">Entity to receive the actions</param>
-    /// <param name="actions">The actions</param>
+    /// <param name="actions">The actions to add</param>
     /// <param name="provider">The entity that enables these actions (e.g., flashlight). May be null (innate actions).</param>
     public virtual void AddActions(EntityUid uid, IEnumerable<ActionType> actions, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
     {
@@ -351,19 +384,9 @@ public abstract class SharedActionsSystem : EntitySystem
 
         foreach (var action in actions)
         {
-            action.Provider = provider;
-            action.AttachedEntity = comp.Owner;
+            AddAction(uid, action, provider, comp, false);
         }
 
-        // Sometimes the client receives actions from the server, before predicting that newly added components will add
-        // their own shared actions. Just in case those systems ever decided to directly access action properties (e.g.,
-        // action.Toggled), we will remove duplicates:
-        comp.Actions.ExceptWith(actions);
-
-        comp.Actions.UnionWith(actions);
-
-        // for client-exclusive actions, the client shouldn't mark the comp as dirty. Otherwise that just leads to
-        // unnecessary prediction resetting and state handling.
         if (dirty)
             Dirty(comp);
     }
@@ -398,9 +421,6 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public void RemoveAction(EntityUid uid, ActionType action, ActionsComponent? comp = null)
         => RemoveActions(uid, new[] { action }, comp);
-
-    public void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null)
-        => AddActions(uid, new[] { action }, provider, comp);
     #endregion
 
     #region EquipHandlers

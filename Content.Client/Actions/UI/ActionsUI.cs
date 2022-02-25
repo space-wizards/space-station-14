@@ -12,6 +12,7 @@ using Robust.Client.Utility;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Actions.UI
@@ -281,6 +282,7 @@ namespace Content.Client.Actions.UI
             foreach (var actionSlot in Slots)
             {
                 var action = System.Assignments[SelectedHotbar, actionSlot.SlotIndex];
+
                 if (action == null)
                 {
                     if (SelectingTargetFor == actionSlot)
@@ -288,6 +290,10 @@ namespace Content.Client.Actions.UI
                     actionSlot.Clear();
                     continue;
                 }
+
+                // This shouldn't happen, but could possible occur if theres some bug. Really the fact that the
+                // assignments aren't stored directly on the components or actions is just bad design and needs fixing.
+                DebugTools.Assert(Component.Actions.TryGetValue(action, out var compAction) && compAction == action);
 
                 UpdateActionSlot(action, actionSlot);
             }
