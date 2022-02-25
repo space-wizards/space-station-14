@@ -1,9 +1,4 @@
 Entries:
-- author: xRiriq
-  changes:
-  - {message: altered names of command clothing and hardsuits to be consistent, type: Fix}
-  id: 625
-  time: '2021-11-21T20:14:39.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: You can no longer inspecting your surroundings using the examine popup
@@ -2996,3 +2991,10 @@ Entries:
   - {message: Added crafting for pipes, type: Add}
   id: 1124
   time: '2022-02-24T15:05:10.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Pillar V5 is here! All new engineering and bar. Lots of QoL improvements.
+      Less space, more interesting corridors etc. See changelog on github PR 6883.',
+    type: Add}
+  id: 1125
+  time: '2022-02-25T23:18:08.0000000+00:00'
