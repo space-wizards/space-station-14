@@ -24,13 +24,73 @@ public sealed class InteractionOutlineSystem : EntitySystem
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
-    public bool Enabled = true;
+    /// <summary>
+    ///     Whether to currently draw the outline. The outline may be temporarily disabled by other systems
+    /// </summary>
+    private bool _enabled = true;
+
+    /// <summary>
+    ///     Whether to draw the outline at all. Overrides <see cref="_enabled"/>.
+    /// </summary>
+    private bool _cvarEnabled = true;
 
     private EntityUid? _lastHoveredEntity;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _configManager.OnValueChanged(CCVars.OutlineEnabled, SetCvarEnabled);
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        _configManager.UnsubValueChanged(CCVars.OutlineEnabled, SetCvarEnabled);
+    }
+
+    public void SetCvarEnabled(bool cvarEnabled)
+    {
+        _cvarEnabled = cvarEnabled;
+
+        // clear last hover if required:
+
+        if (_cvarEnabled)
+            return;
+
+        if (_lastHoveredEntity == null || Deleted(_lastHoveredEntity))
+            return;
+
+        if (TryComp(_lastHoveredEntity, out InteractionOutlineComponent? outline))
+            outline.OnMouseLeave();
+    }
+
+    public void SetEnabled(bool enabled)
+    {
+        if (enabled == _enabled)
+            return;
+
+        _enabled = enabled;
+
+        // clear last hover if required:
+
+        if (enabled)
+            return;
+
+        if (_lastHoveredEntity == null || Deleted(_lastHoveredEntity))
+            return;
+
+        if (TryComp(_lastHoveredEntity, out InteractionOutlineComponent? outline))
+            outline.OnMouseLeave();
+    }
 
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
+
+        if (!_enabled || !_cvarEnabled)
+            return;
 
         // If there is no local player, there is no session, and therefore nothing to do here.
         var localPlayer = _playerManager.LocalPlayer;
@@ -80,16 +140,6 @@ public sealed class InteractionOutlineSystem : EntitySystem
         }
 
         InteractionOutlineComponent? outline;
-
-        if (!Enabled || !_configManager.GetCVar(CCVars.OutlineEnabled))
-        {
-            if (entityToClick != null && TryComp(entityToClick, out outline))
-            {
-                outline.OnMouseLeave(); //Prevent outline remains from persisting post command.
-            }
-
-            return;
-        }
 
         if (entityToClick == _lastHoveredEntity)
         {

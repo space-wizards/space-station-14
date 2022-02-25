@@ -68,8 +68,6 @@
       types:
         Blunt: 22
   - type: Actions
-    innateActions:
-      - CombatMode
   - type: Guardian
   - type: NameIdentifier
     group: Holoparasite

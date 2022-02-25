@@ -31,6 +31,7 @@
     bumpOpen: false
     clickOpen: true
     weldable: false
+    canCrush: false
     closeTimeOne: 0.2
     closeTimeTwo: 0.6
     openTimeOne: 0.6

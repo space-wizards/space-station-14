@@ -113,7 +113,6 @@ namespace Content.Server.Entry
             else
             {
                 IoCManager.Resolve<RecipeManager>().Initialize();
-                IoCManager.Resolve<ActionManager>().Initialize();
                 IoCManager.Resolve<BlackboardManager>().Initialize();
                 IoCManager.Resolve<ConsiderationsManager>().Initialize();
                 IoCManager.Resolve<IAdminManager>().Initialize();

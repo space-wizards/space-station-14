@@ -7,6 +7,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Visible;
 using Content.Server.Warps;
+using Content.Shared.Actions;
 using Content.Shared.Examine;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
@@ -15,10 +16,6 @@ using Content.Shared.Movement.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
@@ -30,7 +27,9 @@ namespace Content.Server.Ghost
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
+        [Dependency] private readonly IEntityLookup _lookup = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
 
         public override void Initialize()
@@ -51,6 +50,30 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostReturnToBodyRequest>(OnGhostReturnToBodyRequest);
             SubscribeNetworkEvent<GhostWarpToLocationRequestEvent>(OnGhostWarpToLocationRequest);
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
+
+            SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
+        }
+        private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            var ents = _lookup.GetEntitiesInRange(args.Performer, component.BooRadius);
+
+            var booCounter = 0;
+            foreach (var ent in ents)
+            {
+                var ghostBoo = new GhostBooEvent();
+                RaiseLocalEvent(ent, ghostBoo);
+
+                if (ghostBoo.Handled)
+                    booCounter++;
+
+                if (booCounter >= component.BooMaxTargets)
+                    break;
+            }
+
+            args.Handled = true;
         }
 
         private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, RelayMoveInputEvent args)
@@ -78,6 +101,8 @@ namespace Content.Server.Ghost
             }
 
             component.TimeOfDeath = _gameTiming.RealTime;
+
+            _actions.AddAction(uid, component.Action, null);
         }
 
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
@@ -98,6 +123,8 @@ namespace Content.Server.Ghost
                 {
                     eye.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
                 }
+
+                _actions.RemoveAction(uid, component.Action);
             }
         }
 

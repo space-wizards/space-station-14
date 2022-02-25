@@ -1,5 +1,4 @@
-using System;
-using Robust.Shared.GameObjects;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -8,6 +7,9 @@ namespace Content.Shared.Light.Component
     [NetworkedComponent]
     public abstract class SharedHandheldLightComponent : Robust.Shared.GameObjects.Component
     {
+        [DataField("toggleAction", required: true)]
+        public InstantAction ToggleAction = default!;
+
         public const int StatusLevels = 6;
 
         [Serializable, NetSerializable]
