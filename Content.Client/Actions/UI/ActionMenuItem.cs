@@ -33,8 +33,11 @@ namespace Content.Client.Actions.UI
 
         private Action<ActionMenuItem> _onControlFocusExited;
 
-        public ActionMenuItem(ActionType action, Action<ActionMenuItem> onControlFocusExited)
+        private readonly ActionsUI _actionsUI;
+
+        public ActionMenuItem(ActionsUI actionsUI, ActionType action, Action<ActionMenuItem> onControlFocusExited)
         {
+            _actionsUI = actionsUI;
             Action = action;
             _onControlFocusExited = onControlFocusExited;
 
@@ -111,7 +114,7 @@ namespace Content.Client.Actions.UI
                 return;
             }
 
-            if (Action.Toggled && Action.IconOn != null)
+            if ((_actionsUI.SelectingTargetFor?.Action == Action || Action.Toggled) && Action.IconOn != null)
                 SetActionIcon(Action.IconOn.Frame0());
             else
                 SetActionIcon(Action.Icon?.Frame0());

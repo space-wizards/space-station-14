@@ -286,7 +286,7 @@ namespace Content.Client.Actions.UI
                 if (action == null)
                 {
                     if (SelectingTargetFor == actionSlot)
-                        StopTargeting();
+                        StopTargeting(true);
                     actionSlot.Clear();
                     continue;
                 }
@@ -377,29 +377,27 @@ namespace Content.Client.Actions.UI
 
             SelectingTargetFor = actionSlot;
 
-            // show it as toggled on to indicate we are currently selecting a target for it
-            actionSlot.UpdateIcons();
-            actionSlot.DrawModeChanged();
-
             if (actionSlot.Action is TargetedAction targetAction)
                 System.StartTargeting(targetAction);
+
+            UpdateUI();
         }
 
         /// <summary>
         /// Switch out of targeting mode if currently selecting target for an action
         /// </summary>
-        public void StopTargeting()
+        public void StopTargeting(bool updating = false)
         {
             if (SelectingTargetFor == null)
                 return;
 
-            var slot = SelectingTargetFor;
             SelectingTargetFor = null;
-
-            slot.UpdateIcons();
-            slot.DrawModeChanged();
-
             System.StopTargeting();
+
+            // Sometimes targeting gets stopped mid-UI update.
+            // in that case, don't need to do a nested UI refresh.
+            if (!updating)
+                UpdateUI();
         }
 
         private void OnToggleActionsMenu(BaseButton.ButtonEventArgs args)

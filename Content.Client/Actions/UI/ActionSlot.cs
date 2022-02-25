@@ -387,7 +387,7 @@ namespace Content.Client.Actions.UI
                 return;
             }
 
-            if ((_actionsUI.SelectingTargetFor == this || Action.Toggled) && Action.IconOn != null)
+            if ((_actionsUI.SelectingTargetFor?.Action == Action || Action.Toggled) && Action.IconOn != null)
                 SetActionIcon(Action.IconOn.Frame0());
             else
                 SetActionIcon(Action.Icon?.Frame0());

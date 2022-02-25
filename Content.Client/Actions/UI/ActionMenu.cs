@@ -383,7 +383,7 @@ namespace Content.Client.Actions.UI
 
             foreach (var action in actions)
             {
-                var actionItem = new ActionMenuItem(action, OnItemFocusExited);
+                var actionItem = new ActionMenuItem(_actionsUI, action, OnItemFocusExited);
                 _resultsGrid.Children.Add(actionItem);
                 actionItem.SetActionState(action.Enabled);
                 actionItem.OnButtonDown += OnItemButtonDown;
