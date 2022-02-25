@@ -16,7 +16,7 @@
       Ignite: 3
 
 - type: entity
-  id: LightningSpellBook
+  id: LightningSpellbook
   name: lightning spellbook
   parent: BaseItem
   components:
@@ -32,7 +32,7 @@
       Taser: 5
 
 - type: entity
-  id: SpatialSpellBook
+  id: SpatialSpellbook
   name: spatial spellbook
   parent: BaseItem
   components:
@@ -59,9 +59,9 @@
     - id: FireSpellbook
       prob: 0.333
       orGroup: books
-    - id: LightningSpellBook
+    - id: LightningSpellbook
       prob: 0.5
       orGroup: books
-    - id: SpatialSpellBook
+    - id: SpatialSpellbook
       prob: 1
       orGroup: books
