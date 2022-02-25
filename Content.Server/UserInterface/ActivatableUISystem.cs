@@ -1,5 +1,7 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
@@ -21,12 +23,29 @@ namespace Content.Server.UserInterface
             SubscribeLocalEvent<ActivatableUIComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<ActivatableUIComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>((uid, aui, _) => CloseAll(uid, aui));
-            SubscribeLocalEvent<ActivatableUIComponent, UnequippedHandEvent>((uid, aui, _) => CloseAll(uid, aui));
+            SubscribeLocalEvent<ActivatableUIComponent, GotUnequippedHandEvent>((uid, aui, _) => CloseAll(uid, aui));
             // *THIS IS A BLATANT WORKAROUND!* RATIONALE: Microwaves need it
             SubscribeLocalEvent<ActivatableUIComponent, EntParentChangedMessage>(OnParentChanged);
             SubscribeLocalEvent<ActivatableUIComponent, BoundUIClosedEvent>(OnUIClose);
 
             SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
+
+            SubscribeLocalEvent<ServerUserInterfaceComponent, OpenUiActionEvent>(OnActionPerform);
+        }
+
+        private void OnActionPerform(EntityUid uid, ServerUserInterfaceComponent component, OpenUiActionEvent args)
+        {
+            if (args.Handled || args.Key == null)
+                return;
+
+            if (!TryComp(args.Performer, out ActorComponent? actor))
+                return;
+
+            if (!component.TryGetBoundUserInterface(args.Key, out var bui))
+                return;
+
+            bui.Toggle(actor.PlayerSession);
+            args.Handled = true;
         }
 
         private void AddOpenUiVerb(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<ActivationVerb> args)

@@ -121,8 +121,6 @@
       sprite: Mobs/Effects/onfire.rsi
       normalState: Generic_mob_burning
   - type: Actions
-    innateActions:
-      - CombatMode
   - type: DoAfter
   - type: Climbing
   - type: Flashable

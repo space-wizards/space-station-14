@@ -1,10 +1,9 @@
 ﻿using Content.Shared.Clothing;
 using Content.Shared.Movement.EntitySystems;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Clothing
 {
-    public sealed class MagbootsSystem : EntitySystem
+    public sealed class MagbootsSystem : SharedMagbootsSystem
     {
         public override void Initialize()
         {

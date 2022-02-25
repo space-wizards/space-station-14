@@ -1,10 +1,9 @@
 using Content.Server.Atmos.Components;
+using Content.Shared.Actions;
+using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -20,6 +19,23 @@ namespace Content.Server.Atmos.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUIVerb);
+            SubscribeLocalEvent<GasTankComponent, GetActionsEvent>(OnGetActions);
+            SubscribeLocalEvent<GasTankComponent, ToggleActionEvent>(OnActionToggle);
+        }
+
+        private void OnGetActions(EntityUid uid, GasTankComponent component, GetActionsEvent args)
+        {
+            args.Actions.Add(component.ToggleAction);
+        }
+
+        private void OnActionToggle(EntityUid uid, GasTankComponent component, ToggleActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            component.ToggleInternals();
+
+            args.Handled = true;
         }
 
         private void AddOpenUIVerb(EntityUid uid, GasTankComponent component, GetVerbsEvent<ActivationVerb> args)
