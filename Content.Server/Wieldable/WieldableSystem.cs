@@ -28,7 +28,7 @@ namespace Content.Server.Wieldable
             SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<WieldableComponent, ItemWieldedEvent>(OnItemWielded);
             SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
-            SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
+            SubscribeLocalEvent<WieldableComponent, UnequippedHandEvent>(OnItemLeaveHand);
             SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
             SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
 
@@ -208,7 +208,7 @@ namespace Content.Server.Wieldable
             _virtualItemSystem.DeleteInHandsMatching(args.User.Value, uid);
         }
 
-        private void OnItemLeaveHand(EntityUid uid, WieldableComponent component, GotUnequippedHandEvent args)
+        private void OnItemLeaveHand(EntityUid uid, WieldableComponent component, UnequippedHandEvent args)
         {
             if (!component.Wielded || component.Owner != args.Unequipped)
                 return;

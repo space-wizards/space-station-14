@@ -44,8 +44,9 @@
         damage:
           groups:
             Caustic: 0.5
-      - !type:Scream
+      - !type:DoAction
         probability: 0.3
+        action: HumanScream
   metabolisms:
     Poison:
       effects:
@@ -77,8 +78,9 @@
         damage:
           groups:
             Caustic: 0.3
-      - !type:Scream
+      - !type:DoAction
         probability: 0.2
+        action: HumanScream
   metabolisms:
     Poison:
       effects:
@@ -117,8 +119,9 @@
         damage:
           groups:
             Caustic: 0.1
-      - !type:Scream
+      - !type:DoAction
         probability: 0.1
+        action: HumanScream
   metabolisms:
     Poison:
       effects:
