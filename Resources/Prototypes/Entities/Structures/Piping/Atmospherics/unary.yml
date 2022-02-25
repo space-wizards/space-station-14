@@ -47,6 +47,9 @@
         - type: PipeColorVisualizer
         - type: VentPumpVisualizer
     - type: GasVentPump
+    - type: Construction
+      graph: GasUnary
+      node: ventpump
 
 - type: entity
   parent: GasUnaryBase
@@ -71,6 +74,9 @@
       visuals:
         - type: PipeColorVisualizer
     - type: GasPassiveVent
+    - type: Construction
+      graph: GasUnary
+      node: passivevent
 
 - type: entity
   parent: GasUnaryBase
@@ -105,6 +111,9 @@
         - type: ScrubberVisualizer
     - type: AtmosDevice
     - type: GasVentScrubber
+    - type: Construction
+      graph: GasUnary
+      node: ventscrubber
 
 - type: entity
   parent: GasUnaryBase
@@ -127,12 +136,14 @@
       visuals:
         - type: PipeColorVisualizer
     - type: GasOutletInjector
+    - type: Construction
+      graph: GasUnary
+      node: outletinjector
 
 - type: entity
   parent: BaseMachinePowered
   id: BaseGasThermoMachine
   name: thermomachine
-  description: Heats or cools gas in connected pipes.
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -172,6 +183,7 @@
   parent: BaseGasThermoMachine
   id: GasThermoMachineFreezer
   name: freezer
+  description: Cools gas in connected pipes.
   placement:
     mode: SnapgridCenter
   components:
@@ -197,6 +209,7 @@
   parent: BaseGasThermoMachine
   id: GasThermoMachineHeater
   name: heater
+  description: Heats gas in connected pipes.
   placement:
     mode: SnapgridCenter
   components:
