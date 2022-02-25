@@ -2,8 +2,8 @@
     <BoxContainer Orientation="Horizontal"
     VerticalExpand="True"
     HorizontalExpand="True"
-    MinSize="50 50">
-        <ItemList Name="CardList"
+    MinSize="400 200">
+        <ScrollContainer Name="CardList"
                   SizeFlagsStretchRatio="8"
                   HorizontalExpand="True"
                   VerticalExpand="True" />
