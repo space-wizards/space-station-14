@@ -53,7 +53,7 @@ namespace Content.Shared.CombatMode
             Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/harmOff.png")),
             IconOn = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/harm.png")),
             UserPopup = "action-popup-combat",
-            PopupToggleSuffix = "-enabled",
+            PopupToggleSuffix = "-disabling",
             Name = "action-name-combat",
             Description = "action-description-combat",
             Event = new ToggleCombatActionEvent(),
