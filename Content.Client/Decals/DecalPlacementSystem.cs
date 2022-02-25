@@ -150,6 +150,7 @@ public sealed class DecalPlacementSystem : EntitySystem
             Repeat = true,
             CheckCanAccess = false,
             CheckCanInteract = false,
+            Range = -1,
             Event = actionEvent,
             IconColor = _decalColor,
         };
