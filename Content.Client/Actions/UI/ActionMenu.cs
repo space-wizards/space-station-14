@@ -61,15 +61,16 @@ namespace Content.Client.Actions.UI
         private readonly TextureRect _dragShadow;
         private readonly IGameHud _gameHud;
         private readonly DragDropHelper<ActionMenuItem> _dragDropHelper;
-
+        private readonly IEntityManager _entMan;
 
         public ActionMenu(ActionsUI actionsUI)
         {
             _actionsUI = actionsUI;
             _gameHud = IoCManager.Resolve<IGameHud>();
+            _entMan = IoCManager.Resolve<IEntityManager>();
 
             Title = Loc.GetString("ui-actionmenu-title");
-            MinSize = (300, 300);
+            MinSize = (320, 300);
 
             Contents.AddChild(new BoxContainer
             {
@@ -119,6 +120,9 @@ namespace Content.Client.Actions.UI
                 _filterButton.AddItem( CultureInfo.CurrentCulture.TextInfo.ToTitleCase(tag), tag);
             }
 
+            // default to showing all actions.
+            _filterButton.SelectKey(AllFilter);
+
             UpdateFilterLabel();
 
             _dragShadow = new TextureRect
@@ -140,13 +144,6 @@ namespace Content.Client.Actions.UI
             _searchBar.OnTextChanged += OnSearchTextChanged;
             _filterButton.OnItemSelected += OnFilterItemSelected;
             _gameHud.ActionsButtonDown = true;
-            foreach (var actionMenuControl in _resultsGrid.Children)
-            {
-                var actionMenuItem = (ActionMenuItem) actionMenuControl;
-                actionMenuItem.OnButtonDown += OnItemButtonDown;
-                actionMenuItem.OnButtonUp += OnItemButtonUp;
-                actionMenuItem.OnPressed += OnItemPressed;
-            }
         }
 
         protected override void ExitedTree()
@@ -314,8 +311,12 @@ namespace Content.Client.Actions.UI
                 return true;
             }
 
-            return false;
+            // search by provider name
+            if (action.Provider == null || action.Provider == _actionsUI.Component.Owner)
+                return false;
 
+            var name = _entMan.GetComponent<MetaDataComponent>(action.Provider.Value).EntityName;
+            return Standardize(name).Contains(standardizedSearch);
         }
 
         private bool ActionMatchesFilterTag(ActionType action, string tag)
@@ -412,6 +413,8 @@ namespace Content.Client.Actions.UI
                 var actionMenuItem = ((ActionMenuItem) actionItem);
                 actionMenuItem.SetActionState(actionMenuItem.Action.Enabled);
             }
+
+            SearchAndDisplay();
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
