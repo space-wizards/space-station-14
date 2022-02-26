@@ -1,24 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: You can no longer inspecting your surroundings using the examine popup
-      or context menu while incapacitated, type: Fix}
-  id: 626
-  time: '2021-11-21T20:40:09.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Livestock crates can no longer be welded shut. You can't weld wood.,
-    type: Tweak}
-  id: 627
-  time: '2021-11-22T02:33:45.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Security, Captain, Head of Personnel, Chief Engineer, Chief Medial
-      Officer, and the Research Director are no longer capable of being antagonists
-      due to expanded NT screening programs. You can now trust your leadership!',
-    type: Add}
-  id: 628
-  time: '2021-11-22T02:33:51.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Foam and smoke now properly carry reagents, and are colored by their
@@ -2998,3 +2978,21 @@ Entries:
     type: Add}
   id: 1125
   time: '2022-02-25T23:18:08.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Three new events have been introduced that will hopefully increase
+      round variation (and, very rarely, result in a station composed entirely of
+      clowns)', type: Add}
+  - {message: Makes HoP and Quartermaster considered heads by the game., type: Tweak}
+  id: 1126
+  time: '2022-02-26T05:10:09.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Musicians now have their own PDA and Theatre access!, type: Add}
+  id: 1127
+  time: '2022-02-26T05:11:04.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Flashbangs no longer jumpscare the entire station., type: Fix}
+  id: 1128
+  time: '2022-02-26T05:11:10.0000000+00:00'
