@@ -37,7 +37,7 @@ namespace Content.Client.GPS
                 base.FrameUpdate(args);
 
                 UpdateDif += args.DeltaSeconds;
-                if (UpdateDif < 1.5f)
+                if (UpdateDif < _parent.UpdateRate)
                     return;
 
                 UpdateDif = 0f;
