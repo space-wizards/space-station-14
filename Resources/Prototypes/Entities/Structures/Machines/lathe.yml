@@ -65,6 +65,7 @@
       - Spade
       - CableStack
       - HandheldGPSBasic
+      - HandheldHealthAnalyzer
   - type: Appearance
     visuals:
     - type: AutolatheVisualizer
