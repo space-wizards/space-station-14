@@ -172,3 +172,5 @@
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellSmallHigh
+  - type: TemperatureProtection
+    coefficient: 0.01
