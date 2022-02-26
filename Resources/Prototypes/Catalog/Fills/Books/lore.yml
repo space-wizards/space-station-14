@@ -162,6 +162,7 @@
   name: Tales from the Fishbowl
   suffix: library salvage
   description: This book sucks.
+  components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
@@ -181,9 +182,10 @@
 - type: entity
   parent: BookBase
   id: BookDetective
-  name: The Misadventures of Strokgraeth Holmes, Dwarf Detective
+  name: Strokgraeth Holmes, Dwarf Detective
   suffix: library salvage
-  description: Exciting! Invigorating! This author killed himself after his book career failed.
+  description: Exciting! Invigorating! This author died after his book career failed.
+  components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
