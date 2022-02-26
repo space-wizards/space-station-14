@@ -302,6 +302,13 @@ namespace Content.Client.Actions.UI
                 // Show the old action, but make sure it is disabled;
                 action.Enabled = false;
                 action.Toggled = false;
+
+                // If we enable the item-sprite, and if the item-sprite has a visual toggle, then the player will be
+                // able to know whether the item is toggled, even if it is not in their LOS (but in PVS). And for things
+                // like PDA sprites, the player can even see whether the action's item is currently inside of their PVS.
+                // SO unless theres some way of "freezing" a sprite-view, we just have to disable it.
+                action.ItemIconStyle = ItemActionIconStyle.NoItem;
+
                 UpdateActionSlot(action, actionSlot);
             }
         }
