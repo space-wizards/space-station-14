@@ -9,6 +9,8 @@ guardian-activator-empty-examine = [color=#ba1919]Инжектор израсх�
 guardian-activator-invalid-target = Только люди подходят для инъекции! # Change this once other species can inject it?
 guardian-no-soul = У вашего стража нет души.
 guardian-available = У вашего стража теперь есть душа.
+action-name-guardian = Toggle guardian manifestation
+action-description-guardian = Either manifests the guardian or recalls it back into your body
 
 ## Guardian entity specific
 
