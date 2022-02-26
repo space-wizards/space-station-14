@@ -1,61 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: 'Reaction effects (potas/water, smoke, foam) have been refactored slightly,
-      so report any bugs you find with them.', type: Tweak}
-  id: 621
-  time: '2021-11-21T07:35:02.0000000+00:00'
-- author: FoLoKe
-  changes:
-  - {message: Added "eat" action for food., type: Add}
-  - {message: Fixed soup eating with a knife or fork., type: Fix}
-  id: 622
-  time: '2021-11-21T07:35:10.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Opening a docked airlock no longer depressurizes the room/shuttle.,
-    type: Fix}
-  id: 623
-  time: '2021-11-21T12:17:31.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: It is clearer which side of a docking airlock that something should
-      dock to., type: Fix}
-  id: 624
-  time: '2021-11-21T13:26:19.0000000+00:00'
-- author: xRiriq
-  changes:
-  - {message: altered names of command clothing and hardsuits to be consistent, type: Fix}
-  id: 625
-  time: '2021-11-21T20:14:39.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: You can no longer inspecting your surroundings using the examine popup
-      or context menu while incapacitated, type: Fix}
-  id: 626
-  time: '2021-11-21T20:40:09.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Livestock crates can no longer be welded shut. You can't weld wood.,
-    type: Tweak}
-  id: 627
-  time: '2021-11-22T02:33:45.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Security, Captain, Head of Personnel, Chief Engineer, Chief Medial
-      Officer, and the Research Director are no longer capable of being antagonists
-      due to expanded NT screening programs. You can now trust your leadership!',
-    type: Add}
-  id: 628
-  time: '2021-11-22T02:33:51.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Foam and smoke now properly carry reagents, and are colored by their
-      reagents.', type: Tweak}
-  id: 629
-  time: '2021-11-22T08:40:14.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: 'Chemicals metabolizing in the body now last twice as long, meaning
       most medicines and poisons will have a greater effect over a longer timespan.',
     type: Tweak}
@@ -2995,3 +2940,58 @@ Entries:
   - {message: Added a named Possum (Morty) and Raccoon (Morticia), type: Add}
   id: 1120
   time: '2022-02-23T18:40:31.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Nuclear bomb now has cooldown time after deactivation. Wait for 30 seconds
+      before you can arm bomb again., type: Tweak}
+  - {message: Iconic nuclear alarm sound is back., type: Fix}
+  id: 1121
+  time: '2022-02-24T00:00:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'While holding a storage entity (backpacks, boxes, etc) you can now
+      right click on other storage entities or disposal units and transfer contents.',
+    type: Add}
+  id: 1122
+  time: '2022-02-24T10:48:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that allowed you to play multiple instruments simultaneously.,
+    type: Fix}
+  id: 1123
+  time: '2022-02-24T11:10:12.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: Added crafting for pipes, type: Add}
+  id: 1124
+  time: '2022-02-24T15:05:10.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Pillar V5 is here! All new engineering and bar. Lots of QoL improvements.
+      Less space, more interesting corridors etc. See changelog on github PR 6883.',
+    type: Add}
+  id: 1125
+  time: '2022-02-25T23:18:08.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Three new events have been introduced that will hopefully increase
+      round variation (and, very rarely, result in a station composed entirely of
+      clowns)', type: Add}
+  - {message: Makes HoP and Quartermaster considered heads by the game., type: Tweak}
+  id: 1126
+  time: '2022-02-26T05:10:09.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Musicians now have their own PDA and Theatre access!, type: Add}
+  id: 1127
+  time: '2022-02-26T05:11:04.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Flashbangs no longer jumpscare the entire station., type: Fix}
+  id: 1128
+  time: '2022-02-26T05:11:10.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added handheld GPS devices which can be found in the autolathe, type: Add}
+  id: 1129
+  time: '2022-02-26T05:59:20.0000000+00:00'

@@ -64,3 +64,39 @@
   - type: Occluder
     sizeX: 32
     sizeY: 32
+
+- type: entity
+  id: PlasticFlapsAirtightClear
+  parent: PlasticFlapsClear
+  name: airtight plastic flaps
+  suffix: Airtight Clear
+  description: Heavy duty, slightly stronger, airtight plastic flaps. Definitely can't get past those. No way.
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Airtight
+    fixVacuum: true
+
+- type: entity
+  id: PlasticFlapsAirtightOpaque
+  parent: PlasticFlapsOpaque
+  name: airtight plastic flaps
+  suffix: Airtight Opaque
+  description: Heavy duty, slightly stronger, airtight plastic flaps. Definitely can't get past those. No way.
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Airtight
+    fixVacuum: true

@@ -25,6 +25,7 @@ namespace Content.Shared.Whitelist
     ///     - AsteroidRock
     /// </code>
     [DataDefinition]
+    [Serializable, NetSerializable]
     public sealed class EntityWhitelist : ISerializationHooks
     {
         /// <summary>
@@ -32,6 +33,7 @@ namespace Content.Shared.Whitelist
         /// </summary>
         [DataField("components")] public string[]? Components = null;
 
+        [NonSerialized]
         private List<IComponentRegistration>? _registrations = null;
 
         /// <summary>
