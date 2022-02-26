@@ -2,6 +2,7 @@
 
 medical-scanner-component-msg-no-soul = ERROR: Body is completely devoid of soul
 medical-scanner-component-msg-soul-broken = ERROR: Soul present, but defunct / departed
+medical-scanner-component-msg-no-humanoid-component = ERROR: Body is incompatible
 
 ## EnterVerb
 
@@ -12,8 +13,5 @@ medical-scanner-verb-noun-occupant = occupant
 
 medical-scanner-window-save-button-text = Scan and Save DNA
 medical-scanner-window-no-patient-data-text = No patient data.
-medical-scanner-window-entity-health-text = {$entityName}'s health:
-medical-scanner-window-entity-damage-total-text = Total Damage: {$amount}
-medical-scanner-window-damage-group-text = {$damageGroup}: {$amount}
-medical-scanner-window-damage-type-text = {$damageType}: {$amount}
-medical-scanner-window-damage-type-duplicate-text = {$damageType}: {$amount} (duplicate)
+medical-scanner-window-entity-name-text = Occupant: {$entityName}
+medical-scanner-window-entity-name-text-unknown = No humanoid detected

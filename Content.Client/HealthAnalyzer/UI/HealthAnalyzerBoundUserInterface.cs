@@ -1,28 +1,29 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
+using static Content.Shared.HealthAnalyzer.SharedHealthAnalyzerComponent;
 
-namespace Content.Client.MedicalScanner.UI
+namespace Content.Client.HealthAnalyzer.UI
 {
     [UsedImplicitly]
-    public sealed class MedicalScannerBoundUserInterface : BoundUserInterface
+    public class HealthAnalyzerBoundUserInterface : BoundUserInterface
     {
-        private MedicalScannerWindow? _window;
+        private HealthAnalyzerWindow? _window;
 
-        public MedicalScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        private HealthAnalyzerBoundUserInterfaceState? _lastState;
+
+        public HealthAnalyzerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
 
         protected override void Open()
         {
             base.Open();
-            _window = new MedicalScannerWindow
+            _window = new HealthAnalyzerWindow
             {
                 Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
             _window.OnClose += Close;
-            _window.ScanButton.OnPressed += _ => SendMessage(new ScanButtonPressedMessage());
             _window.OpenCentered();
         }
 
@@ -30,7 +31,10 @@ namespace Content.Client.MedicalScanner.UI
         {
             base.UpdateState(state);
 
-            _window?.Populate((MedicalScannerBoundUserInterfaceState) state);
+            var castState = (HealthAnalyzerBoundUserInterfaceState)state;
+            _lastState = castState;
+
+            _window?.Populate(castState);
         }
 
         protected override void Dispose(bool disposing)
