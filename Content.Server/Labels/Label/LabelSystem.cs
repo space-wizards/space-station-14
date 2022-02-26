@@ -16,7 +16,7 @@ namespace Content.Server.Labels
     /// A system that lets players see the contents of a label on an object.
     /// </summary>
     [UsedImplicitly]
-    public class LabelSystem : EntitySystem
+    public sealed class LabelSystem : EntitySystem
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
@@ -86,9 +86,10 @@ namespace Content.Server.Labels
             args.PushMarkup(text.TrimEnd());
         }
 
-
         private void OnContainerModified(EntityUid uid, PaperLabelComponent label, ContainerModifiedMessage args)
         {
+            if (!label.Initialized) return;
+
             if (args.Container.ID != label.LabelSlot.ID)
                 return;
 

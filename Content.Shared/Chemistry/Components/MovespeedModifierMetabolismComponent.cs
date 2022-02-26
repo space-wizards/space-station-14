@@ -17,9 +17,6 @@ namespace Content.Shared.Chemistry.Components
     public sealed class MovespeedModifierMetabolismComponent : Component
     {
         [ViewVariables]
-        public override string Name => "MovespeedModifierMetabolism";
-
-        [ViewVariables]
         public float WalkSpeedModifier { get; set; }
 
         [ViewVariables]
@@ -37,7 +34,7 @@ namespace Content.Shared.Chemistry.Components
         }
 
         [Serializable, NetSerializable]
-        public class MovespeedModifierMetabolismComponentState : ComponentState
+        public sealed class MovespeedModifierMetabolismComponentState : ComponentState
         {
             public float WalkSpeedModifier { get; }
             public float SprintSpeedModifier { get; }

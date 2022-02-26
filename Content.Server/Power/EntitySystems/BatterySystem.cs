@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Power.EntitySystems
 {
     [UsedImplicitly]
-    public class BatterySystem : EntitySystem
+    public sealed class BatterySystem : EntitySystem
     {
         public override void Initialize()
         {

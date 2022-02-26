@@ -8,6 +8,8 @@
     snap:
     - Disposal
   components:
+  - type: Sprite
+    netsync: false
   - type: SubFloorHide
   - type: Clickable
   - type: InteractionOutline
@@ -24,10 +26,18 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 100 #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+      - !type:ChangeConstructionNodeBehavior
+        node: broken
   - type: Rotatable
   - type: Pullable
 
@@ -39,6 +49,27 @@
   - type: DisposalHolder
 
 # Pipes
+
+- type: entity
+  id: DisposalPipeBroken
+  parent: DisposalPipeBase
+  name: broken disposal pipe
+  description: A BBP (big broken pipe)
+  components:
+  - type: Sprite
+    drawdepth: ThickPipe
+    sprite: Structures/Piping/disposal.rsi
+    state: pipe-b
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+      layer: [ Underplating ]
+  - type: Construction
+    graph: DisposalPipe
+    node: broken
 
 - type: entity
   id: DisposalPipe
@@ -56,7 +87,6 @@
     - type: DisposalVisualizer
       state_free: conpipe-s
       state_anchored: pipe-s
-      state_broken: pipe-b
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -64,6 +94,9 @@
         !type:PhysShapeAabb
           bounds: "-0.25,-0.5,0.25,0.5"
       layer: [ Underplating ]
+  - type: Construction
+    graph: DisposalPipe
+    node: pipe
 
 - type: entity
   id: DisposalTagger
@@ -81,7 +114,6 @@
     - type: DisposalVisualizer
       state_free: conpipe-tagger
       state_anchored: pipe-tagger
-      state_broken: pipe-b
   - type: UserInterface
     interfaces:
     - key: enum.DisposalTaggerUiKey.Key
@@ -93,6 +125,9 @@
           !type:PhysShapeAabb
             bounds: "-0.25,-0.5,0.25,0.5"
         layer: [ Underplating ]
+  - type: Construction
+    graph: DisposalPipe
+    node: tagger
 
 - type: entity
   id: DisposalTrunk
@@ -110,7 +145,6 @@
     - type: DisposalVisualizer
       state_free: conpipe-t
       state_anchored: pipe-t
-      state_broken: pipe-b
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -118,6 +152,9 @@
           !type:PhysShapeAabb
             bounds: "-0.25,-0.5,0.25,0.4"
         layer: [ Underplating ]
+  - type: Construction
+    graph: DisposalPipe
+    node: trunk
 
 - type: entity
   id: DisposalRouter
@@ -139,7 +176,6 @@
     - type: DisposalVisualizer
       state_free: conpipe-j1s
       state_anchored: pipe-j1s
-      state_broken: pipe-b
   - type: Flippable
     mirrorEntity: DisposalRouterFlipped
   - type: UserInterface
@@ -153,6 +189,9 @@
           !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.25,0.5"
         layer: [ Underplating ]
+  - type: Construction
+    graph: DisposalPipe
+    node: router
 
 - type: entity
   id: DisposalRouterFlipped
@@ -173,7 +212,6 @@
     - type: DisposalVisualizer
       state_free: conpipe-j2s
       state_anchored: pipe-j2s
-      state_broken: pipe-b
   - type: Flippable
     mirrorEntity: DisposalRouter
   - type: Physics
@@ -204,7 +242,6 @@
     - type: DisposalVisualizer
       state_free: conpipe-j1
       state_anchored: pipe-j1
-      state_broken: pipe-b
   - type: Flippable
     mirrorEntity: DisposalJunctionFlipped
   - type: Physics
@@ -214,6 +251,9 @@
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.25,0.5"
       layer: [ Underplating ]
+  - type: Construction
+    graph: DisposalPipe
+    node: junction
 
 - type: entity
   id: DisposalJunctionFlipped
@@ -234,7 +274,6 @@
     - type: DisposalVisualizer
       state_free: conpipe-j2
       state_anchored: pipe-j2
-      state_broken: pipe-b
   - type: Flippable
     mirrorEntity: DisposalJunction
   - type: Physics
@@ -265,7 +304,6 @@
     - type: DisposalVisualizer
       state_free: conpipe-y
       state_anchored: pipe-y
-      state_broken: pipe-b
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -273,6 +311,9 @@
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.25"
       layer: [ Underplating ]
+  - type: Construction
+    graph: DisposalPipe
+    node: yJunction
 
 - type: entity
   id: DisposalBend
@@ -290,7 +331,6 @@
     - type: DisposalVisualizer
       state_free: conpipe-c
       state_anchored: pipe-c
-      state_broken: pipe-b
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -298,3 +338,6 @@
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.25,0.25"
       layer: [ Underplating ]
+  - type: Construction
+    graph: DisposalPipe
+    node: bend

@@ -1,4 +1,4 @@
-using Content.Shared;
+using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -6,7 +6,8 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
-    public class ToggleOutlineCommand : IConsoleCommand
+    [AnyCommand]
+    public sealed class ToggleOutlineCommand : IConsoleCommand
     {
         public string Command => "toggleoutline";
 

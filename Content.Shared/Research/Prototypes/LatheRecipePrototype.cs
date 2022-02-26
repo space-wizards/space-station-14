@@ -5,6 +5,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -12,7 +13,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Research.Prototypes
 {
     [NetSerializable, Serializable, Prototype("latheRecipe")]
-    public class LatheRecipePrototype : IPrototype
+    public sealed class LatheRecipePrototype : IPrototype
     {
         [ViewVariables]
         [DataField("id", required: true)]
@@ -27,13 +28,13 @@ namespace Content.Shared.Research.Prototypes
         [DataField("description")]
         private string _description = string.Empty;
 
-        [DataField("result")]
+        [DataField("result", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string _result = string.Empty;
 
         [DataField("completetime")]
         private int _completeTime = 2500;
 
-        [DataField("materials", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
+        [DataField("materials", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
         private Dictionary<string, int> _requiredMaterials = new();
 
         /// <summary>

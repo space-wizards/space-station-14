@@ -69,3 +69,15 @@
   cost: 1500
   category: Security
   group: market
+
+- type: cargoProduct
+  name: "restraints crate"
+  id: SecurityRestraints
+  description: "Contains two boxes each of handcuffs and zipties. Requires Security access to open."
+  icon:
+    sprite: Objects/Misc/handcuffs.rsi
+    state: handcuff
+  product: CrateRestraints
+  cost: 1500
+  category: Security
+  group: market

@@ -10,10 +10,13 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Preferences;
+using Content.Shared.Species;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Database
@@ -177,6 +180,7 @@ namespace Content.Server.Database
 
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
+                profile.Species,
                 profile.Age,
                 sex,
                 gender,
@@ -204,6 +208,7 @@ namespace Content.Server.Database
             var entity = new Profile
             {
                 CharacterName = humanoid.Name,
+                Species = humanoid.Species,
                 Age = humanoid.Age,
                 Sex = humanoid.Sex.ToString(),
                 Gender = humanoid.Gender.ToString(),
@@ -289,14 +294,47 @@ namespace Content.Server.Database
         /// <param name="address">The ip address of the user.</param>
         /// <param name="userId">The id of the user.</param>
         /// <param name="hwId">The HWId of the user.</param>
+        /// <param name="includeUnbanned">Include pardoned and expired bans.</param>
         /// <returns>The user's ban history.</returns>
         public abstract Task<List<ServerBanDef>> GetServerBansAsync(
             IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId);
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned);
 
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
         public abstract Task AddServerUnbanAsync(ServerUnbanDef serverUnban);
+        #endregion
+
+        #region Role Bans
+        /*
+         * ROLE BANS
+         */
+        /// <summary>
+        ///     Looks up a role ban by id.
+        ///     This will return a pardoned role ban as well.
+        /// </summary>
+        /// <param name="id">The role ban id to look for.</param>
+        /// <returns>The role ban with the given id or null if none exist.</returns>
+        public abstract Task<ServerRoleBanDef?> GetServerRoleBanAsync(int id);
+
+        /// <summary>
+        ///     Looks up an user's role ban history.
+        ///     This will return pardoned role bans based on the <see cref="includeUnbanned"/> bool.
+        ///     Requires one of <see cref="address"/>, <see cref="userId"/>, or <see cref="hwId"/> to not be null.
+        /// </summary>
+        /// <param name="address">The IP address of the user.</param>
+        /// <param name="userId">The NetUserId of the user.</param>
+        /// <param name="hwId">The Hardware Id of the user.</param>
+        /// <param name="includeUnbanned">Whether expired and pardoned bans are included.</param>
+        /// <returns>The user's role ban history.</returns>
+        public abstract Task<List<ServerRoleBanDef>> GetServerRoleBansAsync(IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned);
+
+        public abstract Task AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan);
+        public abstract Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverRoleUnban);
         #endregion
 
         #region Player Records
@@ -360,11 +398,28 @@ namespace Content.Server.Database
         /*
          * CONNECTION LOG
          */
-        public abstract Task AddConnectionLogAsync(
+        public abstract Task<int> AddConnectionLogAsync(
             NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId);
+            ImmutableArray<byte> hwId,
+            ConnectionDenyReason? denied);
+
+        public async Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans)
+        {
+            await using var db = await GetDb();
+
+            foreach (var ban in bans)
+            {
+                db.DbContext.ServerBanHit.Add(new ServerBanHit
+                {
+                    ConnectionId = connection, BanId = ban.Id!.Value
+                });
+            }
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
         #endregion
 
         #region Admin Ranks
@@ -379,6 +434,7 @@ namespace Content.Server.Database
                 .Include(p => p.Flags)
                 .Include(p => p.AdminRank)
                 .ThenInclude(p => p!.Flags)
+                .AsSplitQuery() // tests fail because of a random warning if you dont have this!
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
         }
 
@@ -487,7 +543,16 @@ namespace Content.Server.Database
                 .Where(player => playerIds.Contains(player.UserId))
                 .ToListAsync();
 
-            round.Players.AddRange(players);
+            var playerSet = new HashSet<Guid>(round.Players.Select(player => player.UserId));
+            foreach (var player in players)
+            {
+                if (playerSet.Contains(player.UserId))
+                {
+                    continue;
+                }
+
+                round.Players.Add(player);
+            }
 
             await db.DbContext.SaveChangesAsync();
         }
@@ -631,7 +696,7 @@ namespace Content.Server.Database
             }
         }
 
-        public async IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null)
+        public async IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null)
         {
             await using var db = await GetDb();
             var query = await GetAdminLogsQuery(db.DbContext, filter);
@@ -645,7 +710,7 @@ namespace Content.Server.Database
                     players[i] = log.Players[i].PlayerUserId;
                 }
 
-                yield return new LogRecord(log.Id, log.RoundId, log.Type, log.Impact, log.Date, log.Message, players);
+                yield return new SharedAdminLog(log.Id, log.Type, log.Impact, log.Date, log.Message, players);
             }
         }
 
@@ -658,6 +723,33 @@ namespace Content.Server.Database
             {
                 yield return json;
             }
+        }
+
+        #endregion
+
+        #region Whitelist
+
+        public async Task<bool> GetWhitelistStatusAsync(NetUserId player)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.Whitelist.AnyAsync(w => w.UserId == player);
+        }
+
+        public async Task AddToWhitelistAsync(NetUserId player)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.Whitelist.Add(new Whitelist { UserId = player });
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveFromWhitelistAsync(NetUserId player)
+        {
+            await using var db = await GetDb();
+            var entry = await db.DbContext.Whitelist.SingleAsync(w => w.UserId == player);
+            db.DbContext.Whitelist.Remove(entry);
+            await db.DbContext.SaveChangesAsync();
         }
 
         #endregion

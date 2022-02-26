@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Administration;
 using Content.Server.Roles;
 using Content.Server.Station;
+using Content.Shared.Administration;
 using Content.Shared.Roles;
 using Content.Shared.Station;
 using Robust.Server.Player;
@@ -14,7 +15,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GameTicking.Commands
 {
     [AnyCommand]
-    class JoinGameCommand : IConsoleCommand
+    sealed class JoinGameCommand : IConsoleCommand
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

@@ -16,7 +16,6 @@ namespace Content.Shared.Shuttles.Components
     [NetworkedComponent]
     public sealed class PilotComponent : Component
     {
-        public override string Name => "Pilot";
         [ViewVariables] public SharedShuttleConsoleComponent? Console { get; set; }
 
         /// <summary>

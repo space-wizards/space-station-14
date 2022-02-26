@@ -1,16 +1,16 @@
 using System.Linq;
 using Content.Server.Act;
-using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Players;
 using Content.Server.Popups;
+using Content.Shared.Administration;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -23,7 +23,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class SuicideCommand : IConsoleCommand
+    internal sealed class SuicideCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -68,7 +68,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            if (player.Status != SessionStatus.InGame)
+            if (player.Status != SessionStatus.InGame || player.AttachedEntity == null)
                 return;
 
             var chat = IoCManager.Resolve<IChatManager>();
@@ -84,11 +84,12 @@ namespace Content.Server.Chat.Commands
             //TODO: needs to check if the mob is actually alive
             //TODO: maybe set a suicided flag to prevent resurrection?
 
-            EntitySystem.Get<AdminLogSystem>().Add(LogType.Suicide, $"{player.AttachedEntity} is committing suicide");
+            EntitySystem.Get<AdminLogSystem>().Add(LogType.Suicide,
+                $"{_entities.ToPrettyString(player.AttachedEntity.Value):player} is committing suicide");
 
             // Held item suicide
             var handsComponent = _entities.GetComponent<HandsComponent>(owner);
-            var itemComponent = handsComponent.GetActiveHand;
+            var itemComponent = handsComponent.GetActiveHandItem;
             if (itemComponent != null)
             {
                 var suicide = _entities.GetComponents<ISuicideAct>(itemComponent.Owner).FirstOrDefault();
@@ -106,7 +107,7 @@ namespace Content.Server.Chat.Commands
             {
                 foreach (var entity in entities)
                 {
-                    if (_entities.HasComponent<ItemComponent>(entity))
+                    if (_entities.HasComponent<SharedItemComponent>(entity))
                         continue;
                     var suicide = _entities.GetComponents<ISuicideAct>(entity).FirstOrDefault();
                     if (suicide != null)

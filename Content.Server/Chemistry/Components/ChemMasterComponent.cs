@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Labels.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
@@ -12,6 +11,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Sound;
@@ -35,7 +35,7 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedChemMasterComponent))]
-    public class ChemMasterComponent : SharedChemMasterComponent, IActivate
+    public sealed class ChemMasterComponent : SharedChemMasterComponent, IActivate
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -162,11 +162,6 @@ namespace Content.Server.Chemistry.Components
             if (playerEntity == default)
                 return false;
 
-            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-
-            //Check if player can interact in their current state
-            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
-                return false;
             //Check if device is powered
             if (needsPower && !Powered)
                 return false;
@@ -197,6 +192,8 @@ namespace Content.Server.Chemistry.Components
 
         public void UpdateUserInterface()
         {
+            if (!Initialized) return;
+
             var state = GetUserInterfaceState();
             UserInterface?.SetState(state);
         }
@@ -317,7 +314,7 @@ namespace Content.Server.Chemistry.Components
 
                     //Try to give them the bottle
                     if (_entities.TryGetComponent<HandsComponent?>(user, out var hands) &&
-                        _entities.TryGetComponent<ItemComponent?>(bottle, out var item))
+                        _entities.TryGetComponent<SharedItemComponent?>(bottle, out var item))
                     {
                         if (hands.CanPutInHand(item))
                         {
@@ -344,7 +341,7 @@ namespace Content.Server.Chemistry.Components
                 var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(50));
                 for (int i = 0; i < pillAmount; i++)
                 {
-                    var pill = _entities.SpawnEntity("pill", _entities.GetComponent<TransformComponent>(Owner).Coordinates);
+                    var pill = _entities.SpawnEntity("Pill", _entities.GetComponent<TransformComponent>(Owner).Coordinates);
 
                     //Adding label
                     LabelComponent labelComponent = pill.EnsureComponent<LabelComponent>();
@@ -366,7 +363,7 @@ namespace Content.Server.Chemistry.Components
 
                     //Try to give them the bottle
                     if (_entities.TryGetComponent<HandsComponent?>(user, out var hands) &&
-                        _entities.TryGetComponent<ItemComponent?>(pill, out var item))
+                        _entities.TryGetComponent<SharedItemComponent?>(pill, out var item))
                     {
                         if (hands.CanPutInHand(item))
                         {
@@ -405,7 +402,7 @@ namespace Content.Server.Chemistry.Components
                 return;
             }
 
-            var activeHandEntity = hands.GetActiveHand?.Owner;
+            var activeHandEntity = hands.GetActiveHandItem?.Owner;
             if (activeHandEntity == null)
             {
                 UserInterface?.Open(actor.PlayerSession);

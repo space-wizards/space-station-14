@@ -120,7 +120,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 60
+        maxVol: 40
         canReact: false
 
 - type: entity
@@ -224,7 +224,7 @@
 - type: entity
   name: pill
   parent: BaseItem
-  id: pill
+  id: Pill
   description: It's not a suppository.
   components:
   - type: Sprite
@@ -257,6 +257,9 @@
     state: pill_canister
   - type: Item
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
+  - type: Tag
+    tags:
+      - PillCanister
   - type: Storage
     capacity: 12
     quickInsert: true

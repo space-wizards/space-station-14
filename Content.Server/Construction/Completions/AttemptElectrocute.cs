@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Construction.Completions
 {
     [DataDefinition]
-    public class AttemptElectrocute : IGraphAction
+    public sealed class AttemptElectrocute : IGraphAction
     {
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {

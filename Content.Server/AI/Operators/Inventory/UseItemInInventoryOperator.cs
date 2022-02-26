@@ -1,5 +1,5 @@
 using Content.Server.Hands.Components;
-using Content.Server.Items;
+using Content.Shared.Item;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -8,7 +8,7 @@ namespace Content.Server.AI.Operators.Inventory
     /// <summary>
     /// Will find the item in storage, put it in an active hand, then use it
     /// </summary>
-    public class UseItemInInventoryOperator : AiOperator
+    public sealed class UseItemInInventoryOperator : AiOperator
     {
         private readonly EntityUid _owner;
         private readonly EntityUid _target;
@@ -29,7 +29,7 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            if (!entMan.TryGetComponent(_target, out ItemComponent? itemComponent))
+            if (!entMan.TryGetComponent(_target, out SharedItemComponent? itemComponent))
             {
                 return Outcome.Failed;
             }

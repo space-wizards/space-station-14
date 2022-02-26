@@ -2,31 +2,35 @@
 - type: entity
   name: Xeno
   id: MobXeno
-  parent: SimpleMobBase
+  parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
   components:
   - type: UtilityAI
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
   - type: AiFactionTag
     factions:
     - Xeno
   - type: Hands
   - type: Sprite
     drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/burrower.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
-      sprite: Mobs/Aliens/Xenos/xeno.rsi
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-1,0.4,-0.2"
-      mass: 85
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 120
       mask:
       - Impassable
       - MobImpassable
@@ -42,10 +46,20 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 1
+        Asphyxiation: 3
     damageRecovery:
       types:
-        Asphyxiation: -1
+        Asphyxiation: -1.5
+  - type: Bloodstream
+    bloodReagent: FluorosulfuricAcid
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
   - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
@@ -56,7 +70,19 @@
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
+      rotate: true
       normal: running
       crit: crit
       dead: dead
   - type: Puller
+  - type: Butcherable
+    spawned: FoodMeatXeno
+    butcheringType: Spike
+    pieces: 5
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: xeno
+    description: You are a xeno, co-operate with your hive to kill all crewmembers!
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: ReplacementAccent
+    accent: xeno

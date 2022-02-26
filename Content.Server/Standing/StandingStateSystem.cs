@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Standing;
 
-public class StandingStateSystem : EntitySystem
+public sealed class StandingStateSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -21,7 +21,7 @@ public class StandingStateSystem : EntitySystem
 
         foreach (var heldItem in hands.GetAllHeldItems())
         {
-            if (!hands.Drop(heldItem.Owner))
+            if (!hands.Drop(heldItem.Owner, false))
                 continue;
 
             var worldRotation = EntityManager.GetComponent<TransformComponent>(uid).WorldRotation.ToVec();

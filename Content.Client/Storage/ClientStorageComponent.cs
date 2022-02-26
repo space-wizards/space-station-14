@@ -31,7 +31,7 @@ namespace Content.Client.Storage
     /// Client version of item storage containers, contains a UI which displays stored entities and their size
     /// </summary>
     [RegisterComponent]
-    public class ClientStorageComponent : SharedStorageComponent, IDraggable
+    public sealed class ClientStorageComponent : SharedStorageComponent, IDraggable
     {
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -45,21 +45,32 @@ namespace Content.Client.Storage
 
         public override IReadOnlyList<EntityUid> StoredEntities => _storedEntities;
 
-        protected override void OnAdd()
+        private StorageWindow GetOrCreateWindow()
         {
-            base.OnAdd();
-
-            _window = new StorageWindow(this, _playerManager, _entityManager)
+            if (_window == null)
             {
-                Title = _entityManager.GetComponent<MetaDataComponent>(Owner).EntityName
-            };
-            _window.EntityList.GenerateItem += GenerateButton;
-            _window.EntityList.ItemPressed += Interact;
+                _window = new StorageWindow(this, _playerManager, _entityManager)
+                {
+                    Title = _entityManager.GetComponent<MetaDataComponent>(Owner).EntityName
+                };
+
+                _window.EntityList.GenerateItem += GenerateButton;
+                _window.EntityList.ItemPressed += Interact;
+            }
+
+            return _window;
         }
 
         protected override void OnRemove()
         {
-            _window?.Dispose();
+            if (_window is { Disposed: false })
+            {
+                _window.EntityList.GenerateItem -= GenerateButton;
+                _window.EntityList.ItemPressed -= Interact;
+                _window.Dispose();
+            }
+
+            _window = null;
             base.OnRemove();
         }
 
@@ -108,7 +119,7 @@ namespace Content.Client.Storage
             _storedEntities = storageState.StoredEntities.ToList();
             StorageSizeUsed = storageState.StorageSizeUsed;
             StorageCapacityMax = storageState.StorageSizeMax;
-            _window?.BuildEntityList(storageState.StoredEntities.ToList());
+            GetOrCreateWindow().BuildEntityList(storageState.StoredEntities.ToList());
         }
 
         /// <summary>
@@ -134,12 +145,12 @@ namespace Content.Client.Storage
         /// </summary>
         private void ToggleUI()
         {
-            if (_window == null) return;
+            var window = GetOrCreateWindow();
 
-            if (_window.IsOpen)
-                _window.Close();
+            if (window.IsOpen)
+                window.Close();
             else
-                _window.OpenCentered();
+                window.OpenCentered();
         }
 
         private void CloseUI()
@@ -222,7 +233,7 @@ namespace Content.Client.Storage
         /// <summary>
         /// GUI class for client storage component
         /// </summary>
-        private class StorageWindow : SS14Window
+        private sealed class StorageWindow : DefaultWindow
         {
             private Control _vBox;
             private readonly Label _information;

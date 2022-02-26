@@ -19,12 +19,11 @@ namespace Content.Server.Projectiles.Components
     /// Lasers etc.
     /// </summary>
     [RegisterComponent]
-    public class HitscanComponent : Component
+    public sealed class HitscanComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        public override string Name => "Hitscan";
         public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
 
         [DataField("layers")] //todo  WithFormat.Flags<CollisionLayer>()

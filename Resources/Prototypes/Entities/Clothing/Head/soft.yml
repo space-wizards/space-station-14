@@ -199,7 +199,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatSecsoft
-  name: ssecurity cap
+  name: security cap
   description: It's a robust baseball hat in tasteful red colour.
   components:
   - type: Sprite
@@ -239,3 +239,25 @@
     sprite: Clothing/Head/Soft/yellowsoft_flipped.rsi
   - type: Clothing
     sprite: Clothing/Head/Soft/yellowsoft_flipped.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBizarreSoft
+  name: troublemaker's soft
+  description: A truly.. bizarre accessory.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Soft/bizarresoft.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Soft/bizarresoft.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBizarreSoftFlipped
+  name: troublemaker's soft flipped
+  description: A truly.. bizarre accessory, flipped.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Soft/bizarresoft_flipped.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Soft/bizarresoft_flipped.rsi

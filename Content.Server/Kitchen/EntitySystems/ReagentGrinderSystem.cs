@@ -2,13 +2,13 @@
 using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Kitchen.Components;
 using Content.Server.Kitchen.Events;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
@@ -264,7 +264,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             if (user == null ||
                 !EntityManager.TryGetComponent<HandsComponent?>(user.Value, out var hands) ||
-                !EntityManager.TryGetComponent<ItemComponent?>(beaker, out var item))
+                !EntityManager.TryGetComponent<SharedItemComponent?>(beaker, out var item))
                 return;
 
             hands.PutInHandOrDrop(item);
@@ -318,7 +318,6 @@ namespace Content.Server.Kitchen.EntitySystems
                                 component.HeldBeaker.MaxVolume) continue;
                             solution.ScaleSolution(juiceEvent.Scalar);
                             _solutionsSystem.TryAddSolution(beakerEntity.Value, component.HeldBeaker, solution);
-                            _solutionsSystem.RemoveAllSolution(beakerEntity.Value, solution);
                             EntityManager.DeleteEntity(item);
                         }
 

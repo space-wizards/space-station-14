@@ -1,6 +1,7 @@
 ﻿using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -8,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems
 {
-    public class StomachSystem : EntitySystem
+    public sealed class StomachSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 

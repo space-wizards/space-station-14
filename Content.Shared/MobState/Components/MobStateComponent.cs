@@ -5,11 +5,11 @@ using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Content.Shared.MobState.EntitySystems;
 using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -24,11 +24,9 @@ namespace Content.Shared.MobState.Components
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent]
-    public class MobStateComponent : Component
+    public sealed class MobStateComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "MobState";
 
         /// <summary>
         ///     States that this <see cref="MobStateComponent"/> mapped to
@@ -68,10 +66,7 @@ namespace Content.Shared.MobState.Components
 
         protected override void OnRemove()
         {
-            if (_entMan.TryGetComponent(Owner, out SharedAlertsComponent? status))
-            {
-                status.ClearAlert(AlertType.HumanHealth);
-            }
+            EntitySystem.Get<AlertsSystem>().ClearAlert(Owner, AlertType.HumanHealth);
 
             base.OnRemove();
         }
@@ -318,13 +313,12 @@ namespace Content.Shared.MobState.Components
 
             var message = new MobStateChangedEvent(this, old, state);
             entMan.EventBus.RaiseLocalEvent(Owner, message);
-
             Dirty();
         }
     }
 
     [Serializable, NetSerializable]
-    public class MobStateComponentState : ComponentState
+    public sealed class MobStateComponentState : ComponentState
     {
         public readonly FixedPoint2? CurrentThreshold;
 

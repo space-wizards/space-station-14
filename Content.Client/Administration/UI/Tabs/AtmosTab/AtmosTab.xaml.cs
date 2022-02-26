@@ -4,7 +4,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Administration.UI.Tabs.AtmosTab
 {
     [GenerateTypedNameReferences]
-    public partial class AtmosTab : Control
+    public sealed partial class AtmosTab : Control
     {
     }
 }

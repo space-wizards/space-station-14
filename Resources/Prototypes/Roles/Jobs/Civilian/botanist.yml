@@ -9,16 +9,18 @@
   access:
   - Service
   - Maintenance
+  - Hydroponics
 
 - type: startingGear
   id: BotanistGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitHydroponics
-    backpack: ClothingBackpackHydroponicsFilled
+    jumpsuit: ClothingUniformJumpsuitHydroponics
+    back: ClothingBackpackHydroponicsFilled
     shoes: ClothingShoesColorBrown
-    idcard: BotanistPDA
+    id: BotanistPDA
     ears: ClothingHeadsetService
-    outerclothing: ClothingOuterApronBotanist
+    outerClothing: ClothingOuterApronBotanist
+    belt: ClothingBeltPlantFilled
   innerclothingskirt: ClothingUniformJumpskirtHydroponics
   satchel: ClothingBackpackSatchelHydroponicsFilled
   duffelbag: ClothingBackpackDuffelFilled

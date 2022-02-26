@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             SetSize="400 600"
             MinSize="400 600">
@@ -80,4 +80,4 @@
         </PanelContainer>
         <TextureButton VerticalExpand="True" />
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

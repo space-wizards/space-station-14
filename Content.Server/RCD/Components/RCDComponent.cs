@@ -14,10 +14,8 @@ namespace Content.Server.RCD.Components
     }
 
     [RegisterComponent]
-    public class RCDComponent : Component
+    public sealed class RCDComponent : Component
     {
-        public override string Name => "RCD";
-
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("maxAmmo")] public int MaxAmmo = 5;
 

@@ -14,10 +14,8 @@ namespace Content.Server.Shuttles.Components
     [Friend(typeof(ThrusterSystem))]
     public sealed class ThrusterComponent : Component
     {
-        public override string Name => "Thruster";
-
         /// <summary>
-        /// Whether the thruster has been force to be enabled / disable (e.g. VV, interaction, etc.)
+        /// Whether the thruster has been force to be enabled / disabled (e.g. VV, interaction, etc.)
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]

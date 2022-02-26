@@ -149,20 +149,26 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
         foreach (var instrument in EntityManager.EntityQuery<InstrumentComponent>(true))
         {
-            if ((instrument.BatchesDropped >= MaxMidiBatchesDropped
-                 || instrument.LaggedBatches >= MaxMidiLaggedBatches)
-                && instrument.InstrumentPlayer != null && instrument.RespectMidiLimits)
+            if (instrument.DirtyRenderer)
             {
-                // Just in case
-                Clean((instrument).Owner);
-                instrument.UserInterface?.CloseAll();
+                instrument.Dirty();
+                instrument.DirtyRenderer = false;
+            }
 
-                if (instrument.InstrumentPlayer.AttachedEntity is {Valid: true} mob)
+            if (instrument.RespectMidiLimits && instrument.InstrumentPlayer != null &&
+                (instrument.BatchesDropped >= MaxMidiBatchesDropped
+                 || instrument.LaggedBatches >= MaxMidiLaggedBatches))
+            {
+                if (instrument.InstrumentPlayer?.AttachedEntity is {Valid: true} mob)
                 {
                     _stunSystem.TryParalyze(mob, TimeSpan.FromSeconds(1), true);
 
-                    instrument.Owner.PopupMessage(mob, "instrument-component-finger-cramps-max-message");
+                    instrument.Owner.PopupMessage(mob, Loc.GetString("instrument-component-finger-cramps-max-message"));
                 }
+
+                // Just in case
+                Clean((instrument).Owner);
+                instrument.UserInterface?.CloseAll();
             }
 
             instrument.Timer += frameTime;

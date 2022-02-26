@@ -1,4 +1,6 @@
 using System;
+using Content.Server.Administration.Logs;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
@@ -6,6 +8,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -19,9 +22,11 @@ using Robust.Shared.Maths;
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasPressurePumpSystem : EntitySystem
+    public sealed class GasPressurePumpSystem : EntitySystem
     {
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public override void Initialize()
         {
@@ -78,7 +83,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 var transferMoles = pressureDelta * outlet.Air.Volume / inlet.Air.Temperature * Atmospherics.R;
 
                 var removed = inlet.Air.Remove(transferMoles);
-                outlet.AssumeAir(removed);
+                _atmosphereSystem.Merge(outlet.Air, removed);
             }
         }
 
@@ -111,12 +116,16 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnToggleStatusMessage(EntityUid uid, GasPressurePumpComponent pump, GasPressurePumpToggleStatusMessage args)
         {
             pump.Enabled = args.Enabled;
+            _adminLogSystem.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
+                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, pump);
         }
 
         private void OnOutputPressureChangeMessage(EntityUid uid, GasPressurePumpComponent pump, GasPressurePumpChangeOutputPressureMessage args)
         {
             pump.TargetPressure = Math.Clamp(args.Pressure, 0f, Atmospherics.MaxOutputPressure);
+            _adminLogSystem.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
+                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the pressure on {ToPrettyString(uid):device} to {args.Pressure}kPa");
             DirtyUI(uid, pump);
 
         }

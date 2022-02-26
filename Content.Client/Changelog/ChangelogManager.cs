@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -18,11 +20,9 @@ namespace Content.Client.Changelog
 {
     public sealed class ChangelogManager
     {
-        // If you fork SS14, change this to have the changelog "last seen" date stored separately.
-        public const string ForkId = "Wizards";
-
         [Dependency] private readonly IResourceManager _resource = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         public bool NewChangelogEntries { get; private set; }
         public int LastReadId { get; private set; }
@@ -43,8 +43,7 @@ namespace Content.Client.Changelog
             NewChangelogEntries = false;
             NewChangelogEntriesChanged?.Invoke();
 
-            using var file = _resource.UserData.Create(new ResourcePath($"/changelog_last_seen_{ForkId}"));
-            using var sw = new StreamWriter(file);
+            using var sw = _resource.UserData.OpenWriteText(new ResourcePath($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
 
             sw.Write(MaxId.ToString());
         }
@@ -61,10 +60,10 @@ namespace Content.Client.Changelog
 
             MaxId = changelog.Max(c => c.Id);
 
-            var path = new ResourcePath($"/changelog_last_seen_{ForkId}");
-            if (_resource.UserData.Exists(path))
+            var path = new ResourcePath($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}");
+            if(_resource.UserData.TryReadAllText(path, out var lastReadIdText))
             {
-                LastReadId = int.Parse(_resource.UserData.ReadAllText(path));
+                LastReadId = int.Parse(lastReadIdText);
             }
 
             NewChangelogEntries = LastReadId < MaxId;

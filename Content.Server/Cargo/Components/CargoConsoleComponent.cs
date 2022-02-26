@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
@@ -18,7 +19,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Cargo.Components
 {
     [RegisterComponent]
-    public class CargoConsoleComponent : SharedCargoConsoleComponent
+    public sealed class CargoConsoleComponent : SharedCargoConsoleComponent
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -59,7 +60,7 @@ namespace Content.Server.Cargo.Components
         private SoundSpecifier _errorSound = new SoundPathSpecifier("/Audio/Effects/error.ogg");
 
         private bool Powered => !_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
-        private CargoConsoleSystem _cargoConsoleSystem = default!;
+        private CargoSystem _cargoConsoleSystem = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CargoConsoleUiKey.Key);
 
@@ -75,7 +76,7 @@ namespace Content.Server.Cargo.Components
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            _cargoConsoleSystem = EntitySystem.Get<CargoConsoleSystem>();
+            _cargoConsoleSystem = EntitySystem.Get<CargoSystem>();
             BankAccount = _cargoConsoleSystem.StationAccount;
         }
 
@@ -113,7 +114,7 @@ namespace Content.Server.Cargo.Components
                     if (!_cargoConsoleSystem.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId,
                         msg.Amount, _bankAccount.Id))
                     {
-                        SoundSystem.Play(Filter.Local(), _errorSound.GetSound(), Owner, AudioParams.Default);
+                        SoundSystem.Play(Filter.Pvs(Owner), _errorSound.GetSound(), Owner, AudioParams.Default);
                     }
                     break;
                 }
@@ -146,7 +147,7 @@ namespace Content.Server.Cargo.Components
                         || !_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                         )
                     {
-                        SoundSystem.Play(Filter.Local(), _errorSound.GetSound(), Owner, AudioParams.Default);
+                        SoundSystem.Play(Filter.Pvs(Owner), _errorSound.GetSound(), Owner, AudioParams.Default);
                         break;
                     }
 
@@ -155,6 +156,7 @@ namespace Content.Server.Cargo.Components
                 }
                 case CargoConsoleShuttleMessage _:
                 {
+                    // Jesus fucking christ Glass
                     //var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(orders.Database);
                     //orders.Database.ClearOrderCapacity();
 
@@ -164,23 +166,20 @@ namespace Content.Server.Cargo.Components
                     var indices = _entMan.GetComponent<TransformComponent>(Owner).Coordinates.ToVector2i(_entMan, _mapManager);
                     var offsets = new Vector2i[] { new Vector2i(0, 1), new Vector2i(1, 1), new Vector2i(1, 0), new Vector2i(1, -1),
                                                    new Vector2i(0, -1), new Vector2i(-1, -1), new Vector2i(-1, 0), new Vector2i(-1, 1), };
-                    var adjacentEntities = new List<IEnumerable<EntityUid>>(); //Probably better than IEnumerable.concat
-                    foreach (var offset in offsets)
-                    {
-                        adjacentEntities.Add((indices+offset).GetEntitiesInTileFast(_entMan.GetComponent<TransformComponent>(Owner).GridID));
-                    }
 
-                    foreach (var enumerator in adjacentEntities)
+                    var lookup = IoCManager.Resolve<IEntityLookup>();
+                    var gridId = _entMan.GetComponent<TransformComponent>(Owner).GridID;
+
+                    // TODO: Should use anchoring.
+                    foreach (var entity in lookup.GetEntitiesIntersecting(gridId, offsets.Select(o => o + indices)))
                     {
-                        foreach (EntityUid entity in enumerator)
+                        if (_entMan.HasComponent<CargoTelepadComponent>(entity) && _entMan.TryGetComponent<ApcPowerReceiverComponent?>(entity, out var powerReceiver) && powerReceiver.Powered)
                         {
-                            if (_entMan.HasComponent<CargoTelepadComponent>(entity) && _entMan.TryGetComponent<ApcPowerReceiverComponent?>(entity, out var powerReceiver) && powerReceiver.Powered)
-                            {
-                                cargoTelepad = entity;
-                                break;
-                            }
+                            cargoTelepad = entity;
+                            break;
                         }
                     }
+
                     if (cargoTelepad != null)
                     {
                         if (_entMan.TryGetComponent<CargoTelepadComponent?>(cargoTelepad.Value, out var telepadComponent))
@@ -189,7 +188,7 @@ namespace Content.Server.Cargo.Components
                             orders.Database.ClearOrderCapacity();
                             foreach (var order in approvedOrders)
                             {
-                                telepadComponent.QueueTeleport(order);
+                                _cargoConsoleSystem.QueueTeleport(telepadComponent, order);
                             }
                         }
                     }

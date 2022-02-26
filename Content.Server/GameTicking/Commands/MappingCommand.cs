@@ -16,7 +16,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
-    class MappingCommand : IConsoleCommand
+    sealed class MappingCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -68,15 +68,15 @@ namespace Content.Server.GameTicking.Commands
                     return;
             }
 
+            // loadmap checks for this on its own but we want to avoid running our other commands.
             if (mapManager.MapExists(new MapId(mapId)))
             {
-                shell.WriteLine($"Map {mapId} already exists");
+                shell.WriteError($"Map {mapId} already exists");
                 return;
             }
 
             shell.ExecuteCommand("sudo cvar events.enabled false");
-            shell.ExecuteCommand($"addmap {mapId} false");
-            shell.ExecuteCommand($"loadbp {mapId} \"{CommandParsing.Escape(mapName)}\" true");
+            shell.ExecuteCommand($"loadmap {mapId} \"{CommandParsing.Escape(mapName)}\" true");
 
             if (player.AttachedEntity is {Valid: true} playerEntity &&
                 _entities.GetComponent<MetaDataComponent>(playerEntity).EntityPrototype?.ID != "AdminObserver")
@@ -88,9 +88,8 @@ namespace Content.Server.GameTicking.Commands
             shell.RemoteExecuteCommand("showmarkers");
 
             var newGrid = mapManager.GetAllGrids().OrderByDescending(g => (int) g.Index).First();
-            var pauseManager = IoCManager.Resolve<IPauseManager>();
 
-            pauseManager.SetMapPaused(newGrid.ParentMapId, true);
+            mapManager.SetMapPaused(newGrid.ParentMapId, true);
 
             shell.WriteLine($"Created unloaded map from file {mapName} with id {mapId}. Use \"savebp {newGrid.Index} foo.yml\" to save the new grid as a map.");
         }

@@ -31,8 +31,6 @@ namespace Content.Server.Chemistry.Components
         // If it's anything else, GIVE reagent.
         // Of course, only if possible.
 
-        public override string Name => "SolutionTransfer";
-
         /// <summary>
         ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.
         /// </summary>
@@ -117,24 +115,27 @@ namespace Content.Server.Chemistry.Components
         {
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
 
-            if (!eventArgs.InRangeUnobstructed() || eventArgs.Target == null)
-                return false;
-
-            if (!_entities.HasComponent<SolutionContainerManagerComponent>(Owner))
+            if (!eventArgs.CanReach || eventArgs.Target == null)
                 return false;
 
             var target = eventArgs.Target!.Value;
-            if (!_entities.HasComponent<SolutionContainerManagerComponent>(target))
-            {
-                return false;
-            }
 
+            //Special case for reagent tanks, because normally clicking another container will give solution, not take it.
+            if (CanReceive  && !_entities.HasComponent<RefillableSolutionComponent>(target) // target must not be refillable (e.g. Reagent Tanks)
+                            && solutionsSys.TryGetDrainableSolution(target, out var targetDrain) // target must be drainable
+                            && _entities.TryGetComponent(Owner, out RefillableSolutionComponent refillComp)
+                            && solutionsSys.TryGetRefillableSolution(Owner, out var ownerRefill, refillable: refillComp))
 
-            if (CanReceive && _entities.TryGetComponent(target, out ReagentTankComponent? tank)
-                           && solutionsSys.TryGetRefillableSolution(Owner, out var ownerRefill)
-                           && solutionsSys.TryGetDrainableSolution(target, out var targetDrain))
             {
-                var transferred = DoTransfer(eventArgs.User, target, targetDrain, Owner, ownerRefill, tank.TransferAmount);
+
+                var transferAmount = TransferAmount; // This is the player-configurable transfer amount of "Owner," not the target reagent tank.
+
+                if (_entities.TryGetComponent(Owner, out RefillableSolutionComponent? refill) && refill.MaxRefill != null) // Owner is the entity receiving solution from target.
+                {
+                    transferAmount = FixedPoint2.Min(transferAmount, (FixedPoint2) refill.MaxRefill); // if the receiver has a smaller transfer limit, use that instead
+                }
+
+                var transferred = DoTransfer(eventArgs.User, target, targetDrain, Owner, ownerRefill, transferAmount);
                 if (transferred > 0)
                 {
                     var toTheBrim = ownerRefill.AvailableVolume == 0;
@@ -148,10 +149,18 @@ namespace Content.Server.Chemistry.Components
                 }
             }
 
+            // if target is refillable, and owner is drainable
             if (CanSend && solutionsSys.TryGetRefillableSolution(target, out var targetRefill)
                         && solutionsSys.TryGetDrainableSolution(Owner, out var ownerDrain))
             {
-                var transferred = DoTransfer(eventArgs.User, Owner, ownerDrain, target, targetRefill, TransferAmount);
+                var transferAmount = TransferAmount;
+
+                if (_entities.TryGetComponent(target, out RefillableSolutionComponent? refill) && refill.MaxRefill != null)
+                {
+                    transferAmount = FixedPoint2.Min(transferAmount, (FixedPoint2) refill.MaxRefill);
+                }
+
+                var transferred = DoTransfer(eventArgs.User, Owner, ownerDrain, target, targetRefill, transferAmount);
 
                 if (transferred > 0)
                 {
@@ -164,7 +173,7 @@ namespace Content.Server.Chemistry.Components
                 }
             }
 
-            return true;
+            return false;
         }
 
         /// <returns>The actual amount transferred.</returns>
@@ -190,8 +199,7 @@ namespace Content.Server.Chemistry.Components
                 return FixedPoint2.Zero;
             }
 
-            var actualAmount =
-                FixedPoint2.Min(amount, FixedPoint2.Min(source.DrainAvailable, target.AvailableVolume));
+            var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(source.DrainAvailable, target.AvailableVolume));
 
             var solution = EntitySystem.Get<SolutionContainerSystem>().Drain(sourceEntity, source, actualAmount);
             EntitySystem.Get<SolutionContainerSystem>().Refill(targetEntity, target, solution);

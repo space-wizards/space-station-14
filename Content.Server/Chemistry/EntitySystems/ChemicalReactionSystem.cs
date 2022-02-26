@@ -9,18 +9,18 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
-    public class ChemicalReactionSystem : SharedChemicalReactionSystem
+    public sealed class ChemicalReactionSystem : SharedChemicalReactionSystem
     {
-        protected override void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype randomReagent, EntityUid Owner, FixedPoint2 unitReactions)
+        protected override void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype randomReagent, EntityUid owner, FixedPoint2 unitReactions)
         {
-            base.OnReaction(solution, reaction,  randomReagent, Owner, unitReactions);
+            base.OnReaction(solution, reaction,  randomReagent, owner, unitReactions);
 
-            var coordinates = EntityManager.GetComponent<TransformComponent>(Owner).Coordinates;
+            var coordinates = Transform(owner).Coordinates;
 
             _logSystem.Add(LogType.ChemicalReaction, reaction.Impact,
-                $"Chemical reaction {reaction.ID} occurred with strength {unitReactions:strength} on entity {Owner} at {coordinates}");
+                $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(owner):metabolizer} at {coordinates}");
 
-            SoundSystem.Play(Filter.Pvs(Owner, entityManager:EntityManager), reaction.Sound.GetSound(), Owner);
+            SoundSystem.Play(Filter.Pvs(owner, entityManager:EntityManager), reaction.Sound.GetSound(), owner);
         }
     }
 }

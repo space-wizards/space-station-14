@@ -8,9 +8,8 @@ namespace Content.Server.Singularity.Components
     /// Overrides exactly how much energy this object gives to a singularity.
     /// </summary>
     [RegisterComponent]
-    public class SinguloFoodComponent : Component
+    public sealed class SinguloFoodComponent : Component
     {
-        public override string Name => "SinguloFood";
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("energy")]
         public int Energy { get; set; } = 1;

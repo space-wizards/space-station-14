@@ -28,3 +28,17 @@
     - Thirst
     - Idle
     - Spirate
+
+- type: entity
+  parent: MobHumanBase
+  suffix: Dead
+  save: true
+  id: SalvageHumanCorpse
+  name: unidentified human
+  description: We barely knew ye.
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 200
+

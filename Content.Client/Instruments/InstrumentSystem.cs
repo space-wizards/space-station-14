@@ -18,7 +18,7 @@ using SharpFont;
 namespace Content.Client.Instruments
 {
     [UsedImplicitly]
-    public class InstrumentSystem : SharedInstrumentSystem
+    public sealed class InstrumentSystem : SharedInstrumentSystem
     {
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IMidiManager _midiManager = default!;
@@ -37,6 +37,8 @@ namespace Content.Client.Instruments
         public override void Initialize()
         {
             base.Initialize();
+
+            UpdatesOutsidePrediction = true;
 
             _cfg.OnValueChanged(CCVars.MaxMidiEventsPerBatch, OnMaxMidiEventsPerBatchChanged, true);
             _cfg.OnValueChanged(CCVars.MaxMidiEventsPerSecond, OnMaxMidiEventsPerSecondChanged, true);
@@ -106,7 +108,7 @@ namespace Content.Client.Instruments
 
         public override void EndRenderer(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? component = null)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component, false))
                 return;
 
             if (component is not InstrumentComponent instrument)
@@ -129,7 +131,8 @@ namespace Content.Client.Instruments
             var renderer = instrument.Renderer;
 
             // We dispose of the synth two seconds from now to allow the last notes to stop from playing.
-            instrument.Owner.SpawnTimer(2000, () => { renderer?.Dispose(); });
+            // Don't use timers bound to the entity in case it is getting deleted.
+            Timer.Spawn(2000, () => { renderer?.Dispose(); });
             instrument.Renderer = null;
             instrument.MidiEventBuffer.Clear();
 

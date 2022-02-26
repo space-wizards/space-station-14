@@ -11,9 +11,6 @@ namespace Content.Client.Weapons.Melee.Components
     public sealed class MeleeWeaponArcAnimationComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "MeleeWeaponArcAnimation";
-
         private MeleeWeaponAnimationPrototype? _meleeWeaponAnimation;
 
         private float _timer;

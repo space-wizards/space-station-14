@@ -10,17 +10,15 @@ using Robust.Shared.Maths;
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public class AirtightSystem : EntitySystem
+    public sealed class AirtightSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly SpreaderSystem _spreaderSystem = default!;
 
         public override void Initialize()
         {
             SubscribeLocalEvent<AirtightComponent, ComponentInit>(OnAirtightInit);
             SubscribeLocalEvent<AirtightComponent, ComponentShutdown>(OnAirtightShutdown);
-            SubscribeLocalEvent<AirtightComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<AirtightComponent, AnchorStateChangedEvent>(OnAirtightPositionChanged);
             SubscribeLocalEvent<AirtightComponent, RotateEvent>(OnAirtightRotated);
         }
@@ -44,14 +42,15 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnAirtightShutdown(EntityUid uid, AirtightComponent airtight, ComponentShutdown args)
         {
-            SetAirblocked(airtight, false);
+            var xform = Transform(uid);
 
-            InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum);
-            RaiseLocalEvent(new AirtightChanged(airtight));
-        }
+            // If the grid is deleting no point updating atmos.
+            if (_mapManager.TryGetGrid(xform.GridID, out var grid))
+            {
+                if (MetaData(grid.GridEntityId).EntityLifeStage > EntityLifeStage.MapInitialized) return;
+            }
 
-        private void OnMapInit(EntityUid uid, AirtightComponent airtight, MapInitEvent args)
-        {
+            SetAirblocked(airtight, false, xform);
         }
 
         private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent airtight, ref AnchorStateChangedEvent args)
@@ -79,16 +78,18 @@ namespace Content.Server.Atmos.EntitySystems
             RaiseLocalEvent(uid, new AirtightChanged(airtight));
         }
 
-        public void SetAirblocked(AirtightComponent airtight, bool airblocked)
+        public void SetAirblocked(AirtightComponent airtight, bool airblocked, TransformComponent? xform = null)
         {
+            if (!Resolve(airtight.Owner, ref xform)) return;
+
             airtight.AirBlocked = airblocked;
-            UpdatePosition(airtight);
-            RaiseLocalEvent((airtight).Owner, new AirtightChanged(airtight));
+            UpdatePosition(airtight, xform);
+            RaiseLocalEvent(airtight.Owner, new AirtightChanged(airtight));
         }
 
-        public void UpdatePosition(AirtightComponent airtight)
+        public void UpdatePosition(AirtightComponent airtight, TransformComponent? xform = null)
         {
-            var xform = EntityManager.GetComponent<TransformComponent>(airtight.Owner);
+            if (!Resolve(airtight.Owner, ref xform)) return;
 
             if (!xform.Anchored || !xform.GridID.IsValid())
                 return;
@@ -131,7 +132,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
     }
 
-    public class AirtightChanged : EntityEventArgs
+    public sealed class AirtightChanged : EntityEventArgs
     {
         public AirtightComponent Airtight;
 

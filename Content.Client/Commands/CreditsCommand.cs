@@ -1,11 +1,12 @@
 using Content.Client.Credits;
 using Content.Client.UserInterface;
+using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
 
 namespace Content.Client.Commands
 {
-    [UsedImplicitly]
+    [UsedImplicitly, AnyCommand]
     public sealed class CreditsCommand : IConsoleCommand
     {
         public string Command => "credits";

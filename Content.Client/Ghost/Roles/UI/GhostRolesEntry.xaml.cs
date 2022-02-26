@@ -7,13 +7,13 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Ghost.Roles.UI
 {
     [GenerateTypedNameReferences]
-    public partial class GhostRolesEntry : BoxContainer
+    public sealed partial class GhostRolesEntry : BoxContainer
     {
         public GhostRolesEntry(GhostRoleInfo info, Action<BaseButton.ButtonEventArgs> requestAction)
         {
             RobustXamlLoader.Load(this);
 
-            Title.SetMessage(info.Name);
+            Title.Text = info.Name;
             Description.SetMessage(info.Description);
             RequestButton.OnPressed += requestAction;
         }

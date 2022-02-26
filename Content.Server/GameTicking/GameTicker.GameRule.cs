@@ -1,72 +1,132 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameTicking.Rules;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
-        [ViewVariables] private readonly List<GameRule> _gameRules = new();
-        public IEnumerable<GameRule> ActiveGameRules => _gameRules;
+        // No duplicates.
+        [ViewVariables] private readonly HashSet<GameRulePrototype> _addedGameRules = new();
+        public IEnumerable<GameRulePrototype> AddedGameRules => _addedGameRules;
 
-        public T AddGameRule<T>() where T : GameRule, new()
+        [ViewVariables] private readonly HashSet<GameRulePrototype> _startedGameRules = new();
+        public IEnumerable<GameRulePrototype> StartedGameRules => _startedGameRules;
+
+        /// <summary>
+        ///     Game rules can be 'started' separately from being added. 'Starting' them usually
+        ///     happens at round start while they can be added and removed before then.
+        /// </summary>
+        public void StartGameRule(GameRulePrototype rule)
         {
-            var instance = _dynamicTypeFactory.CreateInstance<T>();
+            if (!GameRuleAdded(rule))
+                AddGameRule(rule);
 
-            _gameRules.Add(instance);
-            instance.Added();
-
-            RaiseLocalEvent(new GameRuleAddedEvent(instance));
-
-            return instance;
+            if (_startedGameRules.Add(rule))
+                RaiseLocalEvent(new GameRuleStartedEvent(rule));
         }
 
-        public bool HasGameRule(string? name)
+        /// <summary>
+        ///     Ends a game rule.
+        ///     This always includes removing it (removing it from added game rules) so that behavior
+        ///     is not separate from this.
+        /// </summary>
+        /// <param name="rule"></param>
+        public void EndGameRule(GameRulePrototype rule)
         {
-            if (name == null)
+            if (!GameRuleAdded(rule))
+                return;
+
+            _addedGameRules.Remove(rule);
+
+            if (GameRuleStarted(rule))
+                _startedGameRules.Remove(rule);
+            RaiseLocalEvent(new GameRuleEndedEvent(rule));
+        }
+
+        /// <summary>
+        ///     Adds a game rule to the list, but does not
+        ///     start it yet, instead waiting until roundstart.
+        /// </summary>
+        public bool AddGameRule(GameRulePrototype rule)
+        {
+            if (!_addedGameRules.Add(rule))
                 return false;
 
-            foreach (var rule in _gameRules)
+            RaiseLocalEvent(new GameRuleAddedEvent(rule));
+            return true;
+        }
+
+        public bool GameRuleAdded(GameRulePrototype rule)
+        {
+            return _addedGameRules.Contains(rule);
+        }
+
+        public bool GameRuleAdded(string rule)
+        {
+            foreach (var ruleProto in _addedGameRules)
             {
-                if (rule.GetType().Name == name)
-                {
+                if (ruleProto.ID.Equals(rule))
                     return true;
-                }
             }
 
             return false;
         }
 
-        public bool HasGameRule(Type? type)
+        public bool GameRuleStarted(GameRulePrototype rule)
         {
-            if (type == null || !typeof(GameRule).IsAssignableFrom(type))
-                return false;
+            return _startedGameRules.Contains(rule);
+        }
 
-            foreach (var rule in _gameRules)
+        public bool GameRuleStarted(string rule)
+        {
+            foreach (var ruleProto in _startedGameRules)
             {
-                if (rule.GetType().IsAssignableFrom(type))
+                if (ruleProto.ID.Equals(rule))
                     return true;
             }
 
             return false;
         }
 
-        public void RemoveGameRule(GameRule rule)
+        public void ClearGameRules()
         {
-            if (_gameRules.Contains(rule)) return;
-
-            rule.Removed();
-
-            _gameRules.Remove(rule);
+            foreach (var rule in _addedGameRules.ToArray())
+            {
+                EndGameRule(rule);
+            }
         }
     }
 
-    public class GameRuleAddedEvent
+    /// <summary>
+    ///     Raised broadcast when a game rule is selected, but not started yet.
+    /// </summary>
+    public sealed class GameRuleAddedEvent
     {
-        public GameRule Rule { get; }
+        public GameRulePrototype Rule { get; }
 
-        public GameRuleAddedEvent(GameRule rule)
+        public GameRuleAddedEvent(GameRulePrototype rule)
+        {
+            Rule = rule;
+        }
+    }
+
+    public sealed class GameRuleStartedEvent
+    {
+        public GameRulePrototype Rule { get; }
+
+        public GameRuleStartedEvent(GameRulePrototype rule)
+        {
+            Rule = rule;
+        }
+    }
+
+    public sealed class GameRuleEndedEvent
+    {
+        public GameRulePrototype Rule { get; }
+
+        public GameRuleEndedEvent(GameRulePrototype rule)
         {
             Rule = rule;
         }

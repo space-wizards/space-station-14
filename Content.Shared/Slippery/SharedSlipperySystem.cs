@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Inventory;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
@@ -26,6 +27,9 @@ namespace Content.Shared.Slippery
         public override void Initialize()
         {
             base.Initialize();
+
+            UpdatesOutsidePrediction = true;
+
             SubscribeLocalEvent<SlipperyComponent, StartCollideEvent>(HandleCollide);
             SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
         }
@@ -106,7 +110,7 @@ namespace Content.Shared.Slippery
                 PlaySound(component);
             }
 
-            _adminLog.Add(LogType.Slip, LogImpact.Low, $"{otherBody.Owner} slipped on collision with {component.Owner}");
+            _adminLog.Add(LogType.Slip, LogImpact.Low, $"{ToPrettyString(otherBody.Owner):mob} slipped on collision with {ToPrettyString(component.Owner):entity}");
 
             return true;
         }
@@ -155,7 +159,8 @@ namespace Content.Shared.Slippery
     /// <summary>
     ///     Raised on an entity to determine if it can slip or not.
     /// </summary>
-    public class SlipAttemptEvent : CancellableEntityEventArgs
+    public sealed class SlipAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
     {
+        public SlotFlags TargetSlots { get; } = SlotFlags.FEET;
     }
 }

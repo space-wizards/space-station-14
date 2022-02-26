@@ -1,6 +1,6 @@
 - type: entity
   name: beaker box
-  parent: BoxBase
+  parent: BoxCardboard
   id: BoxBeaker
   description: A box full of beakers.
   components:
@@ -14,7 +14,3 @@
     layers:
       - state: box
       - state: beaker
-
-  - type: Item
-  - type: Storage
-    capacity: 30

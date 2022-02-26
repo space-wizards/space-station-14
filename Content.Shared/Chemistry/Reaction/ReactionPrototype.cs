@@ -15,7 +15,7 @@ namespace Content.Shared.Chemistry.Reaction
     /// Prototype for chemical reaction definitions
     /// </summary>
     [Prototype("reaction")]
-    public class ReactionPrototype : IPrototype
+    public sealed class ReactionPrototype : IPrototype
     {
         [ViewVariables]
         [DataField("id", required: true)]
@@ -29,6 +29,18 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         [DataField("reactants", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<ReactantPrototype, ReagentPrototype>))]
         public Dictionary<string, ReactantPrototype> Reactants = new();
+
+        /// <summary>
+        ///     The minimum temperature the reaction can occur at.
+        /// </summary>
+        [DataField("minTemp")]
+        public float MinimumTemperature = 0.0f;
+
+        /// <summary>
+        ///     The maximum temperature the reaction can occur at.
+        /// </summary>
+        [DataField("maxTemp")]
+        public float MaximumTemperature = float.PositiveInfinity;
 
         /// <summary>
         /// Reagents created when the reaction occurs.
@@ -61,7 +73,7 @@ namespace Content.Shared.Chemistry.Reaction
     /// Prototype for chemical reaction reactants.
     /// </summary>
     [DataDefinition]
-    public class ReactantPrototype
+    public sealed class ReactantPrototype
     {
         [DataField("amount")]
         private FixedPoint2 _amount = FixedPoint2.New(1);
