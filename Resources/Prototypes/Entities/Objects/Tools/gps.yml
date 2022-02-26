@@ -14,7 +14,3 @@
     sprite: Objects/Devices/gps.rsi
     state: icon
   - type: HandheldGPS
-  - type: UserInterface
-    interfaces:
-    - key: enum.GPSUiKey.Key
-      type: HandheldGPSBoundUserInterface

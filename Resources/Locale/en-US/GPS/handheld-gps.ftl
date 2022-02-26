@@ -1,1 +1,1 @@
-handheld-gps-ui-title = GPS
+handheld-gps-coordinates-title = Coords: {$coordinates}
