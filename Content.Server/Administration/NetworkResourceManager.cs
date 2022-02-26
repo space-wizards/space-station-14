@@ -17,9 +17,9 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IServerDbManager _serverDb = default!;
 
-    public bool Enabled { get; private set; } = true;
-    public float SizeLimit { get; private set; } = 0f;
-    public bool StoreUploaded { get; set; } = true;
+    [ViewVariables] public bool Enabled { get; private set; } = true;
+    [ViewVariables] public float SizeLimit { get; private set; } = 0f;
+    [ViewVariables] public bool StoreUploaded { get; set; } = true;
 
     public override void Initialize()
     {

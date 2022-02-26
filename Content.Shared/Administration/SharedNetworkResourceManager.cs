@@ -22,6 +22,7 @@ public abstract class SharedNetworkResourceManager : IContentRoot
     /// </summary>
     private static readonly ResourcePath Prefix = ResourcePath.Root / "Uploaded";
 
+    [ViewVariables]
     protected readonly Dictionary<ResourcePath, byte[]> Files = new();
 
     public virtual void Initialize()
