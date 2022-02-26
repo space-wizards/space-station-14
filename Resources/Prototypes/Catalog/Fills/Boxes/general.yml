@@ -203,7 +203,12 @@
     contents:
       - id: TrashBag
         amount: 6
+  - type: Storage
+    capacity: 800
   - type: Sprite
     layers:
       - state: box
       - state: writing
+    whitelist:
+      tags:
+        - TrashBag
