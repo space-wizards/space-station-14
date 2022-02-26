@@ -16,6 +16,6 @@ namespace Content.Server.Light.Components
         [ViewVariables] public bool LightOn = false;
 
         [DataField("toggleAction", required: true)]
-        public InstantAction ToggleAction = default!;
+        public InstantAction ToggleAction = new();
     }
 }

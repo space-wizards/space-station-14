@@ -118,7 +118,7 @@ namespace Content.Server.Chat.Managers
             _logs.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
         }
 
-        public void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true)
+        public void DispatchStationAnnouncement(string message, string sender = "Central Command", bool playDefaultSound = true)
         {
             var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
             NetMessageToAll(ChatChannel.Radio, message, messageWrap);

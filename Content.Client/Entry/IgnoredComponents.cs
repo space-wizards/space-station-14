@@ -124,6 +124,8 @@ namespace Content.Client.Entry
             "CursedEntityStorage",
             "Radio",
             "GasArtifact",
+            "SentienceTarget",
+            "VentCritterSpawnLocation",
             "RadiateArtifact",
             "TemperatureArtifact",
             "DisposalHolder",

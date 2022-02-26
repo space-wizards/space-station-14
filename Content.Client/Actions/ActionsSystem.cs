@@ -120,13 +120,21 @@ namespace Content.Client.Actions
 
         protected override void Dirty(ActionType action)
         {
+            // Should only ever receive component states for attached player's component.
+            // --> lets not bother unnecessarily dirtying and prediction-resetting actions for other players.
+            if (action.AttachedEntity != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
             base.Dirty(action);
-            if (action.AttachedEntity == _playerManager.LocalPlayer?.ControlledEntity)
-                UIDirty = true;
+            UIDirty = true;
         }
 
         private void HandleState(EntityUid uid, ActionsComponent component, ref ComponentHandleState args)
         {
+            // Client only needs to care about local player.
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
             if (args.Current is not ActionsComponentState state)
                 return;
 
@@ -140,7 +148,8 @@ namespace Content.Client.Actions
                 if (!serverActions.TryGetValue(act, out var serverAct))
                 {
                     component.Actions.Remove(act);
-                    Assignments.Remove(act);
+                    if (act.AutoRemove && !(Ui?.Locked ?? false))
+                        Assignments.Remove(act);
                     continue;
                 }
 
@@ -204,17 +213,23 @@ namespace Content.Client.Actions
             comp.Actions.Add(action);
         }
 
-        public override void AddActions(EntityUid uid, IEnumerable<ActionType> actions, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
+        public override void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
         {
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
             if (!Resolve(uid, ref comp, false))
                 return;
 
-            base.AddActions(uid, actions, provider, comp, dirty);
+            base.AddAction(uid, action, provider, comp, dirty);
             UIDirty = true;
         }
 
         public override void RemoveActions(EntityUid uid, IEnumerable<ActionType> actions, ActionsComponent? comp = null, bool dirty = true)
         {
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
             if (!Resolve(uid, ref comp, false))
                 return;
 
@@ -222,7 +237,8 @@ namespace Content.Client.Actions
 
             foreach (var act in actions)
             {
-                Assignments.Remove(act);
+                if (act.AutoRemove && !(Ui?.Locked ?? false))
+                    Assignments.Remove(act);
             }
 
             UIDirty = true;
@@ -261,10 +277,8 @@ namespace Content.Client.Actions
                     continue;
                 }
 
-                if (Ui.Component.Actions.Contains(action))
-                    continue;
-
-                Assignments.ClearSlot(index[0].Hotbar, index[0].Slot, false);
+                if (action.AutoRemove && !Ui.Locked && !Ui.Component.Actions.Contains(action))
+                    Assignments.ClearSlot(index[0].Hotbar, index[0].Slot, false);
             }
 
             Assignments.PreventAutoPopulate.RemoveWhere(action => !Ui.Component.Actions.Contains(action));
@@ -574,7 +588,7 @@ namespace Content.Client.Actions
             _targetOutline.Enable(range, entityAction.CheckCanAccess, predicate, entityAction.Whitelist, null);
         }
 
-        internal void TryFillSlot(ActionSlot slot, byte hotbar, byte index)
+        internal void TryFillSlot(byte hotbar, byte index)
         {
             if (Ui == null)
                 return;

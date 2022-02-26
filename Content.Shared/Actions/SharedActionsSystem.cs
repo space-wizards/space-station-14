@@ -354,7 +354,7 @@ public abstract class SharedActionsSystem : EntitySystem
     /// <param name="uid">Entity to receive the actions</param>
     /// <param name="action">The action to add</param>
     /// <param name="provider">The entity that enables these actions (e.g., flashlight). May be null (innate actions).</param>
-    public void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
+    public virtual void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
     {
         comp ??= EnsureComp<ActionsComponent>(uid);
         action.Provider = provider;
@@ -378,7 +378,7 @@ public abstract class SharedActionsSystem : EntitySystem
     /// <param name="uid">Entity to receive the actions</param>
     /// <param name="actions">The actions to add</param>
     /// <param name="provider">The entity that enables these actions (e.g., flashlight). May be null (innate actions).</param>
-    public virtual void AddActions(EntityUid uid, IEnumerable<ActionType> actions, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
+    public void AddActions(EntityUid uid, IEnumerable<ActionType> actions, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
     {
         comp ??= EnsureComp<ActionsComponent>(uid);
 

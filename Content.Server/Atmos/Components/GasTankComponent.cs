@@ -82,7 +82,7 @@ namespace Content.Server.Atmos.Components
         public float TankFragmentScale { get; set; }    = 10 * Atmospherics.OneAtmosphere;
 
         [DataField("toggleAction", required: true)]
-        public InstantAction ToggleAction = default!;
+        public InstantAction ToggleAction = new();
 
         protected override void Initialize()
         {

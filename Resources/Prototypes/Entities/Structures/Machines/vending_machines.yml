@@ -55,7 +55,8 @@
   - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
-  
+  - type: SentienceTarget
+    flavorKind: mechanical
 
 - type: entity
   parent: VendingMachine
