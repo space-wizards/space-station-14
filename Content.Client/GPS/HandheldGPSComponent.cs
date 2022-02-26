@@ -40,17 +40,15 @@ namespace Content.Client.GPS
                 if (UpdateDif < _parent.UpdateRate)
                     return;
 
-                UpdateDif = 0f;
+                UpdateDif -= _parent.UpdateRate;
 
                 UpdateGPSDetails();
             }
 
             public void UpdateGPSDetails()
             {
-                _entMan.TryGetComponent<TransformComponent>(_parent.Owner, out TransformComponent? transComp);
-
                 string posText = "Error";
-                if (transComp != null)
+                if (_entMan.TryGetComponent<TransformComponent>(_parent.Owner, out TransformComponent? transComp))
                 {
                     if (transComp.Coordinates != null)
                     {
