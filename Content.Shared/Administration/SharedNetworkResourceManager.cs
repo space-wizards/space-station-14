@@ -36,10 +36,15 @@ public abstract class SharedNetworkResourceManager : IContentRoot
 
     public bool TryGetFile(ResourcePath relPath, [NotNullWhen(true)] out Stream? stream)
     {
-        if (!Files.TryGetValue(relPath, out var data))
+        byte[]? data;
+
+        lock(Files)
         {
-            stream = null;
-            return false;
+            if (!Files.TryGetValue(relPath, out data))
+            {
+                stream = null;
+                return false;
+            }
         }
 
         // Non-writable stream, as this needs to be thread-safe.
@@ -49,18 +54,24 @@ public abstract class SharedNetworkResourceManager : IContentRoot
 
     public IEnumerable<ResourcePath> FindFiles(ResourcePath path)
     {
-        foreach (var (file, _) in Files)
+        lock(Files)
         {
-            if (file.TryRelativeTo(path, out _))
-                yield return file;
+            foreach (var (file, _) in Files)
+            {
+                if (file.TryRelativeTo(path, out _))
+                    yield return file;
+            }
         }
     }
 
     public IEnumerable<string> GetRelativeFilePaths()
     {
-        foreach (var (file, _) in Files)
+        lock (Files)
         {
-            yield return file.ToString();
+            foreach (var (file, _) in Files)
+            {
+                yield return file.ToString();
+            }
         }
     }
 

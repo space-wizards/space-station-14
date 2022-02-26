@@ -58,7 +58,11 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
 
         // just in case, we ensure it's a relative path.
         msg.RelativePath = msg.RelativePath.ToRelativePath();
-        Files[msg.RelativePath] = msg.Data;
+
+        lock(Files)
+        {
+            Files[msg.RelativePath] = msg.Data;
+        }
 
         // Now we broadcast the message!
         foreach (var channel in _serverNetManager.Channels)
@@ -74,12 +78,15 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
 
     private void ServerNetManagerOnConnected(object? sender, NetChannelArgs e)
     {
-        foreach (var (path, data) in Files)
+        lock (Files)
         {
-            var msg = _serverNetManager.CreateNetMessage<NetworkResourceUploadMessage>();
-            msg.RelativePath = path;
-            msg.Data = data;
-            e.Channel.SendMessage(msg);
+            foreach (var (path, data) in Files)
+            {
+                var msg = _serverNetManager.CreateNetMessage<NetworkResourceUploadMessage>();
+                msg.RelativePath = path;
+                msg.Data = data;
+                e.Channel.SendMessage(msg);
+            }
         }
     }
 
