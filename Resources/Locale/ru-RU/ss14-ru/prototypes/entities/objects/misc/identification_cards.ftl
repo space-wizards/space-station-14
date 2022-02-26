@@ -82,3 +82,6 @@ ent-CentcomIDCard = command officer ID card
 ent-CentcomIDCardSyndie = Centcom ID card
     .desc = { ent-IDCardStandard.desc }
     .suffix = { "" }
+ent-MusicianIDCard = musician ID card
+    .desc = { ent-IDCardStandard.desc }
+    .suffix = { "" }

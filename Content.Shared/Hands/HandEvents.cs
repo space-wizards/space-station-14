@@ -104,7 +104,7 @@ namespace Content.Shared.Hands
     ///     Raised when putting an entity into a hand slot
     /// </summary>
     [PublicAPI]
-    public sealed class EquippedHandEvent : HandledEntityEventArgs
+    public abstract class EquippedHandEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that equipped the item.
@@ -133,7 +133,7 @@ namespace Content.Shared.Hands
     ///     Raised when removing an entity from an inventory slot.
     /// </summary>
     [PublicAPI]
-    public sealed class UnequippedHandEvent : HandledEntityEventArgs
+    public abstract class UnequippedHandEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that equipped the item.
@@ -156,5 +156,25 @@ namespace Content.Shared.Hands
             Unequipped = unequipped;
             Hand = hand;
         }
+    }
+
+    public sealed class GotEquippedHandEvent : EquippedHandEvent
+    {
+        public GotEquippedHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
+    }
+
+    public sealed class GotUnequippedHandEvent : UnequippedHandEvent
+    {
+        public GotUnequippedHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
+    }
+
+    public sealed class DidEquipHandEvent : EquippedHandEvent
+    {
+        public DidEquipHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
+    }
+
+    public sealed class DidUnequipHandEvent : UnequippedHandEvent
+    {
+        public DidUnequipHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
 }

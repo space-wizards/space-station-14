@@ -432,7 +432,7 @@ namespace Content.Server.Database
         [Column("role_unban_id")] public int Id { get; set; }
 
         public int BanId { get; set; }
-        public ServerBan Ban { get; set; } = null!;
+        public ServerRoleBan Ban { get; set; } = null!;
 
         public Guid? UnbanningAdmin { get; set; }
 

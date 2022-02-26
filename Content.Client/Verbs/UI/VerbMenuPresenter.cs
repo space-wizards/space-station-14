@@ -107,7 +107,7 @@ namespace Content.Client.Verbs.UI
                 if (verb.Category?.Text == category.Text)
                 {
                     verbsInCategory.Add(verb);
-                    drawIcons = drawIcons || verb.Icon != null;
+                    drawIcons = drawIcons || verb.Icon != null || verb.IconEntity != null;
                 }
             }
 

@@ -42,6 +42,8 @@
     successChance: 0.2
     interactSuccessString: petting-success-soft-floofy
     interactFailureString: petting-failure-bat
+  - type: SentienceTarget
+    flavorKind: organic
 
 - type: entity
   name: bee
@@ -546,13 +548,8 @@
   components:
   - type: NameIdentifier
     group: Monkey
-  - type: GhostTakeoverAvailable
-    makeSentient: true
-    name: monkey
-    description: Ook ook!
-    rules: |
-      Being a monkey does NOT give you a free pass to kill, RDM or self-antag.
-
+  - type: SentienceTarget
+    flavorKind: primate
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -646,8 +643,15 @@
     tags:
     - Trash
   - type: Recyclable
-  - type: Actions # TODO: Remove CombatMode when Prototype Composition is added
-    innateActions: []
+  - type: Actions 
+  # TODO: Remove CombatMode when Prototype Composition is added
+  - type: CombatMode
+    combatToggleAction:
+      enabled: false
+      autoPopulate: false
+    disarmAction:
+      enabled: false
+      autoPopulate: false
 
 
 - type: entity
@@ -937,6 +941,19 @@
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
     interactFailureString: petting-failure-generic
+
+- type: entity
+  name: tarantula
+  parent: MobGiantSpider
+  id: MobGiantSpiderAngry
+  components:
+    - type: AiFactionTag
+      factions:
+        - Xeno
+    - type: UtilityAI
+      behaviorSets:
+        - Idle
+        - UnarmedAttackHostiles
 
 - type: entity
   name: possum

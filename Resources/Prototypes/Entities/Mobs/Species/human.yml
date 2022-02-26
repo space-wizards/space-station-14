@@ -288,6 +288,7 @@
 #  - type: Recyclable Turns out turning off recycler safeties without considering the instagib is a bad idea
 #    safe: false
   - type: Speech
+  - type: Vocal
   - type: Emoting
   - type: Grammar
     attributes:

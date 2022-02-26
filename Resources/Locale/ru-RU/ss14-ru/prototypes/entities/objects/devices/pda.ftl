@@ -79,3 +79,6 @@ ent-SecurityPDA = охранный КПК
 ent-CentcomPDA = центком КПК
     .desc = Окрашен серостью бюрократии.
     .suffix = { "" }
+ent-MusicianPDA = musician PDA
+    .desc = It fills you with inspiration.
+    .suffix = { "" }

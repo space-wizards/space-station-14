@@ -5,9 +5,6 @@ using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 
 namespace Content.Client.Hands
 {
@@ -16,10 +13,14 @@ namespace Content.Client.Hands
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IClyde _clyde = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         private readonly IRenderTexture _renderBackbuffer;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
+
+        public Texture? IconOverride;
+        public EntityUid? EntityOverride;
 
         public ShowHandItemOverlay()
         {
@@ -43,15 +44,25 @@ namespace Content.Client.Hands
 
         protected override void Draw(in OverlayDrawArgs args)
         {
-            var sys = EntitySystem.Get<HandsSystem>();
-            var handEntity = sys.GetActiveHandEntity();
-
-            if (handEntity == null || !_cfg.GetCVar(CCVars.HudHeldItemShow) || !IoCManager.Resolve<IEntityManager>().HasComponent<ISpriteComponent>(handEntity))
+            if (!_cfg.GetCVar(CCVars.HudHeldItemShow))
                 return;
 
             var screen = args.ScreenHandle;
-            var halfSize = _renderBackbuffer.Size / 2;
+            var offset = _cfg.GetCVar(CCVars.HudHeldItemOffset);
+            var mousePos = _inputManager.MouseScreenPosition.Position;
 
+            if (IconOverride != null)
+            {
+                screen.DrawTexture(IconOverride, mousePos - IconOverride.Size / 2 + offset, Color.White.WithAlpha(0.75f));
+                return;
+            }
+
+            var handEntity = EntityOverride ?? EntitySystem.Get<HandsSystem>().GetActiveHandEntity();
+
+            if (handEntity == null || !_entMan.HasComponent<ISpriteComponent>(handEntity))
+                return;
+
+            var halfSize = _renderBackbuffer.Size / 2;
             var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
 
             screen.RenderInRenderTarget(_renderBackbuffer, () =>
@@ -59,11 +70,7 @@ namespace Content.Client.Hands
                 screen.DrawEntity(handEntity.Value, halfSize, new Vector2(1f, 1f) * uiScale, Direction.South);
             }, Color.Transparent);
 
-            var offset = _cfg.GetCVar(CCVars.HudHeldItemOffset);
-
-            var mousePos = _inputManager.MouseScreenPosition.Position;
             screen.DrawTexture(_renderBackbuffer.Texture, mousePos - halfSize + offset, Color.White.WithAlpha(0.75f));
-            // screen.DrawRect(UIBox2.FromDimensions((offset, offset) + mousePos, (32, 32)), Color.Red);
         }
     }
 }

@@ -64,6 +64,7 @@
       - Shovel
       - Spade
       - CableStack
+      - HandheldGPSBasic
   - type: Appearance
     visuals:
     - type: AutolatheVisualizer

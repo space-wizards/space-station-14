@@ -79,3 +79,6 @@ ent-SecurityPDA = security PDA
 ent-CentcomPDA = centcom PDA
     .desc = Colored the numbing grey of bureaucracy.
     .suffix = { "" }
+ent-MusicianPDA = musician PDA
+    .desc = It fills you with inspiration.
+    .suffix = { "" }
