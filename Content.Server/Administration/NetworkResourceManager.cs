@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Shared.Administration;
@@ -56,8 +55,8 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
         if (SizeLimit > 0f && msg.Data.Length * BytesToMegabytes > SizeLimit)
             return;
 
-        // just in case, we ensure it's a relative path.
-        msg.RelativePath = msg.RelativePath.ToRelativePath();
+        // just in case, we ensure it's a clean relative path.
+        msg.RelativePath = msg.RelativePath.Clean().ToRelativePath();
 
         lock(Files)
         {
