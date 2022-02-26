@@ -14,6 +14,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Emoting;
 using Robust.Shared.Player;
 using Content.Shared.Tag;
+using Content.Shared.Throwing;
 
 namespace Content.Server.Drone
 {
@@ -31,6 +32,7 @@ namespace Content.Server.Drone
             SubscribeLocalEvent<DroneComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<DroneComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<DroneComponent, EmoteAttemptEvent>(OnEmoteAttempt);
+            SubscribeLocalEvent<DroneComponent, ThrowAttemptEvent>(OnThrowAttempt);
         }
 
         private void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
@@ -113,6 +115,11 @@ namespace Content.Server.Drone
         private void OnEmoteAttempt(EntityUid uid, DroneComponent component, EmoteAttemptEvent args)
         {
             // No.
+            args.Cancel();
+        }
+
+        private void OnThrowAttempt(EntityUid uid, DroneComponent drone, ThrowAttemptEvent args)
+        {
             args.Cancel();
         }
 

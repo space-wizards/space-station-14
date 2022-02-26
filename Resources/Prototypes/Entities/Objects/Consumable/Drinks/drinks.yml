@@ -2104,6 +2104,7 @@
     sprite: Objects/Consumable/Drinks/ramen.rsi
   - type: Tag
     tags:
+    - Recyclable
     - Trash
   - type: Recyclable
 

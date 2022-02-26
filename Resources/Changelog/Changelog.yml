@@ -1,177 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: 'Fires no longer instantly kill you if you walk near them. They''ll
-      now kill you in at most 10 seconds, usually slower for colder fires.', type: Tweak}
-  - {message: Hardsuits and firesuits now protect you against temperature increases.,
-    type: Add}
-  id: 602
-  time: '2021-11-19T06:08:30.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Vending machine adverts no longer get stored in your chat box., type: Tweak}
-  id: 603
-  time: '2021-11-19T06:36:26.0000000+00:00'
-- author: Clyybber
-  changes:
-  - {message: Changed Harm and Disarm icons., type: Tweak}
-  id: 604
-  time: '2021-11-19T06:36:32.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Shards now do slightly less damage when thrown., type: Fix}
-  id: 605
-  time: '2021-11-19T06:37:35.408797+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Added a new map, "Knightship", meant for very low populations.', type: Add}
-  id: 606
-  time: '2021-11-19T10:45:18.0000000+00:00'
-- author: Tomeno
-  changes:
-  - {message: Fixed thermoregulation by sweating., type: Fix}
-  - {message: Rebalanced fire damage., type: Tweak}
-  id: 607
-  time: '2021-11-19T16:54:02.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Fixed some missing floor tiles on Knightship., type: Fix}
-  id: 608
-  time: '2021-11-19T16:54:25.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: Added a new sound for poppin pills., type: Add}
-  id: 609
-  time: '2021-11-20T01:02:49.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Medical scanners and cloning pods will now not push you into walls.,
-    type: Fix}
-  id: 610
-  time: '2021-11-20T01:03:10.0000000+00:00'
-- author: cheesePizza2
-  changes:
-  - {message: Shakers are no longer breakable and do not spill contents, type: Tweak}
-  id: 611
-  time: '2021-11-20T01:03:42.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Tweaked right-click entity menu. The entity lookup range is smaller
-      and the entity grouping has been changed., type: Tweak}
-  id: 612
-  time: '2021-11-20T05:25:29.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Item cabinet verbs have been updated., type: Tweak}
-  - {message: Clown PDA pen slot has been updated., type: Tweak}
-  id: 613
-  time: '2021-11-20T05:26:01.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: The litterbugs have been summoned to PackedStation to give the Janitor
-      something to do. If they like it is not under consideration., type: Add}
-  - {message: The delivery delay causing welding tanks in PackedStation to not be
-      fuelled has been solved., type: Fix}
-  - {message: A light in PackedStation no longer occupies the interior of a wall.,
-    type: Fix}
-  id: 614
-  time: '2021-11-20T05:26:57.0000000+00:00'
-- author: Efruit
-  changes:
-  - {message: The previous Chief Engineer of Packed Station was fired. The new C.E.
-      rewired the whole station to pad his resume., type: Tweak}
-  id: 615
-  time: '2021-11-20T18:31:33.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: Maps now know what the minimum and maximum number of players for them
-      is., type: Add}
-  - {message: You can now vote for the Knight Ship map with 8 or fewer players., type: Add}
-  - {message: You can no longer play on Saltern with 50 people., type: Fix}
-  id: 616
-  time: '2021-11-20T18:32:07.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: Fixed skintone on feet., type: Fix}
-  id: 617
-  time: '2021-11-20T23:17:16.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Pretty much every chemical in the game has received new metabolism
-      effects. Some examples: meth & ephedrine make you jitter, histamine makes you
-      itch and take poison damage, leporazines regulate your body temperature, acids
-      burn your insides, cryoxadone heals you when you''re cold, and a lot more.',
-    type: Add}
-  id: 618
-  time: '2021-11-20T23:47:53.0000000+00:00'
-- author: AJCM-git
-  changes:
-  - {message: You can no longer use the E key to interact with things outside lockers/crates
-      while inside one., type: Fix}
-  id: 619
-  time: '2021-11-21T05:06:44.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Shuttles now require thrust., type: Add}
-  id: 620
-  time: '2021-11-21T06:09:49.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Reaction effects (potas/water, smoke, foam) have been refactored slightly,
-      so report any bugs you find with them.', type: Tweak}
-  id: 621
-  time: '2021-11-21T07:35:02.0000000+00:00'
-- author: FoLoKe
-  changes:
-  - {message: Added "eat" action for food., type: Add}
-  - {message: Fixed soup eating with a knife or fork., type: Fix}
-  id: 622
-  time: '2021-11-21T07:35:10.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Opening a docked airlock no longer depressurizes the room/shuttle.,
-    type: Fix}
-  id: 623
-  time: '2021-11-21T12:17:31.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: It is clearer which side of a docking airlock that something should
-      dock to., type: Fix}
-  id: 624
-  time: '2021-11-21T13:26:19.0000000+00:00'
-- author: xRiriq
-  changes:
-  - {message: altered names of command clothing and hardsuits to be consistent, type: Fix}
-  id: 625
-  time: '2021-11-21T20:14:39.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: You can no longer inspecting your surroundings using the examine popup
-      or context menu while incapacitated, type: Fix}
-  id: 626
-  time: '2021-11-21T20:40:09.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Livestock crates can no longer be welded shut. You can't weld wood.,
-    type: Tweak}
-  id: 627
-  time: '2021-11-22T02:33:45.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Security, Captain, Head of Personnel, Chief Engineer, Chief Medial
-      Officer, and the Research Director are no longer capable of being antagonists
-      due to expanded NT screening programs. You can now trust your leadership!',
-    type: Add}
-  id: 628
-  time: '2021-11-22T02:33:51.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Foam and smoke now properly carry reagents, and are colored by their
-      reagents.', type: Tweak}
-  id: 629
-  time: '2021-11-22T08:40:14.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: 'Chemicals metabolizing in the body now last twice as long, meaning
       most medicines and poisons will have a greater effect over a longer timespan.',
     type: Tweak}
@@ -3000,3 +2829,169 @@ Entries:
   - {message: Fixed the round-end counter., type: Tweak}
   id: 1101
   time: '2022-02-20T00:42:16.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: High-capacity water tanks have arrived! Botanists no longer have to
+      scavenge for water., type: Add}
+  id: 1102
+  time: '2022-02-20T01:07:08.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Holoparasites now have a unique name identifier., type: Tweak}
+  id: 1103
+  time: '2022-02-20T01:07:28.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones can no longer throw., type: Remove}
+  id: 1104
+  time: '2022-02-20T06:02:06.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Using ctrl+rightclick to move pulled objects should no longer feel slightly
+      weird., type: Tweak}
+  id: 1105
+  time: '2022-02-20T06:17:49.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: Small amounts of liquids don't turn to cum stains, type: Fix}
+  id: 1106
+  time: '2022-02-20T19:54:06.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Thermomachines can now actually be constructed, and their machine board
+      can be unlocked through research.', type: Add}
+  - {message: Thermomachines now function properly., type: Fix}
+  id: 1107
+  time: '2022-02-21T00:17:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Blood puddles are now a darker red and much more opaque., type: Tweak}
+  - {message: Your bleeding can now alternatively be stopped by cauterizing the wounds
+      using heat damage., type: Add}
+  - {message: Bloodloss from bleeding has been lowered slightly., type: Tweak}
+  id: 1108
+  time: '2022-02-21T00:18:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fixed a bug where examine tooltips would pop up incorrectly on different
+      UI scales., type: Fix}
+  id: 1109
+  time: '2022-02-21T03:42:16.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Added the Musician job. Get out there and entertain us!, type: Add}
+  id: 1110
+  time: '2022-02-21T04:38:48.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Role bans have been implemented, type: Add}
+  id: 1111
+  time: '2022-02-21T22:11:39.0000000+00:00'
+- author: Xenomorph queen
+  changes:
+  - {message: 'Xenos are ghost roles by default now, and even have their own accent!',
+    type: Tweak}
+  id: 1112
+  time: '2022-02-22T00:13:18.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Reduced the size and capacity of all cardboard boxes. No more hardsuits
+      in boxes., type: Tweak}
+  id: 1113
+  time: '2022-02-22T05:01:31.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added buildable plastic flaps for pushing items through and keeping
+      people out., type: Add}
+  id: 1114
+  time: '2022-02-22T05:01:58.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The emag now shows how long it has until the next charge when you examine
+      it., type: Add}
+  id: 1115
+  time: '2022-02-22T05:18:08.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: A new holiday has been added on March 9th., type: Add}
+  id: 1116
+  time: '2022-02-22T20:15:11.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Thermomachines now have a proper UI., type: Add}
+  id: 1117
+  time: '2022-02-23T04:09:02.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Chargers, beds and bookshelves can be dragged and anchored now.', type: Tweak}
+  - {message: Racks can be vaulted over., type: Tweak}
+  id: 1118
+  time: '2022-02-23T04:58:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Drones can now go under doors. They also are no longer considered flying
+      and don't have all-access., type: Tweak}
+  id: 1119
+  time: '2022-02-23T09:22:19.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: 'Added Possums, Raccoons and Ferrets, with a couple of new sound effects.',
+    type: Add}
+  - {message: Added a named Possum (Morty) and Raccoon (Morticia), type: Add}
+  id: 1120
+  time: '2022-02-23T18:40:31.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Nuclear bomb now has cooldown time after deactivation. Wait for 30 seconds
+      before you can arm bomb again., type: Tweak}
+  - {message: Iconic nuclear alarm sound is back., type: Fix}
+  id: 1121
+  time: '2022-02-24T00:00:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'While holding a storage entity (backpacks, boxes, etc) you can now
+      right click on other storage entities or disposal units and transfer contents.',
+    type: Add}
+  id: 1122
+  time: '2022-02-24T10:48:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that allowed you to play multiple instruments simultaneously.,
+    type: Fix}
+  id: 1123
+  time: '2022-02-24T11:10:12.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: Added crafting for pipes, type: Add}
+  id: 1124
+  time: '2022-02-24T15:05:10.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Pillar V5 is here! All new engineering and bar. Lots of QoL improvements.
+      Less space, more interesting corridors etc. See changelog on github PR 6883.',
+    type: Add}
+  id: 1125
+  time: '2022-02-25T23:18:08.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Three new events have been introduced that will hopefully increase
+      round variation (and, very rarely, result in a station composed entirely of
+      clowns)', type: Add}
+  - {message: Makes HoP and Quartermaster considered heads by the game., type: Tweak}
+  id: 1126
+  time: '2022-02-26T05:10:09.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Musicians now have their own PDA and Theatre access!, type: Add}
+  id: 1127
+  time: '2022-02-26T05:11:04.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Flashbangs no longer jumpscare the entire station., type: Fix}
+  id: 1128
+  time: '2022-02-26T05:11:10.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added handheld GPS devices which can be found in the autolathe, type: Add}
+  id: 1129
+  time: '2022-02-26T05:59:20.0000000+00:00'

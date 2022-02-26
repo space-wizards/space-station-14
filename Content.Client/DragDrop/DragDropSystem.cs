@@ -204,7 +204,7 @@ namespace Content.Client.DragDrop
                 }
 
                 HighlightTargets();
-                _outline.Enabled = false;
+                _outline.SetEnabled(false);
 
                 // drag initiated
                 return true;
@@ -257,7 +257,7 @@ namespace Content.Client.DragDrop
                 EntityManager.DeleteEntity(_dragShadow);
             }
 
-            _outline.Enabled = true;
+            _outline.SetEnabled(true);
             _dragShadow = default;
             _draggables.Clear();
             _dragger = default;
@@ -353,6 +353,7 @@ namespace Content.Client.DragDrop
             return false;
         }
 
+        // TODO make this just use TargetOutlineSystem
         private void HighlightTargets()
         {
             if (_dragDropHelper.Dragged == default || Deleted(_dragDropHelper.Dragged) ||
@@ -370,7 +371,7 @@ namespace Content.Client.DragDrop
             RemoveHighlights();
 
             // find possible targets on screen even if not reachable
-            // TODO: Duplicated in SpriteSystem
+            // TODO: Duplicated in SpriteSystem and TargetOutlineSystem. Should probably be cached somewhere for a frame?
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
             var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
             var pvsEntities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.IncludeAnchored);

@@ -8,6 +8,7 @@
   - type: ActivatableUI
     inHandsOnly: false
     singleUser: true
+    verbText: verb-instrument-openui
     key: enum.InstrumentUiKey.Key
   - type: InteractionOutline
   - type: Sprite
