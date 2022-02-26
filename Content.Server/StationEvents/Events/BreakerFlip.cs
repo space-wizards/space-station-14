@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using JetBrains.Annotations;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
+[UsedImplicitly]
 public sealed class BreakerFlip : StationEvent
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
