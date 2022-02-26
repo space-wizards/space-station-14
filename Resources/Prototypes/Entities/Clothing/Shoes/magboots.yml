@@ -10,9 +10,13 @@
     - type: Clothing
       sprite: Clothing/Shoes/Boots/magboots.rsi
     - type: Magboots
-    - type: ItemActions
-      actions:
-        - actionType: ToggleMagboots
+      toggleAction:
+        icon: Clothing/Shoes/Boots/magboots.rsi/icon.png
+        iconOn: Clothing/Shoes/Boots/magboots.rsi/icon-on.png
+        name: action-name-magboot-toggle
+        description: action-decription-magboot-toggle
+        itemIconStyle: NoItem
+        event: !type:ToggleActionEvent
 
 - type: entity
   parent: ClothingShoesBootsMag

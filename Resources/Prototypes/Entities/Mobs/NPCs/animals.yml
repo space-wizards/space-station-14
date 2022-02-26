@@ -643,8 +643,15 @@
     tags:
     - Trash
   - type: Recyclable
-  - type: Actions # TODO: Remove CombatMode when Prototype Composition is added
-    innateActions: []
+  - type: Actions 
+  # TODO: Remove CombatMode when Prototype Composition is added
+  - type: CombatMode
+    combatToggleAction:
+      enabled: false
+      autoPopulate: false
+    disarmAction:
+      enabled: false
+      autoPopulate: false
 
 
 - type: entity
