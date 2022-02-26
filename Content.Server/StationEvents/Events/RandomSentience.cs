@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.Chat.Managers;
+using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.StationEvents.Components;
 using Robust.Shared.Random;
@@ -35,6 +36,9 @@ public sealed class RandomSentience : StationEvent
 
             MakeSentientCommand.MakeSentient(target.Owner, _entityManager);
             _entityManager.RemoveComponent<SentienceTargetComponent>(target.Owner);
+            var comp = _entityManager.AddComponent<GhostTakeoverAvailableComponent>(target.Owner);
+            comp.RoleName = _entityManager.GetComponent<MetaDataComponent>(target.Owner).EntityName;
+            comp.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", comp.RoleName));
             groups.Add(target.FlavorKind);
         }
 

@@ -16,9 +16,15 @@ random-sentience-event-strength-6 = clown
 random-sentience-event-strength-7 = low
 random-sentience-event-strength-8 = AI
 
+## Announcement text
+
 station-event-random-sentience-announcement = Based on { $data }, we believe that some of the station's { $amount ->
     [1] { $kind1 }
     [2] { $kind1 } and { $kind2 }
     [3] { $kind1 }, { $kind2 }, and { $kind3 }
     *[other] { $kind1 }, { $kind2 }, { $kind3 }, etc.
 } beings have developed { $strength } level intelligence, and the ability to communicate.
+
+## Ghost role description
+
+station-event-random-sentience-role-description = You are a sentient { $name }, brought to life through space magic.
