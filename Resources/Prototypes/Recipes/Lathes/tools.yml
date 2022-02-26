@@ -134,3 +134,13 @@
   materials:
     Steel: 500
     Plastic: 250
+
+- type: latheRecipe
+  id: HandheldGPSBasic
+  icon: Objects/Devices/gps.rsi/icon.png
+  result: HandheldGPSBasic
+  completetime: 2000
+  materials:
+    Steel: 800
+    Plastic: 400
+    Glass: 300

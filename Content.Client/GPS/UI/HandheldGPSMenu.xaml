@@ -1,0 +1,11 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io">
+    <BoxContainer
+        Orientation="Vertical"
+        MinSize="150 40">
+        <RichTextLabel
+            HorizontalAlignment="Center"
+            Name="GPSInfo"
+            Access="Public"
+            HorizontalExpand="True" />
+    </BoxContainer>
+</DefaultWindow>
