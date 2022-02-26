@@ -469,3 +469,31 @@
   components:
   - type: PDA
     id: CentcomIDCardSyndie
+
+- type: entity
+  parent: BasePDA
+  id: MusicianPDA
+  name: musician PDA
+  description: It fills you with inspiration.
+  components:
+  - type: PDA
+    id: MusicianIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-musician
+  - type: Instrument
+    allowPercussion: false
+    handheld: true
+    bank: 1
+    program: 2
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    key: enum.InstrumentUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
+  - type: Input
+    context: "human"
