@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.StationEvents.Events
@@ -46,8 +47,11 @@ namespace Content.Server.StationEvents.Events
         {
             foreach (var component in _entityManager.EntityQuery<ApcPowerReceiverComponent>(true))
             {
-                _powered.Add(component.Owner);
+                if (!component.PowerDisabled)
+                    _powered.Add(component.Owner);
             }
+
+            _random.Shuffle(_powered);
 
             _numberPerSecond = Math.Max(1, (int)(_powered.Count / SecondsUntilOff)); // Number of APCs to turn off every second. At least one.
 
@@ -71,7 +75,7 @@ namespace Content.Server.StationEvents.Events
                 if (_powered.Count == 0)
                     break;
 
-                var selected = _random.PickAndTake(_powered);
+                var selected = _powered.Pop();
                 if (_entityManager.Deleted(selected)) continue;
                 if (_entityManager.TryGetComponent<ApcPowerReceiverComponent>(selected, out var powerReceiverComponent))
                 {
