@@ -130,11 +130,18 @@ public sealed class DoorComponent : Component, ISerializationHooks
     public DamageSpecifier? CrushDamage;
 
     /// <summary>
-    /// If false, this door is incapable of crushing entities. Note that this differs from the airlock's "safety"
-    /// feature that checks for colliding entities.
+    /// If false, this door is incapable of crushing entities. This just determines whether it will apply damage and
+    /// stun, not whether it can close despite entities being in the way.
     /// </summary>
     [DataField("canCrush")]
     public readonly bool CanCrush = true;
+
+    /// <summary>
+    /// Whether to check for colliding entities before closing. This may be overridden by other system by subscribing to
+    /// <see cref="BeforeDoorClosedEvent"/>. For example, hacked airlocks will set this to false.
+    /// </summary>
+    [DataField("performCollisionCheck")]
+    public readonly bool PerformCollisionCheck = true;
 
     /// <summary>
     /// List of EntityUids of entities we're currently crushing. Cleared in OnPartialOpen().

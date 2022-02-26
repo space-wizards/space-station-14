@@ -11,7 +11,7 @@ namespace Content.Shared.Clothing
     public abstract class SharedMagbootsComponent : Component
     {
         [DataField("toggleAction", required: true)]
-        public InstantAction ToggleAction = default!;
+        public InstantAction ToggleAction = new();
 
         public abstract bool On { get; set; }
 

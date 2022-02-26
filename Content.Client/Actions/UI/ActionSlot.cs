@@ -198,7 +198,7 @@ namespace Content.Client.Actions.UI
             if (Action == null)
             {
                 // No action for this slot. Maybe the user is trying to add a mapping action?
-                _actionsUI.System.TryFillSlot(this, _actionsUI.SelectedHotbar, SlotIndex);
+                _actionsUI.System.TryFillSlot(_actionsUI.SelectedHotbar, SlotIndex);
                 return;
             }
 
