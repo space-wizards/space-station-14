@@ -15,7 +15,7 @@ public sealed class VentCritters : StationEvent
     public override string Name => "VentCritters";
 
     public override string? StartAnnouncement =>
-        Loc.GetString("station-event-vent-spiders-start-announcement", ("data", Loc.GetString(_random.Pick(RandomSentience.AnnouncementData))));
+        Loc.GetString("station-event-vent-spiders-start-announcement", ("data", Loc.GetString(Loc.GetString($"random-sentience-event-data-{_random.Next(1, 6)}"))));
 
     public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
 

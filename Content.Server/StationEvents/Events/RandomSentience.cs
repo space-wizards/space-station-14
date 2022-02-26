@@ -18,19 +18,6 @@ public sealed class RandomSentience : StationEvent
 
     protected override float EndAfter => 1.0f;
 
-    public static readonly IReadOnlyList<string> AnnouncementData = new[]
-    {
-        "random-sentience-event-data-1", "andom-sentience-event-data-2", "random-sentience-event-data-3",
-        "random-sentience-event-data-4", "random-sentience-event-data-5", "random-sentience-event-data-6"
-    };
-
-    private static readonly IReadOnlyList<string> AnnouncementStrength = new[]
-    {
-        "random-sentience-event-strength-1", "random-sentience-event-strength-2", "random-sentience-event-strength-3",
-        "random-sentience-event-strength-4", "random-sentience-event-strength-5", "random-sentience-event-strength-6",
-        "random-sentience-event-strength-7", "random-sentience-event-strength-8"
-    };
-
     public override void Startup()
     {
         base.Startup();
@@ -61,8 +48,8 @@ public sealed class RandomSentience : StationEvent
         _chatManager.DispatchStationAnnouncement(
             Loc.GetString("station-event-random-sentience-announcement",
                 ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),
-                ("data", Loc.GetString(_random.Pick(AnnouncementData))),
-                ("strength", Loc.GetString(_random.Pick(AnnouncementStrength))))
+                ("data", Loc.GetString($"random-sentience-event-data-{_random.Next(1, 6)}")),
+                ("strength", Loc.GetString($"random-sentience-event-strength-{_random.Next(1, 8)}")))
         );
     }
 }
