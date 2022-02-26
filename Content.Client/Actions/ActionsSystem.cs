@@ -131,11 +131,11 @@ namespace Content.Client.Actions
 
         private void HandleState(EntityUid uid, ActionsComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not ActionsComponentState state)
-                return;
-
             // Client only needs to care about local player.
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
+            if (args.Current is not ActionsComponentState state)
                 return;
 
             var serverActions = new SortedSet<ActionType>(state.Actions);
@@ -148,7 +148,8 @@ namespace Content.Client.Actions
                 if (!serverActions.TryGetValue(act, out var serverAct))
                 {
                     component.Actions.Remove(act);
-                    Assignments.Remove(act);
+                    if (act.AutoRemove && !(Ui?.Locked ?? false))
+                        Assignments.Remove(act);
                     continue;
                 }
 
@@ -236,7 +237,8 @@ namespace Content.Client.Actions
 
             foreach (var act in actions)
             {
-                Assignments.Remove(act);
+                if (act.AutoRemove && !(Ui?.Locked ?? false))
+                    Assignments.Remove(act);
             }
 
             UIDirty = true;
@@ -275,10 +277,8 @@ namespace Content.Client.Actions
                     continue;
                 }
 
-                if (Ui.Component.Actions.Contains(action))
-                    continue;
-
-                Assignments.ClearSlot(index[0].Hotbar, index[0].Slot, false);
+                if (action.AutoRemove && !Ui.Locked && !Ui.Component.Actions.Contains(action))
+                    Assignments.ClearSlot(index[0].Hotbar, index[0].Slot, false);
             }
 
             Assignments.PreventAutoPopulate.RemoveWhere(action => !Ui.Component.Actions.Contains(action));

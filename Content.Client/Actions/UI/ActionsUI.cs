@@ -291,10 +291,17 @@ namespace Content.Client.Actions.UI
                     continue;
                 }
 
-                // This shouldn't happen, but could possible occur if theres some bug. Really the fact that the
-                // assignments aren't stored directly on the components or actions is just bad design and needs fixing.
-                DebugTools.Assert(Component.Actions.TryGetValue(action, out var compAction) && compAction == action);
+                if (Component.Actions.TryGetValue(action, out var actualAction))
+                {
+                    UpdateActionSlot(actualAction, actionSlot);
+                    continue;
+                }
 
+                // Action not in the actions component, but in the assignment list.
+                // This is either an action that doesn't auto-clear from the menu, or the action menu was locked.
+                // Show the old action, but make sure it is disabled;
+                action.Enabled = false;
+                action.Toggled = false;
                 UpdateActionSlot(action, actionSlot);
             }
         }

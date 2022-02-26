@@ -121,6 +121,13 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     [DataField("autoPopulate")]
     public bool AutoPopulate = true;
 
+
+    /// <summary>
+    ///     Whether or not to automatically remove this action to the action bar when it becomes unavailable.
+    /// </summary>
+    [DataField("autoRemove")]
+    public bool AutoRemove = true;
+
     /// <summary>
     ///     Temporary actions are removed from the action component when removed from the action-bar/GUI. Currently,
     ///     should only be used for client-exclusive actions (server is not notified).
@@ -191,8 +198,8 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
         if (Priority != otherAction.Priority)
             return otherAction.Priority - Priority;
 
-        var name = Loc.GetString(Name);
-        var otherName = Loc.GetString(otherAction.Name);
+        var name = FormattedMessage.RemoveMarkup(Loc.GetString(Name));
+        var otherName = FormattedMessage.RemoveMarkup(Loc.GetString(otherAction.Name));
         if (name != otherName)
             return string.Compare(name, otherName, StringComparison.CurrentCulture);
 
@@ -238,6 +245,7 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
         Charges = toClone.Charges;
         Keywords = new(toClone.Keywords);
         AutoPopulate = toClone.AutoPopulate;
+        AutoRemove = toClone.AutoRemove;
         ItemIconStyle = toClone.ItemIconStyle;
         CheckCanInteract = toClone.CheckCanInteract;
         Speech = toClone.Speech;
