@@ -754,6 +754,33 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region Uploaded Resources Logs
+
+        public async Task AddUploadedResourceLogAsync(NetUserId user, DateTime date, string path, byte[] data)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.UploadedResourceLog.Add(new UploadedResourceLog() { UserId = user, Date = date, Path = path, Data = data });
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task PurgeUploadedResourceLogAsync(int days)
+        {
+            await using var db = await GetDb();
+
+            var today = DateTime.Now;
+
+            await foreach (var log in db.DbContext.UploadedResourceLog.AsAsyncEnumerable())
+            {
+                if ((today - log.Date).TotalDays >= days)
+                    db.DbContext.Remove(log);
+            }
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        #endregion
+
         protected abstract Task<DbGuard> GetDb();
 
         protected abstract class DbGuard : IAsyncDisposable
