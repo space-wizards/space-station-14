@@ -1,0 +1,102 @@
+- type: entity
+  id: PlasticFlapsClear
+  parent: BaseStructureDynamic
+  name: plastic flaps
+  suffix: Clear
+  description: Heavy duty, plastic flaps. Definitely can't get past those. No way.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/plastic_flaps.rsi
+    state: plasticflaps
+    drawdepth: Mobs
+  - type: Physics
+  - type: Transform
+    anchored: true
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.49,-0.49,0.49,0.49"
+      mass: 100
+      layer:
+      - VaultImpassable
+      mask:
+      - Impassable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: Construction
+    graph: PlasticFlapsGraph
+    node: plasticFlaps
+
+- type: entity
+  id: PlasticFlapsOpaque
+  parent: PlasticFlapsClear
+  name: plastic flaps
+  suffix: Opaque
+  description: Heavy duty, plastic flaps. Definitely can't get past those. No way.
+  components:
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.49,-0.49,0.49,0.49"
+      mass: 100
+      layer:
+      - Opaque
+      - VaultImpassable
+      mask:
+      - Impassable
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
+
+- type: entity
+  id: PlasticFlapsAirtightClear
+  parent: PlasticFlapsClear
+  name: airtight plastic flaps
+  suffix: Airtight Clear
+  description: Heavy duty, slightly stronger, airtight plastic flaps. Definitely can't get past those. No way.
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Airtight
+    fixVacuum: true
+
+- type: entity
+  id: PlasticFlapsAirtightOpaque
+  parent: PlasticFlapsOpaque
+  name: airtight plastic flaps
+  suffix: Airtight Opaque
+  description: Heavy duty, slightly stronger, airtight plastic flaps. Definitely can't get past those. No way.
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Airtight
+    fixVacuum: true

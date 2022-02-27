@@ -18,8 +18,8 @@ namespace Content.Server.StationEvents.Events
     {
         // Based on Goonstation style radiation storm with some TG elements (announcer, etc.)
 
-        [Dependency] private IEntityManager _entityManager = default!;
-        [Dependency] private IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "RadiationStorm";
         public override string StartAnnouncement => Loc.GetString("station-event-radiation-storm-start-announcement");

@@ -21,7 +21,7 @@
   - type: TemperatureProtection
     coefficient: 0.001 # yes it needs to be this low, fires are fucking deadly apparently!!!!
   - type: Clothing
-    size: 25
+    size: 50
   - type: Armor
     modifiers:
       coefficients:

@@ -12,10 +12,6 @@
     layers:
       - state: box
       - state: syringe
-  - type: Item
-    size: 30
-  - type: Storage
-    capacity: 30
 
 - type: entity
   name: pill canister box
@@ -31,10 +27,6 @@
     layers:
       - state: box
       - state: pillbox
-  - type: Item
-    size: 30
-  - type: Storage
-    capacity: 30
 
 - type: entity
   name: sterile box
@@ -76,10 +68,6 @@
     contents:
       - id: BodyBag_Folded
         amount: 5
-  - type: Item
-    size: 30
-  - type: Storage
-    capacity: 30
   - type: Sprite
     layers:
       - state: box
