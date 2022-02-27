@@ -561,7 +561,7 @@
       state: monkey
       sprite: Mobs/Animals/monkey.rsi
   - type: Inventory
-    templateId: head
+    templateId: monkey
   - type: Strippable
   - type: UserInterface
     interfaces:
