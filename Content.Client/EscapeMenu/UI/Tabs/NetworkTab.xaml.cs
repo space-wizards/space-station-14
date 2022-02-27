@@ -67,7 +67,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             var isEverythingSame = isNetInterpRatioSame;
             ApplyButton.Disabled = isEverythingSame;
             ResetButton.Disabled = isEverythingSame;
-            NetInterpRatioLabel.Text = "NetInterpRatio";
+            NetInterpRatioLabel.Text = NetInterpRatioSlider.Value.ToString();
         }
     }
 }

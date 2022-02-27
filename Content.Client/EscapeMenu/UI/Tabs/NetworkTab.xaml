@@ -5,7 +5,7 @@
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
             <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
-                <Label Text="NetInterpRatio" />
+                <Label Text="{Loc 'ui-options-net-interp-ratio'}" />
                 <Control MinSize="8 0" />
                 <Slider Name="NetInterpRatioSlider"
                             MinValue="0"
