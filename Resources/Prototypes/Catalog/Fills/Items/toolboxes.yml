@@ -19,6 +19,7 @@
         prob: 0.15
         orGroup: HarmonicaOrChocolate
       - id: FoodSnackChocolate
+        prob: 0.85
         orGroup: HarmonicaOrChocolate
 
 - type: entity
@@ -40,6 +41,7 @@
         prob: 0.05
         orGroup: GlovesOrWires
       - id: CableHVStack
+        prob: 0.95
         orGroup: GlovesOrWires
 
 - type: entity
@@ -91,4 +93,5 @@
         prob: 0.05
         orGroup: CupOrGold
       - id: IngotGold
+        prob: 0.95
         orGroup: CupOrGold

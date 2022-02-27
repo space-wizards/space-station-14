@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using Content.Server.Storage.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -19,13 +17,27 @@ public sealed partial class StorageSystem
         }
 
         var coordinates = Transform(uid).Coordinates;
-        var alreadySpawnedGroups = new HashSet<string>();
 
+        var orGroupedSpawns = new Dictionary<string, List<EntitySpawnEntry>>();
+
+        // collect groups together, create singular items that pass probability
         foreach (var entry in component.Contents)
         {
             // Handle "Or" groups
-            if (!string.IsNullOrEmpty(entry.GroupId) && alreadySpawnedGroups.Contains(entry.GroupId)) continue;
+            if (!string.IsNullOrEmpty(entry.GroupId))
+            {
+                if (!orGroupedSpawns.ContainsKey(entry.GroupId))
+                {
+                    List<EntitySpawnEntry> currentGroup = new();
+                    currentGroup.Add(entry);
+                    orGroupedSpawns.Add(entry.GroupId, currentGroup);
+                    continue;
+                }
+                orGroupedSpawns[entry.GroupId].Add(entry);
+                continue;
+            }
 
+            // else
             // Check random spawn
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (entry.SpawnProbability != 1f && !_random.Prob(entry.SpawnProbability)) continue;
@@ -39,8 +51,33 @@ public sealed partial class StorageSystem
                 Logger.ErrorS("storage", $"Tried to StorageFill {entry.PrototypeId} inside {uid} but can't.");
                 EntityManager.DeleteEntity(ent);
             }
+        }
 
-            if (!string.IsNullOrEmpty(entry.GroupId)) alreadySpawnedGroups.Add(entry.GroupId);
+        // handle orgroup spawns
+        foreach (var group in orGroupedSpawns)
+        {
+            Random r = new Random();
+            double diceRoll = r.NextDouble();
+            List<EntitySpawnEntry> shuffled = group.Value.OrderBy(a => r.Next()).ToList();
+
+            double cumulative = 0.0;
+            for (int i = 0; i < shuffled.Count; i++)
+            {
+                cumulative += shuffled[i].SpawnProbability;
+                if (diceRoll < cumulative)
+                {
+                    for (var index = 0; index < shuffled[i].Amount; index++)
+                    {
+                        var ent = EntityManager.SpawnEntity(shuffled[i].PrototypeId, coordinates);
+
+                        if (storage.Insert(ent)) continue;
+
+                        Logger.ErrorS("storage", $"Tried to StorageFill {shuffled[i].PrototypeId} inside {uid} but can't.");
+                        EntityManager.DeleteEntity(ent);
+                    }
+                    break;
+                }
+            }
         }
     }
 }
