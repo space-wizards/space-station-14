@@ -37,7 +37,7 @@ public sealed class VentClog : StationEvent
     // Give players time to reach cover.
     protected override float StartAfter => 50f;
 
-    protected override float EndAfter => 1.0f;
+    protected override float EndAfter => 51.0f; // This can, surprisingly, cause the event to end before it starts.
 
     public readonly IReadOnlyList<string> SafeishVentChemicals = new[]
     {
