@@ -50,12 +50,12 @@ namespace Content.Server.Flash
 
         private void OnFlashableStartup(EntityUid uid, FlashableComponent component, ComponentStartup args)
         {
-            _metaSystem.AddFlag(Comp<MetaDataComponent>(uid), MetaDataFlags.EntitySpecific);
+            _metaSystem.AddFlag(uid, MetaDataFlags.EntitySpecific);
         }
 
         private void OnFlashableShutdown(EntityUid uid, FlashableComponent component, ComponentShutdown args)
         {
-            _metaSystem.RemoveFlag(Comp<MetaDataComponent>(uid), MetaDataFlags.EntitySpecific);
+            _metaSystem.RemoveFlag(uid, MetaDataFlags.EntitySpecific);
         }
 
         private void OnFlashMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
