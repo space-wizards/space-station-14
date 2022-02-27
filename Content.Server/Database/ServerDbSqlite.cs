@@ -187,7 +187,7 @@ namespace Content.Server.Database
             var queryBans = await GetAllRoleBans(db.SqliteDbContext, includeUnbanned);
 
             return queryBans
-                .Where(b => BanMatches(b, address, userId, hwId))
+                .Where(b => RoleBanMatches(b, address, userId, hwId))
                 .Select(ConvertRoleBan)
                 .ToList()!;
         }
@@ -206,7 +206,7 @@ namespace Content.Server.Database
             return await query.ToListAsync();
         }
 
-        private static bool BanMatches(
+        private static bool RoleBanMatches(
             ServerRoleBan ban,
             IPAddress? address,
             NetUserId? userId,

@@ -155,9 +155,9 @@
      Glass: 900
 
 - type: latheRecipe
-  id: KitchenReagentGrinderMachineCircuitboard
+  id: ReagentGrinderMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
-  result: KitchenReagentGrinderMachineCircuitboard
+  result: ReagentGrinderMachineCircuitboard
   completetime: 1000
   materials:
      Steel: 100
