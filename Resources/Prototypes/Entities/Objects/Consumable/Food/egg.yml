@@ -73,10 +73,13 @@
     netsync: false
     drawdepth: FloorObjects
     layers:
-    - map: ["enum.PuddleVisualLayers.Puddle"]
-      sprite: Fluids/egg_splat.rsi
+    - sprite: Fluids/egg_splat.rsi
+      map: ["enum.PuddleVisualLayers.Puddle"]
       state: egg-0
-    - map: ["enum.PuddleVisualLayers.WetFloorEffect"]
+    - sprite: Fluids/wet_floor_sparkles.rsi
+      map: ["enum.PuddleVisualLayers.WetFloorEffect"]
+      state: sparkles
+      visible: false
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
