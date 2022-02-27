@@ -1,12 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: 'Foam and smoke now properly carry reagents, and are colored by their
-      reagents.', type: Tweak}
-  id: 629
-  time: '2021-11-22T08:40:14.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: 'Chemicals metabolizing in the body now last twice as long, meaning
       most medicines and poisons will have a greater effect over a longer timespan.',
     type: Tweak}
@@ -2996,3 +2990,8 @@ Entries:
   - {message: Flashbangs no longer jumpscare the entire station., type: Fix}
   id: 1128
   time: '2022-02-26T05:11:10.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added handheld GPS devices which can be found in the autolathe, type: Add}
+  id: 1129
+  time: '2022-02-26T05:59:20.0000000+00:00'
