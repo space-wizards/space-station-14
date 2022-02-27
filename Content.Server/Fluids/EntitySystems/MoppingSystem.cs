@@ -58,6 +58,7 @@ public sealed class MoppingSystem : EntitySystem
         {
             ReleaseToFloor(args.ClickLocation, component, absorbedSolution);
             args.Handled = true;
+            args.User.PopupMessage(args.User, Loc.GetString("mopping-system-release-to-floor"));
             return;
         }
         else if (args.Target is not null)
@@ -78,9 +79,9 @@ public sealed class MoppingSystem : EntitySystem
             TileRef tile = mapGrid.GetTileRef(clickLocation);
 
             // Drop some of the absorbed liquid onto the ground
-            var releaseAmount = FixedPoint2.Min(absorbent.ResidueAmount, absorbedSolution.CurrentVolume);
-            var releasedSolution = _solutionSystem.SplitSolution(absorbent.Owner, absorbedSolution, releaseAmount);
-            _spillableSystem.SpillAt(tile, releasedSolution, "PuddleSmear");
+            var releaseAmount = FixedPoint2.Min(absorbent.ResidueAmount, absorbedSolution.CurrentVolume); // The release amount specified on the absorbent component, or the amount currently absorbed (whichever is less).
+            var releasedSolution = _solutionSystem.SplitSolution(absorbent.Owner, absorbedSolution, releaseAmount); // Remove releaseAmount of solution from the absorbent component
+            _spillableSystem.SpillAt(tile, releasedSolution, "PuddleSmear");                                        // And spill it onto the tile.
         }
     }
 
