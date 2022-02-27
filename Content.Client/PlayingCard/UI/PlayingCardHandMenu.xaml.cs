@@ -12,6 +12,9 @@ using Robust.Shared.Prototypes;
 using Robust.Client.UserInterface;
 using System.Linq;
 using Content.Client.Stylesheets;
+using static Robust.Client.UserInterface.Controls.BaseButton;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
+
 namespace Content.Client.PlayingCard.UI
 {
     [GenerateTypedNameReferences]
@@ -32,13 +35,14 @@ namespace Content.Client.PlayingCard.UI
             RobustXamlLoader.Load(this);
 
             Owner = owner;
+            IoCManager.Resolve<IResourceCache>();
             // VendingContents.OnItemSelected += ItemSelected;
 
             // GRAB SPRITES
             // EntityView.Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
         }
 
-        public void Populate(List<String> cards)
+        public void Populate(List<String> testList)
         {
             // VendingContents.Clear();
             // _cachedCardList = cards;
@@ -58,40 +62,8 @@ namespace Content.Client.PlayingCard.UI
 
             // SetSize = (Math.Clamp((longestEntry.Length + 2) * 12, 250, 300),
             //     Math.Clamp(VendingContents.Count * 50, 150, 350));
-            CardList.Clear();
-            List<string> testList = new List<string>
-            {
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
-                "10",
-                "11",
-                "12",
-                "13",
-                "14",
-                "15",
-                "16",
-                "17",
-                "18",
-                "19",
-                "20",
-                "21",
-                "22",
-                "23",
-                "24",
-                "25",
-                "26",
-                "27",
-                "28",
-                "29",
-                "30",
-            };
+            // CardList.Clear();
+            CardList.RemoveAllChildren();
 
             _cachedCardList = testList;
 
@@ -99,19 +71,32 @@ namespace Content.Client.PlayingCard.UI
             {
                 if (i > _cachedCardList.Count - 1)
                     continue;
-                CardList.AddItem($"{testList[i]}");
+
+            var button = new CardButton
+            {
+                CardName = testList[i],
+                Index = i // We track this index purely for debugging.
+            };
+
+            // var rect = button.EntityTextureRects;
+            // rect.Textures = SpriteComponent.GetPrototypeTextures(prototype, resourceCache).Select(o => o.Default).ToList();
+                button.ActualButton.OnPressed += OnCardSelected;
+                button.CardNameLabel.Text = testList[i];
+                CardList.AddChild(button);
             }
-            // if (_count == 0 && entities.Count > 0)
-            // {
-                // EntityContainerButton control = new(entities[0]);
-                // control.Measure(Vector2.Infinity);
-                // _itemHeight = control.DesiredSize.Y;
-                // control.Dispose();
-            // }
-            // _count = entities.Count;
-            // _entityUids = entities;
-            // _updateChildren = true;
-            // InvalidateArrange();
+
+            // IF NO CHNAGES, DOnn"T DO ANYTHING, OTHERWISE IF OFFSET CHANGED, DELETE FAR LEFT, AMMEND ONE TO RIGHT.
+
+        }
+
+        private void ShiftCardsLeft()
+        {
+
+        }
+
+        private void ShiftCardsRight()
+        {
+
         }
 
         protected override void MouseWheel(GUIMouseWheelEventArgs args)
@@ -126,6 +111,60 @@ namespace Content.Client.PlayingCard.UI
             _cardOffset = (int)newOffset;
             Populate(_cachedCardList);
             args.Handle();
+        }
+
+        private void OnCardSelected(BaseButton.ButtonEventArgs args)
+        {
+            var item = (CardButton) args.Button.Parent!;
+            Owner.RemoveCard(item.Index);
+        }
+
+        private sealed class CardButton : Control
+        {
+            public string CardName { get; set; } = default!;
+            public Button ActualButton { get; private set; }
+            public Label CardNameLabel { get; private set; }
+            public Label DescriptionLabel { get; private set; }
+            public LayeredTextureRect EntityTextureRects { get; private set; }
+            public int Index { get; set; }
+
+            public CardButton()
+            {
+                AddChild(ActualButton = new Button
+                {
+                });
+
+                AddChild(new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Vertical,
+                    MinSize = (100, 50),
+                    Children =
+                    {
+                        (EntityTextureRects = new LayeredTextureRect
+                        {
+                            MinSize = (32, 32),
+                            HorizontalAlignment = HAlignment.Center,
+                            VerticalAlignment = VAlignment.Center,
+                            Stretch = TextureRect.StretchMode.KeepAspectCentered,
+                            CanShrink = true
+                        }),
+                        (CardNameLabel = new Label
+                        {
+                            VerticalAlignment = VAlignment.Center,
+                            HorizontalAlignment = HAlignment.Center,
+                            HorizontalExpand = true,
+                            Text = "Backpack",
+                        }),
+                        (DescriptionLabel = new Label
+                        {
+                            VerticalAlignment = VAlignment.Center,
+                            HorizontalAlignment = HAlignment.Center,
+                            HorizontalExpand = true,
+                            Text = "A playing card",
+                        })
+                    }
+                });
+            }
         }
 
         public void ItemSelected(ItemList.ItemListSelectedEventArgs args)

@@ -1,9 +1,6 @@
 using Robust.Shared.Serialization;
-using Robust.Shared.GameStates;
 
 namespace Content.Shared.PlayingCard;
-
-
 
 [Serializable]
 [NetSerializable]
@@ -31,11 +28,6 @@ public class PickSingleCardMessage : BoundUserInterfaceMessage
 public enum PlayingCardHandUiKey
 {
     Key
-}
-
-[Serializable, NetSerializable]
-public class CardListSyncRequestMessage : BoundUserInterfaceMessage
-{
 }
 
 [Serializable, NetSerializable]

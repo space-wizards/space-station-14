@@ -36,7 +36,6 @@ public class PlayingCardHandSystem : EntitySystem
         SubscribeLocalEvent<PlayingCardHandComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlayingCardHandComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<PlayingCardHandComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<PlayingCardHandComponent, CardListSyncRequestMessage>(OnCardListSyncRequest);
         SubscribeLocalEvent<PlayingCardHandComponent, PickSingleCardMessage>(PickSingleCardMessage);
         // ON INTERACT OTHER, ATTEMPT TO MERGE
     }
@@ -60,11 +59,6 @@ public class PlayingCardHandSystem : EntitySystem
         // List last 5 cards
 
         args.PushText(Loc.GetString("playing-card-hand-component-examine", ("cards", cardHandComponent.CardList.Last())));
-    }
-
-    private void OnCardListSyncRequest(EntityUid uid, PlayingCardHandComponent cardHandComponent, CardListSyncRequestMessage args)
-    {
-        cardHandComponent.UserInterface?.SendMessage(new CardListMessage(cardHandComponent.CardList));
     }
 
     private void PickSingleCardMessage(EntityUid uid, PlayingCardHandComponent cardHandComponent, PickSingleCardMessage args)
@@ -91,6 +85,7 @@ public class PlayingCardHandSystem : EntitySystem
             EntityManager.QueueDeleteEntity(handComp.Owner);
             cardHandComponent.UserInterface?.SendMessage(new CardListMessage(cardHandComponent.CardList));
             UpdateAppearance(cardHandComponent);
+            UpdateUiState(uid, cardHandComponent);
         }
         if (TryComp<PlayingCardComponent>(addedEntity, out PlayingCardComponent? cardComp))
         {
@@ -104,6 +99,7 @@ public class PlayingCardHandSystem : EntitySystem
             EntityManager.QueueDeleteEntity(cardComp.Owner);
             cardHandComponent.UserInterface?.SendMessage(new CardListMessage(cardHandComponent.CardList));
             UpdateAppearance(cardHandComponent);
+            UpdateUiState(uid, cardHandComponent);
         }
     }
 
@@ -132,7 +128,6 @@ public class PlayingCardHandSystem : EntitySystem
 
             cardHandComponent.CardList.RemoveAt(cardIndex);
             hands.PutInHand(item);
-
             // destroy hand, now single card
             if (cardHandComponent.CardList.Count < 2)
             {
@@ -152,6 +147,7 @@ public class PlayingCardHandSystem : EntitySystem
             }
             else
             {
+                UpdateUiState(uid, cardHandComponent);
                 UpdateAppearance(cardHandComponent);
             }
         }
@@ -171,6 +167,7 @@ public class PlayingCardHandSystem : EntitySystem
 
         playingCardHandComp.CardList = cards;
         UpdateAppearance(playingCardHandComp);
+        UpdateUiState(playingCardHandEnt, playingCardHandComp);
         return playingCardHandEnt;
     }
 

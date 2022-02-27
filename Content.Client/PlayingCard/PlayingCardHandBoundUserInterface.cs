@@ -9,9 +9,10 @@ namespace Content.Client.PlayingCard.UI;
     {
         [ViewVariables] private PlayingCardHandMenu? _menu;
 
+        private PlayingCardHandBoundUserInterfaceState? _lastState;
+
         public PlayingCardHandBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-            SendMessage(new CardListSyncRequestMessage());
         }
 
         protected override void Open()
@@ -24,10 +25,8 @@ namespace Content.Client.PlayingCard.UI;
                 UpdateState(State);
 
             _menu = new PlayingCardHandMenu(this) {Title = entMan.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
-            Logger.Debug("attempting to get playing card comp4");
 
             // _menu.Populate(PlayingCardHand.CardList);
-            Logger.Debug("attempting to get playing card comp5");
 
             _menu.OnClose += Close;
             _menu.OpenCentered();
@@ -43,33 +42,25 @@ namespace Content.Client.PlayingCard.UI;
             if (_menu == null || state is not PlayingCardHandBoundUserInterfaceState cast)
                 return;
 
-            // _minTemp = cast.MinTemperature;
-            // _maxTemp = cast.MaxTemperature;
+            _lastState = cast;
 
-            // _window.SetTemperature(cast.Temperature);
-            // _window.SetActive(cast.Enabled);
-            // _window.Title = cast.Mode switch
-            // {
-            //     ThermoMachineMode.Freezer => Loc.GetString("comp-gas-thermomachine-ui-title-freezer"),
-            //     ThermoMachineMode.Heater => Loc.GetString("comp-gas-thermomachine-ui-title-heater"),
-            //     _ => string.Empty
-            // };
+            _menu?.Populate(cast.CardList);
         }
 
-        public void Eject(int id)
+        public void RemoveCard(int id)
         {
             SendMessage(new PickSingleCardMessage(id));
         }
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-        {
-            switch (message)
-            {
-                case CardListMessage msg:
-                    _menu?.Populate(msg.Cards);
-                    break;
-            }
-        }
+        // protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        // {
+        //     switch (message)
+        //     {
+        //         case CardListMessage msg:
+        //             // _menu?.Populate(msg.Cards);
+        //             break;
+        //     }
+        // }
 
         protected override void Dispose(bool disposing)
         {
