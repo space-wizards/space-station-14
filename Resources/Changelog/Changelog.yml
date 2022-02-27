@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Admin logs., type: Add}
-  id: 632
-  time: '2021-11-22T17:49:26.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: It is no longer possible to start pulling people while in cuffs., type: Fix}
@@ -2993,3 +2988,8 @@ Entries:
       toggling affecting all flashlights.', type: Fix}
   id: 1131
   time: '2022-02-27T03:02:39.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Introduced two more events., type: Add}
+  id: 1132
+  time: '2022-02-27T03:04:01.0000000+00:00'
