@@ -5,6 +5,9 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Commands;
 
+// Disabled until sandoxing issues are resolved. In the meantime, if you want to create an acttions preset, just disable
+// sandboxing and uncomment this code (and the SaveActionAssignments() function).
+/*
 [AnyCommand]
 public sealed class SaveActionsCommand : IConsoleCommand
 {
@@ -30,9 +33,9 @@ public sealed class SaveActionsCommand : IConsoleCommand
         {
             shell.WriteLine("Failed to save action assignments");
         }
-
     }
 }
+*/
 
 [AnyCommand]
 public sealed class LoadActionsCommand : IConsoleCommand
