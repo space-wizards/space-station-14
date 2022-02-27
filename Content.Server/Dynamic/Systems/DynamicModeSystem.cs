@@ -66,7 +66,7 @@ public sealed partial class DynamicModeSystem : GameRuleSystem
         }
     }
 
-    public override void Added()
+    public override void Started()
     {
         // Don't run station events while Dynamic is active.
         // We'll take care of that.
@@ -103,7 +103,7 @@ public sealed partial class DynamicModeSystem : GameRuleSystem
         RunRoundstartEvents(ev.Players);
     }
 
-    public override void Removed()
+    public override void Ended()
     {
         _stationEvents.Enabled = _stationEventsWereEnabled;
         _cfg.SetCVar(CCVars.VoteStorytellerEnabled, _storytellerWasVotable);
