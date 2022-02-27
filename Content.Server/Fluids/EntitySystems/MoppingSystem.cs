@@ -162,104 +162,98 @@ public sealed class MoppingSystem : EntitySystem
                 sfx = component.PickupSound;
             }
         }
-        else if (currentVolume > 0) // tool is wet
+        else if ((TryComp<RefillableSolutionComponent>(target, out var refillable)) // We can put solution from the tool into the target
+                && (currentVolume > 0))                                             // And the tool is wet
         {
-            // Can we put solution from the tool into the target?
-            if (TryComp<RefillableSolutionComponent>(target, out var refillable))
+            // These return conditions will abort BEFORE the do_after is called:
+            if (!_solutionSystem.TryGetRefillableSolution(target, out var refillableSolution)) // refillable Solution is null
             {
-                // These return conditions will abort BEFORE the do_after is called:
-                if (!_solutionSystem.TryGetRefillableSolution(target, out var refillableSolution)) // refillable Solution is null
-                {
-                    return;
-                }
-                else if (refillableSolution.AvailableVolume <= 0) // target container is full (liquid destination)
-                {
-                    msg = "mopping-system-target-container-full";
-                    user.PopupMessage(user, Loc.GetString(msg, ("target", target))); // play message now because we are aborting.
-                    return;
-                }
-                else if (refillableSolution.MaxVolume <= FixedPoint2.New(20)) // target container is too small (e.g. syringe)
-                {
-                    msg = "mopping-system-target-container-too-small";
-                    user.PopupMessage(user, Loc.GetString(msg, ("target", target))); // play message now because we are aborting.
-                    return;
-                }
-                else
-                {
-                    // Determine transferAmount
-                    if (_tagSystem.HasTag(used, "Mop") // if the tool used is a literal mop (and not a sponge, rag, etc.)
-                        && !_tagSystem.HasTag(target, "Wringer")) // and if the target does not have a wringer for properly drying the mop
-                    {
-                        delay = 5.0f; // Should take much longer if you don't have a wringer
-
-                        if ((currentVolume / (currentVolume + availableVolume) ) > 0.25) // mop is more than one-quarter full
-                        {
-                            transferAmount = FixedPoint2.Min(refillableSolution.AvailableVolume, currentVolume * 0.6); // squeeze up to 60% of the solution from the mop.
-                            msg = "mopping-system-hand-squeeze-little-wet";
-
-                            if ((currentVolume / (currentVolume + availableVolume) ) > 0.5) // if the mop is more than half full
-                                msg = "mopping-system-hand-squeeze-still-wet"; // overwrites the above
-
-                        }
-                        else // mop is less than one-quarter full
-                        {
-                            transferAmount = FixedPoint2.Min(refillableSolution.AvailableVolume, currentVolume); // squeeze remainder of solution from the mop.
-                            msg = "mopping-system-hand-squeeze-dry";
-                        }
-
-                    }
-                    else
-                    {
-                        transferAmount = FixedPoint2.Min(refillableSolution.AvailableVolume, currentVolume); //Transfer all liquid from the tool to the container, but only if it will fit.
-                        msg = "mopping-system-refillable-success";
-                        delay = 1.0f;
-                    }
-
-                    donor = used; // the mop/tool Uid
-                    donorSolutionName = "absorbed"; // by definition on AbsorbentComponent
-
-                    acceptor  = target; // the refillable container's Uid
-                    acceptorSolutionName = refillable.Solution;
-
-                    // Set delay/popup/sound if nondefault. Popup and sound will only play on a successful doAfter.
-
-                    sfx = component.TransferSound;
-                }
+                return;
             }
-            else return; // if the target did not have a Refillable Component
-        }
-        else if (currentVolume <= 0) // tool is dry
-        {
-            if (TryComp<DrainableSolutionComponent>(target, out var drainable))
+            else if (refillableSolution.AvailableVolume <= 0) // target container is full (liquid destination)
             {
-                // These return conditions will abort BEFORE the do_after is called:
-                if (!_solutionSystem.TryGetDrainableSolution(target, out var drainableSolution))
+                msg = "mopping-system-target-container-full";
+                user.PopupMessage(user, Loc.GetString(msg, ("target", target))); // play message now because we are aborting.
+                return;
+            }
+            else if (refillableSolution.MaxVolume <= FixedPoint2.New(20)) // target container is too small (e.g. syringe)
+            {
+                msg = "mopping-system-target-container-too-small";
+                user.PopupMessage(user, Loc.GetString(msg, ("target", target))); // play message now because we are aborting.
+                return;
+            }
+            else
+            {
+                // Determine transferAmount
+                if (_tagSystem.HasTag(used, "Mop") // if the tool used is a literal mop (and not a sponge, rag, etc.)
+                    && !_tagSystem.HasTag(target, "Wringer")) // and if the target does not have a wringer for properly drying the mop
                 {
-                    return;
-                }
-                else if (drainableSolution.CurrentVolume <= 0) // target container is empty (liquid source)
-                {
-                    msg = "mopping-system-target-container-empty";
-                    user.PopupMessage(user, Loc.GetString(msg, ("target", target))); // play message now because we are returning.
-                    return;
+                    delay = 5.0f; // Should take much longer if you don't have a wringer
+
+                    if ((currentVolume / (currentVolume + availableVolume) ) > 0.25) // mop is more than one-quarter full
+                    {
+                        transferAmount = FixedPoint2.Min(refillableSolution.AvailableVolume, currentVolume * 0.6); // squeeze up to 60% of the solution from the mop.
+                        msg = "mopping-system-hand-squeeze-little-wet";
+
+                        if ((currentVolume / (currentVolume + availableVolume) ) > 0.5) // if the mop is more than half full
+                            msg = "mopping-system-hand-squeeze-still-wet"; // overwrites the above
+
+                    }
+                    else // mop is less than one-quarter full
+                    {
+                        transferAmount = FixedPoint2.Min(refillableSolution.AvailableVolume, currentVolume); // squeeze remainder of solution from the mop.
+                        msg = "mopping-system-hand-squeeze-dry";
+                    }
+
                 }
                 else
                 {
-                    // Determine transferAmount
-                    transferAmount = FixedPoint2.Min(availableVolume * 0.5, drainableSolution.CurrentVolume); // Let's transfer up to to half the tool's available capacity to the tool.
-
-                    donor = target; // the drainable container's Uid
-                    donorSolutionName = drainable.Solution;
-
-                    acceptor  = used; // the mop/tool Uid
-                    acceptorSolutionName = "absorbed"; // by definition on AbsorbentComponent
-
-                    // Set delay/popup/sound if nondefault. Popup and sound will only play on a successful doAfter.
-                    // default delay is fine for this case.
-                    msg = "mopping-system-drainable-success";
-                    sfx = component.TransferSound;
+                    transferAmount = FixedPoint2.Min(refillableSolution.AvailableVolume, currentVolume); //Transfer all liquid from the tool to the container, but only if it will fit.
+                    msg = "mopping-system-refillable-success";
+                    delay = 1.0f;
                 }
-            } else return; // if the target did not have a Drainable Component
+
+                donor = used; // the mop/tool Uid
+                donorSolutionName = "absorbed"; // by definition on AbsorbentComponent
+
+                acceptor  = target; // the refillable container's Uid
+                acceptorSolutionName = refillable.Solution;
+
+                // Set delay/popup/sound if nondefault. Popup and sound will only play on a successful doAfter.
+
+                sfx = component.TransferSound;
+            }
+        }
+        else if (TryComp<DrainableSolutionComponent>(target, out var drainable) // We can take solution from the target
+                && currentVolume <= 0 ) // tool is dry
+        {
+            // These return conditions will abort BEFORE the do_after is called:
+            if (!_solutionSystem.TryGetDrainableSolution(target, out var drainableSolution))
+            {
+                return;
+            }
+            else if (drainableSolution.CurrentVolume <= 0) // target container is empty (liquid source)
+            {
+                msg = "mopping-system-target-container-empty";
+                user.PopupMessage(user, Loc.GetString(msg, ("target", target))); // play message now because we are returning.
+                return;
+            }
+            else
+            {
+                // Determine transferAmount
+                transferAmount = FixedPoint2.Min(availableVolume * 0.5, drainableSolution.CurrentVolume); // Let's transfer up to to half the tool's available capacity to the tool.
+
+                donor = target; // the drainable container's Uid
+                donorSolutionName = drainable.Solution;
+
+                acceptor  = used; // the mop/tool Uid
+                acceptorSolutionName = "absorbed"; // by definition on AbsorbentComponent
+
+                // Set delay/popup/sound if nondefault. Popup and sound will only play on a successful doAfter.
+                // default delay is fine for this case.
+                msg = "mopping-system-drainable-success";
+                sfx = component.TransferSound;
+            }
         }
         else return;
 
