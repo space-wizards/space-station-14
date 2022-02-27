@@ -18,12 +18,11 @@ namespace Content.Server.Fluids.EntitySystems;
 [UsedImplicitly]
 public sealed class MoppingSystem : EntitySystem
 {
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
-
+    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -34,49 +33,46 @@ public sealed class MoppingSystem : EntitySystem
 
     private void OnAfterInteract(EntityUid uid, AbsorbentComponent component, AfterInteractEvent args)
     {
-        var user = args.User;
-        var used = args.Used;
-        var target = args.Target;
-
-        _solutionSystem.TryGetSolution(used, "absorbed", out var absorbedSolution);
-
-        var toolAvailableVolume = FixedPoint2.New(0);
-        var toolCurrentVolume = FixedPoint2.New(0);
-        var transferAmount = FixedPoint2.New(0);
-
-        if (absorbedSolution is not null)
-        {
-            toolAvailableVolume = absorbedSolution.AvailableVolume;
-            toolCurrentVolume = absorbedSolution.CurrentVolume;
-        }
-
-        if (!args.CanReach)
+        if (!args.CanReach) // if user cannot reach the target
         {
             return;
         }
 
+        if (args.Handled) // if the event was already handled
+        {
+            return;
+        }
+
+        _solutionSystem.TryGetSolution(args.Used, AbsorbentComponent.SolutionName, out var absorbedSolution);
+
+        if (absorbedSolution is null)
+        {
+            return;
+        }
+
+        var toolAvailableVolume = absorbedSolution.AvailableVolume;
+        var toolCurrentVolume = absorbedSolution.CurrentVolume;
+        var transferAmount = FixedPoint2.New(0);
+
         // For adding liquid to an empty floor tile
-        if (target is null // if a tile is clicked
-            && !args.Handled)
+        if (args.Target is null) // if a tile is clicked
         {
             ReleaseToFloor(args.ClickLocation, component, absorbedSolution);
             args.Handled = true;
             return;
         }
-        else if (target is not null)
+        else if (args.Target is not null)
         {
             // Handle our do_after logic
-            HandleDoAfter(user, used, target.Value, component, toolCurrentVolume, toolAvailableVolume);
+            HandleDoAfter(args.User, args.Used, args.Target.Value, component, toolCurrentVolume, toolAvailableVolume);
         }
 
         args.Handled = true;
         return;
     }
 
-
     private void ReleaseToFloor(EntityCoordinates clickLocation, AbsorbentComponent absorbent, Solution? absorbedSolution)
     {
-
         if ((_mapManager.TryGetGrid(clickLocation.GetGridId(EntityManager), out var mapGrid)) // needs valid grid
             && absorbedSolution != null) // needs a solution to place on the tile
         {
