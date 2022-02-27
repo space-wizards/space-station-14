@@ -48,6 +48,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
+    netsync: false
   - type: Physics
     bodyType: KinematicController
   - type: Hands
@@ -114,13 +115,10 @@
         radius: 0.35
       mass: 20
       mask:
-      - VaultImpassable
+      - SmallImpassable
+      - MobImpassable
       layer:
       - Opaque
-  - type: Tag
-  - type: Access
-    groups:
-    - AllAccess
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer

@@ -35,8 +35,8 @@ public abstract class SharedAirlockSystem : EntitySystem
 
     protected virtual void OnBeforeDoorClosed(EntityUid uid, SharedAirlockComponent airlock, BeforeDoorClosedEvent args)
     {
-        if (airlock.Safety && DoorSystem.GetColliding(uid).Any())
-            args.Cancel();
+        if (!airlock.Safety)
+            args.PerformCollisionCheck = false;
     }
 
 

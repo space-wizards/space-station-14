@@ -45,6 +45,11 @@
           SheetSteel1:
             min: 1
             max: 2
+  - type: Transform
+    anchored: true
+  - type: Anchorable
+  - type: Pullable
+
 
 - type: entity
   parent: Bed

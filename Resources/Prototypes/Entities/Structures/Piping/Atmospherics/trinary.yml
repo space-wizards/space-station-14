@@ -55,6 +55,9 @@
     - type: GasFilter
     - type: Flippable
       mirrorEntity: GasFilterFlipped
+    - type: Construction
+      graph: GasTrinary
+      node: filter
 
 - type: entity
   parent: GasFilter
@@ -130,6 +133,9 @@
       inletTwo: filter
     - type: Flippable
       mirrorEntity: GasMixerFlipped
+    - type: Construction
+      graph: GasTrinary
+      node: mixer
 
 - type: entity
   parent: GasMixer

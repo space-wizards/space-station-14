@@ -5,6 +5,7 @@
   abstract: true
   description: A door, where will it lead?
   components:
+  - type: InteractionOutline
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/MineralDoors/metal_door.rsi
@@ -30,6 +31,7 @@
     bumpOpen: false
     clickOpen: true
     weldable: false
+    canCrush: false
     closeTimeOne: 0.2
     closeTimeTwo: 0.6
     openTimeOne: 0.6
