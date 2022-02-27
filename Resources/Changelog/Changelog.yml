@@ -1,13 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: 'Chemicals metabolizing in the body now last twice as long, meaning
-      most medicines and poisons will have a greater effect over a longer timespan.',
-    type: Tweak}
-  id: 630
-  time: '2021-11-22T08:45:21.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: 'People sprayed/coming into contact with any alcoholic drink can now
       be lit on fire, rather than just ethanol.', type: Tweak}
   id: 631
@@ -2995,3 +2988,8 @@ Entries:
   - {message: Added handheld GPS devices which can be found in the autolathe, type: Add}
   id: 1129
   time: '2022-02-26T05:59:20.0000000+00:00'
+- author: Zymem
+  changes:
+  - {message: Drinks should now have sprites, type: Fix}
+  id: 1130
+  time: '2022-02-27T01:26:45.0000000+00:00'
