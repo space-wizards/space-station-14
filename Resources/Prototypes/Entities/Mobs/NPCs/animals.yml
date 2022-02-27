@@ -552,7 +552,8 @@
     description: Ook ook!
     rules: |
       Being a monkey does NOT give you a free pass to kill, RDM or self-antag.
-      
+  - type: SentienceTarget
+    flavorKind: primate
   - type: Sprite
     drawdepth: Mobs
     layers:
