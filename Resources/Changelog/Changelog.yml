@@ -1,15 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Thrusters now have examine text, type: Add}
-  id: 639
-  time: '2021-11-23T06:44:08.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Admins are now fully knowledgeable of every potassium/water bomb you
-      make., type: Add}
-  id: 640
-  time: '2021-11-23T06:51:43.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Added epinephrine, an emergency medical chemical that reduces stun
@@ -2994,3 +2983,13 @@ Entries:
   - {message: Suspicion no longer shows up in gamemode votes., type: Remove}
   id: 1138
   time: '2022-02-27T18:03:08.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Added boxes of trashbags, flares and all magazine types.', type: Add}
+  id: 1139
+  time: '2022-02-27T19:56:27.0000000+00:00'
+- author: Zyme
+  changes:
+  - {message: Monkeys now understand the concept of hats, type: Add}
+  id: 1140
+  time: '2022-02-27T19:56:36.0000000+00:00'
