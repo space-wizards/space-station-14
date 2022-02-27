@@ -25,12 +25,17 @@
   - type: Input
     context: "human"
   - type: PAI
+    midiAction:
+      name: action-name-pai-play-midi
+      checkCanInteract: false
+      icon: Interface/Actions/pai-midi.png
+      description: action-description-pai-play-midi
+      event: !type:OpenUiActionEvent
+        key: enum.InstrumentUiKey.Key
   - type: Examiner
   - type: GhostRadio
   - type: DoAfter
   - type: Actions
-    innateActions:
-      - PAIMidi
     # This has to be installed because otherwise they're not "alive",
     #  so they can ghost and come back.
     # Note that the personal AI never "dies".

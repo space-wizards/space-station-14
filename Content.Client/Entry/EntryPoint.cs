@@ -104,6 +104,9 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("debris");
             prototypes.RegisterIgnore("debrisLayout");
             prototypes.RegisterIgnore("biome");
+            prototypes.RegisterIgnore("worldSpell");
+            prototypes.RegisterIgnore("entitySpell");
+            prototypes.RegisterIgnore("instantSpell");
 
             ClientContentIoC.Register();
 
@@ -189,11 +192,9 @@ namespace Content.Client.Entry
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
 
             IoCManager.Resolve<IChatManager>().Initialize();
-            IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();
             IoCManager.Resolve<EuiManager>().Initialize();
-            IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<IVoteManager>().Initialize();
             IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
 

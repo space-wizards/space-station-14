@@ -1,24 +1,15 @@
-using System.Collections.Generic;
 using Content.Server.Chat.Managers;
 using Content.Server.Construction.Components;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Nuke;
 using Content.Shared.Sound;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Nuke
@@ -31,14 +22,11 @@ namespace Content.Server.Nuke
         [Dependency] private readonly IEntityLookup _lookup = default!;
         [Dependency] private readonly IChatManager _chat = default!;
 
-        private readonly HashSet<EntityUid> _tickingBombs = new();
-
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<NukeComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<NukeComponent, ComponentRemove>(OnRemove);
-            SubscribeLocalEvent<NukeComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<NukeComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
             SubscribeLocalEvent<NukeComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
 
@@ -68,35 +56,24 @@ namespace Content.Server.Nuke
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var uid in _tickingBombs)
+
+            var query = EntityQuery<NukeComponent>();
+            foreach (var nuke in query)
             {
-                if (!EntityManager.TryGetComponent(uid, out NukeComponent nuke))
-                    continue;
-
-                nuke.RemainingTime -= frameTime;
-
-                // play alert sound if time is running out
-                if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
+                switch (nuke.Status)
                 {
-                    nuke.AlertAudioStream = SoundSystem.Play(Filter.Broadcast(), nuke.AlertSound.GetSound());
-                    nuke.PlayedAlertSound = true;
-                }
-
-                if (nuke.RemainingTime <= 0)
-                {
-                    nuke.RemainingTime = 0;
-                    ActivateBomb(uid, nuke);
-                }
-                else
-                {
-                    UpdateUserInterface(uid, nuke);
+                    case NukeStatus.ARMED:
+                        TickTimer(nuke.Owner, frameTime, nuke);
+                        break;
+                    case NukeStatus.COOLDOWN:
+                        TickCooldown(nuke.Owner, frameTime, nuke);
+                        break;
                 }
             }
         }
 
         private void OnRemove(EntityUid uid, NukeComponent component, ComponentRemove args)
         {
-            _tickingBombs.Remove(uid);
             _itemSlots.RemoveItemSlot(uid, component.DiskSlot);
         }
 
@@ -109,18 +86,6 @@ namespace Content.Server.Nuke
 
             UpdateStatus(uid, component);
             UpdateUserInterface(uid, component);
-        }
-
-        private void OnActivate(EntityUid uid, NukeComponent component, ActivateInWorldEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
-                return;
-
-            ShowUI(uid, actor.PlayerSession, component);
-            args.Handled = true;
         }
 
         #region Anchor
@@ -188,7 +153,7 @@ namespace Content.Server.Nuke
 
         private void OnKeypadButtonPressed(EntityUid uid, NukeComponent component, NukeKeypadMessage args)
         {
-            PlaydSound(uid, component.KeypadPressSound, 0.125f, component);
+            PlaySound(uid, component.KeypadPressSound, 0.125f, component);
 
             if (component.Status != NukeStatus.AWAIT_CODE)
                 return;
@@ -202,7 +167,7 @@ namespace Content.Server.Nuke
 
         private void OnClearButtonPressed(EntityUid uid, NukeComponent component, NukeKeypadClearMessage args)
         {
-            PlaydSound(uid, component.KeypadPressSound, 0f, component);
+            PlaySound(uid, component.KeypadPressSound, 0f, component);
 
             if (component.Status != NukeStatus.AWAIT_CODE)
                 return;
@@ -226,6 +191,48 @@ namespace Content.Server.Nuke
             }
         }
         #endregion
+
+        private void TickCooldown(EntityUid uid, float frameTime, NukeComponent? nuke = null)
+        {
+            if (!Resolve(uid, ref nuke))
+                return;
+
+            nuke.CooldownTime -= frameTime;
+            if (nuke.CooldownTime <= 0)
+            {
+                // reset nuke to default state
+                nuke.CooldownTime = 0;
+                nuke.Status = NukeStatus.AWAIT_ARM;
+                UpdateStatus(uid, nuke);
+            }
+
+            UpdateUserInterface(nuke.Owner, nuke);
+        }
+
+        private void TickTimer(EntityUid uid, float frameTime, NukeComponent? nuke = null)
+        {
+            if (!Resolve(uid, ref nuke))
+                return;
+
+            nuke.RemainingTime -= frameTime;
+
+            // play alert sound if time is running out
+            if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
+            {
+                nuke.AlertAudioStream = SoundSystem.Play(Filter.Broadcast(), nuke.AlertSound.GetSound());
+                nuke.PlayedAlertSound = true;
+            }
+
+            if (nuke.RemainingTime <= 0)
+            {
+                nuke.RemainingTime = 0;
+                ActivateBomb(uid, nuke);
+            }
+            else
+            {
+                UpdateUserInterface(uid, nuke);
+            }
+        }
 
         private void UpdateStatus(EntityUid uid, NukeComponent? component = null)
         {
@@ -252,12 +259,12 @@ namespace Content.Server.Nuke
                         {
                             component.Status = NukeStatus.AWAIT_ARM;
                             component.RemainingTime = component.Timer;
-                            PlaydSound(uid, component.AccessGrantedSound, 0, component);
+                            PlaySound(uid, component.AccessGrantedSound, 0, component);
                         }
                         else
                         {
                             component.EnteredCode = "";
-                            PlaydSound(uid, component.AccessDeniedSound, 0, component);
+                            PlaySound(uid, component.AccessDeniedSound, 0, component);
                         }
                         break;
                     }
@@ -268,17 +275,6 @@ namespace Content.Server.Nuke
                     // do nothing, wait for arm button to be unpressed
                     break;
             }
-        }
-
-        private void ShowUI(EntityUid uid, IPlayerSession session, NukeComponent? component = null)
-        {
-            if (!Resolve(uid, ref component))
-                return;
-
-            var ui = component.Owner.GetUIOrNull(NukeUiKey.Key);
-            ui?.Open(session);
-
-            UpdateUserInterface(uid, component);
         }
 
         private void UpdateUserInterface(EntityUid uid, NukeComponent? component = null)
@@ -306,20 +302,21 @@ namespace Content.Server.Nuke
                 IsAnchored = anchored,
                 AllowArm = allowArm,
                 EnteredCodeLength = component.EnteredCode.Length,
-                MaxCodeLength = _codes.Code.Length
+                MaxCodeLength = _codes.Code.Length,
+                CooldownTime = (int) component.CooldownTime
             };
 
             ui.SetState(state);
         }
 
-        private void PlaydSound(EntityUid uid, SoundSpecifier sound, float varyPitch = 0f,
+        private void PlaySound(EntityUid uid, SoundSpecifier sound, float varyPitch = 0f,
             NukeComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
 
             SoundSystem.Play(Filter.Pvs(uid), sound.GetSound(),
-                uid, AudioHelpers.WithVariation(varyPitch));
+                uid, AudioHelpers.WithVariation(varyPitch).WithVolume(-5f));
         }
 
         #region Public API
@@ -344,7 +341,6 @@ namespace Content.Server.Nuke
             SoundSystem.Play(Filter.Broadcast(), component.ArmSound.GetSound());
 
             component.Status = NukeStatus.ARMED;
-            _tickingBombs.Add(uid);
             UpdateUserInterface(uid, component);
         }
 
@@ -371,8 +367,10 @@ namespace Content.Server.Nuke
             component.PlayedAlertSound = false;
             component.AlertAudioStream?.Stop();
 
-            component.Status = NukeStatus.AWAIT_ARM;
-            _tickingBombs.Remove(uid);
+            // start bomb cooldown
+            component.Status = NukeStatus.COOLDOWN;
+            component.CooldownTime = component.Cooldown;
+
             UpdateUserInterface(uid, component);
         }
 
@@ -407,7 +405,7 @@ namespace Content.Server.Nuke
             {
                 var entUid = ent;
                 if (!EntityManager.EntityExists(entUid))
-                    continue;;
+                    continue;
 
                 if (EntityManager.TryGetComponent(entUid, out SharedBodyComponent? body))
                     body.Gib();
