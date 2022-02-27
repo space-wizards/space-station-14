@@ -1,13 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Added carpetium, a chemical that creates carpets whenever it touches
-      a tile either through spills, sprays, or foam. It''s created using Space Drugs
-      and Fiber.', type: Add}
-  - {message: You can now grind up jumpsuits and shoes into Fiber. TOTALLY unrelated
-      to the last changelog entry, type: Add}
-  id: 637
-  time: '2021-11-23T01:01:51.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Removed meth., type: Remove}
@@ -2995,3 +2986,12 @@ Entries:
       and substations.', type: Add}
   id: 1136
   time: '2022-02-27T07:02:15.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'All electronics, machine and computer boards now have updated names,
+      descriptions and in some cases sprites.', type: Fix}
+  - {message: SMES construction is now fixed., type: Fix}
+  - {message: There's now computer boards for all computers on the station...some
+      still don't do anything., type: Add}
+  id: 1137
+  time: '2022-02-27T13:46:27.0000000+00:00'
