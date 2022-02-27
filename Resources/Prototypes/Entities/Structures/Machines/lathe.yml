@@ -64,6 +64,7 @@
       - Shovel
       - Spade
       - CableStack
+      - HandheldGPSBasic
   - type: Appearance
     visuals:
     - type: AutolatheVisualizer
@@ -227,7 +228,7 @@
       - SolarControlComputerCircuitboard
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
-      - KitchenReagentGrinderMachineCircuitboard
+      - ReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - ShuttleConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard

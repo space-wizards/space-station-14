@@ -1,20 +1,14 @@
-﻿using System;
+using System;
 using Content.Client.Cooldown;
 using Content.Client.Stylesheets;
 using Content.Shared.Actions;
-using Content.Shared.Actions.Components;
-using Content.Shared.Actions.Prototypes;
-using Content.Shared.Inventory;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
@@ -37,73 +31,13 @@ namespace Content.Client.Actions.UI
         /// <summary>
         /// Current action in this slot.
         /// </summary>
-        public BaseActionPrototype? Action { get; private set; }
-
-        /// <summary>
-        /// true if there is an action assigned to the slot
-        /// </summary>
-        public bool HasAssignment => Action != null;
-
-        private bool HasToggleSprite => Action != null && Action.IconOn != SpriteSpecifier.Invalid;
-
-        /// <summary>
-        /// Only applicable when an action is in this slot.
-        /// True if the action is currently shown as enabled, false if action disabled.
-        /// </summary>
-        public bool ActionEnabled { get; private set; }
-
-        /// <summary>
-        /// Is there an action in the slot that can currently be used?
-        /// Target-basedActions on cooldown can still be selected / deselected if they've been configured as such
-        /// </summary>
-        public bool CanUseAction => Action != null && ActionEnabled &&
-                                    (!IsOnCooldown || (Action.IsTargetAction && !Action.DeselectOnCooldown));
-
-        /// <summary>
-        /// Item the action is provided by, only valid if Action is an ItemActionPrototype. May be null
-        /// if the item action is not yet tied to an item.
-        /// </summary>
-        public EntityUid? Item { get; private set; }
-
-        /// <summary>
-        /// Whether the action in this slot should be shown as toggled on. Separate from Depressed.
-        /// </summary>
-        public bool ToggledOn
-        {
-            get => _toggledOn;
-            set
-            {
-                if (_toggledOn == value) return;
-                _toggledOn = value;
-                UpdateIcons();
-                DrawModeChanged();
-            }
-        }
+        public ActionType? Action { get; private set; }
 
         /// <summary>
         /// 1-10 corresponding to the number label on the slot (10 is labeled as 0)
         /// </summary>
         private byte SlotNumber => (byte) (SlotIndex + 1);
         public byte SlotIndex { get; }
-
-        /// <summary>
-        /// Current cooldown displayed in this slot. Set to null to show no cooldown.
-        /// </summary>
-        public (TimeSpan Start, TimeSpan End)? Cooldown
-        {
-            get => _cooldown;
-            set
-            {
-                _cooldown = value;
-                if (SuppliedTooltip is ActionAlertTooltip actionAlertTooltip)
-                {
-                    actionAlertTooltip.Cooldown = value;
-                }
-            }
-        }
-        private (TimeSpan Start, TimeSpan End)? _cooldown;
-
-        public bool IsOnCooldown => Cooldown.HasValue && _gameTiming.CurTime < Cooldown.Value.End;
 
         private readonly IGameTiming _gameTiming;
         private readonly RichTextLabel _number;
@@ -114,8 +48,6 @@ namespace Content.Client.Actions.UI
         private readonly CooldownGraphic _cooldownGraphic;
         private readonly ActionsUI _actionsUI;
         private readonly ActionMenu _actionMenu;
-        private readonly ClientActionsComponent _actionsComponent;
-        private bool _toggledOn;
         // whether button is currently pressed down by mouse or keybind down.
         private bool _depressed;
         private bool _beingHovered;
@@ -124,9 +56,8 @@ namespace Content.Client.Actions.UI
         /// Creates an action slot for the specified number
         /// </summary>
         /// <param name="slotIndex">slot index this corresponds to, 0-9 (0 labeled as 1, 8, labeled "9", 9 labeled as "0".</param>
-        public ActionSlot(ActionsUI actionsUI, ActionMenu actionMenu, ClientActionsComponent actionsComponent, byte slotIndex)
+        public ActionSlot(ActionsUI actionsUI, ActionMenu actionMenu, byte slotIndex)
         {
-            _actionsComponent = actionsComponent;
             _actionsUI = actionsUI;
             _actionMenu = actionMenu;
             _gameTiming = IoCManager.Resolve<IGameTiming>();
@@ -170,7 +101,8 @@ namespace Content.Client.Actions.UI
             {
                 HorizontalAlignment = HAlignment.Right,
                 VerticalAlignment = VAlignment.Bottom,
-                Visible = false
+                Visible = false,
+                OverrideDirection = Direction.South,
             };
 
             _cooldownGraphic = new CooldownGraphic {Progress = 0, Visible = false};
@@ -219,24 +151,24 @@ namespace Content.Client.Actions.UI
 
         private Control? SupplyTooltip(Control sender)
         {
-            return Action == null ? null :
-                new ActionAlertTooltip(Action.Name, Action.Description, Action.Requires) {Cooldown = Cooldown};
-        }
+            if (Action == null)
+                return null;
 
-        /// <summary>
-        /// Action attempt for performing the action in the slot
-        /// </summary>
-        public IActionAttempt? ActionAttempt()
-        {
-            IActionAttempt? attempt = Action switch
+            string? extra = null;
+            if (Action.Charges != null)
             {
-                ActionPrototype actionPrototype => new ActionAttempt(actionPrototype),
-                ItemActionPrototype itemActionPrototype =>
-                    Item.HasValue && IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemActionsComponent?>(Item, out var itemActions) ?
-                        new ItemActionAttempt(itemActionPrototype, Item.Value, itemActions) : null,
-                _ => null
-            };
-            return attempt;
+                extra = Loc.GetString("ui-actionslot-charges", ("charges", Action.Charges));
+            }
+
+            var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(Action.Name));
+            var decr = FormattedMessage.FromMarkupPermissive(Loc.GetString(Action.Description));
+
+            var tooltip = new ActionAlertTooltip(name, decr, extra);
+
+            if (Action.Enabled && (Action.Charges == null || Action.Charges != 0))
+                tooltip.Cooldown = Action.Cooldown;
+
+            return tooltip;
         }
 
         protected override void MouseEntered()
@@ -245,9 +177,9 @@ namespace Content.Client.Actions.UI
 
             _beingHovered = true;
             DrawModeChanged();
-            if (Action is not ItemActionPrototype) return;
-            if (Item == null) return;
-            _actionsComponent.HighlightItemSlot(Item.Value);
+
+            if (Action?.Provider != null)
+                _actionsUI.System.HighlightItemSlot(Action.Provider.Value);
         }
 
         protected override void MouseExited()
@@ -256,32 +188,55 @@ namespace Content.Client.Actions.UI
             _beingHovered = false;
             CancelPress();
             DrawModeChanged();
-            _actionsComponent.StopHighlightingItemSlots();
+            _actionsUI.System.StopHighlightingItemSlot();
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
         {
             base.KeyBindDown(args);
 
-            if (args.Function == EngineKeyFunctions.UIRightClick)
+            if (Action == null)
             {
-                if (!_actionsUI.Locked && !_actionsUI.DragDropHelper.IsDragging && !_actionMenu.IsDragging)
-                {
-                    _actionsComponent.Assignments.ClearSlot(_actionsUI.SelectedHotbar, SlotIndex, true);
-                    _actionsUI.StopTargeting();
-                    _actionsUI.UpdateUI();
-                }
+                // No action for this slot. Maybe the user is trying to add a mapping action?
+                _actionsUI.System.TryFillSlot(_actionsUI.SelectedHotbar, SlotIndex);
                 return;
             }
 
             // only handle clicks, and can't do anything to this if no assignment
-            if (args.Function != EngineKeyFunctions.UIClick || !HasAssignment)
+            if (args.Function == EngineKeyFunctions.UIClick)
+            {
+                // might turn into a drag or a full press if released
+                Depress(true);
+                _actionsUI.DragDropHelper.MouseDown(this);
+                DrawModeChanged();
+                return;
+            }
+
+            if (args.Function != EngineKeyFunctions.UIRightClick || _actionsUI.Locked)
                 return;
 
-            // might turn into a drag or a full press if released
-            Depress(true);
-            _actionsUI.DragDropHelper.MouseDown(this);
-            DrawModeChanged();
+            if (_actionsUI.DragDropHelper.IsDragging || _actionMenu.IsDragging)
+                return;
+
+            // user right clicked on an action slot, so we clear it.
+            _actionsUI.System.Assignments.ClearSlot(_actionsUI.SelectedHotbar, SlotIndex, true);
+
+            // If this was a temporary action, and it is no longer assigned to any slots, then we remove the action
+            // altogether.
+            if (Action.Temporary)
+            {
+                // Theres probably a better way to do this.....
+                DebugTools.Assert(Action.ClientExclusive, "Temporary-actions must be client exclusive");
+
+                if (!_actionsUI.System.Assignments.Assignments.TryGetValue(Action, out var index)
+                    || index.Count == 0)
+                {
+                    _actionsUI.Component.Actions.Remove(Action);
+                }
+            }        
+
+            _actionsUI.StopTargeting();
+            _actionsUI.UpdateUI();
         }
 
         protected override void KeyBindUp(GUIBoundKeyEventArgs args)
@@ -299,21 +254,21 @@ namespace Content.Client.Actions.UI
             {
                 // finish the drag, swap the 2 slots
                 var fromIdx = SlotIndex;
-                var fromAssignment = _actionsComponent.Assignments[_actionsUI.SelectedHotbar, fromIdx];
+                var fromAssignment = _actionsUI.System.Assignments[_actionsUI.SelectedHotbar, fromIdx];
                 var toIdx = targetSlot.SlotIndex;
-                var toAssignment = _actionsComponent.Assignments[_actionsUI.SelectedHotbar, toIdx];
+                var toAssignment = _actionsUI.System.Assignments[_actionsUI.SelectedHotbar, toIdx];
 
                 if (fromIdx == toIdx) return;
-                if (!fromAssignment.HasValue) return;
+                if (fromAssignment == null) return;
 
-                _actionsComponent.Assignments.AssignSlot(_actionsUI.SelectedHotbar, toIdx, fromAssignment.Value);
-                if (toAssignment.HasValue)
+                _actionsUI.System.Assignments.AssignSlot(_actionsUI.SelectedHotbar, toIdx, fromAssignment);
+                if (toAssignment != null)
                 {
-                    _actionsComponent.Assignments.AssignSlot(_actionsUI.SelectedHotbar, fromIdx, toAssignment.Value);
+                    _actionsUI.System.Assignments.AssignSlot(_actionsUI.SelectedHotbar, fromIdx, toAssignment);
                 }
                 else
                 {
-                    _actionsComponent.Assignments.ClearSlot(_actionsUI.SelectedHotbar, fromIdx, false);
+                    _actionsUI.System.Assignments.ClearSlot(_actionsUI.SelectedHotbar, fromIdx, false);
                 }
                 _actionsUI.UpdateUI();
             }
@@ -348,66 +303,19 @@ namespace Content.Client.Actions.UI
 
         /// <summary>
         /// Press this button down. If it was depressed and now set to not depressed, will
-        /// trigger the action. Only has an effect if CanUseAction.
+        /// trigger the action.
         /// </summary>
         public void Depress(bool depress)
         {
             // action can still be toggled if it's allowed to stay selected
-            if (!CanUseAction) return;
-
+            if (Action == null || !Action.Enabled) return;
 
             if (_depressed && !depress)
             {
                 // fire the action
-                // no left-click interaction with it on cooldown or revoked
-                _actionsComponent.AttemptAction(this);
+                _actionsUI.System.OnSlotPressed(this);
             }
             _depressed = depress;
-           DrawModeChanged();
-        }
-
-        /// <summary>
-        /// Updates the action assigned to this slot.
-        /// </summary>
-        /// <param name="action">action to assign</param>
-        /// <param name="actionEnabled">whether action should initially appear enable or disabled</param>
-        public void Assign(ActionPrototype action, bool actionEnabled)
-        {
-            // already assigned
-            if (Action != null && Action == action) return;
-
-            Action = action;
-            Item = default;
-            _depressed = false;
-            ToggledOn = false;
-            ActionEnabled = actionEnabled;
-            Cooldown = null;
-            HideTooltip();
-            UpdateIcons();
-            DrawModeChanged();
-            _number.SetMessage(SlotNumberLabel());
-        }
-
-        /// <summary>
-        /// Updates the item action assigned to this slot. The action will always be shown as disabled
-        /// until it is tied to a specific item.
-        /// </summary>
-        /// <param name="action">action to assign</param>
-        public void Assign(ItemActionPrototype action)
-        {
-            // already assigned
-            if (Action != null && Action == action && Item == default) return;
-
-            Action = action;
-            Item = default;
-            _depressed = false;
-            ToggledOn = false;
-            ActionEnabled = false;
-            Cooldown = null;
-            HideTooltip();
-            UpdateIcons();
-            DrawModeChanged();
-            _number.SetMessage(SlotNumberLabel());
         }
 
         /// <summary>
@@ -415,18 +323,12 @@ namespace Content.Client.Actions.UI
         /// </summary>
         /// <param name="action">action to assign</param>
         /// <param name="item">item the action is provided by</param>
-        /// <param name="actionEnabled">whether action should initially appear enable or disabled</param>
-        public void Assign(ItemActionPrototype action, EntityUid item, bool actionEnabled)
+        public void Assign(ActionType action)
         {
             // already assigned
-            if (Action != null && Action == action && Item == item) return;
+            if (Action != null && Action == action) return;
 
             Action = action;
-            Item = item;
-            _depressed = false;
-            ToggledOn = false;
-            ActionEnabled = false;
-            Cooldown = null;
             HideTooltip();
             UpdateIcons();
             DrawModeChanged();
@@ -438,12 +340,9 @@ namespace Content.Client.Actions.UI
         /// </summary>
         public void Clear()
         {
-            if (!HasAssignment) return;
+            if (Action == null) return;
             Action = null;
-            Item = default;
-            ToggledOn = false;
             _depressed = false;
-            Cooldown = null;
             HideTooltip();
             UpdateIcons();
             DrawModeChanged();
@@ -453,12 +352,8 @@ namespace Content.Client.Actions.UI
         /// <summary>
         /// Display the action in this slot (if there is one) as enabled
         /// </summary>
-        public void EnableAction()
+        public void Enable()
         {
-            if (ActionEnabled || !HasAssignment) return;
-
-            ActionEnabled = true;
-            _depressed = false;
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
         }
@@ -467,11 +362,8 @@ namespace Content.Client.Actions.UI
         /// Display the action in this slot (if there is one) as disabled.
         /// The slot is still clickable.
         /// </summary>
-        public void DisableAction()
+        public void Disable()
         {
-            if (!ActionEnabled || !HasAssignment) return;
-
-            ActionEnabled = false;
             _depressed = false;
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
@@ -481,70 +373,56 @@ namespace Content.Client.Actions.UI
         {
             if (SlotNumber > 10) return FormattedMessage.FromMarkup("");
             var number = Loc.GetString(SlotNumber == 10 ? "0" : SlotNumber.ToString());
-            var color = (ActionEnabled || !HasAssignment) ? EnabledColor : DisabledColor;
+            var color = (Action == null || Action.Enabled) ? EnabledColor : DisabledColor;
             return FormattedMessage.FromMarkup("[color=" + color + "]" + number + "[/color]");
         }
 
-        private void UpdateIcons()
+        public void UpdateIcons()
         {
-            if (!HasAssignment)
+            UpdateItemIcon();
+
+            if (Action == null)
             {
                 SetActionIcon(null);
-                SetItemIcon(null);
                 return;
             }
 
-            if (HasToggleSprite && ToggledOn && Action != null)
-            {
+            if ((_actionsUI.SelectingTargetFor?.Action == Action || Action.Toggled) && Action.IconOn != null)
                 SetActionIcon(Action.IconOn.Frame0());
-            }
-            else if (Action != null)
-            {
-                SetActionIcon(Action.Icon.Frame0());
-            }
-
-            if (Item != default)
-            {
-                SetItemIcon(IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(Item, out var spriteComponent) ? spriteComponent : null);
-            }
             else
-            {
-                SetItemIcon(null);
-            }
+                SetActionIcon(Action.Icon?.Frame0());
         }
 
         private void SetActionIcon(Texture? texture)
         {
-            if (texture == null || !HasAssignment)
+            if (texture == null || Action == null)
             {
                 _bigActionIcon.Texture = null;
                 _bigActionIcon.Visible = false;
                 _smallActionIcon.Texture = null;
                 _smallActionIcon.Visible = false;
             }
+            else if (Action.Provider != null && Action.ItemIconStyle == ItemActionIconStyle.BigItem)
+            {
+                _smallActionIcon.Texture = texture;
+                _smallActionIcon.Modulate = Action.IconColor;
+                _smallActionIcon.Visible = true;
+                _bigActionIcon.Texture = null;
+                _bigActionIcon.Visible = false;
+            }
             else
             {
-                if (Action is ItemActionPrototype {IconStyle: ItemActionIconStyle.BigItem})
-                {
-                    _bigActionIcon.Texture = null;
-                    _bigActionIcon.Visible = false;
-                    _smallActionIcon.Texture = texture;
-                    _smallActionIcon.Visible = true;
-                }
-                else
-                {
-                    _bigActionIcon.Texture = texture;
-                    _bigActionIcon.Visible = true;
-                    _smallActionIcon.Texture = null;
-                    _smallActionIcon.Visible = false;
-                }
-
+                _bigActionIcon.Texture = texture;
+                _bigActionIcon.Modulate = Action.IconColor;
+                _bigActionIcon.Visible = true;
+                _smallActionIcon.Texture = null;
+                _smallActionIcon.Visible = false;
             }
         }
 
-        private void SetItemIcon(ISpriteComponent? sprite)
+        private void UpdateItemIcon()
         {
-            if (sprite == null || !HasAssignment)
+            if (Action?.Provider == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Action.Provider.Value, out SpriteComponent sprite))
             {
                 _bigItemSpriteView.Visible = false;
                 _bigItemSpriteView.Sprite = null;
@@ -553,68 +431,46 @@ namespace Content.Client.Actions.UI
             }
             else
             {
-                if (Action is ItemActionPrototype actionPrototype)
+                switch (Action.ItemIconStyle)
                 {
-                    switch (actionPrototype.IconStyle)
-                    {
-                        case ItemActionIconStyle.BigItem:
-                        {
-                            _bigItemSpriteView.Visible = true;
-                            _bigItemSpriteView.Sprite = sprite;
-                            _smallItemSpriteView.Visible = false;
-                            _smallItemSpriteView.Sprite = null;
-                            break;
-                        }
-                        case ItemActionIconStyle.BigAction:
-                        {
-                            _bigItemSpriteView.Visible = false;
-                            _bigItemSpriteView.Sprite = null;
-                            _smallItemSpriteView.Visible = true;
-                            _smallItemSpriteView.Sprite = sprite;
-                            break;
-                        }
-                        case ItemActionIconStyle.NoItem:
-                        {
-                            _bigItemSpriteView.Visible = false;
-                            _bigItemSpriteView.Sprite = null;
-                            _smallItemSpriteView.Visible = false;
-                            _smallItemSpriteView.Sprite = null;
-                            break;
-                        }
-                    }
+                    case ItemActionIconStyle.BigItem:
+                        _bigItemSpriteView.Visible = true;
+                        _bigItemSpriteView.Sprite = sprite;
+                        _smallItemSpriteView.Visible = false;
+                        _smallItemSpriteView.Sprite = null;
+                        break;
+                    case ItemActionIconStyle.BigAction:
 
-                }
-                else
-                {
-                    _bigItemSpriteView.Visible = false;
-                    _bigItemSpriteView.Sprite = null;
-                    _smallItemSpriteView.Visible = false;
-                    _smallItemSpriteView.Sprite = null;
-                }
+                        _bigItemSpriteView.Visible = false;
+                        _bigItemSpriteView.Sprite = null;
+                        _smallItemSpriteView.Visible = true;
+                        _smallItemSpriteView.Sprite = sprite;
+                        break;
 
+                    case ItemActionIconStyle.NoItem:
+
+                        _bigItemSpriteView.Visible = false;
+                        _bigItemSpriteView.Sprite = null;
+                        _smallItemSpriteView.Visible = false;
+                        _smallItemSpriteView.Sprite = null;
+                        break;
+                }
             }
         }
 
-
-        private void DrawModeChanged()
+        public void DrawModeChanged()
         {
-
-            // show a hover only if the action is usable or another action is being dragged on top of this
-            if (_beingHovered)
-            {
-                if (_actionsUI.DragDropHelper.IsDragging || _actionMenu.IsDragging ||
-                    (HasAssignment && ActionEnabled && !IsOnCooldown))
-                {
-                    SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassHover);
-                    return;
-                }
-            }
-
             // always show the normal empty button style if no action in this slot
-            if (!HasAssignment)
+            if (Action == null)
             {
                 SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassNormal);
                 return;
+            }
+
+            // show a hover only if the action is usable or another action is being dragged on top of this
+            if (_beingHovered && (_actionsUI.DragDropHelper.IsDragging || _actionMenu.IsDragging || Action.Enabled))
+            {
+                SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassHover);
             }
 
             // it's only depress-able if it's usable, so if we're depressed
@@ -625,47 +481,50 @@ namespace Content.Client.Actions.UI
                 return;
             }
 
-
             // if it's toggled on, always show the toggled on style (currently same as depressed style)
-            if (ToggledOn)
+            if (Action.Toggled || _actionsUI.SelectingTargetFor == this)
             {
                 // when there's a toggle sprite, we're showing that sprite instead of highlighting this slot
-                SetOnlyStylePseudoClass(HasToggleSprite ? ContainerButton.StylePseudoClassNormal :
+                SetOnlyStylePseudoClass(Action.IconOn != null ? ContainerButton.StylePseudoClassNormal :
                     ContainerButton.StylePseudoClassPressed);
                 return;
             }
 
-
-            if (!ActionEnabled)
+            if (!Action.Enabled)
             {
                 SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassDisabled);
                 return;
             }
 
-
             SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassNormal);
         }
-
-
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
-            if (!Cooldown.HasValue)
+            if (Action == null || Action.Cooldown == null || !Action.Enabled)
             {
                 _cooldownGraphic.Visible = false;
                 _cooldownGraphic.Progress = 0;
                 return;
             }
 
-            var duration = Cooldown.Value.End - Cooldown.Value.Start;
+            var cooldown = Action.Cooldown.Value;
+            var duration = cooldown.End - cooldown.Start;
             var curTime = _gameTiming.CurTime;
             var length = duration.TotalSeconds;
-            var progress = (curTime - Cooldown.Value.Start).TotalSeconds / length;
-            var ratio = (progress <= 1 ? (1 - progress) : (curTime - Cooldown.Value.End).TotalSeconds * -5);
+            var progress = (curTime - cooldown.Start).TotalSeconds / length;
+            var ratio = (progress <= 1 ? (1 - progress) : (curTime - cooldown.End).TotalSeconds * -5);
 
             _cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
-            _cooldownGraphic.Visible = ratio > -1f;
+            if (ratio > -1f)
+                _cooldownGraphic.Visible = true;
+            else
+            {
+                _cooldownGraphic.Visible = false;
+                Action.Cooldown = null;
+                DrawModeChanged();
+            }
         }
     }
 }

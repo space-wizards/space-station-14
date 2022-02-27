@@ -15,7 +15,8 @@ namespace Content.Shared.Nuke
         AWAIT_DISK,
         AWAIT_CODE,
         AWAIT_ARM,
-        ARMED
+        ARMED,
+        COOLDOWN
     }
 
     [Serializable, NetSerializable]
@@ -24,6 +25,7 @@ namespace Content.Shared.Nuke
         public bool DiskInserted;
         public NukeStatus Status;
         public int RemainingTime;
+        public int CooldownTime;
         public bool IsAnchored;
         public int EnteredCodeLength;
         public int MaxCodeLength;

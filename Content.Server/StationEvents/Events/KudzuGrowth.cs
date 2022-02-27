@@ -10,8 +10,8 @@ namespace Content.Server.StationEvents.Events;
 
 public sealed class KudzuGrowth : StationEvent
 {
-    [Dependency] private IRobustRandom _robustRandom = default!;
-    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     public override string Name => "KudzuGrowth";
 
