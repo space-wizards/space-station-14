@@ -34,7 +34,6 @@
     - sus
   name: suspicion-title
   description: suspicion-description
-  showInVote: true
   rules:
     - Suspicion
 
