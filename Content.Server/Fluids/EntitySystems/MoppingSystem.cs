@@ -87,7 +87,6 @@ public sealed class MoppingSystem : EntitySystem
             var releasedSolution = _solutionSystem.SplitSolution(absorbent.Owner, absorbedSolution, releaseAmount);
             _spillableSystem.SpillAt(tile, releasedSolution, "PuddleSmear");
         }
-        return;
     }
 
     // Handles logic for our different types of valid target.
