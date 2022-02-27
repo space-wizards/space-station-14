@@ -29,7 +29,6 @@ public sealed partial class ExplosionSystem : EntitySystem
         float slope,
         float maxIntensity)
     {
-
         if (totalIntensity <= 0 || slope <= 0)
             return null;
 
@@ -260,6 +259,9 @@ public sealed partial class ExplosionSystem : EntitySystem
         // some directions but not in others, the actual explosion may reach further than this distance from the
         // epicenter. Conversely, it might go nowhere near as far.
         var radius = 0.5f + IntensityToRadius(totalIntensity, slope, maxIntensity);
+
+        // to avoid a silly lookup for silly input numbers, cap the radius to half of the theoretical maximum (lookup area gets doubled later on).
+        radius = Math.Min(radius, MaxIterations / 4);
 
         GridId? referenceGrid = null;
         float mass = 0;

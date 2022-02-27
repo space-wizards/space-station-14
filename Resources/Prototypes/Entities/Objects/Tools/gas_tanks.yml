@@ -14,7 +14,7 @@
     size: 15
     sprite: Objects/Tanks/generic.rsi
     QuickEquip: false
-  - type: GasTan
+  - type: GasTank
     toggleAction:
       name: action-name-internals-toggle
       description: action-description-internals-toggle
