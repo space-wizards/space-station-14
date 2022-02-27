@@ -52,7 +52,6 @@ public sealed class MoppingSystem : EntitySystem
 
         var toolAvailableVolume = absorbedSolution.AvailableVolume;
         var toolCurrentVolume = absorbedSolution.CurrentVolume;
-        var transferAmount = FixedPoint2.New(0);
 
         // For adding liquid to an empty floor tile
         if (args.Target is null) // if a tile is clicked
@@ -74,7 +73,7 @@ public sealed class MoppingSystem : EntitySystem
     private void ReleaseToFloor(EntityCoordinates clickLocation, AbsorbentComponent absorbent, Solution? absorbedSolution)
     {
         if ((_mapManager.TryGetGrid(clickLocation.GetGridId(EntityManager), out var mapGrid)) // needs valid grid
-            && absorbedSolution != null) // needs a solution to place on the tile
+            && absorbedSolution is not null) // needs a solution to place on the tile
         {
             TileRef tile = mapGrid.GetTileRef(clickLocation);
 
@@ -92,16 +91,16 @@ public sealed class MoppingSystem : EntitySystem
         // Below variables will be set within this function depending on what kind of target was clicked.
         // They will be passed to the OnTransferComplete if the doAfter succeeds.
 
-        EntityUid donor = new(0);
-        EntityUid acceptor = new(0);
-        var donorSolutionName = "";
-        var acceptorSolutionName = "";
+        EntityUid donor;
+        EntityUid acceptor;
+        string donorSolutionName;
+        string acceptorSolutionName;
 
-        var transferAmount = FixedPoint2.New(0);
+        FixedPoint2 transferAmount;
 
         var delay = 1.0f; //default do_after delay in seconds.
-        var msg = "";
-        SoundSpecifier sfx = new SoundPathSpecifier("");
+        string msg;
+        SoundSpecifier sfx;
 
         // For our purposes, if our target has a PuddleComponent, treat it as a puddle above all else.
         if (TryComp<PuddleComponent>(target, out var puddle))
@@ -124,17 +123,19 @@ public sealed class MoppingSystem : EntitySystem
             // adding to puddles
             else if (puddleSolution.TotalVolume < component.MopLowerLimit // if the puddle is too small for the tool to effectively absorb any more solution from it
                     && currentVolume > 0) // tool needs a solution to dilute the puddle with.
-                {
-                    // Dilutes the puddle with some solution from the tool
-                    transferAmount = FixedPoint2.Max(component.ResidueAmount, currentVolume);
-                    TryTransfer(used, target, "absorbed", puddle.SolutionName, transferAmount); // Complete the transfer right away, with no doAfter.
+            {
+                // Dilutes the puddle with some solution from the tool
+                transferAmount = FixedPoint2.Max(component.ResidueAmount, currentVolume);
+                TryTransfer(used, target, "absorbed", puddle.SolutionName, transferAmount); // Complete the transfer right away, with no doAfter.
 
-                    sfx = component.TransferSound;
-                    SoundSystem.Play(Filter.Pvs(user), sfx.GetSound(), used); // Give instant feedback for diluting puddle, so that it's clear that the player is adding to the puddle (as opposed to other behaviours, which have a doAfter).
-                    msg = "mopping-system-puddle-diluted";
-                    user.PopupMessage(user, Loc.GetString(msg)); // play message now because we are aborting.
-                    return; // Do not begin a doAfter.
-                }
+                sfx = component.TransferSound;
+                SoundSystem.Play(Filter.Pvs(user), sfx.GetSound(), used); // Give instant feedback for diluting puddle, so that it's clear that the player is adding to the puddle (as opposed to other behaviours, which have a doAfter).
+
+                msg = "mopping-system-puddle-diluted";
+                user.PopupMessage(user, Loc.GetString(msg)); // play message now because we are aborting.
+
+                return; // Do not begin a doAfter.
+            }
             else
             {
                 // Taking from puddles:
@@ -159,9 +160,6 @@ public sealed class MoppingSystem : EntitySystem
                 msg = "mopping-system-puddle-success";
                 sfx = component.PickupSound;
             }
-
-
-
         }
         else if (currentVolume > 0) // tool is wet
         {
@@ -300,7 +298,6 @@ public sealed class MoppingSystem : EntitySystem
             return;
 
         var result = _doAfterSystem.WaitDoAfter(doAfterArgs);
-
     }
 
 

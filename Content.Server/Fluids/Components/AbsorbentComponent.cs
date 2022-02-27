@@ -10,7 +10,7 @@ namespace Content.Server.Fluids.Components;
 [RegisterComponent, Friend(typeof(MoppingSystem))]
 public sealed class AbsorbentComponent : Component
 {
-     public const string SolutionName = "absorbed";
+    public const string SolutionName = "absorbed";
 
     [DataField("pickupAmount")]
     public FixedPoint2 PickupAmount = FixedPoint2.New(10);
