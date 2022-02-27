@@ -26,6 +26,9 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnAfterInteract(EntityUid uid, SharpComponent component, AfterInteractEvent args)
     {
+        if (!args.CanReach)
+            return;
+        
         if (args.Target is null || !TryComp<SharedButcherableComponent>(args.Target, out var butcher))
             return;
 

@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Orbit;
 
-public sealed class OrbitVisualsSystem : VisualizerSystem<OrbitVisualsComponent>
+public sealed class OrbitVisualsSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -19,6 +19,7 @@ public sealed class OrbitVisualsSystem : VisualizerSystem<OrbitVisualsComponent>
         base.Initialize();
 
         SubscribeLocalEvent<OrbitVisualsComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<OrbitVisualsComponent, ComponentRemove>(OnComponentRemove);
         SubscribeLocalEvent<OrbitVisualsComponent, AnimationCompletedEvent>(OnAnimationCompleted);
     }
 
@@ -28,6 +29,34 @@ public sealed class OrbitVisualsSystem : VisualizerSystem<OrbitVisualsComponent>
             _robustRandom.NextFloat(0.75f * component.OrbitDistance, 1.25f * component.OrbitDistance);
 
         component.OrbitLength = _robustRandom.NextFloat(0.5f * component.OrbitLength, 1.5f * component.OrbitLength);
+
+        var animationPlayer = EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
+        if (animationPlayer.HasRunningAnimation(_orbitAnimationKey))
+            return;
+
+        if (animationPlayer.HasRunningAnimation(_orbitStopKey))
+        {
+            animationPlayer.Stop(_orbitStopKey);
+        }
+
+        animationPlayer.Play(GetOrbitAnimation(component), _orbitAnimationKey);
+    }
+
+    private void OnComponentRemove(EntityUid uid, OrbitVisualsComponent component, ComponentRemove args)
+    {
+        if (!TryComp<ISpriteComponent>(uid, out var sprite))
+            return;
+
+        var animationPlayer = EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
+        if (animationPlayer.HasRunningAnimation(_orbitAnimationKey))
+        {
+            animationPlayer.Stop(_orbitAnimationKey);
+        }
+
+        if (!animationPlayer.HasRunningAnimation(_orbitStopKey))
+        {
+            animationPlayer.Play(GetStopAnimation(component, sprite), _orbitStopKey);
+        }
     }
 
     public override void FrameUpdate(float frameTime)
@@ -41,43 +70,6 @@ public sealed class OrbitVisualsSystem : VisualizerSystem<OrbitVisualsComponent>
 
             sprite.Rotation = angle;
             sprite.Offset = vec;
-        }
-    }
-
-    protected override void OnAppearanceChange(EntityUid uid, OrbitVisualsComponent component, ref AppearanceChangeEvent args)
-    {
-        if (!args.Component.TryGetData<bool>(OrbitingVisuals.IsOrbiting, out var orbiting))
-            return;
-
-        if (!TryComp<ISpriteComponent>(uid, out var sprite))
-            return;
-
-        var animationPlayer = EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
-
-        if (orbiting)
-        {
-            if (animationPlayer.HasRunningAnimation(_orbitAnimationKey))
-                return;
-
-            if (animationPlayer.HasRunningAnimation(_orbitStopKey))
-            {
-                animationPlayer.Stop(_orbitStopKey);
-            }
-
-            animationPlayer.Play(GetOrbitAnimation(component), _orbitAnimationKey);
-        }
-        else
-        {
-            RemComp<OrbitVisualsComponent>(uid);
-            if (animationPlayer.HasRunningAnimation(_orbitAnimationKey))
-            {
-                animationPlayer.Stop(_orbitAnimationKey);
-            }
-
-            if (!animationPlayer.HasRunningAnimation(_orbitStopKey))
-            {
-                animationPlayer.Play(GetStopAnimation(component, sprite), _orbitStopKey);
-            }
         }
     }
 

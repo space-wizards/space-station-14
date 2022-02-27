@@ -11,6 +11,7 @@
   - type: Tag
     tags:
       - Cigarette
+      - Recyclable
       - Trash
   - type: Recyclable
   - type: Clothing
@@ -42,6 +43,7 @@
   - type: Tag
     tags:
       - Cigarette
+      - Recyclable
       - Trash
   - type: Recyclable
   - type: Clothing

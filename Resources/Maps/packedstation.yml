@@ -115650,7 +115650,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 11087
-  type: PosterContrabandEAT.
+  type: PosterContrabandEAT
   components:
   - pos: 29.5,-8.5
     parent: 14

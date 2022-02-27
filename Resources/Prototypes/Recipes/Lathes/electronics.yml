@@ -72,6 +72,16 @@
      Gold: 100
 
 - type: latheRecipe
+  id: ThermomachineFreezerMachineCircuitBoard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ThermomachineFreezerMachineCircuitBoard
+  completetime: 1000
+  materials:
+    Steel: 150
+    Glass: 900
+    Gold: 50
+
+- type: latheRecipe
   id: MedicalScannerMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: MedicalScannerMachineCircuitboard

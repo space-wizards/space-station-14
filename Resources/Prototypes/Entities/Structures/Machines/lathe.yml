@@ -64,6 +64,7 @@
       - Shovel
       - Spade
       - CableStack
+      - HandheldGPSBasic
   - type: Appearance
     visuals:
     - type: AutolatheVisualizer
@@ -218,6 +219,7 @@
     protolatherecipes:
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
+      - ThermomachineFreezerMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - ChemMasterMachineCircuitboard

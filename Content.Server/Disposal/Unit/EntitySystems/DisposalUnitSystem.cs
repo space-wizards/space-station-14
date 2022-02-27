@@ -486,7 +486,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (_atmosSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates, true) is {Temperature: > 0} environment)
             {
-                var transferMoles = 0.1f * (0.05f * Atmospherics.OneAtmosphere * 1.01f - air.Pressure) * air.Volume / (environment.Temperature * Atmospherics.R);
+                var transferMoles = 0.1f * (0.25f * Atmospherics.OneAtmosphere * 1.01f - air.Pressure) * air.Volume / (environment.Temperature * Atmospherics.R);
 
                 component.Air = environment.Remove(transferMoles);
             }

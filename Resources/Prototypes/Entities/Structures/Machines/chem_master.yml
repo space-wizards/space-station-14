@@ -49,6 +49,8 @@
     interfaces:
     - key: enum.ChemMasterUiKey.Key
       type: ChemMasterBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 250
   # Machine / Construction stuff
   - type: Wires
     BoardName: "chem_master"

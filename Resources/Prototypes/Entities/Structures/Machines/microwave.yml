@@ -47,3 +47,5 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+  - type: ApcPowerReceiver
+    powerLoad: 400

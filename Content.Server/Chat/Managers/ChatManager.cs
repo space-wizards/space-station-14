@@ -118,7 +118,7 @@ namespace Content.Server.Chat.Managers
             _logs.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
         }
 
-        public void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true)
+        public void DispatchStationAnnouncement(string message, string sender = "Central Command", bool playDefaultSound = true)
         {
             var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
             NetMessageToAll(ChatChannel.Radio, message, messageWrap);
@@ -364,7 +364,7 @@ namespace Content.Server.Chat.Managers
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.LOOC;
             msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message", ("entityName", Name: _entManager.GetComponent<MetaDataComponent>(entity).EntityName));
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message", ("entityName", _entManager.GetComponent<MetaDataComponent>(entity).EntityName));
 
             _netManager.ServerSendToMany(msg, sessions.Select(o => o.ConnectedClient).ToList());
 

@@ -1,8 +1,10 @@
 ﻿using Robust.Shared.Animations;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Follower.Components;
 
 [RegisterComponent]
+[NetworkedComponent]
 public sealed class OrbitVisualsComponent : Component
 {
     /// <summary>

@@ -52,14 +52,14 @@
         amount: -3.0
       - !type:GenericStatusEffect
         key: Jitter
-        time: 1.0
+        time: 3.0
         type: Remove
 
 - type: reagent
   id: Arithrazine
   name: arithrazine
   group: Medicine
-  desc: A slightly unstable medication used for the most extreme any serious case of radiation poisoning. Lowers radiation level at over twice the rate Hyronalin does and will heal toxin damage at the same time. Deals very minor brute damage to the patient over time, but the patient's body will typically out-regenerate it easily.
+  desc: A slightly unstable medication used for the most extreme case of radiation poisoning. Lowers radiation level at over twice the rate Hyronalin does and will heal toxin damage at the same time. Deals very minor brute damage to the patient over time, but the patient's body will typically out-regenerate it easily.
   physicalDesc: cloudy
   color: "#bd5902"
   metabolisms:
@@ -249,11 +249,11 @@
         amount: 4
       - !type:GenericStatusEffect
         key: Stun
-        time: 0.25
+        time: 0.75
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 0.25
+        time: 0.75
         type: Remove
 
 - type: reagent
@@ -401,6 +401,19 @@
   # TODO: Hallucinations.
 
 - type: reagent
+  id: PulpedBananaPeel
+  name: pulped banana peel
+  group: Medicine
+  desc: Pulped banana peels have some effectiveness against bleeding.
+  physicalDesc: pulpy
+  color: "#FFE774"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ModifyBleedAmount
+        amount: -0.5
+
+- type: reagent
   id: Ryetalyn
   name: ryetalyn
   group: Medicine
@@ -409,12 +422,49 @@
   color: "#532fd4"
 
 - type: reagent
+  id: Siderlac
+  name: siderlac
+  group: Medicine
+  desc: A powerful anti-caustic medicine derived from plants.
+  physicalDesc: milky
+  color: "#f4dab8"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Caustic: -5
+
+- type: reagent
   id: Spaceacillin
   name: spaceacillin
   group: Medicine
   desc: A theta-lactam antibiotic. A common and very useful medicine, effective against many diseases likely to be encountered in space. Slows progression of diseases.
   physicalDesc: opaque
   color: "#9942f5"
+
+- type: reagent
+  id: Stellibinin
+  name: stellibinin
+  group: Medicine
+  desc: A natual antitoxin with particular effectiveness against amatoxin.
+  physicalDesc: starry
+  color: "#2b2f77"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -1
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Amatoxin
+          min: 1
+        reagent: Amatoxin
+        amount: -3
 
 - type: reagent
   id: Synaptizine
@@ -432,11 +482,11 @@
             Poison: 3
       - !type:GenericStatusEffect
         key: Stun
-        time: 1.0
+        time: 3.0
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 1.0
+        time: 3.0
         type: Remove
 
 - type: reagent
@@ -480,6 +530,9 @@
     Medicine:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
         damage:
           groups:
             Burn: -1
@@ -586,40 +639,3 @@
           min: 1
         reagent: Ultravasculine
         amount: 0.5
-
-- type: reagent
-  id: Stellibinin
-  name: stellibinin
-  group: Medicine
-  desc: A natual antitoxin with particular effectiveness against amatoxin.
-  physicalDesc: starry
-  color: "#2b2f77"
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: -1
-      - !type:AdjustReagent
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Amatoxin
-          min: 1
-        reagent: Amatoxin
-        amount: -3
-
-- type: reagent
-  id: Siderlac
-  name: siderlac
-  group: Medicine
-  desc: A powerful anti-caustic medicine derived from plants.
-  physicalDesc: milky
-  color: "#f4dab8"
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          groups:
-            Caustic: -5
