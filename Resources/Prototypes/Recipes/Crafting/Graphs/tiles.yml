@@ -28,7 +28,7 @@
             # Needs StackType ID
             - material: WoodPlank
               amount: 1
-    - node: woodtile
+    - node: whitetile
       entity: FloorTileItemWood
 
 - type: constructionGraph
@@ -60,5 +60,5 @@
           steps:
             - material: Steel
               amount: 1
-    - node: steeltile
+    - node: darktile
       entity: FloorTileItemDark
