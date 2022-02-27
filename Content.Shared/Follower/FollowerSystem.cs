@@ -51,7 +51,7 @@ public sealed class FollowerSystem : EntitySystem
 
     // Since we parent our observer to the followed entity, we need to detach
     // before they get deleted so that we don't get recursively deleted too.
-    private void OnFollowedTerminating(EntityUid uid, FollowedComponent component, EntityTerminatingEvent args)
+    private void OnFollowedTerminating(EntityUid uid, FollowedComponent component, ref EntityTerminatingEvent args)
     {
         StopAllFollowers(uid, component);
     }
