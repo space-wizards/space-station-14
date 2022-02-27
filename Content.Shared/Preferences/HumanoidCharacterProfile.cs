@@ -23,7 +23,7 @@ namespace Content.Shared.Preferences
     /// Character profile. Looks immutable, but uses non-immutable semantics internally for serialization/code sanity purposes.
     /// </summary>
     [Serializable, NetSerializable]
-    public class HumanoidCharacterProfile : ICharacterProfile
+    public sealed class HumanoidCharacterProfile : ICharacterProfile
     {
         public const int MinimumAge = 18;
         public const int MaximumAge = 120;

@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.RCD.Systems
 {
-    public class RCDAmmoSystem : EntitySystem
+    public sealed class RCDAmmoSystem : EntitySystem
     {
         public override void Initialize()
         {

@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.DeviceNetwork.Systems
 {
     [UsedImplicitly]
-    public class ApcNetworkSystem : EntitySystem
+    public sealed class ApcNetworkSystem : EntitySystem
     {
         public override void Initialize()
         {

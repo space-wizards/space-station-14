@@ -12,7 +12,7 @@ namespace Content.Shared.Alert
     /// </summary>
     [Prototype("alertOrder")]
     [DataDefinition]
-    public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>, ISerializationHooks
+    public sealed class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>, ISerializationHooks
     {
         [ViewVariables]
         [DataField("id", required: true)]

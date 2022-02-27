@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Power
 {
     [Parallelizable(ParallelScope.Fixtures)]
     [TestFixture]
-    public class PowerTest : ContentIntegrationTest
+    public sealed class PowerTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

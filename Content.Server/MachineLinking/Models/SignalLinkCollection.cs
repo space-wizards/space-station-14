@@ -4,7 +4,7 @@ using Content.Server.MachineLinking.Exceptions;
 
 namespace Content.Server.MachineLinking.Models
 {
-    public class SignalLinkCollection
+    public sealed class SignalLinkCollection
     {
         private Dictionary<SignalTransmitterComponent, List<SignalLink>> _transmitterDict = new();
         private Dictionary<SignalReceiverComponent, List<SignalLink>> _receiverDict = new();

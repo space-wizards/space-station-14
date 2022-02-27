@@ -20,7 +20,7 @@ namespace Content.Shared.Storage.Components
     /// </code>
     [RegisterComponent]
     [Friend(typeof(SharedItemCounterSystem))]
-    public class ItemCounterComponent : Component
+    public sealed class ItemCounterComponent : Component
     {
         [DataField("count", required: true)]
         public EntityWhitelist Count { get; set; } = default!;

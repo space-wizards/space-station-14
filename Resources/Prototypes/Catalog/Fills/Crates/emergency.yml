@@ -81,6 +81,4 @@
   components:
   - type: StorageFill
     contents:
-      - id: InflatableWallStack
-        amount: 3
-
+      - id: BoxInflatable

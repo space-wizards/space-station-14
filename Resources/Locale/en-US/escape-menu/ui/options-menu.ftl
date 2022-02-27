@@ -112,6 +112,7 @@ ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-open-entity-spawn-window = Open entity spawn menu
 ui-options-function-open-sandbox-window = Open sandbox menu
 ui-options-function-open-tile-spawn-window = Open tile spawn menu
+ui-options-function-open-decal-spawn-window = Open decal spawn menu
 ui-options-function-open-admin-menu = Open admin menu
 
 ui-options-function-take-screenshot = Take screenshot

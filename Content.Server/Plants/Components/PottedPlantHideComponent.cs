@@ -13,7 +13,7 @@ namespace Content.Server.Plants.Components
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(PottedPlantHideSystem))]
-    public class PottedPlantHideComponent : Component
+    public sealed class PottedPlantHideComponent : Component
     {
         [DataField("rustleSound")]
         public SoundSpecifier RustleSound = new SoundPathSpecifier("/Audio/Effects/plant_rustle.ogg");

@@ -23,7 +23,9 @@
         openIcon: open
   - type: Tag
     tags:
+    - Recyclable
     - Trash
+  - type: Recyclable
 
 - type: entity
   id: CigCartonRed

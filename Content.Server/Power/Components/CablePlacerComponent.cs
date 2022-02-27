@@ -6,7 +6,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.Components
 {
-    [RegisterComponent, ComponentProtoName("CablePlacer")]
+    [RegisterComponent]
     public sealed class CablePlacerComponent : Component
     {
         [ViewVariables]

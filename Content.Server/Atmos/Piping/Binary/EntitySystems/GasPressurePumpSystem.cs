@@ -22,7 +22,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasPressurePumpSystem : EntitySystem
+    public sealed class GasPressurePumpSystem : EntitySystem
     {
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private AdminLogSystem _adminLogSystem = default!;

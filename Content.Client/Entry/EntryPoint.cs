@@ -52,7 +52,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Entry
 {
-    public class EntryPoint : GameClient
+    public sealed class EntryPoint : GameClient
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
@@ -105,6 +105,9 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("gameEventTag");
             prototypes.RegisterIgnore("storyteller");
             prototypes.RegisterIgnore("dynamicScheduler");
+            prototypes.RegisterIgnore("worldSpell");
+            prototypes.RegisterIgnore("entitySpell");
+            prototypes.RegisterIgnore("instantSpell");
 
             ClientContentIoC.Register();
 
@@ -190,11 +193,9 @@ namespace Content.Client.Entry
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
 
             IoCManager.Resolve<IChatManager>().Initialize();
-            IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();
             IoCManager.Resolve<EuiManager>().Initialize();
-            IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<IVoteManager>().Initialize();
             IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
 

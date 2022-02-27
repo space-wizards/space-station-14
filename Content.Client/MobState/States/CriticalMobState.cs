@@ -2,7 +2,7 @@
 
 namespace Content.Client.MobState.States
 {
-    public class CriticalMobState : SharedCriticalMobState
+    public sealed class CriticalMobState : SharedCriticalMobState
     {
     }
 }

@@ -9,7 +9,7 @@ namespace Content.Server.Tabletop.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedTabletopDraggableComponent))]
-    public class TabletopDraggableComponent : SharedTabletopDraggableComponent
+    public sealed class TabletopDraggableComponent : SharedTabletopDraggableComponent
     {
         private NetUserId? _draggingPlayer;
 

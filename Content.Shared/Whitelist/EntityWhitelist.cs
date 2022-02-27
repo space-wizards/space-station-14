@@ -25,13 +25,15 @@ namespace Content.Shared.Whitelist
     ///     - AsteroidRock
     /// </code>
     [DataDefinition]
-    public class EntityWhitelist : ISerializationHooks
+    [Serializable, NetSerializable]
+    public sealed class EntityWhitelist : ISerializationHooks
     {
         /// <summary>
         ///     Component names that are allowed in the whitelist.
         /// </summary>
         [DataField("components")] public string[]? Components = null;
 
+        [NonSerialized]
         private List<IComponentRegistration>? _registrations = null;
 
         /// <summary>

@@ -10,7 +10,7 @@ namespace Content.Server.Destructible.Thresholds.Triggers
     /// </summary>
     [Serializable]
     [DataDefinition]
-    public class AndTrigger : IThresholdTrigger
+    public sealed class AndTrigger : IThresholdTrigger
     {
         [DataField("triggers")]
         public List<IThresholdTrigger> Triggers { get; set; } = new();

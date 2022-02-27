@@ -13,7 +13,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
     [TestFixture]
     [TestOf(typeof(ClimbableComponent))]
     [TestOf(typeof(ClimbingComponent))]
-    public class ClimbUnitTest : ContentIntegrationTest
+    public sealed class ClimbUnitTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

@@ -60,6 +60,15 @@
     - state: bowl
     - state: alpha-filling
       color: green
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 5
 # Tastes like creamy peas.
 
 # Salad
@@ -74,6 +83,17 @@
     layers:
     - state: bowl
     - state: aesir
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 6
+        - ReagentId: Omnizine
+          Quantity: 8
 # Tastes like leaves
 
 - type: entity
@@ -86,6 +106,15 @@
     layers:
     - state: bowl
     - state: herb
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 2
 # Tastes like leaves, apples.
 
 - type: entity
@@ -98,6 +127,17 @@
     layers:
     - state: bowl
     - state: valid
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: DoctorsDelight
+          Quantity: 5
 # Tastes like leaves, potato, meat, valids.
 
 - type: entity
@@ -110,6 +150,15 @@
     layers:
     - state: bowl
     - state: fruit
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like fruit.
 
 - type: entity
@@ -122,6 +171,15 @@
     layers:
     - state: bowl
     - state: fruit
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like fruit, the jungle.
 
 - type: entity
@@ -134,6 +192,15 @@
     layers:
     - state: bowl
     - state: citrusdelight
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 5
 # Tastes like sourness, leaves.
 
 - type: entity
@@ -146,6 +213,17 @@
     layers:
     - state: bowl
     - state: eden
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Omnizine
+          Quantity: 5
 # Tastes like extreme bitterness, hope.
 
 # Rice
@@ -172,6 +250,15 @@
     layers:
     - state: bowl
     - state: rice-egg
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like rice, egg. Egg =/= Meat -Swept 2020
 - type: entity
   name: rice and pork
@@ -183,6 +270,19 @@
     layers:
     - state: bowl
     - state: rice-pork
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 18
+        - ReagentId: Vitamin
+          Quantity: 7
+        - ReagentId: Dexalin ##This is probably a reference to something but I don't get it
+          Quantity: 6.5
+        - ReagentId: Epinephrine
+          Quantity: 2
 # Tastes like rice, meat.
 
 - type: entity
@@ -195,6 +295,19 @@
     layers:
     - state: bowl
     - state: rice-pudding
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 9
+        - ReagentId: Vitamin
+          Quantity: 3
+        - ReagentId: Milk ##This is probably a reference to something but I don't get it
+          Quantity: 5
+        - ReagentId: Glucose
+          Quantity: 5
 # Tastes like rice, sweetness.
 
 - type: entity
@@ -207,6 +320,17 @@
     layers:
     - state: bowl
     - state: gumbo
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 3
+        - ReagentId: CapsaicinOil
+          Quantity: 2
 # Tastes like building heat, savory meat, savory vegetables, suppressed rice.
 
 # Misc
@@ -221,6 +345,17 @@
     layers:
     - state: bowl
     - state: oatmeal
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Milk
+          Quantity: 10
 # Tastes like oats, milk.
 
 - type: entity
@@ -233,6 +368,25 @@
     layers:
     - state: bowl
     - state: spacelibertyduff
+# Tastes like jelly, mushroom.
+- type: entity
+  name: amanita jelly
+  parent: FoodInjectableBase
+  id: FoodJellyAmanita
+  description: It's evil, don't touch it!
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/meals.rsi
+    state: amanita-jelly
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Amatoxin
+          Quantity: 6
 # Tastes like jelly, mushroom.
 
 # Soup
@@ -247,6 +401,17 @@
     layers:
     - state: bowl
     - state: meatball
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 8
+        - ReagentId: Water
+          Quantity: 10
 # Tastes like meatballs.
 
 - type: entity
@@ -259,6 +424,17 @@
     layers:
     - state: bowl
     - state: slime
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Water
+          Quantity: 10
 # Tastes like slime.
 
 - type: entity
@@ -271,6 +447,17 @@
     layers:
     - state: bowl
     - state: tomato
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Water
+          Quantity: 10
 # Tastes like iron.
 
 - type: entity
@@ -283,6 +470,17 @@
     layers:
     - state: bowl
     - state: wingfangchu
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 30
+        reagents:
+        - ReagentId: Protein
+          Quantity: 9
+        - ReagentId: Soysauce
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 7
 # Tastes like soy.
 
 - type: entity
@@ -295,6 +493,17 @@
     layers:
     - state: bowl
     - state: clowntears
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 9
+        - ReagentId: Water
+          Quantity: 10
 # Tastes like a bad joke.
 
 - type: entity
@@ -307,6 +516,17 @@
     layers:
     - state: bowl
     - state: vegetable
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 8
+        - ReagentId: Water
+          Quantity: 10
 # Tastes like vegetables, sadness.
 
 - type: entity
@@ -319,6 +539,21 @@
     layers:
     - state: bowl
     - state: nettle
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 8
+        - ReagentId: Water
+          Quantity: 10
+        - ReagentId: Omnizine
+          Quantity: 5
+        - ReagentId: Histamine
+          Quantity: 0.5
 # Tastes like nettles.
 
 - type: entity
@@ -346,11 +581,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 20
         reagents:
           - ReagentId: Nutriment
-            Quantity: 30
+            Quantity: 8
           - ReagentId: CapsaicinOil
             Quantity: 5
+          - ReagentId: Vitamin
+            Quantity: 4
 # Tastes like hot peppers.
 
 - type: entity
@@ -363,6 +601,15 @@
     layers:
     - state: bowl
     - state: chili-cold
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 8
+          - ReagentId: Vitamin
+            Quantity: 4
 # Tastes like tomato, mint.
 
 - type: entity
@@ -378,11 +625,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 20
         reagents:
           - ReagentId: Nutriment
-            Quantity: 30
+            Quantity: 6
           - ReagentId: CapsaicinOil
             Quantity: 5
+          - ReagentId: Vitamin
+            Quantity: 4
 # Tastes like tomato, hot peppers, clown feet, kind of funny, someone's parents.
 
 - type: entity
@@ -395,6 +645,19 @@
     layers:
     - state: bowl
     - state: monkeydelight
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 10
+          - ReagentId: Vitamin
+            Quantity: 5
+          - ReagentId: TableSalt
+            Quantity: 1
+          - ReagentId: Blackpepper
+            Quantity: 1
 # Tastes like the jungle, banana.
 
 - type: entity
@@ -407,6 +670,17 @@
     layers:
     - state: bowl
     - state: tomato
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 22
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 3
+          - ReagentId: Vitamin
+            Quantity: 5
+          - ReagentId: Water
+            Quantity: 10
 # Tastes like tomato.
 
 - type: entity
@@ -419,6 +693,15 @@
     layers:
     - state: bowl
     - state: eyeball
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 5
+          - ReagentId: Vitamin
+            Quantity: 3
 # Tastes like tomato, squirming.
 
 - type: entity
@@ -432,8 +715,18 @@
   - type: Sprite
     layers:
     - state: bowl2
-    - state: milo
+    - state: milo ##Why is this misspelled and why does it break if I fix it
   - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 9
+          - ReagentId: Vitamin
+            Quantity: 3
+          - ReagentId: Water
+            Quantity: 10
 # Tastes like miso.
 
 - type: entity
@@ -446,6 +739,19 @@
     layers:
     - state: bowl
     - state: mushroom
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 2
+          - ReagentId: Vitamin
+            Quantity: 6
+          - ReagentId: Water
+            Quantity: 5
+          - ReagentId: Milk
+            Quantity: 5
 # Tastes like mushroom.
 
 - type: entity
@@ -458,6 +764,17 @@
     layers:
     - state: bowl
     - state: beet
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 3
+          - ReagentId: Vitamin
+            Quantity: 7
+          - ReagentId: Water
+            Quantity: 10
 # Tastes like borsch, bortsch, borstch, borsh, borshch, borscht.
 
 - type: entity
@@ -470,6 +787,15 @@
     layers:
     - state: bowl
     - state: redbeet
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 4
+          - ReagentId: Vitamin
+            Quantity: 6
 # Tastes like
 
 - type: entity
@@ -482,6 +808,15 @@
     layers:
     - state: bowl
     - state: stew
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 7
+          - ReagentId: Vitamin
+            Quantity: 2
 # Tastes like tomato, carrot.
 
 - type: entity
@@ -494,6 +829,15 @@
     layers:
     - state: bowl
     - state: sweetpotato
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 4
+          - ReagentId: Vitamin
+            Quantity: 5
 # Tastes like sweet potato.
 
 - type: entity
@@ -506,6 +850,15 @@
     layers:
     - state: bowl
     - state: onion
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 1
+          - ReagentId: Vitamin
+            Quantity: 5
 # Tastes like onion, france.
 
 - type: entity
@@ -518,6 +871,19 @@
     layers:
     - state: bowl
     - state: bisque
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 6
+          - ReagentId: Vitamin
+            Quantity: 6
+          - ReagentId: Protein
+            Quantity: 6
+          - ReagentId: Water
+            Quantity: 5
 # Tastes like cream, crab.
 
 - type: entity
@@ -530,6 +896,15 @@
     layers:
     - state: bowl
     - state: electron
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 3
+          - ReagentId: Licoxide
+            Quantity: 6
 # Tastes like mushroom, electrons.
 
 - type: entity
@@ -542,4 +917,15 @@
     layers:
     - state: bowl
     - state: bungo
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 6
+          - ReagentId: Vitamin
+            Quantity: 5
+          - ReagentId: CapsaicinOil
+            Quantity: 5
 # Tastes like bungo, hot curry, tropical sweetness.

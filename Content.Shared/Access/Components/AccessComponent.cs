@@ -13,10 +13,12 @@ namespace Content.Shared.Access.Components
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(AccessSystem))]
-    public class AccessComponent : Component
+    public sealed class AccessComponent : Component
     {
         [DataField("tags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
-        [ViewVariables]
         public HashSet<string> Tags = new();
+
+        [DataField("groups", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessGroupPrototype>))]
+        public HashSet<string> Groups = new();
     }
 }

@@ -199,7 +199,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatSecsoft
-  name: ssecurity cap
+  name: security cap
   description: It's a robust baseball hat in tasteful red colour.
   components:
   - type: Sprite

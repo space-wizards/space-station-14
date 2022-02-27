@@ -120,6 +120,9 @@
     },
     {
       "name": "warden"
+    },
+    {
+      "name": "musician"
     }
   ]
 }

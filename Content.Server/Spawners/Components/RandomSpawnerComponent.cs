@@ -8,8 +8,8 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Spawners.Components
 {
-    [RegisterComponent, ComponentProtoName("RandomSpawner")]
-    public class RandomSpawnerComponent : ConditionalSpawnerComponent
+    [RegisterComponent]
+    public sealed class RandomSpawnerComponent : ConditionalSpawnerComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("rarePrototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]

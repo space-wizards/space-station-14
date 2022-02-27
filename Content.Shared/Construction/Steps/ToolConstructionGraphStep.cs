@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
-    public class ToolConstructionGraphStep : ConstructionGraphStep
+    public sealed class ToolConstructionGraphStep : ConstructionGraphStep
     {
         [DataField("tool", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string Tool { get; } = string.Empty;

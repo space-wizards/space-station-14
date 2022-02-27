@@ -13,7 +13,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class PlantDiethylamine : ReagentEffect
+    public sealed class PlantDiethylamine : ReagentEffect
     {
         public override void Effect(ReagentEffectArgs args)
         {

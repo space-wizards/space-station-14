@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.Components.SolutionManager
     ///     Denotes the solution that can removed  be with syringes.
     /// </summary>
     [RegisterComponent]
-    public class DrawableSolutionComponent : Component
+    public sealed class DrawableSolutionComponent : Component
     {
         /// <summary>
         /// Solution name that can be removed with syringes.

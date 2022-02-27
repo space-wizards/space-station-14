@@ -11,7 +11,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.ReagentEffects
 {
     [UsedImplicitly]
-    public class AddToSolutionReaction : ReagentEffect
+    public sealed class AddToSolutionReaction : ReagentEffect
     {
         [DataField("solution")]
         private string _solution = "reagents";

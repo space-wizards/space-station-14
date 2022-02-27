@@ -13,13 +13,15 @@ using Robust.Shared.Log;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using Content.Shared.Actions;
 
 namespace Content.Server.PAI
 {
-    public class PAISystem : SharedPAISystem
+    public sealed class PAISystem : SharedPAISystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
+        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
 
         public override void Initialize()
         {
@@ -29,7 +31,22 @@ namespace Content.Server.PAI
             SubscribeLocalEvent<PAIComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<PAIComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
-            SubscribeLocalEvent<PAIComponent, GetActivationVerbsEvent>(AddWipeVerb);
+            SubscribeLocalEvent<PAIComponent, GetVerbsEvent<ActivationVerb>>(AddWipeVerb);
+
+            SubscribeLocalEvent<PAIComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<PAIComponent, ComponentShutdown>(OnShutdown);
+        }
+
+        private void OnStartup(EntityUid uid, PAIComponent component, ComponentStartup args)
+        {
+            if (component.MidiAction != null)
+                _actionsSystem.AddAction(uid, component.MidiAction, null);
+        }
+
+        private void OnShutdown(EntityUid uid, PAIComponent component, ComponentShutdown args)
+        {
+            if (component.MidiAction != null)
+                _actionsSystem.RemoveAction(uid, component.MidiAction);
         }
 
         private void OnExamined(EntityUid uid, PAIComponent component, ExaminedEvent args)
@@ -127,14 +144,14 @@ namespace Content.Server.PAI
             }
         }
 
-        private void AddWipeVerb(EntityUid uid, PAIComponent pai, GetActivationVerbsEvent args)
+        private void AddWipeVerb(EntityUid uid, PAIComponent pai, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
             if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
             {
-                Verb verb = new();
+                ActivationVerb verb = new();
                 verb.Text = Loc.GetString("pai-system-wipe-device-verb-text");
                 verb.Act = () => {
                     if (pai.Deleted)
@@ -153,7 +170,7 @@ namespace Content.Server.PAI
             }
             else if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
             {
-                Verb verb = new();
+                ActivationVerb verb = new();
                 verb.Text = Loc.GetString("pai-system-stop-searching-verb-text");
                 verb.Act = () => {
                     if (pai.Deleted)

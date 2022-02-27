@@ -72,3 +72,20 @@
     Cold: 1.5
     Poison: 0.8
 
+# Represents which damage types should be modified
+# in relation to how they cause bloodloss damage.
+- type: damageModifierSet
+  id: BloodlossHuman
+  coefficients:
+    Blunt: 0.8
+    Slash: 2.5
+    Piercing: 2.0
+    Shock: 0.0
+    Cold: 0.0
+    Heat: -0.25 # heat damage cauterizes wounds!
+    Poison: 0.0
+    Radiation: 0.0
+    Asphyxiation: 0.0
+    Bloodloss: 0.0 # no double dipping
+    Cellular: 0.0
+

@@ -15,7 +15,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Administration
 {
-    public class AdminSystem : EntitySystem
+    public sealed class AdminSystem : EntitySystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
