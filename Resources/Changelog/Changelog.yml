@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'People sprayed/coming into contact with any alcoholic drink can now
-      be lit on fire, rather than just ethanol.', type: Tweak}
-  id: 631
-  time: '2021-11-22T09:17:35.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Admin logs., type: Add}
@@ -2993,3 +2987,9 @@ Entries:
   - {message: Drinks should now have sprites, type: Fix}
   id: 1130
   time: '2022-02-27T01:26:45.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed two action bugs: ghost boo not working, and powered-flashlight
+      toggling affecting all flashlights.', type: Fix}
+  id: 1131
+  time: '2022-02-27T03:02:39.0000000+00:00'
