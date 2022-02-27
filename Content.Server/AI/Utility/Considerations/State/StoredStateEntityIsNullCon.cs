@@ -28,7 +28,7 @@ namespace Content.Server.AI.Utility.Considerations.State
             }
 
             context.GetStoredState(stateData, out StoredStateData<EntityUid> state);
-            return state.GetValue() == null ? 1.0f : 0.0f;
+            return !state.GetValue().IsValid() ? 1.0f : 0.0f;
         }
     }
 }

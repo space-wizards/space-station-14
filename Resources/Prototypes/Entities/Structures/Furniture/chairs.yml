@@ -17,7 +17,7 @@
           radius: 0.2
       mask:
       - Impassable
-      - SmallImpassable
+      - VaultImpassable
       mass: 10
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi

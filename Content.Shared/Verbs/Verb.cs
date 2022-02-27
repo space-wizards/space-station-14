@@ -122,6 +122,12 @@ namespace Content.Shared.Verbs
         public string? IconTexture;
 
         /// <summary>
+        ///     If this is not null, and no icon or icon texture were specified, a sprite view of this entity will be
+        ///     used as the icon for this verb.
+        /// </summary>
+        public EntityUid? IconEntity;
+
+        /// <summary>
         ///     Whether or not to close the context menu after using it to run this verb.
         /// </summary>
         /// <remarks>
@@ -200,6 +206,7 @@ namespace Content.Shared.Verbs
         {
             { typeof(Verb) },
             { typeof(InteractionVerb) },
+            { typeof(UtilityVerb) },
             { typeof(AlternativeVerb) },
             { typeof(ActivationVerb) },
             { typeof(ExamineVerb) }
@@ -223,6 +230,27 @@ namespace Content.Shared.Verbs
         public InteractionVerb() : base()
         {
             TextStyleClass = DefaultTextStyleClass;
+        }
+    }
+
+    /// <summary>
+    ///     These verbs are similar to the normal interaction verbs, except these interactions are facilitated by the
+    ///     currently held entity.
+    /// </summary>
+    /// <remarks>
+    ///     The only notable difference between these and InteractionVerbs is that they are obtained by raising an event
+    ///     directed at the currently held entity. Distinguishing between utility and interaction verbs helps avoid
+    ///     confusion if a component enables verbs both when the item is used on something else, or when it is the
+    ///     target of an interaction. These verbs are only obtained if the target and the held entity are NOT the same.
+    /// </remarks>
+    [Serializable, NetSerializable]
+    public sealed class UtilityVerb : Verb
+    {
+        public override int TypePriority => 3;
+
+        public UtilityVerb() : base()
+        {
+            TextStyleClass = InteractionVerb.DefaultTextStyleClass;
         }
     }
 

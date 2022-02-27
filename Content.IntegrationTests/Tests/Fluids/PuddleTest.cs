@@ -87,7 +87,6 @@ namespace Content.IntegrationTests.Tests.Fluids
             await server.WaitIdleAsync();
 
             var sMapManager = server.ResolveDependency<IMapManager>();
-            var sPauseManager = server.ResolveDependency<IPauseManager>();
             var sTileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -102,7 +101,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             await server.WaitPost(() =>
             {
                 sMapId = sMapManager.CreateMap();
-                sPauseManager.SetMapPaused(sMapId, true);
+                sMapManager.SetMapPaused(sMapId, true);
                 sGrid = sMapManager.CreateGrid(sMapId);
                 sGridId = sGrid.Index;
                 sGridEntity = sGrid.GridEntityId;
@@ -118,8 +117,8 @@ namespace Content.IntegrationTests.Tests.Fluids
             // Check that the map and grid are paused
             await server.WaitAssertion(() =>
             {
-                Assert.True(sPauseManager.IsGridPaused(sGridId));
-                Assert.True(sPauseManager.IsMapPaused(sMapId));
+                Assert.True(sMapManager.IsGridPaused(sGridId));
+                Assert.True(sMapManager.IsMapPaused(sMapId));
             });
 
             float evaporateTime = default;
@@ -171,13 +170,13 @@ namespace Content.IntegrationTests.Tests.Fluids
             });
 
             // Unpause the map
-            await server.WaitPost(() => { sPauseManager.SetMapPaused(sMapId, false); });
+            await server.WaitPost(() => { sMapManager.SetMapPaused(sMapId, false); });
 
             // Check that the map, grid and puddle are unpaused
             await server.WaitAssertion(() =>
             {
-                Assert.False(sPauseManager.IsMapPaused(sMapId));
-                Assert.False(sPauseManager.IsGridPaused(sGridId));
+                Assert.False(sMapManager.IsMapPaused(sMapId));
+                Assert.False(sMapManager.IsGridPaused(sGridId));
                 Assert.False(meta.EntityPaused);
 
                 // Check that the puddle still exists

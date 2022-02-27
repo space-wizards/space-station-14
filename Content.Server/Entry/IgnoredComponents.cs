@@ -18,6 +18,7 @@ namespace Content.Server.Entry
             "CharacterInfo",
             "ItemCabinetVisuals",
             "StasisBedVisuals",
+            "HandheldGPS"
         };
     }
 }

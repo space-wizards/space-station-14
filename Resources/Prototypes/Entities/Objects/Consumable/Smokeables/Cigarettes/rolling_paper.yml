@@ -57,6 +57,7 @@
     size: 2
   - type: Tag
     tags:
+    - Recyclable
     - RollingPaper
     - Trash
   - type: Recyclable
@@ -80,5 +81,6 @@
   - type: Tag
     tags:
     - CigFilter
+    - Recyclable
     - Trash
   - type: Recyclable
