@@ -550,6 +550,13 @@
     group: Monkey
   - type: SentienceTarget
     flavorKind: primate
+  - type: Inventory
+    templateId: head
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: Sprite
     drawdepth: Mobs
     layers:

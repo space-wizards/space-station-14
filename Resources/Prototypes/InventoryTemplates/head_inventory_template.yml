@@ -1,5 +1,5 @@
-﻿- type: inventoryTemplate
-  id: drone
+- type: inventoryTemplate
+  id: head
   slots:
   - name: head
     slotTexture: head
