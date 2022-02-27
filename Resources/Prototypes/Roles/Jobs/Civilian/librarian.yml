@@ -6,7 +6,7 @@
   - Civilian
   icon: "Librarian"
   supervisors: "the head of personnel"
-  access:
+  accessGroups:
     - AllAccess
 
 - type: startingGear

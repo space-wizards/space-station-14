@@ -6,7 +6,7 @@
   - Civilian
   icon: "Chaplain"
   supervisors: "the head of personnel"
-  access:
+  accessGroups:
     - AllAccess
   special:
   - !type:AddComponentSpecial

@@ -6,7 +6,7 @@
   - Science
   icon: "Scientist"
   supervisors: "the research director"
-  access:
+  accessGroups:
     - AllAccess
 
 - type: startingGear

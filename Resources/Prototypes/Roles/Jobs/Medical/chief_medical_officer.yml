@@ -12,7 +12,7 @@
   requireAdminNotify: true
   supervisors: "the captain"
   canBeAntag: false
-  access:
+  accessGroups:
     - AllAccess
 
 - type: startingGear

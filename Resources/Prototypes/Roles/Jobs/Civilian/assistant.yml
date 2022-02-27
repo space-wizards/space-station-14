@@ -6,7 +6,7 @@
   - Civilian
   icon: "Assistant"
   supervisors: "absolutely everyone"
-  access:
+  accessGroups:
     - AllAccess
 
 - type: startingGear

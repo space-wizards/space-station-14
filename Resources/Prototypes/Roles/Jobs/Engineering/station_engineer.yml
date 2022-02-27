@@ -6,7 +6,7 @@
   - Engineering
   icon: "StationEngineer"
   supervisors: "the chief engineer"
-  access:
+  accessGroups:
     - AllAccess
 
 - type: startingGear

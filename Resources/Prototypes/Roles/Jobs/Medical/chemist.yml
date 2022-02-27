@@ -6,7 +6,7 @@
   - Medical
   icon: "Chemist"
   supervisors: "the chief medical officer"
-  access:
+  accessGroups:
     - AllAccess
 
 - type: startingGear

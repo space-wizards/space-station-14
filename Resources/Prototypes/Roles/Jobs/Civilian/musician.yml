@@ -6,7 +6,7 @@
   - Civilian
   icon: "Musician"
   supervisors: "whoever hires you"
-  access:
+  accessGroups:
     - AllAccess
 
 - type: startingGear
