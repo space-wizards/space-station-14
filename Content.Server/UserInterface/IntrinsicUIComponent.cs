@@ -10,7 +10,7 @@ namespace Content.Server.UserInterface;
 public sealed class IntrinsicUIComponent : Component, ISerializationHooks
 {
     [ViewVariables, DataField("uis", required: true)]
-    public List<IntrinsicUIEntry> UIs = default!;
+    public List<IntrinsicUIEntry> UIs = new();
 
     void ISerializationHooks.AfterDeserialization()
     {
