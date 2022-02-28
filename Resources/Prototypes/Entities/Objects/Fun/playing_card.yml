@@ -98,9 +98,6 @@
     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
     layers:
     - state: deck_nanotrasen_full
-      map: ["enum.PlayingCardDeckVisualLayers.Base"]
-  - type: PlayingCardDeckVisuals
-  - type: Appearance
   - type: UserInterface
     interfaces:
     - key: enum.PlayingCardDeckUiKey.Key
