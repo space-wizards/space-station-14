@@ -190,6 +190,8 @@ namespace Content.Server.GameTicking
 
                 SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
+                LoadMaps();
+
                 StartGamePresetRules();
 
                 RoundLengthMetric.Set(0);
@@ -373,7 +375,6 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.PreRoundLobby;
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             ResettingCleanup();
-            LoadMaps();
 
             if (!LobbyEnabled)
             {
@@ -411,17 +412,17 @@ namespace Content.Server.GameTicking
                 unCastData.ContentData()?.WipeMind();
             }
 
-            // Delete all entities.
-            foreach (var entity in EntityManager.GetEntities().ToList())
+            _startingRound = false;
+
+            _mapManager.Restart();
+
+            // Delete all remaining entities.
+            foreach (var entity in EntityManager.GetEntities().ToArray())
             {
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
                 EntityManager.DeleteEntity(entity);
             }
-
-            _startingRound = false;
-
-            _mapManager.Restart();
 
             _roleBanManager.Restart();
 
