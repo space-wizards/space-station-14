@@ -13,7 +13,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.PlayingCard.UI
 {
     [GenerateTypedNameReferences]
-    public partial class PlayingCardHandMenu : DefaultWindow
+    public partial class PlayingCardHandWindow : DefaultWindow
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -25,7 +25,7 @@ namespace Content.Client.PlayingCard.UI
         private int _cardOffset = 0;
 
         private int _cardPageLimit = 5;
-        public PlayingCardHandMenu(PlayingCardHandBoundUserInterface owner)
+        public PlayingCardHandWindow(PlayingCardHandBoundUserInterface owner)
         {
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);

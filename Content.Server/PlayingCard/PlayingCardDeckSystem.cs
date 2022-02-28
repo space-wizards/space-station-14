@@ -28,12 +28,21 @@ public class PlayingCardDeckSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<PlayingCardDeckComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<PlayingCardDeckComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<PlayingCardDeckComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<PlayingCardDeckComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlayingCardDeckComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<PlayingCardDeckComponent, GetVerbsEvent<AlternativeVerb>>(AddAltVerb);
         SubscribeLocalEvent<PlayingCardDeckComponent, PickupCountMessage>(PickupMultipleCards);
+    }
+
+    private void OnComponentInit(EntityUid uid, PlayingCardDeckComponent cardDeckComponent, ComponentInit args)
+    {
+        if (cardDeckComponent.CardDeckID == string.Empty)
+        {
+            cardDeckComponent.CardDeckID = cardDeckComponent.Owner.ToString();
+        }
     }
 
     private void OnExamined(EntityUid uid, PlayingCardDeckComponent cardDeckComponent, ExaminedEvent args)
@@ -102,7 +111,7 @@ public class PlayingCardDeckSystem : EntitySystem
     {
         if (TryComp<PlayingCardHandComponent>(addedEntity, out PlayingCardHandComponent? handComp))
         {
-            if (handComp.CardDeckID != cardDeckComponent.Owner.ToString())
+            if (handComp.CardDeckID != cardDeckComponent.CardDeckID)
             {
                 _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-merge-card-id-fail"),
                     uid, Filter.Entities(user));
@@ -117,7 +126,7 @@ public class PlayingCardDeckSystem : EntitySystem
         }
         if (TryComp<PlayingCardComponent>(addedEntity, out PlayingCardComponent? cardComp))
         {
-            if (cardComp.CardDeckID != cardDeckComponent.Owner.ToString())
+            if (cardComp.CardDeckID != cardDeckComponent.CardDeckID)
             {
                 _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-merge-card-id-fail"),
                     uid, Filter.Entities(user));
@@ -153,9 +162,11 @@ public class PlayingCardDeckSystem : EntitySystem
         }
 
         string topCard = cardDeckComponent.CardList.First();
-        string cardDeckID = cardDeckComponent.Owner.ToString();
 
-        EntityUid? playingCard = _playingCardSystem.CreateCard(cardDeckID, topCard, cardDeckComponent.CardPrototype, transformComp.Coordinates);
+        EntityUid? playingCard = _playingCardSystem.CreateCard(cardDeckComponent.CardDeckID,
+            topCard,
+            cardDeckComponent.CardPrototype,
+            transformComp.Coordinates);
 
         if (!TryComp<SharedItemComponent>(playingCard, out var item))
             return;
@@ -205,9 +216,11 @@ public class PlayingCardDeckSystem : EntitySystem
         {
             var topCards = cardDeckComponent.CardList.Take(count).ToList();
 
-            string cardDeckID = cardDeckComponent.Owner.ToString();
-
-            EntityUid? playingCards = _playingCardHandSystem.CreateCardHand(cardDeckID, topCards, cardDeckComponent.CardHandPrototype, cardDeckComponent.CardPrototype, transformComp.Coordinates);
+            EntityUid? playingCards = _playingCardHandSystem.CreateCardHand(cardDeckComponent.CardDeckID,
+                topCards,
+                cardDeckComponent.CardHandPrototype,
+                cardDeckComponent.CardPrototype,
+                transformComp.Coordinates);
 
             if (playingCards != null && TryComp<SharedItemComponent>(playingCards, out var item))
             {

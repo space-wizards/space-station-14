@@ -1,13 +1,10 @@
 using Content.Shared.PlayingCard;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.PlayingCard.UI;
     public class PlayingCardHandBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables] private PlayingCardHandMenu? _menu;
+        [ViewVariables] private PlayingCardHandWindow? _window;
 
         private PlayingCardHandBoundUserInterfaceState? _lastState;
 
@@ -24,12 +21,10 @@ namespace Content.Client.PlayingCard.UI;
             if(State != null)
                 UpdateState(State);
 
-            _menu = new PlayingCardHandMenu(this) {Title = entMan.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
+            _window = new PlayingCardHandWindow(this) {Title = entMan.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
 
-            // _menu.Populate(PlayingCardHand.CardList);
-
-            _menu.OnClose += Close;
-            _menu.OpenCentered();
+            _window.OnClose += Close;
+            _window.OpenCentered();
         }
 
         /// <summary>
@@ -39,12 +34,12 @@ namespace Content.Client.PlayingCard.UI;
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (_menu == null || state is not PlayingCardHandBoundUserInterfaceState cast)
+            if (_window == null || state is not PlayingCardHandBoundUserInterfaceState cast)
                 return;
 
             _lastState = cast;
 
-            _menu?.Populate(cast.CardList);
+            _window?.Populate(cast.CardList);
         }
 
         public void RemoveCard(int id)
@@ -52,22 +47,12 @@ namespace Content.Client.PlayingCard.UI;
             SendMessage(new PickSingleCardMessage(id));
         }
 
-        // protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-        // {
-        //     switch (message)
-        //     {
-        //         case CardListMessage msg:
-        //             // _menu?.Populate(msg.Cards);
-        //             break;
-        //     }
-        // }
-
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
             if (!disposing)
                 return;
 
-            _menu?.Dispose();
+            _window?.Dispose();
         }
     }

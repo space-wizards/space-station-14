@@ -4,6 +4,10 @@ using Content.Shared.Sound;
 namespace Content.Shared.PlayingCard;
 public abstract class SharedPlayingCardDeckComponent : Component, ISerializationHooks
 {
+
+    // Allow setting a unified deck ID if someone really wants to make a TCG that can share cards
+    [DataField("cardDeckID")]
+    public string CardDeckID = string.Empty;
     [DataField("cardPrototype")]
     public string CardPrototype { get; private set; } = string.Empty;
     [DataField("cardHandPrototype")]
