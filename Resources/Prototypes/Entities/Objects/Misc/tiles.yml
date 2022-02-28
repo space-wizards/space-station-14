@@ -329,6 +329,136 @@
       - plating
       - floor_laundry
 
+# Carpets
+- type: entity
+  name: blue arcade floor
+  parent: FloorTileItemBase
+  id: FloorTileItemArcadeBlue
+  components:
+  - type: Sprite
+    state: arcadeblue
+  - type: Item
+    HeldPrefix: arcadeblue
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorArcadeBlue
+  - type: Stack
+    stackType: FloorTileStackArcadeBlue
+      
+- type: entity
+  name: red arcade floor
+  parent: FloorTileItemBase
+  id: FloorTileItemArcadeRed
+  components:
+  - type: Sprite
+    state: arcadered
+  - type: Item
+    HeldPrefix: arcadered
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorArcadeRed
+  - type: Stack
+    stackType: FloorTileStackArcadeRed
+      
+- type: entity
+  name: eighties floor
+  parent: FloorTileItemBase
+  id: FloorTileItemEighties
+  components:
+  - type: Sprite
+    state: eighties
+  - type: Item
+    HeldPrefix: eighties
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorEighties
+  - type: Stack
+    stackType: FloorTileStackEighties
+
+# Shuttles
+- type: entity
+  name: white shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleWhite
+  components:
+  - type: Sprite
+    state: shuttlewhite
+  - type: Item
+    HeldPrefix: shuttlewhite
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorShuttleWhite
+  - type: Stack
+    stackType: FloorTileStackShuttleWhite
+    
+- type: entity
+  name: blue shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleBlue
+  components:
+  - type: Sprite
+    state: shuttleblue
+  - type: Item
+    HeldPrefix: shuttleblue
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorShuttleBlue
+  - type: Stack
+    stackType: FloorTileStackShuttleBlue
+    
+- type: entity
+  name: orange shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleOrange
+  components:
+  - type: Sprite
+    state: shuttleorange
+  - type: Item
+    HeldPrefix: shuttleorange
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorShuttleOrange
+  - type: Stack
+    stackType: FloorTileStackShuttleOrange
+    
+- type: entity
+  name: purple shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttlePurple
+  components:
+  - type: Sprite
+    state: shuttlepurple
+  - type: Item
+    HeldPrefix: shuttlepurple
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorShuttlePurple
+  - type: Stack
+    stackType: FloorTileStackShuttlePurple
+    
+- type: entity
+  name: red shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleRed
+  components:
+  - type: Sprite
+    state: shuttlered
+  - type: Item
+    HeldPrefix: shuttlered
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorShuttleRed
+  - type: Stack
+    stackType: FloorTileStackShuttleRed
+
 # Materials
 - type: entity
   name: gold floor
@@ -403,6 +533,20 @@
     outputs:
       - plating
       - floor_grass
+      
+- type: entity
+  name: jungle grass tile
+  parent: FloorTileItemBase
+  id: FloorTileItemGrassJungle
+  components:
+  - type: Sprite
+    state: grassjungle
+  - type: Item
+    HeldPrefix: grassjungle
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorGrassJungle
 
 - type: entity
   name: snow tile

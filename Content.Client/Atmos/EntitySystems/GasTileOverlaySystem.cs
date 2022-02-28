@@ -176,8 +176,12 @@ namespace Content.Client.Atmos.EntitySystems
 
                 var frameCount = FrameCounter[i];
                 Timer[i] += frameTime;
-                if (!(Timer[i] >= delays[frameCount])) continue;
-                Timer[i] = 0f;
+                var time = delays[frameCount];
+
+                if (Timer[i] < time)
+                    continue;
+
+                Timer[i] -= time;
                 FrameCounter[i] = (frameCount + 1) % Frames[i].Length;
             }
 
@@ -188,8 +192,10 @@ namespace Content.Client.Atmos.EntitySystems
 
                 var frameCount = FireFrameCounter[i];
                 FireTimer[i] += frameTime;
-                if (!(FireTimer[i] >= delays[frameCount])) continue;
-                FireTimer[i] = 0f;
+                var time = delays[frameCount];
+
+                if (FireTimer[i] < time) continue;
+                FireTimer[i] -= time;
                 FireFrameCounter[i] = (frameCount + 1) % FireFrames[i].Length;
             }
         }

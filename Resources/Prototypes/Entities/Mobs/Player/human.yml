@@ -20,10 +20,6 @@
         Asphyxiation: -1.5
   - type: Alerts
   - type: Actions
-    innateActions:
-      - CombatMode
-      - Disarm
-      - HumanScream
   - type: Eye
   - type: CameraRecoil
   - type: Examiner

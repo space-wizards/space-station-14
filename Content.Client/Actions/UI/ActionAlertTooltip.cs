@@ -1,5 +1,7 @@
 ﻿using System;
 using Content.Client.Stylesheets;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
@@ -89,7 +91,7 @@ namespace Content.Client.Actions.UI
             {
                 var duration = Cooldown.Value.End - Cooldown.Value.Start;
                 _cooldownLabel.SetMessage(FormattedMessage.FromMarkup(
-                    $"[color=#a10505]{duration.Seconds} sec cooldown ({timeLeft.Seconds + 1} sec remaining)[/color]"));
+                    $"[color=#a10505]{(int) duration.TotalSeconds} sec cooldown ({(int) timeLeft.TotalSeconds + 1} sec remaining)[/color]"));
                 _cooldownLabel.Visible = true;
             }
             else

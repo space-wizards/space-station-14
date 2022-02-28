@@ -101,6 +101,9 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("salvageMap");
             prototypes.RegisterIgnore("gamePreset");
             prototypes.RegisterIgnore("gameRule");
+            prototypes.RegisterIgnore("worldSpell");
+            prototypes.RegisterIgnore("entitySpell");
+            prototypes.RegisterIgnore("instantSpell");
 
             ClientContentIoC.Register();
 
@@ -189,7 +192,6 @@ namespace Content.Client.Entry
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();
             IoCManager.Resolve<EuiManager>().Initialize();
-            IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<IVoteManager>().Initialize();
             IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
 
