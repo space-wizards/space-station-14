@@ -28,6 +28,7 @@ namespace Content.Shared.DoAfter
 
         public CancelledDoAfterMessage(EntityUid uid, byte id)
         {
+            Uid = uid;
             ID = id;
         }
     }
