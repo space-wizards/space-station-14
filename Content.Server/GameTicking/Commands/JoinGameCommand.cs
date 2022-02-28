@@ -42,6 +42,7 @@ namespace Content.Server.GameTicking.Commands
 
             if (!ticker.PlayersInLobby.ContainsKey(player) || ticker.PlayersInLobby[player] == LobbyPlayerStatus.Observer)
             {
+                Logger.InfoS("security", $"{player.Name} ({player.UserId}) attempted to latejoin while in-game.");
                 shell.WriteError($"{player.Name} is not in the lobby.   This incident will be reported.");
                 return;
             }
