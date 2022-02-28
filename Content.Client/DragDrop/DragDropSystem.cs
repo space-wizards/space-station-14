@@ -243,7 +243,7 @@ namespace Content.Client.DragDrop
             if (_targetRecheckTime > TargetRecheckInterval)
             {
                 HighlightTargets();
-                _targetRecheckTime = 0;
+                _targetRecheckTime -= TargetRecheckInterval;
             }
 
             return true;
