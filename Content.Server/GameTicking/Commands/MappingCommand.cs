@@ -23,7 +23,7 @@ namespace Content.Server.GameTicking.Commands
         {
             if (shell.Player is not IPlayerSession player)
             {
-                shell.WriteLine("Only players can use this command");
+                shell.WriteError("Only players can use this command");
                 return;
             }
 
