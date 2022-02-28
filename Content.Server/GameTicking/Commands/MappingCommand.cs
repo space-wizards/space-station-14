@@ -92,7 +92,7 @@ namespace Content.Server.GameTicking.Commands
             if (args.Length != 0)
                 shell.WriteLine($"Created uninitialized map from file {args[0]} with id {mapId}.");
             else
-                shell.WriteLine($"Created a new uninitialized map with id {mapId}. If you create a new grid on the map you can use \"savebp <gridId> foo.yml\" to save it as a map.");
+                shell.WriteLine($"Created a new uninitialized map with id {mapId}.");
         }
     }
 }
