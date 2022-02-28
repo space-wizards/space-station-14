@@ -16,7 +16,7 @@
   - type: PlayerInputMover
   - type: MovementSpeedModifier
     baseSprintSpeed: 12
-    baseWalkSpeed: 5
+    baseWalkSpeed: 8
   - type: Physics
     bodyType: Kinematic
     status: InAir
