@@ -20,7 +20,6 @@ namespace Content.Server.Entry
             "HandheldGPS",
             "PlayingCardVisuals",
             "PlayingCardHandVisuals",
-            "PlayingCardDeckVisuals"
         };
     }
 }
