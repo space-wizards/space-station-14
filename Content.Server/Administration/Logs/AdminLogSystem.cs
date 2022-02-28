@@ -108,6 +108,7 @@ public sealed partial class AdminLogSystem : SharedAdminLogSystem
         }
 
         SubscribeLocalEvent<RoundStartingEvent>(RoundStarting);
+        SubscribeLocalEvent<GameRunLevelChangedEvent>(RunLevelChanged);
     }
 
     public override async void Shutdown()
@@ -232,14 +233,21 @@ public sealed partial class AdminLogSystem : SharedAdminLogSystem
 
     private void RoundStarting(RoundStartingEvent ev)
     {
-        Interlocked.Exchange(ref _currentLogId, 0);
         CacheNewRound();
+    }
 
-        if (_metricsEnabled)
+    private void RunLevelChanged(GameRunLevelChangedEvent ev)
+    {
+        if (ev.New == GameRunLevel.PreRoundLobby)
         {
-            PreRoundQueueCapReached.Set(0);
-            QueueCapReached.Set(0);
-            LogsSent.Set(0);
+            Interlocked.Exchange(ref _currentLogId, 0);
+
+            if (_metricsEnabled)
+            {
+                PreRoundQueueCapReached.Set(0);
+                QueueCapReached.Set(0);
+                LogsSent.Set(0);
+            }
         }
     }
 
