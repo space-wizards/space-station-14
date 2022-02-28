@@ -1,4 +1,4 @@
-0- type: entity
+- type: entity
   id: CrateSalvageEquipment
   name: "salvage equipment crate"
   description: For the daring.
