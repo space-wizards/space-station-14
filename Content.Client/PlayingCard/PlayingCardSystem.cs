@@ -16,7 +16,6 @@ public sealed class PlayingCardSystem : VisualizerSystem<PlayingCardVisualsCompo
             {
                 sprite.LayerSetState(PlayingCardVisualLayers.Details, cardSprite);
             }
-            sprite.LayerSetVisible(PlayingCardVisualLayers.Base, isFacingUp);
             sprite.LayerSetVisible(PlayingCardVisualLayers.Details, isFacingUp);
             sprite.LayerSetVisible(PlayingCardVisualLayers.FlippedDown, !isFacingUp);
         }

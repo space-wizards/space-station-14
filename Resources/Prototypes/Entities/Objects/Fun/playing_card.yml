@@ -11,8 +11,8 @@
   - type: Sprite
     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
     layers:
-    - state: "8 of Clubs"
-      map: ["enum.PlayingCardVisualLayers.Base"]
+    # - state: "8 of Clubs"
+    #   map: ["enum.PlayingCardVisualLayers.Base"]
     - state: "8 of Clubs"
       map: ["enum.PlayingCardVisualLayers.Details"]
     - state: "singlecard_down"

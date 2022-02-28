@@ -15,7 +15,6 @@ public abstract class SharedPlayingCardHandComponent : Component, ISerialization
     public bool NoUniqueCardLayers = false;
 }
 
-
 [Serializable]
 [NetSerializable]
 public sealed class PlayingCardHandBoundUserInterfaceState : BoundUserInterfaceState
