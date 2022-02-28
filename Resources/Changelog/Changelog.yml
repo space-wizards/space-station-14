@@ -1,9 +1,4 @@
 Entries:
-- author: Mith-randalf
-  changes:
-  - {message: Added the warden's favourite jacket., type: Add}
-  id: 642
-  time: '2021-11-23T11:12:20.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Mopping now picks up slightly more reagents, and cleaning vomit should
@@ -2992,3 +2987,8 @@ Entries:
       the Id, and a new blank map is created by providing no arguments.', type: Tweak}
   id: 1141
   time: '2022-02-28T01:21:15.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Animal's blood now variate depending on their size, type: Tweak}
+  id: 1142
+  time: '2022-02-28T01:23:45.0000000+00:00'
