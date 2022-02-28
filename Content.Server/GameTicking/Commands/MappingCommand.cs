@@ -41,11 +41,11 @@ namespace Content.Server.GameTicking.Commands
             MapId mapId;
 
             // Get the map ID to use
-            if (args.Length == 2)
+            if (args.Length is 1 or 2)
             {
                 if (!int.TryParse(args[0], out var id))
                 {
-                    shell.WriteError($"{args[1]} is not a valid integer.");
+                    shell.WriteError($"{args[0]} is not a valid integer.");
                     return;
                 }
 
@@ -61,8 +61,10 @@ namespace Content.Server.GameTicking.Commands
                 mapId = mapManager.NextMapId();
             }
 
+            DebugTools.Assert(args.Length <= 2);
+
             // either load a map or create a new one.
-            if (args.Length == 0)
+            if (args.Length <= 1)
                 shell.ExecuteCommand($"addmap {mapId} false");
             else
                 shell.ExecuteCommand($"loadmap {mapId} \"{CommandParsing.Escape(args[1])}\"");
