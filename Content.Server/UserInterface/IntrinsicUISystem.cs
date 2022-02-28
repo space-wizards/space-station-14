@@ -87,7 +87,3 @@ public sealed class IntrinsicUIOpenAttemptEvent : CancellableEntityEventArgs
         Key = key;
     }
 }
-
-public sealed class IntrinsicUIPlayerChangedEvent : EntityEventArgs
-{
-}
