@@ -32,8 +32,8 @@
 - type: entity
   parent: BaseItem
   id: playingCardDeck
-  name: playing card deck
-  description: A deck of cards
+  name: deck of cards
+  description: A deck of space-grade playing cards.
   components:
   - type: PlayingCardDeck
     cardPrototype: PlayingCard

@@ -21,5 +21,7 @@ namespace Content.Shared.PlayingCard
         public string CardHandPrototype { get; private set; } = string.Empty;
         [DataField("playingCardPrototype")]
         public string PlayingCardPrototype { get; private set; } = string.Empty;
+        [DataField("noUniqueCardLayers")]
+        public bool NoUniqueCardLayers = false;
     }
 }

@@ -14,6 +14,8 @@ public abstract class SharedPlayingCardDeckComponent : Component, ISerialization
     public string CardHandPrototype { get; private set; } = string.Empty;
     [DataField("cardList")]
     public List<string> CardList = new();
+    [DataField("noUniqueCardLayers")]
+    public bool NoUniqueCardLayers = false;
     [DataField("shuffleSound")]
     public SoundSpecifier ShuffleSound = new SoundPathSpecifier("/Audio/Effects/cardshuffle.ogg");
 }

@@ -60,7 +60,7 @@ namespace Content.Client.PlayingCard.UI
             // var rect = button.EntityTextureRects;
             // rect.Textures = SpriteComponent.GetPrototypeTextures(prototype, resourceCache).Select(o => o.Default).ToList();
                 button.ActualButton.OnPressed += OnCardSelected;
-                button.CardNameLabel.Text = cardList[i];
+                button.CardNameLabel.SetMessage(cardList[i]);
                 CardList.AddChild(button);
             }
 
@@ -106,9 +106,8 @@ namespace Content.Client.PlayingCard.UI
         {
             public string CardName { get; set; } = default!;
             public Button ActualButton { get; private set; }
-            public Label CardNameLabel { get; private set; }
-            public Label DescriptionLabel { get; private set; }
-            public LayeredTextureRect EntityTextureRects { get; private set; }
+            public RichTextLabel CardNameLabel { get; private set; }
+            // public LayeredTextureRect EntityTextureRects { get; private set; }
             public int Index { get; set; }
 
             public CardButton()
@@ -120,30 +119,23 @@ namespace Content.Client.PlayingCard.UI
                 AddChild(new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical,
-                    MinSize = (100, 50),
+                    MinSize = (125, 200),
+                    MaxSize = (125, 200),
                     Children =
                     {
-                        (EntityTextureRects = new LayeredTextureRect
+                        // (EntityTextureRects = new LayeredTextureRect
+                        // {
+                        //     MinSize = (32, 32),
+                        //     HorizontalAlignment = HAlignment.Center,
+                        //     VerticalAlignment = VAlignment.Top,
+                        //     // Stretch = TextureRect.StretchMode.KeepAspectCentered,
+                        //     CanShrink = true
+                        // }),
+                        (CardNameLabel = new RichTextLabel
                         {
-                            MinSize = (32, 32),
+                            VerticalAlignment = VAlignment.Top,
                             HorizontalAlignment = HAlignment.Center,
-                            VerticalAlignment = VAlignment.Center,
-                            Stretch = TextureRect.StretchMode.KeepAspectCentered,
-                            CanShrink = true
-                        }),
-                        (CardNameLabel = new Label
-                        {
-                            VerticalAlignment = VAlignment.Center,
-                            HorizontalAlignment = HAlignment.Center,
-                            HorizontalExpand = true,
-                            Text = "Backpack",
-                        }),
-                        (DescriptionLabel = new Label
-                        {
-                            VerticalAlignment = VAlignment.Center,
-                            HorizontalAlignment = HAlignment.Center,
-                            HorizontalExpand = true,
-                            Text = "A playing card",
+                            HorizontalExpand = false,
                         })
                     }
                 });

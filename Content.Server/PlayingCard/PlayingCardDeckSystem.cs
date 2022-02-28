@@ -166,6 +166,7 @@ public class PlayingCardDeckSystem : EntitySystem
         EntityUid? playingCard = _playingCardSystem.CreateCard(cardDeckComponent.CardDeckID,
             topCard,
             cardDeckComponent.CardPrototype,
+            cardDeckComponent.NoUniqueCardLayers,
             transformComp.Coordinates);
 
         if (!TryComp<SharedItemComponent>(playingCard, out var item))
@@ -220,6 +221,7 @@ public class PlayingCardDeckSystem : EntitySystem
                 topCards,
                 cardDeckComponent.CardHandPrototype,
                 cardDeckComponent.CardPrototype,
+                cardDeckComponent.NoUniqueCardLayers,
                 transformComp.Coordinates);
 
             if (playingCards != null && TryComp<SharedItemComponent>(playingCards, out var item))

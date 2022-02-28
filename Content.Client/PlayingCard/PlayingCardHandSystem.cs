@@ -11,14 +11,15 @@ public sealed class PlayingCardHandSystem : VisualizerSystem<PlayingCardHandVisu
         && args.Component.TryGetData(PlayingCardHandVisuals.CardCount, out int cardCount)
         && args.Component.TryGetData(PlayingCardHandVisuals.CardList, out List<string> cardList))
         {
+            sprite.LayerSetVisible(PlayingCardHandVisualLayers.ManyCardHandBase, false);
+            sprite.LayerSetVisible(PlayingCardHandVisualLayers.FourthCardDetails, false);
+            sprite.LayerSetVisible(PlayingCardHandVisualLayers.FourthCardBase, false);
+            sprite.LayerSetVisible(PlayingCardHandVisualLayers.ThirdCardDetails, false);
+            sprite.LayerSetVisible(PlayingCardHandVisualLayers.ThirdCardBase, false);
+            // first and second cards should always be in use in a hand
+
             if (cardCount == 2)
             {
-                sprite.LayerSetVisible(PlayingCardHandVisualLayers.ThirdCardDetails, false);
-                // sprite.LayerSetVisible(PlayingCardHandVisualLayers.ThirdCardBase, false);
-                sprite.LayerSetVisible(PlayingCardHandVisualLayers.FourthCardDetails, false);
-                // sprite.LayerSetVisible(PlayingCardHandVisualLayers.FourthCardBase, false);
-                // sprite.LayerSetVisible(PlayingCardHandVisualLayers.ManyCardHandBase, false);
-
                 sprite.LayerSetOffset(PlayingCardHandVisualLayers.FirstCardDetails, new Vector2(-.2f,0f));
                 sprite.LayerSetRotation(PlayingCardHandVisualLayers.FirstCardDetails, new Angle(0.523599));
                 sprite.LayerSetOffset(PlayingCardHandVisualLayers.SecondCardDetails, new Vector2(.2f,0f));
@@ -30,17 +31,15 @@ public sealed class PlayingCardHandSystem : VisualizerSystem<PlayingCardHandVisu
             }
             if (cardCount == 3)
             {
-
                 sprite.LayerSetVisible(PlayingCardHandVisualLayers.ThirdCardDetails, true);
-                // sprite.LayerSetVisible(PlayingCardHandVisualLayers.ThirdCardBase, false);
-                // sprite.LayerSetVisible(PlayingCardHandVisualLayers.FourthCardDetails, false);
-                // sprite.LayerSetVisible(PlayingCardHandVisualLayers.FourthCardBase, false);
-                // sprite.LayerSetVisible(PlayingCardHandVisualLayers.ManyCardHandBase, false);
+
+                sprite.LayerSetOffset(PlayingCardHandVisualLayers.FirstCardDetails, new Vector2());
+                sprite.LayerSetRotation(PlayingCardHandVisualLayers.FirstCardDetails, new Angle());
+                sprite.LayerSetOffset(PlayingCardHandVisualLayers.SecondCardDetails, new Vector2());
+                sprite.LayerSetRotation(PlayingCardHandVisualLayers.SecondCardDetails, new Angle());
 
                 sprite.LayerSetOffset(PlayingCardHandVisualLayers.FirstCardDetails, new Vector2(-.3f,0f));
                 sprite.LayerSetRotation(PlayingCardHandVisualLayers.FirstCardDetails, new Angle(0.349066));
-                // sprite.LayerSetOffset(PlayingCardHandVisualLayers.SecondCardDetails, new Vector2(.2f,0f));
-                // sprite.LayerSetRotation(PlayingCardHandVisualLayers.SecondCardDetails, new Angle(5.93412));
                 sprite.LayerSetOffset(PlayingCardHandVisualLayers.ThirdCardDetails, new Vector2(.3f,0f));
                 sprite.LayerSetRotation(PlayingCardHandVisualLayers.ThirdCardDetails, new Angle(6.10865));
 
@@ -58,7 +57,6 @@ public sealed class PlayingCardHandSystem : VisualizerSystem<PlayingCardHandVisu
                 sprite.LayerSetOffset(PlayingCardHandVisualLayers.SecondCardDetails, new Vector2(-.05f,0f));
                 sprite.LayerSetOffset(PlayingCardHandVisualLayers.ThirdCardDetails, new Vector2(.1f,.1f));
                 sprite.LayerSetOffset(PlayingCardHandVisualLayers.FourthCardDetails, new Vector2(.25f,.15f));
-
 
                 sprite.LayerSetState(PlayingCardHandVisualLayers.FirstCardDetails, cardList[3]);
                 sprite.LayerSetState(PlayingCardHandVisualLayers.SecondCardDetails, cardList[2]);

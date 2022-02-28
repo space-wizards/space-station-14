@@ -21,5 +21,7 @@ namespace Content.Server.PlayingCard
         [DataField("cardList")]
         public List<string> CardList = new();
 
+        [DataField("noUniqueCardLayers")]
+        public bool NoUniqueCardLayers = false;
     }
 }

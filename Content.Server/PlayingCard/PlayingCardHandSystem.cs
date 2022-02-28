@@ -116,7 +116,7 @@ public class PlayingCardHandSystem : EntitySystem
             // GRAB NAME FROM LIST
             string cardName = cardHandComponent.CardList[cardIndex];
 
-            EntityUid? createdCard = _playingCardSystem.CreateCard(cardHandComponent.CardDeckID, cardName, cardHandComponent.CardPrototype, transformComp.Coordinates, true);
+            EntityUid? createdCard = _playingCardSystem.CreateCard(cardHandComponent.CardDeckID, cardName, cardHandComponent.CardPrototype, cardHandComponent.NoUniqueCardLayers, transformComp.Coordinates, true);
 
             if (createdCard == null || !TryComp<SharedItemComponent>(createdCard, out var item))
                 return;
@@ -129,7 +129,7 @@ public class PlayingCardHandSystem : EntitySystem
             {
                 string lastCardName = cardHandComponent.CardList[0];
 
-                EntityUid? lastPlayingCardEnt = _playingCardSystem.CreateCard(cardHandComponent.CardDeckID, lastCardName, cardHandComponent.CardPrototype, transformComp.Coordinates, true);
+                EntityUid? lastPlayingCardEnt = _playingCardSystem.CreateCard(cardHandComponent.CardDeckID, lastCardName, cardHandComponent.CardPrototype, cardHandComponent.NoUniqueCardLayers, transformComp.Coordinates, true);
 
                 if (lastPlayingCardEnt == null)
                     return;
@@ -151,7 +151,7 @@ public class PlayingCardHandSystem : EntitySystem
         //     uid, Filter.Entities(user));
     }
 
-    public EntityUid? CreateCardHand(string cardDeckID, List<string> cards, string cardHandPrototype, string playingCardPrototype, EntityCoordinates coords)
+    public EntityUid? CreateCardHand(string cardDeckID, List<string> cards, string cardHandPrototype, string playingCardPrototype, bool noUniqueCardLayers, EntityCoordinates coords)
     {
         EntityUid playingCardHandEnt = EntityManager.SpawnEntity(cardHandPrototype, coords);
 
@@ -164,6 +164,7 @@ public class PlayingCardHandSystem : EntitySystem
         playingCardHandComp.CardList = cards;
         playingCardHandComp.CardPrototype = playingCardPrototype;
         playingCardHandComp.CardDeckID = cardDeckID;
+        playingCardHandComp.NoUniqueCardLayers = noUniqueCardLayers;
 
         UpdateAppearance(playingCardHandComp);
         UpdateUiState(playingCardHandEnt, playingCardHandComp);
@@ -177,6 +178,7 @@ public class PlayingCardHandSystem : EntitySystem
             appearance.SetData(PlayingCardHandVisuals.CardCount, cardHandComponent.CardList.Count);
             // grab cards for appearance
             appearance.SetData(PlayingCardHandVisuals.CardList, cardHandComponent.CardList);
+            appearance.SetData(PlayingCardHandVisuals.NoUniqueCardLayers, cardHandComponent.NoUniqueCardLayers);
         }
     }
 

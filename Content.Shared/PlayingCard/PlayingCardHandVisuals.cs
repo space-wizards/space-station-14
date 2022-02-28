@@ -7,6 +7,7 @@ namespace Content.Shared.PlayingCard
     public enum PlayingCardHandVisuals : byte
     {
         CardCount,
-        CardList
+        CardList,
+        NoUniqueCardLayers
     }
 }

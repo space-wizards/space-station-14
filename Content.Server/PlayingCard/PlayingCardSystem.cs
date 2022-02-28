@@ -65,7 +65,7 @@ public sealed class PlayingCardSystem : EntitySystem
                 cardsToAdd.Add(cardComponent.CardName);
                 cardsToAdd.Add(incomingCardComp.CardName);
 
-                EntityUid? cardHand =  _playingCardHandSystem.CreateCardHand(cardComponent.CardDeckID, cardsToAdd, cardComponent.CardHandPrototype, cardComponent.PlayingCardPrototype, transformComp.Coordinates);
+                EntityUid? cardHand =  _playingCardHandSystem.CreateCardHand(cardComponent.CardDeckID, cardsToAdd, cardComponent.CardHandPrototype, cardComponent.PlayingCardPrototype, cardComponent.NoUniqueCardLayers, transformComp.Coordinates);
 
                 if (cardHand == null || !TryComp<SharedItemComponent>(cardHand, out var cardHandEnt))
                     return;
@@ -101,7 +101,7 @@ public sealed class PlayingCardSystem : EntitySystem
         }
     }
 
-    public EntityUid? CreateCard(string cardDeckID, string cardName, string cardPrototype, EntityCoordinates coords, bool facingUp = false)
+    public EntityUid? CreateCard(string cardDeckID, string cardName, string cardPrototype, bool noUniqueCardLayers, EntityCoordinates coords, bool facingUp = false)
     {
         EntityUid playingCardEnt = EntityManager.SpawnEntity(cardPrototype, coords);
         if (!TryComp<PlayingCardComponent>(playingCardEnt, out PlayingCardComponent? playingCardComp))
@@ -112,6 +112,7 @@ public sealed class PlayingCardSystem : EntitySystem
 
         playingCardComp.CardDeckID = cardDeckID;
         playingCardComp.CardName = cardName;
+        playingCardComp.NoUniqueCardLayers = noUniqueCardLayers;
 
         if (facingUp)
             FlipCard(playingCardComp);
@@ -119,6 +120,7 @@ public sealed class PlayingCardSystem : EntitySystem
         if (TryComp<AppearanceComponent>(playingCardEnt, out AppearanceComponent? appearance))
         {
             appearance.SetData(PlayingCardVisuals.CardSprite, cardName);
+            appearance.SetData(PlayingCardVisuals.NoUniqueCardLayers, playingCardComp.NoUniqueCardLayers);
         }
         return playingCardEnt;
     }
