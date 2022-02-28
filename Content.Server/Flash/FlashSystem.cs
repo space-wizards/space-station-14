@@ -44,8 +44,8 @@ namespace Content.Server.Flash
 
         private void OnMetaFlagRemoval(EntityUid uid, FlashableComponent component, ref MetaFlagRemoveAttemptEvent args)
         {
-            if (component.LifeStage > ComponentLifeStage.Initialized) return;
-            args.Cancelled = true;
+            if (component.LifeStage == ComponentLifeStage.Running)
+                args.Cancelled = true;
         }
 
         private void OnFlashableStartup(EntityUid uid, FlashableComponent component, ComponentStartup args)
