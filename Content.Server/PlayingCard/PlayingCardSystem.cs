@@ -25,7 +25,7 @@ public sealed class PlayingCardSystem : EntitySystem
     private void OnUseInhand(EntityUid uid, PlayingCardComponent cardComponent, UseInHandEvent args)
     {
         if (args.Handled) return;
-        FlipCard(cardComponent, args.User);
+        FlipCard(cardComponent);
         args.Handled = true;
     }
 
@@ -47,10 +47,10 @@ public sealed class PlayingCardSystem : EntitySystem
         if (TryComp<PlayingCardComponent>(itemUsed, out PlayingCardComponent? incomingCardComp))
             {
 
-                if (incomingCardComp.StackTypeId != cardComponent.StackTypeId)
+                if (incomingCardComp.CardDeckID != cardComponent.CardDeckID)
                 {
                     _popupSystem.PopupEntity(Loc.GetString("playing-card-hand-component-merge-card-id-fail"),
-                        uid, Filter.Entities(uid));
+                        uid, Filter.Entities(user));
                     return;
                 }
 
@@ -62,22 +62,22 @@ public sealed class PlayingCardSystem : EntitySystem
 
 
                 List<string> cardsToAdd = new();
-                cardsToAdd.Add(incomingCardComp.CardName);
                 cardsToAdd.Add(cardComponent.CardName);
+                cardsToAdd.Add(incomingCardComp.CardName);
 
-                EntityUid? cardHand =  _playingCardHandSystem.CreateCardHand(cardsToAdd, cardComponent.CardHandPrototype, transformComp.Coordinates);
+                EntityUid? cardHand =  _playingCardHandSystem.CreateCardHand(cardComponent.CardDeckID, cardsToAdd, cardComponent.CardHandPrototype, cardComponent.PlayingCardPrototype, transformComp.Coordinates);
 
                 if (cardHand == null || !TryComp<SharedItemComponent>(cardHand, out var cardHandEnt))
                     return;
 
                 EntityManager.QueueDeleteEntity(itemUsed);
-                EntityManager.QueueDeleteEntity(cardComponent.Owner);
+                EntityManager.DeleteEntity(cardComponent.Owner);
 
                 hands.PutInHand(cardHandEnt);
             }
     }
 
-    private void FlipCard(PlayingCardComponent component, EntityUid user)
+    private void FlipCard(PlayingCardComponent component)
     {
         if (component.FacingUp)
         {
@@ -101,16 +101,21 @@ public sealed class PlayingCardSystem : EntitySystem
         }
     }
 
-    public EntityUid? CreateCard(string cardName, string cardPrototype, EntityCoordinates coords)
+    public EntityUid? CreateCard(string cardDeckID, string cardName, string cardPrototype, EntityCoordinates coords, bool facingUp = false)
     {
-
         EntityUid playingCardEnt = EntityManager.SpawnEntity(cardPrototype, coords);
         if (!TryComp<PlayingCardComponent>(playingCardEnt, out PlayingCardComponent? playingCardComp))
         {
             EntityManager.DeleteEntity(playingCardEnt);
             return null;
         }
+
+        playingCardComp.CardDeckID = cardDeckID;
         playingCardComp.CardName = cardName;
+
+        if (facingUp)
+            FlipCard(playingCardComp);
+
         if (TryComp<AppearanceComponent>(playingCardEnt, out AppearanceComponent? appearance))
         {
             appearance.SetData(PlayingCardVisuals.CardSprite, cardName);

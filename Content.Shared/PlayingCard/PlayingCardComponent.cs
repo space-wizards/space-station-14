@@ -9,8 +9,7 @@ namespace Content.Shared.PlayingCard
     {
         [ViewVariables(VVAccess.ReadWrite)]
         // [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
-        [DataField("stackId")]
-        public string StackTypeId { get; private set; } = string.Empty;
+        public string CardDeckID = string.Empty;
 
         [DataField("cardName")]
         public string CardName = "Playing Card";
@@ -20,5 +19,7 @@ namespace Content.Shared.PlayingCard
         public bool FacingUp = false;
         [DataField("cardHandPrototype")]
         public string CardHandPrototype { get; private set; } = string.Empty;
+        [DataField("playingCardPrototype")]
+        public string PlayingCardPrototype { get; private set; } = string.Empty;
     }
 }

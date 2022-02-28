@@ -5,6 +5,7 @@
   components:
   - type: PlayingCard
     cardHandPrototype: PlayingCardHand
+    playingCardPrototype: PlayingCard
   - type: Item
     size: 2
   - type: Sprite
@@ -23,17 +24,19 @@
   parent: BasePlayingCard
   id: PlayingCard
   name: playing card
-  description: A test
+  components:
+  - type: PlayingCard
+    cardHandPrototype: PlayingCardHand
+    playingCardPrototype: PlayingCard
 
 - type: entity
   parent: BaseItem
   id: playingCardDeck
   name: playing card deck
-  description: A test
+  description: A deck of cards
   components:
   - type: PlayingCardDeck
-    # stackId: test
-    cardPrototype: BasePlayingCard
+    cardPrototype: PlayingCard
     cardHandPrototype: PlayingCardHand
     cardList: [
       6 of Hearts,
@@ -98,6 +101,10 @@
       map: ["enum.PlayingCardDeckVisualLayers.Base"]
   - type: PlayingCardDeckVisuals
   - type: Appearance
+  - type: UserInterface
+    interfaces:
+    - key: enum.PlayingCardDeckUiKey.Key
+      type: PlayingCardDeckBoundUserInterface
 
 - type: entity
   parent: BaseItem

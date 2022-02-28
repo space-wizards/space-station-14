@@ -14,3 +14,7 @@ playing-card-deck-component-pickup-multiple-verb = Pickup multiple cards
 playing-card-deck-component-merge-card-id-fail = You can't combine cards from different decks!
 playing-card-deck-component-pickup-card-full-hand-fail = You need a free hand to pick up cards.
 playing-card-deck-component-pickup-card-none-left = There are no more cards in the deck!
+
+# UI
+playing-card-deck-component-pickup-multiple-ui-title = Pickup cards (1-10)
+playing-card-deck-component-pickup-multiple-ui-submit-button = Pickup cards

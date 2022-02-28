@@ -50,20 +50,20 @@ public class PlayingCardHandSystem : EntitySystem
         if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
 
-        Logger.Debug("attempt to create");
         cardHandComponent.UserInterface?.Toggle(actor.PlayerSession);
     }
 
     private void OnExamine(EntityUid uid, PlayingCardHandComponent cardHandComponent, ExaminedEvent args)
     {
-        // List last 5 cards
-
-        args.PushText(Loc.GetString("playing-card-hand-component-examine", ("cards", cardHandComponent.CardList.Last())));
+        args.PushText(Loc.GetString("playing-card-hand-component-examine-top-card", ("card", cardHandComponent.CardList.Last())));
+        args.PushText(Loc.GetString("playing-card-hand-component-examine-count", ("count", cardHandComponent.CardList.Count)));
     }
 
     private void PickSingleCardMessage(EntityUid uid, PlayingCardHandComponent cardHandComponent, PickSingleCardMessage args)
     {
-        RemoveSingleCard(uid, args.Entity, args.ID, cardHandComponent);
+        if (args.Session.AttachedEntity is not {Valid: true} player)
+            return;
+        RemoveSingleCard(uid, args.Session.AttachedEntity, args.ID, cardHandComponent);
     }
 
     public void AddCards(EntityUid uid, EntityUid addedEntity, EntityUid user, PlayingCardHandComponent? cardHandComponent)
@@ -73,10 +73,10 @@ public class PlayingCardHandSystem : EntitySystem
 
         if (TryComp<PlayingCardHandComponent>(addedEntity, out PlayingCardHandComponent? handComp))
         {
-            if (handComp.StackTypeId != cardHandComponent.StackTypeId)
+            if (handComp.CardDeckID != cardHandComponent.CardDeckID)
             {
                 _popupSystem.PopupEntity(Loc.GetString("playing-card-hand-component-merge-card-id-fail"),
-                    uid, Filter.Entities(uid));
+                    uid, Filter.Entities(user));
                 return;
             }
             // handComp.CardList.Reverse();
@@ -89,10 +89,10 @@ public class PlayingCardHandSystem : EntitySystem
         }
         if (TryComp<PlayingCardComponent>(addedEntity, out PlayingCardComponent? cardComp))
         {
-            if (cardComp.StackTypeId != cardHandComponent.StackTypeId)
+            if (cardComp.CardDeckID != cardHandComponent.CardDeckID)
             {
                 _popupSystem.PopupEntity(Loc.GetString("playing-card-hand-component-merge-card-id-fail"),
-                    uid, Filter.Entities(uid));
+                    uid, Filter.Entities(user));
                 return;
             }
             cardHandComponent.CardList.Add(cardComp.CardName);
@@ -103,12 +103,10 @@ public class PlayingCardHandSystem : EntitySystem
         }
     }
 
-    public void RemoveSingleCard(EntityUid uid, EntityUid user, int cardIndex, PlayingCardHandComponent cardHandComponent)
+    public void RemoveSingleCard(EntityUid uid, EntityUid? user, int cardIndex, PlayingCardHandComponent cardHandComponent)
     {
-        if (cardHandComponent.CardList.Count <= 0)
-        {
+        if (user == null || cardHandComponent.CardList.Count <= 0)
             return;
-        }
 
         if (!TryComp<TransformComponent>(cardHandComponent.Owner, out var transformComp))
             return;
@@ -118,27 +116,25 @@ public class PlayingCardHandSystem : EntitySystem
             // GRAB NAME FROM LIST
             string cardName = cardHandComponent.CardList[cardIndex];
 
-            EntityUid? createdCard = _playingCardSystem.CreateCard(cardName, cardHandComponent.CardPrototype, transformComp.Coordinates);
+            EntityUid? createdCard = _playingCardSystem.CreateCard(cardHandComponent.CardDeckID, cardName, cardHandComponent.CardPrototype, transformComp.Coordinates, true);
 
-            if (createdCard == null)
-                return;
-
-            if (!TryComp<SharedItemComponent>(createdCard, out var item))
+            if (createdCard == null || !TryComp<SharedItemComponent>(createdCard, out var item))
                 return;
 
             cardHandComponent.CardList.RemoveAt(cardIndex);
+
             hands.PutInHand(item);
             // destroy hand, now single card
             if (cardHandComponent.CardList.Count < 2)
             {
-                string lastCardName = cardHandComponent.CardList[cardIndex];
+                string lastCardName = cardHandComponent.CardList[0];
 
-                EntityUid? lastPlayingCardEnt = _playingCardSystem.CreateCard(lastCardName, cardHandComponent.CardPrototype, transformComp.Coordinates);
+                EntityUid? lastPlayingCardEnt = _playingCardSystem.CreateCard(cardHandComponent.CardDeckID, lastCardName, cardHandComponent.CardPrototype, transformComp.Coordinates, true);
 
                 if (lastPlayingCardEnt == null)
                     return;
 
-                EntityManager.QueueDeleteEntity(cardHandComponent.Owner);
+                EntityManager.DeleteEntity(cardHandComponent.Owner);
 
                 if (!TryComp<SharedItemComponent>(lastPlayingCardEnt, out var lastCardItem))
                     return;
@@ -151,11 +147,11 @@ public class PlayingCardHandSystem : EntitySystem
                 UpdateAppearance(cardHandComponent);
             }
         }
-        _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-full-hand-fail"),
-            uid, Filter.Entities(uid));
+        // _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-full-hand-fail"),
+        //     uid, Filter.Entities(user));
     }
 
-    public EntityUid? CreateCardHand(List<string> cards, string cardHandPrototype, EntityCoordinates coords)
+    public EntityUid? CreateCardHand(string cardDeckID, List<string> cards, string cardHandPrototype, string playingCardPrototype, EntityCoordinates coords)
     {
         EntityUid playingCardHandEnt = EntityManager.SpawnEntity(cardHandPrototype, coords);
 
@@ -166,6 +162,9 @@ public class PlayingCardHandSystem : EntitySystem
         }
 
         playingCardHandComp.CardList = cards;
+        playingCardHandComp.CardPrototype = playingCardPrototype;
+        playingCardHandComp.CardDeckID = cardDeckID;
+
         UpdateAppearance(playingCardHandComp);
         UpdateUiState(playingCardHandEnt, playingCardHandComp);
         return playingCardHandEnt;
@@ -176,8 +175,8 @@ public class PlayingCardHandSystem : EntitySystem
         if (TryComp<AppearanceComponent>(cardHandComponent.Owner, out AppearanceComponent? appearance))
         {
             appearance.SetData(PlayingCardHandVisuals.CardCount, cardHandComponent.CardList.Count);
-            // grab 5 highest cards for front appearance
-            appearance.SetData(PlayingCardHandVisuals.CardList, cardHandComponent.CardList.Take(5).ToList());
+            // grab cards for appearance
+            appearance.SetData(PlayingCardHandVisuals.CardList, cardHandComponent.CardList);
         }
     }
 

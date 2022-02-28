@@ -11,13 +11,11 @@ namespace Content.Server.PlayingCard
         [ViewVariables]
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(PlayingCardHandUiKey.Key);
 
-        [ViewVariables]
-        [DataField("stackId")]
-        public string StackTypeId { get; private set; } = string.Empty;
+        public string CardDeckID = string.Empty;
 
         [ViewVariables]
         [DataField("cardPrototype")]
-        public string CardPrototype { get; private set; } = string.Empty;
+        public string CardPrototype = string.Empty;
 
         [ViewVariables]
         [DataField("cardList")]

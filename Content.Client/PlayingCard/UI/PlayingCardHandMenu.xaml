@@ -1,5 +1,5 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io">
-    <BoxContainer Orientation="Horizontal" MinSize="600 200">
+    <BoxContainer Orientation="Horizontal" MinSize="650 200">
         <Button MinSize="50 200" Name="ScrollLeft" Text="←" Disabled="True" />
         <BoxContainer Orientation="Horizontal"
         Name="CardList"

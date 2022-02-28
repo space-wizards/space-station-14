@@ -1,0 +1,12 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            Title="{Loc 'playing-card-deck-component-pickup-multiple-ui-title'}">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="200">
+        <SpinBox Name="PickupCardAmount"
+        Access="Public"
+        Value="2" />
+        <Button Name="PickupCards"
+        Access="Public"
+        Text="{Loc 'playing-card-deck-component-pickup-multiple-ui-submit-button'}" />
+    </BoxContainer>
+</DefaultWindow>

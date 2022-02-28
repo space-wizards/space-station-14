@@ -10,6 +10,8 @@ using Content.Shared.Examine;
 using Robust.Shared.Audio;
 using Content.Shared.Item;
 using System.Linq;
+using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.Server.PlayingCard.EntitySystems;
 [UsedImplicitly]
@@ -19,17 +21,19 @@ public class PlayingCardDeckSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly PlayingCardSystem _playingCardSystem = default!;
     [Dependency] private readonly PlayingCardHandSystem _playingCardHandSystem = default!;
+
     public static readonly int PickupMultipleCardLimit = 10;
 
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<PlayingCardDeckComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<PlayingCardDeckComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<PlayingCardDeckComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlayingCardDeckComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<PlayingCardDeckComponent, GetVerbsEvent<AlternativeVerb>>(AddAltVerb);
-
+        SubscribeLocalEvent<PlayingCardDeckComponent, PickupCountMessage>(PickupMultipleCards);
     }
 
     private void OnExamined(EntityUid uid, PlayingCardDeckComponent cardDeckComponent, ExaminedEvent args)
@@ -67,7 +71,7 @@ public class PlayingCardDeckSystem : EntitySystem
         {
             Act = () =>
             {
-                PickupMultipleCards(uid, args.User, component);
+                OpenCardPickUI(uid, args.User, component);
             },
             Text = Loc.GetString("playing-card-deck-component-pickup-multiple-verb"),
             Priority = 2
@@ -98,10 +102,10 @@ public class PlayingCardDeckSystem : EntitySystem
     {
         if (TryComp<PlayingCardHandComponent>(addedEntity, out PlayingCardHandComponent? handComp))
         {
-            if (handComp.StackTypeId != cardDeckComponent.StackTypeId)
+            if (handComp.CardDeckID != cardDeckComponent.Owner.ToString())
             {
                 _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-merge-card-id-fail"),
-                    uid, Filter.Entities(uid));
+                    uid, Filter.Entities(user));
                 return;
             }
             // handComp.CardList.Reverse();
@@ -113,10 +117,10 @@ public class PlayingCardDeckSystem : EntitySystem
         }
         if (TryComp<PlayingCardComponent>(addedEntity, out PlayingCardComponent? cardComp))
         {
-            if (cardComp.StackTypeId != cardDeckComponent.StackTypeId)
+            if (cardComp.CardDeckID != cardDeckComponent.Owner.ToString())
             {
                 _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-merge-card-id-fail"),
-                    uid, Filter.Entities(uid));
+                    uid, Filter.Entities(user));
                 return;
             }
             cardDeckComponent.CardList.Add(cardComp.CardName);
@@ -126,12 +130,15 @@ public class PlayingCardDeckSystem : EntitySystem
         }
     }
 
-    public void PickupSingleCard(EntityUid uid, EntityUid user, PlayingCardDeckComponent cardDeckComponent)
+    public void PickupSingleCard(EntityUid uid, EntityUid? user, PlayingCardDeckComponent cardDeckComponent)
     {
+        if (user == null)
+            return;
+
         if (cardDeckComponent.CardList.Count <= 0)
         {
             _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-none-left"),
-                uid, Filter.Entities(uid));
+                uid, Filter.Entities(user.Value));
             return;
         }
 
@@ -141,13 +148,14 @@ public class PlayingCardDeckSystem : EntitySystem
         if (!TryComp<HandsComponent>(user, out var hands))
         {
             _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-full-hand-fail"),
-            uid, Filter.Entities(uid));
+            uid, Filter.Entities(user.Value));
             return;
         }
 
         string topCard = cardDeckComponent.CardList.First();
+        string cardDeckID = cardDeckComponent.Owner.ToString();
 
-        EntityUid? playingCard = _playingCardSystem.CreateCard(topCard, cardDeckComponent.CardPrototype, transformComp.Coordinates);
+        EntityUid? playingCard = _playingCardSystem.CreateCard(cardDeckID, topCard, cardDeckComponent.CardPrototype, transformComp.Coordinates);
 
         if (!TryComp<SharedItemComponent>(playingCard, out var item))
             return;
@@ -159,43 +167,61 @@ public class PlayingCardDeckSystem : EntitySystem
 
     }
 
-    public void PickupMultipleCards(EntityUid uid, EntityUid user, PlayingCardDeckComponent cardDeckComponent)
+    public void OpenCardPickUI(EntityUid uid, EntityUid user, PlayingCardDeckComponent cardDeckComponent)
     {
-        // THIS NEEDS TO CALL A MINI UI INPUT TO GRAB INPUT
-        // int count = 5;
-        // int givenCardAmount = count;
+        if (!TryComp<ActorComponent>(user, out var actor))
+            return;
 
-        // if (cardDeckComponent.CardList.Count <= 0)
-        // {
-        //     return;
-        // }
+        cardDeckComponent.UserInterface?.Toggle(actor.PlayerSession);
+    }
 
-        // if (count < 1)
-        //     return;
+    public void PickupMultipleCards(EntityUid uid, PlayingCardDeckComponent cardDeckComponent, PickupCountMessage args)
+    {
+        int count = args.Count;
 
-        // if (count > cardDeckComponent.CardList.Count)
-        //     givenCardAmount = cardDeckComponent.CardList.Count;
+        if (count < 0)
+            return;
 
-        // if (!TryComp<TransformComponent>(cardDeckComponent.Owner, out var transformComp))
-        //     return;
+        if (cardDeckComponent.CardList.Count <= 0 && args.Session.AttachedEntity != null)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-none-left"),
+                uid, Filter.Entities(args.Session.AttachedEntity.Value));
+            return;
+        }
 
+        if (count == 1)
+        {
+            PickupSingleCard(uid, args.Session.AttachedEntity, cardDeckComponent);
+            return;
+        }
 
-        // if (TryComp<HandsComponent>(user, out var hands))
-        // {
-        //     var topCards = cardDeckComponent.CardList.Take(givenCardAmount);
+        if (count > cardDeckComponent.CardList.Count)
+            count = cardDeckComponent.CardList.Count;
 
+        if (!TryComp<TransformComponent>(cardDeckComponent.Owner, out var transformComp))
+            return;
 
-        //     _playingCardHandSystem.CreateCardHand(topCards, cardDeckComponent.CardHandPrototype, transformComp.Coordinates);
-        //     EntityUid playingCards = Spawn(cardDeckComponent.CardHandPrototype, transformComp.Coordinates);
-        //     if (TryComp<SharedItemComponent>(playingCards, out var item))
-        //     {
-        //         hands.PutInHand(item);
-        //         _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pick-up-multiple", ("user", user), ("count", givenCardAmount)),
-        //             uid, Filter.Pvs(uid));
-        //         cardDeckComponent.CardList.RemoveRange(0, givenCardAmount);
-        //     }
-        // }
-        // _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-full-hand-fail"),
-        //     uid, Filter.Entities(uid));
+        if (TryComp<HandsComponent>(args.Session.AttachedEntity, out var hands))
+        {
+            var topCards = cardDeckComponent.CardList.Take(count).ToList();
+
+            string cardDeckID = cardDeckComponent.Owner.ToString();
+
+            EntityUid? playingCards = _playingCardHandSystem.CreateCardHand(cardDeckID, topCards, cardDeckComponent.CardHandPrototype, cardDeckComponent.CardPrototype, transformComp.Coordinates);
+
+            if (playingCards != null && TryComp<SharedItemComponent>(playingCards, out var item))
+            {
+                hands.PutInHand(item);
+                if (TryComp<MetaDataComponent>(args.Session.AttachedEntity, out MetaDataComponent? metaData))
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pick-up-multiple", ("user", metaData.EntityName), ("count", count)),
+                        uid, Filter.Pvs(uid));
+                }
+                cardDeckComponent.CardList.RemoveRange(0, count);
+            }
+            return;
+        }
+        _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-full-hand-fail"),
+            uid, Filter.Entities(uid));
     }
 }
