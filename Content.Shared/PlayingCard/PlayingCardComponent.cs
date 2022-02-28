@@ -8,7 +8,6 @@ namespace Content.Shared.PlayingCard
     public sealed class PlayingCardComponent : Component, ISerializationHooks
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        // [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
         public string CardDeckID = string.Empty;
 
         [DataField("cardName")]

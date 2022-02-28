@@ -9,9 +9,13 @@ public sealed class PlayingCardSystem : VisualizerSystem<PlayingCardVisualsCompo
     {
         if (TryComp(uid, out SpriteComponent? sprite)
         && args.Component.TryGetData(PlayingCardVisuals.FacingUp, out bool isFacingUp)
-        && args.Component.TryGetData(PlayingCardVisuals.CardSprite, out string cardSprite))
+        && args.Component.TryGetData(PlayingCardVisuals.CardSprite, out string cardSprite)
+        && args.Component.TryGetData(PlayingCardVisuals.NoUniqueCardLayers, out bool noUniqueCards))
         {
-            sprite.LayerSetState(PlayingCardVisualLayers.Details, cardSprite);
+            if (!noUniqueCards)
+            {
+                sprite.LayerSetState(PlayingCardVisualLayers.Details, cardSprite);
+            }
             sprite.LayerSetVisible(PlayingCardVisualLayers.Base, isFacingUp);
             sprite.LayerSetVisible(PlayingCardVisualLayers.Details, isFacingUp);
             sprite.LayerSetVisible(PlayingCardVisualLayers.FlippedDown, !isFacingUp);

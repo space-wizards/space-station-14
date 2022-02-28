@@ -113,7 +113,6 @@ public class PlayingCardHandSystem : EntitySystem
 
         if (TryComp<HandsComponent>(user, out var hands))
         {
-            // GRAB NAME FROM LIST
             string cardName = cardHandComponent.CardList[cardIndex];
 
             EntityUid? createdCard = _playingCardSystem.CreateCard(cardHandComponent.CardDeckID, cardName, cardHandComponent.CardPrototype, cardHandComponent.NoUniqueCardLayers, transformComp.Coordinates, true);
@@ -124,7 +123,7 @@ public class PlayingCardHandSystem : EntitySystem
             cardHandComponent.CardList.RemoveAt(cardIndex);
 
             hands.PutInHand(item);
-            // destroy hand, now single card
+
             if (cardHandComponent.CardList.Count < 2)
             {
                 string lastCardName = cardHandComponent.CardList[0];
@@ -176,7 +175,6 @@ public class PlayingCardHandSystem : EntitySystem
         if (TryComp<AppearanceComponent>(cardHandComponent.Owner, out AppearanceComponent? appearance))
         {
             appearance.SetData(PlayingCardHandVisuals.CardCount, cardHandComponent.CardList.Count);
-            // grab cards for appearance
             appearance.SetData(PlayingCardHandVisuals.CardList, cardHandComponent.CardList);
             appearance.SetData(PlayingCardHandVisuals.NoUniqueCardLayers, cardHandComponent.NoUniqueCardLayers);
         }

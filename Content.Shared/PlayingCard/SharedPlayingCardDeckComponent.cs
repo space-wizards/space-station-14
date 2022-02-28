@@ -5,6 +5,7 @@ namespace Content.Shared.PlayingCard;
 public abstract class SharedPlayingCardDeckComponent : Component, ISerializationHooks
 {
 
+    // All decks get a unique ID on init to prevent stacking from another deck
     // Allow setting a unified deck ID if someone really wants to make a TCG that can share cards
     [DataField("cardDeckID")]
     public string CardDeckID = string.Empty;

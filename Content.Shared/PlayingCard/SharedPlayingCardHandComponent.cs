@@ -2,6 +2,20 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.PlayingCard;
 
+public abstract class SharedPlayingCardHandComponent : Component, ISerializationHooks
+{
+    public string CardDeckID = string.Empty;
+    [ViewVariables]
+    [DataField("cardPrototype")]
+    public string CardPrototype = string.Empty;
+    [ViewVariables]
+    [DataField("cardList")]
+    public List<string> CardList = new();
+    [DataField("noUniqueCardLayers")]
+    public bool NoUniqueCardLayers = false;
+}
+
+
 [Serializable]
 [NetSerializable]
 public sealed class PlayingCardHandBoundUserInterfaceState : BoundUserInterfaceState

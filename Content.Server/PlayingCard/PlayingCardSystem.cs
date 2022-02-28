@@ -16,7 +16,6 @@ public sealed class PlayingCardSystem : EntitySystem
 
     public override void Initialize()
     {
-        // ON INIT, set card sprite
         SubscribeLocalEvent<PlayingCardComponent, UseInHandEvent>(OnUseInhand);
         SubscribeLocalEvent<PlayingCardComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlayingCardComponent, ExaminedEvent>(OnExamined);
@@ -38,8 +37,6 @@ public sealed class PlayingCardSystem : EntitySystem
     {
         if (cardComponent.FacingUp)
             args.PushText(cardComponent.CardName);
-        // else
-            // args.PushText(Loc.GetString("playing-card-deck-component-examine-multiple", ("count", cardDeckComponent.CardList.Count)));
     }
 
     public void CombineCards(EntityUid uid, EntityUid itemUsed, EntityUid user, PlayingCardComponent cardComponent)
@@ -77,27 +74,12 @@ public sealed class PlayingCardSystem : EntitySystem
             }
     }
 
-    private void FlipCard(PlayingCardComponent component)
+    public void FlipCard(PlayingCardComponent component)
     {
-        if (component.FacingUp)
+        component.FacingUp = !component.FacingUp;
+        if (TryComp<AppearanceComponent>(component.Owner, out AppearanceComponent? appearance))
         {
-            component.FacingUp = false;
-            if (TryComp<AppearanceComponent>(component.Owner, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(PlayingCardVisuals.FacingUp, false);
-            }
-            // use improper name
-            // use improper description
-        }
-        else
-        {
-            component.FacingUp = true;
-            if (TryComp<AppearanceComponent>(component.Owner, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(PlayingCardVisuals.FacingUp, true);
-            }
-            // assign proper name
-            // assign proper description
+            appearance.SetData(PlayingCardVisuals.FacingUp, component.FacingUp);
         }
     }
 

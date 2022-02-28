@@ -34,18 +34,16 @@ namespace Content.Client.PlayingCard.UI
             IoCManager.Resolve<IResourceCache>();
             // VendingContents.OnItemSelected += ItemSelected;
 
-            // GRAB SPRITES
-            // EntityView.Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
+            ScrollRight.OnPressed += e => ChangeOffset(1);
+            ScrollLeft.OnPressed += e => ChangeOffset(-1);
         }
 
         public void Populate(List<String> cardList)
         {
-            // SHOULDN'T BE REMOVING ALL CHILDREN EVERYTIME, ONLY SHIFT
             CardList.RemoveAllChildren();
 
             _cachedCardList = cardList;
 
-             // ONLY START OFFSETTING IF CARDCOUNT > PAGE LIMIT
             int start = Math.Max(0, ((cardList.Count - 1) - _cardOffset));
             int end = Math.Max(0, ((start + 1) - _cardPageLimit));
 
@@ -54,7 +52,7 @@ namespace Content.Client.PlayingCard.UI
             var button = new CardButton
             {
                 CardName = cardList[i],
-                Index = i // We track this index purely for debugging.
+                Index = i
             };
 
             // var rect = button.EntityTextureRects;
@@ -64,36 +62,29 @@ namespace Content.Client.PlayingCard.UI
                 CardList.AddChild(button);
             }
 
-            // IF NO CHNAGES, DOnn"T DO ANYTHING, OTHERWISE IF OFFSET CHANGED, DELETE FAR LEFT, AMMEND ONE TO RIGHT.
 
         }
 
-        private void ShiftCardsLeft()
-        {
-
-        }
-
-        private void ShiftCardsRight()
-        {
-
-        }
-
-        protected override void MouseWheel(GUIMouseWheelEventArgs args)
+        private void ChangeOffset(float offsetChange)
         {
             if (!((_cachedCardList.Count - 1) < _cardPageLimit))
             {
-                base.MouseWheel(args);
-                var newOffset = _cardOffset + args.Delta.Y;
+                var newOffset = _cardOffset + offsetChange;
                 if ((newOffset < 0) || (newOffset > _cachedCardList.Count - 1))
                     return;
 
                 _cardOffset = (int)newOffset;
                 Populate(_cachedCardList);
-                args.Handle();
                 return;
             }
             if (_cardOffset > 0)
                 _cardOffset = 0;
+        }
+
+        protected override void MouseWheel(GUIMouseWheelEventArgs args)
+        {
+            base.MouseWheel(args);
+            ChangeOffset(args.Delta.Y);
         }
 
         private void OnCardSelected(BaseButton.ButtonEventArgs args)
@@ -133,7 +124,7 @@ namespace Content.Client.PlayingCard.UI
                         // }),
                         (CardNameLabel = new RichTextLabel
                         {
-                            VerticalAlignment = VAlignment.Top,
+                            VerticalAlignment = VAlignment.Center,
                             HorizontalAlignment = HAlignment.Center,
                             HorizontalExpand = false,
                         })

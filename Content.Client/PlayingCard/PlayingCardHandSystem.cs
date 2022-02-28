@@ -9,13 +9,12 @@ public sealed class PlayingCardHandSystem : VisualizerSystem<PlayingCardHandVisu
     {
         if (TryComp(uid, out SpriteComponent? sprite)
         && args.Component.TryGetData(PlayingCardHandVisuals.CardCount, out int cardCount)
-        && args.Component.TryGetData(PlayingCardHandVisuals.CardList, out List<string> cardList))
+        && args.Component.TryGetData(PlayingCardHandVisuals.CardList, out List<string> cardList)
+        && args.Component.TryGetData(PlayingCardHandVisuals.NoUniqueCardLayers, out bool noUniqueCards))
         {
             sprite.LayerSetVisible(PlayingCardHandVisualLayers.ManyCardHandBase, false);
             sprite.LayerSetVisible(PlayingCardHandVisualLayers.FourthCardDetails, false);
-            sprite.LayerSetVisible(PlayingCardHandVisualLayers.FourthCardBase, false);
             sprite.LayerSetVisible(PlayingCardHandVisualLayers.ThirdCardDetails, false);
-            sprite.LayerSetVisible(PlayingCardHandVisualLayers.ThirdCardBase, false);
             // first and second cards should always be in use in a hand
 
             if (cardCount == 2)
@@ -25,8 +24,11 @@ public sealed class PlayingCardHandSystem : VisualizerSystem<PlayingCardHandVisu
                 sprite.LayerSetOffset(PlayingCardHandVisualLayers.SecondCardDetails, new Vector2(.2f,0f));
                 sprite.LayerSetRotation(PlayingCardHandVisualLayers.SecondCardDetails, new Angle(5.93412));
 
-                sprite.LayerSetState(PlayingCardHandVisualLayers.FirstCardDetails, cardList[1]);
-                sprite.LayerSetState(PlayingCardHandVisualLayers.SecondCardDetails, cardList[0]);
+                if (!noUniqueCards)
+                {
+                    sprite.LayerSetState(PlayingCardHandVisualLayers.FirstCardDetails, cardList[1]);
+                    sprite.LayerSetState(PlayingCardHandVisualLayers.SecondCardDetails, cardList[0]);
+                }
                 return;
             }
             if (cardCount == 3)
@@ -43,9 +45,12 @@ public sealed class PlayingCardHandSystem : VisualizerSystem<PlayingCardHandVisu
                 sprite.LayerSetOffset(PlayingCardHandVisualLayers.ThirdCardDetails, new Vector2(.3f,0f));
                 sprite.LayerSetRotation(PlayingCardHandVisualLayers.ThirdCardDetails, new Angle(6.10865));
 
-                sprite.LayerSetState(PlayingCardHandVisualLayers.FirstCardDetails, cardList[2]);
-                sprite.LayerSetState(PlayingCardHandVisualLayers.SecondCardDetails, cardList[1]);
-                sprite.LayerSetState(PlayingCardHandVisualLayers.ThirdCardDetails, cardList[0]);
+                if (!noUniqueCards)
+                {
+                    sprite.LayerSetState(PlayingCardHandVisualLayers.FirstCardDetails, cardList[2]);
+                    sprite.LayerSetState(PlayingCardHandVisualLayers.SecondCardDetails, cardList[1]);
+                    sprite.LayerSetState(PlayingCardHandVisualLayers.ThirdCardDetails, cardList[0]);
+                }
                 return;
             }
             if (cardCount == 4)
@@ -58,10 +63,13 @@ public sealed class PlayingCardHandSystem : VisualizerSystem<PlayingCardHandVisu
                 sprite.LayerSetOffset(PlayingCardHandVisualLayers.ThirdCardDetails, new Vector2(.1f,.1f));
                 sprite.LayerSetOffset(PlayingCardHandVisualLayers.FourthCardDetails, new Vector2(.25f,.15f));
 
-                sprite.LayerSetState(PlayingCardHandVisualLayers.FirstCardDetails, cardList[3]);
-                sprite.LayerSetState(PlayingCardHandVisualLayers.SecondCardDetails, cardList[2]);
-                sprite.LayerSetState(PlayingCardHandVisualLayers.ThirdCardDetails, cardList[1]);
-                sprite.LayerSetState(PlayingCardHandVisualLayers.FourthCardDetails, cardList[0]);
+                if (!noUniqueCards)
+                {
+                    sprite.LayerSetState(PlayingCardHandVisualLayers.FirstCardDetails, cardList[3]);
+                    sprite.LayerSetState(PlayingCardHandVisualLayers.SecondCardDetails, cardList[2]);
+                    sprite.LayerSetState(PlayingCardHandVisualLayers.ThirdCardDetails, cardList[1]);
+                    sprite.LayerSetState(PlayingCardHandVisualLayers.FourthCardDetails, cardList[0]);
+                }
                 return;
             }
             if (cardCount > 4)
@@ -75,10 +83,13 @@ public sealed class PlayingCardHandSystem : VisualizerSystem<PlayingCardHandVisu
                 sprite.LayerSetOffset(PlayingCardHandVisualLayers.ThirdCardDetails, new Vector2(.1f,.1f));
                 sprite.LayerSetOffset(PlayingCardHandVisualLayers.FourthCardDetails, new Vector2(.25f,.15f));
 
-                sprite.LayerSetState(PlayingCardHandVisualLayers.FirstCardDetails, cardList[cardList.Count - 1]);
-                sprite.LayerSetState(PlayingCardHandVisualLayers.SecondCardDetails, cardList[cardList.Count - 2]);
-                sprite.LayerSetState(PlayingCardHandVisualLayers.ThirdCardDetails, cardList[cardList.Count - 3]);
-                sprite.LayerSetState(PlayingCardHandVisualLayers.FourthCardDetails, cardList[cardList.Count - 4]);
+                if (!noUniqueCards)
+                {
+                    sprite.LayerSetState(PlayingCardHandVisualLayers.FirstCardDetails, cardList[cardList.Count - 1]);
+                    sprite.LayerSetState(PlayingCardHandVisualLayers.SecondCardDetails, cardList[cardList.Count - 2]);
+                    sprite.LayerSetState(PlayingCardHandVisualLayers.ThirdCardDetails, cardList[cardList.Count - 3]);
+                    sprite.LayerSetState(PlayingCardHandVisualLayers.FourthCardDetails, cardList[cardList.Count - 4]);
+                }
                 return;
             }
         }
