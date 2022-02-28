@@ -28,11 +28,11 @@
             # Needs StackType ID
             - material: WoodPlank
               amount: 1
-    - node: whitetile
+    - node: woodtile
       entity: FloorTileItemWood
 
 - type: constructionGraph
-  id: tileWhite
+  id: TileWhite
   start: start
   graph:
     - node: start
@@ -44,7 +44,7 @@
           steps:
             - material: Steel
               amount: 1
-    - node: steeltile
+    - node: whitetile
       entity: FloorTileItemWhite
 
 - type: constructionGraph
