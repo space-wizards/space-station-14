@@ -29,7 +29,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (airtight.FixAirBlockedDirectionInitialize)
             {
-                var rotateEvent = new RotateEvent(airtight.Owner, Angle.Zero, xform.WorldRotation);
+                var rotateEvent = new RotateEvent(airtight.Owner, Angle.Zero, xform.WorldRotation, xform);
                 OnAirtightRotated(uid, airtight, ref rotateEvent);
             }
 

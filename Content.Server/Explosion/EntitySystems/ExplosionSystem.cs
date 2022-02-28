@@ -45,7 +45,7 @@ namespace Content.Server.Explosion.EntitySystems
         // TODO move this to the component
         private static readonly SoundSpecifier ExplosionSound = new SoundCollectionSpecifier("explosion");
 
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _maps = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
