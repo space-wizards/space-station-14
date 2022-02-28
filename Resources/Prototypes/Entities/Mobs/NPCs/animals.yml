@@ -44,6 +44,8 @@
     interactFailureString: petting-failure-bat
   - type: SentienceTarget
     flavorKind: organic
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 - type: entity
   name: bee
@@ -90,6 +92,8 @@
   - type: Tag
     tags:
     - Bee
+  - type: Bloodstream
+    bloodMaxVolume: 0.1
 
 - type: entity
   name: bee
@@ -112,6 +116,9 @@
   - type: AiFactionTag
     factions:
     - SimpleHostile
+  - type: Bloodstream
+    bloodMaxVolume: 0.1
+
 
 - type: entity
   name: chicken
@@ -140,6 +147,8 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/chicken_cluck_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: mallard duck #Quack
@@ -168,6 +177,8 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/duck_quack_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: white duck #Quack
@@ -196,6 +207,8 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/duck_quack_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: brown duck #Quack
@@ -224,6 +237,8 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/duck_quack_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: butterfly
@@ -274,6 +289,8 @@
       normal: butterfly
       crit: dead
       dead: dead
+  - type: Bloodstream
+    bloodMaxVolume: 0.1
 
 - type: entity
   name: cow
@@ -329,6 +346,7 @@
     interactSuccessString: petting-success-soft-floofy
     interactFailureString: petting-failure-generic
 
+
 - type: entity
   name: crab
   parent: SimpleMobBase
@@ -368,6 +386,8 @@
     successChance: 0.5
     interactSuccessString: petting-success-crab
     interactFailureString: petting-failure-crab
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 - type: entity
   name: goat
@@ -436,6 +456,8 @@
     successChance: 0.1 # Yeah, good luck with that.
     interactSuccessString: petting-success-goose
     interactFailureString: petting-failure-goose
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: gorilla
@@ -471,6 +493,8 @@
   - type: Butcherable
     spawned: FoodMeat
     pieces: 4
+  - type: Bloodstream
+    bloodMaxVolume: 300
 
 - type: entity
   name: kangaroo
@@ -641,6 +665,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+        - ReagentId: Blood
+          Quantity: 50
   - type: Butcherable
     spawned: FoodMeat
     pieces: 1
@@ -659,6 +685,8 @@
     disarmAction:
       enabled: false
       autoPopulate: false
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 
 - type: entity
@@ -679,6 +707,9 @@
       normal: mouse-1
       crit: dead-1
       dead: splat-1
+  - type: Bloodstream
+    bloodMaxVolume: 50  
+
 
 - type: entity
   parent: MobMouse
@@ -698,10 +729,12 @@
       normal: mouse-2
       crit: dead-2
       dead: splat-2
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 
 - type: entity
-  name: lizard
+  name: lizard #Weh
   parent: SimpleMobBase
   id: MobLizard
   description: I think it's lost.
@@ -741,6 +774,8 @@
     successChance: 0.3
     interactSuccessString: petting-success-reptile
     interactFailureString: petting-failure-generic
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 - type: entity
   name: frog
@@ -783,6 +818,8 @@
     successChance: 0.6
     interactSuccessString: petting-success-frog
     interactFailureString: petting-failure-generic
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
@@ -826,6 +863,8 @@
     successChance: 0.6
     interactSuccessString: petting-success-bird
     interactFailureString: petting-failure-generic
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 - type: entity
   name: penguin
@@ -907,6 +946,8 @@
     successChance: 0.6
     interactSuccessString: petting-success-reptile
     interactFailureString: petting-failure-generic
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
