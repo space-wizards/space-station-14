@@ -11,7 +11,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.Atmos.Monitor.UI.Widgets
 {
     [GenerateTypedNameReferences]
-    public partial class PumpControl : BoxContainer
+    public sealed partial class PumpControl : BoxContainer
     {
         private GasVentPumpData _data;
         private string _address;

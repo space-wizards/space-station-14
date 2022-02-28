@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Research.Components
 {
     [RegisterComponent]
-    public class ResearchServerComponent : Component
+    public sealed class ResearchServerComponent : Component
     {
         public static int ServerCount = 0;
 

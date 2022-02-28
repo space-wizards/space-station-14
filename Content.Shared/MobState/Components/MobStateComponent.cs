@@ -24,7 +24,7 @@ namespace Content.Shared.MobState.Components
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent]
-    public class MobStateComponent : Component
+    public sealed class MobStateComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -318,7 +318,7 @@ namespace Content.Shared.MobState.Components
     }
 
     [Serializable, NetSerializable]
-    public class MobStateComponentState : ComponentState
+    public sealed class MobStateComponentState : ComponentState
     {
         public readonly FixedPoint2? CurrentThreshold;
 

@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Animals.Components
 {
     [RegisterComponent, Friend(typeof(UdderSystem))]
-    internal class UdderComponent : Component
+    internal sealed class UdderComponent : Component
     {
         /// <summary>
         ///     The reagent to produce.

@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    class ToggleDisallowLateJoinCommand : IConsoleCommand
+    sealed class ToggleDisallowLateJoinCommand : IConsoleCommand
     {
         public string Command => "toggledisallowlatejoin";
         public string Description => "Allows or disallows latejoining during mid-game.";

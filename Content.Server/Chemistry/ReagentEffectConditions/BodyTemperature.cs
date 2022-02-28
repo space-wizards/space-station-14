@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
     ///     Requires the solution entity to be above or below a certain temperature.
     ///     Used for things like cryoxadone and pyroxadone.
     /// </summary>
-    public class Temperature : ReagentEffectCondition
+    public sealed class Temperature : ReagentEffectCondition
     {
         [DataField("min")]
         public float Min = 0;

@@ -408,7 +408,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutletCooked
@@ -439,7 +441,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
 
 - type: entity
   name: cooked bear
@@ -461,7 +465,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
   - type: SliceableFood
     count: 3
     slice: FoodMeatBearCutletCooked
@@ -486,7 +492,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
   - type: SliceableFood
     count: 3
     slice: FoodMeatPenguinCutletCooked
@@ -511,7 +519,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
   - type: SliceableFood
     count: 3
     slice: FoodMeatChickenCutletCooked
@@ -539,7 +549,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
 
 - type: entity
   name: cooked duck
@@ -561,7 +573,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
   - type: SliceableFood
     count: 3
     slice: FoodMeatDuckCutletCooked
@@ -586,7 +600,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
 
 - type: entity
   name: goliath steak
@@ -608,7 +624,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - reagentId: Protein
+          Quantity: 5
 
 - type: entity
   name: lizard steak
@@ -630,7 +648,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
   - type: SliceableFood
     count: 3
     slice: FoodMeatLizardCutletCooked
@@ -655,7 +675,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
 
 - type: entity
   name: meatball
@@ -673,7 +695,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
 
 # Cutlets
 
@@ -879,7 +903,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 1
 
 # Cooked
 
@@ -900,7 +926,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
 
 - type: entity
   name: bear cutlet
@@ -922,7 +950,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
 
 - type: entity
   name: penguin cutlet
@@ -942,7 +972,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
 
 - type: entity
   name: chicken cutlet
@@ -962,7 +994,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
 
 - type: entity
   name: duck cutlet
@@ -982,7 +1016,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
 
 - type: entity
   name: lizard cutlet
@@ -1003,7 +1039,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
 
 - type: entity
   name: spider cutlet
@@ -1026,7 +1064,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 1
 
 - type: entity
   name: xeno cutlet
@@ -1049,4 +1089,6 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 1

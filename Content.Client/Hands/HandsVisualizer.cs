@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Hands
 {
     [UsedImplicitly]
-    public class HandsVisualizer : AppearanceVisualizer
+    public sealed class HandsVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

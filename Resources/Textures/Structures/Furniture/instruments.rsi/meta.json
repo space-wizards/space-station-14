@@ -24,6 +24,10 @@
       "directions": 4
     },
     {
+      "name": "piano-upright",
+      "directions": 4
+    },
+    {
       "name": "piano-broken",
       "directions": 4
     },

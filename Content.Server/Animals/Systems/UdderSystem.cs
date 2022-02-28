@@ -16,7 +16,7 @@ namespace Content.Server.Animals.Systems
     /// <summary>
     ///     Gives ability to living beings with acceptable hunger level to produce milkable reagents.
     /// </summary>
-    internal class UdderSystem : EntitySystem
+    internal sealed class UdderSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -26,7 +26,7 @@ namespace Content.Server.Animals.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<UdderComponent, GetAlternativeVerbsEvent>(AddMilkVerb);
+            SubscribeLocalEvent<UdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
             SubscribeLocalEvent<UdderComponent, MilkingFinishedEvent>(OnMilkingFinished);
             SubscribeLocalEvent<UdderComponent, MilkingFailEvent>(OnMilkingFailed);
         }
@@ -120,14 +120,14 @@ namespace Content.Server.Animals.Systems
             component.BeingMilked = false;
         }
 
-        private void AddMilkVerb(EntityUid uid, UdderComponent component, GetAlternativeVerbsEvent args)
+        private void AddMilkVerb(EntityUid uid, UdderComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (args.Using == null ||
                  !args.CanInteract ||
                  !EntityManager.HasComponent<RefillableSolutionComponent>(args.Using.Value))
                 return;
 
-            Verb verb = new()
+            AlternativeVerb verb = new()
             {
                 Act = () =>
                 {
@@ -139,7 +139,7 @@ namespace Content.Server.Animals.Systems
             args.Verbs.Add(verb);
         }
 
-        private class MilkingFinishedEvent : EntityEventArgs
+        private sealed class MilkingFinishedEvent : EntityEventArgs
         {
             public EntityUid UserUid;
             public EntityUid ContainerUid;
@@ -151,7 +151,7 @@ namespace Content.Server.Animals.Systems
             }
         }
 
-        private class MilkingFailEvent : EntityEventArgs
+        private sealed class MilkingFailEvent : EntityEventArgs
         { }
     }
 }

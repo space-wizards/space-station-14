@@ -59,69 +59,15 @@ namespace Content.Shared.Buckle.Components
         public int? DrawDepth;
     }
 
+    public sealed class BuckleChangeEvent : EntityEventArgs
+    {
+        public EntityUid Strap;
+        public bool Buckling;
+    }
+
     [Serializable, NetSerializable]
     public enum BuckleVisuals
     {
         Buckled
-    }
-
-    [Serializable, NetSerializable]
-#pragma warning disable 618
-    public abstract class BuckleChangeMessage : ComponentMessage
-#pragma warning restore 618
-    {
-        /// <summary>
-        ///     Constructs a new instance of <see cref="BuckleChangeMessage"/>
-        /// </summary>
-        /// <param name="entity">The entity that had its buckling status changed</param>
-        /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        /// <param name="buckled">True if the entity was buckled, false otherwise</param>
-        protected BuckleChangeMessage(EntityUid entity, EntityUid strap, bool buckled)
-        {
-            Entity = entity;
-            Strap = strap;
-            Buckled = buckled;
-        }
-
-        /// <summary>
-        ///     The entity that had its buckling status changed
-        /// </summary>
-        public EntityUid Entity { get; }
-
-        /// <summary>
-        ///     The strap that the entity was buckled to or unbuckled from
-        /// </summary>
-        public EntityUid Strap { get; }
-
-        /// <summary>
-        ///     True if the entity was buckled, false otherwise.
-        /// </summary>
-        public bool Buckled { get; }
-    }
-
-    [Serializable, NetSerializable]
-    public class BuckleMessage : BuckleChangeMessage
-    {
-        /// <summary>
-        ///     Constructs a new instance of <see cref="BuckleMessage"/>
-        /// </summary>
-        /// <param name="entity">The entity that had its buckling status changed</param>
-        /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        public BuckleMessage(EntityUid entity, EntityUid strap) : base(entity, strap, true)
-        {
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class UnbuckleMessage : BuckleChangeMessage
-    {
-        /// <summary>
-        ///     Constructs a new instance of <see cref="UnbuckleMessage"/>
-        /// </summary>
-        /// <param name="entity">The entity that had its buckling status changed</param>
-        /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        public UnbuckleMessage(EntityUid entity, EntityUid strap) : base(entity, strap, false)
-        {
-        }
     }
 }

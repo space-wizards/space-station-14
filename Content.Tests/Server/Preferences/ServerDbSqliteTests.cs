@@ -20,7 +20,7 @@ using Robust.Shared.Serialization.Manager;
 namespace Content.Tests.Server.Preferences
 {
     [TestFixture]
-    public class ServerDbSqliteTests : ContentUnitTest
+    public sealed class ServerDbSqliteTests : ContentUnitTest
     {
         private const string Prototypes = @"
 - type: dataset

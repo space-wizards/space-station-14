@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AttachBodyPartCommand : IConsoleCommand
+    public sealed class AttachBodyPartCommand : IConsoleCommand
     {
         public string Command => "attachbodypart";
         public string Description => "Attaches a body part to you or someone else.";

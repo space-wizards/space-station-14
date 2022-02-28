@@ -9,7 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Medical.CrewMonitoring
 {
-    public class CrewMonitoringConsoleSystem : EntitySystem
+    public sealed class CrewMonitoringConsoleSystem : EntitySystem
     {
         [Dependency] private readonly SuitSensorSystem _sensors = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;

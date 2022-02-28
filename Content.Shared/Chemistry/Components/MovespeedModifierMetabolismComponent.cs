@@ -34,7 +34,7 @@ namespace Content.Shared.Chemistry.Components
         }
 
         [Serializable, NetSerializable]
-        public class MovespeedModifierMetabolismComponentState : ComponentState
+        public sealed class MovespeedModifierMetabolismComponentState : ComponentState
         {
             public float WalkSpeedModifier { get; }
             public float SprintSpeedModifier { get; }

@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Bible.Components
 {
-    [RegisterComponent, ComponentProtoName("Bible")]
+    [RegisterComponent]
     public sealed class BibleComponent : Component
     {
 

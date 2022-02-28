@@ -47,8 +47,8 @@ namespace Content.Server.Strip
 
             _strippableSystem = EntitySystem.Get<StrippableSystem>();
             Owner.EnsureComponentWarn<ServerInventoryComponent>();
-            var cuffed = Owner.EnsureComponentWarn<CuffableComponent>();
-            cuffed.OnCuffedStateChanged += UpdateState;
+            if(_entities.TryGetComponent<CuffableComponent>(Owner, out var cuffed))
+                cuffed.OnCuffedStateChanged += UpdateState;
         }
 
         protected override void Shutdown()
@@ -88,9 +88,6 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                    return false;
-
                 if (item == null)
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-not-holding-anything"));
@@ -153,9 +150,6 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                    return false;
-
                 if (item == null)
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-not-holding-anything"));
@@ -219,9 +213,6 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                    return false;
-
                 if (!invSystem.HasSlot(Owner, slot))
                     return false;
 
@@ -272,9 +263,6 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                    return false;
-
                 if (!hands.HasHand(hand))
                     return false;
 

@@ -9,7 +9,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Announcements
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class AnnounceCommand : IConsoleCommand
+    public sealed class AnnounceCommand : IConsoleCommand
     {
         public string Command => "announce";
         public string Description => "Send an in-game announcement.";

@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Ban)]
-    public class PardonCommand : IConsoleCommand
+    public sealed class PardonCommand : IConsoleCommand
     {
         public string Command => "pardon";
         public string Description => "Pardons somebody's ban";

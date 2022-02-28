@@ -10,7 +10,7 @@ using Robust.Shared.Physics;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public class ShuttleTest : ContentIntegrationTest
+    public sealed class ShuttleTest : ContentIntegrationTest
     {
         [Test]
         public async Task Test()

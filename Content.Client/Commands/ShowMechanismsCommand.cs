@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
-    public class ShowMechanismsCommand : IConsoleCommand
+    public sealed class ShowMechanismsCommand : IConsoleCommand
     {
         public const string CommandName = "showmechanisms";
 

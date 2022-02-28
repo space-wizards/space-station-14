@@ -16,10 +16,9 @@ using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Server.WireHacking
 {
-    public class WireHackingSystem : EntitySystem
+    public sealed class WireHackingSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly ToolSystem _tools = default!;
 
         [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts =

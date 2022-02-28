@@ -1,0 +1,12 @@
+- type: accessLevel
+  id: ResearchDirector
+  name: Research Director
+
+- type: accessLevel
+  id: Research
+
+- type: accessGroup
+  id: Research
+  tags:
+  - ResearchDirector
+  - Research

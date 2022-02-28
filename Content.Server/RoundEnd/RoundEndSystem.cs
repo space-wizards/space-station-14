@@ -15,7 +15,7 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.RoundEnd
 {
-    public class RoundEndSystem : EntitySystem
+    public sealed class RoundEndSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
@@ -26,7 +26,7 @@ namespace Content.Server.RoundEnd
 
         public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);
         public TimeSpan DefaultCountdownDuration { get; set; } = TimeSpan.FromMinutes(4);
-        public TimeSpan DefaultRestartRoundDuration { get; set; } = TimeSpan.FromSeconds(20);
+        public TimeSpan DefaultRestartRoundDuration { get; set; } = TimeSpan.FromMinutes(1);
 
         private CancellationTokenSource? _countdownTokenSource = null;
         private CancellationTokenSource? _cooldownTokenSource = null;
@@ -130,7 +130,7 @@ namespace Content.Server.RoundEnd
             _gameTicker.EndRound();
             _countdownTokenSource?.Cancel();
             _countdownTokenSource = new();
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("round-end-system-round-restart-eta-announcement", ("seconds", DefaultRestartRoundDuration.Seconds)));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("round-end-system-round-restart-eta-announcement", ("minutes", DefaultRestartRoundDuration.Minutes)));
             Timer.Spawn(DefaultRestartRoundDuration, AfterEndRoundRestart, _countdownTokenSource.Token);
         }
 
@@ -154,7 +154,7 @@ namespace Content.Server.RoundEnd
         }
     }
 
-    public class RoundEndSystemChangedEvent : EntityEventArgs
+    public sealed class RoundEndSystemChangedEvent : EntityEventArgs
     {
         public static RoundEndSystemChangedEvent Default { get; } = new();
     }

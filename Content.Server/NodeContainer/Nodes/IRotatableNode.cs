@@ -9,8 +9,8 @@ namespace Content.Server.NodeContainer.Nodes
     public interface IRotatableNode
     {
         /// <summary>
-        ///     Rotates this <see cref="Node"/>.
+        ///     Rotates this <see cref="Node"/>. Returns true if the node's connections need to be updated.
         /// </summary>
-        void RotateEvent(ref RotateEvent ev);
+        bool RotateEvent(ref RotateEvent ev);
     }
 }

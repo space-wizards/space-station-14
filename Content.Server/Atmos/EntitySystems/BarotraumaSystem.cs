@@ -11,7 +11,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public class BarotraumaSystem : EntitySystem
+    public sealed class BarotraumaSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
