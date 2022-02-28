@@ -10,10 +10,10 @@ namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
     [TestOf(typeof(RoundRestartCleanupEvent))]
-    public class ResettingEntitySystemTests : ContentIntegrationTest
+    public sealed class ResettingEntitySystemTests : ContentIntegrationTest
     {
         [Reflect(false)]
-        private class TestRoundRestartCleanupEvent : EntitySystem
+        private sealed class TestRoundRestartCleanupEvent : EntitySystem
         {
             public bool HasBeenReset { get; set; }
 

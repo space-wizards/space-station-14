@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.MachineLinking.Events
 {
-    public class SignalValueRequestedEvent : HandledEntityEventArgs
+    public sealed class SignalValueRequestedEvent : HandledEntityEventArgs
     {
         public readonly string Port;
         public readonly Type Type;

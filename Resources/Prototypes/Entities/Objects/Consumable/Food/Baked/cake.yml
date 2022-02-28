@@ -13,10 +13,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
+        - Vitamin:
+          Quantity: 5
 
 - type: entity
   parent: FoodCakeBase
@@ -29,10 +31,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 8
+        maxVol: 10
         reagents:
         - ReagentId: Nutriment
           Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 1
 
 # Custom Cake Example
 
@@ -130,6 +134,7 @@
     - state: brain
   - type: SliceableFood
     slice: FoodCakeBrainSlice
+
 
 - type: entity
   name: slice of brain cake
@@ -260,11 +265,13 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 35
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
         - ReagentId: Theobromine
+          Quantity: 5
+        - ReagentId: Vitamin
           Quantity: 5
 
 - type: entity
@@ -284,6 +291,8 @@
         - ReagentId: Nutriment
           Quantity: 4
         - ReagentId: Theobromine
+          Quantity: 1
+        - ReagentId: Vitamin
           Quantity: 1
 # Tastes like sweetness, cake, chocolate.
 
@@ -361,6 +370,15 @@
     - state: pumpkinspice
   - type: SliceableFood
     slice: FoodCakePumpkinSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 32
+        - ReagentId: Vitamin
+          Quantity: 11
 
 - type: entity
   name: slice of pumpkin-spice cake
@@ -375,6 +393,15 @@
     - state: plate-small
     - state: plate-slice-shading
     - state: pumpkinspice-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6.4
+        - ReagentId: Vitamin
+          Quantity: 2.2
 # Tastes like sweetness, cake, pumpkin.
 
 - type: entity
@@ -449,6 +476,17 @@
     - state: vanilla
   - type: SliceableFood
     slice: FoodCakeVanillaSlice
+  - type: SolutionContainerManager #TODO Sprinkles
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Glucose
+          Quantity: 15
 
 - type: entity
   name: slice of vanilla cake
@@ -463,6 +501,17 @@
     - state: plate-small
     - state: plate-slice-shading
     - state: vanilla-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Glucose
+          Quantity: 3
 # Tastes like sweetness, cake, vanilla.
 
 - type: entity
@@ -479,6 +528,17 @@
     - state: clown
   - type: SliceableFood
     slice: FoodCakeClownSlice
+  - type: SolutionContainerManager #TODO Sprinkles
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Glucose
+          Quantity: 15
 
 - type: entity
   name: slice of clown cake
@@ -493,6 +553,17 @@
     - state: plate-small
     - state: plate-slice-shading
     - state: clown-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Glucose
+          Quantity: 3
 # Tastes like sweetness, cake, clown.
 
 - type: entity
@@ -509,6 +580,17 @@
     - state: trumpet
   - type: SliceableFood
     slice: FoodCakeSpacemanSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Omnizine #This is a really rare cake with healing stuff and we don't have any of its chems yet
+          Quantity: 15
 
 - type: entity
   name: slice of spaceman's cake
@@ -523,4 +605,15 @@
     - state: plate-small
     - state: plate-slice-shading
     - state: trumpet-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Omnizine
+          Quantity: 3
 # Tastes like sweetness, cake, jam.

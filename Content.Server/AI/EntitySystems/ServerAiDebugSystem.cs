@@ -7,7 +7,7 @@ namespace Content.Server.AI.EntitySystems
 {
 #if DEBUG
     [UsedImplicitly]
-    public class ServerAiDebugSystem : EntitySystem
+    public sealed class ServerAiDebugSystem : EntitySystem
     {
         public override void Initialize()
         {

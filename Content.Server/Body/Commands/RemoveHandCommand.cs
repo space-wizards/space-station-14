@@ -12,7 +12,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    class RemoveHandCommand : IConsoleCommand
+    sealed class RemoveHandCommand : IConsoleCommand
     {
         public string Command => "removehand";
         public string Description => "Removes a hand from your entity.";

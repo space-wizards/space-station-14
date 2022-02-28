@@ -5,7 +5,7 @@ using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Client.Wires.Visualizers
 {
-    public class WiresVisualizer : AppearanceVisualizer
+    public sealed class WiresVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests
     /// making sure that gravity is applied to the correct grids.
     [TestFixture]
     [TestOf(typeof(GravityGeneratorComponent))]
-    public class GravityGridTest : ContentIntegrationTest
+    public sealed class GravityGridTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

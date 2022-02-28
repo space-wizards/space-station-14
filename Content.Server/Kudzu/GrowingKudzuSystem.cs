@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Kudzu;
 
-public class GrowingKudzuSystem : EntitySystem
+public sealed class GrowingKudzuSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 

@@ -11,7 +11,7 @@ namespace Content.Client.Cuffs.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedCuffableComponent))]
-    public class CuffableComponent : SharedCuffableComponent
+    public sealed class CuffableComponent : SharedCuffableComponent
     {
         [ViewVariables]
         private string? _currentRSI;

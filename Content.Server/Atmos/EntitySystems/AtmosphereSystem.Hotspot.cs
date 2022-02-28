@@ -13,7 +13,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public partial class AtmosphereSystem
+    public sealed partial class AtmosphereSystem
     {
         [Dependency] private readonly IEntityLookup _lookup = default!;
 
@@ -170,7 +170,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var entity in _lookup.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
-                RaiseLocalEvent(entity, fireEvent, false);
+                RaiseLocalEvent(entity, ref fireEvent, false);
             }
         }
     }

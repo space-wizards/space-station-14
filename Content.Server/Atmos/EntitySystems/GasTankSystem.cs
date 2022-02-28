@@ -1,15 +1,14 @@
 using Content.Server.Atmos.Components;
+using Content.Shared.Actions;
+using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public class GasTankSystem : EntitySystem
+    public sealed class GasTankSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
@@ -19,15 +18,32 @@ namespace Content.Server.Atmos.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<GasTankComponent, GetActivationVerbsEvent>(AddOpenUIVerb);
+            SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUIVerb);
+            SubscribeLocalEvent<GasTankComponent, GetActionsEvent>(OnGetActions);
+            SubscribeLocalEvent<GasTankComponent, ToggleActionEvent>(OnActionToggle);
         }
 
-        private void AddOpenUIVerb(EntityUid uid, GasTankComponent component, GetActivationVerbsEvent args)
+        private void OnGetActions(EntityUid uid, GasTankComponent component, GetActionsEvent args)
+        {
+            args.Actions.Add(component.ToggleAction);
+        }
+
+        private void OnActionToggle(EntityUid uid, GasTankComponent component, ToggleActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            component.ToggleInternals();
+
+            args.Handled = true;
+        }
+
+        private void AddOpenUIVerb(EntityUid uid, GasTankComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess ||  !EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
-            Verb verb = new();
+            ActivationVerb verb = new();
             verb.Act = () => component.OpenInterface(actor.PlayerSession);
             verb.Text = Loc.GetString("control-verb-open-control-panel-text");
             // TODO VERBS add "open UI" icon?

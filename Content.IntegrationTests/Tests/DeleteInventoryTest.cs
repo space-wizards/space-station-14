@@ -12,7 +12,7 @@ using Robust.Shared.Map;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public class DeleteInventoryTest : ContentIntegrationTest
+    public sealed class DeleteInventoryTest : ContentIntegrationTest
     {
         // Test that when deleting an entity with an InventoryComponent,
         // any equipped items also get deleted.

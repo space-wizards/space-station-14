@@ -22,7 +22,7 @@ namespace Content.Server.Buckle.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StrapComponent, GetInteractionVerbsEvent>(AddStrapVerbs);
+            SubscribeLocalEvent<StrapComponent, GetVerbsEvent<InteractionVerb>>(AddStrapVerbs);
             SubscribeLocalEvent<StrapComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
         }
 
@@ -37,7 +37,7 @@ namespace Content.Server.Buckle.Systems
         // functions. Whenever these are fully ECSed, maybe do it in a way that allows for these verbs to be handled in
         // a sensible manner in a single system?
 
-        private void AddStrapVerbs(EntityUid uid, StrapComponent component, GetInteractionVerbsEvent args)
+        private void AddStrapVerbs(EntityUid uid, StrapComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract || !component.Enabled)
                 return;
@@ -53,7 +53,7 @@ namespace Content.Server.Buckle.Systems
                 if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckledComp.Range))
                     continue;
 
-                Verb verb = new()
+                InteractionVerb verb = new()
                 {
                     Act = () => buckledComp.TryUnbuckle(args.User),
                     Category = VerbCategory.Unbuckle
@@ -79,7 +79,7 @@ namespace Content.Server.Buckle.Systems
                 component.HasSpace(buckle) &&
                 _interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckle.Range))
             {
-                Verb verb = new()
+                InteractionVerb verb = new()
                 {
                     Act = () => buckle.TryBuckle(args.User, args.Target),
                     Category = VerbCategory.Buckle,
@@ -99,7 +99,7 @@ namespace Content.Server.Buckle.Systems
                 if (!_interactionSystem.InRangeUnobstructed(@using, args.Target, usingBuckle.Range, predicate: Ignored))
                     return;
 
-                Verb verb = new()
+                InteractionVerb verb = new()
                 {
                     Act = () => usingBuckle.TryBuckle(args.User, args.Target),
                     Category = VerbCategory.Buckle,

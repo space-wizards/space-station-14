@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.AI.WorldState.States.Hands
 {
     [UsedImplicitly]
-    public class HandItemsState : StateData<List<EntityUid>>
+    public sealed class HandItemsState : StateData<List<EntityUid>>
     {
         public override string Name => "HandItems";
         public override List<EntityUid> GetValue()

@@ -9,6 +9,8 @@
       sprite: Objects/Specific/Hydroponics/seeds.rsi
       state: seed
       netsync: true
+    - type: Item
+      size: 2
 
 - type: entity
   parent: SeedBase
@@ -225,3 +227,58 @@
       seed: poppy
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/poppy.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of lingzhi seeds
+  description: "Also known as reishi."
+  id: LingzhiSeeds
+  components:
+    - type: Seed
+      seed: lingzhi
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/lingzhi.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of ambrosia vulgaris seeds
+  description: "A medicinal plant for the common folk."
+  id: AmbrosiaVulgarisSeeds
+  components:
+    - type: Seed
+      seed: ambrosiaVulgaris
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of galaxythistle seeds
+  description: "Brushes of starry nights."
+  id: GalaxythistleSeeds
+  components:
+    - type: Seed
+      seed: galaxythistle
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of fly amanita seeds
+  description: "The iconic, extremely deadly mushroom to be used for purely ornamental purposes."
+  id: FlyAmanitaSeeds
+  components:
+    - type: Seed
+      seed: flyAmanita
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of gatfruit seeds
+  description: "These are no peashooters."
+  id: GatfruitSeeds
+  components:
+    - type: Seed
+      seed: gatfruit
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/gatfruit.rsi

@@ -2,7 +2,7 @@ using System;
 
 namespace Content.Server.MachineLinking.Exceptions
 {
-    public class PortNotFoundException : Exception
+    public sealed class PortNotFoundException : Exception
     {
 
     }

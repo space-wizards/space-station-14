@@ -121,6 +121,9 @@
   name: plastic
   suffix: Full
   components:
+  - type: Tag
+    tags:
+    - Plastic
   - type: Material
     materials:
     - Plastic

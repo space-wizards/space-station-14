@@ -6,7 +6,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Roles
 {
-    public class Job : Role
+    public sealed class Job : Role
     {
         [ViewVariables]
         public JobPrototype Prototype { get; }

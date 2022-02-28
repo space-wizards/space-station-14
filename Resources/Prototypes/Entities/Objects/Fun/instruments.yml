@@ -4,10 +4,13 @@
   id: BaseHandheldInstrument
   description: That's an instrument.
   components:
+  - type: Sprite
+    netsync: false
   - type: Instrument
   - type: ActivatableUI
     inHandsOnly: true
     singleUser: true
+    verbText: verb-instrument-openui
     key: enum.InstrumentUiKey.Key
   - type: UserInterface
     interfaces:
@@ -37,6 +40,7 @@
   parent: BaseHandheldInstrument
   id: AcousticGuitarInstrument
   name: acoustic guitar
+  description: Anyway, here's Wonderwall.
   components:
   - type: Instrument
     program: 25

@@ -14,7 +14,7 @@ namespace Content.Shared.CharacterAppearance.Components
     [RegisterComponent]
     [Friend(typeof(SharedHumanoidAppearanceSystem), typeof(SharedMagicMirrorComponent))]
     [NetworkedComponent]
-    public class HumanoidAppearanceComponent : Component
+    public sealed class HumanoidAppearanceComponent : Component
     {
         [ViewVariables]
         public HumanoidCharacterAppearance Appearance { get; set; } = HumanoidCharacterAppearance.Default();

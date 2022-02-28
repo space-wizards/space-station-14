@@ -20,7 +20,7 @@ namespace Content.Server.Strip
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StrippableComponent, GetOtherVerbsEvent>(AddStripVerb);
+            SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<Verb>>(AddStripVerb);
             SubscribeLocalEvent<StrippableComponent, DidEquipEvent>(OnDidEquip);
             SubscribeLocalEvent<StrippableComponent, DidUnequipEvent>(OnDidUnequip);
             SubscribeLocalEvent<StrippableComponent, ComponentInit>(OnCompInit);
@@ -93,7 +93,7 @@ namespace Content.Server.Strip
             strippableComponent.UserInterface.SetState(new StrippingBoundUserInterfaceState(inventory, hands, cuffs));
         }
 
-        private void AddStripVerb(EntityUid uid, StrippableComponent component, GetOtherVerbsEvent args)
+        private void AddStripVerb(EntityUid uid, StrippableComponent component, GetVerbsEvent<Verb> args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract || args.Target == args.User)
                 return;

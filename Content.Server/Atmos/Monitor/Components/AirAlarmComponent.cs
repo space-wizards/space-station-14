@@ -18,7 +18,7 @@ using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
 namespace Content.Server.Atmos.Monitor.Components
 {
     [RegisterComponent]
-    public class AirAlarmComponent : Component, IWires
+    public sealed class AirAlarmComponent : Component, IWires
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

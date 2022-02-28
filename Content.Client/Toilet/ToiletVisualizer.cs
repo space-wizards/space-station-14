@@ -5,7 +5,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Toilet
 {
-    public class ToiletVisualizer : AppearanceVisualizer
+    public sealed class ToiletVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {
