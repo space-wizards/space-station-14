@@ -17,12 +17,11 @@ namespace Content.Server.GameTicking.Commands
 
         public string Command => "mapping";
         public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
-        public string Help => $"Usage: {Command} [mapname] [id]";
+        public string Help => $"Usage: {Command} <MapID> <Path>";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
-            if (player == null)
+            if (shell.Player is not IPlayerSession player)
             {
                 shell.WriteLine("Only players can use this command");
                 return;
@@ -44,7 +43,7 @@ namespace Content.Server.GameTicking.Commands
             // Get the map ID to use
             if (args.Length == 2)
             {
-                if (!int.TryParse(args[1], out var id))
+                if (!int.TryParse(args[0], out var id))
                 {
                     shell.WriteError($"{args[1]} is not a valid integer.");
                     return;
@@ -66,7 +65,7 @@ namespace Content.Server.GameTicking.Commands
             if (args.Length == 0)
                 shell.ExecuteCommand($"addmap {mapId} false");
             else
-                shell.ExecuteCommand($"loadmap {mapId} \"{CommandParsing.Escape(args[0])}\"");
+                shell.ExecuteCommand($"loadmap {mapId} \"{CommandParsing.Escape(args[1])}\"");
 
             // was the map actually created?
             if (!mapManager.MapExists(mapId))
@@ -90,7 +89,7 @@ namespace Content.Server.GameTicking.Commands
             mapManager.SetMapPaused(mapId, true);
 
             if (args.Length != 0)
-                shell.WriteLine($"Created uninitialized map from file {args[0]} with id {mapId}.");
+                shell.WriteLine($"Created uninitialized map from file {args[1]} with id {mapId}.");
             else
                 shell.WriteLine($"Created a new uninitialized map with id {mapId}.");
         }
