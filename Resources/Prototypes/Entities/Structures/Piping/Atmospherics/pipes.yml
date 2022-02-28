@@ -83,6 +83,9 @@
     layers:
       - state: pipeHalf
         map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+  - type: Construction
+    graph: GasPipe
+    node: half
 
 - type: entity
   parent: GasPipeBase
@@ -99,6 +102,9 @@
     layers:
       - state: pipeStraight
         map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+  - type: Construction
+    graph: GasPipe
+    node: straight
 
 - type: entity
   parent: GasPipeBase
@@ -115,6 +121,9 @@
     layers:
       - state: pipeBend
         map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+  - type: Construction
+    graph: GasPipe
+    node: bend
 
 - type: entity
   parent: GasPipeBase
@@ -131,6 +140,9 @@
     layers:
       - state: pipeTJunction
         map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+  - type: Construction
+    graph: GasPipe
+    node: tjunction
 
 - type: entity
   parent: GasPipeBase
@@ -149,3 +161,6 @@
     layers:
       - state: pipeFourway
         map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+  - type: Construction
+    graph: GasPipe
+    node: fourway

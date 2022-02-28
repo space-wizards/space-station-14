@@ -1,0 +1,23 @@
+- type: job
+  id: Musician
+  name: "musician"
+  startingGear: MusicianGear
+  departments:
+  - Civilian
+  icon: "Musician"
+  supervisors: "whoever hires you"
+  access:
+  - Maintenance
+  - Theatre
+
+- type: startingGear
+  id: MusicianGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerPurple
+    back: ClothingBackpackMusicianFilled
+    eyes: ClothingEyesGlassesSunglasses
+    shoes: ClothingShoesColorBlack
+    id: MusicianPDA
+    ears: ClothingHeadsetService
+  satchel: ClothingBackpackSatchelMusicianFilled
+  duffelbag: ClothingBackpackDuffelMusicianFilled

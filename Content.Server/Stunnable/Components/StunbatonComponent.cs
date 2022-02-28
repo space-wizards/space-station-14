@@ -30,6 +30,10 @@ namespace Content.Server.Stunnable.Components
         [DataField("energyPerUse")]
         public float EnergyPerUse { get; set; } = 50;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("onThrowStunChance")]
+        public float OnThrowStunChance { get; set; } = 0.20f;
+
         [DataField("stunSound")]
         public SoundSpecifier StunSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/egloves.ogg");
 
