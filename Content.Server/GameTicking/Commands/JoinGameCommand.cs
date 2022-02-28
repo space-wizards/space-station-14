@@ -1,15 +1,10 @@
-using System.Collections.Generic;
-using Content.Server.Administration;
-using Content.Server.Roles;
 using Content.Server.Station;
 using Content.Shared.Administration;
+using Content.Shared.GameTicking;
 using Content.Shared.Roles;
 using Content.Shared.Station;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Commands
@@ -45,7 +40,7 @@ namespace Content.Server.GameTicking.Commands
             var ticker = EntitySystem.Get<GameTicker>();
             var stationSystem = EntitySystem.Get<StationSystem>();
 
-            if (!ticker.PlayersInLobby.ContainsKey(player))
+            if (!ticker.PlayersInLobby.ContainsKey(player) || ticker.PlayersInLobby[player] == LobbyPlayerStatus.Observer)
             {
                 shell.WriteError($"{player.Name} is not in the lobby.   This incident will be reported.");
                 return;
