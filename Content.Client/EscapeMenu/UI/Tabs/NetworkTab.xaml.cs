@@ -63,8 +63,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
 
         private void UpdateChanges()
         {
-            var isNetInterpRatioSame = NetInterpRatioSlider.Value == _cfg.GetCVar(CVars.NetInterpRatio);
-            var isEverythingSame = isNetInterpRatioSame;
+            var isEverythingSame = NetInterpRatioSlider.Value == _cfg.GetCVar(CVars.NetInterpRatio);
             ApplyButton.Disabled = isEverythingSame;
             ResetButton.Disabled = isEverythingSame;
             NetInterpRatioLabel.Text = NetInterpRatioSlider.Value.ToString();
