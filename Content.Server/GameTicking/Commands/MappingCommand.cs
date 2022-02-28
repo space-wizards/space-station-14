@@ -64,7 +64,7 @@ namespace Content.Server.GameTicking.Commands
 
             // either load a map or create a new one.
             if (args.Length == 0)
-                shell.ExecuteCommand($"addmap {mapId}");
+                shell.ExecuteCommand($"addmap {mapId} false");
             else
                 shell.ExecuteCommand($"loadmap {mapId} \"{CommandParsing.Escape(args[0])}\"");
 
