@@ -30,10 +30,6 @@ public struct IntrinsicUIEntry
     [DataField("key", readOnly: true, required: true)]
     private string _keyRaw = default!;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("adminOnly")]
-    public bool AdminOnly { get; set; } = false;
-
     [DataField("toggleAction", required: true)]
     public InstantAction ToggleAction = new();
 
