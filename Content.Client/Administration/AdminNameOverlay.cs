@@ -46,7 +46,7 @@ namespace Content.Client.Administration
                     continue;
                 }
 
-                var aabb = _entityLookup.GetWorldAabbFromEntity(entity);
+                var aabb = _entityLookup.GetWorldAABB(entity);
 
                 // if not on screen, continue
                 if (!aabb.Intersects(in viewport))
