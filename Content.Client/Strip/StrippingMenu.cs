@@ -7,7 +7,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Strip
 {
-    public class StrippingMenu : DefaultWindow
+    public sealed class StrippingMenu : DefaultWindow
     {
         private readonly BoxContainer _vboxContainer;
 

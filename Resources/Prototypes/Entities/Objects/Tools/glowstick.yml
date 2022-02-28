@@ -6,7 +6,9 @@
   components:
     - type: Tag
       tags:
+      - Recyclable
       - Trash
+    - type: Recyclable
     - type: ExpendableLight
       spentName: spent green glowstick
       spentDesc: It looks like this glowstick has stopped glowing. How tragic.

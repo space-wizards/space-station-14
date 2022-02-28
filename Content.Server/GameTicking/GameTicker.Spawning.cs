@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Content.Server.Access.Systems;
@@ -22,17 +20,14 @@ using Content.Shared.Roles;
 using Content.Shared.Species;
 using Content.Shared.Station;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         private const string ObserverPrototypeName = "MobObserver";
 
@@ -48,10 +43,78 @@ namespace Content.Server.GameTicking
         // Mainly to avoid allocations.
         private readonly List<EntityCoordinates> _possiblePositions = new();
 
+        private void SpawnPlayers(List<IPlayerSession> readyPlayers, IPlayerSession[] origReadyPlayers,
+            Dictionary<NetUserId, HumanoidCharacterProfile> profiles, bool force)
+        {
+            // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
+            RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
+
+            var assignedJobs = AssignJobs(readyPlayers, profiles);
+
+            AssignOverflowJobs(assignedJobs, origReadyPlayers, profiles);
+
+            // Spawn everybody in!
+            foreach (var (player, (job, station)) in assignedJobs)
+            {
+                SpawnPlayer(player, profiles[player.UserId], station, job, false);
+            }
+
+            RefreshLateJoinAllowed();
+
+            // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
+            RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
+        }
+
+        private void AssignOverflowJobs(IDictionary<IPlayerSession, (string, StationId)> assignedJobs,
+            IPlayerSession[] origReadyPlayers, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles)
+        {
+            // For players without jobs, give them the overflow job if they have that set...
+            foreach (var player in origReadyPlayers)
+            {
+                if (assignedJobs.ContainsKey(player))
+                {
+                    continue;
+                }
+
+                var profile = profiles[player.UserId];
+                if (profile.PreferenceUnavailable != PreferenceUnavailableMode.SpawnAsOverflow)
+                    continue;
+
+                // Pick a random station
+                var stations = _stationSystem.StationInfo.Keys.ToList();
+
+                if (stations.Count == 0)
+                {
+                    assignedJobs.Add(player, (FallbackOverflowJob, StationId.Invalid));
+                    continue;
+                }
+
+                _robustRandom.Shuffle(stations);
+
+                foreach (var station in stations)
+                {
+                    // Pick a random overflow job from that station
+                    var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone();
+                    _robustRandom.Shuffle(overflows);
+
+                    // Stations with no overflow slots should simply get skipped over.
+                    if (overflows.Count == 0)
+                        continue;
+
+                    // If the overflow exists, put them in as it.
+                    assignedJobs.Add(player, (overflows[0], stations[0]));
+                    break;
+                }
+            }
+        }
+
         private void SpawnPlayer(IPlayerSession player, StationId station, string? jobId = null, bool lateJoin = true)
         {
             var character = GetPlayerProfile(player);
 
+            var jobBans = _roleBanManager.GetJobBans(player.UserId);
+            if (jobBans == null || (jobId != null && jobBans.Contains(jobId)))
+                return;
             SpawnPlayer(player, character, station, jobId, lateJoin);
             UpdateJobsAvailable();
         }
@@ -90,7 +153,7 @@ namespace Content.Server.GameTicking
             }
 
             // Pick best job best on prefs.
-            jobId ??= PickBestAvailableJob(character, station);
+            jobId ??= PickBestAvailableJob(player, character, station);
             // If no job available, stay in lobby, or if no lobby spawn as observer
             if (jobId is null)
             {
@@ -366,7 +429,7 @@ namespace Content.Server.GameTicking
     ///     You can use this event to spawn a player off-station on late-join but also at round start.
     ///     When this event is handled, the GameTicker will not perform its own player-spawning logic.
     /// </summary>
-    public class PlayerBeforeSpawnEvent : HandledEntityEventArgs
+    public sealed class PlayerBeforeSpawnEvent : HandledEntityEventArgs
     {
         public IPlayerSession Player { get; }
         public HumanoidCharacterProfile Profile { get; }
@@ -389,7 +452,7 @@ namespace Content.Server.GameTicking
     ///     You can use this to handle people late-joining, or to handle people being spawned at round start.
     ///     Can be used to give random players a role, modify their equipment, etc.
     /// </summary>
-    public class PlayerSpawnCompleteEvent : EntityEventArgs
+    public sealed class PlayerSpawnCompleteEvent : EntityEventArgs
     {
         public EntityUid Mob { get; }
         public IPlayerSession Player { get; }

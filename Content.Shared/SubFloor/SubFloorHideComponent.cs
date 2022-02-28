@@ -5,65 +5,40 @@ namespace Content.Shared.SubFloor
 {
     /// <summary>
     /// Simple component that automatically hides the sibling
-    /// <see cref="ISpriteComponent" /> when the tile it's on is not a sub floor
+    /// <see cref="SpriteComponent" /> when the tile it's on is not a sub floor
     /// (plating).
     /// </summary>
     /// <seealso cref="P:Content.Shared.Maps.ContentTileDefinition.IsSubFloor" />
     [NetworkedComponent]
     [RegisterComponent]
-    [Friend(typeof(SubFloorHideSystem))]
+    [Friend(typeof(SharedSubFloorHideSystem))]
     public sealed class SubFloorHideComponent : Component
     {
         /// <summary>
-        ///     Whether the entity will be hid when not in subfloor.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("enabled")]
-        public bool Enabled { get; set; } = true;
-
-        /// <summary>
         ///     Whether the entity's current position has a "Floor-type" tile above its current position.
         /// </summary>
+        [ViewVariables]
         public bool IsUnderCover { get; set; } = false;
 
-        /*
-         * An un-anchored hiding entity would require listening to on-move events in case it moves into a sub-floor
-         * tile. Also T-Ray scanner headaches.
         /// <summary>
-        ///     This entity needs to be anchored to be hid when not in subfloor.
+        ///     Whether interactions with this entity should be blocked while it is under floor tiles.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("requireAnchored")]
-        public bool RequireAnchored { get; set; } = true;
-        */
-
-        public override ComponentState GetComponentState()
-        {
-            return new SubFloorHideComponentState(Enabled);
-        }
+        /// <remarks>
+        ///     Useful for entities like vents, which are only partially hidden. Anchor attempts will still be blocked.
+        /// </remarks>
+        [DataField("blockInteractions")]
+        public bool BlockInteractions { get; set; } = true;
 
         /// <summary>
-        ///     Whether or not this entity is supposed
-        ///     to be visible.
+        ///     When revealed using some scanning tool, what transparency should be used to draw this item?
         /// </summary>
-        [ViewVariables]
-        public bool Visible { get; set; }
+        [DataField("scannerTransparency")]
+        public float ScannerTransparency = 0.8f;
 
         /// <summary>
         ///     The entities this subfloor is revealed by.
         /// </summary>
         [ViewVariables]
         public HashSet<EntityUid> RevealedBy { get; set; } = new();
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class SubFloorHideComponentState : ComponentState
-    {
-        public bool Enabled { get; }
-
-        public SubFloorHideComponentState(bool enabled)
-        {
-            Enabled = enabled;
-        }
     }
 }

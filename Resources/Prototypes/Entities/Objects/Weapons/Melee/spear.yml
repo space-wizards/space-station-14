@@ -7,6 +7,7 @@
   - type: Tag
     tags:
     - Spear
+  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
     state: spear

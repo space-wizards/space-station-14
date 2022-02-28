@@ -6,13 +6,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Throwing
 {
     [RegisterComponent, NetworkedComponent]
-    public class ThrownItemComponent : Component
+    public sealed class ThrownItemComponent : Component
     {
         public EntityUid? Thrower { get; set; }
     }
 
     [Serializable, NetSerializable]
-    public class ThrownItemComponentState : ComponentState
+    public sealed class ThrownItemComponentState : ComponentState
     {
         public EntityUid? Thrower { get; }
 

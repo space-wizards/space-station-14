@@ -14,12 +14,13 @@ namespace Content.Server.Clothing.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedItemComponent))]
+    [Virtual]
     public class ItemComponent : SharedItemComponent{}
 
     [RegisterComponent]
     [NetworkedComponent]
     [ComponentReference(typeof(SharedItemComponent))]
-    public class ClothingComponent : ItemComponent, IUse
+    public sealed class ClothingComponent : ItemComponent, IUse
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;

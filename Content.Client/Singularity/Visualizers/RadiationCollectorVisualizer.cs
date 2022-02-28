@@ -10,7 +10,7 @@ using Robust.Shared.Serialization;
 namespace Content.Client.Singularity.Visualizers
 {
     [UsedImplicitly]
-    public class RadiationCollectorVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class RadiationCollectorVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "radiationcollector_animation";
 

@@ -22,12 +22,12 @@ namespace Content.Server.Fluids.Components
     /// For cleaning up puddles
     /// </summary>
     [RegisterComponent]
-    public class MopComponent : Component, IAfterInteract
+    public sealed class MopComponent : Component, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
         public const string SolutionName = "mop";
-        
+
         /// <summary>
         ///     Used to prevent do_after spam if we're currently mopping.
         /// </summary>
@@ -169,7 +169,7 @@ namespace Content.Server.Fluids.Components
 
             // Transfers solution from the puddle to the mop
             solutionSystem.TryAddSolution(Owner, contents, solutionSystem.SplitSolution(target, puddleSolution, transferAmount));
-            
+
             SoundSystem.Play(Filter.Pvs(Owner), _pickupSound.GetSound(), Owner);
 
             // if the mop became full after that puddle, let the player know.

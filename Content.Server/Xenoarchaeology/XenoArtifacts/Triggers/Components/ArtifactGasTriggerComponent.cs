@@ -1,7 +1,4 @@
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 
@@ -9,7 +6,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 ///     Activates artifact when it surrounded by certain gas.
 /// </summary>
 [RegisterComponent]
-public class ArtifactGasTriggerComponent : Component
+public sealed class ArtifactGasTriggerComponent : Component
 {
     /// <summary>
     ///     List of possible activation gases to pick on startup.

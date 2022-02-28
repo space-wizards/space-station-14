@@ -19,7 +19,7 @@ using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
 namespace Content.Server.Atmos.Monitor.Components
 {
     [RegisterComponent]
-    public class FireAlarmComponent : Component, IWires
+    public sealed class FireAlarmComponent : Component, IWires
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

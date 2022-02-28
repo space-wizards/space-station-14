@@ -46,7 +46,7 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public class SpaceVillainArcadePlayerActionMessage : BoundUserInterfaceMessage
+        public sealed class SpaceVillainArcadePlayerActionMessage : BoundUserInterfaceMessage
         {
             public readonly PlayerAction PlayerAction;
             public SpaceVillainArcadePlayerActionMessage(PlayerAction playerAction)
@@ -56,7 +56,7 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public class SpaceVillainArcadeMetaDataUpdateMessage : SpaceVillainArcadeDataUpdateMessage
+        public sealed class SpaceVillainArcadeMetaDataUpdateMessage : SpaceVillainArcadeDataUpdateMessage
         {
             public readonly string GameTitle;
             public readonly string EnemyName;
@@ -69,7 +69,7 @@ namespace Content.Shared.Arcade
             }
         }
 
-        [Serializable, NetSerializable]
+        [Serializable, NetSerializable, Virtual]
         public class SpaceVillainArcadeDataUpdateMessage : BoundUserInterfaceMessage
         {
             public readonly int PlayerHP;

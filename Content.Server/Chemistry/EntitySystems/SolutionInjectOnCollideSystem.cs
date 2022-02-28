@@ -38,7 +38,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var solToInject = solRemoved.SplitSolution(solRemovedVol * component.TransferEfficiency);
 
-            _bloodstreamSystem.TryAddToBloodstream((args.OtherFixture.Body).Owner, solToInject, bloodstream);
+            _bloodstreamSystem.TryAddToChemicals((args.OtherFixture.Body).Owner, solToInject, bloodstream);
         }
     }
 }

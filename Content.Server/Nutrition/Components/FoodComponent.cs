@@ -14,7 +14,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent, Friend(typeof(FoodSystem))]
-    public class FoodComponent : Component
+    public sealed class FoodComponent : Component
     {
         [DataField("solution")]
         public string SolutionName { get; set; } = "food";

@@ -11,12 +11,11 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using System.Linq;
@@ -42,18 +41,24 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, PryCancelledEvent>(OnPryCancelled);
         SubscribeLocalEvent<DoorComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<DoorComponent, WeldCancelledEvent>(OnWeldCancelled);
+        SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
     }
 
-    protected override void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
+    protected override void SetCollidable(EntityUid uid, bool collidable,
+        DoorComponent? door = null,
+        PhysicsComponent? physics = null,
+        OccluderComponent? occluder = null)
     {
-        base.OnInit(uid, door, args);
+        if (!Resolve(uid, ref door))
+            return;
 
-        if (door.State == DoorState.Open
-                && door.ChangeAirtight
-                && TryComp(uid, out AirtightComponent? airtight))
-        {
-            _airtightSystem.SetAirblocked(airtight, false);
-        }
+        if (door.ChangeAirtight && TryComp(uid, out AirtightComponent? airtight))
+            _airtightSystem.SetAirblocked(airtight, collidable);
+
+        // Pathfinding / AI stuff.
+        RaiseLocalEvent(new AccessReaderChangeMessage(uid, collidable));
+
+        base.SetCollidable(uid, collidable, door, physics, occluder);
     }
 
     // TODO AUDIO PREDICT Figure out a better way to handle sound and prediction. For now, this works well enough?
@@ -154,7 +159,9 @@ public sealed class DoorSystem : SharedDoorSystem
         RaiseLocalEvent(target, canEv, false);
 
         if (canEv.Cancelled)
-            return false;
+            // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
+            // under a windoor.
+            return true;
 
         var modEv = new DoorGetPryTimeModifierEvent();
         RaiseLocalEvent(target, modEv, false);
@@ -248,39 +255,6 @@ public sealed class DoorSystem : SharedDoorSystem
             TryOpen(uid, door, otherUid);
     }
 
-    public override void OnPartialOpen(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
-    {
-        if (!Resolve(uid, ref door, ref physics))
-            return;
-
-        base.OnPartialOpen(uid, door, physics);
-
-        if (door.ChangeAirtight && TryComp(uid, out AirtightComponent? airtight))
-        {
-            _airtightSystem.SetAirblocked(airtight, false);
-        }
-
-        // Path-finding. Has nothing directly to do with access readers.
-        RaiseLocalEvent(new AccessReaderChangeMessage(uid, false));
-    }
-
-    public override bool OnPartialClose(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
-    {
-        if (!Resolve(uid, ref door, ref physics))
-            return false;
-
-        if (!base.OnPartialClose(uid, door, physics))
-            return false;
-
-        // update airtight, if we did not crush something.
-        if (door.ChangeAirtight && door.CurrentlyCrushing.Count == 0 && TryComp(uid, out AirtightComponent? airtight))
-            _airtightSystem.SetAirblocked(airtight, true);
-
-        // Path-finding. Has nothing directly to do with access readers.
-        RaiseLocalEvent(new AccessReaderChangeMessage(uid, true));
-        return true;
-    }
-
     private void OnMapInit(EntityUid uid, DoorComponent door, MapInitEvent args)
     {
         // Ensure that the construction component is aware of the board container.
@@ -293,23 +267,32 @@ public sealed class DoorSystem : SharedDoorSystem
 
         var container = uid.EnsureContainer<Container>("board", out var existed);
 
-        /* // TODO ShadowCommander: Re-enable when access is added to boards. Requires map update.
-           if (existed)
-           {
-        // We already contain a board. Note: We don't check if it's the right one!
-        if (container.ContainedEntities.Count != 0)
-        return;
+        if (existed & container.ContainedEntities.Count != 0)
+        {
+            // We already contain a board. Note: We don't check if it's the right one!
+            return;
         }
 
-        var board = Owner.EntityManager.SpawnEntity(_boardPrototype, Owner.Transform.Coordinates);
+        var board = EntityManager.SpawnEntity(door.BoardPrototype, Transform(uid).Coordinates);
 
         if(!container.Insert(board))
-        Logger.Warning($"Couldn't insert board {board} into door {Owner}!");
-        */
+            Logger.Warning($"Couldn't insert board {ToPrettyString(board)} into door {ToPrettyString(uid)}!");
+    }
+    private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
+    {
+        if(TryComp<AirlockComponent>(uid, out var airlockComponent))
+        {
+            if (door.State == DoorState.Closed)
+            {
+                StartOpening(uid);
+                airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
+                args.Handled = true;
+            }
+        }
     }
 }
 
-public class PryFinishedEvent : EntityEventArgs { }
-public class PryCancelledEvent : EntityEventArgs { }
-public class WeldFinishedEvent : EntityEventArgs { }
-public class WeldCancelledEvent : EntityEventArgs { }
+public sealed class PryFinishedEvent : EntityEventArgs { }
+public sealed class PryCancelledEvent : EntityEventArgs { }
+public sealed class WeldFinishedEvent : EntityEventArgs { }
+public sealed class WeldCancelledEvent : EntityEventArgs { }

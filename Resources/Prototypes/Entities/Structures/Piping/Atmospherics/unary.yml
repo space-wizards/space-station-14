@@ -6,6 +6,8 @@
     mode: SnapgridCenter
   components:
     - type: AtmosDevice
+    - type: SubFloorHide
+      blockInteractions: false
     - type: NodeContainer
       nodes:
         pipe:
@@ -39,14 +41,16 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
-          map: [ "enum.VentVisualLayers.Vent", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.VentVisualLayers.Vent", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: VentPumpVisualizer
     - type: GasVentPump
+    - type: Construction
+      graph: GasUnary
+      node: ventpump
+    - type: VentCritterSpawnLocation
 
 - type: entity
   parent: GasUnaryBase
@@ -66,13 +70,14 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
-          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasPassiveVent
+    - type: Construction
+      graph: GasUnary
+      node: passivevent
 
 - type: entity
   parent: GasUnaryBase
@@ -100,15 +105,16 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: scrub_off
-          map: [ "enum.ScrubberVisualLayers.Scrubber", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.ScrubberVisualLayers.Scrubber", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: ScrubberVisualizer
     - type: AtmosDevice
     - type: GasVentScrubber
+    - type: Construction
+      graph: GasUnary
+      node: ventscrubber
 
 - type: entity
   parent: GasUnaryBase
@@ -126,19 +132,19 @@
       layers:
         - state: pipeHalf
           sprite: Structures/Piping/Atmospherics/pipe.rsi
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasOutletInjector
+    - type: Construction
+      graph: GasUnary
+      node: outletinjector
 
 - type: entity
   parent: BaseMachinePowered
   id: BaseGasThermoMachine
   name: thermomachine
-  description: Heats or cools gas in connected pipes.
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -149,12 +155,24 @@
       noRot: true
     - type: Appearance
       visuals:
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: Rotatable
     - type: GasThermoMachine
     - type: AtmosPipeColor
     - type: AtmosDevice
+    - type: UserInterface
+      interfaces:
+      - key: enum.ThermomachineUiKey.Key
+        type: GasThermomachineBoundUserInterface
+    - type: ActivatableUI
+      inHandsOnly: false
+      key: enum.ThermomachineUiKey.Key
+    - type: Construction
+      graph: Machine
+      node: machine
+    - type: Wires
+      BoardName: "Thermomachine"
+      LayoutId: Thermomachine
     - type: NodeContainer
       nodes:
         pipe:
@@ -166,6 +184,7 @@
   parent: BaseGasThermoMachine
   id: GasThermoMachineFreezer
   name: freezer
+  description: Cools gas in connected pipes.
   placement:
     mode: SnapgridCenter
   components:
@@ -177,7 +196,6 @@
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - type: Appearance
       visuals:
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: ThermoMachineVisualizer
           disabledState: freezer_off
@@ -185,11 +203,14 @@
     - type: GasThermoMachine
       mode: Freezer
       minTemperature: 73.15
+    - type: Machine
+      board: ThermomachineFreezerMachineCircuitBoard
 
 - type: entity
   parent: BaseGasThermoMachine
   id: GasThermoMachineHeater
   name: heater
+  description: Heats gas in connected pipes.
   placement:
     mode: SnapgridCenter
   components:
@@ -201,7 +222,6 @@
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - type: Appearance
       visuals:
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: ThermoMachineVisualizer
           disabledState: heater_off
@@ -209,3 +229,5 @@
     - type: GasThermoMachine
       mode: Heater
       maxTemperature: 573.15 # This is changed when parts are refreshed.
+    - type: Machine
+      board: ThermomachineHeaterMachineCircuitBoard

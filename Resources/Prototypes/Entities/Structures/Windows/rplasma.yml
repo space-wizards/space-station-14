@@ -15,6 +15,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 1000
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 600
       behaviors:
       - !type:PlaySoundBehavior
@@ -66,6 +72,12 @@
     node: plasmaReinforcedWindowDirectional
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 600

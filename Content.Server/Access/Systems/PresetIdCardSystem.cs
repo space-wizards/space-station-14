@@ -9,7 +9,7 @@ using System;
 
 namespace Content.Server.Access.Systems
 {
-    public class PresetIdCardSystem : EntitySystem
+    public sealed class PresetIdCardSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IdCardSystem _cardSystem = default!;

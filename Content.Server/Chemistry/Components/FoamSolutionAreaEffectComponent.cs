@@ -12,7 +12,7 @@ namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SolutionAreaEffectComponent))]
-    public class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
+    public sealed class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -61,10 +61,10 @@ namespace Content.Server.Chemistry.Components
 
             var cloneSolution = solution.Clone();
             var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction * (1 - protection),
-                bloodstream.Solution.AvailableVolume);
+                bloodstream.ChemicalSolution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
-            bloodstreamSys.TryAddToBloodstream(entity, transferSolution, bloodstream);
+            bloodstreamSys.TryAddToChemicals(entity, transferSolution, bloodstream);
         }
 
         protected override void OnKill()

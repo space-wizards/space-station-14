@@ -23,7 +23,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -34,10 +33,20 @@
       crit: corgi_dead
       dead: corgi_dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 3
   - type: ReplacementAccent
     accent: dog
+  - type: InteractionPopup
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: SentienceTarget
+    flavorKind: corgi
 
 - type: entity
   name: corrupted corgi
@@ -71,6 +80,13 @@
   - type: AiFactionTag
     factions:
     - SimpleHostile
+  - type: InteractionPopup
+    successChance: 0 # Override the automatic success that would normally be inherited from MobCorgi.
+    interactSuccessString: petting-success-corrupted-corgi # Normally impossible but added an easter egg just in case.
+    interactFailureString: petting-failure-corrupted-corgi
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: Ian
@@ -90,6 +106,10 @@
       normal: ian
       crit: ian_dead
       dead: ian_dead
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
 
 - type: entity
   name: Old Ian
@@ -109,6 +129,10 @@
       normal: old_ian
       crit: old_ian_dead
       dead: old_ian_dead
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
 
 - type: entity
   name: Lisa
@@ -128,6 +152,10 @@
       normal: lisa
       crit: lisa_dead
       dead: lisa_dead
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
 
 - type: entity
   name: corgi puppy
@@ -147,6 +175,9 @@
       normal: puppy
       crit: puppy_dead
       dead: puppy_dead
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: cat
@@ -170,7 +201,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -181,10 +211,19 @@
       crit: cat_dead
       dead: cat_dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 2
   - type: ReplacementAccent
     accent: cat
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-cat
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: calico cat
@@ -204,6 +243,9 @@
       normal: cat2
       crit: cat2_dead
       dead: cat2_dead
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: space cat
@@ -223,6 +265,15 @@
       normal: spacecat
       crit: spacecat_dead
       dead: spacecat_dead
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-space-cat
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: caracal cat
@@ -242,6 +293,9 @@
       normal: caracal_flop
       crit: caracal_dead
       dead: caracal_dead
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: sloth
@@ -268,7 +322,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -279,5 +332,59 @@
       crit: sloth_dead
       dead: sloth_dead
   - type: Butcherable
-    meat: FoodMeat
+    spawned: FoodMeat
     pieces: 3
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-sloth
+    interactFailureString: petting-failure-sloth
+  - type: Grammar
+    attributes:
+      gender: epicene
+
+- type: entity
+  name: ferret
+  parent: SimpleMobBase
+  id: MobFerret
+  description: Just a silly little guy!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/ferret.rsi
+    scale: 0.7, 0.7
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: ferret
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: ferret
+      crit: ferret_dead
+      dead: ferret_dead
+  - type: Butcherable
+    spawned: FoodMeat
+    pieces: 3
+  - type: InteractionPopup
+    successChance: 0.8
+    interactDelay: 1.5 # Avoids overlapping SFX due to spam - these SFX are a little longer than the typical 1 second.
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/ferret_happy.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene

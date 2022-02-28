@@ -9,7 +9,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.MobState.Overlays
 {
-    public class CritOverlay : Overlay
+    public sealed class CritOverlay : Overlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;

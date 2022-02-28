@@ -5,9 +5,10 @@
   abstract: true
   description: A door, where will it lead?
   components:
+  - type: InteractionOutline
   - type: Sprite
     netsync: false
-    sprite: Structures/Doors/MineralDoors/wood_door.rsi
+    sprite: Structures/Doors/MineralDoors/metal_door.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -30,6 +31,65 @@
     bumpOpen: false
     clickOpen: true
     weldable: false
+    canCrush: false
+    closeTimeOne: 0.2
+    closeTimeTwo: 0.6
+    openTimeOne: 0.6
+    openTimeTwo: 0.2
+    openSound:
+      path: /Audio/Effects/stonedoor_openclose.ogg
+    closeSound:
+      path: /Audio/Effects/stonedoor_openclose.ogg
+  - type: Appearance
+    visuals:
+      - type: AirlockVisualizer
+        simpleVisuals: true
+        animationTime: 1.2
+  - type: Airtight
+    fixVacuum: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
+
+- type: entity
+  id: MetalDoor
+  name: metal door
+  parent: BaseMaterialDoor
+  components:
+  - type: Construction
+    graph: DoorGraph
+    node: metalDoor
+
+- type: entity
+  id: WoodDoor
+  name: wooden door
+  parent: BaseMaterialDoor
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/MineralDoors/wood_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Door
+    bumpOpen: false
+    clickOpen: true
+    weldable: false
     closeTimeOne: 0.2
     closeTimeTwo: 0.6
     openTimeOne: 0.6
@@ -38,13 +98,6 @@
       path: /Audio/Effects/door_open.ogg
     closeSound:
       path: /Audio/Effects/door_close.ogg
-  - type: Appearance
-    visuals:
-      - type: AirlockVisualizer
-        simpleVisuals: true
-        animationTime: 1.2
-  - type: Airtight
-    fixVacuum: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
@@ -56,11 +109,160 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
+  - type: Construction
+    graph: DoorGraph
+    node: woodDoor
 
 - type: entity
-  id: WoodDoor
-  name: wooden door
+  id: PaperDoor
+  name: paper door
+  parent: WoodDoor
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/MineralDoors/paper_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Construction
+    graph: DoorGraph
+    node: paperDoor
+
+- type: entity
+  id: PlasmaDoor
+  name: plasma door
   parent: BaseMaterialDoor
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/MineralDoors/plasma_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Construction
+    graph: DoorGraph
+    node: plasmaDoor
+
+- type: entity
+  id: DiamondDoor
+  name: diamond door
+  parent: BaseMaterialDoor
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/MineralDoors/diamond_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Construction
+    graph: DoorGraph
+    node: diamondDoor
+
+- type: entity
+  id: UraniumDoor
+  name: uranium door
+  parent: BaseMaterialDoor
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/MineralDoors/uranium_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Construction
+    graph: DoorGraph
+    node: uraniumDoor
+
+- type: entity
+  id: GoldDoor
+  name: gold door
+  parent: BaseMaterialDoor
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/MineralDoors/gold_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: DoorGraph
+    node: goldDoor
+
+- type: entity
+  id: SilverDoor
+  name: silver door
+  parent: BaseMaterialDoor
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/MineralDoors/silver_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: DoorGraph
+    node: silverDoor
+
+- type: entity
+  id: SandstoneDoor
+  name: sandstone door
+  parent: BaseMaterialDoor
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/MineralDoors/sandstone_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: DoorGraph
+    node: sandstoneDoor
+

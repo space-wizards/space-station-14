@@ -11,7 +11,7 @@ namespace Content.Server.Light.Components
     ///     state of an entity.
     /// </summary>
     [RegisterComponent, Friend(typeof(PoweredLightSystem))]
-    public class LitOnPoweredComponent : Component
+    public sealed class LitOnPoweredComponent : Component
     {
     }
 }

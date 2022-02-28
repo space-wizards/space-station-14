@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
-    public class GasPortComponent : Component
+    public sealed class GasPortComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("pipe")]

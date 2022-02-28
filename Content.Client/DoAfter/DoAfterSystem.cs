@@ -1,12 +1,13 @@
 ﻿using System.Linq;
+using Content.Client.DoAfter.UI;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
+using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.DoAfter
 {
@@ -39,11 +40,157 @@ namespace Content.Client.DoAfter
             base.Initialize();
             UpdatesOutsidePrediction = true;
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
+            SubscribeNetworkEvent<CancelledDoAfterMessage>(OnCancelledDoAfter);
+            SubscribeLocalEvent<DoAfterComponent, ComponentStartup>(OnDoAfterStartup);
+            SubscribeLocalEvent<DoAfterComponent, ComponentShutdown>(OnDoAfterShutdown);
+            SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
+        }
+
+        private void OnDoAfterHandleState(EntityUid uid, DoAfterComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not DoAfterComponentState state)
+                return;
+
+            var toRemove = new RemQueue<ClientDoAfter>();
+
+            foreach (var (id, doAfter) in component.DoAfters)
+            {
+                var found = false;
+
+                foreach (var clientdoAfter in state.DoAfters)
+                {
+                    if (clientdoAfter.ID == id)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    toRemove.Add(doAfter);
+                }
+            }
+
+            foreach (var doAfter in toRemove)
+            {
+                Remove(component, doAfter);
+            }
+
+            foreach (var doAfter in state.DoAfters)
+            {
+                if (component.DoAfters.ContainsKey(doAfter.ID))
+                    continue;
+
+                component.DoAfters.Add(doAfter.ID, doAfter);
+            }
+
+            if (component.Gui == null || component.Gui.Disposed)
+                return;
+
+            foreach (var (_, doAfter) in component.DoAfters)
+            {
+                component.Gui.AddDoAfter(doAfter);
+            }
+        }
+
+        private void OnDoAfterStartup(EntityUid uid, DoAfterComponent component, ComponentStartup args)
+        {
+            Enable(component);
+        }
+
+        private void OnDoAfterShutdown(EntityUid uid, DoAfterComponent component, ComponentShutdown args)
+        {
+            Disable(component);
+        }
+
+        private void OnCancelledDoAfter(CancelledDoAfterMessage ev)
+        {
+            if (!TryComp<DoAfterComponent>(ev.Uid, out var doAfter)) return;
+
+            Cancel(doAfter, ev.ID);
         }
 
         private void HandlePlayerAttached(PlayerAttachSysMessage message)
         {
             _attachedEntity = message.AttachedEntity;
+        }
+
+        /// <summary>
+        ///     For handling PVS so we dispose of controls if they go out of range
+        /// </summary>
+        public void Enable(DoAfterComponent component)
+        {
+            if (component.Gui?.Disposed == false)
+                return;
+
+            component.Gui = new DoAfterGui {AttachedEntity = component.Owner};
+
+            foreach (var (_, doAfter) in component.DoAfters)
+            {
+                component.Gui.AddDoAfter(doAfter);
+            }
+
+            foreach (var (_, cancelled) in component.CancelledDoAfters)
+            {
+                component.Gui.CancelDoAfter(cancelled.ID);
+            }
+        }
+
+        public void Disable(DoAfterComponent component)
+        {
+            component.Gui?.Dispose();
+            component.Gui = null;
+        }
+
+        /// <summary>
+        ///     Remove a DoAfter without showing a cancellation graphic.
+        /// </summary>
+        /// <param name="clientDoAfter"></param>
+        public void Remove(DoAfterComponent component, ClientDoAfter clientDoAfter)
+        {
+            component.DoAfters.Remove(clientDoAfter.ID);
+
+            var found = false;
+
+            for (var i = component.CancelledDoAfters.Count - 1; i >= 0; i--)
+            {
+                var cancelled = component.CancelledDoAfters[i];
+
+                if (cancelled.Message == clientDoAfter)
+                {
+                    component.CancelledDoAfters.RemoveAt(i);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+                component.DoAfters.Remove(clientDoAfter.ID);
+
+            component.Gui?.RemoveDoAfter(clientDoAfter.ID);
+        }
+
+        /// <summary>
+        ///     Mark a DoAfter as cancelled and show a cancellation graphic.
+        /// </summary>
+        ///     Actual removal is handled by DoAfterEntitySystem.
+        /// <param name="id"></param>
+        /// <param name="currentTime"></param>
+        public void Cancel(DoAfterComponent component, byte id, TimeSpan? currentTime = null)
+        {
+            foreach (var (_, cancelled) in component.CancelledDoAfters)
+            {
+                if (cancelled.ID == id)
+                    return;
+            }
+
+            if (!component.DoAfters.ContainsKey(id))
+                return;
+
+            var doAfterMessage = component.DoAfters[id];
+            component.CancelledDoAfters.Add((_gameTiming.CurTime, doAfterMessage));
+            component.Gui?.CancelDoAfter(id);
         }
 
         public override void Update(float frameTime)
@@ -69,7 +216,7 @@ namespace Content.Client.DoAfter
                     compPos.MapId != entXform.MapID ||
                     !viewbox.Contains(compPos.Position))
                 {
-                    comp.Disable();
+                    Disable(comp);
                     continue;
                 }
 
@@ -81,11 +228,11 @@ namespace Content.Client.DoAfter
                         compPos, range,
                         ent => ent == comp.Owner || ent == _attachedEntity))
                 {
-                    comp.Disable();
+                    Disable(comp);
                     continue;
                 }
 
-                comp.Enable();
+                Enable(comp);
 
                 var userGrid = xform.Coordinates;
 
@@ -97,22 +244,20 @@ namespace Content.Client.DoAfter
                     // If we've passed the final time (after the excess to show completion graphic) then remove.
                     if (elapsedTime > doAfter.Delay + ExcessTime)
                     {
-                        comp.Remove(doAfter);
+                        Remove(comp, doAfter);
                         continue;
                     }
 
                     // Don't predict cancellation if it's already finished.
                     if (elapsedTime > doAfter.Delay)
-                    {
                         continue;
-                    }
 
                     // Predictions
                     if (doAfter.BreakOnUserMove)
                     {
                         if (!userGrid.InRange(EntityManager, doAfter.UserGrid, doAfter.MovementThreshold))
                         {
-                            comp.Cancel(id, currentTime);
+                            Cancel(comp, id, currentTime);
                             continue;
                         }
                     }
@@ -123,7 +268,7 @@ namespace Content.Client.DoAfter
                             !Transform(doAfter.Target.Value).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
                                 doAfter.MovementThreshold))
                         {
-                            comp.Cancel(id, currentTime);
+                            Cancel(comp, id, currentTime);
                             continue;
                         }
                     }
@@ -136,7 +281,7 @@ namespace Content.Client.DoAfter
                     var cancelled = comp.CancelledDoAfters[i];
                     if ((currentTime - cancelled.CancelTime).TotalSeconds > ExcessTime)
                     {
-                        comp.Remove(cancelled.Message);
+                        Remove(comp, cancelled.Message);
                     }
                 }
             }

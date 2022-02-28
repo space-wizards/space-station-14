@@ -12,7 +12,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Doors.Systems
 {
-    public class FirelockSystem : EntitySystem
+    public sealed class FirelockSystem : EntitySystem
     {
         [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
 

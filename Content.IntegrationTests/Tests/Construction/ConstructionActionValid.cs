@@ -9,7 +9,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Construction
 {
     [TestFixture]
-    public class ConstructionActionValid : ContentIntegrationTest
+    public sealed class ConstructionActionValid : ContentIntegrationTest
     {
         private bool IsValid(IGraphAction action, IPrototypeManager protoMan, out string prototype)
         {

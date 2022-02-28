@@ -7,7 +7,7 @@ using Robust.Shared.Network;
 namespace Content.IntegrationTests.Tests.Networking
 {
     [TestFixture]
-    public class ReconnectTest : ContentIntegrationTest
+    public sealed class ReconnectTest : ContentIntegrationTest
     {
         [Test]
         public async Task Test()

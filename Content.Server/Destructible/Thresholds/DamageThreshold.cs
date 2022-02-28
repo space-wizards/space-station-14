@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Destructible.Thresholds
 {
     [DataDefinition]
-    public class DamageThreshold
+    public sealed class DamageThreshold
     {
         [DataField("behaviors")]
         private List<IThresholdBehavior> _behaviors = new();

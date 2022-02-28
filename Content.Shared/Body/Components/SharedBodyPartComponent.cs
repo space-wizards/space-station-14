@@ -303,7 +303,7 @@ namespace Content.Shared.Body.Components
     }
 
     [Serializable, NetSerializable]
-    public class BodyPartComponentState : ComponentState
+    public sealed class BodyPartComponentState : ComponentState
     {
         [NonSerialized] private List<MechanismComponent>? _mechanisms;
 

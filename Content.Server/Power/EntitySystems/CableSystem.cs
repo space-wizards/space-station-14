@@ -65,7 +65,7 @@ public sealed partial class CableSystem : EntitySystem
     }
 }
 
-public class CuttingFinishedEvent : EntityEventArgs
+public sealed class CuttingFinishedEvent : EntityEventArgs
 {
     public EntityUid User;
 

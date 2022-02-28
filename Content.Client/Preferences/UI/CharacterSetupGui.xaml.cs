@@ -24,7 +24,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Preferences.UI
 {
     [GenerateTypedNameReferences]
-    public partial class CharacterSetupGui : Control
+    public sealed partial class CharacterSetupGui : Control
     {
         private readonly IClientPreferencesManager _preferencesManager;
         private readonly IEntityManager _entityManager;
@@ -138,7 +138,7 @@ namespace Content.Client.Preferences.UI
             Characters.AddChild(_createNewCharacterButton);
         }
 
-        private class CharacterPickerButton : ContainerButton
+        private sealed class CharacterPickerButton : ContainerButton
         {
             private EntityUid _previewDummy;
 

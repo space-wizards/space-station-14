@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
 [TestOf(typeof(AdminLogSystem))]
-public class AddTests : ContentIntegrationTest
+public sealed class AddTests : ContentIntegrationTest
 {
     [Test]
     public async Task AddAndGetSingleLog()

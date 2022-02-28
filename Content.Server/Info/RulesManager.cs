@@ -4,7 +4,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Info;
 
-public class RulesManager : SharedRulesManager
+public sealed class RulesManager : SharedRulesManager
 {
     [Dependency] private readonly INetManager _netManager = default!;
 

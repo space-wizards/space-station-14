@@ -15,7 +15,7 @@ namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedContainmentFieldGeneratorComponent))]
-    public class ContainmentFieldGeneratorComponent : SharedContainmentFieldGeneratorComponent
+    public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldGeneratorComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
