@@ -284,3 +284,11 @@
   category: Misc
   itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
   price: 4
+  
+- type: uplinkListing
+  id: UplinkCatEars
+  category: Misc
+  itemId: ClothingHeadHatCatEars
+  listingName: Cat Ears
+  description: UwU.
+  price: 3
