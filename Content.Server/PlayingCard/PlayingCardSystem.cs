@@ -41,37 +41,35 @@ public sealed class PlayingCardSystem : EntitySystem
 
     public void CombineCards(EntityUid uid, EntityUid itemUsed, EntityUid user, PlayingCardComponent cardComponent)
     {
-        if (TryComp<PlayingCardComponent>(itemUsed, out PlayingCardComponent? incomingCardComp))
-            {
+        if (!TryComp<PlayingCardComponent>(itemUsed, out PlayingCardComponent? incomingCardComp))
+            return;
 
-                if (incomingCardComp.CardDeckID != cardComponent.CardDeckID)
-                {
-                    _popupSystem.PopupEntity(Loc.GetString("playing-card-hand-component-merge-card-id-fail"),
-                        uid, Filter.Entities(user));
-                    return;
-                }
+        if (incomingCardComp.CardDeckID != cardComponent.CardDeckID)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("playing-card-hand-component-merge-card-id-fail"),
+                uid, Filter.Entities(user));
+            return;
+        }
 
-                if (!TryComp<HandsComponent>(user, out var hands))
-                    return;
+        if (!TryComp<HandsComponent>(user, out var hands))
+            return;
 
-                if (!TryComp<TransformComponent>(cardComponent.Owner, out var transformComp))
-                return;
+        if (!TryComp<TransformComponent>(cardComponent.Owner, out var transformComp))
+        return;
 
+        List<string> cardsToAdd = new(){
+            cardComponent.CardName,
+            incomingCardComp.CardName
+        };
 
-                List<string> cardsToAdd = new();
-                cardsToAdd.Add(cardComponent.CardName);
-                cardsToAdd.Add(incomingCardComp.CardName);
+        EntityUid? cardHand =  _playingCardHandSystem.CreateCardHand(cardComponent.CardDeckID, cardsToAdd, cardComponent.CardHandPrototype, cardComponent.PlayingCardPrototype, cardComponent.NoUniqueCardLayers, transformComp.Coordinates);
 
-                EntityUid? cardHand =  _playingCardHandSystem.CreateCardHand(cardComponent.CardDeckID, cardsToAdd, cardComponent.CardHandPrototype, cardComponent.PlayingCardPrototype, cardComponent.NoUniqueCardLayers, transformComp.Coordinates);
+        if (cardHand == null || !TryComp<SharedItemComponent>(cardHand, out var cardHandEnt))
+            return;
 
-                if (cardHand == null || !TryComp<SharedItemComponent>(cardHand, out var cardHandEnt))
-                    return;
-
-                EntityManager.QueueDeleteEntity(itemUsed);
-                EntityManager.DeleteEntity(cardComponent.Owner);
-
-                hands.PutInHand(cardHandEnt);
-            }
+        EntityManager.QueueDeleteEntity(itemUsed);
+        EntityManager.DeleteEntity(cardComponent.Owner);
+        hands.PutInHand(cardHandEnt);
     }
 
     public void FlipCard(PlayingCardComponent component)

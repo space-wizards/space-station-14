@@ -8,10 +8,11 @@ public sealed class PlayingCardHandSystem : VisualizerSystem<PlayingCardHandVisu
     protected override void OnAppearanceChange(EntityUid uid, PlayingCardHandVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (TryComp(uid, out SpriteComponent? sprite)
-        && args.Component.TryGetData(PlayingCardHandVisuals.CardCount, out int cardCount)
-        && args.Component.TryGetData(PlayingCardHandVisuals.CardList, out List<string> cardList)
-        && args.Component.TryGetData(PlayingCardHandVisuals.NoUniqueCardLayers, out bool noUniqueCards))
+        && args.Component.TryGetData(PlayingCardHandVisuals.CardList, out CardListVisualState visualState))
         {
+            List<string> cardList = visualState.CardList;
+            int cardCount = cardList.Count;
+            bool noUniqueCards = visualState.NoUniqueCardLayers;
             sprite.LayerSetVisible(PlayingCardHandVisualLayers.ManyCardHandBase, false);
             sprite.LayerSetVisible(PlayingCardHandVisualLayers.FourthCardDetails, false);
             sprite.LayerSetVisible(PlayingCardHandVisualLayers.ThirdCardDetails, false);

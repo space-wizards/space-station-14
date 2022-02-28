@@ -56,7 +56,9 @@ public class PlayingCardDeckSystem : EntitySystem
 
     private void OnUseInHand(EntityUid uid, PlayingCardDeckComponent cardDeckComponent, UseInHandEvent args)
     {
-        // CREATE COOLDOWN
+        if (args.Handled) return;
+
+        args.Handled = true;
         Shuffle(uid, args.User, cardDeckComponent);
     }
 
@@ -72,7 +74,6 @@ public class PlayingCardDeckSystem : EntitySystem
 
     private void AddAltVerb(EntityUid uid, PlayingCardDeckComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        //  add verbs for picking up deck and taking cards out
         if (!args.CanInteract)
             return;
 
@@ -117,7 +118,7 @@ public class PlayingCardDeckSystem : EntitySystem
                     uid, Filter.Entities(user));
                 return;
             }
-            // handComp.CardList.Reverse();
+
             int addCount = handComp.CardList.Count;
             cardDeckComponent.CardList.AddRange(handComp.CardList);
             EntityManager.QueueDeleteEntity(handComp.Owner);
@@ -176,7 +177,6 @@ public class PlayingCardDeckSystem : EntitySystem
         cardDeckComponent.CardList.RemoveAt(0);
         _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pick-up-single", ("user", user)),
             uid, Filter.Pvs(uid));
-
     }
 
     public void OpenCardPickUI(EntityUid uid, EntityUid user, PlayingCardDeckComponent cardDeckComponent)

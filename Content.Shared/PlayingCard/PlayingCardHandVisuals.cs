@@ -1,4 +1,3 @@
-using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.PlayingCard
@@ -6,8 +5,23 @@ namespace Content.Shared.PlayingCard
     [Serializable, NetSerializable]
     public enum PlayingCardHandVisuals : byte
     {
-        CardCount,
         CardList,
-        NoUniqueCardLayers
+    }
+
+    [Serializable, NetSerializable]
+     public sealed class CardListVisualState : ICloneable
+    {
+        // These should be the last 5 cards for their relevant state
+        public readonly List<string> CardList;
+        public readonly bool NoUniqueCardLayers;
+        public CardListVisualState(List<string> cardList, bool noUniqueCardLayers)
+        {
+            CardList = cardList;
+            NoUniqueCardLayers = noUniqueCardLayers;
+        }
+        public object Clone()
+        {
+            return new CardListVisualState(CardList, NoUniqueCardLayers);
+        }
     }
 }

@@ -1,6 +1,4 @@
 using Robust.Shared.Serialization;
-using Robust.Shared.GameStates;
-
 
 namespace Content.Shared.PlayingCard
 {
@@ -12,8 +10,6 @@ namespace Content.Shared.PlayingCard
 
         [DataField("cardName")]
         public string CardName = "Playing Card";
-        [DataField("cardDescription")]
-        public string CardDescription = "a playing card";
         [DataField("isFacingUp")]
         public bool FacingUp = false;
         [DataField("cardHandPrototype")]

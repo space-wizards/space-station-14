@@ -1,15 +1,11 @@
-using System;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.PlayingCard;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
-
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Content.Server.PlayingCard;
 using System.Linq;
 using Content.Shared.Examine;
 using Robust.Server.GameObjects;
@@ -37,7 +33,6 @@ public class PlayingCardHandSystem : EntitySystem
         SubscribeLocalEvent<PlayingCardHandComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<PlayingCardHandComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<PlayingCardHandComponent, PickSingleCardMessage>(PickSingleCardMessage);
-        // ON INTERACT OTHER, ATTEMPT TO MERGE
     }
 
     private void OnInteractUsing(EntityUid uid, PlayingCardHandComponent cardHandComponent, InteractUsingEvent args)
@@ -79,7 +74,6 @@ public class PlayingCardHandSystem : EntitySystem
                     uid, Filter.Entities(user));
                 return;
             }
-            // handComp.CardList.Reverse();
             int addCount = handComp.CardList.Count;
             cardHandComponent.CardList.AddRange(handComp.CardList);
             EntityManager.QueueDeleteEntity(handComp.Owner);
@@ -103,8 +97,11 @@ public class PlayingCardHandSystem : EntitySystem
         }
     }
 
-    public void RemoveSingleCard(EntityUid uid, EntityUid? user, int cardIndex, PlayingCardHandComponent cardHandComponent)
+    public void RemoveSingleCard(EntityUid uid, EntityUid? user, int cardIndex, PlayingCardHandComponent? cardHandComponent)
     {
+        if (!Resolve(uid, ref cardHandComponent))
+            return;
+
         if (user == null || cardHandComponent.CardList.Count <= 0)
             return;
 
@@ -174,9 +171,11 @@ public class PlayingCardHandSystem : EntitySystem
     {
         if (TryComp<AppearanceComponent>(cardHandComponent.Owner, out AppearanceComponent? appearance))
         {
-            appearance.SetData(PlayingCardHandVisuals.CardCount, cardHandComponent.CardList.Count);
-            appearance.SetData(PlayingCardHandVisuals.CardList, cardHandComponent.CardList);
-            appearance.SetData(PlayingCardHandVisuals.NoUniqueCardLayers, cardHandComponent.NoUniqueCardLayers);
+            List<string> relevantCards = new(
+                cardHandComponent.CardList.Skip(Math.Max(0, cardHandComponent.CardList.Count - 5)).Take(5)
+            );
+
+            appearance.SetData(PlayingCardHandVisuals.CardList, new CardListVisualState(relevantCards, cardHandComponent.NoUniqueCardLayers));
         }
     }
 

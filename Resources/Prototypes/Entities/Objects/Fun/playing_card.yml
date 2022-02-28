@@ -39,6 +39,8 @@
     cardPrototype: PlayingCard
     cardHandPrototype: PlayingCardHand
     cardList: [
+      6 of Clubs,
+      6 of Diamonds,
       6 of Hearts,
       6 of Spades,
       7 of Clubs,
@@ -88,9 +90,7 @@
       5 of Hearts,
       Queen of Hearts,
       5 of Spades,
-      Queen of Spades,
-      6 of Clubs,
-      6 of Diamonds,
+      Queen of Spades
     ]
   - type: Item
     size: 3
@@ -105,6 +105,8 @@
     interfaces:
     - key: enum.PlayingCardDeckUiKey.Key
       type: PlayingCardDeckBoundUserInterface
+  - type: UseDelay
+    delay: 2.0
 
 - type: entity
   parent: BaseItem
