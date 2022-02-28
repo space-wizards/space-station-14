@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Mopping now picks up slightly more reagents, and cleaning vomit should
-      be easier.', type: Tweak}
-  id: 643
-  time: '2021-11-23T17:14:46.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Pried tiles now have a random rotation applied, type: Tweak}
@@ -2992,3 +2986,8 @@ Entries:
   - {message: Animal's blood now variate depending on their size, type: Tweak}
   id: 1142
   time: '2022-02-28T01:23:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Lowered ghost movement speed., type: Tweak}
+  id: 1143
+  time: '2022-02-28T15:14:17.0000000+00:00'
