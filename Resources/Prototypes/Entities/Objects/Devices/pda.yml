@@ -501,5 +501,11 @@
     interfaces:
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
+    - key: enum.PDAUiKey.Key
+      type: PDABoundUserInterface
+    - key: enum.UplinkUiKey.Key
+      type: UplinkBoundUserInterface
+    - key: enum.RingerUiKey.Key
+      type: RingerBoundUserInterface
   - type: Input
     context: "human"
