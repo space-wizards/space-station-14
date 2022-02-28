@@ -53,11 +53,6 @@ public sealed class EntityPainter
 
     public void Run(Image canvas, EntityData entity)
     {
-        if (_sEntityManager.HasComponent<SubFloorHideComponent>(entity.Sprite.Owner))
-        {
-            return;
-        }
-
         if (!entity.Sprite.Visible || entity.Sprite.ContainerOccluded)
         {
             return;
