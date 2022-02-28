@@ -77,7 +77,7 @@
   - type: NameIdentifier
     group: Drone
   - type: Inventory
-    templateId: drone
+    templateId: head
   - type: Strippable
   - type: UserInterface
     interfaces:
