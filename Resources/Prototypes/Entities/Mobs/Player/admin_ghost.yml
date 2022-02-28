@@ -52,6 +52,8 @@
           description: action-description-show-solar-console
           icon: Structures/Machines/parts.rsi/box_0.png
           iconOn: Structures/Machines/parts.rsi/box_2.png
+          keywords: [ "AI", "console", "interface" ]
+          priority: -10
           event: !type:ToggleIntrinsicUIEvent
       - key: enum.CommunicationsConsoleUiKey.Key
         toggleAction:
@@ -59,6 +61,8 @@
           description: action-description-show-communications-console
           icon: Structures/Machines/parts.rsi/box_0.png
           iconOn: Structures/Machines/parts.rsi/box_2.png
+          keywords: [ "AI", "console", "interface" ]
+          priority: -10
           event: !type:ToggleIntrinsicUIEvent
       - key: enum.RadarConsoleUiKey.Key
         toggleAction:
@@ -66,6 +70,8 @@
           description: action-description-show-radar-console
           icon: Structures/Machines/parts.rsi/box_0.png
           iconOn: Structures/Machines/parts.rsi/box_2.png
+          keywords: [ "AI", "console", "interface" ]
+          priority: -10
           event: !type:ToggleIntrinsicUIEvent
       - key: enum.CargoConsoleUiKey.Key
         toggleAction:
@@ -73,6 +79,8 @@
           description: action-description-show-cargo-console
           icon: Structures/Machines/parts.rsi/box_0.png
           iconOn: Structures/Machines/parts.rsi/box_2.png
+          keywords: [ "AI", "console", "interface" ]
+          priority: -10
           event: !type:ToggleIntrinsicUIEvent
       - key: enum.CrewMonitoringUIKey.Key
         toggleAction:
@@ -80,6 +88,8 @@
           description: action-description-crew-monitoring-console
           icon: Structures/Machines/parts.rsi/box_0.png
           iconOn: Structures/Machines/parts.rsi/box_2.png
+          keywords: [ "AI", "console", "interface" ]
+          priority: -10
           event: !type:ToggleIntrinsicUIEvent
   - type: SolarControlConsole # look ma i AM the computer!
   - type: CommunicationsConsole

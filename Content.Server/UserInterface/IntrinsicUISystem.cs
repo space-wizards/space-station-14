@@ -25,7 +25,6 @@ public sealed class IntrinsicUISystem : EntitySystem
 
     private void OnGetActions(EntityUid uid, IntrinsicUIComponent component, ComponentStartup args)
     {
-        Logger.DebugS("actions", "Setting up intrinsics");
         if (!TryComp<ActionsComponent>(uid, out var actions))
             return;
 
