@@ -1,11 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Added epinephrine, an emergency medical chemical that reduces stun
-      times slightly and heals people that are in critical health. Everyone starts
-      with a medipen containing it in their survival box--beware of overdoses.', type: Add}
-  id: 641
-  time: '2021-11-23T06:51:52.0000000+00:00'
 - author: Mith-randalf
   changes:
   - {message: Added the warden's favourite jacket., type: Add}
@@ -2993,3 +2986,9 @@ Entries:
   - {message: Monkeys now understand the concept of hats, type: Add}
   id: 1140
   time: '2022-02-27T19:56:36.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'The /mapping command syntax has changed. The filename now comes before
+      the Id, and a new blank map is created by providing no arguments.', type: Tweak}
+  id: 1141
+  time: '2022-02-28T01:21:15.0000000+00:00'
