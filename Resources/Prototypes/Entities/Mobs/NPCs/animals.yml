@@ -734,7 +734,7 @@
 
 
 - type: entity
-  name: lizard
+  name: lizard #Weh
   parent: SimpleMobBase
   id: MobLizard
   description: I think it's lost.
