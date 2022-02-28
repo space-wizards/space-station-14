@@ -1,1 +1,1 @@
-station-event-vent-spiders-start-announcement = Based on { $data }, we believe a small colony of unknown organisms have taken residence inside the station's ventilation and have taken action to drive them out.
+station-event-vent-spiders-start-announcement = Опираясь на { $data }, мы полагаем, что небольшая колония неизвестных организмов обосновалась внутри вентиляции станции, и мы предприняли меры по выдворению их оттуда.
