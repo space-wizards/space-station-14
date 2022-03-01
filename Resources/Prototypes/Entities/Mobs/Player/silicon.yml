@@ -71,8 +71,8 @@
   components:
   - type: Drone
     tools:
-      - id: PowerDrill
-      - id: JawsOfLife
+      - id: trayScanner
+      - id: Omnitool
       - id: WelderExperimental
   - type: NameIdentifier
     group: Drone
