@@ -7,7 +7,7 @@
     prefixCreator: '14'
   mapPath: /Maps/saltern.yml
   minPlayers: 0
-  maxPlayers: 25
+  maxPlayers: 29
   fallback: true
   overflowJobs:
     - Assistant
@@ -33,7 +33,10 @@
     SecurityOfficer: [ 2, 3 ]
     Chaplain: [ 1, 1 ]
     Librarian: [ 1, 1 ]
-    Musician: [1, 1]
+    Musician: [ 1, 1 ]
+    Lawyer: [ 1, 1 ]
+    SalvageSpecialist: [ 1, 2 ]
+    Quartermaster: [ 1, 1 ]
 
 - type: gameMap
   id: packedstation
