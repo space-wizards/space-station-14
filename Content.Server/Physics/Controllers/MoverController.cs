@@ -171,16 +171,21 @@ namespace Content.Server.Physics.Controllers
                 if (linearInput.Length.Equals(0f))
                 {
                     thrusterSystem.DisableLinearThrusters(shuttle);
-                    body.LinearDamping = shuttleSystem.ShuttleIdleLinearDamping;
+                    body.LinearDamping = shuttleSystem.ShuttleIdleLinearDamping * body.InvMass;
+                    if (body.LinearVelocity.Length < 0.08)
+                    {
+                        body.LinearVelocity = Vector2.Zero;
+                    }
                 }
                 else
                 {
-                    body.LinearDamping = shuttleSystem.ShuttleMovingLinearDamping;
-
+                    body.LinearDamping = 0;
                     var angle = linearInput.ToWorldAngle();
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
                     var shuttleNorth = EntityManager.GetComponent<TransformComponent>(body.Owner).WorldRotation.ToWorldVec();
+
+                    var totalForce = new Vector2();
 
                     // Won't just do cardinal directions.
                     foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
@@ -231,37 +236,36 @@ namespace Content.Server.Physics.Controllers
                         thrusterSystem.EnableLinearThrustDirection(shuttle, dir);
 
                         var index = (int) Math.Log2((int) dir);
-                        var force = shuttle.LinearThrust[index] * length;
+                        var force = thrustAngle.RotateVec(shuttleNorth) * shuttle.LinearThrust[index] * length;
 
-                        var maxForce = body.Mass * shuttleSystem.ShuttleMaxLinearAcc;
-
-                        force = Math.Clamp(force, 0f, maxForce);
-
-                        body.ApplyLinearImpulse(
-                            thrustAngle.RotateVec(shuttleNorth) *
-                            force *
-                            frameTime);
+                        totalForce += force;
                     }
+
+                    var dragForce = body.LinearVelocity * (totalForce.Length / shuttleSystem.ShuttleMaxLinearSpeed);
+                    body.ApplyLinearImpulse((totalForce - dragForce) * frameTime);
                 }
 
                 if (MathHelper.CloseTo(angularInput, 0f))
                 {
                     thrusterSystem.SetAngularThrust(shuttle, false);
-                    body.AngularDamping = shuttleSystem.ShuttleIdleAngularDamping;
+                    body.AngularDamping = shuttleSystem.ShuttleIdleAngularDamping * body.InvI;
+
+                    if (Math.Abs(body.AngularVelocity) < 0.05f)
+                    {
+                        body.AngularVelocity = 0f;
+                    }
                 }
                 else
                 {
-                    body.AngularDamping = shuttleSystem.ShuttleMovingAngularDamping;
+                    body.AngularDamping = 0;
 
-                    var torque = shuttle.AngularThrust;
                     var maxTorque = body.Inertia * shuttleSystem.ShuttleMaxAngularAcc;
 
-                    torque = Math.Clamp(torque, 0f, maxTorque);
+                    var torque = Math.Clamp(shuttle.AngularThrust, 0, maxTorque);
 
-                    body.ApplyAngularImpulse(
-                        -angularInput *
-                        torque *
-                        frameTime);
+                    var dragTorque = body.AngularVelocity * (torque / shuttleSystem.ShuttleMaxAngularSpeed);
+
+                    body.ApplyAngularImpulse((-angularInput * torque - dragTorque) * frameTime);
 
                     thrusterSystem.SetAngularThrust(shuttle, true);
                 }

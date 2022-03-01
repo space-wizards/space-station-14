@@ -14,14 +14,13 @@ namespace Content.Server.Shuttles.EntitySystems
     {
         private const float TileMassMultiplier = 4f;
 
-        public float ShuttleMaxLinearAcc = 13f;
+        public float ShuttleMaxLinearSpeed = 11f;
+        public float ShuttleMaxAngularSpeed = 1.4f;
+
         public float ShuttleMaxAngularAcc = 3f;
 
-        public float ShuttleMovingLinearDamping = 1.15f;
-        public float ShuttleIdleLinearDamping = 0.5f;
-
-        public float ShuttleMovingAngularDamping = 3f;
-        public float ShuttleIdleAngularDamping = 3f;
+        public float ShuttleIdleLinearDamping = 50f;
+        public float ShuttleIdleAngularDamping = 100f;
 
         public override void Initialize()
         {
@@ -34,31 +33,27 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<GridFixtureChangeEvent>(OnGridFixtureChange);
 
             var configManager = IoCManager.Resolve<IConfigurationManager>();
-            configManager.OnValueChanged(CCVars.ShuttleMaxLinearAcc, SetShuttleMaxLinearAcc, true);
-            configManager.OnValueChanged(CCVars.ShuttleMaxAngularAcc, SetShuttleMaxAngularAcc, true);
+            configManager.OnValueChanged(CCVars.ShuttleMaxLinearSpeed, SetShuttleMaxLinearSpeed, true);
+            configManager.OnValueChanged(CCVars.ShuttleMaxAngularSpeed, SetShuttleMaxAngularSpeed, true);
             configManager.OnValueChanged(CCVars.ShuttleIdleLinearDamping, SetShuttleIdleLinearDamping, true);
             configManager.OnValueChanged(CCVars.ShuttleIdleAngularDamping, SetShuttleIdleAngularDamping, true);
-            configManager.OnValueChanged(CCVars.ShuttleMovingLinearDamping, SetShuttleMovingLinearDamping, true);
-            configManager.OnValueChanged(CCVars.ShuttleMovingAngularDamping, SetShuttleMovingAngularDamping, true);
+            configManager.OnValueChanged(CCVars.ShuttleMaxAngularAcc, SetShuttleMaxAngularAcc, true);
         }
 
-        private void SetShuttleMaxLinearAcc(float value) => ShuttleMaxLinearAcc = value;
+        private void SetShuttleMaxLinearSpeed(float value) => ShuttleMaxLinearSpeed = value;
+        private void SetShuttleMaxAngularSpeed(float value) => ShuttleMaxAngularSpeed = value;
         private void SetShuttleMaxAngularAcc(float value) => ShuttleMaxAngularAcc = value;
         private void SetShuttleIdleLinearDamping(float value) => ShuttleIdleLinearDamping = value;
         private void SetShuttleIdleAngularDamping(float value) => ShuttleIdleAngularDamping = value;
-        private void SetShuttleMovingLinearDamping(float value) => ShuttleMovingLinearDamping = value;
-        private void SetShuttleMovingAngularDamping(float value) => ShuttleMovingAngularDamping = value;
 
         public override void Shutdown()
         {
             base.Shutdown();
-            var configManar = IoCManager.Resolve<IConfigurationManager>();
-            configManar.UnsubValueChanged(CCVars.ShuttleMaxLinearAcc, SetShuttleMaxLinearAcc);
-            configManar.UnsubValueChanged(CCVars.ShuttleMaxAngularAcc, SetShuttleMaxAngularAcc);
-            configManar.UnsubValueChanged(CCVars.ShuttleIdleLinearDamping, SetShuttleIdleLinearDamping);
-            configManar.UnsubValueChanged(CCVars.ShuttleIdleAngularDamping, SetShuttleIdleAngularDamping);
-            configManar.UnsubValueChanged(CCVars.ShuttleMovingLinearDamping, SetShuttleMovingLinearDamping);
-            configManar.UnsubValueChanged(CCVars.ShuttleMovingAngularDamping, SetShuttleMovingAngularDamping);
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            configManager.UnsubValueChanged(CCVars.ShuttleMaxLinearSpeed, SetShuttleMaxLinearSpeed);
+            configManager.UnsubValueChanged(CCVars.ShuttleMaxAngularSpeed, SetShuttleMaxAngularSpeed);
+            configManager.UnsubValueChanged(CCVars.ShuttleIdleLinearDamping, SetShuttleIdleLinearDamping);
+            configManager.UnsubValueChanged(CCVars.ShuttleIdleAngularDamping, SetShuttleIdleAngularDamping);
         }
 
         private void OnShuttleAdd(EntityUid uid, ShuttleComponent component, ComponentAdd args)

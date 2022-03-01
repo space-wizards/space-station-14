@@ -95,7 +95,7 @@
   - type: Thruster
     thrusterType: Angular
     requireSpace: false
-    thrust: 130000
+    thrust: 50000
   - type: Sprite
     # Listen I'm not the biggest fan of the sprite but it was the most appropriate thing I could find.
     sprite: Structures/Shuttles/gyroscope.rsi
