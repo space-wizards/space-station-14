@@ -1,3 +1,3 @@
 ent-DoorElectronics = door electronics
-    .desc = { ent-BaseItem.desc }
+    .desc = An electronics board used in doors and airlocks
     .suffix = { "" }

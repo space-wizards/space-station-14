@@ -7,3 +7,6 @@ ent-SalvageCanisterSpawner = Salvage Canister Spawner
 ent-SalvageMobSpawner = Salvage Mob Spawner
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
+ent-SalvageMobSpawner75 = { ent-SalvageMobSpawner }
+    .suffix = 75
+    .desc = { ent-SalvageMobSpawner.desc }

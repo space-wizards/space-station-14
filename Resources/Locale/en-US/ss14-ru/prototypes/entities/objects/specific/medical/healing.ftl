@@ -1,3 +1,6 @@
+ent-BaseHealingItem = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+    .suffix = { "" }
 ent-Ointment = ointment
     .desc = Used to treat those nasty burns.
     .suffix = { "" }
@@ -6,6 +9,9 @@ ent-Brutepack = bruise pack
     .suffix = { "" }
 ent-Gauze = roll of gauze
     .desc = Some sterile gauze to wrap around bloody stumps.
+    .suffix = { "" }
+ent-Gauze1 = { ent-Gauze }
+    .desc = { ent-Gauze.desc }
     .suffix = { "" }
 ent-AloeCream = aloe cream
     .desc = A topical cream for burns.

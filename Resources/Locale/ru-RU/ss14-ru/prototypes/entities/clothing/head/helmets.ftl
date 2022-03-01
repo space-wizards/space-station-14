@@ -37,3 +37,6 @@ ent-ClothingHeadHelmetThunderdome = thunderdome helmet
 ent-ClothingHeadHelmetWizardHelm = wizard helm
     .desc = Strange-looking helmet that most certainly belongs to a real magic user.
     .suffix = { "" }
+ent-ClothingHeadHelmetFire = fire helmet
+    .desc = An atmos techs best friend. Provides some heat resistance and looks cool.
+    .suffix = { "" }

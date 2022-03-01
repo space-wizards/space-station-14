@@ -1,6 +1,6 @@
 ent-AirAlarmElectronics = air alarm electronics
-    .desc = { ent-BaseItem.desc }
+    .desc = An electronics board used in air alarms
     .suffix = { "" }
 ent-FireAlarmElectronics = fire alarm electronics
-    .desc = { ent-BaseItem.desc }
+    .desc = An electronics board used in fire alarms
     .suffix = { "" }
