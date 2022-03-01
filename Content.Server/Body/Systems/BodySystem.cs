@@ -41,10 +41,10 @@ namespace Content.Server.Body.Systems
         private void OnApplyMetabolicMultiplier(EntityUid uid, BodyComponent component, ApplyMetabolicMultiplierEvent args)
         {
             foreach (var (part, _) in component.Parts)
-                foreach (var mechanism in part.Mechanisms)
-                {
-                    RaiseLocalEvent(mechanism.Owner, args, false);
-                }
+            foreach (var mechanism in part.Mechanisms)
+            {
+                RaiseLocalEvent(mechanism.Owner, args, false);
+            }
         }
 
         /// <summary>
