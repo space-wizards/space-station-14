@@ -149,6 +149,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
+    femaleMask: UniformTop
 
 - type: entity
   parent: ClothingUniformBase

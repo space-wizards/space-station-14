@@ -14,10 +14,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -62,7 +58,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 || !nodeContainer.TryGetNode(pump.InletName, out PipeNode? inlet)
                 || !nodeContainer.TryGetNode(pump.OutletName, out PipeNode? outlet))
             {
-                appearance?.SetData(PressurePumpVisuals.Enabled, false);
+                appearance?.SetData(PumpVisuals.Enabled, false);
                 return;
             }
 
@@ -70,13 +66,13 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             if (MathHelper.CloseToPercent(pump.TargetPressure, outputStartingPressure))
             {
-                appearance?.SetData(PressurePumpVisuals.Enabled, false);
+                appearance?.SetData(PumpVisuals.Enabled, false);
                 return; // No need to pump gas if target has been reached.
             }
 
             if (inlet.Air.TotalMoles > 0 && inlet.Air.Temperature > 0)
             {
-                appearance?.SetData(PressurePumpVisuals.Enabled, true);
+                appearance?.SetData(PumpVisuals.Enabled, true);
 
                 // We calculate the necessary moles to transfer using our good ol' friend PV=nRT.
                 var pressureDelta = pump.TargetPressure - outputStartingPressure;
@@ -91,7 +87,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         {
             if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
-                appearance.SetData(PressurePumpVisuals.Enabled, false);
+                appearance.SetData(PumpVisuals.Enabled, false);
             }
         }
 

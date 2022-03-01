@@ -1,6 +1,7 @@
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Guardian
 {
@@ -22,5 +23,17 @@ namespace Content.Server.Guardian
         /// Container which holds the guardian
         /// </summary>
         [ViewVariables] public ContainerSlot GuardianContainer = default!;
+
+        [DataField("action")]
+        public InstantAction Action = new()
+        {
+            Name = "action-name-guardian",
+            Description = "action-description-guardian",
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/manifest.png")),
+            UseDelay = TimeSpan.FromSeconds(2),
+            Event =  new GuardianToggleActionEvent(),
+        };
     }
+
+    public sealed class GuardianToggleActionEvent : PerformActionEvent { };
 }

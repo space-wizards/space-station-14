@@ -96,10 +96,7 @@
       - Impassable
       layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
       - Impassable
-      - MobImpassable
       - VaultImpassable
-      - SmallImpassable
-
 
 
 - type: entity
