@@ -11,10 +11,8 @@
   - Theatre
   special:
   - !type:GiveItemOnHolidaySpecial
-    holiday: PerformersDay
+    holiday: MikuDay
     prototype: BoxPerformer
-
-
 
 - type: startingGear
   id: MusicianGear

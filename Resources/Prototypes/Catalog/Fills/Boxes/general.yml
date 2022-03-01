@@ -179,10 +179,10 @@
       - state: writing
 
 - type: entity
-  name: miku day box
+  name: hatsune miku day box
   parent: BoxCardboard
   id: BoxPerformer
-  description: Happy Miku Day!
+  description: Happy Hatsune Miku Day!
   components:
   - type: StorageFill
     contents:

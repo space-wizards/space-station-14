@@ -56,13 +56,8 @@
   beginMonth: February
 
 - type: holiday
-<<<<<<< HEAD
-  id: PerformersDay
-  name: Performer's Day
-=======
   id: MikuDay
   name: Hatsune Miku Day
->>>>>>> 1efcd251ebbf34de2ee8ac45f4f59f8bc06f0440
   beginDay: 9
   beginMonth: March
 
