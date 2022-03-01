@@ -231,8 +231,8 @@ namespace Content.Server.Buckle.Components
             UpdateBuckleStatus();
 
             var ev = new BuckleChangeEvent() { Buckling = true, Strap = BuckledTo.Owner, BuckledEntity = Owner };
-            _entMan.EventBus.RaiseLocalEvent(Owner, ev, false);
-            _entMan.EventBus.RaiseLocalEvent(BuckledTo.Owner, ev, false);
+            _entMan.EventBus.RaiseLocalEvent(ev.BuckledEntity, ev, false);
+            _entMan.EventBus.RaiseLocalEvent(ev.Strap, ev, false);
 
             if (_entMan.TryGetComponent(Owner, out SharedPullableComponent? ownerPullable))
             {

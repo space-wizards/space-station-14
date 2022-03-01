@@ -3,12 +3,10 @@ using Content.Shared.Damage;
 namespace Content.Server.Bed.Components
 {
     [RegisterComponent]
-
     public sealed class HealOnBuckleComponent : Component
     {
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-
         public DamageSpecifier Damage = default!;
 
         [DataField("healTime", required: false)]

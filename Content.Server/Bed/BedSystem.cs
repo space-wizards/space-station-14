@@ -65,10 +65,10 @@ namespace Content.Server.Bed
             if (!TryComp<SharedBodyComponent>(args.BuckledEntity, out var body))
                 return;
 
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered && args.Buckling)
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
                 return;
             // Make the machine draw more power while someone is inside it
-            if (power != null)
+            if (power != null && power.NeedsPower)
             {
                 if (args.Buckling)
                 {

@@ -15,7 +15,7 @@ namespace Content.Client.Bed
         }
     }
 
-    public enum StasisBedVisualLayers
+    public enum StasisBedVisualLayers : byte
     {
         IsOn,
     }
