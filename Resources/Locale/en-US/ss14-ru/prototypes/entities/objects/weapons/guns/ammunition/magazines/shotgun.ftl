@@ -10,3 +10,6 @@ ent-MagazineShotgunBeanbag = ammo drum (.50 beanbags)
 ent-MagazineShotgunSlug = ammo drum (.50 slug)
     .desc = { ent-MagazineShotgunBase.desc }
     .suffix = { "" }
+ent-MagazineShotgunIncendiary = ammo drum (.50 incendiary)
+    .desc = { ent-MagazineShotgunBase.desc }
+    .suffix = { "" }

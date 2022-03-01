@@ -1,3 +1,3 @@
 ent-APCElectronics = APC electronics
-    .desc = Circuit used in APC construction.
+    .desc = An electronics board used in APC construction.
     .suffix = { "" }
