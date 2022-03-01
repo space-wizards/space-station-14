@@ -601,6 +601,7 @@ namespace Content.Client.Actions
 
             fillEvent.Action.ClientExclusive = true;
             fillEvent.Action.Temporary = true;
+            fillEvent.Action.AutoPopulate = false;
 
             Ui.Component.Actions.Add(fillEvent.Action);
             Assignments.AssignSlot(hotbar, index, fillEvent.Action);

@@ -7,6 +7,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Window
@@ -19,6 +20,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: WallReinforced
@@ -31,6 +33,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: WallSolid
@@ -43,6 +46,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: ReinforcedWindow
@@ -55,6 +59,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Firelock
@@ -67,6 +72,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Grille
@@ -79,6 +85,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       eraser: True
   assignments:
@@ -95,6 +102,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: AlignTileAny
       isTile: True
@@ -107,6 +115,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: AlignTileAny
       tileType: 30
@@ -120,6 +129,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: AlignTileAny
       tileType: 36
@@ -135,6 +145,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasPipeStraight
@@ -147,6 +158,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasPipeBend
@@ -159,6 +171,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasPipeTJunction
@@ -171,6 +184,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasPipeFourway
@@ -183,6 +197,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasVentScrubber
@@ -195,6 +210,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasVentPump
@@ -207,6 +223,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirAlarm
@@ -219,6 +236,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: FireAlarm
@@ -231,6 +249,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: SalternAPC
@@ -243,6 +262,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: CableApcExtension
@@ -255,6 +275,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: CableMV
@@ -267,6 +288,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: CableHV
@@ -279,6 +301,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: SalternSubstation
@@ -291,6 +314,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Poweredlight
@@ -303,6 +327,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: PlaceFree
       entityType: EmergencyLight
@@ -315,6 +340,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: SalternSMES
@@ -327,6 +353,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: TableWood
@@ -339,6 +366,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Table
@@ -351,6 +379,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: ChairWood
@@ -363,6 +392,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Chair
@@ -375,6 +405,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: ChairOfficeLight
@@ -387,6 +418,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: StoolBar
@@ -399,6 +431,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Stool
@@ -411,6 +444,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Rack
@@ -423,6 +457,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: ChairOfficeDark
@@ -435,6 +470,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: PlaceFree
       entityType: LampGold
@@ -447,6 +483,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalPipe
@@ -459,6 +496,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalBend
@@ -471,6 +509,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalJunction
@@ -483,6 +522,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalJunctionFlipped
@@ -495,6 +535,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalRouter
@@ -507,6 +548,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalRouterFlipped
@@ -519,6 +561,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalUnit
@@ -531,6 +574,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalTrunk
@@ -543,6 +587,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: SignDisposalSpace
@@ -555,6 +600,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Windoor
@@ -567,6 +613,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: WindowDirectional
@@ -579,6 +626,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: WindowReinforcedDirectional
@@ -591,6 +639,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: PlasmaWindowDirectional
@@ -603,6 +652,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Railing
@@ -615,6 +665,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: RailingCorner
@@ -627,6 +678,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: RailingCornerSmall
@@ -639,6 +691,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockMaintLocked
@@ -651,6 +704,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockGlass
@@ -663,6 +717,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockServiceLocked
@@ -675,6 +730,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockSecurityLocked
@@ -687,6 +743,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockCommand
@@ -699,6 +756,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockScience
@@ -711,6 +769,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockMedical
@@ -723,6 +782,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockEngineering
@@ -735,6 +795,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockCargo
@@ -752,6 +813,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#EFB34196'
@@ -770,6 +832,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#EFB34196'
@@ -788,6 +851,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#EFB34196'
@@ -806,6 +870,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#EFB34196'
@@ -824,6 +889,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#334E6DC8'
@@ -842,6 +908,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#52B4E996'
@@ -860,6 +927,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#9FED5896'
@@ -878,6 +946,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#DE3A3A96'
@@ -896,6 +965,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#D381C996'
@@ -914,6 +984,7 @@
     checkCanInteract: False
     clientExclusive: True
     temporary: True
+    autoPopulate: False
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#A4610696'
