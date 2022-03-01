@@ -1,7 +1,4 @@
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
@@ -28,6 +25,7 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         public string OutletName { get; set; } = "outlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("targetPressure")]
         public float TargetPressure { get; set; } = Atmospherics.OneAtmosphere;
     }
 }

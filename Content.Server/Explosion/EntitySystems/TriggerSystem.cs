@@ -103,7 +103,7 @@ namespace Content.Server.Explosion.EntitySystems
         private void HandleSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
         {
             if (component.Sound == null) return;
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.Sound.GetSound(), AudioHelpers.WithVariation(0.01f));
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.Sound.GetSound(), uid);
         }
 
         private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)

@@ -4,6 +4,7 @@ ui-options-title = Game Options
 ui-options-tab-graphics = Graphics
 ui-options-tab-controls = Controls
 ui-options-tab-audio = Audio
+ui-options-tab-network = Network
 
 ui-options-apply = Apply
 ui-options-reset-all = Reset All
@@ -148,3 +149,7 @@ ui-options-function-loadout6 = Hotbar Loadout 6
 ui-options-function-loadout7 = Hotbar Loadout 7
 ui-options-function-loadout8 = Hotbar Loadout 8
 ui-options-function-loadout9 = Hotbar Loadout 9
+
+## Network menu
+
+ui-options-net-interp-ratio = Network Smoothing

@@ -1,8 +1,5 @@
-﻿using System;
-using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 

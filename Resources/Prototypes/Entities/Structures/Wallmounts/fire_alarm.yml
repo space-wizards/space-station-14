@@ -61,6 +61,7 @@
   name: fire alarm assembly
   description: A fire alarm assembly. Very mild.
   components:
+  - type: WallMount
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite

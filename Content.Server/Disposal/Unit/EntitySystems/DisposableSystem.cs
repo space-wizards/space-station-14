@@ -47,6 +47,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             foreach (var entity in holder.Container.ContainedEntities.ToArray())
             {
+                if (HasComp<BeingDisposedComponent>(entity))
+                    RemComp <BeingDisposedComponent>(entity);
+
                 if (EntityManager.TryGetComponent(entity, out IPhysBody? physics))
                 {
                     physics.CanCollide = true;
@@ -99,6 +102,12 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 ExitDisposals(holderUid, holder, holderTransform);
                 return false;
+            }
+
+            foreach (var ent in holder.Container.ContainedEntities)
+            {
+                var comp = EnsureComp<BeingDisposedComponent>(ent);
+                comp.Holder = holder.Owner;
             }
 
             // Insert into next tube

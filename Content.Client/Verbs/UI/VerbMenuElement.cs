@@ -41,6 +41,18 @@ namespace Content.Client.Verbs.UI
                 ExpansionIndicator.Visible = true;
             }
 
+            if (verb.Icon == null && verb.IconEntity != null)
+            {
+                var spriteView = new SpriteView()
+                {
+                    OverrideDirection = Direction.South,
+                    Sprite = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ISpriteComponent>(verb.IconEntity.Value)
+                };
+
+                Icon.AddChild(spriteView);
+                return;
+            }
+
             Icon.AddChild(new TextureRect()
             {
                 Texture = verb.Icon?.Frame0(),
