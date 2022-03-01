@@ -13,25 +13,43 @@ namespace Content.Server.Bed
     public sealed class BedSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+
+        private List<EntityUid> _strappedBeds = new(); //This keeps track of beds with people in them to avoid EntityQuery
+
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<HealOnBuckleComponent, BuckleChangeEvent>(ManageUpdateList);
             SubscribeLocalEvent<StasisBedComponent, ComponentStartup>(OnComponentStartup);
             SubscribeLocalEvent<StasisBedComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<StasisBedComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<StasisBedComponent, GotEmaggedEvent>(OnEmagged);
         }
+
+        private void ManageUpdateList(EntityUid uid, HealOnBuckleComponent component, BuckleChangeEvent args)
+        {
+            if (!HasComp<StrapComponent>(uid))
+                return;
+
+            if (args.Buckling)
+            {
+                _strappedBeds.Add(uid);
+                return;
+            }
+
+            _strappedBeds.Remove(uid);
+            component.Accumulator = 0;
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            foreach (var (bedComponent, strapComponent) in EntityManager.EntityQuery<HealOnBuckleComponent, StrapComponent>())
+            foreach (EntityUid bed in _strappedBeds)
             {
-                if (strapComponent.BuckledEntities.Count == 0)
-                {
-                    bedComponent.Accumulator = 0;
-                    continue;
-                }
+                var bedComponent = EntityManager.GetComponent<HealOnBuckleComponent>(bed);
+                var strapComponent = EntityManager.GetComponent<StrapComponent>(bed);
+
                 bedComponent.Accumulator += frameTime;
 
                 if (bedComponent.Accumulator < bedComponent.HealTime)
