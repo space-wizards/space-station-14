@@ -63,12 +63,13 @@
   - type: Appearance
     visuals:
     - type: FlashLightVisualizer
-  - type: ItemActions
-    actions:
-    - actionType: ToggleLight
-    # right now there is no power system for hardsuits
-    # so hardsuit helmet just have small battery inside
   - type: HandheldLight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellHardsuitHelmet # self recharging

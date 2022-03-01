@@ -36,9 +36,7 @@
       layer:
       - Opaque
       - Impassable
-      - MobImpassable
       - VaultImpassable
-      - SmallImpassable
   - type: Door
     board: DoorElectronics
     crushDamage:
@@ -56,6 +54,7 @@
     - type: AirlockVisualizer
     - type: WiresVisualizer
   - type: ApcPowerReceiver
+    powerLoad: 20
   - type: ExtensionCableReceiver
   - type: Wires
     BoardName: "Airlock Control"

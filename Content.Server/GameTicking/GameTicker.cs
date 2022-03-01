@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
 using Content.Server.CharacterAppearance.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Ghost;
@@ -16,14 +17,12 @@ using Robust.Shared.Configuration;
 #if EXCEPTION_TOLERANCE
 using Robust.Shared.Exceptions;
 #endif
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
@@ -90,7 +89,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IBaseServer _baseServer = default!;
         [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
-        [Dependency] private readonly IPauseManager _pauseManager = default!;
 #if EXCEPTION_TOLERANCE
         [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 #endif
@@ -100,5 +98,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly PDASystem _pdaSystem = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly GhostSystem _ghosts = default!;
+        [Dependency] private readonly RoleBanManager _roleBanManager = default!;
     }
 }

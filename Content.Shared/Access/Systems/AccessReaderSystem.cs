@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Emag.Systems;
 using Content.Shared.PDA;
 using Content.Shared.Access.Components;
 using Robust.Shared.GameObjects;
@@ -22,6 +23,7 @@ namespace Content.Shared.Access.Systems
         {
             base.Initialize();
             SubscribeLocalEvent<AccessReaderComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<AccessReaderComponent, GotEmaggedEvent>(OnEmagged);
         }
 
         private void OnInit(EntityUid uid, AccessReaderComponent reader, ComponentInit args)
@@ -33,6 +35,15 @@ namespace Content.Shared.Access.Systems
                 {
                     Logger.ErrorS("access", $"Invalid access level: {level}");
                 }
+            }
+        }
+
+        private void OnEmagged(EntityUid uid, AccessReaderComponent reader, GotEmaggedEvent args)
+        {
+            if (reader.Enabled == true)
+            {
+                reader.Enabled = false;
+                args.Handled = true;
             }
         }
 

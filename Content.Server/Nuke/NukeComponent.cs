@@ -1,17 +1,13 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nuke;
 using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Nuke
 {
     /// <summary>
-    ///     Nuclear device that can devistate an entire station.
-    ///     Basicaly a station self-destruction mechanism.
+    ///     Nuclear device that can devastate an entire station.
+    ///     Basically a station self-destruction mechanism.
     ///     To activate it, user needs to insert an authorization disk and enter a secret code.
     /// </summary>
     [RegisterComponent]
@@ -24,6 +20,13 @@ namespace Content.Server.Nuke
         [DataField("timer")]
         [ViewVariables(VVAccess.ReadWrite)]
         public int Timer = 180;
+
+        /// <summary>
+        ///     How long until the bomb can arm again after deactivation.
+        ///     Used to prevent announcements spam.
+        /// </summary>
+        [DataField("cooldown")]
+        public int Cooldown = 30;
 
         /// <summary>
         ///     The <see cref="ItemSlot"/> that stores the nuclear disk. The entity whitelist, sounds, and some other
@@ -50,13 +53,13 @@ namespace Content.Server.Nuke
         public SoundSpecifier KeypadPressSound = new SoundPathSpecifier("/Audio/Machines/Nuke/general_beep.ogg");
 
         [DataField("accessGrantedSound")]
-        public SoundSpecifier AccessGrantedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/general_beep.ogg");
+        public SoundSpecifier AccessGrantedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/confirm_beep.ogg");
 
         [DataField("accessDeniedSound")]
         public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/angry_beep.ogg");
 
         [DataField("alertSound")]
-        public SoundSpecifier AlertSound = new SoundPathSpecifier("/Audio/Machines/alarm.ogg");
+        public SoundSpecifier AlertSound = new SoundPathSpecifier("/Audio/Machines/Nuke/nuke_alarm.ogg");
 
         [DataField("armSound")]
         public SoundSpecifier ArmSound = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
@@ -71,7 +74,13 @@ namespace Content.Server.Nuke
         public float RemainingTime;
 
         /// <summary>
-        ///     Curent nuclear code buffer. Entered manually by players.
+        ///     Time until bomb cooldown will expire in seconds.
+        /// </summary>
+        [ViewVariables]
+        public float CooldownTime;
+
+        /// <summary>
+        ///     Current nuclear code buffer. Entered manually by players.
         ///     If valid it will allow arm/disarm bomb.
         /// </summary>
         [ViewVariables]

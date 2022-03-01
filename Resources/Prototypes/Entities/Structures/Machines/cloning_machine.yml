@@ -42,6 +42,8 @@
   - type: Wires
     BoardName: "CloningPod"
     LayoutId: CloningPod
+  - type: ApcPowerReceiver
+    powerLoad: 2000
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer

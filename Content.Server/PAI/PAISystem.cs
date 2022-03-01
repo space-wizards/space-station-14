@@ -13,6 +13,7 @@ using Robust.Shared.Log;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using Content.Shared.Actions;
 
 namespace Content.Server.PAI
 {
@@ -20,6 +21,7 @@ namespace Content.Server.PAI
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
+        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
 
         public override void Initialize()
         {
@@ -30,6 +32,21 @@ namespace Content.Server.PAI
             SubscribeLocalEvent<PAIComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<PAIComponent, GetVerbsEvent<ActivationVerb>>(AddWipeVerb);
+
+            SubscribeLocalEvent<PAIComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<PAIComponent, ComponentShutdown>(OnShutdown);
+        }
+
+        private void OnStartup(EntityUid uid, PAIComponent component, ComponentStartup args)
+        {
+            if (component.MidiAction != null)
+                _actionsSystem.AddAction(uid, component.MidiAction, null);
+        }
+
+        private void OnShutdown(EntityUid uid, PAIComponent component, ComponentShutdown args)
+        {
+            if (component.MidiAction != null)
+                _actionsSystem.RemoveAction(uid, component.MidiAction);
         }
 
         private void OnExamined(EntityUid uid, PAIComponent component, ExaminedEvent args)

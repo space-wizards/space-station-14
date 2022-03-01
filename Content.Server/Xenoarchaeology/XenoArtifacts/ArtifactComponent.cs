@@ -1,8 +1,3 @@
-using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
 [RegisterComponent]
@@ -21,7 +16,9 @@ public sealed class ArtifactComponent : Component
     [DataField("possibleTriggers")]
     public string[] PossibleTriggers = {
         "ArtifactInteractionTrigger",
-        "ArtifactGasTrigger"
+        "ArtifactGasTrigger",
+        "ArtifactHeatTrigger",
+        "ArtifactElectricityTrigger",
     };
 
     /// <summary>

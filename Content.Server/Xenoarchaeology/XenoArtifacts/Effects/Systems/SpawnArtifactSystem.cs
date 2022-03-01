@@ -2,9 +2,6 @@ using Content.Server.Clothing.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Hands.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;

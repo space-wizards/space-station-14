@@ -1,17 +1,19 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Act;
 using Content.Server.Administration.Logs;
 using Content.Server.Hands.Components;
+using Content.Server.Popups;
 using Content.Server.Stack;
 using Content.Server.Storage.Components;
 using Content.Server.Strip;
+using Content.Server.Stunnable;
 using Content.Server.Throwing;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
+using Content.Shared.Stunnable;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Physics.Pull;
@@ -19,14 +21,11 @@ using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
@@ -43,6 +42,7 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
         [Dependency] private readonly StrippableSystem _strippableSystem = default!;
         [Dependency] private readonly SharedHandVirtualItemSystem _virtualSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -53,6 +53,7 @@ namespace Content.Server.Hands.Systems
             SubscribeNetworkEvent<ClientInteractUsingInHandMsg>(HandleInteractUsingInHand);
             SubscribeNetworkEvent<UseInHandMsg>(HandleUseInHand);
             SubscribeNetworkEvent<MoveItemFromHandMsg>(HandleMoveItemFromHand);
+            SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] { typeof(StunSystem) });
 
             SubscribeLocalEvent<HandsComponent, PullAttemptMessage>(HandlePullAttempt);
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
@@ -79,6 +80,26 @@ namespace Content.Server.Hands.Systems
         private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
         {
             args.State = new HandsComponentState(hands.Hands, hands.ActiveHand);
+        }
+
+        private void OnDisarmed(EntityUid uid, HandsComponent component, DisarmedEvent args)
+        {
+            if (args.Handled || component.BreakPulls())
+                return;
+
+            if (component.ActiveHand == null || !component.Drop(component.ActiveHand, false))
+                return;
+
+            var targetName = Name(args.Target);
+
+            var msgOther = Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", Name(args.Source)), ("disarmed", targetName));
+            var msgUser = Loc.GetString("hands-component-disarm-success-message", ("disarmed", targetName));
+
+            var filter = Filter.Pvs(args.Source).RemoveWhereAttachedEntity(e => e == args.Source);
+            _popupSystem.PopupEntity(msgOther, args.Source, filter);
+            _popupSystem.PopupEntity(msgUser, args.Source, Filter.Entities(args.Source));
+
+            args.Handled = true; // no shove/stun.
         }
 
         #region EntityInsertRemove
@@ -253,7 +274,10 @@ namespace Content.Server.Hands.Systems
             if (playerSession.AttachedEntity is not {Valid: true} plyEnt || !Exists(plyEnt))
                 return;
 
-            if (!EntityManager.TryGetComponent(plyEnt, out SharedHandsComponent? hands))
+            if (!TryComp<SharedHandsComponent>(plyEnt, out var hands))
+                return;
+
+            if (HasComp<StunnedComponent>(plyEnt))
                 return;
 
             if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||

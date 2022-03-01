@@ -108,7 +108,7 @@ namespace Content.Client.Instruments
 
         public override void EndRenderer(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? component = null)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component, false))
                 return;
 
             if (component is not InstrumentComponent instrument)

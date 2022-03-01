@@ -1,6 +1,4 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -26,7 +24,7 @@ public sealed class ArtifactSystem : EntitySystem
         }
     }
 
-    public void AddRandomTrigger(EntityUid uid, ArtifactComponent? component = null)
+    private void AddRandomTrigger(EntityUid uid, ArtifactComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;

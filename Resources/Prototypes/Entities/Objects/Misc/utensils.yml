@@ -9,7 +9,9 @@
     sprite: Objects/Misc/utensils.rsi
   - type: Tag
     tags:
+    - Recyclable
     - Trash
+  - type: Recyclable
 
 - type: entity
   parent: UtensilBase

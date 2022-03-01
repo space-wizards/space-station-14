@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Content.Shared.Follower.Components;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Follower;
 
@@ -62,6 +63,10 @@ public sealed class FollowerSystem : EntitySystem
     /// <param name="entity">The entity to be followed</param>
     public void StartFollowingEntity(EntityUid follower, EntityUid entity)
     {
+        // No recursion for you
+        if (Transform(entity).ParentUid == follower)
+            return;
+
         var followerComp = EnsureComp<FollowerComponent>(follower);
         followerComp.Following = entity;
 
@@ -71,6 +76,14 @@ public sealed class FollowerSystem : EntitySystem
         var xform = Transform(follower);
         xform.AttachParent(entity);
         xform.LocalPosition = Vector2.Zero;
+
+        EnsureComp<OrbitVisualsComponent>(follower);
+
+        var followerEv = new StartedFollowingEntityEvent(entity, follower);
+        var entityEv = new EntityStartedFollowingEvent(entity, follower);
+
+        RaiseLocalEvent(follower, followerEv);
+        RaiseLocalEvent(entity, entityEv, false);
     }
 
     /// <summary>
@@ -89,7 +102,16 @@ public sealed class FollowerSystem : EntitySystem
         if (followed.Following.Count == 0)
             RemComp<FollowedComponent>(target);
         RemComp<FollowerComponent>(uid);
+
         Transform(uid).AttachToGridOrMap();
+
+        RemComp<OrbitVisualsComponent>(uid);
+
+        var uidEv = new StoppedFollowingEntityEvent(target, uid);
+        var targetEv = new EntityStoppedFollowingEvent(target, uid);
+
+        RaiseLocalEvent(uid, uidEv);
+        RaiseLocalEvent(target, targetEv, false);
     }
 
     /// <summary>
@@ -105,5 +127,57 @@ public sealed class FollowerSystem : EntitySystem
         {
             StopFollowingEntity(player, uid, followed);
         }
+    }
+}
+
+public abstract class FollowEvent : EntityEventArgs
+{
+    public EntityUid Following;
+    public EntityUid Follower;
+
+    protected FollowEvent(EntityUid following, EntityUid follower)
+    {
+        Following = following;
+        Follower = follower;
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it start following another entity.
+/// </summary>
+public sealed class StartedFollowingEntityEvent : FollowEvent
+{
+    public StartedFollowingEntityEvent(EntityUid following, EntityUid follower) : base(following, follower)
+    {
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it stops following another entity.
+/// </summary>
+public sealed class StoppedFollowingEntityEvent : FollowEvent
+{
+    public StoppedFollowingEntityEvent(EntityUid following, EntityUid follower) : base(following, follower)
+    {
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it start following another entity.
+/// </summary>
+public sealed class EntityStartedFollowingEvent : FollowEvent
+{
+    public EntityStartedFollowingEvent(EntityUid following, EntityUid follower) : base(following, follower)
+    {
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it starts being followed by another entity.
+/// </summary>
+public sealed class EntityStoppedFollowingEvent : FollowEvent
+{
+    public EntityStoppedFollowingEvent(EntityUid following, EntityUid follower) : base(following, follower)
+    {
     }
 }
