@@ -132,3 +132,59 @@
   - type: Repairable
     fuelcost: 15
     doAfterDelay: 8
+
+- type: entity
+  name: onestar
+  id: Onestar
+  parent: PlayerSiliconBase
+  components:
+  - type: Drone
+    tools:
+      - id: Minigun
+      - id: EnergySword
+      - id: LauncherMultipleRocket
+      - id: IndustrialXrayCannon
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Onestar
+    description: Big robutt
+    rules: WHERE AM I?!
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 2
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      1000: !type:DeadMobState {}
+  - type: Sprite
+    drawdepth: Mobs
+    netsync: false
+    layers:
+    - state: onestar_boss
+      sprite: Mobs/Silicon/onestar.rsi
+  - type: MovementIgnoreGravity
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 1
+      mass: 500
+      mask:
+      - SmallImpassable
+      - MobImpassable
+      - VaultImpassable
+      - Impassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      rotate: true
+      normal: onestar_boss  
+      dead: onestar_boss_wrecked
+    doAfterDelay: 8
+  - type: CombatMode

@@ -230,3 +230,40 @@
       magState: mag
       steps: 5
       zeroVisible: true
+
+- type: entity
+  name: industrial x-ray cannon
+  parent: BatteryGunBase
+  id: IndustrialXrayCannon
+  description: An experimental weapon that uses concentrated x-ray energy against its target.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
+  - type: BatteryBarrel
+    fireCost: 50
+    ammoPrototype: XrayLaser
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+  - type: PowerCellSlot
+    cellSlot:
+      ejectOnUse: true
+      soundOptions: 
+        volume: -2
+      startingItem: PowerCellSmallSuper
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: true
+
