@@ -15,7 +15,7 @@
         radius: 0.2
       mass: 25
       mask:
-        - MobImpassable
+        - SmallImpassable
       layer:
         - Opaque
         - MobImpassable
