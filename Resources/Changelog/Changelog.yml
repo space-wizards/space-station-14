@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Pried tiles now have a random rotation applied, type: Tweak}
-  id: 644
-  time: '2021-11-23T17:15:49.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Smoke spam no longer crashes the server., type: Fix}
@@ -2991,3 +2986,8 @@ Entries:
   - {message: Lowered ghost movement speed., type: Tweak}
   id: 1143
   time: '2022-02-28T15:14:17.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: 'A brand new station, moose station.', type: Add}
+  id: 1144
+  time: '2022-03-01T02:16:46.0000000+00:00'
