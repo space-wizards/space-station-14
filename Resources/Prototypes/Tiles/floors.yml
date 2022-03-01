@@ -33,6 +33,7 @@
   id: floor_white
   name: white floor
   texture: "white"
+  variants: 4
   base_turfs:
   - plating
   is_subfloor: false
