@@ -38,7 +38,7 @@ public sealed class VariantizeCommand : IConsoleCommand
         foreach (var tile in grid.GetAllTiles())
         {
             var def = tile.GetContentTileDefinition();
-            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, (byte) random.Next(0, def.Variants));
+            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, (byte) random.Pick(def.PlacementVariants));
             grid.SetTile(tile.GridIndices, newTile);
         }
     }

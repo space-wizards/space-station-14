@@ -42,6 +42,8 @@ namespace Content.Shared.Maps
 
         [DataField("variants")] public byte Variants { get; set; } = 1;
 
+        [DataField("placementVariants")] public List<byte> PlacementVariants { get; set; } = new() { 1 };
+
         [DataField("thermalConductivity")] public float ThermalConductivity { get; set; } = 0.05f;
 
         // Heat capacity is opt-in, not opt-out.
