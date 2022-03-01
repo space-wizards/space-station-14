@@ -2,6 +2,7 @@
   id: floor_steel
   name: steel floor
   texture: "steel"
+  variants: 4
   base_turfs:
   - plating
   is_subfloor: false
@@ -298,7 +299,7 @@
   item_drop: FloorTileItemLaundry
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
+
 # Carpets (non smoothing)
 - type: tile
   id: FloorArcadeBlue
@@ -314,7 +315,7 @@
   item_drop: FloorTileItemArcadeBlue
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
+
 - type: tile
   id: FloorArcadeRed
   name: red arcade floor
@@ -329,7 +330,7 @@
   item_drop: FloorTileItemArcadeRed
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
+
 - type: tile
   id: FloorEighties
   name: eighties floor
@@ -360,7 +361,7 @@
   item_drop: FloorTileItemShuttleWhite
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
+
 - type: tile
   id: FloorShuttleBlue
   name: blue shuttle floor
@@ -375,7 +376,7 @@
   item_drop: FloorTileItemShuttleBlue
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
+
 - type: tile
   id: FloorShuttleOrange
   name: orange shuttle floor
@@ -390,7 +391,7 @@
   item_drop: FloorTileItemShuttleOrange
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
+
 - type: tile
   id: FloorShuttlePurple
   name: purple shuttle floor
@@ -544,7 +545,7 @@
   item_drop: FloorTileItemGrass
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
+
 - type: tile
   id: FloorGrassJungle
   name: jungle grass floor
@@ -644,7 +645,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
+
 - type: tile
   id: FloorAsteroidIronsand1
   name: asteroid ironsand
@@ -658,7 +659,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
+
 - type: tile
   id: FloorAsteroidIronsand2
   name: asteroid ironsand pebbles
@@ -686,7 +687,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
+
 - type: tile
   id: FloorAsteroidIronsand4
   name: asteroid ironsand rock

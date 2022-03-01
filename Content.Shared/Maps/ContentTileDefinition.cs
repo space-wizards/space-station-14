@@ -40,6 +40,8 @@ namespace Content.Shared.Maps
 
         [DataField("friction")] public float Friction { get; set; }
 
+        [DataField("variants")] public byte Variants { get; set; } = 1;
+
         [DataField("thermalConductivity")] public float ThermalConductivity { get; set; } = 0.05f;
 
         // Heat capacity is opt-in, not opt-out.
