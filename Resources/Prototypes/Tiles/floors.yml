@@ -3,7 +3,7 @@
   name: steel floor
   texture: "steel"
   variants: 4
-  placementVariants: [1, 2, 3, 4]
+  placementVariants: [0, 1, 2, 3]
   base_turfs:
   - plating
   is_subfloor: false
@@ -20,7 +20,7 @@
   name: wood
   texture: "wood"
   variants: 4
-  placementVariants: [1, 2, 3, 4]
+  placementVariants: [0, 1, 2, 3]
   base_turfs:
   - plating
   is_subfloor: false
@@ -37,7 +37,7 @@
   name: white floor
   texture: "white"
   variants: 4
-  placementVariants: [1, 2, 3, 4]
+  placementVariants: [0, 1, 2, 3]
   base_turfs:
   - plating
   is_subfloor: false
