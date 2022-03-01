@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Disposals should no longer be capable of sending employees through walls
-      when they're not supposed to be., type: Fix}
-  id: 647
-  time: '2021-11-23T23:38:46.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: You can now directly swap beakers in chemistry machines. No more swap-hands
@@ -2992,3 +2986,9 @@ Entries:
   - {message: Added a new medium-sized salvage., type: Add}
   id: 1146
   time: '2022-03-01T02:18:31.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Map votes during the pre-round period actually affect the chosen map
+      on round start., type: Tweak}
+  id: 1147
+  time: '2022-03-01T02:20:21.0000000+00:00'
