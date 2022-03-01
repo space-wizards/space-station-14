@@ -16,6 +16,7 @@
       mass: 25
       mask:
         - SmallImpassable
+        - VaultImpassable
       layer:
         - Opaque
         - MobImpassable
