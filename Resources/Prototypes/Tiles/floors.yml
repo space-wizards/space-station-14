@@ -298,6 +298,129 @@
   item_drop: FloorTileItemLaundry
   thermalConductivity: 0.04
   heatCapacity: 10000
+  
+# Carpets (non smoothing)
+- type: tile
+  id: FloorArcadeBlue
+  name: blue arcade floor
+  texture: arcadeblue
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.40
+  item_drop: FloorTileItemArcadeBlue
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorArcadeRed
+  name: red arcade floor
+  texture: arcadered
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.40
+  item_drop: FloorTileItemArcadeRed
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorEighties
+  name: eighties floor
+  texture: eighties
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.40
+  item_drop: FloorTileItemEighties
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+# Shuttle
+- type: tile
+  id: FloorShuttleWhite
+  name: white shuttle floor
+  texture: shuttlewhite
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemShuttleWhite
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorShuttleBlue
+  name: blue shuttle floor
+  texture: shuttleblue
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemShuttleBlue
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorShuttleOrange
+  name: orange shuttle floor
+  texture: shuttleorange
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemShuttleOrange
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorShuttlePurple
+  name: purple shuttle floor
+  texture: shuttlepurple
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemShuttlePurple
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorShuttleRed
+  name: red shuttle floor
+  texture: shuttlered
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemShuttleRed
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
 
 # Materials
 - type: tile
@@ -421,6 +544,21 @@
   item_drop: FloorTileItemGrass
   thermalConductivity: 0.04
   heatCapacity: 10000
+  
+- type: tile
+  id: FloorGrassJungle
+  name: jungle grass floor
+  texture: grassjungle
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemGrassJungle
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 # Asteroid
 - type: tile
@@ -506,3 +644,60 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  
+- type: tile
+  id: FloorAsteroidIronsand1
+  name: asteroid ironsand
+  texture: ironsand1
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds:
+    collection: footstep_asteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorAsteroidIronsand2
+  name: asteroid ironsand pebbles
+  texture: ironsand2
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds:
+    collection: footstep_asteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorAsteroidIronsand3
+  name: asteroid ironsand pebbles 2
+  texture: ironsand3
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds:
+    collection: footstep_asteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorAsteroidIronsand4
+  name: asteroid ironsand rock
+  texture: ironsand4
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds:
+    collection: footstep_asteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+

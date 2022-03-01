@@ -1,120 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Chemicals metabolizing in the body now last twice as long, meaning
-      most medicines and poisons will have a greater effect over a longer timespan.',
-    type: Tweak}
-  id: 630
-  time: '2021-11-22T08:45:21.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'People sprayed/coming into contact with any alcoholic drink can now
-      be lit on fire, rather than just ethanol.', type: Tweak}
-  id: 631
-  time: '2021-11-22T09:17:35.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Admin logs., type: Add}
-  id: 632
-  time: '2021-11-22T17:49:26.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: It is no longer possible to start pulling people while in cuffs., type: Fix}
-  id: 633
-  time: '2021-11-22T19:31:12.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Admins no longer have to turn events back on every time the server restarts,
-    type: Add}
-  id: 634
-  time: '2021-11-22T22:33:30.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Announcements from Central Command are now properly serenaded., type: Fix}
-  id: 635
-  time: '2021-11-22T22:34:48.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: You are no longer interrupted by damage during prying a firelock or
-      airlock., type: Tweak}
-  id: 636
-  time: '2021-11-23T00:34:57.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Added carpetium, a chemical that creates carpets whenever it touches
-      a tile either through spills, sprays, or foam. It''s created using Space Drugs
-      and Fiber.', type: Add}
-  - {message: You can now grind up jumpsuits and shoes into Fiber. TOTALLY unrelated
-      to the last changelog entry, type: Add}
-  id: 637
-  time: '2021-11-23T01:01:51.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Removed meth., type: Remove}
-  - {message: Added desoxyephedrine., type: Add}
-  id: 638
-  time: '2021-11-23T04:39:59.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Thrusters now have examine text, type: Add}
-  id: 639
-  time: '2021-11-23T06:44:08.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Admins are now fully knowledgeable of every potassium/water bomb you
-      make., type: Add}
-  id: 640
-  time: '2021-11-23T06:51:43.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Added epinephrine, an emergency medical chemical that reduces stun
-      times slightly and heals people that are in critical health. Everyone starts
-      with a medipen containing it in their survival box--beware of overdoses.', type: Add}
-  id: 641
-  time: '2021-11-23T06:51:52.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: Added the warden's favourite jacket., type: Add}
-  id: 642
-  time: '2021-11-23T11:12:20.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Mopping now picks up slightly more reagents, and cleaning vomit should
-      be easier.', type: Tweak}
-  id: 643
-  time: '2021-11-23T17:14:46.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pried tiles now have a random rotation applied, type: Tweak}
-  id: 644
-  time: '2021-11-23T17:15:49.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Smoke spam no longer crashes the server., type: Fix}
-  id: 645
-  time: '2021-11-23T19:35:50.472421+00:00'
-- author: Clyybber
-  changes:
-  - {message: Reworked how dropping items by slipping works., type: Tweak}
-  id: 646
-  time: '2021-11-23T23:38:39.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Disposals should no longer be capable of sending employees through walls
-      when they're not supposed to be., type: Fix}
-  id: 647
-  time: '2021-11-23T23:38:46.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: You can now directly swap beakers in chemistry machines. No more swap-hands
-      > eject > swap-hands> insert., type: Tweak}
-  id: 648
-  time: '2021-11-24T07:03:08.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: The lobby timer is now (much) longer., type: Tweak}
-  id: 649
-  time: '2021-11-24T09:52:07.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Solar control console works again, type: Fix}
@@ -2995,3 +2879,120 @@ Entries:
   - {message: Added handheld GPS devices which can be found in the autolathe, type: Add}
   id: 1129
   time: '2022-02-26T05:59:20.0000000+00:00'
+- author: Zymem
+  changes:
+  - {message: Drinks should now have sprites, type: Fix}
+  id: 1130
+  time: '2022-02-27T01:26:45.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed two action bugs: ghost boo not working, and powered-flashlight
+      toggling affecting all flashlights.', type: Fix}
+  id: 1131
+  time: '2022-02-27T03:02:39.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Introduced two more events., type: Add}
+  id: 1132
+  time: '2022-02-27T03:04:01.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Power grid check no longer shuts off all power instantly, and instead
+      does so over about 30 seconds.', type: Tweak}
+  id: 1133
+  time: '2022-02-27T07:01:39.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Adds a bunch of new carpets, grass and shuttle flooring for mappers.
+      Keep an eye out for updates to your favorite maps!', type: Add}
+  id: 1134
+  time: '2022-02-27T07:01:48.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added the fire helmet! Heat resistant goodness for your head that looks
+      cool AND has a light!, type: Add}
+  id: 1135
+  time: '2022-02-27T07:02:07.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Pillar V5.1 - bug fixes and reinforced more walls, departments, offices
+      and substations.', type: Add}
+  id: 1136
+  time: '2022-02-27T07:02:15.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'All electronics, machine and computer boards now have updated names,
+      descriptions and in some cases sprites.', type: Fix}
+  - {message: SMES construction is now fixed., type: Fix}
+  - {message: There's now computer boards for all computers on the station...some
+      still don't do anything., type: Add}
+  id: 1137
+  time: '2022-02-27T13:46:27.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Suspicion no longer shows up in gamemode votes., type: Remove}
+  id: 1138
+  time: '2022-02-27T18:03:08.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Added boxes of trashbags, flares and all magazine types.', type: Add}
+  id: 1139
+  time: '2022-02-27T19:56:27.0000000+00:00'
+- author: Zyme
+  changes:
+  - {message: Monkeys now understand the concept of hats, type: Add}
+  id: 1140
+  time: '2022-02-27T19:56:36.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'The /mapping command syntax has changed. The filename now comes before
+      the Id, and a new blank map is created by providing no arguments.', type: Tweak}
+  id: 1141
+  time: '2022-02-28T01:21:15.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Animal's blood now variate depending on their size, type: Tweak}
+  id: 1142
+  time: '2022-02-28T01:23:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Lowered ghost movement speed., type: Tweak}
+  id: 1143
+  time: '2022-02-28T15:14:17.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: 'A brand new station, moose station.', type: Add}
+  id: 1144
+  time: '2022-03-01T02:16:46.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed being able to push some entities (computers, canisters, plants)
+      through walls and doors.', type: Fix}
+  id: 1145
+  time: '2022-03-01T02:18:20.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Added a new medium-sized salvage., type: Add}
+  id: 1146
+  time: '2022-03-01T02:18:31.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Map votes during the pre-round period actually affect the chosen map
+      on round start., type: Tweak}
+  id: 1147
+  time: '2022-03-01T02:20:21.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Gauze can now be crafted using cloth., type: Add}
+  - {message: 'You can now gain cloth by butchering clothing items like jumpsuits,
+      shoes, or cloaks.', type: Tweak}
+  - {message: 'Fiber reagent is now gained by grinding cloth, not the individual clothing
+      items.', type: Tweak}
+  id: 1148
+  time: '2022-03-01T03:38:39.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Certain station announcements have been given a splash of color in chat.,
+    type: Add}
+  id: 1149
+  time: '2022-03-01T13:21:29.0000000+00:00'

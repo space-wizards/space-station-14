@@ -1,16 +1,11 @@
 // ReSharper disable once RedundantUsingDirective
 // Used to warn the player in big red letters in debug mode
 
-using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Commands
@@ -22,14 +17,19 @@ namespace Content.Server.GameTicking.Commands
 
         public string Command => "mapping";
         public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
-        public string Help => $"Usage: {Command} <mapname> / {Command} <id> <mapname>";
+        public string Help => $"Usage: {Command} <MapID> <Path>";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
-            if (player == null)
+            if (shell.Player is not IPlayerSession player)
             {
-                shell.WriteLine("Only players can use this command");
+                shell.WriteError("Only players can use this command");
+                return;
+            }
+
+            if (args.Length > 2)
+            {
+                shell.WriteLine(Help);
                 return;
             }
 
@@ -38,60 +38,62 @@ namespace Content.Server.GameTicking.Commands
 #endif
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            int mapId;
-            string mapName;
+            MapId mapId;
 
-            switch (args.Length)
+            // Get the map ID to use
+            if (args.Length is 1 or 2)
             {
-                case 1:
-                    if (player.AttachedEntity == null)
-                    {
-                        shell.WriteError("The map name argument cannot be omitted if you have no entity.");
-                        return;
-                    }
-
-                    mapId = (int) mapManager.NextMapId();
-                    mapName = args[0];
-                    break;
-                case 2:
-                    if (!int.TryParse(args[0], out var id))
-                    {
-                        shell.WriteError($"{args[0]} is not a valid integer.");
-                        return;
-                    }
-
-                    mapId = id;
-                    mapName = args[1];
-                    break;
-                default:
-                    shell.WriteLine(Help);
+                if (!int.TryParse(args[0], out var id))
+                {
+                    shell.WriteError($"{args[0]} is not a valid integer.");
                     return;
+                }
+
+                mapId = new MapId(id);
+                if (mapManager.MapExists(mapId))
+                {
+                    shell.WriteError($"Map {mapId} already exists");
+                    return;
+                }
+            }
+            else
+            {
+                mapId = mapManager.NextMapId();
             }
 
-            // loadmap checks for this on its own but we want to avoid running our other commands.
-            if (mapManager.MapExists(new MapId(mapId)))
+            DebugTools.Assert(args.Length <= 2);
+
+            // either load a map or create a new one.
+            if (args.Length <= 1)
+                shell.ExecuteCommand($"addmap {mapId} false");
+            else
+                shell.ExecuteCommand($"loadmap {mapId} \"{CommandParsing.Escape(args[1])}\"");
+
+            // was the map actually created?
+            if (!mapManager.MapExists(mapId))
             {
-                shell.WriteError($"Map {mapId} already exists");
+                shell.WriteError($"An error occurred when creating the new map.");
                 return;
             }
 
-            shell.ExecuteCommand("sudo cvar events.enabled false");
-            shell.ExecuteCommand($"loadmap {mapId} \"{CommandParsing.Escape(mapName)}\" true");
-
-            if (player.AttachedEntity is {Valid: true} playerEntity &&
+            // map successfully created. run misc helpful mapping commands
+            if (player.AttachedEntity is { Valid: true } playerEntity &&
                 _entities.GetComponent<MetaDataComponent>(playerEntity).EntityPrototype?.ID != "AdminObserver")
             {
                 shell.ExecuteCommand("aghost");
             }
 
+            shell.ExecuteCommand("sudo cvar events.enabled false");
             shell.ExecuteCommand($"tp 0 0 {mapId}");
             shell.RemoteExecuteCommand("showmarkers");
+            shell.RemoteExecuteCommand("togglelight");
+            shell.RemoteExecuteCommand("showsubfloorforever");
+            mapManager.SetMapPaused(mapId, true);
 
-            var newGrid = mapManager.GetAllGrids().OrderByDescending(g => (int) g.Index).First();
-
-            mapManager.SetMapPaused(newGrid.ParentMapId, true);
-
-            shell.WriteLine($"Created unloaded map from file {mapName} with id {mapId}. Use \"savebp {newGrid.Index} foo.yml\" to save the new grid as a map.");
+            if (args.Length == 2)
+                shell.WriteLine($"Created uninitialized map from file {args[1]} with id {mapId}.");
+            else
+                shell.WriteLine($"Created a new uninitialized map with id {mapId}.");
         }
     }
 }
