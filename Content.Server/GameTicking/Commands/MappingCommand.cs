@@ -90,7 +90,7 @@ namespace Content.Server.GameTicking.Commands
             shell.RemoteExecuteCommand("showsubfloorforever");
             mapManager.SetMapPaused(mapId, true);
 
-            if (args.Length != 0)
+            if (args.Length == 2)
                 shell.WriteLine($"Created uninitialized map from file {args[1]} with id {mapId}.");
             else
                 shell.WriteLine($"Created a new uninitialized map with id {mapId}.");
