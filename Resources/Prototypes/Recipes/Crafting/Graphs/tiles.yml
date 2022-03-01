@@ -48,7 +48,7 @@
       entity: FloorTileItemWhite
 
 - type: constructionGraph
-  id: tileDark
+  id: TileDark
   start: start
   graph:
     - node: start
