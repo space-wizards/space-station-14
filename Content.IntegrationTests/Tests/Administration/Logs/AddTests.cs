@@ -234,6 +234,8 @@ public sealed class AddTests : ContentIntegrationTest
         await server.WaitIdleAsync();
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
+        var sEntities = server.ResolveDependency<IEntityManager>();
+        var sMaps = server.ResolveDependency<IMapManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
         var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
@@ -243,7 +245,10 @@ public sealed class AddTests : ContentIntegrationTest
 
         await server.WaitPost(() =>
         {
-            sAdminLogSystem.Add(LogType.Unknown, $"test log: {guid}");
+            var coordinates = GetMainEntityCoordinates(sMaps);
+            var entity = sEntities.SpawnEntity(null, coordinates);
+
+            sAdminLogSystem.Add(LogType.Unknown, $"{entity} test log: {guid}");
         });
 
         await server.WaitPost(() =>
@@ -279,7 +284,8 @@ public sealed class AddTests : ContentIntegrationTest
         await foreach (var json in sDatabase.GetAdminLogsJson(filter))
         {
             var root = json.RootElement;
-            
+
+            Assert.That(root.TryGetProperty("entity", out _), Is.True);
             Assert.That(root.TryGetProperty("guid", out _), Is.True);
 
             json.Dispose();
