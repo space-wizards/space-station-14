@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Solar control console works again, type: Fix}
-  id: 650
-  time: '2021-11-24T20:51:43.0000000+00:00'
 - author: moony
   changes:
   - {message: The game admins are now omnipotent., type: Add}
@@ -2996,3 +2991,10 @@ Entries:
     type: Add}
   id: 1149
   time: '2022-03-01T13:21:29.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Added some more basic mapping tools. Entity, tile, and decal placement
+      can now be saved to the action-toolbar by clicking on empty slots while placing
+      entities. `/loadmapacts` loads some presets mapping actions.', type: Add}
+  id: 1150
+  time: '2022-03-01T23:12:34.0000000+00:00'
