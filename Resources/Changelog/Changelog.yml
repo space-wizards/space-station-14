@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'You can now grind up the bee plush, you monster.', type: Add}
-  id: 656
-  time: '2021-11-25T06:06:13.0000000+00:00'
 - author: Rane
   changes:
   - {message: The chemist has arrived on station! Pharmacology will be left to the
@@ -2998,3 +2993,8 @@ Entries:
     type: Tweak}
   id: 1155
   time: '2022-03-02T14:08:19.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Items on conveyor belts now round corners correctly., type: Add}
+  id: 1156
+  time: '2022-03-02T22:32:33.0000000+00:00'
