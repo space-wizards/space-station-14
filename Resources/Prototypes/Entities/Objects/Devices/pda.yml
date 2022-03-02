@@ -191,7 +191,7 @@
     visuals:
       - type: PDAVisualizer
         state: pda-qm
-  - type: Icon
+  - type: Iconchange drone tools
     state: pda-qm
 
 - type: entity
@@ -499,12 +499,6 @@
     key: enum.InstrumentUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.PDAUiKey.Key
-      type: PDABoundUserInterface
-    - key: enum.UplinkUiKey.Key
-      type: UplinkBoundUserInterface
-    - key: enum.RingerUiKey.Key
-      type: RingerBoundUserInterface
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
   - type: Input
