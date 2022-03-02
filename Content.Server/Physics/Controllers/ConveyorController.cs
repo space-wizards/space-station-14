@@ -87,21 +87,17 @@ namespace Content.Server.Physics.Controllers
              * is not on the centerline.
              */
 
-            /* TODO: Figure out how to fix corner cuts.
-            direction = direction.Normalized;
-
-            var dirNormal = new Vector2(direction.Y, direction.X);
-            var dot = Vector2.Dot(itemRelative, dirNormal);
-            */
-
             var p = direction * (Vector2.Dot(itemRelative, direction) / Vector2.Dot(direction, direction));
             var r = itemRelative - p;
 
-            if (r.Length < 0.1) {
+            if (r.Length < 0.1)
+            {
                 var velocity = direction * speed;
                 return velocity * frameTime;
-            } else {
-                var velocity = r * speed;
+            }
+            else
+            {
+                var velocity = r.Normalized * speed;
                 return velocity * frameTime;
             }
         }
