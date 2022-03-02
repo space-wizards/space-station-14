@@ -675,7 +675,7 @@
     tags:
     - Trash
   - type: Recyclable
-  - type: Actions 
+  - type: Actions
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
     combatToggleAction:
@@ -707,7 +707,7 @@
       crit: dead-1
       dead: splat-1
   - type: Bloodstream
-    bloodMaxVolume: 50  
+    bloodMaxVolume: 50
 
 
 - type: entity

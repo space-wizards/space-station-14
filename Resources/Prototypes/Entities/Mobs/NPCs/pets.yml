@@ -89,6 +89,61 @@
       gender: epicene
 
 - type: entity
+  name: Hellhound
+  parent: MobCorgiNarsi
+  id: MobHellhound
+  description: This pupper is not wholesome.
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Hellhound
+    description: Obey your master. Spread chaos.
+    rules: You are an intelligent, demonic dog. Try to help the chaplain and any of his flock. As an antagonist, you're otherwise unrestrained.
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      types:
+        Piercing: 10
+        Slash: 10
+  - type: AiFactionTag
+    factions:
+    - SimpleNeutral #Don't want it attacking its master, let a ghost take it
+  - type: InteractionPopup
+    successChance: 50
+    interactSuccessString: petting-success-corrupted-corgi
+    interactFailureString: petting-failure-corrupted-corgi
+  - type: Temperature
+    heatDamageThreshold: 4000 #They come from hell, so...
+    coldDamageThreshold: 260
+    currentTemperature: 310.15
+    coldDamage:
+      types:
+        Cold : 1 #per second, scales with temperature & other constants
+    specificHeat: 42
+    heatDamage:
+      types:
+        Heat : 1 #per second, scales with temperature & other constants
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      80: !type:CriticalMobState {}
+      160: !type:DeadMobState {}
+  - type: Bloodstream
+    bloodReagent: DemonsBlood
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
+
+
+
+- type: entity
   name: Ian
   parent: MobCorgi
   id: MobCorgiOld

@@ -21,6 +21,10 @@
   startingInventory:
     ClothingOuterArmorCult: 1
     ClothingHeadHelmetCult: 1
-    ClothingOuterRobesCult: 1
-    ClothingHeadHatHoodCulthood: 1
+    ClothingOuterRobesCult: 3
+    ClothingHeadHatHoodCulthood: 3
+    ClothingShoesCult: 4
+    BedsheetCult: 4
+    BibleNecronomicon: 1
+    MobHellhound: 1 #ghost role
 

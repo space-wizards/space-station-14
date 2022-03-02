@@ -30,3 +30,30 @@
     storageSoundCollection:
       collection: storageRustle
 
+- type: entity
+  parent: Bible
+  name: necronomicon
+  description: "There's a note: Klatuu, Verata, Nikto -- Don't forget it again!"
+  id: BibleNecronomicon
+  components:
+  - type: Bible
+    damage:
+      groups: ##DPS is 16
+        Brute: 40
+        Burn: 40
+    damageOnFail:
+      groups:
+        Brute: 15
+        Airloss: 25
+    damageOnUntrainedUse:
+      groups:
+        Burn: 60
+    failChance: 0
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Chapel/necronomicon.rsi
+    state: icon
+  - type: Item
+    size: 15
+    sprite: Objects/Specific/Chapel/necronomicon.rsi
+    prefix: inhand
