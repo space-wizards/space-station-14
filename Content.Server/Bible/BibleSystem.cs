@@ -105,7 +105,9 @@ namespace Content.Server.Bible
 
         private void AttemptSummon(BibleComponent component, EntityUid user)
         {
-            if (component.AlreadySummoned || component.SpecialItemPrototype == string.Empty)
+            if (!HasComp<TransformComponent>(user))
+                return;
+            if (component.Deleted || Deleted(component.Owner))
                 return;
 
             var position = EntityManager.GetComponent<TransformComponent>(user).Coordinates;
