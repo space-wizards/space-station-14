@@ -1,17 +1,4 @@
 Entries:
-- author: Leander
-  changes:
-  - {message: added broken bottles for bar fights, type: Add}
-  - {message: tweaked bottles so that they spawn actual broken bottles instead of
-      glass when thrown, type: Tweak}
-  - {message: nerfed bottle throwing damage, type: Tweak}
-  id: 654
-  time: '2021-11-25T05:16:17.0000000+00:00'
-- author: iczero
-  changes:
-  - {message: Survival boxes are no longer magic, type: Add}
-  id: 655
-  time: '2021-11-25T05:47:52.0000000+00:00'
 - author: moony
   changes:
   - {message: 'You can now grind up the bee plush, you monster.', type: Add}
@@ -2999,3 +2986,15 @@ Entries:
       tiles., type: Fix}
   id: 1153
   time: '2022-03-02T13:38:19.0000000+00:00'
+- author: wrexbe
+  changes:
+  - {message: Glass tables now have different mass limits., type: Add}
+  id: 1154
+  time: '2022-03-02T14:07:49.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Xenos no longer need oxygen and are space-proof., type: Tweak}
+  - {message: The odds of winning against a Xeno in a fist-fight have decreased considerably.,
+    type: Tweak}
+  id: 1155
+  time: '2022-03-02T14:08:19.0000000+00:00'
