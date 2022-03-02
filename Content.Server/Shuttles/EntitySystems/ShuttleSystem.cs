@@ -14,10 +14,10 @@ namespace Content.Server.Shuttles.EntitySystems
     {
         private const float TileMassMultiplier = 4f;
 
-        public float ShuttleMaxLinearSpeed = 11f;
+        public float ShuttleMaxLinearSpeed = 13f;
         public float ShuttleMaxAngularSpeed = 1.4f;
 
-        public float ShuttleMaxAngularAcc = 3f;
+        public float ShuttleMaxAngularAcc = 0.75f;
 
         public float ShuttleIdleLinearDamping = 50f;
         public float ShuttleIdleAngularDamping = 100f;

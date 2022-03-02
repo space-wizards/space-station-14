@@ -250,7 +250,7 @@ namespace Content.Server.Physics.Controllers
                     thrusterSystem.SetAngularThrust(shuttle, false);
                     body.AngularDamping = shuttleSystem.ShuttleIdleAngularDamping * body.InvI;
 
-                    if (Math.Abs(body.AngularVelocity) < 0.05f)
+                    if (Math.Abs(body.AngularVelocity) < 0.07f)
                     {
                         body.AngularVelocity = 0f;
                     }

@@ -584,7 +584,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.dock_speed_cap", 5f, CVar.SERVERONLY);
 
         public static readonly CVarDef<float> ShuttleMaxLinearSpeed =
-            CVarDef.Create("shuttle.max_linear_speed", 11f, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.max_linear_speed", 13f, CVar.SERVERONLY);
 
         public static readonly CVarDef<float> ShuttleMaxAngularSpeed =
             CVarDef.Create("shuttle.max_angular_speed", 1.4f, CVar.SERVERONLY);
@@ -596,7 +596,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.idle_angular_damping", 100f, CVar.SERVERONLY);
 
         public static readonly CVarDef<float> ShuttleMaxAngularAcc =
-            CVarDef.Create("shuttle.max_angular_acc", 3f, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.max_angular_acc", 0.75f, CVar.SERVERONLY);
 
         /*
          * VIEWPORT
