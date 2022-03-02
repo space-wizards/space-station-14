@@ -25,7 +25,7 @@
     outerClothing: ClothingOuterCoatLab
     id: RnDPDA
     ears: ClothingHeadsetScience
-    pocket1: WageImportant
+    # pocket1: WageImportant
   innerclothingskirt: ClothingUniformJumpskirtResearchDirector
   satchel: ClothingBackpackSatchelScienceFilled
   duffelbag: ClothingBackpackDuffelScienceFilled

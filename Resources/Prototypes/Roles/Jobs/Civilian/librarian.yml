@@ -19,6 +19,6 @@
     id: LibrarianPDA
     ears: ClothingHeadsetService
     pocket1: d10Dice
-    pocket2: WageUntrained
+    # pocket2: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
 

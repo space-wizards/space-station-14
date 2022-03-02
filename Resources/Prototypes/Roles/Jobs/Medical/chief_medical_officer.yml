@@ -29,7 +29,7 @@
     id: CMOPDA
     ears: ClothingHeadsetAltMedical
     belt: ClothingBeltMedicalFilled
-    pocket1: WageImportant
+    # pocket1: WageImportant
   innerclothingskirt: ClothingUniformJumpskirtCMO
   satchel: ClothingBackpackSatchelMedicalFilled
   duffelbag: ClothingBackpackDuffelMedicalFilled

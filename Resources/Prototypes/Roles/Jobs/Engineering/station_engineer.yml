@@ -22,7 +22,7 @@
     id: EngineerPDA
     belt: ClothingBeltUtilityFilled
     ears: ClothingHeadsetEngineering
-    pocket1: WageTradesman
+    # pocket1: WageTradesman
   innerclothingskirt: ClothingUniformJumpskirtEngineering
   satchel: ClothingBackpackSatchelEngineeringFilled
   duffelbag: ClothingBackpackDuffelEngineeringFilled

@@ -17,7 +17,7 @@
     shoes: ClothingShoesColorBlack
     id: AssistantPDA
     ears: ClothingHeadsetService
-    pocket1: WageUntrained
+    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtColorGrey
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

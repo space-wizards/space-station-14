@@ -22,7 +22,7 @@
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedical
     pocket1: HandLabeler
-    pocket2: WageDoctorate
+    # pocket2: WageDoctorate
     # the purple glasses?
   innerclothingskirt: ClothingUniformJumpskirtChemistry
   satchel: ClothingBackpackSatchelChemistryFilled

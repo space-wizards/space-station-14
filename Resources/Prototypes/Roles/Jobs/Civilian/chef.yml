@@ -21,7 +21,7 @@
     id: ChefPDA
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterApronChef
-    pocket1: WageUntrained
+    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtChef
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

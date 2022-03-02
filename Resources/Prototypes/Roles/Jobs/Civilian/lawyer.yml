@@ -14,11 +14,11 @@
 - type: startingGear
   id: LawyerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitLawyerBlack  #TODO change jumpsuit to randomiser of the 4 variants
+    jumpsuit: ClothingUniformJumpsuitLawyerBlack  # TODO change jumpsuit to randomiser of the 4 variants
     back: ClothingBackpackBriefcaseFilled
     shoes: ClothingShoesColorBlack
     id: LawyerPDA
     ears: ClothingHeadsetService
-    #TODO add copy of space law
-    pocket2: WageDoctorate #Ph.D in fucking your shit up
+    # TODO add copy of space law
+    # pocket2: WageDoctorate # Ph.D in fucking your shit up
 

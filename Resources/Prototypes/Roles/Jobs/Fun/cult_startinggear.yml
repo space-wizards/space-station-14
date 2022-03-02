@@ -10,6 +10,7 @@
     shoes: ClothingShoesCult
     id: AssistantPDA
     ears: ClothingHeadsetService
+    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -24,6 +25,7 @@
     shoes: ClothingShoesColorRed
     id: AssistantPDA
     ears: ClothingHeadsetService
+    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

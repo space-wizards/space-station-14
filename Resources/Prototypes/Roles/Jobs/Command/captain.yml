@@ -55,7 +55,7 @@
     outerClothing: ClothingOuterArmorCaptainCarapace
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
-    pocket1: WageExecutive
+    pocket1: WageExecutive # should probably be mapped in but whatever
   innerclothingskirt: ClothingUniformJumpskirtCaptain
   satchel: ClothingBackpackSatchelCaptainFilled
   duffelbag: ClothingBackpackDuffelCaptainFilled

@@ -12,6 +12,7 @@
     shoes: ClothingShoesBootsJack
     id: AssistantPDA
     ears: ClothingHeadsetService
+    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -27,6 +28,7 @@
     shoes: ClothingShoesBootsWork
     id: AssistantPDA
     belt: ClothingBeltUtility
+    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
   satchel: ClothingBackpackSatchelEngineering
   duffelbag: ClothingBackpackSatchelEngineering
@@ -42,6 +44,7 @@
     outerClothing: ClothingOuterSuitSpaceninja
     shoes: ClothingShoesSpaceNinja
     id: AssistantPDA
+    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -61,7 +64,7 @@
     shoes: ClothingShoesChameleonNoSlips
     id: CentcomPDA
     pocket1: EmergencyOxygenTankFilled
-    pocket2: WageDoctorate #Ph.D in fucking your shit up, for real
+    # pocket2: WageDoctorate # Ph.D in fucking your shit up, for real
     belt: ClothingBeltUtilityFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackDuffelSyndicateAmmo
