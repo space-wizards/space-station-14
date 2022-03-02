@@ -29,7 +29,7 @@ public sealed class GlassTableComponent : Component
     ///     How much mass should be needed to break the table?
     /// </summary>
     [DataField("tableMassLimit")]
-    public float MassLimit = default!;
+    public float MassLimit;
 
     /// <summary>
     ///     How long should someone who climbs on this table be stunned for?
