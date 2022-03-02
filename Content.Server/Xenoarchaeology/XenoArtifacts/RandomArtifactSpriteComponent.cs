@@ -1,8 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-
-namespace Content.Server.Xenoarchaeology.XenoArtifacts;
+﻿namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
 [RegisterComponent]
 public sealed class RandomArtifactSpriteComponent : Component

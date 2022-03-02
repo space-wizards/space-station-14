@@ -13,10 +13,10 @@
   - type: DoAfter
   - type: CombatMode
   - type: Actions
-    innateActions:
-    - CombatMode
-    - GhostBoo
   - type: PlayerInputMover
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 12
+    baseWalkSpeed: 8
   - type: Physics
     bodyType: Kinematic
     status: InAir

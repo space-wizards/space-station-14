@@ -5,11 +5,13 @@ using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
+using Content.Server.Doors.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
@@ -39,18 +41,24 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, PryCancelledEvent>(OnPryCancelled);
         SubscribeLocalEvent<DoorComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<DoorComponent, WeldCancelledEvent>(OnWeldCancelled);
+        SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
     }
 
-    protected override void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
+    protected override void SetCollidable(EntityUid uid, bool collidable,
+        DoorComponent? door = null,
+        PhysicsComponent? physics = null,
+        OccluderComponent? occluder = null)
     {
-        base.OnInit(uid, door, args);
+        if (!Resolve(uid, ref door))
+            return;
 
-        if (door.State == DoorState.Open
-                && door.ChangeAirtight
-                && TryComp(uid, out AirtightComponent? airtight))
-        {
-            _airtightSystem.SetAirblocked(airtight, false);
-        }
+        if (door.ChangeAirtight && TryComp(uid, out AirtightComponent? airtight))
+            _airtightSystem.SetAirblocked(airtight, collidable);
+
+        // Pathfinding / AI stuff.
+        RaiseLocalEvent(new AccessReaderChangeMessage(uid, collidable));
+
+        base.SetCollidable(uid, collidable, door, physics, occluder);
     }
 
     // TODO AUDIO PREDICT Figure out a better way to handle sound and prediction. For now, this works well enough?
@@ -247,39 +255,6 @@ public sealed class DoorSystem : SharedDoorSystem
             TryOpen(uid, door, otherUid);
     }
 
-    public override void OnPartialOpen(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
-    {
-        if (!Resolve(uid, ref door, ref physics))
-            return;
-
-        base.OnPartialOpen(uid, door, physics);
-
-        if (door.ChangeAirtight && TryComp(uid, out AirtightComponent? airtight))
-        {
-            _airtightSystem.SetAirblocked(airtight, false);
-        }
-
-        // Path-finding. Has nothing directly to do with access readers.
-        RaiseLocalEvent(new AccessReaderChangeMessage(uid, false));
-    }
-
-    public override bool OnPartialClose(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
-    {
-        if (!Resolve(uid, ref door, ref physics))
-            return false;
-
-        if (!base.OnPartialClose(uid, door, physics))
-            return false;
-
-        // update airtight, if we did not crush something.
-        if (door.ChangeAirtight && door.CurrentlyCrushing.Count == 0 && TryComp(uid, out AirtightComponent? airtight))
-            _airtightSystem.SetAirblocked(airtight, true);
-
-        // Path-finding. Has nothing directly to do with access readers.
-        RaiseLocalEvent(new AccessReaderChangeMessage(uid, true));
-        return true;
-    }
-
     private void OnMapInit(EntityUid uid, DoorComponent door, MapInitEvent args)
     {
         // Ensure that the construction component is aware of the board container.
@@ -302,6 +277,18 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if(!container.Insert(board))
             Logger.Warning($"Couldn't insert board {ToPrettyString(board)} into door {ToPrettyString(uid)}!");
+    }
+    private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
+    {
+        if(TryComp<AirlockComponent>(uid, out var airlockComponent))
+        {
+            if (door.State == DoorState.Closed)
+            {
+                StartOpening(uid);
+                airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
+                args.Handled = true;
+            }
+        }
     }
 }
 

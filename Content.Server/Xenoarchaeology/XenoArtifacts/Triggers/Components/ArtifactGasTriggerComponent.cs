@@ -1,7 +1,4 @@
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 

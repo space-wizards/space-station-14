@@ -3,6 +3,8 @@
   name: "signal switch"
   description: "Its a switch for toggling power to things."
   components:
+  - type: WallMount
+    arc: 360
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -30,6 +32,8 @@
   name: "signal button"
   description: "It's a button for activating something."
   components:
+  - type: WallMount
+    arc: 360
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -51,6 +55,8 @@
   name: apc net switch
   description: Its a switch for toggling lights that are connected to the same apc.
   components:
+    - type: WallMount
+      arc: 360
     - type: Clickable
     - type: InteractionOutline
     - type: Physics

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Botany.Components;
+using Content.Server.Kitchen.Components;
 using Content.Shared.Examine;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
@@ -136,7 +137,7 @@ public sealed partial class BotanySystem
 
     public bool CanHarvest(SeedPrototype proto, EntityUid? held = null)
     {
-        return !proto.Ligneous || proto.Ligneous && held != null && _tags.HasTag(held.Value, "BotanySharp");
+        return !proto.Ligneous || proto.Ligneous && held != null && HasComp<SharpComponent>(held);
     }
 
     #endregion

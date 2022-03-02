@@ -64,6 +64,7 @@
       - Shovel
       - Spade
       - CableStack
+      - HandheldGPSBasic
   - type: Appearance
     visuals:
     - type: AutolatheVisualizer
@@ -144,7 +145,6 @@
       - CableMVStack
       - CableHVStack
       - ConveyorBeltAssembly
-      - RCD
       - RCDAmmo
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
@@ -164,18 +164,6 @@
       - PillCanister
       - Drone
       - Flash
-      - Handcuffs
-      - Stunbaton
-      - CartridgePistol
-      - ShellShotgun
-      - CartridgeLRifle
-      - CartridgeMagnum
-      - ShellShotgunBeanbag
-      - CartridgePistolRubber
-      - CartridgeMagnumRubber
-      - CartridgeClRifleRubber
-      - CartridgeLRifleRubber
-      - CartridgeSRifleRubber
       - MicroManipulatorStockPart
       - ScanningModuleStockPart
       - MicroLaserStockPart
@@ -231,6 +219,7 @@
     protolatherecipes:
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
+      - ThermomachineFreezerMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - ChemMasterMachineCircuitboard
@@ -239,7 +228,7 @@
       - SolarControlComputerCircuitboard
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
-      - KitchenReagentGrinderMachineCircuitboard
+      - ReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - ShuttleConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
@@ -247,3 +236,38 @@
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
 
+- type: entity
+  parent: Protolathe
+  id: SecurityTechFab
+  name: Security TechFab
+  description: Prints security equipment and some basics.
+  components:
+  - type: ProtolatheDatabase
+    protolatherecipes:
+      - Flash
+      - Handcuffs
+      - Stunbaton
+      - CartridgePistol
+      - ShellShotgun
+      - CartridgeLRifle
+      - CartridgeMagnum
+      - ShellShotgunBeanbag
+      - CartridgePistolRubber
+      - CartridgeMagnumRubber
+      - CartridgeClRifleRubber
+      - CartridgeLRifleRubber
+      - CartridgeSRifleRubber #Everything below this is shared with other lathes
+      - FlashlightLantern
+      - Bucket
+      - MopItem
+      - SprayBottle
+      - FireExtinguisher
+      - LightTube
+      - LightBulb
+      - SheetSteel
+      - SheetGlass1
+      - SheetRGlass
+      - SheetPlastic
+      - CableStack
+      - CableMVStack
+      - CableHVStack

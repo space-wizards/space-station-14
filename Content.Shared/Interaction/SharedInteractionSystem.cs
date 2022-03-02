@@ -9,6 +9,7 @@ using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
@@ -16,16 +17,13 @@ using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Content.Shared.Wall;
+using Content.Shared.Item;
 using Robust.Shared.Player;
 
 #pragma warning disable 618
@@ -38,6 +36,7 @@ namespace Content.Shared.Interaction
     [UsedImplicitly]
     public abstract class SharedInteractionSystem : EntitySystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedPhysicsSystem _sharedBroadphaseSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
@@ -57,6 +56,7 @@ namespace Content.Shared.Interaction
         {
             SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
             SubscribeAllEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
+            SubscribeLocalEvent<UnremoveableComponent, ContainerGettingRemovedAttemptEvent>(OnRemoveAttempt);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.AltActivateItemInWorld,
@@ -87,12 +87,21 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (!InRangeUnobstructed(user, ev.Target, ignoreInsideBlocker: true))
+            if (!InRangeUnobstructed(user, ev.Target))
             {
                 ev.Cancel();
                 return;
             }
         }
+
+        /// <summary>
+        ///     Prevents an item with the Unremovable component from being removed from a container by almost any means
+        /// </summary>
+        private void OnRemoveAttempt(EntityUid uid, UnremoveableComponent item, ContainerGettingRemovedAttemptEvent args)
+        {
+            args.Cancel();
+        }
+
 
         /// <summary>
         ///     Handles the event were a client uses an item in their inventory or in their hands, either by
@@ -190,12 +199,9 @@ namespace Content.Shared.Interaction
             if (!TryComp(user, out SharedHandsComponent? hands) || !hands.TryGetActiveHand(out hand))
                 return;
 
-            // ^ In future, things like looking at a UI & opening doors (i.e., Activate interactions) shouldn't neccesarily require hands.
-            // But that would first involve some work with BUIs & making sure other activate-interactions check hands if they are required.
-
-            // Check range
-            // TODO: Replace with body interaction range when we get something like arm length or telekinesis or something.
-            var inRangeUnobstructed = !checkAccess || user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true);
+            var inRangeUnobstructed = target == null
+                ? !checkAccess || InRangeUnobstructed(user, coordinates)
+                : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
             // empty-hand interactions
             if (hand.HeldEntity == null)
@@ -209,6 +215,12 @@ namespace Content.Shared.Interaction
             // Can the user use the held entity?
             if (checkCanUse && !_actionBlockerSystem.CanUseHeldEntity(user))
                 return;
+
+            if (target == hand.HeldEntity)
+            {
+                UseInHandInteraction(user, target.Value, checkCanUse: false, checkCanInteract: false);
+                return;
+            }
 
             if (inRangeUnobstructed && target != null)
             {
@@ -290,30 +302,6 @@ namespace Content.Shared.Interaction
         }
 
         /// <summary>
-        ///     Traces a ray from coords to otherCoords and returns the length
-        ///     of the vector between coords and the ray's first hit.
-        /// </summary>
-        /// <param name="origin">Set of coordinates to use.</param>
-        /// <param name="other">Other set of coordinates to use.</param>
-        /// <param name="collisionMask">The mask to check for collisions</param>
-        /// <param name="ignoredEnt">
-        ///     The entity to be ignored when checking for collisions.
-        /// </param>
-        /// <returns>Length of resulting ray.</returns>
-        public float UnobstructedDistance(
-            MapCoordinates origin,
-            MapCoordinates other,
-            int collisionMask = (int) CollisionGroup.Impassable,
-            EntityUid? ignoredEnt = null)
-        {
-            var predicate = ignoredEnt == null
-                ? null
-                : (Ignored) (e => e == ignoredEnt);
-
-            return UnobstructedDistance(origin, other, collisionMask, predicate);
-        }
-
-        /// <summary>
         ///     Checks that these coordinates are within a certain distance without any
         ///     entity that matches the collision mask obstructing them.
         ///     If the <paramref name="range"/> is zero or negative,
@@ -330,14 +318,6 @@ namespace Content.Shared.Interaction
         ///     A predicate to check whether to ignore an entity or not.
         ///     If it returns true, it will be ignored.
         /// </param>
-        /// <param name="ignoreInsideBlocker">
-        ///     If true and <see cref="origin"/> or <see cref="other"/> are inside
-        ///     the obstruction, ignores the obstruction and considers the interaction
-        ///     unobstructed.
-        ///     Therefore, setting this to true makes this check more permissive,
-        ///     such as allowing an interaction to occur inside something impassable
-        ///     (like a wall). The default, false, makes the check more restrictive.
-        /// </param>
         /// <returns>
         ///     True if the two points are within a given range without being obstructed.
         /// </returns>
@@ -346,8 +326,7 @@ namespace Content.Shared.Interaction
             MapCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            Ignored? predicate = null)
         {
             // Have to be on same map regardless.
             if (other.MapId != origin.MapId) return false;
@@ -371,29 +350,7 @@ namespace Content.Shared.Interaction
             var ray = new CollisionRay(origin.Position, dir.Normalized, (int) collisionMask);
             var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
 
-            if (rayResults.Count == 0) return true;
-
-            // TODO: Wot? This should just be in the predicate.
-            if (!ignoreInsideBlocker) return false;
-
-            foreach (var result in rayResults)
-            {
-                if (!TryComp(result.HitEntity, out IPhysBody? p))
-                {
-                    continue;
-                }
-
-                var bBox = p.GetWorldAABB();
-
-                if (bBox.Contains(other.Position))
-                {
-                    continue;
-                }
-
-                return false;
-            }
-
-            return true;
+            return rayResults.Count == 0;
         }
 
         /// <summary>
@@ -401,6 +358,8 @@ namespace Content.Shared.Interaction
         ///     entity that matches the collision mask obstructing them.
         ///     If the <paramref name="range"/> is zero or negative,
         ///     this method will only check if nothing obstructs the two entities.
+        ///     This function will also check whether the other entity is a wall-mounted entity. If it is, it will
+        ///     automatically ignore some obstructions.
         /// </summary>
         /// <param name="origin">The first entity to use.</param>
         /// <param name="other">Other entity to use.</param>
@@ -411,14 +370,6 @@ namespace Content.Shared.Interaction
         /// <param name="predicate">
         ///     A predicate to check whether to ignore an entity or not.
         ///     If it returns true, it will be ignored.
-        /// </param>
-        /// <param name="ignoreInsideBlocker">
-        ///     If true and <see cref="origin"/> or <see cref="other"/> are inside
-        ///     the obstruction, ignores the obstruction and considers the interaction
-        ///     unobstructed.
-        ///     Therefore, setting this to true makes this check more permissive,
-        ///     such as allowing an interaction to occur inside something impassable
-        ///     (like a wall). The default, false, makes the check more restrictive.
         /// </param>
         /// <param name="popup">
         ///     Whether or not to popup a feedback message on the origin entity for
@@ -433,55 +384,92 @@ namespace Content.Shared.Interaction
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            predicate ??= e => e == origin || e == other;
-            return InRangeUnobstructed(origin, Transform(other).MapPosition, range, collisionMask, predicate, ignoreInsideBlocker, popup);
+            var originPosition = Transform(origin).MapPosition;
+            var transform = Transform(other);
+            var (position, rotation) = transform.GetWorldPositionRotation();
+            var mapPos = new MapCoordinates(position, transform.MapID);
+            var wallPredicate = AddAnchoredPredicate(other, mapPos, rotation, originPosition);
+
+            Ignored combinedPredicate = e =>
+            {
+                return e == origin
+                    || e == other
+                    || (predicate?.Invoke(e) ?? false)
+                    || (wallPredicate?.Invoke(e) ?? false);
+            };
+
+            var inRange = InRangeUnobstructed(origin, mapPos, range, collisionMask, combinedPredicate, popup);
+
+            if (!inRange && popup)
+            {
+                var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
+                _popupSystem.PopupEntity(message, origin, Filter.Entities(origin));
+            }
+
+            return inRange;
+        }
+
+        public bool InRangeUnobstructed(
+            MapCoordinates origin,
+            EntityUid target,
+            float range = InteractionRange,
+            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            Ignored? predicate = null)
+        {
+            var transform = Transform(target);
+            var (position, rotation) = transform.GetWorldPositionRotation();
+            var mapPos = new MapCoordinates(position, transform.MapID);
+
+            var wallPredicate = AddAnchoredPredicate(target, mapPos, rotation, origin);
+            Ignored combinedPredicate = e =>
+            {
+                return e == target
+                    || (predicate?.Invoke(e) ?? false)
+                    || (wallPredicate?.Invoke(e) ?? false);
+            };
+
+            return InRangeUnobstructed(origin, mapPos, range, collisionMask, combinedPredicate);
         }
 
         /// <summary>
-        ///     Checks that an entity and a component are within a certain
-        ///     distance without any entity that matches the collision mask
-        ///     obstructing them.
-        ///     If the <paramref name="range"/> is zero or negative,
-        ///     this method will only check if nothing obstructs the entity and component.
+        ///     If the target entity is either an item or a wall-mounted object, this will add a predicate to ignore any
+        ///     anchored entities on that tile.
         /// </summary>
-        /// <param name="origin">The entity to use.</param>
-        /// <param name="other">The component to use.</param>
-        /// <param name="range">
-        ///     Maximum distance between the entity and component.
-        /// </param>
-        /// <param name="collisionMask">The mask to check for collisions.</param>
-        /// <param name="predicate">
-        ///     A predicate to check whether to ignore an entity or not.
-        ///     If it returns true, it will be ignored.
-        /// </param>
-        /// <param name="ignoreInsideBlocker">
-        ///     If true and <see cref="origin"/> or <see cref="other"/> are inside
-        ///     the obstruction, ignores the obstruction and considers the interaction
-        ///     unobstructed.
-        ///     Therefore, setting this to true makes this check more permissive,
-        ///     such as allowing an interaction to occur inside something impassable
-        ///     (like a wall). The default, false, makes the check more restrictive.
-        /// </param>
-        /// <param name="popup">
-        ///     Whether or not to popup a feedback message on the origin entity for
-        ///     it to see.
-        /// </param>
-        /// <returns>
-        ///     True if the two points are within a given range without being obstructed.
-        /// </returns>
-        public bool InRangeUnobstructed(
-            EntityUid origin,
-            IComponent other,
-            float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
-            bool popup = false)
+        public Ignored? AddAnchoredPredicate(
+            EntityUid target,
+            MapCoordinates targetPosition,
+            Angle targetRotation,
+            MapCoordinates origin)
         {
-            return InRangeUnobstructed(origin, other.Owner, range, collisionMask, predicate, ignoreInsideBlocker, popup);
+            if (!_mapManager.TryFindGridAt(targetPosition, out var grid))
+                return null;
+
+            if (HasComp<SharedItemComponent>(target))
+            {
+                // Ignore anchored entities on that tile.
+                var colliding = new HashSet<EntityUid>(grid.GetAnchoredEntities(targetPosition));
+                return e => colliding.Contains(e);
+            }
+
+            if (!TryComp(target, out WallMountComponent? wallMount))
+                return null;
+
+            // wall-mount exemptions may be restricted to a specific angle range.
+            if (wallMount.Arc < 360)
+            {
+                var angle = Angle.FromWorldVec(origin.Position - targetPosition.Position);
+                var angleDelta = (wallMount.Direction + targetRotation - angle).Reduced().FlipPositive();
+                var inArc = angleDelta < wallMount.Arc / 2 || Math.Tau - angleDelta < wallMount.Arc / 2;
+
+                if (!inArc)
+                    return null;
+            }
+
+            // Ignore anchored entities on that tile.
+            var ignored = new HashSet<EntityUid>(grid.GetAnchoredEntities(targetPosition));
+            return e => ignored.Contains(e);
         }
 
         /// <summary>
@@ -501,14 +489,6 @@ namespace Content.Shared.Interaction
         ///     A predicate to check whether to ignore an entity or not.
         ///     If it returns true, it will be ignored.
         /// </param>
-        /// <param name="ignoreInsideBlocker">
-        ///     If true and <see cref="origin"/> or <see cref="other"/> are inside
-        ///     the obstruction, ignores the obstruction and considers the interaction
-        ///     unobstructed.
-        ///     Therefore, setting this to true makes this check more permissive,
-        ///     such as allowing an interaction to occur inside something impassable
-        ///     (like a wall). The default, false, makes the check more restrictive.
-        /// </param>
         /// <param name="popup">
         ///     Whether or not to popup a feedback message on the origin entity for
         ///     it to see.
@@ -522,10 +502,9 @@ namespace Content.Shared.Interaction
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            return InRangeUnobstructed(origin, other.ToMap(EntityManager), range, collisionMask, predicate, ignoreInsideBlocker, popup);
+            return InRangeUnobstructed(origin, other.ToMap(EntityManager), range, collisionMask, predicate, popup);
         }
 
         /// <summary>
@@ -545,14 +524,6 @@ namespace Content.Shared.Interaction
         ///     A predicate to check whether to ignore an entity or not.
         ///     If it returns true, it will be ignored.
         /// </param>
-        /// <param name="ignoreInsideBlocker">
-        ///     If true and <see cref="origin"/> or <see cref="other"/> are inside
-        ///     the obstruction, ignores the obstruction and considers the interaction
-        ///     unobstructed.
-        ///     Therefore, setting this to true makes this check more permissive,
-        ///     such as allowing an interaction to occur inside something impassable
-        ///     (like a wall). The default, false, makes the check more restrictive.
-        /// </param>
         /// <param name="popup">
         ///     Whether or not to popup a feedback message on the origin entity for
         ///     it to see.
@@ -566,18 +537,16 @@ namespace Content.Shared.Interaction
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
             bool popup = false)
         {
+            Ignored combinedPredicatre = e => e == origin || (predicate?.Invoke(e) ?? false);
             var originPosition = Transform(origin).MapPosition;
-            predicate ??= e => e == origin;
-
-            var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, predicate, ignoreInsideBlocker);
+            var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, combinedPredicatre);
 
             if (!inRange && popup)
             {
                 var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                origin.PopupMessage(message);
+                _popupSystem.PopupEntity(message, origin, Filter.Entities(origin));
             }
 
             return inRange;
@@ -690,9 +659,7 @@ namespace Content.Shared.Interaction
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))
                 return false;
 
-
-            // all activates should only fire when in range / unobstructed
-            if (checkAccess && !InRangeUnobstructed(user, used, ignoreInsideBlocker: true, popup: true))
+            if (checkAccess && !InRangeUnobstructed(user, used, popup: true))
                 return false;
 
             // Check if interacted entity is in the same container, the direct child, or direct parent of the user.

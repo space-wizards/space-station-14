@@ -2,6 +2,7 @@
   id: AirAlarmElectronics
   parent: BaseItem
   name: air alarm electronics
+  description: An electronics board used in air alarms
   components:
   - type: Tag
     tags:
@@ -14,10 +15,11 @@
   id: FireAlarmElectronics
   parent: BaseItem
   name: fire alarm electronics
+  description: An electronics board used in fire alarms
   components:
   - type: Tag
     tags:
     - FireAlarmElectronics
   - type: Sprite
     sprite: Objects/Misc/module.rsi
-    state: door_electronics
+    state: airalarm_electronics

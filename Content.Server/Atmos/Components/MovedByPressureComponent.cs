@@ -1,30 +1,22 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Atmos;
-using Content.Shared.MobState.Components;
-using Content.Shared.Physics;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Content.Server.Atmos.EntitySystems;
 
 namespace Content.Server.Atmos.Components
 {
+    // Unfortunately can't be friends yet due to magboots.
     [RegisterComponent]
     public sealed class MovedByPressureComponent : Component
     {
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly IEntityManager _entMan = default!;
+        public const float MoveForcePushRatio = 1f;
+        public const float MoveForceForcePushRatio = 1f;
+        public const float ProbabilityOffset = 25f;
+        public const float ProbabilityBasePercent = 10f;
+        public const float ThrowForce = 100f;
 
-        private const float MoveForcePushRatio = 1f;
-        private const float MoveForceForcePushRatio = 1f;
-        private const float ProbabilityOffset = 25f;
-        private const float ProbabilityBasePercent = 10f;
-        private const float ThrowForce = 100f;
+        /// <summary>
+        /// Accumulates time when yeeted by high pressure deltas.
+        /// </summary>
+        [ViewVariables]
+        public float Accumulator = 0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]
@@ -37,75 +29,5 @@ namespace Content.Server.Atmos.Components
         public float MoveResist { get; set; } = 100f;
         [ViewVariables(VVAccess.ReadWrite)]
         public int LastHighPressureMovementAirCycle { get; set; } = 0;
-
-        public void ExperiencePressureDifference(int cycle, float pressureDifference, AtmosDirection direction,
-            float pressureResistanceProbDelta, EntityCoordinates throwTarget)
-        {
-            if (!_entMan.TryGetComponent(Owner, out PhysicsComponent? physics))
-                return;
-            if (!_entMan.TryGetComponent(Owner, out FixturesComponent? fixtureComponent))
-                return;
-
-            // TODO ATMOS stuns?
-
-            var transform = _entMan.GetComponent<TransformComponent>(physics.Owner);
-            var maxForce = MathF.Sqrt(pressureDifference) * 2.25f;
-            var moveProb = 100f;
-
-            if (PressureResistance > 0)
-                moveProb = MathF.Abs((pressureDifference / PressureResistance * ProbabilityBasePercent) -
-                           ProbabilityOffset);
-
-            if (moveProb > ProbabilityOffset && _robustRandom.Prob(MathF.Min(moveProb / 100f, 1f))
-                                             && !float.IsPositiveInfinity(MoveResist)
-                                             && (physics.BodyType != BodyType.Static
-                                                 && (maxForce >= (MoveResist * MoveForcePushRatio)))
-                || (physics.BodyType == BodyType.Static && (maxForce >= (MoveResist * MoveForceForcePushRatio))))
-            {
-                if (_entMan.HasComponent<MobStateComponent>(physics.Owner))
-                {
-                    physics.BodyStatus = BodyStatus.InAir;
-                    foreach (var fixture in fixtureComponent.Fixtures.Values)
-                    {
-                        fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
-                    }
-
-                    Owner.SpawnTimer(2000, () =>
-                    {
-                        if (Deleted || !_entMan.TryGetComponent(Owner, out PhysicsComponent? physicsComponent)) return;
-
-                        // Uhh if you get race conditions good luck buddy.
-                        if (_entMan.HasComponent<MobStateComponent>(physicsComponent.Owner))
-                        {
-                            physicsComponent.BodyStatus = BodyStatus.OnGround;
-                        }
-
-                        foreach (var fixture in physics.Fixtures)
-                        {
-                            fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
-                        }
-                    });
-                }
-
-                if (maxForce > ThrowForce)
-                {
-                    // Vera please fix ;-;
-                    if (throwTarget != EntityCoordinates.Invalid)
-                    {
-                        var moveForce = maxForce * MathHelper.Clamp(moveProb, 0, 100) / 15f;
-                        var pos = ((throwTarget.Position - transform.Coordinates.Position).Normalized + direction.ToDirection().ToVec()).Normalized;
-                        physics.ApplyLinearImpulse(pos * moveForce);
-                    }
-
-                    else
-                    {
-                        var moveForce = MathF.Min(maxForce * MathHelper.Clamp(moveProb, 0, 100) / 2500f, 20f);
-                        physics.ApplyLinearImpulse(direction.ToDirection().ToVec() * moveForce);
-                    }
-
-                    LastHighPressureMovementAirCycle = cycle;
-                }
-            }
-        }
     }
 }

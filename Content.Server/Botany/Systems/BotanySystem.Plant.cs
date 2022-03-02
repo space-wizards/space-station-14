@@ -19,7 +19,6 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly TagSystem _tags = default!;
 
         private int _nextUid = 0;
         private float _timer = 0f;
@@ -73,7 +72,7 @@ namespace Content.Server.Botany.Systems
             if (_timer < 3f)
                 return;
 
-            _timer = 0f;
+            _timer -= 3f;
 
             foreach (var plantHolder in EntityManager.EntityQuery<PlantHolderComponent>())
             {

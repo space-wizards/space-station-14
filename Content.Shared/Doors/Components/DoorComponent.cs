@@ -1,23 +1,19 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.Sound;
 using Content.Shared.Tools;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Timing;
 using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
 
 namespace Content.Shared.Doors.Components;
 
 [NetworkedComponent]
 [RegisterComponent]
-public sealed class DoorComponent : Component
+public sealed class DoorComponent : Component, ISerializationHooks
 {
     /// <summary>
     /// The current state of the door -- whether it is open, closed, opening, or closing.
@@ -72,6 +68,7 @@ public sealed class DoorComponent : Component
     ///     Whether the door is currently partially closed or open. I.e., when the door is "closing" and is already opaque,
     ///     but not yet actually closed.
     /// </summary>
+    [DataField("partial")]
     public bool Partial;
     #endregion
 
@@ -133,16 +130,52 @@ public sealed class DoorComponent : Component
     public DamageSpecifier? CrushDamage;
 
     /// <summary>
-    /// If false, this door is incapable of crushing entities. Note that this differs from the airlock's "safety"
-    /// feature that checks for colliding entities.
+    /// If false, this door is incapable of crushing entities. This just determines whether it will apply damage and
+    /// stun, not whether it can close despite entities being in the way.
     /// </summary>
     [DataField("canCrush")]
     public readonly bool CanCrush = true;
 
     /// <summary>
+    /// Whether to check for colliding entities before closing. This may be overridden by other system by subscribing to
+    /// <see cref="BeforeDoorClosedEvent"/>. For example, hacked airlocks will set this to false.
+    /// </summary>
+    [DataField("performCollisionCheck")]
+    public readonly bool PerformCollisionCheck = true;
+
+    /// <summary>
     /// List of EntityUids of entities we're currently crushing. Cleared in OnPartialOpen().
     /// </summary>
-    public List<EntityUid> CurrentlyCrushing = new();
+    [DataField("currentlyCrushing")]
+    public HashSet<EntityUid> CurrentlyCrushing = new();
+    #endregion
+
+    #region Serialization
+    /// <summary>
+    ///     Time until next state change. Because apparently <see cref="IGameTiming.CurTime"/> might not get saved/restored.
+    /// </summary>
+    [DataField("SecondsUntilStateChange")]
+    private float? _secondsUntilStateChange;
+
+    void ISerializationHooks.BeforeSerialization()
+    {
+        if (NextStateChange == null)
+        {
+            _secondsUntilStateChange = null;
+            return;
+        };
+        
+        var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
+        _secondsUntilStateChange = (float) (NextStateChange.Value - curTime).TotalSeconds;
+    }
+
+    void ISerializationHooks.AfterDeserialization()
+    {
+        if (_secondsUntilStateChange == null || _secondsUntilStateChange.Value > 0)
+            return;
+
+        NextStateChange = IoCManager.Resolve<IGameTiming>().CurTime + TimeSpan.FromSeconds(_secondsUntilStateChange.Value);
+    }
     #endregion
 
     [DataField("board", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
@@ -212,7 +245,7 @@ public enum DoorVisuals
 public sealed class DoorComponentState : ComponentState
 {
     public readonly DoorState DoorState;
-    public readonly List<EntityUid> CurrentlyCrushing;
+    public readonly HashSet<EntityUid> CurrentlyCrushing;
     public readonly TimeSpan? NextStateChange;
     public readonly bool Partial;
 

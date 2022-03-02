@@ -24,4 +24,10 @@ namespace Content.Server.Atmos.EntitySystems
             GasMixture = mixture;
         }
     }
+
+    [ByRefEvent]
+    public struct AtmosExposedGetAirEvent
+    {
+        public GasMixture? Gas;
+    }
 }

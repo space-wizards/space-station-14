@@ -341,7 +341,7 @@ namespace Content.Server.Chemistry.Components
                 var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(50));
                 for (int i = 0; i < pillAmount; i++)
                 {
-                    var pill = _entities.SpawnEntity("pill", _entities.GetComponent<TransformComponent>(Owner).Coordinates);
+                    var pill = _entities.SpawnEntity("Pill", _entities.GetComponent<TransformComponent>(Owner).Coordinates);
 
                     //Adding label
                     LabelComponent labelComponent = pill.EnsureComponent<LabelComponent>();

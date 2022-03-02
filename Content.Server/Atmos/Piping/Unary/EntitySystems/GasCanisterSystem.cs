@@ -191,11 +191,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 }
             }
 
-            DirtyUI(uid, canister, nodeContainer, containerManager);
-
             // If last pressure is very close to the current pressure, do nothing.
             if (MathHelper.CloseToPercent(canister.Air.Pressure, canister.LastPressure))
                 return;
+
+            DirtyUI(uid, canister, nodeContainer, containerManager);
 
             canister.LastPressure = canister.Air.Pressure;
 
@@ -250,9 +250,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             // Check the user has hands.
             if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
-                return;
-
-            if (!args.User.InRangeUnobstructed(canister, SharedInteractionSystem.InteractionRange, popup: true))
                 return;
 
             if (!hands.Drop(args.Used, container))

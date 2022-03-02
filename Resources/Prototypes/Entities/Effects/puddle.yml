@@ -89,6 +89,27 @@
     - type: PuddleVisualizer
 
 - type: entity
+  id: PuddleBlood
+  name: blood
+  description: This can't be a good sign.
+  parent: PuddleBase
+  components:
+  - type: Sprite
+    sprite: Fluids/splatter.rsi # Placeholder
+    state: splatter-0
+    netsync: false
+  - type: Puddle
+    slipThreshold: 20
+    overflowVolume: 50
+    opacityModifier: 8
+  - type: Evaporation
+    evaporateTime: 400 # very slow
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
+      recolor: true
+
+- type: entity
   name: vomit
   id: PuddleVomit
   parent: PuddleBase

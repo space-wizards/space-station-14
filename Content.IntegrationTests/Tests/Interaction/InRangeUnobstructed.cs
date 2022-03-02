@@ -1,11 +1,8 @@
 using System.Threading.Tasks;
-using Content.Client.Interactable;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -13,8 +10,6 @@ namespace Content.IntegrationTests.Tests.Interaction
 {
     [TestFixture]
     [TestOf(typeof(SharedInteractionSystem))]
-    [TestOf(typeof(SharedUnobstructedExtensions))]
-    [TestOf(typeof(UnobstructedExtensions))]
     public sealed class InRangeUnobstructed : ContentIntegrationTest
     {
         private const string HumanId = "MobHumanBase";
@@ -59,98 +54,50 @@ namespace Content.IntegrationTests.Tests.Interaction
 
             await server.WaitIdleAsync();
 
+            var interactionSys = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SharedInteractionSystem>();
+
             server.Assert(() =>
             {
                 // Entity <-> Entity
-                Assert.True(origin.InRangeUnobstructed(other));
-                Assert.True(other.InRangeUnobstructed(origin));
-
-                // Entity <-> Component
-                Assert.True(origin.InRangeUnobstructed(component));
-                Assert.True(component.InRangeUnobstructed(origin));
-
-                // Entity <-> Container
-                Assert.True(origin.InRangeUnobstructed(container));
-                Assert.True(container.InRangeUnobstructed(origin));
-
-                // Entity <-> EntityCoordinates
-                Assert.True(origin.InRangeUnobstructed(entityCoordinates));
-                Assert.True(entityCoordinates.InRangeUnobstructed(origin));
+                Assert.True(interactionSys.InRangeUnobstructed(origin, other));
+                Assert.True(interactionSys.InRangeUnobstructed(other, origin));
 
                 // Entity <-> MapCoordinates
-                Assert.True(origin.InRangeUnobstructed(mapCoordinates));
-                Assert.True(mapCoordinates.InRangeUnobstructed(origin));
-
+                Assert.True(interactionSys.InRangeUnobstructed(origin, mapCoordinates));
+                Assert.True(interactionSys.InRangeUnobstructed(mapCoordinates, origin));
 
                 // Move them slightly apart
                 sEntities.GetComponent<TransformComponent>(origin).LocalPosition += _interactionRangeDivided15X;
 
                 // Entity <-> Entity
-                Assert.True(origin.InRangeUnobstructed(other));
-                Assert.True(other.InRangeUnobstructed(origin));
-
-                // Entity <-> Component
-                Assert.True(origin.InRangeUnobstructed(component));
-                Assert.True(component.InRangeUnobstructed(origin));
-
-                // Entity <-> Container
-                Assert.True(origin.InRangeUnobstructed(container));
-                Assert.True(container.InRangeUnobstructed(origin));
-
-                // Entity <-> EntityCoordinates
-                Assert.True(origin.InRangeUnobstructed(entityCoordinates));
-                Assert.True(entityCoordinates.InRangeUnobstructed(origin));
+                // Entity <-> Entity
+                Assert.True(interactionSys.InRangeUnobstructed(origin, other));
+                Assert.True(interactionSys.InRangeUnobstructed(other, origin));
 
                 // Entity <-> MapCoordinates
-                Assert.True(origin.InRangeUnobstructed(mapCoordinates));
-                Assert.True(mapCoordinates.InRangeUnobstructed(origin));
-
+                Assert.True(interactionSys.InRangeUnobstructed(origin, mapCoordinates));
+                Assert.True(interactionSys.InRangeUnobstructed(mapCoordinates, origin));
 
                 // Move them out of range
                 sEntities.GetComponent<TransformComponent>(origin).LocalPosition += _interactionRangeDivided15X;
 
                 // Entity <-> Entity
-                Assert.False(origin.InRangeUnobstructed(other));
-                Assert.False(other.InRangeUnobstructed(origin));
-
-                // Entity <-> Component
-                Assert.False(origin.InRangeUnobstructed(component));
-                Assert.False(component.InRangeUnobstructed(origin));
-
-                // Entity <-> Container
-                Assert.False(origin.InRangeUnobstructed(container));
-                Assert.False(container.InRangeUnobstructed(origin));
-
-                // Entity <-> EntityCoordinates
-                Assert.False(origin.InRangeUnobstructed(entityCoordinates));
-                Assert.False(entityCoordinates.InRangeUnobstructed(origin));
+                Assert.False(interactionSys.InRangeUnobstructed(origin, other));
+                Assert.False(interactionSys.InRangeUnobstructed(other, origin));
 
                 // Entity <-> MapCoordinates
-                Assert.False(origin.InRangeUnobstructed(mapCoordinates));
-                Assert.False(mapCoordinates.InRangeUnobstructed(origin));
-
+                Assert.False(interactionSys.InRangeUnobstructed(origin, mapCoordinates));
+                Assert.False(interactionSys.InRangeUnobstructed(mapCoordinates, origin));
 
                 // Checks with increased range
 
                 // Entity <-> Entity
-                Assert.True(origin.InRangeUnobstructed(other, InteractionRangeDivided15Times3));
-                Assert.True(other.InRangeUnobstructed(origin, InteractionRangeDivided15Times3));
-
-                // Entity <-> Component
-                Assert.True(origin.InRangeUnobstructed(component, InteractionRangeDivided15Times3));
-                Assert.True(component.InRangeUnobstructed(origin, InteractionRangeDivided15Times3));
-
-                // Entity <-> Container
-                Assert.True(origin.InRangeUnobstructed(container, InteractionRangeDivided15Times3));
-                Assert.True(container.InRangeUnobstructed(origin, InteractionRangeDivided15Times3));
-
-                // Entity <-> EntityCoordinates
-                Assert.True(origin.InRangeUnobstructed(entityCoordinates, InteractionRangeDivided15Times3));
-                Assert.True(entityCoordinates.InRangeUnobstructed(origin, InteractionRangeDivided15Times3));
+                Assert.True(interactionSys.InRangeUnobstructed(origin, other, InteractionRangeDivided15Times3));
+                Assert.True(interactionSys.InRangeUnobstructed(other, origin, InteractionRangeDivided15Times3));
 
                 // Entity <-> MapCoordinates
-                Assert.True(origin.InRangeUnobstructed(mapCoordinates, InteractionRangeDivided15Times3));
-                Assert.True(mapCoordinates.InRangeUnobstructed(origin, InteractionRangeDivided15Times3));
+                Assert.True(interactionSys.InRangeUnobstructed(origin, mapCoordinates, InteractionRangeDivided15Times3));
+                Assert.True(interactionSys.InRangeUnobstructed(mapCoordinates, origin, InteractionRangeDivided15Times3));
             });
 
             await server.WaitIdleAsync();

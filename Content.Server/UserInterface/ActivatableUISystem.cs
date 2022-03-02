@@ -1,17 +1,13 @@
-using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
-using Content.Shared.ActionBlocker;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.UserInterface
 {
@@ -27,12 +23,29 @@ namespace Content.Server.UserInterface
             SubscribeLocalEvent<ActivatableUIComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<ActivatableUIComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>((uid, aui, _) => CloseAll(uid, aui));
-            SubscribeLocalEvent<ActivatableUIComponent, UnequippedHandEvent>((uid, aui, _) => CloseAll(uid, aui));
+            SubscribeLocalEvent<ActivatableUIComponent, GotUnequippedHandEvent>((uid, aui, _) => CloseAll(uid, aui));
             // *THIS IS A BLATANT WORKAROUND!* RATIONALE: Microwaves need it
             SubscribeLocalEvent<ActivatableUIComponent, EntParentChangedMessage>(OnParentChanged);
             SubscribeLocalEvent<ActivatableUIComponent, BoundUIClosedEvent>(OnUIClose);
 
             SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
+
+            SubscribeLocalEvent<ServerUserInterfaceComponent, OpenUiActionEvent>(OnActionPerform);
+        }
+
+        private void OnActionPerform(EntityUid uid, ServerUserInterfaceComponent component, OpenUiActionEvent args)
+        {
+            if (args.Handled || args.Key == null)
+                return;
+
+            if (!TryComp(args.Performer, out ActorComponent? actor))
+                return;
+
+            if (!component.TryGetBoundUserInterface(args.Key, out var bui))
+                return;
+
+            bui.Toggle(actor.PlayerSession);
+            args.Handled = true;
         }
 
         private void AddOpenUiVerb(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<ActivationVerb> args)
@@ -40,12 +53,15 @@ namespace Content.Server.UserInterface
             if (!args.CanAccess)
                 return;
 
+            if (component.InHandsOnly && args.Using != uid)
+                return;
+
             if (!args.CanInteract && !HasComp<GhostComponent>(args.User))
                 return;
 
             ActivationVerb verb = new();
             verb.Act = () => InteractUI(args.User, component);
-            verb.Text = Loc.GetString("ui-verb-toggle-open");
+            verb.Text = Loc.GetString(component.VerbText);
             // TODO VERBS add "open UI" icon?
             args.Verbs.Add(verb);
         }
@@ -95,8 +111,10 @@ namespace Content.Server.UserInterface
             // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
             // This is so that stuff can require further conditions (like power).
             var oae = new ActivatableUIOpenAttemptEvent(user);
+            var uae = new UserOpenActivatableUIAttemptEvent(user);
+            RaiseLocalEvent(user, uae, false);
             RaiseLocalEvent((aui).Owner, oae, false);
-            if (oae.Cancelled) return false;
+            if (oae.Cancelled || uae.Cancelled) return false;
 
             SetCurrentSingleUser((aui).Owner, actor.PlayerSession, aui);
             ui.Toggle(actor.PlayerSession);
@@ -131,6 +149,14 @@ namespace Content.Server.UserInterface
         }
     }
 
+    public sealed class UserOpenActivatableUIAttemptEvent : CancellableEntityEventArgs //have to one-up the already stroke-inducing name
+    {
+        public EntityUid User { get; }
+        public UserOpenActivatableUIAttemptEvent(EntityUid who)
+        {
+            User = who;
+        }
+    }
     public sealed class ActivatableUIPlayerChangedEvent : EntityEventArgs
     {
     }

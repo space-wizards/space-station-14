@@ -1,11 +1,10 @@
 using Content.Server.Sandbox;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class SandboxRuleSystem : GameRuleSystem
 {
-    [Dependency] private readonly ISandboxManager _sandbox = default!;
+    [Dependency] private readonly SandboxSystem _sandbox = default!;
 
     public override string Prototype => "Sandbox";
 

@@ -3,6 +3,7 @@
   name: fire alarm
   description: A fire alarm. Spicy!
   components:
+  - type: WallMount
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetworkComponent
@@ -26,6 +27,7 @@
         Normal: fire_off
         Warning: fire_off # shouldn't be alarming at a warning
         Danger: fire_on
+        Emagged: fire_emagged
       hideOnDepowered: ["fireAlarmState"]
     - type: WiresVisualizer
   - type: UserInterface
@@ -59,6 +61,7 @@
   name: fire alarm assembly
   description: A fire alarm assembly. Very mild.
   components:
+  - type: WallMount
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite

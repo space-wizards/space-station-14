@@ -26,7 +26,7 @@ namespace Content.Server.RoundEnd
 
         public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);
         public TimeSpan DefaultCountdownDuration { get; set; } = TimeSpan.FromMinutes(4);
-        public TimeSpan DefaultRestartRoundDuration { get; set; } = TimeSpan.FromSeconds(20);
+        public TimeSpan DefaultRestartRoundDuration { get; set; } = TimeSpan.FromMinutes(1);
 
         private CancellationTokenSource? _countdownTokenSource = null;
         private CancellationTokenSource? _cooldownTokenSource = null;
@@ -84,7 +84,7 @@ namespace Content.Server.RoundEnd
                 _adminLog.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called");
             }
 
-            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",("minutes", countdownTime.Minutes)), Loc.GetString("Station"), false);
+            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",("minutes", countdownTime.Minutes)), Loc.GetString("Station"), false, Color.Gold);
 
             SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlecalled.ogg");
 
@@ -130,7 +130,7 @@ namespace Content.Server.RoundEnd
             _gameTicker.EndRound();
             _countdownTokenSource?.Cancel();
             _countdownTokenSource = new();
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("round-end-system-round-restart-eta-announcement", ("seconds", DefaultRestartRoundDuration.Seconds)));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("round-end-system-round-restart-eta-announcement", ("minutes", DefaultRestartRoundDuration.Minutes)));
             Timer.Spawn(DefaultRestartRoundDuration, AfterEndRoundRestart, _countdownTokenSource.Token);
         }
 
