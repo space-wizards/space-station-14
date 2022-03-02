@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Content.Client.Clothing;
 using Content.Client.Items.Systems;
 using Content.Shared.Clothing;
 using Content.Shared.Hands;
@@ -9,11 +6,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Light;
 using Content.Shared.Light.Component;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using static Robust.Client.GameObjects.SpriteComponent;
 

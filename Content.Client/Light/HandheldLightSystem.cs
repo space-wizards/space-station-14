@@ -6,10 +6,7 @@ using Content.Shared.Hands;
 using Content.Shared.Item;
 using Content.Shared.Light.Component;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using System.Linq;
 
 namespace Content.Client.Light;
