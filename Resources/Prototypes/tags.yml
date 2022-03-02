@@ -282,6 +282,9 @@
 
 - type: Tag
   id: Trash
+  
+- type: Tag
+  id: TrashBag
 
 - type: Tag
   id: Wall
