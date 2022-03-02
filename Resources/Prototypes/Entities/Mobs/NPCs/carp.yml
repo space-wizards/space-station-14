@@ -45,6 +45,13 @@
   - type: Butcherable
     spawned: FoodMeat # TODO: CrapMeat or FishMeat # - 2022-02-17 LMAO crap meat
     pieces: 2
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      groups:
+        Brute: 20
 
 - type: entity
   name: magicarp

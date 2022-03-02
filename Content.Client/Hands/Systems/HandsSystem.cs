@@ -4,6 +4,7 @@ using Content.Client.Animations;
 using Content.Client.HUD;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
+using Content.Shared.Item;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -11,6 +12,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
@@ -32,6 +34,7 @@ namespace Content.Client.Hands
             SubscribeLocalEvent<HandsComponent, PlayerDetachedEvent>(HandlePlayerDetached);
             SubscribeLocalEvent<HandsComponent, ComponentRemove>(HandleCompRemove);
             SubscribeLocalEvent<HandsComponent, ComponentHandleState>(HandleComponentState);
+            SubscribeLocalEvent<HandsComponent, VisualsChangedEvent>(OnVisualsChanged);
 
             SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
         }
@@ -180,6 +183,95 @@ namespace Content.Client.Hands
             RaiseNetworkEvent(new ActivateInHandMsg(handName));
         }
 
+        #region visuals
+        protected override void HandleContainerModified(EntityUid uid, SharedHandsComponent handComp, ContainerModifiedMessage args)
+        {
+            if (handComp.TryGetHand(args.Container.ID, out var hand))
+            {
+                UpdateHandVisuals(uid, args.Entity, hand);
+            }
+        }
+
+        /// <summary>
+        ///     Update the players sprite with new in-hand visuals.
+        /// </summary>
+        private void UpdateHandVisuals(EntityUid uid, EntityUid held, Hand hand, HandsComponent? handComp = null, SpriteComponent? sprite = null)
+        {
+            if (!Resolve(uid, ref handComp, ref sprite, false))
+                return;
+
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
+                UpdateGui();
+
+            // Remove old layers. We could also just set them to invisible, but as items may add arbitrary layers, this
+            // may eventually bloat the player with lots of layers.
+            if (handComp.RevealedLayers.TryGetValue(hand.Location, out var revealedLayers))
+            {
+                foreach (var key in revealedLayers)
+                {
+                    sprite.RemoveLayer(key);
+                }
+                revealedLayers.Clear();
+            }
+            else
+            {
+                revealedLayers = new();
+                handComp.RevealedLayers[hand.Location] = revealedLayers;
+            }
+
+            if (hand.HeldEntity == null)
+            {
+                // the held item was removed.
+                RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers));
+                return;
+            }
+
+            var ev = new GetInhandVisualsEvent(uid, hand.Location);
+            RaiseLocalEvent(held, ev, false);
+
+            if (ev.Layers.Count == 0)
+            {
+                RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers));
+                return;
+            }
+
+            // add the new layers
+            foreach (var (key, layerData) in ev.Layers)
+            {
+                if (!revealedLayers.Add(key))
+                {
+                    Logger.Warning($"Duplicate key for in-hand visuals: {key}. Are multiple components attempting to modify the same layer? Entity: {ToPrettyString(held)}");
+                    continue;
+                }
+
+                var index = sprite.LayerMapReserveBlank(key);
+
+                // In case no RSI is given, use the item's base RSI as a default. This cuts down on a lot of unnecessary yaml entries.
+                if (layerData.RsiPath == null
+                    && layerData.TexturePath == null
+                    && sprite[index].Rsi == null
+                    && TryComp(held, out SpriteComponent? clothingSprite))
+                {
+                    sprite.LayerSetRSI(index, clothingSprite.BaseRSI);
+                }
+
+                sprite.LayerSetData(index, layerData);
+            }
+
+            RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers));
+        }
+
+        private void OnVisualsChanged(EntityUid uid, HandsComponent component, VisualsChangedEvent args)
+        {
+            // update hands visuals if this item is in a hand (rather then inventory or other container).
+            if (component.TryGetHand(args.ContainerId, out var hand))
+            {
+                UpdateHandVisuals(uid, args.Item, hand, component);
+            }
+        }
+        #endregion
+
+
         #region Gui
         public void UpdateGui(HandsComponent? hands = null)
         {
@@ -191,14 +283,6 @@ namespace Content.Client.Hands
                 .ToArray();
 
             hands.Gui.Update(new HandsGuiState(states, hands.ActiveHand));
-        }
-
-        public override void UpdateHandVisuals(EntityUid uid, SharedHandsComponent? handComp = null, AppearanceComponent? appearance = null)
-        {
-            base.UpdateHandVisuals(uid, handComp, appearance);
-
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
-                UpdateGui();
         }
 
         public override bool TrySetActiveHand(EntityUid uid, string? value, SharedHandsComponent? handComp = null)

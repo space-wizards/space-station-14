@@ -57,6 +57,11 @@
     state: cloth
   - type: Stack
     count: 1
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
 
 - type: entity
   parent: MaterialBase
