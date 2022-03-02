@@ -66,10 +66,10 @@ namespace Content.Server.Bed
 
         private void OnComponentStartup(EntityUid uid, StasisBedComponent component, ComponentStartup args)
         {
-            UpdateAppeance(uid, true);
+            UpdateAppearance(uid, false);
         }
 
-        private void UpdateAppeance(EntityUid uid, bool isOn)
+        private void UpdateAppearance(EntityUid uid, bool isOn)
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
                 return;
@@ -104,7 +104,7 @@ namespace Content.Server.Bed
 
         private void OnPowerChanged(EntityUid uid, StasisBedComponent component, PowerChangedEvent args)
         {
-            UpdateAppeance(uid, args.Powered);
+            UpdateAppearance(uid, args.Powered);
             UpdateMetabolisms(uid, component, args.Powered);
         }
 
