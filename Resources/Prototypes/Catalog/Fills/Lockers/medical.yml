@@ -41,7 +41,7 @@
         prob: 0.05
         orGroup: Surgcaps
       - id: UniformScrubsColorBlue
-        prob: 1
+        prob: 0.5
         orGroup: Surgshrubs
       - id: UniformScrubsColorGreen
         prob: 0.1
