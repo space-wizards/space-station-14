@@ -52,6 +52,8 @@
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: bolt-closed
+      map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Icon
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
   - type: Item

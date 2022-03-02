@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "https://github.com/tgstation/tgstation/commit/a39e3f3f1f351e3be5ae955c4de3a2e8889e191b",
-  "copyright": "CC-BY-SA",
+  "copyright": "CC-BY-SA-3.0",
   "size": {
     "x": 32,
     "y": 32
@@ -23,6 +23,39 @@
     },
     {
       "name": "notholstered"
+    },
+    {
+      "name": "bolt-closed",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bolt-open",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "icon",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }
