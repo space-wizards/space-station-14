@@ -21,7 +21,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/cosmonaut.rsi
   - type: IngestionBlocker
-  
+
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetCult
@@ -33,6 +33,13 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/cult.rsi
   - type: IngestionBlocker
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.9
+        Heat: 0.8
 
 - type: entity
   parent: ClothingHeadBase
@@ -157,7 +164,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/wizardhelm.rsi
   - type: IngestionBlocker
-  
+
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase # hardsuitlight base for light and protection
   id: ClothingHeadHelmetFire
