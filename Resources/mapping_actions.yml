@@ -1,91 +1,89 @@
-# Default action-toolbar layout for the /mapping command.
-
 - action: !type:InstantAction
-    icon: Window
-    name: Window
-    keywords: []
     checkCanInteract: False
-    clientExclusive: True
-    temporary: True
-    autoPopulate: False
-    event: !type:StartPlacementActionEvent
-      placementOption: SnapgridCenter
-      entityType: Window
-  assignments:
-  - 0: 2
-- action: !type:InstantAction
-    icon: WallReinforced
-    name: WallReinforced
-    keywords: []
-    checkCanInteract: False
-    clientExclusive: True
-    temporary: True
-    autoPopulate: False
-    event: !type:StartPlacementActionEvent
-      placementOption: SnapgridCenter
-      entityType: WallReinforced
-  assignments:
-  - 0: 1
-- action: !type:InstantAction
-    icon: WallSolid
-    name: WallSolid
-    keywords: []
-    checkCanInteract: False
-    clientExclusive: True
-    temporary: True
-    autoPopulate: False
-    event: !type:StartPlacementActionEvent
-      placementOption: SnapgridCenter
-      entityType: WallSolid
-  assignments:
-  - 0: 0
-- action: !type:InstantAction
     icon: ReinforcedWindow
     name: ReinforcedWindow
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: ReinforcedWindow
   assignments:
   - 0: 3
 - action: !type:InstantAction
+    checkCanInteract: False
+    icon: WallSolid
+    name: WallSolid
+    keywords: []
+    clientExclusive: True
+    autoPopulate: False
+    temporary: True
+    event: !type:StartPlacementActionEvent
+      placementOption: SnapgridCenter
+      entityType: WallSolid
+  assignments:
+  - 0: 0
+- action: !type:InstantAction
+    checkCanInteract: False
+    icon: WallReinforced
+    name: WallReinforced
+    keywords: []
+    clientExclusive: True
+    autoPopulate: False
+    temporary: True
+    event: !type:StartPlacementActionEvent
+      placementOption: SnapgridCenter
+      entityType: WallReinforced
+  assignments:
+  - 0: 1
+- action: !type:InstantAction
+    checkCanInteract: False
+    icon: Window
+    name: Window
+    keywords: []
+    clientExclusive: True
+    autoPopulate: False
+    temporary: True
+    event: !type:StartPlacementActionEvent
+      placementOption: SnapgridCenter
+      entityType: Window
+  assignments:
+  - 0: 2
+- action: !type:InstantAction
+    checkCanInteract: False
     icon: Firelock
     name: Firelock
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Firelock
   assignments:
   - 0: 5
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: Grille
     name: Grille
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Grille
   assignments:
   - 0: 4
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: Interface/VerbIcons/delete.svg.192dpi.png
     name: action-name-mapping-erase
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       eraser: True
   assignments:
@@ -96,706 +94,663 @@
   - 5: 9
   - 6: 9
 - action: !type:InstantAction
-    icon: Tiles/cropped_parallax.png
-    name: space
-    keywords: []
     checkCanInteract: False
-    clientExclusive: True
-    temporary: True
-    autoPopulate: False
-    event: !type:StartPlacementActionEvent
-      placementOption: AlignTileAny
-      isTile: True
-  assignments:
-  - 0: 8
-- action: !type:InstantAction
-    icon: /Textures/Tiles/steel.png
-    name: steel floor
-    keywords: []
-    checkCanInteract: False
-    clientExclusive: True
-    temporary: True
-    autoPopulate: False
-    event: !type:StartPlacementActionEvent
-      placementOption: AlignTileAny
-      tileType: 30
-      isTile: True
-  assignments:
-  - 0: 7
-- action: !type:InstantAction
-    icon: /Textures/Tiles/plating.png
-    name: plating
-    keywords: []
-    checkCanInteract: False
-    clientExclusive: True
-    temporary: True
-    autoPopulate: False
-    event: !type:StartPlacementActionEvent
-      placementOption: AlignTileAny
-      tileType: 36
-      isTile: True
-  assignments:
-  - 0: 6
-  - 1: 8
-  - 2: 8
-- action: !type:InstantAction
     icon: GasPipeStraight
     name: GasPipeStraight
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasPipeStraight
   assignments:
   - 1: 0
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: GasPipeBend
     name: GasPipeBend
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasPipeBend
   assignments:
   - 1: 1
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: GasPipeTJunction
     name: GasPipeTJunction
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasPipeTJunction
   assignments:
   - 1: 2
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: GasPipeFourway
     name: GasPipeFourway
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasPipeFourway
   assignments:
   - 1: 3
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: GasVentScrubber
     name: GasVentScrubber
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasVentScrubber
   assignments:
   - 1: 4
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: GasVentPump
     name: GasVentPump
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasVentPump
   assignments:
   - 1: 5
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: AirAlarm
     name: AirAlarm
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirAlarm
   assignments:
   - 1: 6
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: FireAlarm
     name: FireAlarm
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: FireAlarm
   assignments:
   - 1: 7
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: SalternAPC
     name: SalternAPC
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: SalternAPC
   assignments:
   - 2: 3
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: CableApcExtension
     name: CableApcExtension
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: CableApcExtension
   assignments:
   - 2: 0
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: CableMV
     name: CableMV
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: CableMV
   assignments:
   - 2: 1
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: CableHV
     name: CableHV
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: CableHV
   assignments:
   - 2: 2
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: SalternSubstation
     name: SalternSubstation
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: SalternSubstation
   assignments:
   - 2: 4
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: Poweredlight
     name: Poweredlight
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Poweredlight
   assignments:
   - 2: 6
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: EmergencyLight
     name: EmergencyLight
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: PlaceFree
       entityType: EmergencyLight
   assignments:
   - 2: 7
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: SalternSMES
     name: SalternSMES
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: SalternSMES
   assignments:
   - 2: 5
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: TableWood
     name: TableWood
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: TableWood
   assignments:
   - 3: 0
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: Table
     name: Table
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Table
   assignments:
   - 3: 1
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: ChairWood
     name: ChairWood
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: ChairWood
   assignments:
   - 3: 2
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: Chair
     name: Chair
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Chair
   assignments:
   - 3: 3
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: ChairOfficeLight
     name: ChairOfficeLight
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: ChairOfficeLight
   assignments:
   - 3: 4
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: StoolBar
     name: StoolBar
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: StoolBar
   assignments:
   - 3: 6
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: Stool
     name: Stool
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Stool
   assignments:
   - 3: 7
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: Rack
     name: Rack
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Rack
   assignments:
   - 3: 8
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: ChairOfficeDark
     name: ChairOfficeDark
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: ChairOfficeDark
   assignments:
   - 3: 5
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: LampGold
     name: LampGold
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: PlaceFree
       entityType: LampGold
   assignments:
   - 3: 9
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: DisposalPipe
     name: DisposalPipe
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalPipe
   assignments:
   - 4: 0
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: DisposalBend
     name: DisposalBend
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalBend
   assignments:
   - 4: 1
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: DisposalJunction
     name: DisposalJunction
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalJunction
   assignments:
   - 4: 2
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: DisposalJunctionFlipped
     name: DisposalJunctionFlipped
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalJunctionFlipped
   assignments:
   - 4: 3
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: DisposalRouter
     name: DisposalRouter
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalRouter
   assignments:
   - 4: 4
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: DisposalRouterFlipped
     name: DisposalRouterFlipped
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalRouterFlipped
   assignments:
   - 4: 5
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: DisposalUnit
     name: DisposalUnit
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalUnit
   assignments:
   - 4: 6
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: DisposalTrunk
     name: DisposalTrunk
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalTrunk
   assignments:
   - 4: 7
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: SignDisposalSpace
     name: SignDisposalSpace
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: SignDisposalSpace
   assignments:
   - 4: 8
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: Windoor
     name: Windoor
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Windoor
   assignments:
   - 5: 0
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: WindowDirectional
     name: WindowDirectional
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: WindowDirectional
   assignments:
   - 5: 1
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: WindowReinforcedDirectional
     name: WindowReinforcedDirectional
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: WindowReinforcedDirectional
   assignments:
   - 5: 2
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: PlasmaWindowDirectional
     name: PlasmaWindowDirectional
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: PlasmaWindowDirectional
   assignments:
   - 5: 3
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: Railing
     name: Railing
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Railing
   assignments:
   - 5: 6
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: RailingCorner
     name: RailingCorner
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: RailingCorner
   assignments:
   - 5: 7
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: RailingCornerSmall
     name: RailingCornerSmall
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: RailingCornerSmall
   assignments:
   - 5: 8
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: AirlockMaintLocked
     name: AirlockMaintLocked
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockMaintLocked
   assignments:
   - 6: 0
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: AirlockGlass
     name: AirlockGlass
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockGlass
   assignments:
   - 6: 1
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: AirlockServiceLocked
     name: AirlockServiceLocked
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockServiceLocked
   assignments:
   - 6: 2
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: AirlockSecurityLocked
     name: AirlockSecurityLocked
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockSecurityLocked
   assignments:
   - 6: 3
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: AirlockCommand
     name: AirlockCommand
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockCommand
   assignments:
   - 6: 4
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: AirlockScience
     name: AirlockScience
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockScience
   assignments:
   - 6: 5
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: AirlockMedical
     name: AirlockMedical
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockMedical
   assignments:
   - 6: 6
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: AirlockEngineering
     name: AirlockEngineering
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockEngineering
   assignments:
   - 6: 7
 - action: !type:InstantAction
+    checkCanInteract: False
     icon: AirlockCargo
     name: AirlockCargo
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockCargo
@@ -804,6 +759,7 @@
 - action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
+    range: -1
     icon:
       sprite: Decals/markings.rsi
       state: bot_left
@@ -812,8 +768,8 @@
     keywords: []
     checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#EFB34196'
@@ -823,6 +779,7 @@
 - action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
+    range: -1
     icon:
       sprite: Decals/markings.rsi
       state: delivery
@@ -831,8 +788,8 @@
     keywords: []
     checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#EFB34196'
@@ -842,6 +799,7 @@
 - action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
+    range: -1
     icon:
       sprite: Decals/markings.rsi
       state: warn_full
@@ -850,8 +808,8 @@
     keywords: []
     checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#EFB34196'
@@ -861,6 +819,7 @@
 - action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
+    range: -1
     icon:
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
@@ -869,8 +828,8 @@
     keywords: []
     checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#EFB34196'
@@ -880,6 +839,7 @@
 - action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
+    range: -1
     icon:
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
@@ -888,8 +848,8 @@
     keywords: []
     checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#334E6DC8'
@@ -899,6 +859,7 @@
 - action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
+    range: -1
     icon:
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
@@ -907,8 +868,8 @@
     keywords: []
     checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#52B4E996'
@@ -918,6 +879,7 @@
 - action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
+    range: -1
     icon:
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
@@ -926,8 +888,8 @@
     keywords: []
     checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#9FED5896'
@@ -937,6 +899,7 @@
 - action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
+    range: -1
     icon:
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
@@ -945,8 +908,8 @@
     keywords: []
     checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#DE3A3A96'
@@ -956,6 +919,7 @@
 - action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
+    range: -1
     icon:
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
@@ -964,8 +928,8 @@
     keywords: []
     checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#D381C996'
@@ -975,6 +939,7 @@
 - action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
+    range: -1
     icon:
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
@@ -983,12 +948,53 @@
     keywords: []
     checkCanInteract: False
     clientExclusive: True
-    temporary: True
     autoPopulate: False
+    temporary: True
     event: !type:PlaceDecalActionEvent
       snap: True
       color: '#A4610696'
       decalId: HalfTileOverlayGreyscale
   assignments:
   - 7: 9
+- action: !type:InstantAction
+    checkCanInteract: False
+    icon: /Textures/Tiles/steel.png
+    name: steel floor
+    keywords: []
+    clientExclusive: True
+    autoPopulate: False
+    temporary: True
+    event: !type:StartPlacementActionEvent
+      placementOption: AlignTileAny
+      tileId: floor_steel
+  assignments:
+  - 0: 6
+- action: !type:InstantAction
+    checkCanInteract: False
+    icon: /Textures/Tiles/plating.png
+    name: plating
+    keywords: []
+    clientExclusive: True
+    autoPopulate: False
+    temporary: True
+    event: !type:StartPlacementActionEvent
+      placementOption: AlignTileAny
+      tileId: plating
+  assignments:
+  - 0: 7
+  - 1: 8
+  - 2: 8
+- action: !type:InstantAction
+    checkCanInteract: False
+    icon: Tiles/cropped_parallax.png
+    name: space
+    keywords: []
+    clientExclusive: True
+    autoPopulate: False
+    temporary: True
+    event: !type:StartPlacementActionEvent
+      placementOption: AlignTileAny
+      tileId: space
+  assignments:
+  - 0: 8
 ...

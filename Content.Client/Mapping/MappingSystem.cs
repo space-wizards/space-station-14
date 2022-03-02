@@ -53,13 +53,18 @@ public sealed partial class MappingSystem : EntitySystem
             return;
 
         var actionEvent = new StartPlacementActionEvent();
+        ITileDefinition? tileDef = null;
 
         if (_placementMan.CurrentPermission != null)
         {
             actionEvent.EntityType = _placementMan.CurrentPermission.EntityType;
-            actionEvent.IsTile = _placementMan.CurrentPermission.IsTile;
-            actionEvent.TileType = _placementMan.CurrentPermission.TileType;
             actionEvent.PlacementOption = _placementMan.CurrentPermission.PlacementOption;
+
+            if (_placementMan.CurrentPermission.IsTile)
+            {
+                tileDef = _tileMan[_placementMan.CurrentPermission.TileType];
+                actionEvent.TileId = tileDef.ID;
+            }
         }
         else if (_placementMan.Eraser)
         {
@@ -68,10 +73,8 @@ public sealed partial class MappingSystem : EntitySystem
         else
             return;
 
-        if (actionEvent.IsTile)
+        if (tileDef != null)
         {
-            var tileDef = _tileMan[actionEvent.TileType];
-
             if (tileDef is not ContentTileDefinition contentTileDef)
                 return;
 
@@ -125,8 +128,8 @@ public sealed partial class MappingSystem : EntitySystem
         _placementMan.BeginPlacing(new()
         {
             EntityType = args.EntityType,
-            IsTile = args.IsTile,
-            TileType = args.TileType,
+            IsTile = args.TileId != null,
+            TileType = args.TileId != null ? _tileMan[args.TileId].TileId : (ushort) 0,
             PlacementOption = args.PlacementOption,
         });
 
@@ -140,11 +143,8 @@ public sealed class StartPlacementActionEvent : PerformActionEvent
     [DataField("entityType")]
     public string? EntityType;
 
-    [DataField("isTile")]
-    public bool IsTile;
-
-    [DataField("tileType")]
-    public ushort TileType;
+    [DataField("tileId")]
+    public string? TileId;
 
     [DataField("placementOption")]
     public string? PlacementOption;
