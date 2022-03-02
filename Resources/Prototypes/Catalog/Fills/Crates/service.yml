@@ -46,19 +46,16 @@
         prob: 0.50
         orGroup: CigCarton1
       - id: CigCartonRed
-        prob: 0.50
         orGroup: CigCarton1
       - id: CigCartonBlue
         prob: 0.50
         orGroup: CigCarton2
       - id: CigCartonBlack
-        prob: 0.50
         orGroup: CigCarton2
       - id: CigarGoldCase
         prob: 0.05
         orGroup: Cigars
       - id: CigarCase
-        prob: 0.95
         orGroup: Cigars
       - id: Matchbox
         amount: 2
