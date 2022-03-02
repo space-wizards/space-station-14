@@ -20,6 +20,9 @@
         - PlushieSlime
         - PlushieSnake
         - PlushieVox
+        - PlushieRatvar
+        - PlushieSpaceLizard
+        - PlushieRouny
         - ToyMouse
       chance: 0.5
       offset: 0.2
