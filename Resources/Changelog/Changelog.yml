@@ -1,9 +1,4 @@
 Entries:
-- author: Mith-randalf
-  changes:
-  - {message: Fixed broken tonic water can visual., type: Fix}
-  id: 652
-  time: '2021-11-25T01:35:01.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Fixed bug with disposals that turned Packedstation disposals into an
@@ -2999,3 +2994,8 @@ Entries:
       uplink)!, type: Remove}
   id: 1151
   time: '2022-03-02T01:46:55.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: updated Saltern to Saltern Special Edition HD Enhanced Edition, type: Add}
+  id: 1152
+  time: '2022-03-02T13:16:42.0000000+00:00'
