@@ -143,7 +143,7 @@
       - id: Minigun
       - id: EnergySword
       - id: LauncherMultipleRocket
-      - id: IndustrialXrayCannon
+      - id: XrayCannon
   - type: UserInterface
     interfaces:
     - key: enum.StrippingUiKey.Key
