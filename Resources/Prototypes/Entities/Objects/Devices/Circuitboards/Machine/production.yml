@@ -57,7 +57,6 @@
       Manipulator: 1
       Laser: 1
 
-
 - type: entity
   id: ThermomachineFreezerMachineCircuitBoard
   parent: BaseMachineCircuitboard
