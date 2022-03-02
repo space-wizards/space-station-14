@@ -1,20 +1,17 @@
-using System;
-using Robust.Shared.GameObjects;
+
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
 using Content.Shared.Damage;
-using Content.Shared.Popups;
+using Content.Shared.Verbs;
+using Content.Shared.Item;
 using Content.Server.Cooldown;
-using Content.Server.Inventory;
-using Content.Server.Mind.Components;
 using Content.Server.Bible.Components;
 using Content.Server.Popups;
-using Robust.Shared.IoC;
+using Content.Server.Hands.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 
 
@@ -33,6 +30,7 @@ namespace Content.Server.Bible
             base.Initialize();
 
             SubscribeLocalEvent<BibleComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<BibleComponent, GetVerbsEvent<AlternativeVerb>>(AddSummonVerb);
         }
 
         private void OnAfterInteract(EntityUid uid, BibleComponent component, AfterInteractEvent args)
@@ -59,7 +57,7 @@ namespace Content.Server.Bible
             {
                 _popupSystem.PopupEntity(Loc.GetString("bible-sizzle"), args.User, Filter.Entities(args.User));
 
-                SoundSystem.Play(Filter.Pvs(args.User), "/Audio/Effects/lightburn.ogg", args.User);
+                SoundSystem.Play(Filter.Pvs(args.User), component.SizzleSoundPath, args.User);
                 _damageableSystem.TryChangeDamage(args.User, component.DamageOnUntrainedUse, true);
 
                 return;
@@ -69,10 +67,10 @@ namespace Content.Server.Bible
             {
                 if (_random.Prob(component.FailChance))
                 {
-                var othersFailMessage = Loc.GetString("bible-heal-fail-others", ("user", args.User),("target", args.Target),("bible", uid));
+                var othersFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-others", ("user", args.User),("target", args.Target),("bible", uid));
             _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
 
-                var selfFailMessage = Loc.GetString("bible-heal-fail-self", ("target", args.Target),("bible", uid));
+                var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", args.Target),("bible", uid));
                 _popupSystem.PopupEntity(selfFailMessage, args.User, Filter.Entities(args.User));
 
                 SoundSystem.Play(Filter.Pvs(args.Target.Value), "/Audio/Effects/hit_kick.ogg", args.User);
@@ -81,15 +79,42 @@ namespace Content.Server.Bible
                 }
             }
 
-            var othersMessage = Loc.GetString("bible-heal-success-others", ("user", args.User),("target", args.Target),("bible", uid));
+            var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-others", ("user", args.User),("target", args.Target),("bible", uid));
             _popupSystem.PopupEntity(othersMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
 
-            var selfMessage = Loc.GetString("bible-heal-success-self", ("target", args.Target),("bible", uid));
+            var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-self", ("target", args.Target),("bible", uid));
             _popupSystem.PopupEntity(selfMessage, args.User, Filter.Entities(args.User));
 
-            SoundSystem.Play(Filter.Pvs(args.Target.Value), "/Audio/Effects/holy.ogg", args.User);
+            SoundSystem.Play(Filter.Pvs(args.Target.Value), component.HealSoundPath, args.User);
             _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true);
         }
 
+        private async void AddSummonVerb(EntityUid uid, BibleComponent component, GetVerbsEvent<AlternativeVerb> args)
+        {
+            if (!args.CanInteract || !args.CanAccess || !HasComp<BibleUserComponent>(args.User) || component.AlreadySummoned || component.SpecialItemPrototype == string.Empty)
+                return;
+
+            AlternativeVerb verb = new()
+            {
+                Act = () =>
+                {
+                    AttemptSummon(component, args.User);
+                },
+                Text = Loc.GetString("bible-summon-verb"),
+                Priority = 2
+            };
+            args.Verbs.Add(verb);
+
+        }
+
+        private void AttemptSummon(BibleComponent component, EntityUid user)
+        {
+            if (component.AlreadySummoned || component.SpecialItemPrototype == string.Empty)
+                return;
+
+            var position = EntityManager.GetComponent<TransformComponent>(user).Coordinates;
+            var finisher = EntityManager.SpawnEntity(component.SpecialItemPrototype, position);
+            component.AlreadySummoned = true;
+        }
     }
 }

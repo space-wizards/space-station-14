@@ -1,11 +1,6 @@
-using System;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Bible.Components
 {
@@ -26,6 +21,16 @@ namespace Content.Server.Bible.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier DamageOnUntrainedUse = default!;
 
+
+        /// <summary>
+        /// Used for a special item only the Chaplain can summon. Usually a mob, but supports regular items too.
+        /// </summary>
+        [DataField("specialItem", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string SpecialItemPrototype = string.Empty;
+
+        public bool AlreadySummoned = false;
+
+
         //Chance the bible will fail to heal someone with no helmet
         [DataField("failChance", required:true)]
         [ViewVariables(VVAccess.ReadWrite)]
@@ -33,6 +38,17 @@ namespace Content.Server.Bible.Components
 
         public TimeSpan LastAttackTime;
         public TimeSpan CooldownEnd;
+
+        [DataField("cooldownTime")]
         public float CooldownTime { get; } = 5f;
+
+        [DataField("sizzleSound")]
+        public string SizzleSoundPath = "/Audio/Effects/lightburn.ogg";
+
+        [DataField("healSound")]
+        public string HealSoundPath = "/Audio/Effects/holy.ogg";
+
+        [DataField("locPrefix")]
+        public string LocPrefix = "bible";
     }
 }

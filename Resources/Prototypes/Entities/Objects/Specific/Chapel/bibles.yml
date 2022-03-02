@@ -16,6 +16,7 @@
     damageOnUntrainedUse: ## What a non-chaplain takes when attempting to heal someone
       groups:
         Burn: 30
+    specialItem: MobBatRemilia
   - type: ItemCooldown
   - type: Sprite
     netsync: false
@@ -38,17 +39,20 @@
   components:
   - type: Bible
     damage:
-      groups: ##DPS is 16
-        Brute: 40
-        Burn: 40
+      groups:
+        Caustic: 60 #20 dps
     damageOnFail:
       groups:
         Brute: 15
         Airloss: 25
     damageOnUntrainedUse:
       groups:
-        Burn: 60
+        Caustic: 60
+    specialItem: MobCorgiCerberus
     failChance: 0
+    locPrefix: "necro"
+    healSound: "/Audio/Effects/lightburn.ogg"
+    cooldownTime: 3
   - type: Sprite
     netsync: false
     sprite: Objects/Specific/Chapel/necronomicon.rsi
