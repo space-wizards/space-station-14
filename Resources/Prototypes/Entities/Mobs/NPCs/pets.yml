@@ -87,6 +87,30 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: Bloodstream
+    bloodReagent: DemonsBlood
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Infernal
+  - type: Temperature
+    heatDamageThreshold: 4000 #They come from hell, so...
+    coldDamageThreshold: 260
+    currentTemperature: 310.15
+    coldDamage:
+      types:
+        Cold : 1 #per second, scales with temperature & other constants
+    specificHeat: 42
+    heatDamage:
+      types:
+        Heat : 1 #per second, scales with temperature & other constants
 
 - type: entity
   name: Cerberus
@@ -107,42 +131,21 @@
       types:
         Piercing: 10
         Slash: 10
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
   - type: AiFactionTag
     factions:
-    - SimpleNeutral #Don't want it attacking its master, let a ghost take it
+    - SimpleNeutral
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-corrupted-corgi
     interactFailureString: petting-failure-corrupted-corgi
-  - type: Damageable
-    damageContainer: Biological
-    damageModifierSet: Infernal
-  - type: Temperature
-    heatDamageThreshold: 4000 #They come from hell, so...
-    coldDamageThreshold: 260
-    currentTemperature: 310.15
-    coldDamage:
-      types:
-        Cold : 1 #per second, scales with temperature & other constants
-    specificHeat: 42
-    heatDamage:
-      types:
-        Heat : 1 #per second, scales with temperature & other constants
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
       80: !type:CriticalMobState {}
       160: !type:DeadMobState {}
-  - type: Bloodstream
-    bloodReagent: DemonsBlood
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
   - type: Grammar
     attributes:
       gender: male

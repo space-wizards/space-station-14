@@ -86,7 +86,7 @@ namespace Content.Server.Bible
             _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true);
         }
 
-        private async void AddSummonVerb(EntityUid uid, BibleComponent component, GetVerbsEvent<AlternativeVerb> args)
+        private void AddSummonVerb(EntityUid uid, BibleComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanInteract || !args.CanAccess || !HasComp<BibleUserComponent>(args.User) || component.AlreadySummoned || component.SpecialItemPrototype == string.Empty)
                 return;
