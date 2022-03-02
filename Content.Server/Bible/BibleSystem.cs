@@ -101,7 +101,6 @@ namespace Content.Server.Bible
                 Priority = 2
             };
             args.Verbs.Add(verb);
-
         }
 
         private void AttemptSummon(BibleComponent component, EntityUid user)
@@ -110,7 +109,7 @@ namespace Content.Server.Bible
                 return;
 
             var position = EntityManager.GetComponent<TransformComponent>(user).Coordinates;
-            var finisher = EntityManager.SpawnEntity(component.SpecialItemPrototype, position);
+            EntityManager.SpawnEntity(component.SpecialItemPrototype, position);
             component.AlreadySummoned = true;
         }
     }
