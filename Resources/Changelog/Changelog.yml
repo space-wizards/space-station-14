@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Fixed bug with disposals that turned Packedstation disposals into an
-      inescapable hell, type: Fix}
-  id: 653
-  time: '2021-11-25T02:10:15.0000000+00:00'
 - author: Leander
   changes:
   - {message: added broken bottles for bar fights, type: Add}
@@ -2999,3 +2993,9 @@ Entries:
   - {message: updated Saltern to Saltern Special Edition HD Enhanced Edition, type: Add}
   id: 1152
   time: '2022-03-02T13:16:42.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug preventing the RCD from constructing entities on some empty
+      tiles., type: Fix}
+  id: 1153
+  time: '2022-03-02T13:38:19.0000000+00:00'
