@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: The game admins are now omnipotent., type: Add}
-  id: 651
-  time: '2021-11-24T22:52:31.0000000+00:00'
 - author: Mith-randalf
   changes:
   - {message: Fixed broken tonic water can visual., type: Fix}
@@ -2998,3 +2993,9 @@ Entries:
       entities. `/loadmapacts` loads some presets mapping actions.', type: Add}
   id: 1150
   time: '2022-03-01T23:12:34.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: Removed fun (by which I mean the centcomm outfit bundle from the traitor
+      uplink)!, type: Remove}
+  id: 1151
+  time: '2022-03-02T01:46:55.0000000+00:00'
