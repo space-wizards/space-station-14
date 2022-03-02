@@ -26,7 +26,7 @@ public sealed partial class StorageSystem
             // Handle "Or" groups
             if (!string.IsNullOrEmpty(entry.GroupId))
             {
-                if (!orGroupedSpawns.TryGetValue(entry.GroupId, out OrGroup orGroup))
+                if (!orGroupedSpawns.TryGetValue(entry.GroupId, out OrGroup? orGroup))
                 {
                     OrGroup currentGroup = new(new List<EntitySpawnEntry>(), 0f);
                     currentGroup.Entries.Add(entry);
@@ -81,10 +81,10 @@ public sealed partial class StorageSystem
             }
         }
     }
-    private struct OrGroup
+    private sealed class OrGroup
     {
-        public List<EntitySpawnEntry> Entries = new();
-        public float CumulativeProbability = 0f;
+        public List<EntitySpawnEntry> Entries { get; set; } = new();
+        public float CumulativeProbability { get; set; } = 0f;
         public OrGroup(List<EntitySpawnEntry> entries, float cumulativeProbability)
         {
             Entries = entries;
