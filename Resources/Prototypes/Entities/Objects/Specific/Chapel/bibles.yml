@@ -40,19 +40,19 @@
   - type: Bible
     damage:
       groups:
-        Caustic: 60 #20 dps
+        Caustic: 20 ##Worse than a lot of the higher tier melees but it deals a weird damage type
     damageOnFail:
       groups:
         Brute: 15
         Airloss: 25
     damageOnUntrainedUse:
       groups:
-        Caustic: 60
+        Caustic: 50
     specialItem: MobCorgiCerberus
     failChance: 0
     locPrefix: "necro"
     healSound: "/Audio/Effects/lightburn.ogg"
-    cooldownTime: 3
+    cooldownTime: 1
   - type: Sprite
     netsync: false
     sprite: Objects/Specific/Chapel/necronomicon.rsi

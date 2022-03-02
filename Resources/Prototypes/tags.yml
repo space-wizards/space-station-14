@@ -127,6 +127,9 @@
   id: ExplosivePassable
 
 - type: Tag
+  id: Familiar
+
+- type: Tag
   id: FireAlarmElectronics
 
 - type: Tag
@@ -282,7 +285,7 @@
 
 - type: Tag
   id: Trash
-  
+
 - type: Tag
   id: TrashBag
 

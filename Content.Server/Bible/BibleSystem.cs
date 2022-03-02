@@ -3,6 +3,7 @@ using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
 using Content.Shared.Damage;
 using Content.Shared.Verbs;
+using Content.Shared.Tag;
 using Content.Server.Cooldown;
 using Content.Server.Bible.Components;
 using Content.Server.Popups;
@@ -21,6 +22,8 @@ namespace Content.Server.Bible
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
+
 
         public override void Initialize()
         {
@@ -60,7 +63,7 @@ namespace Content.Server.Bible
                 return;
             }
 
-            if (!_invSystem.TryGetSlotEntity(args.Target.Value, "head", out var entityUid))
+            if (!_invSystem.TryGetSlotEntity(args.Target.Value, "head", out var entityUid) && !_tagSystem.HasTag(args.Target.Value, "Familiar"))
             {
                 if (_random.Prob(component.FailChance))
                 {

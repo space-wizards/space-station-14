@@ -150,6 +150,9 @@
     attributes:
       gender: male
       proper: true
+  - type: Tag
+    tags:
+      - Familiar
 
 - type: entity
   name: Ian
@@ -207,11 +210,14 @@
     makeSentient: true
     name: Remilia, the chaplain's familiar
     description: Obey your master. Eat fruit.
-    rules: Follow the chaplain around. Don't grief anyone for any reason unless they are trying to hurt your master.
+    rules: Follow the chaplain around. Don't cause any trouble unless the chaplain tells you to.
   - type: Grammar
     attributes:
       gender: female
       proper: true
+  - type: Tag
+    tags:
+      - Familiar
 
 - type: entity
   name: Lisa
