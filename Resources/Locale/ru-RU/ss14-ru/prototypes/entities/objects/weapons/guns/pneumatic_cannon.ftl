@@ -1,6 +1,6 @@
-ent-ImprovisedPneumaticCannon = improvised pneumatic cannon
-    .desc = Improvised using nothing but a pipe, some zipties, and a pneumatic cannon.
+ent-ImprovisedPneumaticCannon = импровизированная пневматическая пушка
+    .desc = Сделана из трубы, кабельных стяжек, и пневматической пушки.
     .suffix = { "" }
-ent-LauncherCreamPie = pie cannon
-    .desc = Load cream pie for optimal results.
+ent-LauncherCreamPie = пирогомёт
+    .desc = Для оптимального результата заряжать кремовыми пирогами.
     .suffix = { "" }

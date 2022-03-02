@@ -1,3 +1,3 @@
-ent-Gohei = gohei
-    .desc = A wooden stick with white streamers at the end. Originally used by shrine maidens to purify things. Now used by the station's weeaboos.
+ent-Gohei = гохэй
+    .desc = деревянныей жезл, украшенный двумя бумажными лентами сидэ. Изначально использовался жрицами синтоистских храмов для очищения предметов. Теперь используется станционными виабушниками.
     .suffix = { "" }

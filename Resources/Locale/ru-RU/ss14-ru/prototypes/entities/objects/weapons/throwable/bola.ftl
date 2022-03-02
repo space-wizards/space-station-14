@@ -1,3 +1,3 @@
-ent-Bola = bola
-    .desc = Linked together with some spare cuffs and metal.
+ent-Bola = бола
+    .desc = Скрепленные с металлом кабельные стяжки.
     .suffix = { "" }

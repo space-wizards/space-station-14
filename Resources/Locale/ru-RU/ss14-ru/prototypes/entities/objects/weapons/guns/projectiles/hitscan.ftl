@@ -1,9 +1,9 @@
-ent-RedLaser = red laser
+ent-RedLaser = красный лазер
     .desc = { "" }
     .suffix = { "" }
-ent-RedHeavyLaser = red heavy laser
+ent-RedHeavyLaser = мощный красный лазер
     .desc = { "" }
     .suffix = { "" }
-ent-XrayLaser = x-ray laser
+ent-XrayLaser = рентгеновский лазер
     .desc = { "" }
     .suffix = { "" }

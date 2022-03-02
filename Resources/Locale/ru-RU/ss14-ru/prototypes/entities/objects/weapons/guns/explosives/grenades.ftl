@@ -1,8 +1,8 @@
-ent-ExGrenade = explosive grenade
-    .desc = Grenade that creates a small but devastating explosion.
-ent-GrenadeFlashBang = flashbang
-    .desc = Eeeeeeeeeeeeeeeeeeeeee
-ent-SyndieMiniBomb = Syndicate minibomb
-    .desc = A syndicate manufactured explosive used to sow destruction and chaos.
-ent-NuclearGrenade = the nuclear option
-    .desc = Please don't throw it, think of the children.
+ent-ExGrenade = разрывная граната
+    .desc = Граната, создающая небольшой но разрушительный взрыв.
+ent-GrenadeFlashBang = светошумовая граната
+    .desc = Пиииииииииииииииииииии
+ent-SyndieMiniBomb = минибомба Синдиката
+    .desc = Взрывное устройство, изготовленное Синдикатом, предназначенное сеять хаос и разрушение.
+ent-NuclearGrenade = критическая масса
+    .desc = Пожалуйста не бросай её, подумай о детях. 
