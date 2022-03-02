@@ -135,6 +135,11 @@ public abstract class SharedDoorSystem : EntitySystem
                 door.NextStateChange = GameTiming.CurTime + door.DenyDuration;
                 break;
 
+            case DoorState.Emagging:
+                _activeDoors.Add(door);
+                door.NextStateChange = GameTiming.CurTime + door.EmagDuration;
+                break;
+
             case DoorState.Open:
             case DoorState.Closed:
                 door.Partial = false;
@@ -355,7 +360,7 @@ public abstract class SharedDoorSystem : EntitySystem
         SetCollidable(uid, true, door, physics);
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         _activeDoors.Add(door);
-        
+
         // Crush any entities. Note that we don't check airlock safety here. This should have been checked before
         // the door closed.
         Crush(uid, door, physics);

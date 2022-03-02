@@ -284,9 +284,15 @@ public sealed class DoorSystem : SharedDoorSystem
         {
             if (door.State == DoorState.Closed)
             {
-                StartOpening(uid);
-                airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
-                args.Handled = true;
+                SetState(uid, DoorState.Emagging, door);
+                PlaySound(uid, door.SparkSound.GetSound(), AudioParams.Default.WithVolume(8), args.UserUid, false);
+
+                door.Owner.SpawnTimer(door.EmagDuration, () =>
+                {
+                    StartOpening(uid);
+                    airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
+                    args.Handled = true;
+                });
             }
         }
     }
