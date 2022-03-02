@@ -1,3 +1,3 @@
-ent-FlareGun = flare gun
-    .desc = A compact, single-shot pistol that fires shotgun shells.
+ent-FlareGun = сигнальный пистолет
+    .desc = Компактный, однозарядный пистолет стреляющий ружейными патронами.
     .suffix = { "" }

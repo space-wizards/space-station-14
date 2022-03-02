@@ -1,13 +1,13 @@
 ent-MagazineShotgunBase = ammo drum (.50 shells)
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }
-ent-MagazineShotgun = ammo drum (.50 pellet)
+ent-MagazineShotgun = барабан (.50 дробь)
     .desc = { ent-MagazineShotgunBase.desc }
     .suffix = { "" }
-ent-MagazineShotgunBeanbag = ammo drum (.50 beanbags)
+ent-MagazineShotgunBeanbag = барабан (.50 травматические)
     .desc = { ent-MagazineShotgunBase.desc }
     .suffix = { "" }
-ent-MagazineShotgunSlug = ammo drum (.50 slug)
+ent-MagazineShotgunSlug = барабан (.50 пуля)
     .desc = { ent-MagazineShotgunBase.desc }
     .suffix = { "" }
 ent-MagazineShotgunIncendiary = ammo drum (.50 incendiary)

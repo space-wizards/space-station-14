@@ -1,3 +1,3 @@
-ent-BulletAntiMaterial = bullet (.60 anti-material)
+ent-BulletAntiMaterial = пуля (.60 антиматериальная)
     .desc = { ent-BulletBaseHV.desc }
     .suffix = { "" }
