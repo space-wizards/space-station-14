@@ -16,8 +16,7 @@
     state: cash
   - type: Fixtures
     fixtures:
-      - shape:
-        mass: 0 # no space travel
+      - mass: 0 # no space travel
   - type: Appearance
     visuals:
     - type: StackVisualizer
