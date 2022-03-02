@@ -1,3 +1,25 @@
+
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitColorGrey #Assistant
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/Color/grey.rsi
+    state: icon
+  result: ClothingUniformJumpsuitColorGrey
+  completetime: 500
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorGrey
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/grey.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorGrey
+  completetime: 500
+  materials:
+    Cloth: 300
+
 - type: latheRecipe
   id: ClothingUniformJumpsuitBartender
   icon:
@@ -309,6 +331,36 @@
     Cloth: 300
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitLawyerBlack
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerblack.rsi
+    state: icon
+  result: ClothingUniformJumpsuitLawyerBlack
+  completetime: 500
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitLibrarian
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/librarian.rsi
+    state: icon
+  result: ClothingUniformJumpsuitLibrarian
+  completetime: 500
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorLightBrown #Librarian
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/lightbrown.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorLightBrown
+  completetime: 500
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitMedicalDoctor
   icon:
     sprite: Clothing/Uniforms/Jumpsuit/medical.rsi
@@ -344,6 +396,16 @@
     sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
     state: icon
   result: ClothingUniformJumpskirtMime
+  completetime: 500
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitLawyerPurple ##Musician
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
+    state: icon
+  result: ClothingUniformJumpsuitLawyerPurple
   completetime: 500
   materials:
     Cloth: 300

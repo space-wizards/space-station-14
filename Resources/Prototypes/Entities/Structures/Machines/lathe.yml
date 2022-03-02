@@ -282,6 +282,8 @@
   - type: LatheDatabase
     static: true
     recipes:
+      - ClothingUniformJumpsuitColorGrey
+      - ClothingUniformJumpskirtColorGrey
       - ClothingUniformJumpsuitBartender
       - ClothingUniformJumpskirtBartender
       - ClothingUniformJumpsuitCaptain
@@ -312,10 +314,14 @@
       - ClothingUniformJumpskirtHydroponics
       - ClothingUniformJumpsuitJanitor
       - ClothingUniformJumpskirtJanitor
+      - ClothingUniformJumpsuitLawyerBlack
+      - ClothingUniformJumpsuitLibrarian
+      - ClothingUniformJumpskirtColorLightBrown
       - ClothingUniformJumpsuitMedicalDoctor
       - ClothingUniformJumpskirtMedicalDoctor
       - ClothingUniformJumpsuitMime
       - ClothingUniformJumpskirtMime
+      - ClothingUniformJumpsuitLawyerPurple
       - ClothingUniformJumpsuitParamedic
       - ClothingUniformJumpskirtParamedic
       - ClothingUniformJumpsuitPrisoner
