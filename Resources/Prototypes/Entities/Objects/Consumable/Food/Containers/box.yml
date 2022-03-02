@@ -189,31 +189,31 @@
   - type: StorageFill
     contents:
     - id: FoodPizzaArnold
-      prob: 0.13
+      prob: 0.15
       orGroup: Pizza
     - id: FoodPizzaDank
-      prob: 0.05
+      prob: 0.10
       orGroup: Pizza
     - id: FoodPizzaSassysage
-      prob: 0.13
+      prob: 0.15
       orGroup: Pizza
     - id: FoodPizzaMargherita
-      prob: 0.13
+      prob: 0.15
       orGroup: Pizza
     - id: FoodPizzaMeat
-      prob: 0.13
+      prob: 0.15
       orGroup: Pizza
     - id: FoodPizzaMushroom
-      prob: 0.13
+      prob: 0.15
       orGroup: Pizza
     - id: FoodPizzaPineapple
-      prob: 0.12
+      prob: 0.15
       orGroup: Pizza
     - id: FoodPizzaVegetable
-      prob: 0.13
+      prob: 0.15
       orGroup: Pizza
     - id: FoodPizzaDonkpocket
-      prob: 0.05
+      prob: 0.10
       orGroup: Pizza
 
 # Nugget

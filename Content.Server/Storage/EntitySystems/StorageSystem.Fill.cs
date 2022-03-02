@@ -18,7 +18,7 @@ public sealed partial class StorageSystem
 
         var coordinates = Transform(uid).Coordinates;
 
-        var orGroupedSpawns = new Dictionary<string, List<EntitySpawnEntry>>();
+        var orGroupedSpawns = new Dictionary<string, OrGroup>();
 
         // collect groups together, create singular items that pass probability
         foreach (var entry in component.Contents)
@@ -26,14 +26,16 @@ public sealed partial class StorageSystem
             // Handle "Or" groups
             if (!string.IsNullOrEmpty(entry.GroupId))
             {
-                if (!orGroupedSpawns.ContainsKey(entry.GroupId))
+                if (!orGroupedSpawns.TryGetValue(entry.GroupId, out OrGroup orGroup))
                 {
-                    List<EntitySpawnEntry> currentGroup = new();
-                    currentGroup.Add(entry);
+                    OrGroup currentGroup = new(new List<EntitySpawnEntry>(), 0f);
+                    currentGroup.Entries.Add(entry);
+                    currentGroup.CumulativeProbability += entry.SpawnProbability;
                     orGroupedSpawns.Add(entry.GroupId, currentGroup);
                     continue;
                 }
-                orGroupedSpawns[entry.GroupId].Add(entry);
+                orGroup.Entries.Add(entry);
+                orGroup.CumulativeProbability += entry.SpawnProbability;
                 continue;
             }
 
@@ -56,15 +58,14 @@ public sealed partial class StorageSystem
         // handle orgroup spawns
         foreach (var group in orGroupedSpawns)
         {
-            Random r = new Random();
-            double diceRoll = r.NextDouble();
-            List<EntitySpawnEntry> shuffled = group.Value.OrderBy(a => r.Next()).ToList();
+            double diceRoll = _random.NextDouble() * group.Value.CumulativeProbability;
+            List<EntitySpawnEntry> shuffled = group.Value.Entries.OrderBy(a => _random.Next()).ToList();
 
             double cumulative = 0.0;
             for (int i = 0; i < shuffled.Count; i++)
             {
                 cumulative += shuffled[i].SpawnProbability;
-                if (diceRoll < cumulative)
+                if (diceRoll <= cumulative)
                 {
                     for (var index = 0; index < shuffled[i].Amount; index++)
                     {
@@ -78,6 +79,16 @@ public sealed partial class StorageSystem
                     break;
                 }
             }
+        }
+    }
+    private struct OrGroup
+    {
+        public List<EntitySpawnEntry> Entries = new();
+        public float CumulativeProbability = 0f;
+        public OrGroup(List<EntitySpawnEntry> entries, float cumulativeProbability)
+        {
+            Entries = entries;
+            CumulativeProbability = cumulativeProbability;
         }
     }
 }
