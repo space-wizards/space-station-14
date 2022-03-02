@@ -68,6 +68,12 @@
   size: 7.5
 
 - type: salvageMap
+  id: mediumLibraryWreck
+  name: "Medium / Abandoned Library"
+  mapPath: /Maps/Salvage/medium-library.yml
+  size: 7.5
+
+- type: salvageMap
   id: mediumShuttleWreck
   name: "Medium / Ruined Emergency Shuttle"
   mapPath: /Maps/Salvage/medium-ruined-emergency-shuttle.yml

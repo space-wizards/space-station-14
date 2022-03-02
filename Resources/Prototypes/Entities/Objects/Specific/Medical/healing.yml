@@ -71,6 +71,9 @@
     - Gauze
   - type: Sprite
     state: gauze
+  - type: Construction
+    graph: Gauze
+    node: gauze
   - type: Healing
     damageContainer: Biological
     damage:
@@ -84,6 +87,13 @@
       path: "/Audio/Items/Medical/brutepack_end.ogg"
   - type: Stack
     stackType: Gauze
+
+- type: entity
+  id: Gauze1
+  parent: Gauze
+  components:
+  - type: Stack
+    count: 1
 
 - type: entity
   name: aloe cream
