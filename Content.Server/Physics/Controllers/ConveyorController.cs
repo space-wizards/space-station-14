@@ -77,6 +77,16 @@ namespace Content.Server.Physics.Controllers
         {
             if (speed == 0 || direction.Length == 0) return Vector2.Zero;
 
+            /*
+             * Basic idea: if the item is not in the middle of the conveyor in the direction that the conveyor is running,
+             * move the item towards the middle. Otherwise, move the item along the direction. This lets conveyors pick up
+             * items that are not perfectly aligned in the middle, and also makes corner cuts work.
+             *
+             * We do this by computing the projection of 'itemRelative' on 'direction', yielding a vector 'p' in the direction
+             * of 'direction'. We also compute the rejection 'r'. If the magnitude of 'r' is not (near) zero, then the item
+             * is not on the centerline.
+             */
+
             /* TODO: Figure out how to fix corner cuts.
             direction = direction.Normalized;
 
@@ -84,15 +94,16 @@ namespace Content.Server.Physics.Controllers
             var dot = Vector2.Dot(itemRelative, dirNormal);
             */
 
-            var velocity = direction * speed;
+            var p = direction * (Vector2.Dot(itemRelative, direction) / Vector2.Dot(direction, direction));
+            var r = itemRelative - p;
 
-            return velocity * frameTime;
-
-            /*
-            velocity += dirNormal * speed * -dot;
-
-            return velocity * frameTime;
-            */
+            if (r.Length < 0.1) {
+                var velocity = direction * speed;
+                return velocity * frameTime;
+            } else {
+                var velocity = r * speed;
+                return velocity * frameTime;
+            }
         }
 
         public IEnumerable<(EntityUid, TransformComponent)> GetEntitiesToMove(ConveyorComponent comp, TransformComponent xform)
