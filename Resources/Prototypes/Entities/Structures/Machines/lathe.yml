@@ -271,3 +271,61 @@
       - CableStack
       - CableMVStack
       - CableHVStack
+
+- type: entity
+  parent: Autolathe
+  id: UniformPrinter
+  name: uniform printer
+  description: Prints new or replacement uniforms
+  components:
+  - type: LatheDatabase
+    static: true
+    recipes:
+      - ClothingUniformJumpsuitBartender
+      - ClothingUniformJumpskirtBartender
+      - ClothingUniformJumpsuitCaptain
+      - ClothingUniformJumpskirtCaptain
+      - ClothingUniformJumpsuitCargo
+      - ClothingUniformJumpskirtCargo
+      - ClothingUniformJumpsuitSalvageSpecialist
+      - ClothingUniformJumpsuitChiefEngineer
+      - ClothingUniformJumpskirtChiefEngineer
+      - ClothingUniformJumpsuitChaplain
+      - ClothingUniformJumpskirtChaplain
+      - ClothingUniformJumpsuitChef
+      - ClothingUniformJumpskirtChef
+      - ClothingUniformJumpsuitChemistry
+      - ClothingUniformJumpskirtChemistry
+      - ClothingUniformJumpsuitClown
+      - ClothingUniformJumpsuitCMO
+      - ClothingUniformJumpskirtCMO
+      - ClothingUniformJumpsuitDetective
+      - ClothingUniformJumpskirtDetective
+      - ClothingUniformJumpsuitEngineering
+      - ClothingUniformJumpskirtEngineering
+      - ClothingUniformJumpsuitHoP
+      - ClothingUniformJumpskirtHoP
+      - ClothingUniformJumpsuitHoS
+      - ClothingUniformJumpskirtHoS
+      - ClothingUniformJumpsuitHydroponics
+      - ClothingUniformJumpskirtHydroponics
+      - ClothingUniformJumpsuitJanitor
+      - ClothingUniformJumpskirtJanitor
+      - ClothingUniformJumpsuitMedicalDoctor
+      - ClothingUniformJumpskirtMedicalDoctor
+      - ClothingUniformJumpsuitMime
+      - ClothingUniformJumpskirtMime
+      - ClothingUniformJumpsuitParamedic
+      - ClothingUniformJumpskirtParamedic
+      - ClothingUniformJumpsuitPrisoner
+      - ClothingUniformJumpskirtPrisoner
+      - ClothingUniformJumpsuitQM
+      - ClothingUniformJumpskirtQM
+      - ClothingUniformJumpsuitResearchDirector
+      - ClothingUniformJumpskirtResearchDirector
+      - ClothingUniformJumpsuitScientist
+      - ClothingUniformJumpskirtScientist
+      - ClothingUniformJumpsuitSec
+      - ClothingUniformJumpskirtSec
+      - ClothingUniformJumpsuitWarden
+      - ClothingUniformJumpskirtWarden
