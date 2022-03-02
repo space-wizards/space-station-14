@@ -33,6 +33,7 @@
   description: Gross.
   components:
   - type: Sprite
+    sprite: Fluids/gibblet.rsi # Placeholder
     netsync: false
     drawdepth: FloorObjects
     layers:
