@@ -69,13 +69,33 @@ namespace Content.Client.CharacterAppearance.Systems
                 var hairColor = component.CanColorHair ? component.Appearance.HairColor : Color.White;
                 hairColor = component.HairMatchesSkin ? component.Appearance.SkinColor : hairColor;
                 sprite.LayerSetColor(hairLayer, hairColor.WithAlpha(component.HairAlpha));
+
+                var hairStyle = component.Appearance.HairStyleId;
+                if (string.IsNullOrWhiteSpace(hairStyle) ||
+                    !_accessoryManager.IsValidAccessoryInCategory(hairStyle, component.CategoriesHair))
+                {
+                    hairStyle = HairStyles.DefaultHairStyle;
+                }
+
+                var hairPrototype = _prototypeManager.Index<SpriteAccessoryPrototype>(hairStyle);
+                sprite.LayerSetSprite(hairLayer, hairPrototype.Sprite);
             }
 
             if (sprite.LayerMapTryGet(HumanoidVisualLayers.FacialHair, out var facialLayer))
             {
                 var facialHairColor = component.CanColorHair ? component.Appearance.FacialHairColor : Color.White;
                 facialHairColor = component.HairMatchesSkin ? component.Appearance.SkinColor : facialHairColor;
-                sprite.LayerSetColor(HumanoidVisualLayers.FacialHair, facialHairColor.WithAlpha(component.HairAlpha));
+                sprite.LayerSetColor(facialLayer, facialHairColor.WithAlpha(component.HairAlpha));
+
+                var facialHairStyle = component.Appearance.FacialHairStyleId;
+                if (string.IsNullOrWhiteSpace(facialHairStyle) ||
+                    !_accessoryManager.IsValidAccessoryInCategory(facialHairStyle, component.CategoriesFacialHair))
+                {
+                    facialHairStyle = HairStyles.DefaultFacialHairStyle;
+                }
+
+                var facialHairPrototype = _prototypeManager.Index<SpriteAccessoryPrototype>(facialHairStyle);
+                sprite.LayerSetSprite(facialLayer, facialHairPrototype.Sprite);
             }
 
             foreach (var layer in _bodyPartLayers)
@@ -87,7 +107,6 @@ namespace Content.Client.CharacterAppearance.Systems
             }
 
             sprite.LayerSetColor(HumanoidVisualLayers.Eyes, component.Appearance.EyeColor);
-
             sprite.LayerSetState(HumanoidVisualLayers.Chest, component.Sex == Sex.Male ? "torso_m" : "torso_f");
             sprite.LayerSetState(HumanoidVisualLayers.Head, component.Sex == Sex.Male ? "head_m" : "head_f");
 
@@ -102,26 +121,6 @@ namespace Content.Client.CharacterAppearance.Systems
             {
                 sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, false);
             }
-
-            var hairStyle = component.Appearance.HairStyleId;
-            if (string.IsNullOrWhiteSpace(hairStyle) ||
-                !_accessoryManager.IsValidAccessoryInCategory(hairStyle, component.CategoriesHair))
-            {
-                hairStyle = HairStyles.DefaultHairStyle;
-            }
-
-            var facialHairStyle = component.Appearance.FacialHairStyleId;
-            if (string.IsNullOrWhiteSpace(facialHairStyle) ||
-                !_accessoryManager.IsValidAccessoryInCategory(facialHairStyle, component.CategoriesFacialHair))
-            {
-                facialHairStyle = HairStyles.DefaultFacialHairStyle;
-            }
-
-            var hairPrototype = _prototypeManager.Index<SpriteAccessoryPrototype>(hairStyle);
-            var facialHairPrototype = _prototypeManager.Index<SpriteAccessoryPrototype>(facialHairStyle);
-
-            sprite.LayerSetSprite(HumanoidVisualLayers.Hair, hairPrototype.Sprite);
-            sprite.LayerSetSprite(HumanoidVisualLayers.FacialHair, facialHairPrototype.Sprite);
         }
 
         // Scaffolding until Body is moved to ECS.
