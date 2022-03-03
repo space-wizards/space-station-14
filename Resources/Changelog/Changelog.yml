@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Chemist's maintenance access updated to comply with current NT access
-      policy., type: Tweak}
-  id: 660
-  time: '2021-11-26T03:37:05.0000000+00:00'
 - author: wrexbe
   changes:
   - {message: fixed crash when admin log has the same object more then once., type: Fix}
@@ -2992,3 +2986,8 @@ Entries:
   - {message: Security door remote now works on Armory access airlocks., type: Fix}
   id: 1159
   time: '2022-03-03T09:18:15.0000000+00:00'
+- author: router
+  changes:
+  - {message: Added capitalism. The captain spawns with some money now., type: Add}
+  id: 1160
+  time: '2022-03-03T10:11:35.0000000+00:00'
