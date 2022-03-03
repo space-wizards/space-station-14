@@ -14,6 +14,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Station;
 using Prometheus;
+using Robust.Server;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -39,7 +40,10 @@ namespace Content.Server.GameTicking
             "ss14_round_length",
             "Round length in seconds.");
 
-        [Dependency] private readonly IServerDbManager _db = default!;
+#if EXCEPTION_TOLERANCE
+        [ViewVariables]
+        private int _roundStartFailCount = 0;
+#endif
 
         [ViewVariables]
         private TimeSpan _roundStartTimeSpan;
@@ -190,6 +194,8 @@ namespace Content.Server.GameTicking
 
                 SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
+                LoadMaps();
+
                 StartGamePresetRules();
 
                 RoundLengthMetric.Set(0);
@@ -258,11 +264,24 @@ namespace Content.Server.GameTicking
             }
             catch(Exception e)
             {
+                _roundStartFailCount++;
 
-                Logger.WarningS("ticker", $"Exception caught while trying to start the round! Restarting...");
+                if (RoundStartFailShutdownCount > 0 && _roundStartFailCount >= RoundStartFailShutdownCount)
+                {
+                    Logger.FatalS("ticker", $"Failed to start a round {_roundStartFailCount} time(s) in a row... Shutting down!");
+                    _runtimeLog.LogException(e, nameof(GameTicker));
+                    _baseServer.Shutdown("Restarting server");
+                    return;
+                }
+
+                Logger.WarningS("ticker", $"Exception caught while trying to start the round! Restarting round...");
                 _runtimeLog.LogException(e, nameof(GameTicker));
                 RestartRound();
+                return;
             }
+
+            // Round started successfully! Reset counter...
+            _roundStartFailCount = 0;
 #endif
         }
 
@@ -373,7 +392,6 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.PreRoundLobby;
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             ResettingCleanup();
-            LoadMaps();
 
             if (!LobbyEnabled)
             {
@@ -411,17 +429,17 @@ namespace Content.Server.GameTicking
                 unCastData.ContentData()?.WipeMind();
             }
 
-            // Delete all entities.
-            foreach (var entity in EntityManager.GetEntities().ToList())
+            _startingRound = false;
+
+            _mapManager.Restart();
+
+            // Delete all remaining entities.
+            foreach (var entity in EntityManager.GetEntities().ToArray())
             {
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
                 EntityManager.DeleteEntity(entity);
             }
-
-            _startingRound = false;
-
-            _mapManager.Restart();
 
             _roleBanManager.Restart();
 
