@@ -92,13 +92,13 @@
   - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
-      path: /Audio/Items/Toys/muffledweh.ogg
+      path: /Audio/Items/Toys/muffled_weh.ogg
   - type: EmitSoundOnLand
     sound:
-      path: /Audio/Items/Toys/muffledweh.ogg
+      path: /Audio/Items/Toys/muffled_weh.ogg
   - type: EmitSoundOnActivate
     sound:
-      path: /Audio/Items/Toys/muffledweh.ogg
+      path: /Audio/Items/Toys/muffle_dweh.ogg
   - type: UseDelay
     delay: 1.0
 
