@@ -20,7 +20,6 @@
     shoes: ClothingShoesColorBlack
     id: CargoPDA
     ears: ClothingHeadsetCargo
-    # pocket1: WageTradesman
   innerclothingskirt: ClothingUniformJumpskirtCargo
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

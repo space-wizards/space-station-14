@@ -21,7 +21,6 @@
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterApronBotanist
     belt: ClothingBeltPlantFilled
-    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtHydroponics
   satchel: ClothingBackpackSatchelHydroponicsFilled
   duffelbag: ClothingBackpackDuffelFilled

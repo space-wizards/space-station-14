@@ -24,7 +24,6 @@
     id: JanitorPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
-    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtJanitor
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

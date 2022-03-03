@@ -27,7 +27,6 @@
     id: CEPDA
     ears: ClothingHeadsetEngineering
     belt: ClothingBeltChiefEngineerFilled
-    # pocket1: WageImportant
   innerclothingskirt: ClothingUniformJumpskirtChiefEngineer
   satchel: ClothingBackpackSatchelEngineeringFilled
   duffelbag: ClothingBackpackDuffelEngineeringFilled

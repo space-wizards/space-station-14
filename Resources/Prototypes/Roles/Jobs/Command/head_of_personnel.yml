@@ -34,7 +34,6 @@
     head: ClothingHeadHatHopcap
     id: HoPPDA
     ears: ClothingHeadsetAltCommand
-    # pocket1: WageImportant
   innerclothingskirt: ClothingUniformJumpskirtHoP
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

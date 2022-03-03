@@ -19,7 +19,6 @@
     outerClothing: ClothingOuterCoatLab
     id: SciencePDA
     ears: ClothingHeadsetScience
-    # pocket1: WageDoctorate
   innerclothingskirt: ClothingUniformJumpskirtScientist
   satchel: ClothingBackpackSatchelScienceFilled
   duffelbag: ClothingBackpackDuffelScienceFilled

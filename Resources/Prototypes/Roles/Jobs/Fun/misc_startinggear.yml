@@ -12,7 +12,6 @@
     shoes: ClothingShoesBootsJack
     id: AssistantPDA
     ears: ClothingHeadsetService
-    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -28,7 +27,6 @@
     shoes: ClothingShoesBootsWork
     id: AssistantPDA
     belt: ClothingBeltUtility
-    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
   satchel: ClothingBackpackSatchelEngineering
   duffelbag: ClothingBackpackSatchelEngineering
@@ -44,7 +42,6 @@
     outerClothing: ClothingOuterSuitSpaceninja
     shoes: ClothingShoesSpaceNinja
     id: AssistantPDA
-    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

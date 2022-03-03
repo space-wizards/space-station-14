@@ -9,7 +9,6 @@
     shoes: ClothingShoesWizard
     id: AssistantPDA
     ears: ClothingHeadsetService
-    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtColorDarkBlue
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -24,7 +23,6 @@
     shoes: ClothingShoesWizard
     id: AssistantPDA
     ears: ClothingHeadsetService
-    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtColorRed
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -39,7 +37,6 @@
     shoes: ClothingShoesWizard
     id: AssistantPDA
     ears: ClothingHeadsetService
-    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtColorPurple
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -54,7 +51,6 @@
     shoes: ClothingShoesWizard
     id: AssistantPDA
     ears: ClothingHeadsetService
-    # pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtColorPurple
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
