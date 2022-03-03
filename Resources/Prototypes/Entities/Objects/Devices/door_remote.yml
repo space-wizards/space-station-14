@@ -101,6 +101,7 @@
     tags:
     - Cargo
     - Quartermaster
+    - Salvage
 
 - type: entity
   parent: DoorRemoteDefault
