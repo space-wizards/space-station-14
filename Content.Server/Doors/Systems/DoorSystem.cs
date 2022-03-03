@@ -42,6 +42,7 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<DoorComponent, WeldCancelledEvent>(OnWeldCancelled);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<DoorComponent, DoorStateChangedEvent>(OnStateChanged);
     }
 
     protected override void SetCollidable(EntityUid uid, bool collidable,
@@ -286,13 +287,19 @@ public sealed class DoorSystem : SharedDoorSystem
             {
                 SetState(uid, DoorState.Emagging, door);
                 PlaySound(uid, door.SparkSound.GetSound(), AudioParams.Default.WithVolume(8), args.UserUid, false);
+                args.Handled = true;
+            }
+        }
+    }
 
-                door.Owner.SpawnTimer(door.EmagDuration, () =>
-                {
-                    StartOpening(uid);
-                    airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
-                    args.Handled = true;
-                });
+    private void OnStateChanged(EntityUid uid, DoorComponent component, DoorStateChangedEvent args)
+    {
+        if (args.PreviousState == DoorState.Emagging)
+        {
+            if(TryComp<AirlockComponent>(uid, out var airlockComponent))
+            {
+                StartOpening(uid);
+                airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
             }
         }
     }

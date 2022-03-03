@@ -100,6 +100,7 @@ public abstract class SharedDoorSystem : EntitySystem
             return;
 
         door.CurrentlyCrushing = new(state.CurrentlyCrushing);
+        DoorState previous = door.State;
         door.State = state.DoorState;
         door.NextStateChange = state.NextStateChange;
         door.Partial = state.Partial;
@@ -109,7 +110,7 @@ public abstract class SharedDoorSystem : EntitySystem
         else
             _activeDoors.Add(door);
 
-        RaiseLocalEvent(uid, new DoorStateChangedEvent(door.State), false);
+        RaiseLocalEvent(uid, new DoorStateChangedEvent(door.State, previous), false);
         UpdateAppearance(uid, door);
     }
 
@@ -147,10 +148,10 @@ public abstract class SharedDoorSystem : EntitySystem
                     _activeDoors.Remove(door);
                 break;
         }
-
+        DoorState previous = door.State;
         door.State = state;
         door.Dirty();
-        RaiseLocalEvent(uid, new DoorStateChangedEvent(state), false);
+        RaiseLocalEvent(uid, new DoorStateChangedEvent(state, previous), false);
         UpdateAppearance(uid, door);
     }
 
@@ -584,6 +585,10 @@ public abstract class SharedDoorSystem : EntitySystem
 
             case DoorState.Denying:
                 // Finish denying entry and return to the closed state.
+                SetState(door.Owner, DoorState.Closed, door);
+                break;
+
+            case DoorState.Emagging:
                 SetState(door.Owner, DoorState.Closed, door);
                 break;
 

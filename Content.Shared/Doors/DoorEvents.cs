@@ -9,10 +9,12 @@ namespace Content.Shared.Doors
     public sealed class DoorStateChangedEvent : EntityEventArgs
     {
         public readonly DoorState State;
+        public readonly DoorState PreviousState;
 
-        public DoorStateChangedEvent(DoorState state)
+        public DoorStateChangedEvent(DoorState state, DoorState previousState)
         {
             State = state;
+            PreviousState = previousState;
         }
     }
 
