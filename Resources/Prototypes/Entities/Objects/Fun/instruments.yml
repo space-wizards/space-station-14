@@ -53,7 +53,12 @@
   - type: Tag
     tags:
     - StringInstrument
-
+  - type: Clothing
+    size: 9999
+    QuickEquip: false
+    Slots:
+    - back
+    sprite: Objects/Fun/Instruments/guitar.rsi
 
 - type: entity
   parent: BaseHandheldInstrument
