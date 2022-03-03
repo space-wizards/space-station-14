@@ -1,9 +1,4 @@
 Entries:
-- author: moonheart08
-  changes:
-  - {message: Lobby timer now actually shows minutes., type: Fix}
-  id: 658
-  time: '2021-11-25T19:30:36.0000000+00:00'
 - author: Taral
   changes:
   - {message: new laser guns, type: Add}
@@ -2998,3 +2993,8 @@ Entries:
       them on your closest plushie crate or toy spawners!', type: Add}
   id: 1157
   time: '2022-03-03T00:26:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pushing objects has been disabled. Pulling is still okay., type: Tweak}
+  id: 1158
+  time: '2022-03-03T02:32:03.0000000+00:00'
