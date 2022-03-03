@@ -109,7 +109,6 @@
   - type: Body
     template: HumanoidTemplate
     preset: HumanPreset
-  - type: DoorBumpOpener
 
 - type: entity
   save: false

@@ -26,7 +26,7 @@ namespace Content.Client.CharacterAppearance.Systems
             SubscribeLocalEvent<HumanoidAppearanceBodyPartRemovedEvent>(BodyPartRemoved);
         }
 
-        private List<HumanoidVisualLayers> _bodyPartLayers = new List<HumanoidVisualLayers>
+        private List<HumanoidVisualLayers> _bodyPartLayers = new()
         {
             HumanoidVisualLayers.Chest,
             HumanoidVisualLayers.Head,
@@ -73,7 +73,10 @@ namespace Content.Client.CharacterAppearance.Systems
 
             foreach (var layer in _bodyPartLayers)
             {
-                sprite.LayerSetColor(layer, component.Appearance.SkinColor);
+                // Not every mob may have the furry layers hence we just skip it.
+                if (!sprite.LayerMapTryGet(layer, out var actualLayer)) continue;
+
+                sprite.LayerSetColor(actualLayer, component.Appearance.SkinColor);
             }
 
             sprite.LayerSetColor(HumanoidVisualLayers.Eyes, component.Appearance.EyeColor);
