@@ -56,6 +56,7 @@ namespace Content.Server.GameTicking
                 if (startAttempt.Cancelled)
                 {
                     FailedPresetRestart();
+                    return false;
                 }
 
                 RefreshLateJoinAllowed();
