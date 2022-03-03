@@ -63,9 +63,13 @@ namespace Content.Client.CharacterAppearance.Systems
                 }
             }
 
-            var hairColor = component.CanColorHair ? component.Appearance.HairColor : Color.White;
-            hairColor = component.HairMatchesSkin ? component.Appearance.SkinColor : hairColor;
-            sprite.LayerSetColor(HumanoidVisualLayers.Hair, hairColor.WithAlpha(component.HairAlpha));
+            // Like body parts some stuff may not have hair.
+            if (sprite.LayerMapTryGet(HumanoidVisualLayers.Hair, out var hairLayer))
+            {
+                var hairColor = component.CanColorHair ? component.Appearance.HairColor : Color.White;
+                hairColor = component.HairMatchesSkin ? component.Appearance.SkinColor : hairColor;
+                sprite.LayerSetColor(hairLayer, hairColor.WithAlpha(component.HairAlpha));
+            }
 
             var facialHairColor = component.CanColorHair ? component.Appearance.FacialHairColor : Color.White;
             facialHairColor = component.HairMatchesSkin ? component.Appearance.SkinColor : facialHairColor;
