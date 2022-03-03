@@ -277,7 +277,7 @@
   parent: Autolathe
   id: UniformPrinter
   name: uniform printer
-  description: Prints new or replacement uniforms
+  description: Prints new or replacement uniforms.
   components:
   - type: LatheDatabase
     static: true
@@ -336,5 +336,18 @@
       - ClothingUniformJumpskirtSec
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
+  - type: Sprite
+    sprite: Structures/Machines/uniform_printer.rsi
+    netsync: false
+    layers:
+    - state: icon
+      map: ["enum.AutolatheVisualLayers.Base"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.AutolatheVisualLayers.BaseUnlit"]
+    - state: icon
+      map: ["enum.AutolatheVisualLayers.AnimationLayer"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
     board: UniformPrinterMachineCircuitboard
