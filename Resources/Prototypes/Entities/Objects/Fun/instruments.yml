@@ -54,7 +54,7 @@
     tags:
     - StringInstrument
   - type: Clothing
-    size: 9999
+    size: 24
     QuickEquip: false
     Slots:
     - back
