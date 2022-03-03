@@ -93,7 +93,6 @@
   - type: StorageFill
     contents:
       - id: BoxSurvival
-      # - id: SpaceCash10
 
 - type: entity
   abstract: true

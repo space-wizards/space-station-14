@@ -13,10 +13,19 @@
     count: 1
   - type: Sprite
     sprite: Objects/Economy/cash.rsi
+    netsync: false
     state: cash
+  - type: Physics
+    bodyType: Dynamic
   - type: Fixtures
     fixtures:
-      - mass: 0 # no space travel
+    - mass: 1
+      shape:
+        !type:PhysShapeAabb
+          bounds: "-0.35,-0.2,0.25,0.1"
+      mask:
+      - Impassable
+      - VaultImpassable
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -99,67 +108,3 @@
     state: cash_1000000
   - type: Stack
     count: 1000000
-
-# beginregion wages
-
-# these specific values are based on goonstation - TODO change?
-
-- type: entity
-  parent: SpaceCash
-  id: WageUntrained # e.g. the plebs
-  name: credit
-  suffix: untrained salary
-  components:
-  - type: Icon
-    sprite: Objects/Economy/cash.rsi
-    state: cash_100
-  - type: Stack
-    count: 120
-
-- type: entity
-  parent: SpaceCash
-  id: WageTradesman # e.g. cargo, engineering, security
-  name: credit
-  suffix: tradesman salary
-  components:
-  - type: Icon
-    sprite: Objects/Economy/cash.rsi
-    state: cash_100
-  - type: Stack
-    count: 300
-
-- type: entity
-  parent: SpaceCash
-  id: WageDoctorate # e.g. science, medical
-  name: credit
-  suffix: doctorate salary
-  components:
-  - type: Icon
-    sprite: Objects/Economy/cash.rsi
-    state: cash_100
-  - type: Stack
-    count: 480
-
-- type: entity
-  parent: SpaceCash
-  id: WageImportant # e.g. heads of staff
-  name: credit
-  suffix: head salary
-  components:
-  - type: Icon
-    sprite: Objects/Economy/cash.rsi
-    state: cash_500
-  - type: Stack
-    count: 900
-
-- type: entity
-  parent: SpaceCash
-  id: WageExecutive # e.g. captain
-  name: credit
-  suffix: executive salary
-  components:
-  - type: Icon
-    sprite: Objects/Economy/cash.rsi
-    state: cash_1000
-  - type: Stack
-    count: 1200
