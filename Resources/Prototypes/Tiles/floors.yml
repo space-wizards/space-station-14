@@ -53,6 +53,8 @@
   id: floor_dark
   name: dark floor
   texture: "dark"
+  variants: 4
+  placementVariants: [ 0, 1, 2, 3 ]
   base_turfs:
   - plating
   is_subfloor: false
@@ -234,6 +236,8 @@
   id: floor_bar
   name: bar floor
   texture: "bar"
+  variants: 4
+  placementVariants: [ 0, 1, 2, 3 ]
   base_turfs:
   - plating
   is_subfloor: false
