@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: The chemist has arrived on station! Pharmacology will be left to the
-      professionals now., type: Add}
-  id: 657
-  time: '2021-11-25T06:07:07.0000000+00:00'
 - author: moonheart08
   changes:
   - {message: Lobby timer now actually shows minutes., type: Fix}
@@ -2998,3 +2992,9 @@ Entries:
   - {message: Items on conveyor belts now round corners correctly., type: Add}
   id: 1156
   time: '2022-03-02T22:32:33.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Ratvar, Rouny, and Space Lizard have joined the plushie gang, find
+      them on your closest plushie crate or toy spawners!', type: Add}
+  id: 1157
+  time: '2022-03-03T00:26:18.0000000+00:00'
