@@ -34,6 +34,7 @@
   components:
   - type: Sprite
     sprite: Fluids/gibblet.rsi # Placeholder
+    state: gibblet-0
     netsync: false
     drawdepth: FloorObjects
     layers:
