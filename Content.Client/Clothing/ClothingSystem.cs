@@ -10,9 +10,7 @@ using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
+using static Robust.Client.GameObjects.SpriteComponent;
 using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Client.Clothing;
@@ -204,6 +202,9 @@ public sealed class ClothingSystem : EntitySystem
             });
         }
 
+        if (!_inventorySystem.TryGetSlot(equipee, slot, out var slotDef, inventory))
+            return;
+
         // Remove old layers. We could also just set them to invisible, but as items may add arbitrary layers, this
         // may eventually bloat the player with lots of invisible layers.
         if (inventory.VisualLayerKeys.TryGetValue(slot, out var revealedLayers))
@@ -239,17 +240,20 @@ public sealed class ClothingSystem : EntitySystem
             }
 
             var index = sprite.LayerMapReserveBlank(key);
+            if (sprite[index] is not Layer layer)
+                return;
 
             // In case no RSI is given, use the item's base RSI as a default. This cuts down on a lot of unnecessary yaml entries.
             if (layerData.RsiPath == null
                 && layerData.TexturePath == null
-                && sprite[index].Rsi == null
+                && layer.RSI == null
                 && TryComp(equipment, out SpriteComponent? clothingSprite))
             {
-                sprite.LayerSetRSI(index, clothingSprite.BaseRSI);
+                layer.SetRsi(clothingSprite.BaseRSI);
             }
 
             sprite.LayerSetData(index, layerData);
+            layer.Offset += slotDef.Offset;
         }
 
         RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers));
