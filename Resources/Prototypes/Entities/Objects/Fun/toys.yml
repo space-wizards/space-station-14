@@ -50,7 +50,17 @@
 
 - type: entity
   parent: BasePlushie
-  id: PlushieLizard
+  id: PlushieRouny
+  name: rouny plushie
+  description: Rouny
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_rouny
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieLizard #Weh!
   name: lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleges as you do this plush, with open arms!"
   components:
@@ -72,6 +82,38 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieSpaceLizard #ᵂᵉʰ!
+  name: space lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson in an EVA suit. Made by CentCom as a token initiative to combat speciesism in space environments. "Welcome your new colleges as you do this plush, with open arms!"
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_spacelizard
+  - type: ItemCooldown
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: UseDelay
+    delay: 1.0
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieRatvar
+  name: ratvar plushie
+  description: A small stuffed doll of the elder god Ratvar.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_ratvar
+
+- type: entity
+  parent: BasePlushie
   id: PlushieNar
   name: nar'sie plushie
   description: A small stuffed doll of the elder goddess Nar'Sie.
@@ -79,6 +121,7 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: narplush
+
 
 - type: entity
   parent: BasePlushie
