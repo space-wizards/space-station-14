@@ -152,7 +152,6 @@
   - type: Appearance
   - type: PuddleVisuals
 
-
 - type: entity
   name: toxins vomit
   id: PuddleVomitToxin
