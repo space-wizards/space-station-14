@@ -52,6 +52,7 @@
   - type: Physics
     bodyType: KinematicController
   - type: Hands
+    showInHands: false
   - type: Body
     template: DroneTemplate
     preset: DronePreset
