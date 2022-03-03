@@ -10,7 +10,7 @@ namespace Content.Server.Physics.Controllers
 {
     public sealed class ConveyorController : VirtualController
     {
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ConveyorSystem _conveyor = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;

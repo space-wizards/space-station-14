@@ -29,7 +29,7 @@ namespace Content.Client.Administration
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
 
         [Dependency] private readonly VerbSystem _verbSystem = default!;
