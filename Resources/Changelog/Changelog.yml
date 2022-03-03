@@ -1,9 +1,4 @@
 Entries:
-- author: wrexbe
-  changes:
-  - {message: fixed crash when admin log has the same object more then once., type: Fix}
-  id: 661
-  time: '2021-11-26T07:39:36.0000000+00:00'
 - author: Hoolny
   changes:
   - {message: Readded cows into cargo, type: Tweak}
@@ -2991,3 +2986,9 @@ Entries:
   - {message: Added capitalism. The captain spawns with some money now., type: Add}
   id: 1160
   time: '2022-03-03T10:11:35.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Onion and Oat seeds are now in the seed vendor and seed crate., type: Add}
+  - {message: Seed vendor inventory reduced from 10 seeds to 5., type: Tweak}
+  id: 1161
+  time: '2022-03-03T10:42:49.0000000+00:00'
