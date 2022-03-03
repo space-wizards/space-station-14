@@ -45,6 +45,7 @@
     tags:
     - HeadOfSecurity
     - Security
+    - Armory
 
 - type: entity
   parent: DoorRemoteDefault
