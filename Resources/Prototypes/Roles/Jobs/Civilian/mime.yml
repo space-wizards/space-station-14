@@ -14,7 +14,7 @@
   id: MimeGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitMime
-    back: ClothingBackpackMimeFilled # mime wage in backpack
+    back: ClothingBackpackMimeFilled
     head: ClothingHeadHatBeret
     belt: ClothingBeltSuspenders
     gloves: ClothingHandsGlovesLatex
