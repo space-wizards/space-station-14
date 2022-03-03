@@ -16,7 +16,7 @@
           bounds: "-0.45,-0.45,0.45,0.45"
       mass: 50
       layer:
-      - SmallImpassable
+      - VaultImpassable
       mask:
       - Impassable
   - type: Pullable

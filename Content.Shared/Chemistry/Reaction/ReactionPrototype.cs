@@ -15,7 +15,7 @@ namespace Content.Shared.Chemistry.Reaction
     /// Prototype for chemical reaction definitions
     /// </summary>
     [Prototype("reaction")]
-    public class ReactionPrototype : IPrototype
+    public sealed class ReactionPrototype : IPrototype
     {
         [ViewVariables]
         [DataField("id", required: true)]
@@ -73,7 +73,7 @@ namespace Content.Shared.Chemistry.Reaction
     /// Prototype for chemical reaction reactants.
     /// </summary>
     [DataDefinition]
-    public class ReactantPrototype
+    public sealed class ReactantPrototype
     {
         [DataField("amount")]
         private FixedPoint2 _amount = FixedPoint2.New(1);

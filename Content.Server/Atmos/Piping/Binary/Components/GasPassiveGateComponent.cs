@@ -1,15 +1,10 @@
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
-    public class GasPassiveGateComponent : Component
+    public sealed class GasPassiveGateComponent : Component
     {
-        public override string Name => "GasPassiveGate";
-
         [DataField("enabled")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
@@ -30,6 +25,7 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         public string OutletName { get; set; } = "outlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("targetPressure")]
         public float TargetPressure { get; set; } = Atmospherics.OneAtmosphere;
     }
 }

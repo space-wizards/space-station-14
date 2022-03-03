@@ -8,10 +8,8 @@ namespace Content.Server.Resist;
 
 [RegisterComponent]
 [Friend(typeof(ResistLockerSystem))]
-public class ResistLockerComponent : Component
+public sealed class ResistLockerComponent : Component
 {
-    public override string Name => "ResistLocker";
-
     /// <summary>
     /// How long will this locker take to kick open, defaults to 2 minutes
     /// </summary>

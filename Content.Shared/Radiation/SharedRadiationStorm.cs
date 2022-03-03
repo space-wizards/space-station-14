@@ -9,8 +9,6 @@ namespace Content.Shared.Radiation
     [NetworkedComponent()]
     public abstract class SharedRadiationPulseComponent : Component
     {
-        public override string Name => "RadiationPulse";
-
         [DataField("radsPerSecond")]
         public float RadsPerSecond { get; set; } = 1;
 
@@ -30,7 +28,7 @@ namespace Content.Shared.Radiation
     /// For syncing the pulse's lifespan between client and server for the overlay
     /// </summary>
     [Serializable, NetSerializable]
-    public class RadiationPulseState : ComponentState
+    public sealed class RadiationPulseState : ComponentState
     {
         // not networking RadsPerSecond because damage is only ever dealt by server-side systems.
 

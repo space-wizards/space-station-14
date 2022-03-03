@@ -8,7 +8,7 @@ namespace Content.Shared.Construction
 {
     [Serializable]
     [DataDefinition]
-    public class ConstructionGraphNode
+    public sealed class ConstructionGraphNode
     {
         [DataField("actions", serverOnly: true)]
         private IGraphAction[] _actions = Array.Empty<IGraphAction>();

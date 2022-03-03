@@ -11,10 +11,12 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         [ViewVariables]
         private readonly Dictionary<IPlayerSession, LobbyPlayerStatus> _playersInLobby = new();
+
+        [ViewVariables] private readonly HashSet<NetUserId> _playersInGame = new();
 
         [ViewVariables]
         private TimeSpan _roundStartTime;
@@ -23,12 +25,13 @@ namespace Content.Server.GameTicking
         private TimeSpan _pauseTime;
 
         [ViewVariables]
-        public bool Paused { get; set; }
+        public new bool Paused { get; set; }
 
         [ViewVariables]
         private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;
 
         public IReadOnlyDictionary<IPlayerSession, LobbyPlayerStatus> PlayersInLobby => _playersInLobby;
+        public IReadOnlySet<NetUserId> PlayersInGame => _playersInGame;
 
         private void UpdateInfoText()
         {

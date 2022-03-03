@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests.Body
     [TestFixture]
     [TestOf(typeof(SharedBodyComponent))]
     [TestOf(typeof(BodyComponent))]
-    public class LegTest : ContentIntegrationTest
+    public sealed class LegTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

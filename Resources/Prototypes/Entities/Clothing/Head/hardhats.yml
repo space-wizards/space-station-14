@@ -4,6 +4,7 @@
   abstract: true
   components:
   - type: Sprite
+    netsync: true
     layers:
     - state: icon
     - state: light-icon
@@ -18,9 +19,12 @@
     visuals:
       - type: FlashLightVisualizer
   - type: HandheldLight
-  - type: ItemActions
-    actions:
-      - actionType: ToggleLight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellSmallHigh

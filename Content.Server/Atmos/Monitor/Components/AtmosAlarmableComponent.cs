@@ -26,10 +26,8 @@ namespace Content.Server.Atmos.Monitor.Components
     ///     by an atmospheric monitor.
     /// </summary>
     [RegisterComponent]
-    public class AtmosAlarmableComponent : Component
+    public sealed class AtmosAlarmableComponent : Component
     {
-        public override string Name => "AtmosAlarmable";
-
         [ViewVariables]
         public List<EntityUid> LinkedMonitors { get; set; } = new();
 

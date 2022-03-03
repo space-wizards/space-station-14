@@ -20,7 +20,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
 {
     [TestFixture]
     [TestOf(typeof(InteractionSystem))]
-    public class InteractionSystemTests : ContentIntegrationTest
+    public sealed class InteractionSystemTests : ContentIntegrationTest
     {
         const string PROTOTYPES = @"
 - type: entity
@@ -283,7 +283,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             {
                 user = sEntities.SpawnEntity(null, coords);
                 user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
-                target = sEntities.SpawnEntity(null, new MapCoordinates((InteractionSystem.InteractionRange, 0), mapId));
+                target = sEntities.SpawnEntity(null, new MapCoordinates((SharedInteractionSystem.InteractionRange + 0.01f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
                 item.EnsureComponent<ItemComponent>();
             });
@@ -408,7 +408,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         }
 
         [Reflect(false)]
-        private class TestInteractionSystem : EntitySystem
+        private sealed class TestInteractionSystem : EntitySystem
         {
             public ComponentEventHandler<HandsComponent, ClickAttackEvent>? AttackEvent;
             public EntityEventHandler<InteractUsingEvent>? InteractUsingEvent;

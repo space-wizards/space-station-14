@@ -8,6 +8,7 @@ using Content.Server.PDA;
 using Content.Shared.Access.Components;
 using Content.Shared.Administration;
 using Content.Shared.PDA;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -16,7 +17,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Mind.Commands;
 
 [AdminCommand(AdminFlags.VarEdit)]
-public class RenameCommand : IConsoleCommand
+public sealed class RenameCommand : IConsoleCommand
 {
     public string Command => "rename";
     public string Description => "Renames an entity and its cloner entries, ID cards, and PDAs.";
@@ -89,6 +90,13 @@ public class RenameCommand : IConsoleCommand
                     continue;
                 pdaSystem.SetOwner(pdaComponent, name);
             }
+        }
+
+        // Admin Overlay
+        if (entSysMan.TryGetEntitySystem<AdminSystem>(out var adminSystem)
+            && entMan.TryGetComponent<ActorComponent>(entityUid, out var actorComp))
+        {
+            adminSystem.UpdatePlayerList(actorComp.PlayerSession);
         }
     }
 

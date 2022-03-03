@@ -4,17 +4,13 @@ using Content.Client.Stylesheets;
 using Content.Shared.Stacks;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Stack
 {
     [RegisterComponent, Friend(typeof(StackSystem), typeof(StatusControl))]
     [ComponentReference(typeof(SharedStackComponent))]
-    public class StackComponent : SharedStackComponent, IItemStatus
+    public sealed class StackComponent : SharedStackComponent, IItemStatus
     {
         [ViewVariables]
         public bool UiUpdateNeeded { get; set; }
@@ -33,9 +29,8 @@ namespace Content.Client.Stack
             {
                 _parent = parent;
                 _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
+                _label.SetMarkup(Loc.GetString("comp-stack-status", ("count", _parent.Count)));
                 AddChild(_label);
-
-                parent.UiUpdateNeeded = true;
             }
 
             protected override void FrameUpdate(FrameEventArgs args)

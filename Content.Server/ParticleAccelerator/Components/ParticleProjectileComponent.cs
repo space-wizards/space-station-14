@@ -11,11 +11,10 @@ using Robust.Shared.Timing;
 namespace Content.Server.ParticleAccelerator.Components
 {
     [RegisterComponent]
-    public class ParticleProjectileComponent : Component
+    public sealed class ParticleProjectileComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "ParticleProjectile";
         public ParticleAcceleratorPowerState State;
 
         public void Fire(ParticleAcceleratorPowerState state, Angle angle, EntityUid firer)

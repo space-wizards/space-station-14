@@ -12,7 +12,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.CharacterAppearance.Systems
 {
-    public class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
+    public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     {
         [Dependency] private readonly SpriteAccessoryManager _accessoryManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

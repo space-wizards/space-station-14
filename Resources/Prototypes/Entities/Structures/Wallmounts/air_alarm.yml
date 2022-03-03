@@ -3,6 +3,7 @@
   name: air alarm
   description: An air alarm. Alarms... air?
   components:
+  - type: WallMount
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetworkComponent
@@ -64,7 +65,7 @@
   - type: Transform
     anchored: true
   - type: Construction
-    graph: air_alarm
+    graph: AirAlarm
     node: air_alarm
   placement:
     mode: SnapgridCenter
@@ -76,13 +77,14 @@
   name: air alarm assembly
   description: An air alarm. Doesn't look like it'll be alarming air any time soon.
   components:
+  - type: WallMount
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
     state: alarm_b1
   - type: Construction
-    graph: air_alarm
+    graph: AirAlarm
     node: assembly
   placement:
     mode: SnapgridCenter

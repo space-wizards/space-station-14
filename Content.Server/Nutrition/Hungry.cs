@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Nutrition
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class Hungry : IConsoleCommand
+    public sealed class Hungry : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 

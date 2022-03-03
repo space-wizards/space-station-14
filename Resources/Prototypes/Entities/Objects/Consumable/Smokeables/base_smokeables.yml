@@ -10,6 +10,11 @@
   - type: Appearance
     visuals:
       - type: BurnStateVisualizer
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash
+  - type: Recyclable
 
 # Base for all cigars and cigarettes.
 - type: entity
@@ -17,6 +22,8 @@
   id: BaseCigar
   abstract: true
   components:
+  - type: Smokable
+    exposeTemperature: 1173.15
   - type: Cigar
   - type: InjectableSolution
     solution: smokable

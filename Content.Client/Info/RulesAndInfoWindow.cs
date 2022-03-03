@@ -7,7 +7,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Client.Info
 {
-    public sealed class RulesAndInfoWindow : SS14Window
+    public sealed class RulesAndInfoWindow : DefaultWindow
     {
         [Dependency] private readonly RulesManager _rulesManager = default!;
         [Dependency] private readonly IResourceCache _resourceManager = default!;

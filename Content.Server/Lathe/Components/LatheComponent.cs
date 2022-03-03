@@ -21,7 +21,7 @@ namespace Content.Server.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class LatheComponent : SharedLatheComponent, IInteractUsing, IActivate
+    public sealed class LatheComponent : SharedLatheComponent, IInteractUsing, IActivate
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -35,7 +35,7 @@ namespace Content.Server.Lathe.Components
 
         private LatheState _state = LatheState.Base;
 
-        protected virtual LatheState State
+        private LatheState State
         {
             get => _state;
             set => _state = value;
@@ -228,7 +228,7 @@ namespace Content.Server.Lathe.Components
             return queue;
         }
 
-        protected enum LatheState
+        private enum LatheState : byte
         {
             Base,
             Inserting,

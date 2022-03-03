@@ -8,7 +8,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class ShowAtmos : IConsoleCommand
+    public sealed class ShowAtmos : IConsoleCommand
     {
         public string Command => "showatmos";
         public string Description => "Toggles seeing atmos debug overlay.";

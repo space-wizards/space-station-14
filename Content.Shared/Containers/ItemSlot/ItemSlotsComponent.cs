@@ -20,10 +20,8 @@ namespace Content.Shared.Containers.ItemSlots
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(ItemSlotsSystem))]
-    public class ItemSlotsComponent : Component
+    public sealed class ItemSlotsComponent : Component
     {
-        public override string Name => "ItemSlots";
-
         /// <summary>
         ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
         ///     cref="ItemSlotsSystem"/>.
@@ -69,7 +67,7 @@ namespace Content.Shared.Containers.ItemSlots
     /// </summary>
     [DataDefinition]
     [Friend(typeof(ItemSlotsSystem))]
-    public class ItemSlot
+    public sealed class ItemSlot
     {
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist;
@@ -84,7 +82,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Options used for playing the insert/eject sounds.
         /// </summary>
         [DataField("soundOptions")]
-        public AudioParams SoundOptions = AudioParams.Default; 
+        public AudioParams SoundOptions = AudioParams.Default;
 
         /// <summary>
         ///     The name of this item slot. This will be shown to the user in the verb menu.
@@ -156,7 +154,7 @@ namespace Content.Shared.Containers.ItemSlots
         public string? EjectVerbText;
 
         [ViewVariables]
-        public ContainerSlot ContainerSlot = default!;
+        public ContainerSlot? ContainerSlot = default!;
 
         /// <summary>
         ///     If this slot belongs to some de-constructible component, should the item inside the slot be ejected upon
@@ -192,10 +190,10 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("swap")]
         public bool Swap = true;
 
-        public string ID => ContainerSlot.ID;
+        public string? ID => ContainerSlot?.ID;
 
         // Convenience properties
-        public bool HasItem => ContainerSlot.ContainedEntity != null;
-        public EntityUid? Item => ContainerSlot.ContainedEntity;
+        public bool HasItem => ContainerSlot?.ContainedEntity != null;
+        public EntityUid? Item => ContainerSlot?.ContainedEntity;
     }
 }

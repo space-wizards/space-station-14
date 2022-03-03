@@ -3,8 +3,7 @@
 namespace Content.Server.Speech.Components
 {
     [RegisterComponent]
-    public class OwOAccentComponent : Component
+    public sealed class OwOAccentComponent : Component
     {
-        public override string Name => "OwOAccent";
     }
 }

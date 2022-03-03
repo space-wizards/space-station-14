@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'ame-window-title'}"
             MinSize="250 250">
     <BoxContainer Orientation="Vertical">
@@ -43,4 +43,4 @@
             <Label Name="CoreCount" Text="0" />
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

@@ -11,20 +11,8 @@ namespace Content.Server.Database
 {
     public abstract class ServerDbContext : DbContext
     {
-        /// <summary>
-        /// The "dotnet ef" CLI tool uses the parameter-less constructor.
-        /// When that happens we want to supply the <see cref="DbContextOptions"/> via <see cref="DbContext.OnConfiguring"/>.
-        /// To use the context within the application, the options need to be passed the constructor instead.
-        /// </summary>
-        protected readonly bool InitializedWithOptions;
-
-        public ServerDbContext()
+        protected ServerDbContext(DbContextOptions options) : base(options)
         {
-        }
-
-        public ServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
-        {
-            InitializedWithOptions = true;
         }
 
         public DbSet<Preference> Preference { get; set; } = null!;
@@ -37,6 +25,12 @@ namespace Content.Server.Database
         public DbSet<AdminLog> AdminLog { get; set; } = null!;
         public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
         public DbSet<Whitelist> Whitelist { get; set; } = null!;
+        public DbSet<ServerBan> Ban { get; set; } = default!;
+        public DbSet<ServerUnban> Unban { get; set; } = default!;
+        public DbSet<ConnectionLog> ConnectionLog { get; set; } = default!;
+        public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
+        public DbSet<ServerRoleBan> RoleBan { get; set; } = default!;
+        public DbSet<ServerRoleUnban> RoleUnban { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -101,6 +95,48 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasKey(logPlayer => new {logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
+
+            modelBuilder.Entity<ServerBan>()
+                .HasIndex(p => p.UserId);
+
+            modelBuilder.Entity<ServerBan>()
+                .HasIndex(p => p.Address);
+
+            modelBuilder.Entity<ServerBan>()
+                .HasIndex(p => p.UserId);
+
+            modelBuilder.Entity<ServerUnban>()
+                .HasIndex(p => p.BanId)
+                .IsUnique();
+
+            modelBuilder.Entity<ServerBan>()
+                .HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
+
+            modelBuilder.Entity<ServerRoleBan>()
+                .HasIndex(p => p.UserId);
+
+            modelBuilder.Entity<ServerRoleBan>()
+                .HasIndex(p => p.Address);
+
+            modelBuilder.Entity<ServerRoleBan>()
+                .HasIndex(p => p.UserId);
+
+            modelBuilder.Entity<ServerRoleUnban>()
+                .HasIndex(p => p.BanId)
+                .IsUnique();
+
+            modelBuilder.Entity<ServerRoleBan>()
+                .HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
+
+            modelBuilder.Entity<Player>()
+                .HasIndex(p => p.UserId)
+                .IsUnique();
+
+            modelBuilder.Entity<Player>()
+                .HasIndex(p => p.LastSeenUserName);
+
+            modelBuilder.Entity<ConnectionLog>()
+                .HasIndex(p => p.UserId);
         }
     }
 
@@ -299,5 +335,107 @@ namespace Content.Server.Database
     {
         [Required, Key] public int Uid { get; set; }
         public string? Name { get; set; } = default!;
+    }
+
+    [Table("server_ban")]
+    public class ServerBan
+    {
+        public int Id { get; set; }
+        public Guid? UserId { get; set; }
+        [Column(TypeName = "inet")] public (IPAddress, int)? Address { get; set; }
+        public byte[]? HWId { get; set; }
+
+        public DateTime BanTime { get; set; }
+
+        public DateTime? ExpirationTime { get; set; }
+
+        public string Reason { get; set; } = null!;
+        public Guid? BanningAdmin { get; set; }
+
+        public ServerUnban? Unban { get; set; }
+
+        public List<ServerBanHit> BanHits { get; set; } = null!;
+    }
+
+    [Table("server_unban")]
+    public class ServerUnban
+    {
+        [Column("unban_id")] public int Id { get; set; }
+
+        public int BanId { get; set; }
+        public ServerBan Ban { get; set; } = null!;
+
+        public Guid? UnbanningAdmin { get; set; }
+
+        public DateTime UnbanTime { get; set; }
+    }
+
+    [Table("connection_log")]
+    public class ConnectionLog
+    {
+        public int Id { get; set; }
+
+        public Guid UserId { get; set; }
+        public string UserName { get; set; } = null!;
+
+        public DateTime Time { get; set; }
+
+        public IPAddress Address { get; set; } = null!;
+        public byte[]? HWId { get; set; }
+
+        public ConnectionDenyReason? Denied { get; set; }
+
+        public List<ServerBanHit> BanHits { get; set; } = null!;
+    }
+
+    public enum ConnectionDenyReason : byte
+    {
+        Ban = 0,
+        Whitelist = 1,
+        Full = 2,
+    }
+
+    public class ServerBanHit
+    {
+        public int Id { get; set; }
+
+        public int BanId { get; set; }
+        public int ConnectionId { get; set; }
+
+        public ServerBan Ban { get; set; } = null!;
+        public ConnectionLog Connection { get; set; } = null!;
+    }
+
+    [Table("server_role_ban")]
+    public sealed class ServerRoleBan
+    {
+        public int Id { get; set; }
+        public Guid? UserId { get; set; }
+        [Column(TypeName = "inet")] public (IPAddress, int)? Address { get; set; }
+        public byte[]? HWId { get; set; }
+
+        public DateTime BanTime { get; set; }
+
+        public DateTime? ExpirationTime { get; set; }
+
+        public string Reason { get; set; } = null!;
+        public Guid? BanningAdmin { get; set; }
+
+        public ServerRoleUnban? Unban { get; set; }
+
+        public string RoleId { get; set; } = null!;
+    }
+
+    [Table("server_role_unban")]
+    public sealed class ServerRoleUnban
+    {
+        [Column("role_unban_id")] public int Id { get; set; }
+
+        public int BanId { get; set; }
+        public ServerRoleBan Ban { get; set; } = null!;
+
+        public Guid? UnbanningAdmin { get; set; }
+
+        public DateTime UnbanTime { get; set; }
     }
 }

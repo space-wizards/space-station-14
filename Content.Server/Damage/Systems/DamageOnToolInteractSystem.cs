@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Damage.Systems
 {
-    public class DamageOnToolInteractSystem : EntitySystem
+    public sealed class DamageOnToolInteractSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;

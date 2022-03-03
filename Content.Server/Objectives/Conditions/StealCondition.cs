@@ -16,7 +16,7 @@ namespace Content.Server.Objectives.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class StealCondition : IObjectiveCondition, ISerializationHooks
+    public sealed class StealCondition : IObjectiveCondition, ISerializationHooks
     {
         private Mind.Mind? _mind;
         [DataField("prototype")] private string _prototypeId = string.Empty;
@@ -65,7 +65,7 @@ namespace Content.Server.Objectives.Conditions
             }
         }
 
-        public float Difficulty => 2f;
+        public float Difficulty => 2.25f;
 
         public bool Equals(IObjectiveCondition? other)
         {

@@ -20,7 +20,7 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedGasAnalyzerComponent))]
-    public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IActivate
+    public sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IActivate
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -167,7 +167,7 @@ namespace Content.Server.Atmos.Components
                 if (!_entities.TryGetComponent(playerEntity, out HandsComponent? handsComponent))
                     return;
 
-                if (handsComponent?.GetActiveHand?.Owner is not {Valid: true} activeHandEntity ||
+                if (handsComponent?.GetActiveHandItem?.Owner is not {Valid: true} activeHandEntity ||
                     !_entities.TryGetComponent(activeHandEntity, out GasAnalyzerComponent? gasAnalyzer))
                 {
                     return;
@@ -234,7 +234,7 @@ namespace Content.Server.Atmos.Components
                         return;
                     }
 
-                    if (handsComponent.GetActiveHand?.Owner is not {Valid: true} activeHandEntity ||
+                    if (handsComponent.GetActiveHandItem?.Owner is not {Valid: true} activeHandEntity ||
                         !_entities.TryGetComponent(activeHandEntity, out GasAnalyzerComponent? gasAnalyzer))
                     {
                         serverMsg.Session.AttachedEntity.Value.PopupMessage(Loc.GetString("gas-analyzer-component-need-gas-analyzer-in-hand-message"));

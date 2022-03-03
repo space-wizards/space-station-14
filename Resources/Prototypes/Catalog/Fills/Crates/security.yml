@@ -61,8 +61,8 @@
         amount: 2
       - id: ShotgunGladstone
         amount: 2
-      - id: ShellShotgunBeanbag
-        amount: 12
+      - id: BoxBeanbag
+        amount: 2
 #      - ShieldRiot
 #      - SecGasmask
 

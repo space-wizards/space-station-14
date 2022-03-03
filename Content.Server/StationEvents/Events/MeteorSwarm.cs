@@ -24,8 +24,8 @@ namespace Content.Server.StationEvents.Events
         public override int? MaxOccurrences => 2;
         public override int MinimumPlayers => 20;
 
-        public override string StartAnnouncement => "Meteors are on a collision course with the station. Brace for impact.";
-        protected override string EndAnnouncement => "The meteor swarm has passed. Please return to your stations.";
+        public override string StartAnnouncement =>  Loc.GetString("station-event-meteor-swarm-start-announcement");
+        protected override string EndAnnouncement => Loc.GetString("station-event-meteor-swarm-ebd-announcement");
 
         public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
 

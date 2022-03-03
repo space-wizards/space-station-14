@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: seat
+  id: Seat
   start: start
   graph:
     - node: start
@@ -32,6 +32,11 @@
               amount: 2
               doAfter: 1
         - to: chairComfy
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 1
+        - to: chairPilotSeat
           steps:
             - material: Steel
               amount: 5
@@ -110,6 +115,18 @@
           steps:
             - tool: Screwing
               doAfter: 1
+              
+    - node: chairPilotSeat
+      entity: ChairPilotSeat
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 5
+          steps:
+            - tool: Screwing
+              doAfter: 2
 
     - node: chairWood
       entity: ChairWood

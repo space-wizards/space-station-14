@@ -26,8 +26,6 @@ namespace Content.Shared.Body.Components
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public override string Name => "Body";
-
         [ViewVariables]
         [DataField("template", required: true)]
         private string? TemplateId { get; }
@@ -409,7 +407,7 @@ namespace Content.Shared.Body.Components
     }
 
     [Serializable, NetSerializable]
-    public class BodyComponentState : ComponentState
+    public sealed class BodyComponentState : ComponentState
     {
         private Dictionary<string, SharedBodyPartComponent>? _parts;
 

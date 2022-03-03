@@ -1,9 +1,8 @@
-﻿# TODO: Add descriptions (3)
-
-- type: entity
+﻿- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Autolathe (Machine Board)
+  name: autolathe machine board
+  description: A machine printed circuit board for an autolathe
   components:
     - type: MachineBoard
       prototype: Autolathe
@@ -16,7 +15,8 @@
 - type: entity
   id: ProtolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Protolathe (Machine Board)
+  name: protolathe machine board
+  description: A machine printed circuit board for a protolathe
   components:
     - type: MachineBoard
       prototype: Protolathe
@@ -30,9 +30,61 @@
           ExamineName: Glass Beaker
 
 - type: entity
+  id: CircuitImprinterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Circuit Imprinter (Machine Board)
+  components:
+  - type: MachineBoard
+    prototype: CircuitImprinter
+    requirements:
+      MatterBin: 1
+      Manipulator: 1
+    tagRequirements:
+      GlassBeaker:
+        Amount: 2
+        DefaultPrototype: Beaker
+        ExamineName: Glass Beaker
+
+
+- type: entity
+  id: ThermomachineFreezerMachineCircuitBoard
+  parent: BaseMachineCircuitboard
+  name: Freezer Thermomachine (Machine Board)
+  description: Looks like you could use a screwdriver to change the board type.
+  components:
+  - type: MachineBoard
+    prototype: GasThermoMachineFreezer
+    requirements:
+      MatterBin: 3
+      Laser: 3
+    materialRequirements:
+      Cable: 5
+  - type: Construction
+    graph: ThermomachineBoard
+    node: freezer
+
+- type: entity
+  id: ThermomachineHeaterMachineCircuitBoard
+  parent: BaseMachineCircuitboard
+  name: Heater Thermomachine (Machine Board)
+  description: Looks like you could use a screwdriver to change the board type.
+  components:
+  - type: MachineBoard
+    prototype: GasThermoMachineHeater
+    requirements:
+      MatterBin: 3
+      Laser: 3
+    materialRequirements:
+      Cable: 5
+  - type: Construction
+    graph: ThermomachineBoard
+    node: heater
+
+- type: entity
   id: CloningPodMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Cloning Pod (Machine Board)
+  name: cloning pod machine board
+  description: A machine printed circuit board for a cloning pod
   components:
     - type: MachineBoard
       prototype: CloningPod
@@ -46,7 +98,8 @@
 - type: entity
   id: MedicalScannerMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Medical Scanner (Machine Board)
+  name: medical scanner machine board
+  description: A machine printed circuit board for a medical scanner
   components:
     - type: MachineBoard
       prototype: MedicalScanner
@@ -61,7 +114,8 @@
 - type: entity
   id: ChemMasterMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Chem Master (Machine Board)
+  name: ChemMaster 4000 machine board
+  description: A machine printed circuit board for a ChemMaster 4000
   components:
     - type: MachineBoard
       prototype: chem_master
@@ -78,7 +132,8 @@
 - type: entity
   id: ChemDispenserMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Chem Dispenser (Machine Board)
+  name: chem dispenser machine board
+  description: A machine printed circuit board for a chem dispenser
   components:
     - type: MachineBoard
       prototype: chem_dispenser
@@ -92,7 +147,8 @@
 - type: entity
   id: HydroponicsTrayMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Hydroponics Tray (Machine Board)
+  name: hydroponics tray machine board
+  description: A machine printed circuit board for a hydroponics tray
   components:
     - type: MachineBoard
       prototype: hydroponicsTray
@@ -113,20 +169,22 @@
 - type: entity
   id: SMESMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: SMES (Machine Board)
+  name: SMES machine board
+  description: A machine printed circuit board for a SMES
   components:
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: power_mod
     - type: MachineBoard
-      prototype: BaseSmes
+      prototype: BaseSMES
       requirements:
         Capacitor: 10
 
 - type: entity
   id: SubstationMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Substation (Machine Board)
+  name: substation machine board
+  description: A machine printed circuit board for a substation
   components:
     - type: MachineBoard
       prototype: BaseSubstation
@@ -137,9 +195,46 @@
         CableHV: 5
 
 - type: entity
-  id: KitchenReagentGrinderMachineCircuitboard #unsure why the reagent grinder has 'kitchen' in the id name when multiple departments use it but that's for another time
   parent: BaseMachineCircuitboard
-  name: Reagent Grinder (Machine Board)
+  id: DawInstrumentMachineCircuitboard
+  name: Digital Audio Workstation (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: DawInstrument
+      requirements:
+        Capacitor: 4
+        ScanningModule: 5
+      materialRequirements:
+        Glass: 1
+      tagRequirements:
+#      One instrument to bring them all and in the darkness bind them...
+       KeyedInstrument:
+          Amount: 1
+          DefaultPrototype: SynthesizerInstrument
+          ExamineName: Keyed Instrument
+       StringInstrument:
+          Amount: 1
+          DefaultPrototype: AcousticGuitarInstrument
+          ExamineName: String Instrument
+       PercussionInstrument:
+          Amount: 1
+          DefaultPrototype: GlockenspielInstrument
+          ExamineName: Percussion Instrument
+       BrassInstrument:
+          Amount: 1
+          DefaultPrototype: TrumpetInstrument
+          ExamineName: Brass Instrument
+       WoodwindInstrument:
+          Amount: 1
+          DefaultPrototype: SaxophoneInstrument
+          ExamineName: Woodwind Instrument
+
+
+- type: entity
+  id: ReagentGrinderMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: reagent grinder machine board
+  description: A machine printed circuit board for a reagent grinder
   components:
     - type: MachineBoard
       prototype: KitchenReagentGrinder

@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: lightFixture
+  id: LightFixture
   start: start
   graph:
     - node: start
@@ -13,6 +13,11 @@
           steps:
             - material: Steel
               amount: 2
+              doAfter: 2.0
+        - to: groundLight
+          steps:
+            - material: Steel
+              amount: 5
               doAfter: 2.0
     - node: tubeLight
       entity: PoweredlightEmpty
@@ -44,9 +49,25 @@
               prototype: SheetSteel1
               amount: 1
             - !type:DeleteEntity {}
+    - node: groundLight
+      entity: PoweredLightPostSmallEmpty
+      edges:
+        - to: start
+          conditions:
+            - !type:ContainerEmpty
+              container: "light_bulb"
+          steps:
+            - tool: Screwing
+              doAfter: 4.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 5
+            - !type:DeleteEntity {}
+            
 
 - type: constructionGraph
-  id: lightSwitch
+  id: LightSwitch
   start: start
   graph:
     - node: start

@@ -22,6 +22,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Chat.UI
 {
     [GenerateTypedNameReferences]
+    [Virtual]
     public partial class ChatBox : Control
     {
         [Dependency] protected readonly IChatManager ChatMgr = default!;
@@ -496,8 +497,8 @@ namespace Content.Client.Chat.UI
             return channel switch
             {
                 ChatSelectChannel.Radio => Color.LimeGreen,
-                ChatSelectChannel.LOOC => Color.LightSkyBlue,
-                ChatSelectChannel.OOC => Color.RoyalBlue,
+                ChatSelectChannel.LOOC => Color.MediumTurquoise,
+                ChatSelectChannel.OOC => Color.LightSkyBlue,
                 ChatSelectChannel.Dead => Color.MediumPurple,
                 ChatSelectChannel.Admin => Color.Red,
                 _ => Color.DarkGray

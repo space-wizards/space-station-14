@@ -3,15 +3,15 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Chat
 {
-    public class ChatHelper
+    public sealed class ChatHelper
     {
         public static Color ChatColor(ChatChannel channel) =>
             channel switch
             {
                 ChatChannel.Server => Color.Orange,
                 ChatChannel.Radio => Color.LimeGreen,
-                ChatChannel.LOOC => Color.LightSkyBlue,
-                ChatChannel.OOC => Color.RoyalBlue,
+                ChatChannel.LOOC => Color.MediumTurquoise,
+                ChatChannel.OOC => Color.LightSkyBlue,
                 ChatChannel.Dead => Color.MediumPurple,
                 ChatChannel.Admin => Color.Red,
                 ChatChannel.Whisper => Color.DarkGray,

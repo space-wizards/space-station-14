@@ -23,7 +23,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class SuicideCommand : IConsoleCommand
+    internal sealed class SuicideCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -89,7 +89,7 @@ namespace Content.Server.Chat.Commands
 
             // Held item suicide
             var handsComponent = _entities.GetComponent<HandsComponent>(owner);
-            var itemComponent = handsComponent.GetActiveHand;
+            var itemComponent = handsComponent.GetActiveHandItem;
             if (itemComponent != null)
             {
                 var suicide = _entities.GetComponents<ISuicideAct>(itemComponent.Owner).FirstOrDefault();

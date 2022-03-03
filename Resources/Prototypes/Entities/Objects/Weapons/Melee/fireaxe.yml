@@ -7,6 +7,7 @@
   - type: Tag
     tags:
     - FireAxe
+  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
@@ -28,3 +29,6 @@
     QuickEquip: false
     Slots:
     - back
+  - type: Tool
+    qualities:
+      - Prying

@@ -16,11 +16,9 @@ namespace Content.Server.Ghost.Roles.Components
     ///     Allows a ghost to take this role, spawning a new entity.
     /// </summary>
     [RegisterComponent, ComponentReference(typeof(GhostRoleComponent))]
-    public class GhostRoleMobSpawnerComponent : GhostRoleComponent
+    public sealed class GhostRoleMobSpawnerComponent : GhostRoleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "GhostRoleMobSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("deleteOnSpawn")]
         private bool _deleteOnSpawn = true;

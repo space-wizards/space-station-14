@@ -9,10 +9,8 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent, Friend(typeof(SmokingSystem))]
-    public class SmokableComponent : Component
+    public sealed class SmokableComponent : Component
     {
-        public override string Name => "Smokable";
-
         [DataField("solution")]
         public string Solution { get; } = "smokable";
 
@@ -24,6 +22,12 @@ namespace Content.Server.Nutrition.Components
 
         [DataField("state")]
         public SmokableState State { get; set; } = SmokableState.Unlit;
+
+        [DataField("exposeTemperature")]
+        public float ExposeTemperature { get; set; } = 0;
+
+        [DataField("exposeVolume")]
+        public float ExposeVolume { get; set; } = 1f;
 
         // clothing prefixes
         [DataField("burntPrefix")]

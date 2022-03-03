@@ -26,7 +26,7 @@ namespace Content.Server.Medical.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedMedicalScannerComponent))]
-    public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDestroyAct
+    public sealed class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDestroyAct
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
@@ -213,15 +213,14 @@ namespace Content.Server.Medical.Components
                         // Ideally this ends with GameTicker & CloningSystem handing DNA to a function that sets up a body for that DNA.
                         var mindUser = mind.UserId;
 
-                        if (mindUser == null)
+                        if (mindUser.HasValue == false || mind.Session == null)
                         {
                             // For now assume this means soul departed
                             obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-soul-broken"));
                             break;
                         }
 
-                        // has to be explicit cast like this, IDK why, null suppression operators seem to not work
-                        var profile = GetPlayerProfileAsync((NetUserId) mindUser);
+                        var profile = GetPlayerProfileAsync(mindUser.Value);
                         cloningSystem.AddToDnaScans(new ClonerDNAEntry(mind, profile));
                     }
 

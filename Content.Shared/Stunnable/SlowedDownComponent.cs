@@ -10,16 +10,14 @@ namespace Content.Shared.Stunnable
     [RegisterComponent]
     [NetworkedComponent]
     [Friend(typeof(SharedStunSystem))]
-    public class SlowedDownComponent : Component
+    public sealed class SlowedDownComponent : Component
     {
-        public override string Name => "SlowedDown";
-
         public float SprintSpeedModifier { get; set; } = 0.5f;
         public float WalkSpeedModifier { get; set; } = 0.5f;
     }
 
     [Serializable, NetSerializable]
-    public class SlowedDownComponentState : ComponentState
+    public sealed class SlowedDownComponentState : ComponentState
     {
         public float SprintSpeedModifier { get; set;  }
         public float WalkSpeedModifier { get; set;  }

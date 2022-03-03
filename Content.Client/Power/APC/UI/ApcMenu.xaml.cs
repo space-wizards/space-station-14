@@ -13,7 +13,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Power.APC.UI
 {
     [GenerateTypedNameReferences]
-    public partial class ApcMenu : SS14Window
+    public sealed partial class ApcMenu : DefaultWindow
     {
         public ApcMenu(ApcBoundUserInterface owner)
         {

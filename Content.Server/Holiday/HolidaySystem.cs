@@ -12,7 +12,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Holiday
 {
-    public class HolidaySystem : EntitySystem
+    public sealed class HolidaySystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -112,7 +112,7 @@ namespace Content.Server.Holiday
     /// <summary>
     ///     Event for when the list of currently active holidays has been refreshed.
     /// </summary>
-    public class HolidaysRefreshedEvent : EntityEventArgs
+    public sealed class HolidaysRefreshedEvent : EntityEventArgs
     {
         public readonly IEnumerable<HolidayPrototype> Holidays;
 

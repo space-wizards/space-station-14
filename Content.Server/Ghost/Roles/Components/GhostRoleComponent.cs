@@ -9,7 +9,7 @@ namespace Content.Server.Ghost.Roles.Components
 {
     public abstract class GhostRoleComponent : Component
     {
-        [DataField("name")] private string _roleName = "Unknown";
+        [DataField("name")] public string _roleName = "Unknown";
 
         [DataField("description")] private string _roleDescription = "Unknown";
 

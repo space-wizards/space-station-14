@@ -8,10 +8,8 @@ namespace Content.Server.Tabletop.Components
     ///     Component for marking an entity as currently playing a tabletop.
     /// </summary>
     [RegisterComponent, Friend(typeof(TabletopSystem))]
-    public class TabletopGamerComponent : Component
+    public sealed class TabletopGamerComponent : Component
     {
-        public override string Name => "TabletopGamer";
-
         [DataField("tabletop")]
         public EntityUid Tabletop { get; set; } = EntityUid.Invalid;
     }

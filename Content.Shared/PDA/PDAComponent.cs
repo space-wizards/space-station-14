@@ -9,10 +9,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.PDA
 {
     [RegisterComponent]
-    public class PDAComponent : Component
+    public sealed class PDAComponent : Component
     {
-        public override string Name => "PDA";
-
         [DataField("idSlot")]
         public ItemSlot IdSlot = new();
 

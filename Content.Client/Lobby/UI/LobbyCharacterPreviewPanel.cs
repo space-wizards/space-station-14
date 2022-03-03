@@ -21,7 +21,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lobby.UI
 {
-    public class LobbyCharacterPreviewPanel : Control
+    public sealed class LobbyCharacterPreviewPanel : Control
     {
         private readonly IEntityManager _entMan;
         private readonly IClientPreferencesManager _preferencesManager;
