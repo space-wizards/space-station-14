@@ -2,7 +2,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.CharacterAppearance.Systems;
 using Content.Server.Chat.Managers;
-using Content.Server.Database;
 using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Server.PDA;
@@ -90,7 +89,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IBaseServer _baseServer = default!;
         [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
-        [Dependency] private readonly IServerDbManager _db = default!;
 #if EXCEPTION_TOLERANCE
         [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 #endif
