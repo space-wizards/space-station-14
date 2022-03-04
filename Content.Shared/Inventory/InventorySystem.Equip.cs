@@ -53,6 +53,9 @@ public abstract partial class InventorySystem
         if(!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
            return;
 
+        // un-rotate entities. needed for things like directional flashlights on hardsuit helmets
+        Transform(args.Entity).LocalRotation = 0;
+
         var equippedEvent = new DidEquipEvent(uid, args.Entity, slotDef);
         RaiseLocalEvent(uid, equippedEvent);
 
