@@ -73,7 +73,7 @@
   name: Cybersun pen
   parent: BaseItem
   id: CyberPen
-  description: A high-tech pen straight from the Cybersun's legal department, capable of refracting hard-light at impossible angles through it's diamond tip in order to write. It's not literally pointless, only figuratively.
+  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. It's not literally pointless, only figuratively.
   components:
   - type: Tag
     tags:
