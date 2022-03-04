@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Inventory;
@@ -10,9 +9,8 @@ using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
+using static Robust.Client.GameObjects.SpriteComponent;
 using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Client.Clothing;
@@ -44,10 +42,20 @@ public sealed class ClothingSystem : EntitySystem
 
     [Dependency] private IResourceCache _cache = default!;
     [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private IPrototypeManager _protoMan = default!;
+
+    private ShaderInstance? _stencilDraw;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        if (_protoMan.TryIndex<ShaderPrototype>("StencilDraw", out var prototype))
+            _stencilDraw = prototype.Instance();
+        else
+        {
+            Logger.Error("Missing stencil shader");
+        }
 
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
@@ -194,15 +202,20 @@ public sealed class ClothingSystem : EntitySystem
         if(!Resolve(equipee, ref inventory, ref sprite) || !Resolve(equipment, ref clothingComponent, false))
             return;
 
-        if (slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
+        bool stencilShaderOverride = false;
+        if (slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var stencilLayer))
         {
-            sprite.LayerSetState(HumanoidVisualLayers.StencilMask, clothingComponent.FemaleMask switch
+            sprite.LayerSetState(stencilLayer, clothingComponent.FemaleMask switch
             {
                 FemaleClothingMask.NoMask => "female_none",
                 FemaleClothingMask.UniformTop => "female_top",
                 _ => "female_full",
             });
+            stencilShaderOverride = true;
         }
+
+        if (!_inventorySystem.TryGetSlot(equipee, slot, out var slotDef, inventory))
+            return;
 
         // Remove old layers. We could also just set them to invisible, but as items may add arbitrary layers, this
         // may eventually bloat the player with lots of invisible layers.
@@ -239,17 +252,23 @@ public sealed class ClothingSystem : EntitySystem
             }
 
             var index = sprite.LayerMapReserveBlank(key);
+            if (sprite[index] is not Layer layer)
+                return;
 
             // In case no RSI is given, use the item's base RSI as a default. This cuts down on a lot of unnecessary yaml entries.
             if (layerData.RsiPath == null
                 && layerData.TexturePath == null
-                && sprite[index].Rsi == null
+                && layer.RSI == null
                 && TryComp(equipment, out SpriteComponent? clothingSprite))
             {
-                sprite.LayerSetRSI(index, clothingSprite.BaseRSI);
+                layer.SetRsi(clothingSprite.BaseRSI);
             }
 
             sprite.LayerSetData(index, layerData);
+            layer.DrawDepth += slotDef.DrawDepthOffset;
+
+            if (stencilShaderOverride && _stencilDraw != null)
+                layer.Shader = _stencilDraw;
         }
 
         RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers));

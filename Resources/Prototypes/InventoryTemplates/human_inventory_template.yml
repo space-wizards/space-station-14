@@ -7,54 +7,63 @@
       uiContainer: Top
       uiWindowPos: 1,3
       displayName: Shoes
+      drawDepthOffset: -270
     - name: jumpsuit
       slotTexture: uniform
       slotFlags: INNERCLOTHING
       uiContainer: Top
       uiWindowPos: 0,2
       displayName: Jumpsuit
+      drawDepthOffset: -400
     - name: outerClothing
       slotTexture: suit
       slotFlags: OUTERCLOTHING
       uiContainer: Top
       uiWindowPos: 1,2
       displayName: Suit
+      drawDepthOffset: -250
     - name: gloves
       slotTexture: gloves
       slotFlags: GLOVES
       uiContainer: Top
       uiWindowPos: 2,2
       displayName: Gloves
+      drawDepthOffset: -280
     - name: neck
       slotTexture: neck
       slotFlags: NECK
       uiContainer: Top
       uiWindowPos: 0,1
       displayName: Neck
+      drawDepthOffset: -220
     - name: mask
       slotTexture: mask
       slotFlags: MASK
       uiContainer: Top
       uiWindowPos: 1,1
       displayName: Mask
+      drawDepthOffset: -90
     - name: eyes
       slotTexture: glasses
       slotFlags: EYES
       uiContainer: Top
       uiWindowPos: 0,0
       displayName: Eyes
+      drawDepthOffset: -240
     - name: ears
       slotTexture: ears
       slotFlags: EARS
       uiContainer: Top
       uiWindowPos: 2,0
       displayName: Ears
+      drawDepthOffset: -260
     - name: head
       slotTexture: head
       slotFlags: HEAD
       uiContainer: Top
       uiWindowPos: 1,0
       displayName: Head
+      drawDepthOffset: -80
     - name: pocket1
       slotTexture: pocket
       slotFlags: POCKET
@@ -62,6 +71,7 @@
       uiWindowPos: 0,3
       dependsOn: jumpsuit
       displayName: Pocket 1
+      drawDepthOffset: -70
     - name: pocket2
       slotTexture: pocket
       slotFlags: POCKET
@@ -69,6 +79,7 @@
       uiWindowPos: 2,3
       dependsOn: jumpsuit
       displayName: Pocket 2
+      drawDepthOffset: -70
     - name: id
       slotTexture: id
       slotFlags: IDCARD
@@ -76,15 +87,18 @@
       uiWindowPos: 2,1
       dependsOn: jumpsuit
       displayName: ID
+      drawDepthOffset: -290
     - name: belt
       slotTexture: belt
       slotFlags: BELT
       uiContainer: BottomLeft
       uiWindowPos: 3,1
       displayName: Belt
+      drawDepthOffset: -230
     - name: back
       slotTexture: back
       slotFlags: BACK
       uiContainer: BottomLeft
       uiWindowPos: 3,0
       displayName: Back
+      drawDepthOffset: -210

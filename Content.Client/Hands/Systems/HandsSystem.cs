@@ -235,6 +235,8 @@ namespace Content.Client.Hands
                 return;
             }
 
+            handComp.HandLayerDrawDepth.TryGetValue(hand.Location, out var depthOverride);
+
             // add the new layers
             foreach (var (key, layerData) in ev.Layers)
             {
@@ -256,6 +258,7 @@ namespace Content.Client.Hands
                 }
 
                 sprite.LayerSetData(index, layerData);
+                sprite.LayerSetDrawDepthOverride(index, depthOverride);
             }
 
             RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers));

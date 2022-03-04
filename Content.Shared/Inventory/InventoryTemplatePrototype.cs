@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -32,6 +32,12 @@ public sealed class SlotDefinition
 
     //todo this is supreme shit and ideally slots should be stored in a given equipmentslotscomponent on each equipment
     [DataField("dependsOn")] public string? DependsOn { get; }
+
+    /// <summary>
+    ///     This is used to modify the draw depth of the clothing layers of any equipment that is equipped to this slot
+    /// </summary>
+    [DataField("drawDepthOffset")]
+    public int DrawDepthOffset;
 
     [DataField("displayName", required: true)] public string DisplayName { get; } = string.Empty;
 }

@@ -422,12 +422,8 @@ namespace Content.Client.Damage
                 {
                     int layerCount = spriteComponent.AllLayers.Count();
                     int index = spriteComponent.LayerMapGet(layer);
+                    int depth = spriteComponent[layer].DrawDepth + 1;
                     string layerState = spriteComponent.LayerGetState(index)!.ToString()!;
-
-                    if (index + 1 != layerCount)
-                    {
-                        index += 1;
-                    }
 
                     damageData.LayerMapKeyStates.Add(layer, layerState);
 
@@ -441,7 +437,7 @@ namespace Content.Client.Damage
                                 sprite,
                                 $"{layerState}_{group}_{_thresholds[1]}",
                                 $"{layer}{group}",
-                                index);
+                                depth);
                         }
                         damageData.DisabledLayers.Add(layer, false);
                     }
@@ -455,7 +451,7 @@ namespace Content.Client.Damage
                             _damageOverlay,
                             $"{layerState}_{_thresholds[1]}",
                             $"{layer}trackDamage",
-                            index);
+                            depth);
                         damageData.DisabledLayers.Add(layer, false);
                     }
                 }
@@ -472,7 +468,7 @@ namespace Content.Client.Damage
                         AddDamageLayerToSprite(spriteComponent,
                             sprite,
                             $"DamageOverlay_{group}_{_thresholds[1]}",
-                            $"DamageOverlay{group}");
+                            $"DamageOverlay{group}", 0);
                         damageData.TopMostLayerKey = $"DamageOverlay{group}";
                     }
                 }
@@ -481,7 +477,7 @@ namespace Content.Client.Damage
                     AddDamageLayerToSprite(spriteComponent,
                         _damageOverlay,
                         $"DamageOverlay_{_thresholds[1]}",
-                        "DamageOverlay");
+                        "DamageOverlay", 0);
                     damageData.TopMostLayerKey = $"DamageOverlay";
                 }
             }
@@ -490,12 +486,13 @@ namespace Content.Client.Damage
         /// <summary>
         ///     Adds a damage tracking layer to a given sprite component.
         /// </summary>
-        private void AddDamageLayerToSprite(SpriteComponent spriteComponent, DamageVisualizerSprite sprite, string state, string mapKey, int? index = null)
+        private void AddDamageLayerToSprite(SpriteComponent spriteComponent, DamageVisualizerSprite sprite, string state, string mapKey, int depth)
         {
             int newLayer = spriteComponent.AddLayer(
                 new SpriteSpecifier.Rsi(
                     new ResourcePath(sprite.Sprite), state
-                ), index);
+                ));
+            spriteComponent[newLayer].DrawDepth = depth;
             spriteComponent.LayerMapSet(mapKey, newLayer);
             if (sprite.Color != null)
                 spriteComponent.LayerSetColor(newLayer, Color.FromHex(sprite.Color));
@@ -632,6 +629,7 @@ namespace Content.Client.Damage
         {
             spriteComponent.LayerMapTryGet(key, out int spriteLayer);
             bool visibility = spriteComponent[spriteLayer].Visible;
+            var depth = spriteComponent[spriteLayer].DrawDepth;
             spriteComponent.RemoveLayer(spriteLayer);
             if (threshold == FixedPoint2.Zero) // these should automatically be invisible
                 threshold = _thresholds[1];
@@ -641,6 +639,7 @@ namespace Content.Client.Damage
                     $"{statePrefix}_{threshold}"
                 ),
                 spriteLayer);
+            spriteComponent[spriteLayer].DrawDepth = depth;
             spriteComponent.LayerMapSet(key, spriteLayer);
             spriteComponent.LayerSetVisible(spriteLayer, visibility);
             // this is somewhat iffy since it constantly reallocates

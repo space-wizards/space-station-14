@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
@@ -13,7 +9,7 @@ namespace Content.Shared.Hands
     /// <summary>
     ///     Raised directed at an item that needs to update its in-hand sprites/layers.
     /// </summary>
-    public class GetInhandVisualsEvent : EntityEventArgs
+    public sealed class GetInhandVisualsEvent : EntityEventArgs
     {
         /// <summary>
         ///     Entity that owns the hand holding the item.
@@ -43,7 +39,7 @@ namespace Content.Shared.Hands
     /// <remarks>
     ///     Useful for systems/components that modify the visual layers that an item adds to a player. (e.g. RGB memes)
     /// </remarks>
-    public class HeldVisualsUpdatedEvent : EntityEventArgs
+    public sealed class HeldVisualsUpdatedEvent : EntityEventArgs
     {
         /// <summary>
         ///     Entity that is holding the item.

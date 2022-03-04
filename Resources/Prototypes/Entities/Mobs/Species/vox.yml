@@ -14,72 +14,62 @@
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
         sprite: Mobs/Species/Vox/parts.rsi
         state: torso_m
+        drawDepth: -560
       - map: [ "enum.HumanoidVisualLayers.Head" ]
         sprite: Mobs/Species/Vox/parts.rsi
         state: head_m
+        drawDepth: -550
       - map: [ "enum.HumanoidVisualLayers.Eyes" ]
         color: "#008800"
         sprite: Mobs/Customization/eyes.rsi
         state: vox_eyes_s
+        drawDepth: -540
       - map: [ "enum.HumanoidVisualLayers.RArm" ]
         sprite: Mobs/Species/Vox/parts.rsi
         state: r_arm
+        drawDepth: -530
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
         sprite: Mobs/Species/Vox/parts.rsi
         state: l_arm
+        drawDepth: -520
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
         sprite: Mobs/Species/Vox/parts.rsi
         state: r_leg
+        drawDepth: -510
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
         sprite: Mobs/Species/Vox/parts.rsi
         state: l_leg
-      # Vox don't have female clothing masks.
-      #- shader: StencilClear
-      #  sprite: Mobs/Species/Vox/parts.rsi
-      #  state: l_leg
-      #- shader: StencilMask
-      #  map: [ "enum.HumanoidVisualLayers.StencilMask" ]
-      #  sprite: Mobs/Customization/masking_helpers.rsi
-      #  state: female_full
-      #  visible: false
-      #- map: [ "jumpsuit" ]
-      #  shader: StencilDraw
+        drawDepth: -500
       - map: [ "enum.HumanoidVisualLayers.LHand" ]
         sprite: Mobs/Species/Vox/parts.rsi
         state: l_hand
+        drawDepth: -340
       - map: [ "enum.HumanoidVisualLayers.RHand" ]
         sprite: Mobs/Species/Vox/parts.rsi
         state: r_hand
+        drawDepth: -330
       - map: [ "enum.HumanoidVisualLayers.LFoot" ]
         sprite: Mobs/Species/Vox/parts.rsi
         state: l_foot
+        drawDepth: -320
       - map: [ "enum.HumanoidVisualLayers.RFoot" ]
         sprite: Mobs/Species/Vox/parts.rsi
         state: r_foot
+        drawDepth: -310
       - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
         color: "#ffffff"
         sprite: Objects/Misc/handcuffs.rsi
         state: body-overlay-2
         visible: false
-      - map: [ "id" ]
-      - map: [ "gloves" ]
-      - map: [ "shoes" ]
-      - map: [ "ears" ]
-      - map: [ "outerClothing" ]
-      - map: [ "eyes" ]
-      - map: [ "belt" ]
-      - map: [ "neck" ]
-      - map: [ "back" ]
+        drawDepth: -300
       - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
         state: shaved
         sprite: Mobs/Customization/human_facial_hair.rsi
+        drawDepth: -110
       - map: [ "enum.HumanoidVisualLayers.Hair" ]
         state: bald
         sprite: Mobs/Customization/human_hair.rsi
-      - map: [ "mask" ]
-      - map: [ "head" ]
-      - map: [ "pocket1" ]
-      - map: [ "pocket2" ]
+        drawDepth: -100
   - type: Body
     template: HumanoidTemplate
     preset: VoxPreset
