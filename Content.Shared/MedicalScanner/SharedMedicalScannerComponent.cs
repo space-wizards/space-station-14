@@ -9,12 +9,10 @@ namespace Content.Shared.MedicalScanner
         [Serializable, NetSerializable]
         public sealed class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly EntityUid? ContainedEntity;
             public readonly bool IsScannable;
 
-            public MedicalScannerBoundUserInterfaceState(EntityUid? containedEntity, bool isScannable)
+            public MedicalScannerBoundUserInterfaceState(bool isScannable)
             {
-                ContainedEntity = containedEntity;
                 IsScannable = isScannable;
             }
         }

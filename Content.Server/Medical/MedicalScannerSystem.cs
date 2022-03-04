@@ -143,7 +143,7 @@ namespace Content.Server.MedicalScanner
         }
 
         private static readonly MedicalScannerBoundUserInterfaceState EmptyUIState =
-            new(null, false);
+            new(false);
 
         private MedicalScannerBoundUserInterfaceState GetUserInterfaceState(EntityUid uid,  MedicalScannerComponent scannerComponent)
         {
@@ -166,7 +166,7 @@ namespace Content.Server.MedicalScanner
 
             bool isScanned = _cloningSystem.HasDnaScan(mindComponent.Mind);
 
-            return new MedicalScannerBoundUserInterfaceState(containedBody, !isScanned);
+            return new MedicalScannerBoundUserInterfaceState(!isScanned);
         }
 
         private void UpdateUserInterface(EntityUid uid, MedicalScannerComponent scannerComponent)

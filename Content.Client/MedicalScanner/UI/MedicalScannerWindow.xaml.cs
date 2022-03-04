@@ -16,13 +16,6 @@ namespace Content.Client.MedicalScanner.UI
 
         public void Populate(MedicalScannerBoundUserInterfaceState state)
         {
-            var entities = IoCManager.Resolve<IEntityManager>();
-
-            if (state.ContainedEntity != null && entities.TryGetComponent<MetaDataComponent>(state.ContainedEntity, out MetaDataComponent? metaData))
-            OccupantName.Text = Loc.GetString("medical-scanner-window-entity-name-text", ("entityName", metaData.EntityName));
-            else
-            OccupantName.Text = Loc.GetString("medical-scanner-window-entity-name-text-unknown");
-
             ScanButton.Disabled = !state.IsScannable;
         }
     }
