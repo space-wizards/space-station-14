@@ -187,10 +187,10 @@
     state: frag
   - type: ExplodeOnTrigger
   - type: Explosive
-    devastationRange: 1
-    heavyImpactRange: 2
-    lightImpactRange: 4
-    flashRange: 10
+    explosionType: Default
+    maxIntensity: 50
+    intensitySlope: 7.5
+    totalIntensity: 300
   - type: PointLight
     radius: 3.5
     color: orange
@@ -229,10 +229,9 @@
     state: grenade
   - type: ExplodeOnTrigger
   - type: Explosive
-    devastationRange: 1
-    heavyImpactRange: 2
-    lightImpactRange: 7
-    flashRange: 10
+    explosionType: Default
+    totalIntensity: 500 # a ~7 tile radius. This is pretty big.
+    maxIntensity: 10 # caps at 150 damage
 
 - type: entity
   id: BulletGrenadeFlash
@@ -260,10 +259,8 @@
     state: grenade
   - type: ExplodeOnTrigger
   - type: Explosive
-    devastationRange: 0
-    heavyImpactRange: 1
-    lightImpactRange: 4
-    flashRange: 10
+    explosionType: Default
+    totalIntensity: 64 # about a ~4 tile radius
 
 - type: entity
   id: BulletFoam

@@ -19,12 +19,8 @@
       types:
         Heat: 10
   - type: Explosive
-    # The explosive component is independent of the stored liquid :/
-    # I dream of a day where all grenades/explosives will be reagent dependent.
-    devastationRange: 0
-    heavyImpactRange: 2
-    lightImpactRange: 6
-    flashRange: 5
+    explosionType: Default
+    totalIntensity: 120 # ~ 5 tile radius
 
 - type: entity
   id: WeldingFuelTankFull
