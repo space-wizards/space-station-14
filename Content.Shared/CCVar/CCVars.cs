@@ -242,6 +242,24 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DatabaseSqliteDbPath =
             CVarDef.Create("database.sqlite_dbpath", "preferences.db", CVar.SERVERONLY);
 
+        /// <summary>
+        /// Milliseconds to asynchronously delay all SQLite database acquisitions with.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to 1 on DEBUG, 0 on RELEASE.
+        /// This is intended to help catch .Result deadlock bugs that only happen on postgres
+        /// (because SQLite is not actually asynchronous normally)
+        /// </remarks>
+        public static readonly CVarDef<int> DatabaseSqliteDelay =
+            CVarDef.Create("database.sqlite_delay", DefaultSqliteDelay, CVar.SERVERONLY);
+
+#if DEBUG
+        private const int DefaultSqliteDelay = 1;
+#else
+        private const int DefaultSqliteDelay = 0;
+#endif
+
+
         public static readonly CVarDef<string> DatabasePgHost =
             CVarDef.Create("database.pg_host", "localhost", CVar.SERVERONLY);
 
@@ -380,7 +398,7 @@ namespace Content.Shared.CCVar
         /// <remarks>
         ///     Large nukes tend to generate a lot of shrapnel that flies through space. This can functionally cripple
         ///     the server TPS for a while after an explosion (or even during, if the explosion is processed
-        ///     incrementally. 
+        ///     incrementally.
         /// </remarks>
         public static readonly CVarDef<int> ExplosionThrowLimit =
             CVarDef.Create("explosion.throwlimit", 400, CVar.SERVERONLY);
