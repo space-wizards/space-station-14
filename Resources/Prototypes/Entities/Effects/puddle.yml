@@ -47,7 +47,8 @@
         - ReagentId: Water
           Quantity: 10
   - type: Appearance
-  - type: PuddleVisuals
+    visuals:
+    - type: PuddleVisualizer
 
 - type: entity
   name: puddle
