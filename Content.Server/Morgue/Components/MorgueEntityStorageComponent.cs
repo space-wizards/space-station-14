@@ -161,7 +161,7 @@ namespace Content.Server.Morgue.Components
                 yield break;
             }
 
-            var entityLookup = IoCManager.Resolve<IEntityLookup>();
+            var entityLookup = EntitySystem.Get<EntityLookupSystem>();
             foreach (var entity in entityLookup.GetEntitiesIntersecting(_tray.Value, flags: LookupFlags.None))
             {
                 yield return entity;

@@ -59,6 +59,8 @@
         prob: 1
       - id: ClothingHeadsetAltCommand
         prob: 1
+      - id: SpaceCash1000
+        prob: 1
       - id: PlushieNuke
         prob: 0.1
       - id: CigarGoldCase
