@@ -5,6 +5,7 @@ using Robust.Server.GameObjects;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Prototypes;
 using Content.Server.DoAfter;
+using System.Threading;
 
 using static Content.Shared.HealthAnalyzer.SharedHealthAnalyzerComponent;
 
@@ -15,6 +16,7 @@ namespace Content.Server.HealthAnalyzer
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        private CancellationTokenSource? _requestCancelTokenSource;
 
         public override void Initialize()
         {
@@ -22,6 +24,7 @@ namespace Content.Server.HealthAnalyzer
             SubscribeLocalEvent<HealthAnalyzerComponent, ActivateInWorldEvent>(HandleActivateInWorld);
             SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<TargetScanSuccessfulEvent>(OnTargetScanSuccessful);
+            SubscribeLocalEvent<ScanCancelledEvent>(OnScancancelled);
         }
 
         private void HandleActivateInWorld(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, ActivateInWorldEvent args)
@@ -29,7 +32,7 @@ namespace Content.Server.HealthAnalyzer
             OpenUserInterface(args.User, healthAnalyzer);
         }
 
-        private void OnAfterInteract(EntityUid uid, HealthAnalyzerComponent HealthAnalyzer, AfterInteractEvent args)
+        private void OnAfterInteract(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, AfterInteractEvent args)
         {
             if (args.Target == null)
                 return;
@@ -37,19 +40,27 @@ namespace Content.Server.HealthAnalyzer
             if (!args.CanReach)
                 return;
 
+            if (healthAnalyzer.CancelToken != null)
+                return;
+
             if (!TryComp<MobStateComponent>(args.Target, out MobStateComponent? comp))
                 return;
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, HealthAnalyzer.ScanDelay, target: args.Target)
+            healthAnalyzer.CancelToken = new CancellationTokenSource();
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, healthAnalyzer.ScanDelay, healthAnalyzer.CancelToken.Token, target: args.Target)
             {
-                BroadcastFinishedEvent = new TargetScanSuccessfulEvent(args.User, args.Target, HealthAnalyzer),
+                BroadcastFinishedEvent = new TargetScanSuccessfulEvent(args.User, args.Target, healthAnalyzer),
+                BroadcastCancelledEvent = new ScanCancelledEvent(healthAnalyzer),
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
+                BreakOnStun = true,
+                NeedHand = true
             });
         }
 
         private void OnTargetScanSuccessful(TargetScanSuccessfulEvent args)
         {
+            args.Component.CancelToken = null;
             UpdateScannedUser(args.Component.Owner, args.User, args.Target, args.Component);
         }
 
@@ -74,6 +85,20 @@ namespace Content.Server.HealthAnalyzer
 
             OpenUserInterface(user, healthAnalyzer);
             healthAnalyzer.UserInterface?.SendMessage(new HealthAnalyzerScannedUserMessage(target));
+        }
+
+        private static void OnScancancelled(ScanCancelledEvent args)
+        {
+            args.HealthAnalyzer.CancelToken = null;
+        }
+
+        private sealed class ScanCancelledEvent : EntityEventArgs
+        {
+            public readonly HealthAnalyzerComponent HealthAnalyzer;
+            public ScanCancelledEvent(HealthAnalyzerComponent healthAnalyzer)
+            {
+                HealthAnalyzer = healthAnalyzer;
+            }
         }
 
         private sealed class TargetScanSuccessfulEvent : EntityEventArgs

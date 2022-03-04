@@ -2,7 +2,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Movement;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Shared.Timing;
 using Content.Server.Climbing;
 using Content.Shared.MobState.Components;
 using Content.Shared.DragDrop;
@@ -29,7 +28,6 @@ namespace Content.Server.MedicalScanner
     internal sealed class MedicalScannerSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
