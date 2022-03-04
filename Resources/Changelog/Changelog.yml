@@ -1,14 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Added chemistry recipes for creating cheese (40 milk, 5 enzyme), dough
-      (15 flour, 10 water), and cake batter (15 flour, 5 sugar, and 12 eggs or soy
-      milk)', type: Add}
-  - {message: Added more ingredients to the chef's locker, type: Tweak}
-  - {message: 'Several microwave recipes that used to require flour now need dough,
-      batter, or bread slices.', type: Tweak}
-  id: 665
-  time: '2021-11-26T22:50:14.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'NT14 Knightship models have been taken in for a refit, and now have
@@ -2993,3 +2983,9 @@ Entries:
     type: Add}
   id: 1164
   time: '2022-03-04T06:56:40.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed a bug causing alerts (health, hunger, etc) to sometimes disappear.
+      Please report if it continues happening.', type: Fix}
+  id: 1165
+  time: '2022-03-04T10:52:51.0000000+00:00'
