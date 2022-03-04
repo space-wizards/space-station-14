@@ -34,7 +34,7 @@ namespace Content.Server.MedicalScanner
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
-
+        [Dependency] private readonly ClimbSystem _climbSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -267,17 +267,9 @@ namespace Content.Server.MedicalScanner
             if (scannerComponent.BodyContainer.ContainedEntity is not {Valid: true} contained) return;
 
             scannerComponent.BodyContainer.Remove(contained);
-            EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(contained);
+            _climbSystem.ForciblySetClimbing(contained);
             UpdateUserInterface(uid, scannerComponent);
             UpdateAppearance(scannerComponent.Owner, scannerComponent);
-        }
-
-        public override void Update(float frameTime)
-        {
-            foreach (var comp in EntityManager.EntityQuery<MedicalScannerComponent>())
-            {
-                UpdateAppearance(comp.Owner, comp);
-            }
         }
 
         public void TrySaveCloningData(EntityUid uid, MedicalScannerComponent? scannerComponent)
@@ -317,6 +309,8 @@ namespace Content.Server.MedicalScanner
                 return;
             }
 
+             // TODO get synchronously
+             //  This must be changed to grab the details of the mob itself, not session preferences
             var profile = GetPlayerProfileAsync(mindUser.Value);
             _cloningSystem.AddToDnaScans(new ClonerDNAEntry(mind, profile));
             UpdateUserInterface(uid, scannerComponent);

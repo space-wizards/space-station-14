@@ -6,7 +6,7 @@ namespace Content.Server.HealthAnalyzer
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedHealthAnalyzerComponent))]
-    public class HealthAnalyzerComponent : SharedHealthAnalyzerComponent
+    public sealed class HealthAnalyzerComponent : SharedHealthAnalyzerComponent
     {
         /// <summary>
         /// How long it takes to scan someone.

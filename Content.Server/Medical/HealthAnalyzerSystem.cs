@@ -4,7 +4,6 @@ using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Prototypes;
-using Content.Shared.Damage.Prototypes;
 using Content.Server.DoAfter;
 
 using static Content.Shared.HealthAnalyzer.SharedHealthAnalyzerComponent;
@@ -20,28 +19,22 @@ namespace Content.Server.HealthAnalyzer
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<HealthAnalyzerComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<HealthAnalyzerComponent, ActivateInWorldEvent>(HandleActivateInWorld);
             SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<TargetScanSuccessfulEvent>(OnTargetScanSuccessful);
         }
 
-        private void OnComponentInit(EntityUid uid, HealthAnalyzerComponent HealthAnalyzer, ComponentInit args)
+        private void HandleActivateInWorld(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, ActivateInWorldEvent args)
         {
-            base.Initialize();
-        }
-
-        private void HandleActivateInWorld(EntityUid uid, HealthAnalyzerComponent HealthAnalyzer, ActivateInWorldEvent args)
-        {
-            if (!TryComp<ActorComponent>(args.User, out ActorComponent? actor))
-                return;
-
-            HealthAnalyzer.UserInterface?.Open(actor.PlayerSession);
+            OpenUserInterface(args.User, healthAnalyzer);
         }
 
         private void OnAfterInteract(EntityUid uid, HealthAnalyzerComponent HealthAnalyzer, AfterInteractEvent args)
         {
             if (args.Target == null)
+                return;
+
+            if (!args.CanReach)
                 return;
 
             if (!TryComp<MobStateComponent>(args.Target, out MobStateComponent? comp))
@@ -57,64 +50,30 @@ namespace Content.Server.HealthAnalyzer
 
         private void OnTargetScanSuccessful(TargetScanSuccessfulEvent args)
         {
-            SetHealthInfo(args.Component.Owner, args.Target, args.Component);
+            UpdateScannedUser(args.Component.Owner, args.User, args.Target, args.Component);
         }
 
-        public void SetHealthInfo(EntityUid uid, EntityUid? target, HealthAnalyzerComponent? scannerComponent)
+        private void OpenUserInterface(EntityUid user, HealthAnalyzerComponent healthAnalyzer)
         {
-            if (!Resolve(uid, ref scannerComponent))
+            if (!TryComp<ActorComponent>(user, out ActorComponent? actor))
                 return;
 
-            var targetName = "Unknown";
+            healthAnalyzer.UserInterface?.Open(actor.PlayerSession);
+        }
 
-            if (target == null || scannerComponent.UserInterface == null)
+        public void UpdateScannedUser(EntityUid uid, EntityUid user, EntityUid? target, HealthAnalyzerComponent? healthAnalyzer)
+        {
+            if (!Resolve(uid, ref healthAnalyzer))
+                return;
+
+            if (target == null || healthAnalyzer.UserInterface == null)
                 return;
 
             if (!TryComp<DamageableComponent>(target, out var damageable))
                 return;
 
-            if (TryComp<MetaDataComponent>(target, out var meta))
-              targetName = meta.EntityName;
-
-            var DamagePerGroup = damageable.DamagePerGroup ?? new();
-            var DamagePerType = damageable.Damage?.DamageDict ?? new();
-
-            // Show the total damage and type breakdown for each damage group.
-            List<MobDamageGroup> damageGroups = new();
-            HashSet<string> shownTypes = new();
-
-            foreach (var (damageGroupId, damageAmount) in DamagePerGroup)
-            {
-                MobDamageGroup damageType = new(damageGroupId, damageAmount.ToString(), new Dictionary<string, string>());
-                // Show the damage for each type in that group.
-                var group = _prototypeManager.Index<DamageGroupPrototype>(damageGroupId);
-                foreach (var type in group.DamageTypes)
-                {
-                    if (DamagePerType.TryGetValue(type, out var typeAmount))
-                    {
-                        // If damage types are allowed to belong to more than one damage group, ignore them.
-                        if (!shownTypes.Contains(type))
-                        {
-                            shownTypes.Add(type);
-                            if (damageType.GroupedMinorDamages != null)
-                            {
-                                damageType.GroupedMinorDamages.Add(type, typeAmount.ToString());
-                            }
-                        }
-                    }
-                }
-                damageGroups.Add(damageType);
-            }
-
-            var totalDamage = 0;
-            totalDamage = totalDamage = damageable.TotalDamage.Int();
-
-            var isAlive = false;
-
-            if (TryComp<MobStateComponent>(target, out var mobState))
-                isAlive = !mobState.IsDead();
-
-            scannerComponent.UserInterface.SetState(new HealthAnalyzerBoundUserInterfaceState(targetName, isAlive, totalDamage.ToString(), damageGroups));
+            OpenUserInterface(user, healthAnalyzer);
+            healthAnalyzer.UserInterface?.SendMessage(new HealthAnalyzerScannedUserMessage(target));
         }
 
         private sealed class TargetScanSuccessfulEvent : EntityEventArgs

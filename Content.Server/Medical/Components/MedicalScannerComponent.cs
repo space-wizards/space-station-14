@@ -8,7 +8,7 @@ namespace Content.Server.MedicalScanner
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMedicalScannerComponent))]
-    public class MedicalScannerComponent : SharedMedicalScannerComponent
+    public sealed class MedicalScannerComponent : SharedMedicalScannerComponent
     {
         public ContainerSlot BodyContainer = default!;
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(MedicalScannerUiKey.Key);

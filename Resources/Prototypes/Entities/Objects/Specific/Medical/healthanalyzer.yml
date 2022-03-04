@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/healthanalyzer.rsi
+    netsync: false
     state: analyzer
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key

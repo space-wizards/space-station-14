@@ -6,11 +6,9 @@ using static Content.Shared.HealthAnalyzer.SharedHealthAnalyzerComponent;
 namespace Content.Client.HealthAnalyzer.UI
 {
     [UsedImplicitly]
-    public class HealthAnalyzerBoundUserInterface : BoundUserInterface
+    public sealed class HealthAnalyzerBoundUserInterface : BoundUserInterface
     {
         private HealthAnalyzerWindow? _window;
-
-        private HealthAnalyzerBoundUserInterfaceState? _lastState;
 
         public HealthAnalyzerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -27,14 +25,15 @@ namespace Content.Client.HealthAnalyzer.UI
             _window.OpenCentered();
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
-            base.UpdateState(state);
+            if (_window == null)
+                return;
 
-            var castState = (HealthAnalyzerBoundUserInterfaceState)state;
-            _lastState = castState;
+            if (message is not HealthAnalyzerScannedUserMessage cast)
+                return;
 
-            _window?.Populate(castState);
+            _window.Populate(cast);
         }
 
         protected override void Dispose(bool disposing)
