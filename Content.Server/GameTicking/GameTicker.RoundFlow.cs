@@ -1,32 +1,21 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Database;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Server.Station;
-using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Station;
 using Prometheus;
-using Robust.Server;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
@@ -176,7 +165,7 @@ namespace Content.Server.GameTicking
             }
         }
 
-        public async void StartRound(bool force = false)
+        public void StartRound(bool force = false)
         {
 #if EXCEPTION_TOLERANCE
             try
@@ -200,7 +189,7 @@ namespace Content.Server.GameTicking
             RoundLengthMetric.Set(0);
 
             var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
-            RoundId = await _db.AddNewRound(playerIds);
+            RoundId = _db.AddNewRound(playerIds).Result;
 
             var startingEvent = new RoundStartingEvent();
             RaiseLocalEvent(startingEvent);
@@ -481,8 +470,7 @@ namespace Content.Server.GameTicking
                 RoundLengthMetric.Inc(frameTime);
             }
 
-            if (RunLevel != GameRunLevel.PreRoundLobby ||
-                Paused ||
+            if (RunLevel != GameRunLevel.PreRoundLobby || Paused ||
                 _roundStartTime > _gameTiming.CurTime ||
                 _roundStartCountdownHasNotStartedYetDueToNoPlayers)
             {
