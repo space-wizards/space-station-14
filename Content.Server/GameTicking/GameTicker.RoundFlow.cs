@@ -79,7 +79,6 @@ namespace Content.Server.GameTicking
 
             DefaultMap = _mapManager.CreateMap();
             _mapManager.AddUninitializedMap(DefaultMap);
-            _startingRound = false;
             var startTime = _gameTiming.RealTime;
             var maps = new List<GameMapPrototype>() { _gameMapManager.GetSelectedMapChecked(true) };
 
@@ -183,92 +182,91 @@ namespace Content.Server.GameTicking
             try
             {
 #endif
-                // If this game ticker is a dummy or the round is already being started, do nothing!
-                if (DummyTicker || _startingRound)
-                    return;
+            // If this game ticker is a dummy or the round is already being started, do nothing!
+            if (DummyTicker || _startingRound)
+                return;
 
-                _startingRound = true;
+            _startingRound = true;
 
-                DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
-                Logger.InfoS("ticker", "Starting round!");
+            DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
+            Logger.InfoS("ticker", "Starting round!");
 
-                SendServerMessage(Loc.GetString("game-ticker-start-round"));
+            SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
-                LoadMaps();
+            LoadMaps();
 
-                StartGamePresetRules();
+            StartGamePresetRules();
 
-                RoundLengthMetric.Set(0);
+            RoundLengthMetric.Set(0);
 
-                var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
-                RoundId = await _db.AddNewRound(playerIds);
+            var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
+            RoundId = await _db.AddNewRound(playerIds);
 
-                var startingEvent = new RoundStartingEvent();
-                RaiseLocalEvent(startingEvent);
+            var startingEvent = new RoundStartingEvent();
+            RaiseLocalEvent(startingEvent);
 
-                List<IPlayerSession> readyPlayers;
-                if (LobbyEnabled)
+            List<IPlayerSession> readyPlayers;
+            if (LobbyEnabled)
+            {
+                readyPlayers = _playersInLobby.Where(p => p.Value == LobbyPlayerStatus.Ready).Select(p => p.Key)
+                    .ToList();
+            }
+            else
+            {
+                readyPlayers = _playersInLobby.Keys.ToList();
+            }
+
+            readyPlayers.RemoveAll(p =>
+            {
+                if (_roleBanManager.GetRoleBans(p.UserId) != null)
+                    return false;
+                Logger.ErrorS("RoleBans", $"Role bans for player {p} {p.UserId} have not been loaded yet.");
+                return true;
+            });
+
+            // Get the profiles for each player for easier lookup.
+            var profiles = _prefsManager.GetSelectedProfilesForPlayers(
+                    readyPlayers
+                        .Select(p => p.UserId).ToList())
+                .ToDictionary(p => p.Key, p => (HumanoidCharacterProfile) p.Value);
+
+            foreach (var readyPlayer in readyPlayers)
+            {
+                if (!profiles.ContainsKey(readyPlayer.UserId))
                 {
-                    readyPlayers = _playersInLobby.Where(p => p.Value == LobbyPlayerStatus.Ready).Select(p => p.Key)
-                        .ToList();
+                    profiles.Add(readyPlayer.UserId, HumanoidCharacterProfile.Random());
                 }
-                else
-                {
-                    readyPlayers = _playersInLobby.Keys.ToList();
-                }
+            }
 
-                readyPlayers.RemoveAll(p =>
-                {
-                    if (_roleBanManager.GetRoleBans(p.UserId) != null)
-                        return false;
-                    Logger.ErrorS("RoleBans", $"Role bans for player {p} {p.UserId} have not been loaded yet.");
-                    return true;
-                });
+            var origReadyPlayers = readyPlayers.ToArray();
 
-                // Get the profiles for each player for easier lookup.
-                var profiles = _prefsManager.GetSelectedProfilesForPlayers(
-                        readyPlayers
-                            .Select(p => p.UserId).ToList())
-                    .ToDictionary(p => p.Key, p => (HumanoidCharacterProfile) p.Value);
+            if (!StartPreset(origReadyPlayers, force))
+                return;
 
-                foreach (var readyPlayer in readyPlayers)
-                {
-                    if (!profiles.ContainsKey(readyPlayer.UserId))
-                    {
-                        profiles.Add(readyPlayer.UserId, HumanoidCharacterProfile.Random());
-                    }
-                }
+            // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
+            _mapManager.DoMapInitialize(DefaultMap);
 
-                var origReadyPlayers = readyPlayers.ToArray();
+            SpawnPlayers(readyPlayers, origReadyPlayers, profiles, force);
 
-                if (!StartPreset(origReadyPlayers, force))
-                    return;
+            _roundStartDateTime = DateTime.UtcNow;
+            RunLevel = GameRunLevel.InRound;
 
-                // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
-                _mapManager.DoMapInitialize(DefaultMap);
-
-                SpawnPlayers(readyPlayers, origReadyPlayers, profiles, force);
-
-                _roundStartDateTime = DateTime.UtcNow;
-                RunLevel = GameRunLevel.InRound;
-
-                _startingRound = false;
-
-                _roundStartTimeSpan = _gameTiming.RealTime;
-                SendStatusToAll();
-                ReqWindowAttentionAll();
-                UpdateLateJoinStatus();
-                UpdateJobsAvailable();
+            _roundStartTimeSpan = _gameTiming.RealTime;
+            SendStatusToAll();
+            ReqWindowAttentionAll();
+            UpdateLateJoinStatus();
+            UpdateJobsAvailable();
 
 #if EXCEPTION_TOLERANCE
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _roundStartFailCount++;
 
                 if (RoundStartFailShutdownCount > 0 && _roundStartFailCount >= RoundStartFailShutdownCount)
                 {
-                    Logger.FatalS("ticker", $"Failed to start a round {_roundStartFailCount} time(s) in a row... Shutting down!");
+                    Logger.FatalS("ticker",
+                        $"Failed to start a round {_roundStartFailCount} time(s) in a row... Shutting down!");
                     _runtimeLog.LogException(e, nameof(GameTicker));
                     _baseServer.Shutdown("Restarting server");
                     return;
@@ -276,6 +274,7 @@ namespace Content.Server.GameTicking
 
                 Logger.WarningS("ticker", $"Exception caught while trying to start the round! Restarting round...");
                 _runtimeLog.LogException(e, nameof(GameTicker));
+                _startingRound = false;
                 RestartRound();
                 return;
             }
@@ -283,6 +282,7 @@ namespace Content.Server.GameTicking
             // Round started successfully! Reset counter...
             _roundStartFailCount = 0;
 #endif
+            _startingRound = false;
         }
 
         private void RefreshLateJoinAllowed()
@@ -428,8 +428,6 @@ namespace Content.Server.GameTicking
             {
                 unCastData.ContentData()?.WipeMind();
             }
-
-            _startingRound = false;
 
             _mapManager.Restart();
 
