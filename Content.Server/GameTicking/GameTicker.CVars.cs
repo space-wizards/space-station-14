@@ -27,6 +27,11 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         public float MaxStationOffset { get; private set; } = 0f;
 
+#if EXCEPTION_TOLERANCE
+        [ViewVariables]
+        public int RoundStartFailShutdownCount { get; private set; } = 0;
+#endif
+
         private void InitializeCVars()
         {
             _configurationManager.OnValueChanged(CCVars.GameLobbyEnabled, value => LobbyEnabled = value, true);
@@ -37,6 +42,9 @@ namespace Content.Server.GameTicking
             _configurationManager.OnValueChanged(CCVars.StationOffset, value => StationOffset = value, true);
             _configurationManager.OnValueChanged(CCVars.StationRotation, value => StationRotation = value, true);
             _configurationManager.OnValueChanged(CCVars.MaxStationOffset, value => MaxStationOffset = value, true);
+#if EXCEPTION_TOLERANCE
+            _configurationManager.OnValueChanged(CCVars.RoundStartFailShutdownCount, value => RoundStartFailShutdownCount = value, true);
+#endif
         }
     }
 }

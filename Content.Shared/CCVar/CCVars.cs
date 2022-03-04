@@ -60,6 +60,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool>
             EventsEnabled = CVarDef.Create("events.enabled", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Disables most functionality in the GameTicker.
+        /// </summary>
         public static readonly CVarDef<bool>
             GameDummyTicker = CVarDef.Create("game.dummyticker", false, CVar.ARCHIVE | CVar.SERVERONLY);
 
@@ -153,6 +156,15 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> SoftMaxPlayers =
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
+
+#if EXCEPTION_TOLERANCE
+        /// <summary>
+        ///     Amount of times round start must fail before the server is shut down.
+        ///     Set to 0 or a negative number to disable.
+        /// </summary>
+        public static readonly CVarDef<int> RoundStartFailShutdownCount =
+            CVarDef.Create("game.round_start_fail_shutdown_count", 5, CVar.SERVERONLY | CVar.SERVER);
+#endif
 
         /*
          * Discord
