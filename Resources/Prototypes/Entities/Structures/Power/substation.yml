@@ -64,10 +64,10 @@
             min: 1
             max: 1
   - type: Explosive
-    devastationRange: 1
-    heavyImpactRange: 3
-    lightImpactRange: 5
-    flashRange: 6
+    explosionType: Default
+    maxIntensity: 100
+    intensitySlope: 2
+    totalIntensity: 200
   - type: Wires
     BoardName: "Substation"
     LayoutId: Substation

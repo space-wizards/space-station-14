@@ -1,135 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Pried tiles now have a random rotation applied, type: Tweak}
-  id: 644
-  time: '2021-11-23T17:15:49.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Smoke spam no longer crashes the server., type: Fix}
-  id: 645
-  time: '2021-11-23T19:35:50.472421+00:00'
-- author: Clyybber
-  changes:
-  - {message: Reworked how dropping items by slipping works., type: Tweak}
-  id: 646
-  time: '2021-11-23T23:38:39.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Disposals should no longer be capable of sending employees through walls
-      when they're not supposed to be., type: Fix}
-  id: 647
-  time: '2021-11-23T23:38:46.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: You can now directly swap beakers in chemistry machines. No more swap-hands
-      > eject > swap-hands> insert., type: Tweak}
-  id: 648
-  time: '2021-11-24T07:03:08.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: The lobby timer is now (much) longer., type: Tweak}
-  id: 649
-  time: '2021-11-24T09:52:07.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Solar control console works again, type: Fix}
-  id: 650
-  time: '2021-11-24T20:51:43.0000000+00:00'
-- author: moony
-  changes:
-  - {message: The game admins are now omnipotent., type: Add}
-  id: 651
-  time: '2021-11-24T22:52:31.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: Fixed broken tonic water can visual., type: Fix}
-  id: 652
-  time: '2021-11-25T01:35:01.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Fixed bug with disposals that turned Packedstation disposals into an
-      inescapable hell, type: Fix}
-  id: 653
-  time: '2021-11-25T02:10:15.0000000+00:00'
-- author: Leander
-  changes:
-  - {message: added broken bottles for bar fights, type: Add}
-  - {message: tweaked bottles so that they spawn actual broken bottles instead of
-      glass when thrown, type: Tweak}
-  - {message: nerfed bottle throwing damage, type: Tweak}
-  id: 654
-  time: '2021-11-25T05:16:17.0000000+00:00'
-- author: iczero
-  changes:
-  - {message: Survival boxes are no longer magic, type: Add}
-  id: 655
-  time: '2021-11-25T05:47:52.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'You can now grind up the bee plush, you monster.', type: Add}
-  id: 656
-  time: '2021-11-25T06:06:13.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: The chemist has arrived on station! Pharmacology will be left to the
-      professionals now., type: Add}
-  id: 657
-  time: '2021-11-25T06:07:07.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: Lobby timer now actually shows minutes., type: Fix}
-  id: 658
-  time: '2021-11-25T19:30:36.0000000+00:00'
-- author: Taral
-  changes:
-  - {message: new laser guns, type: Add}
-  - {message: Z8 carbine bundle, type: Add}
-  - {message: firecost for most battery guns, type: Add}
-  - {message: Inspector has been replaced with the Predator in the uplink and bundle,
-    type: Tweak}
-  - {message: replaced old c20r cev eris sprite with a newer one from the same source,
-    type: Tweak}
-  - {message: Inspector had it's ammo capacity reduced from 7 to 6, type: Tweak}
-  id: 659
-  time: '2021-11-25T22:37:21.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Chemist's maintenance access updated to comply with current NT access
-      policy., type: Tweak}
-  id: 660
-  time: '2021-11-26T03:37:05.0000000+00:00'
-- author: wrexbe
-  changes:
-  - {message: fixed crash when admin log has the same object more then once., type: Fix}
-  id: 661
-  time: '2021-11-26T07:39:36.0000000+00:00'
-- author: Hoolny
-  changes:
-  - {message: Readded cows into cargo, type: Tweak}
-  id: 662
-  time: '2021-11-26T09:11:42.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Broken solar panels now spit out shards when deconstructed., type: Tweak}
-  - {message: Solar assemblies are now de-rotated when deconstructing., type: Fix}
-  id: 663
-  time: '2021-11-26T09:17:21.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Station names are now randomly generated., type: Add}
-  id: 664
-  time: '2021-11-26T13:54:32.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Added chemistry recipes for creating cheese (40 milk, 5 enzyme), dough
-      (15 flour, 10 water), and cake batter (15 flour, 5 sugar, and 12 eggs or soy
-      milk)', type: Add}
-  - {message: Added more ingredients to the chef's locker, type: Tweak}
-  - {message: 'Several microwave recipes that used to require flour now need dough,
-      batter, or bread slices.', type: Tweak}
-  id: 665
-  time: '2021-11-26T22:50:14.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'NT14 Knightship models have been taken in for a refit, and now have
@@ -2991,3 +2860,132 @@ Entries:
   - {message: Lowered ghost movement speed., type: Tweak}
   id: 1143
   time: '2022-02-28T15:14:17.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: 'A brand new station, moose station.', type: Add}
+  id: 1144
+  time: '2022-03-01T02:16:46.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed being able to push some entities (computers, canisters, plants)
+      through walls and doors.', type: Fix}
+  id: 1145
+  time: '2022-03-01T02:18:20.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Added a new medium-sized salvage., type: Add}
+  id: 1146
+  time: '2022-03-01T02:18:31.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Map votes during the pre-round period actually affect the chosen map
+      on round start., type: Tweak}
+  id: 1147
+  time: '2022-03-01T02:20:21.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Gauze can now be crafted using cloth., type: Add}
+  - {message: 'You can now gain cloth by butchering clothing items like jumpsuits,
+      shoes, or cloaks.', type: Tweak}
+  - {message: 'Fiber reagent is now gained by grinding cloth, not the individual clothing
+      items.', type: Tweak}
+  id: 1148
+  time: '2022-03-01T03:38:39.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Certain station announcements have been given a splash of color in chat.,
+    type: Add}
+  id: 1149
+  time: '2022-03-01T13:21:29.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Added some more basic mapping tools. Entity, tile, and decal placement
+      can now be saved to the action-toolbar by clicking on empty slots while placing
+      entities. `/loadmapacts` loads some presets mapping actions.', type: Add}
+  id: 1150
+  time: '2022-03-01T23:12:34.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: Removed fun (by which I mean the centcomm outfit bundle from the traitor
+      uplink)!, type: Remove}
+  id: 1151
+  time: '2022-03-02T01:46:55.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: updated Saltern to Saltern Special Edition HD Enhanced Edition, type: Add}
+  id: 1152
+  time: '2022-03-02T13:16:42.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug preventing the RCD from constructing entities on some empty
+      tiles., type: Fix}
+  id: 1153
+  time: '2022-03-02T13:38:19.0000000+00:00'
+- author: wrexbe
+  changes:
+  - {message: Glass tables now have different mass limits., type: Add}
+  id: 1154
+  time: '2022-03-02T14:07:49.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Xenos no longer need oxygen and are space-proof., type: Tweak}
+  - {message: The odds of winning against a Xeno in a fist-fight have decreased considerably.,
+    type: Tweak}
+  id: 1155
+  time: '2022-03-02T14:08:19.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Items on conveyor belts now round corners correctly., type: Add}
+  id: 1156
+  time: '2022-03-02T22:32:33.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Ratvar, Rouny, and Space Lizard have joined the plushie gang, find
+      them on your closest plushie crate or toy spawners!', type: Add}
+  id: 1157
+  time: '2022-03-03T00:26:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pushing objects has been disabled. Pulling is still okay., type: Tweak}
+  id: 1158
+  time: '2022-03-03T02:32:03.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Cargo door remote now works on Salvage access airlocks., type: Fix}
+  - {message: Security door remote now works on Armory access airlocks., type: Fix}
+  id: 1159
+  time: '2022-03-03T09:18:15.0000000+00:00'
+- author: router
+  changes:
+  - {message: Added capitalism. The captain spawns with some money now., type: Add}
+  id: 1160
+  time: '2022-03-03T10:11:35.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Onion and Oat seeds are now in the seed vendor and seed crate., type: Add}
+  - {message: Seed vendor inventory reduced from 10 seeds to 5., type: Tweak}
+  id: 1161
+  time: '2022-03-03T10:42:49.0000000+00:00'
+- author: router
+  changes:
+  - {message: Added money to the captain's locker. Capitalism is now REAL., type: Add}
+  id: 1162
+  time: '2022-03-04T05:03:12.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed a bug that was preventing clothing from being hidden inside of
+      secret stashes (e.g., potted plants)', type: Fix}
+  id: 1163
+  time: '2022-03-04T06:54:27.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added secure cargo and external windoors. Fixed glass EVA airlock sprite.,
+    type: Add}
+  id: 1164
+  time: '2022-03-04T06:56:40.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed a bug causing alerts (health, hunger, etc) to sometimes disappear.
+      Please report if it continues happening.', type: Fix}
+  id: 1165
+  time: '2022-03-04T10:52:51.0000000+00:00'

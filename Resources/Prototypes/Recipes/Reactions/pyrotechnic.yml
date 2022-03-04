@@ -37,12 +37,14 @@
       amount: 3
   effects:
   # TODO electro's pretty explosions PR make this big and firey!!
+  # Welp its fiery now (low damage). Someone else needs to come in and define how big it should get & how it compares to potassium
   # TODO solution temperature!!
   - !type:ExplosionReactionEffect
-    devastationRange: 0
-    heavyImpactRange: 0
-    lightImpactRange: 2
-    scaled: false
+    explosionType: Default # 15 damage per intensity
+    maxIntensity: 2 # at most 30 damage per tile.
+    intensityPerUnit: 2 # 80 total input reagent units for max size
+    intensitySlope: 1
+    maxTotalIntensity: 40
   - !type:PopupMessage
     messages: [ "clf3-explosion" ]
     type: Pvs

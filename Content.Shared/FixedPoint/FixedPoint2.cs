@@ -234,6 +234,11 @@ namespace Content.Shared.FixedPoint
                    _value == unit._value;
         }
 
+        public bool EqualsApprox(FixedPoint2 other, FixedPoint2 tolerance)
+        {
+            return Math.Abs(_value - other._value) < tolerance._value;
+        }
+
         public override readonly int GetHashCode()
         {
             // ReSharper disable once NonReadonlyMemberInGetHashCode
