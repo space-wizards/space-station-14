@@ -5,10 +5,13 @@
   components:
   - type: Transform
     anchored: true
+  - type: Sprite
+    drawdepth: FloorObjects
   - type: SolutionContainerManager
   - type: Puddle
     spillSound:
       path: /Audio/Effects/Fluids/splat.ogg
+    recolor: true
   - type: Clickable
   - type: Evaporation
   - type: Slippery
@@ -36,15 +39,6 @@
     sprite: Fluids/gibblet.rsi # Placeholder
     state: gibblet-0
     netsync: false
-    drawdepth: FloorObjects
-    # layers:
-    # - sprite: Fluids/gibblet.rsi # Placeholder
-    #   map: ["enum.PuddleVisualLayers.Puddle"]
-    #   state: gibblet-0
-    # - sprite: Fluids/wet_floor_sparkles.rsi
-    #   map: ["enum.PuddleVisualLayers.WetFloorEffect"]
-    #   state: sparkles
-    #   visible: false
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
@@ -62,16 +56,9 @@
   description: A puddle of liquid.
   components:
   - type: Sprite
+    sprite: Fluids/smear.rsi # Placeholder
+    state: smear-0
     netsync: false
-    drawdepth: FloorObjects
-    layers:
-    - sprite: Fluids/smear.rsi # Placeholder
-      map: ["enum.PuddleVisualLayers.Puddle"]
-      state: smear-0
-    - sprite: Fluids/wet_floor_sparkles.rsi
-      map: ["enum.PuddleVisualLayers.WetFloorEffect"]
-      state: sparkles
-      visible: false
   - type: Puddle
   - type: Appearance
   - type: PuddleVisuals
@@ -83,16 +70,9 @@
   description: A puddle of liquid.
   components:
   - type: Sprite
+    sprite: Fluids/splatter.rsi # Placeholder
+    state: splatter-0
     netsync: false
-    drawdepth: FloorObjects
-    layers:
-    - sprite: Fluids/splatter.rsi # Placeholder
-      map: ["enum.PuddleVisualLayers.Puddle"]
-      state: splatter-0
-    - sprite: Fluids/wet_floor_sparkles.rsi
-      map: ["enum.PuddleVisualLayers.WetFloorEffect"]
-      state: sparkles
-      visible: false
   - type: Puddle
   - type: Appearance
   - type: PuddleVisuals
@@ -104,16 +84,9 @@
   parent: PuddleBase
   components:
   - type: Sprite
+    sprite: Fluids/splatter.rsi # Placeholder
+    state: splatter-0
     netsync: false
-    drawdepth: FloorObjects
-    layers:
-    - sprite: Fluids/splatter.rsi # Placeholder
-      map: ["enum.PuddleVisualLayers.Puddle"]
-      state: splatter-0
-    - sprite: Fluids/wet_floor_sparkles.rsi
-      map: ["enum.PuddleVisualLayers.WetFloorEffect"]
-      state: sparkles
-      visible: false
   - type: Puddle
     slipThreshold: 20
     overflowVolume: 50
@@ -130,16 +103,9 @@
   description: Gross.
   components:
   - type: Sprite
+    sprite: Fluids/vomit.rsi
+    state: vomit-0
     netsync: false
-    drawdepth: FloorObjects
-    layers:
-    - sprite: Fluids/vomit.rsi # Placeholder
-      map: ["enum.PuddleVisualLayers.Puddle"]
-      state: vomit-0
-    - sprite: Fluids/wet_floor_sparkles.rsi
-      map: ["enum.PuddleVisualLayers.WetFloorEffect"]
-      state: sparkles
-      visible: false
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
@@ -159,16 +125,9 @@
   description: You probably don't want to get too close to this.
   components:
   - type: Sprite
+    sprite: Fluids/vomit_toxin.rsi
+    state: vomit_toxin-0
     netsync: false
-    drawdepth: FloorObjects
-    layers:
-    - sprite: Fluids/vomit_toxin.rsi # Placeholder
-      map: ["enum.PuddleVisualLayers.Puddle"]
-      state: vomit_toxin-0
-    - sprite: Fluids/wet_floor_sparkles.rsi
-      map: ["enum.PuddleVisualLayers.WetFloorEffect"]
-      state: sparkles
-      visible: false
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
@@ -189,16 +148,9 @@
   description: A bit of liquid.
   components:
   - type: Sprite
+    sprite: Fluids/writing.rsi # Placeholder
+    state: writing-0
     netsync: false
-    drawdepth: FloorObjects
-    layers:
-    - sprite: Fluids/writing.rsi # Placeholder
-      map: ["enum.PuddleVisualLayers.Puddle"]
-      state: writing-0
-    - sprite: Fluids/wet_floor_sparkles.rsi
-      map: ["enum.PuddleVisualLayers.WetFloorEffect"]
-      state: sparkles
-      visible: false
   - type: Puddle
     evaporateTime: 10
   - type: Appearance
