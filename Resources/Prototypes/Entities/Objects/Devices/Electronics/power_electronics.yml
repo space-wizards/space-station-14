@@ -8,6 +8,7 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
+      netsync: false
 
 # Wallmount Substation
 - type: entity
@@ -19,6 +20,7 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
+      netsync: false
       
 # Wallmount Generator
 - type: entity
@@ -30,6 +32,7 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
+      netsync: false
       
 # APU
 - type: entity
@@ -41,6 +44,7 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
+      netsync: false
 
 # Solar Tracker Electronics
 - type: entity
@@ -52,3 +56,4 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: generic
+      netsync: false

@@ -90,9 +90,6 @@
     energy: 1.6
     color: "#3db83b"
     castShadows: false
-  - type: AccessReader
-    access: [["Engineering"]]
-  - type: Physics
   - type: Fixtures
     fixtures:
       - shape:
@@ -237,7 +234,7 @@
   suffix: 20kW
   components:
   - type: PowerSupplier
-    supplyRate: 20000 # supposed to be low power at no fuel cost to power derelicts
+    supplyRate: 10000 # supposed to be low power at no fuel cost to power derelicts
   - type: Sprite
     sprite: Structures/Power/Generation/rtg.rsi
     state: rtg
@@ -251,7 +248,7 @@
   suffix: 20kW
   components:
   - type: PowerSupplier
-    supplyRate: 20000
+    supplyRate: 10000
   - type: Sprite
     netsync: false
     sprite: Structures/Power/Generation/rtg.rsi
