@@ -97,6 +97,7 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen
+    netsync: false
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
     HeldPrefix: pen

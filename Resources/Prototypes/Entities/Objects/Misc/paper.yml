@@ -81,6 +81,7 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: overpriced_pen
+    netsync: false
   - type: Pickaxe
     damage:
       types:
@@ -204,4 +205,3 @@
     - state: folder-colormap
       color: "#3f3f3f"
     - state: folder-base
-
