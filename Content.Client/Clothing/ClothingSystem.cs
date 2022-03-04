@@ -265,6 +265,7 @@ public sealed class ClothingSystem : EntitySystem
             }
 
             sprite.LayerSetData(index, layerData);
+            layer.Offset += slotDef.Offset;
             layer.DrawDepth += slotDef.DrawDepthOffset;
 
             if (stencilShaderOverride && _stencilDraw != null)

@@ -1,6 +1,7 @@
 using Content.Shared.Hands.Components;
 using Robust.Client.Graphics;
 
+
 namespace Content.Client.Hands
 {
     [RegisterComponent]
@@ -8,6 +9,12 @@ namespace Content.Client.Hands
     [Friend(typeof(HandsSystem))]
     public sealed class HandsComponent : SharedHandsComponent
     {
+        /// <summary>
+        ///     Whether or not to add in-hand sprites for held items. Some entities (e.g., drones) don't want these.
+        /// </summary>
+        [DataField("showInHands")]
+        public bool ShowInHands = true;
+
         public HandsGui? Gui { get; set; }
 
         /// <summary>

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
 using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Shared.Clothing;
@@ -7,7 +5,7 @@ namespace Content.Shared.Clothing;
 /// <summary>
 ///     Raised directed at a piece of clothing to get the set of layers to show on the wearer's sprite
 /// </summary>
-public class GetEquipmentVisualsEvent : EntityEventArgs
+public sealed class GetEquipmentVisualsEvent : EntityEventArgs
 {
     /// <summary>
     ///     Entity that is wearing the item.
@@ -37,7 +35,7 @@ public class GetEquipmentVisualsEvent : EntityEventArgs
 /// <remarks>
 ///     Useful for systems/components that modify the visual layers that an item adds to a player. (e.g. RGB memes)
 /// </remarks>
-public class EquipmentVisualsUpdatedEvent : EntityEventArgs
+public sealed class EquipmentVisualsUpdatedEvent : EntityEventArgs
 {
     /// <summary>
     ///     Entity that is wearing the item.

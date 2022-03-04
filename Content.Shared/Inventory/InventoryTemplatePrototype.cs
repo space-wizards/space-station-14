@@ -40,6 +40,11 @@ public sealed class SlotDefinition
     public int DrawDepthOffset;
 
     [DataField("displayName", required: true)] public string DisplayName { get; } = string.Empty;
+
+    /// <summary>
+    ///     Offset for the clothing sprites.
+    /// </summary>
+    [DataField("offset")] public Vector2 Offset { get; } = Vector2.Zero;
 }
 
 public enum SlotUIContainer

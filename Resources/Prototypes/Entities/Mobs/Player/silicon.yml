@@ -52,6 +52,7 @@
   - type: Physics
     bodyType: KinematicController
   - type: Hands
+    showInHands: false
   - type: Body
     template: DroneTemplate
     preset: DronePreset
@@ -77,7 +78,7 @@
   - type: NameIdentifier
     group: Drone
   - type: Inventory
-    templateId: head
+    templateId: drone
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -105,8 +106,6 @@
     layers:
     - state: shell
       sprite: Mobs/Silicon/drone.rsi
-    - map: [ "head" ]
-      offset: 0, -0.45
   - type: MovementIgnoreGravity
   - type: Fixtures
     fixtures:
