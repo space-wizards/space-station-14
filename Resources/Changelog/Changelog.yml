@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Broken solar panels now spit out shards when deconstructed., type: Tweak}
-  - {message: Solar assemblies are now de-rotated when deconstructing., type: Fix}
-  id: 663
-  time: '2021-11-26T09:17:21.0000000+00:00'
 - author: moony
   changes:
   - {message: Station names are now randomly generated., type: Add}
@@ -2992,3 +2986,9 @@ Entries:
   - {message: Added money to the captain's locker. Capitalism is now REAL., type: Add}
   id: 1162
   time: '2022-03-04T05:03:12.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed a bug that was preventing clothing from being hidden inside of
+      secret stashes (e.g., potted plants)', type: Fix}
+  id: 1163
+  time: '2022-03-04T06:54:27.0000000+00:00'
