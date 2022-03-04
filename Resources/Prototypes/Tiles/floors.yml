@@ -601,8 +601,10 @@
 
 - type: tile
   id: floor_asteroid_coarse_sand0
-  name: asteroid coarse sand 0
-  texture: Asteroid/asteroid_coarse_sand0
+  name: asteroid coarse sand
+  texture: Asteroid/asteroid_coarse_sand
+  variants: 3
+  placementVariants: [ 0, 1, 2 ]
   base_turfs:
   - space
   is_subfloor: false
@@ -615,8 +617,10 @@
 
 - type: tile
   id: floor_asteroid_coarse_sand1
-  name: asteroid coarse sand 1
-  texture: Asteroid/asteroid_coarse_sand1
+  name: asteroid coarse sand [DO NOT USE]
+  texture: Asteroid/asteroid_coarse_sand
+  variants: 3
+  placementVariants: [ 0, 1, 2 ]
   base_turfs:
   - space
   is_subfloor: false
@@ -629,8 +633,10 @@
 
 - type: tile
   id: floor_asteroid_coarse_sand2
-  name: asteroid coarse sand 2
-  texture: Asteroid/asteroid_coarse_sand2
+  name: asteroid coarse sand [DO NOT USE]
+  texture: Asteroid/asteroid_coarse_sand
+  variants: 3
+  placementVariants: [ 0, 1, 2 ]
   base_turfs:
   - space
   is_subfloor: false
