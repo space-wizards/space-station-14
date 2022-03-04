@@ -108,9 +108,6 @@ namespace Content.Server.GameTicking
         private string? PickBestAvailableJob(IPlayerSession playerSession, HumanoidCharacterProfile profile,
             StationId station)
         {
-            if (station == StationId.Invalid)
-                return null;
-
             var available = _stationSystem.StationInfo[station].JobList;
 
             bool TryPick(JobPriority priority, [NotNullWhen(true)] out string? jobId)
