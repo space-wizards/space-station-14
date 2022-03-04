@@ -30,7 +30,10 @@ namespace Content.Client.MedicalScanner.UI
         {
             base.UpdateState(state);
 
-            _window?.Populate((MedicalScannerBoundUserInterfaceState) state);
+            if (state is not MedicalScannerBoundUserInterfaceState cast)
+                return;
+
+            _window?.Populate(cast);
         }
 
         protected override void Dispose(bool disposing)

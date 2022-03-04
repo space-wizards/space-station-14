@@ -33,6 +33,10 @@ namespace Content.Server.MedicalScanner
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly ClimbSystem _climbSystem = default!;
+
+        private const float UpdateRate = 1f;
+        private float _updateDif;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -81,10 +85,14 @@ namespace Content.Server.MedicalScanner
                 !component.CanInsert(args.Using.Value))
                 return;
 
+            string name = "Unknown";
+            if (TryComp<MetaDataComponent>(args.Using.Value, out MetaDataComponent? metadata))
+                name = metadata.EntityName;
+
             InteractionVerb verb = new();
             verb.Act = () => InsertBody(component.Owner, args.Target, component);
             verb.Category = VerbCategory.Insert;
-            verb.Text = EntityManager.GetComponent<MetaDataComponent>(args.Using.Value).EntityName;
+            verb.Text = name;
             args.Verbs.Add(verb);
         }
 
@@ -158,12 +166,7 @@ namespace Content.Server.MedicalScanner
 
             bool isScanned = _cloningSystem.HasDnaScan(mindComponent.Mind);
 
-            string occupantName = "Unknown";
-
-            if (TryComp<MetaDataComponent>(containedBody, out MetaDataComponent? metaData))
-                occupantName = metaData.EntityName;
-
-            return new MedicalScannerBoundUserInterfaceState(occupantName, !isScanned);
+            return new MedicalScannerBoundUserInterfaceState(containedBody, !isScanned);
         }
 
         private void UpdateUserInterface(EntityUid uid, MedicalScannerComponent scannerComponent)
@@ -238,6 +241,21 @@ namespace Content.Server.MedicalScanner
             if (TryComp<AppearanceComponent>(scannerComponent.Owner, out var appearance))
             {
                 appearance.SetData(MedicalScannerVisuals.Status, GetStatus(scannerComponent));
+            }
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            _updateDif += frameTime;
+            if (_updateDif < UpdateRate)
+                return;
+            _updateDif -= UpdateRate;
+
+            foreach (var scanner in EntityQuery<MedicalScannerComponent>())
+            {
+                UpdateAppearance(scanner.Owner, scanner);
             }
         }
 
