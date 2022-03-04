@@ -1,9 +1,4 @@
 Entries:
-- author: Hoolny
-  changes:
-  - {message: Readded cows into cargo, type: Tweak}
-  id: 662
-  time: '2021-11-26T09:11:42.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Broken solar panels now spit out shards when deconstructed., type: Tweak}
@@ -2992,3 +2987,8 @@ Entries:
   - {message: Seed vendor inventory reduced from 10 seeds to 5., type: Tweak}
   id: 1161
   time: '2022-03-03T10:42:49.0000000+00:00'
+- author: router
+  changes:
+  - {message: Added money to the captain's locker. Capitalism is now REAL., type: Add}
+  id: 1162
+  time: '2022-03-04T05:03:12.0000000+00:00'
