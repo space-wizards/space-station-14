@@ -39,6 +39,9 @@ namespace Content.Client.MedicalScanner.UI
             if (!disposing)
                 return;
 
+            if (_window != null)
+                _window.OnClose -= Close;
+
             _window?.Dispose();
         }
     }
