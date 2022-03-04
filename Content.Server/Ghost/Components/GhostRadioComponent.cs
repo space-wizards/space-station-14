@@ -12,7 +12,7 @@ namespace Content.Server.Ghost.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IRadio))]
-    public class GhostRadioComponent : Component, IRadio
+    public sealed class GhostRadioComponent : Component, IRadio
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;

@@ -13,7 +13,7 @@ namespace Content.Server.Maps;
 /// Prototype data for a game map.
 /// </summary>
 [Prototype("gameMap")]
-public class GameMapPrototype : IPrototype
+public sealed class GameMapPrototype : IPrototype
 {
     /// <inheritdoc/>
     [DataField("id", required: true)]

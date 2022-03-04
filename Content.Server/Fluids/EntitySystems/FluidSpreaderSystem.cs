@@ -37,9 +37,6 @@ public sealed class FluidSpreaderSystem : EntitySystem
                 puddleComponent.SolutionName,
                 out puddleSolution)) return;
 
-        if (puddleSolution.CurrentVolume <= puddleComponent.OverflowVolume)
-            return;
-
         var spreaderComponent = EntityManager.EnsureComponent<FluidSpreaderComponent>(puddleComponent.Owner);
         spreaderComponent.OverflownSolution = puddleSolution;
         spreaderComponent.Enabled = true;
@@ -66,17 +63,16 @@ public sealed class FluidSpreaderSystem : EntitySystem
         var remQueue = new RemQueue<EntityUid>();
         foreach (var uid in _fluidSpread)
         {
-            MetaDataComponent? meta = null;
+            if (!TryComp(uid, out MetaDataComponent? meta) || meta.Deleted)
+            {
+                remQueue.Add(uid);
+                continue;
+            }
 
-            if (Paused(uid, meta))
+            if (meta.EntityPaused)
                 continue;
 
-            // If not paused
-            // it's either Deleted or will be via SpreadFluid
             remQueue.Add(uid);
-
-            if (Deleted(uid, meta))
-                continue;
 
             SpreadFluid(uid);
         }
@@ -89,6 +85,13 @@ public sealed class FluidSpreaderSystem : EntitySystem
 
     private void SpreadFluid(EntityUid suid)
     {
+        EntityUid GetOrCreate(EntityUid uid, string prototype, IMapGrid grid, Vector2i pos)
+        {
+            return uid == EntityUid.Invalid
+                ? EntityManager.SpawnEntity(prototype, grid.GridTileToWorld(pos))
+                : uid;
+        }
+
         PuddleComponent? puddleComponent = null;
         MetaDataComponent? metadataOriginal = null;
         TransformComponent? transformOrig = null;
@@ -98,22 +101,31 @@ public sealed class FluidSpreaderSystem : EntitySystem
             return;
 
         var prototypeName = metadataOriginal.EntityPrototype!.ID;
-
-        var puddles = new List<PuddleComponent> { puddleComponent };
         var visitedTiles = new HashSet<Vector2i>();
 
         if (!_mapManager.TryGetGrid(transformOrig.GridID, out var mapGrid))
             return;
 
-        while (puddles.Count > 0
+        // skip origin puddle
+        var nextToExpand = new List<PuddlePlacer>(9);
+        ExpandPuddle(suid, visitedTiles, mapGrid, nextToExpand);
+
+        while (nextToExpand.Count > 0
                && spreader.OverflownSolution.CurrentVolume > FixedPoint2.Zero)
         {
-            var nextToExpand = new List<(Vector2i, EntityUid?)>();
+            // we need to clamp to prevent spreading 0u fluids, while never going over spill limit
+            var divided = FixedPoint2.Clamp(spreader.OverflownSolution.CurrentVolume / nextToExpand.Count,
+                FixedPoint2.Epsilon, puddleComponent.OverflowVolume);
 
-            var divided = spreader.OverflownSolution.CurrentVolume / puddles.Count;
-
-            foreach (var puddle in puddles)
+            foreach (var posAndUid in nextToExpand)
             {
+                var puddleUid = GetOrCreate(posAndUid.Uid, prototypeName, mapGrid, posAndUid.Pos);
+
+                if (!TryComp(puddleUid, out PuddleComponent? puddle))
+                    continue;
+
+                posAndUid.Uid = puddleUid;
+
                 if (puddle.CurrentVolume >= puddle.OverflowVolume) continue;
 
                 // -puddle.OverflowLeft is guaranteed to be >= 0
@@ -123,52 +135,56 @@ public sealed class FluidSpreaderSystem : EntitySystem
                     puddle.Owner,
                     spreader.OverflownSolution.SplitSolution(split),
                     false, false, puddle);
-            }
 
-            // if solution is spent do not explore
-            if (spreader.OverflownSolution.CurrentVolume <= FixedPoint2.Zero)
-                continue;
+                // if solution is spent do not explore
+                if (spreader.OverflownSolution.CurrentVolume <= FixedPoint2.Zero)
+                    return;
+            }
 
             // find edges
-            foreach (var puddle in puddles)
-            {
-                TransformComponent? transform = null;
+            nextToExpand = ExpandPuddles(nextToExpand, visitedTiles, mapGrid);
+        }
+    }
 
-                if (!Resolve(puddle.Owner, ref transform, false))
-                    continue;
+    private List<PuddlePlacer> ExpandPuddles(List<PuddlePlacer> toExpand,
+        HashSet<Vector2i> visitedTiles,
+        IMapGrid mapGrid)
+    {
+        var nextToExpand = new List<PuddlePlacer>(9);
+        foreach (var puddlePlacer in toExpand)
+        {
+            ExpandPuddle(puddlePlacer.Uid, visitedTiles, mapGrid, nextToExpand, puddlePlacer.Pos);
+        }
 
-                // prepare next set of puddles to be expanded
-                var puddlePos = transform.Coordinates.ToVector2i(EntityManager, _mapManager);
-                foreach (var direction in SharedDirectionExtensions.RandomDirections().ToArray())
-                {
-                    var newPos = puddlePos.Offset(direction);
-                    if (visitedTiles.Contains(newPos))
-                        continue;
+        return nextToExpand;
+    }
 
-                    visitedTiles.Add(newPos);
+    private void ExpandPuddle(EntityUid puddle,
+        HashSet<Vector2i> visitedTiles,
+        IMapGrid mapGrid,
+        List<PuddlePlacer> nextToExpand,
+        Vector2i? pos = null)
+    {
+        TransformComponent? transform = null;
 
-                    if (CanExpand(newPos, mapGrid, out var uid))
-                        nextToExpand.Add((newPos, uid));
-                }
-            }
+        if (pos == null && !Resolve(puddle, ref transform, false))
+        {
+            return;
+        }
 
-            puddles = new List<PuddleComponent>();
+        var puddlePos = pos ?? transform!.Coordinates.ToVector2i(EntityManager, _mapManager);
 
-            // prepare edges for next iteration
-            foreach (var (pos, uid) in nextToExpand)
-            {
-                if (spreader.OverflownSolution.CurrentVolume <= FixedPoint2.Zero)
-                    continue;
+        // prepare next set of puddles to be expanded
+        foreach (var direction in SharedDirectionExtensions.RandomDirections().ToArray())
+        {
+            var newPos = puddlePos.Offset(direction);
+            if (visitedTiles.Contains(newPos))
+                continue;
 
-                var puddleUid = uid!.Value;
-                var coordinate = mapGrid.GridTileToWorld(pos);
-                if (uid == EntityUid.Invalid)
-                {
-                    puddleUid = EntityManager.SpawnEntity(prototypeName, coordinate);
-                }
+            visitedTiles.Add(newPos);
 
-                puddles.Add(EntityManager.GetComponent<PuddleComponent>(puddleUid));
-            }
+            if (CanExpand(newPos, mapGrid, out var uid))
+                nextToExpand.Add(new PuddlePlacer(newPos, (EntityUid) uid));
         }
     }
 
@@ -204,5 +220,18 @@ public sealed class FluidSpreaderSystem : EntitySystem
 
         uid = EntityUid.Invalid;
         return true;
+    }
+}
+
+// Helper to allow mutable pair of (Pos, Uid)
+internal sealed class PuddlePlacer
+{
+    internal Vector2i Pos;
+    internal EntityUid Uid;
+
+    public PuddlePlacer(Vector2i pos, EntityUid uid)
+    {
+        Pos = pos;
+        Uid = uid;
     }
 }

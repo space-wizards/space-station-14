@@ -26,7 +26,7 @@ namespace Content.Server.Atmos.Monitor.Components
     ///     by an atmospheric monitor.
     /// </summary>
     [RegisterComponent]
-    public class AtmosAlarmableComponent : Component
+    public sealed class AtmosAlarmableComponent : Component
     {
         [ViewVariables]
         public List<EntityUid> LinkedMonitors { get; set; } = new();

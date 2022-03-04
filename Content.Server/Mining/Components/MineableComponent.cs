@@ -5,7 +5,7 @@ namespace Content.Server.Mining.Components;
 
 [RegisterComponent]
 [Friend(typeof(MineableSystem))]
-public class MineableComponent : Component
+public sealed class MineableComponent : Component
 {
     public float BaseMineTime = 1.0f;
 }

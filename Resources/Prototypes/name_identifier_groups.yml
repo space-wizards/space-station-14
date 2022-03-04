@@ -2,6 +2,10 @@
 - type: nameIdentifierGroup
   id: Monkey
   prefix: MK
+  
+- type: nameIdentifierGroup
+  id: Holoparasite
+  prefix: HOLO
 
 - type: nameIdentifierGroup
   id: Drone

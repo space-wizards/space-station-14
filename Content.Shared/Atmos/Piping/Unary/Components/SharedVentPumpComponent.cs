@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Piping.Unary.Components
 {
     [Serializable, NetSerializable]
-    public class GasVentPumpData : IAtmosDeviceData
+    public sealed class GasVentPumpData : IAtmosDeviceData
     {
         public bool Enabled { get; set; }
         public bool Dirty { get; set; }
@@ -73,5 +73,6 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         NoBound       = 0,
         InternalBound = 1,
         ExternalBound = 2,
+        Both = 3,
     }
 }

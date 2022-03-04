@@ -11,7 +11,7 @@ namespace Content.Server.Pinpointer
 {
     public sealed class ServerPinpointerSystem : SharedPinpointerSystem
     {
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
 
         public override void Initialize()
         {

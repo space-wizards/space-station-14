@@ -53,6 +53,9 @@ public abstract partial class InventorySystem
         if(!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
            return;
 
+        // un-rotate entities. needed for things like directional flashlights on hardsuit helmets
+        Transform(args.Entity).LocalRotation = 0;
+
         var equippedEvent = new DidEquipEvent(uid, args.Entity, slotDef);
         RaiseLocalEvent(uid, equippedEvent);
 
@@ -163,7 +166,7 @@ public abstract partial class InventorySystem
     public bool CanAccess(EntityUid actor, EntityUid target, EntityUid itemUid)
     {
         // Can the actor reach the target?
-        if (actor != target && !( actor.InRangeUnobstructed(target) && _containerSystem.IsInSameOrParentContainer(actor, target)))
+        if (actor != target && !(_interactionSystem.InRangeUnobstructed(actor, target) && _containerSystem.IsInSameOrParentContainer(actor, target)))
             return false;
 
         // Can the actor reach the item?

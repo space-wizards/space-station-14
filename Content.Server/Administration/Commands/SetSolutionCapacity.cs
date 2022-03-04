@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class SetSolutionCapacity : IConsoleCommand
+    public sealed class SetSolutionCapacity : IConsoleCommand
     {
         public string Command => "setsolutioncapacity";
         public string Description => "Set the capacity (maximum volume) of some solution.";

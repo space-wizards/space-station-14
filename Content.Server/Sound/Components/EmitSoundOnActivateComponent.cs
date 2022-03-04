@@ -6,7 +6,7 @@ namespace Content.Server.Sound.Components
     /// Simple sound emitter that emits sound on ActivateInWorld
     /// </summary>
     [RegisterComponent]
-    public class EmitSoundOnActivateComponent : BaseEmitSoundComponent
+    public sealed class EmitSoundOnActivateComponent : BaseEmitSoundComponent
     {
     }
 }

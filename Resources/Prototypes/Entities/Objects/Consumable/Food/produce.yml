@@ -148,7 +148,9 @@
         maxVol: 6
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 2
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
   - type: Produce
@@ -193,7 +195,18 @@
         - SmallImpassable
   - type: Tag
     tags:
+    - Recyclable
     - Trash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 4
+        reagents:
+        - ReagentId: PulpedBananaPeel
+          Quantity: 4
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Recyclable
 
 - type: entity
   name: carrot
@@ -207,10 +220,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 9
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/carrot.rsi
   - type: Produce
@@ -230,10 +245,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 9
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemon.rsi
   - type: Produce
@@ -253,10 +270,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 16
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Water
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
   - type: Produce
@@ -279,9 +300,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/potato.rsi
   - type: Produce
@@ -301,9 +325,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomato.rsi
   - type: Produce
@@ -379,9 +406,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/eggplant.rsi
   - type: Produce
@@ -396,10 +426,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
   - type: Produce
@@ -421,10 +453,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
@@ -459,9 +493,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion.rsi
   - type: Produce
@@ -479,9 +516,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
   - type: Produce
@@ -568,11 +608,14 @@
     - type: SolutionContainerManager
       solutions:
         food:
+          maxVol: 18
           reagents:
             - ReagentId: Nutriment
-              Quantity: 5
+              Quantity: 4
             - ReagentId: CapsaicinOil
-              Quantity: 1
+              Quantity: 10
+            - ReagentId: Vitamin
+              Quantity: 4
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/chili.rsi
     - type: Produce
@@ -653,7 +696,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 24
+        maxVol: 26
         reagents:
         - ReagentId: Bicaridine
           Quantity: 10
@@ -662,6 +705,8 @@
         - ReagentId: Nutriment
           Quantity: 2
         - ReagentId: Desoxyephedrine
+          Quantity: 2
+        - ReagentId: Vitamin
           Quantity: 2
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi

@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Shared.Pulling.Systems
 {
-    public class SharedPullableSystem : EntitySystem
+    public sealed class SharedPullableSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly SharedPullingSystem _pullSystem = default!;

@@ -23,7 +23,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class SuicideCommand : IConsoleCommand
+    internal sealed class SuicideCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -101,7 +101,7 @@ namespace Content.Server.Chat.Commands
                 }
             }
             // Get all entities in range of the suicider
-            var entities = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(owner, 1, LookupFlags.Approximate | LookupFlags.IncludeAnchored).ToArray();
+            var entities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesInRange(owner, 1, LookupFlags.Approximate | LookupFlags.IncludeAnchored).ToArray();
 
             if (entities.Length > 0)
             {

@@ -22,7 +22,7 @@ namespace Content.Shared.Damage
     ///     functions to apply resistance sets and supports basic math operations to modify this dictionary.
     /// </remarks>
     [DataDefinition]
-    public class DamageSpecifier : IEquatable<DamageSpecifier>
+    public sealed class DamageSpecifier : IEquatable<DamageSpecifier>
     {
         [JsonPropertyName("types")]
         [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]

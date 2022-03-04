@@ -1,4 +1,5 @@
 using System;
+using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -8,7 +9,7 @@ namespace Content.Shared.Examine
     public static class ExamineSystemMessages
     {
         [Serializable, NetSerializable]
-        public class RequestExamineInfoMessage : EntityEventArgs
+        public sealed class RequestExamineInfoMessage : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
 
@@ -22,21 +23,22 @@ namespace Content.Shared.Examine
         }
 
         [Serializable, NetSerializable]
-        public class ExamineInfoResponseMessage : EntityEventArgs
+        public sealed class ExamineInfoResponseMessage : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
             public readonly FormattedMessage Message;
 
-            public readonly bool GetVerbs;
+            public List<Verb>? Verbs;
+
             public readonly bool CenterAtCursor;
             public readonly bool OpenAtOldTooltip;
 
-            public ExamineInfoResponseMessage(EntityUid entityUid, FormattedMessage message,
-                bool getVerbs=false, bool centerAtCursor=true, bool openAtOldTooltip=true)
+            public ExamineInfoResponseMessage(EntityUid entityUid, FormattedMessage message, List<Verb>? verbs=null,
+                bool centerAtCursor=true, bool openAtOldTooltip=true)
             {
                 EntityUid = entityUid;
                 Message = message;
-                GetVerbs = getVerbs;
+                Verbs = verbs;
                 CenterAtCursor = centerAtCursor;
                 OpenAtOldTooltip = openAtOldTooltip;
             }

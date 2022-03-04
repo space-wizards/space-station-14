@@ -6,6 +6,7 @@
   - type: Tag
     tags:
     - Knife
+  - type: Sharp
   - type: Utensil
     types:
       - Knife

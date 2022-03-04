@@ -131,7 +131,7 @@ namespace Content.Server.Cuffs
     /// Event fired on the User when the User attempts to cuff the Target.
     /// Should generate popups on the User.
     /// </summary>
-    public class UncuffAttemptEvent : CancellableEntityEventArgs
+    public sealed class UncuffAttemptEvent : CancellableEntityEventArgs
     {
         public readonly EntityUid User;
         public readonly EntityUid Target;

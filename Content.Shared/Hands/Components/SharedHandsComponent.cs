@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
@@ -18,6 +16,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Shared.Hands.Components
 {
@@ -387,7 +386,8 @@ namespace Content.Shared.Hands.Components
                 target = new MapCoordinates(origin.Position + dropVector, target.MapId);
             }
 
-            var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, target, ignoredEnt: Owner);
+
+            var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, target, predicate: e => e == Owner);
 
             if (dropLength < requestedDropDistance)
                 return origin.Position + dropVector.Normalized * dropLength;
@@ -708,49 +708,8 @@ namespace Content.Shared.Hands.Components
         }
     }
 
-    #region visualizerData
     [Serializable, NetSerializable]
-    public enum HandsVisuals : byte
-    {
-        VisualState
-    }
-
-    [Serializable, NetSerializable]
-    public class HandsVisualState : ICloneable
-    {
-        public List<HandVisualState> Hands { get; } = new();
-
-        public HandsVisualState(List<HandVisualState> hands)
-        {
-            Hands = hands;
-        }
-
-        public object Clone()
-        {
-            return new HandsVisualState(new List<HandVisualState>(Hands));
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public struct HandVisualState
-    {
-        public string RsiPath { get; }
-        public string? EquippedPrefix { get; }
-        public HandLocation Location { get; }
-        public Color Color { get; }
-
-        public HandVisualState(string rsiPath, string? equippedPrefix, HandLocation location, Color color)
-        {
-            RsiPath = rsiPath;
-            EquippedPrefix = equippedPrefix;
-            Location = location;
-            Color = color;
-        }
-    }
-    #endregion
-
-    [Serializable, NetSerializable]
-    public class Hand
+    public sealed class Hand
     {
         [ViewVariables]
         public string Name { get; }
@@ -803,7 +762,7 @@ namespace Content.Shared.Hands.Components
     /// A message that calls the activate interaction on the item in the specified hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public class ActivateInHandMsg : EntityEventArgs
+    public sealed class ActivateInHandMsg : EntityEventArgs
     {
         public string HandName { get; }
 
@@ -817,7 +776,7 @@ namespace Content.Shared.Hands.Components
     ///     Uses the item in the active hand on the item in the specified hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public class ClientInteractUsingInHandMsg : EntityEventArgs
+    public sealed class ClientInteractUsingInHandMsg : EntityEventArgs
     {
         public string HandName { get; }
 
@@ -831,7 +790,7 @@ namespace Content.Shared.Hands.Components
     ///     Moves an item from one hand to the active hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public class MoveItemFromHandMsg : EntityEventArgs
+    public sealed class MoveItemFromHandMsg : EntityEventArgs
     {
         public string HandName { get; }
 
@@ -851,7 +810,7 @@ namespace Content.Shared.Hands.Components
         Right
     }
 
-    public class HandCountChangedEvent : EntityEventArgs
+    public sealed class HandCountChangedEvent : EntityEventArgs
     {
         public HandCountChangedEvent(EntityUid sender)
         {

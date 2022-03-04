@@ -4,7 +4,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Administration.UI.Tabs
 {
     [GenerateTypedNameReferences]
-    public partial class ServerTab : Control
+    public sealed partial class ServerTab : Control
     {
     }
 }

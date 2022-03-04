@@ -27,7 +27,7 @@ namespace Content.Shared.Pulling
     /// Because pulling state is such a mess to get right, all writes to pulling state must go through this class.
     /// </summary>
     [UsedImplicitly]
-    public class SharedPullingStateManagementSystem : EntitySystem
+    public sealed class SharedPullingStateManagementSystem : EntitySystem
     {
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;

@@ -1,5 +1,6 @@
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
@@ -8,7 +9,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Inventory
 {
-    public class PickupEntityOperator : AiOperator
+    public sealed class PickupEntityOperator : AiOperator
     {
         // Input variables
         private readonly EntityUid _owner;
@@ -27,7 +28,7 @@ namespace Content.Server.AI.Operators.Inventory
             if (entMan.Deleted(_target)
                 || !entMan.HasComponent<SharedItemComponent>(_target)
                 || _target.IsInContainer()
-                || !_owner.InRangeUnobstructed(_target, popup: true))
+                || !EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(_owner, _target, popup: true))
             {
                 return Outcome.Failed;
             }

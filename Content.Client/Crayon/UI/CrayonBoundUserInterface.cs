@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Crayon.UI
 {
-    public class CrayonBoundUserInterface : BoundUserInterface
+    public sealed class CrayonBoundUserInterface : BoundUserInterface
     {
         public CrayonBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {

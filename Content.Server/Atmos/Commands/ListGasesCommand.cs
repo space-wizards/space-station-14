@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class ListGasesCommand : IConsoleCommand
+    public sealed class ListGasesCommand : IConsoleCommand
     {
         public string Command => "listgases";
         public string Description => "Prints a list of gases and their indices.";

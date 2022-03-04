@@ -15,7 +15,7 @@ namespace Content.Server.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyComponent))]
-    public class BodyComponent : SharedBodyComponent
+    public sealed class BodyComponent : SharedBodyComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -102,7 +102,12 @@ namespace Content.Server.Body.Components
                 }
             }
 
+            _entMan.EventBus.RaiseLocalEvent(Owner, new BeingGibbedEvent(), false);
             _entMan.QueueDeleteEntity(Owner);
         }
+    }
+
+    public sealed class BeingGibbedEvent : EntityEventArgs
+    {
     }
 }

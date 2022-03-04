@@ -49,6 +49,15 @@
   components:
   - type: Sprite
     state: jelly-plain
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
 
 # Donuts
 
@@ -194,6 +203,15 @@
     state: jelly-homer
   - type: Item
     HeldPrefix: pink
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
 
 - type: entity
   name: pink jelly-donut
@@ -205,6 +223,15 @@
     state: jelly-pink
   - type: Item
     HeldPrefix: pink
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
 
 - type: entity
   name: spaceman's jelly-donut
@@ -214,6 +241,15 @@
   components:
   - type: Sprite
     state: jelly-purple
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like jelly-donut, violets.
 
 - type: entity
@@ -224,6 +260,15 @@
   components:
   - type: Sprite
     state: jelly-green
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like jelly-donut, green apples.
 
 - type: entity
@@ -234,6 +279,15 @@
   components:
   - type: Sprite
     state: jelly-beige
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like jelly-donut, buttery sweetness.
 
 - type: entity
@@ -253,6 +307,8 @@
           Quantity: 3
         - ReagentId: Theobromine
           Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like jelly-donut, bitterness.
 
 - type: entity
@@ -263,6 +319,15 @@
   components:
   - type: Sprite
     state: jelly-blue
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like jelly-donut, blumpkin.
 
 - type: entity
@@ -273,6 +338,15 @@
   components:
   - type: Sprite
     state: jelly-yellow
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like jelly-donut, tropical sweetness.
 
 - type: entity
@@ -283,6 +357,15 @@
   components:
   - type: Sprite
     state: jelly-olive
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like jelly-donut, matcha.
 
 - type: entity
@@ -293,6 +376,15 @@
   components:
   - type: Sprite
     state: jelly-laugh
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like jelly-donut, fizzy tutti frutti.
 
 - type: entity
@@ -303,4 +395,13 @@
   components:
   - type: Sprite
     state: jelly-slug
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like jelly-donut, fizzy tutti frutti.

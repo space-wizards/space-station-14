@@ -21,6 +21,7 @@ namespace Content.Client.Viewport
     // OH GOD.
     // Ok actually it's fine.
     // Instantiated dynamically through the StateManager, Dependencies will be resolved.
+    [Virtual]
     public class GameScreenBase : State, IEntityEventSubscriber
     {
         [Dependency] private readonly IInputManager _inputManager = default!;
@@ -58,7 +59,7 @@ namespace Content.Client.Viewport
         public IList<EntityUid> GetEntitiesUnderPosition(MapCoordinates coordinates)
         {
             // Find all the entities intersecting our click
-            var entities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(coordinates.MapId,
+            var entities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesIntersecting(coordinates.MapId,
                 Box2.CenteredAround(coordinates.Position, (1, 1)));
 
             var containerSystem = _entitySystemManager.GetEntitySystem<SharedContainerSystem>();

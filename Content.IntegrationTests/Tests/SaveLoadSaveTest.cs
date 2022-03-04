@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests
     ///     Tests that the
     /// </summary>
     [TestFixture]
-    public class SaveLoadSaveTest : ContentIntegrationTest
+    public sealed class SaveLoadSaveTest : ContentIntegrationTest
     {
         [Test]
         public async Task SaveLoadSave()
@@ -82,7 +82,6 @@ namespace Content.IntegrationTests.Tests
             await server.WaitIdleAsync();
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
-            var pauseMgr = server.ResolveDependency<IPauseManager>();
 
             IMapGrid grid = default;
 
@@ -90,8 +89,8 @@ namespace Content.IntegrationTests.Tests
             server.Post(() =>
             {
                 var mapId = mapManager.CreateMap();
-                pauseMgr.AddUninitializedMap(mapId);
-                pauseMgr.SetMapPaused(mapId, true);
+                mapManager.AddUninitializedMap(mapId);
+                mapManager.SetMapPaused(mapId, true);
                 grid = mapLoader.LoadBlueprint(mapId, "Maps/saltern.yml");
                 mapLoader.SaveBlueprint(grid.Index, "load save ticks save 1.yml");
             });

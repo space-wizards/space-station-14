@@ -3,7 +3,7 @@ using Robust.Shared.Physics;
 
 namespace Content.Shared.Physics.Pull
 {
-    public class PullMessage : EntityEventArgs
+    public abstract class PullMessage : EntityEventArgs
     {
         public readonly IPhysBody Puller;
         public readonly IPhysBody Pulled;

@@ -11,7 +11,7 @@ namespace Content.Server.Station;
 /// </summary>
 [RegisterComponent]
 [Friend(typeof(GameTicker))]
-public class BecomesStationComponent : Component
+public sealed class BecomesStationComponent : Component
 {
     /// <summary>
     ///     Mapping only. Should use StationIds in all other

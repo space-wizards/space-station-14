@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GuideGenerator;
 
-public class ReagentEntry
+public sealed class ReagentEntry
 {
     [JsonPropertyName("id")]
     public string Id { get; }
@@ -47,7 +47,7 @@ public class ReagentEntry
     }
 }
 
-public class ReactionEntry
+public sealed class ReactionEntry
 {
     [JsonPropertyName("id")]
     public string Id { get; }
@@ -80,7 +80,7 @@ public class ReactionEntry
     }
 }
 
-public class ReactantEntry
+public sealed class ReactantEntry
 {
     [JsonPropertyName("amount")]
     public float Amount { get; }

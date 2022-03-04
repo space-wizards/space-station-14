@@ -20,7 +20,7 @@ namespace Content.Shared.Interaction
         bool UseEntity(UseEntityEventArgs eventArgs);
     }
 
-    public class UseEntityEventArgs : EventArgs
+    public sealed class UseEntityEventArgs : EventArgs
     {
         public UseEntityEventArgs(EntityUid user)
         {
@@ -34,7 +34,7 @@ namespace Content.Shared.Interaction
     ///     Raised when using the entity in your hands.
     /// </summary>
     [PublicAPI]
-    public class UseInHandEvent : HandledEntityEventArgs
+    public sealed class UseInHandEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity holding the item in their hand.

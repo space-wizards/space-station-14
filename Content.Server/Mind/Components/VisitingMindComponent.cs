@@ -16,7 +16,7 @@ namespace Content.Server.Mind.Components
         }
     }
 
-    public class MindUnvisitedMessage : EntityEventArgs
+    public sealed class MindUnvisitedMessage : EntityEventArgs
     {
     }
 }

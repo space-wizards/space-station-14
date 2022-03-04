@@ -30,7 +30,7 @@ namespace Content.Server.Power.NodeGroups
 
     [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower)]
     [UsedImplicitly]
-    public class PowerNet : BaseNetConnectorNodeGroup<IPowerNet>, IPowerNet
+    public sealed class PowerNet : BaseNetConnectorNodeGroup<IPowerNet>, IPowerNet
     {
         private readonly PowerNetSystem _powerNetSystem = EntitySystem.Get<PowerNetSystem>();
 

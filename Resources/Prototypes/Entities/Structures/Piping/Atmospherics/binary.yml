@@ -6,6 +6,8 @@
     mode: SnapgridCenter
   components:
   - type: AtmosDevice
+  - type: SubFloorHide
+    blockInteractions: false
   - type: NodeContainer
     nodes:
       inlet:
@@ -45,6 +47,9 @@
     interfaces:
       - key: enum.GasPressurePumpUiKey.Key
         type: GasPressurePumpBoundUserInterface
+  - type: Construction
+    graph: GasBinary
+    node: pressurepump
 
 - type: entity
   parent: GasBinaryBase
@@ -62,15 +67,21 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpVolume
-          map: [ "enum.SubfloorLayers.FirstLayer" ]
+          map: [ "enum.SubfloorLayers.FirstLayer", "enum.PressurePumpVisualizer+Layers.Enabled" ]
     - type: Appearance
       visuals:
         - type: PipeColorVisualizer
+        - type: PressurePumpVisualizer
+          disabledState: pumpVolume
+          enabledState: pumpVolumeOn
     - type: GasVolumePump
     - type: UserInterface
       interfaces:
         - key: enum.GasVolumePumpUiKey.Key
           type: GasVolumePumpBoundUserInterface
+    - type: Construction
+      graph: GasBinary
+      node: volumepump
 
 - type: entity
   parent: GasBinaryBase
@@ -93,6 +104,9 @@
       visuals:
         - type: PipeColorVisualizer
     - type: GasPassiveGate
+    - type: Construction
+      graph: GasBinary
+      node: passivegate
 
 - type: entity
   parent: GasBinaryBase
@@ -131,6 +145,9 @@
           nodeGroupID: Pipe
           pipeDirection: South
           volume: 100
+    - type: Construction
+      graph: GasBinary
+      node: valve
 
 - type: entity
   parent: GasBinaryBase
@@ -159,6 +176,9 @@
           !type:PortPipeNode
           nodeGroupID: Pipe
           pipeDirection: South
+    - type: Construction
+      graph: GasBinary
+      node: port
 
 - type: entity
   parent: GasUnaryBase
@@ -183,3 +203,6 @@
         - type: PipeColorVisualizer
         - type: VentPumpVisualizer
     - type: GasVentPump
+    - type: Construction
+      graph: GasBinary
+      node: dualportventpump
