@@ -48,8 +48,8 @@ namespace Content.Client.Hands
             { HandLocation.Middle, new()
                 {
                     { RSI.State.Direction.North, -1000 },
-                    { RSI.State.Direction.East, -1 }, // behind the right-hand, but still on top of the rest of the player/clothing layers.
-                    { RSI.State.Direction.West, -1 },
+                    { RSI.State.Direction.East, -10 }, // behind the right-hand, but still on top of the rest of the player/clothing layers.
+                    { RSI.State.Direction.West, -10 },
                 }
             },
         };
