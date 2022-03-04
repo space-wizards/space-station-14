@@ -37,14 +37,14 @@
     state: gibblet-0
     netsync: false
     drawdepth: FloorObjects
-    layers:
-    - sprite: Fluids/gibblet.rsi # Placeholder
-      map: ["enum.PuddleVisualLayers.Puddle"]
-      state: gibblet-0
-    - sprite: Fluids/wet_floor_sparkles.rsi
-      map: ["enum.PuddleVisualLayers.WetFloorEffect"]
-      state: sparkles
-      visible: false
+    # layers:
+    # - sprite: Fluids/gibblet.rsi # Placeholder
+    #   map: ["enum.PuddleVisualLayers.Puddle"]
+    #   state: gibblet-0
+    # - sprite: Fluids/wet_floor_sparkles.rsi
+    #   map: ["enum.PuddleVisualLayers.WetFloorEffect"]
+    #   state: sparkles
+    #   visible: false
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
