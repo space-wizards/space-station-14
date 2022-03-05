@@ -123,15 +123,14 @@ public sealed class ExplosionOverlaySystem : EntitySystem
         }
     }
 
-    public bool IsNewer(byte explosionId)
+    public bool IsNewer(int explosionId)
     {
         if (_overlay.ActiveExplosion == null)
             return true;
 
-        // byte goes up to 255, then wraps back to zero.
-        // what are the odds of more than 128 explosions happening in a tick?
+        // If we ever get servers stable enough to live this long, the explosion Id int might overflow.
         return _overlay.ActiveExplosion.Explosionid < explosionId
-            || _overlay.ActiveExplosion.Explosionid > 192 && explosionId < 64;
+            || _overlay.ActiveExplosion.Explosionid > int.MaxValue/2 && explosionId < int.MinValue/2;
     }
 
     public override void Shutdown()
@@ -151,7 +150,7 @@ internal sealed class Explosion
     public List<float> Intensity;
     public EntityUid LightEntity;
     public MapId Map;
-    public byte Explosionid;
+    public int Explosionid;
 
     public Matrix3 SpaceMatrix;
 

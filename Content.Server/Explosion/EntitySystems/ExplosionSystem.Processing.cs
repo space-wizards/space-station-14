@@ -20,7 +20,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <remarks>
     ///     Overflowing back to 0 should cause no issue, as long as you don't have more than 256 explosions happening in a single tick.
     /// </remarks>
-    private byte _explosionCounter = 0;
+    private int _explosionCounter = 0;
     // maybe should just use a UID/explosion-entity and a state to convey information?
     // but then need to ignore PVS? Eeehh this works well enough for now.
 

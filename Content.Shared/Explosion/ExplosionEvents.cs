@@ -8,7 +8,7 @@ namespace Content.Shared.Explosion;
 ///     Raised directed at an entity to determine its explosion resistance, probably right before it is about to be
 ///     damaged by one.
 /// </summary>
-public class GetExplosionResistanceEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class GetExplosionResistanceEvent : EntityEventArgs, IInventoryRelayEvent
 {
     /// <summary>
     ///     Can be set to whatever, but currently is being additively increased by components & clothing. So think twice
@@ -30,7 +30,7 @@ public class GetExplosionResistanceEvent : EntityEventArgs, IInventoryRelayEvent
 ///     An explosion event. Used for client side rendering.
 /// </summary>
 [Serializable, NetSerializable]
-public class ExplosionEvent : EntityEventArgs
+public sealed class ExplosionEvent : EntityEventArgs
 {
     public MapCoordinates Epicenter;
 
@@ -43,10 +43,10 @@ public class ExplosionEvent : EntityEventArgs
 
     public Matrix3 SpaceMatrix;
 
-    public byte ExplosionId;
+    public int ExplosionId;
 
     public ExplosionEvent(
-        byte explosionId,
+        int explosionId,
         MapCoordinates epicenter,
         string typeID,
         List<float> intensity,
@@ -68,12 +68,12 @@ public class ExplosionEvent : EntityEventArgs
 ///     Update visual rendering of the explosion to correspond to the servers processing of it.
 /// </summary>
 [Serializable, NetSerializable]
-public class ExplosionOverlayUpdateEvent : EntityEventArgs
+public sealed class ExplosionOverlayUpdateEvent : EntityEventArgs
 {
     public int Index;
-    public byte ExplosionId;
+    public int ExplosionId;
 
-    public ExplosionOverlayUpdateEvent(byte explosionId, int index)
+    public ExplosionOverlayUpdateEvent(int explosionId, int index)
     {
         Index = index;
         ExplosionId = explosionId;
