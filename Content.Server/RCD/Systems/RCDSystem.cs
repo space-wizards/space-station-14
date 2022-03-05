@@ -19,7 +19,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.RCD.Systems
 {
-    public class RCDSystem : EntitySystem
+    public sealed class RCDSystem : EntitySystem
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -160,12 +160,12 @@ namespace Content.Server.RCD.Systems
                 return false;
             }
 
-            var coordinates = mapGrid.ToCoordinates(tile.GridIndices);
-            if (coordinates == EntityCoordinates.Invalid ||
-                !_interactionSystem.InRangeUnobstructed(eventArgs.User, coordinates, ignoreInsideBlocker: true, popup: true))
-            {
+            var unobstructed = eventArgs.Target == null
+                ? _interactionSystem.InRangeUnobstructed(eventArgs.User, mapGrid.GridTileToWorld(tile.GridIndices), popup: true)
+                : _interactionSystem.InRangeUnobstructed(eventArgs.User, eventArgs.Target.Value, popup: true);
+
+            if (!unobstructed)
                 return false;
-            }
 
             switch (rcd.Mode)
             {

@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.AI.WorldState.States.Hands
 {
     [UsedImplicitly]
-    public class AnyFreeHandState : StateData<bool>
+    public sealed class AnyFreeHandState : StateData<bool>
     {
         public override string Name => "AnyFreeHand";
         public override bool GetValue()

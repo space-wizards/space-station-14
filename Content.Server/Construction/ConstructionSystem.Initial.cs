@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,24 +10,21 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
-using Content.Shared.Interaction.Helpers;
+using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Construction
 {
-    public partial class ConstructionSystem
+    public sealed partial class ConstructionSystem
     {
 
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -80,7 +76,7 @@ namespace Content.Server.Construction
                 }
             }
 
-            foreach (var near in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(user!, 2f, LookupFlags.Approximate))
+            foreach (var near in EntitySystem.Get<EntityLookupSystem>().GetEntitiesInRange(user!, 2f, LookupFlags.Approximate))
             {
                 yield return near;
             }
@@ -238,10 +234,15 @@ namespace Content.Server.Construction
                 return null;
             }
 
-            var newEntity = EntityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, EntityManager.GetComponent<TransformComponent>(user).Coordinates);
+            var newEntityProto = graph.Nodes[edge.Target].Entity;
+            var newEntity = EntityManager.SpawnEntity(newEntityProto, EntityManager.GetComponent<TransformComponent>(user).Coordinates);
 
-            // Yes, this should throw if it's missing the component.
-            var construction = EntityManager.GetComponent<ConstructionComponent>(newEntity);
+            if (!TryComp(newEntity, out ConstructionComponent? construction))
+            {
+                _sawmill.Error($"Initial construction does not have a valid target entity! It is missing a ConstructionComponent.\nGraph: {graph.ID}, Initial Target: {edge.Target}, Ent. Prototype: {newEntityProto}\nCreated Entity {ToPrettyString(newEntity)} will be deleted.");
+                Del(newEntity); // Screw you, make proper construction graphs.
+                return null;
+            }
 
             // We attempt to set the pathfinding target.
             SetPathfindingTarget(newEntity, targetNode.Name, construction);
@@ -301,7 +302,7 @@ namespace Content.Server.Construction
             var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
 
             if (args.SenderSession.AttachedEntity is not {Valid: true} user ||
-                !Get<ActionBlockerSystem>().CanInteract(user)) return;
+                !Get<ActionBlockerSystem>().CanInteract(user, null)) return;
 
             if (!EntityManager.TryGetComponent(user, out HandsComponent? hands)) return;
 
@@ -399,15 +400,23 @@ namespace Content.Server.Construction
                 _beingBuilt[args.SenderSession].Remove(ev.Ack);
             }
 
-            if (!Get<ActionBlockerSystem>().CanInteract(user)
-                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHandItem == null
-                || !user.InRangeUnobstructed(ev.Location, ignoreInsideBlocker:constructionPrototype.CanBuildInImpassable))
+            if (!_actionBlocker.CanInteract(user, null)
+                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHandItem == null)
             {
                 Cleanup();
                 return;
             }
 
-            if(pathFind == null)
+            var mapPos = ev.Location.ToMap(EntityManager);
+            var predicate = GetPredicate(constructionPrototype.CanBuildInImpassable, mapPos);
+
+            if (!_interactionSystem.InRangeUnobstructed(user, mapPos, predicate: predicate))
+            {
+                Cleanup();
+                return;
+            }
+
+            if (pathFind == null)
                 throw new InvalidDataException($"Can't find path from starting node to target node in construction! Recipe: {ev.PrototypeName}");
 
             var edge = startNode.GetEdge(pathFind[0].Name);

@@ -10,6 +10,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Lathe
 {
     [NetworkedComponent()]
+    [Virtual]
     public class SharedLatheComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -38,7 +39,7 @@ namespace Content.Shared.Lathe
         ///     Sent to the server to sync material storage and the recipe queue.
         /// </summary>
         [Serializable, NetSerializable]
-        public class LatheSyncRequestMessage : BoundUserInterfaceMessage
+        public sealed class LatheSyncRequestMessage : BoundUserInterfaceMessage
         {
             public LatheSyncRequestMessage()
             {
@@ -51,7 +52,7 @@ namespace Content.Shared.Lathe
         ///     Sent to the server to sync the lathe's technology database with the research server.
         /// </summary>
         [Serializable, NetSerializable]
-        public class LatheServerSyncMessage : BoundUserInterfaceMessage
+        public sealed class LatheServerSyncMessage : BoundUserInterfaceMessage
         {
             public LatheServerSyncMessage()
             {
@@ -62,7 +63,7 @@ namespace Content.Shared.Lathe
         ///     Sent to the server to open the ResearchClient UI.
         /// </summary>
         [Serializable, NetSerializable]
-        public class LatheServerSelectionMessage : BoundUserInterfaceMessage
+        public sealed class LatheServerSelectionMessage : BoundUserInterfaceMessage
         {
             public LatheServerSelectionMessage()
             {
@@ -73,7 +74,7 @@ namespace Content.Shared.Lathe
         ///     Sent to the client when the lathe is producing a recipe.
         /// </summary>
         [Serializable, NetSerializable]
-        public class LatheProducingRecipeMessage : BoundUserInterfaceMessage
+        public sealed class LatheProducingRecipeMessage : BoundUserInterfaceMessage
         {
             public readonly string ID;
             public LatheProducingRecipeMessage(string id)
@@ -86,7 +87,7 @@ namespace Content.Shared.Lathe
         ///     Sent to the client when the lathe stopped/finished producing a recipe.
         /// </summary>
         [Serializable, NetSerializable]
-        public class LatheStoppedProducingRecipeMessage : BoundUserInterfaceMessage
+        public sealed class LatheStoppedProducingRecipeMessage : BoundUserInterfaceMessage
         {
             public LatheStoppedProducingRecipeMessage()
             {
@@ -97,7 +98,7 @@ namespace Content.Shared.Lathe
         ///     Sent to the client to let it know about the recipe queue.
         /// </summary>
         [Serializable, NetSerializable]
-        public class LatheFullQueueMessage : BoundUserInterfaceMessage
+        public sealed class LatheFullQueueMessage : BoundUserInterfaceMessage
         {
             public readonly Queue<string> Recipes;
             public LatheFullQueueMessage(Queue<string> recipes)
@@ -110,7 +111,7 @@ namespace Content.Shared.Lathe
         ///     Sent to the server when a client queues a new recipe.
         /// </summary>
         [Serializable, NetSerializable]
-        public class LatheQueueRecipeMessage : BoundUserInterfaceMessage
+        public sealed class LatheQueueRecipeMessage : BoundUserInterfaceMessage
         {
             public readonly string ID;
             public readonly int Quantity;

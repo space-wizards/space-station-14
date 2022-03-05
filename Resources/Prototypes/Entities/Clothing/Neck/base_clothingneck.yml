@@ -10,3 +10,7 @@
     - neck
   - type: Sprite
     state: icon
+  - type: Butcherable
+    butcheringType: Knife
+    spawned: MaterialCloth1
+    pieces: 2

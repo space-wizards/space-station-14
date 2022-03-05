@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Conveyor.Visualizers
 {
     [UsedImplicitly]
-    public class TwoWayLeverVisualizer : AppearanceVisualizer
+    public sealed class TwoWayLeverVisualizer : AppearanceVisualizer
     {
         [DataField("state_forward")]
         private string? _stateForward;

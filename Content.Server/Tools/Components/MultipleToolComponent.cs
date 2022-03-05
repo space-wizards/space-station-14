@@ -15,10 +15,10 @@ namespace Content.Server.Tools.Components
     ///     Not to be confused with Multitool (power)
     /// </summary>
     [RegisterComponent]
-    public class MultipleToolComponent : SharedMultipleToolComponent
+    public sealed class MultipleToolComponent : SharedMultipleToolComponent
     {
         [DataDefinition]
-        public class ToolEntry
+        public sealed class ToolEntry
         {
             [DataField("behavior", required:true)]
             public PrototypeFlags<ToolQualityPrototype> Behavior { get; } = new();
@@ -32,7 +32,7 @@ namespace Content.Server.Tools.Components
             [DataField("sprite")]
             public SpriteSpecifier? Sprite { get; } = null;
         }
-        
+
         [DataField("entries", required:true)]
         public ToolEntry[] Entries { get; } = Array.Empty<ToolEntry>();
 

@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Species;
 
 [Prototype("species")]
-public class SpeciesPrototype : IPrototype
+public sealed class SpeciesPrototype : IPrototype
 {
     /// <summary>
     /// Prototype ID of the species.

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
 {
-    public class TotalDamage : ReagentEffectCondition
+    public sealed class TotalDamage : ReagentEffectCondition
     {
         [DataField("max")]
         public FixedPoint2 Max = FixedPoint2.MaxValue;

@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Utility
 {
     [TestFixture]
     [TestOf(typeof(EntitySystemExtensions))]
-    public class EntitySystemExtensionsTest : ContentIntegrationTest
+    public sealed class EntitySystemExtensionsTest : ContentIntegrationTest
     {
         private const string BlockerDummyId = "BlockerDummy";
 

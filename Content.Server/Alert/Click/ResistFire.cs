@@ -13,7 +13,7 @@ namespace Content.Server.Alert.Click
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class ResistFire : IAlertClick
+    public sealed class ResistFire : IAlertClick
     {
         public void AlertClicked(EntityUid player)
         {

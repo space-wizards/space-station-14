@@ -13,7 +13,7 @@ namespace Content.Shared.Body.Prototypes
     /// </summary>
     [Prototype("bodyTemplate")]
     [Serializable, NetSerializable]
-    public class BodyTemplatePrototype : IPrototype, ISerializationHooks
+    public sealed class BodyTemplatePrototype : IPrototype, ISerializationHooks
     {
         [DataField("slots")]
         private Dictionary<string, BodyPartType> _slots = new();

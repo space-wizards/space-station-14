@@ -9,7 +9,7 @@ namespace Content.Shared.Nutrition.Components
 {
     [Friend(typeof(SharedCreamPieSystem))]
     [RegisterComponent]
-    public class CreamPieComponent : Component
+    public sealed class CreamPieComponent : Component
     {
         [ViewVariables]
         [DataField("paralyzeTime")]

@@ -1,0 +1,1161 @@
+meta:
+  format: 2
+  name: DemoStation
+  author: Space-Wizards
+  postmapinit: false
+tilemap:
+  0: space
+  1: floor_asteroid_coarse_sand0
+  2: floor_asteroid_coarse_sand1
+  3: floor_asteroid_coarse_sand2
+  4: floor_asteroid_coarse_sand_dug
+  5: floor_asteroid_sand
+  6: floor_asteroid_tile
+  7: floor_bar
+  8: floor_blue
+  9: floor_blue_circuit
+  10: floor_clown
+  11: floor_dark
+  12: floor_elevator_shaft
+  13: floor_freezer
+  14: floor_glass
+  15: floor_gold
+  16: floor_grass
+  17: floor_green_circuit
+  18: floor_hydro
+  19: floor_kitchen
+  20: floor_laundry
+  21: floor_lino
+  22: floor_mime
+  23: floor_mono
+  24: floor_reinforced
+  25: floor_rglass
+  26: floor_rock_vault
+  27: floor_showroom
+  28: floor_silver
+  29: floor_snow
+  30: floor_steel
+  31: floor_steel_dirty
+  32: floor_techmaint
+  33: floor_white
+  34: floor_wood
+  35: lattice
+  36: plating
+  37: underplating
+grids:
+- settings:
+    chunksize: 16
+    tilesize: 1
+  chunks:
+  - ind: "-1,-1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAACIAAAAiAAAAIgAAACIAAAAiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAIgAAACIAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAADAAAAIgAAACIAAAAiAAAAIgAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAADAAAAIgAAACIAAAAiAAAAIgAAACIAAAAiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAMAAAAiAAAAIgAAACIAAAAiAAAAIgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAAiAAAAIgAAACIAAAAiAAAAIgAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAIgAAACIAAAAiAAAAIgAAACIAAAAiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAACIAAAAiAAAAIgAAACIAAAAiAAAAIgAAAA==
+  - ind: "0,-1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiAAAAIgAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAiAAAAIgAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiAAAAIgAAACIAAAAiAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIgAAACIAAAAiAAAAIgAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAiAAAAIgAAACIAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiAAAAIgAAACIAAAAiAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIgAAACIAAAAiAAAAIgAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "-1,0"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAAiAAAAIgAAACIAAAAiAAAAIgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAADAAAAIgAAACIAAAAiAAAAIgAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAACIAAAAiAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAAiAAAAAwAAAAMAAAALAAAACwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAMAAAADAAAACwAAAAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "0,0"
+    tiles: IgAAACIAAAAiAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAiAAAAIgAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAADAAAAAwAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+entities:
+- uid: 0
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-0.5
+    parent: 6
+    type: Transform
+- uid: 1
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-1.5
+    parent: 6
+    type: Transform
+- uid: 2
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-2.5
+    parent: 6
+    type: Transform
+- uid: 3
+  type: AsteroidRock
+  components:
+  - pos: 4.5,2.5
+    parent: 6
+    type: Transform
+- uid: 4
+  type: AsteroidRock
+  components:
+  - pos: 4.5,2.5
+    parent: 6
+    type: Transform
+- uid: 5
+  type: WallWood
+  components:
+  - pos: -5.5,-6.5
+    parent: 6
+    type: Transform
+- uid: 6
+  components:
+  - pos: 0.5,0.5
+    parent: null
+    type: Transform
+  - index: 0
+    type: MapGrid
+  - linearDamping: 0.1
+    fixedRotation: False
+    bodyType: Dynamic
+    type: Physics
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,-8.99
+        - -0.01,-7.01
+        - -6.99,-7.01
+        - -6.99,-8.99
+      id: grid_chunk--6.99--8.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 55.281586
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,-6.99
+        - -0.01,-5.01
+        - -7.99,-5.01
+        - -7.99,-6.99
+      id: grid_chunk--7.99--6.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 63.201584
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,-4.99
+        - -0.01,-3.01
+        - -8.99,-3.01
+        - -8.99,-4.99
+      id: grid_chunk--8.99--4.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 71.12159
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,-2.99
+        - -0.01,-0.01
+        - -7.99,-0.01
+        - -7.99,-2.99
+      id: grid_chunk--7.99--2.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 95.1216
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 3.99,-8.99
+        - 3.99,-8.01
+        - 0.01,-8.01
+        - 0.01,-8.99
+      id: grid_chunk-0.01--8.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 15.601593
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 4.99,-7.99
+        - 4.99,-7.01
+        - 0.01,-7.01
+        - 0.01,-7.99
+      id: grid_chunk-0.01--7.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 19.521591
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 5.99,-6.99
+        - 5.99,-0.01
+        - 0.01,-0.01
+        - 0.01,-6.99
+      id: grid_chunk-0.01--6.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 166.96158
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,0.01
+        - -0.01,1.99
+        - -7.99,1.99
+        - -7.99,0.01
+      id: grid_chunk--7.99-0.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 63.2016
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,2.01
+        - -0.01,5.99
+        - -6.99,5.99
+        - -6.99,2.01
+      id: grid_chunk--6.99-2.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 111.12158
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,6.01
+        - -0.01,6.99
+        - -3.99,6.99
+        - -3.99,6.01
+      id: grid_chunk--3.99-6.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 15.601593
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 5.99,0.01
+        - 5.99,4.99
+        - 0.01,4.99
+        - 0.01,0.01
+      id: grid_chunk-0.01-0.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 119.12158
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 3.99,5.01
+        - 3.99,5.99
+        - 0.01,5.99
+        - 0.01,5.01
+      id: grid_chunk-0.01-5.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 15.601593
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 2.99,6.01
+        - 2.99,6.99
+        - 0.01,6.99
+        - 0.01,6.01
+      id: grid_chunk-0.01-6.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 11.681595
+      restitution: 0.1
+    type: Fixtures
+  - gravityShakeSound: !type:SoundPathSpecifier
+      path: /Audio/Effects/alert.ogg
+    type: Gravity
+  - chunkCollection:
+      0,-1:
+        0:
+          color: '#AB00FFFF'
+          id: carp
+          coordinates: 1.5229158,-0.15414214
+        15:
+          color: '#00D400FF'
+          id: r
+          coordinates: 0.011922002,-7.997276
+        16:
+          color: '#00D400FF'
+          id: r
+          coordinates: 0.24108899,-8.101442
+        17:
+          color: '#00D400FF'
+          id: y
+          coordinates: 0.61608994,-8.226442
+        20:
+          cleanable: True
+          color: '#FFFFFF7F'
+          id: Dirt
+          coordinates: 0,-2
+        24:
+          cleanable: True
+          color: '#FFFFFF7F'
+          id: Damaged
+          coordinates: 2,-1
+        26:
+          cleanable: True
+          color: '#FFFFFF51'
+          id: DirtLight
+          coordinates: 1,-4
+        27:
+          cleanable: True
+          color: '#FFFFFF51'
+          id: DirtLight
+          coordinates: 3,-5
+      0,0:
+        1:
+          color: '#AB00FFFF'
+          id: carp
+          coordinates: 4.679166,3.9864826
+        29:
+          cleanable: True
+          color: '#FFFFFFC2'
+          id: Dirt
+          coordinates: 1,1
+        33:
+          cleanable: True
+          color: '#FF0000C2'
+          id: HalfTileOverlayGreyscale
+          coordinates: 0,4
+      -1,0:
+        2:
+          color: '#5E0000FF'
+          id: danger
+          coordinates: -1.5083342,1.0333579
+        4:
+          color: '#910000FF'
+          id: rune3
+          coordinates: -0.16458416,4.0333576
+        19:
+          cleanable: True
+          color: '#FFFFFF7F'
+          id: Dirt
+          coordinates: -4,0
+        30:
+          cleanable: True
+          color: '#FFFFFFC2'
+          id: Dirt
+          coordinates: -2,3
+        32:
+          cleanable: True
+          color: '#FF0000C2'
+          id: HalfTileOverlayGreyscale
+          coordinates: -1,4
+      -1,-1:
+        5:
+          color: '#820000FF'
+          id: Omni
+          coordinates: -4.949684,-4.0486636
+        6:
+          color: '#FFFF00FF'
+          id: danger
+          coordinates: -4.496559,-8.345539
+        7:
+          color: '#FFFF00FF'
+          id: danger
+          coordinates: -3.543434,-8.126789
+        8:
+          color: '#FFFF00FF'
+          id: danger
+          coordinates: -2.605934,-8.236164
+        9:
+          color: '#FFFF00FF'
+          id: danger
+          coordinates: -3.184059,-8.783039
+        10:
+          color: '#FFFF00FF'
+          id: danger
+          coordinates: -4.965309,-7.8767886
+        11:
+          color: '#00D400FF'
+          id: l
+          coordinates: -1.300578,-7.976443
+        12:
+          color: '#00D400FF'
+          id: i
+          coordinates: -1.029744,-7.997276
+        13:
+          color: '#00D400FF'
+          id: b
+          coordinates: -0.717244,-8.226442
+        14:
+          color: '#00D400FF'
+          id: a
+          coordinates: -0.363078,-8.059776
+        18:
+          color: '#00D400FF'
+          id: like
+          coordinates: -0.321411,-8.559776
+        21:
+          cleanable: True
+          color: '#FFFFFF7F'
+          id: Dirt
+          coordinates: -3,-4
+        22:
+          cleanable: True
+          color: '#FFFFFF7F'
+          id: Dirt
+          coordinates: -2,-6
+        23:
+          cleanable: True
+          color: '#FFFFFF7F'
+          id: Dirt
+          coordinates: -1,-6
+        25:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: Remains
+          coordinates: -5,-1
+        28:
+          cleanable: True
+          color: '#FFFFFFC2'
+          id: DirtLight
+          coordinates: -5,-5
+    type: DecalGrid
+- uid: 7
+  type: WallWood
+  components:
+  - pos: -5.5,-7.5
+    parent: 6
+    type: Transform
+- uid: 8
+  type: TableWood
+  components:
+  - pos: 1.5,-1.5
+    parent: 6
+    type: Transform
+- uid: 9
+  type: WallWood
+  components:
+  - pos: -6.5,-5.5
+    parent: 6
+    type: Transform
+- uid: 10
+  type: FloorTileItemWood
+  components:
+  - pos: -3.5196164,2.5830646
+    parent: 6
+    type: Transform
+- uid: 11
+  type: FloorTileItemWood
+  components:
+  - pos: -4.003991,1.6143146
+    parent: 6
+    type: Transform
+- uid: 12
+  type: FloorTileItemWood
+  components:
+  - pos: -3.6914914,2.0830646
+    parent: 6
+    type: Transform
+- uid: 13
+  type: FloorTileItemWood
+  components:
+  - pos: -4.253991,1.9111896
+    parent: 6
+    type: Transform
+- uid: 14
+  type: FloorTileItemWood
+  components:
+  - pos: -4.269616,2.4736896
+    parent: 6
+    type: Transform
+- uid: 15
+  type: ChairWood
+  components:
+  - pos: 1.5,-0.5
+    parent: 6
+    type: Transform
+- uid: 16
+  type: WallWood
+  components:
+  - pos: 2.5,-7.5
+    parent: 6
+    type: Transform
+- uid: 17
+  type: FloorTileItemWood
+  components:
+  - pos: -4.238366,2.6299396
+    parent: 6
+    type: Transform
+- uid: 18
+  type: FloorTileItemWood
+  components:
+  - pos: -4.160241,2.0674396
+    parent: 6
+    type: Transform
+- uid: 19
+  type: WallWood
+  components:
+  - pos: 2.5,-6.5
+    parent: 6
+    type: Transform
+- uid: 20
+  type: WallWood
+  components:
+  - pos: 3.5,-6.5
+    parent: 6
+    type: Transform
+- uid: 21
+  type: WallWood
+  components:
+  - pos: 4.5,0.5
+    parent: 6
+    type: Transform
+- uid: 22
+  type: WallWood
+  components:
+  - pos: 3.5,-5.5
+    parent: 6
+    type: Transform
+- uid: 23
+  type: WallReinforced
+  components:
+  - pos: -2.5,5.5
+    parent: 6
+    type: Transform
+- uid: 24
+  type: WallReinforced
+  components:
+  - pos: -2.5,4.5
+    parent: 6
+    type: Transform
+- uid: 25
+  type: WallReinforced
+  components:
+  - pos: -2.5,3.5
+    parent: 6
+    type: Transform
+- uid: 26
+  type: WallReinforced
+  components:
+  - pos: -1.5,5.5
+    parent: 6
+    type: Transform
+- uid: 27
+  type: WallReinforced
+  components:
+  - pos: -0.5,5.5
+    parent: 6
+    type: Transform
+- uid: 28
+  type: WallReinforced
+  components:
+  - pos: 0.5,5.5
+    parent: 6
+    type: Transform
+- uid: 29
+  type: WallReinforced
+  components:
+  - pos: 1.5,5.5
+    parent: 6
+    type: Transform
+- uid: 30
+  type: WallReinforced
+  components:
+  - pos: 1.5,3.5
+    parent: 6
+    type: Transform
+- uid: 31
+  type: WallReinforced
+  components:
+  - pos: 1.5,4.5
+    parent: 6
+    type: Transform
+- uid: 32
+  type: WallReinforced
+  components:
+  - pos: 1.5,2.5
+    parent: 6
+    type: Transform
+- uid: 33
+  type: WallReinforced
+  components:
+  - pos: -2.5,2.5
+    parent: 6
+    type: Transform
+- uid: 34
+  type: WallReinforced
+  components:
+  - pos: -1.5,2.5
+    parent: 6
+    type: Transform
+- uid: 35
+  type: WallReinforced
+  components:
+  - pos: 0.5,2.5
+    parent: 6
+    type: Transform
+- uid: 36
+  type: MetalDoor
+  components:
+  - pos: -0.5,2.5
+    parent: 6
+    type: Transform
+- uid: 37
+  type: AsteroidRock
+  components:
+  - pos: -6.5,5.5
+    parent: 6
+    type: Transform
+- uid: 38
+  type: AsteroidRock
+  components:
+  - pos: -5.5,5.5
+    parent: 6
+    type: Transform
+- uid: 39
+  type: AsteroidRock
+  components:
+  - pos: -5.5,4.5
+    parent: 6
+    type: Transform
+- uid: 40
+  type: AsteroidRock
+  components:
+  - pos: -6.5,4.5
+    parent: 6
+    type: Transform
+- uid: 41
+  type: AsteroidRock
+  components:
+  - pos: 4.5,3.5
+    parent: 6
+    type: Transform
+- uid: 42
+  type: AsteroidRock
+  components:
+  - pos: 4.5,1.5
+    parent: 6
+    type: Transform
+- uid: 43
+  type: AsteroidRock
+  components:
+  - pos: -5.5,3.5
+    parent: 6
+    type: Transform
+- uid: 44
+  type: WallWood
+  components:
+  - pos: 4.5,-2.5
+    parent: 6
+    type: Transform
+- uid: 45
+  type: WallWood
+  components:
+  - pos: 4.5,-1.5
+    parent: 6
+    type: Transform
+- uid: 46
+  type: WallWood
+  components:
+  - pos: 4.5,-3.5
+    parent: 6
+    type: Transform
+- uid: 47
+  type: WallWood
+  components:
+  - pos: 4.5,-4.5
+    parent: 6
+    type: Transform
+- uid: 48
+  type: WallWood
+  components:
+  - pos: 4.5,-5.5
+    parent: 6
+    type: Transform
+- uid: 49
+  type: WallWood
+  components:
+  - pos: 3.5,1.5
+    parent: 6
+    type: Transform
+- uid: 50
+  type: WallWood
+  components:
+  - pos: 4.5,-0.5
+    parent: 6
+    type: Transform
+- uid: 51
+  type: WallWood
+  components:
+  - pos: 3.5,0.5
+    parent: 6
+    type: Transform
+- uid: 52
+  type: WallWood
+  components:
+  - pos: 3.5,2.5
+    parent: 6
+    type: Transform
+- uid: 53
+  type: WallWood
+  components:
+  - pos: 2.5,2.5
+    parent: 6
+    type: Transform
+- uid: 54
+  type: AsteroidRock
+  components:
+  - pos: -3.5,4.5
+    parent: 6
+    type: Transform
+- uid: 55
+  type: WallWood
+  components:
+  - pos: -5.5,2.5
+    parent: 6
+    type: Transform
+- uid: 56
+  type: AsteroidRock
+  components:
+  - pos: -3.5,5.5
+    parent: 6
+    type: Transform
+- uid: 57
+  type: AMEJar
+  components:
+  - pos: -4.8049326,5.4739976
+    parent: 6
+    type: Transform
+- uid: 58
+  type: WallWood
+  components:
+  - pos: -5.5,1.5
+    parent: 6
+    type: Transform
+- uid: 59
+  type: WallWood
+  components:
+  - pos: -5.5,0.5
+    parent: 6
+    type: Transform
+- uid: 60
+  type: WallWood
+  components:
+  - pos: -6.5,0.5
+    parent: 6
+    type: Transform
+- uid: 61
+  type: WallWood
+  components:
+  - pos: -6.5,-2.5
+    parent: 6
+    type: Transform
+- uid: 62
+  type: WallWood
+  components:
+  - pos: -6.5,-0.5
+    parent: 6
+    type: Transform
+- uid: 63
+  type: WallWood
+  components:
+  - pos: -6.5,-1.5
+    parent: 6
+    type: Transform
+- uid: 64
+  type: TableWood
+  components:
+  - pos: 2.5,-2.5
+    parent: 6
+    type: Transform
+- uid: 65
+  type: WallWood
+  components:
+  - pos: -5.5,-3.5
+    parent: 6
+    type: Transform
+- uid: 66
+  type: WallWood
+  components:
+  - pos: -6.5,-4.5
+    parent: 6
+    type: Transform
+- uid: 67
+  type: WallWood
+  components:
+  - pos: -5.5,-5.5
+    parent: 6
+    type: Transform
+- uid: 68
+  type: WallWood
+  components:
+  - pos: -6.5,-3.5
+    parent: 6
+    type: Transform
+- uid: 69
+  type: WoodDoor
+  components:
+  - pos: -2.5,-6.5
+    parent: 6
+    type: Transform
+- uid: 70
+  type: TableWood
+  components:
+  - pos: 1.5,-2.5
+    parent: 6
+    type: Transform
+- uid: 71
+  type: ChairWood
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 2.5,-3.5
+    parent: 6
+    type: Transform
+- uid: 72
+  type: TableWood
+  components:
+  - pos: 2.5,-1.5
+    parent: 6
+    type: Transform
+- uid: 73
+  type: FloorTileItemWood
+  components:
+  - pos: -3.6758664,1.6768146
+    parent: 6
+    type: Transform
+- uid: 74
+  type: Bookshelf
+  components:
+  - pos: -3.5,-0.5
+    parent: 6
+    type: Transform
+- uid: 75
+  type: Bookshelf
+  components:
+  - pos: -2.5,-0.5
+    parent: 6
+    type: Transform
+- uid: 76
+  type: Bookshelf
+  components:
+  - pos: -1.5,-0.5
+    parent: 6
+    type: Transform
+- uid: 77
+  type: Bookshelf
+  components:
+  - pos: -0.5,-0.5
+    parent: 6
+    type: Transform
+- uid: 78
+  type: Bookshelf
+  components:
+  - pos: -0.5,-2.5
+    parent: 6
+    type: Transform
+- uid: 79
+  type: Bookshelf
+  components:
+  - pos: -1.5,-2.5
+    parent: 6
+    type: Transform
+- uid: 80
+  type: Bookshelf
+  components:
+  - pos: -2.5,-2.5
+    parent: 6
+    type: Transform
+- uid: 81
+  type: Bookshelf
+  components:
+  - pos: -3.5,-2.5
+    parent: 6
+    type: Transform
+- uid: 82
+  type: Bookshelf
+  components:
+  - pos: -3.5,-4.5
+    parent: 6
+    type: Transform
+- uid: 83
+  type: Bookshelf
+  components:
+  - pos: -1.5,-4.5
+    parent: 6
+    type: Transform
+- uid: 84
+  type: Bookshelf
+  components:
+  - pos: -0.5,-4.5
+    parent: 6
+    type: Transform
+- uid: 85
+  type: Bookshelf
+  components:
+  - pos: -2.5,-4.5
+    parent: 6
+    type: Transform
+- uid: 86
+  type: WoodDoor
+  components:
+  - pos: -3.5,-6.5
+    parent: 6
+    type: Transform
+- uid: 87
+  type: WallWood
+  components:
+  - pos: -1.5,-6.5
+    parent: 6
+    type: Transform
+- uid: 88
+  type: WallWood
+  components:
+  - pos: -0.5,-6.5
+    parent: 6
+    type: Transform
+- uid: 89
+  type: WallWood
+  components:
+  - pos: 0.5,-6.5
+    parent: 6
+    type: Transform
+- uid: 90
+  type: WallWood
+  components:
+  - pos: 1.5,-6.5
+    parent: 6
+    type: Transform
+- uid: 91
+  type: WallWood
+  components:
+  - pos: -4.5,-6.5
+    parent: 6
+    type: Transform
+- uid: 92
+  type: AsteroidRock
+  components:
+  - pos: -6.5,1.5
+    parent: 6
+    type: Transform
+- uid: 93
+  type: AsteroidRock
+  components:
+  - pos: -6.5,2.5
+    parent: 6
+    type: Transform
+- uid: 94
+  type: AsteroidRock
+  components:
+  - pos: -6.5,3.5
+    parent: 6
+    type: Transform
+- uid: 95
+  type: AsteroidRock
+  components:
+  - pos: -3.5,3.5
+    parent: 6
+    type: Transform
+- uid: 96
+  type: AsteroidRock
+  components:
+  - pos: -4.5,4.5
+    parent: 6
+    type: Transform
+- uid: 97
+  type: AsteroidRock
+  components:
+  - pos: 2.5,4.5
+    parent: 6
+    type: Transform
+- uid: 98
+  type: AsteroidRock
+  components:
+  - pos: 2.5,3.5
+    parent: 6
+    type: Transform
+- uid: 99
+  type: AsteroidRock
+  components:
+  - pos: 3.5,3.5
+    parent: 6
+    type: Transform
+- uid: 100
+  type: AsteroidRock
+  components:
+  - pos: 2.5,-5.5
+    parent: 6
+    type: Transform
+- uid: 101
+  type: SalvageMobSpawner75
+  components:
+  - pos: 0.5,0.5
+    parent: 6
+    type: Transform
+- uid: 102
+  type: SalvageMobSpawner75
+  components:
+  - pos: 3.5,-2.5
+    parent: 6
+    type: Transform
+- uid: 103
+  type: RandomArtifactSpawner
+  components:
+  - pos: 0.5,3.5
+    parent: 6
+    type: Transform
+- uid: 104
+  type: ClothingShoesBootsSalvage
+  components:
+  - pos: -4.320834,0.7001641
+    parent: 6
+    type: Transform
+- uid: 105
+  type: BookDetective
+  components:
+  - pos: -3.2114592,-1.4248359
+    parent: 6
+    type: Transform
+- uid: 106
+  type: BookFishing
+  components:
+  - pos: -5.539584,-4.549836
+    parent: 6
+    type: Transform
+- uid: 107
+  type: BookGnominomicon
+  components:
+  - pos: 2.6479158,-1.4717109
+    parent: 6
+    type: Transform
+- uid: 108
+  type: BookChemistryInsane
+  components:
+  - pos: 2.3979158,1.5907891
+    parent: 6
+    type: Transform
+- uid: 109
+  type: BookBotanicalTextbook
+  components:
+  - pos: 1.6166658,-5.5689354
+    parent: 6
+    type: Transform
+- uid: 110
+  type: Rack
+  components:
+  - pos: 1.5,-5.5
+    parent: 6
+    type: Transform
+- uid: 111
+  type: BookDemonomiconRandom
+  components:
+  - pos: -0.47708416,4.4708576
+    parent: 6
+    type: Transform
+- uid: 112
+  type: SalvageMobSpawner75
+  components:
+  - pos: -4.5,-1.5
+    parent: 6
+    type: Transform
+- uid: 113
+  type: SalvageMobSpawner75
+  components:
+  - pos: -2.5,1.5
+    parent: 6
+    type: Transform
+- uid: 114
+  type: PosterContrabandBustyBackdoorExoBabes6
+  components:
+  - pos: -1.5,2.5
+    parent: 6
+    type: Transform
+- uid: 115
+  type: PosterLegitDickGumshue
+  components:
+  - pos: -4.5,-6.5
+    parent: 6
+    type: Transform
+- uid: 116
+  type: PosterContrabandLustyExomorph
+  components:
+  - pos: 0.5,2.5
+    parent: 6
+    type: Transform
+- uid: 117
+  type: AsteroidRock
+  components:
+  - pos: -3.5,6.5
+    parent: 6
+    type: Transform
+- uid: 118
+  type: AMEJar
+  components:
+  - pos: -4.5965986,5.453164
+    parent: 6
+    type: Transform
+- uid: 119
+  type: AMEJar
+  components:
+  - pos: -4.4715986,5.4114976
+    parent: 6
+    type: Transform
+- uid: 120
+  type: AMEJar
+  components:
+  - pos: -4.2840986,5.453164
+    parent: 6
+    type: Transform
+- uid: 121
+  type: MaterialWoodPlank1
+  components:
+  - pos: -4.496254,3.473495
+    parent: 6
+    type: Transform
+- uid: 122
+  type: MaterialWoodPlank1
+  components:
+  - pos: -4.558754,3.20787
+    parent: 6
+    type: Transform
+- uid: 123
+  type: MaterialWoodPlank1
+  components:
+  - pos: -4.402504,3.504745
+    parent: 6
+    type: Transform
+- uid: 124
+  type: MaterialWoodPlank1
+  components:
+  - pos: -4.496254,2.55162
+    parent: 6
+    type: Transform
+- uid: 125
+  type: MaterialWoodPlank1
+  components:
+  - pos: -3.949379,2.73912
+    parent: 6
+    type: Transform
+- uid: 126
+  type: MaterialWoodPlank1
+  components:
+  - pos: -3.543129,2.473495
+    parent: 6
+    type: Transform
+- uid: 127
+  type: MaterialWoodPlank1
+  components:
+  - pos: -3.371254,2.33287
+    parent: 6
+    type: Transform
+- uid: 128
+  type: TablePlasmaGlass
+  components:
+  - pos: -0.5,4.5
+    parent: 6
+    type: Transform
+...

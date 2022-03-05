@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using Content.Client.Resources;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Content.Shared.NodeContainer.NodeVis;
@@ -18,7 +14,7 @@ namespace Content.Client.NodeContainer
     public sealed class NodeVisualizationOverlay : Overlay
     {
         private readonly NodeGroupSystem _system;
-        private readonly IEntityLookup _lookup;
+        private readonly EntityLookupSystem _lookup;
         private readonly IMapManager _mapManager;
         private readonly IInputManager _inputManager;
         private readonly IEntityManager _entityManager;
@@ -36,7 +32,7 @@ namespace Content.Client.NodeContainer
 
         public NodeVisualizationOverlay(
             NodeGroupSystem system,
-            IEntityLookup lookup,
+            EntityLookupSystem lookup,
             IMapManager mapManager,
             IInputManager inputManager,
             IResourceCache cache,
@@ -90,6 +86,7 @@ namespace Content.Client.NodeContainer
             sb.Append($"node: {node.Name}\n");
             sb.Append($"type: {node.Type}\n");
             sb.Append($"grid pos: {gridTile}\n");
+            sb.Append(group.DebugData);
 
             args.ScreenHandle.DrawString(_font, mousePos + (20, -20), sb.ToString());
         }

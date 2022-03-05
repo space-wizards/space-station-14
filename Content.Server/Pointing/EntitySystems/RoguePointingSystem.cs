@@ -5,7 +5,6 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Pointing.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -19,8 +18,7 @@ namespace Content.Server.Pointing.EntitySystems
     internal sealed class RoguePointingSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-
-        [Dependency] private readonly ExplosionSystem _explosions = default!;
+        [Dependency] private readonly ExplosionSystem _explosion = default!;
 
         public override void Initialize()
         {
@@ -103,10 +101,7 @@ namespace Content.Server.Pointing.EntitySystems
                 {
                     return;
                 }
-
-                _explosions.SpawnExplosion(uid, 0, 2, 1, 1);
-                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), component.ExplosionSound.GetSound(), uid);
-
+                _explosion.QueueExplosion(uid, "Default", 50, 3, 10);
                 EntityManager.QueueDeleteEntity(uid);
             }
         }

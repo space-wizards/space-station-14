@@ -17,7 +17,7 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Server.Communications
 {
     [RegisterComponent]
-    public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent, IEntityEventSubscriber
+    public sealed class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent, IEntityEventSubscriber
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
@@ -109,7 +109,7 @@ namespace Content.Server.Communications
                     }
 
                     message += $"\nSent by {author}";
-                    _chatManager.DispatchStationAnnouncement(message, "Communications Console");
+                    _chatManager.DispatchStationAnnouncement(message, "Communications Console", colorOverride: Color.Gold);
                     break;
             }
         }

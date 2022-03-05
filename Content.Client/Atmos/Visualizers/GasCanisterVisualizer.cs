@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
-    public class GasCanisterVisualizer : AppearanceVisualizer
+    public sealed class GasCanisterVisualizer : AppearanceVisualizer
     {
         [DataField("pressureStates")]
         private readonly string[] _statePressure = {"", "", "", ""};

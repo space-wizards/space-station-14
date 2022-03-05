@@ -13,7 +13,7 @@ namespace Content.Server.Traitor.Uplink.Account
     /// <summary>
     ///     Manage all registred uplink accounts and their balance
     /// </summary>
-    public class UplinkAccountsSystem : EntitySystem
+    public sealed class UplinkAccountsSystem : EntitySystem
     {
         public const string TelecrystalProtoId = "Telecrystal";
 

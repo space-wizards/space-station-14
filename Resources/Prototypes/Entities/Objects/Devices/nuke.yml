@@ -20,9 +20,12 @@
         mass: 150
         layer:
         - SmallImpassable
-        mask:
-        - VaultImpassable
     - type: Nuke
+      # ~35 tile radius in open space
+      explosionType: Default
+      maxIntensity: 100
+      intensitySlope: 5
+      totalIntensity: 200000
       diskSlot:
         name: Disk
         insertSound:
@@ -33,6 +36,8 @@
           tags:
           - NukeDisk
     - type: InteractionOutline
+    - type: ActivatableUI
+      key: enum.NukeUiKey.Key
     - type: UserInterface
       interfaces:
         - key: enum.NukeUiKey.Key

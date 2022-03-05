@@ -16,6 +16,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Items.UI
 {
+    [Virtual]
     public class ItemSlotButton : Control, IEntityEventSubscriber
     {
         private const string HighlightShader = "SelectionOutlineInrange";

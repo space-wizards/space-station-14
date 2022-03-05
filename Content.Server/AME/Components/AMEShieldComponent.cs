@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.AME.Components
 {
     [RegisterComponent]
-    public class AMEShieldComponent : SharedAMEShieldComponent
+    public sealed class AMEShieldComponent : SharedAMEShieldComponent
     {
 
         private bool _isCore = false;

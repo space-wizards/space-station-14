@@ -32,9 +32,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Storage.Components
 {
     [RegisterComponent]
+    [Virtual]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IExAct
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -474,26 +475,8 @@ namespace Content.Server.Storage.Components
 
         protected virtual IEnumerable<EntityUid> DetermineCollidingEntities()
         {
-            var entityLookup = IoCManager.Resolve<IEntityLookup>();
+            var entityLookup = EntitySystem.Get<EntityLookupSystem>();
             return entityLookup.GetEntitiesIntersecting(Owner, _enteringRange, LookupFlags.Approximate);
-        }
-
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
-        {
-            if (eventArgs.Severity < ExplosionSeverity.Heavy)
-            {
-                return;
-            }
-
-            var containedEntities = Contents.ContainedEntities.ToList();
-            foreach (var entity in containedEntities)
-            {
-                var exActs = _entMan.GetComponents<IExAct>(entity).ToArray();
-                foreach (var exAct in exActs)
-                {
-                    exAct.OnExplosion(eventArgs);
-                }
-            }
         }
     }
 

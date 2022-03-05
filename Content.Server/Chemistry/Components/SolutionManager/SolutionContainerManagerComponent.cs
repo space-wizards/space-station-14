@@ -11,7 +11,7 @@ namespace Content.Server.Chemistry.Components.SolutionManager
 {
     [RegisterComponent]
     [Friend(typeof(SolutionContainerSystem))]
-    public class SolutionContainerManagerComponent : Component
+    public sealed class SolutionContainerManagerComponent : Component
     {
         [ViewVariables]
         [DataField("solutions")]

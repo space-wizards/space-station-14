@@ -7,7 +7,7 @@ using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 namespace Content.Client.MedicalScanner.UI
 {
     [UsedImplicitly]
-    public class MedicalScannerBoundUserInterface : BoundUserInterface
+    public sealed class MedicalScannerBoundUserInterface : BoundUserInterface
     {
         private MedicalScannerWindow? _window;
 

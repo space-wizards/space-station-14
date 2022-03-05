@@ -11,7 +11,7 @@ namespace Content.Server.Atmos.Piping.Components
     ///     Adds itself to a <see cref="IAtmosphereComponent"/> to be updated by.
     /// </summary>
     [RegisterComponent]
-    public class AtmosDeviceComponent : Component
+    public sealed class AtmosDeviceComponent : Component
     {
         /// <summary>
         ///     Whether this device requires being anchored to join an atmosphere.

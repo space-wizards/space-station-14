@@ -20,7 +20,7 @@ namespace Content.Server.AME.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IInteractUsing))]
-    public class AMEPartComponent : Component, IInteractUsing
+    public sealed class AMEPartComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;

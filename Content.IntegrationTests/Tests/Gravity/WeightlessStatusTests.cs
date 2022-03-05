@@ -13,7 +13,7 @@ namespace Content.IntegrationTests.Tests.Gravity
     [TestFixture]
     [TestOf(typeof(WeightlessSystem))]
     [TestOf(typeof(GravityGeneratorComponent))]
-    public class WeightlessStatusTests : ContentIntegrationTest
+    public sealed class WeightlessStatusTests : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

@@ -12,7 +12,7 @@ namespace Content.Server.Objectives.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class KillRandomPersonCondition : KillPersonCondition
+    public sealed class KillRandomPersonCondition : KillPersonCondition
     {
         public override IObjectiveCondition GetAssigned(Mind.Mind mind)
         {

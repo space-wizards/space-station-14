@@ -20,7 +20,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class ComponentInTile : IGraphCondition
+    public sealed class ComponentInTile : IGraphCondition
     {
         /// <summary>
         ///     If true, any entity on the tile must have the component.
@@ -52,7 +52,7 @@ namespace Content.Server.Construction.Conditions
 
             var transform = entityManager.GetComponent<TransformComponent>(uid);
             var indices = transform.Coordinates.ToVector2i(entityManager, IoCManager.Resolve<IMapManager>());
-            var entities = indices.GetEntitiesInTile(transform.GridID, LookupFlags.Approximate | LookupFlags.IncludeAnchored, IoCManager.Resolve<IEntityLookup>());
+            var entities = indices.GetEntitiesInTile(transform.GridID, LookupFlags.Approximate | LookupFlags.IncludeAnchored, EntitySystem.Get<EntityLookupSystem>());
 
             foreach (var ent in entities)
             {

@@ -15,7 +15,7 @@ namespace Content.Shared.Body.Components
     }
 
     [Serializable, NetSerializable]
-    public class BodyScannerUIState : BoundUserInterfaceState
+    public sealed class BodyScannerUIState : BoundUserInterfaceState
     {
         public readonly EntityUid Uid;
 

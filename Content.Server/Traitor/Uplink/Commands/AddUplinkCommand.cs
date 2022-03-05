@@ -13,7 +13,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Traitor.Uplink.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddUplinkCommand : IConsoleCommand
+    public sealed class AddUplinkCommand : IConsoleCommand
     {
         public string Command => "adduplink";
 

@@ -14,16 +14,12 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 3
+        Asphyxiation: 1.5
     damageRecovery:
       types:
         Asphyxiation: -1.5
   - type: Alerts
   - type: Actions
-    innateActions:
-      - CombatMode
-      - Disarm
-      - HumanScream
   - type: Eye
   - type: CameraRecoil
   - type: Examiner

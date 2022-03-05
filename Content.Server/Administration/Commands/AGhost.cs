@@ -11,7 +11,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class AGhost : IConsoleCommand
+    public sealed class AGhost : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -46,7 +46,7 @@ namespace Content.Server.Administration.Commands
             var coordinates = player.AttachedEntity != null
                 ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
                 : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
-            var ghost = _entities.SpawnEntity("AdminObserver", coordinates);
+            var ghost = _entities.SpawnEntity("AdminObserver", coordinates.ToMap(_entities));
 
             if (canReturn)
             {

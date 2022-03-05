@@ -252,7 +252,7 @@ namespace Content.Client.LateJoin
         }
     }
 
-    class JobButton : ContainerButton
+    sealed class JobButton : ContainerButton
     {
         public string JobId { get; }
         public int Amount { get; }

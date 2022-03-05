@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Radar;
 
 [RegisterComponent]
-public class RadarConsoleComponent : Component
+public sealed class RadarConsoleComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("range")]

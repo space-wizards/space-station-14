@@ -9,7 +9,7 @@ using Robust.Shared.Reflection;
 namespace Content.Tests.Shared.Gamestates
 {
     [TestFixture]
-    public class ComponentStateNullTest
+    public sealed class ComponentStateNullTest
     {
         [Test]
         public void HandleComponentState_NullStates_NotThrow()
@@ -52,7 +52,7 @@ namespace Content.Tests.Shared.Gamestates
             return reflection;
         }
 
-        private class FullReflectionManager : ReflectionManager
+        private sealed class FullReflectionManager : ReflectionManager
         {
             protected override IEnumerable<string> TypePrefixes => Prefixes;
 

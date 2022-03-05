@@ -20,7 +20,7 @@ namespace Content.Shared.Containers.ItemSlots
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(ItemSlotsSystem))]
-    public class ItemSlotsComponent : Component
+    public sealed class ItemSlotsComponent : Component
     {
         /// <summary>
         ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
@@ -67,7 +67,7 @@ namespace Content.Shared.Containers.ItemSlots
     /// </summary>
     [DataDefinition]
     [Friend(typeof(ItemSlotsSystem))]
-    public class ItemSlot
+    public sealed class ItemSlot
     {
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist;

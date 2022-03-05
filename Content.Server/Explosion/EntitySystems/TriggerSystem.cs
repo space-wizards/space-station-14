@@ -65,32 +65,10 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<ToggleDoorOnTriggerComponent, TriggerEvent>(HandleDoorTrigger);
         }
 
-        #region Explosions
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
-
-            Explode(uid, explosiveComponent, args.User);
+            _explosions.TriggerExplosive(uid);
         }
-
-        // You really shouldn't call this directly (TODO Change that when ExplosionHelper gets changed).
-        public void Explode(EntityUid uid, ExplosiveComponent component, EntityUid? user = null)
-        {
-            if (component.Exploding)
-            {
-                return;
-            }
-
-            component.Exploding = true;
-            _explosions.SpawnExplosion(uid,
-                component.DevastationRange,
-                component.HeavyImpactRange,
-                component.LightImpactRange,
-                component.FlashRange,
-                user);
-            EntityManager.QueueDeleteEntity(uid);
-        }
-        #endregion
 
         #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
@@ -103,7 +81,7 @@ namespace Content.Server.Explosion.EntitySystems
         private void HandleSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
         {
             if (component.Sound == null) return;
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.Sound.GetSound(), AudioHelpers.WithVariation(0.01f));
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.Sound.GetSound(), uid);
         }
 
         private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)

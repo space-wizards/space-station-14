@@ -88,13 +88,11 @@
       amount: 1
   effects:
     - !type:ExplosionReactionEffect
-      #Ranges used when 1 potassium + 1 water react (A unit reaction)
-      devastationRange: 0.05
-      heavyImpactRange: 0.1
-      lightImpactRange: 0.15
-      flashRange: 0.2
-      scaled: true #Scaled proportionally to amount of potassium and water
-      maxScale: 30 #Explosion strength stops scaling at 30 potassium + 30 water
+      explosionType: Default
+      maxIntensity: 1 # at most 15 damage per tile
+      intensityPerUnit: 0.5 # 50+50 reagent for maximum explosion 
+      intensitySlope: 2
+      maxTotalIntensity: 25
 
 - type: reaction
   id: Smoke
