@@ -17,7 +17,7 @@ namespace Content.Server.Singularity.EntitySystems
     [UsedImplicitly]
     public sealed class SingularitySystem : SharedSingularitySystem
     {
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
 

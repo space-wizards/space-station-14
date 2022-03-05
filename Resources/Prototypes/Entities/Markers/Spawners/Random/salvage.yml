@@ -48,6 +48,7 @@
   name: Salvage Mob Spawner
   id: SalvageMobSpawner
   parent: MarkerBase
+  suffix: 25
   components:
     - type: Sprite
       layers:
@@ -64,4 +65,21 @@
         - DehydratedSpaceCarp
       chance: 0.25
       offset: 0.2
+
+- type: entity
+  id: SalvageMobSpawner75
+  parent: SalvageMobSpawner
+  suffix: 75
+  components:
+  - type: RandomSpawner
+    prototypes:
+    - MobCarp
+    - MobCarp
+    - MobCarp
+    - MobCarp
+    - MobCarp
+    - PlushieCarp
+    - DehydratedSpaceCarp
+    chance: 0.75
+    offset: 0.2
 

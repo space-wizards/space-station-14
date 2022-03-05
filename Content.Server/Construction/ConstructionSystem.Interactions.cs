@@ -403,7 +403,7 @@ namespace Content.Server.Construction
             foreach (var action in actions)
             {
                 // If an action deletes the entity, we stop performing actions.
-                if (!EntityManager.EntityExists(uid))
+                if (!Exists(uid))
                     break;
 
                 action.PerformAction(uid, userUid, EntityManager);
