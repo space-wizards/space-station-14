@@ -260,7 +260,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 {
                     // no longer an edge tile
                     edges.Remove(neighbourIndex);
-                    return;
+                    continue;
                 }
 
                 edges[neighbourIndex] = neighborSpaceDir;
