@@ -25,7 +25,7 @@ namespace Content.Server.Actions
         private void OnMetaFlagRemoval(EntityUid uid, ActionsComponent component, ref MetaFlagRemoveAttemptEvent args)
         {
             if (component.LifeStage == ComponentLifeStage.Running)
-                args.Cancelled = true;
+                args.ToRemove &= ~MetaDataFlags.EntitySpecific;
         }
 
         private void OnStartup(EntityUid uid, ActionsComponent component, ComponentStartup args)
