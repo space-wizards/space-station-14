@@ -493,12 +493,15 @@ namespace Content.Client.Preferences.UI
 
         private void RebuildSpriteView()
         {
-            var dollProto = _prototypeManager.Index<SpeciesPrototype>(Profile?.Species ?? SpeciesManager.DefaultSpecies).DollPrototype;
-            _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
+            if (_previewDummy == default)
+            {
+                var dollProto = _prototypeManager.Index<SpeciesPrototype>(Profile?.Species ?? SpeciesManager.DefaultSpecies).DollPrototype;
+                _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
+            }
 
             var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy);
 
-            if(_previewSprite == null)
+            if (_previewSprite == null)
             {
                 // Front
                 _previewSprite = new SpriteView
@@ -516,7 +519,7 @@ namespace Content.Client.Preferences.UI
                 _previewSprite.Sprite = sprite;
             }
 
-            if(_previewSpriteSide == null)
+            if (_previewSpriteSide == null)
             {
                 _previewSpriteSide = new SpriteView
                 {
