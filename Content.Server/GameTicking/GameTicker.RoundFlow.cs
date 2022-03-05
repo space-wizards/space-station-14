@@ -422,15 +422,15 @@ namespace Content.Server.GameTicking
                 unCastData.ContentData()?.WipeMind();
             }
 
-            _mapManager.Restart();
-
-            // Delete all remaining entities.
+            // Delete all entities.
             foreach (var entity in EntityManager.GetEntities().ToArray())
             {
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
                 EntityManager.DeleteEntity(entity);
             }
+
+            _mapManager.Restart();
 
             _roleBanManager.Restart();
 
