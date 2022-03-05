@@ -16,6 +16,7 @@ using Robust.Shared.Player;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Item;
+using Content.Shared.DragDrop;
 
 namespace Content.Server.Drone
 {
@@ -35,6 +36,7 @@ namespace Content.Server.Drone
             SubscribeLocalEvent<DroneComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<DroneComponent, EmoteAttemptEvent>(OnEmoteAttempt);
             SubscribeLocalEvent<DroneComponent, ThrowAttemptEvent>(OnThrowAttempt);
+            SubscribeLocalEvent<DroneComponent, DropAttemptEvent>(OnDropAttempt);
         }
 
         private void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
@@ -127,6 +129,12 @@ namespace Content.Server.Drone
             args.Cancel();
         }
 
+        private void OnDropAttempt(EntityUid uid, DroneComponent drone, DropAttemptEvent args)
+        {
+            if (OrganicsInRange(uid, drone))
+                args.Cancel();
+        }
+
         private void UpdateDroneAppearance(EntityUid uid, DroneStatus status)
         {
             if (TryComp<AppearanceComponent>(uid, out var appearance))
@@ -142,6 +150,7 @@ namespace Content.Server.Drone
             {
                 if (HasComp<MobStateComponent>(entity) && !HasComp<DroneComponent>(entity))
                 {
+                    _popupSystem.PopupEntity(Loc.GetString("drone-too-close"), uid, Filter.Entities(uid));
                     return true;
                 }
             }
