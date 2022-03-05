@@ -21,11 +21,12 @@
         layer:
         - SmallImpassable
     - type: Nuke
-      # ~35 tile radius in open space
+      # ~50 tile radius in open space
+      # close to defaulkt max cap.
       explosionType: Default
       maxIntensity: 100
       intensitySlope: 5
-      totalIntensity: 200000
+      totalIntensity: 500000
       diskSlot:
         name: Disk
         insertSound:

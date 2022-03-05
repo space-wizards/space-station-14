@@ -177,7 +177,6 @@ public sealed partial class ExplosionSystem : EntitySystem
     internal bool ExplodeTile(EntityLookupComponent lookup,
         IMapGrid grid,
         Vector2i tile,
-        float intensity,
         float throwForce,
         DamageSpecifier damage,
         MapCoordinates epicenter,
@@ -236,7 +235,6 @@ public sealed partial class ExplosionSystem : EntitySystem
         Matrix3 spaceMatrix,
         Matrix3 invSpaceMatrix,
         Vector2i tile,
-        float intensity,
         float throwForce,
         DamageSpecifier damage,
         MapCoordinates epicenter,
@@ -519,13 +517,13 @@ sealed class Explosion
                 var canDamageFloor = _system.ExplodeTile(_currentLookup,
                     _currentGrid,
                     _currentEnumerator.Current,
-                    _currentIntensity,
                     _currentThrowForce,
                     _currentDamage,
                     Epicenter,
                     ProcessedEntities,
                     ExplosionType.ID);
 
+                // was there a blocking entity on the tile that was not destroyed by the explosion?
                 if (canDamageFloor)
                     _system.DamageFloorTile(tileRef, _currentIntensity, tileUpdateList, ExplosionType);
             }
@@ -535,7 +533,6 @@ sealed class Explosion
                     _spaceMatrix,
                     _invSpaceMatrix,
                     _currentEnumerator.Current,
-                    _currentIntensity,
                     _currentThrowForce,
                     _currentDamage,
                     Epicenter,

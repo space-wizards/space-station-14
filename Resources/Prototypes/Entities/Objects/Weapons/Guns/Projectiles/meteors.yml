@@ -19,11 +19,9 @@
     deleteOnCollide: false
   - type: Explosive
     explosionType: Default
-    totalIntensity: 2000.0
-    intensitySlope: 20
-    maxIntensity: 60 
-    # should be enough to kill reinforced walls, so meteors are actually a problem for the station.
-    # though maybe reinforced walls should just be nerfed?
+    totalIntensity: 600.0
+    intensitySlope: 30
+    maxIntensity: 45
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false
@@ -31,7 +29,7 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-          radius: 1.0
+          radius: 0.8
       mass: 200
       hard: true
       # Didn't use MapGrid for now as the bounds are stuffed.
