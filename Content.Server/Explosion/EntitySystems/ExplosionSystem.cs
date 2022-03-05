@@ -229,8 +229,9 @@ public sealed partial class ExplosionSystem : EntitySystem
             iterationIntensity,
             epicenter,
             spaceMatrix,
-            area
-            );
+            area,
+            EntityManager,
+            _mapManager);
     }
 
     /// <summary>

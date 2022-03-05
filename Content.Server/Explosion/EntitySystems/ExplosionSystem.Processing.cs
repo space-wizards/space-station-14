@@ -437,16 +437,15 @@ sealed class Explosion
         List<float> tileSetIntensity,
         MapCoordinates epicenter,
         Matrix3 spaceMatrix,
-        int area)
+        int area,
+        IEntityManager entMan,
+        IMapManager mapMan)
     {
         _system = system;
         ExplosionType = explosionType;
         _tileSetIntensity = tileSetIntensity;
         Epicenter = epicenter;
         Area = area;
-
-        var entityMan = IoCManager.Resolve<IEntityManager>();
-        var mapMan = IoCManager.Resolve<IMapManager>();
 
         if (spaceData != null)
         {
@@ -455,7 +454,7 @@ sealed class Explosion
             _explosionData.Add(new()
             {
                 TileLists = spaceData.TileLists,
-                Lookup = entityMan.GetComponent<EntityLookupComponent>(mapUid),
+                Lookup = entMan.GetComponent<EntityLookupComponent>(mapUid),
                 MapGrid = null
             });
 
@@ -468,12 +467,13 @@ sealed class Explosion
             _explosionData.Add(new()
             {
                 TileLists = grid.TileLists,
-                Lookup = entityMan.GetComponent<EntityLookupComponent>(grid.Grid.GridEntityId),
+                Lookup = entMan.GetComponent<EntityLookupComponent>(grid.Grid.GridEntityId),
                 MapGrid = grid.Grid
             });
         }
 
-        TryGetNextTileEnumerator();
+        if (TryGetNextTileEnumerator())
+            MoveNext();
     }
 
     private bool TryGetNextTileEnumerator()
