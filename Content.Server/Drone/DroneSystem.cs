@@ -1,7 +1,6 @@
 using Content.Shared.Drone;
 using Content.Server.Drone.Components;
 using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Examine;
@@ -16,6 +15,7 @@ using Robust.Shared.Player;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Item;
+using Content.Server.Ghost.Components;
 
 namespace Content.Server.Drone
 {
@@ -140,7 +140,7 @@ namespace Content.Server.Drone
             var xform = Comp<TransformComponent>(uid);
             foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, component.InteractionBlockRange))
             {
-                if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity))
+                if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("drone-too-close"), uid, Filter.Entities(uid));
                     return true;
