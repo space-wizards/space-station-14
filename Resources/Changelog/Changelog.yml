@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'NT14 Knightship models have been taken in for a refit, and now have
-      thrusters, gyroscopes and a docking airlock.', type: Add}
-  id: 666
-  time: '2021-11-26T22:50:36.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed cigar case visuals. Can no longer see the cigars when case is
@@ -2989,3 +2983,9 @@ Entries:
       Please report if it continues happening.', type: Fix}
   id: 1165
   time: '2022-03-04T10:52:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Reverted explosion refactor test merge. Will probably return eventually.,
+    type: Remove}
+  id: 1166
+  time: '2022-03-05T17:02:34.0000000+00:00'
