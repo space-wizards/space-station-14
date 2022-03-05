@@ -104,6 +104,7 @@
       type: PlayingCardDeckBoundUserInterface
   - type: UseDelay
     delay: 2.0
+  - type: InteractionOutline
 
 - type: entity
   parent: BaseItem

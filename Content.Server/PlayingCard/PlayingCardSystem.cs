@@ -64,6 +64,8 @@ public sealed class PlayingCardSystem : EntitySystem
 
         EntityUid? cardHand =  _playingCardHandSystem.CreateCardHand(cardComponent.CardDeckID, cardsToAdd, cardComponent.CardHandPrototype, cardComponent.PlayingCardPrototype, cardComponent.NoUniqueCardLayers, transformComp.Coordinates);
 
+        // if added on another slot or ground, should go there, otherwise should go in hand
+
         if (cardHand == null || !TryComp<SharedItemComponent>(cardHand, out var cardHandEnt))
             return;
 

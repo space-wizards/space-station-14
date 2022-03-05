@@ -110,6 +110,14 @@ public class PlayingCardHandSystem : EntitySystem
 
         if (TryComp<HandsComponent>(user, out var hands))
         {
+            int freeHands = hands.GetFreeHands();
+            if (freeHands == 0)
+            {
+                // _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-full-hand-fail"),
+                //     uid, Filter.Entities(user));
+                return;
+            }
+
             string cardName = cardHandComponent.CardList[cardIndex];
 
             EntityUid? createdCard = _playingCardSystem.CreateCard(cardHandComponent.CardDeckID, cardName, cardHandComponent.CardPrototype, cardHandComponent.NoUniqueCardLayers, transformComp.Coordinates, true);
@@ -117,9 +125,9 @@ public class PlayingCardHandSystem : EntitySystem
             if (createdCard == null || !TryComp<SharedItemComponent>(createdCard, out var item))
                 return;
 
-            cardHandComponent.CardList.RemoveAt(cardIndex);
+                cardHandComponent.CardList.RemoveAt(cardIndex);
 
-            hands.PutInHand(item);
+                hands.PutInHand(item);
 
             if (cardHandComponent.CardList.Count < 2)
             {
@@ -143,8 +151,6 @@ public class PlayingCardHandSystem : EntitySystem
                 UpdateAppearance(cardHandComponent);
             }
         }
-        // _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-full-hand-fail"),
-        //     uid, Filter.Entities(user));
     }
 
     public EntityUid? CreateCardHand(string cardDeckID, List<string> cards, string cardHandPrototype, string playingCardPrototype, bool noUniqueCardLayers, EntityCoordinates coords)
