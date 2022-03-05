@@ -114,13 +114,9 @@
       40: 0.4
       50: 0.2
   - type: Temperature
-    heatDamageThreshold: 2000
-    coldDamageThreshold: 0
+    heatDamageThreshold: 5000
     currentTemperature: 310.15
     specificHeat: 42
-    coldDamage:
-      types:
-        Cold : 1 #per second, scales with temperature & other constants
     heatDamage:
       types:
         Heat : 1 #per second, scales with temperature & other constants
