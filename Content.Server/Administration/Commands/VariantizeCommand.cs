@@ -12,9 +12,9 @@ public sealed class VariantizeCommand : IConsoleCommand
 
     public string Command => "variantize";
 
-    public string Description => "Automatic variant randomization.";
+    public string Description => Loc.GetString("variantize-command-description");
 
-    public string Help => "variantize <grid id>";
+    public string Help => Loc.GetString("variantize-command-help-text");
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
