@@ -11,8 +11,6 @@ internal sealed class GridExplosion : TileExplosion
     private Matrix3 _matrix = Matrix3.Identity;
     private Vector2 _offset;
 
-    private HashSet<Vector2i> _processedSpaceTiles = new();
-
     // Tiles which neighbor an exploding tile, but have not yet had the explosion spread to them due to an
     // airtight entity on the exploding tile that prevents the explosion from spreading in that direction. These
     // will be added as a neighbor after some delay, once the explosion on that tile is sufficiently strong to
@@ -29,7 +27,8 @@ internal sealed class GridExplosion : TileExplosion
     ///     Tiles on this grid that are not actually on this grid.... uhh ... yeah.... look its faster than checking
     ///     atmos directions every iteration.
     /// </summary>
-    private HashSet<Vector2i> _spaceTiles = new();
+    private UniqueVector2iSet _spaceTiles = new();
+    private UniqueVector2iSet _processedSpaceTiles = new();
 
     public HashSet<Vector2i> SpaceJump = new();
 
@@ -64,11 +63,12 @@ internal sealed class GridExplosion : TileExplosion
             }
         }
 
-        // TODO EXPLOSIONS fix this shit.
         foreach (var tile in _edgeTiles.Keys)
         {
-            foreach (var diagTile in ExplosionSystem.GetDiagonalNeighbors(tile))
+            foreach (var offset in ExplosionSystem.DiagonalDirectionVectors)
             {
+                var diagTile = tile + offset;
+
                 if (_spaceTiles.Contains(diagTile))
                     continue;
 
@@ -100,8 +100,14 @@ internal sealed class GridExplosion : TileExplosion
         // Mark tiles as entered if any were just freed due to airtight/explosion blockers being destroyed.
         if (FreedTileLists.TryGetValue(iteration, out var freed))
         {
-            freed.ExceptWith(EnteredBlockedTiles);
-            EnteredBlockedTiles.UnionWith(freed);
+            HashSet<Vector2i> toRemove = new();
+            foreach (var tile in freed)
+            {
+                if (!EnteredBlockedTiles.Add(tile))
+                    toRemove.Add(tile);
+            }
+
+            freed.ExceptWith(toRemove);
             NewFreedTiles = freed;
         }
         else

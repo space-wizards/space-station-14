@@ -331,4 +331,3 @@ public sealed partial class ExplosionSystem : EntitySystem
         return GetExplosionEvent(request.Epicenter, request.TypeId, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
     }
 }
-

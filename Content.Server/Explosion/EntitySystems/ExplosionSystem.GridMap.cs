@@ -296,8 +296,10 @@ public sealed partial class ExplosionSystem : EntitySystem
                 }
             }
 
-            foreach (var diagNeighbourIndex in GetDiagonalNeighbors(tileRef.GridIndices))
+            foreach (var offset in DiagonalDirectionVectors)
             {
+                var diagNeighbourIndex = tileRef.GridIndices + offset;
+
                 if (edges.ContainsKey(diagNeighbourIndex))
                     continue;
 
@@ -334,8 +336,9 @@ public sealed partial class ExplosionSystem : EntitySystem
         }
 
         // and again for diagonal neighbours
-        foreach (var neighborIndex in GetDiagonalNeighbors(tileRef.GridIndices))
+        foreach (var offset in DiagonalDirectionVectors)
         {
+            var neighborIndex = tileRef.GridIndices + offset;
             if (diagEdges.Contains(neighborIndex) && !IsDiagonalEdge(grid, neighborIndex, tileRef.GridIndices))
                 diagEdges.Remove(neighborIndex);
         }
@@ -370,8 +373,10 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     private bool IsDiagonalEdge(IMapGrid grid, Vector2i index, Vector2i? ignore = null)
     {
-        foreach (var neighbourIndex in GetDiagonalNeighbors(index))
+        foreach (var offset in DiagonalDirectionVectors)
         {
+            var neighbourIndex = index + offset;
+
             if (neighbourIndex == ignore)
                 continue;
 
@@ -382,16 +387,13 @@ public sealed partial class ExplosionSystem : EntitySystem
         return false;
     }
 
-    /// <summary>
-    ///     Enumerate over diagonally adjacent tiles.
-    /// </summary>
-    internal static IEnumerable<Vector2i> GetDiagonalNeighbors(Vector2i pos)
-    {
-        yield return pos + (1, 1);
-        yield return pos + (-1, -1);
-        yield return pos + (1, -1);
-        yield return pos + (-1, 1);
-    }
+    internal static readonly Vector2i[] DiagonalDirectionVectors =
+        {
+            new (1, 1),
+            new (-1, -1),
+            new (1, -1),
+            new (-1, 1)
+        };
 }
 
 public struct GridEdgeData : IEquatable<GridEdgeData>
