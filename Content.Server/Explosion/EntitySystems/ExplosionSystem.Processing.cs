@@ -187,19 +187,40 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         // get the entities on a tile. Note that we cannot process them directly, or we get
         // enumerator-changed-while-enumerating errors.
-        List<EntityUid> list = new();
-        _entityLookup.FastEntitiesIntersecting(lookup, ref gridBox, entity => list.Add(entity));
+        List<(EntityUid, TransformComponent?) > list = new();
+        var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
+
+        EntityUidQueryCallback callback = uid =>
+        {
+            if (processed.Contains(uid))
+                return;
+
+            var xform = xformQuery.GetComponent(uid);
+
+            if (xform.ParentUid != grid.GridEntityId)
+            {
+                // Not parented to grid. Likely in a container.
+                if (_containerSystem.IsEntityInContainer(uid, xform))
+                    return;
+            }
+
+            list.Add((uid, xform));
+        };
+
+        _entityLookup.FastEntitiesIntersecting(lookup, ref gridBox, callback);
 
         // process those entities
-        foreach (var entity in list)
+        foreach (var (entity, xform) in list)
         {
-            ProcessEntity(entity, epicenter, processed, damage, throwForce, id, false);
+            processed.Add(entity);
+            ProcessEntity(entity, epicenter, processed, damage, throwForce, id, false, xform);
         }
 
         // process anchored entities
         var tileBlocked = false;
         foreach (var entity in grid.GetAnchoredEntities(tile).ToList())
         {
+            processed.Add(entity);
             ProcessEntity(entity, epicenter, processed, damage, throwForce, id, true);
             tileBlocked |= IsBlockingTurf(entity);
         }
@@ -211,18 +232,18 @@ public sealed partial class ExplosionSystem : EntitySystem
         // to be thrown.
         //
         // All things considered, until entity spawning & destruction is sped up, this isn't all that time consuming.
-        // (unless its a REALLY big explosion)
+        // And throwing is disabled for nukes anyways.
         if (throwForce <= 0)
             return !tileBlocked;
 
         list.Clear();
-        _entityLookup.FastEntitiesIntersecting(lookup, ref gridBox, entity => list.Add(entity));
+        _entityLookup.FastEntitiesIntersecting(lookup, ref gridBox, callback);
 
-        foreach (var e in list)
+        foreach (var (entity, xform) in list)
         {
             // Here we only throw, no dealing damage. Containers n such might drop their entities after being destroyed, but
             // they handle their own damage pass-through.
-            ProcessEntity(e, epicenter, processed, null, throwForce, id, false);
+            ProcessEntity(entity, epicenter, processed, null, throwForce, id, false, xform);
         }
 
         return !tileBlocked;
@@ -243,42 +264,60 @@ public sealed partial class ExplosionSystem : EntitySystem
     {
         var gridBox = new Box2(tile * DefaultTileSize, (DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
-        List<EntityUid> list = new();
+        List<(EntityUid, TransformComponent)> list = new();
+        var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
 
         EntityUidQueryCallback callback = uid =>
         {
-            if (gridBox.Contains(invSpaceMatrix.Transform(Transform(uid).WorldPosition)))
-                list.Add(uid);
+            if (processed.Contains(uid))
+                return;
+
+            var xform  = xformQuery.GetComponent(uid);
+
+            if (xform.ParentUid == lookup.Owner)
+            {
+                // parented directly to the map, use local position
+                if (gridBox.Contains(invSpaceMatrix.Transform(xform.LocalPosition)))
+                    list.Add((uid, xform));
+
+                return;
+            }
+
+            // Not parented to map. Likely in a container.
+            if (_containerSystem.IsEntityInContainer(uid, xform))
+                return;
+
+            // finally check if it intersects our tile
+            if (gridBox.Contains(invSpaceMatrix.Transform(xform.LocalPosition)))
+                list.Add((uid, xform));
         };
 
         _entityLookup.FastEntitiesIntersecting(lookup, ref worldBox, callback);
 
-        foreach (var entity in list)
+        foreach (var (entity, xform) in list)
         {
-            ProcessEntity(entity, epicenter, processed, damage, throwForce, id, false);
+            processed.Add(entity);
+            ProcessEntity(entity, epicenter, processed, damage, throwForce, id, false, xform);
         }
 
         if (throwForce <= 0)
             return;
 
+        // Also, throw any entities that were spawned as shrapnel. Compared to entity spawning & destruction, this extra
+        // lookup is relatively minor computational cost, and throwing is disabled for nukes anyways.
         list.Clear();
         _entityLookup.FastEntitiesIntersecting(lookup, ref worldBox, callback);
-        foreach (var entity in list)
+        foreach (var (entity, xform) in list)
         {
-            ProcessEntity(entity, epicenter, processed, null, throwForce, id, false);
+            ProcessEntity(entity, epicenter, processed, null, throwForce, id, false, xform);
         }
     }
 
     /// <summary>
     ///     This function actually applies the explosion affects to an entity.
     /// </summary>
-    private void ProcessEntity(EntityUid uid, MapCoordinates epicenter, HashSet<EntityUid> processed, DamageSpecifier? damage, float throwForce, string id, bool anchored)
+    private void ProcessEntity(EntityUid uid, MapCoordinates epicenter, HashSet<EntityUid> processed, DamageSpecifier? damage, float throwForce, string id, bool anchored, TransformComponent? xform = null)
     {
-        // check whether this is a valid target, and whether we have already damaged this entity (can happen with
-        // explosion-throwing).
-        if (!anchored && _containerSystem.IsEntityInContainer(uid) || !processed.Add(uid))
-            return;
-
         // damage
         if (damage != null)
         {
@@ -294,10 +333,11 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!anchored
             && throwForce > 0
             && !EntityManager.IsQueuedForDeletion(uid)
-            && HasComp<ExplosionLaunchedComponent>(uid)
-            && TryComp(uid, out TransformComponent? transform))
+            && HasComp<ExplosionLaunchedComponent>(uid))
         {
-            uid.TryThrow(transform.WorldPosition - epicenter.Position, throwForce);
+            xform ??= Transform(uid);
+            // TODO purge throw helpers
+            uid.TryThrow(xform.WorldPosition - epicenter.Position, throwForce);
         }
 
         // TODO EXPLOSION puddle / flammable ignite?
