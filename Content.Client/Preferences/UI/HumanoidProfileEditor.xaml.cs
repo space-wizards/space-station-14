@@ -498,31 +498,40 @@ namespace Content.Client.Preferences.UI
 
             var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy);
 
-            _previewSpriteControl.DisposeAllChildren();
-
-            // Front
-            _previewSprite = new SpriteView
+            if(_previewSprite == null)
             {
-                Sprite = sprite,
-                Scale = (6, 6),
-                OverrideDirection = Direction.South,
-                VerticalAlignment = VAlignment.Center,
-                SizeFlagsStretchRatio = 1
-            };
-            _previewSpriteControl.AddChild(_previewSprite);
-
-            _previewSpriteSideControl.DisposeAllChildren();
-
-            // Side
-            _previewSpriteSide = new SpriteView
+                // Front
+                _previewSprite = new SpriteView
+                {
+                    Sprite = sprite,
+                    Scale = (6, 6),
+                    OverrideDirection = Direction.South,
+                    VerticalAlignment = VAlignment.Center,
+                    SizeFlagsStretchRatio = 1
+                };
+                _previewSpriteControl.AddChild(_previewSprite);
+            }
+            else
             {
-                Sprite = sprite,
-                Scale = (6, 6),
-                OverrideDirection = Direction.East,
-                VerticalAlignment = VAlignment.Center,
-                SizeFlagsStretchRatio = 1
-            };
-            _previewSpriteSideControl.AddChild(_previewSpriteSide);
+                _previewSprite.Sprite = sprite;
+            }
+
+            if(_previewSpriteSide == null)
+            {
+                _previewSpriteSide = new SpriteView
+                {
+                    Sprite = sprite,
+                    Scale = (6, 6),
+                    OverrideDirection = Direction.East,
+                    VerticalAlignment = VAlignment.Center,
+                    SizeFlagsStretchRatio = 1
+                };
+                _previewSpriteSideControl.AddChild(_previewSpriteSide);
+            }
+            else
+            {
+                _previewSpriteSide.Sprite = sprite;
+            }
         }
 
         private void LoadServerData()
