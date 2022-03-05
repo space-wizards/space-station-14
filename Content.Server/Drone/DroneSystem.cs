@@ -16,6 +16,7 @@ using Robust.Shared.Player;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Item;
+using Content.Shared.DragDrop;
 
 namespace Content.Server.Drone
 {
@@ -23,6 +24,7 @@ namespace Content.Server.Drone
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -34,14 +36,13 @@ namespace Content.Server.Drone
             SubscribeLocalEvent<DroneComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<DroneComponent, EmoteAttemptEvent>(OnEmoteAttempt);
             SubscribeLocalEvent<DroneComponent, ThrowAttemptEvent>(OnThrowAttempt);
+            SubscribeLocalEvent<DroneComponent, DropAttemptEvent>(OnDropAttempt);
         }
 
         private void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
         {
-            if (HasComp<MobStateComponent>(args.Target) && !HasComp<DroneComponent>(args.Target))
-            {
+            if (OrganicsInRange(uid, component))
                 args.Cancel();
-            }
 
             if (HasComp<SharedItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
             {
@@ -128,12 +129,32 @@ namespace Content.Server.Drone
             args.Cancel();
         }
 
+        private void OnDropAttempt(EntityUid uid, DroneComponent drone, DropAttemptEvent args)
+        {
+            if (OrganicsInRange(uid, drone))
+                args.Cancel();
+        }
+
         private void UpdateDroneAppearance(EntityUid uid, DroneStatus status)
         {
             if (TryComp<AppearanceComponent>(uid, out var appearance))
             {
                 appearance.SetData(DroneVisuals.Status, status);
             }
+        }
+
+        private bool OrganicsInRange(EntityUid uid, DroneComponent component)
+        {
+            var xform = Comp<TransformComponent>(uid);
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, component.InteractionBlockRange))
+            {
+                if (HasComp<MobStateComponent>(entity) && !HasComp<DroneComponent>(entity))
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("drone-too-close"), uid, Filter.Entities(uid));
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
