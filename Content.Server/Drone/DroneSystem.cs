@@ -23,6 +23,7 @@ namespace Content.Server.Drone
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -38,10 +39,8 @@ namespace Content.Server.Drone
 
         private void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
         {
-            if (HasComp<MobStateComponent>(args.Target) && !HasComp<DroneComponent>(args.Target))
-            {
+            if (OrganicsInRange(uid, component))
                 args.Cancel();
-            }
 
             if (HasComp<SharedItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
             {
@@ -134,6 +133,19 @@ namespace Content.Server.Drone
             {
                 appearance.SetData(DroneVisuals.Status, status);
             }
+        }
+
+        private bool OrganicsInRange(EntityUid uid, DroneComponent component)
+        {
+            var xform = Comp<TransformComponent>(uid);
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, component.InteractionBlockRange))
+            {
+                if (HasComp<MobStateComponent>(entity) && !HasComp<DroneComponent>(entity))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
