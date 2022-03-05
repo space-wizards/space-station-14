@@ -6,10 +6,10 @@ namespace Content.Server.Explosion.EntitySystems;
 /// <summary>
 ///     This is the base class for <see cref="SpaceExplosion"/> and <see cref="GridExplosion"/>. It just exists to avoid some code duplication, because those classes are generally quite distinct.
 /// </summary>
-internal abstract class TileExplosion
+public abstract class TileExplosion
 {
     // Main tile data sets, mapping iterations onto tile lists
-    internal Dictionary<int, List<Vector2i>> TileLists = new();
+    public Dictionary<int, List<Vector2i>> TileLists = new();
     protected Dictionary<int, List<Vector2i>> BlockedTileLists = new();
     protected Dictionary<int, HashSet<Vector2i>> FreedTileLists = new();
 
@@ -24,7 +24,7 @@ internal abstract class TileExplosion
     protected UniqueVector2iSet UnenteredBlockedTiles = new();
     protected UniqueVector2iSet EnteredBlockedTiles = new();
 
-    internal virtual void InitTile(Vector2i initialTile)
+    public virtual void InitTile(Vector2i initialTile)
     {
         ProcessedTiles.Add(initialTile);
         TileLists[0] = new() { initialTile };
@@ -104,7 +104,7 @@ internal abstract class TileExplosion
     /// <summary>
     ///     Merge all tile lists into a single output tile list.
     /// </summary>
-    internal void CleanUp()
+    public void CleanUp()
     {
         foreach (var (iteration, blocked) in BlockedTileLists)
         {
@@ -123,7 +123,7 @@ internal abstract class TileExplosion
 ///     This basically exists to replace the use of HashSet<Vector2i> if all you need is the the functions Contains()
 ///     and Add(). This is both faster and apparently allocates less. Does not support iterating over contents
 /// </remarks>
-internal sealed class UniqueVector2iSet
+public sealed class UniqueVector2iSet
 {
     private const int ChunkSize = 32; // # of bits in an integer.
 

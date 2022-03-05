@@ -1,5 +1,6 @@
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
+using static Content.Server.Explosion.EntitySystems.GridEdgeData;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -12,12 +13,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <summary>
     ///     Set of tiles of each grid that are directly adjacent to space, along with the directions that face space.
     /// </summary>
-    private Dictionary<GridId, Dictionary<Vector2i, AtmosDirection>> _gridEdges = new();
-
-    /// <summary>
-    ///     Set of tiles of each grid that are diagonally adjacent to space
-    /// </summary>
-    private Dictionary<GridId, HashSet<Vector2i>> _diagGridEdges = new();
+    private Dictionary<GridId, Dictionary<Vector2i, NeighborFlag>> _gridEdges = new();
 
     /// <summary>
     ///     On grid startup, prepare a map of grid edges.
@@ -27,10 +23,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!_mapManager.TryGetGrid(ev.GridId, out var grid))
             return;
 
-        Dictionary<Vector2i, AtmosDirection> edges = new();
-        HashSet<Vector2i> diagEdges = new();
+        Dictionary<Vector2i, NeighborFlag> edges = new();
         _gridEdges[ev.GridId] = edges;
-        _diagGridEdges[ev.GridId] = diagEdges;
 
         foreach (var tileRef in grid.GetAllTiles())
         {
@@ -39,8 +33,6 @@ public sealed partial class ExplosionSystem : EntitySystem
 
             if (IsEdge(grid, tileRef.GridIndices, out var dir))
                 edges.Add(tileRef.GridIndices, dir);
-            else if (IsDiagonalEdge(grid, tileRef.GridIndices))
-                diagEdges.Add(tileRef.GridIndices);
         }
     }
 
@@ -48,7 +40,6 @@ public sealed partial class ExplosionSystem : EntitySystem
     {
         _airtightMap.Remove(ev.GridId);
         _gridEdges.Remove(ev.GridId);
-        _diagGridEdges.Remove(ev.GridId);
     }
 
     /// <summary>
@@ -112,8 +103,23 @@ public sealed partial class ExplosionSystem : EntitySystem
             {
                 var center = matrix.Transform(tile);
 
-                // this tile might touch several other tiles, or maybe just one tile. Here we use a Vector2i HashSet to
-                // remove duplicates.
+                if ((dir & NeighborFlag.Cardinal) == 0)
+                {
+                    // this is purely a diagonal edge tile
+                    var newIndex = new Vector2i((int) MathF.Floor(center.X), (int) MathF.Floor(center.Y));
+                    if (!transformedEdges.TryGetValue(newIndex, out var data))
+                    {
+                        data = new();
+                        transformedEdges[newIndex] = data;
+                    }
+
+                    data.BlockingGridEdges.Add(new(default, null, center, angle, tileSize));
+                    continue;
+                }
+
+                // Instead of just mapping the center of the tile, we map for points on that tile. This is basically a
+                // shitty approximation to doing a proper check to get all space-tiles that intersect this grid tile.
+                // But it works well enough.
                 transformedTiles.Clear();
                 transformedTiles.Add(new((int) MathF.Floor(center.X + x), (int) MathF.Floor(center.Y + y)));  // initial direction
                 transformedTiles.Add(new((int) MathF.Floor(center.X - y), (int) MathF.Floor(center.Y + x)));  // rotated 90 degrees
@@ -132,46 +138,6 @@ public sealed partial class ExplosionSystem : EntitySystem
             }
         }
 
-        // Next we transform any diagonal edges.
-        Vector2i newIndex;
-        foreach (var gridToTransform in localGrids)
-        {
-            // we treat the target grid separately
-            if (gridToTransform == referenceGrid)
-                continue;
-
-            if (!_diagGridEdges.TryGetValue(gridToTransform, out var diagEdges))
-                continue;
-
-            if (!_mapManager.TryGetGrid(gridToTransform, out var grid) ||
-                grid.ParentMapId != targetMap)
-                continue;
-
-            if (grid.TileSize != tileSize)
-            {
-                Logger.Error($"Explosions do not support grids with different grid sizes. GridIds: {gridToTransform} and {referenceGrid}");
-                continue;
-            }
-
-            var xform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
-            var matrix = offsetMatrix * xform.WorldMatrix * targetMatrix;
-            var angle = xform.WorldRotation - targetAngle;
-
-            foreach (var tile in diagEdges)
-            {
-                var center = matrix.Transform(tile);
-                newIndex = new((int) MathF.Floor(center.X), (int) MathF.Floor(center.Y));
-                if (!transformedEdges.TryGetValue(newIndex, out var data))
-                {
-                    data = new();
-                    transformedEdges[newIndex] = data;
-                }
-
-                // explosions are not allowed to propagate diagonally ONTO grids. so we just use defaults for some fields.
-                data.BlockingGridEdges.Add(new(default, null, center, angle, tileSize));
-            }
-        }
-
         if (referenceGrid == null)
             return (transformedEdges, tileSize);
 
@@ -179,28 +145,18 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         if (_gridEdges.TryGetValue(referenceGrid.Value, out var localEdges))
         {
-            foreach (var (tile, _) in localEdges)
+            foreach (var (tile, dir) in localEdges)
             {
                 // grids cannot overlap, so tile should NEVER be an existing entry.
                 var data = new GridBlockData();
                 transformedEdges[tile] = data;
                 
                 data.UnblockedDirections = AtmosDirection.Invalid; // all directions are blocked automatically.
-                data.BlockingGridEdges.Add(new(tile, referenceGrid.Value, ((Vector2) tile + 0.5f) * tileSize, 0, tileSize));
-            }
-        }
 
-        if (_diagGridEdges.TryGetValue(referenceGrid.Value, out var localDiagEdges))
-        {
-            foreach (var tile in localDiagEdges)
-            {
-
-                // grids cannot overlap, so tile should NEVER be an existing entry.
-                var data = new GridBlockData();
-                transformedEdges[tile] = data;
-
-                data.UnblockedDirections = AtmosDirection.Invalid; // all directions are blocked automatically.
-                data.BlockingGridEdges.Add(new(default, null, ((Vector2) tile + 0.5f) * tileSize, 0, tileSize));
+                if ((dir & NeighborFlag.Cardinal) == 0)
+                    data.BlockingGridEdges.Add(new(default, null, ((Vector2) tile + 0.5f) * tileSize, 0, tileSize));
+                else
+                    data.BlockingGridEdges.Add(new(tile, referenceGrid.Value, ((Vector2) tile + 0.5f) * tileSize, 0, tileSize));
             }
         }
 
@@ -270,41 +226,21 @@ public sealed partial class ExplosionSystem : EntitySystem
             _gridEdges[tileRef.GridIndex] = edges;
         }
 
-        if (!_diagGridEdges.TryGetValue(tileRef.GridIndex, out var diagEdges))
-        {
-            diagEdges = new();
-            _diagGridEdges[tileRef.GridIndex] = diagEdges;
-        }
-
         if (tileRef.Tile.IsEmpty)
         {
             // if the tile is empty, it cannot itself be an edge tile.
             edges.Remove(tileRef.GridIndices);
-            diagEdges.Remove(tileRef.GridIndices);
 
             // add any valid neighbours to the list of edge-tiles
-            for (var i = 0; i < Atmospherics.Directions; i++)
+            for (var i = 0; i < NeighbourVectors.Length; i++)
             {
-                var direction = (AtmosDirection) (1 << i);
-
-                var neighbourIndex = tileRef.GridIndices.Offset(direction);
+                var neighbourIndex = tileRef.GridIndices + NeighbourVectors[i];
 
                 if (grid.TryGetTileRef(neighbourIndex, out var neighbourTile) && !neighbourTile.Tile.IsEmpty)
                 {
-                    edges[neighbourIndex] = edges.GetValueOrDefault(neighbourIndex) | direction.GetOpposite();
-                    diagEdges.Remove(neighbourIndex);
+                    var oppositeDirection = (NeighborFlag) (1 << ((i + 4) % 8));
+                    edges[neighbourIndex] = edges.GetValueOrDefault(neighbourIndex) | oppositeDirection;
                 }
-            }
-
-            foreach (var offset in DiagonalDirectionVectors)
-            {
-                var diagNeighbourIndex = tileRef.GridIndices + offset;
-
-                if (edges.ContainsKey(diagNeighbourIndex))
-                    continue;
-
-                if (grid.TryGetTileRef(diagNeighbourIndex, out var neighbourIndex) && !neighbourIndex.Tile.IsEmpty)
-                    diagEdges.Add(diagNeighbourIndex);
             }
 
             return;
@@ -312,42 +248,28 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         // the tile is not empty space, but was previously. So update directly adjacent neighbours, which may no longer
         // be edge tiles.
-        AtmosDirection spaceDir;
-        for (var i = 0; i < Atmospherics.Directions; i++)
+        for (var i = 0; i < NeighbourVectors.Length; i++)
         {
-            var direction = (AtmosDirection) (1 << i);
-            var neighbourIndex = tileRef.GridIndices.Offset(direction);
+            var neighbourIndex = tileRef.GridIndices + NeighbourVectors[i];
 
-            if (edges.TryGetValue(neighbourIndex, out spaceDir))
+            if (edges.TryGetValue(neighbourIndex, out var neighborSpaceDir))
             {
-                spaceDir = spaceDir & ~direction.GetOpposite();
-                if (spaceDir != AtmosDirection.Invalid)
-                    edges[neighbourIndex] = spaceDir;
-                else
+                var oppositeDirection = (NeighborFlag) (1 << ((i + 4) % 8));
+                neighborSpaceDir &= ~oppositeDirection;
+                if (neighborSpaceDir == NeighborFlag.Invalid)
                 {
-                    // no longer a direct edge ...
+                    // no longer an edge tile
                     edges.Remove(neighbourIndex);
-
-                    // ... but it could now be a diagonal edge
-                    if (IsDiagonalEdge(grid, neighbourIndex, tileRef.GridIndices))
-                        diagEdges.Add(neighbourIndex);
+                    return;
                 }
+
+                edges[neighbourIndex] = neighborSpaceDir;
             }
         }
 
-        // and again for diagonal neighbours
-        foreach (var offset in DiagonalDirectionVectors)
-        {
-            var neighborIndex = tileRef.GridIndices + offset;
-            if (diagEdges.Contains(neighborIndex) && !IsDiagonalEdge(grid, neighborIndex, tileRef.GridIndices))
-                diagEdges.Remove(neighborIndex);
-        }
-
         // finally check if the new tile is itself an edge tile
-        if (IsEdge(grid, tileRef.GridIndices, out spaceDir))
+        if (IsEdge(grid, tileRef.GridIndices, out var spaceDir))
             edges.Add(tileRef.GridIndices, spaceDir);
-        else if (IsDiagonalEdge(grid, tileRef.GridIndices))
-            diagEdges.Add(tileRef.GridIndices);
     }
 
     /// <summary>
@@ -357,41 +279,67 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     Optionally ignore a specific Vector2i. Used by <see cref="OnTileChanged"/> when we already know that a
     ///     given tile is not space. This avoids unnecessary TryGetTileRef calls.
     /// </remarks>
-    private bool IsEdge(IMapGrid grid, Vector2i index, out AtmosDirection spaceDirections)
+    private bool IsEdge(IMapGrid grid, Vector2i index, out NeighborFlag spaceDirections)
     {
-        spaceDirections = AtmosDirection.Invalid;
-        for (var i = 0; i < Atmospherics.Directions; i++)
+        spaceDirections = NeighborFlag.Invalid;
+        for (var i = 0; i < NeighbourVectors.Length; i++)
         {
-            var direction = (AtmosDirection) (1 << i);
-
-            if (!grid.TryGetTileRef(index.Offset(direction), out var neighborTile) || neighborTile.Tile.IsEmpty)
-                spaceDirections |= direction;
+            if (!grid.TryGetTileRef(index + NeighbourVectors[i], out var neighborTile) || neighborTile.Tile.IsEmpty)
+                spaceDirections |= (NeighborFlag) (1 << i);
         }
 
-        return spaceDirections != AtmosDirection.Invalid;
+        return spaceDirections != NeighborFlag.Invalid;
     }
 
-    private bool IsDiagonalEdge(IMapGrid grid, Vector2i index, Vector2i? ignore = null)
+    // yeah this makrs for the third direction bitflag, and the 5th (afaik) direction enum overall.....
+    /// <summary>
+    ///     Directional bitflags. Differ from atmos and normal directional bit flags as NorthEast != North | East
+    /// </summary>
+    [Flags]
+    public enum NeighborFlag : byte
     {
-        foreach (var offset in DiagonalDirectionVectors)
-        {
-            var neighbourIndex = index + offset;
+        Invalid = 0,
+        North = 1 << 0,
+        NorthEast = 1 << 1,
+        East = 1 << 2,
+        SouthEast = 1 << 3,
+        South = 1 << 4,
+        SouthWest = 1 << 5,
+        West = 1 << 6,
+        NorthWest = 1 << 7,
 
-            if (neighbourIndex == ignore)
-                continue;
+        Cardinal = North | East | South | West,
+        Diagonal = NorthEast | SouthEast | SouthWest | NorthWest,
+        Any = Cardinal | Diagonal
+    }
 
-            if (!grid.TryGetTileRef(neighbourIndex, out var neighborTile) || neighborTile.Tile.IsEmpty)
-                return true;
-        }
+    public static bool NeighborHasDirection(NeighborFlag flag, AtmosDirection dir)
+    {
+        if ((flag & NeighborFlag.North) == NeighborFlag.North && dir.HasFlag(AtmosDirection.North))
+            return true;
+
+        if ((flag & NeighborFlag.South) == NeighborFlag.South && dir.HasFlag(AtmosDirection.South))
+            return true;
+
+        if ((flag & NeighborFlag.East) == NeighborFlag.East && dir.HasFlag(AtmosDirection.East))
+            return true;
+
+        if ((flag & NeighborFlag.West) == NeighborFlag.West && dir.HasFlag(AtmosDirection.West))
+            return true;
 
         return false;
     }
 
-    internal static readonly Vector2i[] DiagonalDirectionVectors =
+    // array indices match NeighborFlags shifts.
+    public static readonly Vector2i[] NeighbourVectors =
         {
+            new (0, 1),
             new (1, 1),
-            new (-1, -1),
+            new (1, 0),
             new (1, -1),
+            new (0, -1),
+            new (-1, -1),
+            new (-1, 0),
             new (-1, 1)
         };
 }
@@ -425,7 +373,7 @@ public struct GridEdgeData : IEquatable<GridEdgeData>
     }
 }
 
-public record GridBlockData
+public sealed class GridBlockData
 {
     /// <summary>
     ///     What directions of this tile are not blocked by some other grid?

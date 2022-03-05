@@ -128,7 +128,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 /// <summary>
 ///     Data struct that describes the explosion-blocking airtight entities on a tile.
 /// </summary>
-internal struct TileData
+public struct TileData
 {
     public TileData(Dictionary<string, float> explosionTolerance, AtmosDirection blockedDirections)
     {

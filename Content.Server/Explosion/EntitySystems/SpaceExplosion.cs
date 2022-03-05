@@ -1,9 +1,10 @@
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
+using static Content.Server.Explosion.EntitySystems.GridEdgeData;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-internal sealed class SpaceExplosion : TileExplosion
+public sealed class SpaceExplosion : TileExplosion
 {
     /// <summary>
     ///     The keys of this dictionary correspond to space tiles that intersect a grid. The values have information
@@ -16,15 +17,15 @@ internal sealed class SpaceExplosion : TileExplosion
     ///     After every iteration, this data set will store all the grid-tiles that were reached as a result of the
     ///     explosion expanding in space.
     /// </summary>
-    internal Dictionary<GridId, HashSet<Vector2i>> GridJump = new();
+    public Dictionary<GridId, HashSet<Vector2i>> GridJump = new();
 
-    internal SpaceExplosion(ExplosionSystem system, MapId targetMap, GridId? referenceGrid, List<GridId> localGrids)
+    public SpaceExplosion(ExplosionSystem system, MapId targetMap, GridId? referenceGrid, List<GridId> localGrids)
     {
         (_gridBlockMap, var tileSize) = system.TransformGridEdges(targetMap, referenceGrid, localGrids);
         system.GetUnblockedDirections(_gridBlockMap, tileSize);
     }
 
-    internal int AddNewTiles(int iteration, HashSet<Vector2i> inputSpaceTiles)
+    public int AddNewTiles(int iteration, HashSet<Vector2i> inputSpaceTiles)
     {
         NewTiles = new();
         NewBlockedTiles = new();
@@ -97,7 +98,7 @@ internal sealed class SpaceExplosion : TileExplosion
         }
     }
 
-    internal override void InitTile(Vector2i initialTile)
+    public override void InitTile(Vector2i initialTile)
     {
         base.InitTile(initialTile);
 

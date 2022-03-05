@@ -1,9 +1,10 @@
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
+using static Content.Server.Explosion.EntitySystems.ExplosionSystem;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-internal sealed class GridExplosion : TileExplosion
+public sealed class GridExplosion : TileExplosion
 {
     public IMapGrid Grid;
     private bool _needToTransform = false;
@@ -32,7 +33,7 @@ internal sealed class GridExplosion : TileExplosion
 
     public HashSet<Vector2i> SpaceJump = new();
 
-    private Dictionary<Vector2i, AtmosDirection> _edgeTiles;
+    private Dictionary<Vector2i, NeighborFlag> _edgeTiles;
 
     public GridExplosion(
         IMapGrid grid,
@@ -40,7 +41,7 @@ internal sealed class GridExplosion : TileExplosion
         float maxIntensity,
         float intensityStepSize,
         string typeID,
-        Dictionary<Vector2i, AtmosDirection> edgeTiles,
+        Dictionary<Vector2i, NeighborFlag> edgeTiles,
         GridId? referenceGrid,
         Matrix3 spaceMatrix,
         Angle spaceAngle)
@@ -53,27 +54,13 @@ internal sealed class GridExplosion : TileExplosion
         _edgeTiles = edgeTiles;
 
         // initialise SpaceTiles
-        foreach (var (tile, dir) in _edgeTiles)
+        foreach (var (tile, spaceNeighbors) in _edgeTiles)
         {
-            for (var i = 0; i < Atmospherics.Directions; i++)
+            for (var i = 0; i < NeighbourVectors.Length; i++)
             {
-                var direction = (AtmosDirection) (1 << i);
-                if (dir.IsFlagSet(direction))
-                    _spaceTiles.Add(tile.Offset(direction));
-            }
-        }
-
-        foreach (var tile in _edgeTiles.Keys)
-        {
-            foreach (var offset in ExplosionSystem.DiagonalDirectionVectors)
-            {
-                var diagTile = tile + offset;
-
-                if (_spaceTiles.Contains(diagTile))
-                    continue;
-
-                if (!Grid.TryGetTileRef(diagTile, out var tileRef) || tileRef.Tile.IsEmpty)
-                    _spaceTiles.Add(diagTile);
+                var dir = (NeighborFlag) (1 << i);
+                if ((spaceNeighbors & dir) != NeighborFlag.Invalid)
+                    _spaceTiles.Add(tile + NeighbourVectors[i]);
             }
         }
 
@@ -172,8 +159,7 @@ internal sealed class GridExplosion : TileExplosion
         var blockedDirections = tileData.BlockedDirections;
         if (entryDirections == AtmosDirection.Invalid) // is coming from space?
         {
-            var spaceDirections = _edgeTiles[tile];
-            blocked = (blockedDirections & spaceDirections) != 0; // at least one space direction is blocked.
+            blocked = NeighborHasDirection(_edgeTiles[tile], blockedDirections); // at least one space direction is blocked.
         }
         else
             blocked = (blockedDirections & entryDirections) == entryDirections;// **ALL** entry directions are blocked
