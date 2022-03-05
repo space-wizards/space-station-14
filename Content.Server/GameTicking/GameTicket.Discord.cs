@@ -99,6 +99,8 @@ namespace Content.Server.GameTicking
                 {
                     { "parse", Array.Empty<string>() }
                 };
+
+            public WebhookPayload() {}
         }
     }
 }
