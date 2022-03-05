@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed cigar case visuals. Can no longer see the cigars when case is
-      closed., type: Fix}
-  id: 667
-  time: '2021-11-27T06:43:19.0000000+00:00'
 - author: moony
   changes:
   - {message: Administrators have had an essential command added to their toolset.,
@@ -2989,3 +2983,9 @@ Entries:
     type: Remove}
   id: 1166
   time: '2022-03-05T17:02:34.0000000+00:00'
+- author: ninruB
+  changes:
+  - {message: 'a recipe for white and dark tiles in the crafting menu, sorta like
+      the steel tile recipe.', type: Add}
+  id: 1167
+  time: '2022-03-05T20:47:19.0000000+00:00'
