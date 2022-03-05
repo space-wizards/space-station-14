@@ -12,10 +12,10 @@ namespace Content.Client.Administration
         private readonly AdminSystem _system;
         private readonly IEntityManager _entityManager;
         private readonly IEyeManager _eyeManager;
-        private readonly IEntityLookup _entityLookup;
+        private readonly EntityLookupSystem _entityLookup;
         private readonly Font _font;
 
-        public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, IEntityLookup entityLookup)
+        public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, EntityLookupSystem entityLookup)
         {
             _system = system;
             _entityManager = entityManager;
@@ -46,7 +46,7 @@ namespace Content.Client.Administration
                     continue;
                 }
 
-                var aabb = _entityLookup.GetWorldAabbFromEntity(entity);
+                var aabb = _entityLookup.GetWorldAABB(entity);
 
                 // if not on screen, continue
                 if (!aabb.Intersects(in viewport))

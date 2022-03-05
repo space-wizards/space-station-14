@@ -140,6 +140,10 @@ namespace Content.Server.Construction
             if(performActions)
                 PerformActions(uid, userUid, node.Actions);
 
+            // An action might have deleted the entity... Account for this.
+            if (!Exists(uid))
+                return false;
+
             // ChangeEntity will handle the pathfinding update.
             if (node.Entity is {} newEntity && ChangeEntity(uid, userUid, newEntity, construction) != null)
                 return true;

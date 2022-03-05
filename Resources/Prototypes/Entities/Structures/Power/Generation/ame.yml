@@ -46,6 +46,10 @@
   - type: Anchorable
   - type: Pullable
   - type: AMEController
+  - type: Explosive
+    explosionType: Default
+    intensitySlope: 5
+    maxIntensity: 60
   - type: UserInterface
     interfaces:
     - key: enum.AMEControllerUiKey.Key

@@ -43,7 +43,7 @@ namespace Content.Server.Storage.Components
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
     [ComponentReference(typeof(SharedStorageComponent))]
-    public sealed class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
+    public sealed class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IActivate, IStorageComponent, IDestroyAct, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -565,7 +565,7 @@ namespace Content.Server.Storage.Components
             if (_areaInsert && (eventArgs.Target == null || !_entityManager.HasComponent<SharedItemComponent>(eventArgs.Target.Value)))
             {
                 var validStorables = new List<EntityUid>();
-                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius, LookupFlags.None))
+                foreach (var entity in EntitySystem.Get<EntityLookupSystem>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius, LookupFlags.None))
                 {
                     if (entity.IsInContainer()
                         || entity == eventArgs.User
@@ -664,30 +664,6 @@ namespace Content.Server.Storage.Components
             foreach (var entity in storedEntities)
             {
                 Remove(entity);
-            }
-        }
-
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
-        {
-            if (eventArgs.Severity < ExplosionSeverity.Heavy)
-            {
-                return;
-            }
-
-            var storedEntities = StoredEntities?.ToList();
-
-            if (storedEntities == null)
-            {
-                return;
-            }
-
-            foreach (var entity in storedEntities)
-            {
-                var exActs = _entityManager.GetComponents<IExAct>(entity).ToArray();
-                foreach (var exAct in exActs)
-                {
-                    exAct.OnExplosion(eventArgs);
-                }
             }
         }
 

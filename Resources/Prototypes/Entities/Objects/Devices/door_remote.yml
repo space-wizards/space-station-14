@@ -45,6 +45,7 @@
     tags:
     - HeadOfSecurity
     - Security
+    - Armory
 
 - type: entity
   parent: DoorRemoteDefault
@@ -101,6 +102,7 @@
     tags:
     - Cargo
     - Quartermaster
+    - Salvage
 
 - type: entity
   parent: DoorRemoteDefault

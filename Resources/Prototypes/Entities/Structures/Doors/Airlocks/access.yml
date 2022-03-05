@@ -441,7 +441,7 @@
     access: [["Armory"]]
 
 - type: entity
-  parent: AirlockEVALocked
+  parent: AirlockCommandGlassLocked
   id: AirlockEVAGlassLocked
   suffix: EVA, Locked
   components:

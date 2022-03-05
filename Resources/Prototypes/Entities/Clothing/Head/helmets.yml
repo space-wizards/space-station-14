@@ -9,6 +9,8 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/bombsuit.rsi
   - type: IngestionBlocker
+  - type: ExplosionResistance
+    resistance: 0.25 # +0.65 from body -> 90%
 
 - type: entity
   parent: ClothingHeadBase
@@ -157,3 +159,20 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/wizardhelm.rsi
   - type: IngestionBlocker
+  
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase # hardsuitlight base for light and protection
+  id: ClothingHeadHelmetFire
+  name: fire helmet
+  description: An atmos techs best friend. Provides some heat resistance and looks cool.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/firehelmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/firehelmet.rsi
+  - type: IngestionBlocker
+  - type: PowerCellSlot
+    cellSlot:
+      startingItem: PowerCellSmallHigh
+  - type: TemperatureProtection
+    coefficient: 0.01
