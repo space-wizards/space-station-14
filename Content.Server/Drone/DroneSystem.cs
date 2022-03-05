@@ -4,18 +4,18 @@ using Content.Shared.MobState;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Examine;
-using Content.Server.Popups;
-using Content.Server.Mind.Components;
-using Content.Server.Ghost.Roles.Components;
-using Content.Server.Hands.Components;
-using Content.Shared.Body.Components;
-using Content.Server.UserInterface;
-using Content.Shared.Emoting;
-using Robust.Shared.Player;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Item;
+using Content.Shared.Emoting;
+using Content.Shared.Body.Components;
+using Content.Server.Popups;
+using Content.Server.Mind.Components;
 using Content.Server.Ghost.Components;
+using Content.Server.Ghost.Roles.Components;
+using Content.Server.Hands.Components;
+using Content.Server.UserInterface;
+using Robust.Shared.Player;
 
 namespace Content.Server.Drone
 {
@@ -39,7 +39,7 @@ namespace Content.Server.Drone
 
         private void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
         {
-            if (OrganicsInRange(uid, component))
+            if (NonDronesInRange(uid, component))
                 args.Cancel();
 
             if (HasComp<SharedItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
@@ -135,7 +135,7 @@ namespace Content.Server.Drone
             }
         }
 
-        private bool OrganicsInRange(EntityUid uid, DroneComponent component)
+        private bool NonDronesInRange(EntityUid uid, DroneComponent component)
         {
             var xform = Comp<TransformComponent>(uid);
             foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, component.InteractionBlockRange))
