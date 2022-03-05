@@ -15,6 +15,7 @@ using Content.Shared.Emoting;
 using Robust.Shared.Player;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
+using Content.Shared.Item;
 
 namespace Content.Server.Drone
 {
@@ -40,6 +41,12 @@ namespace Content.Server.Drone
             if (HasComp<MobStateComponent>(args.Target) && !HasComp<DroneComponent>(args.Target))
             {
                 args.Cancel();
+            }
+
+            if (HasComp<SharedItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
+            {
+                if (!_tagSystem.HasTag(args.Target.Value, "DroneUsable") && !_tagSystem.HasTag(args.Target.Value, "Trash"))
+                    args.Cancel();
             }
         }
 
@@ -81,7 +88,6 @@ namespace Content.Server.Drone
         private void OnMindAdded(EntityUid uid, DroneComponent drone, MindAddedMessage args)
         {
             UpdateDroneAppearance(uid, DroneStatus.On);
-            _tagSystem.AddTag(uid, "DoorBumpOpener");
             _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid, Filter.Pvs(uid));
 
             if (drone.AlreadyAwoken == false)
@@ -108,7 +114,6 @@ namespace Content.Server.Drone
         private void OnMindRemoved(EntityUid uid, DroneComponent drone, MindRemovedMessage args)
         {
             UpdateDroneAppearance(uid, DroneStatus.Off);
-            _tagSystem.RemoveTag(uid, "DoorBumpOpener");
             EnsureComp<GhostTakeoverAvailableComponent>(uid);
         }
 

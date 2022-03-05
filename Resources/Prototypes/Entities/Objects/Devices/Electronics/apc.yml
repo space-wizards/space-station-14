@@ -8,3 +8,6 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
+    - type: Tag
+      tags:
+        - DroneUsable

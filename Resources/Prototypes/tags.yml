@@ -118,6 +118,9 @@
   id: Donut
 
 - type: Tag
+  id: DroneUsable
+
+- type: Tag
   id: Egg
 
 - type: Tag
@@ -282,7 +285,7 @@
 
 - type: Tag
   id: Trash
-  
+
 - type: Tag
   id: TrashBag
 
