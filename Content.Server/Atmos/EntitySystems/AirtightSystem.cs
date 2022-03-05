@@ -1,5 +1,4 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.Kudzu;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
@@ -15,7 +14,6 @@ namespace Content.Server.Atmos.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
 
         public override void Initialize()
         {
@@ -106,7 +104,6 @@ namespace Content.Server.Atmos.EntitySystems
             if (!gridId.IsValid())
                 return;
 
-            _explosionSystem.UpdateAirtightMap(gridId, pos);
             _atmosphereSystem.UpdateAdjacent(gridId, pos);
             _atmosphereSystem.InvalidateTile(gridId, pos);
 

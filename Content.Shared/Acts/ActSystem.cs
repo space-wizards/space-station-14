@@ -29,6 +29,21 @@ namespace Content.Shared.Acts
         void OnBreak(BreakageEventArgs eventArgs);
     }
 
+    public interface IExAct
+    {
+        /// <summary>
+        /// Called when explosion reaches the entity
+        /// </summary>
+        void OnExplosion(ExplosionEventArgs eventArgs);
+    }
+
+    public sealed class ExplosionEventArgs : EventArgs
+    {
+        public EntityCoordinates Source { get; set; }
+        public EntityUid Target { get; set; }
+        public ExplosionSeverity Severity { get; set; }
+    }
+
     [UsedImplicitly]
     public sealed class ActSystem : EntitySystem
     {
@@ -44,7 +59,23 @@ namespace Content.Shared.Acts
                 destroyAct.OnDestroy(eventArgs);
             }
 
-            QueueDel(owner);
+            EntityManager.QueueDeleteEntity(owner);
+        }
+
+        public void HandleExplosion(EntityCoordinates source, EntityUid target, ExplosionSeverity severity)
+        {
+            var eventArgs = new ExplosionEventArgs
+            {
+                Source = source,
+                Target = target,
+                Severity = severity
+            };
+            var exActs = EntityManager.GetComponents<IExAct>(target).ToList();
+
+            foreach (var exAct in exActs)
+            {
+                exAct.OnExplosion(eventArgs);
+            }
         }
 
         public void HandleBreakage(EntityUid owner)
@@ -57,5 +88,12 @@ namespace Content.Shared.Acts
                 breakAct.OnBreak(eventArgs);
             }
         }
+    }
+
+    public enum ExplosionSeverity
+    {
+        Light,
+        Heavy,
+        Destruction,
     }
 }

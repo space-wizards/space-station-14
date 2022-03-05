@@ -50,8 +50,6 @@ namespace Content.Server.NodeContainer.EntitySystems
         private int _gen = 1;
         private int _groupNetIdCounter = 1;
 
-        public bool Snoozing = false;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -140,11 +138,8 @@ namespace Content.Server.NodeContainer.EntitySystems
         {
             base.Update(frameTime);
 
-            if (!Snoozing)
-            {
-                DoGroupUpdates();
-                VisDoUpdate(frameTime);
-            }
+            DoGroupUpdates();
+            VisDoUpdate(frameTime);
         }
 
         private void DoGroupUpdates()
