@@ -140,7 +140,7 @@ namespace Content.Server.Drone
             var xform = Comp<TransformComponent>(uid);
             foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, component.InteractionBlockRange))
             {
-                if (HasComp<MobStateComponent>(entity) && !HasComp<DroneComponent>(entity))
+                if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("drone-too-close"), uid, Filter.Entities(uid));
                     return true;
