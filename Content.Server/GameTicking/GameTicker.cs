@@ -34,12 +34,16 @@ namespace Content.Server.GameTicking
 
         [ViewVariables] public MapId DefaultMap { get; private set; }
 
+        private ISawmill _sawmill = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
             DebugTools.Assert(!_initialized);
             DebugTools.Assert(!_postInitialized);
+
+            _sawmill = _logManager.GetSawmill("ticker");
 
             // Initialize the other parts of the game ticker.
             InitializeStatusShell();
@@ -91,6 +95,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
 #if EXCEPTION_TOLERANCE
         [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 #endif

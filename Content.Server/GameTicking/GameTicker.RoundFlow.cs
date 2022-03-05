@@ -139,13 +139,13 @@ namespace Content.Server.GameTicking
                     }
                     else
                     {
-                        Logger.Error($"Grid {grid.Index} ({grid.GridEntityId}) specified that it was part of station {partOfStation.Id} which does not exist");
+                        _sawmill.Error($"Grid {grid.Index} ({grid.GridEntityId}) specified that it was part of station {partOfStation.Id} which does not exist");
                     }
                 }
             }
 
             var timeSpan = _gameTiming.RealTime - startTime;
-            Logger.InfoS("ticker", $"Loaded maps in {timeSpan.TotalMilliseconds:N2}ms.");
+            _sawmill.Info($"Loaded maps in {timeSpan.TotalMilliseconds:N2}ms.");
         }
 
         private void SetupGridStation(IMapGrid grid)
@@ -179,7 +179,7 @@ namespace Content.Server.GameTicking
             _startingRound = true;
 
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
-            Logger.InfoS("ticker", "Starting round!");
+            _sawmill.Info("Starting round!");
 
             SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
@@ -258,14 +258,13 @@ namespace Content.Server.GameTicking
 
                 if (RoundStartFailShutdownCount > 0 && _roundStartFailCount >= RoundStartFailShutdownCount)
                 {
-                    Logger.FatalS("ticker",
-                        $"Failed to start a round {_roundStartFailCount} time(s) in a row... Shutting down!");
+                    _sawmill.Fatal($"Failed to start a round {_roundStartFailCount} time(s) in a row... Shutting down!");
                     _runtimeLog.LogException(e, nameof(GameTicker));
                     _baseServer.Shutdown("Restarting server");
                     return;
                 }
 
-                Logger.WarningS("ticker", $"Exception caught while trying to start the round! Restarting round...");
+                _sawmill.Warning($"Exception caught while trying to start the round! Restarting round...");
                 _runtimeLog.LogException(e, nameof(GameTicker));
                 _startingRound = false;
                 RestartRound();
@@ -292,7 +291,7 @@ namespace Content.Server.GameTicking
                 return;
 
             DebugTools.Assert(RunLevel == GameRunLevel.InRound);
-            Logger.InfoS("ticker", "Ending round!");
+            _sawmill.Info("Ending round!");
 
             RunLevel = GameRunLevel.PostRound;
 
@@ -376,7 +375,7 @@ namespace Content.Server.GameTicking
                 return;
             }
 
-            Logger.InfoS("ticker", "Restarting round!");
+            _sawmill.Info("Restarting round!");
 
             SendServerMessage(Loc.GetString("game-ticker-restart-round"));
 
@@ -425,9 +424,22 @@ namespace Content.Server.GameTicking
             // Delete all entities.
             foreach (var entity in EntityManager.GetEntities().ToArray())
             {
+#if EXCEPTION_TOLERANCE
+                try
+                {
+#endif
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
                 EntityManager.DeleteEntity(entity);
+#if EXCEPTION_TOLERANCE
+                }
+                catch (Exception e)
+                {
+                    _sawmill.Error($"Caught exception while trying to delete entity {ToPrettyString(entity)}, this might corrupt the game state...");
+                    _runtimeLog.LogException(e, nameof(GameTicker));
+                    continue;
+                }
+#endif
             }
 
             _mapManager.Restart();
