@@ -493,11 +493,8 @@ namespace Content.Client.Preferences.UI
 
         private void RebuildSpriteView()
         {
-            if (_previewDummy == default)
-            {
-                var dollProto = _prototypeManager.Index<SpeciesPrototype>(Profile?.Species ?? SpeciesManager.DefaultSpecies).DollPrototype;
-                _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
-            }
+            var dollProto = _prototypeManager.Index<SpeciesPrototype>(Profile?.Species ?? SpeciesManager.DefaultSpecies).DollPrototype;
+            _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
 
             var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy);
 
