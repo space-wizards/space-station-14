@@ -47,52 +47,51 @@ namespace Content.Client.Fluids
 
         protected override void OnAppearanceChange(EntityUid uid, PuddleVisualsComponent component, ref AppearanceChangeEvent args)
         {
-            if (TryComp(uid, out SpriteComponent? sprite)
-                && args.Component.TryGetData(PuddleVisuals.VolumeScale, out float volumeScale)
-                && args.Component.TryGetData(PuddleVisuals.SolutionColor, out Color solutionColor)
-                && args.Component.TryGetData(PuddleVisuals.WetFloorEffect, out bool wetFloorEffect)
+            if (!TryComp(uid, out SpriteComponent? sprite)
+                || !args.Component.TryGetData(PuddleVisuals.VolumeScale, out float volumeScale)
+                || !args.Component.TryGetData(PuddleVisuals.SolutionColor, out Color solutionColor)
+                || !args.Component.TryGetData(PuddleVisuals.WetFloorEffect, out bool wetFloorEffect)
                 )
-            {
-
-                // volumeScale is our opacity based on level of fullness to overflow. The lower bound is hard-capped for visibility reasons.
-                var cappedScale = Math.Min(1.0f, volumeScale * 0.75f + 0.25f);
-
-                Color newColor;
-                if (component.Recolor)
-                {
-                    newColor = solutionColor.WithAlpha(cappedScale);
-                }
-                else
-                {
-                    newColor = sprite.Color.WithAlpha(cappedScale);
-                }
-
-                if (wetFloorEffect)
-                {
-                    // Hides the main puddle sprite layer
-                    sprite.LayerSetVisible(PuddleVisualLayers.Puddle, false);
-
-                    // Shows the wet floor sprite layers
-                    sprite.LayerSetRSI(PuddleVisualLayers.WetFloorEffect, "Fluids/wet_floor_sparkles.rsi");
-                    sprite.LayerSetState(PuddleVisualLayers.WetFloorEffect, "sparkles");
-                    sprite.LayerSetColor(PuddleVisualLayers.WetFloorEffect, newColor.WithAlpha(0.25f)); //Sparkles inherit the color of the puddle's solution, except they should be mostly transparent.
-                    sprite.LayerSetVisible(PuddleVisualLayers.WetFloorEffect, true);
-
-                }
-                else
-                {
-                    // Hides the wet floor sprite layer
-                    sprite.LayerSetVisible(PuddleVisualLayers.WetFloorEffect, false);
-
-                    // Shows the main puddle sprite layer
-                    sprite.LayerSetColor(PuddleVisualLayers.Puddle, newColor);
-                    sprite.LayerSetVisible(PuddleVisualLayers.Puddle, true);
-                }
-            }
-            else
             {
                 Logger.Warning($"Missing SpriteComponent for PuddleVisualsSystem on entityUid = {uid}");
                 return;
+            }
+
+            // volumeScale is our opacity based on level of fullness to overflow. The lower bound is hard-capped for visibility reasons.
+            var cappedScale = Math.Min(1.0f, volumeScale * 0.75f + 0.25f);
+
+            Color newColor;
+            if (component.Recolor)
+            {
+                newColor = solutionColor.WithAlpha(cappedScale);
+            }
+            else
+            {
+                newColor = sprite.Color.WithAlpha(cappedScale);
+            }
+
+            if (!component.Sparkly)
+                return;
+
+            if (wetFloorEffect)
+            {
+                // Hides the main puddle sprite layer
+                sprite.LayerSetVisible(PuddleVisualLayers.Puddle, false);
+
+                // Shows the wet floor sprite layers
+                sprite.LayerSetState(PuddleVisualLayers.WetFloorEffect, "sparkles", "Fluids/wet_floor_sparkles.rsi");
+                sprite.LayerSetColor(PuddleVisualLayers.WetFloorEffect, newColor.WithAlpha(0.25f)); //Sparkles inherit the color of the puddle's solution, except they should be mostly transparent.
+                sprite.LayerSetVisible(PuddleVisualLayers.WetFloorEffect, true);
+
+            }
+            else
+            {
+                // Hides the wet floor sprite layer
+                sprite.LayerSetVisible(PuddleVisualLayers.WetFloorEffect, false);
+
+                // Shows the main puddle sprite layer
+                sprite.LayerSetColor(PuddleVisualLayers.Puddle, newColor);
+                sprite.LayerSetVisible(PuddleVisualLayers.Puddle, true);
             }
         }
     }

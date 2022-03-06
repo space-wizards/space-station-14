@@ -47,8 +47,7 @@
         - ReagentId: Water
           Quantity: 10
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisuals
 
 - type: entity
   name: puddle
@@ -60,9 +59,13 @@
     sprite: Fluids/smear.rsi # Placeholder
     state: smear-0
     netsync: false
+    layers:
+    - map: ["enum.PuddleVisualLayers.Puddle"]
+    - map: ["enum.PuddleVisualLayers.WetFloorEffect"]
   - type: Puddle
   - type: Appearance
   - type: PuddleVisuals
+    sparkly: true
 
 - type: entity
   name: puddle
@@ -74,9 +77,13 @@
     sprite: Fluids/splatter.rsi # Placeholder
     state: splatter-0
     netsync: false
+    layers:
+    - map: ["enum.PuddleVisualLayers.Puddle"]
+    - map: ["enum.PuddleVisualLayers.WetFloorEffect"]
   - type: Puddle
   - type: Appearance
   - type: PuddleVisuals
+    sparkly: true
 
 - type: entity
   id: PuddleBlood
