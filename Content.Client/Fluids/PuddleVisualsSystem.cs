@@ -40,7 +40,7 @@ namespace Content.Client.Fluids
             int selectedState = (int) Math.Floor(visualSeed * maxStates.Length); // uses the visualSeed to randomly select an index for which RSI state to use.
             sprite.LayerSetState(PuddleVisualLayers.Puddle, maxStates[selectedState].StateId); // sets the sprite's state via our randomly selected index.
 
-            int rotationDegrees = (int) Math.Floor(visualSeed * 360); // uses the visualSeed to randomly select a rotation for our puddle sprite.
+            float rotationDegrees = (visualSeed * maxStates.Length - selectedState) * 360; // uses the visualSeed to randomly select a rotation for our puddle sprite.
             sprite.Rotation = Angle.FromDegrees(rotationDegrees); // sets the sprite's rotation to the one we randomly selected.
         }
 
