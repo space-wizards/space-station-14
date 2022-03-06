@@ -23,6 +23,9 @@ public sealed class MoppingSystem : EntitySystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+
+    const string puddlePrototypeId = "PuddleSmear"; // The puddle prototype to use when releasing liquid to the floor, making a new puddle
+
     public override void Initialize()
     {
         base.Initialize();
@@ -81,7 +84,7 @@ public sealed class MoppingSystem : EntitySystem
             // Drop some of the absorbed liquid onto the ground
             var releaseAmount = FixedPoint2.Min(absorbent.ResidueAmount, absorbedSolution.CurrentVolume); // The release amount specified on the absorbent component, or the amount currently absorbed (whichever is less).
             var releasedSolution = _solutionSystem.SplitSolution(absorbent.Owner, absorbedSolution, releaseAmount); // Remove releaseAmount of solution from the absorbent component
-            _spillableSystem.SpillAt(tile, releasedSolution, "PuddleSmear");                                        // And spill it onto the tile.
+            _spillableSystem.SpillAt(tile, releasedSolution, puddlePrototypeId);                                        // And spill it onto the tile.
         }
     }
 
