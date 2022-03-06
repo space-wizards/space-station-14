@@ -88,6 +88,7 @@ namespace Content.Server.GameTicking.Commands
             shell.RemoteExecuteCommand("showmarkers");
             shell.RemoteExecuteCommand("togglelight");
             shell.RemoteExecuteCommand("showsubfloorforever");
+            shell.RemoteExecuteCommand("loadmapacts");
             mapManager.SetMapPaused(mapId, true);
 
             if (args.Length == 2)

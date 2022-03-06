@@ -30,7 +30,7 @@ namespace Content.Client.Verbs
         [Dependency] private readonly ExamineSystem _examineSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         /// <summary>

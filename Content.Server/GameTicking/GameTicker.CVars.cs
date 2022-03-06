@@ -33,6 +33,11 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         public string DiscordRoleId { get; private set; } = "";
 
+#if EXCEPTION_TOLERANCE
+        [ViewVariables]
+        public int RoundStartFailShutdownCount { get; private set; } = 0;
+#endif
+
         private void InitializeCVars()
         {
             _configurationManager.OnValueChanged(CCVars.GameLobbyEnabled, value => LobbyEnabled = value, true);
@@ -45,6 +50,9 @@ namespace Content.Server.GameTicking
             _configurationManager.OnValueChanged(CCVars.MaxStationOffset, value => MaxStationOffset = value, true);
             _configurationManager.OnValueChanged(CCVars.DiscordRoundWebhook, value => DiscordWebhook = value, true);
             _configurationManager.OnValueChanged(CCVars.DiscordRoundRoleId, value => DiscordRoleId = value, true);
+#if EXCEPTION_TOLERANCE
+            _configurationManager.OnValueChanged(CCVars.RoundStartFailShutdownCount, value => RoundStartFailShutdownCount = value, true);
+#endif
         }
     }
 }
