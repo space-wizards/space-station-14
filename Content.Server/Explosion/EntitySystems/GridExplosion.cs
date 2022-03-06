@@ -74,6 +74,16 @@ public sealed class GridExplosion : TileExplosion
         _offset = relativeAngle.RotateVec((size / 4, size / 4));
     }
 
+    public override void InitTile(Vector2i initialTile)
+    {
+        TileLists[0] = new() { initialTile };
+
+        if (_airtightMap.ContainsKey(initialTile))
+            EnteredBlockedTiles.Add(initialTile);
+        else
+            ProcessedTiles.Add(initialTile);
+    }
+
     public int AddNewTiles(int iteration, HashSet<Vector2i>? gridJump)
     {
         SpaceJump = new();

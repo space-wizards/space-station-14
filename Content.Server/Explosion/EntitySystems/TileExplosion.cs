@@ -24,11 +24,7 @@ public abstract class TileExplosion
     protected UniqueVector2iSet UnenteredBlockedTiles = new();
     protected UniqueVector2iSet EnteredBlockedTiles = new();
 
-    public virtual void InitTile(Vector2i initialTile)
-    {
-        ProcessedTiles.Add(initialTile);
-        TileLists[0] = new() { initialTile };
-    }
+    public abstract void InitTile(Vector2i initialTile);
 
     protected abstract void ProcessNewTile(int iteration, Vector2i tile, AtmosDirection entryDirections);
 

@@ -99,7 +99,8 @@ public sealed class SpaceExplosion : TileExplosion
 
     public override void InitTile(Vector2i initialTile)
     {
-        base.InitTile(initialTile);
+        ProcessedTiles.Add(initialTile);
+        TileLists[0] = new() { initialTile };
 
         // It might be the case that the initial space-explosion tile actually overlaps on a grid. In that case we
         // need to manually add it to the `spaceToGridTiles` dictionary. This would normally be done automatically
