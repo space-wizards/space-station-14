@@ -313,7 +313,9 @@ public sealed class MoppingSystem : EntitySystem
 
     private void OnTransferCancelled(TransferCancelledEvent ev)
     {
-        ev.Component.InteractingEntities.Remove(ev.Target); // Tell the absorbentComponent that we have stopped interacting with the target.
+        if (!ev.Component.Deleted)
+            ev.Component.InteractingEntities.Remove(ev.Target); // Tell the absorbentComponent that we have stopped interacting with the target.
+
         return;
     }
 
