@@ -41,7 +41,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Take our map of grid edges, where each is defined in their own grid's reference frame, and map those
+    ///     Take our map of grid edges, where each is defHined in their own grid's reference frame, and map those
     ///     edges all onto one grids reference frame.
     /// </summary>
     public (Dictionary<Vector2i, BlockedSpaceTile>, float) TransformGridEdges(MapId targetMap, GridId? referenceGrid, List<GridId> localGrids)
@@ -119,10 +119,10 @@ public sealed partial class ExplosionSystem : EntitySystem
                 // shitty approximation to doing a proper check to get all space-tiles that intersect this grid tile.
                 // Not perfect, but works well enough.
                 transformedTiles.Clear();
-                transformedTiles.Add(new((int) MathF.Floor(center.X + x), (int) MathF.Floor(center.Y + y)));  // center of tile, offset by + (0.25, 0.25) in tile coordinates
-                transformedTiles.Add(new((int) MathF.Floor(center.X - y), (int) MathF.Floor(center.Y + x)));  // rotated 90 degrees
-                transformedTiles.Add(new((int) MathF.Floor(center.X - x), (int) MathF.Floor(center.Y - y)));  // rotated 180 degrees
-                transformedTiles.Add(new((int) MathF.Floor(center.X + y), (int) MathF.Floor(center.Y - x)));  // rotated 270 degrees
+                transformedTiles.Add(new((int) MathF.Floor(center.X + x), (int) MathF.Floor(center.Y + y)));  // center of tile, offset by (0.25, 0.25) in tile coordinates
+                transformedTiles.Add(new((int) MathF.Floor(center.X - y), (int) MathF.Floor(center.Y + x)));  // center offset by (-0.25, 0.25)
+                transformedTiles.Add(new((int) MathF.Floor(center.X - x), (int) MathF.Floor(center.Y - y)));  // offset by (-0.25, -0.25)
+                transformedTiles.Add(new((int) MathF.Floor(center.X + y), (int) MathF.Floor(center.Y - x)));  // offset by (0.25, -0.25)
 
                 foreach (var newIndices in transformedTiles)
                 {
@@ -356,9 +356,9 @@ public sealed class BlockedSpaceTile
     /// <summary>
     ///     The set of grid edge-tiles that are blocking this space tile.
     /// </summary>
-    public HashSet<GridEdgeData> BlockingGridEdges = new();
+    public List<GridEdgeData> BlockingGridEdges = new();
 
-    public struct GridEdgeData : IEquatable<GridEdgeData>
+    public sealed class GridEdgeData
     {
         public Vector2i Tile;
         public GridId? Grid;
@@ -369,21 +369,6 @@ public sealed class BlockedSpaceTile
             Tile = tile;
             Grid = grid;
             Box = new(Box2.CenteredAround(center, (size, size)), angle, center);
-        }
-
-        /// <inheritdoc />
-        public bool Equals(GridEdgeData other)
-        {
-            return Tile.Equals(other.Tile) && Grid.Equals(other.Grid);
-        }
-
-        /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (Tile.GetHashCode() * 397) ^ Grid.GetHashCode();
-            }
         }
     }
 }

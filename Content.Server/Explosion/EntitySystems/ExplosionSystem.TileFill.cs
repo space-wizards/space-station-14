@@ -122,7 +122,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // These variables keep track of the total intensity we have distributed
         List<int> tilesInIteration = new() { 1 };
         List<float> iterationIntensity = new() {stepSize};
-        var totalTiles = 0;
+        var totalTiles = 1;
         var remainingIntensity = totalIntensity - stepSize;
 
         var iteration = 1;
