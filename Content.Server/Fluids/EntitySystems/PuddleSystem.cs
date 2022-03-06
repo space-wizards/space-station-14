@@ -80,7 +80,8 @@ namespace Content.Server.Fluids.EntitySystems
 
             bool useWetFloorEffect = false; // Assume it won't by default, then check if it will.
 
-            if (TryComp(uid, out EvaporationComponent? evaporation) && evaporation.EvaporationToggle// if puddle is evaporating.
+            if (TryComp(uid, out EvaporationComponent? evaporation)
+                && evaporation.EvaporationToggle// if puddle is evaporating.
                 && puddle.CurrentVolume <= puddle.WetFloorEffectThreshold) // if puddle's volume is below a certain threshold. TODO: By default this threshold is hardcoded at what a standard mop can pick up -- need to make this more robust.
             {
                 useWetFloorEffect = true;
