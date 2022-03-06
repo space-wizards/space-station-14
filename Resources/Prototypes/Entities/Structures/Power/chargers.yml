@@ -24,8 +24,11 @@
     visuals:
     - type: PowerChargerVisualizer
   - type: Anchorable
+  - type: Pullable
   - type: Clickable
   - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
 
 - type: entity
   name: recharger

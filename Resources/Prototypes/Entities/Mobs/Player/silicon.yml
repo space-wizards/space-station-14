@@ -48,9 +48,11 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
+    netsync: false
   - type: Physics
     bodyType: KinematicController
   - type: Hands
+    showInHands: false
   - type: Body
     template: DroneTemplate
     preset: DronePreset
@@ -104,8 +106,6 @@
     layers:
     - state: shell
       sprite: Mobs/Silicon/drone.rsi
-    - map: [ "head" ]
-      offset: 0, -0.45
   - type: MovementIgnoreGravity
   - type: Fixtures
     fixtures:
@@ -114,13 +114,10 @@
         radius: 0.35
       mass: 20
       mask:
-      - VaultImpassable
+      - SmallImpassable
+      - MobImpassable
       layer:
       - Opaque
-  - type: Tag
-  - type: Access
-    groups:
-    - AllAccess
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer

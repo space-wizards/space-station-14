@@ -13,26 +13,18 @@ using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Hands.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedHandsComponent))]
 #pragma warning disable 618
-    public sealed class HandsComponent : SharedHandsComponent, IBodyPartAdded, IBodyPartRemoved, IDisarmedAct
+    public sealed class HandsComponent : SharedHandsComponent, IBodyPartAdded, IBodyPartRemoved
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
-
-        [DataField("disarmedSound")] SoundSpecifier _disarmedSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
-
-        int IDisarmedAct.Priority => int.MaxValue; // We want this to be the last disarm act to run.
 
         #region Pull/Disarm
 
@@ -62,33 +54,10 @@ namespace Content.Server.Hands.Components
             RemoveHand(args.Slot);
         }
 
-        bool IDisarmedAct.Disarmed(DisarmedActEvent @event)
-        {
-            if (BreakPulls())
-                return false;
-
-            var source = @event.Source;
-            var target = @event.Target;
-
-            SoundSystem.Play(Filter.Pvs(source), _disarmedSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
-
-            if (ActiveHand != null && Drop(ActiveHand, false))
-            {
-                source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", _entities.GetComponent<MetaDataComponent>(source).EntityName), ("disarmed", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
-                source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
-            }
-            else
-            {
-                source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", _entities.GetComponent<MetaDataComponent>(source).EntityName), ("shoved", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
-                source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
-            }
-
-            return true;
-        }
-
-        private bool BreakPulls()
+        public bool BreakPulls()
         {
             // What is this API??
+            // I just wanted to do actions not deal with this shit...
             if (!_entities.TryGetComponent(Owner, out SharedPullerComponent? puller)
                 || puller.Pulling is not {Valid: true} pulling || !_entities.TryGetComponent(puller.Pulling.Value, out SharedPullableComponent? pullable))
                 return false;

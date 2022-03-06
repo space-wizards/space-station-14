@@ -404,6 +404,7 @@ namespace Content.Shared.Containers.ItemSlots
                     : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
 
                 AlternativeVerb verb = new();
+                verb.IconEntity = slot.Item;
                 verb.Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true);
 
                 if (slot.EjectVerbText == null)
@@ -414,7 +415,6 @@ namespace Content.Shared.Containers.ItemSlots
                 else
                 {
                     verb.Text = Loc.GetString(slot.EjectVerbText);
-                    verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                 }
 
                 args.Verbs.Add(verb);
@@ -439,8 +439,8 @@ namespace Content.Shared.Containers.ItemSlots
                         : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
 
                     InteractionVerb takeVerb = new();
+                    takeVerb.IconEntity = slot.Item;
                     takeVerb.Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true);
-                    takeVerb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
 
                     if (slot.EjectVerbText == null)
                         takeVerb.Text = Loc.GetString("take-item-verb-text", ("subject", verbSubject));
@@ -465,6 +465,7 @@ namespace Content.Shared.Containers.ItemSlots
                     : Name(args.Using.Value) ?? string.Empty;
 
                 InteractionVerb insertVerb = new();
+                insertVerb.IconEntity = args.Using;
                 insertVerb.Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true);
 
                 if (slot.InsertVerbText != null)

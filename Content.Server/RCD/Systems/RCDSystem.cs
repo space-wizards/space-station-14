@@ -165,12 +165,12 @@ namespace Content.Server.RCD.Systems
                 return false;
             }
 
-            var coordinates = mapGrid.ToCoordinates(tile.GridIndices);
-            if (coordinates == EntityCoordinates.Invalid ||
-                !_interactionSystem.InRangeUnobstructed(eventArgs.User, coordinates, popup: true))
-            {
+            var unobstructed = eventArgs.Target == null
+                ? _interactionSystem.InRangeUnobstructed(eventArgs.User, mapGrid.GridTileToWorld(tile.GridIndices), popup: true)
+                : _interactionSystem.InRangeUnobstructed(eventArgs.User, eventArgs.Target.Value, popup: true);
+
+            if (!unobstructed)
                 return false;
-            }
 
             switch (rcd.Mode)
             {
