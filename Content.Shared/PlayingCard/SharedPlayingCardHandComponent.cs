@@ -11,8 +11,6 @@ public abstract class SharedPlayingCardHandComponent : Component, ISerialization
     [ViewVariables]
     [DataField("cardList")]
     public List<string> CardList = new();
-    [DataField("noUniqueCardLayers")]
-    public bool NoUniqueCardLayers = false;
 }
 
 [Serializable]

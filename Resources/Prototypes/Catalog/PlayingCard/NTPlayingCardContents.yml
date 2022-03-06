@@ -83,7 +83,6 @@
   layerTwoState: sc_9
   layerTwoColor: black
 
-
 - type: PlayingCardDetails
   id: 9_of_DiamondsDetails
   layerOneState: sc_Diamonds
@@ -326,4 +325,3 @@
   layerOneState: sc_Spades
   layerTwoState: sc_Queen
   layerTwoColor: black
-
