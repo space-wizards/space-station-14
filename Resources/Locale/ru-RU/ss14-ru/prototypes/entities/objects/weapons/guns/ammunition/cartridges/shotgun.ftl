@@ -1,7 +1,6 @@
 ent-ShellShotgunBase = shell (.50)
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }
-
 ent-ShellShotgunBeanbag = ружейный патрон (.50 травматический)
     .desc = { ent-ShellShotgunBase.desc }
     .suffix = { "" }

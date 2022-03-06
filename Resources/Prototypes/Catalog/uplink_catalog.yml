@@ -267,11 +267,11 @@
   itemId: lanternextrabright
   price: 2
 
-- type: uplinkListing
-  id: UplinkCostumeCentcom
-  category: Misc
-  itemId: ClothingBackpackDuffelSyndicateCostumeCentcom
-  price: 4
+#- type: uplinkListing
+#  id: UplinkCostumeCentcom
+#  category: Misc
+#  itemId: ClothingBackpackDuffelSyndicateCostumeCentcom
+#  price: 4
 
 - type: uplinkListing
   id: UplinkCostumeClown

@@ -1,7 +1,6 @@
 ent-MagazineLRifleBase = magazine (.30 rifle)
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }
-
 ent-MagazineLRifleBox = патронная коробка L6 SAW (.30 винтовочные)
     .desc = { ent-MagazineLRifleBase.desc }
     .suffix = { "" }

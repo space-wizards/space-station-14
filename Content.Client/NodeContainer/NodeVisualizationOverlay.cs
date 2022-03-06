@@ -14,7 +14,7 @@ namespace Content.Client.NodeContainer
     public sealed class NodeVisualizationOverlay : Overlay
     {
         private readonly NodeGroupSystem _system;
-        private readonly IEntityLookup _lookup;
+        private readonly EntityLookupSystem _lookup;
         private readonly IMapManager _mapManager;
         private readonly IInputManager _inputManager;
         private readonly IEntityManager _entityManager;
@@ -32,7 +32,7 @@ namespace Content.Client.NodeContainer
 
         public NodeVisualizationOverlay(
             NodeGroupSystem system,
-            IEntityLookup lookup,
+            EntityLookupSystem lookup,
             IMapManager mapManager,
             IInputManager inputManager,
             IResourceCache cache,

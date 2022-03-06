@@ -1,4 +1,4 @@
-ent-RocketAmmo = выстрел ПГ-7ВЛ 
+ent-RocketAmmo = выстрел ПГ-7ВЛ
     .desc = Выстрел для гранатомёта РПГ-7. Имеет форму трубы.
     .suffix = { "" }
 ent-GrenadeBaton = шоковая граната

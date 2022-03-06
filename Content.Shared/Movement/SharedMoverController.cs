@@ -149,7 +149,7 @@ namespace Content.Shared.Movement
             {
                 // This should have its event run during island solver soooo
                 xform.DeferUpdates = true;
-                xform.WorldRotation = worldTotal.GetDir().ToAngle();
+                xform.LocalRotation = total.GetDir().ToAngle();
                 xform.DeferUpdates = false;
                 HandleFootsteps(mover, mobMover);
             }

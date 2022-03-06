@@ -36,7 +36,7 @@ namespace Content.Server.Electrocution
 {
     public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     {
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;

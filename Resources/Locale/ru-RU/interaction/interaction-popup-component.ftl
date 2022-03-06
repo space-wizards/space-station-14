@@ -32,4 +32,4 @@ petting-failure-holo = You reach out to pet { THE($target) }, but { POSS-ADJ($ta
 ## Knocking on windows
 
 # Shown when knocking on a window
-comp-window-knock = *knock knock*
+comp-window-knock = *тук-тук*

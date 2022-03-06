@@ -40,6 +40,3 @@ ent-DawInstrumentMachineCircuitboard = Digital Audio Workstation (Machine Board)
 ent-ReagentGrinderMachineCircuitboard = reagent grinder machine board
     .desc = A machine printed circuit board for a reagent grinder
     .suffix = { "" }
-ent-KitchenReagentGrinderMachineCircuitboard = Измельчитель реагентов (Машинная плата)
-    .desc = { ent-BaseMachineCircuitboard.desc }
-    .suffix = { "" }

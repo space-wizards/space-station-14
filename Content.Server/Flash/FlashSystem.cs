@@ -18,7 +18,7 @@ namespace Content.Server.Flash
 {
     internal sealed class FlashSystem : SharedFlashSystem
     {
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
