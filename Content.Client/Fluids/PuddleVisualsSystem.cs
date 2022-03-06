@@ -79,7 +79,7 @@ namespace Content.Client.Fluids
                 sprite.LayerSetVisible(PuddleVisualLayers.Puddle, false);
 
                 // Shows the wet floor sprite layers
-                sprite.LayerSetState(PuddleVisualLayers.WetFloorEffect, "sparkles", "Fluids/wet_floor_sparkles.rsi");
+                sprite.LayerSetState(PuddleVisualLayers.WetFloorEffect, component.EffectState, component.EffectRsi);
                 sprite.LayerSetColor(PuddleVisualLayers.WetFloorEffect, newColor.WithAlpha(0.25f)); //Sparkles inherit the color of the puddle's solution, except they should be mostly transparent.
                 sprite.LayerSetVisible(PuddleVisualLayers.WetFloorEffect, true);
 
