@@ -63,5 +63,7 @@ public enum LogType
     Emitter = 59,
     GhostRoleTaken = 60,
     Chat = 61,
+    // haha so funny not incrementing and going straight to 69
     Emag = 69,
+    RCD = 62,
 }
