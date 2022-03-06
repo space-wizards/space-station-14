@@ -84,7 +84,7 @@ public sealed class MoppingSystem : EntitySystem
             // Drop some of the absorbed liquid onto the ground
             var releaseAmount = FixedPoint2.Min(absorbent.ResidueAmount, absorbedSolution.CurrentVolume); // The release amount specified on the absorbent component, or the amount currently absorbed (whichever is less).
             var releasedSolution = _solutionSystem.SplitSolution(absorbent.Owner, absorbedSolution, releaseAmount); // Remove releaseAmount of solution from the absorbent component
-            _spillableSystem.SpillAt(tile, releasedSolution, puddlePrototypeId);                                        // And spill it onto the tile.
+            _spillableSystem.SpillAt(tile, releasedSolution, puddlePrototypeId);                                    // And spill it onto the tile.
         }
     }
 
@@ -110,7 +110,8 @@ public sealed class MoppingSystem : EntitySystem
         if (TryComp<PuddleComponent>(target, out var puddle))
         {
             // These return conditions will abort BEFORE the do_after is called:
-            if(!_solutionSystem.TryGetSolution(target, puddle.SolutionName, out var puddleSolution)) // puddle Solution is null
+            if(!_solutionSystem.TryGetSolution(target, puddle.SolutionName, out var puddleSolution) // puddle Solution is null
+                || (puddleSolution.TotalVolume <= 0)) // puddle is completely empty
             {
                 return;
             }
@@ -118,10 +119,6 @@ public sealed class MoppingSystem : EntitySystem
             {
                 msg = "mopping-system-tool-full";
                 user.PopupMessage(user, Loc.GetString(msg, ("used", used))); // play message now because we are aborting.
-                return;
-            }
-            else if (puddleSolution.TotalVolume <= 0) // puddle is completely empty
-            {
                 return;
             }
             // adding to puddles
@@ -163,6 +160,8 @@ public sealed class MoppingSystem : EntitySystem
                 delay = (component.PickupAmount.Float() / 10.0f) * component.MopSpeed; // Delay should scale with PickupAmount, which represents the maximum we can pick up per click.
                 msg = "mopping-system-puddle-success";
                 sfx = component.PickupSound;
+
+                DoMopInteraction(user, used, target, donor, acceptor, component, donorSolutionName, acceptorSolutionName, transferAmount, delay, msg, sfx);
             }
         }
         else if ((TryComp<RefillableSolutionComponent>(target, out var refillable)) // We can put solution from the tool into the target
@@ -225,6 +224,8 @@ public sealed class MoppingSystem : EntitySystem
                 // Set delay/popup/sound if nondefault. Popup and sound will only play on a successful doAfter.
 
                 sfx = component.TransferSound;
+
+                DoMopInteraction(user, used, target, donor, acceptor, component, donorSolutionName, acceptorSolutionName, transferAmount, delay, msg, sfx);
             }
         }
         else if (TryComp<DrainableSolutionComponent>(target, out var drainable) // We can take solution from the target
@@ -256,10 +257,16 @@ public sealed class MoppingSystem : EntitySystem
                 // default delay is fine for this case.
                 msg = "mopping-system-drainable-success";
                 sfx = component.TransferSound;
+
+                DoMopInteraction(user, used, target, donor, acceptor, component, donorSolutionName, acceptorSolutionName, transferAmount, delay, msg, sfx);
             }
         }
-        else return;
+    }
 
+    private void DoMopInteraction(EntityUid user, EntityUid used, EntityUid target, EntityUid donor, EntityUid acceptor,
+                                  AbsorbentComponent component, string donorSolutionName, string acceptorSolutionName,
+                                  FixedPoint2 transferAmount, float delay, string msg, SoundSpecifier sfx)
+    {
         var doAfterArgs = new DoAfterEventArgs(user, delay, target: target)
         {
             BreakOnUserMove = true,
@@ -297,7 +304,6 @@ public sealed class MoppingSystem : EntitySystem
 
         var result = _doAfterSystem.WaitDoAfter(doAfterArgs);
     }
-
 
     private void OnTransferComplete(TransferCompleteEvent ev)
     {
