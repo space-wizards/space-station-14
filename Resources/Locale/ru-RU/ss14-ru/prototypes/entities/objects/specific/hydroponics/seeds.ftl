@@ -79,3 +79,6 @@ ent-FlyAmanitaSeeds = пакет спор мухоморов
 ent-GatfruitSeeds = пакет семян гатфрукта
     .desc = Это вам не горохострел.
     .suffix = { "" }
+ent-OnionSeeds = packet of onion seeds
+    .desc = Not a shallot.
+    .suffix = { "" }

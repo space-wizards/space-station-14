@@ -79,3 +79,6 @@ ent-FlyAmanitaSeeds = packet of fly amanita seeds
 ent-GatfruitSeeds = packet of gatfruit seeds
     .desc = These are no peashooters.
     .suffix = { "" }
+ent-OnionSeeds = packet of onion seeds
+    .desc = Not a shallot.
+    .suffix = { "" }
