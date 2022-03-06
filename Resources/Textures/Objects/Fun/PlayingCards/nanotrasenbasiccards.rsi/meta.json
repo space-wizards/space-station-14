@@ -20,178 +20,73 @@
             "name": "deck_nanotrasen_low"
         },
         {
-            "name": "nanotrasen_hand1"
+            "name": "nanotrasen_hand"
         },
         {
-            "name": "nanotrasen_hand2"
+            "name": "sc_Ace_of_Clubs"
         },
         {
-            "name": "nanotrasen_hand3"
+            "name": "sc_Ace_of_Diamonds"
         },
         {
-            "name": "nanotrasen_hand4"
+            "name": "sc_Ace_of_Hearts"
         },
         {
-            "name": "nanotrasen_hand5"
+            "name": "sc_Ace_of_Spades"
         },
         {
-            "name": "10 of Clubs"
+            "name": "sc_Hearts"
         },
         {
-            "name": "10 of Diamonds"
+            "name": "sc_Clubs"
         },
         {
-            "name": "10 of Hearts"
+            "name": "sc_Spades"
         },
         {
-            "name": "10 of Spades"
+            "name": "sc_Diamonds"
         },
         {
-            "name": "2 of Clubs"
+            "name": "sc_2"
         },
         {
-            "name": "2 of Diamonds"
+            "name": "sc_3"
         },
         {
-            "name": "2 of Hearts"
+            "name": "sc_4"
         },
         {
-            "name": "2 of Spades"
+            "name": "sc_5"
         },
         {
-            "name": "3 of Clubs"
+            "name": "sc_6"
         },
         {
-            "name": "3 of Diamonds"
+            "name": "sc_7"
         },
         {
-            "name": "3 of Hearts"
+            "name": "sc_8"
         },
         {
-            "name": "3 of Spades"
+            "name": "sc_9"
         },
         {
-            "name": "4 of Clubs"
+            "name": "sc_10"
         },
         {
-            "name": "4 of Diamonds"
+            "name": "sc_base"
         },
         {
-            "name": "4 of Hearts"
+            "name": "sc_Jack"
         },
         {
-            "name": "4 of Spades"
+            "name": "sc_King"
         },
         {
-            "name": "5 of Clubs"
+            "name": "sc_Queen"
         },
         {
-            "name": "5 of Diamonds"
-        },
-        {
-            "name": "5 of Hearts"
-        },
-        {
-            "name": "5 of Spades"
-        },
-        {
-            "name": "6 of Clubs"
-        },
-        {
-            "name": "6 of Diamonds"
-        },
-        {
-            "name": "6 of Hearts"
-        },
-        {
-            "name": "6 of Spades"
-        },
-        {
-            "name": "7 of Clubs"
-        },
-        {
-            "name": "7 of Diamonds"
-        },
-        {
-            "name": "7 of Hearts"
-        },
-        {
-            "name": "7 of Spades"
-        },
-        {
-            "name": "8 of Clubs"
-        },
-        {
-            "name": "8 of Diamonds"
-        },
-        {
-            "name": "8 of Hearts"
-        },
-        {
-            "name": "8 of Spades"
-        },
-        {
-            "name": "9 of Clubs"
-        },
-        {
-            "name": "9 of Diamonds"
-        },
-        {
-            "name": "9 of Hearts"
-        },
-        {
-            "name": "9 of Spades"
-        },
-        {
-            "name": "Ace of Clubs"
-        },
-        {
-            "name": "Ace of Diamonds"
-        },
-        {
-            "name": "Ace of Hearts"
-        },
-        {
-            "name": "Ace of Spades"
-        },
-        {
-            "name": "Jack of Clubs"
-        },
-        {
-            "name": "Jack of Diamonds"
-        },
-        {
-            "name": "Jack of Hearts"
-        },
-        {
-            "name": "Jack of Spades"
-        },
-        {
-            "name": "King of Clubs"
-        },
-        {
-            "name": "King of Diamonds"
-        },
-        {
-            "name": "King of Hearts"
-        },
-        {
-            "name": "King of Spades"
-        },
-        {
-            "name": "Queen of Clubs"
-        },
-        {
-            "name": "Queen of Diamonds"
-        },
-        {
-            "name": "Queen of Hearts"
-        },
-        {
-            "name": "Queen of Spades"
-        },
-        {
-            "name": "singlecard_down"
+            "name": "sc_backside"
         }
     ]
 }

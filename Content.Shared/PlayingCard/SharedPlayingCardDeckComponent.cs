@@ -22,7 +22,7 @@ public abstract class SharedPlayingCardDeckComponent : Component, ISerialization
 }
 
 [Serializable, NetSerializable]
-public class PickupCountMessage : BoundUserInterfaceMessage
+public sealed class PickupCountMessage : BoundUserInterfaceMessage
 {
     public readonly int Count;
     public PickupCountMessage(int count)
@@ -32,7 +32,7 @@ public class PickupCountMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public enum PlayingCardDeckUiKey
+public enum PlayingCardDeckUiKey : byte
 {
     Key
 }

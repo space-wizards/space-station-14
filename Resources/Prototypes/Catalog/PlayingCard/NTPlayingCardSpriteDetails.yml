@@ -1,0 +1,56 @@
+- type: PlayingCardContents
+  id: NTPlayingCardContents
+  baseLayerState: sc_base
+  cardContents:
+    6 of Clubs:  6_of_ClubsDetails
+    6 of Diamonds:  6_of_DiamondsDetails
+    6 of Hearts:  6_of_HeartsDetails
+    6 of Spades:  6_of_SpadesDetails
+    7 of Clubs:  7_of_ClubsDetails
+    7 of Diamonds:  7_of_DiamondsDetails
+    7 of Hearts:  7_of_HeartsDetails
+    7 of Spades:  7_of_SpadesDetails
+    8 of Clubs:  8_of_ClubsDetails
+    8 of Diamonds:  8_of_DiamondsDetails
+    8 of Hearts:  8_of_HeartsDetails
+    8 of Spades:  8_of_SpadesDetails
+    9 of Clubs:  9_of_ClubsDetails
+    9 of Diamonds:  9_of_DiamondsDetails
+    9 of Hearts:  9_of_HeartsDetails
+    9 of Spades:  9_of_SpadesDetails
+    10 of Clubs:  10_of_ClubsDetails
+    10 of Diamonds:  10_of_DiamondsDetails
+    10 of Hearts:  10_of_HeartsDetails
+    10 of Spades:  10_of_SpadesDetails
+    2 of Clubs:  2_of_ClubsDetails
+    2 of Diamonds:  2_of_DiamondsDetails
+    2 of Hearts:  2_of_HeartsDetails
+    2 of Spades:  2_of_SpadesDetails
+    Ace of Clubs:  Ace_of_ClubsDetails
+    Ace of Diamonds:  Ace_of_DiamondsDetails
+    Ace of Hearts:  Ace_of_HeartsDetails
+    Ace of Spades:  Ace_of_SpadesDetails
+    3 of Clubs:  3_of_ClubsDetails
+    3 of Diamonds:  3_of_DiamondsDetails
+    3 of Hearts:  3_of_HeartsDetails
+    3 of Spades:  3_of_SpadesDetails
+    Jack of Clubs:  Jack_of_ClubsDetails
+    Jack of Diamonds:  Jack_of_DiamondsDetails
+    Jack of Hearts:  Jack_of_HeartsDetails
+    Jack of Spades:  Jack_of_SpadesDetails
+    4 of Clubs:  4_of_ClubsDetails
+    4 of Diamonds:  4_of_DiamondsDetails
+    4 of Hearts:  4_of_HeartsDetails
+    4 of Spades:  4_of_SpadesDetails
+    King of Clubs:  King_of_ClubsDetails
+    King of Diamonds:  King_of_DiamondsDetails
+    King of Hearts:  King_of_HeartsDetails
+    King of Spades:  King_of_SpadesDetails
+    5 of Clubs:  5_of_ClubsDetails
+    5 of Diamonds:  5_of_DiamondsDetails
+    5 of Hearts:  5_of_HeartsDetails
+    5 of Spades:  5_of_SpadesDetails
+    Queen of Clubs:  Queen_of_ClubsDetails
+    Queen of Diamonds:  Queen_of_DiamondsDetails
+    Queen of Hearts:  Queen_of_HeartsDetails
+    Queen of Spades:  Queen_of_SpadesDetails

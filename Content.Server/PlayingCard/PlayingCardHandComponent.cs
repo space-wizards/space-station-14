@@ -10,5 +10,7 @@ namespace Content.Server.PlayingCard
     {
         [ViewVariables]
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(PlayingCardHandUiKey.Key);
+        [DataField("playingCardContent")]
+        public string PlayingCardContentPrototypeID = string.Empty;
     }
 }

@@ -11,11 +11,13 @@
   - type: Sprite
     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
     layers:
-    # - state: "8 of Clubs"
-    #   map: ["enum.PlayingCardVisualLayers.Base"]
-    - state: "8 of Clubs"
-      map: ["enum.PlayingCardVisualLayers.Details"]
-    - state: "singlecard_down"
+    - state: "sc_base"
+      map: ["enum.PlayingCardVisualLayers.Base"]
+    - state: "sc_Clubs"
+      map: ["enum.PlayingCardVisualLayers.LayerOne"]
+    - state: "sc_8"
+      map: ["enum.PlayingCardVisualLayers.LayerTwo"]
+    - state: "sc_backside"
       map: ["enum.PlayingCardVisualLayers.FlippedDown"]
   - type: PlayingCardVisuals
   - type: Appearance
@@ -38,6 +40,7 @@
   - type: PlayingCardDeck
     cardPrototype: PlayingCard
     cardHandPrototype: PlayingCardHand
+    playingCardContent: NTPlayingCardContents
     cardList: [
       6 of Clubs,
       6 of Diamonds,
@@ -116,29 +119,39 @@
   - type: Sprite
     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
     layers:
-    - state: nanotrasen_hand5
+    - state: nanotrasen_hand
       visible: false
       map: ["enum.PlayingCardHandVisualLayers.ManyCardHandBase"]
-    # - state: nanotrasen_hand5
-    #   visible: false
-    #   map: ["enum.PlayingCardHandVisualLayers.FourthCardBase"]
-    - state: 5 of Hearts
+    - state: sc_base
       visible: false
-      map: ["enum.PlayingCardHandVisualLayers.FourthCardDetails"]
-    # - state: nanotrasen_hand5
-    #   visible: false
-    #   map: ["enum.PlayingCardHandVisualLayers.ThirdCardBase"]
-    - state:  8 of Clubs
+      map: ["enum.PlayingCardHandVisualLayers.FourthCardBase"]
+    - state: sc_Hearts
       visible: false
-      map: ["enum.PlayingCardHandVisualLayers.ThirdCardDetails"]
-    # - state: sc_4 of Clubs_nanotrasen
-    #   map: ["enum.PlayingCardHandVisualLayers.SecondCardBase"]
-    - state: 7 of Spades
-      map: ["enum.PlayingCardHandVisualLayers.SecondCardDetails"]
-    # - state: sc_6 of Diamonds_nanotrasen
-    #   map: ["enum.PlayingCardHandVisualLayers.FirstCardBase"]
-    - state: 4 of Diamonds
-      map: ["enum.PlayingCardHandVisualLayers.FirstCardDetails"]
+      map: ["enum.PlayingCardHandVisualLayers.FourthCardLayerOne"]
+    - state: sc_5
+      visible: false
+      map: ["enum.PlayingCardHandVisualLayers.FourthCardLayerTwo"]
+    - state: sc_base
+      visible: false
+      map: ["enum.PlayingCardHandVisualLayers.ThirdCardBase"]
+    - state: sc_Hearts
+      visible: false
+      map: ["enum.PlayingCardHandVisualLayers.ThirdCardLayerOne"]
+    - state: sc_5
+      visible: false
+      map: ["enum.PlayingCardHandVisualLayers.ThirdCardLayerTwo"]
+    - state: sc_base
+      map: ["enum.PlayingCardHandVisualLayers.SecondCardBase"]
+    - state: sc_Hearts
+      map: ["enum.PlayingCardHandVisualLayers.SecondCardLayerOne"]
+    - state: sc_5
+      map: ["enum.PlayingCardHandVisualLayers.SecondCardLayerTwo"]
+    - state: sc_base
+      map: ["enum.PlayingCardHandVisualLayers.FirstCardBase"]
+    - state: sc_Hearts
+      map: ["enum.PlayingCardHandVisualLayers.FirstCardLayerOne"]
+    - state: sc_5
+      map: ["enum.PlayingCardHandVisualLayers.FirstCardLayerTwo"]
   - type: PlayingCardHandVisuals
   - type: Appearance
   - type: Item

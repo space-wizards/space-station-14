@@ -113,14 +113,14 @@ public class PlayingCardHandSystem : EntitySystem
             int freeHands = hands.GetFreeHands();
             if (freeHands == 0)
             {
-                // _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-full-hand-fail"),
-                //     uid, Filter.Entities(user));
+                _popupSystem.PopupEntity(Loc.GetString("playing-card-deck-component-pickup-card-full-hand-fail"),
+                    uid, Filter.Entities(user.Value));
                 return;
             }
 
             string cardName = cardHandComponent.CardList[cardIndex];
 
-            EntityUid? createdCard = _playingCardSystem.CreateCard(cardHandComponent.CardDeckID, cardName, cardHandComponent.CardPrototype, cardHandComponent.NoUniqueCardLayers, transformComp.Coordinates, true);
+            EntityUid? createdCard = _playingCardSystem.CreateCard(cardHandComponent.CardDeckID, cardName, cardHandComponent.CardPrototype, cardHandComponent.PlayingCardContentPrototypeID, transformComp.Coordinates, true);
 
             if (createdCard == null || !TryComp<SharedItemComponent>(createdCard, out var item))
                 return;
@@ -133,7 +133,7 @@ public class PlayingCardHandSystem : EntitySystem
             {
                 string lastCardName = cardHandComponent.CardList[0];
 
-                EntityUid? lastPlayingCardEnt = _playingCardSystem.CreateCard(cardHandComponent.CardDeckID, lastCardName, cardHandComponent.CardPrototype, cardHandComponent.NoUniqueCardLayers, transformComp.Coordinates, true);
+                EntityUid? lastPlayingCardEnt = _playingCardSystem.CreateCard(cardHandComponent.CardDeckID, lastCardName, cardHandComponent.CardPrototype, cardHandComponent.PlayingCardContentPrototypeID, transformComp.Coordinates, true);
 
                 if (lastPlayingCardEnt == null)
                     return;
@@ -153,7 +153,7 @@ public class PlayingCardHandSystem : EntitySystem
         }
     }
 
-    public EntityUid? CreateCardHand(string cardDeckID, List<string> cards, string cardHandPrototype, string playingCardPrototype, bool noUniqueCardLayers, EntityCoordinates coords)
+    public EntityUid? CreateCardHand(string cardDeckID, List<string> cards, string cardHandPrototype, string playingCardPrototype, string playingCardContentPrototypeID, EntityCoordinates coords)
     {
         EntityUid playingCardHandEnt = EntityManager.SpawnEntity(cardHandPrototype, coords);
 
@@ -166,7 +166,7 @@ public class PlayingCardHandSystem : EntitySystem
         playingCardHandComp.CardList = cards;
         playingCardHandComp.CardPrototype = playingCardPrototype;
         playingCardHandComp.CardDeckID = cardDeckID;
-        playingCardHandComp.NoUniqueCardLayers = noUniqueCardLayers;
+        playingCardHandComp.PlayingCardContentPrototypeID = playingCardContentPrototypeID;
 
         UpdateAppearance(playingCardHandComp);
         UpdateUiState(playingCardHandEnt, playingCardHandComp);
@@ -181,7 +181,7 @@ public class PlayingCardHandSystem : EntitySystem
                 cardHandComponent.CardList.Skip(Math.Max(0, cardHandComponent.CardList.Count - 5)).Take(5)
             );
 
-            appearance.SetData(PlayingCardHandVisuals.CardList, new CardListVisualState(relevantCards, cardHandComponent.NoUniqueCardLayers));
+            appearance.SetData(PlayingCardHandVisuals.CardList, new CardListVisualState(relevantCards, cardHandComponent.PlayingCardContentPrototypeID));
         }
     }
 

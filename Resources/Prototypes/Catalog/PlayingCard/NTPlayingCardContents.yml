@@ -1,0 +1,329 @@
+- type: PlayingCardDetails
+  id: 6_of_ClubsDetails
+  layerOneState: sc_Clubs
+  layerOneColor: black
+  layerTwoState: sc_6
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 6_of_DiamondsDetails
+  layerOneState: sc_Diamonds
+  layerOneColor: red
+  layerTwoState: sc_6
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 6_of_HeartsDetails
+  layerOneState: sc_Hearts
+  layerTwoState: sc_6
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 6_of_SpadesDetails
+  layerOneState: sc_Spades
+  layerTwoState: sc_6
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 7_of_ClubsDetails
+  layerOneState: sc_Clubs
+  layerOneColor: black
+  layerTwoState: sc_7
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 7_of_DiamondsDetails
+  layerOneState: sc_Diamonds
+  layerOneColor: red
+  layerTwoState: sc_7
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 7_of_HeartsDetails
+  layerOneState: sc_Hearts
+  layerTwoState: sc_7
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 7_of_SpadesDetails
+  layerOneState: sc_Spades
+  layerTwoState: sc_7
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 8_of_ClubsDetails
+  layerOneState: sc_Clubs
+  layerOneColor: black
+  layerTwoState: sc_8
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 8_of_DiamondsDetails
+  layerOneState: sc_Diamonds
+  layerOneColor: red
+  layerTwoState: sc_8
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 8_of_HeartsDetails
+  layerOneState: sc_Hearts
+  layerTwoState: sc_8
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 8_of_SpadesDetails
+  layerOneState: sc_Spades
+  layerTwoState: sc_8
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 9_of_ClubsDetails
+  layerOneState: sc_Clubs
+  layerOneColor: black
+  layerTwoState: sc_9
+  layerTwoColor: black
+
+
+- type: PlayingCardDetails
+  id: 9_of_DiamondsDetails
+  layerOneState: sc_Diamonds
+  layerOneColor: red
+  layerTwoState: sc_9
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 9_of_HeartsDetails
+  layerOneState: sc_Hearts
+  layerTwoState: sc_9
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 9_of_SpadesDetails
+  layerOneState: sc_Spades
+  layerTwoState: sc_9
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 10_of_ClubsDetails
+  layerOneState: sc_Clubs
+  layerOneColor: black
+  layerTwoState: sc_10
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 10_of_DiamondsDetails
+  layerOneState: sc_Diamonds
+  layerOneColor: red
+  layerTwoState: sc_10
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 10_of_HeartsDetails
+  layerOneState: sc_Hearts
+  layerTwoState: sc_10
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 10_of_SpadesDetails
+  layerOneState: sc_Spades
+  layerTwoState: sc_10
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 2_of_ClubsDetails
+  layerOneState: sc_Clubs
+  layerOneColor: black
+  layerTwoState: sc_2
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 2_of_DiamondsDetails
+  layerOneState: sc_Diamonds
+  layerOneColor: red
+  layerTwoState: sc_2
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 2_of_HeartsDetails
+  layerOneState: sc_Hearts
+  layerTwoState: sc_2
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 2_of_SpadesDetails
+  layerOneState: sc_Spades
+  layerTwoState: sc_2
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: Ace_of_ClubsDetails
+  layerTwoState: sc_Ace_of_Clubs
+
+- type: PlayingCardDetails
+  id: Ace_of_DiamondsDetails
+  layerTwoState: sc_Ace_of_Diamonds
+
+- type: PlayingCardDetails
+  id: Ace_of_HeartsDetails
+  layerTwoState: sc_Ace_of_Hearts
+
+- type: PlayingCardDetails
+  id: Ace_of_SpadesDetails
+  layerTwoState: sc_Ace_of_Spades
+
+- type: PlayingCardDetails
+  id: 3_of_ClubsDetails
+  layerOneState: sc_Clubs
+  layerOneColor: black
+  layerTwoState: sc_3
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 3_of_DiamondsDetails
+  layerOneState: sc_Diamonds
+  layerOneColor: red
+  layerTwoState: sc_3
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 3_of_HeartsDetails
+  layerOneState: sc_Hearts
+  layerTwoState: sc_3
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 3_of_SpadesDetails
+  layerOneState: sc_Spades
+  layerTwoState: sc_3
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: Jack_of_ClubsDetails
+  layerOneState: sc_Clubs
+  layerOneColor: black
+  layerTwoState: sc_Jack
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: Jack_of_DiamondsDetails
+  layerOneState: sc_Diamonds
+  layerOneColor: red
+  layerTwoState: sc_Jack
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: Jack_of_HeartsDetails
+  layerOneState: sc_Hearts
+  layerTwoState: sc_Jack
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: Jack_of_SpadesDetails
+  layerOneState: sc_Spades
+  layerTwoState: sc_Jack
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 4_of_ClubsDetails
+  layerOneState: sc_Clubs
+  layerOneColor: black
+  layerTwoState: sc_4
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 4_of_DiamondsDetails
+  layerOneState: sc_Diamonds
+  layerOneColor: red
+  layerTwoState: sc_4
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 4_of_HeartsDetails
+  layerOneState: sc_Hearts
+  layerTwoState: sc_4
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 4_of_SpadesDetails
+  layerOneState: sc_Spades
+  layerTwoState: sc_4
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: King_of_ClubsDetails
+  layerOneState: sc_Clubs
+  layerOneColor: black
+  layerTwoState: sc_King
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: King_of_DiamondsDetails
+  layerOneState: sc_Diamonds
+  layerOneColor: red
+  layerTwoState: sc_King
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: King_of_HeartsDetails
+  layerOneState: sc_Hearts
+  layerTwoState: sc_King
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: King_of_SpadesDetails
+  layerOneState: sc_Spades
+  layerTwoState: sc_King
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 5_of_ClubsDetails
+  layerOneState: sc_Clubs
+  layerOneColor: black
+  layerTwoState: sc_5
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: 5_of_DiamondsDetails
+  layerOneState: sc_Diamonds
+  layerOneColor: red
+  layerTwoState: sc_5
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 5_of_HeartsDetails
+  layerOneState: sc_Hearts
+  layerTwoState: sc_5
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: 5_of_SpadesDetails
+  layerOneState: sc_Spades
+  layerTwoState: sc_5
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: Queen_of_ClubsDetails
+  layerOneState: sc_Clubs
+  layerOneColor: black
+  layerTwoState: sc_Queen
+  layerTwoColor: black
+
+- type: PlayingCardDetails
+  id: Queen_of_DiamondsDetails
+  layerOneState: sc_Diamonds
+  layerOneColor: red
+  layerTwoState: sc_Queen
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: Queen_of_HeartsDetails
+  layerOneState: sc_Hearts
+  layerTwoState: sc_Queen
+  layerTwoColor: red
+
+- type: PlayingCardDetails
+  id: Queen_of_SpadesDetails
+  layerOneState: sc_Spades
+  layerTwoState: sc_Queen
+  layerTwoColor: black
+

@@ -39,6 +39,8 @@ public class PlayingCardDeckSystem : EntitySystem
 
     private void OnComponentInit(EntityUid uid, PlayingCardDeckComponent cardDeckComponent, ComponentInit args)
     {
+        // If there is no deck ID, assign it to the deck's UID
+        // This will make any cards only usable with this deck
         if (cardDeckComponent.CardDeckID == string.Empty)
         {
             cardDeckComponent.CardDeckID = cardDeckComponent.Owner.ToString();
@@ -91,6 +93,10 @@ public class PlayingCardDeckSystem : EntitySystem
 
     public void Shuffle(EntityUid uid, EntityUid user, PlayingCardDeckComponent cardDeckComponent)
     {
+
+        if (cardDeckComponent.CardList.Count <= 0)
+            return;
+
         Random rng = new Random();
 
         List<string> cards = cardDeckComponent.CardList;
@@ -167,7 +173,7 @@ public class PlayingCardDeckSystem : EntitySystem
         EntityUid? playingCard = _playingCardSystem.CreateCard(cardDeckComponent.CardDeckID,
             topCard,
             cardDeckComponent.CardPrototype,
-            cardDeckComponent.NoUniqueCardLayers,
+            cardDeckComponent.PlayingCardContentPrototypeID,
             transformComp.Coordinates);
 
         if (!TryComp<SharedItemComponent>(playingCard, out var item))
@@ -221,7 +227,7 @@ public class PlayingCardDeckSystem : EntitySystem
                 topCards,
                 cardDeckComponent.CardHandPrototype,
                 cardDeckComponent.CardPrototype,
-                cardDeckComponent.NoUniqueCardLayers,
+                cardDeckComponent.PlayingCardContentPrototypeID,
                 transformComp.Coordinates);
 
             if (playingCards != null && TryComp<SharedItemComponent>(playingCards, out var item))

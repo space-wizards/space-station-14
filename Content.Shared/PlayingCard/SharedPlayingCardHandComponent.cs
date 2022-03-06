@@ -28,7 +28,7 @@ public sealed class PlayingCardHandBoundUserInterfaceState : BoundUserInterfaceS
 }
 
 [Serializable, NetSerializable]
-public class PickSingleCardMessage : BoundUserInterfaceMessage
+public sealed class PickSingleCardMessage : BoundUserInterfaceMessage
 {
     public readonly int ID;
     public PickSingleCardMessage(int id)
@@ -38,13 +38,13 @@ public class PickSingleCardMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public enum PlayingCardHandUiKey
+public enum PlayingCardHandUiKey : byte
 {
     Key
 }
 
 [Serializable, NetSerializable]
-public class CardListMessage : BoundUserInterfaceMessage
+public sealed class CardListMessage : BoundUserInterfaceMessage
 {
     public readonly List<String> Cards;
     public CardListMessage(List<String> cards)

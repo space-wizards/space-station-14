@@ -13,15 +13,15 @@ namespace Content.Shared.PlayingCard
     {
         // These should be the last 5 cards for their relevant state
         public readonly List<string> CardList;
-        public readonly bool NoUniqueCardLayers;
-        public CardListVisualState(List<string> cardList, bool noUniqueCardLayers)
+        public readonly string PlayingCardContentPrototypeID;
+        public CardListVisualState(List<string> cardList, string playingCardContentPrototypeID)
         {
             CardList = cardList;
-            NoUniqueCardLayers = noUniqueCardLayers;
+            PlayingCardContentPrototypeID = playingCardContentPrototypeID;
         }
         public object Clone()
         {
-            return new CardListVisualState(CardList, NoUniqueCardLayers);
+            return new CardListVisualState(CardList, PlayingCardContentPrototypeID);
         }
     }
 }

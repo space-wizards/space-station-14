@@ -7,7 +7,7 @@ namespace Content.Shared.PlayingCard
     public enum PlayingCardVisuals : byte
     {
         FacingUp,
-        CardSprite,
-        NoUniqueCardLayers
+        CardName,
+        PlayingCardContentPrototypeID
     }
 }
