@@ -379,6 +379,7 @@ namespace Content.Server.GameTicking
             _sawmill.Info("Restarting round!");
 
             SendServerMessage(Loc.GetString("game-ticker-restart-round"));
+            SendDiscordStartRoundAlert();
 
             RoundNumberMetric.Inc();
 
