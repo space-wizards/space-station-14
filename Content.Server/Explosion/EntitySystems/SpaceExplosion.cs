@@ -1,6 +1,5 @@
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
-using static Content.Server.Explosion.EntitySystems.GridEdgeData;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -11,7 +10,7 @@ public sealed class SpaceExplosion : TileExplosion
     ///     about what grid (which could be more than one), and in what directions the space-based explosion is allowed
     ///     to propagate from this tile.
     /// </summary>
-    private Dictionary<Vector2i, GridBlockData> _gridBlockMap;
+    private Dictionary<Vector2i, BlockedSpaceTile> _gridBlockMap;
 
     /// <summary>
     ///     After every iteration, this data set will store all the grid-tiles that were reached as a result of the
@@ -61,7 +60,7 @@ public sealed class SpaceExplosion : TileExplosion
         return NewTiles.Count + NewBlockedTiles.Count;
     }
 
-    private void JumpToGrid(GridBlockData blocker)
+    private void JumpToGrid(BlockedSpaceTile blocker)
     {
         foreach (var edge in blocker.BlockingGridEdges)
         {

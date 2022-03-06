@@ -24,10 +24,6 @@ public sealed class GridExplosion : TileExplosion
     private float _intensityStepSize;
     private string _typeID;
 
-    /// <summary>
-    ///     Tiles on this grid that are not actually on this grid.... uhh ... yeah.... look its faster than checking
-    ///     atmos directions every iteration.
-    /// </summary>
     private UniqueVector2iSet _spaceTiles = new();
     private UniqueVector2iSet _processedSpaceTiles = new();
 
@@ -159,7 +155,7 @@ public sealed class GridExplosion : TileExplosion
         var blockedDirections = tileData.BlockedDirections;
         if (entryDirections == AtmosDirection.Invalid) // is coming from space?
         {
-            blocked = NeighborHasDirection(_edgeTiles[tile], blockedDirections); // at least one space direction is blocked.
+            blocked = AnyNeighborBlocked(_edgeTiles[tile], blockedDirections); // at least one space direction is blocked.
         }
         else
             blocked = (blockedDirections & entryDirections) == entryDirections;// **ALL** entry directions are blocked

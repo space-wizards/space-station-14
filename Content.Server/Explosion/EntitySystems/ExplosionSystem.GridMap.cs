@@ -1,7 +1,5 @@
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
-using static Content.Server.Explosion.EntitySystems.GridEdgeData;
-
 namespace Content.Server.Explosion.EntitySystems;
 
 // This partial part of the explosion system has all of the functions used to facilitate explosions moving across grids.
@@ -46,13 +44,13 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     Take our map of grid edges, where each is defined in their own grid's reference frame, and map those
     ///     edges all onto one grids reference frame.
     /// </summary>
-    public (Dictionary<Vector2i, GridBlockData>, ushort) TransformGridEdges(MapId targetMap, GridId? referenceGrid, List<GridId> localGrids)
+    public (Dictionary<Vector2i, BlockedSpaceTile>, float) TransformGridEdges(MapId targetMap, GridId? referenceGrid, List<GridId> localGrids)
     {
-        Dictionary<Vector2i, GridBlockData> transformedEdges = new();
+        Dictionary<Vector2i, BlockedSpaceTile> transformedEdges = new();
 
         var targetMatrix = Matrix3.Identity;
         Angle targetAngle = new();
-        ushort tileSize = DefaultTileSize;
+        var tileSize = (float) DefaultTileSize;
 
         // if the explosion is centered on some grid (and not just space), get the transforms.
         if (referenceGrid != null)
@@ -61,14 +59,14 @@ public sealed partial class ExplosionSystem : EntitySystem
             var xform = Transform(targetGrid.GridEntityId);
             targetAngle = xform.WorldRotation;
             targetMatrix = xform.InvWorldMatrix;
-            tileSize = targetGrid.TileSize;
+            tileSize = (float) targetGrid.TileSize;
         }
 
         var offsetMatrix = Matrix3.Identity;
         offsetMatrix.R0C2 = tileSize / 2;
         offsetMatrix.R1C2 = tileSize / 2;
 
-        // here we will get a triple nested for loop:
+        // Here we can end up with a triple nested for loop:
         // foreach other grid
         //   foreach edge tile in that grid
         //     foreach tile in our grid that touches that tile (vast majority of the time: 1 tile, but could be up to 4)
@@ -119,9 +117,9 @@ public sealed partial class ExplosionSystem : EntitySystem
 
                 // Instead of just mapping the center of the tile, we map for points on that tile. This is basically a
                 // shitty approximation to doing a proper check to get all space-tiles that intersect this grid tile.
-                // But it works well enough.
+                // Not perfect, but works well enough.
                 transformedTiles.Clear();
-                transformedTiles.Add(new((int) MathF.Floor(center.X + x), (int) MathF.Floor(center.Y + y)));  // initial direction
+                transformedTiles.Add(new((int) MathF.Floor(center.X + x), (int) MathF.Floor(center.Y + y)));  // center of tile, offset by + (0.25, 0.25) in tile coordinates
                 transformedTiles.Add(new((int) MathF.Floor(center.X - y), (int) MathF.Floor(center.Y + x)));  // rotated 90 degrees
                 transformedTiles.Add(new((int) MathF.Floor(center.X - x), (int) MathF.Floor(center.Y - y)));  // rotated 180 degrees
                 transformedTiles.Add(new((int) MathF.Floor(center.X + y), (int) MathF.Floor(center.Y - x)));  // rotated 270 degrees
@@ -148,7 +146,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             foreach (var (tile, dir) in localEdges)
             {
                 // grids cannot overlap, so tile should NEVER be an existing entry.
-                var data = new GridBlockData();
+                var data = new BlockedSpaceTile();
                 transformedEdges[tile] = data;
                 
                 data.UnblockedDirections = AtmosDirection.Invalid; // all directions are blocked automatically.
@@ -170,7 +168,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     After grid edges were transformed into the reference frame of some other grid, this function figures out
     ///     which of those edges are actually blocking explosion propagation.
     /// </remarks>
-    public void GetUnblockedDirections(Dictionary<Vector2i, GridBlockData> transformedEdges, ushort tileSize)
+    public void GetUnblockedDirections(Dictionary<Vector2i, BlockedSpaceTile> transformedEdges, float tileSize)
     {
         foreach (var (tile, data) in transformedEdges)
         {
@@ -291,9 +289,10 @@ public sealed partial class ExplosionSystem : EntitySystem
         return spaceDirections != NeighborFlag.Invalid;
     }
 
-    // yeah this makrs for the third direction bitflag, and the 5th (afaik) direction enum overall.....
+    // yeah this is now the third direction flag enum, and the 5th (afaik) direction enum overall.....
     /// <summary>
-    ///     Directional bitflags. Differ from atmos and normal directional bit flags as NorthEast != North | East
+    ///     Directional bitflags used to denote the neighbouring tiles of some tile on a grid.. Differ from atmos and
+    ///     normal directional flags as NorthEast != North | East
     /// </summary>
     [Flags]
     public enum NeighborFlag : byte
@@ -313,18 +312,18 @@ public sealed partial class ExplosionSystem : EntitySystem
         Any = Cardinal | Diagonal
     }
 
-    public static bool NeighborHasDirection(NeighborFlag flag, AtmosDirection dir)
+    public static bool AnyNeighborBlocked(NeighborFlag neighbors, AtmosDirection blockedDirs)
     {
-        if ((flag & NeighborFlag.North) == NeighborFlag.North && dir.HasFlag(AtmosDirection.North))
+        if ((neighbors & NeighborFlag.North) == NeighborFlag.North && (blockedDirs & AtmosDirection.North) == AtmosDirection.North)
             return true;
 
-        if ((flag & NeighborFlag.South) == NeighborFlag.South && dir.HasFlag(AtmosDirection.South))
+        if ((neighbors & NeighborFlag.South) == NeighborFlag.South && (blockedDirs & AtmosDirection.South) == AtmosDirection.South)
             return true;
 
-        if ((flag & NeighborFlag.East) == NeighborFlag.East && dir.HasFlag(AtmosDirection.East))
+        if ((neighbors & NeighborFlag.East) == NeighborFlag.East && (blockedDirs & AtmosDirection.East) == AtmosDirection.East)
             return true;
 
-        if ((flag & NeighborFlag.West) == NeighborFlag.West && dir.HasFlag(AtmosDirection.West))
+        if ((neighbors & NeighborFlag.West) == NeighborFlag.West && (blockedDirs & AtmosDirection.West) == AtmosDirection.West)
             return true;
 
         return false;
@@ -344,45 +343,47 @@ public sealed partial class ExplosionSystem : EntitySystem
         };
 }
 
-public struct GridEdgeData : IEquatable<GridEdgeData>
-{
-    public Vector2i Tile;
-    public GridId? Grid;
-    public Box2Rotated Box;
-
-    public GridEdgeData(Vector2i tile, GridId? grid, Vector2 center, Angle angle, float size)
-    {
-        Tile = tile;
-        Grid = grid;
-        Box = new(Box2.CenteredAround(center, (size, size)), angle, center);
-    }
-
-    /// <inheritdoc />
-    public bool Equals(GridEdgeData other)
-    {
-        return Tile.Equals(other.Tile) && Grid.Equals(other.Grid);
-    }
-
-    /// <inheritdoc />
-    public override int GetHashCode()
-    {
-        unchecked
-        {
-            return (Tile.GetHashCode() * 397) ^ Grid.GetHashCode();
-        }
-    }
-}
-
-public sealed class GridBlockData
+/// <summary>
+///     This class has information about the space equivalent of an airtight entity blocking explosions: the edges of grids.
+/// </summary>
+public sealed class BlockedSpaceTile
 {
     /// <summary>
-    ///     What directions of this tile are not blocked by some other grid?
+    ///     What directions of this tile are not blocked?
     /// </summary>
     public AtmosDirection UnblockedDirections = AtmosDirection.All;
 
     /// <summary>
-    ///     Hashset contains information about the edge-tiles, which belong to some other grid(s), that are blocking
-    ///     this tile.
+    ///     The set of grid edge-tiles that are blocking this space tile.
     /// </summary>
     public HashSet<GridEdgeData> BlockingGridEdges = new();
+
+    public struct GridEdgeData : IEquatable<GridEdgeData>
+    {
+        public Vector2i Tile;
+        public GridId? Grid;
+        public Box2Rotated Box;
+
+        public GridEdgeData(Vector2i tile, GridId? grid, Vector2 center, Angle angle, float size)
+        {
+            Tile = tile;
+            Grid = grid;
+            Box = new(Box2.CenteredAround(center, (size, size)), angle, center);
+        }
+
+        /// <inheritdoc />
+        public bool Equals(GridEdgeData other)
+        {
+            return Tile.Equals(other.Tile) && Grid.Equals(other.Grid);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (Tile.GetHashCode() * 397) ^ Grid.GetHashCode();
+            }
+        }
+    }
 }
