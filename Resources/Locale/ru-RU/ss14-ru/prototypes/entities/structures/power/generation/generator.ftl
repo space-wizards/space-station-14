@@ -1,3 +1,3 @@
-ent-BaseGenerator = generator
-    .desc = A high efficiency thermoelectric generator.
+ent-BaseGenerator = генератор
+    .desc = Высокоэффективный термоэлектрический генератор.
     .suffix = { "" }

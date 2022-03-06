@@ -1,9 +1,9 @@
-ent-ConveyorBelt = conveyor belt
-    .desc = A conveyor belt, commonly used to transport large numbers of items elsewhere quite quickly.
+ent-ConveyorBelt = конвейерная лента
+    .desc = Конвейерная лента, обычно используется для быстрой транспортировки большого количества объектов в другое место.
     .suffix = { "" }
-ent-ConveyorBeltAssembly = conveyor belt
-    .desc = A conveyor belt assembly. Used to construct a conveyor belt.
-    .suffix = assembly
-ent-TwoWayLever = two way lever
-    .desc = A two way lever.
+ent-ConveyorBeltAssembly = конвейерная лента
+    .desc = Разобранная конвейерная лента. Служит для сборки, как ни странно, конвейерной ленты.
+    .suffix = разобранная
+ent-TwoWayLever = двухпозиционный рычаг
+    .desc = Двухпозиционный рычаг.
     .suffix = { "" }

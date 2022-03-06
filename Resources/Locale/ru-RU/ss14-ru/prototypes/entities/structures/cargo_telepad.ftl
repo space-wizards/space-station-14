@@ -1,3 +1,3 @@
-ent-cargoTelepad = cargo telepad
-    .desc = Temporary cargo delivery for developing Nanotrasen stations! Warning: destroying this while goods are in transit will lose them forever!
+ent-cargoTelepad = телепортатор грузов
+    .desc = Временная решение по доставке грузов для развивающихся станций Nanotrasen! Внимание: уничтожение этого устройства во время транспортировки грузов приведет к их потере навсегда!
     .suffix = { "" }

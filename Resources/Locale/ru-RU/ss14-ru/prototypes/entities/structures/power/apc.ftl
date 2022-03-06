@@ -1,3 +1,3 @@
-ent-BaseAPC = APC
-    .desc = A control terminal for the area's electrical systems.
+ent-BaseAPC = ЛКП
+    .desc = Терминал управления локальными электрическими системами.
     .suffix = { "" }

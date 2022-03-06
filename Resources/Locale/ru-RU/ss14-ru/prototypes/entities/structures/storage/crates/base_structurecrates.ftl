@@ -1,6 +1,6 @@
-ent-CrateGeneric = crate
-    .desc = A large container for items.
+ent-CrateGeneric = ящик
+    .desc = Большой контейнер для предметов.
     .suffix = { "" }
-ent-CrateBaseSecure = crate
-    .desc = A large container for items.
+ent-CrateBaseSecure = ящик
+    .desc = Большой контейнер для предметов.
     .suffix = { "" }

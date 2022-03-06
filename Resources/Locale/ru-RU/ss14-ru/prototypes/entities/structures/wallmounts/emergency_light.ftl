@@ -1,3 +1,3 @@
-ent-EmergencyLight = emergency light
-    .desc = A small red light with an internal battery that turns on as soon as it stops receiving any power.
+ent-EmergencyLight = аварийная лампа
+    .desc = Маленькая красная лампочка с внутренним аккумулятором, которая включается, как только перестает получать питание извне.
     .suffix = { "" }

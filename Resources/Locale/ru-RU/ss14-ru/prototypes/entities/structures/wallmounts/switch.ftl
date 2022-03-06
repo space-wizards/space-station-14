@@ -1,9 +1,9 @@
-ent-SignalSwitch = signal switch
-    .desc = Its a switch for toggling power to things.
+ent-SignalSwitch = переключатель сигнала
+    .desc = Это переключатель питания устройств.
     .suffix = { "" }
-ent-SignalButton = signal button
-    .desc = It's a button for activating something.
+ent-SignalButton = кнопка сигнала
+    .desc = Эта кнопка что-то активирует.
     .suffix = { "" }
-ent-ApcNetSwitch = apc net switch
-    .desc = Its a switch for toggling lights that are connected to the same apc.
+ent-ApcNetSwitch = переключатель сети ЛКП
+    .desc = Это переключатель источников света, использующих локальный контроллер питания.
     .suffix = { "" }

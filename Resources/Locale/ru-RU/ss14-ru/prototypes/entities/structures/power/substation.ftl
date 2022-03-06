@@ -1,3 +1,3 @@
-ent-BaseSubstation = substation
-    .desc = Reduces the voltage of electricity put into it.
+ent-BaseSubstation = подстанция
+    .desc = Понижает напряжение подаваемого в него электричества.
     .suffix = { "" }

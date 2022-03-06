@@ -1,3 +1,3 @@
-ent-KitchenSpike = meat spike
-    .desc = A spike for collecting meat from animals.
+ent-KitchenSpike = мясной крюк
+    .desc = Крюк для снятия мяса с животных.
     .suffix = { "" }

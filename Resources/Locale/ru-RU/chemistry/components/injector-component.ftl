@@ -1,24 +1,24 @@
 ## UI
 
-injector-draw-text = Draw
-injector-inject-text = Inject
-injector-invalid-injector-toggle-mode = Invalid
-injector-volume-label = Volume: [color=white]{ $currentVolume }/{ $totalVolume }[/color] | [color=white]{ $modeString }[/color]
+injector-draw-text = Набрать
+injector-inject-text = Ввести
+injector-invalid-injector-toggle-mode = Неверный режим
+injector-volume-label = Объём: [color=white]{ $currentVolume }/{ $totalVolume }[/color] | [color=white]{ $modeString }[/color]
 
 ## Entity
 
-injector-component-drawing-text = Now drawing
-injector-component-injecting-text = Now injecting
-injector-component-cannot-transfer-message = You aren't able to transfer to { $target }!
-injector-component-cannot-draw-message = You aren't able to draw from { $target }!
-injector-component-cannot-inject-message = You aren't able to inject to { $target }!
-injector-component-inject-success-message = You inject { $amount }u into { $target }!
-injector-component-transfer-success-message = You transfer { $amount }u into { $target }.
-injector-component-draw-success-message = You draw { $amount }u from { $target }.
-injector-component-target-already-full-message = { $target } is already full!
-injector-component-target-is-empty-message = { $target } is empty!
+injector-component-drawing-text = Содержимое набирается
+injector-component-injecting-text = Содержимое вводится
+injector-component-cannot-transfer-message = Вы не можете ничего переместить в { $target }!
+injector-component-cannot-draw-message = Вы не можете ничего набрать из { $target }!
+injector-component-cannot-inject-message = Вы не можете ничего ввести в { $target }!
+injector-component-inject-success-message = Вы вводите { $amount }ед. в { $target }!
+injector-component-transfer-success-message = Вы перемещаете { $amount }ед. в { $target }.
+injector-component-draw-success-message = Вы набираете { $amount }ед. из { $target }.
+injector-component-target-already-full-message = { $target } полон!
+injector-component-target-is-empty-message = { $target } пуст!
 
 ## mob-inject doafter messages
 
-injector-component-injecting-user = You start inserting the needle.
-injector-component-injecting-target = { $user } is trying to stick a needle into you!
+injector-component-injecting-user = Вы начинаете вводить иглу.
+injector-component-injecting-target = { $user } пытается ввести вам иглу!

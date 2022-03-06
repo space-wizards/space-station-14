@@ -1,17 +1,17 @@
-particle-accelerator-control-menu-on-button = On
-particle-accelerator-control-menu-off-button = Off
-particle-accelerator-control-menu-service-manual-reference = Refer to p.132 of service manual
-particle-accelerator-control-menu-device-version-label = Mark 2 Particle Accelerator
-particle-accelerator-control-menu-power-label = Power:
-particle-accelerator-control-menu-strength-label = Strength:
+particle-accelerator-control-menu-on-button = ВКЛ
+particle-accelerator-control-menu-off-button = ВЫКЛ
+particle-accelerator-control-menu-service-manual-reference = См. стр. 132 руководства по обслуживанию
+particle-accelerator-control-menu-device-version-label = Ускоритель частиц Mark 2
+particle-accelerator-control-menu-power-label = Питание:
+particle-accelerator-control-menu-strength-label = Сила:
 particle-accelerator-control-menu-alarm-control =
-    PARTICLE STRENGTH
-    LIMITER FAILURE
-particle-accelerator-control-menu-scan-parts-button = Scan Parts
-particle-accelerator-control-menu-check-containment-field-warning = Ensure containment field is active before operation
+    МОЩНОСТЬ ЧАСТИЦ
+    СБОЙ ОГРАНИЧИТЕЛЯ
+particle-accelerator-control-menu-scan-parts-button = Сканировать части
+particle-accelerator-control-menu-check-containment-field-warning = Перед началом работы убедитесь, что защитное поле активно
 particle-accelerator-control-menu-foo-bar-baz = FOO-BAR-BAZ
-particle-accelerator-control-menu-status-label = Status: { $status }
-particle-accelerator-control-menu-status-operational = Operational
-particle-accelerator-control-menu-status-incomplete = Incomplete
-particle-accelerator-control-menu-draw-not-available = Draw: N/A
-particle-accelerator-control-menu-draw = Draw: { $watts }/{ $lastReceive }
+particle-accelerator-control-menu-status-label = Статус: { $status }
+particle-accelerator-control-menu-status-operational = Работает
+particle-accelerator-control-menu-status-incomplete = Не завершено
+particle-accelerator-control-menu-draw-not-available = Мощность: Н/Д
+particle-accelerator-control-menu-draw = Мощность: { $watts }/{ $lastReceive }

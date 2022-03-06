@@ -1,9 +1,9 @@
 ent-MedkitFilled = { ent-Medkit }
-    .suffix = Filled
+    .suffix = Заполненная
     .desc = { ent-Medkit.desc }
 ent-MedkitBurnFilled = { ent-MedkitBurn }
-    .suffix = Filled
+    .suffix = Заполненная
     .desc = { ent-MedkitBurn.desc }
 ent-MedkitBruteFilled = { ent-MedkitBrute }
-    .suffix = Filled
+    .suffix = Заполненная
     .desc = { ent-MedkitBrute.desc }

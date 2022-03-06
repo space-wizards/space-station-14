@@ -1,3 +1,3 @@
-ent-ClosetBase = closet
-    .desc = A standard-issue Nanotrasen storage unit.
+ent-ClosetBase = шкаф
+    .desc = Стандартное хранилище Nanotrasen.
     .suffix = { "" }

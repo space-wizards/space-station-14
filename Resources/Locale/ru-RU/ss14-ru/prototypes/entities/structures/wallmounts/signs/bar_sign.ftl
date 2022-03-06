@@ -1,7 +1,7 @@
 ent-BarSign = вывеска бара
     .desc = { ent-BaseStructure.desc }
     .suffix = { "" }
-ent-LargeBarSign = large bar sign
+ent-LargeBarSign = большая вывеска бара
     .desc = { "" }
     .suffix = { "" }
 ent-BarSignEngineChange = Замена двигателя
