@@ -399,7 +399,7 @@
         - ReagentId: JuiceTomato
           Quantity: 10
   - type: Evaporation
-    lowerLimit: 0 # todo: reimplement stain behaviour, ideally in a way that doesn't use evaporation lowerLimit
+    evaporateTime: 400 # very slow
   - type: Appearance
   - type: PuddleVisuals
 

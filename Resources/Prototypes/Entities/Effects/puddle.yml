@@ -115,6 +115,8 @@
     state: vomit-0
     netsync: false
   - type: Puddle
+  - type: Evaporation
+    evaporateTime: 400 # very slow
   - type: SolutionContainerManager
     solutions:
       puddle:
@@ -137,6 +139,8 @@
     state: vomit_toxin-0
     netsync: false
   - type: Puddle
+  - type: Evaporation
+    evaporateTime: 400 # very slow
   - type: SolutionContainerManager
     solutions:
       puddle:
