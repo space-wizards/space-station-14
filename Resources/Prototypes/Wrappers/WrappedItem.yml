@@ -1,0 +1,14 @@
+- type: entity
+  name: Parcel
+  parent: BoxBase
+  id: parcelBase
+  description: A [Size/WappType] wrapped package.. #A small wrapped package
+  components:
+    - type: Sprite
+      layers:
+        - state: box
+    - type: Item
+      size: 20
+    - type: Storage
+      capacity: 20
+      size: 20
