@@ -18,7 +18,6 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        float visualSeed = 0; // given a random value on puddle initialization, to be used as a seed for rotation and sprite selection.
 
         public override void Initialize()
         {
@@ -34,8 +33,6 @@ namespace Content.Server.Fluids.EntitySystems
         {
             var solution = _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
             solution.MaxVolume = FixedPoint2.New(1000);
-
-            visualSeed = _random.NextFloat();
 
             InitializeAppearance(uid, component);
 
@@ -60,7 +57,7 @@ namespace Content.Server.Fluids.EntitySystems
             if (!Resolve(uid, ref puddle, ref appearance, false))
                 return;
 
-            appearance.SetData(PuddleVisuals.VisualSeed, visualSeed); // This only needs to be set once, when the puddle is initialized.
+            appearance.SetData(PuddleVisuals.VisualSeed, _random.NextFloat()); // Random value is used as a seed for rotation and sprite selection.
 
             UpdateAppearance(uid, puddle);
         }
