@@ -249,8 +249,9 @@ namespace Content.Server.Physics.Controllers
                 {
                     thrusterSystem.SetAngularThrust(shuttle, false);
                     body.AngularDamping = shuttleSystem.ShuttleIdleAngularDamping * body.InvI;
+                    body.SleepingAllowed = true;
 
-                    if (Math.Abs(body.AngularVelocity) < 0.07f)
+                    if (Math.Abs(body.AngularVelocity) < 0.01f)
                     {
                         body.AngularVelocity = 0f;
                     }
@@ -258,12 +259,13 @@ namespace Content.Server.Physics.Controllers
                 else
                 {
                     body.AngularDamping = 0;
+                    body.SleepingAllowed = false;
 
+                    var maxSpeed = Math.Min(shuttleSystem.ShuttleMaxAngularMomentum * body.InvI, shuttleSystem.ShuttleMaxAngularSpeed);
                     var maxTorque = body.Inertia * shuttleSystem.ShuttleMaxAngularAcc;
 
-                    var torque = Math.Clamp(shuttle.AngularThrust, 0, maxTorque);
-
-                    var dragTorque = body.AngularVelocity * (torque / shuttleSystem.ShuttleMaxAngularSpeed);
+                    var torque = Math.Min(shuttle.AngularThrust, maxTorque);
+                    var dragTorque = body.AngularVelocity * (torque / maxSpeed);
 
                     body.ApplyAngularImpulse((-angularInput * torque - dragTorque) * frameTime);
 
