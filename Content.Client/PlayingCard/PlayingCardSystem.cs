@@ -18,6 +18,8 @@ public sealed class PlayingCardSystem : VisualizerSystem<PlayingCardVisualsCompo
             sprite.LayerSetVisible(PlayingCardVisualLayers.LayerOne, false);
             sprite.LayerSetVisible(PlayingCardVisualLayers.LayerTwo, false);
 
+            sprite.LayerSetVisible(PlayingCardVisualLayers.Base, isFacingUp);
+
             sprite.LayerSetVisible(PlayingCardVisualLayers.FlippedDown, !isFacingUp);
 
             if (string.IsNullOrEmpty(playingCardContentPrototypeID))
@@ -32,7 +34,6 @@ public sealed class PlayingCardSystem : VisualizerSystem<PlayingCardVisualsCompo
             if (!_prototypeManager.TryIndex(cardLayerDetailsPrototypeID, out PlayingCardDetailsPrototype? cardDetails))
                 return;
 
-            // if (!noUniqueCards) should just use base
             if (cardDetails.LayerOneState != null)
             {
                 sprite.LayerSetState(PlayingCardVisualLayers.LayerOne, cardDetails.LayerOneState);
@@ -46,11 +47,10 @@ public sealed class PlayingCardSystem : VisualizerSystem<PlayingCardVisualsCompo
             {
                 sprite.LayerSetState(PlayingCardVisualLayers.LayerTwo, cardDetails.LayerTwoState);
                 sprite.LayerSetVisible(PlayingCardVisualLayers.LayerTwo, isFacingUp);
-
             }
 
             if (cardDetails.LayerTwoColor != null)
-            sprite.LayerSetColor(PlayingCardVisualLayers.LayerTwo, cardDetails.LayerTwoColor.Value);
+                sprite.LayerSetColor(PlayingCardVisualLayers.LayerTwo, cardDetails.LayerTwoColor.Value);
         }
     }
 }
