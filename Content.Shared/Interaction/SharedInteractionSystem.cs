@@ -151,8 +151,7 @@ namespace Content.Shared.Interaction
         ///     Checks Whether combat mode is enabled and whether the user can actually interact with the given entity.
         /// </remarks>
         /// <param name="altInteract">Whether to use default or alternative interactions (usually as a result of
-        /// alt+clicking). If combat mode is enabled, the alternative action is to perform the default non-combat
-        /// interaction. Having an item in the active hand also disables alternative interactions.</param>
+        /// alt+clicking). Having an item in the active hand also disables alternative interactions.</param>
         public void UserInteraction(
             EntityUid user,
             EntityCoordinates coordinates,
@@ -165,10 +164,9 @@ namespace Content.Shared.Interaction
             if (target != null && Deleted(target.Value))
                 return;
 
-            // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
-            if (!altInteract && TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
-                DoAttack(user, coordinates, false, target);
+                DoAttack(user, coordinates, false, target, altInteract);
                 return;
             }
 
@@ -249,7 +247,7 @@ namespace Content.Shared.Interaction
         }
 
         public virtual void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack,
-            EntityUid? targetUid = null)
+            EntityUid? targetUid = null, bool altInteract = false)
         {
             // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
         }

@@ -1,18 +1,15 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
 using Content.Server.Timing;
+using Content.Server.Weapon.Ranged;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Timing;
@@ -20,13 +17,11 @@ using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
+using System.Linq;
 
 namespace Content.Server.Interaction
 {
@@ -292,7 +287,7 @@ namespace Content.Server.Interaction
             InteractDoAfter(user, used, target, clickLocation, inRangeUnobstructed);
         }
 
-        public override void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack, EntityUid? target = null)
+        public override void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack, EntityUid? target = null, bool altInteract = false)
         {
             // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
             if (!ValidateInteractAndFace(user, coordinates))
@@ -327,6 +322,10 @@ namespace Content.Server.Interaction
 
                 if (item != null && !Deleted(item.Value))
                 {
+
+                    if (EntityManager.HasComponent<ServerRangedWeaponComponent>(item) && !altInteract)
+                        return;
+
                     if (wideAttack)
                     {
                         var ev = new WideAttackEvent(item.Value, user, coordinates);
