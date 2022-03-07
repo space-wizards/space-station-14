@@ -7,6 +7,8 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Client.UserInterface;
 using Content.Client.Stylesheets;
+using Robust.Client.Utility;
+using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -25,6 +27,8 @@ namespace Content.Client.PlayingCard.UI
         private int _cardOffset = 0;
 
         private int _cardPageLimit = 5;
+
+        private const string PillsRsiPath = "/Textures/Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi";
         public PlayingCardHandWindow(PlayingCardHandBoundUserInterface owner)
         {
             IoCManager.InjectDependencies(this);
@@ -32,10 +36,44 @@ namespace Content.Client.PlayingCard.UI
 
             Owner = owner;
             IoCManager.Resolve<IResourceCache>();
-            // VendingContents.OnItemSelected += ItemSelected;
 
             ScrollRight.OnPressed += e => ChangeOffset(1);
             ScrollLeft.OnPressed += e => ChangeOffset(-1);
+        }
+
+        // private Control SupplyTooltip(Control? sender)
+        public sealed class TestTooltip : PanelContainer
+        {
+            private const float TooltipTextMaxWidth = 128;
+            public TestTooltip(string tooltipText)
+            {
+                SetOnlyStyleClass(StyleNano.StyleClassTransparentBorderedWindowPanel);
+
+                BoxContainer vbox;
+                AddChild(vbox = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Vertical,
+                    RectClipContent = true,
+                    MaxWidth = TooltipTextMaxWidth,
+                });
+
+                var nameLabel = new RichTextLabel
+                {
+                    StyleClasses = {StyleNano.StyleClassTooltipActionDescription}
+                };
+
+                nameLabel.SetMessage(tooltipText);
+                vbox.AddChild(nameLabel);
+            }
+
+        }
+
+        private Control? SupplyTooltip(Control sender)
+        {
+            if (sender.ToolTip != null)
+                return new TestTooltip(sender.ToolTip);
+
+            return null;
         }
 
         public void Populate(List<String> cardList)
@@ -47,18 +85,38 @@ namespace Content.Client.PlayingCard.UI
             int start = Math.Max(0, ((cardList.Count - 1) - _cardOffset));
             int end = Math.Max(0, ((start + 1) - _cardPageLimit));
 
+            var resourcePath = new ResourcePath(PillsRsiPath);
+            var specifier = new SpriteSpecifier.Rsi(resourcePath, "sc_base");
+
             for (int i = start; i >= end ; i--) {
+
+            var baseTexture = specifier.Frame0();
+
+            TextureRect pillTypeTexture = new TextureRect
+            {
+
+                Texture = specifier.Frame0(),
+                TextureScale = (1.75f, 1.75f),
+                Stretch = TextureRect.StretchMode.KeepCentered,
+            };
 
             var button = new CardButton
             {
                 CardName = cardList[i],
                 Index = i
             };
+            button.ActualButton.ToolTip = cardList[i];
+            button.ActualButton.TooltipDelay = 0.1f;
+            button.ActualButton.TooltipSupplier = SupplyTooltip;
+
+            // SET TEXTURES
+            var rect = button.EntityTextureRects;
+            rect.Textures = new(){baseTexture};
 
             // var rect = button.EntityTextureRects;
             // rect.Textures = SpriteComponent.GetPrototypeTextures(prototype, resourceCache).Select(o => o.Default).ToList();
                 button.ActualButton.OnPressed += OnCardSelected;
-                button.CardNameLabel.SetMessage(cardList[i]);
+                // button.CardNameLabel.SetMessage(cardList[i]);
                 CardList.AddChild(button);
             }
 
@@ -97,8 +155,8 @@ namespace Content.Client.PlayingCard.UI
         {
             public string CardName { get; set; } = default!;
             public Button ActualButton { get; private set; }
-            public RichTextLabel CardNameLabel { get; private set; }
-            // public LayeredTextureRect EntityTextureRects { get; private set; }
+            public BoxContainer Box { get; private set; }
+            public LayeredTextureRect EntityTextureRects { get; private set; }
             public int Index { get; set; }
 
             public CardButton()
@@ -107,26 +165,21 @@ namespace Content.Client.PlayingCard.UI
                 {
                 });
 
-                AddChild(new BoxContainer
+                AddChild(Box = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical,
-                    MinSize = (125, 200),
-                    MaxSize = (125, 200),
+                    MinSize = (64, 96),
+                    MaxSize = (64, 96),
                     Children =
                     {
-                        // (EntityTextureRects = new LayeredTextureRect
-                        // {
-                        //     MinSize = (32, 32),
-                        //     HorizontalAlignment = HAlignment.Center,
-                        //     VerticalAlignment = VAlignment.Top,
-                        //     // Stretch = TextureRect.StretchMode.KeepAspectCentered,
-                        //     CanShrink = true
-                        // }),
-                        (CardNameLabel = new RichTextLabel
+                        (EntityTextureRects = new LayeredTextureRect
                         {
-                            VerticalAlignment = VAlignment.Center,
+                            MinSize = (128, 128),
+                            HorizontalExpand = true,
+                            VerticalExpand = true,
                             HorizontalAlignment = HAlignment.Center,
-                            HorizontalExpand = false,
+                            VerticalAlignment = VAlignment.Center,
+                            Stretch = TextureRect.StretchMode.KeepAspect,
                         })
                     }
                 });

@@ -1,11 +1,10 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io">
-    <BoxContainer Orientation="Horizontal" MinSize="775 200">
-        <Button MinSize="50 200" Name="ScrollLeft" Text="←"/>
+    <BoxContainer Orientation="Horizontal" MinSize="370 96">
+        <Button MinSize="25 96" MaxSize="25 96" Name="ScrollLeft" Text="←"/>
         <BoxContainer Orientation="Horizontal"
         Name="CardList"
-        VerticalExpand="True"
-        HorizontalExpand="True">
+        MinSize="320 96">
         </BoxContainer>
-        <Button MinSize="50 200" Name="ScrollRight" Text="→"/>
+        <Button MinSize="25 96" MaxSize="25 96" Name="ScrollRight" Text="→"/>
     </BoxContainer>
 </DefaultWindow>
