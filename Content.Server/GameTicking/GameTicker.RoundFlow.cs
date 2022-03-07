@@ -333,12 +333,12 @@ namespace Content.Server.GameTicking
                     // Finish
                     var antag = mind.AllRoles.Any(role => role.Antagonist);
 
-                    var playerIcName = string.Empty;
+                    var playerIcName = "Unknown";
 
                     if (mind.CharacterName != null)
                         playerIcName = mind.CharacterName;
-                    else if (mind.CurrentEntity != null)
-                        playerIcName = EntityManager.GetComponent<MetaDataComponent>(mind.CurrentEntity.Value).EntityName;
+                    else if (mind.CurrentEntity != null && TryName(mind.CurrentEntity.Value, out var icName))
+                        playerIcName = icName;
 
                     var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                     {

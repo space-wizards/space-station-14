@@ -1,59 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'NT14 Knightship models have been taken in for a refit, and now have
-      thrusters, gyroscopes and a docking airlock.', type: Add}
-  id: 666
-  time: '2021-11-26T22:50:36.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed cigar case visuals. Can no longer see the cigars when case is
-      closed., type: Fix}
-  id: 667
-  time: '2021-11-27T06:43:19.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Administrators have had an essential command added to their toolset.,
-    type: Add}
-  id: 668
-  time: '2021-11-27T06:43:33.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Lanterns and hardhats have been upgraded to starting with Small High-Capacity
-      Power Cells., type: Tweak}
-  id: 669
-  time: '2021-11-27T06:43:38.0000000+00:00'
-- author: artak10t
-  changes:
-  - {message: Added pills types selection in ChemMaster, type: Add}
-  - {message: Added pills canister, type: Add}
-  id: 670
-  time: '2021-11-27T06:44:36.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Acids including fluorosulfuric, polytrinic, and sulfuric now have effects
-      on touch.', type: Add}
-  id: 671
-  time: '2021-11-27T07:31:50.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Trash Bags have been added to the Janitor Cargo Crate., type: Tweak}
-  - {message: Emergency Suits have been added to the Emergency Internals Cargo Crate.,
-    type: Tweak}
-  id: 672
-  time: '2021-11-27T08:54:08.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Pill canisters can now be found in a box in chemistry's locker., type: Add}
-  - {message: 'Cargo now has access to the chemistry supplies crate, allowing them
-      to replace chemistry''s things after they are all stolen or blown up.', type: Add}
-  id: 673
-  time: '2021-11-28T01:30:47.0000000+00:00'
-- author: iczero
-  changes:
-  - {message: Protolathes and autolathes can now be constructed, type: Add}
-  id: 674
-  time: '2021-11-28T01:38:07.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Gyroscope examine no longer mentions direction which doesn't matter,
@@ -2989,3 +2934,55 @@ Entries:
       Please report if it continues happening.', type: Fix}
   id: 1165
   time: '2022-03-04T10:52:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Reverted explosion refactor test merge. Will probably return eventually.,
+    type: Remove}
+  id: 1166
+  time: '2022-03-05T17:02:34.0000000+00:00'
+- author: ninruB
+  changes:
+  - {message: 'a recipe for white and dark tiles in the crafting menu, sorta like
+      the steel tile recipe.', type: Add}
+  id: 1167
+  time: '2022-03-05T20:47:19.0000000+00:00'
+- author: Radrark
+  changes:
+  - {message: Improved the movement of shuttles., type: Tweak}
+  id: 1168
+  time: '2022-03-07T05:03:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed electrocution not dealing damage., type: Fix}
+  id: 1169
+  time: '2022-03-07T05:14:56.0000000+00:00'
+- author: Radrark
+  changes:
+  - {message: Fixed the mass scanner console., type: Fix}
+  id: 1170
+  time: '2022-03-07T07:04:27.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Musician PDA works like a regular PDA again., type: Fix}
+  id: 1171
+  time: '2022-03-07T11:41:50.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones can now only pick up or drag a whitelist of items., type: Tweak}
+  - {message: Drones are now way easier to kill for a variety of reasons., type: Tweak}
+  - {message: "Drones can no longer interact with anything within 2\xBD tiles of a\
+      \ non-drone mob. The nerfs will continue until morale improves.", type: Tweak}
+  id: 1172
+  time: '2022-03-07T11:46:37.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Player built shuttles should now be able to hold an atmosphere, assuming
+      they''re eight tiles or larger.', type: Add}
+  id: 1173
+  time: '2022-03-07T12:09:55.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Pillar 5.2! New arcade, small dorms, EVA storage and minor fixes. Engineering
+      now have EVA suits.', type: Add}
+  id: 1174
+  time: '2022-03-07T12:26:28.0000000+00:00'

@@ -8,6 +8,9 @@
     - HEAD
   - type: Sprite
     state: icon
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   abstract: true
@@ -42,6 +45,9 @@
         Heat: 0.90
         Radiation: 0.25
   - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - HidesHair
 
 - type: entity
   abstract: true

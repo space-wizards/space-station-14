@@ -43,6 +43,8 @@
       type: UplinkBoundUserInterface
     - key: enum.RingerUiKey.Key
       type: RingerBoundUserInterface
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
   - type: PDA
     penSlot:
       startingItem: Pen
@@ -59,6 +61,8 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+  - type: Input
+    context: "human"
 
 - type: entity
   parent: BasePDA
@@ -493,13 +497,3 @@
     handheld: true
     bank: 1
     program: 2
-  - type: ActivatableUI
-    inHandsOnly: true
-    singleUser: true
-    key: enum.InstrumentUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.InstrumentUiKey.Key
-      type: InstrumentBoundUserInterface
-  - type: Input
-    context: "human"
