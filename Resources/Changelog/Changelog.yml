@@ -1,9 +1,4 @@
 Entries:
-- author: iczero
-  changes:
-  - {message: Protolathes and autolathes can now be constructed, type: Add}
-  id: 674
-  time: '2021-11-28T01:38:07.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Gyroscope examine no longer mentions direction which doesn't matter,
@@ -2985,3 +2980,9 @@ Entries:
       they''re eight tiles or larger.', type: Add}
   id: 1173
   time: '2022-03-07T12:09:55.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Pillar 5.2! New arcade, small dorms, EVA storage and minor fixes. Engineering
+      now have EVA suits.', type: Add}
+  id: 1174
+  time: '2022-03-07T12:26:28.0000000+00:00'
