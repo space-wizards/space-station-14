@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Administrators have had an essential command added to their toolset.,
-    type: Add}
-  id: 668
-  time: '2021-11-27T06:43:33.0000000+00:00'
 - author: Pancake
   changes:
   - {message: Lanterns and hardhats have been upgraded to starting with Small High-Capacity
@@ -2989,3 +2983,8 @@ Entries:
       the steel tile recipe.', type: Add}
   id: 1167
   time: '2022-03-05T20:47:19.0000000+00:00'
+- author: Radrark
+  changes:
+  - {message: Improved the movement of shuttles., type: Tweak}
+  id: 1168
+  time: '2022-03-07T05:03:53.0000000+00:00'
