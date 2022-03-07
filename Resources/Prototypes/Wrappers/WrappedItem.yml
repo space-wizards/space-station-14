@@ -1,7 +1,7 @@
 - type: entity
-  name: Parcel
+  name: TinyParcel
   parent: BoxBase
-  id: parcelBase
+  id: TinyParcel
   description: A [Size/WappType] wrapped package.. #A small wrapped package
   components:
     - type: Sprite
@@ -12,3 +12,59 @@
     - type: Storage
       capacity: 20
       size: 20
+
+- type: entity
+  name: SmallParcel
+  parent: BoxBase
+  id: SmallParcel
+  description: A [Size/WappType] wrapped package.. #A small wrapped package
+  components:
+    - type: Sprite
+      layers:
+        - state: box
+    - type: Item
+      size: 20
+    - type: Storage
+      capacity: 20
+      size: 20
+
+- type: entity
+  name: MediumParcel
+  parent: BoxBase
+  id: MediumParcel
+  description: A [Size/WappType] wrapped package.. #A small wrapped package
+  components:
+    - type: Sprite
+      layers:
+        - state: box
+    - type: Item
+      size: 20
+    - type: Storage
+      capacity: 20
+      size: 20
+
+- type: entity
+  name: LargeParcel
+  parent: BoxBase
+  id: LargeParcel
+  description: A [Size/WappType] wrapped package.. #A small wrapped package
+  components:
+    - type: Sprite
+      layers:
+        - state: box
+    - type: Item
+      size: 20
+    - type: Storage
+      capacity: 20
+      size: 20
+
+- type: entity
+  name: Wrapper
+  parent: BaseItem
+  id: WrapperBase
+  description: A [Size/WappType] wrapped package.. #A small wrapped package
+  components:
+    - type: Sprite
+      sprite: Objects/Fun/bikehorn.rsi
+      state: icon
+    - type: PackageWrapper
