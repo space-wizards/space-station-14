@@ -123,7 +123,8 @@ namespace Content.Server.PDA
                 return;
 
             ui.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo,
-                ShouldShowUplink(pda.Owner, ui, user), pda.CanPlayMusic));
+                ShouldShowUplink(pda.Owner, ui, user),
+                HasComp<InstrumentComponent>(pda.Owner)));
         }
 
         /// <summary>
@@ -197,7 +198,8 @@ namespace Content.Server.PDA
                     }
                 case PDAShowMusicMessage _:
                 {
-                    _instrumentSystem.ToggleInstrumentUi(pda.Owner, msg.Session);
+                    if (TryComp(pda.Owner, out InstrumentComponent? instrument))
+                        _instrumentSystem.ToggleInstrumentUi(pda.Owner, msg.Session, instrument);
                     break;
                 }
             }

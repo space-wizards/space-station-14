@@ -488,7 +488,6 @@
   components:
   - type: PDA
     id: MusicianIDCard
-    canPlayMusic: true
   - type: Appearance
     visuals:
     - type: PDAVisualizer
