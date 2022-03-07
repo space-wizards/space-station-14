@@ -1,13 +1,9 @@
-using System.Collections.Generic;
 using Content.Client.Cuffs.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.CharacterAppearance.Systems
@@ -26,8 +22,7 @@ namespace Content.Client.CharacterAppearance.Systems
             SubscribeLocalEvent<HumanoidAppearanceBodyPartRemovedEvent>(BodyPartRemoved);
         }
 
-        private List<HumanoidVisualLayers> _bodyPartLayers = new()
-        {
+        private readonly HumanoidVisualLayers[] _bodyPartLayers = {
             HumanoidVisualLayers.Chest,
             HumanoidVisualLayers.Head,
             HumanoidVisualLayers.Snout,
@@ -48,18 +43,19 @@ namespace Content.Client.CharacterAppearance.Systems
         private void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component,
             ChangedHumanoidAppearanceEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+            var spriteQuery = EntityManager.GetEntityQuery<SpriteComponent>();
+
+            if (!spriteQuery.TryGetComponent(uid, out var sprite))
                 return;
 
             if (EntityManager.TryGetComponent(uid, out SharedBodyComponent? body))
             {
                 foreach (var (part, _) in body.Parts)
                 {
-                    if (EntityManager.TryGetComponent(part.Owner, out SpriteComponent? partSprite))
+                    if (spriteQuery.TryGetComponent(part.Owner, out var partSprite))
                     {
-                        partSprite!.Color = component.Appearance.SkinColor;
+                        partSprite.Color = component.Appearance.SkinColor;
                     }
-
                 }
             }
 
