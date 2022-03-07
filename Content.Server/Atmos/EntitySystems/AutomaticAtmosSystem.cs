@@ -20,6 +20,12 @@ public sealed class AutomaticAtmosSystem : EntitySystem
         _mapManager.TileChanged += MapManagerOnTileChanged;
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _mapManager.TileChanged -= MapManagerOnTileChanged;
+    }
+
     private void MapManagerOnTileChanged(object? sender, TileChangedEventArgs e)
     {
         // Only if a atmos-holding tile has been added or removed.
