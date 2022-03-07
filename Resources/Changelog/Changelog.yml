@@ -1,11 +1,4 @@
 Entries:
-- author: Pancake
-  changes:
-  - {message: Trash Bags have been added to the Janitor Cargo Crate., type: Tweak}
-  - {message: Emergency Suits have been added to the Emergency Internals Cargo Crate.,
-    type: Tweak}
-  id: 672
-  time: '2021-11-27T08:54:08.0000000+00:00'
 - author: Rane
   changes:
   - {message: Pill canisters can now be found in a box in chemistry's locker., type: Add}
@@ -2985,3 +2978,11 @@ Entries:
   - {message: Musician PDA works like a regular PDA again., type: Fix}
   id: 1171
   time: '2022-03-07T11:41:50.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones can now only pick up or drag a whitelist of items., type: Tweak}
+  - {message: Drones are now way easier to kill for a variety of reasons., type: Tweak}
+  - {message: "Drones can no longer interact with anything within 2\xBD tiles of a\
+      \ non-drone mob. The nerfs will continue until morale improves.", type: Tweak}
+  id: 1172
+  time: '2022-03-07T11:46:37.0000000+00:00'
