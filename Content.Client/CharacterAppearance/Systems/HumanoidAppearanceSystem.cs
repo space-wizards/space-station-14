@@ -39,13 +39,13 @@ namespace Content.Client.CharacterAppearance.Systems
         private void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component,
             ChangedHumanoidAppearanceEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+            var spriteQuery = EntityManager.GetEntityQuery<SpriteComponent>();
+
+            if (!spriteQuery.TryGetComponent(uid, out var sprite))
                 return;
 
             if (EntityManager.TryGetComponent(uid, out SharedBodyComponent? body))
             {
-                var spriteQuery = EntityManager.GetEntityQuery<SpriteComponent>();
-
                 foreach (var (part, _) in body.Parts)
                 {
                     if (spriteQuery.TryGetComponent(part.Owner, out var partSprite))
