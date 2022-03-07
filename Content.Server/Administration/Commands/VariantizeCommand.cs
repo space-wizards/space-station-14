@@ -20,7 +20,7 @@ public sealed class VariantizeCommand : IConsoleCommand
     {
         if (args.Length != 1)
         {
-            shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
+            shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
             return;
         }
 
@@ -29,16 +29,20 @@ public sealed class VariantizeCommand : IConsoleCommand
 
         if (!int.TryParse(args[0], out var targetId))
         {
-            shell.WriteLine(Loc.GetString("shell-argument-must-be-number"));
+            shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
             return;
         }
 
         var gridId = new GridId(targetId);
-        var grid = mapManager.GetGrid(gridId);
+        if (!mapManager.TryGetGrid(gridId, out var grid))
+        {
+            shell.WriteError(Loc.GetString("shell-invalid-grid-id"));
+            return;
+        }
         foreach (var tile in grid.GetAllTiles())
         {
             var def = tile.GetContentTileDefinition();
-            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, (byte) random.Pick(def.PlacementVariants));
+            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, random.Pick(def.PlacementVariants));
             grid.SetTile(tile.GridIndices, newTile);
         }
     }
