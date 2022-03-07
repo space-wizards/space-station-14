@@ -12,7 +12,7 @@ namespace Content.Server.Shuttles.EntitySystems
     [UsedImplicitly]
     internal sealed class ShuttleSystem : EntitySystem
     {
-        private const float TileMassMultiplier = 4f;
+        public const float TileMassMultiplier = 4f;
 
         public float ShuttleMaxLinearSpeed;
 
