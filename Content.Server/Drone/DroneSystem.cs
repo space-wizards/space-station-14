@@ -44,7 +44,7 @@ namespace Content.Server.Drone
 
             if (HasComp<SharedItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
             {
-                if (!_tagSystem.HasTag(args.Target.Value, "DroneUsable") && !_tagSystem.HasTag(args.Target.Value, "Trash"))
+                if (!_tagSystem.HasAnyTag(args.Target.Value, "DroneUsable", "Trash"))
                     args.Cancel();
             }
         }
