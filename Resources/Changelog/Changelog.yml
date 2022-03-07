@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Acids including fluorosulfuric, polytrinic, and sulfuric now have effects
-      on touch.', type: Add}
-  id: 671
-  time: '2021-11-27T07:31:50.0000000+00:00'
 - author: Pancake
   changes:
   - {message: Trash Bags have been added to the Janitor Cargo Crate., type: Tweak}
@@ -2986,3 +2980,8 @@ Entries:
   - {message: Fixed the mass scanner console., type: Fix}
   id: 1170
   time: '2022-03-07T07:04:27.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Musician PDA works like a regular PDA again., type: Fix}
+  id: 1171
+  time: '2022-03-07T11:41:50.0000000+00:00'
