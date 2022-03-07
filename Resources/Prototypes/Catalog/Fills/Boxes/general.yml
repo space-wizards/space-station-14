@@ -69,6 +69,9 @@
     whitelist:
       components:
       - LightBulb
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: PDA box
@@ -177,7 +180,7 @@
     layers:
       - state: box
       - state: writing
-      
+
 - type: entity
   name: flare box
   parent: BoxCardboard
@@ -192,7 +195,7 @@
     layers:
       - state: box
       - state: writing
-      
+
 - type: entity
   name: trashbag box
   parent: BoxCardboard
