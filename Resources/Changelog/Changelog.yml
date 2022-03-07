@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Pill canisters can now be found in a box in chemistry's locker., type: Add}
-  - {message: 'Cargo now has access to the chemistry supplies crate, allowing them
-      to replace chemistry''s things after they are all stolen or blown up.', type: Add}
-  id: 673
-  time: '2021-11-28T01:30:47.0000000+00:00'
 - author: iczero
   changes:
   - {message: Protolathes and autolathes can now be constructed, type: Add}
@@ -2986,3 +2979,9 @@ Entries:
       \ non-drone mob. The nerfs will continue until morale improves.", type: Tweak}
   id: 1172
   time: '2022-03-07T11:46:37.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Player built shuttles should now be able to hold an atmosphere, assuming
+      they''re eight tiles or larger.', type: Add}
+  id: 1173
+  time: '2022-03-07T12:09:55.0000000+00:00'
