@@ -25,7 +25,7 @@
       layer:
       - Opaque
       mask:
-      - MobImpassable
+      - MobMask
   - type: Transform
     anchored: true
   - type: Anchorable

@@ -565,7 +565,7 @@ namespace Content.Server.Storage.Components
             if (_areaInsert && (eventArgs.Target == null || !_entityManager.HasComponent<SharedItemComponent>(eventArgs.Target.Value)))
             {
                 var validStorables = new List<EntityUid>();
-                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius, LookupFlags.None))
+                foreach (var entity in EntitySystem.Get<EntityLookupSystem>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius, LookupFlags.None))
                 {
                     if (entity.IsInContainer()
                         || entity == eventArgs.User

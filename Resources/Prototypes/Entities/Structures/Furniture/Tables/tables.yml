@@ -136,6 +136,7 @@
     tableDamage:
       types:
         Blunt: 25
+    tableMassLimit: 60
   - type: Destructible
     thresholds:
     - trigger:
@@ -175,6 +176,7 @@
     tableDamage:
       types:
         Blunt: 40
+    tableMassLimit: 120
   - type: Destructible
     thresholds:
     - trigger:
@@ -223,6 +225,7 @@
     tableDamage:
       types:
         Blunt: 100
+    tableMassLimit: 240
   - type: Destructible
     thresholds:
     - trigger:

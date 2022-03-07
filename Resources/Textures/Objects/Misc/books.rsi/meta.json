@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/tgstation/tgstation/commit/37fb6bc6dd20005775dde8d886f48f7722606b77",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "book0"
+    },
+    {
+      "name": "book1"
+    },
+    {
+      "name": "book2"
+    },
+    {
+      "name": "book3"
+    },
+    {
+      "name": "book4"
+    },
+    {
+      "name": "book5"
+    },
+    {
+      "name": "book6"
+    },
+    {
+      "name": "book7"
+    },
+    {
+      "name": "book8"
+    },
+    {
+      "name": "book_infections"
+    },
+    {
+      "name": "book_cooking"
+    },
+    {
+      "name": "book_engineering"
+    },
+    {
+      "name": "book_engineering2"
+    },
+    {
+      "name": "book_hacking"
+    },
+    {
+      "name": "book_detective"
+    },
+    {
+      "name": "book_nuclear"
+    },
+    {
+      "name": "book_particle_accelerator"
+    },
+    {
+      "name": "book_cloning"
+    },
+    {
+      "name": "book_hydroponics_pod_people"
+    },
+    {
+      "name": "book_borg",
+      "delays": [
+        [
+          6,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "book_chemistry"
+    },
+    {
+      "name": "book_bar"
+    },
+    {
+      "name": "book_space_law"
+    },
+    {
+      "name": "book_demonomicon",
+      "delays": [
+        [
+          0.5,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "book_origami"
+    },
+    {
+      "name": "book_boneworking"
+    },
+    {
+      "name": "book_fish"
+    }
+  ]
+}

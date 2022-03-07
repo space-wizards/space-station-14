@@ -19,7 +19,7 @@ namespace Content.Server.Nuke
         [Dependency] private readonly NukeCodeSystem _codes = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IChatManager _chat = default!;
 
         public override void Initialize()
@@ -335,7 +335,7 @@ namespace Content.Server.Nuke
             var announcement = Loc.GetString("nuke-component-announcement-armed",
                 ("time", (int) component.RemainingTime));
             var sender = Loc.GetString("nuke-component-announcement-sender");
-            _chat.DispatchStationAnnouncement(announcement, sender, false);
+            _chat.DispatchStationAnnouncement(announcement, sender, false, Color.Red);
 
             // todo: move it to announcements system
             SoundSystem.Play(Filter.Broadcast(), component.ArmSound.GetSound());

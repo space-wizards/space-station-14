@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Content.Client.Outline;
 using Content.Client.Viewport;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -14,13 +11,8 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
@@ -237,8 +229,6 @@ namespace Content.Client.DragDrop
             if (_dragShadow == default)
                 return false;
 
-            EntityManager.GetComponent<TransformComponent>(_dragShadow).WorldPosition = mousePos.Position;
-
             _targetRecheckTime += frameTime;
             if (_targetRecheckTime > TargetRecheckInterval)
             {
@@ -374,7 +364,7 @@ namespace Content.Client.DragDrop
             // TODO: Duplicated in SpriteSystem and TargetOutlineSystem. Should probably be cached somewhere for a frame?
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
             var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
-            var pvsEntities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.IncludeAnchored);
+            var pvsEntities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.IncludeAnchored);
             foreach (var pvsEntity in pvsEntities)
             {
                 if (!EntityManager.TryGetComponent(pvsEntity, out ISpriteComponent? inRangeSprite) ||
@@ -464,7 +454,20 @@ namespace Content.Client.DragDrop
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
             _dragDropHelper.Update(frameTime);
+        }
+
+        public override void FrameUpdate(float frameTime)
+        {
+            base.FrameUpdate(frameTime);
+
+            // Update position every frame to make it smooth.
+            if (_dragDropHelper.IsDragging)
+            {
+                var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+                Transform(_dragShadow).WorldPosition = mousePos.Position;
+            }
         }
     }
 }

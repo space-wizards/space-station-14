@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.SubFloor;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using TerraFX.Interop.Windows;
 using static Robust.Client.Graphics.RSI.State;
 using static Robust.UnitTesting.RobustIntegrationTest;
 
@@ -49,11 +53,6 @@ public sealed class EntityPainter
 
     public void Run(Image canvas, EntityData entity)
     {
-        if (_sEntityManager.HasComponent<SubFloorHideComponent>(entity.Sprite.Owner))
-        {
-            return;
-        }
-
         if (!entity.Sprite.Visible || entity.Sprite.ContainerOccluded)
         {
             return;
@@ -94,55 +93,44 @@ public sealed class EntityPainter
 
             image = image.CloneAs<Rgba32>();
 
-            var directions = entity.Sprite.GetLayerDirectionCount(layer);
-
-            // TODO add support for 8 directions and animations (delays)
-            if (directions != 1 && directions != 8)
+            (int, int, int, int) GetRsiFrame(RSI? rsi, Image image, EntityData entity, ISpriteLayer layer, int direction)
             {
-                double xStart, xEnd, yStart, yEnd;
+                if (rsi is null)
+                    return (0, 0, EyeManager.PixelsPerMeter, EyeManager.PixelsPerMeter);
 
-                switch (directions)
-                {
-                    case 4:
-                    {
-                        var dir = layer.EffectiveDirection(worldRotation);
-
-                        (xStart, xEnd, yStart, yEnd) = dir switch
-                        {
-                            // Only need the first tuple as doubles for the compiler to recognize it
-                            Direction.South => (0d, 0.5d, 0d, 0.5d),
-                            Direction.East => (0, 0.5, 0.5, 1),
-                            Direction.North => (0.5, 1, 0, 0.5),
-                            Direction.West => (0.5, 1, 0.5, 1),
-                            _ => throw new ArgumentOutOfRangeException(nameof(dir))
-                        };
-                        break;
-                    }
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
-                var x = (int) (image.Width * xStart);
-                var width = (int) (image.Width * xEnd) - x;
-
-                var y = (int) (image.Height * yStart);
-                var height = (int) (image.Height * yEnd) - y;
-
-                image.Mutate(o => o.Crop(new Rectangle(x, y, width, height)));
+                var statesX = image.Width / rsi.Size.X;
+                var statesY = image.Height / rsi.Size.Y;
+                var stateCount = statesX * statesY;
+                var frames = stateCount / entity.Sprite.GetLayerDirectionCount(layer);
+                var target = direction * frames;
+                var targetY = target / statesX;
+                var targetX = target % statesY;
+                return (targetX * rsi.Size.X, targetY * rsi.Size.Y, rsi.Size.X, rsi.Size.Y);
             }
+
+            var dir =  entity.Sprite.GetLayerDirectionCount(layer) switch
+            {
+                0 => 0,
+                _ => (int)layer.EffectiveDirection(worldRotation)
+            };
+
+            var (x, y, width, height) = GetRsiFrame(rsi, image, entity, layer, dir);
+
+            image.Mutate(o => o.Crop(new Rectangle(x, y, width, height)));
 
             var colorMix = entity.Sprite.Color * layer.Color;
             var imageColor = Color.FromRgba(colorMix.RByte, colorMix.GByte, colorMix.BByte, colorMix.AByte);
             var coloredImage = new Image<Rgba32>(image.Width, image.Height);
             coloredImage.Mutate(o => o.BackgroundColor(imageColor));
 
+            var (imgX, imgY) = rsi?.Size ?? (EyeManager.PixelsPerMeter, EyeManager.PixelsPerMeter);
             image.Mutate(o => o
                 .DrawImage(coloredImage, PixelColorBlendingMode.Multiply, PixelAlphaCompositionMode.SrcAtop, 1)
-                .Resize(32, 32)
+                .Resize(imgX, imgY)
                 .Flip(FlipMode.Vertical));
 
-            var pointX = (int) entity.X;
-            var pointY = (int) entity.Y;
+            var pointX = (int) entity.X - (imgX / 2) + EyeManager.PixelsPerMeter / 2;
+            var pointY = (int) entity.Y - (imgY / 2) + EyeManager.PixelsPerMeter / 2;
             canvas.Mutate(o => o.DrawImage(image, new Point(pointX, pointY), 1));
         }
     }
