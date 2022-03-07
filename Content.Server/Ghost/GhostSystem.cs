@@ -29,7 +29,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
 
         public override void Initialize()

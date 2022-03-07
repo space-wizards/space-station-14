@@ -104,6 +104,14 @@
 
 - type: entity
   parent: WindoorSecure
+  id: WindoorSecureCargoLocked
+  suffix: Cargo, Locked
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
+
+- type: entity
+  parent: WindoorSecure
   id: WindoorSecureChapelLocked
   suffix: Chapel, Locked
   components:
@@ -135,6 +143,14 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
+    
+- type: entity
+  parent: WindoorSecure
+  id: WindoorExternalLocked
+  suffix: External, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]
 
 - type: entity
   parent: WindoorSecure

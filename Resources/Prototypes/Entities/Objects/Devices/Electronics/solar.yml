@@ -7,3 +7,6 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: generic
+    - type: Tag
+      tags:
+        - DroneUsable

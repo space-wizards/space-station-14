@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
@@ -74,7 +74,7 @@ public sealed class BloodstreamSystem : EntitySystem
             if (bloodPercentage < bloodstream.BloodlossThreshold)
             {
                 // TODO use a better method for determining this.
-                var amt = bloodstream.BloodlossDamage / bloodPercentage;
+                var amt = bloodstream.BloodlossDamage / (0.1f + bloodPercentage);
 
                 _damageableSystem.TryChangeDamage(uid, amt, true, false);
             }
