@@ -1,10 +1,4 @@
 Entries:
-- author: artak10t
-  changes:
-  - {message: Added pills types selection in ChemMaster, type: Add}
-  - {message: Added pills canister, type: Add}
-  id: 670
-  time: '2021-11-27T06:44:36.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Acids including fluorosulfuric, polytrinic, and sulfuric now have effects
@@ -2987,3 +2981,8 @@ Entries:
   - {message: Fixed electrocution not dealing damage., type: Fix}
   id: 1169
   time: '2022-03-07T05:14:56.0000000+00:00'
+- author: Radrark
+  changes:
+  - {message: Fixed the mass scanner console., type: Fix}
+  id: 1170
+  time: '2022-03-07T07:04:27.0000000+00:00'
