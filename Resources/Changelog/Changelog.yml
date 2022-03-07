@@ -1,10 +1,4 @@
 Entries:
-- author: Pancake
-  changes:
-  - {message: Lanterns and hardhats have been upgraded to starting with Small High-Capacity
-      Power Cells., type: Tweak}
-  id: 669
-  time: '2021-11-27T06:43:38.0000000+00:00'
 - author: artak10t
   changes:
   - {message: Added pills types selection in ChemMaster, type: Add}
@@ -2988,3 +2982,8 @@ Entries:
   - {message: Improved the movement of shuttles., type: Tweak}
   id: 1168
   time: '2022-03-07T05:03:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed electrocution not dealing damage., type: Fix}
+  id: 1169
+  time: '2022-03-07T05:14:56.0000000+00:00'
