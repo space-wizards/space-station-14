@@ -10,6 +10,6 @@ ent-MagazineShotgunBeanbag = барабан (.50 травматические)
 ent-MagazineShotgunSlug = барабан (.50 пуля)
     .desc = { ent-MagazineShotgunBase.desc }
     .suffix = { "" }
-ent-MagazineShotgunIncendiary = ammo drum (.50 incendiary)
+ent-MagazineShotgunIncendiary = барабан (.50 зажигательные)
     .desc = { ent-MagazineShotgunBase.desc }
     .suffix = { "" }
