@@ -1,17 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Added Napalm, a chemical that makes people extremely susceptible to
-      being lit on fire. It''s made using three basic flammable chemicals.', type: Add}
-  - {message: 'Added Phlogiston, a chemical that makes plasma when mixed and lights
-      people on fire on touch. It''s made using phosphorus, a certain acid, and a
-      dangerous but common toxin found in Chemistry.', type: Add}
-  - {message: 'Added Chlorine Trifluoride (CLF3), an extraordinarily dangerous chemical
-      that rips up tiles and will always light people on fire. This one should be
-      pretty self explanatory to make. Be wary about mixing it, as it''s very, very
-      reactive.', type: Add}
-  id: 680
-  time: '2021-11-29T02:25:51.0000000+00:00'
 - author: FoLoKe
   changes:
   - {message: Added space carps "dead" sprite, type: Add}
@@ -2979,3 +2966,8 @@ Entries:
   - {message: Musicians will now receive a special box on a certain holiday., type: Add}
   id: 1179
   time: '2022-03-08T06:34:10.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: Fixed popup positioning on large UI scales, type: Fix}
+  id: 1180
+  time: '2022-03-08T07:53:02.0000000+00:00'
