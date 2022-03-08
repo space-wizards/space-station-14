@@ -26,6 +26,12 @@ public sealed class GlassTableComponent : Component
     public DamageSpecifier TableDamage = default!;
 
     /// <summary>
+    ///     How much mass should be needed to break the table?
+    /// </summary>
+    [DataField("tableMassLimit")]
+    public float MassLimit;
+
+    /// <summary>
     ///     How long should someone who climbs on this table be stunned for?
     /// </summary>
     public float StunTime = 5.0f;

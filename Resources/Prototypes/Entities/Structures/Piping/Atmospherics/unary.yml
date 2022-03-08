@@ -50,6 +50,7 @@
     - type: Construction
       graph: GasUnary
       node: ventpump
+    - type: VentCritterSpawnLocation
 
 - type: entity
   parent: GasUnaryBase

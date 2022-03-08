@@ -181,6 +181,9 @@
     qualities:
       - Pulsing
   - type: SignalLinker
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: power drill

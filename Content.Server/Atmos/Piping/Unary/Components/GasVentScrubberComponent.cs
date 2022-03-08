@@ -1,14 +1,12 @@
-using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
+    [Friend(typeof(GasVentScrubberSystem))]
     public sealed class GasVentScrubberComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
@@ -30,8 +28,28 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
 
+        /// <summary>
+        ///     Target volume to transfer. If <see cref="WideNet"/> is enabled, actual transfer rate will be much higher.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float VolumeRate { get; set; } = 200f;
+        public float TransferRate
+        {
+            get => _transferRate;
+            set => _transferRate = Math.Clamp(value, 0f, MaxTransferRate);
+        }
+
+        private float _transferRate = Atmospherics.MaxTransferRate;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("maxTransferRate")]
+        public float MaxTransferRate = Atmospherics.MaxTransferRate;
+
+        /// <summary>
+        ///     As pressure difference approaches this number, the effective volume rate may be smaller than <see
+        ///     cref="TransferRate"/>
+        /// </summary>
+        [DataField("maxPressure")]
+        public float MaxPressure = Atmospherics.MaxOutputPressure;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool WideNet { get; set; } = false;
@@ -46,7 +64,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
                 Dirty = IsDirty,
                 FilterGases = FilterGases,
                 PumpDirection = PumpDirection,
-                VolumeRate = VolumeRate,
+                VolumeRate = TransferRate,
                 WideNet = WideNet
             };
         }
@@ -56,7 +74,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             Enabled = data.Enabled;
             IsDirty = data.Dirty;
             PumpDirection = (ScrubberPumpDirection) data.PumpDirection!;
-            VolumeRate = (float) data.VolumeRate!;
+            TransferRate = (float) data.VolumeRate!;
             WideNet = data.WideNet;
 
             if (!data.FilterGases!.SequenceEqual(FilterGases))

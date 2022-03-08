@@ -31,11 +31,14 @@ namespace Content.Server.Database
         private readonly Task _dbReadyTask;
         private readonly SqliteServerDbContext _prefsCtx;
 
+        private int _msDelay;
+
         public ServerDbSqlite(DbContextOptions<SqliteServerDbContext> options)
         {
             _prefsCtx = new SqliteServerDbContext(options);
 
-            if (IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.DatabaseSynchronous))
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
+            if (cfg.GetCVar(CCVars.DatabaseSynchronous))
             {
                 _prefsCtx.Database.Migrate();
                 _dbReadyTask = Task.CompletedTask;
@@ -44,6 +47,8 @@ namespace Content.Server.Database
             {
                 _dbReadyTask = Task.Run(() => _prefsCtx.Database.Migrate());
             }
+
+            cfg.OnValueChanged(CCVars.DatabaseSqliteDelay, v => _msDelay = v, true);
         }
 
         #region Ban
@@ -488,6 +493,9 @@ namespace Content.Server.Database
         private async Task<DbGuardImpl> GetDbImpl()
         {
             await _dbReadyTask;
+            if (_msDelay > 0)
+                await Task.Delay(_msDelay);
+
             await _prefsSemaphore.WaitAsync();
 
             return new DbGuardImpl(this);

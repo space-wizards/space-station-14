@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Alert;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Alerts;
@@ -28,12 +23,11 @@ internal sealed class ClientAlertsSystem : AlertsSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AlertsComponent, PlayerAttachedEvent>((_, component, _) => PlayerAttached(component));
-        SubscribeLocalEvent<AlertsComponent, PlayerDetachedEvent>((_, _, _) => PlayerDetached());
+        SubscribeLocalEvent<AlertsComponent, PlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<AlertsComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
         SubscribeLocalEvent<AlertsComponent, ComponentHandleState>(ClientAlertsHandleState);
     }
-
     protected override void LoadPrototypes()
     {
         base.LoadPrototypes();
@@ -56,7 +50,7 @@ internal sealed class ClientAlertsSystem : AlertsSystem
 
     protected override void AfterShowAlert(AlertsComponent alertsComponent)
     {
-        if (!CurControlled(alertsComponent.Owner, _playerManager))
+        if (_playerManager.LocalPlayer?.ControlledEntity != alertsComponent.Owner)
             return;
 
         SyncAlerts?.Invoke(this, alertsComponent.Alerts);
@@ -64,7 +58,7 @@ internal sealed class ClientAlertsSystem : AlertsSystem
 
     protected override void AfterClearAlert(AlertsComponent alertsComponent)
     {
-        if (!CurControlled(alertsComponent.Owner, _playerManager))
+        if (_playerManager.LocalPlayer?.ControlledEntity != alertsComponent.Owner)
             return;
 
         SyncAlerts?.Invoke(this, alertsComponent.Alerts);
@@ -72,44 +66,45 @@ internal sealed class ClientAlertsSystem : AlertsSystem
 
     private void ClientAlertsHandleState(EntityUid uid, AlertsComponent component, ref ComponentHandleState args)
     {
+        if (_playerManager.LocalPlayer?.ControlledEntity != uid)
+            return;
+
         var componentAlerts = (args.Current as AlertsComponentState)?.Alerts;
         if (componentAlerts == null) return;
 
-        //TODO: Do we really want to send alerts for non-attached entity?
         component.Alerts = new(componentAlerts);
-        if (!CurControlled(component.Owner, _playerManager)) return;
 
         SyncAlerts?.Invoke(this, componentAlerts);
     }
 
-    private void PlayerAttached(AlertsComponent clientAlertsComponent)
+    private void OnPlayerAttached(EntityUid uid, AlertsComponent component, PlayerAttachedEvent args)
     {
-        if (!CurControlled(clientAlertsComponent.Owner, _playerManager)) return;
-        SyncAlerts?.Invoke(this, clientAlertsComponent.Alerts);
+        if (_playerManager.LocalPlayer?.ControlledEntity != uid)
+            return;
+
+        SyncAlerts?.Invoke(this, component.Alerts);
     }
 
-    protected override void HandleComponentShutdown(EntityUid uid)
+    protected override void HandleComponentShutdown(EntityUid uid, AlertsComponent component, ComponentShutdown args)
     {
-        base.HandleComponentShutdown(uid);
+        base.HandleComponentShutdown(uid, component, args);
 
-        PlayerDetached();
+        if (_playerManager.LocalPlayer?.ControlledEntity != uid)
+            return;
+
+        ClearAlerts?.Invoke(this, EventArgs.Empty);
     }
 
-    private void PlayerDetached()
+    private void OnPlayerDetached(EntityUid uid, AlertsComponent component, PlayerDetachedEvent args)
     {
+        if (_playerManager.LocalPlayer?.ControlledEntity != uid)
+            return;
+
         ClearAlerts?.Invoke(this, EventArgs.Empty);
     }
 
     public void AlertClicked(AlertType alertType)
     {
         RaiseNetworkEvent(new ClickAlertEvent(alertType));
-    }
-
-    /// <summary>
-    ///     Allows calculating if we need to act due to this component being controlled by the current mob
-    /// </summary>
-    private static bool CurControlled(EntityUid entity, IPlayerManager playerManager)
-    {
-        return playerManager.LocalPlayer != null && playerManager.LocalPlayer.ControlledEntity == entity;
     }
 }

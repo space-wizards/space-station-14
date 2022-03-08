@@ -45,6 +45,8 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: SentienceTarget
+    flavorKind: corgi
 
 - type: entity
   name: corrupted corgi
