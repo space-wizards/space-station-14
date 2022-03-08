@@ -1,6 +1,7 @@
 using Content.Shared.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
+using Content.Server.WireHacking;
 using JetBrains.Annotations;
 
 namespace Content.Server.Power.EntitySystems
@@ -22,6 +23,8 @@ namespace Content.Server.Power.EntitySystems
             if (args.Cancelled) return;
             if (EntityManager.TryGetComponent<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
             {
+                if (TryComp<WiresComponent>(uid, out var wires) && wires.IsPanelOpen)
+                    return;
                 args.User.PopupMessageCursor(Loc.GetString("base-computer-ui-component-not-powered", ("machine", uid)));
                 args.Cancel();
             }

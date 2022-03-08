@@ -1,7 +1,6 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
-using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
+using Content.Server.WireHacking;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
@@ -115,6 +114,13 @@ namespace Content.Server.UserInterface
             RaiseLocalEvent(user, uae, false);
             RaiseLocalEvent((aui).Owner, oae, false);
             if (oae.Cancelled || uae.Cancelled) return false;
+
+            // Wires are the ONE thing that makes this hard to work with
+            if (TryComp<WiresComponent>(aui.Owner, out var wires) && wires.IsPanelOpen)
+            {
+                wires.OpenInterface(actor.PlayerSession);
+                return true;
+            }
 
             SetCurrentSingleUser((aui).Owner, actor.PlayerSession, aui);
             ui.Toggle(actor.PlayerSession);
