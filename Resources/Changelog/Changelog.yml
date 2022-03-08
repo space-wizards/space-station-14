@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Raised the maximum number of traitors from four to seven., type: Tweak}
-  id: 676
-  time: '2021-11-28T23:25:10.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'More verbs can now be used on items inside of storage (backpack, boxes,
@@ -2984,3 +2979,8 @@ Entries:
   - {message: Things should no longer float through asteroid rocks., type: Fix}
   id: 1175
   time: '2022-03-08T01:01:36.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Welder sprite now updates correctly when lit., type: Fix}
+  id: 1176
+  time: '2022-03-08T01:06:10.0000000+00:00'
