@@ -5,12 +5,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
+
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Paper
 {
@@ -23,7 +19,7 @@ namespace Content.Server.Paper
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        private PaperAction _mode;
+        public PaperAction Mode;
         [DataField("content")]
         public string Content { get; set; } = "";
 
@@ -42,7 +38,7 @@ namespace Content.Server.Paper
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
-            _mode = PaperAction.Read;
+            Mode = PaperAction.Read;
             UpdateUserInterface();
         }
 
@@ -62,9 +58,9 @@ namespace Content.Server.Paper
             appearance.SetData(PaperVisuals.Status, status);
         }
 
-        private void UpdateUserInterface()
+        public void UpdateUserInterface()
         {
-            UserInterface?.SetState(new PaperBoundUserInterfaceState(Content, _mode));
+            UserInterface?.SetState(new PaperBoundUserInterfaceState(Content, Mode));
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
@@ -86,7 +82,7 @@ namespace Content.Server.Paper
             if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return;
 
-            _mode = PaperAction.Read;
+            Mode = PaperAction.Read;
             UpdateUserInterface();
             UserInterface?.Toggle(actor.PlayerSession);
             return;
@@ -118,7 +114,7 @@ namespace Content.Server.Paper
             if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return false;
 
-            _mode = PaperAction.Write;
+            Mode = PaperAction.Write;
             UpdateUserInterface();
             UserInterface?.Open(actor.PlayerSession);
             return true;
