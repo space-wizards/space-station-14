@@ -1,4 +1,4 @@
-ent-ClothingHandsGlovesBoxingRed = { "" }
+ent-ClothingHandsGlovesBoxingRed = красные боксёрские перчатки
     .desc = Красные перчатки для соревновательного бокса.
     .suffix = { "" }
 ent-ClothingHandsGlovesBoxingBlue = синие боксёрские перчатки
@@ -37,6 +37,6 @@ ent-ClothingHandsGlovesCombat = боевые перчатки
 ent-ClothingHandsGlovesAerostatic = аэростатические перчатки
     .desc = Дышащие красные перчатки для профессиональной работы с ручкой и блокнотом.
     .suffix = { "" }
-ent-ClothingHandsGlovesFingerless = fingerless gloves
-    .desc = Plain black gloves without fingertips for the hard working.
+ent-ClothingHandsGlovesFingerless = беспалые перчатки
+    .desc = Простые черные перчатки с обрезанными пальцами для тяжелой работы.
     .suffix = { "" }
