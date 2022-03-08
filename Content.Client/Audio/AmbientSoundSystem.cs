@@ -19,7 +19,7 @@ namespace Content.Client.Audio
     /// </summary>
     public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     {
-        [Dependency] private IEntityLookup _lookup = default!;
+        [Dependency] private EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;

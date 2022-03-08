@@ -18,3 +18,6 @@
     - type: GasAnalyzerVisualizer
       state_off: icon
       state_working: working
+  - type: Tag
+    tags:
+      - DroneUsable

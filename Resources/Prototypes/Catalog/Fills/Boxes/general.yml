@@ -69,6 +69,9 @@
     whitelist:
       components:
       - LightBulb
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: PDA box
@@ -177,6 +180,7 @@
     layers:
       - state: box
       - state: writing
+
 
 - type: entity
   name: hatsune miku day box

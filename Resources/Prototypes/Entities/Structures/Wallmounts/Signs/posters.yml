@@ -481,6 +481,24 @@
   - type: Sprite
     state: poster49_contraband
 
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandWehWatches
+  name: "Weh Watches"
+  description: "A poster depicting a loveable green lizard."
+  components:
+  - type: Sprite
+    state: poster50_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandVoteWeh
+  name: "Vote Weh"
+  description: "A stylish, sleek, and well illustrated poster for a \"Weh\"nderful new progressive candidate coming this election season."
+  components:
+  - type: Sprite
+    state: poster51_contraband
+
 # Legit
 - type: entity
   parent: PosterBase

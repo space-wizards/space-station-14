@@ -7,6 +7,7 @@
   - type: Tag
     tags:
     - AirAlarmElectronics
+    - DroneUsable
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: airalarm_electronics
@@ -20,6 +21,7 @@
   - type: Tag
     tags:
     - FireAlarmElectronics
+    - DroneUsable
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: airalarm_electronics

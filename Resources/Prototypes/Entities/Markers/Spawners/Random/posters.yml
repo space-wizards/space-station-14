@@ -77,6 +77,8 @@
       - PosterContrabandBountyHunters
       - PosterContrabandTheBigGasTruth
       - PosterContrabandGotWood
+      - PosterContrabandWehWatches
+      - PosterContrabandVoteWeh
     chance: 1
 
 - type: entity
