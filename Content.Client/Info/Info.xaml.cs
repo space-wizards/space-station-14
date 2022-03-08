@@ -5,7 +5,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Info;
 
 [GenerateTypedNameReferences]
-public partial class Info : ScrollContainer
+public sealed partial class Info : ScrollContainer
 {
     public Info()
     {

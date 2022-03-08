@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Damage
 {
-    public class DamageableSystem : EntitySystem
+    public sealed class DamageableSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -84,10 +84,13 @@ namespace Content.Shared.Damage
         {
             component.DamagePerGroup = component.Damage.GetDamagePerGroup();
             component.TotalDamage = component.Damage.Total;
-            component.Dirty();
+            Dirty(component);
 
             if (EntityManager.TryGetComponent<AppearanceComponent>(component.Owner, out var appearance) && damageDelta != null)
-                appearance.SetData(DamageVisualizerKeys.DamageUpdateGroups, damageDelta.GetDamagePerGroup().Keys.ToList());
+            {
+                var data = new DamageVisualizerGroupData(damageDelta.GetDamagePerGroup().Keys.ToList());
+                appearance.SetData(DamageVisualizerKeys.DamageUpdateGroups, data);
+            }
             RaiseLocalEvent(component.Owner, new DamageChangedEvent(component, damageDelta, interruptsDoAfters), false);
         }
 
@@ -198,7 +201,7 @@ namespace Content.Shared.Damage
             component.DamageModifierSetId = state.ModifierSetId;
 
             // Has the damage actually changed?
-            DamageSpecifier newDamage = new() { DamageDict = state.DamageDict };
+            DamageSpecifier newDamage = new() { DamageDict = new(state.DamageDict) };
             var delta = component.Damage - newDamage;
             delta.TrimZeros();
 
@@ -217,7 +220,7 @@ namespace Content.Shared.Damage
     ///
     ///     For example, armor.
     /// </summary>
-    public class DamageModifyEvent : EntityEventArgs, IInventoryRelayEvent
+    public sealed class DamageModifyEvent : EntityEventArgs, IInventoryRelayEvent
     {
         // Whenever locational damage is a thing, this should just check only that bit of armour.
         public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
@@ -230,7 +233,7 @@ namespace Content.Shared.Damage
         }
     }
 
-    public class DamageChangedEvent : EntityEventArgs
+    public sealed class DamageChangedEvent : EntityEventArgs
     {
         /// <summary>
         ///     This is the component whose damage was changed.

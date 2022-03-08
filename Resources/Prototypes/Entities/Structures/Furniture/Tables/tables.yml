@@ -17,7 +17,7 @@
       mass: 50
       mask:
       - Impassable
-      - VaultImpassable
+      - SmallImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -41,7 +41,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableFrame
 
 - type: entity
@@ -61,6 +61,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
@@ -74,7 +80,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: Table
 
 - type: entity
@@ -91,6 +97,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 200
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 75
       behaviors:
       - !type:PlaySoundBehavior
@@ -104,7 +116,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableReinforced
 
 - type: entity
@@ -124,6 +136,7 @@
     tableDamage:
       types:
         Blunt: 25
+    tableMassLimit: 60
   - type: Destructible
     thresholds:
     - trigger:
@@ -143,7 +156,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableGlass
 
 - type: entity
@@ -163,8 +176,15 @@
     tableDamage:
       types:
         Blunt: 40
+    tableMassLimit: 120
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 20
@@ -185,7 +205,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableReinforcedGlass
 
 - type: entity
@@ -205,8 +225,15 @@
     tableDamage:
       types:
         Blunt: 100
+    tableMassLimit: 240
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -227,7 +254,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TablePlasmaGlass
 
 - type: entity
@@ -246,6 +273,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
@@ -259,7 +292,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableWood
   - type: Tag
     tags:
@@ -297,7 +330,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableCarpet
   - type: Tag
     tags:

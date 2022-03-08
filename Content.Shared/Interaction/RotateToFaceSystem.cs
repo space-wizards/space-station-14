@@ -31,7 +31,7 @@ namespace Content.Shared.Interaction
     /// Doesn't really fit with SharedInteractionSystem so it's not there.
     /// </summary>
     [UsedImplicitly]
-    public class RotateToFaceSystem : EntitySystem
+    public sealed class RotateToFaceSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         public bool TryFaceCoordinates(EntityUid user, Vector2 coordinates)

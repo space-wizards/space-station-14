@@ -12,10 +12,8 @@ namespace Content.Shared.Stunnable
     [RegisterComponent]
     [NetworkedComponent]
     [Friend(typeof(SharedStunSystem))]
-    public class KnockedDownComponent : Component
+    public sealed class KnockedDownComponent : Component
     {
-        public override string Name => "KnockedDown";
-
         [DataField("helpInterval")]
         public float HelpInterval { get; set; } = 1f;
 
@@ -27,7 +25,7 @@ namespace Content.Shared.Stunnable
     }
 
     [Serializable, NetSerializable]
-    public class KnockedDownComponentState : ComponentState
+    public sealed class KnockedDownComponentState : ComponentState
     {
         public float HelpInterval { get; set; }
         public float HelpTimer { get; set; }

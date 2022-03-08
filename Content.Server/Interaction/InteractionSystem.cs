@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
@@ -7,6 +6,7 @@ using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
+using Content.Server.Timing;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
@@ -14,18 +14,16 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
-using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -41,6 +39,7 @@ namespace Content.Server.Interaction
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
         public override void Initialize()
         {
@@ -87,6 +86,11 @@ namespace Content.Server.Interaction
             return storage.SubscribedSessions.Contains(actor.PlayerSession);
         }
 
+        protected override void BeginDelay(UseDelayComponent? component = null)
+        {
+            _useDelay.BeginDelay(component);
+        }
+
         #region Drag drop
         private void HandleDragDropRequestEvent(DragDropRequestEvent msg, EntitySessionEventArgs args)
         {
@@ -96,17 +100,18 @@ namespace Content.Server.Interaction
                 return;
             }
 
-            if (!_actionBlockerSystem.CanInteract(userEntity.Value))
+            if (Deleted(msg.Dropped) || Deleted(msg.Target))
                 return;
 
-            if (Deleted(msg.Dropped) || Deleted(msg.Target))
+            if (!_actionBlockerSystem.CanInteract(userEntity.Value, msg.Target))
                 return;
 
             var interactionArgs = new DragDropEvent(userEntity.Value, msg.DropLocation, msg.Dropped, msg.Target);
 
             // must be in range of both the target and the object they are drag / dropping
             // Client also does this check but ya know we gotta validate it.
-            if (!interactionArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            if (!InRangeUnobstructed(interactionArgs.User, interactionArgs.Dragged, popup: true)
+                || !InRangeUnobstructed(interactionArgs.User, interactionArgs.Target, popup: true))
                 return;
 
             // trigger dragdrops on the dropped entity
@@ -228,13 +233,11 @@ namespace Content.Server.Interaction
         /// <summary>
         /// Uses an empty hand on an entity
         /// Finds components with the InteractHand interface and calls their function
-        /// NOTE: Does not have an InRangeUnobstructed check
+        /// NOTE: Does not have any range or can-interact checks. These should all have been done before this function is called.
         /// </summary>
         public override void InteractHand(EntityUid user, EntityUid target)
         {
             // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-            if (!_actionBlockerSystem.CanInteract(user))
-                return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
@@ -256,41 +259,37 @@ namespace Content.Server.Interaction
             }
 
             // Else we run Activate.
-            InteractionActivate(user, target);
+            InteractionActivate(user, target,
+                checkCanInteract: false,
+                checkUseDelay: true,
+                checkAccess: false);
         }
 
         /// <summary>
         /// Will have two behaviors, either "uses" the used entity at range on the target entity if it is capable of accepting that action
         /// Or it will use the used entity itself on the position clicked, regardless of what was there
         /// </summary>
-        public override async Task<bool> InteractUsingRanged(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
+        public override void InteractUsingRanged(
+            EntityUid user,
+            EntityUid used,
+            EntityUid? target,
+            EntityCoordinates clickLocation,
+            bool inRangeUnobstructed)
         {
             // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-            if (InteractDoBefore(user, used, inRangeUnobstructed ? target : null, clickLocation, false))
-                return true;
+            if (RangedInteractDoBefore(user, used, target, clickLocation, inRangeUnobstructed))
+                return;
 
             if (target != null)
             {
                 var rangedMsg = new RangedInteractEvent(user, used, target.Value, clickLocation);
                 RaiseLocalEvent(target.Value, rangedMsg);
+
                 if (rangedMsg.Handled)
-                    return true;
-
-                var rangedInteractions = AllComps<IRangedInteract>(target.Value).ToList();
-                var rangedInteractionEventArgs = new RangedInteractEventArgs(user, used, clickLocation);
-
-                // See if we have a ranged interaction
-                foreach (var t in rangedInteractions)
-                {
-                    // If an InteractUsingRanged returns a status completion we finish our interaction
-#pragma warning disable 618
-                    if (t.RangedInteract(rangedInteractionEventArgs))
-#pragma warning restore 618
-                        return true;
-                }
+                    return;
             }
 
-            return await InteractDoAfter(user, used, inRangeUnobstructed ? target : null, clickLocation, false);
+            InteractDoAfter(user, used, target, clickLocation, inRangeUnobstructed);
         }
 
         public override void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack, EntityUid? target = null)
@@ -305,7 +304,7 @@ namespace Content.Server.Interaction
             if (!wideAttack)
             {
                 // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
-                if (target != null && !Deleted(target.Value) && !user.IsInSameOrParentContainer(target.Value) && !CanAccessViaStorage(user, target.Value))
+                if (target != null && !Deleted(target.Value) && !ContainerSystem.IsInSameOrParentContainer(user, target.Value) && !CanAccessViaStorage(user, target.Value))
                 {
                     Logger.WarningS("system.interaction",
                         $"User entity {ToPrettyString(user):user} clicked on object {ToPrettyString(target.Value):target} that isn't the parent, child, or in the same container");
@@ -313,7 +312,11 @@ namespace Content.Server.Interaction
                 }
 
                 // TODO: Replace with body attack range when we get something like arm length or telekinesis or something.
-                if (!user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true))
+                var unobstructed = (target == null)
+                    ? InRangeUnobstructed(user, coordinates)
+                    : InRangeUnobstructed(user, target.Value);
+
+                if (!unobstructed)
                     return;
             }
 

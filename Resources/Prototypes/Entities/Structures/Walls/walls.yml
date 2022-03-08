@@ -27,6 +27,9 @@
   - type: IconSmooth
     key: walls
     base: brick
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
 
 - type: entity
   parent: WallBase
@@ -342,7 +345,7 @@
     sprite: Structures/Walls/solid.rsi
     state: rgeneric
   - type: Construction
-    graph: girder
+    graph: Girder
     node: reinforcedWall
   - type: Destructible
     thresholds:
@@ -471,7 +474,7 @@
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
   - type: Construction
-    graph: girder
+    graph: Girder
     node: wall
   - type: Icon
     sprite: Structures/Walls/solid.rsi

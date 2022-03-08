@@ -16,7 +16,7 @@ namespace Content.Server.AI.EntitySystems
     ///     Handles NPCs running every tick.
     /// </summary>
     [UsedImplicitly]
-    internal class NPCSystem : EntitySystem
+    internal sealed class NPCSystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -105,13 +105,15 @@ namespace Content.Server.AI.EntitySystems
 
             for (var i = 0; i < npcs.Length; i++)
             {
+                MetaDataComponent? metadata = null;
                 var index = (i + startIndex) % npcs.Length;
                 var npc = npcs[index];
 
-                if (npc.Deleted)
+                if (Deleted(npc.Owner, metadata))
                     continue;
 
-                if (npc.Paused)
+                // Probably gets resolved in deleted for us already
+                if (Paused(npc.Owner, metadata))
                     continue;
 
                 npc.Update(frameTime);

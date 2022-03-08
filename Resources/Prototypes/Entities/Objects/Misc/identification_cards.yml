@@ -14,7 +14,9 @@
     HeldPrefix: default
   - type: Access
   - type: IdCard
-  - type: DoorBumpOpener
+  - type: Tag
+    tags:
+    - DoorBumpOpener
 
 #IDs with layers
 
@@ -115,6 +117,18 @@
     - state: idcargotechnician
   - type: PresetIdCard
     job: CargoTechnician
+
+- type: entity
+  parent: IDCardStandard
+  id: SalvageIDCard
+  name: salvage ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idshaftminer
+  - type: PresetIdCard
+    job: SalvageSpecialist
 
 - type: entity
   parent: IDCardStandard
@@ -333,28 +347,8 @@
     jobTitle: Central Commander
   - type: Access
     #GOD DEAR FUCKING GOD WE NEED AN ALL-ACCESS FLAG
-    tags:
-    - Maintenance
-    - Cargo
-  #  - Quartermaster
-    - Engineering
-  #  - ChiefEngineer
-    - Medical
-  #  - ChiefMedicalOfficer
-    - Research
-  #  - ResearchDirector
-    - Security
-    - Service
-    - Captain
-    - Command
-    - External
-    #- HeadOfSecurity
-    - HeadOfPersonnel
-    - Bar
-    #- Hydroponics
-    #- Kitchen
-    - Janitor
-    - Theatre
+    groups:
+    - AllAccess
 
 - type: entity
   parent: IDCardStandard
@@ -371,3 +365,15 @@
   - type: Access
     tags:
     - Maintenance
+
+- type: entity
+  parent: IDCardStandard
+  id: MusicianIDCard
+  name: musician ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idmusician
+    - type: PresetIdCard
+      job: Musician

@@ -17,11 +17,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.UserInterface
 {
     [RegisterComponent]
-    public class ActivatableUIComponent : Component,
+    public sealed class ActivatableUIComponent : Component,
             ISerializationHooks
     {
-        public override string Name => "ActivatableUI";
-
         [ViewVariables]
         public Enum? Key { get; set; }
 
@@ -41,6 +39,9 @@ namespace Content.Server.UserInterface
 
         [DataField("key", readOnly: true, required: true)]
         private string _keyRaw = default!;
+
+        [DataField("verbText")]
+        public string VerbText = "ui-verb-toggle-open";
 
         /// <summary>
         ///     The client channel currently using the object, or null if there's none/not single user.

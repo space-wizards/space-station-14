@@ -1,0 +1,26 @@
+- type: constructionGraph
+  id: PlasticFlapsGraph
+  start: start
+  graph:
+  - node: start
+    actions:
+      - !type:DestroyEntity {}
+    edges:
+      - to: plasticFlaps
+        completed:
+          - !type:SnapToGrid { }
+        steps:
+          - material: Plastic
+            amount: 5
+            doAfter: 10
+  - node: plasticFlaps
+    entity: PlasticFlapsClear
+    edges:
+      - to: start
+        completed:
+          - !type:SpawnPrototype
+            prototype: SheetPlastic
+            amount: 5
+        steps:
+          - tool: Anchoring
+            doAfter: 10

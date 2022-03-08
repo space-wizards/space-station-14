@@ -3,8 +3,7 @@
 namespace Content.Server.Speech.Components
 {
     [RegisterComponent]
-    public class SpanishAccentComponent : Component
+    public sealed class SpanishAccentComponent : Component
     {
-        public override string Name => "SpanishAccent";
     }
 }

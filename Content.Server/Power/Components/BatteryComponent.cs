@@ -11,11 +11,10 @@ namespace Content.Server.Power.Components
     ///     Battery node on the pow3r network. Needs other components to connect to actual networks.
     /// </summary>
     [RegisterComponent]
+    [Virtual]
     public class BatteryComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "Battery";
 
         /// <summary>
         /// Maximum charge of the battery in joules (ie. watt seconds)
@@ -93,5 +92,5 @@ namespace Content.Server.Power.Components
         }
     }
 
-    public class ChargeChangedEvent : EventArgs { }
+    public struct ChargeChangedEvent {}
 }

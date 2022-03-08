@@ -40,3 +40,9 @@
   - type: Tag
     tags:
     - Wooden
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
+  - type: Pullable

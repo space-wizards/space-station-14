@@ -23,7 +23,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class SuicideCommand : IConsoleCommand
+    internal sealed class SuicideCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -88,9 +88,8 @@ namespace Content.Server.Chat.Commands
                 $"{_entities.ToPrettyString(player.AttachedEntity.Value):player} is committing suicide");
 
             // Held item suicide
-            var handsComponent = _entities.GetComponent<HandsComponent>(owner);
-            var itemComponent = handsComponent.GetActiveHandItem;
-            if (itemComponent != null)
+            if (_entities.TryGetComponent(owner, out HandsComponent handsComponent)
+                && handsComponent.GetActiveHandItem is {} itemComponent)
             {
                 var suicide = _entities.GetComponents<ISuicideAct>(itemComponent.Owner).FirstOrDefault();
 
@@ -100,8 +99,9 @@ namespace Content.Server.Chat.Commands
                     return;
                 }
             }
+
             // Get all entities in range of the suicider
-            var entities = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(owner, 1, LookupFlags.Approximate | LookupFlags.IncludeAnchored).ToArray();
+            var entities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesInRange(owner, 1, LookupFlags.Approximate | LookupFlags.IncludeAnchored).ToArray();
 
             if (entities.Length > 0)
             {

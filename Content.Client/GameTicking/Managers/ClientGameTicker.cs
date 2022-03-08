@@ -18,7 +18,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.GameTicking.Managers
 {
     [UsedImplicitly]
-    public class ClientGameTicker : SharedGameTicker
+    public sealed class ClientGameTicker : SharedGameTicker
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
 

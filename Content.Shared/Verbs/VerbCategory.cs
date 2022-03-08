@@ -9,7 +9,7 @@ namespace Content.Shared.Verbs
     ///     Contains combined name and icon information for a verb category.
     /// </summary>
     [Serializable, NetSerializable]
-    public class VerbCategory
+    public sealed class VerbCategory
     {
         public readonly string Text;
 
@@ -33,6 +33,9 @@ namespace Content.Shared.Verbs
 
         public static readonly VerbCategory Admin =
             new("verb-categories-admin", "/Textures/Interface/character.svg.192dpi.png");
+
+        public static readonly VerbCategory Examine =
+            new("verb-categories-examine", "/Textures/Interface/VerbIcons/examine.svg.192dpi.png");
 
         public static readonly VerbCategory Debug =
             new("verb-categories-debug", "/Textures/Interface/VerbIcons/debug.svg.192dpi.png");

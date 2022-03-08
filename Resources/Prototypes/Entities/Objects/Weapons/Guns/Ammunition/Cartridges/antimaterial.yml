@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: BaseCartridge
   id: CartridgeAntiMaterial
   name: cartridge (.60 anti-material)
   components:
@@ -17,6 +17,3 @@
   - type: Appearance
     visuals:
     - type: SpentAmmoVisualizer
-  - type: Tag
-    tags:
-    - Cartridge

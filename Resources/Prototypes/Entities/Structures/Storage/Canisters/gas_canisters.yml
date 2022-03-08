@@ -53,7 +53,7 @@
             bounds: "-0.25,-0.25,0.25,0.25"
           mass: 25
           mask:
-            - MobImpassable
+          - MobMask
           layer:
             - Opaque
             - MobImpassable
@@ -380,7 +380,7 @@
               bounds: "-0.4,-0.3,0.4,0.3"
           mass: 25
           mask:
-            - MobImpassable
+          - MobMask
           layer:
             - Opaque
             - MobImpassable

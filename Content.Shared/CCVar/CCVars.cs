@@ -60,6 +60,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool>
             EventsEnabled = CVarDef.Create("events.enabled", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Disables most functionality in the GameTicker.
+        /// </summary>
         public static readonly CVarDef<bool>
             GameDummyTicker = CVarDef.Create("game.dummyticker", false, CVar.ARCHIVE | CVar.SERVERONLY);
 
@@ -154,6 +157,15 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> SoftMaxPlayers =
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
 
+#if EXCEPTION_TOLERANCE
+        /// <summary>
+        ///     Amount of times round start must fail before the server is shut down.
+        ///     Set to 0 or a negative number to disable.
+        /// </summary>
+        public static readonly CVarDef<int> RoundStartFailShutdownCount =
+            CVarDef.Create("game.round_start_fail_shutdown_count", 5, CVar.SERVERONLY | CVar.SERVER);
+#endif
+
         /*
          * Discord
          */
@@ -200,7 +212,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitor.starting_balance", 20);
 
         public static readonly CVarDef<int> TraitorMaxDifficulty =
-            CVarDef.Create("traitor.max_difficulty", 6);
+            CVarDef.Create("traitor.max_difficulty", 5);
 
         public static readonly CVarDef<int> TraitorMaxPicks =
             CVarDef.Create("traitor.max_picks", 20);
@@ -229,6 +241,24 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<string> DatabaseSqliteDbPath =
             CVarDef.Create("database.sqlite_dbpath", "preferences.db", CVar.SERVERONLY);
+
+        /// <summary>
+        /// Milliseconds to asynchronously delay all SQLite database acquisitions with.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to 1 on DEBUG, 0 on RELEASE.
+        /// This is intended to help catch .Result deadlock bugs that only happen on postgres
+        /// (because SQLite is not actually asynchronous normally)
+        /// </remarks>
+        public static readonly CVarDef<int> DatabaseSqliteDelay =
+            CVarDef.Create("database.sqlite_delay", DefaultSqliteDelay, CVar.SERVERONLY);
+
+#if DEBUG
+        private const int DefaultSqliteDelay = 1;
+#else
+        private const int DefaultSqliteDelay = 0;
+#endif
+
 
         public static readonly CVarDef<string> DatabasePgHost =
             CVarDef.Create("database.pg_host", "localhost", CVar.SERVERONLY);
@@ -291,7 +321,7 @@ namespace Content.Shared.CCVar
         /// Technically client doesn't need to know about it but this may prevent a bug in the distant future so it stays.
         /// </remarks>
         public static readonly CVarDef<bool> MobPushing =
-            CVarDef.Create("physics.mob_pushing", true, CVar.REPLICATED);
+            CVarDef.Create("physics.mob_pushing", false, CVar.REPLICATED);
 
         /*
          * Lobby music
@@ -434,13 +464,13 @@ namespace Content.Shared.CCVar
         ///     Maximum time in milliseconds that atmos can take processing.
         /// </summary>
         public static readonly CVarDef<float> AtmosMaxProcessTime =
-            CVarDef.Create("atmos.max_process_time", 5f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.max_process_time", 3f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Atmos tickrate in TPS. Atmos processing will happen every 1/TPS seconds.
         /// </summary>
         public static readonly CVarDef<float> AtmosTickRate =
-            CVarDef.Create("atmos.tickrate", 26f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.tickrate", 15f, CVar.SERVERONLY);
 
         /*
          * MIDI instruments
@@ -543,6 +573,32 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> VoteSameTypeTimeout =
             CVarDef.Create("vote.same_type_timeout", 240f, CVar.SERVERONLY);
 
+
+        /// <summary>
+        ///     Sets the duration of the map vote timer.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerMap = CVarDef.Create("vote.timermap", 90, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Sets the duration of the restart vote timer.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerRestart = CVarDef.Create("vote.timerrestart", 30, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Sets the duration of the gamemode/preset vote timer.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerPreset = CVarDef.Create("vote.timerpreset", 30, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Sets the duration of the map vote timer when ALONE.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerAlone = CVarDef.Create("vote.timeralone", 10, CVar.SERVERONLY);
+
+
         /*
          * BAN
          */
@@ -556,6 +612,25 @@ namespace Content.Shared.CCVar
         // Once cruising actually gets implemented I'd likely drop this speed to 3 maybe.
         public static readonly CVarDef<float> ShuttleDockSpeedCap =
             CVarDef.Create("shuttle.dock_speed_cap", 5f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxLinearSpeed =
+            CVarDef.Create("shuttle.max_linear_speed", 13f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularSpeed =
+            CVarDef.Create("shuttle.max_angular_speed", 1.4f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularAcc =
+            CVarDef.Create("shuttle.max_angular_acc", 2f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularMomentum =
+            CVarDef.Create("shuttle.max_angular_momentum", 60000f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleIdleLinearDamping =
+            CVarDef.Create("shuttle.idle_linear_damping", 50f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleIdleAngularDamping =
+            CVarDef.Create("shuttle.idle_angular_damping", 100f, CVar.SERVERONLY);
+
 
         /*
          * VIEWPORT

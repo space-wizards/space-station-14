@@ -13,6 +13,7 @@
   - type: Tag
     tags:
     - Sheet
+    - DroneUsable
 
 - type: entity
   parent: SheetOtherBase
@@ -121,6 +122,9 @@
   name: plastic
   suffix: Full
   components:
+  - type: Tag
+    tags:
+    - Plastic
   - type: Material
     materials:
     - Plastic

@@ -1,25 +1,19 @@
-using System.Collections.Generic;
-using Content.Server.Clothing.Components;
+using Content.Server.Actions;
 using Content.Server.Light.Components;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
-using Content.Shared.Actions.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Light.Component;
 using Content.Shared.Rounding;
+using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -28,9 +22,9 @@ namespace Content.Server.Light.EntitySystems
     [UsedImplicitly]
     public sealed class HandheldLightSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
+        [Dependency] private readonly ActionsSystem _actionSystem = default!;
 
         // TODO: Ideally you'd be able to subscribe to power stuff to get events at certain percentages.. or something?
         // But for now this will be better anyway.
@@ -45,9 +39,30 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<HandheldLightComponent, ComponentGetState>(OnGetState);
 
             SubscribeLocalEvent<HandheldLightComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<HandheldLightComponent, GetActivationVerbsEvent>(AddToggleLightVerb);
+            SubscribeLocalEvent<HandheldLightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerb);
 
             SubscribeLocalEvent<HandheldLightComponent, ActivateInWorldEvent>(OnActivate);
+
+            SubscribeLocalEvent<HandheldLightComponent, GetActionsEvent>(OnGetActions);
+            SubscribeLocalEvent<HandheldLightComponent, ToggleActionEvent>(OnToggleAction);
+        }
+
+        private void OnGetActions(EntityUid uid, HandheldLightComponent component, GetActionsEvent args)
+        {
+            args.Actions.Add(component.ToggleAction);
+        }
+
+        private void OnToggleAction(EntityUid uid, HandheldLightComponent component, ToggleActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (component.Activated)
+                TurnOff(component);
+            else
+                TurnOn(args.Performer, component);
+
+            args.Handled = true;
         }
 
         private void OnGetState(EntityUid uid, HandheldLightComponent component, ref ComponentGetState args)
@@ -96,7 +111,6 @@ namespace Content.Server.Light.EntitySystems
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
         public bool ToggleStatus(EntityUid user, HandheldLightComponent component)
         {
-            if (!_blocker.CanUse(user)) return false;
             return component.Activated ? TurnOff(component) : TurnOn(user, component);
         }
 
@@ -125,7 +139,7 @@ namespace Content.Server.Light.EntitySystems
                     continue;
                 }
 
-                if (handheld.Paused) continue;
+                if (Paused(handheld.Owner)) continue;
                 TryUpdate(handheld, frameTime);
             }
 
@@ -135,11 +149,11 @@ namespace Content.Server.Light.EntitySystems
             }
         }
 
-        private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetActivationVerbsEvent args)
+        private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract) return;
 
-            Verb verb = new()
+            ActivationVerb verb = new()
             {
                 Text = Loc.GetString("verb-common-toggle-light"),
                 IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png",
@@ -157,7 +171,6 @@ namespace Content.Server.Light.EntitySystems
 
             SetState(component, false);
             component.Activated = false;
-            UpdateLightAction(component);
             _activeLights.Remove(component);
             component.LastLevel = null;
             component.Dirty(EntityManager);
@@ -176,7 +189,6 @@ namespace Content.Server.Light.EntitySystems
             {
                 SoundSystem.Play(Filter.Pvs(component.Owner), component.TurnOnFailSound.GetSound(), component.Owner);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), component.Owner, Filter.Entities(user));
-                UpdateLightAction(component);
                 return false;
             }
 
@@ -187,12 +199,10 @@ namespace Content.Server.Light.EntitySystems
             {
                 SoundSystem.Play(Filter.Pvs(component.Owner), component.TurnOnFailSound.GetSound(), component.Owner);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), component.Owner, Filter.Entities(user));
-                UpdateLightAction(component);
                 return false;
             }
 
             component.Activated = true;
-            UpdateLightAction(component);
             SetState(component, true);
             _activeLights.Add(component);
             component.LastLevel = GetLevel(component);
@@ -219,13 +229,8 @@ namespace Content.Server.Light.EntitySystems
             {
                 item.EquippedPrefix = on ? "on" : "off";
             }
-        }
 
-        private void UpdateLightAction(HandheldLightComponent component)
-        {
-            if (!EntityManager.TryGetComponent(component.Owner, out ItemActionsComponent? actions)) return;
-
-            actions.Toggle(ItemActionType.ToggleLight, component.Activated);
+            _actionSystem.SetToggled(component.ToggleAction, on);
         }
 
         public void TryUpdate(HandheldLightComponent component, float frameTime)

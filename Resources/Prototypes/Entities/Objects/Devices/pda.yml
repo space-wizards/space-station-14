@@ -22,18 +22,29 @@
     - idcard
     - Belt
   - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
     radius: 2.5
     softness: 5
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
+  - type: Ringer
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
     - key: enum.UplinkUiKey.Key
       type: UplinkBoundUserInterface
+    - key: enum.RingerUiKey.Key
+      type: RingerBoundUserInterface
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
   - type: PDA
     penSlot:
       startingItem: Pen
@@ -47,7 +58,11 @@
       whitelist:
         components:
         - IdCard
-  - type: DoorBumpOpener
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  - type: Input
+    context: "human"
 
 - type: entity
   parent: BasePDA
@@ -197,6 +212,21 @@
         state: pda-cargo
   - type: Icon
     state: pda-cargo
+
+- type: entity
+  parent: BasePDA
+  id: SalvagePDA
+  name: salvage PDA
+  description: Smells like ash.
+  components:
+  - type: PDA
+    id: SalvageIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-miner
+  - type: Icon
+    state: pda-miner
 
 - type: entity
   parent: BasePDA
@@ -449,3 +479,21 @@
   components:
   - type: PDA
     id: CentcomIDCardSyndie
+
+- type: entity
+  parent: BasePDA
+  id: MusicianPDA
+  name: musician PDA
+  description: It fills you with inspiration.
+  components:
+  - type: PDA
+    id: MusicianIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-musician
+  - type: Instrument
+    allowPercussion: false
+    handheld: true
+    bank: 1
+    program: 2

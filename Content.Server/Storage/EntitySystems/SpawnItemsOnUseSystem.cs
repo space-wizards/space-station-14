@@ -10,7 +10,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Storage.EntitySystems
 {
-    public class SpawnItemsOnUseSystem : EntitySystem
+    public sealed class SpawnItemsOnUseSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -48,7 +48,7 @@ namespace Content.Server.Storage.EntitySystems
             }
 
             if (component.Sound != null)
-                SoundSystem.Play(Filter.Pvs(uid), component.Sound.GetSound());
+                SoundSystem.Play(Filter.Pvs(uid), component.Sound.GetSound(), uid);
 
             component.Uses--;
             if (component.Uses == 0)

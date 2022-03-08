@@ -94,6 +94,7 @@
   - type: Sprite
     sprite: Objects/Tools/wrench.rsi
     state: icon
+    netsync: false
   - type: Item
     sprite: Objects/Tools/wrench.rsi
   - type: ItemCooldown
@@ -122,6 +123,7 @@
   - type: Sprite
     sprite: Objects/Tools/crowbar.rsi
     state: icon
+    netsync: false
   - type: Item
     sprite: Objects/Tools/crowbar.rsi
     size: 10
@@ -179,6 +181,9 @@
     qualities:
       - Pulsing
   - type: SignalLinker
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: power drill
@@ -198,6 +203,7 @@
   - type: Tool
     qualities:
       - Screwing
+    speed: 1.5
   - type: MultipleTool
     statusShowBehavior: true
     entries:

@@ -1,11 +1,13 @@
-﻿using Robust.Shared.Analyzers;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Follower.Components;
 
-[RegisterComponent, ComponentProtoName("Follower")]
+[RegisterComponent]
 [Friend(typeof(FollowerSystem))]
-public class FollowerComponent : Component
+[NetworkedComponent]
+public sealed class FollowerComponent : Component
 {
     public EntityUid Following;
 }

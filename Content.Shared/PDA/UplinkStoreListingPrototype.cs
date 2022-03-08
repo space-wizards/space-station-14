@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.PDA
 {
     [Prototype("uplinkListing")]
-    public class UplinkStoreListingPrototype : IPrototype
+    public sealed class UplinkStoreListingPrototype : IPrototype
     {
         [ViewVariables]
         [DataField("id", required: true)]

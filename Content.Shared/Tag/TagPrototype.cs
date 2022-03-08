@@ -10,7 +10,7 @@ namespace Content.Shared.Tag
     ///     gets saved in TagComponent.
     /// </summary>
     [Prototype("Tag")]
-    public class TagPrototype : IPrototype
+    public sealed class TagPrototype : IPrototype
     {
         [ViewVariables]
         [DataField("id", required: true)]

@@ -7,7 +7,7 @@ namespace Content.Server.Objectives.Requirements
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class TraitorRequirement : IObjectiveRequirement
+    public sealed class TraitorRequirement : IObjectiveRequirement
     {
         public bool CanBeAssigned(Mind.Mind mind)
         {

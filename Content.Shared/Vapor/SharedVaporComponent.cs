@@ -4,9 +4,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Vapor
 {
+    [Virtual]
     public class SharedVaporComponent : Component
     {
-        public override string Name => "Vapor";
         public const string SolutionName = "vapor";
     }
 

@@ -12,10 +12,8 @@ namespace Content.Server.Destructible
     ///     and triggers thresholds when reached.
     /// </summary>
     [RegisterComponent]
-    public class DestructibleComponent : Component
+    public sealed class DestructibleComponent : Component
     {
-        public override string Name => "Destructible";
-
         [ViewVariables]
         [DataField("thresholds")]
         public List<DamageThreshold> Thresholds = new();

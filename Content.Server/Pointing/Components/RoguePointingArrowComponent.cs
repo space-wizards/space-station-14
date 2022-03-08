@@ -10,7 +10,7 @@ namespace Content.Server.Pointing.Components
 {
     [RegisterComponent]
     [Friend(typeof(RoguePointingSystem))]
-    public class RoguePointingArrowComponent : SharedRoguePointingArrowComponent
+    public sealed class RoguePointingArrowComponent : SharedRoguePointingArrowComponent
     {
         [ViewVariables]
         public EntityUid? Chasing;

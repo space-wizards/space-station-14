@@ -8,10 +8,13 @@
     snap:
     - Window
   components:
+  - type: WallMount
+    arc: 360 # interact despite grilles
   - type: Tag
     tags:
       - RCDDeconstructWhitelist
       - ForceFixRotations
+      - Window
   - type: Sprite
     netsync: false
     drawdepth: WallTops
@@ -35,6 +38,8 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: ExaminableDamage
+    messages: WindowMessages
   - type: Repairable
   - type: Destructible
     thresholds:
@@ -62,14 +67,19 @@
   - type: IconSmooth
     key: windows
     base: window
-  - type: Window
+  - type: InteractionPopup
+    interactSuccessString: comp-window-knock
+    popupPerceivedByOthers: true
+    interactSuccessSound:
+      path: /Audio/Effects/glass_knock.ogg
   - type: Construction
-    graph: window
+    graph: Window
     node: window
   - type: Appearance
     visuals:
     - type: DamageVisualizer
       thresholds: [4, 8, 12]
+      damageDivisor: 2
       trackAllDamage: true
       damageOverlay:
         sprite: Structures/Windows/cracks.rsi
@@ -84,16 +94,25 @@
     snap:
     - Window
   components:
+  - type: WallMount
+    arc: 360 # interact despite grilles
     # Attention! If adding tags here:
     # Keep WindowTintedDirectional in mind
+  - type: Tag
+    tags:
+      - Window
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: window
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: window
+  - type: InteractionPopup
+    interactSuccessString: comp-window-knock
+    popupPerceivedByOthers: true
+    interactSuccessSound:
+      path: /Audio/Effects/glass_knock.ogg
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -112,8 +131,16 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: ExaminableDamage
+    messages: WindowMessages
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150 #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -132,9 +159,8 @@
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
     - South
-  - type: Window
   - type: Construction
-    graph: windowDirectional
+    graph: WindowDirectional
     node: windowDirectional
 
 - type: entity
@@ -149,7 +175,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: tinted_window
   - type: Tag
@@ -173,7 +198,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: frosted_window
   - type: Icon

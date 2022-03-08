@@ -13,7 +13,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.PDA
 {
     [UsedImplicitly]
-    public class PDABoundUserInterface : BoundUserInterface
+    public sealed class PDABoundUserInterface : BoundUserInterface
     {
         private PDAMenu? _menu;
 
@@ -46,6 +46,16 @@ namespace Content.Client.PDA
             _menu.ActivateUplinkButton.OnPressed += _ =>
             {
                 SendMessage(new PDAShowUplinkMessage());
+            };
+
+            _menu.ActivateMusicButton.OnPressed += _ =>
+            {
+                SendMessage(new PDAShowMusicMessage());
+            };
+
+            _menu.AccessRingtoneButton.OnPressed += _ =>
+            {
+                SendMessage(new PDAShowRingtoneMessage());
             };
 
         }
@@ -86,6 +96,7 @@ namespace Content.Client.PDA
                     _menu.EjectIdButton.Visible = msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null;
                     _menu.EjectPenButton.Visible = msg.HasPen;
                     _menu.ActivateUplinkButton.Visible = msg.HasUplink;
+                    _menu.ActivateMusicButton.Visible = msg.CanPlayMusic;
 
                     break;
                 }

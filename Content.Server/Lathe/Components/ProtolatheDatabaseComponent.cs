@@ -11,11 +11,9 @@ namespace Content.Server.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
-    public class ProtolatheDatabaseComponent : SharedProtolatheDatabaseComponent
+    public sealed class ProtolatheDatabaseComponent : SharedProtolatheDatabaseComponent
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-        public override string Name => "ProtolatheDatabase";
 
         public override ComponentState GetComponentState()
         {

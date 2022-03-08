@@ -17,17 +17,15 @@ namespace Content.Shared.Foldable;
 [RegisterComponent]
 [NetworkedComponent]
 [Friend(typeof(SharedFoldableSystem))]
-public class FoldableComponent : Component
+public sealed class FoldableComponent : Component
 {
-    public override string Name => "Foldable";
-
     [DataField("folded")]
     public bool IsFolded = false;
 }
 
 // ahhh, the ol' "state thats just a copy of the component".
 [Serializable, NetSerializable]
-public class FoldableComponentState : ComponentState
+public sealed class FoldableComponentState : ComponentState
 {
     public readonly bool IsFolded;
 

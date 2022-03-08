@@ -12,7 +12,9 @@ namespace Content.Server.Chat.Managers
         /// <summary>
         ///     Dispatch a server announcement to every connected player.
         /// </summary>
-        void DispatchServerAnnouncement(string message);
+        /// <param name="message"></param>
+        /// <param name="colorOverride">Override the color of the message being sent.</param>
+        void DispatchServerAnnouncement(string message, Color? colorOverride = null);
 
         /// <summary>
         ///     Station announcement to every player
@@ -20,7 +22,8 @@ namespace Content.Server.Chat.Managers
         /// <param name="message"></param>
         /// <param name="sender"></param>
         /// <param name="playDefaultSound">If the default 'PA' sound should be played.</param>
-        void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true);
+        /// <param name="colorOverride">Override the color of the message being sent.</param>
+        void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true, Color? colorOverride = null);
 
         void DispatchServerMessage(IPlayerSession player, string message);
 
@@ -28,6 +31,8 @@ namespace Content.Server.Chat.Managers
         /// Tries to use entity say or entity whisper to speak a message.
         /// </summary>
         void TrySpeak(EntityUid source, string message, bool whisper = false, IConsoleShell? shell = null, IPlayerSession? player = null);
+
+        void TryEmote(EntityUid source, string message, IConsoleShell? shell = null, IPlayerSession? player = null);
 
         /// <param name="hideChat">If true, message will not be logged to chat boxes but will still produce a speech bubble.</param>
         void EntitySay(EntityUid source, string message, bool hideChat=false);

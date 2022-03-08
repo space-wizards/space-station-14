@@ -1,11 +1,10 @@
-using System;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
-using Content.Shared.Atmos;
+using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -13,15 +12,12 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasVolumePumpSystem : EntitySystem
+    public sealed class GasVolumePumpSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -54,18 +50,17 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnVolumePumpUpdated(EntityUid uid, GasVolumePumpComponent pump, AtmosDeviceUpdateEvent args)
         {
-            if (!pump.Enabled)
-                return;
+            TryComp(uid, out AppearanceComponent? appearance);
 
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device))
-                return;
-
-            if (!nodeContainer.TryGetNode(pump.InletName, out PipeNode? inlet)
+            if (!pump.Enabled
+                || !TryComp(uid, out NodeContainerComponent? nodeContainer)
+                || !TryComp(uid, out AtmosDeviceComponent? device)
+                || !nodeContainer.TryGetNode(pump.InletName, out PipeNode? inlet)
                 || !nodeContainer.TryGetNode(pump.OutletName, out PipeNode? outlet))
+            {
+                appearance?.SetData(PumpVisuals.Enabled, false);
                 return;
+            }
 
             var inputStartingPressure = inlet.Air.Pressure;
             var outputStartingPressure = outlet.Air.Pressure;
@@ -77,6 +72,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             // Overclocked pumps can only force gas a certain amount.
             if ((outputStartingPressure - inputStartingPressure > pump.OverclockThreshold) && pump.Overclocked)
                 return;
+
+            appearance?.SetData(PumpVisuals.Enabled, true);
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
             var transferRatio = (float)(pump.TransferRate * (_gameTiming.CurTime - device.LastProcess).TotalSeconds) / inlet.Air.Volume;
@@ -95,7 +92,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 }
             }
 
-            outlet.AssumeAir(removed);
+            _atmosphereSystem.Merge(outlet.Air, removed);
         }
 
         private void OnPumpInteractHand(EntityUid uid, GasVolumePumpComponent component, InteractHandEvent args)
@@ -126,7 +123,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnTransferRateChangeMessage(EntityUid uid, GasVolumePumpComponent pump, GasVolumePumpChangeTransferRateMessage args)
         {
-            pump.TransferRate = Math.Clamp(args.TransferRate, 0f, Atmospherics.MaxTransferRate);
+            pump.TransferRate = Math.Clamp(args.TransferRate, 0f, pump.MaxTransferRate);
             _adminLogSystem.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the transfer rate on {ToPrettyString(uid):device} to {args.TransferRate}");
             DirtyUI(uid, pump);
