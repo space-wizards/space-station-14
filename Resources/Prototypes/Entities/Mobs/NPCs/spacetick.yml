@@ -1,0 +1,70 @@
+- type: entity
+  name: space tick
+  id: MobTick
+  parent: SimpleSpaceMobBase
+  description: It's a nasty space tick. Make sure you check your legs when you get home.
+  components:
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
+    - UnarmedAttackHostiles
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 8
+    baseSprintSpeed : 8
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+      sprite: Mobs/Aliens/spacetick.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.20
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      25: !type:DeadMobState {}
+  - type: MovementIgnoreGravity
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: alive
+      dead: dead
+  - type: Butcherable
+    spawned: FoodMeatXeno
+    pieces: 1
+  - type: UnarmedCombat
+    range: .5
+    arcwidth: 0
+    arc: bite
+    damage:
+      groups:
+        Brute: 2
+      types:
+        Poison: 4
+
+  - type: MeleeChemicalInjector #this whole thing was supposed to inject the player, but it never worked so idk
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: FluorosulfuricAcid
+          Quantity: 25
+  - type: RefillableSolution
+    solution: melee
+  - type: SolutionTransfer
+    maxTransferAmount: 5
+  

@@ -61,6 +61,9 @@
         - MobCarp
         - MobCarp
         - MobCarp
+        - MobTick
+        - MobTick
+        - MobTick
         - PlushieCarp
         - DehydratedSpaceCarp
       chance: 0.25
@@ -78,6 +81,9 @@
     - MobCarp
     - MobCarp
     - MobCarp
+    - MobTick
+    - MobTick
+    - MobTick
     - PlushieCarp
     - DehydratedSpaceCarp
     chance: 0.75
