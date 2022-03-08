@@ -1,7 +1,7 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.Components;
+using Content.Server.UserInterface;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -13,8 +13,13 @@ namespace Content.Server.Kitchen.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<MicrowaveComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<MicrowaveComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpen);
         }
 
+        private void OnAfterUIOpen(EntityUid uid, MicrowaveComponent microwave, AfterActivatableUIOpenEvent args)
+        {
+            microwave.UIDirty = true;
+        }
         private void OnSolutionChange(EntityUid uid, MicrowaveComponent component, SolutionChangedEvent args)
         {
             component.DirtyUi();
