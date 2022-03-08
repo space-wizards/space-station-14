@@ -1,7 +1,7 @@
-using Content.Server.Research.Components;
 using Content.Server.UserInterface;
-using Content.Server.Drone.Components;
+using Content.Server.Research.Components;
 using JetBrains.Annotations;
+
 
 namespace Content.Server.Research
 {
@@ -17,18 +17,14 @@ namespace Content.Server.Research
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ResearchConsoleComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
+            SubscribeLocalEvent<ResearchConsoleComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpen);
         }
 
-        private void OnActivateUIAttempt(EntityUid uid, ResearchConsoleComponent component, ActivatableUIOpenAttemptEvent args)
+        private void OnAfterUIOpen(EntityUid uid, ResearchConsoleComponent component, AfterActivatableUIOpenEvent args)
         {
-            if (component.Powered)
-            {
-                component.PlayKeyboardSound();
-            }
-
-
+            component.PlayKeyboardSound();
         }
+
         public bool RegisterServer(ResearchServerComponent server)
         {
             if (_servers.Contains(server)) return false;

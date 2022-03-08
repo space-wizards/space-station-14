@@ -1,32 +1,22 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
 using Content.Server.WireHacking;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public sealed class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IActivate, IWires
+    public sealed class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IWires
     {
         [Dependency] private readonly IRobustRandom _random = null!;
 
@@ -37,7 +27,7 @@ namespace Content.Server.Arcade.Components
         [ViewVariables] private bool _overflowFlag;
         [ViewVariables] private bool _playerInvincibilityFlag;
         [ViewVariables] private bool _enemyInvincibilityFlag;
-        [ViewVariables] private SpaceVillainGame _game = null!;
+        [ViewVariables] public SpaceVillainGame Game = null!;
 
         [DataField("newGameSound")] private SoundSpecifier _newGameSound = new SoundPathSpecifier("/Audio/Effects/Arcade/newgame.ogg");
         [DataField("playerAttackSound")] private SoundSpecifier _playerAttackSound = new SoundPathSpecifier("/Audio/Effects/Arcade/player_attack.ogg");
@@ -72,22 +62,6 @@ namespace Content.Server.Arcade.Components
             "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton"
         };
 
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!Powered || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
-                return;
-
-            _game ??= new SpaceVillainGame(this);
-
-            if (_entityManager.TryGetComponent<WiresComponent>(Owner, out var wiresComponent) && wiresComponent.IsPanelOpen)
-            {
-                wiresComponent.OpenInterface(actor.PlayerSession);
-            }
-            else
-            {
-                UserInterface?.Toggle(actor.PlayerSession);
-            }
-        }
 
         protected override void Initialize()
         {
@@ -131,22 +105,22 @@ namespace Content.Server.Arcade.Components
             switch (msg.PlayerAction)
             {
                 case PlayerAction.Attack:
-                    _game?.ExecutePlayerAction(msg.PlayerAction);
+                    Game?.ExecutePlayerAction(msg.PlayerAction);
                     break;
                 case PlayerAction.Heal:
-                    _game?.ExecutePlayerAction(msg.PlayerAction);
+                    Game?.ExecutePlayerAction(msg.PlayerAction);
                     break;
                 case PlayerAction.Recharge:
-                    _game?.ExecutePlayerAction(msg.PlayerAction);
+                    Game?.ExecutePlayerAction(msg.PlayerAction);
                     break;
                 case PlayerAction.NewGame:
                     SoundSystem.Play(Filter.Pvs(Owner), _newGameSound.GetSound(), Owner, AudioParams.Default.WithVolume(-4f));
 
-                    _game = new SpaceVillainGame(this);
-                    UserInterface?.SendMessage(_game.GenerateMetaDataMessage());
+                    Game = new SpaceVillainGame(this);
+                    UserInterface?.SendMessage(Game.GenerateMetaDataMessage());
                     break;
                 case PlayerAction.RequestData:
-                    UserInterface?.SendMessage(_game.GenerateMetaDataMessage());
+                    UserInterface?.SendMessage(Game.GenerateMetaDataMessage());
                     break;
             }
         }

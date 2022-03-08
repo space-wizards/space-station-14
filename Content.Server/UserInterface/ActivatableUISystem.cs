@@ -1,6 +1,7 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
-using Content.Server.WireHacking;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
@@ -110,20 +111,18 @@ namespace Content.Server.UserInterface
             // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
             // This is so that stuff can require further conditions (like power).
             var oae = new ActivatableUIOpenAttemptEvent(user);
-            var uae = new UserOpenActivatableUIAttemptEvent(user, aui.Owner);
+            var uae = new UserOpenActivatableUIAttemptEvent(user);
             RaiseLocalEvent(user, uae, false);
             RaiseLocalEvent((aui).Owner, oae, false);
             if (oae.Cancelled || uae.Cancelled) return false;
 
-            // Wires are the ONE thing that makes this hard to work with
-            if (TryComp<WiresComponent>(aui.Owner, out var wires) && wires.IsPanelOpen)
-            {
-                wires.OpenInterface(actor.PlayerSession);
-                return true;
-            }
-
             SetCurrentSingleUser((aui).Owner, actor.PlayerSession, aui);
             ui.Toggle(actor.PlayerSession);
+
+            //Let the component know a user opened it so it can do whatever it needs to do
+            var aae = new AfterActivatableUIOpenEvent(user);
+            RaiseLocalEvent((aui).Owner, aae, false);
+
             return true;
         }
 
@@ -158,11 +157,18 @@ namespace Content.Server.UserInterface
     public sealed class UserOpenActivatableUIAttemptEvent : CancellableEntityEventArgs //have to one-up the already stroke-inducing name
     {
         public EntityUid User { get; }
-        public EntityUid Target{ get; }
-        public UserOpenActivatableUIAttemptEvent(EntityUid who, EntityUid target)
+        public UserOpenActivatableUIAttemptEvent(EntityUid who)
         {
             User = who;
-            Target = target;
+        }
+    }
+
+    public sealed class AfterActivatableUIOpenEvent : EntityEventArgs
+    {
+        public EntityUid User { get; }
+        public AfterActivatableUIOpenEvent(EntityUid who)
+        {
+            User = who;
         }
     }
     public sealed class ActivatableUIPlayerChangedEvent : EntityEventArgs
