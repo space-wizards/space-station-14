@@ -156,6 +156,9 @@
   - type: ResearchClient
   - type: ResearchConsole
   - type: TechnologyDatabase
+  - type: ActivatableUI
+    key: enum.ResearchConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.ResearchConsoleUiKey.Key

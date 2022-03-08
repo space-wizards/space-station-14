@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using Content.Server.Research.Components;
+using Content.Server.UserInterface;
+using Content.Server.Drone.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Research
 {
@@ -14,6 +14,21 @@ namespace Content.Server.Research
         private readonly List<ResearchServerComponent> _servers = new();
         public IReadOnlyList<ResearchServerComponent> Servers => _servers;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<ResearchConsoleComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
+        }
+
+        private void OnActivateUIAttempt(EntityUid uid, ResearchConsoleComponent component, ActivatableUIOpenAttemptEvent args)
+        {
+            if (component.Powered && !HasComp<DroneComponent>(args.User))
+            {
+                component.PlayKeyboardSound();
+            }
+
+
+        }
         public bool RegisterServer(ResearchServerComponent server)
         {
             if (_servers.Contains(server)) return false;
