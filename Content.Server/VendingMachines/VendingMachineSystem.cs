@@ -1,10 +1,5 @@
-using System.Collections.Generic;
-using Content.Shared.Interaction;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
-using System;
 using System.Linq;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -13,11 +8,10 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Server.Throwing;
-using Robust.Shared.Maths;
+using Content.Server.UserInterface;
 using Content.Shared.Acts;
 using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 
@@ -34,7 +28,7 @@ namespace Content.Server.VendingMachines.systems
         {
             base.Initialize();
             SubscribeLocalEvent<VendingMachineComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<VendingMachineComponent, ActivateInWorldEvent>(HandleActivate);
+            SubscribeLocalEvent<VendingMachineComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
             SubscribeLocalEvent<VendingMachineComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<VendingMachineComponent, InventorySyncRequestMessage>(OnInventoryRequestMessage);
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
@@ -72,28 +66,16 @@ namespace Content.Server.VendingMachines.systems
             AuthorizedVend(uid, entity, args.ID, component);
         }
 
-        private void HandleActivate(EntityUid uid, VendingMachineComponent component, ActivateInWorldEvent args)
+        private void OnActivateUIAttempt(EntityUid uid, VendingMachineComponent component, ActivatableUIOpenAttemptEvent args)
         {
-            if (!TryComp<ActorComponent>(args.User, out var actor))
-            {
-                return;
-            }
-
-            if (!IsPowered(uid, component))
-            {
-                return;
-            }
-
             if (TryComp<WiresComponent>(uid, out var wires))
             {
-                if (wires.IsPanelOpen)
+                if (wires.IsPanelOpen && TryComp<ActorComponent>(args.User, out var actor))
                 {
                     wires.OpenInterface(actor.PlayerSession);
-                    return;
+                    args.Cancel();
                 }
             }
-
-            component.UserInterface?.Toggle(actor.PlayerSession);
         }
 
         private void OnPowerChanged(EntityUid uid, VendingMachineComponent component, PowerChangedEvent args)

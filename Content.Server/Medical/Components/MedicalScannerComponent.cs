@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Climbing;
 using Content.Server.Cloning;
 using Content.Server.Mind.Components;
@@ -8,25 +7,19 @@ using Content.Server.UserInterface;
 using Content.Shared.Acts;
 using Content.Shared.Damage;
 using Content.Shared.DragDrop;
-using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Medical.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedMedicalScannerComponent))]
-    public sealed class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDestroyAct
+    public sealed class MedicalScannerComponent : SharedMedicalScannerComponent, IDestroyAct
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
@@ -151,19 +144,6 @@ namespace Content.Server.Medical.Components
             {
                 appearance.SetData(MedicalScannerVisuals.Status, GetStatus());
             }
-        }
-
-        void IActivate.Activate(ActivateEventArgs args)
-        {
-            if (!_entMan.TryGetComponent(args.User, out ActorComponent? actor))
-            {
-                return;
-            }
-
-            if (!Powered)
-                return;
-
-            UserInterface?.Open(actor.PlayerSession);
         }
 
         public void InsertBody(EntityUid user)

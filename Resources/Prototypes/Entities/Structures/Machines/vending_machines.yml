@@ -37,6 +37,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+  - type: ActivatableUI
+    key: enum.VendingMachineUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.VendingMachineUiKey.Key
