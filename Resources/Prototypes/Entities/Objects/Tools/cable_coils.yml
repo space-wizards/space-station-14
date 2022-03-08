@@ -12,6 +12,7 @@
   - type: Tag
     tags:
     - CableCoil
+    - DroneUsable
   - type: Stack
     stackType: Cable
   - type: Sprite

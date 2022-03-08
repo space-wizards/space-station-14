@@ -34,15 +34,16 @@ public sealed partial class RadarConsoleWindow : DefaultWindow, IComputerWindow<
 
 public sealed class RadarControl : Control
 {
-    private float _radarArea = 256f;
+    private const int MinimapRadius = 256;
+    private const int MinimapMargin = 4;
+    private const float GridLinesDistance = 32f;
 
-    private float RadarCircleRadius => MathF.Max(0, _radarArea - 8) / 2;
-
+    private float _radarRange = 256f;
     private RadarConsoleBoundInterfaceState _lastState = new(256f, Array.Empty<RadarObjectData>());
 
-    private float SizeFull => (int) (_radarArea * UIScale);
-
-    public int RadiusCircle => (int) (RadarCircleRadius * UIScale);
+    private int SizeFull => (int) ((MinimapRadius + MinimapMargin) * 2 * UIScale);
+    private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
+    private float MinimapScale => _radarRange != 0 ? ScaledMinimapRadius / _radarRange : 0f;
 
     public RadarControl()
     {
@@ -51,10 +52,9 @@ public sealed class RadarControl : Control
 
     public void UpdateState(RadarConsoleBoundInterfaceState ls)
     {
-        if (!_radarArea.Equals(ls.Range * 2))
+        if (!_radarRange.Equals(ls.Range))
         {
-            _radarArea = ls.Range * 2;
-            MinSize = (SizeFull, SizeFull);
+            _radarRange = ls.Range;
         }
 
         _lastState = ls;
@@ -66,20 +66,20 @@ public sealed class RadarControl : Control
         var fakeAA = new Color(0.08f, 0.08f, 0.08f);
         var gridLines = new Color(0.08f, 0.08f, 0.08f);
         var gridLinesRadial = 8;
-        var gridLinesEquatorial = 8;
+        var gridLinesEquatorial = (int) Math.Floor(_radarRange / GridLinesDistance);
 
-        handle.DrawCircle((point, point), RadiusCircle + 1, fakeAA);
-        handle.DrawCircle((point, point), RadiusCircle, Color.Black);
+        handle.DrawCircle((point, point), ScaledMinimapRadius + 1, fakeAA);
+        handle.DrawCircle((point, point), ScaledMinimapRadius, Color.Black);
 
-        for (var i = 0; i < gridLinesEquatorial; i++)
+        for (var i = 1; i < gridLinesEquatorial + 1; i++)
         {
-            handle.DrawCircle((point, point), (RadiusCircle / gridLinesEquatorial) * i, gridLines, false);
+            handle.DrawCircle((point, point), GridLinesDistance * MinimapScale * i, gridLines, false);
         }
 
         for (var i = 0; i < gridLinesRadial; i++)
         {
             Angle angle = (Math.PI / gridLinesRadial) * i;
-            var aExtent = angle.ToVec() * RadiusCircle;
+            var aExtent = angle.ToVec() * ScaledMinimapRadius;
             handle.DrawLine((point, point) - aExtent, (point, point) + aExtent, gridLines);
         }
 
@@ -88,7 +88,10 @@ public sealed class RadarControl : Control
 
         foreach (var obj in _lastState.Objects)
         {
-            if (obj.Position.Length > RadiusCircle - 24)
+            var minimapPos = obj.Position * MinimapScale;
+            var radius = obj.Radius * MinimapScale;
+
+            if (minimapPos.Length + radius > ScaledMinimapRadius)
                 continue;
 
             switch (obj.Shape)
@@ -96,7 +99,7 @@ public sealed class RadarControl : Control
                 case RadarObjectShape.CircleFilled:
                 case RadarObjectShape.Circle:
                 {
-                    handle.DrawCircle(obj.Position + point, obj.Radius, obj.Color, obj.Shape == RadarObjectShape.CircleFilled);
+                    handle.DrawCircle(minimapPos + point, radius, obj.Color, obj.Shape == RadarObjectShape.CircleFilled);
                     break;
                 }
                 default:

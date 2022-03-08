@@ -8,7 +8,7 @@
     nodes:
       electrocution: !type:ElectrocutionNode
         nodeGroupID: HVPower
-
+        needAnchored: false
   - type: PowerConsumer
     voltage: High
     drawRate: 50000
@@ -23,7 +23,7 @@
     nodes:
       electrocution: !type:ElectrocutionNode
         nodeGroupID: MVPower
-
+        needAnchored: false
   - type: PowerConsumer
     voltage: Medium
     drawRate: 50000
@@ -38,6 +38,7 @@
     nodes:
       electrocution: !type:ElectrocutionNode
         nodeGroupID: Apc
+        needAnchored: false
   - type: PowerConsumer
     voltage: Apc
     drawRate: 50000

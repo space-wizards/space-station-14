@@ -1,12 +1,4 @@
 - type: latheRecipe
-  id: Gauze
-  icon: Objects/Specific/Medical/medical.rsi/gauze.png
-  result: Gauze
-  completetime: 500
-  materials:
-    Plastic: 100
-
-- type: latheRecipe
   id: Scalpel
   icon: Objects/Specific/Medical/Surgery/scalpel.rsi/scalpel.png
   result: Scalpel

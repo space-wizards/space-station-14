@@ -69,5 +69,9 @@
         Blunt: 22
   - type: Actions
   - type: Guardian
+  - type: InteractionPopup
+    interactSuccessString: petting-success-holo
+    interactFailureString: petting-failure-holo
+    successChance: 0.7
   - type: NameIdentifier
     group: Holoparasite

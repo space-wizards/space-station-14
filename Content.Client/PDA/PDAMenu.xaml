@@ -37,6 +37,9 @@
             <Button Name="ActivateUplinkButton"
                     Access="Public"
                     Text="{Loc 'pda-bound-user-interface-uplink-tab-title'}" />
+            <Button Name="ActivateMusicButton"
+                    Access="Public"
+                    Text="{Loc 'pda-bound-user-interface-music-button'}" />
         </BoxContainer>
     </TabContainer>
 </DefaultWindow>

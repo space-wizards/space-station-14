@@ -8,7 +8,7 @@ namespace Content.Shared.Light.Component
     public abstract class SharedHandheldLightComponent : Robust.Shared.GameObjects.Component
     {
         [DataField("toggleAction", required: true)]
-        public InstantAction ToggleAction = default!;
+        public InstantAction ToggleAction = new();
 
         public const int StatusLevels = 6;
 

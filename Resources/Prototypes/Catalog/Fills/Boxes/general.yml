@@ -69,6 +69,9 @@
     whitelist:
       components:
       - LightBulb
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: PDA box
@@ -173,6 +176,41 @@
           amount: 2
         - id: InflatableDoorStack
           amount: 2
+  - type: Sprite
+    layers:
+      - state: box
+      - state: writing
+
+- type: entity
+  name: flare box
+  parent: BoxCardboard
+  id: BoxFlare
+  description: A box of flares. Party time.
+  components:
+  - type: StorageFill
+    contents:
+      - id: Flare
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: writing
+
+- type: entity
+  name: trashbag box
+  parent: BoxCardboard
+  id: BoxTrashbag
+  description: A box of trashbags. Happy janitor noises.
+  components:
+  - type: StorageFill
+    contents:
+      - id: TrashBag
+        amount: 6
+  - type: Storage
+    capacity: 800
+    whitelist:
+      tags:
+        - TrashBag
   - type: Sprite
     layers:
       - state: box

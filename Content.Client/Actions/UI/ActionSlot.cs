@@ -233,7 +233,7 @@ namespace Content.Client.Actions.UI
                 {
                     _actionsUI.Component.Actions.Remove(Action);
                 }
-            }        
+            }
 
             _actionsUI.StopTargeting();
             _actionsUI.UpdateUI();

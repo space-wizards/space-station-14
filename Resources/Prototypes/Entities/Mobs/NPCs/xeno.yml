@@ -43,13 +43,6 @@
       0: !type:NormalMobState {}
       150: !type:CriticalMobState {}
       200: !type:DeadMobState {}
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 3
-    damageRecovery:
-      types:
-        Asphyxiation: -1.5
   - type: Bloodstream
     bloodReagent: FluorosulfuricAcid
     bloodlossDamage:
@@ -66,7 +59,7 @@
     arc: claw
     damage:
       groups:
-        Brute: 10
+        Brute: 20
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -86,3 +79,7 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: ReplacementAccent
     accent: xeno
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: -150
+    currentTemperature: 310.15
