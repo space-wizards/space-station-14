@@ -377,3 +377,10 @@
         - state: idmusician
     - type: PresetIdCard
       job: Musician
+
+- type: entity
+  parent: AssistantIDCard
+  id: AgentIDCard
+  suffix: Agent
+  components:
+  - type: AgentIDCard
