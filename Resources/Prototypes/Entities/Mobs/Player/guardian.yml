@@ -1,12 +1,12 @@
 # Does not inherit from simplemob
 - type: entity
-  name: Holoparasite
-  id: MobHoloparasite
-  description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
+  name: GuardianBase
+  id: MobGuardianBase
+  description: guardian
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
-    name: Holoparasite
+    name: Guardian
     description: Listen to your owner. Don't tank damage. Punch people hard.
   - type: Input
     context: "human"
@@ -69,5 +69,73 @@
     innateActions:
       - CombatMode
   - type: Guardian
+
+# From the uplink injector
+- type: entity
+  name: Holoparasite
+  id: MobHoloparasiteGuardian
+  parent: MobGuardianBase
+  description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Holoparasite
+    description: Listen to your owner. Don't tank damage. Punch people hard.
   - type: NameIdentifier
     group: Holoparasite
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Guardians/guardians.rsi
+    layers:
+    - state: tech_base
+    - state: tech_flare
+      color: "#40a7d7"
+      shader: unshaded
+    noRot: true
+
+# From Salvage rewards
+# TODO: Tweak stats if actually introduced
+- type: entity
+  name: Wreckage Warden
+  parent: MobGuardianBase
+  id: MobWreckGuardian
+  description: A tireless worker stuck in limbo, half man, half apparition. This one radiates an amiable aura. It stands noble, tuning into it's owner's life to sustain itself.
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Wreckage Warden
+    description: Listen to your owner. Don't tank damage. Only attack if commanded to.
+  - type: NameIdentifier
+    group: Holoparasite
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Guardians/guardians.rsi
+    layers:
+    - state: miner_base
+    - state: miner_flare
+      color: "#d240ff"
+      shader: unshaded
+    noRot: true
+
+# From Wizard deck of cards
+- type: entity
+  name: Ifrit Protector
+  parent: MobGuardianBase
+  id: MobMagicalGuardian
+  description: A vengeful soul, summoned to serve the wizard's foul needs. It stands wicked, tuning into it's owner's life to sustain itself.
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Ifrit Protector
+    description: Listen to your owner. Don't tank damage. Punch people hard.
+  - type: NameIdentifier
+    group: Holoparasite
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Guardians/guardians.rsi
+    layers:
+    - state: magic_base
+    - state: magic_flare
+      color: "#d14730"
+      shader: unshaded
+    noRot: true
