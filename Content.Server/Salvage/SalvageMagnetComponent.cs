@@ -10,8 +10,7 @@ namespace Content.Server.Salvage
     ///     A salvage magnet.
     /// </summary>
     [RegisterComponent]
-    [ComponentProtoName("SalvageMagnet")]
-    public class SalvageMagnetComponent : Component
+    public sealed class SalvageMagnetComponent : Component
     {
         /// <summary>
         ///     Offset relative to magnet that salvage should spawn.

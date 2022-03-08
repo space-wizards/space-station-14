@@ -11,7 +11,7 @@ using Robust.Shared.Map;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public class InventoryHelpersTest : ContentIntegrationTest
+    public sealed class InventoryHelpersTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

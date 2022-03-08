@@ -4,7 +4,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Cloning.Components
 {
     [RegisterComponent]
-    public class BeingClonedComponent : Component
+    public sealed class BeingClonedComponent : Component
     {
         [ViewVariables]
         public Mind.Mind? Mind = default;

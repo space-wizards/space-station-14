@@ -17,7 +17,9 @@
   - type: Tag
     tags:
     - Matchstick
+    - Recyclable
     - Trash
+  - type: Recyclable
   - type: Sprite
     netsync: false
     sprite: Objects/Tools/matches.rsi
@@ -79,4 +81,6 @@
           - matchbox3
   - type: Tag
     tags:
+    - Recyclable
     - Trash
+  - type: Recyclable

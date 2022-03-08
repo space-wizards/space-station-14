@@ -6,7 +6,7 @@ namespace Content.Server.Explosion.Components
     /// Explode using the entity's <see cref="ExplosiveComponent"/> if Triggered.
     /// </summary>
     [RegisterComponent]
-    public class ExplodeOnTriggerComponent : Component
+    public sealed class ExplodeOnTriggerComponent : Component
     {
     }
 }

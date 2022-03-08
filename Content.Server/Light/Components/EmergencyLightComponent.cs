@@ -18,7 +18,7 @@ namespace Content.Server.Light.Components
     /// </summary>
     [RegisterComponent]
 #pragma warning disable 618
-    public class EmergencyLightComponent : SharedEmergencyLightComponent, IExamine
+    public sealed class EmergencyLightComponent : SharedEmergencyLightComponent, IExamine
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;

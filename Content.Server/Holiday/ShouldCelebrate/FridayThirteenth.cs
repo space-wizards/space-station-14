@@ -8,7 +8,7 @@ namespace Content.Server.Holiday.ShouldCelebrate
     ///     For Friday the 13th. Spooky!
     /// </summary>
     [UsedImplicitly]
-    public class FridayThirteenth : IHolidayShouldCelebrate
+    public sealed class FridayThirteenth : IHolidayShouldCelebrate
     {
         public bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
         {

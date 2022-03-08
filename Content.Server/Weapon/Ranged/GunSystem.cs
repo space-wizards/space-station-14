@@ -34,7 +34,6 @@ namespace Content.Server.Weapon.Ranged;
 public sealed partial class GunSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ActionBlockerSystem  _blocker = default!;
     [Dependency] private readonly AdminLogSystem _logs = default!;
@@ -70,7 +69,7 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<AmmoBoxComponent, InteractUsingEvent>(OnAmmoBoxInteractUsing);
         SubscribeLocalEvent<AmmoBoxComponent, UseInHandEvent>(OnAmmoBoxUse);
         SubscribeLocalEvent<AmmoBoxComponent, InteractHandEvent>(OnAmmoBoxInteractHand);
-        SubscribeLocalEvent<AmmoBoxComponent, GetAlternativeVerbsEvent>(OnAmmoBoxAltVerbs);
+        SubscribeLocalEvent<AmmoBoxComponent, GetVerbsEvent<AlternativeVerb>>(OnAmmoBoxAltVerbs);
 
         SubscribeLocalEvent<RangedMagazineComponent, ComponentInit>(OnRangedMagInit);
         SubscribeLocalEvent<RangedMagazineComponent, MapInitEvent>(OnRangedMagMapInit);
@@ -86,7 +85,6 @@ public sealed partial class GunSystem : EntitySystem
         // (All of these would be comp references so max you only ever have 2 components on the gun).
         SubscribeLocalEvent<BatteryBarrelComponent, ComponentInit>(OnBatteryInit);
         SubscribeLocalEvent<BatteryBarrelComponent, MapInitEvent>(OnBatteryMapInit);
-        SubscribeLocalEvent<BatteryBarrelComponent, ComponentGetState>(OnBatteryGetState);
         SubscribeLocalEvent<BatteryBarrelComponent, PowerCellChangedEvent>(OnCellSlotUpdated);
 
         SubscribeLocalEvent<BoltActionBarrelComponent, ComponentInit>(OnBoltInit);
@@ -96,7 +94,7 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<BoltActionBarrelComponent, InteractUsingEvent>(OnBoltInteractUsing);
         SubscribeLocalEvent<BoltActionBarrelComponent, ComponentGetState>(OnBoltGetState);
         SubscribeLocalEvent<BoltActionBarrelComponent, ExaminedEvent>(OnBoltExamine);
-        SubscribeLocalEvent<BoltActionBarrelComponent, GetInteractionVerbsEvent>(AddToggleBoltVerb);
+        SubscribeLocalEvent<BoltActionBarrelComponent, GetVerbsEvent<InteractionVerb>>(AddToggleBoltVerb);
 
         SubscribeLocalEvent<MagazineBarrelComponent, ComponentInit>(OnMagazineInit);
         SubscribeLocalEvent<MagazineBarrelComponent, MapInitEvent>(OnMagazineMapInit);
@@ -104,8 +102,8 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<MagazineBarrelComponent, UseInHandEvent>(OnMagazineUse);
         SubscribeLocalEvent<MagazineBarrelComponent, InteractUsingEvent>(OnMagazineInteractUsing);
         SubscribeLocalEvent<MagazineBarrelComponent, ComponentGetState>(OnMagazineGetState);
-        SubscribeLocalEvent<MagazineBarrelComponent, GetInteractionVerbsEvent>(AddMagazineInteractionVerbs);
-        SubscribeLocalEvent<MagazineBarrelComponent, GetAlternativeVerbsEvent>(AddEjectMagazineVerb);
+        SubscribeLocalEvent<MagazineBarrelComponent, GetVerbsEvent<InteractionVerb>>(AddMagazineInteractionVerbs);
+        SubscribeLocalEvent<MagazineBarrelComponent, GetVerbsEvent<AlternativeVerb>>(AddEjectMagazineVerb);
 
         SubscribeLocalEvent<PumpBarrelComponent, ComponentGetState>(OnPumpGetState);
         SubscribeLocalEvent<PumpBarrelComponent, ComponentInit>(OnPumpInit);
@@ -118,7 +116,7 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<RevolverBarrelComponent, UseInHandEvent>(OnRevolverUse);
         SubscribeLocalEvent<RevolverBarrelComponent, InteractUsingEvent>(OnRevolverInteractUsing);
         SubscribeLocalEvent<RevolverBarrelComponent, ComponentGetState>(OnRevolverGetState);
-        SubscribeLocalEvent<RevolverBarrelComponent, GetAlternativeVerbsEvent>(AddSpinVerb);
+        SubscribeLocalEvent<RevolverBarrelComponent, GetVerbsEvent<AlternativeVerb>>(AddSpinVerb);
 
         SubscribeLocalEvent<SpeedLoaderComponent, ComponentInit>(OnSpeedLoaderInit);
         SubscribeLocalEvent<SpeedLoaderComponent, MapInitEvent>(OnSpeedLoaderMapInit);

@@ -9,7 +9,7 @@ public sealed class DesignTimeContextFactoryPostgres : IDesignTimeDbContextFacto
     public PostgresServerDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<PostgresServerDbContext>();
-        optionsBuilder.UseNpgsql(args[0]);
+        optionsBuilder.UseNpgsql("Server=localhost");
         return new PostgresServerDbContext(optionsBuilder.Options);
     }
 }
@@ -19,7 +19,7 @@ public sealed class DesignTimeContextFactorySqlite : IDesignTimeDbContextFactory
     public SqliteServerDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<SqliteServerDbContext>();
-        optionsBuilder.UseSqlite(args[0]);
+        optionsBuilder.UseSqlite("Data Source=:memory:");
         return new SqliteServerDbContext(optionsBuilder.Options);
     }
 }

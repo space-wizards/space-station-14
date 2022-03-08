@@ -18,8 +18,8 @@ namespace Content.Server.Mind.Components
     /// <summary>
     ///     Stores a <see cref="Server.Mind.Mind"/> on a mob.
     /// </summary>
-    [RegisterComponent, ComponentProtoName("Mind"), Friend(typeof(MindSystem))]
-    public class MindComponent : Component
+    [RegisterComponent, Friend(typeof(MindSystem))]
+    public sealed class MindComponent : Component
     {
         /// <summary>
         ///     The mind controlling this mob. Can be null.
@@ -48,11 +48,11 @@ namespace Content.Server.Mind.Components
         public bool GhostOnShutdown { get; set; } = true;
     }
 
-    public class MindRemovedMessage : EntityEventArgs
+    public sealed class MindRemovedMessage : EntityEventArgs
     {
     }
 
-    public class MindAddedMessage : EntityEventArgs
+    public sealed class MindAddedMessage : EntityEventArgs
     {
     }
 }

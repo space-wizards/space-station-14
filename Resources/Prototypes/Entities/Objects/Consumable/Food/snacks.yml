@@ -208,7 +208,9 @@
     HeldPrefix: packet
   - type: Tag
     tags:
+    - Recyclable
     - Trash
+  - type: Recyclable
 
 - type: entity
   abstract: true

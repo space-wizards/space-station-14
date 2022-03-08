@@ -31,8 +31,5 @@ namespace Content.Server.Weapon.Ranged
         [DataField("clumsyWeaponShotSound")]
         public SoundSpecifier ClumsyWeaponShotSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("clumsyDamage")]
-        public DamageSpecifier? ClumsyDamage;
     }
 }

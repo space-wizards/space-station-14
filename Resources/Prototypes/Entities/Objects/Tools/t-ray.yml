@@ -5,6 +5,7 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/t-ray.rsi
+    netsync: false
     layers:
     - state: tray-off
   - type: TrayScanner
@@ -18,3 +19,6 @@
       states:
         enum.TrayScannerVisual.On: tray-on
         enum.TrayScannerVisual.Off: tray-off
+  - type: Tag
+    tags:
+      - DroneUsable

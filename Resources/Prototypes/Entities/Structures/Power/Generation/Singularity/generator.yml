@@ -8,6 +8,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/generator.rsi
     state: icon
+    netsync: false
   - type: SingularityGenerator
   - type: InteractionOutline
   - type: Clickable
@@ -24,7 +25,7 @@
       layer:
       - Opaque
       mask:
-      - MobImpassable
+      - MobMask
   - type: Transform
     anchored: true
   - type: Anchorable

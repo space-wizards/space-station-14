@@ -7,7 +7,7 @@ using System;
 namespace Content.Shared.Traitor.Uplink
 {
     [Serializable, NetSerializable]
-    public class UplinkListingData : ComponentState, IEquatable<UplinkListingData>
+    public sealed class UplinkListingData : ComponentState, IEquatable<UplinkListingData>
     {
         public readonly string ItemId;
         public readonly int Price;

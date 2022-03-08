@@ -21,7 +21,7 @@ namespace Content.Server.Stack
     ///     This is a good example for learning how to code in an ECS manner.
     /// </summary>
     [UsedImplicitly]
-    public class StackSystem : SharedStackSystem
+    public sealed class StackSystem : SharedStackSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -33,7 +33,7 @@ namespace Content.Server.Stack
             base.Initialize();
 
             SubscribeLocalEvent<StackComponent, InteractUsingEvent>(OnStackInteractUsing);
-            SubscribeLocalEvent<StackComponent, GetAlternativeVerbsEvent>(OnStackAlternativeInteract);
+            SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
         }
 
         /// <summary>
@@ -126,12 +126,12 @@ namespace Content.Server.Stack
             args.Handled = true;
         }
 
-        private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetAlternativeVerbsEvent args)
+        private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            Verb halve = new()
+            AlternativeVerb halve = new()
             {
                 Text = Loc.GetString("comp-stack-split-halve"),
                 Category = VerbCategory.Split,
@@ -146,7 +146,7 @@ namespace Content.Server.Stack
                 if (amount >= stack.Count)
                     continue;
 
-                Verb verb = new()
+                AlternativeVerb verb = new()
                 {
                     Text = amount.ToString(),
                     Category = VerbCategory.Split,

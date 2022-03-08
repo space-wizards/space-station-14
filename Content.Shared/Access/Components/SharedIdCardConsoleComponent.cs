@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Access.Components
 {
-    public class SharedIdCardConsoleComponent : Component
+    public abstract class SharedIdCardConsoleComponent : Component
     {
         public const int MaxFullNameLength = 256;
         public const int MaxJobTitleLength = 256;
@@ -25,7 +25,7 @@ namespace Content.Shared.Access.Components
         }
 
         [Serializable, NetSerializable]
-        public class IdButtonPressedMessage : BoundUserInterfaceMessage
+        public sealed class IdButtonPressedMessage : BoundUserInterfaceMessage
         {
             public readonly UiButton Button;
 
@@ -36,7 +36,7 @@ namespace Content.Shared.Access.Components
         }
 
         [Serializable, NetSerializable]
-        public class WriteToTargetIdMessage : BoundUserInterfaceMessage
+        public sealed class WriteToTargetIdMessage : BoundUserInterfaceMessage
         {
             public readonly string FullName;
             public readonly string JobTitle;
@@ -51,7 +51,7 @@ namespace Content.Shared.Access.Components
         }
 
         [Serializable, NetSerializable]
-        public class IdCardConsoleBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class IdCardConsoleBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly string PrivilegedIdName;
             public readonly bool IsPrivilegedIdPresent;

@@ -29,6 +29,9 @@
       "name": "box"
     },
     {
+      "name": "boxwide"
+    },
+    {
       "name": "box_hug"
     },
     {
@@ -114,10 +117,25 @@
       "directions": 4
     },
     {
-      "name": "box_lethalshot"
+      "name": "shellbeanbag"
     },
     {
-      "name": "box_beanbag"
+      "name": "shellflare"
+    },
+    {
+      "name": "shellflash"
+    },
+    {
+      "name": "shellincendiary"
+    },
+    {
+      "name": "shelllethal"
+    },
+    {
+      "name": "shellpractice"
+    },
+    {
+      "name": "shellslug"
     },
     {
       "name": "ziptie"

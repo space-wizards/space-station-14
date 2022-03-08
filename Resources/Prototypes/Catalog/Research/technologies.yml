@@ -96,7 +96,7 @@
     - CryostasisBeaker
     - Dropper
     - Syringe
-    - KitchenReagentGrinderMachineCircuitboard
+    - ReagentGrinderMachineCircuitboard
     - PillCanister
 
 - type: technology
@@ -116,6 +116,7 @@
     - ChemMasterMachineCircuitboard
     - ChemDispenserMachineCircuitboard
     - CrewMonitoringComputerCircuitboard
+    - HandheldCrewMonitor
 
 # Security Technology Tree
 
@@ -245,6 +246,7 @@
     - FireExtinguisher
     - AutolatheMachineCircuitboard
     - ProtolatheMachineCircuitboard
+    - CircuitImprinterMachineCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
 
@@ -262,6 +264,19 @@
     - SheetRGlass
     - SheetGlass1
 
+- type: technology
+  name: advanced atmospherics technology
+  id: AdvancedAtmosTechnology
+  description: As if it can get more advanced.
+  icon:
+    sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+    state: freezer_off
+  requiredPoints: 3000
+  requiredTechnologies:
+  - IndustrialEngineering
+  unlockedRecipes:
+  - ThermomachineFreezerMachineCircuitBoard
+
 # Avionics Circuitry Technology Tree
 
 - type: technology
@@ -276,6 +291,7 @@
     - IndustrialEngineering
   unlockedRecipes:
     - ShuttleConsoleCircuitboard
+    - Drone
 
 # Electromagnetic Theory Technology Tree
 
@@ -302,6 +318,20 @@
     - SubstationMachineCircuitboard
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
+
+- type: technology
+  name: "applied musicology"
+  id: AppliedMusicology
+  description: Bringing you the latest in audio-audio technology.
+  icon:
+    sprite: Objects/Fun/Instruments/guitar.rsi
+    state: icon
+  requiredPoints: 10000
+  requiredTechnologies:
+    - ElectromagneticTheory
+  unlockedRecipes:
+    - SynthesizerInstrument
+    - DawInstrumentMachineCircuitboard
 
 # Basic Parts Technology Tree
 

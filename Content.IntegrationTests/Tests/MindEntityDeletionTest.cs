@@ -13,7 +13,7 @@ namespace Content.IntegrationTests.Tests
 {
     // Tests various scenarios of deleting the entity that a player's mind is connected to.
     [TestFixture]
-    public class MindEntityDeletionTest : ContentIntegrationTest
+    public sealed class MindEntityDeletionTest : ContentIntegrationTest
     {
         [Test]
         public async Task TestDeleteVisiting()

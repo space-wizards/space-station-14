@@ -4,4 +4,4 @@ namespace Content.Server.Alert;
 
 // The only reason this exists is because the DI system requires the shared AlertsSystem
 // to be abstract.
-internal class ServerAlertsSystem : AlertsSystem { }
+internal sealed class ServerAlertsSystem : AlertsSystem { }

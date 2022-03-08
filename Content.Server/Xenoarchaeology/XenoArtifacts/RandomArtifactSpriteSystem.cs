@@ -1,14 +1,11 @@
-﻿using System;
-using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
-public class RandomArtifactSpriteSystem : EntitySystem
+public sealed class RandomArtifactSpriteSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _time = default!;
@@ -16,7 +13,7 @@ public class RandomArtifactSpriteSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RandomArtifactSpriteComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<RandomArtifactSpriteComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RandomArtifactSpriteComponent, ArtifactActivatedEvent>(OnActivated);
     }
 
@@ -27,7 +24,7 @@ public class RandomArtifactSpriteSystem : EntitySystem
         foreach (var (component, appearance) in query)
         {
             if (component.ActivationStart == null)
-                return;
+                continue;
 
             var timeDif = _time.CurTime - component.ActivationStart.Value;
             if (timeDif.Seconds >= component.ActivationTime)
@@ -38,7 +35,7 @@ public class RandomArtifactSpriteSystem : EntitySystem
         }
     }
 
-    private void OnInit(EntityUid uid, RandomArtifactSpriteComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, RandomArtifactSpriteComponent component, MapInitEvent args)
     {
         if (!TryComp(uid, out AppearanceComponent? appearance))
             return;

@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Damage.Components
 {
     [RegisterComponent]
-    public class DamageOnToolInteractComponent : Component
+    public sealed class DamageOnToolInteractComponent : Component
     {
         [DataField("tools")]
         public PrototypeFlags<ToolQualityPrototype> Tools { get; } = new ();

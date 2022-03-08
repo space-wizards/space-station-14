@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
     ///     Requires the solution to be above or below a certain thermal energy.
     ///     Used for things like explosives.
     /// </summary>
-    public class SolutionThermalEnergy : ReagentEffectCondition
+    public sealed class SolutionThermalEnergy : ReagentEffectCondition
     {
         [DataField("min")]
         public float Min = 0.0f;

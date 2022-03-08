@@ -123,7 +123,7 @@ namespace Content.Shared.Stacks
     /// <summary>
     ///     Event raised when a stack's count has changed.
     /// </summary>
-    public class StackCountChangedEvent : EntityEventArgs
+    public sealed class StackCountChangedEvent : EntityEventArgs
     {
         /// <summary>
         ///     The old stack count.

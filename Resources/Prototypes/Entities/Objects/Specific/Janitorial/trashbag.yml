@@ -19,6 +19,10 @@
       tags:
         - Cartridge
         - Trash
+  - type: Tag
+    tags:
+    - TrashBag
+    - DroneUsable
 
 - type: entity
   name: trash bag

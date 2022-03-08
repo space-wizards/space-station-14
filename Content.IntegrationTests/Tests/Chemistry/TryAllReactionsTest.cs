@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
 {
     [TestFixture]
     [TestOf(typeof(ReactionPrototype))]
-    public class TryAllReactionsTest : ContentIntegrationTest
+    public sealed class TryAllReactionsTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity
@@ -57,6 +57,8 @@ namespace Content.IntegrationTests.Tests.Chemistry
                             .TryAddReagent(beaker, component, id, reactant.Amount, out var quantity));
                         Assert.That(reactant.Amount, Is.EqualTo(quantity));
                     }
+
+                    EntitySystem.Get<SolutionContainerSystem>().SetTemperature(beaker, component, reactionPrototype.MinimumTemperature);
                 });
 
                 await server.WaitIdleAsync();

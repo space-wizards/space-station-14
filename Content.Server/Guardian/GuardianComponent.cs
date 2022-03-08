@@ -8,8 +8,7 @@ namespace Content.Server.Guardian
     /// Given to guardians to monitor their link with the host
     /// </summary>
     [RegisterComponent]
-    [ComponentProtoName("Guardian")]
-    public class GuardianComponent : Component
+    public sealed class GuardianComponent : Component
     {
         /// <summary>
         /// The guardian host entity

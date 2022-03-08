@@ -9,7 +9,7 @@ using Robust.Shared.Physics.Controllers;
 
 namespace Content.Server.Physics.Controllers
 {
-    public class PullController : VirtualController
+    public sealed class PullController : VirtualController
     {
         // Parameterization for pulling:
         // Speeds. Note that the speed is mass-independent (multiplied by mass).
@@ -114,12 +114,6 @@ namespace Content.Server.Physics.Controllers
                 physics.WakeBody();
                 var impulse = accel * physics.Mass * frameTime;
                 physics.ApplyLinearImpulse(impulse);
-
-                if (EntityManager.TryGetComponent<PhysicsComponent?>(puller, out var pullerPhysics))
-                {
-                    pullerPhysics.WakeBody();
-                    pullerPhysics.ApplyLinearImpulse(-impulse);
-                }
             }
         }
     }
