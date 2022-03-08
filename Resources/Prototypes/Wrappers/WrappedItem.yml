@@ -1,6 +1,18 @@
 - type: entity
+  id: ParcelItemBase
+  parent: BaseItem
+  abstract: true
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Materials/Wraps/WrapDefault.rsi
+    - type: Item
+      sprite: Objects/Materials/Wraps/WrapDefault.rsi
+      size: 31
+
+- type: entity
   name: TinyParcel
-  parent: BoxBase
+  parent: ParcelItemBase
   id: TinyParcel
   description: A [Size/WappType] wrapped package..
   components:
@@ -9,13 +21,11 @@
       state: deliverypackage1
     - type: Item
       size: 1
-    - type: Storage
-      capacity: 20
-      size: 20
+    - type: WrappedStorage
 
 - type: entity
   name: SmallParcel
-  parent: BoxBase
+  parent: BaseItem
   id: SmallParcel
   description: A [Size/WappType] wrapped package..
   components:
@@ -24,13 +34,11 @@
       state: deliverypackage2
     - type: Item
       size: 5
-    - type: Storage
-      capacity: 20
-      size: 20
+    - type: WrappedStorage
 
 - type: entity
   name: MediumParcel
-  parent: BoxBase
+  parent: BaseItem
   id: MediumParcel
   description: A [Size/WappType] wrapped package..
   components:
@@ -39,13 +47,11 @@
       state: deliverypackage3
     - type: Item
       size: 10
-    - type: Storage
-      capacity: 20
-      size: 20
+    - type: WrappedStorage
 
 - type: entity
   name: LargeParcel
-  parent: BoxBase
+  parent: BaseItem
   id: LargeParcel
   description: A [Size/WappType] wrapped package..
   components:
@@ -54,9 +60,7 @@
       state: deliverypackage3
     - type: Item
       size: 40
-    - type: Storage
-      capacity: 20
-      size: 20
+    - type: WrappedStorage
 
 - type: entity
   id: CrateParcel

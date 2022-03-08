@@ -21,12 +21,6 @@ namespace Content.Server.Storage.Components
         public override string Name => "WrappedStorage";
 
         /// <summary>
-        ///     Max item size that can be fitted into secret stash.
-        /// </summary>
-        [ViewVariables] [DataField("maxItemSize")]
-        public int MaxItemSize = (int) ReferenceSizes.Pocket;
-
-        /// <summary>
         ///     Container used to keep item.
         /// </summary>
         [ViewVariables]

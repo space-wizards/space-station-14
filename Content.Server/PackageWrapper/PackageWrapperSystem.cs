@@ -41,15 +41,15 @@ namespace Content.Server.PackageWrapper
         {
             if (args.Target != null)
             {
-                if(TryComp<WrapableShapeComponent>(args.Target.Value, out var targetWrapType))
+                if(TryComp<WrapableShapeComponent>(args.Target.Value, out var targetWrapType)) // Broken!
                 {
                     var typeComp = component.ProductsShaped.FirstOrDefault(x => targetWrapType.WrapType == x.ID);
 
                     if (typeComp != null)
                     {
                         var spawnedObj2 = Spawn(typeComp.ProtoSpawnID, Comp<TransformComponent>((EntityUid) args.Target).MapPosition);
-                        var container2 = Comp<ServerStorageComponent>(spawnedObj2);
-                        container2.Insert(args.Target.Value);
+                        var container2 = Comp<WrappedStorageComponent>(spawnedObj2);
+                        container2.ItemContainer.Insert(args.Target.Value);
                     }
                 }
                 if (TryComp<SharedItemComponent>(args.Target.Value, out var targetItem))
@@ -62,8 +62,8 @@ namespace Content.Server.PackageWrapper
                     if (typeComp != null)
                     {
                         var spawnedObj2 = Spawn(typeComp.ProtoSpawnID, Comp<TransformComponent>((EntityUid) args.Target).MapPosition);
-                        var container2 = Comp<ServerStorageComponent>(spawnedObj2);
-                        container2.Insert(args.Target.Value);
+                        var container2 = Comp<WrappedStorageComponent>(spawnedObj2);
+                        container2.ItemContainer.Insert(args.Target.Value);
                     }
                 }
                 else

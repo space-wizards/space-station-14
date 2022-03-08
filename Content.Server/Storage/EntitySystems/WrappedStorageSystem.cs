@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Shared.Acts;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -13,116 +14,26 @@ namespace Content.Server.Storage.EntitySystems
 {
     public class WrappedStorageSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<WrappedStorageComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<WrappedStorageComponent, DestructionEventArgs>(OnDestroyed);
+            SubscribeLocalEvent<WrappedStorageComponent, UseInHandEvent>(OnUseInHand);
         }
 
         private void OnInit(EntityUid uid, WrappedStorageComponent component, ComponentInit args)
         {
-
+            component.ItemContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(uid, "wrap", out _);
         }
 
-        private void OnDestroyed(EntityUid uid, WrappedStorageComponent component, DestructionEventArgs args)
+        private void OnUseInHand(EntityUid uid, WrappedStorageComponent component, UseInHandEvent args)
         {
-            component.ItemContainer.EmptyContainer();
-        }
-
-        /// <summary>
-        ///     Is there something inside secret stash item container?
-        /// </summary>
-        public bool HasItemInside(EntityUid uid, SecretStashComponent? component = null)
-        {
-            if (!Resolve(uid, ref component))
-                return false;
-            return component.ItemContainer.ContainedEntity != null;
-        }
-
-        /// <summary>
-        ///     Tries to hide item inside secret stash from hands of user.
-        /// </summary>
-        /// <returns>True if item was hidden inside stash</returns>
-        public bool TryHideItem(EntityUid uid, EntityUid userUid, EntityUid itemToHideUid,
-            SecretStashComponent? component = null, ItemComponent? item = null,
-            MetaDataComponent? itemMeta = null, SharedHandsComponent? hands = null)
-        {
-            if (!Resolve(uid, ref component))
-                return false;
-            if (!Resolve(itemToHideUid, ref item, ref itemMeta))
-                return false;
-            if (!Resolve(userUid, ref hands))
-                return false;
-
-            // check if secret stash is already occupied
-            var container = component.ItemContainer;
-            if (container.ContainedEntity != null)
+            if (component.ItemContainer.ContainedEntity != null)
             {
-                var msg = Loc.GetString("comp-secret-stash-action-hide-container-not-empty");
-                _popupSystem.PopupEntity(msg, uid, Filter.Entities(userUid));
-                return false;
+                var ent = (EntityUid) component.ItemContainer.ContainedEntity;
+                Comp<SharedHandsComponent>(args.User).PutInHandOrDrop(ent);
             }
-
-            // check if item is too big to fit into secret stash
-            var itemName = itemMeta.EntityName;
-            if (item.Size > component.MaxItemSize)
-            {
-                var msg = Loc.GetString("comp-secret-stash-action-hide-item-too-big",
-                    ("item", itemName), ("stash", component.SecretPartName));
-                _popupSystem.PopupEntity(msg, uid, Filter.Entities(userUid));
-                return false;
-            }
-
-            // try to move item from hands to stash container
-            if (!hands.Drop(itemToHideUid, container))
-            {
-                return false;
-            }
-
-            // all done, show success message
-            var successMsg = Loc.GetString("comp-secret-stash-action-hide-success",
-                ("item", itemName), ("this", component.SecretPartName));
-            _popupSystem.PopupEntity(successMsg, uid, Filter.Entities(userUid));
-            return true;
-        }
-
-        /// <summary>
-        ///     Try get item and place it in users hand.
-        ///     If user can't take it by hands, will drop item from container.
-        /// </summary>
-        /// <returns>True if user received item</returns>
-        public bool TryGetItem(EntityUid uid, EntityUid userUid, SecretStashComponent? component = null,
-            SharedHandsComponent? hands = null)
-        {
-            if (!Resolve(uid, ref component))
-                return false;
-            if (!Resolve(userUid, ref hands))
-                return false;
-
-            // check if secret stash has something inside
-            var container = component.ItemContainer;
-            if (container.ContainedEntity == null)
-            {
-                return false;
-            }
-
-            // get item inside container
-            var itemUid = container.ContainedEntity;
-            if (!EntityManager.TryGetComponent(itemUid, out ItemComponent? item))
-            {
-                return false;
-            }
-            hands.PutInHandOrDrop(item);
-
-            // show success message
-            var successMsg = Loc.GetString("comp-secret-stash-action-get-item-found-something",
-                ("stash", component.SecretPartName));
-            _popupSystem.PopupEntity(successMsg, uid, Filter.Entities(userUid));
-
-            return true;
+            QueueDel(uid);
         }
     }
 }
