@@ -1,25 +1,16 @@
 using Content.Server.Climbing;
 using Content.Server.Cloning;
 using Content.Server.Medical.Components;
-using Content.Server.Mind.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Preferences.Managers;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
-using Content.Shared.CharacterAppearance.Components;
-using Content.Shared.Damage;
 using Content.Shared.DragDrop;
-using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement;
-using Content.Shared.Preferences;
 using Content.Shared.Verbs;
-using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
-using Robust.Shared.Player;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 
 namespace Content.Server.Medical
@@ -40,13 +31,12 @@ namespace Content.Server.Medical
             base.Initialize();
 
             SubscribeLocalEvent<MedicalScannerComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<MedicalScannerComponent, ActivateInWorldEvent>(OnActivated);
             SubscribeLocalEvent<MedicalScannerComponent, RelayMovementEntityEvent>(OnRelayMovement);
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<InteractionVerb>>(AddInsertOtherVerb);
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
             SubscribeLocalEvent<MedicalScannerComponent, DestructionEventArgs>(OnDestroyed);
             SubscribeLocalEvent<MedicalScannerComponent, DragDropEvent>(HandleDragDropOn);
-            SubscribeLocalEvent<MedicalScannerComponent, ScanButtonPressedMessage>(OnScanButtonPressed);
+            // SubscribeLocalEvent<MedicalScannerComponent, ScanButtonPressedMessage>(OnScanButtonPressed);
         }
 
         private void OnComponentInit(EntityUid uid, MedicalScannerComponent scannerComponent, ComponentInit args)
@@ -54,15 +44,6 @@ namespace Content.Server.Medical
             base.Initialize();
 
             scannerComponent.BodyContainer = scannerComponent.Owner.EnsureContainer<ContainerSlot>($"{scannerComponent.Name}-bodyContainer");
-            UpdateUserInterface(uid, scannerComponent);
-        }
-
-        private void OnActivated(EntityUid uid, MedicalScannerComponent scannerComponent, ActivateInWorldEvent args)
-        {
-            if (!IsPowered(scannerComponent))
-                return;
-
-            UpdateUserInterface(uid, scannerComponent);
         }
 
         private void OnRelayMovement(EntityUid uid, MedicalScannerComponent scannerComponent, RelayMovementEntityEvent args)
@@ -132,48 +113,12 @@ namespace Content.Server.Medical
             InsertBody(uid, args.Dragged, scannerComponent);
         }
 
-        private void OnScanButtonPressed(EntityUid uid, MedicalScannerComponent scannerComponent, ScanButtonPressedMessage args)
-        {
-            TrySaveCloningData(uid, scannerComponent);
-        }
 
-        private static readonly MedicalScannerBoundUserInterfaceState EmptyUIState =
-            new(false);
-
-        private MedicalScannerBoundUserInterfaceState GetUserInterfaceState(EntityUid uid,  MedicalScannerComponent scannerComponent)
-        {
-            EntityUid? containedBody = scannerComponent.BodyContainer.ContainedEntity;
-
-            if (containedBody == null)
-            {
-                UpdateAppearance(uid, scannerComponent);
-                return EmptyUIState;
-            }
-
-            if (!HasComp<DamageableComponent>(containedBody))
-                return EmptyUIState;
-
-            if (!HasComp<HumanoidAppearanceComponent>(containedBody))
-                return EmptyUIState;
-
-            if (!TryComp<MindComponent>(containedBody, out var mindComponent) || mindComponent.Mind == null)
-                return EmptyUIState;
-
-            bool isScanned = _cloningSystem.HasDnaScan(mindComponent.Mind);
-
-            return new MedicalScannerBoundUserInterfaceState(!isScanned);
-        }
-
-        private void UpdateUserInterface(EntityUid uid, MedicalScannerComponent scannerComponent)
-        {
-            if (!IsPowered(scannerComponent))
-            {
-                return;
-            }
-
-            var newState = GetUserInterfaceState(uid, scannerComponent);
-            scannerComponent.UserInterface?.SetState(newState);
-        }
+        // send body change signal?
+        // private void OnScanButtonPressed(EntityUid uid, MedicalScannerComponent scannerComponent, ScanButtonPressedMessage args)
+        // {
+        //     TrySaveCloningData(uid, scannerComponent);
+        // }
 
         private MedicalScannerStatus GetStatus(MedicalScannerComponent scannerComponent)
         {
@@ -257,7 +202,6 @@ namespace Content.Server.Medical
                 return;
 
             scannerComponent.BodyContainer.Insert(user);
-            UpdateUserInterface(uid, scannerComponent);
             UpdateAppearance(scannerComponent.Owner, scannerComponent);
         }
 
@@ -270,57 +214,7 @@ namespace Content.Server.Medical
 
             scannerComponent.BodyContainer.Remove(contained);
             _climbSystem.ForciblySetClimbing(contained);
-            UpdateUserInterface(uid, scannerComponent);
             UpdateAppearance(scannerComponent.Owner, scannerComponent);
-        }
-
-        public void TrySaveCloningData(EntityUid uid, MedicalScannerComponent? scannerComponent)
-        {
-            if (!Resolve(uid, ref scannerComponent))
-                return;
-
-            EntityUid? body = scannerComponent.BodyContainer.ContainedEntity;
-
-            if (body == null)
-                return;
-
-            // Check to see if they are humanoid
-            if (!TryComp<HumanoidAppearanceComponent>(body, out var humanoid))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("medical-scanner-component-msg-no-humanoid-component"), uid, Filter.Pvs(uid));
-                return;
-            }
-
-            if (!TryComp<MindComponent>(body, out var mindComp) || mindComp.Mind == null)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("medical-scanner-component-msg-no-soul"), uid, Filter.Pvs(uid));
-                return;
-            }
-
-            // Null suppression based on above check. Yes, it's explicitly needed
-            var mind = mindComp.Mind;
-            // We need the HumanoidCharacterProfile
-            // TODO: Move this further 'outwards' into a DNAComponent or somesuch.
-            // Ideally this ends with GameTicker & CloningSystem handing DNA to a function that sets up a body for that DNA.
-            var mindUser = mind.UserId;
-
-            if (mindUser.HasValue == false || mind.Session == null)
-            {
-                // For now assume this means soul departed
-                _popupSystem.PopupEntity(Loc.GetString("medical-scanner-component-msg-soul-broken"), uid, Filter.Pvs(uid));
-                return;
-            }
-
-             // TODO get synchronously
-             //  This must be changed to grab the details of the mob itself, not session preferences
-            var profile = GetPlayerProfileAsync(mindUser.Value);
-            _cloningSystem.AddToDnaScans(new ClonerDNAEntry(mind, profile));
-            UpdateUserInterface(uid, scannerComponent);
-        }
-
-        private HumanoidCharacterProfile GetPlayerProfileAsync(NetUserId userId)
-        {
-            return (HumanoidCharacterProfile) _prefsManager.GetPreferences(userId).SelectedCharacter;
         }
     }
 }
