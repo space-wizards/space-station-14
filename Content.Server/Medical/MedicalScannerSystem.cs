@@ -1,38 +1,36 @@
+using Content.Server.Climbing;
+using Content.Server.Cloning;
+using Content.Server.Medical.Components;
+using Content.Server.Mind.Components;
+using Content.Server.Popups;
+using Content.Server.Power.Components;
+using Content.Server.Preferences.Managers;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Acts;
+using Content.Shared.CharacterAppearance.Components;
+using Content.Shared.Damage;
+using Content.Shared.DragDrop;
+using Content.Shared.Interaction;
+using Content.Shared.MobState.Components;
 using Content.Shared.Movement;
+using Content.Shared.Preferences;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Content.Server.Climbing;
-using Content.Shared.MobState.Components;
-using Content.Shared.DragDrop;
-using Content.Shared.Acts;
-using Content.Server.Power.Components;
-using Robust.Shared.Containers;
-using Content.Server.Mind.Components;
-using Content.Shared.Damage;
-using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
-using Content.Server.Popups;
-using Robust.Shared.Player;
-using Content.Shared.Preferences;
+using Robust.Shared.Containers;
 using Robust.Shared.Network;
-using Content.Server.Preferences.Managers;
-using Content.Server.Cloning;
-using Content.Shared.CharacterAppearance.Components;
-
+using Robust.Shared.Player;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 
-namespace Content.Server.MedicalScanner
+namespace Content.Server.Medical
 {
-    [UsedImplicitly]
-    internal sealed class MedicalScannerSystem : EntitySystem
+    public sealed class MedicalScannerSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private readonly ClimbSystem _climbSystem = default!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
-        [Dependency] private readonly ClimbSystem _climbSystem = default!;
 
         private const float UpdateRate = 1f;
         private float _updateDif;
@@ -55,7 +53,7 @@ namespace Content.Server.MedicalScanner
         {
             base.Initialize();
 
-            scannerComponent.BodyContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(scannerComponent.Owner, $"{Name}-bodyContainer");
+            scannerComponent.BodyContainer = scannerComponent.Owner.EnsureContainer<ContainerSlot>($"{scannerComponent.Name}-bodyContainer");
             UpdateUserInterface(uid, scannerComponent);
         }
 
@@ -86,13 +84,15 @@ namespace Content.Server.MedicalScanner
                 return;
 
             string name = "Unknown";
-            if (TryComp<MetaDataComponent>(args.Using.Value, out MetaDataComponent? metadata))
+            if (TryComp<MetaDataComponent>(args.Using.Value, out var metadata))
                 name = metadata.EntityName;
 
-            InteractionVerb verb = new();
-            verb.Act = () => InsertBody(component.Owner, args.Target, component);
-            verb.Category = VerbCategory.Insert;
-            verb.Text = name;
+            InteractionVerb verb = new()
+            {
+                Act = () => InsertBody(component.Owner, args.Target, component),
+                Category = VerbCategory.Insert,
+                Text = name
+            };
             args.Verbs.Add(verb);
         }
 
@@ -111,14 +111,10 @@ namespace Content.Server.MedicalScanner
                 args.Verbs.Add(verb);
             }
 
-            if (component.BodyContainer == null) {
-                return;
-            }
-
             // Self-insert verb
             if (!IsOccupied(component) &&
                 component.CanInsert(args.User) &&
-                _actionBlockerSystem.CanMove(args.User))
+                _blocker.CanMove(args.User))
             {
                 AlternativeVerb verb = new();
                 verb.Act = () => InsertBody(component.Owner, args.User, component);
@@ -155,13 +151,13 @@ namespace Content.Server.MedicalScanner
                 return EmptyUIState;
             }
 
-            if (!TryComp<DamageableComponent>(containedBody, out DamageableComponent? damageable))
+            if (!HasComp<DamageableComponent>(containedBody))
                 return EmptyUIState;
 
-            if (!TryComp<HumanoidAppearanceComponent>(containedBody, out HumanoidAppearanceComponent? humanoid))
+            if (!HasComp<HumanoidAppearanceComponent>(containedBody))
                 return EmptyUIState;
 
-            if (!TryComp<MindComponent>(containedBody, out MindComponent? mindComponent) || mindComponent.Mind == null)
+            if (!TryComp<MindComponent>(containedBody, out var mindComponent) || mindComponent.Mind == null)
                 return EmptyUIState;
 
             bool isScanned = _cloningSystem.HasDnaScan(mindComponent.Mind);
@@ -209,31 +205,21 @@ namespace Content.Server.MedicalScanner
 
         public bool IsOccupied(MedicalScannerComponent scannerComponent)
         {
-            if (scannerComponent.BodyContainer != null)
-            {
-                return scannerComponent.BodyContainer.ContainedEntity != null;
-            }
-            return false;
+            return scannerComponent.BodyContainer.ContainedEntity != null;
         }
 
         private MedicalScannerStatus GetStatusFromDamageState(MobStateComponent state)
         {
             if (state.IsAlive())
-            {
                 return MedicalScannerStatus.Green;
-            }
-            else if (state.IsCritical())
-            {
+
+            if (state.IsCritical())
                 return MedicalScannerStatus.Red;
-            }
-            else if (state.IsDead())
-            {
+
+            if (state.IsDead())
                 return MedicalScannerStatus.Death;
-            }
-            else
-            {
-                return MedicalScannerStatus.Yellow;
-            }
+
+            return MedicalScannerStatus.Yellow;
         }
 
         private void UpdateAppearance(EntityUid uid, MedicalScannerComponent scannerComponent)
@@ -251,6 +237,7 @@ namespace Content.Server.MedicalScanner
             _updateDif += frameTime;
             if (_updateDif < UpdateRate)
                 return;
+
             _updateDif -= UpdateRate;
 
             foreach (var scanner in EntityQuery<MedicalScannerComponent>())
@@ -264,10 +251,10 @@ namespace Content.Server.MedicalScanner
             if (!Resolve(uid, ref scannerComponent))
                 return;
 
-            if (scannerComponent.BodyContainer == null || scannerComponent.BodyContainer.ContainedEntity != null)
+            if (scannerComponent.BodyContainer.ContainedEntity != null)
                 return;
 
-            if (!TryComp<MobStateComponent>(user, out MobStateComponent? comp))
+            if (!TryComp<MobStateComponent>(user, out var comp))
                 return;
 
             scannerComponent.BodyContainer.Insert(user);
@@ -299,13 +286,13 @@ namespace Content.Server.MedicalScanner
                 return;
 
             // Check to see if they are humanoid
-            if (!TryComp<HumanoidAppearanceComponent>(body, out HumanoidAppearanceComponent? humanoid))
+            if (!TryComp<HumanoidAppearanceComponent>(body, out var humanoid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("medical-scanner-component-msg-no-humanoid-component"), uid, Filter.Pvs(uid));
                 return;
             }
 
-            if (!TryComp<MindComponent>(body, out MindComponent? mindComp) || mindComp.Mind == null)
+            if (!TryComp<MindComponent>(body, out var mindComp) || mindComp.Mind == null)
             {
                 _popupSystem.PopupEntity(Loc.GetString("medical-scanner-component-msg-no-soul"), uid, Filter.Pvs(uid));
                 return;

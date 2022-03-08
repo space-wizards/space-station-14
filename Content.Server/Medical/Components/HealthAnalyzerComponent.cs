@@ -1,16 +1,15 @@
-using Content.Server.UserInterface;
-using Robust.Server.GameObjects;
 using System.Threading;
+using Content.Server.UserInterface;
 using Content.Shared.MedicalScanner;
+using Robust.Server.GameObjects;
 
-namespace Content.Server.HealthAnalyzer
+namespace Content.Server.Medical.Components
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedHealthAnalyzerComponent))]
-
     /// <summary>
     ///    After scanning, retrieves the target Uid to use with its related UI.
     /// </summary>
+    [RegisterComponent]
+    [ComponentReference(typeof(SharedHealthAnalyzerComponent))]
     public sealed class HealthAnalyzerComponent : SharedHealthAnalyzerComponent
     {
         /// <summary>

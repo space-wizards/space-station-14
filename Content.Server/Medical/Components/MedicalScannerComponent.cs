@@ -1,10 +1,10 @@
+using Content.Server.UserInterface;
 using Content.Shared.DragDrop;
 using Content.Shared.MedicalScanner;
-using Robust.Shared.Containers;
-using Content.Server.UserInterface;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 
-namespace Content.Server.MedicalScanner
+namespace Content.Server.Medical.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMedicalScannerComponent))]

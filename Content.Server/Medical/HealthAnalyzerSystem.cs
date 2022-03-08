@@ -1,17 +1,15 @@
 using System.Threading;
 using Content.Server.DoAfter;
-using Content.Server.HealthAnalyzer;
+using Content.Server.Medical.Components;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
 
 namespace Content.Server.Medical
 {
-    [UsedImplicitly]
-    internal sealed class HealthAnalyzerSystem : EntitySystem
+    public sealed class HealthAnalyzerSystem : EntitySystem
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
 
