@@ -42,9 +42,7 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - SmallImpassable
-      - MobImpassable
+      - VaultImpassable
       layer:
       - Opaque
   - type: Damageable
