@@ -111,7 +111,7 @@ namespace Content.Server.UserInterface
             // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
             // This is so that stuff can require further conditions (like power).
             var oae = new ActivatableUIOpenAttemptEvent(user);
-            var uae = new UserOpenActivatableUIAttemptEvent(user);
+            var uae = new UserOpenActivatableUIAttemptEvent(user, aui.Owner);
             RaiseLocalEvent(user, uae, false);
             RaiseLocalEvent((aui).Owner, oae, false);
             if (oae.Cancelled || uae.Cancelled) return false;
@@ -157,9 +157,11 @@ namespace Content.Server.UserInterface
     public sealed class UserOpenActivatableUIAttemptEvent : CancellableEntityEventArgs //have to one-up the already stroke-inducing name
     {
         public EntityUid User { get; }
-        public UserOpenActivatableUIAttemptEvent(EntityUid who)
+        public EntityUid Target { get; }
+        public UserOpenActivatableUIAttemptEvent(EntityUid who, EntityUid target)
         {
             User = who;
+            Target = target;
         }
     }
 
