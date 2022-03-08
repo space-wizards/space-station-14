@@ -7,7 +7,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Content.Shared.Damage;
 
-using static Content.Shared.HealthAnalyzer.SharedHealthAnalyzerComponent;
+using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
 
 namespace Content.Client.HealthAnalyzer.UI
 {

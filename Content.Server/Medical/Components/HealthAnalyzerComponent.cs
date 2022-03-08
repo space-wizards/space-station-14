@@ -1,7 +1,7 @@
 using Content.Server.UserInterface;
-using Content.Shared.HealthAnalyzer;
 using Robust.Server.GameObjects;
 using System.Threading;
+using Content.Shared.MedicalScanner;
 
 namespace Content.Server.HealthAnalyzer
 {

@@ -1,22 +1,19 @@
-using JetBrains.Annotations;
+using System.Threading;
+using Content.Server.DoAfter;
+using Content.Server.HealthAnalyzer;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
-using Robust.Server.GameObjects;
 using Content.Shared.MobState.Components;
-using Robust.Shared.Prototypes;
-using Content.Server.DoAfter;
-using System.Threading;
+using JetBrains.Annotations;
+using Robust.Server.GameObjects;
+using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
 
-using static Content.Shared.HealthAnalyzer.SharedHealthAnalyzerComponent;
-
-namespace Content.Server.HealthAnalyzer
+namespace Content.Server.Medical
 {
     [UsedImplicitly]
     internal sealed class HealthAnalyzerSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        private CancellationTokenSource? _requestCancelTokenSource;
 
         public override void Initialize()
         {
@@ -24,7 +21,7 @@ namespace Content.Server.HealthAnalyzer
             SubscribeLocalEvent<HealthAnalyzerComponent, ActivateInWorldEvent>(HandleActivateInWorld);
             SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<TargetScanSuccessfulEvent>(OnTargetScanSuccessful);
-            SubscribeLocalEvent<ScanCancelledEvent>(OnScancancelled);
+            SubscribeLocalEvent<ScanCancelledEvent>(OnScanCancelled);
         }
 
         private void HandleActivateInWorld(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, ActivateInWorldEvent args)
@@ -34,6 +31,13 @@ namespace Content.Server.HealthAnalyzer
 
         private void OnAfterInteract(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, AfterInteractEvent args)
         {
+            if (healthAnalyzer.CancelToken != null)
+            {
+                healthAnalyzer.CancelToken.Cancel();
+                healthAnalyzer.CancelToken = null;
+                return;
+            }
+
             if (args.Target == null)
                 return;
 
@@ -43,7 +47,7 @@ namespace Content.Server.HealthAnalyzer
             if (healthAnalyzer.CancelToken != null)
                 return;
 
-            if (!TryComp<MobStateComponent>(args.Target, out MobStateComponent? comp))
+            if (!HasComp<MobStateComponent>(args.Target))
                 return;
 
             healthAnalyzer.CancelToken = new CancellationTokenSource();
@@ -66,7 +70,7 @@ namespace Content.Server.HealthAnalyzer
 
         private void OpenUserInterface(EntityUid user, HealthAnalyzerComponent healthAnalyzer)
         {
-            if (!TryComp<ActorComponent>(user, out ActorComponent? actor))
+            if (!TryComp<ActorComponent>(user, out var actor))
                 return;
 
             healthAnalyzer.UserInterface?.Open(actor.PlayerSession);
@@ -80,14 +84,14 @@ namespace Content.Server.HealthAnalyzer
             if (target == null || healthAnalyzer.UserInterface == null)
                 return;
 
-            if (!TryComp<DamageableComponent>(target, out var damageable))
+            if (!HasComp<DamageableComponent>(target))
                 return;
 
             OpenUserInterface(user, healthAnalyzer);
             healthAnalyzer.UserInterface?.SendMessage(new HealthAnalyzerScannedUserMessage(target));
         }
 
-        private static void OnScancancelled(ScanCancelledEvent args)
+        private static void OnScanCancelled(ScanCancelledEvent args)
         {
             args.HealthAnalyzer.CancelToken = null;
         }

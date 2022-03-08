@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-using static Content.Shared.HealthAnalyzer.SharedHealthAnalyzerComponent;
+using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
 
 namespace Content.Client.HealthAnalyzer.UI
 {
