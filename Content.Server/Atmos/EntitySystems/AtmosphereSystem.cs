@@ -20,6 +20,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly SharedContainerSystem _containers = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
+
         private const float ExposedUpdateDelay = 1f;
         private float _exposedTimer = 0f;
 
@@ -52,7 +53,7 @@ namespace Content.Server.Atmos.EntitySystems
             // space -> not space or vice versa. So if the old tile is the
             // same as the new tile in terms of space-ness, ignore the change
 
-            if (ev.NewTile.IsSpace() == ev.OldTile.IsSpace())
+            if (ev.NewTile.IsSpace(_tileDefinitionManager) == ev.OldTile.IsSpace(_tileDefinitionManager))
             {
                 return;
             }
