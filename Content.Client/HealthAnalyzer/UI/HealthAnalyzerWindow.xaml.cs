@@ -24,14 +24,14 @@ namespace Content.Client.HealthAnalyzer.UI
             var text = new StringBuilder();
             var entities = IoCManager.Resolve<IEntityManager>();
 
-            if (msg.TargetEntity != null && entities.TryGetComponent<DamageableComponent>(msg.TargetEntity, out DamageableComponent damageable))
+            if (msg.TargetEntity != null && entities.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
             {
                 string entityName = "Unknown";
-                if (msg.TargetEntity != null && entities.TryGetComponent<MetaDataComponent>(msg.TargetEntity.Value, out MetaDataComponent metaData))
+                if (msg.TargetEntity != null && entities.TryGetComponent<MetaDataComponent>(msg.TargetEntity.Value, out var metaData))
                     entityName = metaData.EntityName;
 
-                IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup = damageable.DamagePerGroup ?? new();
-                IReadOnlyDictionary<string, FixedPoint2> DamagePerType = damageable.Damage?.DamageDict ?? new();
+                IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup = damageable.DamagePerGroup;
+                IReadOnlyDictionary<string, FixedPoint2> DamagePerType = damageable.Damage.DamageDict;
 
                 text.Append($"{Loc.GetString("health-analyzer-window-entity-health-text", ("entityName", entityName))}\n");
 
@@ -39,12 +39,14 @@ namespace Content.Client.HealthAnalyzer.UI
 
                 HashSet<string> shownTypes = new();
 
+                var protos = IoCManager.Resolve<IPrototypeManager>();
+
                 // Show the total damage and type breakdown for each damage group.
                 foreach (var (damageGroupId, damageAmount) in DamagePerGroup)
                 {
                     text.Append($"\n{Loc.GetString("health-analyzer-window-damage-group-text", ("damageGroup", damageGroupId), ("amount", damageAmount))}");
                     // Show the damage for each type in that group.
-                    var group = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(damageGroupId);
+                    var group = protos.Index<DamageGroupPrototype>(damageGroupId);
                     foreach (var type in group.DamageTypes)
                     {
                         if (DamagePerType.TryGetValue(type, out var typeAmount))
