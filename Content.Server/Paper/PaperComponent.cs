@@ -13,8 +13,7 @@ namespace Content.Server.Paper
     [RegisterComponent]
 #pragma warning disable 618
     [ComponentReference(typeof(SharedPaperComponent))]
-    [ComponentReference(typeof(IActivate))]
-    public sealed class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IActivate
+    public sealed class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -75,17 +74,6 @@ namespace Content.Server.Paper
                     "paper-component-examine-detail-has-words"
                 )
             );
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-                return;
-
-            Mode = PaperAction.Read;
-            UpdateUserInterface();
-            UserInterface?.Toggle(actor.PlayerSession);
-            return;
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
