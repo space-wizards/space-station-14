@@ -12,8 +12,7 @@ namespace Content.Shared.MedicalScanner
         {
             public readonly EntityUid? TargetEntity;
 
-            public HealthAnalyzerScannedUserMessage(
-                EntityUid? targetEntity)
+            public HealthAnalyzerScannedUserMessage(EntityUid? targetEntity)
             {
                 TargetEntity = targetEntity;
             }
