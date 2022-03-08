@@ -1,11 +1,4 @@
 Entries:
-- author: moonheart08
-  changes:
-  - {message: 'Nanotrasen has recently obtained reports of a mysterious, extremely
-      fast growing space plant that rapidly consumes entire stations if left unharmed.',
-    type: Add}
-  id: 679
-  time: '2021-11-29T02:25:36.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Added Napalm, a chemical that makes people extremely susceptible to
@@ -2981,3 +2974,8 @@ Entries:
       the autolathe, type: Add}
   id: 1178
   time: '2022-03-08T03:45:52.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Musicians will now receive a special box on a certain holiday., type: Add}
+  id: 1179
+  time: '2022-03-08T06:34:10.0000000+00:00'
