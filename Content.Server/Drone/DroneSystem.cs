@@ -1,5 +1,7 @@
 using Content.Shared.Drone;
 using Content.Server.Drone.Components;
+using Content.Shared.Actions;
+using Content.Server.Light.Components;
 using Content.Shared.MobState;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Components;
@@ -24,6 +26,8 @@ namespace Content.Server.Drone
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -37,9 +41,9 @@ namespace Content.Server.Drone
             SubscribeLocalEvent<DroneComponent, ThrowAttemptEvent>(OnThrowAttempt);
         }
 
-        private void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
+        private async void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
         {
-            if (NonDronesInRange(uid, component))
+            if (args.Target != null && !HasComp<UnremoveableComponent>(args.Target) && NonDronesInRange(uid, component))
                 args.Cancel();
 
             if (HasComp<SharedItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
@@ -104,6 +108,11 @@ namespace Content.Server.Drone
                         hands.PutInHand(item);
                         drone.ToolUids.Add(item);
                     }
+                }
+
+                if (TryComp<ActionsComponent>(uid, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
+                {
+                    _actionsSystem.AddAction(uid, flashlight.ToggleAction, null, actions);
                 }
 
                 drone.AlreadyAwoken = true;
