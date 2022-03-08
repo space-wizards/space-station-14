@@ -1,36 +1,51 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using NpgsqlTypes;
 
 #nullable disable
 
 namespace Content.Server.Database.Migrations.Postgres
 {
-    public partial class AdminLogFullTextSearch : Migration
+    public partial class ServerNameFts : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_round_server__server_id",
-                table: "round");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_round__server_id",
-                table: "round",
-                newName: "IX_round_server_id");
-
-            migrationBuilder.AlterColumn<int>(
+            migrationBuilder.AddColumn<int>(
                 name: "server_id",
                 table: "round",
                 type: "integer",
-                nullable: true,
-                oldClrType: typeof(int),
-                oldType: "integer");
+                nullable: false,
+                defaultValue: 0);
 
             migrationBuilder.AddColumn<NpgsqlTsVector>(
                 name: "search_vector",
                 table: "admin_log",
                 type: "tsvector",
                 nullable: true);
+
+            migrationBuilder.CreateTable(
+                name: "server",
+                columns: table => new
+                {
+                    server_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_server", x => x.server_id);
+                });
+
+            migrationBuilder.InsertData(
+                "server",
+                new[] {"server_id", "name"},
+                new object[] { 0, "unknown" }
+            );
+
+            migrationBuilder.CreateIndex(
+                name: "IX_round_server_id",
+                table: "round",
+                column: "server_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_admin_log_search_vector",
@@ -43,7 +58,8 @@ namespace Content.Server.Database.Migrations.Postgres
                 table: "round",
                 column: "server_id",
                 principalTable: "server",
-                principalColumn: "server_id");
+                principalColumn: "server_id",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.Sql(
                 @"CREATE TRIGGER admin_log_search_vector_update BEFORE INSERT OR UPDATE
@@ -51,7 +67,6 @@ namespace Content.Server.Database.Migrations.Postgres
               tsvector_update_trigger(search_vector, 'pg_catalog.english', message);");
 
             migrationBuilder.Sql("UPDATE admin_log SET search_vector = to_tsvector('english', message)");
-
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -60,38 +75,24 @@ namespace Content.Server.Database.Migrations.Postgres
                 name: "FK_round_server_server_id",
                 table: "round");
 
+            migrationBuilder.DropTable(
+                name: "server");
+
+            migrationBuilder.DropIndex(
+                name: "IX_round_server_id",
+                table: "round");
+
             migrationBuilder.DropIndex(
                 name: "IX_admin_log_search_vector",
                 table: "admin_log");
 
             migrationBuilder.DropColumn(
+                name: "server_id",
+                table: "round");
+
+            migrationBuilder.DropColumn(
                 name: "search_vector",
                 table: "admin_log");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_round_server_id",
-                table: "round",
-                newName: "IX_round__server_id");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "server_id",
-                table: "round",
-                type: "integer",
-                nullable: false,
-                defaultValue: 0,
-                oldClrType: typeof(int),
-                oldType: "integer",
-                oldNullable: true);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_round_server__server_id",
-                table: "round",
-                column: "server_id",
-                principalTable: "server",
-                principalColumn: "server_id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.Sql("DROP TRIGGER admin_log_search_vector_update");
         }
     }
 }
