@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Gyroscope examine no longer mentions direction which doesn't matter,
-    type: Fix}
-  - {message: Rotating a thruster will now turn it off / on properly, type: Fix}
-  id: 675
-  time: '2021-11-28T02:03:46.0000000+00:00'
 - author: moony
   changes:
   - {message: Raised the maximum number of traitors from four to seven., type: Tweak}
@@ -2986,3 +2979,8 @@ Entries:
       now have EVA suits.', type: Add}
   id: 1174
   time: '2022-03-07T12:26:28.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Things should no longer float through asteroid rocks., type: Fix}
+  id: 1175
+  time: '2022-03-08T01:01:36.0000000+00:00'
