@@ -21,7 +21,7 @@ public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
 
     private void LoadGamePrototype(GamePrototypeLoadMessage message)
     {
-        _prototypeManager.LoadString(message.PrototypeData);
+        _prototypeManager.LoadString(message.PrototypeData, true);
         _prototypeManager.Resync();
         _localizationManager.ReloadLocalizations();
         GamePrototypeLoaded?.Invoke();
