@@ -93,7 +93,7 @@
     color: "#1f8c28"
   - type: Computer
     board: MedicalRecordsComputerCircuitboard
-    
+
 - type: entity
   parent: ComputerBase
   id: ComputerCriminalRecords
@@ -226,6 +226,9 @@
   description: That's a body scanner.
   components:
   - type: BodyScanner
+  - type: ActivatableUI
+    key: enum.BodyScannerUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.BodyScannerUiKey.Key

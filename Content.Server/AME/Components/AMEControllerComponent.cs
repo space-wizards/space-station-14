@@ -14,19 +14,13 @@ using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.AME.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public sealed class AMEControllerComponent : SharedAMEControllerComponent, IActivate, IInteractUsing
+    public sealed class AMEControllerComponent : SharedAMEControllerComponent, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -113,30 +107,6 @@ namespace Content.Server.AME.Components
 
             if (_stability <= 0) { group.ExplodeCores(); }
 
-        }
-
-        /// <summary>
-        /// Called when you click the owner entity with an empty hand. Opens the UI client-side if possible.
-        /// </summary>
-        /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
-        void IActivate.Activate(ActivateEventArgs args)
-        {
-            if (!_entities.TryGetComponent(args.User, out ActorComponent? actor))
-            {
-                return;
-            }
-
-            if (!_entities.TryGetComponent(args.User, out HandsComponent? hands))
-            {
-                Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-no-hands-text"));
-                return;
-            }
-
-            var activeHandEntity = hands.GetActiveHandItem?.Owner;
-            if (activeHandEntity == null)
-            {
-                UserInterface?.Open(actor.PlayerSession);
-            }
         }
 
         private void OnPowerChanged(PowerChangedMessage e)

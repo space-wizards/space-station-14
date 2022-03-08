@@ -6,7 +6,6 @@ using Content.Server.UserInterface;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
-using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
@@ -25,7 +24,6 @@ namespace Content.Server.Chemistry.Components
     /// Messages sent from the client are used to handle ui button presses.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedChemMasterComponent))]
     public sealed class ChemMasterComponent : SharedChemMasterComponent
     {

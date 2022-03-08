@@ -22,7 +22,7 @@ namespace Content.Server.Power.EntitySystems
             if (args.Cancelled) return;
             if (EntityManager.TryGetComponent<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
             {
-                args.User.PopupMessageCursor(Loc.GetString("base-computer-ui-component-not-powered"));
+                args.User.PopupMessageCursor(Loc.GetString("base-computer-ui-component-not-powered", ("machine", uid)));
                 args.Cancel();
             }
         }
