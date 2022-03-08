@@ -2,13 +2,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Access.Systems
 {
-    public class SharedAgentIDCardSystem : EntitySystem
+    public class SharedAgentIdCardSystem : EntitySystem
     {
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
+        /// Just for friending for now
     }
     /// <summary>
     /// Key representing which <see cref="BoundUserInterface"/> is currently open.
