@@ -1,12 +1,13 @@
 using Content.Shared.Access.Components;
 using Content.Server.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Interaction;
 using Content.Server.Popups;
 using Robust.Shared.Player;
 
 namespace Content.Server.Access.Systems
 {
-    public sealed class AgentIDCardSystem : EntitySystem
+    public sealed class AgentIDCardSystem : SharedAgentIDCardSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
