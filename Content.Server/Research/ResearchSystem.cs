@@ -22,7 +22,7 @@ namespace Content.Server.Research
 
         private void OnActivateUIAttempt(EntityUid uid, ResearchConsoleComponent component, ActivatableUIOpenAttemptEvent args)
         {
-            if (component.Powered && !HasComp<DroneComponent>(args.User))
+            if (component.Powered)
             {
                 component.PlayKeyboardSound();
             }
