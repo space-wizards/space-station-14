@@ -34,13 +34,15 @@ namespace Content.Server.Access.Systems
             access.Tags.UnionWith(targetAccess.Tags);
             var addedLength = access.Tags.Count - beforeLength;
 
-            if (addedLength == beforeLength)
+            if (addedLength == 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("agent-id-no-new", ("card", args.Target)), args.Target.Value, Filter.Pvs(args.User));
+                return;
             }
             else if (addedLength == 1)
             {
                 _popupSystem.PopupEntity(Loc.GetString("agent-id-new-1", ("card", args.Target)), args.Target.Value, Filter.Pvs(args.User));
+                return;
             }
             _popupSystem.PopupEntity(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)), args.Target.Value, Filter.Pvs(args.User));
         }
