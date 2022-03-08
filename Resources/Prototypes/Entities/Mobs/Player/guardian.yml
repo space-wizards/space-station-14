@@ -1,5 +1,6 @@
 # Does not inherit from simplemob
 - type: entity
+  abstract: true
   name: GuardianBase
   id: MobGuardianBase
   description: guardian
