@@ -1,9 +1,4 @@
 Entries:
-- author: FoLoKe
-  changes:
-  - {message: Added space carps "dead" sprite, type: Add}
-  id: 681
-  time: '2021-11-30T10:12:19.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: 'The space around you feels colder... Depressurized rooms will now be
@@ -2971,3 +2966,10 @@ Entries:
   - {message: Fixed popup positioning on large UI scales, type: Fix}
   id: 1180
   time: '2022-03-08T07:53:02.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added Uniform Printers. You can currently get them from the circuit
+      imprinter, later they will be part of the HOP office.', type: Add}
+  - {message: Lathes now actually play their building animations., type: Fix}
+  id: 1181
+  time: '2022-03-08T23:58:50.0000000+00:00'
