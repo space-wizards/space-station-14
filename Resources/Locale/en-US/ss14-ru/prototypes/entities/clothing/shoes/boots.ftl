@@ -7,3 +7,6 @@ ent-ClothingShoesBootsJack = jackboots
 ent-ClothingShoesBootsSalvage = salvage boots
     .desc = Steel-toed salvage boots for salvaging in hazardous environments.
     .suffix = { "" }
+ent-ClothingShoesBootsPerformer = performer's boots
+    .desc = These boots provide great traction for when you're up on stage.
+    .suffix = { "" }

@@ -124,3 +124,6 @@ ent-ClothingUniformJumpskirtColorBrown = brown jumpskirt
 ent-ClothingUniformJumpskirtColorMaroon = maroon jumpskirt
     .desc = A generic maroon jumpskirt with no rank markings.
     .suffix = { "" }
+ent-ClothingUniformJumpskirtPerformer = performer's jumpskirt
+    .desc = Hi, I'm Scott, president of Donk Pizza. Have you heard of [FAMOUS VIRTUAL PERFORMER]?
+    .suffix = { "" }
