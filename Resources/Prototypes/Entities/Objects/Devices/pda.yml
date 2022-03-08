@@ -370,6 +370,7 @@
   - type: Icon
     state: pda-cmo
   - type: HealthAnalyzer
+    scanDelay: 1
 
 - type: entity
   parent: BasePDA
@@ -386,6 +387,7 @@
   - type: Icon
     state: pda-medical
   - type: HealthAnalyzer
+    scanDelay: 1.2
 
 - type: entity
   parent: BasePDA
