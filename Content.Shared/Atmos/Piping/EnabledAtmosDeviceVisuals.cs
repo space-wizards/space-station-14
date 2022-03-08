@@ -28,7 +28,7 @@ namespace Content.Shared.Atmos.Piping
     }
 
     [Serializable, NetSerializable]
-    public enum PressurePumpVisuals : byte
+    public enum PumpVisuals : byte
     {
         Enabled,
     }

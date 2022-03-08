@@ -14,8 +14,6 @@ namespace Content.Server.Bed
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
-        private List<EntityUid> _strappedBeds = new(); //This keeps track of beds with people in them to avoid EntityQuery
-
         public override void Initialize()
         {
             base.Initialize();
@@ -33,11 +31,11 @@ namespace Content.Server.Bed
 
             if (args.Buckling)
             {
-                _strappedBeds.Add(uid);
+                AddComp<HealOnBuckleHealingComponent>(uid);
                 return;
             }
 
-            _strappedBeds.Remove(uid);
+            RemComp<HealOnBuckleHealingComponent>(uid);
             component.Accumulator = 0;
         }
 
@@ -45,8 +43,9 @@ namespace Content.Server.Bed
         {
             base.Update(frameTime);
 
-            foreach (EntityUid bed in _strappedBeds)
+            foreach (var healingComp in EntityQuery<HealOnBuckleHealingComponent>(true))
             {
+                var bed = healingComp.Owner;
                 var bedComponent = EntityManager.GetComponent<HealOnBuckleComponent>(bed);
                 var strapComponent = EntityManager.GetComponent<StrapComponent>(bed);
 

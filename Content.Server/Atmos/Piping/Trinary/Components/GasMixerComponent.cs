@@ -23,7 +23,12 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
         public string OutletName = "outlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("targetPressure")]
         public float TargetPressure = Atmospherics.OneAtmosphere;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("maxTargetPressure")]
+        public float MaxTargetPressure = Atmospherics.MaxOutputPressure;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inletOneConcentration")]

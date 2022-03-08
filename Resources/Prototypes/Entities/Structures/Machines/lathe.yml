@@ -65,6 +65,7 @@
       - Spade
       - CableStack
       - HandheldGPSBasic
+      - HandheldHealthAnalyzer
   - type: Appearance
     visuals:
     - type: AutolatheVisualizer
@@ -228,7 +229,7 @@
       - SolarControlComputerCircuitboard
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
-      - KitchenReagentGrinderMachineCircuitboard
+      - ReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - ShuttleConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard

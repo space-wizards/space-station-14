@@ -1,9 +1,8 @@
-﻿# TODO: Add descriptions (3)
-
-- type: entity
+﻿- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Autolathe (Machine Board)
+  name: autolathe machine board
+  description: A machine printed circuit board for an autolathe
   components:
     - type: MachineBoard
       prototype: Autolathe
@@ -16,7 +15,8 @@
 - type: entity
   id: ProtolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Protolathe (Machine Board)
+  name: protolathe machine board
+  description: A machine printed circuit board for a protolathe
   components:
     - type: MachineBoard
       prototype: Protolathe
@@ -83,7 +83,8 @@
 - type: entity
   id: CloningPodMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Cloning Pod (Machine Board)
+  name: cloning pod machine board
+  description: A machine printed circuit board for a cloning pod
   components:
     - type: MachineBoard
       prototype: CloningPod
@@ -97,7 +98,8 @@
 - type: entity
   id: MedicalScannerMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Medical Scanner (Machine Board)
+  name: medical scanner machine board
+  description: A machine printed circuit board for a medical scanner
   components:
     - type: MachineBoard
       prototype: MedicalScanner
@@ -112,7 +114,8 @@
 - type: entity
   id: ChemMasterMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Chem Master (Machine Board)
+  name: ChemMaster 4000 machine board
+  description: A machine printed circuit board for a ChemMaster 4000
   components:
     - type: MachineBoard
       prototype: chem_master
@@ -129,7 +132,8 @@
 - type: entity
   id: ChemDispenserMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Chem Dispenser (Machine Board)
+  name: chem dispenser machine board
+  description: A machine printed circuit board for a chem dispenser
   components:
     - type: MachineBoard
       prototype: chem_dispenser
@@ -143,7 +147,8 @@
 - type: entity
   id: HydroponicsTrayMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Hydroponics Tray (Machine Board)
+  name: hydroponics tray machine board
+  description: A machine printed circuit board for a hydroponics tray
   components:
     - type: MachineBoard
       prototype: hydroponicsTray
@@ -164,20 +169,22 @@
 - type: entity
   id: SMESMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: SMES (Machine Board)
+  name: SMES machine board
+  description: A machine printed circuit board for a SMES
   components:
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: power_mod
     - type: MachineBoard
-      prototype: BaseSmes
+      prototype: BaseSMES
       requirements:
         Capacitor: 10
 
 - type: entity
   id: SubstationMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Substation (Machine Board)
+  name: substation machine board
+  description: A machine printed circuit board for a substation
   components:
     - type: MachineBoard
       prototype: BaseSubstation
@@ -224,9 +231,10 @@
 
 
 - type: entity
-  id: KitchenReagentGrinderMachineCircuitboard #unsure why the reagent grinder has 'kitchen' in the id name when multiple departments use it but that's for another time
+  id: ReagentGrinderMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Reagent Grinder (Machine Board)
+  name: reagent grinder machine board
+  description: A machine printed circuit board for a reagent grinder
   components:
     - type: MachineBoard
       prototype: KitchenReagentGrinder

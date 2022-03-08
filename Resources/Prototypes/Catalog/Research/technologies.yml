@@ -96,7 +96,7 @@
     - CryostasisBeaker
     - Dropper
     - Syringe
-    - KitchenReagentGrinderMachineCircuitboard
+    - ReagentGrinderMachineCircuitboard
     - PillCanister
 
 - type: technology

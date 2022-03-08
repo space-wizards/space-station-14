@@ -57,17 +57,25 @@ namespace Content.Server.Power.EntitySystems
 
             if (access == null || _accessReader.IsAllowed(access, args.Session.AttachedEntity.Value))
             {
-                component.MainBreakerEnabled = !component.MainBreakerEnabled;
-                Comp<PowerNetworkBatteryComponent>(uid).CanDischarge = component.MainBreakerEnabled;
-
-                UpdateUIState(uid, component);
-                SoundSystem.Play(Filter.Pvs(uid), component.OnReceiveMessageSound.GetSound(), uid, AudioParams.Default.WithVolume(-2f));
+                ApcToggleBreaker(uid, component);
             }
             else
             {
                 _popupSystem.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
                     Filter.Entities(args.Session.AttachedEntity.Value));
             }
+        }
+
+        public void ApcToggleBreaker(EntityUid uid, ApcComponent? apc = null, PowerNetworkBatteryComponent? battery = null)
+        {
+            if (!Resolve(uid, ref apc, ref battery))
+                return;
+
+            apc.MainBreakerEnabled = !apc.MainBreakerEnabled;
+            battery.CanDischarge = apc.MainBreakerEnabled;
+
+            UpdateUIState(uid, apc);
+            SoundSystem.Play(Filter.Pvs(uid), apc.OnReceiveMessageSound.GetSound(), uid, AudioParams.Default.WithVolume(-2f));
         }
 
         private void OnEmagged(EntityUid uid, ApcComponent comp, GotEmaggedEvent args)
