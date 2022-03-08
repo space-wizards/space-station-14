@@ -286,6 +286,8 @@
   - type: Item
     sprite: Objects/Tools/omnitool.rsi
     size: 20
+  - type: TilePrying
+  - type: SignalLinker
   - type: Tool
     qualities:
       - Screwing
