@@ -24,6 +24,7 @@
   - type: StorageFill
     contents:
       - id: HandheldHealthAnalyzer
+        prob: 0.6
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
      # - id: ClothingEyesHudMedical #Removed until working properly
