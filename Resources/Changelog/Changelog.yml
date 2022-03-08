@@ -1,13 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'More verbs can now be used on items inside of storage (backpack, boxes,
-      etc).', type: Tweak}
-  - {message: 'If you close a storage UI, any nested UIs are also closed. I.e., if
-      you have a box inside of a backpack, closing the backpack will also close the
-      box UI.', type: Tweak}
-  id: 677
-  time: '2021-11-28T23:25:22.0000000+00:00'
 - author: artak10t
   changes:
   - {message: Added auto labeler for ChemMaster., type: Add}
@@ -2984,3 +2975,9 @@ Entries:
   - {message: Welder sprite now updates correctly when lit., type: Fix}
   id: 1176
   time: '2022-03-08T01:06:10.0000000+00:00'
+- author: moony
+  changes:
+  - {message: A number of unused/useless chems have been removed until they actually
+      get a usage., type: Remove}
+  id: 1177
+  time: '2022-03-08T02:51:35.0000000+00:00'
