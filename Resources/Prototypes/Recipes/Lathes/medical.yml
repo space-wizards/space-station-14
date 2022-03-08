@@ -64,3 +64,12 @@
     Glass: 1200
     Steel: 1000
     Plastic: 1400
+
+- type: latheRecipe
+  id: HandheldHealthAnalyzer
+  icon: Objects/Specific/Medical/healthanalyzer.rsi/icon.png
+  result: HandheldHealthAnalyzer
+  completetime: 1000
+  materials:
+    Glass: 500
+    Steel: 500

@@ -1,39 +1,39 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
+using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
 
-namespace Content.Client.MedicalScanner.UI
+namespace Content.Client.HealthAnalyzer.UI
 {
     [UsedImplicitly]
-    public sealed class MedicalScannerBoundUserInterface : BoundUserInterface
+    public sealed class HealthAnalyzerBoundUserInterface : BoundUserInterface
     {
-        private MedicalScannerWindow? _window;
+        private HealthAnalyzerWindow? _window;
 
-        public MedicalScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public HealthAnalyzerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
 
         protected override void Open()
         {
             base.Open();
-            _window = new MedicalScannerWindow
+            _window = new HealthAnalyzerWindow
             {
                 Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
             _window.OnClose += Close;
-            _window.ScanButton.OnPressed += _ => SendMessage(new ScanButtonPressedMessage());
             _window.OpenCentered();
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
-            base.UpdateState(state);
-
-            if (state is not MedicalScannerBoundUserInterfaceState cast)
+            if (_window == null)
                 return;
 
-            _window?.Populate(cast);
+            if (message is not HealthAnalyzerScannedUserMessage cast)
+                return;
+
+            _window.Populate(cast);
         }
 
         protected override void Dispose(bool disposing)
