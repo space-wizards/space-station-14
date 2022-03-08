@@ -41,6 +41,17 @@ namespace Content.Server.PackageWrapper
         {
             if (args.Target != null)
             {
+                if(TryComp<WrapableShapeComponent>(args.Target.Value, out var targetWrapType))
+                {
+                    var typeComp = component.ProductsShaped.FirstOrDefault(x => targetWrapType.WrapType == x.ID);
+
+                    if (typeComp != null)
+                    {
+                        var spawnedObj2 = Spawn(typeComp.ProtoSpawnID, Comp<TransformComponent>((EntityUid) args.Target).MapPosition);
+                        var container2 = Comp<ServerStorageComponent>(spawnedObj2);
+                        container2.Insert(args.Target.Value);
+                    }
+                }
                 if (TryComp<SharedItemComponent>(args.Target.Value, out var targetItem))
                 {
                     // find minimal size
@@ -50,7 +61,7 @@ namespace Content.Server.PackageWrapper
                     // Spawn item with minimal size and insert
                     if (typeComp != null)
                     {
-                        var spawnedObj2 = Spawn(typeComp.ProtoSpawnID, args.ClickLocation);
+                        var spawnedObj2 = Spawn(typeComp.ProtoSpawnID, Comp<TransformComponent>((EntityUid) args.Target).MapPosition);
                         var container2 = Comp<ServerStorageComponent>(spawnedObj2);
                         container2.Insert(args.Target.Value);
                     }

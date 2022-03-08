@@ -21,15 +21,14 @@ namespace Content.Server.PackageWrapper
 
         public sealed override string Name => "PackageWrapper";
 
-        [DataField("wraptype", customTypeSerializer: typeof(PrototypeIdListSerializer<WrapperTypePrototype>))]
-        protected List<string> _productIds = new();
-
         protected List<WrapperTypePrototype> _products = new();
+        protected List<WrapperShapedTypePrototype> _productsShaped = new();
 
         /// <summary>
         ///     A read-only list of wraps.
         /// </summary>
         public IReadOnlyList<WrapperTypePrototype> Products => _products;
+        public IReadOnlyList<WrapperShapedTypePrototype> ProductsShaped => _productsShaped;
 
         protected override void Initialize()
         {
@@ -40,6 +39,7 @@ namespace Content.Server.PackageWrapper
             // I dont know how to get list of all my warpType prototypes so i use that.
             // I'm really need to know how to init data once for all PackageWrappers
             _products = _prototypeManager.EnumeratePrototypes<WrapperTypePrototype>().ToList();
+            _productsShaped = _prototypeManager.EnumeratePrototypes<WrapperShapedTypePrototype>().ToList();
 
             Dirty();
         }

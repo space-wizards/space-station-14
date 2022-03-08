@@ -24,22 +24,22 @@
   capacity: 40
 
 #Shaped base
-- type: WrapType
+- type: WrapShapedType
   id: Sphere
   tags: ["WrapType"]
   protospawnid: SphereParcel
 
-- type: WrapType
+- type: WrapShapedType
   id: Box
   tags: ["WrapType"]
   protospawnid: BoxParcel
 
-- type: WrapType
+- type: WrapShapedType
   id: Closet
   tags: ["WrapType"]
   protospawnid: ClosetParcel
 
-- type: WrapType
+- type: WrapShapedType
   id: Crate
   tags: ["WrapType"]
   protospawnid: CrateParcel
