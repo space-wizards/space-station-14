@@ -189,5 +189,4 @@
       rotate: true
       normal: onestar_boss  
       dead: onestar_boss_wrecked
-    doAfterDelay: 8
   - type: CombatMode
