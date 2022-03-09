@@ -203,6 +203,9 @@ namespace Content.Client.Hands
             if (uid == _playerManager.LocalPlayer?.ControlledEntity)
                 UpdateGui();
 
+            if (!handComp.ShowInHands)
+                return;
+
             // Remove old layers. We could also just set them to invisible, but as items may add arbitrary layers, this
             // may eventually bloat the player with lots of layers.
             if (handComp.RevealedLayers.TryGetValue(hand.Location, out var revealedLayers))

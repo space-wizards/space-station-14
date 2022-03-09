@@ -118,6 +118,9 @@
   id: Donut
 
 - type: Tag
+  id: DroneUsable
+
+- type: Tag
   id: Egg
 
 - type: Tag
@@ -165,6 +168,9 @@
 - type: Tag
   id: HideContextMenu
 
+- type: Tag
+  id: HidesHair # for headwear.
+  
 - type: Tag
   id: Hoe
 

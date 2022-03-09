@@ -1,22 +1,4 @@
 - type: reagent
-  id: Alkycosine
-  name: alkycosine
-  group: Medicine
-  desc: Lessens the damage to neurological tissue. More effective at treating brain damage than alkysine and also a fairly effective painkiller as well. Caution is needed in its creation to avoid mixing bleach and the chlorine needed to make alkysine.
-  physicalDesc: strong-smelling
-  color: "#9e232b"
-  # TODO brain damage
-
-- type: reagent
-  id: Alkysine
-  name: alkysine
-  group: Medicine
-  desc: Lessens the damage to neurological tissue, effective even after catastrophic injury. Used for treating brain damage and also a fairly effective painkiller.
-  physicalDesc: oily
-  color: "#ff8c00"
-  # TODO brain damage
-
-- type: reagent
   id: Dylovene
   name: dylovene
   group: Medicine
@@ -130,16 +112,6 @@
       amount: 5
 
 - type: reagent
-  id: Citalopram
-  name: citalopram
-  group: Medicine
-  desc: Prevents hallucination slightly.
-  physicalDesc: cloudy
-  color: "#21693c"
-  # Why do so many chems 'reduce hallucination slightly' and why did we add so fucking many
-  # without even implementing hallucination?
-
-- type: reagent
   id: Dermaline
   name: dermaline
   group: Medicine
@@ -185,15 +157,6 @@
           types:
             Asphyxiation: -3
             Bloodloss: -2
-
-- type: reagent
-  id: Ethylredoxrazine
-  name: ethylredoxrazine
-  group: Medicine
-  desc: Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.
-  physicalDesc: opaque
-  color: "#2d5708"
-  # TODO: GenericStatusEffect remove drunkenness
 
 # this ones a doozy
 - type: reagent
@@ -257,14 +220,6 @@
         type: Remove
 
 - type: reagent
-  id: Hyperzine
-  name: hyperzine
-  group: Medicine
-  desc: A highly effective, long lasting muscle stimulant. It allows greater freedom of movement in bulky clothing although it has the side effect of causing some twitching. Dangerous in higher doses.
-  physicalDesc: translucent
-  color: "#17bd61"
-
-- type: reagent
   id: Hyronalin
   name: hyronalin
   group: Medicine
@@ -278,24 +233,6 @@
         damage:
           types:
             Radiation: -1
-
-- type: reagent
-  id: Imidazoline
-  name: imidazoline
-  group: Medicine
-  desc: Effective in treating eye trauma. It heals damage caused by physical or chemical trauma, though it is ineffective in treating genetic defects in the eyes.
-  physicalDesc: pungent
-  color: "#f7ef00"
-  # TODO eye damage
-
-- type: reagent
-  id: Inacusiate
-  name: inacusiate
-  group: Medicine
-  desc: You only need 1u for Inacusiate to be effective. Cures deafness instantly. Useful after an explosion.
-  physicalDesc: pungent
-  color: "#c4c04b"
-  # TODO ear damage
 
 - type: reagent
   id: Inaprovaline
@@ -359,22 +296,6 @@
         probability: 0.2
 
 - type: reagent
-  id: Methylin
-  name: methylin
-  group: Medicine
-  desc: An intelligence enhancer, also used in the treatment of attention deficit hyperactivity disorder. Also known as Ritalin. Allows monkeys (not diona nymphs) to understand human speech and improves their dexterity as long as they have some in their system. Causes toxin and brain damage in higher doses.
-  physicalDesc: acrid
-  color: "#a700c4"
-
-- type: reagent
-  id: Oxycodone
-  name: oxycodone
-  group: Medicine
-  desc: A very effective painkiller, about 250% as strong as Tramadol.
-  physicalDesc: acrid
-  color: "#c4a300"
-
-- type: reagent
   id: Phalanximine
   name: phalanximine
   group: Medicine
@@ -392,15 +313,6 @@
             Radiation: 1
 
 - type: reagent
-  id: Paroxetine
-  name: paroxetine
-  group: Medicine
-  desc: Prevents hallucination, but has a 10% chance of causing intense hallucinations.
-  physicalDesc: acrid
-  color: "#fffbad"
-  # TODO: Hallucinations.
-
-- type: reagent
   id: PulpedBananaPeel
   name: pulped banana peel
   group: Medicine
@@ -412,14 +324,6 @@
       effects:
       - !type:ModifyBleedAmount
         amount: -0.5
-
-- type: reagent
-  id: Ryetalyn
-  name: ryetalyn
-  group: Medicine
-  desc: You only need 1u for Ryetalin to work. Deactivates genetic defects and powers, restoring a patient to an ideal state. May be useful if genetics is unable to function properly. Deactivated effects return if the patient's genes are modified again.
-  physicalDesc: cloudy
-  color: "#532fd4"
 
 - type: reagent
   id: Siderlac
@@ -435,14 +339,6 @@
         damage:
           groups:
             Caustic: -5
-
-- type: reagent
-  id: Spaceacillin
-  name: spaceacillin
-  group: Medicine
-  desc: A theta-lactam antibiotic. A common and very useful medicine, effective against many diseases likely to be encountered in space. Slows progression of diseases.
-  physicalDesc: opaque
-  color: "#9942f5"
 
 - type: reagent
   id: Stellibinin
@@ -490,14 +386,6 @@
         type: Remove
 
 - type: reagent
-  id: Tramadol
-  name: tramadol
-  group: Medicine
-  desc: A simple, yet effective painkiller. Very effective for patients in shock.
-  physicalDesc: strong-smelling
-  color: "#2f6ed4"
-
-- type: reagent
   id: TranexamicAcid
   name: tranexamic acid
   group: Medicine
@@ -541,24 +429,6 @@
             Poison: -0.5 ##Should be about what it was when it healed the toxin group
 
 - type: reagent
-  id: ChloralHydrate
-  name: chloral hydrate
-  group: Medicine
-  desc: A powerful sedative which causes death in doses upwards of 16.2 units. Sends the patient to sleep almost instantly.
-  physicalDesc: acrid
-  color: "#18c9b1"
-  # TODO: sleeping and unconsciousness
-
-- type: reagent
-  id: Cryptobiolin
-  name: cryptobiolin
-  group: Medicine
-  desc: Causes confusion and dizziness. This is essential to make Spaceacillin.
-  physicalDesc: fizzy
-  color: "#081a80"
-  # TODO confusion/dizzyness
-
-- type: reagent
   id: Lipozine
   name: lipozine
   group: Medicine
@@ -571,14 +441,6 @@
       # what the hell, this isn't satiating at all!!
       - !type:SatiateHunger
         factor: -1
-
-- type: reagent
-  id: Sterilizine
-  name: sterilizine
-  group: Medicine
-  desc: Helps the patient when used during surgery, may also decontaminate objects and surfaces that bear pathogens. Is currently useless due to infections not being a thing.
-  physicalDesc: strong-smelling
-  color: "#7cad37"
 
 - type: reagent
   id: Omnizine
