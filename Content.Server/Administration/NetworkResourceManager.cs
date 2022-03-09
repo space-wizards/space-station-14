@@ -55,18 +55,7 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
         if (SizeLimit > 0f && msg.Data.Length * BytesToMegabytes > SizeLimit)
             return;
 
-        // just in case, we ensure it's a clean relative path.
-        msg.RelativePath = msg.RelativePath.Clean().ToRelativePath();
-
-        FilesLock.EnterWriteLock();
-        try
-        {
-            Files[msg.RelativePath] = msg.Data;
-        }
-        finally
-        {
-            FilesLock.ExitWriteLock();
-        }
+        ContentRoot.AddOrUpdateFile(msg.RelativePath, msg.Data);
 
         // Now we broadcast the message!
         foreach (var channel in _serverNetManager.Channels)
@@ -82,20 +71,12 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
 
     private void ServerNetManagerOnConnected(object? sender, NetChannelArgs e)
     {
-        FilesLock.EnterReadLock();
-        try
+        foreach (var (path, data) in ContentRoot.GetAllFiles())
         {
-            foreach (var (path, data) in Files)
-            {
-                var msg = _serverNetManager.CreateNetMessage<NetworkResourceUploadMessage>();
-                msg.RelativePath = path;
-                msg.Data = data;
-                e.Channel.SendMessage(msg);
-            }
-        }
-        finally
-        {
-            FilesLock.ExitReadLock();
+            var msg = _serverNetManager.CreateNetMessage<NetworkResourceUploadMessage>();
+            msg.RelativePath = path;
+            msg.Data = data;
+            e.Channel.SendMessage(msg);
         }
     }
 

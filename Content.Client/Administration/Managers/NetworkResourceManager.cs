@@ -10,14 +10,6 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
     /// <param name="msg">The network message containing the data.</param>
     protected override void ResourceUploadMsg(NetworkResourceUploadMessage msg)
     {
-        FilesLock.EnterWriteLock();
-        try
-        {
-            Files[msg.RelativePath] = msg.Data;
-        }
-        finally
-        {
-            FilesLock.ExitWriteLock();
-        }
+        ContentRoot.AddOrUpdateFile(msg.RelativePath, msg.Data);
     }
 }
