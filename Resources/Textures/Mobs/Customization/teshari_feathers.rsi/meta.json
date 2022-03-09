@@ -1,0 +1,73 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "backstrafe",
+            "directions": 4
+        },
+        {
+            "name": "body_plain",
+            "directions": 4
+        },
+        {
+            "name": "bushy",
+            "directions": 4
+        },
+        {
+            "name": "droopy",
+            "directions": 4
+        },
+        {
+            "name": "longway",
+            "directions": 4
+        },
+        {
+            "name": "mane",
+            "directions": 4
+        },
+        {
+            "name": "mohawk",
+            "directions": 4
+        },
+        {
+            "name": "mushroom",
+            "directions": 4
+        },
+        {
+            "name": "plain",
+            "directions": 4
+        },
+        {
+            "name": "pointy",
+            "directions": 4
+        },
+        {
+            "name": "spiky",
+            "directions": 4
+        },
+        {
+            "name": "thin",
+            "directions": 4
+        },
+        {
+            "name": "thinmohawk",
+            "directions": 4
+        },
+        {
+            "name": "tree",
+            "directions": 4
+        },
+        {
+            "name": "twies",
+            "directions": 4
+        },
+        {
+            "name": "upright",
+            "directions": 4
+        }
+    ]
+}
