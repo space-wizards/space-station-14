@@ -4,6 +4,8 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Damage;
 using Content.Shared.Verbs;
 using Content.Shared.Tag;
+using Content.Shared.Actions;
+using Content.Shared.ActionBlocker;
 using Content.Server.Cooldown;
 using Content.Server.Bible.Components;
 using Content.Server.Popups;
@@ -23,6 +25,8 @@ namespace Content.Server.Bible
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+
 
 
         public override void Initialize()
@@ -57,7 +61,7 @@ namespace Content.Server.Bible
             {
                 _popupSystem.PopupEntity(Loc.GetString("bible-sizzle"), args.User, Filter.Entities(args.User));
 
-                SoundSystem.Play(Filter.Pvs(args.User), component.SizzleSoundPath, args.User);
+                SoundSystem.Play(Filter.Pvs(args.User), component.SizzleSoundPath.GetSound(), args.User);
                 _damageableSystem.TryChangeDamage(args.User, component.DamageOnUntrainedUse, true);
 
                 return;
@@ -68,7 +72,7 @@ namespace Content.Server.Bible
                 if (_random.Prob(component.FailChance))
                 {
                 var othersFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-others", ("user", args.User),("target", args.Target),("bible", uid));
-            _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
+                _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
 
                 var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", args.Target),("bible", uid));
                 _popupSystem.PopupEntity(selfFailMessage, args.User, Filter.Entities(args.User));
@@ -85,20 +89,21 @@ namespace Content.Server.Bible
             var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-self", ("target", args.Target),("bible", uid));
             _popupSystem.PopupEntity(selfMessage, args.User, Filter.Entities(args.User));
 
-            SoundSystem.Play(Filter.Pvs(args.Target.Value), component.HealSoundPath, args.User);
+            SoundSystem.Play(Filter.Pvs(args.Target.Value), component.HealSoundPath.GetSound(), args.User);
             _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true);
         }
 
         private void AddSummonVerb(EntityUid uid, BibleComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanInteract || !args.CanAccess || !HasComp<BibleUserComponent>(args.User) || component.AlreadySummoned || component.SpecialItemPrototype == string.Empty)
+            if (!args.CanInteract || !args.CanAccess || !HasComp<BibleUserComponent>(args.User) || component.AlreadySummoned || component.SpecialItemPrototype == null)
                 return;
 
             AlternativeVerb verb = new()
             {
                 Act = () =>
                 {
-                    AttemptSummon(component, args.User);
+                    TransformComponent? position = Comp<TransformComponent>(args.User);
+                    AttemptSummon(component, args.User, position);
                 },
                 Text = Loc.GetString("bible-summon-verb"),
                 Priority = 2
@@ -106,15 +111,18 @@ namespace Content.Server.Bible
             args.Verbs.Add(verb);
         }
 
-        private void AttemptSummon(BibleComponent component, EntityUid user)
+        private void AttemptSummon(BibleComponent component, EntityUid user, TransformComponent? position)
         {
-            if (!HasComp<TransformComponent>(user))
+            if (!HasComp<BibleUserComponent>(user) || component.AlreadySummoned || component.SpecialItemPrototype == null)
+                return;
+            if (!Resolve(user, ref position))
                 return;
             if (component.Deleted || Deleted(component.Owner))
                 return;
+            if (!_blocker.CanInteract(user, component.Owner))
+                return;
 
-            var position = EntityManager.GetComponent<TransformComponent>(user).Coordinates;
-            EntityManager.SpawnEntity(component.SpecialItemPrototype, position);
+            EntityManager.SpawnEntity(component.SpecialItemPrototype, position.Coordinates);
             component.AlreadySummoned = true;
         }
     }

@@ -172,19 +172,18 @@ namespace Content.Server.VendingMachines.systems
         {
             if (!_prototypeManager.TryIndex(pack, out VendingMachineInventoryPrototype? packPrototype))
             {
+                Logger.Error($"Pack has no valid inventory prototype: {pack}");
                 return;
             }
 
-            var inventory = component.Inventory;
             foreach (var (id, amount) in packPrototype.StartingInventory)
             {
                 if (!_prototypeManager.TryIndex(id, out EntityPrototype? prototype))
                 {
                     continue;
                 }
-                inventory.Add(new VendingMachineInventoryEntry(id, amount));
+                component.Inventory.Add(new VendingMachineInventoryEntry(id, amount));
             }
-            component.Inventory = inventory;
         }
 
         public void Deny(EntityUid uid, VendingMachineComponent? vendComponent = null)

@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.Sound;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Prototypes;
 
@@ -23,7 +24,7 @@ namespace Content.Server.Bible.Components
         /// Used for a special item only the Chaplain can summon. Usually a mob, but supports regular items too.
         /// </summary>
         [DataField("specialItem", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string SpecialItemPrototype = string.Empty;
+        public string? SpecialItemPrototype = null;
         public bool AlreadySummoned = false;
         //Chance the bible will fail to heal someone with no helmet
         [DataField("failChance", required:true)]
@@ -36,9 +37,9 @@ namespace Content.Server.Bible.Components
         public float CooldownTime { get; } = 5f;
 
         [DataField("sizzleSound")]
-        public string SizzleSoundPath = "/Audio/Effects/lightburn.ogg";
+        public SoundSpecifier SizzleSoundPath = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
         [DataField("healSound")]
-        public string HealSoundPath = "/Audio/Effects/holy.ogg";
+        public SoundSpecifier HealSoundPath = new  SoundPathSpecifier("/Audio/Effects/holy.ogg");
 
         [DataField("locPrefix")]
         public string LocPrefix = "bible";

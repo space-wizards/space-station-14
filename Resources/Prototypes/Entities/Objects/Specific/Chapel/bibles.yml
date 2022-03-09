@@ -40,7 +40,7 @@
   - type: Bible
     damage:
       groups:
-        Caustic: 20 ##Worse than a lot of the higher tier melees but it deals a weird damage type
+        Caustic: 20 ## ~15 dps
     damageOnFail:
       groups:
         Brute: 15
@@ -52,7 +52,7 @@
     failChance: 0
     locPrefix: "necro"
     healSound: "/Audio/Effects/lightburn.ogg"
-    cooldownTime: 1
+    cooldownTime: 1.3
   - type: Sprite
     netsync: false
     sprite: Objects/Specific/Chapel/necronomicon.rsi
