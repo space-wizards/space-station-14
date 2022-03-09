@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: 'The space around you feels colder... Depressurized rooms will now be
-      very, very cold.', type: Tweak}
-  id: 682
-  time: '2021-11-30T10:42:48.0000000+00:00'
 - author: pointer-to-null
   changes:
   - {message: Added a FPS counter game option., type: Add}
@@ -2973,3 +2967,9 @@ Entries:
   - {message: Lathes now actually play their building animations., type: Fix}
   id: 1181
   time: '2022-03-08T23:58:50.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: You can no longer accidentally punch sub-floor entities when using a
+      T-Ray scanner, type: Fix}
+  id: 1182
+  time: '2022-03-09T06:40:07.0000000+00:00'
