@@ -1,75 +1,9 @@
 - type: entity
-  save: false
-  abstract: true
-  id: PlayerSiliconBase #for player controlled silicons
-  components:
-  - type: Reactive
-    groups:
-      Acidic: [Touch]
-  - type: Input
-    context: "human"
-  - type: DamageOnHighSpeedImpact
-    damage:
-      types:
-        Blunt: 5
-    soundHit:
-      path: /Audio/Effects/hit_kick.ogg
-  - type: Clickable
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Bloodstream
-    bloodReagent: Oil
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
-  - type: InteractionOutline
-  - type: Fixtures
-    fixtures:
-    - shape:
-        # Circles, cuz rotation of rectangles looks very bad
-        !type:PhysShapeCircle
-        radius: 0.35
-      mass: 20
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 4
-    baseSprintSpeed : 3
-  - type: Sprite
-    noRot: true
-    drawdepth: Mobs
-    netsync: false
-  - type: Physics
-    bodyType: KinematicController
-  - type: Hands
-    showInHands: false
-  - type: Body
-    template: DroneTemplate
-    preset: DronePreset
-  - type: DoAfter
-  - type: Pullable
-  - type: Examiner
-  - type: Puller
-  - type: Recyclable
-    safe: false
-  - type: StandingState
-  - type: Alerts
-
-- type: entity
-  name: drone
+  parent: MobSiliconBase
   id: Drone
-  parent: PlayerSiliconBase
+  name: drone
   components:
+  - type: Flashable
   - type: Drone
     tools:
       - id: PowerDrill
@@ -79,11 +13,6 @@
     group: Drone
   - type: Inventory
     templateId: drone
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: Maintenance Drone
@@ -100,7 +29,6 @@
     thresholds:
       0: !type:NormalMobState {}
       60: !type:DeadMobState {}
-  - type: Flashable
   - type: NoSlip
   - type: StatusEffects
     allowed:
@@ -121,8 +49,6 @@
       types:
         Heat : 1 #per second, scales with temperature & other constants
   - type: Sprite
-    drawdepth: Mobs
-    netsync: false
     layers:
     - state: shell
       sprite: Mobs/Silicon/drone.rsi

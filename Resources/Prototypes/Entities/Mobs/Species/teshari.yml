@@ -1,66 +1,81 @@
 - type: entity
   parent: MobOrganicBase
-  id: MobHumanBase
-  description: A miserable pile of secrets.
-  abstract: true
+  id: MobTeshariBase
   save: false
+  name: Urist McHands The birb
+  abstract: true
+  description: A miserable pile of feathers.
   components:
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 40
+      restitution: 0.0
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Icon
+    sprite: Mobs/Species/Teshari/parts.rsi
+    state: full
   - type: Sprite
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: torso_m
+    # Temporary until we get proper markings. Don't even think of roundstart before then.
+    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+      color: "#34a223"
+      state: body_plain
+      sprite: Mobs/Customization/teshari_parts.rsi
     - map: [ "enum.HumanoidVisualLayers.Head" ]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: head_m
     - map: [ "enum.HumanoidVisualLayers.Eyes" ]
       color: "#008800"
       sprite: Mobs/Customization/eyes.rsi
-      state: eyes
+      state: teshari_eyes
     - map: [ "enum.HumanoidVisualLayers.RArm" ]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: r_arm
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: l_arm
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: r_leg
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: l_leg
-    - shader: StencilClear
-      sprite: Mobs/Species/Human/parts.rsi
-      state: l_leg
-    - shader: StencilMask
-      map: [ "enum.HumanoidVisualLayers.StencilMask" ]
-      sprite: Mobs/Customization/masking_helpers.rsi
-      state: female_full
-      visible: false
-    - map: [ "jumpsuit" ]
-      shader: StencilDraw
+    #- shader: StencilClear
+    #  sprite: Mobs/Species/Vox/parts.rsi
+    #  state: l_leg
+    #- shader: StencilMask
+    #  map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+    #  sprite: Mobs/Customization/masking_helpers.rsi
+    #  state: female_full
+    #  visible: false
+    #- map: [ "jumpsuit" ]
+    #  shader: StencilDraw
     - map: [ "enum.HumanoidVisualLayers.LHand" ]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: l_hand
     - map: [ "enum.HumanoidVisualLayers.RHand" ]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: r_hand
-    - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: l_foot
-    - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: r_foot
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi
@@ -71,16 +86,15 @@
     - map: [ "shoes" ]
     - map: [ "ears" ]
     - map: [ "outerClothing" ]
+      scale: 0.5, 0.5
     - map: [ "eyes" ]
     - map: [ "belt" ]
     - map: [ "neck" ]
     - map: [ "back" ]
-    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
-      state: shaved
-      sprite: Mobs/Customization/human_facial_hair.rsi
     - map: [ "enum.HumanoidVisualLayers.Hair" ]
-      state: bald
-      sprite: Mobs/Customization/human_hair.rsi
+      color: "#34a223"
+      state: plain
+      sprite: Mobs/Customization/teshari_parts.rsi
     - map: [ "mask" ]
     - map: [ "head" ]
     - map: [ "pocket1" ]
@@ -88,54 +102,50 @@
 
 - type: entity
   parent: MobOrganicDummy
-  id: MobHumanDummy
+  id: MobTeshariDummy
   save: false
-  name: Urist McHands
+  name: Urist McTeshari
   abstract: true
-  description: A dummy human meant to be used in character setup.
+  description: A dummy teshari meant to be used in character setup.
   components:
   - type: Icon
-    sprite: Mobs/Species/Human/parts.rsi
+    sprite: Mobs/Species/Teshari/parts.rsi
     state: full
   - type: Sprite
     # TODO BODY Turn these into individual body parts?
     layers:
     - map: ["enum.HumanoidVisualLayers.Chest"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: torso_m
+    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+      color: "#34a223"
+      state: body_plain
+      sprite: Mobs/Customization/teshari_parts.rsi
     - map: ["enum.HumanoidVisualLayers.Head"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: head_m
     - map: ["enum.HumanoidVisualLayers.Eyes"]
       color: "#008800"
       sprite: Mobs/Customization/eyes.rsi
-      state: eyes
+      state: teshari_eyes
     - map: ["enum.HumanoidVisualLayers.RArm"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: r_arm
     - map: ["enum.HumanoidVisualLayers.LArm"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: l_arm
     - map: ["enum.HumanoidVisualLayers.RLeg"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: r_leg
     - map: ["enum.HumanoidVisualLayers.LLeg"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: l_leg
-    - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: l_foot
-    - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: r_foot
     - shader: StencilClear
     - shader: StencilMask
       map: ["enum.HumanoidVisualLayers.StencilMask"]
@@ -145,12 +155,12 @@
     - map: ["jumpsuit"]
       shader: StencilDraw
     - map: ["enum.HumanoidVisualLayers.LHand"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: l_hand
     - map: ["enum.HumanoidVisualLayers.RHand"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
       state: r_hand
     - map: ["enum.HumanoidVisualLayers.Handcuffs"]
       color: "#ffffff"
@@ -166,12 +176,10 @@
     - map: ["belt"]
     - map: ["neck"]
     - map: ["back"]
-    - map: ["enum.HumanoidVisualLayers.FacialHair"]
-      state: shaved
-      sprite: Mobs/Customization/human_facial_hair.rsi
-    - map: ["enum.HumanoidVisualLayers.Hair"]
-      state: bald
-      sprite: Mobs/Customization/human_hair.rsi
+    - map: [ "enum.HumanoidVisualLayers.Hair" ]
+      color: "#34a223"
+      state: plain
+      sprite: Mobs/Customization/teshari_parts.rsi
     - map: ["mask"]
     - map: ["head"]
     - map: [ "pocket1" ]

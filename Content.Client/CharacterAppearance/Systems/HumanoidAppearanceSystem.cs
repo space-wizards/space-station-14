@@ -59,6 +59,8 @@ namespace Content.Client.CharacterAppearance.Systems
                 }
             }
 
+            // TODO: Markings, body hair, etc. Try to find something less messy than this.
+
             // Like body parts some stuff may not have hair.
             if (sprite.LayerMapTryGet(HumanoidVisualLayers.Hair, out var hairLayer))
             {

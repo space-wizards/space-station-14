@@ -23,10 +23,6 @@
       "directions": 4
     },
     {
-      "name": "l_foot",
-      "directions": 4
-    },
-    {
       "name": "l_hand",
       "directions": 4
     },
@@ -36,10 +32,6 @@
     },
     {
       "name": "r_arm",
-      "directions": 4
-    },
-    {
-      "name": "r_foot",
       "directions": 4
     },
     {
