@@ -11,3 +11,4 @@ comp-pda-ui-eject-id-button = Извлечь ID
 comp-pda-ui-eject-pen-button = Извлечь ручку
 comp-pda-ui-ringtone-button = Рингтон
 comp-pda-ui-toggle-flashlight-button = Переключить фонарик
+pda-bound-user-interface-music-button = Music Instrument
