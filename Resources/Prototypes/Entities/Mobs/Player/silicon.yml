@@ -166,6 +166,9 @@
     layers:
     - state: onestar_boss
       sprite: Mobs/Silicon/onestar.rsi
+    - state: onestar_boss_screen
+      sprite: Mobs/Silicon/onestar.rsi
+      shader: unshaded
   - type: MovementIgnoreGravity
   - type: Fixtures
     fixtures:

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/discordia-space/CEV-Eris/commit/49f9744d084c23bf2f28cd321209facee6a3816f",
+  "copyright": "https://github.com/discordia-space/CEV-Eris/pull/3768",
   "size": {
     "x": 64,
     "y": 64
@@ -9,6 +9,26 @@
   "states": [
     {
       "name": "onestar_boss",
+      "directions": 4
+    },
+    {
+      "name": "onestar_boss_unpowered"
+    },
+    {
+      "name": "onestar_boss_wrecked",
+      "delays": [
+        [
+          3,
+          0.9,
+          0.9,
+          0.9,
+          0.9,
+          0.9
+        ]
+      ]
+    },
+    {
+      "name": "onestar_boss_screen",
       "directions": 4,
       "delays": [
         [
@@ -166,22 +186,6 @@
           0.1,
           0.1,
           0.1
-        ]
-      ]
-    },
-    {
-      "name": "onestar_boss_unpowered"
-    },
-    {
-      "name": "onestar_boss_wrecked",
-      "delays": [
-        [
-          3,
-          0.9,
-          0.9,
-          0.9,
-          0.9,
-          0.9
         ]
       ]
     }
