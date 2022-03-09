@@ -6,18 +6,11 @@
   components:
   - type: HealOnBuckle
     damage:
+      groups:
+        Brute: -0.3 ## 0.1 per
+        Burn: -0.3
       types:
-        Blunt: -0.1
-        Slash: -0.1
-        Piercing: -0.1
-        Heat: -0.1
-        Shock: -0.1
-        Cold: -0.1
-        Asphyxiation: -0.1
-        Bloodloss: -0.1
         Poison: -0.1
-        Radiation: -0.1
-        Cellular: -0.1
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -75,18 +68,11 @@
     state: bed-MED
   - type: HealOnBuckle
     damage:
+      groups:
+        Brute: -0.6 ## 0.2 per
+        Burn: -0.6
       types:
-        Blunt: -0.2
-        Slash: -0.2
-        Piercing: -0.2
-        Heat: -0.2
-        Shock: -0.2
-        Cold: -0.2
-        Asphyxiation: -0.2
-        Bloodloss: -0.2
         Poison: -0.2
-        Radiation: -0.2
-        Cellular: -0.2
   - type: Construction
     graph: bed
     node: medicalbed

@@ -26,9 +26,6 @@ namespace Content.Server.Bed
 
         private void ManageUpdateList(EntityUid uid, HealOnBuckleComponent component, BuckleChangeEvent args)
         {
-            if (!HasComp<StrapComponent>(uid))
-                return;
-
             if (args.Buckling)
             {
                 AddComp<HealOnBuckleHealingComponent>(uid);
