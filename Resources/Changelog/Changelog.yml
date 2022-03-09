@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added inflatable wall crate to cargo under emergency tab., type: Add}
-  id: 685
-  time: '2021-11-30T20:48:58.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Weedkiller and Pest-B-Gone now harms kudzu., type: Add}
@@ -2974,3 +2969,9 @@ Entries:
   - {message: clarify round stalling as against the rules, type: Add}
   id: 1184
   time: '2022-03-09T13:45:53.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Some tiles now have additional visual variants. These will start showing
+      up when maps are updated., type: Add}
+  id: 1185
+  time: '2022-03-09T19:59:44.0000000+00:00'
