@@ -196,11 +196,15 @@ namespace Content.Server.Body.Systems
             {
                 component.CycleDelay *= args.Multiplier;
                 component.Saturation *= args.Multiplier;
+                component.MaxSaturation *= args.Multiplier;
+                component.MinSaturation *= args.Multiplier;
                 return;
             }
             // This way we don't have to worry about it breaking if the stasis bed component is destroyed
             component.CycleDelay /= args.Multiplier;
             component.Saturation /= args.Multiplier;
+            component.MaxSaturation /= args.Multiplier;
+            component.MinSaturation /= args.Multiplier;
             // Reset the accumulator properly
             if (component.AccumulatedFrametime >= component.CycleDelay)
                 component.AccumulatedFrametime = component.CycleDelay;

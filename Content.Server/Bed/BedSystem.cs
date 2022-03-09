@@ -87,6 +87,7 @@ namespace Content.Server.Bed
                 if (args.Buckling)
                 {
                     power.Load += component.AddLoadOnBuckle;
+                    UpdateMetabolisms(uid, component, false); // This is going to call OnPowerChanged
                 } else
                 {
                     power.Load -= component.AddLoadOnBuckle;
