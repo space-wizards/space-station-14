@@ -52,6 +52,17 @@
     Shock: 0
   flatReductions:
     Blunt: 5
+    
+- type: damageModifierSet
+  id: RGlass
+  coefficients:
+    Blunt: 0.5
+    Slash: 0.5
+    Piercing: 1.2
+    Heat: 0
+    Shock: 0
+  flatReductions:
+    Blunt: 5
 
 - type: damageModifierSet
   id: Wood
