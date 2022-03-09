@@ -81,18 +81,6 @@ namespace Content.Server.Bed
 
             if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
                 return;
-            // Make the machine draw more power while someone is inside it
-            if (power != null && power.NeedsPower)
-            {
-                if (args.Buckling)
-                {
-                    power.Load += component.AddLoadOnBuckle;
-                    UpdateMetabolisms(uid, component, false); // This is going to call OnPowerChanged
-                } else
-                {
-                    power.Load -= component.AddLoadOnBuckle;
-                }
-            }
 
             var metabolicEvent = new ApplyMetabolicMultiplierEvent()
                 {Uid = args.BuckledEntity, Multiplier = component.Multiplier, Apply = args.Buckling};

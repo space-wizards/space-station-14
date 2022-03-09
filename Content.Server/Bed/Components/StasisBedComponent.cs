@@ -9,10 +9,5 @@ namespace Content.Server.Bed.Components
         [DataField("multiplier", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public float Multiplier = 10f;
-
-        /// <summary>
-        /// How much will the power load increase when someone buckles in?
-        /// </summary>
-        [DataField("addLoadOnBuckle")] public readonly float AddLoadOnBuckle = 1500f;
     }
 }
