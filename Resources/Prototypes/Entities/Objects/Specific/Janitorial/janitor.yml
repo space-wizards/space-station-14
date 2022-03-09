@@ -16,6 +16,9 @@
     solutions:
       mop:
         maxVol: 50
+  - type: Tag
+    tags:
+      - DroneUsable #No bucket because it holds chems, they can drag the thing around instead
 
 - type: entity
   name: mop bucket

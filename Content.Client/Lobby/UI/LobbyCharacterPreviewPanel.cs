@@ -27,6 +27,7 @@ namespace Content.Client.Lobby.UI
         private readonly IClientPreferencesManager _preferencesManager;
         private readonly IPrototypeManager _prototypeManager;
         private EntityUid? _previewDummy;
+        private string? _previewDummySpecies;
         private readonly Label _summaryLabel;
         private readonly BoxContainer _loaded;
         private readonly BoxContainer _viewBox;

@@ -8,6 +8,9 @@
     - HEAD
   - type: Sprite
     state: icon
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   abstract: true

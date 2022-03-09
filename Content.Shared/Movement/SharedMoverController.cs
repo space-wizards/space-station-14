@@ -86,7 +86,9 @@ namespace Content.Shared.Movement
                 mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
-                transform.WorldRotation = worldTotal.GetDir().ToAngle();
+                transform.LocalRotation = transform.GridID != GridId.Invalid
+                    ? total.ToWorldAngle()
+                    : worldTotal.ToWorldAngle();
 
             _physics.SetLinearVelocity(physicsComponent, worldTotal);
         }
@@ -149,7 +151,9 @@ namespace Content.Shared.Movement
             {
                 // This should have its event run during island solver soooo
                 xform.DeferUpdates = true;
-                xform.LocalRotation = total.GetDir().ToAngle();
+                xform.LocalRotation = xform.GridID != GridId.Invalid
+                    ? total.ToWorldAngle()
+                    : worldTotal.ToWorldAngle();
                 xform.DeferUpdates = false;
                 HandleFootsteps(mover, mobMover);
             }
