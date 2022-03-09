@@ -36,8 +36,6 @@
       sprite: Mobs/Species/Human/parts.rsi
       state: l_leg
     - shader: StencilClear
-      sprite: Mobs/Species/Human/parts.rsi
-      state: l_leg
     - shader: StencilMask
       map: [ "enum.HumanoidVisualLayers.StencilMask" ]
       sprite: Mobs/Customization/masking_helpers.rsi
