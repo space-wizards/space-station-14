@@ -1,12 +1,10 @@
-﻿using Content.Server.Clothing.Components;
+using Content.Server.Clothing.Components;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Shared.Acts;
 using Content.Shared.Hands.Components;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Storage.EntitySystems
@@ -55,7 +53,7 @@ namespace Content.Server.Storage.EntitySystems
         /// </summary>
         /// <returns>True if item was hidden inside stash</returns>
         public bool TryHideItem(EntityUid uid, EntityUid userUid, EntityUid itemToHideUid,
-            SecretStashComponent? component = null, ItemComponent? item = null,
+            SecretStashComponent? component = null, SharedItemComponent? item = null,
             MetaDataComponent? itemMeta = null, SharedHandsComponent? hands = null)
         {
             if (!Resolve(uid, ref component))
@@ -119,7 +117,7 @@ namespace Content.Server.Storage.EntitySystems
 
             // get item inside container
             var itemUid = container.ContainedEntity;
-            if (!EntityManager.TryGetComponent(itemUid, out ItemComponent? item))
+            if (!EntityManager.TryGetComponent(itemUid, out SharedItemComponent? item))
             {
                 return false;
             }

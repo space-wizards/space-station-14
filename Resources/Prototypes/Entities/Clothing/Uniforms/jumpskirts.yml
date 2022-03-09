@@ -469,3 +469,14 @@
     sprite: Clothing/Uniforms/Jumpskirt/Color/maroon.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/Color/maroon.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPerformer
+  name: performer's jumpskirt
+  description: Hi, I'm Scott, president of Donk Pizza. Have you heard of [FAMOUS VIRTUAL PERFORMER]?
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/performer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/performer.rsi

@@ -7,11 +7,6 @@
   - type: Sprite
     layers:
       - state: box
-  - type: Item
-    size: 20
-  - type: Storage
-    capacity: 20
-    size: 20
 
 - type: entity
   name: lightbulb box
@@ -74,6 +69,9 @@
     whitelist:
       components:
       - LightBulb
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: PDA box
@@ -148,9 +146,6 @@
     layers:
       - state: box
       - state: writing
-  - type: Storage
-    capacity: 30
-    size: 30
 
 - type: entity
   name: box of hugs
@@ -168,9 +163,6 @@
     contents:
       - id: Brutepack
         amount: 6
-  - type: Storage
-    capacity: 30
-    size: 30
 
 - type: entity
   name: inflatable wall box
@@ -184,6 +176,55 @@
           amount: 2
         - id: InflatableDoorStack
           amount: 2
+  - type: Sprite
+    layers:
+      - state: box
+      - state: writing
+
+
+- type: entity
+  name: hatsune miku day box
+  parent: BoxCardboard
+  id: BoxPerformer
+  description: Happy Hatsune Miku Day!
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingShoesBootsPerformer
+      - id: ClothingUniformJumpskirtPerformer
+      - id: FoodMealMemoryleek
+        amount: 2
+
+- type: entity
+  name: flare box
+  parent: BoxCardboard
+  id: BoxFlare
+  description: A box of flares. Party time.
+  components:
+  - type: StorageFill
+    contents:
+      - id: Flare
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: writing
+
+- type: entity
+  name: trashbag box
+  parent: BoxCardboard
+  id: BoxTrashbag
+  description: A box of trashbags. Happy janitor noises.
+  components:
+  - type: StorageFill
+    contents:
+      - id: TrashBag
+        amount: 6
+  - type: Storage
+    capacity: 800
+    whitelist:
+      tags:
+        - TrashBag
   - type: Sprite
     layers:
       - state: box

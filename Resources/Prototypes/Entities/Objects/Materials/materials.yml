@@ -10,6 +10,9 @@
   - type: Item
     sprite: Objects/Materials/materials.rsi
   - type: ItemStatus
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   parent: MaterialBase
@@ -38,6 +41,9 @@
   components:
   - type: Stack
     stackType: Cloth
+  - type: Material
+    materials:
+    - Cloth
   - type: Sprite
     state: cloth_3
   - type: Appearance
@@ -57,6 +63,11 @@
     state: cloth
   - type: Stack
     count: 1
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
 
 - type: entity
   parent: MaterialBase
@@ -115,6 +126,9 @@
   components:
   - type: Stack
     stackType: Durathread
+  - type: Material
+    materials:
+    - Durathread
   - type: Sprite
     state: durathread_3
   - type: Appearance

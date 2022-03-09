@@ -44,9 +44,8 @@
         damage:
           groups:
             Caustic: 0.5
-      - !type:DoAction
+      - !type:Scream
         probability: 0.3
-        action: HumanScream
   metabolisms:
     Poison:
       effects:
@@ -78,9 +77,8 @@
         damage:
           groups:
             Caustic: 0.3
-      - !type:DoAction
+      - !type:Scream
         probability: 0.2
-        action: HumanScream
   metabolisms:
     Poison:
       effects:
@@ -119,9 +117,8 @@
         damage:
           groups:
             Caustic: 0.1
-      - !type:DoAction
+      - !type:Scream
         probability: 0.1
-        action: HumanScream
   metabolisms:
     Poison:
       effects:
@@ -198,15 +195,6 @@
   - !type:PlantAdjustToxins
     amount: 10
   # TODO hallucinations
-
-- type: reagent
-  id: Soporific
-  name: soporific (sleep-toxin)
-  group: Toxins
-  desc: A less powerful sedative that takes a while to work, intended to help insomniacs and patients that are too aggressive to be treated normally. Takes roughly 50 seconds to make the patient fall asleep. Is safe in large quantities. Can be counteracted with Anti-Toxin.
-  physicalDesc: acrid
-  color: "#215263"
-  # TODO sleeping
 
 - type: reagent
   id: Histamine

@@ -217,9 +217,9 @@ namespace Content.Server.Database
 
             db.PgDbContext.Unban.Add(new ServerUnban
             {
-                 BanId = serverUnban.BanId,
-                 UnbanningAdmin = serverUnban.UnbanningAdmin?.UserId,
-                 UnbanTime = serverUnban.UnbanTime.UtcDateTime
+                BanId = serverUnban.BanId,
+                UnbanningAdmin = serverUnban.UnbanningAdmin?.UserId,
+                UnbanTime = serverUnban.UnbanTime.UtcDateTime
             });
 
             await db.PgDbContext.SaveChangesAsync();
@@ -401,9 +401,9 @@ namespace Content.Server.Database
 
             db.PgDbContext.RoleUnban.Add(new ServerRoleUnban
             {
-                 BanId = serverRoleUnban.BanId,
-                 UnbanningAdmin = serverRoleUnban.UnbanningAdmin?.UserId,
-                 UnbanTime = serverRoleUnban.UnbanTime.UtcDateTime
+                BanId = serverRoleUnban.BanId,
+                UnbanningAdmin = serverRoleUnban.UnbanningAdmin?.UserId,
+                UnbanTime = serverRoleUnban.UnbanTime.UtcDateTime
             });
 
             await db.PgDbContext.SaveChangesAsync();

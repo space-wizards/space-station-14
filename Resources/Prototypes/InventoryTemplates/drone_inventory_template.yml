@@ -1,4 +1,4 @@
-﻿- type: inventoryTemplate
+- type: inventoryTemplate
   id: drone
   slots:
   - name: head
@@ -7,3 +7,4 @@
     uiContainer: BottomLeft
     uiWindowPos: 0,0
     displayName: Head
+    offset: 0, -0.45
