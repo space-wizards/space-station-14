@@ -8,8 +8,6 @@
   components:
   - type: Battery
   - type: PowerCell
-  - type: Explosive
-    explosionType: Default
   - type: Sprite
     netsync: false
   - type: SolutionContainerManager

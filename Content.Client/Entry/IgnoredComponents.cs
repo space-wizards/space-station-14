@@ -16,7 +16,6 @@ namespace Content.Client.Entry
             "Temperature",
             "AtmosExposed",
             "Explosive",
-            "ExplosionResistance",
             "Vocal",
             "OnUseTimerTrigger",
             "WarpPoint",
@@ -318,6 +317,7 @@ namespace Content.Client.Entry
             "EnergySword",
             "DoorRemote",
             "InteractionPopup",
+            "HealthAnalyzer"
         };
     }
 }

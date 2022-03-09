@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
@@ -21,7 +21,6 @@ namespace Content.Shared.Ghost
             SubscribeLocalEvent<SharedGhostComponent, UseAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<SharedGhostComponent, InteractionAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<SharedGhostComponent, EmoteAttemptEvent>(OnAttempt);
-            SubscribeLocalEvent<SharedGhostComponent, AttackAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<SharedGhostComponent, DropAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<SharedGhostComponent, PickupAttemptEvent>(OnAttempt);
         }

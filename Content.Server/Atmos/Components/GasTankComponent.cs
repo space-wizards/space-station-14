@@ -245,14 +245,14 @@ namespace Content.Server.Atmos.Components
                 var range = (pressure - TankFragmentPressure) / TankFragmentScale;
 
                 // Let's cap the explosion, yeah?
-                // !1984
                 if (range > MaxExplosionRange)
                 {
                     range = MaxExplosionRange;
                 }
 
-                EntitySystem.Get<ExplosionSystem>().TriggerExplosive(Owner, radius: range);
+                EntitySystem.Get<ExplosionSystem>().SpawnExplosion(Owner, (int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
+                _entMan.QueueDeleteEntity(Owner);
                 return;
             }
 
