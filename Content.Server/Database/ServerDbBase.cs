@@ -768,13 +768,13 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var today = DateTime.Now;
+            var date = DateTime.Now.Subtract(TimeSpan.FromDays(days));
 
             await foreach (var log in db.DbContext.UploadedResourceLog
-                               .Where(l => (today - l.Date).TotalDays >= days)
+                               .Where(l => date > l.Date)
                                .AsAsyncEnumerable())
             {
-                db.DbContext.Remove(log);
+                db.DbContext.UploadedResourceLog.Remove(log);
             }
 
             await db.DbContext.SaveChangesAsync();
