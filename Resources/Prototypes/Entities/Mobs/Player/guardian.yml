@@ -94,30 +94,6 @@
       shader: unshaded
     noRot: true
 
-# From Salvage rewards
-# TODO: Tweak stats if actually introduced
-- type: entity
-  name: Wreckage Warden
-  parent: MobGuardianBase
-  id: MobWreckGuardian
-  description: A tireless worker stuck in limbo, half man, half apparition. This one radiates an amiable aura. It stands noble, tuning into it's owner's life to sustain itself.
-  components:
-  - type: GhostTakeoverAvailable
-    makeSentient: true
-    name: Wreckage Warden
-    description: Listen to your owner. Don't tank damage. Only attack if commanded to.
-  - type: NameIdentifier
-    group: Holoparasite
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/Guardians/guardians.rsi
-    layers:
-    - state: miner_base
-    - state: miner_flare
-      color: "#d240ff"
-      shader: unshaded
-    noRot: true
-
 # From Wizard deck of cards
 - type: entity
   name: Ifrit Protector
