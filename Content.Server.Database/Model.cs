@@ -446,12 +446,12 @@ namespace Content.Server.Database
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required] public DateTime Date { get; set; }
+        public DateTime Date { get; set; }
 
-        [Required] public Guid UserId { get; set; }
+        public Guid UserId { get; set; }
 
-        [Required] public string Path { get; set; } = string.Empty;
+        public string Path { get; set; } = string.Empty;
 
-        [Required] public byte[] Data { get; set; } = default!;
+        public byte[] Data { get; set; } = default!;
     }
 }
