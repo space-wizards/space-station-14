@@ -1,0 +1,117 @@
+# Books that are actually useful
+- type: entity
+  parent: BookBase
+  id: BookChemistryBloodloss
+  name: bloodloss recipes
+  suffix: useful
+  description: 'Instructions on how to prepare bloodloss medication.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book_chemistry
+  - type: Paper
+    content: |
+      To deal with bloodloss, we want two pills. One will stop bleeding, so we'll call it 'stopper.'
+      The other will heal. This is Dexalin Plus.
+
+      'Stopper'
+      100u beaker. Dispenser to 10u. Carbon, Oxygen, Glucose; Dispenser to 15u. Glucose, Sulfiric Acid. Transfer to chem master buffer.
+      Repeat 3 times. Discard 30u leaving 150u. Add 350 units of iron. Make 10 pills.
+
+      'Dexalin Plus'
+      2 100u beakers. Grind 1 plasma into one. Fill the rest with oxygen. Put the dexalin in the chem master buffer. Set the plasma beaker aside.
+      Take out 30u at a time. Put in dispenser. Dispenser to 30u. Iron, Carbon. Put Dexalin Plus back into buffer. Repeat until all Dexalin is Dexalin Plus.
+
+- type: entity
+  parent: BookBase
+  id: BookEngineeringSolars
+  name: solars setup guide
+  suffix: useful
+  description: 'Instructions how to set up solars.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book_engineering2
+  - type: Paper
+    content: |
+      Solars are a safe and easy supplemental power source. Their uptime is hurt by the fact the station tend to block them from receiving sunlight,
+      but they can keep power running long enough to get the more heavy duty generators running.
+
+      Solars take orange HV cable. There's probably some near them. Ensure there is a continuous connection between all of the HV cable of the solars,
+      including the actual panels in space, and the station's main HV loop that delivers power to the SMESes.
+      Basically, connect all the orange wires in the area.
+
+      Next, take a look at the computer. Make the angle match the sun's angle. Next, adjust how fast the solars rotate to try to
+      keep up with it. This will be somewhere around 6 degrees. Check back occasionally to resync as they will inevitably drift.
+
+- type: entity
+  parent: BookBase
+  id: BookKitchenHealthy
+  name: healthiest recipes
+  suffix: useful
+  description: 'A list of recipes which are extremely healthy.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book_cooking
+  - type: Paper
+    content: |
+      Some foods have properties that can help people feel their best again. These are some particularly effective ones.
+
+      1. Donk Pocket Pizza
+      Warm 3 donk pockets (plain) for 5 seconds. Put them back in the microwave, along with dough, a tomato, and a cheese wedge.
+      Microwave 30 seconds.
+
+      2. Nettle Soup
+      Put 10 water, 1 nettle, 1 egg, 1 potato into the microwave for 10 seconds.
+
+      3. Dank Pizza
+      Put dough, 3 ambrosia vulgaris, 1 cheese wedge, and 1 tomato into the microwave for 30 seconds.
+
+      4. Valid Salad
+      Put 3 ambrosia vulgaris, 1 potato, and 1 meatball into the microwave for 5 seconds.
+
+- type: entity
+  parent: BookBase
+  id: BookHydroponicsPotency
+  name: how to grow better plants
+  suffix: useful
+  description: 'A how-to guide to increase potency & growing speed.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book5
+  - type: Paper
+    content: |
+      Robust harvest increases potency.
+      All plants contain chemicals. A plant's potency increases how many chemicals it has.
+      If you are growing a plant for its chemical effects, you want to use robust harvest to
+      make the plant have more chemicals.
+
+      Diethylamine increases growing speed. If you just want to grow a lot of a plant,
+      but don't need to increase its chemicals, use diethylamine. You'll need to ask chemistry.
+      Maybe trade with them for some of your potent medicinal plants.
+
+- type: entity
+  parent: BookBase
+  id: BookHydroponicsMedicinalPlants
+  name: Guide to Medicinal Plants
+  suffix: useful
+  description: 'A guide to various medicinal plants.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book5
+  - type: Paper
+    content: |
+      Ambrosia Vulgaris - Heals brute and burn. Can be worn as a hat. Wanted by both chefs and chemists.
+      Lingzhi - Contains chemicals very good for helping people in critical condition. Dearly wanted by chemists.
+      Aloe - Heals burn. Can be microwaved into aloe cream. Can be mixed with starthistle to make siderlac, an anticaustic.
+      Starthistle - Heals poison. Can be mixed with starthistle to make siderlac.
+      Poppies - Heals brute.
+      Nettles - Can be made into nettle soup. Can be used to extend the effects of ultravasculine. Can be used as a weapon.
