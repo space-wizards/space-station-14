@@ -59,21 +59,24 @@
     layers:
     - state: book_cooking
   - type: Paper
-    content: |
-      Some foods have properties that can help people feel their best again. These are some particularly effective ones.
+    content:
+      "Some foods have properties that can help people feel their best again. These are some particularly effective ones.\n
 
-      1. Donk Pocket Pizza
-      Warm 3 donk pockets (plain) for 5 seconds. Put them back in the microwave, along with dough, a tomato, and a cheese wedge.
-      Microwave 30 seconds.
+      №1. Donk Pocket Pizza\n
+      Warm 3 donk pockets (plain) for 5 seconds. Put them back in the microwave, along with dough, a tomato, and a cheese wedge.\n
+      Microwave 30 seconds.\n
 
-      2. Nettle Soup
-      Put 10 water, 1 nettle, 1 egg, 1 potato into the microwave for 10 seconds.
+      №2. Nettle Soup\n
+      Put 10 water, 1 nettle, 1 egg, 1 potato into the microwave for 10 seconds.\n
 
-      3. Dank Pizza
-      Put dough, 3 ambrosia vulgaris, 1 cheese wedge, and 1 tomato into the microwave for 30 seconds.
+      №3. Dank Pizza\n
+      Put dough, 3 ambrosia vulgaris, 1 cheese wedge, and 1 tomato into the microwave for 30 seconds.\n
 
-      4. Valid Salad
-      Put 3 ambrosia vulgaris, 1 potato, and 1 meatball into the microwave for 5 seconds.
+      №4. Valid Salad\n
+      Put 3 ambrosia vulgaris, 1 potato, and 1 meatball into the microwave for 5 seconds.\n
+
+      №5. Herb Salad\n
+      Put 3 ambrosia vulgaris and 1 apple into the microwave for 5 seconds.\n"
 
 - type: entity
   parent: BookBase
@@ -129,18 +132,19 @@
     layers:
     - state: book_nuclear
   - type: Paper
-    content: |
-      If you are reading this ahead of time, please ensure the disk is in a safe location and pinpointers have been
-      distributed to other heads. Do not carry both a pinpointer and the disk. It will be of no use to you when dead.
+    content:
+      "If you are reading this ahead of time, please ensure the disk is in a safe location and pinpointers have been\n
+       distributed to other heads. Do not carry both a pinpointer and the disk. It will be of no use to you when dead.\n
+      ═══════════════════════════════════════════════════════════════════════════\n
+      In the event the station is under attack by hostile military forces, normal operating procedures no longer apply.\n
+      Immediately put security on high alert. Release any prisoners being held for minor infractions.\n
 
-      In the event the station is under attack by hostile military forces, normal operating procedures no longer apply.
-      Immediately put security on high alert. Release any prisoners being held for minor infractions.
+      Make an announcement over the communications console. Most crew who you would normally not trust with this sense\n
+      of information have a shared interest in not dying and any bloodlust they have can be temporarily redirected.\n
+      After this, relocate immediately as this telegraphs your location as being near a communications console.\n
 
-      Make an announcement over the communications console. Most crew who you would normally not trust with this sense of information have a shared interest in
-      not dying and any bloodlust they have can be temporarily redirected. After this, relocate immediately as this telegraphs your location as being near a
-      communications console.
-
-      Try to link up with security or other heads you trust and decide how you are going to defend the disk. Keeping it on your person is
-      highly discouraged. This allows enemy forces to pinpoint both the location of the disk and YOU. You, who are under every obligation to defend
-      this ship with your life, musn't sacrifice the tactical advantage. Any defensive setup should be near the disk, but the disk should not be on anyone's person
-      if they intend to fight. The CMO may be able to place it in an assistant's chest cavity.
+      Try to link up with security or other heads you trust and decide how you are going to defend the disk. Keeping it\n
+      on your person is highly discouraged. This allows enemy forces to pinpoint both the location of the disk and YOU.\n
+      You, who are under every obligation to defend this ship with your life, musn't sacrifice the tactical advantage.\n
+      Any defensive setup should be near the disk, but the disk should not be on anyone's person if they intend to fight.\n
+      The CMO may be able to place it in an assistant's chest cavity.\n"

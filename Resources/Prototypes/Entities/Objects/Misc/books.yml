@@ -9,6 +9,7 @@
     layers:
     - state: book0
   - type: Paper
+    hugeUI: true
   - type: UserInterface
     interfaces:
     - key: enum.PaperUiKey.Key

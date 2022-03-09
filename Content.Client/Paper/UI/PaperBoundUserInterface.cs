@@ -1,8 +1,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Client.Paper;
 using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Client.Paper.UI
@@ -19,8 +18,14 @@ namespace Content.Client.Paper.UI
         protected override void Open()
         {
             base.Open();
+            bool hugeUI = IoCManager.Resolve<IEntityManager>().GetComponent<PaperComponent>(Owner.Owner).HugeUI;
+            var uiSize = (300, 300);
+            if (hugeUI)
+                uiSize = (1000, 700);
             _window = new PaperWindow
             {
+                MinSize = uiSize,
+                SetSize = uiSize,
                 Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
             _window.OnClose += Close;

@@ -58,7 +58,6 @@ namespace Content.Client.Entry
             "RandomInsulation",
             "Electrified",
             "Electrocution",
-            "Paper",
             "Drone",
             "Bloodstream",
             "TransformableContainer",
