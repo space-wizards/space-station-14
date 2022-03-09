@@ -48,7 +48,7 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
             return;
 
         // +QUERY only for now.
-        if (!_adminManager.IsAdmin(session) || !_adminManager.HasAdminFlag(session, AdminFlags.Query))
+        if (!_adminManager.HasAdminFlag(session, AdminFlags.Query))
             return;
 
         // Ensure the data is under the current size limit, if it's currently enabled.
