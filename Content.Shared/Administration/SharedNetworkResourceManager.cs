@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Threading;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
@@ -25,6 +26,8 @@ public abstract class SharedNetworkResourceManager : IContentRoot
     [ViewVariables]
     protected readonly Dictionary<ResourcePath, byte[]> Files = new();
 
+    protected readonly ReaderWriterLockSlim FilesLock = new();
+
     public virtual void Initialize()
     {
         _netManager.RegisterNetMessage<NetworkResourceUploadMessage>(ResourceUploadMsg);
@@ -37,25 +40,29 @@ public abstract class SharedNetworkResourceManager : IContentRoot
 
     public bool TryGetFile(ResourcePath relPath, [NotNullWhen(true)] out Stream? stream)
     {
-        byte[]? data;
-
-        lock(Files)
+        FilesLock.EnterReadLock();
+        try
         {
-            if (!Files.TryGetValue(relPath, out data))
+            if (!Files.TryGetValue(relPath, out var data))
             {
                 stream = null;
                 return false;
             }
-        }
 
-        // Non-writable stream, as this needs to be thread-safe.
-        stream = new MemoryStream(data, false);
-        return true;
+            // Non-writable stream, as this needs to be thread-safe.
+            stream = new MemoryStream(data, false);
+            return true;
+        }
+        finally
+        {
+            FilesLock.ExitReadLock();
+        }
     }
 
     public IEnumerable<ResourcePath> FindFiles(ResourcePath path)
     {
-        lock(Files)
+        FilesLock.EnterReadLock();
+        try
         {
             foreach (var (file, _) in Files)
             {
@@ -63,16 +70,25 @@ public abstract class SharedNetworkResourceManager : IContentRoot
                     yield return file;
             }
         }
+        finally
+        {
+            FilesLock.ExitReadLock();
+        }
     }
 
     public IEnumerable<string> GetRelativeFilePaths()
     {
-        lock (Files)
+        FilesLock.EnterReadLock();
+        try
         {
             foreach (var (file, _) in Files)
             {
                 yield return file.ToString();
             }
+        }
+        finally
+        {
+            FilesLock.ExitReadLock();
         }
     }
 

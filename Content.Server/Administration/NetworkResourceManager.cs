@@ -58,9 +58,14 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
         // just in case, we ensure it's a clean relative path.
         msg.RelativePath = msg.RelativePath.Clean().ToRelativePath();
 
-        lock(Files)
+        FilesLock.EnterWriteLock();
+        try
         {
             Files[msg.RelativePath] = msg.Data;
+        }
+        finally
+        {
+            FilesLock.ExitWriteLock();
         }
 
         // Now we broadcast the message!
@@ -77,7 +82,8 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
 
     private void ServerNetManagerOnConnected(object? sender, NetChannelArgs e)
     {
-        lock (Files)
+        FilesLock.EnterReadLock();
+        try
         {
             foreach (var (path, data) in Files)
             {
@@ -86,6 +92,10 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
                 msg.Data = data;
                 e.Channel.SendMessage(msg);
             }
+        }
+        finally
+        {
+            FilesLock.ExitReadLock();
         }
     }
 
