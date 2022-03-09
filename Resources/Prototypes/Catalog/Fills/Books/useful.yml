@@ -1,8 +1,9 @@
 # Books that are actually useful
+# Yeah I'm breaking the capitalization standard for names - they're proper titles
 - type: entity
   parent: BookBase
   id: BookChemistryBloodloss
-  name: bloodloss recipes
+  name: Bloodloss Recipes
   suffix: useful
   description: 'Instructions on how to prepare bloodloss medication.'
   components:
@@ -26,7 +27,7 @@
 - type: entity
   parent: BookBase
   id: BookEngineeringSolars
-  name: solars setup guide
+  name: Solars Setup Guide
   suffix: useful
   description: 'Instructions how to set up solars.'
   components:
@@ -49,7 +50,7 @@
 - type: entity
   parent: BookBase
   id: BookKitchenHealthy
-  name: healthiest recipes
+  name: Healthiest Recipes
   suffix: useful
   description: 'A list of recipes which are extremely healthy.'
   components:
@@ -77,7 +78,7 @@
 - type: entity
   parent: BookBase
   id: BookHydroponicsPotency
-  name: how to grow better plants
+  name: How to Grow Better Plants
   suffix: useful
   description: 'A how-to guide to increase potency & growing speed.'
   components:
@@ -112,6 +113,34 @@
       Ambrosia Vulgaris - Heals brute and burn. Can be worn as a hat. Wanted by both chefs and chemists.
       Lingzhi - Contains chemicals very good for helping people in critical condition. Dearly wanted by chemists.
       Aloe - Heals burn. Can be microwaved into aloe cream. Can be mixed with starthistle to make siderlac, an anticaustic.
-      Starthistle - Heals poison. Can be mixed with starthistle to make siderlac.
+      Starthistle - Heals poison. Can be mixed with aloe to make siderlac.
       Poppies - Heals brute.
       Nettles - Can be made into nettle soup. Can be used to extend the effects of ultravasculine. Can be used as a weapon.
+
+- type: entity
+  parent: BookBase
+  id: BookBridgeNuclearEmergency
+  name: Nuclear Emergency Procedure
+  suffix: useful
+  description: 'Hopefully you will never need this.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book_nuclear
+  - type: Paper
+    content: |
+      If you are reading this ahead of time, please ensure the disk is in a safe location and pinpointers have been
+      distributed to other heads. Do not carry both a pinpointer and the disk. It will be of no use to you when dead.
+
+      In the event the station is under attack by hostile military forces, normal operating procedures no longer apply.
+      Immediately put security on high alert. Release any prisoners being held for minor infractions.
+
+      Make an announcement over the communications console. Most crew who you would normally not trust with this sense of information have a shared interest in
+      not dying and any bloodlust they have can be temporarily redirected. After this, relocate immediately as this telegraphs your location as being near a
+      communications console.
+
+      Try to link up with security or other heads you trust and decide how you are going to defend the disk. Keeping it on your person is
+      highly discouraged. This allows enemy forces to pinpoint both the location of the disk and YOU. You, who are under every obligation to defend
+      this ship with your life, musn't sacrifice the tactical advantage. Any defensive setup should be near the disk, but the disk should not be on anyone's person
+      if they intend to fight. The CMO may be able to place it in an assistant's chest cavity.
