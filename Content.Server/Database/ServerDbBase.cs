@@ -770,10 +770,11 @@ namespace Content.Server.Database
 
             var today = DateTime.Now;
 
-            await foreach (var log in db.DbContext.UploadedResourceLog.AsAsyncEnumerable())
+            await foreach (var log in db.DbContext.UploadedResourceLog
+                               .Where(l => (today - l.Date).TotalDays >= days)
+                               .AsAsyncEnumerable())
             {
-                if ((today - log.Date).TotalDays >= days)
-                    db.DbContext.Remove(log);
+                db.DbContext.Remove(log);
             }
 
             await db.DbContext.SaveChangesAsync();
