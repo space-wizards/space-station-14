@@ -5,6 +5,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Instruments;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -180,5 +181,14 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             instrument.LaggedBatches = 0;
             instrument.BatchesDropped = 0;
         }
+    }
+
+    public void ToggleInstrumentUi(EntityUid uid, IPlayerSession session, InstrumentComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        var ui = uid.GetUIOrNull(InstrumentUiKey.Key);
+        ui?.Toggle(session);
     }
 }

@@ -298,6 +298,11 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
+            // Check general interaction blocking.
+            if (!_actionBlockerSystem.CanInteract(user, target))
+                return;
+
+            // Check combat-specific action blocking.
             if (!_actionBlockerSystem.CanAttack(user, target))
                 return;
 

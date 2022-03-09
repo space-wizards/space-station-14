@@ -26,7 +26,7 @@ namespace Content.Server.Chemistry.TileReactions
 
         FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
         {
-            var entities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(tile).ToArray();
+            var entities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesIntersecting(tile).ToArray();
             var amount = FixedPoint2.Zero;
             var entMan = IoCManager.Resolve<IEntityManager>();
             foreach (var entity in entities)

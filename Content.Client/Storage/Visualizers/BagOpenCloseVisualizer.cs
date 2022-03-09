@@ -32,10 +32,10 @@ namespace Content.Client.Storage.Visualizers
 
             if (_openIcon != null &&
                 entities.TryGetComponent<SpriteComponent?>(entity, out var spriteComponent) &&
-                spriteComponent.BaseRSI?.Path != null)
+                spriteComponent.BaseRSI?.Path is { } path)
             {
                 spriteComponent.LayerMapReserveBlank(OpenIcon);
-                spriteComponent.LayerSetSprite(OpenIcon, new Rsi(spriteComponent.BaseRSI.Path, _openIcon));
+                spriteComponent.LayerSetSprite(OpenIcon, new Rsi(path, _openIcon));
                 spriteComponent.LayerSetVisible(OpenIcon, false);
             }
         }
