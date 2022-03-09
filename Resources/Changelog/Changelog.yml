@@ -1,9 +1,4 @@
 Entries:
-- author: pointer-to-null
-  changes:
-  - {message: Added a FPS counter game option., type: Add}
-  id: 683
-  time: '2021-11-30T11:31:13.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Effects (i.e. melee and hitscan weapons like lasers) now have the correct
@@ -2973,3 +2968,10 @@ Entries:
       T-Ray scanner, type: Fix}
   id: 1182
   time: '2022-03-09T06:40:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'The client now tries to predict more interactions. This may lead to
+      some bugs, particularly double audio, pop-ups, and animations. Please report
+      any that come up.', type: Tweak}
+  id: 1183
+  time: '2022-03-09T07:12:17.0000000+00:00'
