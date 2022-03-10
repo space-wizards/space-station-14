@@ -9,7 +9,7 @@
     state: combat_hypo
     netsync: false
   - type: GuardianCreator
-    guardianProto: MobHoloparasite
+    guardianProto: MobHoloparasiteGuardian
 
 - type: entity
   name: magical lamp
@@ -25,7 +25,7 @@
         shader: unshaded
         visible: false
   - type: GuardianCreator
-    guardianProto: MobMagicalGuardian
+    guardianProto: MobIfritGuardian
 
 - type: entity
   name: holoparasite box

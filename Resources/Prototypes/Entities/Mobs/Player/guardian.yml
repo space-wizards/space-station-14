@@ -97,7 +97,7 @@
 - type: entity
   name: Ifrit
   parent: MobGuardianBase
-  id: MobMagicalGuardian
+  id: MobIfritGuardian
   description: A corrupted jhin, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into it's owner's life to sustain itself.
   components:
   - type: GhostTakeoverAvailable
