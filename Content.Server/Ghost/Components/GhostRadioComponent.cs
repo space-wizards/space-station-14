@@ -1,12 +1,8 @@
-using System.Collections.Generic;
 using Content.Server.Radio.Components;
+using Content.Server.Administration.Managers;
 using Content.Shared.Chat;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Ghost.Components
 {
@@ -17,12 +13,15 @@ namespace Content.Server.Ghost.Components
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
 
+        [Dependency] private readonly IAdminManager _adminManager = default!;
+
+
         [DataField("channels")]
         private List<int> _channels = new(){1459};
 
         public IReadOnlyList<int> Channels => _channels;
 
-        public void Receive(string message, int channel, string speakerVoice)
+        public void Receive(string message, int channel, string speakerVoice, string adminVoice)
         {
             if (!_entMan.TryGetComponent(Owner, out ActorComponent? actor))
                 return;
@@ -34,7 +33,13 @@ namespace Content.Server.Ghost.Components
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;
             //Square brackets are added here to avoid issues with escaping
-            msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", speakerVoice));
+            if (!_adminManager.IsAdmin(actor.PlayerSession))
+            {
+                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", speakerVoice));
+            } else
+            {
+                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", adminVoice));
+            }
             _netManager.ServerSendMessage(msg, playerChannel);
         }
 

@@ -10,6 +10,7 @@ using Content.Server.MoMMI;
 using Content.Server.Players;
 using Content.Server.Preferences.Managers;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Mind.Components;
 using Content.Server.Speech.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
@@ -242,11 +243,25 @@ namespace Content.Server.Chat.Managers
                 entityName = voice.VoiceName;
             }
 
-            var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", entityName));
+            var mind = _entManager.GetComponent<MindComponent>(source);
+            var adminEntityName = entityName;
+            if (mind.Mind != null && (mind.Mind.TryGetSession(out var sourceSession)))
+            {
+                adminEntityName = entityName + " (" + sourceSession.Name + ")";
+            }
 
+
+            var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", entityName));
+            var adminMessageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", adminEntityName));
             foreach (var session in sessions)
             {
-                NetMessageToOne(ChatChannel.Local, message, messageWrap, source, hideChat, session.ConnectedClient);
+                if (!_adminManager.IsAdmin((IPlayerSession) session))
+                {
+                    NetMessageToOne(ChatChannel.Local, message, messageWrap, source, hideChat, session.ConnectedClient);
+                } else
+                {
+                    NetMessageToOne(ChatChannel.Local, message, adminMessageWrap, source, hideChat, session.ConnectedClient);
+                }
             }
 
             _logs.Add(LogType.Chat, LogImpact.Low, $"Say from {_entManager.ToPrettyString(source):user}: {message}");

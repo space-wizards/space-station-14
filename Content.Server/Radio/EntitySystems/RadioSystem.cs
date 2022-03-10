@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Speech.Components;
 using Content.Server.Radio.Components;
+using Content.Server.Mind.Components;
 using JetBrains.Annotations;
 
 namespace Content.Server.Radio.EntitySystems
@@ -16,11 +17,18 @@ namespace Content.Server.Radio.EntitySystems
 
             _messages.Add(message);
             string voiceID = GetSpeakerVoice(speaker);
+            var speakerMind = Comp<MindComponent>(speaker);
+            string adminVoiceID = voiceID;
+            if (speakerMind.Mind != null && speakerMind.Mind.TryGetSession(out var session))
+            {
+                adminVoiceID = voiceID + " (" + session.Name + ")";
+            }
+
             foreach (var radio in EntityManager.EntityQuery<IRadio>(true))
             {
                 if (radio.Channels.Contains(channel))
                 {
-                    radio.Receive(message, channel, voiceID);
+                    radio.Receive(message, channel, voiceID, adminVoiceID);
                 }
             }
 

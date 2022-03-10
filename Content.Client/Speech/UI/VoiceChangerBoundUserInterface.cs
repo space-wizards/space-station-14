@@ -31,6 +31,7 @@ namespace Content.Client.Speech.UI
         private void OnNameChanged(string newName)
         {
             SendMessage(new VoiceChangerNameChangedMessage(newName));
+            Close();
         }
 
         /// <summary>

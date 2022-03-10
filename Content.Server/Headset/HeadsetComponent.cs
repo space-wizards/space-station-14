@@ -1,17 +1,12 @@
-using System.Collections.Generic;
 using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Administration.Managers;
 using Content.Shared.Chat;
 using Content.Shared.Examine;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Headset
 {
@@ -24,6 +19,8 @@ namespace Content.Server.Headset
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
+
+        [Dependency] private readonly IAdminManager _adminManager = default!;
 
         private RadioSystem _radioSystem = default!;
 
@@ -54,7 +51,7 @@ namespace Content.Server.Headset
             return RadioRequested;
         }
 
-        public void Receive(string message, int channel, string speakerVoice)
+        public void Receive(string message, int channel, string speakerVoice, string adminVoice)
         {
             if (Owner.TryGetContainer(out var container))
             {
@@ -68,7 +65,14 @@ namespace Content.Server.Headset
                 msg.Channel = ChatChannel.Radio;
                 msg.Message = message;
                 //Square brackets are added here to avoid issues with escaping
-                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", speakerVoice));
+                if (!_adminManager.IsAdmin(actor.PlayerSession))
+                {
+                    msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", speakerVoice));
+                } else
+                {
+                    msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", adminVoice));
+
+                }
                 _netManager.ServerSendMessage(msg, playerChannel);
             }
         }

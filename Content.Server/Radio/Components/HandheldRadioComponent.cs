@@ -80,7 +80,7 @@ namespace Content.Server.Radio.Components
                    EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
         }
 
-        public void Receive(string message, int channel, string speakerVoice)
+        public void Receive(string message, int channel, string speakerVoice, string adminVoice)
         {
             if (RadioOn)
             {

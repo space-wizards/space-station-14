@@ -7,7 +7,7 @@ namespace Content.Server.Radio.Components
     {
         IReadOnlyList<int> Channels { get; }
 
-        void Receive(string message, int channel, string speaker);
+        void Receive(string message, int channel, string speaker, string adminVoiceID);
 
         void Broadcast(string message, EntityUid speaker);
     }
