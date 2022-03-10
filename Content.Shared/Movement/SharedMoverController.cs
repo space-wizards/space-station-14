@@ -35,8 +35,8 @@ namespace Content.Shared.Movement
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
 
-        protected const float FootstepSoundVariation = 0.01f;
-        protected const float FootstepVolume = -2f;
+        private const float FootstepVariation = 0f;
+        private const float FootstepVolume = 1f;
 
         private bool _relativeMovement;
 
@@ -166,13 +166,13 @@ namespace Content.Shared.Movement
                     : worldTotal.ToWorldAngle();
                 xform.DeferUpdates = false;
 
-                if (TryGetSound(mover, mobMover, xform, out var sound))
+                if (TryGetSound(mover, mobMover, xform, out var variation, out var sound))
                 {
                     SoundSystem.Play(
                         GetSoundPlayers(mover.Owner),
                         sound,
                         mover.Owner,
-                        AudioHelpers.WithVariation(FootstepSoundVariation).WithVolume(FootstepVolume));
+                        AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume));
                 }
             }
 
@@ -225,9 +225,10 @@ namespace Content.Shared.Movement
 
         protected abstract bool CanSound();
 
-        private bool TryGetSound(IMoverComponent mover, IMobMoverComponent mobMover, TransformComponent xform, [NotNullWhen(true)] out string? sound)
+        private bool TryGetSound(IMoverComponent mover, IMobMoverComponent mobMover, TransformComponent xform, out float variation, [NotNullWhen(true)] out string? sound)
         {
             sound = null;
+            variation = 0f;
 
             if (!CanSound() || !_tags.HasTag(mover.Owner, "FootstepSound")) return false;
 
@@ -266,48 +267,40 @@ namespace Content.Shared.Movement
                 EntityManager.TryGetComponent<FootstepModifierComponent>(shoes, out var modifier))
             {
                 sound = modifier.SoundCollection.GetSound();
+                variation = modifier.Variation;
                 return true;
             }
 
-            sound = GetFootstepSound(mover.Owner, gridId, coordinates, mover.Sprinting);
-            return sound != null;
+            return TryGetFootstepSound(gridId, coordinates, out variation, out sound);
         }
 
-        private string? GetFootstepSound(EntityUid mover, GridId gridId, EntityCoordinates coordinates, bool sprinting)
+        private bool TryGetFootstepSound(GridId gridId, EntityCoordinates coordinates, out float variation, [NotNullWhen(true)] out string? sound)
         {
+            variation = 0f;
+            sound = null;
             var grid = _mapManager.GetGrid(gridId);
             var tile = grid.GetTileRef(coordinates);
 
-            if (tile.IsSpace(_tileDefinitionManager)) return null;
+            if (tile.IsSpace(_tileDefinitionManager)) return false;
 
             // If the coordinates have a FootstepModifier component
             // i.e. component that emit sound on footsteps emit that sound
-            string? soundToPlay = null;
             foreach (var maybeFootstep in grid.GetAnchoredEntities(tile.GridIndices))
             {
                 if (EntityManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
                 {
-                    soundToPlay = footstep.SoundCollection.GetSound();
-                    break;
+                    sound = footstep.SoundCollection.GetSound();
+                    variation = footstep.Variation;
+                    return true;
                 }
             }
-            // if there is no FootstepModifierComponent, determine sound based on tiles
-            if (soundToPlay == null)
-            {
-                // Walking on a tile.
-                var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-                soundToPlay = def.FootstepSounds?.GetSound();
-                if (string.IsNullOrEmpty(soundToPlay))
-                    return null;
-            }
 
-            if (string.IsNullOrWhiteSpace(soundToPlay))
-            {
-                Logger.ErrorS("sound", $"Unable to find sound in {nameof(GetFootstepSound)}");
-                return null;
-            }
+            // Walking on a tile.
+            var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
+            sound = def.FootstepSounds?.GetSound();
+            variation = FootstepVariation;
 
-            return soundToPlay;
+            return !string.IsNullOrEmpty(sound);
         }
     }
 }
