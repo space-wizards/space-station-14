@@ -531,6 +531,39 @@
   desc: Turn up for days.
   physicalDesc: bubbly
   color: "#9400D3"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Poison:
+      effects:
+      - !type:Electrocute
+        probability: 0.05
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 3
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: -1
+    Narcotic:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 2.0
+        sprintSpeedModifier: 2.0
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 5
+        type: Remove
+    
 
 - type: reagent
   id: LeanShine
