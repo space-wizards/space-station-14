@@ -286,7 +286,18 @@ namespace Content.Server.Chat.Managers
 
             var transformSource = _entManager.GetComponent<TransformComponent>(source);
             var sourceCoords = transformSource.Coordinates;
-            var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+
+            var entityName = string.Empty;
+
+            if(!_entManager.TryGetComponent<VoiceChangerVoiceComponent>(source, out var voice))
+            {
+                entityName = _entManager.GetComponent<MetaDataComponent>(source).EntityName;
+            } else
+            {
+                entityName = voice.voiceName;
+            }
+
+            var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", entityName));
 
             var xforms = _entManager.GetEntityQuery<TransformComponent>();
             var ghosts = _entManager.GetEntityQuery<GhostComponent>();
