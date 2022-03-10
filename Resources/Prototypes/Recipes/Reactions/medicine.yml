@@ -1,28 +1,4 @@
 - type: reaction
-  id: Alkycosine
-  reactants:
-    Alkysine:
-      amount: 1
-    Bleach:
-      amount: 1
-    Dylovene:
-      amount: 1
-  products:
-    Alkycosine: 3
-
-- type: reaction
-  id: Alkysine
-  reactants:
-    Chlorine:
-      amount: 1
-    Nitrogen:
-      amount: 1
-    Dylovene:
-      amount: 1
-  products:
-    Alkysine: 3
-
-- type: reaction
   id: Dylovene
   reactants:
     Silicon:
@@ -98,16 +74,6 @@
     Clonexadone: 2
 
 - type: reaction
-  id: Citalopram
-  reactants:
-    MindbreakerToxin:
-      amount: 5
-    Carbon:
-      amount: 5
-  products:
-    Citalopram: 10
-
-- type: reaction
   id: Dermaline
   reactants:
     Kelotane:
@@ -143,30 +109,6 @@
     DexalinPlus: 3
 
 - type: reaction
-  id: Ethylredoxrazine
-  reactants:
-    Oxygen:
-      amount: 1
-    Dylovene:
-      amount: 1
-    Carbon:
-      amount: 1
-  products:
-    Ethylredoxrazine: 3
-
-- type: reaction
-  id: Hyperzine
-  reactants:
-    Glucose:
-      amount: 1
-    Phosphorus:
-      amount: 1
-    Sulfur:
-      amount: 1
-  products:
-    Hyperzine: 3
-
-- type: reaction
   id: Hyronalin
   reactants:
     Radium:
@@ -175,30 +117,6 @@
       amount: 1
   products:
     Hyronalin: 2
-
-- type: reaction
-  id: Imidazoline
-  reactants:
-    Hydrogen:
-      amount: 1
-    Carbon:
-      amount: 1
-    Dylovene:
-      amount: 1
-  products:
-    Imidazoline: 3
-
-- type: reaction
-  id: Inacusiate
-  reactants:
-    Dylovene:
-      amount: 1
-    Carbon:
-      amount: 1
-    Water:
-      amount: 1
-  products:
-    Inacusiate: 3
 
 - type: reaction
   id: Inaprovaline
@@ -248,33 +166,6 @@
     Leporazine: 2
 
 - type: reaction
-  id: Methylin
-  reactants:
-    Hydrogen:
-      amount: 1
-    Chlorine:
-      amount: 1
-    Ethanol:
-      amount: 1
-    Fluorine:
-      amount: 5
-      catalyst: true
-  products:
-    Methylin: 3
-
-- type: reaction
-  id: Oxycodone
-  reactants:
-    Ethanol:
-      amount: 1
-    Tramadol:
-      amount: 1
-    Plasma:
-      amount: 1
-  products:
-    Oxycodone: 3
-
-- type: reaction
   id: Phalanximine
   reactants:
     Hyronalin:
@@ -285,38 +176,6 @@
       amount: 1
   products:
     Phalanximine: 3
-
-- type: reaction
-  id: Paroxetine
-  reactants:
-    MindbreakerToxin:
-      amount: 5
-    Oxygen:
-      amount: 5
-    Inaprovaline:
-      amount: 5
-  products:
-    Paroxetine: 15
-
-- type: reaction
-  id: Ryetalyn
-  reactants:
-    Arithrazine:
-      amount: 1
-    Carbon:
-      amount: 1
-  products:
-    Ryetalyn: 2
-
-- type: reaction
-  id: Spaceacillin
-  reactants:
-    Cryptobiolin:
-      amount: 1
-    Inaprovaline:
-      amount: 1
-  products:
-    Spaceacillin: 2
 
 - type: reaction
   id: Synaptizine
@@ -331,18 +190,6 @@
     Synaptizine: 3
 
 - type: reaction
-  id: Tramadol
-  reactants:
-    Inaprovaline:
-      amount: 1
-    Ethanol:
-      amount: 1
-    Oxygen:
-      amount: 1
-  products:
-    Tramadol: 3
-
-- type: reaction
   id: Tricordrazine
   reactants:
     Inaprovaline:
@@ -351,30 +198,6 @@
       amount: 1
   products:
     Tricordrazine: 2
-
-- type: reaction
-  id: ChloralHydrate
-  reactants:
-    Ethanol:
-      amount: 1
-    Chlorine:
-      amount: 3
-    Water:
-      amount: 1
-  products:
-    ChloralHydrate: 1
-
-- type: reaction
-  id: Cryptobiolin
-  reactants:
-    Potassium:
-      amount: 1
-    Oxygen:
-      amount: 1
-    Glucose:
-      amount: 1
-  products:
-    Cryptobiolin: 3
 
 - type: reaction
   id: HeartbreakerToxin #heat to 37C once temperatures supported
@@ -432,28 +255,6 @@
       amount: 1
   products:
     MindbreakerToxin: 3
-
-- type: reaction
-  id: Soporific
-  reactants:
-    ChloralHydrate:
-      amount: 1
-    Glucose:
-      amount: 4
-  products:
-    Soporific: 5
-
-- type: reaction
-  id: Sterilizine
-  reactants:
-    Ethanol:
-      amount: 1
-    Dylovene:
-      amount: 1
-    Chlorine:
-      amount: 1
-  products:
-    Sterilizine: 3
 
 - type: reaction
   id: SpaceDrugs

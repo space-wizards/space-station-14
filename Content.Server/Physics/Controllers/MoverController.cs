@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Content.Server.Movement.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.EntitySystems;
@@ -170,16 +171,21 @@ namespace Content.Server.Physics.Controllers
                 if (linearInput.Length.Equals(0f))
                 {
                     thrusterSystem.DisableLinearThrusters(shuttle);
-                    body.LinearDamping = shuttleSystem.ShuttleIdleLinearDamping;
+                    body.LinearDamping = shuttleSystem.ShuttleIdleLinearDamping * body.InvMass;
+                    if (body.LinearVelocity.Length < 0.08)
+                    {
+                        body.LinearVelocity = Vector2.Zero;
+                    }
                 }
                 else
                 {
-                    body.LinearDamping = shuttleSystem.ShuttleMovingLinearDamping;
-
+                    body.LinearDamping = 0;
                     var angle = linearInput.ToWorldAngle();
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
                     var shuttleNorth = EntityManager.GetComponent<TransformComponent>(body.Owner).WorldRotation.ToWorldVec();
+
+                    var totalForce = new Vector2();
 
                     // Won't just do cardinal directions.
                     foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
@@ -230,41 +236,38 @@ namespace Content.Server.Physics.Controllers
                         thrusterSystem.EnableLinearThrustDirection(shuttle, dir);
 
                         var index = (int) Math.Log2((int) dir);
-                        var speed = shuttle.LinearThrusterImpulse[index] * length;
+                        var force = thrustAngle.RotateVec(shuttleNorth) * shuttle.LinearThrust[index] * length;
 
-                        if (body.LinearVelocity.LengthSquared < 0.5f)
-                        {
-                            speed *= 5f;
-                        }
-
-                        body.ApplyLinearImpulse(
-                            thrustAngle.RotateVec(shuttleNorth) *
-                            speed *
-                            frameTime);
+                        totalForce += force;
                     }
+
+                    var dragForce = body.LinearVelocity * (totalForce.Length / shuttleSystem.ShuttleMaxLinearSpeed);
+                    body.ApplyLinearImpulse((totalForce - dragForce) * frameTime);
                 }
 
                 if (MathHelper.CloseTo(angularInput, 0f))
                 {
                     thrusterSystem.SetAngularThrust(shuttle, false);
-                    body.AngularDamping = shuttleSystem.ShuttleIdleAngularDamping;
+                    body.AngularDamping = shuttleSystem.ShuttleIdleAngularDamping * body.InvI;
+                    body.SleepingAllowed = true;
+
+                    if (Math.Abs(body.AngularVelocity) < 0.01f)
+                    {
+                        body.AngularVelocity = 0f;
+                    }
                 }
                 else
                 {
-                    body.AngularDamping = shuttleSystem.ShuttleMovingAngularDamping;
-                    var angularSpeed = shuttle.AngularThrust;
+                    body.AngularDamping = 0;
+                    body.SleepingAllowed = false;
 
-                    if (body.AngularVelocity < 0.5f)
-                    {
-                        angularSpeed *= 5f;
-                    }
+                    var maxSpeed = Math.Min(shuttleSystem.ShuttleMaxAngularMomentum * body.InvI, shuttleSystem.ShuttleMaxAngularSpeed);
+                    var maxTorque = body.Inertia * shuttleSystem.ShuttleMaxAngularAcc;
 
-                    // Scale rotation by mass just to make rotating larger things a bit more bearable.
-                    body.ApplyAngularImpulse(
-                        -angularInput *
-                        angularSpeed *
-                        frameTime *
-                        body.Mass / 100f);
+                    var torque = Math.Min(shuttle.AngularThrust, maxTorque);
+                    var dragTorque = body.AngularVelocity * (torque / maxSpeed);
+
+                    body.ApplyAngularImpulse((-angularInput * torque - dragTorque) * frameTime);
 
                     thrusterSystem.SetAngularThrust(shuttle, true);
                 }
