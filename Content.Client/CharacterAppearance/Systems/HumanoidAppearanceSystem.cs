@@ -25,6 +25,10 @@ namespace Content.Client.CharacterAppearance.Systems
         private readonly HumanoidVisualLayers[] _bodyPartLayers = {
             HumanoidVisualLayers.Chest,
             HumanoidVisualLayers.Head,
+            HumanoidVisualLayers.Snout,
+            HumanoidVisualLayers.Frills,
+            HumanoidVisualLayers.TailBehind,
+            HumanoidVisualLayers.TailFront,
             HumanoidVisualLayers.Eyes,
             HumanoidVisualLayers.RArm,
             HumanoidVisualLayers.LArm,
@@ -99,7 +103,6 @@ namespace Content.Client.CharacterAppearance.Systems
             }
 
             sprite.LayerSetColor(HumanoidVisualLayers.Eyes, component.Appearance.EyeColor);
-
             sprite.LayerSetState(HumanoidVisualLayers.Chest, component.Sex == Sex.Male ? "torso_m" : "torso_f");
             sprite.LayerSetState(HumanoidVisualLayers.Head, component.Sex == Sex.Male ? "head_m" : "head_f");
 
