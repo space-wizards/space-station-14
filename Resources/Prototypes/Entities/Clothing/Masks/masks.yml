@@ -94,3 +94,9 @@
   suffix: voice changer
   components:
     - type: VoiceChanger
+    - type: ActivatableUI
+      key: enum.VoiceChangerUiKey.Key
+    - type: UserInterface
+      interfaces:
+        - key: enum.VoiceChangerUiKey.Key
+          type: VoiceChangerBoundUserInterface

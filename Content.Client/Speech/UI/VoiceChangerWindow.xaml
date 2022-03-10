@@ -1,0 +1,8 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            Title="Voice Changer">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
+        <Label Name="CurrentName" Text="{Loc 'voice-changer-current-name'}" />
+        <LineEdit Name="NameLineEdit" />
+    </BoxContainer>
+</DefaultWindow>
