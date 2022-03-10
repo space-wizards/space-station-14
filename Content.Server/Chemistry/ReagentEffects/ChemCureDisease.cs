@@ -16,7 +16,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// Chance it has each tick to cure a disease, between 0 and 1
         /// </summary>
         [DataField("cureChance")]
-        public float CureChance = 0.1f;
+        public float CureChance = 0.15f;
 
         public override void Effect(ReagentEffectArgs args)
         {

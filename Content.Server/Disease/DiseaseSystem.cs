@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Disease;
 using Content.Shared.Interaction;
 using Content.Server.Popups;
@@ -11,10 +12,11 @@ namespace Content.Server.Disease
     public sealed class DiseaseSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         [Dependency] private readonly ISerializationManager _serializationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {
@@ -25,7 +27,7 @@ namespace Content.Server.Disease
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var (diseasedComp, carrierComp) in EntityQuery<DiseasedComponent, DiseaseCarrierComponent>(false))
+            foreach (var (diseasedComp, carrierComp) in EntityQuery<DiseasedComponent, DiseaseCarrierComponent>(false).ToArray())
             {
                 if (carrierComp.Diseases.Count > 0)
                 {
@@ -101,6 +103,30 @@ namespace Content.Server.Disease
                 }
             }
         }
+
+        private void TryInfect(DiseaseCarrierComponent carrier, DiseasePrototype? disease, float chance = 0.7f)
+        {
+            if(disease == null)
+                return;
+
+            if (_random.Prob(chance))
+                TryAddDisease(carrier, disease);
+        }
+        public void SneezeCough(EntityUid uid, DiseasePrototype? disease, SneezeCoughType Snough)
+        {
+            var xform = Comp<TransformComponent>(uid);
+            if (Snough == SneezeCoughType.Sneeze)
+                _popupSystem.PopupEntity(Loc.GetString("disease-sneeze", ("person", uid)), uid, Filter.Pvs(uid));
+            else
+                _popupSystem.PopupEntity(Loc.GetString("disease-cough", ("person", uid)), uid, Filter.Pvs(uid));
+
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, 1.5f))
+            {
+                if (TryComp<DiseaseCarrierComponent>(entity, out var carrier))
+                    TryInfect(carrier, disease);
+            }
+
+        }
     }
         public sealed class CureDiseaseAttemptEvent : EntityEventArgs
         {
@@ -110,5 +136,12 @@ namespace Content.Server.Disease
             {
                 CureChance = cureChance;
             }
+        }
+
+        public enum SneezeCoughType
+        {
+            Sneeze,
+
+            Cough
         }
 }

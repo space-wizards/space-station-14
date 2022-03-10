@@ -29,7 +29,7 @@ namespace Content.Shared.Disease
         public readonly List<DiseaseCure> Cures = new(0);
 
         [DataField("cureResist", serverOnly: true)]
-        public float CureResist = 0f;
+        public float CureResist = 0.05f;
 
     }
 }
