@@ -56,22 +56,21 @@ public sealed partial class StorageSystem
         foreach (var group in orGroupedSpawns)
         {
             double diceRoll = _random.NextDouble() * group.Value.CumulativeProbability;
-            List<EntitySpawnEntry> groupEntries = group.Value.Entries;
-            _random.Shuffle(groupEntries);
+            _random.Shuffle(group.Value.Entries);
 
             double cumulative = 0.0;
-            for (int i = 0; i < groupEntries.Count; i++)
+            for (int i = 0; i < group.Value.Entries.Count; i++)
             {
-                cumulative += groupEntries[i].SpawnProbability;
+                cumulative += group.Value.Entries[i].SpawnProbability;
                 if (diceRoll <= cumulative)
                 {
-                    for (var index = 0; index < groupEntries[i].Amount; index++)
+                    for (var index = 0; index < group.Value.Entries[i].Amount; index++)
                     {
-                        var ent = EntityManager.SpawnEntity(groupEntries[i].PrototypeId, coordinates);
+                        var ent = EntityManager.SpawnEntity(group.Value.Entries[i].PrototypeId, coordinates);
 
                         if (storage.Insert(ent)) continue;
 
-                        Logger.ErrorS("storage", $"Tried to StorageFill {groupEntries[i].PrototypeId} inside {uid} but can't.");
+                        Logger.ErrorS("storage", $"Tried to StorageFill {group.Value.Entries[i].PrototypeId} inside {uid} but can't.");
                         EntityManager.DeleteEntity(ent);
                     }
                     break;
