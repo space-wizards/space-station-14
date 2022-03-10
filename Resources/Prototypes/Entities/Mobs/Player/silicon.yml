@@ -99,7 +99,27 @@
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
-      70: !type:DeadMobState {}
+      60: !type:DeadMobState {}
+  - type: Flashable
+  - type: NoSlip
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      20: 0.8
+      30: 0.6
+      40: 0.4
+      50: 0.2
+  - type: Temperature
+    heatDamageThreshold: 5000
+    currentTemperature: 310.15
+    specificHeat: 42
+    heatDamage:
+      types:
+        Heat : 1 #per second, scales with temperature & other constants
   - type: Sprite
     drawdepth: Mobs
     netsync: false

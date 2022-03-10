@@ -20,7 +20,7 @@ namespace Content.Shared.Item
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.
     /// </summary>
     [NetworkedComponent()]
-    public abstract class SharedItemComponent : Component, IInteractHand
+    public abstract class SharedItemComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -96,22 +96,6 @@ namespace Content.Shared.Item
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sprite")]
         public readonly string? RsiPath;
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            var user = eventArgs.User;
-
-            if (!_entMan.TryGetComponent(user, out SharedHandsComponent hands))
-                return false;
-
-            var activeHand = hands.ActiveHand;
-
-            if (activeHand == null)
-                return false;
-
-            // hands checks action blockers
-            return hands.TryPickupEntityToActiveHand(Owner, animateUser: true);
-        }
 
         public void RemovedFromSlot()
         {

@@ -1,3 +1,5 @@
+using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -17,9 +19,24 @@ namespace Content.Shared.Item
 
             SubscribeLocalEvent<SharedSpriteComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<SharedSpriteComponent, GotUnequippedEvent>(OnUnequipped);
+            SubscribeLocalEvent<SharedItemComponent, InteractHandEvent>(OnHandInteract);
 
             SubscribeLocalEvent<SharedItemComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<SharedItemComponent, ComponentHandleState>(OnHandleState);
+        }
+
+        private void OnHandInteract(EntityUid uid, SharedItemComponent component, InteractHandEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (!TryComp(args.User, out SharedHandsComponent? hands))
+                return;
+
+            if (hands.ActiveHand == null)
+                return;
+
+            args.Handled = hands.TryPickupEntity(hands.ActiveHand, uid, false, animateUser: false);
         }
 
         private void OnHandleState(EntityUid uid, SharedItemComponent component, ref ComponentHandleState args)

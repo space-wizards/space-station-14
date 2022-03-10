@@ -15,6 +15,14 @@
   skinColoration: HumanToned
 
 - type: species
+  id: Reptilian
+  name: Reptilian
+  roundStart: false
+  prototype: MobReptilian
+  dollPrototype: MobReptilianDummy
+  skinColoration: Hues
+
+- type: species
   id: SlimePerson
   name: Slime Person
   roundStart: true
