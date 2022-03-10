@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Weedkiller and Pest-B-Gone now harms kudzu., type: Add}
-  id: 686
-  time: '2021-11-30T22:58:37.776324+00:00'
 - author: metalgearsloth
   changes:
   - {message: Shuttle movement now uses significantly less bandwidth., type: Fix}
@@ -2975,3 +2970,8 @@ Entries:
       up when maps are updated., type: Add}
   id: 1185
   time: '2022-03-09T19:59:44.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: It's now possible to carry an acoustic guitar on your back., type: Add}
+  id: 1186
+  time: '2022-03-10T13:59:12.0000000+00:00'
