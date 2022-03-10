@@ -31,3 +31,13 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/explorer.rsi
 
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsPerformer
+  name: performer's boots
+  description: These boots provide great traction for when you're up on stage.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/performer.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/performer.rsi

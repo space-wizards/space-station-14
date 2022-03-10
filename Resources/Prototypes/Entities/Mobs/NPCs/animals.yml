@@ -575,7 +575,7 @@
   - type: SentienceTarget
     flavorKind: primate
   - type: Inventory
-    templateId: head
+    templateId: monkey
   - type: Strippable
   - type: UserInterface
     interfaces:

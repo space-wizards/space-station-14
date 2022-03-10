@@ -7,12 +7,11 @@ using Content.Shared.Clothing;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.Tag;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
+using static Robust.Client.GameObjects.SpriteComponent;
 using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Client.Clothing;
@@ -44,6 +43,7 @@ public sealed class ClothingSystem : EntitySystem
 
     [Dependency] private IResourceCache _cache = default!;
     [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -148,6 +148,17 @@ public sealed class ClothingSystem : EntitySystem
 
     private void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
     {
+        if (component.InSlot == "head"
+            && _tagSystem.HasTag(uid, "HidesHair")
+            && TryComp(args.Equipee, out SpriteComponent? sprite))
+        {
+            if (sprite.LayerMapTryGet(HumanoidVisualLayers.FacialHair, out var facial))
+                sprite[facial].Visible = true;
+
+            if (sprite.LayerMapTryGet(HumanoidVisualLayers.Hair, out var hair))
+                sprite[hair].Visible = true;
+        }
+
         component.InSlot = null;
     }
 
@@ -185,6 +196,17 @@ public sealed class ClothingSystem : EntitySystem
     {
         component.InSlot = args.Slot;
 
+        if (args.Slot == "head"
+            && _tagSystem.HasTag(uid, "HidesHair")
+            && TryComp(args.Equipee, out SpriteComponent? sprite))
+        {
+            if (sprite.LayerMapTryGet(HumanoidVisualLayers.FacialHair, out var facial))
+                sprite[facial].Visible = false;
+
+            if (sprite.LayerMapTryGet(HumanoidVisualLayers.Hair, out var hair))
+                sprite[hair].Visible = false;
+        }
+
         RenderEquipment(args.Equipee, uid, args.Slot, clothingComponent: component);
     }
 
@@ -203,6 +225,9 @@ public sealed class ClothingSystem : EntitySystem
                 _ => "female_full",
             });
         }
+
+        if (!_inventorySystem.TryGetSlot(equipee, slot, out var slotDef, inventory))
+            return;
 
         // Remove old layers. We could also just set them to invisible, but as items may add arbitrary layers, this
         // may eventually bloat the player with lots of invisible layers.
@@ -239,17 +264,20 @@ public sealed class ClothingSystem : EntitySystem
             }
 
             var index = sprite.LayerMapReserveBlank(key);
+            if (sprite[index] is not Layer layer)
+                return;
 
             // In case no RSI is given, use the item's base RSI as a default. This cuts down on a lot of unnecessary yaml entries.
             if (layerData.RsiPath == null
                 && layerData.TexturePath == null
-                && sprite[index].Rsi == null
+                && layer.RSI == null
                 && TryComp(equipment, out SpriteComponent? clothingSprite))
             {
-                sprite.LayerSetRSI(index, clothingSprite.BaseRSI);
+                layer.SetRsi(clothingSprite.BaseRSI);
             }
 
             sprite.LayerSetData(index, layerData);
+            layer.Offset += slotDef.Offset;
         }
 
         RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers));

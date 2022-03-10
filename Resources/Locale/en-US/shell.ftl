@@ -21,6 +21,7 @@ shell-need-between-arguments = Need {$lower} to {$upper} arguments!
 
 shell-entity-is-not-mob = Target entity is not a mob!
 shell-invalid-entity-id = Invalid entity ID.
+shell-invalid-grid-id = Invalid grid ID.
 shell-invalid-entity-uid = {$uid} is not a valid entity uid
 shell-entity-uid-must-be-number = EntityUid must be a number.
 shell-could-not-find-entity = Could not find entity {$entity}
