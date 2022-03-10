@@ -543,7 +543,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 3
+            Poison: 7
     Medicine:
       effects:
       - !type:HealthChange
@@ -583,7 +583,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 5
+            Poison: 12
     Medicine:
       effects:
       - !type:HealthChange
