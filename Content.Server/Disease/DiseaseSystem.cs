@@ -92,36 +92,22 @@ namespace Content.Server.Disease
         {
             if (component.Diseases.Count == 0)
                 return;
-            if (args.TargetSpecificDisease && args.SpecificDisease != null && _prototypeManager.TryIndex(args.SpecificDisease, out DiseasePrototype? specificDisease))
+            foreach (var disease in component.Diseases)
             {
-                foreach (var disease in component.Diseases)
+                if (_random.Prob((args.CureChance / component.Diseases.Count) - disease.CureResist))
                 {
-                    if (disease.Name == args.SpecificDisease && _random.Prob(args.CureChance - disease.CureResist))
-                    {
-                        CureDisease(component, disease);
-                        return;
-                    }
-                }
-                var firstDisease = component.Diseases[0];
-                if (_random.Prob(args.CureChance - firstDisease.CureResist))
-                {
-                    CureDisease(component, firstDisease);
+                    CureDisease(component, disease);
+                    return;
                 }
             }
         }
     }
         public sealed class CureDiseaseAttemptEvent : EntityEventArgs
         {
-            public bool TargetSpecificDisease { get; }
-
-            public string? SpecificDisease { get; }
-
             public float CureChance { get; }
 
-            public CureDiseaseAttemptEvent(bool targetSpecificDisease, string? specificDisease, float cureChance)
+            public CureDiseaseAttemptEvent(float cureChance)
             {
-                TargetSpecificDisease = targetSpecificDisease;
-                SpecificDisease = specificDisease;
                 CureChance = cureChance;
             }
         }

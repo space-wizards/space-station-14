@@ -12,6 +12,3 @@
     - !type:DiseaseGenericStatusEffect
         key: Stutter
         component: OwOAccent
-  cures:
-    - !type:JustWait
-      maxLength: 15
