@@ -47,13 +47,15 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/guitar.rsi
     state: icon
-  - type: Item
-    size: 24
-    sprite: Objects/Fun/Instruments/guitar.rsi
   - type: Tag
     tags:
     - StringInstrument
-
+  - type: Clothing
+    size: 24
+    QuickEquip: false
+    Slots:
+    - back
+    sprite: Objects/Fun/Instruments/guitar.rsi
 
 - type: entity
   parent: BaseHandheldInstrument
