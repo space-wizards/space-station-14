@@ -129,6 +129,25 @@
   icon: /Textures/Objects/Tools/emag.rsi/icon.png
   price: 8
 
+- type: uplinkListing
+  id: UplinkVoiceChanger
+  category: Utility
+  itemId: ClothingMaskGasVoiceChanger
+  listingName: Voice-Changing Gas Mask
+  description: Hidden controls inside the mask let you imitate any voice.
+  icon: Clothing/Mask/gas.rsi/icon.png
+  price: 2
+
+## TODO: These should be chameleon
+- type: uplinkListing
+  id: UplinkClothingNoSlipsShoes
+  category: Utility
+  itemId: ClothingShoesChameleonNoSlips
+  listingName: no-slip shoes
+  description: These protect you from slips while looking like normal sneakers.
+  price: 2
+
+
 # Bundles
 
 - type: uplinkListing
@@ -194,14 +213,7 @@
 
 # Armor
 
-# Should be cameleon shoes, change when implemented.
-- type: uplinkListing
-  id: UplinkClothingNoSlipsShoes
-  category: Armor
-  itemId: ClothingShoesChameleonNoSlips
-  listingName: no-slip shoes
-  description: These protect you from slips while looking like normal sneakers.
-  price: 2
+# Only visible combat stuff here please
 
 - type: uplinkListing
   id: UplinkClothingOuterVestWeb

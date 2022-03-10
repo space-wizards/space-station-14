@@ -22,7 +22,7 @@ namespace Content.Server.Ghost.Components
 
         public IReadOnlyList<int> Channels => _channels;
 
-        public void Receive(string message, int channel, EntityUid speaker)
+        public void Receive(string message, int channel, string speakerVoice)
         {
             if (!_entMan.TryGetComponent(Owner, out ActorComponent? actor))
                 return;
@@ -34,7 +34,7 @@ namespace Content.Server.Ghost.Components
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;
             //Square brackets are added here to avoid issues with escaping
-            msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", _entMan.GetComponent<MetaDataComponent>(speaker).EntityName));
+            msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", speakerVoice));
             _netManager.ServerSendMessage(msg, playerChannel);
         }
 

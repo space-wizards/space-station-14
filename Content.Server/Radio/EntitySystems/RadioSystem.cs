@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using Content.Server.Speech.Components;
 using Content.Server.Radio.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Radio.EntitySystems
 {
@@ -16,17 +15,27 @@ namespace Content.Server.Radio.EntitySystems
             if (_messages.Contains(message)) return;
 
             _messages.Add(message);
-
+            string voiceID = GetSpeakerVoice(speaker);
             foreach (var radio in EntityManager.EntityQuery<IRadio>(true))
             {
                 if (radio.Channels.Contains(channel))
                 {
-                    //TODO: once voice identity gets added, pass into receiver via source.GetSpeakerVoice()
-                    radio.Receive(message, channel, speaker);
+                    radio.Receive(message, channel, voiceID);
                 }
             }
 
             _messages.Remove(message);
+        }
+
+        private string GetSpeakerVoice(EntityUid uid)
+        {
+            if (!TryComp<VoiceChangerVoiceComponent>(uid, out var voice))
+            {
+                return Comp<MetaDataComponent>(uid).EntityName;
+            } else
+            {
+                return voice.VoiceName;
+            }
         }
     }
 }

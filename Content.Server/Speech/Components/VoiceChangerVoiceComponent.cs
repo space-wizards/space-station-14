@@ -4,6 +4,6 @@ namespace Content.Server.Speech.Components
     [RegisterComponent]
     public sealed class VoiceChangerVoiceComponent : Component
     {
-        public string voiceName = "Bane";
+        public string VoiceName = "Unknown";
     }
 }

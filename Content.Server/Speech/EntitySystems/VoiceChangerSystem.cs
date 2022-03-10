@@ -26,7 +26,7 @@ namespace Content.Server.Speech.EntitySystems
                 return;
 
             var voice = EnsureComp<VoiceChangerVoiceComponent>(args.Equipee);
-            voice.voiceName = component.SetVoiceName;
+            voice.VoiceName = component.SetVoiceName;
             component.Equipped = true;
         }
 

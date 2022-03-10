@@ -8,7 +8,7 @@ namespace Content.Server.Speech.Components
     {
         [DataField("activationSlot")]
         public SlotFlags ActivationSlot = SlotFlags.MASK;
-        public string SetVoiceName = "Bane";
+        public string SetVoiceName = "Unknown";
 
         public bool Equipped = false;
     }

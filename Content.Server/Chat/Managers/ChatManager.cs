@@ -239,7 +239,7 @@ namespace Content.Server.Chat.Managers
                 entityName = _entManager.GetComponent<MetaDataComponent>(source).EntityName;
             } else
             {
-                entityName = voice.voiceName;
+                entityName = voice.VoiceName;
             }
 
             var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", entityName));
@@ -294,7 +294,7 @@ namespace Content.Server.Chat.Managers
                 entityName = _entManager.GetComponent<MetaDataComponent>(source).EntityName;
             } else
             {
-                entityName = voice.voiceName;
+                entityName = voice.VoiceName;
             }
 
             var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", entityName));
