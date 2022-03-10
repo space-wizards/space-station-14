@@ -85,21 +85,18 @@
   - type: NameIdentifier
     group: Holoparasite
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/Guardians/guardians.rsi
     layers:
     - state: tech_base
     - state: tech_flare
       color: "#40a7d7"
       shader: unshaded
-    noRot: true
 
 # From Wizard deck of cards
 - type: entity
-  name: Ifrit Protector
+  name: Ifrit
   parent: MobGuardianBase
   id: MobMagicalGuardian
-  description: A vengeful soul, summoned to serve the wizard's foul needs. It stands wicked, tuning into it's owner's life to sustain itself.
+  description: A corrupted jhin, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into it's owner's life to sustain itself.
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
@@ -108,11 +105,8 @@
   - type: NameIdentifier
     group: Holoparasite
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/Guardians/guardians.rsi
     layers:
     - state: magic_base
     - state: magic_flare
       color: "#d14730"
       shader: unshaded
-    noRot: true
