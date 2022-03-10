@@ -4,12 +4,15 @@ using Content.Server.Popups;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Disease
 {
     public sealed class DiseaseSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+        [Dependency] private readonly ISerializationManager _serializationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
@@ -44,7 +47,7 @@ namespace Content.Server.Disease
                                 effect.Effect(args);
                         }
                     }
-               if (carrierComp.Diseases.Count == 0)
+                if (carrierComp.Diseases.Count == 0)
                   RemComp<DiseasedComponent>(diseasedComp.Owner);
                 }
             }
@@ -68,7 +71,8 @@ namespace Content.Server.Disease
                         return;
                 }
             }
-            targetDiseases.Diseases.Add(compDisease);
+            var freshDisease = _serializationManager.CreateCopy(compDisease) ?? default!;
+            targetDiseases.Diseases.Add(freshDisease);
             EnsureComp<DiseasedComponent>(args.Target.Value);
         }
     }

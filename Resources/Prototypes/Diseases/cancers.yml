@@ -9,6 +9,9 @@
           Radiation: 0.5
     - !type:DiseasePopUp
       probability: 0.1
+    - !type:DiseaseGenericStatusEffect
+        key: Stutter
+        component: OwOAccent
   cures:
     - !type:JustWait
-      maxLength: 30
+      maxLength: 15
