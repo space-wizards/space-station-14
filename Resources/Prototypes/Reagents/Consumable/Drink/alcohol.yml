@@ -553,6 +553,46 @@
     Narcotic:
       effects:
       - !type:MovespeedModifier
+        walkSpeedModifier: 1.5
+        sprintSpeedModifier: 1.5
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 5
+        type: Remove
+
+- type: reagent
+  id: LeanShine
+  name: leanshine
+  parent: BaseAlcohol
+  desc: Lean mixed with moonshine. Turn up for months.
+  physicalDesc: bubbly
+  color: "#9d5fb8"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Poison:
+      effects:
+      - !type:Electrocute
+        probability: 0.10
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 5
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: -3
+    Narcotic:
+      effects:
+      - !type:MovespeedModifier
         walkSpeedModifier: 2.0
         sprintSpeedModifier: 2.0
       - !type:GenericStatusEffect
@@ -563,15 +603,6 @@
         key: KnockedDown
         time: 5
         type: Remove
-    
-
-- type: reagent
-  id: LeanShine
-  name: leanshine
-  parent: BaseAlcohol
-  desc: Lean mixed with moonshine. Turn up for months.
-  physicalDesc: bubbly
-  color: "#9d5fb8"
 
 - type: reagent
   id: LongIslandIcedTea
