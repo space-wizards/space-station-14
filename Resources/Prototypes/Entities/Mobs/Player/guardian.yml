@@ -67,8 +67,6 @@
       types:
         Blunt: 22
   - type: Actions
-    innateActions:
-      - CombatMode
   - type: Guardian
 
 # From the uplink injector
@@ -82,6 +80,10 @@
     makeSentient: true
     name: Holoparasite
     description: Listen to your owner. Don't tank damage. Punch people hard.
+  - type: InteractionPopup
+    interactSuccessString: petting-success-holo
+    interactFailureString: petting-failure-holo
+    successChance: 0.7
   - type: NameIdentifier
     group: Holoparasite
   - type: Sprite
@@ -100,8 +102,11 @@
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
-    name: Ifrit Protector
+    name: Ifrit
     description: Listen to your owner. Don't tank damage. Punch people hard.
+  - type: InteractionPopup
+    interactSuccessString: petting-success-holo
+    interactFailureString: petting-failure-holo
   - type: NameIdentifier
     group: Holoparasite
   - type: Sprite

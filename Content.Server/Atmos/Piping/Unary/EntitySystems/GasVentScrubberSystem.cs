@@ -15,15 +15,14 @@ using Content.Shared.Atmos.Piping.Unary.Visuals;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
     public sealed class GasVentScrubberSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
 
@@ -36,7 +35,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<GasVentScrubberComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<GasVentScrubberComponent, PacketSentEvent>(OnPacketRecv);
-
         }
 
         private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, AtmosDeviceUpdateEvent args)
@@ -49,6 +47,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
+            if (!TryComp(uid, out AtmosDeviceComponent? device))
+                return;
+
+            var timeDelta = (float) (_gameTiming.CurTime - device.LastProcess).TotalSeconds;
+
             if (!scrubber.Enabled
             || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
             || !nodeContainer.TryGetNode(scrubber.OutletName, out PipeNode? outlet))
@@ -59,14 +62,14 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             var environment = _atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(scrubber.Owner).Coordinates, true);
 
-            Scrub(_atmosphereSystem, scrubber, appearance, environment, outlet);
+            Scrub(timeDelta, scrubber, appearance, environment, outlet);
 
             if (!scrubber.WideNet) return;
 
             // Scrub adjacent tiles too.
             foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(EntityManager.GetComponent<TransformComponent>(scrubber.Owner).Coordinates, false, true))
             {
-                Scrub(_atmosphereSystem, scrubber, null, adjacent, outlet);
+                Scrub(timeDelta, scrubber, null, adjacent, outlet);
             }
         }
 
@@ -78,7 +81,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
-        private void Scrub(AtmosphereSystem atmosphereSystem, GasVentScrubberComponent scrubber, AppearanceComponent? appearance, GasMixture? tile, PipeNode outlet)
+        private void Scrub(float timeDelta, GasVentScrubberComponent scrubber, AppearanceComponent? appearance, GasMixture? tile, PipeNode outlet)
         {
             // Cannot scrub if tile is null or air-blocked.
             if (tile == null
@@ -88,29 +91,26 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
+            // Take a gas sample.
+            var ratio = MathF.Min(1f, timeDelta * scrubber.TransferRate / tile.Volume);
+            var removed = tile.RemoveRatio(ratio);
+
+            // Nothing left to remove from the tile.
+            if (MathHelper.CloseToPercent(removed.TotalMoles, 0f))
+                return;
+
             if (scrubber.PumpDirection == ScrubberPumpDirection.Scrubbing)
             {
                 appearance?.SetData(ScrubberVisuals.State, scrubber.WideNet ? ScrubberState.WideScrub : ScrubberState.Scrub);
-                var transferMoles = MathF.Min(1f, scrubber.VolumeRate / tile.Volume) * tile.TotalMoles;
 
-                // Take a gas sample.
-                var removed = tile.Remove(transferMoles);
-
-                // Nothing left to remove from the tile.
-                if (MathHelper.CloseToPercent(removed.TotalMoles, 0f))
-                    return;
-
-                atmosphereSystem.ScrubInto(removed, outlet.Air, scrubber.FilterGases);
+                _atmosphereSystem.ScrubInto(removed, outlet.Air, scrubber.FilterGases);
 
                 // Remix the gases.
-                atmosphereSystem.Merge(tile, removed);
+                _atmosphereSystem.Merge(tile, removed);
             }
             else if (scrubber.PumpDirection == ScrubberPumpDirection.Siphoning)
             {
                 appearance?.SetData(ScrubberVisuals.State, ScrubberState.Siphon);
-                var transferMoles = tile.TotalMoles * (scrubber.VolumeRate / tile.Volume);
-
-                var removed = tile.Remove(transferMoles);
 
                 _atmosphereSystem.Merge(outlet.Air, removed);
             }

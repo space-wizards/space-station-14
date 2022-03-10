@@ -72,6 +72,16 @@
      Gold: 100
 
 - type: latheRecipe
+  id: ThermomachineFreezerMachineCircuitBoard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ThermomachineFreezerMachineCircuitBoard
+  completetime: 1000
+  materials:
+    Steel: 150
+    Glass: 900
+    Gold: 50
+
+- type: latheRecipe
   id: MedicalScannerMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: MedicalScannerMachineCircuitboard
@@ -145,9 +155,18 @@
      Glass: 900
 
 - type: latheRecipe
-  id: KitchenReagentGrinderMachineCircuitboard
+  id: UniformPrinterMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
-  result: KitchenReagentGrinderMachineCircuitboard
+  result: UniformPrinterMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: ReagentGrinderMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ReagentGrinderMachineCircuitboard
   completetime: 1000
   materials:
      Steel: 100

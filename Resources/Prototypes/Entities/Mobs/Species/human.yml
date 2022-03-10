@@ -241,7 +241,6 @@
       fireStackAlternateState: 3
     - type: CreamPiedVisualizer
       state: creampie_human
-    - type: HandsVisualizer
     - type: DamageVisualizer
       thresholds: [20, 40, 100]
       targetLayers:
@@ -285,14 +284,16 @@
   - type: Butcherable
     butcheringType: Spike # TODO human.
     spawned: FoodMeat
-  - type: Recyclable
-    safe: false
+#  - type: Recyclable Turns out turning off recycler safeties without considering the instagib is a bad idea
+#    safe: false
   - type: Speech
+  - type: Vocal
   - type: Emoting
   - type: Grammar
     attributes:
       proper: true
   - type: StandingState
+
 - type: entity
   save: false
   name: Urist McHands

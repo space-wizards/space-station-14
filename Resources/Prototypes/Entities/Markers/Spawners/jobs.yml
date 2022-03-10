@@ -195,6 +195,18 @@
       - state: green
       - state: janitor
 
+- type: entity
+  id: SpawnPointMusician
+  parent: SpawnPointJobBase
+  name: musician
+  components:
+    - type: SpawnPoint
+      job_id: Musician
+    - type: Sprite
+      layers:
+        - state: green
+        - state: musician
+
 # Command
 
 - type: entity

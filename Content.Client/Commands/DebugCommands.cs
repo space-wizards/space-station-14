@@ -72,30 +72,4 @@ namespace Content.Client.Commands
             EntitySystem.Get<PopupSystem>().PopupCursor(message);
         }
     }
-
-    internal sealed class MappingCommand : IConsoleCommand
-    {
-        public string Command => "mapping";
-        public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
-        public string Help => $"Usage: {Command} <mapname> / {Command} <id> <mapname>";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
-        {
-            if (args.Length == 0)
-            {
-                shell.WriteLine(Help);
-                return;
-            }
-
-#if DEBUG
-            shell.WriteError("WARNING: The client is using a debug build. You are risking losing your changes.");
-#endif
-
-            shell.ConsoleHost.RegisteredCommands["togglelight"].Execute(shell, string.Empty, Array.Empty<string>());
-            shell.ConsoleHost.RegisteredCommands["showsubfloorforever"].Execute(shell, string.Empty, Array.Empty<string>());
-            shell.ConsoleHost.RegisteredCommands["showmarkers"].Execute(shell, string.Empty, Array.Empty<string>());
-
-            shell.RemoteExecuteCommand(argStr);
-        }
-    }
 }

@@ -1,6 +1,7 @@
 using System.Threading;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -42,5 +43,17 @@ namespace Content.Server.Medical.Components
         public float Delay = 3f;
 
         public CancellationTokenSource? CancelToken = null;
+
+        /// <summary>
+        ///     Sound played on healing begin
+        /// </summary>
+        [DataField("healingBeginSound")]
+        public SoundSpecifier? HealingBeginSound = null;
+
+        /// <summary>
+        ///     Sound played on healing end
+        /// </summary>
+        [DataField("healingEndSound")]
+        public SoundSpecifier? HealingEndSound = null;
     }
 }

@@ -17,7 +17,6 @@ namespace Content.Server.Plants.Systems
     {
         [Dependency] private readonly SecretStashSystem _stashSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
 
         public override void Initialize()
         {
