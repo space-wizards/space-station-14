@@ -87,3 +87,10 @@
     - type: AddAccentClothing
       accent: ReplacementAccent
       replacement: mumble
+
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskGasVoiceChanger
+  suffix: voice changer
+  components:
+    - type: VoiceChanger

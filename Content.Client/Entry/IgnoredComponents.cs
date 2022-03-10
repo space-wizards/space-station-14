@@ -59,6 +59,8 @@ namespace Content.Client.Entry
             "Electrified",
             "Electrocution",
             "Paper",
+            "VoiceChanger",
+            "VoiceChangerVoice",
             "Drone",
             "Bloodstream",
             "TransformableContainer",

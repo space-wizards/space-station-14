@@ -10,6 +10,7 @@ using Content.Server.MoMMI;
 using Content.Server.Players;
 using Content.Server.Preferences.Managers;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Speech.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -231,7 +232,17 @@ namespace Content.Server.Chat.Managers
             var sessions = new List<ICommonSession>();
             ClientDistanceToList(source, VoiceRange, sessions);
 
-            var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            string entityName = string.Empty;
+
+            if(!_entManager.TryGetComponent<VoiceChangerVoiceComponent>(source, out var voice))
+            {
+                entityName = _entManager.GetComponent<MetaDataComponent>(source).EntityName;
+            } else
+            {
+                entityName = voice.voiceName;
+            }
+
+            var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", entityName));
 
             foreach (var session in sessions)
             {
