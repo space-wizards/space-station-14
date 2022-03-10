@@ -3,12 +3,14 @@ using Content.Shared.Interaction;
 using Content.Server.Popups;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Disease
 {
     public sealed class DiseaseSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
@@ -38,6 +40,7 @@ namespace Content.Server.Disease
                                     return; // Get the hell out before we trigger enumeration errors, sorry you can only cure like 30 diseases a second
                                 }
                             foreach (var effect in disease.Effects)
+                            if (_random.Prob(effect.Probability))
                                 effect.Effect(args);
                         }
                     }

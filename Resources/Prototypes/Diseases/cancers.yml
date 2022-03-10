@@ -7,6 +7,8 @@
         types:
           Cellular: 0.5
           Radiation: 0.5
+    - !type:DiseasePopUp
+      probability: 0.1
   cures:
     - !type:JustWait
       maxLength: 30
