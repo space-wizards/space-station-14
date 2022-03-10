@@ -65,6 +65,7 @@ namespace Content.Client.Entry
             "Mind",
             "Diseased",
             "DiseaseInteractSource",
+            "DiseaseCarrier",
             "StorageFill",
             "Mop",
             "Bucket",

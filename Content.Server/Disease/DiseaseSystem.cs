@@ -1,10 +1,14 @@
 using Content.Shared.Disease;
 using Content.Shared.Interaction;
+using Content.Server.Popups;
+using Robust.Shared.Player;
 
 namespace Content.Server.Disease
 {
     public sealed class DiseaseSystem : EntitySystem
     {
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -13,26 +17,31 @@ namespace Content.Server.Disease
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var diseasedComp in EntityQuery<DiseasedComponent>(false))
+            foreach (var (diseasedComp, carrierComp) in EntityQuery<DiseasedComponent, DiseaseCarrierComponent>(false))
             {
-                foreach(var disease in diseasedComp.Diseases)
+                if (carrierComp.Diseases.Count > 0)
                 {
-                    var args = new DiseaseEffectArgs(diseasedComp.Owner, disease);
-                    disease.Accumulator += frameTime;
-                    if (disease.Accumulator >= frameTime)
+                    foreach(var disease in carrierComp.Diseases)
                     {
-                        disease.Accumulator -= frameTime;
-                        foreach (var cure in disease.Cures)
-                            if (cure.Cure(args))
-                            {
-                                diseasedComp.Diseases.Remove(disease);
-                            }
-                        foreach (var effect in disease.Effects)
-                            effect.Effect(args);
+                        var args = new DiseaseEffectArgs(carrierComp.Owner, disease);
+                        disease.Accumulator += frameTime;
+                        if (disease.Accumulator >= 1f)
+                        {
+                            disease.Accumulator -= 1f;
+                            foreach (var cure in disease.Cures)
+                                if (cure.Cure(args))
+                                {
+                                    carrierComp.Diseases.Remove(disease);
+                                    _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrierComp.Owner, Filter.Pvs(carrierComp.Owner));
+                                    return; // Get the hell out before we trigger enumeration errors, sorry you can only cure like 30 diseases a second
+                                }
+                            foreach (var effect in disease.Effects)
+                                effect.Effect(args);
+                        }
                     }
+               if (carrierComp.Diseases.Count == 0)
+                  RemComp<DiseasedComponent>(diseasedComp.Owner);
                 }
-                if (diseasedComp.Diseases.Count == 0)
-                    RemComp<DiseasedComponent>(diseasedComp.Owner);
             }
         }
 
@@ -41,30 +50,18 @@ namespace Content.Server.Disease
             if (!args.CanReach || args.Target == null)
                 return;
 
-            var targetDiseaseComp = EnsureComp<DiseasedComponent>(args.Target.Value);
-
-            if (targetDiseaseComp.Diseases.Count == 0)
-            {
-                targetDiseaseComp.Diseases = component.Diseases;
+            if (!TryComp<DiseaseCarrierComponent>(args.Target, out var targetDiseases) || targetDiseases == null)
                 return;
-            }
-
-            foreach (var disease in component.Diseases)
+            if (targetDiseases.Diseases.Count > 0)
             {
-                bool merge = true;
-                foreach (var targetDisease in targetDiseaseComp.Diseases)
+                foreach (var disease in targetDiseases.Diseases)
                 {
-                    if (targetDisease.Name == disease.Name)
-                    {
-                        merge = false;
-                        continue;
-                    }
-                }
-                if (merge)
-                {
-                    targetDiseaseComp.Diseases.Add(disease);
+                    if (disease.Name == component.Disease.Name)
+                        return;
                 }
             }
+            targetDiseases.Diseases.Add(component.Disease);
+            EnsureComp<DiseasedComponent>(args.Target.Value);
         }
     }
 }

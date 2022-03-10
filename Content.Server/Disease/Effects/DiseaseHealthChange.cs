@@ -7,14 +7,12 @@ namespace Content.Server.Disease.Effects
     [UsedImplicitly]
     public sealed class DiseaseHealthChange : DiseaseEffect
     {
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-
         [DataField("damage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
-
         public override void Effect(DiseaseEffectArgs args)
         {
-            _damageableSystem.TryChangeDamage(args.DiseasedEntity, Damage);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(args.DiseasedEntity, Damage);
         }
 
     }

@@ -9,4 +9,4 @@
           Radiation: 0.5
   cures:
     - !type:JustWait
-      maxlength: 30
+      maxLength: 30

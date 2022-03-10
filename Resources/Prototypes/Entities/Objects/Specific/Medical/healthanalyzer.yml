@@ -15,3 +15,11 @@
       - key: enum.HealthAnalyzerUiKey.Key
         type: HealthAnalyzerBoundUserInterface
   - type: HealthAnalyzer
+
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerGigacancer
+  suffix: gigacancer
+  components:
+  - type: DiseaseInteractSource
+    disease:
