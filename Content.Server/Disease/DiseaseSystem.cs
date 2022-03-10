@@ -2,11 +2,13 @@ using Content.Shared.Disease;
 using Content.Shared.Interaction;
 using Content.Server.Popups;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Disease
 {
     public sealed class DiseaseSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
@@ -50,17 +52,20 @@ namespace Content.Server.Disease
             if (!args.CanReach || args.Target == null)
                 return;
 
+            if (!_prototypeManager.TryIndex(component.Disease, out DiseasePrototype? compDisease))
+                return;
+
             if (!TryComp<DiseaseCarrierComponent>(args.Target, out var targetDiseases) || targetDiseases == null)
                 return;
             if (targetDiseases.Diseases.Count > 0)
             {
                 foreach (var disease in targetDiseases.Diseases)
                 {
-                    if (disease.Name == component.Disease.Name)
+                    if (disease.Name == component.Disease)
                         return;
                 }
             }
-            targetDiseases.Diseases.Add(component.Disease);
+            targetDiseases.Diseases.Add(compDisease);
             EnsureComp<DiseasedComponent>(args.Target.Value);
         }
     }

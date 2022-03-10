@@ -22,4 +22,4 @@
   suffix: gigacancer
   components:
   - type: DiseaseInteractSource
-    disease:
+    disease: Gigacancer

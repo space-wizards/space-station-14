@@ -6,8 +6,8 @@ namespace Content.Server.Disease
     [RegisterComponent]
     public sealed class DiseaseInteractSourceComponent : Component
     {
-        [DataField("diseases", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
+        [DataField("disease", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DiseasePrototype Disease = default!;
+        public string Disease = string.Empty;
     }
 }
