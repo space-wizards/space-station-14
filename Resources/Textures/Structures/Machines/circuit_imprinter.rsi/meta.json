@@ -82,39 +82,6 @@
     },
     {
       "name": "inserting_unlit"
-    },
-    {
-      "name": "inserting_glass"
-    },
-    {
-      "name": "inserting_adamantine"
-    },
-    {
-      "name": "inserting_bananium"
-    },
-    {
-      "name": "inserting_diamond"
-    },
-    {
-      "name": "inserting_silver"
-    },
-    {
-      "name": "inserting_uranium"
-    },
-    {
-      "name": "inserting_gold"
-    },
-    {
-      "name": "inserting_metal"
-    },
-    {
-      "name": "inserting_phoron"
-    },
-    {
-      "name": "inserting_plasma"
-    },
-    {
-      "name": "inserting_plastic"
     }
   ]
 }

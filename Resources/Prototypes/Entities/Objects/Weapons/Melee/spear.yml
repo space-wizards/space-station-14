@@ -39,6 +39,8 @@
         maxVol: 5
   - type: RefillableSolution
     solution: melee
+  - type: InjectableSolution
+    solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 5
   - type: Wieldable

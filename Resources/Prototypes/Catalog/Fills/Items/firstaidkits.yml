@@ -50,8 +50,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: SyringeSpaceacillin
-        amount: 1
       - id: PillDylovene
         amount: 3
 
