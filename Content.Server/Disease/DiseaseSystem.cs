@@ -19,6 +19,7 @@ namespace Content.Server.Disease
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
             SubscribeLocalEvent<DiseaseInteractSourceComponent, AfterInteractEvent>(OnAfterInteract);
         }
         public override void Update(float frameTime)
@@ -38,8 +39,7 @@ namespace Content.Server.Disease
                             foreach (var cure in disease.Cures)
                                 if (cure.Cure(args))
                                 {
-                                    carrierComp.Diseases.Remove(disease);
-                                    _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrierComp.Owner, Filter.Pvs(carrierComp.Owner));
+                                    CureDisease(carrierComp, disease);
                                     return; // Get the hell out before we trigger enumeration errors, sorry you can only cure like 30 diseases a second
                                 }
                             foreach (var effect in disease.Effects)
@@ -53,6 +53,13 @@ namespace Content.Server.Disease
             }
         }
 
+        private void CureDisease(DiseaseCarrierComponent carrier, DiseasePrototype? disease)
+        {
+            if (disease == null)
+                return;
+            carrier.Diseases.Remove(disease);
+            _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Pvs(carrier.Owner));
+        }
         private void TryAddDisease(DiseaseCarrierComponent target, DiseasePrototype addedDisease)
         {
             if (target.Diseases.Count > 0)
@@ -80,5 +87,42 @@ namespace Content.Server.Disease
                 return;
             TryAddDisease(targetDiseases, compDisease);
         }
+
+        private async void OnTryCureDisease(EntityUid uid, DiseaseCarrierComponent component, CureDiseaseAttemptEvent args)
+        {
+            if (component.Diseases.Count == 0)
+                return;
+            if (args.TargetSpecificDisease && args.SpecificDisease != null && _prototypeManager.TryIndex(args.SpecificDisease, out DiseasePrototype? specificDisease))
+            {
+                foreach (var disease in component.Diseases)
+                {
+                    if (disease.Name == args.SpecificDisease && _random.Prob(args.CureChance - disease.CureResist))
+                    {
+                        CureDisease(component, disease);
+                        return;
+                    }
+                }
+                var firstDisease = component.Diseases[0];
+                if (_random.Prob(args.CureChance - firstDisease.CureResist))
+                {
+                    CureDisease(component, firstDisease);
+                }
+            }
+        }
     }
+        public sealed class CureDiseaseAttemptEvent : EntityEventArgs
+        {
+            public bool TargetSpecificDisease { get; }
+
+            public string? SpecificDisease { get; }
+
+            public float CureChance { get; }
+
+            public CureDiseaseAttemptEvent(bool targetSpecificDisease, string? specificDisease, float cureChance)
+            {
+                TargetSpecificDisease = targetSpecificDisease;
+                SpecificDisease = specificDisease;
+                CureChance = cureChance;
+            }
+        }
 }
