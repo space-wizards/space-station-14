@@ -53,6 +53,21 @@ namespace Content.Server.Disease
             }
         }
 
+        private void TryAddDisease(DiseaseCarrierComponent target, DiseasePrototype addedDisease)
+        {
+            if (target.Diseases.Count > 0)
+            {
+                foreach (var disease in target.Diseases)
+                {
+                    if (disease.Name == addedDisease.Name)
+                        return;
+                }
+            }
+            var freshDisease = _serializationManager.CreateCopy(addedDisease) ?? default!;
+            target.Diseases.Add(freshDisease);
+            EnsureComp<DiseasedComponent>(target.Owner);
+        }
+
         private void OnAfterInteract(EntityUid uid, DiseaseInteractSourceComponent component, AfterInteractEvent args)
         {
             if (!args.CanReach || args.Target == null)
@@ -63,17 +78,7 @@ namespace Content.Server.Disease
 
             if (!TryComp<DiseaseCarrierComponent>(args.Target, out var targetDiseases) || targetDiseases == null)
                 return;
-            if (targetDiseases.Diseases.Count > 0)
-            {
-                foreach (var disease in targetDiseases.Diseases)
-                {
-                    if (disease.Name == component.Disease)
-                        return;
-                }
-            }
-            var freshDisease = _serializationManager.CreateCopy(compDisease) ?? default!;
-            targetDiseases.Diseases.Add(freshDisease);
-            EnsureComp<DiseasedComponent>(args.Target.Value);
+            TryAddDisease(targetDiseases, compDisease);
         }
     }
 }
