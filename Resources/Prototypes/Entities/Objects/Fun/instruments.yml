@@ -47,9 +47,6 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/guitar.rsi
     state: icon
-  - type: Item
-    size: 24
-    sprite: Objects/Fun/Instruments/guitar.rsi
   - type: Tag
     tags:
     - StringInstrument
