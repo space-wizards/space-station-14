@@ -63,6 +63,8 @@ namespace Content.Client.Entry
             "Bloodstream",
             "TransformableContainer",
             "Mind",
+            "Diseased",
+            "DiseaseInteractSource",
             "StorageFill",
             "Mop",
             "Bucket",

@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Disease.Effects
 {
     [UsedImplicitly]
-    public sealed class HealthChange : DiseaseEffect
+    public sealed class DiseaseHealthChange : DiseaseEffect
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 

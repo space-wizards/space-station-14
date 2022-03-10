@@ -1,0 +1,12 @@
+- type: disease
+  id: Gigacancer
+  name: gigacancer
+  effects:
+    - !type:DiseaseHealthChange
+      damage:
+        types:
+          Cellular: 0.5
+          Radiation: 0.5
+  cures:
+    - !type:JustWait
+      maxlength: 30

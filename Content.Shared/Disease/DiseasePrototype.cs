@@ -1,13 +1,12 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-
 namespace Content.Shared.Disease
 {
     [Prototype("disease")]
     [DataDefinition]
 
-    public sealed class DiseasePrototype : IPrototype
+    public sealed class DiseasePrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
         [DataField("id", required: true)]
