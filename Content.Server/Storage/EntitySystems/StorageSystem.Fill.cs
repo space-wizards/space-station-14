@@ -28,11 +28,8 @@ public sealed partial class StorageSystem
             {
                 if (!orGroupedSpawns.TryGetValue(entry.GroupId, out OrGroup? orGroup))
                 {
-                    OrGroup currentGroup = new(new List<EntitySpawnEntry>(), 0f);
-                    currentGroup.Entries.Add(entry);
-                    currentGroup.CumulativeProbability += entry.SpawnProbability;
-                    orGroupedSpawns.Add(entry.GroupId, currentGroup);
-                    continue;
+                    orGroup = new(new List<EntitySpawnEntry>(), 0f);
+                    orGroupedSpawns.Add(entry.GroupId, orGroup);
                 }
                 orGroup.Entries.Add(entry);
                 orGroup.CumulativeProbability += entry.SpawnProbability;
@@ -59,21 +56,22 @@ public sealed partial class StorageSystem
         foreach (var group in orGroupedSpawns)
         {
             double diceRoll = _random.NextDouble() * group.Value.CumulativeProbability;
-            List<EntitySpawnEntry> shuffled = group.Value.Entries.OrderBy(a => _random.Next()).ToList();
+            List<EntitySpawnEntry> groupEntries = group.Value.Entries;
+            _random.Shuffle(groupEntries);
 
             double cumulative = 0.0;
-            for (int i = 0; i < shuffled.Count; i++)
+            for (int i = 0; i < groupEntries.Count; i++)
             {
-                cumulative += shuffled[i].SpawnProbability;
+                cumulative += groupEntries[i].SpawnProbability;
                 if (diceRoll <= cumulative)
                 {
-                    for (var index = 0; index < shuffled[i].Amount; index++)
+                    for (var index = 0; index < groupEntries[i].Amount; index++)
                     {
-                        var ent = EntityManager.SpawnEntity(shuffled[i].PrototypeId, coordinates);
+                        var ent = EntityManager.SpawnEntity(groupEntries[i].PrototypeId, coordinates);
 
                         if (storage.Insert(ent)) continue;
 
-                        Logger.ErrorS("storage", $"Tried to StorageFill {shuffled[i].PrototypeId} inside {uid} but can't.");
+                        Logger.ErrorS("storage", $"Tried to StorageFill {groupEntries[i].PrototypeId} inside {uid} but can't.");
                         EntityManager.DeleteEntity(ent);
                     }
                     break;
