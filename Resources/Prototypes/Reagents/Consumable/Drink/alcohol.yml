@@ -539,11 +539,11 @@
     Poison:
       effects:
       - !type:Electrocute
-        probability: 0.05
+        probability: 0.25
       - !type:HealthChange
         damage:
           types:
-            Poison: 7
+            Poison: 8
     Medicine:
       effects:
       - !type:HealthChange
@@ -553,16 +553,12 @@
     Narcotic:
       effects:
       - !type:MovespeedModifier
-        walkSpeedModifier: 1.5
-        sprintSpeedModifier: 1.5
+        walkSpeedModifier: 1.25
+        sprintSpeedModifier: 1.25
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
       - !type:Jitter
-      - !type:GenericStatusEffect
-        key: KnockedDown
-        time: 5
-        type: Remove
 
 - type: reagent
   id: LeanShine
@@ -579,11 +575,11 @@
     Poison:
       effects:
       - !type:Electrocute
-        probability: 0.10
+        probability: 0.05
       - !type:HealthChange
         damage:
           types:
-            Poison: 12
+            Poison: 13
     Medicine:
       effects:
       - !type:HealthChange
@@ -593,16 +589,12 @@
     Narcotic:
       effects:
       - !type:MovespeedModifier
-        walkSpeedModifier: 2.0
-        sprintSpeedModifier: 2.0
+        walkSpeedModifier: 1.5
+        sprintSpeedModifier: 1.5
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
       - !type:Jitter
-      - !type:GenericStatusEffect
-        key: KnockedDown
-        time: 5
-        type: Remove
 
 - type: reagent
   id: LongIslandIcedTea
