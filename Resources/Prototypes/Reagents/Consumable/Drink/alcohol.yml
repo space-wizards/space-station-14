@@ -535,15 +535,15 @@
     Drink:
       effects:
       - !type:SatiateThirst
-        factor: 2
+        factor: -5
     Poison:
       effects:
       - !type:Electrocute
-        probability: 0.25
+        probability: 0.10
       - !type:HealthChange
         damage:
           types:
-            Poison: 8
+            Poison: 2
     Medicine:
       effects:
       - !type:HealthChange
@@ -553,8 +553,8 @@
     Narcotic:
       effects:
       - !type:MovespeedModifier
-        walkSpeedModifier: 1.25
-        sprintSpeedModifier: 1.25
+        walkSpeedModifier: 1.05
+        sprintSpeedModifier: 1.05
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
@@ -571,26 +571,26 @@
     Drink:
       effects:
       - !type:SatiateThirst
-        factor: 2
+        factor: -5
     Poison:
       effects:
       - !type:Electrocute
-        probability: 0.05
+        probability: 0.15
       - !type:HealthChange
         damage:
           types:
-            Poison: 13
+            Poison: 3
     Medicine:
       effects:
       - !type:HealthChange
         damage:
           types:
-            Radiation: -3
+            Radiation: -2
     Narcotic:
       effects:
       - !type:MovespeedModifier
-        walkSpeedModifier: 1.5
-        sprintSpeedModifier: 1.5
+        walkSpeedModifier: 1.10
+        sprintSpeedModifier: 1.10
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
