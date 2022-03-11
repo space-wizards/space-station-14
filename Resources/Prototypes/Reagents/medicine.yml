@@ -316,8 +316,7 @@
       - !type:HealthChange
         damage:
           types:
-            # close enough to what it says
-            Poison: -1
+            Cellular: -1
             Radiation: 1
 
 - type: reagent

@@ -6,6 +6,8 @@ namespace Content.Server.Disease.Cures
 {
     public sealed class DiseaseReagentCure : DiseaseCure
     {
+        [DataField("min")]
+        public FixedPoint2 Min = 1;
         [DataField("reagent")]
         public string? Reagent;
 
@@ -14,10 +16,13 @@ namespace Content.Server.Disease.Cures
             if (!args.EntityManager.TryGetComponent<BloodstreamComponent>(args.DiseasedEntity, out var bloodstream))
                 return false;
 
+            var quant = FixedPoint2.Zero;
             if (Reagent != null && bloodstream.ChemicalSolution.ContainsReagent(Reagent))
-                return true;
+            {
+                quant = bloodstream.ChemicalSolution.GetReagentQuantity(Reagent);
+            }
 
-            return false;
+            return quant >= Min;
         }
     }
 }

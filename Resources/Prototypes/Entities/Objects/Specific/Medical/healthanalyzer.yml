@@ -23,3 +23,13 @@
   components:
   - type: DiseaseInteractSource
     disease: Gigacancer
+
+## I know admins will want this
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerOwOnavirus
+  name: OwOnavirus analyzer
+  suffix: admin abuse
+  components:
+  - type: DiseaseInteractSource
+    disease: OwOnavirus

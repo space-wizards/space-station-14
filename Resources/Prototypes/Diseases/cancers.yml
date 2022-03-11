@@ -1,17 +1,15 @@
 - type: disease
   id: Gigacancer
-  name: felinid gigacancer
+  name: gigacancer
   effects:
     - !type:DiseaseHealthChange
+      probability: 0.5
       damage:
         types:
-          Cellular: 0.5
-          Radiation: 0.5
+          Cellular: 1
     - !type:DiseasePopUp
-      probability: 0.1
-    - !type:DiseaseGenericStatusEffect
-        key: Stutter
-        component: OwOAccent
+      probability: 0.03
   cures:
     - !type:DiseaseReagentCure
-      reagent: Milk
+      reagent: Phalanximine
+      min: 15
