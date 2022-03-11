@@ -50,6 +50,12 @@
   - type: Construction
     graph: GasBinary
     node: pressurepump
+  - type: AmbientSound
+    enabled: false
+    volume: -12
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/gas_pump.ogg
 
 - type: entity
   parent: GasBinaryBase
@@ -82,6 +88,12 @@
     - type: Construction
       graph: GasBinary
       node: volumepump
+    - type: AmbientSound
+      enabled: false
+      volume: -12
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_pump.ogg
 
 - type: entity
   parent: GasBinaryBase
@@ -107,6 +119,12 @@
     - type: Construction
       graph: GasBinary
       node: passivegate
+    - type: AmbientSound
+      enabled: true
+      volume: -12
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_hiss.ogg
 
 - type: entity
   parent: GasBinaryBase
@@ -148,6 +166,12 @@
     - type: Construction
       graph: GasBinary
       node: valve
+    - type: AmbientSound
+      enabled: false
+      volume: -12
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_hiss.ogg
 
 - type: entity
   parent: GasBinaryBase

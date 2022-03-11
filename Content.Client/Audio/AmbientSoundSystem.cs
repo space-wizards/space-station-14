@@ -11,6 +11,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Audio
 {
@@ -22,6 +23,7 @@ namespace Content.Client.Audio
         [Dependency] private EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private int _maxAmbientCount;
@@ -33,7 +35,7 @@ namespace Content.Client.Audio
         /// <summary>
         /// How many times we can be playing 1 particular sound at once.
         /// </summary>
-        private int _maxSingleSound = 3;
+        private int _maxSingleSound = 16;
 
         private Dictionary<AmbientSoundComponent, (IPlayingAudioStream? Stream, string Sound)> _playingSounds = new();
 
@@ -99,7 +101,7 @@ namespace Content.Client.Audio
 
             var coordinates = playerManager.Coordinates;
 
-            foreach (var (comp, (stream, _)) in _playingSounds.ToArray())
+            foreach (var (comp, (stream, _)) in Enumerable.ToArray(_playingSounds))
             {
                 if (!comp.Deleted && comp.Enabled && EntityManager.GetComponent<TransformComponent>(comp.Owner).Coordinates.TryDistance(EntityManager, coordinates, out var range) &&
                     range <= comp.Range)
@@ -150,14 +152,18 @@ namespace Content.Client.Audio
                 compsInRange.Add(ambientComp);
             }
 
-            while (_playingSounds.Count < _maxAmbientCount)
-            {
-                if (compsInRange.Count == 0) break;
 
-                var comp = _random.PickAndTake(compsInRange);
+            var enumr = compsInRange.OrderByDescending(x =>
+                Transform(x.Owner).Coordinates.TryDistance(_entityManager, coordinates, out var dist) ? dist : float.MaxValue);
+
+            foreach (var comp in enumr)
+            {
                 var sound = comp.Sound.GetSound();
 
-                if (PlayingCount(sound) >= _maxSingleSound) continue;
+                if (PlayingCount(sound) >= _maxSingleSound)
+                {
+                    continue;
+                }
 
                 var audioParams = AudioHelpers
                     .WithVariation(0.01f)

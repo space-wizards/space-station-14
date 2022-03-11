@@ -51,6 +51,12 @@
       graph: GasUnary
       node: ventpump
     - type: VentCritterSpawnLocation
+    - type: AmbientSound
+      enabled: false
+      volume: -17
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_vent.ogg
 
 - type: entity
   parent: GasUnaryBase
@@ -115,6 +121,12 @@
     - type: Construction
       graph: GasUnary
       node: ventscrubber
+    - type: AmbientSound
+      enabled: false
+      volume: -17
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_vent.ogg
 
 - type: entity
   parent: GasUnaryBase

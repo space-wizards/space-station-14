@@ -86,6 +86,12 @@
     visuals:
     - type: CableVisualizer
       base: hvcable_
+  - type: AmbientSound
+    enabled: true
+    volume: -20
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/emf_buzz.ogg
 
 - type: entity
   parent: CableBase
