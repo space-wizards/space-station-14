@@ -153,10 +153,10 @@ namespace Content.Client.Audio
             }
 
 
-            var enumr = compsInRange.OrderByDescending(x =>
+            var sorted = compsInRange.OrderByDescending(x =>
                 Transform(x.Owner).Coordinates.TryDistance(_entityManager, coordinates, out var dist) ? dist : float.MaxValue);
 
-            foreach (var comp in enumr)
+            foreach (var comp in sorted)
             {
                 var sound = comp.Sound.GetSound();
 

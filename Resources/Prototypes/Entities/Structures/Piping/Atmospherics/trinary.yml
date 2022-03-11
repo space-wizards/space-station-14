@@ -8,6 +8,7 @@
     - type: AtmosDevice
     - type: SubFloorHide
       blockInteractions: false
+      blockAmbience: false
     - type: NodeContainer
       nodes:
         inlet:

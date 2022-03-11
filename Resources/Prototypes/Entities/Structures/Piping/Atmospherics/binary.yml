@@ -8,6 +8,7 @@
   - type: AtmosDevice
   - type: SubFloorHide
     blockInteractions: false
+    blockAmbience: false
   - type: NodeContainer
     nodes:
       inlet:
@@ -121,7 +122,7 @@
       node: passivegate
     - type: AmbientSound
       enabled: true
-      volume: -12
+      volume: -9
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
@@ -168,7 +169,7 @@
       node: valve
     - type: AmbientSound
       enabled: false
-      volume: -12
+      volume: -9
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
