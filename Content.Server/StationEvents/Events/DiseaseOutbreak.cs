@@ -16,7 +16,8 @@ public sealed class DiseaseOutbreak : StationEvent
     [Dependency] private readonly IChatManager _chatManager = default!;
     public readonly IReadOnlyList<string> NotTooSeriousDiseases = new[]
     {
-        "SpaceCold"
+        "SpaceCold",
+        "VanAusdallsRobovirus"
     };
 
     public override string Name => "DiseaseOutbreak";

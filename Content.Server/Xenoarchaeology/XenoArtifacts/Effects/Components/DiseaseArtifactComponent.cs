@@ -35,6 +35,8 @@ public sealed class DiseaseArtifactComponent : Component
         [ViewVariables(VVAccess.ReadWrite)]
         public readonly IReadOnlyList<string> ArtifactDiseases = new[]
         {
-            "SpaceCold"
+            "VanAusdallsRobovirus",
+            "OwOnavirus",
+            "BleedersBite"
         };
 }

@@ -20,6 +20,35 @@
       reagent: Ultravasculine
 
 - type: disease
+  id: BleedersBite
+  name: Bleeder's Bite
+  effects:
+    - !type:DiseaseAdjustReagent
+      reagent: TranexamicAcid
+      amount: -1
+    - !type:DiseaseHealthChange
+      probability: 0.05
+      damage:
+        types:
+          Piercing: 10
+  cures:
+    - !type:DiseaseBodyTemperature
+      min: 360
+
+- type: disease
+  id: VanAusdallsRobovirus
+  name: Van Ausdall's Robovirus
+  cureResist: 0.1
+  effects:
+    - !type:DiseaseAdjustReagent
+      probability: 0.4
+      reagent: Licoxide
+      amount: 1
+  cures:
+    - !type:DiseaseReagentCure
+      reagent: BeepskySmash
+
+- type: disease
   id: OwOnavirus
   name: OwOnavirus
   cureResist: 0.25
