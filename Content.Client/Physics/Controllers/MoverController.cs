@@ -3,15 +3,16 @@ using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Pulling.Components;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Physics.Controllers
 {
     public sealed class MoverController : SharedMoverController
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -75,6 +76,16 @@ namespace Content.Client.Physics.Controllers
             }
 
             HandleKinematicMovement(mover, body);
+        }
+
+        protected override Filter GetSoundPlayers(EntityUid mover)
+        {
+            return Filter.Local();
+        }
+
+        protected override bool CanSound()
+        {
+            return _timing.IsFirstTimePredicted;
         }
     }
 }
