@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Markings
 {
     [Serializable, NetSerializable]
-    public class Marking : IEquatable<Marking>, IComparable<Marking>, IComparable<string>
+    public sealed class Marking : IEquatable<Marking>, IComparable<Marking>, IComparable<string>
     {
         private List<Color> _markingColors = new();
 

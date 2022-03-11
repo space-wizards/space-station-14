@@ -13,7 +13,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Markings
 {
-    public class MarkingsSystem : EntitySystem
+    public sealed class MarkingsSystem : EntitySystem
     {
         [Dependency] private readonly MarkingManager _markingManager = default!;
         // [Dependency] private readonly MarkingsSpeciesManager _speciesManager = default!;

@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Markings
 {
     [Prototype("marking")]
-    public class MarkingPrototype : IPrototype, ISerializationHooks
+    public sealed class MarkingPrototype : IPrototype, ISerializationHooks
     {
         [DataField("id", required: true)]
         public string ID { get; } = "uwu";

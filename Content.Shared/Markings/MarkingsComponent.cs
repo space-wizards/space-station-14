@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Shared.Markings
 {
     [RegisterComponent]
-    public class MarkingsComponent : Component
+    public sealed class MarkingsComponent : Component
     {
         public override string Name => "Markings";
 
