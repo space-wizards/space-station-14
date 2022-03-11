@@ -19,9 +19,6 @@ namespace Content.Shared.Markings
         [DataField("bodyPart", required: true)]
         public HumanoidVisualLayers BodyPart { get; } = default!;
 
-        [DataField("markingLayerNames", required: true)]
-        public List<string> MarkingPartNames { get; } = default!;
-
         [DataField("markingCategory", required: true)]
         public MarkingCategories MarkingCategory { get; } = default!;
 

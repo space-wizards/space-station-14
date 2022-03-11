@@ -63,7 +63,8 @@ namespace Content.Client.Markings
 
                 for (int j = 0; j < markingPrototype.Sprites.Count(); j++)
                 {
-                    string layerId = markingPrototype.ID + markingPrototype.MarkingPartNames[j];
+                    var rsi = (SpriteSpecifier.Rsi) markingPrototype.Sprites[j];
+                    string layerId = $"{markingPrototype.Name}-{rsi.RsiState}";
 
                     if (sprite.LayerMapTryGet(layerId, out var existingLayer))
                     {

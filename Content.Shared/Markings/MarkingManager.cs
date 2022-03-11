@@ -37,12 +37,8 @@ namespace Content.Shared.Markings
             {
                 if (marking.MarkingId == markingPrototype.ID)
                 {
-                    if (markingPrototype.MarkingPartNames.Count
-                            == markingPrototype.Sprites.Count)
-                    {
-                        markingResult = markingPrototype;
-                        return true;
-                    }
+                    markingResult = markingPrototype;
+                    return true;
                 }
             }
 

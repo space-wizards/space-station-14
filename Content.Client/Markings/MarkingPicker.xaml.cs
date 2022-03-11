@@ -10,8 +10,10 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Markings
@@ -51,7 +53,7 @@ namespace Content.Client.Markings
                 if (_markingManager.IsValidMarking(marking, out MarkingPrototype? newMarking))
                 {
                     // TODO: Composite sprite preview, somehow.
-                    var _item = CMarkingsUsed.AddItem($"{newMarking.ID} ({newMarking.MarkingCategory})", newMarking.Sprites[0].Frame0());
+                    var _item = CMarkingsUsed.AddItem($"{GetMarkingName(newMarking)} ({newMarking.MarkingCategory})", newMarking.Sprites[0].Frame0());
                     _item.Metadata = newMarking;
                     _item.IconModulate = marking.MarkingColors[0];
                     if (marking.MarkingColors.Count != _usedMarkingList[i].MarkingColors.Count)
@@ -97,6 +99,8 @@ namespace Content.Client.Markings
             CMarkingRankDown.OnPressed += _ => SwapMarkingDown();
         }
 
+        private string GetMarkingName(MarkingPrototype marking) => Loc.GetString($"{marking.Name}");
+
         public void Populate()
         {
             CMarkingsUnused.Clear();
@@ -105,7 +109,7 @@ namespace Content.Client.Markings
             {
                 if (_usedMarkingList.Contains(marking.AsMarking())) continue;
                 if (!marking.SpeciesRestrictions.Contains(_currentSpecies) && !marking.Unrestricted) continue;
-                var item = CMarkingsUnused.AddItem($"{marking.ID}", marking.Sprites[0].Frame0());
+                var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", marking.Sprites[0].Frame0());
                 item.Metadata = marking;
             }
         }
@@ -206,7 +210,9 @@ namespace Content.Client.Markings
                 ColorSlider colorSliderG = new ColorSlider(StyleNano.StyleClassSliderGreen);
                 ColorSlider colorSliderB = new ColorSlider(StyleNano.StyleClassSliderBlue);
 
-                colorContainer.AddChild(new Label { Text = $"{prototype.MarkingPartNames[i]} color:" });
+                var rsi = (SpriteSpecifier.Rsi) prototype.Sprites[i];
+                var name = Loc.GetString($"{prototype.Name}-{rsi.RsiState}");
+                colorContainer.AddChild(new Label { Text = $"{name} color:" });
                 colorContainer.AddChild(colorSliderR);
                 colorContainer.AddChild(colorSliderG);
                 colorContainer.AddChild(colorSliderB);
@@ -262,7 +268,7 @@ namespace Content.Client.Markings
             _usedMarkingList.Add(marking.AsMarking());
 
             CMarkingsUnused.Remove(_selectedUnusedMarking);
-            var item = CMarkingsUsed.AddItem($"{marking.ID} ({marking.MarkingCategory})", marking.Sprites[0].Frame0());
+            var item = CMarkingsUsed.AddItem($"{GetMarkingName(marking)} ({marking.MarkingCategory})", marking.Sprites[0].Frame0());
             item.Metadata = marking;
 
             _selectedUnusedMarking = null;
@@ -279,7 +285,7 @@ namespace Content.Client.Markings
 
             if (marking.MarkingCategory == _selectedMarkingCategory)
             {
-                var item = CMarkingsUnused.AddItem($"{marking.ID}", marking.Sprites[0].Frame0());
+                var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", marking.Sprites[0].Frame0());
                 item.Metadata = marking;
             }
             _selectedMarking = null;
