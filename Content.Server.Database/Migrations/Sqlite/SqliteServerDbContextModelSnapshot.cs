@@ -476,6 +476,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("hair_name");
 
+                    b.Property<string>("Markings")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("markings");
+
                     b.Property<int>("PreferenceId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("preference_id");

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CharacterAppearance;
+using Content.Shared.Markings;
 using Content.Shared.Preferences;
 using Content.Shared.Species;
 using Microsoft.EntityFrameworkCore;
@@ -178,6 +179,23 @@ namespace Content.Server.Database
             if (Enum.TryParse<Gender>(profile.Gender, true, out var genderVal))
                 gender = genderVal;
 
+            List<Marking> markings = new();
+            if (profile.Markings != null && profile.Markings.Length != 0)
+            {
+                List<string>? markingsRaw = JsonSerializer.Deserialize<List<string>>(profile.Markings);
+                if (markingsRaw != null)
+                {
+                    foreach (var marking in markingsRaw)
+                    {
+                        var parsed = Marking.ParseFromDbString(marking);
+
+                        if (parsed is null) continue;
+
+                        markings.Add(parsed);
+                    }
+                }
+            }
+
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.Species,
@@ -191,7 +209,8 @@ namespace Content.Server.Database
                     profile.FacialHairName,
                     Color.FromHex(profile.FacialHairColor),
                     Color.FromHex(profile.EyeColor),
-                    Color.FromHex(profile.SkinColor)
+                    Color.FromHex(profile.SkinColor),
+                    markings
                 ),
                 clothing,
                 backpack,
@@ -204,6 +223,12 @@ namespace Content.Server.Database
         private static Profile ConvertProfiles(HumanoidCharacterProfile humanoid, int slot)
         {
             var appearance = (HumanoidCharacterAppearance) humanoid.CharacterAppearance;
+            List<string> markingStrings = new();
+            foreach (var marking in appearance.Markings)
+            {
+                markingStrings.Add(marking.ToString());
+            }
+            var markings = JsonSerializer.Serialize(markingStrings);
 
             var entity = new Profile
             {
@@ -220,6 +245,7 @@ namespace Content.Server.Database
                 SkinColor = appearance.SkinColor.ToHex(),
                 Clothing = humanoid.Clothing.ToString(),
                 Backpack = humanoid.Backpack.ToString(),
+                Markings = markings,
                 Slot = slot,
                 PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable
             };

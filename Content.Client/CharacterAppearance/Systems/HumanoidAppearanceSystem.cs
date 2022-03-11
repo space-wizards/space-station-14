@@ -22,7 +22,7 @@ namespace Content.Client.CharacterAppearance.Systems
             SubscribeLocalEvent<HumanoidAppearanceBodyPartRemovedEvent>(BodyPartRemoved);
         }
 
-        private readonly HumanoidVisualLayers[] _bodyPartLayers = {
+        public readonly static HumanoidVisualLayers[] BodyPartLayers = {
             HumanoidVisualLayers.Chest,
             HumanoidVisualLayers.Head,
             HumanoidVisualLayers.Snout,
@@ -94,7 +94,7 @@ namespace Content.Client.CharacterAppearance.Systems
                 sprite.LayerSetSprite(facialLayer, facialHairPrototype.Sprite);
             }
 
-            foreach (var layer in _bodyPartLayers)
+            foreach (var layer in BodyPartLayers)
             {
                 // Not every mob may have the furry layers hence we just skip it.
                 if (!sprite.LayerMapTryGet(layer, out var actualLayer)) continue;

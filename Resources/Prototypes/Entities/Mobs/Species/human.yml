@@ -161,6 +161,7 @@
     - map: [ "head" ]
     - map: [ "pocket1" ]
     - map: [ "pocket2" ]
+  - type: Markings
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -391,6 +392,7 @@
       - map: [ "pocket2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
+    - type: Markings 
     - type: Physics
       bodyType: Dynamic
     - type: Fixtures
