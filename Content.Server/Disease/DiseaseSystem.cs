@@ -44,7 +44,7 @@ namespace Content.Server.Disease
 
                 foreach(var disease in carrierComp.Diseases)
                 {
-                    var args = new DiseaseEffectArgs(carrierComp.Owner, disease);
+                    var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
                     disease.Accumulator += frameTime;
                     if (disease.Accumulator >= 1f)
                     {

@@ -15,6 +15,7 @@ namespace Content.Shared.Disease
     }
     public readonly record struct DiseaseEffectArgs(
         EntityUid DiseasedEntity,
-        DiseasePrototype Disease
+        DiseasePrototype Disease,
+        IEntityManager EntityManager
     );
 }

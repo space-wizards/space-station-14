@@ -1,6 +1,6 @@
 - type: disease
   id: Gigacancer
-  name: gigacancer
+  name: felinid gigacancer
   effects:
     - !type:DiseaseHealthChange
       damage:
@@ -14,3 +14,6 @@
     - !type:DiseaseGenericStatusEffect
         key: Stutter
         component: OwOAccent
+  cures:
+    - !type:DiseaseReagentCure
+      reagent: Milk
