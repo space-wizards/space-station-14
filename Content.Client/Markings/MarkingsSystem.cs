@@ -47,10 +47,10 @@ namespace Content.Client.Markings
             var appearance = args.Appearance;
             if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite)) return;
 
-            appearance.Markings.Reverse();
             // Top -> Bottom ordering
-            foreach (var marking in appearance.Markings)
+            for (int i = appearance.Markings.Count; i > 0; i--)
             {
+                var marking = appearance.Markings[i];
                 if (!_markingManager.IsValidMarking(marking, out MarkingPrototype? markingPrototype))
                 {
                     continue;
@@ -61,9 +61,9 @@ namespace Content.Client.Markings
                     continue;
                 }
 
-                for (int i = 0; i < markingPrototype.Sprites.Count(); i++)
+                for (int j = 0; i < markingPrototype.Sprites.Count(); i++)
                 {
-                    string layerId = markingPrototype.ID + markingPrototype.MarkingPartNames[i];
+                    string layerId = markingPrototype.ID + markingPrototype.MarkingPartNames[j];
 
                     if (sprite.LayerMapTryGet(layerId, out var existingLayer))
                     {
@@ -71,9 +71,9 @@ namespace Content.Client.Markings
                         sprite.LayerMapRemove(marking.MarkingId);
                     }
 
-                    int layer = sprite.AddLayer(markingPrototype.Sprites[i], targetLayer + i + 1);
+                    int layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
                     sprite.LayerMapSet(layerId, layer);
-                    sprite.LayerSetColor(layerId, marking.MarkingColors[i]);
+                    sprite.LayerSetColor(layerId, marking.MarkingColors[j]);
                 }
 
                 // _activeMarkings[markingPrototype.BodyPart].Add(marking);
