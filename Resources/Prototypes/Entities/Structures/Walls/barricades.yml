@@ -23,6 +23,7 @@
       - SmallImpassable
   - type: Tag
     tags:
+    - ExplosivePassable
     - Wooden
   - type: Damageable
     damageModifierSet: Wood

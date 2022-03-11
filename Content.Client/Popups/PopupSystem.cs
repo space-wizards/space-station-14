@@ -4,6 +4,7 @@ using Content.Client.Stylesheets;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -17,6 +18,7 @@ namespace Content.Client.Popups
 {
     public sealed class PopupSystem : SharedPopupSystem
     {
+        [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
@@ -34,7 +36,7 @@ namespace Content.Client.Popups
 
         public void PopupCursor(string message)
         {
-            PopupMessage(message, _userInterfaceManager.MousePositionScaled);
+            PopupMessage(message, _inputManager.MouseScreenPosition);
         }
 
         public void PopupCoordinates(string message, EntityCoordinates coordinates)
@@ -62,9 +64,8 @@ namespace Content.Client.Popups
 
             _userInterfaceManager.PopupRoot.AddChild(label);
             label.Measure(Vector2.Infinity);
-            var minimumSize = label.DesiredSize;
 
-            label.InitialPos = coordinates.Position / label.UIScale - minimumSize / 2;
+            label.InitialPos = coordinates.Position / label.UIScale - label.DesiredSize / 2;
             LayoutContainer.SetPosition(label, label.InitialPos);
             _aliveLabels.Add(label);
         }

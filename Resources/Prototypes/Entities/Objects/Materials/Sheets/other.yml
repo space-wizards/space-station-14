@@ -13,6 +13,7 @@
   - type: Tag
     tags:
     - Sheet
+    - DroneUsable
 
 - type: entity
   parent: SheetOtherBase

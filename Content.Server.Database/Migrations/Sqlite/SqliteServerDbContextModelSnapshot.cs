@@ -640,10 +640,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("role_id");
 
-                    b.Property<int?>("UnbanId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("unban_id");
-
                     b.Property<Guid?>("UserId")
                         .HasColumnType("TEXT")
                         .HasColumnName("user_id");
@@ -651,10 +647,13 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasKey("Id")
                         .HasName("PK_server_role_ban");
 
-                    b.HasIndex("UnbanId")
-                        .HasDatabaseName("IX_server_role_ban__unban_id");
+                    b.HasIndex("Address");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("server_role_ban", (string)null);
+
+                    b.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
                 });
 
             modelBuilder.Entity("Content.Server.Database.ServerRoleUnban", b =>
@@ -680,7 +679,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasName("PK_server_role_unban");
 
                     b.HasIndex("BanId")
-                        .HasDatabaseName("IX_server_role_unban_ban_id");
+                        .IsUnique();
 
                     b.ToTable("server_role_unban", (string)null);
                 });
@@ -879,24 +878,14 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Connection");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.ServerRoleBan", b =>
-                {
-                    b.HasOne("Content.Server.Database.ServerRoleUnban", "Unban")
-                        .WithMany()
-                        .HasForeignKey("UnbanId")
-                        .HasConstraintName("FK_server_role_ban_server_role_unban__unban_id");
-
-                    b.Navigation("Unban");
-                });
-
             modelBuilder.Entity("Content.Server.Database.ServerRoleUnban", b =>
                 {
-                    b.HasOne("Content.Server.Database.ServerBan", "Ban")
-                        .WithMany()
-                        .HasForeignKey("BanId")
+                    b.HasOne("Content.Server.Database.ServerRoleBan", "Ban")
+                        .WithOne("Unban")
+                        .HasForeignKey("Content.Server.Database.ServerRoleUnban", "BanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_server_role_unban_server_ban_ban_id");
+                        .HasConstraintName("FK_server_role_unban_server_role_ban_ban_id");
 
                     b.Navigation("Ban");
                 });
@@ -980,6 +969,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     b.Navigation("BanHits");
 
+                    b.Navigation("Unban");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.ServerRoleBan", b =>
+                {
                     b.Navigation("Unban");
                 });
 #pragma warning restore 612, 618

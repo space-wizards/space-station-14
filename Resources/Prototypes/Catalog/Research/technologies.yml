@@ -247,6 +247,7 @@
     - AutolatheMachineCircuitboard
     - ProtolatheMachineCircuitboard
     - CircuitImprinterMachineCircuitboard
+    - UniformPrinterMachineCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
 

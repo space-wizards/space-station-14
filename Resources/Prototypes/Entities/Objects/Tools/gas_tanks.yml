@@ -21,9 +21,6 @@
       icon: Interface/Actions/internal0.png
       iconOn: Interface/Actions/internal1.png
       event: !type:ToggleActionEvent
-  - type: Explosive
-    explosionType: Default
-    maxIntensity: 20
 
 - type: entity
   parent: GasTankBase

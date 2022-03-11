@@ -117,11 +117,6 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/Cowtools/cowelder.rsi
-    layers:
-    - state: icon
-    - state: welder_flame
-      shader: unshaded
-      visible: false
   - type: Item
     size: 10
     sprite: Objects/Tools/Cowtools/cowelder.rsi
