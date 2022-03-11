@@ -11,3 +11,6 @@
       probability: 0.03
     - !type:DiseaseSnough
       probability: 0.03
+  cures:
+    - !type:DiseaseBodyTemperature
+      max: 270
