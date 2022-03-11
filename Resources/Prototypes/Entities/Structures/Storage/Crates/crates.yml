@@ -316,6 +316,14 @@
     - type: StorageVisualizer
       state_open: secgearcrate_open
       state_closed: secgearcrate_door
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   id: CrateEngineeringSecure
