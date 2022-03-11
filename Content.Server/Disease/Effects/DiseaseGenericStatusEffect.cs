@@ -24,13 +24,13 @@ namespace Content.Server.Disease.Effects
         public string Component = String.Empty;
 
         [DataField("time")]
-        public float Time = 2.0f;
+        public float Time = 1.015f;
 
         /// <remarks>
         ///     true - refresh status effect time,  false - accumulate status effect time
         /// </remarks>
         [DataField("refresh")]
-        public bool Refresh = true;
+        public bool Refresh = false;
 
         /// <summary>
         ///     Should this effect add the status effect, remove time from it, or set its cooldown?

@@ -1,19 +1,37 @@
 - type: disease
   id: SpaceCold
   name: space cold
+  cureResist: 0
   effects:
-    - !type:DiseaseHealthChange
-      probability: 0.1
-      damage:
-        types:
-          Poison: 1
-    - !type:DiseasePopUp
-      probability: 0.03
-    - !type:DiseaseSnough
-      probability: 0.03
     - !type:DiseaseAdjustReagent
-      reagent: Licoxide
+      probability: 0.15
+      reagent: Histamine
       amount: 1
+    - !type:DiseasePopUp
+      probability: 0.025
+    - !type:DiseaseSnough
+      probability: 0.025
   cures:
     - !type:DiseaseBedrestCure
-      maxLength: 10
+      maxLength: 20
+    - !type:JustWait
+      maxLength: 400
+    - !type:DiseaseReagentCure
+      reagent: Ultravasculine
+
+- type: disease
+  id: OwOnavirus
+  name: OwOnavirus
+  cureResist: 0.25
+  effects:
+    - !type:DiseaseGenericStatusEffect
+      key: Stutter
+      component: OwOAccent
+    - !type:DiseaseAdjustReagent ## 20 / 0.013 is around 25 (0.5u metabolize each tick)
+      probability: 0.513
+      reagent: Ephedrine
+      amount: 1
+  cures:
+    - !type:DiseaseBodyTemperature
+      min: 500
+
