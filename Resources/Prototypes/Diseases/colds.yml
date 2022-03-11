@@ -12,5 +12,5 @@
     - !type:DiseaseSnough
       probability: 0.03
   cures:
-    - !type:DiseaseBodyTemperature
-      max: 270
+    - !type:DiseaseBedrestCure
+      maxLength: 10
