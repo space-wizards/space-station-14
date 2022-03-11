@@ -92,6 +92,9 @@ namespace Content.Client.Markings
 
             CMarkingRemove.OnPressed += args =>
                 MarkingRemove();
+
+            CMarkingRankUp.OnPressed += _ => SwapMarkingUp();
+            CMarkingRankDown.OnPressed += _ => SwapMarkingDown();
         }
 
         public void Populate()
@@ -105,6 +108,49 @@ namespace Content.Client.Markings
                 var item = CMarkingsUnused.AddItem($"{marking.ID}", marking.Sprites[0].Frame0());
                 item.Metadata = marking;
             }
+        }
+
+        private void SwapMarkingUp()
+        {
+            if (_selectedMarking == null)
+            {
+                return;
+            }
+
+            var i = CMarkingsUsed.IndexOf(_selectedMarking);
+            if (SwapMarkingRank(i, i - 1))
+            {
+                OnMarkingRankChange?.Invoke(_usedMarkingList);
+            }
+        }
+
+        private void SwapMarkingDown()
+        {
+            if (_selectedMarking == null)
+            {
+                return;
+            }
+
+            var i = CMarkingsUsed.IndexOf(_selectedMarking);
+            if (SwapMarkingRank(i, i + 1))
+            {
+                OnMarkingRankChange?.Invoke(_usedMarkingList);
+            }
+        }
+
+
+        private bool SwapMarkingRank(int src, int dest)
+        {
+            if (dest >= CMarkingsUsed.Count || dest < 0)
+            {
+                return false;
+            }
+
+            var temp = CMarkingsUsed[dest];
+            CMarkingsUsed[dest] = CMarkingsUsed[src];
+            CMarkingsUsed[src] = temp;
+
+            return true;
         }
 
         // repopulate in case markings are restricted,

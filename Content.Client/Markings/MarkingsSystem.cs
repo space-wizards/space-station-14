@@ -47,10 +47,10 @@ namespace Content.Client.Markings
             var appearance = args.Appearance;
             if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite)) return;
 
+            appearance.Markings.Reverse();
             // Top -> Bottom ordering
-            for (int i = appearance.Markings.Count; i > 0; i--)
+            foreach (var marking in appearance.Markings)
             {
-                var marking = appearance.Markings[i];
                 if (!_markingManager.IsValidMarking(marking, out MarkingPrototype? markingPrototype))
                 {
                     continue;
@@ -61,7 +61,7 @@ namespace Content.Client.Markings
                     continue;
                 }
 
-                for (int j = 0; i < markingPrototype.Sprites.Count(); i++)
+                for (int j = 0; j < markingPrototype.Sprites.Count(); j++)
                 {
                     string layerId = markingPrototype.ID + markingPrototype.MarkingPartNames[j];
 
