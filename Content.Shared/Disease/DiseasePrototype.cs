@@ -31,5 +31,8 @@ namespace Content.Shared.Disease
         [DataField("cureResist", serverOnly: true)]
         public float CureResist = 0.05f;
 
+        [DataField("infectious", serverOnly: true)]
+        public bool Infectious = true;
+
     }
 }

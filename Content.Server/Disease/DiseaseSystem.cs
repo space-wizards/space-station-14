@@ -161,7 +161,7 @@ namespace Content.Server.Disease
         }
         public void TryInfect(DiseaseCarrierComponent carrier, DiseasePrototype? disease, float chance = 0.7f)
         {
-            if(disease == null)
+            if(disease == null || !disease.Infectious)
                 return;
             var infectionChance = chance - carrier.DiseaseResist;
             if (infectionChance <= 0)
