@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Shuttle movement now uses significantly less bandwidth., type: Fix}
-  id: 687
-  time: '2021-12-01T07:32:37.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Instruments network again, type: Fix}
@@ -2975,3 +2970,8 @@ Entries:
   - {message: It's now possible to carry an acoustic guitar on your back., type: Add}
   id: 1186
   time: '2022-03-10T13:59:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Footstep sounds are now predicted and won't sound delayed., type: Tweak}
+  id: 1187
+  time: '2022-03-11T01:48:03.0000000+00:00'
