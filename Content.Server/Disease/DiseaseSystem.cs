@@ -7,6 +7,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Physics.Dynamics;
 using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Disease
@@ -24,7 +25,9 @@ namespace Content.Server.Disease
         {
             base.Initialize();
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
-            SubscribeLocalEvent<DiseaseInteractSourceComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<DiseasedComponent, InteractHandEvent>(OnInteractDiseasedHand);
+            SubscribeLocalEvent<DiseasedComponent, InteractUsingEvent>(OnInteractDiseasedUsing);
+            SubscribeLocalEvent<DiseaseInteractSourceComponent, AfterInteractEvent>(OnAfterInteractSource);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
         }
@@ -65,7 +68,7 @@ namespace Content.Server.Disease
             }
         }
 
-        private void OnAfterInteract(EntityUid uid, DiseaseInteractSourceComponent component, AfterInteractEvent args)
+        private void OnAfterInteractSource(EntityUid uid, DiseaseInteractSourceComponent component, AfterInteractEvent args)
         {
             if (!args.CanReach || args.Target == null)
                 return;
@@ -112,6 +115,29 @@ namespace Content.Server.Disease
                 return;
             carrier.Diseases.Remove(disease);
             _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Pvs(carrier.Owner));
+        }
+
+        private void OnInteractDiseasedHand(EntityUid uid, DiseasedComponent component, InteractHandEvent args)
+        {
+            if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
+                return;
+
+            InteractWithDiseased (args.Target, args.User);
+        }
+
+        private void OnInteractDiseasedUsing(EntityUid uid, DiseasedComponent component, InteractUsingEvent args)
+        {
+            InteractWithDiseased(args.Target, args.User);
+        }
+
+        private void InteractWithDiseased(EntityUid diseased, EntityUid target)
+        {
+            if (!TryComp<DiseaseCarrierComponent>(target, out var carrier))
+                return;
+
+            var disease = _random.Pick(Comp<DiseaseCarrierComponent>(diseased).Diseases);
+            if (disease != null)
+                TryInfect(carrier, disease, 0.3f);
         }
         public void TryAddDisease(DiseaseCarrierComponent? target, DiseasePrototype? addedDisease, string? diseaseName = null, EntityUid host = default!)
         {

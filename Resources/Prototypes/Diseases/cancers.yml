@@ -9,8 +9,6 @@
           Radiation: 0.5
     - !type:DiseasePopUp
       probability: 0.1
-    - !type:DiseaseSnough
-      probability: 0.6
     - !type:DiseaseGenericStatusEffect
         key: Stutter
         component: OwOAccent
