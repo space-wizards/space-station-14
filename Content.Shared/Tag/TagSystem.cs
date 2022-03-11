@@ -178,15 +178,6 @@ public sealed class TagSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Checks if a tag has been added to an entity.
-    /// </summary>
-    public bool HasTag(EntityUid entity, string id, EntityQuery<TagComponent> tagQuery)
-    {
-        return tagQuery.TryGetComponent(entity, out var component) &&
-               HasTag(component, id);
-    }
-
-    /// <summary>
     ///     Checks if all of the given tags have been added to an entity.
     /// </summary>
     /// <param name="entity">The entity to check.</param>
