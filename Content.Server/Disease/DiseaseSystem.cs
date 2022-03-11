@@ -149,7 +149,7 @@ namespace Content.Server.Disease
 
             var disease = _random.Pick(Comp<DiseaseCarrierComponent>(diseased).Diseases);
             if (disease != null)
-                TryInfect(carrier, disease, 0.3f);
+                TryInfect(carrier, disease, 0.4f);
         }
         public void TryAddDisease(DiseaseCarrierComponent? target, DiseasePrototype? addedDisease, string? diseaseName = null, EntityUid host = default!)
         {
@@ -181,7 +181,7 @@ namespace Content.Server.Disease
             if (_random.Prob(infectionChance))
                 TryAddDisease(carrier, disease);
         }
-        public void SneezeCough(EntityUid uid, DiseasePrototype? disease, SneezeCoughType Snough)
+        public void SneezeCough(EntityUid uid, DiseasePrototype? disease, SneezeCoughType Snough, float infectionChance = 0.3f)
         {
             IngestionBlockerComponent blocker;
 
@@ -198,10 +198,10 @@ namespace Content.Server.Disease
                 blocker.Enabled)
                 return;
 
-            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, 1.5f))
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, infectionChance))
             {
                 if (TryComp<DiseaseCarrierComponent>(entity, out var carrier))
-                    TryInfect(carrier, disease);
+                    TryInfect(carrier, disease, 0.3f);
             }
 
         }

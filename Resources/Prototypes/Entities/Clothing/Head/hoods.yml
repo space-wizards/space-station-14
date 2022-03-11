@@ -10,7 +10,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/general.rsi
   - type: DiseaseProtection
-    protection: 0.25
+    protection: 0.15
 
 - type: entity
   parent: ClothingHeadBase
@@ -24,7 +24,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/cmo.rsi
   - type: DiseaseProtection
-    protection: 0.35
+    protection: 0.25
 
 - type: entity
   parent: ClothingHeadBase
@@ -38,7 +38,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi
   - type: DiseaseProtection
-    protection: 0.25
+    protection: 0.15
 
 - type: entity
   parent: ClothingHeadBase
@@ -52,7 +52,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/scientist.rsi
   - type: DiseaseProtection
-    protection: 0.25
+    protection: 0.15
 
 - type: entity
   parent: ClothingHeadBase
@@ -66,7 +66,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/security.rsi
   - type: DiseaseProtection
-    protection: 0.35
+    protection: 0.25
 
 - type: entity
   parent: ClothingHeadBase
@@ -80,7 +80,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/virology.rsi
   - type: DiseaseProtection
-    protection: 0.25
+    protection: 0.15
 
 - type: entity
   parent: ClothingHeadBase
