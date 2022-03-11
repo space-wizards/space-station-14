@@ -10,6 +10,8 @@ using Content.Server.MoMMI;
 using Content.Server.Players;
 using Content.Server.Preferences.Managers;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Disease;
+using Content.Server.Disease.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -207,6 +209,12 @@ namespace Content.Server.Chat.Managers
             {
                 return;
             }
+
+            if (_entManager.HasComponent<DiseasedComponent>(source) && _entManager.TryGetComponent<DiseaseCarrierComponent>(source,out var carrier))
+            {
+                EntitySystem.Get<DiseaseSystem>().SneezeCough(source, _random.Pick(carrier.Diseases), SneezeCoughType.None);
+            }
+
 
             if (MessageCharacterLimit(source, message))
             {

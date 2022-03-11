@@ -1,14 +1,15 @@
 using Content.Shared.Disease;
 using Content.Server.Disease.Components;
 using Content.Server.Clothing.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Interaction;
 using Content.Server.Popups;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
-using Robust.Shared.Physics.Dynamics;
 using Content.Shared.Inventory.Events;
+using Content.Server.Nutrition.EntitySystems;
 
 namespace Content.Server.Disease
 {
@@ -20,6 +21,8 @@ namespace Content.Server.Disease
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         public override void Initialize()
         {
@@ -171,11 +174,20 @@ namespace Content.Server.Disease
         }
         public void SneezeCough(EntityUid uid, DiseasePrototype? disease, SneezeCoughType Snough)
         {
+            IngestionBlockerComponent blocker;
+
             var xform = Comp<TransformComponent>(uid);
+
             if (Snough == SneezeCoughType.Sneeze)
                 _popupSystem.PopupEntity(Loc.GetString("disease-sneeze", ("person", uid)), uid, Filter.Pvs(uid));
-            else
+            else if (Snough == SneezeCoughType.Cough)
                 _popupSystem.PopupEntity(Loc.GetString("disease-cough", ("person", uid)), uid, Filter.Pvs(uid));
+
+
+            if (_inventorySystem.TryGetSlotEntity(uid, "mask", out var maskUid) &&
+                EntityManager.TryGetComponent(maskUid, out blocker) &&
+                blocker.Enabled)
+                return;
 
             foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, 1.5f))
             {
@@ -199,6 +211,7 @@ namespace Content.Server.Disease
         {
             Sneeze,
 
-            Cough
+            Cough,
+            None
         }
 }
