@@ -15,8 +15,8 @@
                 <Label Text="{Loc 'markings-used'}" />
                 <ItemList Name="CMarkingsUsed" VerticalExpand="True" MinSize="300 250" />
                 <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                    <Button Name="CMarkingRankUp" Text="{Loc 'markings-rank-up'}" />
-                    <Button Name="CMarkingRankDown" Text="{Loc 'markings-rank-down'}" />
+                    <Button Name="CMarkingRankUp" Text="{Loc 'markings-rank-up'}" HorizontalExpand="True" />
+                    <Button Name="CMarkingRankDown" Text="{Loc 'markings-rank-down'}" HorizontalExpand="True" />
                 </BoxContainer>
                 <Button Name="CMarkingRemove" Text="{Loc 'markings-remove'}" />
             </BoxContainer>
