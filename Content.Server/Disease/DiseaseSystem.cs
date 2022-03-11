@@ -113,17 +113,25 @@ namespace Content.Server.Disease
             carrier.Diseases.Remove(disease);
             _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Pvs(carrier.Owner));
         }
-        public void TryAddDisease(DiseaseCarrierComponent target, DiseasePrototype addedDisease)
+        public void TryAddDisease(DiseaseCarrierComponent? target, DiseasePrototype? addedDisease, string? diseaseName = null, EntityUid host = default!)
         {
-            foreach (var disease in target.Diseases)
-            {
-                if (disease.Name == addedDisease.Name)
-                    return;
-            }
+            if (diseaseName != null && _prototypeManager.TryIndex(diseaseName, out DiseasePrototype? diseaseProto))
+                addedDisease = diseaseProto;
 
+            if (host != default!)
+                target = Comp<DiseaseCarrierComponent>(host);
+
+            if (target != null)
+            {
+                foreach (var disease in target.Diseases)
+                {
+                    if (disease.Name == addedDisease?.Name)
+                        return;
+                }
             var freshDisease = _serializationManager.CreateCopy(addedDisease) ?? default!;
             target.Diseases.Add(freshDisease);
             AddQueue.Enqueue(target.Owner);
+            }
         }
         private void TryInfect(DiseaseCarrierComponent carrier, DiseasePrototype? disease, float chance = 0.7f)
         {

@@ -1,7 +1,5 @@
-using Content.Shared.Disease;
 using Content.Shared.Chemistry.Reagent;
 using Content.Server.Disease;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using JetBrains.Annotations;
 
 namespace Content.Server.Chemistry.ReagentEffects
