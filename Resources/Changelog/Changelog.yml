@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Instruments network again, type: Fix}
-  id: 688
-  time: '2021-12-01T14:00:11.0000000+00:00'
 - author: Efruit
   changes:
   - {message: Radiation storms are scary., type: Tweak}
@@ -2975,3 +2970,10 @@ Entries:
   - {message: Footstep sounds are now predicted and won't sound delayed., type: Tweak}
   id: 1187
   time: '2022-03-11T01:48:03.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: 'Admin ghosts now have the cargo shuttle console, communications console,
+      crew monitoring console, mass scanner console, and solar control console built
+      into their ghostly skull.', type: Add}
+  id: 1188
+  time: '2022-03-11T05:37:36.0000000+00:00'
