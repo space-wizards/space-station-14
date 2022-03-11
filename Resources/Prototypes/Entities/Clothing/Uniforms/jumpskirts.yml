@@ -89,6 +89,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
+  - type: DiseaseProtection
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -199,6 +200,8 @@
     sprite: Clothing/Uniforms/Jumpskirt/medical.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/medical.rsi
+  - type: DiseaseProtection
+    protection: 0.05
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -221,6 +224,8 @@
     sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
+  - type: DiseaseProtection
+    protection: 0.05
 
 - type: entity
   parent: ClothingUniformSkirtBase

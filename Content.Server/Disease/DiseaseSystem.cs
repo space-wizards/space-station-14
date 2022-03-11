@@ -1,11 +1,13 @@
-using System.Linq;
 using Content.Shared.Disease;
+using Content.Server.Disease.Components;
+using Content.Server.Clothing.Components;
 using Content.Shared.Interaction;
 using Content.Server.Popups;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
+using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Disease
 {
@@ -23,6 +25,8 @@ namespace Content.Server.Disease
             base.Initialize();
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
             SubscribeLocalEvent<DiseaseInteractSourceComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<DiseaseProtectionComponent, GotEquippedEvent>(OnEquipped);
+            SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
         }
 
         private Queue<EntityUid> AddQueue = new();
@@ -37,52 +41,28 @@ namespace Content.Server.Disease
 
             foreach (var (diseasedComp, carrierComp) in EntityQuery<DiseasedComponent, DiseaseCarrierComponent>(false))
             {
-                if (carrierComp.Diseases.Count > 0)
+
+                foreach(var disease in carrierComp.Diseases)
                 {
-                    foreach(var disease in carrierComp.Diseases)
+                    var args = new DiseaseEffectArgs(carrierComp.Owner, disease);
+                    disease.Accumulator += frameTime;
+                    if (disease.Accumulator >= 1f)
                     {
-                        var args = new DiseaseEffectArgs(carrierComp.Owner, disease);
-                        disease.Accumulator += frameTime;
-                        if (disease.Accumulator >= 1f)
-                        {
-                            disease.Accumulator -= 1f;
-                            foreach (var cure in disease.Cures)
-                                if (cure.Cure(args))
-                                {
-                                    CureDisease(carrierComp, disease);
-                                    return; // Get the hell out before we trigger enumeration errors, sorry you can only cure like 30 diseases a second
-                                }
-                            foreach (var effect in disease.Effects)
+                        disease.Accumulator -= 1f;
+                        foreach (var cure in disease.Cures)
+                            if (cure.Cure(args))
+                            {
+                                CureDisease(carrierComp, disease);
+                                return; //Prevent any effects or additional cure attempts, it can mess with some of the maths
+                            }
+                        foreach (var effect in disease.Effects)
                             if (_random.Prob(effect.Probability))
                                 effect.Effect(args);
-                        }
                     }
+                }
                 if (carrierComp.Diseases.Count == 0)
                   RemComp<DiseasedComponent>(diseasedComp.Owner);
-                }
             }
-        }
-
-        private void CureDisease(DiseaseCarrierComponent carrier, DiseasePrototype? disease)
-        {
-            if (disease == null)
-                return;
-            carrier.Diseases.Remove(disease);
-            _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Pvs(carrier.Owner));
-        }
-        private void TryAddDisease(DiseaseCarrierComponent target, DiseasePrototype addedDisease)
-        {
-            if (target.Diseases.Count > 0)
-            {
-                foreach (var disease in target.Diseases)
-                {
-                    if (disease.Name == addedDisease.Name)
-                        return;
-                }
-            }
-            var freshDisease = _serializationManager.CreateCopy(addedDisease) ?? default!;
-            target.Diseases.Add(freshDisease);
-            AddQueue.Enqueue(target.Owner);
         }
 
         private void OnAfterInteract(EntityUid uid, DiseaseInteractSourceComponent component, AfterInteractEvent args)
@@ -100,8 +80,6 @@ namespace Content.Server.Disease
 
         private async void OnTryCureDisease(EntityUid uid, DiseaseCarrierComponent component, CureDiseaseAttemptEvent args)
         {
-            if (component.Diseases.Count == 0)
-                return;
             foreach (var disease in component.Diseases)
             {
                 if (_random.Prob((args.CureChance / component.Diseases.Count) - disease.CureResist))
@@ -112,12 +90,49 @@ namespace Content.Server.Disease
             }
         }
 
+        private void OnEquipped(EntityUid uid, DiseaseProtectionComponent component, GotEquippedEvent args)
+        {
+            if (TryComp<ClothingComponent>(uid, out var clothing))
+                if (clothing.SlotFlags != args.SlotFlags)
+                    return;
+
+            if(TryComp<DiseaseCarrierComponent>(args.Equipee, out var carrier))
+                carrier.DiseaseResist += component.Protection;
+        }
+
+
+        private void OnUnequipped(EntityUid uid, DiseaseProtectionComponent component, GotUnequippedEvent args)
+        {
+            if(TryComp<DiseaseCarrierComponent>(args.Equipee, out var carrier))
+                carrier.DiseaseResist -= component.Protection;
+        }
+        private void CureDisease(DiseaseCarrierComponent carrier, DiseasePrototype? disease)
+        {
+            if (disease == null)
+                return;
+            carrier.Diseases.Remove(disease);
+            _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Pvs(carrier.Owner));
+        }
+        private void TryAddDisease(DiseaseCarrierComponent target, DiseasePrototype addedDisease)
+        {
+            foreach (var disease in target.Diseases)
+            {
+                if (disease.Name == addedDisease.Name)
+                    return;
+            }
+
+            var freshDisease = _serializationManager.CreateCopy(addedDisease) ?? default!;
+            target.Diseases.Add(freshDisease);
+            AddQueue.Enqueue(target.Owner);
+        }
         private void TryInfect(DiseaseCarrierComponent carrier, DiseasePrototype? disease, float chance = 0.7f)
         {
             if(disease == null)
                 return;
-
-            if (_random.Prob(chance))
+            var infectionChance = chance - carrier.DiseaseResist;
+            if (infectionChance <= 0)
+                return;
+            if (_random.Prob(infectionChance))
                 TryAddDisease(carrier, disease);
         }
         public void SneezeCough(EntityUid uid, DiseasePrototype? disease, SneezeCoughType Snough)

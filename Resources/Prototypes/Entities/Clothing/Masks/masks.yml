@@ -72,6 +72,7 @@
     sprite: Clothing/Mask/sterile.rsi
   - type: BreathMask
   - type: IngestionBlocker
+  - type: DiseaseProtection
 
 - type: entity
   parent: ClothingMaskBase

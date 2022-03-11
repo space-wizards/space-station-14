@@ -1,7 +1,7 @@
 using Content.Shared.Disease;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Disease
+namespace Content.Server.Disease.Components
 {
     [RegisterComponent]
     public sealed class DiseaseInteractSourceComponent : Component
