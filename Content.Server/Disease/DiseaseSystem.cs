@@ -78,7 +78,7 @@ namespace Content.Server.Disease
             TryAddDisease(targetDiseases, compDisease);
         }
 
-        private async void OnTryCureDisease(EntityUid uid, DiseaseCarrierComponent component, CureDiseaseAttemptEvent args)
+        private void OnTryCureDisease(EntityUid uid, DiseaseCarrierComponent component, CureDiseaseAttemptEvent args)
         {
             foreach (var disease in component.Diseases)
             {
@@ -113,7 +113,7 @@ namespace Content.Server.Disease
             carrier.Diseases.Remove(disease);
             _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Pvs(carrier.Owner));
         }
-        private void TryAddDisease(DiseaseCarrierComponent target, DiseasePrototype addedDisease)
+        public void TryAddDisease(DiseaseCarrierComponent target, DiseasePrototype addedDisease)
         {
             foreach (var disease in target.Diseases)
             {
