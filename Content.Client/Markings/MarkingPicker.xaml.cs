@@ -20,11 +20,7 @@ namespace Content.Client.Markings
     public sealed partial class MarkingPicker : Control
     {
         [Dependency] private readonly MarkingManager _markingManager = default!;
-
-        // temporarily, as a treat
-        // maybe use this information to create
-        // a 'realistic' enum of skin colors?
-        // public Action<Color>? OnBodyColorChange;
+        
         public Action<List<Marking>>? OnMarkingAdded;
         public Action<List<Marking>>? OnMarkingRemoved;
         public Action<List<Marking>>? OnMarkingColorChange;
@@ -49,8 +45,6 @@ namespace Content.Client.Markings
             _selectedUnusedMarking = null;
             _currentSpecies = species;
 
-            Logger.DebugS("MarkingSelector", $"New marking set: {_usedMarkingList}");
-            // foreach (var m in _usedMarkingList)
             for (int i = 0; i < _usedMarkingList.Count; i++)
             {
                 Marking marking = _usedMarkingList[i];
@@ -108,7 +102,6 @@ namespace Content.Client.Markings
             {
                 if (_usedMarkingList.Contains(marking.AsMarking())) continue;
                 if (!marking.SpeciesRestrictions.Contains(_currentSpecies) && !marking.Unrestricted) continue;
-                Logger.DebugS("MarkingSelector", $"Adding marking {marking.ID}");
                 var item = CMarkingsUnused.AddItem($"{marking.ID}", marking.Sprites[0].Frame0());
                 item.Metadata = marking;
             }
@@ -202,27 +195,13 @@ namespace Content.Client.Markings
             CMarkingColors.Visible = true;
         }
 
-        /*
-        private void BodyColorChanged()
-        {
-            var newColor = new Color(
-                _bodyColorSliderR.ColorValue,
-                _bodyColorSliderG.ColorValue,
-                _bodyColorSliderB.ColorValue
-            );
-
-            OnBodyColorChange?.Invoke(newColor);
-        }
-        */
-
-
         private void ColorChanged(int colorIndex)
         {
             if (_selectedMarking is null) return;
             var markingPrototype = (MarkingPrototype) _selectedMarking.Metadata!;
             int markingIndex = _usedMarkingList.FindIndex(m => m.MarkingId == markingPrototype.ID);
 
-            if (markingIndex < 0) return; // ???
+            if (markingIndex < 0) return;
 
             _selectedMarking.IconModulate = _currentMarkingColors[colorIndex];
             _usedMarkingList[markingIndex].SetColor(colorIndex, _currentMarkingColors[colorIndex]);
@@ -234,9 +213,7 @@ namespace Content.Client.Markings
             if (_usedMarkingList is null || _selectedUnusedMarking is null) return;
 
             MarkingPrototype marking = (MarkingPrototype) _selectedUnusedMarking.Metadata!;
-            Logger.DebugS("MarkingSelector", $"Adding marking {marking.ID} to character");
             _usedMarkingList.Add(marking.AsMarking());
-            Logger.DebugS("MarkingSelector", $"{_usedMarkingList}");
 
             CMarkingsUnused.Remove(_selectedUnusedMarking);
             var item = CMarkingsUsed.AddItem($"{marking.ID} ({marking.MarkingCategory})", marking.Sprites[0].Frame0());

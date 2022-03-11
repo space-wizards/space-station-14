@@ -26,16 +26,11 @@ namespace Content.Shared.Markings
                 _index.Add(prototype);
                 _markingDict[prototype.MarkingCategory].Add(prototype);
             }
-
-            // _index.Sort();
         }
 
         public IReadOnlyList<MarkingPrototype> Markings() => _index;
         public IReadOnlyDictionary<MarkingCategories, List<MarkingPrototype>> CategorizedMarkings() => _markingDict;
 
-        // the most DEVIOUS lick
-        // mostly because i seriously don't like the whole out thing, but whatever
-        // TODO: O(n) to O(log n)
         public bool IsValidMarking(Marking marking, [NotNullWhen(true)] out MarkingPrototype? markingResult)
         {
             foreach (var markingPrototype in _index)
@@ -45,25 +40,13 @@ namespace Content.Shared.Markings
                     if (markingPrototype.MarkingPartNames.Count
                             == markingPrototype.Sprites.Count)
                     {
-                        /*
-                        if (marking.MarkingColors.Count != markingPrototype.Sprites.Count)
-                        {
-                            List<Color> colors = new();
-                            for (int i = 0; i < markingPrototype.Sprites.Count; i++)
-                            {
-                                colors.Add(Color.White);
-                            }
-                            marking = new Marking(marking.MarkingId, colors);
-                        }
-                        */
-
                         markingResult = markingPrototype;
                         return true;
                     }
                 }
             }
 
-            Logger.DebugS("AnthroSystem", $"An error occurred while validing a marking. Marking: {marking}");
+            Logger.DebugS("Markings", $"An error occurred while validing a marking. Marking: {marking}");
             markingResult = null;
             return false;
         }
