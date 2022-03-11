@@ -133,7 +133,7 @@ namespace Content.Server.Disease
             AddQueue.Enqueue(target.Owner);
             }
         }
-        private void TryInfect(DiseaseCarrierComponent carrier, DiseasePrototype? disease, float chance = 0.7f)
+        public void TryInfect(DiseaseCarrierComponent carrier, DiseasePrototype? disease, float chance = 0.7f)
         {
             if(disease == null)
                 return;

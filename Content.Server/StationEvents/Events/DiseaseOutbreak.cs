@@ -12,7 +12,6 @@ public sealed class DiseaseOutbreak : StationEvent
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
-
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     public readonly IReadOnlyList<string> NotTooSeriousDiseases = new[]

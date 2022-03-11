@@ -126,6 +126,7 @@ namespace Content.Client.Entry
             "RCD",
             "RCDAmmo",
             "CursedEntityStorage",
+            "DiseaseArtifact",
             "Radio",
             "GasArtifact",
             "SentienceTarget",
