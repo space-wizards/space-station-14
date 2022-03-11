@@ -53,7 +53,7 @@
     - type: VentCritterSpawnLocation
     - type: AmbientSound
       enabled: false
-      volume: -17
+      volume: -12
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
@@ -123,7 +123,7 @@
       node: ventscrubber
     - type: AmbientSound
       enabled: false
-      volume: -17
+      volume: -12
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg

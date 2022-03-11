@@ -52,7 +52,7 @@
     node: pressurepump
   - type: AmbientSound
     enabled: false
-    volume: -12
+    volume: -9
     range: 5
     sound:
       path: /Audio/Ambience/Objects/gas_pump.ogg
@@ -90,7 +90,7 @@
       node: volumepump
     - type: AmbientSound
       enabled: false
-      volume: -12
+      volume: -9
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_pump.ogg

@@ -7,6 +7,7 @@
     mode: AlignTileAny
   components:
   - type: AmbientSound
+    volume: -6
     range: 7
     sound:
       path: /Audio/Ambience/Objects/gravity_gen_hum.ogg

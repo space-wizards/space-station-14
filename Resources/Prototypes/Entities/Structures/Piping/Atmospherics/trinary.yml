@@ -60,7 +60,7 @@
       node: filter
     - type: AmbientSound
       enabled: false
-      volume: -12
+      volume: -9
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
@@ -144,7 +144,7 @@
       node: mixer
     - type: AmbientSound
       enabled: false
-      volume: -12
+      volume: -9
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
