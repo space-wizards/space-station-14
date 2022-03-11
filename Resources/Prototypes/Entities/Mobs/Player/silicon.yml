@@ -71,7 +71,6 @@
   components:
   - type: Drone
     tools:
-      - id: ClothingBackpackSatchelDrone
       - id: trayScanner
       - id: Omnitool
       - id: WelderExperimental

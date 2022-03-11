@@ -102,8 +102,3 @@
         - id: BoxSurvival
         - id: AcousticGuitarInstrument
         - id: SaxophoneInstrument
-
-- type: entity
-  abstract: true
-  parent: ClothingBackpackSatchel
-  id: ClothingBackpackSatchelDrone
