@@ -25,6 +25,7 @@ using Content.Shared.Wall;
 using Content.Shared.Item;
 using Robust.Shared.Player;
 using Robust.Shared.Input;
+using Robust.Shared.Timing;
 
 #pragma warning disable 618
 
@@ -37,6 +38,7 @@ namespace Content.Shared.Interaction
     public abstract class SharedInteractionSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedPhysicsSystem _sharedBroadphaseSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
@@ -455,7 +457,7 @@ namespace Content.Shared.Interaction
 
             var inRange = InRangeUnobstructed(origin, mapPos, range, collisionMask, combinedPredicate, popup);
 
-            if (!inRange && popup)
+            if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
                 var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
                 _popupSystem.PopupEntity(message, origin, Filter.Entities(origin));
@@ -596,7 +598,7 @@ namespace Content.Shared.Interaction
             var originPosition = Transform(origin).MapPosition;
             var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, combinedPredicatre);
 
-            if (!inRange && popup)
+            if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
                 var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
                 _popupSystem.PopupEntity(message, origin, Filter.Entities(origin));
@@ -727,7 +729,7 @@ namespace Content.Shared.Interaction
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))
                 return false;
 
-            if (checkAccess && !InRangeUnobstructed(user, used, popup: true))
+            if (checkAccess && !InRangeUnobstructed(user, used))
                 return false;
 
             // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
