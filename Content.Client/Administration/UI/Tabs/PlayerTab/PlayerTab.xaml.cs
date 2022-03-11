@@ -58,12 +58,11 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
             PlayerList.AddChild(new HSeparator());
 
             // Temporary until we can sort by <whatever>
-            var sortedPlayers = new List<PlayerInfo>();
-            sortedPlayers.AddRange(players);
+            var sortedPlayers = new List<PlayerInfo>(players);
             sortedPlayers.Sort((x, y) => string.Compare(x.Username, y.Username, StringComparison.Ordinal));
 
             var useAltColor = false;
-            foreach (var player in players)
+            foreach (var player in sortedPlayers)
             {
                 var entry = new PlayerTabEntry(player.Username,
                     player.CharacterName,
