@@ -11,6 +11,9 @@
       probability: 0.03
     - !type:DiseaseSnough
       probability: 0.03
+    - !type:DiseaseAdjustReagent
+      reagent: Licoxide
+      amount: 1
   cures:
     - !type:DiseaseBedrestCure
       maxLength: 10

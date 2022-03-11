@@ -19,7 +19,7 @@ public sealed class DiseaseOutbreak : StationEvent
         "SpaceCold"
     };
 
-    public override string Name => "Disease Outbreak";
+    public override string Name => "DiseaseOutbreak";
 
     public override float Weight => WeightNormal;
 
