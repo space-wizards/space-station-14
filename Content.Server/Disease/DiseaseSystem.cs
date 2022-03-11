@@ -24,10 +24,18 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
             SubscribeLocalEvent<DiseaseInteractSourceComponent, AfterInteractEvent>(OnAfterInteract);
         }
+
+        private Queue<EntityUid> AddQueue = new();
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var (diseasedComp, carrierComp) in EntityQuery<DiseasedComponent, DiseaseCarrierComponent>(false).ToArray())
+            foreach (var entity in AddQueue)
+            {
+                EnsureComp<DiseasedComponent>(entity);
+            }
+            AddQueue.Clear();
+
+            foreach (var (diseasedComp, carrierComp) in EntityQuery<DiseasedComponent, DiseaseCarrierComponent>(false))
             {
                 if (carrierComp.Diseases.Count > 0)
                 {
@@ -74,7 +82,7 @@ namespace Content.Server.Disease
             }
             var freshDisease = _serializationManager.CreateCopy(addedDisease) ?? default!;
             target.Diseases.Add(freshDisease);
-            EnsureComp<DiseasedComponent>(target.Owner);
+            AddQueue.Enqueue(target.Owner);
         }
 
         private void OnAfterInteract(EntityUid uid, DiseaseInteractSourceComponent component, AfterInteractEvent args)
