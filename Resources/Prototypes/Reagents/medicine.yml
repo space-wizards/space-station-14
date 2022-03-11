@@ -1,4 +1,12 @@
 - type: reagent
+  id: Cryptobiolin
+  name: cryptobiolin
+  group: Medicine
+  desc: Causes confusion and dizziness. This is essential to make Spaceacillin.
+  physicalDesc: fizzy
+  color: "#081a80"
+
+- type: reagent
   id: Dylovene
   name: dylovene
   group: Medicine

@@ -11,6 +11,18 @@
     Dylovene: 3
 
 - type: reaction
+  id: Cryptobiolin
+  reactants:
+    Potassium:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Glucose:
+      amount: 1
+  products:
+    Cryptobiolin: 3
+
+- type: reaction
   id: Arithrazine
   reactants:
     Hyronalin:
@@ -292,7 +304,7 @@
 - type: reaction
   id: Spaceacillin
   reactants:
-    Dexalin:
+    Cryptobiolin:
       amount: 1
     Inaprovaline:
       amount: 1

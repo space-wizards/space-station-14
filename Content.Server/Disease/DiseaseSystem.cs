@@ -88,7 +88,15 @@ namespace Content.Server.Disease
         {
             foreach (var disease in component.Diseases)
             {
-                if (_random.Prob((args.CureChance / component.Diseases.Count) - disease.CureResist))
+                var cureProb = ((args.CureChance / component.Diseases.Count) - disease.CureResist);
+                if (cureProb < 0)
+                    return;
+                if (cureProb > 1)
+                {
+                    CureDisease(component, disease);
+                    return;
+                }
+                if (_random.Prob(cureProb))
                 {
                     CureDisease(component, disease);
                     return;
@@ -116,6 +124,7 @@ namespace Content.Server.Disease
         {
             if (disease == null)
                 return;
+            carrier.PastDiseases.Add(disease);
             carrier.Diseases.Remove(disease);
             _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Pvs(carrier.Owner));
         }
@@ -152,7 +161,7 @@ namespace Content.Server.Disease
 
             if (target != null)
             {
-                foreach (var disease in target.Diseases)
+                foreach (var disease in target.AllDiseases)
                 {
                     if (disease.Name == addedDisease?.Name)
                         return;

@@ -25,15 +25,20 @@
   effects:
     - !type:DiseaseAdjustReagent
       reagent: TranexamicAcid
-      amount: -1
+      amount: -2.5
     - !type:DiseaseHealthChange
-      probability: 0.05
+      probability: 0.015
       damage:
         types:
-          Piercing: 10
+          Piercing: 20
+    - !type:DiseasePopUp
+      probability: 0.05
+      message: disease-eaten-inside
   cures:
     - !type:DiseaseBodyTemperature
       min: 360
+    - !type:DiseaseReagentCure
+      reagent: DemonsBlood
 
 - type: disease
   id: VanAusdallsRobovirus
@@ -41,7 +46,7 @@
   cureResist: 0.1
   effects:
     - !type:DiseaseAdjustReagent
-      probability: 0.4
+      probability: 0.08
       reagent: Licoxide
       amount: 1
   cures:
@@ -56,11 +61,10 @@
     - !type:DiseaseGenericStatusEffect
       key: Stutter
       component: OwOAccent
-    - !type:DiseaseAdjustReagent ## 20 / 0.013 is around 25 (0.5u metabolize each tick)
+    - !type:DiseaseAdjustReagent ## 20 / 0.013 / 60 is around 25 minutes before overdose (0.5u metabolize each tick)
       probability: 0.513
       reagent: Ephedrine
       amount: 1
   cures:
     - !type:DiseaseBodyTemperature
-      min: 500
-
+      min: 420 ## Reachable with a flamer
