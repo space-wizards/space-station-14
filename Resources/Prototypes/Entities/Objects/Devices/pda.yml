@@ -191,7 +191,7 @@
     visuals:
       - type: PDAVisualizer
         state: pda-qm
-  - type: Icon
+  - type: Iconchange drone tools
     state: pda-qm
 
 - type: entity
