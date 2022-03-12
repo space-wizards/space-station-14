@@ -84,7 +84,7 @@
       zeroVisible: true
 
 - type: entity
-  name: Multiple rocket launcher
+  name: multiple rocket launcher
   parent: LauncherBase
   id: LauncherMultipleRocket
   description: A modified ancient rocket-propelled grenade launcher.
