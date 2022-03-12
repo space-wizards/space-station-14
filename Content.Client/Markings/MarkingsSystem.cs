@@ -47,10 +47,10 @@ namespace Content.Client.Markings
             var appearance = args.Appearance;
             if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite)) return;
 
-            appearance.Markings.Reverse();
-            // Top -> Bottom ordering
-            foreach (var marking in appearance.Markings)
+            // Reverse ordering
+            for (int i = appearance.Markings.Count - 1; i >= 0; i--)
             {
+                var marking = appearance.Markings[i];
                 if (!_markingManager.IsValidMarking(marking, out MarkingPrototype? markingPrototype))
                 {
                     continue;

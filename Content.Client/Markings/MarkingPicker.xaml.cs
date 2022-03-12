@@ -43,19 +43,29 @@ namespace Content.Client.Markings
         {
             _usedMarkingList = newMarkings;
             CMarkingsUsed.Clear();
+            CMarkingColors.Visible = false;
             _selectedMarking = null;
             _selectedUnusedMarking = null;
             _currentSpecies = species;
-
+            
+            // ugly little O(n * m) loop going on here, but it's more or less
+            // all client-side, so whatever
             for (int i = 0; i < _usedMarkingList.Count; i++)
             {
                 Marking marking = _usedMarkingList[i];
                 if (_markingManager.IsValidMarking(marking, out MarkingPrototype? newMarking))
                 {
                     // TODO: Composite sprite preview, somehow.
-                    var _item = CMarkingsUsed.AddItem($"{GetMarkingName(newMarking)} ({newMarking.MarkingCategory})", newMarking.Sprites[0].Frame0());
-                    _item.Metadata = newMarking;
-                    _item.IconModulate = marking.MarkingColors[0];
+                    var _item = new ItemList.Item(CMarkingsUsed)
+                    {
+                        Text = $"{GetMarkingName(newMarking)} ({newMarking.MarkingCategory})", 
+                        Icon = newMarking.Sprites[0].Frame0(),
+                        Selectable = true,
+                        Metadata = newMarking,
+                        IconModulate = marking.MarkingColors[0]
+                    };
+                    CMarkingsUsed.Insert(0, _item);
+
                     if (marking.MarkingColors.Count != _usedMarkingList[i].MarkingColors.Count)
                     {
                         _usedMarkingList[i] = new Marking(marking.MarkingId, marking.MarkingColors);
@@ -122,7 +132,7 @@ namespace Content.Client.Markings
             }
 
             var i = CMarkingsUsed.IndexOf(_selectedMarking);
-            if (SwapMarkingRank(i, i - 1))
+            if (ShiftMarkingRank(i, -1))
             {
                 OnMarkingRankChange?.Invoke(_usedMarkingList);
             }
@@ -136,24 +146,33 @@ namespace Content.Client.Markings
             }
 
             var i = CMarkingsUsed.IndexOf(_selectedMarking);
-            if (SwapMarkingRank(i, i + 1))
+            if (ShiftMarkingRank(i, 1))
             {
                 OnMarkingRankChange?.Invoke(_usedMarkingList);
             }
         }
 
-
-        private bool SwapMarkingRank(int src, int dest)
+        private bool ShiftMarkingRank(int src, int places)
         {
-            if (dest >= CMarkingsUsed.Count || dest < 0)
+            if (src + places >= CMarkingsUsed.Count || src + places < 0)
             {
                 return false;
             }
 
-            var temp = CMarkingsUsed[dest];
-            CMarkingsUsed[dest] = CMarkingsUsed[src];
-            CMarkingsUsed[src] = temp;
+            var visualDest = src + places; // what it would visually look like
 
+            var visualTemp = CMarkingsUsed[visualDest];
+            CMarkingsUsed[visualDest] = CMarkingsUsed[src];
+            CMarkingsUsed[src] = visualTemp;
+
+            var backingSrc = _usedMarkingList.Count - 1 - src; // what it actually needs to be
+            var backingDest = backingSrc - places; // what it actually needs to be
+
+            var backingTemp = _usedMarkingList[backingDest];
+
+            _usedMarkingList[backingDest] = _usedMarkingList[backingSrc];
+            _usedMarkingList[backingSrc] = backingTemp;
+            
             return true;
         }
 
@@ -162,14 +181,13 @@ namespace Content.Client.Markings
         public void SetSpecies(string species)
         {
             _currentSpecies = species;
-            var markingCount = CMarkingsUsed.Count;
-            for (int i = 0; i < CMarkingsUsed.Count; i++)
+            var markingCount = _usedMarkingList.Count;
+            for (int i = 0; i < _usedMarkingList.Count; i++)
             {
                 var markingPrototype = (MarkingPrototype) CMarkingsUsed[i].Metadata!;
                 if (!markingPrototype.SpeciesRestrictions.Contains(species))
                 {
                     _usedMarkingList.RemoveAt(i);
-                    CMarkingsUsed.RemoveAt(i);
                 }
 
             }
@@ -268,8 +286,14 @@ namespace Content.Client.Markings
             _usedMarkingList.Add(marking.AsMarking());
 
             CMarkingsUnused.Remove(_selectedUnusedMarking);
-            var item = CMarkingsUsed.AddItem($"{GetMarkingName(marking)} ({marking.MarkingCategory})", marking.Sprites[0].Frame0());
-            item.Metadata = marking;
+            var item = new ItemList.Item(CMarkingsUsed)
+            {
+                Text = $"{GetMarkingName(marking)} ({marking.MarkingCategory})", 
+                Icon = marking.Sprites[0].Frame0(),
+                Selectable = true,
+                Metadata = marking,
+            };
+            CMarkingsUsed.Insert(0, item);
 
             _selectedUnusedMarking = null;
             OnMarkingAdded?.Invoke(_usedMarkingList);

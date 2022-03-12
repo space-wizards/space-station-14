@@ -31,6 +31,18 @@ namespace Content.Shared.Markings
         public IReadOnlyList<MarkingPrototype> Markings() => _index;
         public IReadOnlyDictionary<MarkingCategories, List<MarkingPrototype>> CategorizedMarkings() => _markingDict;
 
+        public IReadOnlyDictionary<MarkingCategories, List<MarkingPrototype>> MarkingsBySpecies(string species)
+        {
+            var result = new Dictionary<MarkingCategories, List<MarkingPrototype>>(_markingDict);
+
+            foreach (var list in result.Values)
+            {
+                list.RemoveAll(marking => !marking.SpeciesRestrictions.Contains(species) && !marking.Unrestricted );
+            }
+
+            return result;
+        }
+
         public bool IsValidMarking(Marking marking, [NotNullWhen(true)] out MarkingPrototype? markingResult)
         {
             foreach (var markingPrototype in _index)
