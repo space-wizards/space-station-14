@@ -100,6 +100,36 @@
     fireCost: 25
 
 - type: entity
+  name: PDW-10 pulse pistol
+  parent: BatteryGunBase
+  id: PulsePistolPdw
+  description: A state of the art energy pistol favoured as a sidearm by the NT-ERT operatives.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+  - type: BatteryBarrel
+    fireCost: 25
+    ammoPrototype: Pulse
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: PowerCellSlot
+    cellSlot:
+      ejectOnUse: true
+      soundOptions: 
+        volume: -2
+      startingItem: PowerCellSmallHigh
+
+- type: entity
   name: cog laser carbine
   parent: BatteryGunBase
   id: LaserRifleCog
@@ -121,6 +151,36 @@
     fireCost: 12
 
 - type: entity
+  name: DEAC-12 pulse carbine
+  parent: BatteryGunBase
+  id: PulseCarbineDeac
+  description: A high tech energy carbine favoured by the NT-ERT operatives.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+  - type: BatteryBarrel
+    fireCost: 12
+    ammoPrototype: Pulse
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: PowerCellSlot
+    cellSlot:
+      ejectOnUse: true
+      soundOptions: 
+        volume: -2
+      startingItem: PowerCellSmallHigh
+
+- type: entity
   name: laser cannon
   parent: BatteryGunBase
   id: LaserCannon
@@ -139,7 +199,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: BatteryBarrel
-    fireCost: 600
+    fireCost: 200
     ammoPrototype: RedHeavyLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
