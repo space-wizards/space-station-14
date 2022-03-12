@@ -1,6 +1,7 @@
 using Content.Server.Temperature.Components;
 using Content.Shared.Disease;
 
+
 namespace Content.Server.Disease.Cures
 {
     /// <summary>
@@ -27,7 +28,12 @@ namespace Content.Server.Disease.Cures
 
         public override string CureText()
         {
-            return Loc.GetString("disease-cure-temp", ("max", Max), ("min", Min));
+            if (Min == 0)
+                return Loc.GetString("diagnoser-cure-temp-max", ("max", Math.Round(Max)));
+            if (Max == float.MaxValue)
+                return Loc.GetString("diagnoser-cure-temp-min", ("min", Math.Round(Min)));
+
+            return Loc.GetString("diagnoser-cure-temp-both", ("max", Math.Round(Max)), ("min", Math.Round(Min)));
         }
     }
 }

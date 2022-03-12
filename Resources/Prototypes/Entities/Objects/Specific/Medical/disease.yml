@@ -8,10 +8,24 @@
     size: 1
   - type: Sprite
     netsync: false
-    sprite: Objects/Tools/matches.rsi
-    layers:
-      - state: match_unlit
+    sprite: Objects/Specific/Medical/mouth_swab.rsi
+    state: icon
   - type: Tag
     tags:
     - Recyclable
   - type: DiseaseSwab
+
+
+- type: entity
+  parent: BaseItem
+  id: Vaccine
+  name: Vaccine
+  description: There's no way you don't already have an opinion on these.
+  components:
+  - type: Item
+    size: 3
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    netsync: false
+    state: salpen
+  - type: DiseaseVaccine

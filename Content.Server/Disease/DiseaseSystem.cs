@@ -1,10 +1,13 @@
+using System.Threading;
 using Content.Shared.Disease;
 using Content.Shared.Disease.Components;
 using Content.Server.Disease.Components;
 using Content.Server.Clothing.Components;
+using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.Interaction;
 using Content.Server.Popups;
+using Content.Server.DoAfter;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -19,10 +22,10 @@ namespace Content.Server.Disease
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ISerializationManager _serializationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         public override void Initialize()
@@ -33,6 +36,10 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseasedComponent, InteractUsingEvent>(OnInteractDiseasedUsing);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
+            SubscribeLocalEvent<DiseaseVaccineComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<DiseaseVaccineComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<TargetVaxxSuccessfulEvent>(OnTargetVaxxSuccessful);
+            SubscribeLocalEvent<VaxxCancelledEvent>(OnVaxxCancelled);
         }
 
         private Queue<EntityUid> AddQueue = new();
@@ -128,6 +135,59 @@ namespace Content.Server.Disease
             InteractWithDiseased(args.Target, args.User);
         }
 
+        private void OnAfterInteract(EntityUid uid, DiseaseVaccineComponent vaxx, AfterInteractEvent args)
+        {
+            if (vaxx.CancelToken != null)
+            {
+                vaxx.CancelToken.Cancel();
+                vaxx.CancelToken = null;
+                return;
+            }
+            if (args.Target == null)
+                return;
+
+            if (!args.CanReach)
+                return;
+
+            if (vaxx.CancelToken != null)
+                return;
+
+            if (!TryComp<DiseaseCarrierComponent>(args.Target, out var carrier))
+                return;
+
+            if (vaxx.Used)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("vaxx-already-used"), args.User, Filter.Entities(args.User));
+                return;
+            }
+
+            vaxx.CancelToken = new CancellationTokenSource();
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, vaxx.InjectDelay, vaxx.CancelToken.Token, target: args.Target)
+            {
+                BroadcastFinishedEvent = new TargetVaxxSuccessfulEvent(args.User, args.Target, vaxx, carrier),
+                BroadcastCancelledEvent = new VaxxCancelledEvent(vaxx),
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnStun = true,
+                NeedHand = true
+            });
+        }
+
+        private void OnExamined(EntityUid uid, DiseaseVaccineComponent vaxx, ExaminedEvent args)
+        {
+            if (args.IsInDetailsRange)
+            {
+                if (vaxx.Used)
+                {
+                    args.PushMarkup(Loc.GetString("vaxx-used"));
+                }
+                else
+                {
+                    args.PushMarkup(Loc.GetString("vaxx-unused"));
+                }
+            }
+        }
+
         private void InteractWithDiseased(EntityUid diseased, EntityUid target)
         {
             if (!TryComp<DiseaseCarrierComponent>(target, out var carrier))
@@ -190,6 +250,48 @@ namespace Content.Server.Disease
                     TryInfect(carrier, disease, 0.3f);
             }
 
+        }
+
+        public void Vaccinate(DiseaseCarrierComponent carrier, DiseasePrototype disease)
+        {
+            carrier.PastDiseases.Add(disease);
+        }
+
+        private void OnTargetVaxxSuccessful(TargetVaxxSuccessfulEvent args)
+        {
+            if (args.Vaxx.Disease == null)
+                return;
+            Vaccinate(args.Carrier, args.Vaxx.Disease);
+        }
+
+        private static void OnVaxxCancelled(VaxxCancelledEvent args)
+        {
+            args.Vaxx.CancelToken = null;
+        }
+        private sealed class VaxxCancelledEvent : EntityEventArgs
+        {
+            public readonly DiseaseVaccineComponent Vaxx;
+            public VaxxCancelledEvent(DiseaseVaccineComponent vaxx)
+            {
+                Vaxx = vaxx;
+            }
+        }
+
+        private sealed class TargetVaxxSuccessfulEvent : EntityEventArgs
+        {
+            public EntityUid User { get; }
+            public EntityUid? Target { get; }
+            public DiseaseVaccineComponent Vaxx { get; }
+
+            public DiseaseCarrierComponent Carrier { get; }
+
+            public TargetVaxxSuccessfulEvent(EntityUid user, EntityUid? target, DiseaseVaccineComponent vaxx, DiseaseCarrierComponent carrier)
+            {
+                User = user;
+                Target = target;
+                Vaxx = vaxx;
+                Carrier = carrier;
+            }
         }
     }
         public sealed class CureDiseaseAttemptEvent : EntityEventArgs

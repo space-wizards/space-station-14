@@ -40,6 +40,8 @@ namespace Content.Client.Entry
             "RandomAppearance",
             "DiseaseProtection",
             "DiseaseDiagnoser",
+            "DiseaseVaccine",
+            "DiseaseVaccineCreator",
             "Mineable",
             "RangedMagazine",
             "Ammo",

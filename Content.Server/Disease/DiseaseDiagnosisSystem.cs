@@ -30,6 +30,7 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseSwabComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<DiseaseSwabComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DiseaseDiagnoserComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
+            SubscribeLocalEvent<DiseaseVaccineCreatorComponent, AfterInteractUsingEvent>(OnAfterInteractUsingVaccine);
             SubscribeLocalEvent<TargetSwabSuccessfulEvent>(OnTargetSwabSuccessful);
             SubscribeLocalEvent<SwabCancelledEvent>(OnSwabCancelled);
         }
@@ -121,6 +122,35 @@ namespace Content.Server.Disease
             paper.SetContent(contents);
         }
 
+
+        private void OnAfterInteractUsingVaccine(EntityUid uid, DiseaseVaccineCreatorComponent component, AfterInteractUsingEvent args)
+        {
+            if (args.Handled || !args.CanReach)
+                return;
+
+            if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used))
+                return;
+
+            if (!TryComp<DiseaseSwabComponent>(args.Used, out var swab))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("diagnoser-cant-use-swab", ("machine", uid), ("swab", args.Used)), uid, Filter.Entities(args.User));
+                return;
+            }
+            _popupSystem.PopupEntity(Loc.GetString("diagnoser-insert-swab", ("machine", uid), ("swab", args.Used)), uid, Filter.Entities(args.User));
+
+            component.Disease = swab.Disease;
+            EntityManager.DeleteEntity(args.Used);
+
+            // spawn a vaccine
+            var vaxx = EntityManager.SpawnEntity(component.MachineOutput, Transform(uid).Coordinates);
+
+            if (!TryComp<DiseaseVaccineComponent>(vaxx, out var vaxxComp))
+                return;
+
+            vaxxComp.Disease = component.Disease;
+        }
+
+
         private void OnExamined(EntityUid uid, DiseaseSwabComponent swab, ExaminedEvent args)
         {
             if (args.IsInDetailsRange)
@@ -159,15 +189,15 @@ namespace Content.Server.Disease
             if (disease.CureResist <= 0)
             {
                 report += Loc.GetString("diagnoser-disease-report-cureresist-none");
-            } else if (disease.CureResist <= 5)
+            } else if (disease.CureResist <= 0.05)
             {
                 report += Loc.GetString("diagnoser-disease-report-cureresist-low");
-            } else if (disease.CureResist <= 14)
+            } else if (disease.CureResist <= 0.14)
             {
-                report += Loc.GetString("diagnoser-disease-report-cureresist-Medium");
+                report += Loc.GetString("diagnoser-disease-report-cureresist-medium");
             } else
             {
-                report += Loc.GetString("diagnoser-disease-report-cureresist-Medium");
+                report += Loc.GetString("diagnoser-disease-report-cureresist-high");
             }
             report += System.Environment.NewLine;
 

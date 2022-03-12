@@ -5,14 +5,14 @@ namespace Content.Server.Disease.Components
 {
     [RegisterComponent]
     /// For the swabs you use to take samples of diseases
-    public class DiseaseSwabComponent : Component
+    public class DiseaseVaccineComponent : Component
     {
         /// <summary>
-        /// How long it takes to swab someone.
+        /// How long it takes to inject someone
         /// </summary>
-        [DataField("swabDelay")]
+        [DataField("injectDelay")]
         [ViewVariables]
-        public float SwabDelay = 2f;
+        public float InjectDelay = 2f;
 
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Content.Server.Disease.Components
         /// <summary>
         /// The disease prototype currently on the swab
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public DiseasePrototype? Disease;
     }
 }
