@@ -8,6 +8,7 @@ using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
 using Content.Client.Preferences;
 using Content.Client.Preferences.UI;
+using Content.Client.Resources;
 using Content.Client.Voting;
 using Content.Shared.GameTicking;
 using Robust.Client;
@@ -22,6 +23,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Lobby
@@ -104,12 +106,12 @@ namespace Content.Client.Lobby
             _lobby.LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
             _lobby.OptionsButton.OnPressed += _ => new OptionsMenu().Open();
 
-            UpdatePlayerList();
+            //UpdatePlayerList();
 
             _playerManager.PlayerListUpdated += PlayerManagerOnPlayerListUpdated;
             _gameTicker.InfoBlobUpdated += UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
-            _gameTicker.LobbyReadyUpdated += LobbyReadyUpdated;
+            //_gameTicker.LobbyReadyUpdated += LobbyReadyUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
         }
 
@@ -118,7 +120,7 @@ namespace Content.Client.Lobby
             _playerManager.PlayerListUpdated -= PlayerManagerOnPlayerListUpdated;
             _gameTicker.InfoBlobUpdated -= UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
-            _gameTicker.LobbyReadyUpdated -= LobbyReadyUpdated;
+            //_gameTicker.LobbyReadyUpdated -= LobbyReadyUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
 
             _lobby?.Dispose();
@@ -176,14 +178,15 @@ namespace Content.Client.Lobby
                 }
             }
 
-            UpdatePlayerList();
+            //UpdatePlayerList();
         }
 
-        private void LobbyReadyUpdated() => UpdatePlayerList();
+        //private void LobbyReadyUpdated() => UpdatePlayerList();
 
         private void LobbyStatusUpdated()
         {
-            UpdatePlayerList();
+            //UpdatePlayerList();
+            UpdateLobbyBackground();
             UpdateLobbyUi();
         }
 
@@ -222,36 +225,51 @@ namespace Content.Client.Lobby
             }
         }
 
-        private void UpdatePlayerList()
+        private void UpdateLobbyBackground()
         {
             if (_lobby == null) return;
-            _lobby.OnlinePlayerList.Clear();
-            var gameTicker = EntitySystem.Get<ClientGameTicker>();
-
-            foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
+            if (_gameTicker.LobbyBackground != null)
             {
-                var readyState = string.Empty;
-                // Don't show ready state if we're ingame
-                if (!gameTicker.IsGameStarted)
-                {
-                    LobbyPlayerStatus status;
-                    if (session.UserId == _playerManager.LocalPlayer?.UserId)
-                        status = gameTicker.AreWeReady ? LobbyPlayerStatus.Ready : LobbyPlayerStatus.NotReady;
-                    else
-                        gameTicker.Status.TryGetValue(session.UserId, out status);
-
-                    readyState = status switch
-                    {
-                        LobbyPlayerStatus.NotReady => Loc.GetString("lobby-state-player-status-not-ready"),
-                        LobbyPlayerStatus.Ready => Loc.GetString("lobby-state-player-status-ready"),
-                        LobbyPlayerStatus.Observer => Loc.GetString("lobby-state-player-status-observer"),
-                        _ => string.Empty,
-                    };
-                }
-
-                _lobby.OnlinePlayerList.AddItem(session.Name, readyState);
+                _lobby.Background.Texture = _resourceCache.GetResource<TextureResource>(_gameTicker.LobbyBackground );
             }
+            else
+            {
+                _lobby.Background.Texture = null;
+            }
+
         }
+
+
+        //private void UpdatePlayerList()
+        //{
+        //    if (_lobby == null) return;
+        //    _lobby.OnlinePlayerList.Clear();
+        //    var gameTicker = EntitySystem.Get<ClientGameTicker>();
+
+        //    foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
+        //    {
+        //        var readyState = string.Empty;
+        //        // Don't show ready state if we're ingame
+        //        if (!gameTicker.IsGameStarted)
+        //        {
+        //            LobbyPlayerStatus status;
+        //            if (session.UserId == _playerManager.LocalPlayer?.UserId)
+        //                status = gameTicker.AreWeReady ? LobbyPlayerStatus.Ready : LobbyPlayerStatus.NotReady;
+        //            else
+        //                gameTicker.Status.TryGetValue(session.UserId, out status);
+
+        //            readyState = status switch
+        //            {
+        //                LobbyPlayerStatus.NotReady => Loc.GetString("lobby-state-player-status-not-ready"),
+        //                LobbyPlayerStatus.Ready => Loc.GetString("lobby-state-player-status-ready"),
+        //                LobbyPlayerStatus.Observer => Loc.GetString("lobby-state-player-status-observer"),
+        //                _ => string.Empty,
+        //            };
+        //        }
+
+        //        _lobby.OnlinePlayerList.AddItem(session.Name, readyState);
+        //    }
+        //}
 
         private void SetReady(bool newReady)
         {
@@ -261,7 +279,7 @@ namespace Content.Client.Lobby
             }
 
             _consoleHost.ExecuteCommand($"toggleready {newReady}");
-            UpdatePlayerList();
+            //UpdatePlayerList();
         }
     }
 }

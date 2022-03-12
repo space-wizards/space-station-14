@@ -32,13 +32,12 @@ namespace Content.Client.Lobby.UI
         private readonly BoxContainer _viewBox;
         private readonly Label _unloaded;
 
-        public LobbyCharacterPreviewPanel(IEntityManager entityManager,
-            IClientPreferencesManager preferencesManager,
-            IPrototypeManager prototypeManager)
+        public LobbyCharacterPreviewPanel()
         {
-            _entMan = entityManager;
-            _preferencesManager = preferencesManager;
-            _prototypeManager = prototypeManager;
+            //This only runs once, if you cry about optimization fite me - Jezi
+            _entMan = IoCManager.Resolve<IEntityManager>();
+            _preferencesManager = IoCManager.Resolve<IClientPreferencesManager>();
+            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             var header = new NanoHeading
             {
@@ -58,7 +57,11 @@ namespace Content.Client.Lobby.UI
                 Orientation = LayoutOrientation.Vertical
             };
 
-            vBox.AddChild(header);
+            var vSpacer = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                MinHeight = 5
+            };
 
             _unloaded = new Label { Text = Loc.GetString("lobby-character-preview-panel-unloaded-preferences-label") };
 
@@ -67,17 +70,18 @@ namespace Content.Client.Lobby.UI
                 Orientation = LayoutOrientation.Vertical,
                 Visible = false
             };
-
-            _loaded.AddChild(CharacterSetupButton);
-            _loaded.AddChild(_summaryLabel);
-
             _viewBox = new BoxContainer
             {
                 Orientation = LayoutOrientation.Horizontal
             };
 
-            _loaded.AddChild(_viewBox);
 
+            _loaded.AddChild(_summaryLabel);
+            _loaded.AddChild(_viewBox);
+            _loaded.AddChild(vSpacer);
+            _loaded.AddChild(CharacterSetupButton);
+
+            vBox.AddChild(header);
             vBox.AddChild(_loaded);
             vBox.AddChild(_unloaded);
             AddChild(vBox);
