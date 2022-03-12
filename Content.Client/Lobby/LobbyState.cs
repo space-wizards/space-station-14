@@ -106,12 +106,10 @@ namespace Content.Client.Lobby
             _lobby.LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
             _lobby.OptionsButton.OnPressed += _ => new OptionsMenu().Open();
 
-            //UpdatePlayerList();
 
             _playerManager.PlayerListUpdated += PlayerManagerOnPlayerListUpdated;
             _gameTicker.InfoBlobUpdated += UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
-            //_gameTicker.LobbyReadyUpdated += LobbyReadyUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
         }
 
@@ -120,7 +118,6 @@ namespace Content.Client.Lobby
             _playerManager.PlayerListUpdated -= PlayerManagerOnPlayerListUpdated;
             _gameTicker.InfoBlobUpdated -= UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
-            //_gameTicker.LobbyReadyUpdated -= LobbyReadyUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
 
             _lobby?.Dispose();
@@ -178,14 +175,11 @@ namespace Content.Client.Lobby
                 }
             }
 
-            //UpdatePlayerList();
         }
 
-        //private void LobbyReadyUpdated() => UpdatePlayerList();
 
         private void LobbyStatusUpdated()
         {
-            //UpdatePlayerList();
             UpdateLobbyBackground();
             UpdateLobbyUi();
         }
@@ -239,38 +233,6 @@ namespace Content.Client.Lobby
 
         }
 
-
-        //private void UpdatePlayerList()
-        //{
-        //    if (_lobby == null) return;
-        //    _lobby.OnlinePlayerList.Clear();
-        //    var gameTicker = EntitySystem.Get<ClientGameTicker>();
-
-        //    foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
-        //    {
-        //        var readyState = string.Empty;
-        //        // Don't show ready state if we're ingame
-        //        if (!gameTicker.IsGameStarted)
-        //        {
-        //            LobbyPlayerStatus status;
-        //            if (session.UserId == _playerManager.LocalPlayer?.UserId)
-        //                status = gameTicker.AreWeReady ? LobbyPlayerStatus.Ready : LobbyPlayerStatus.NotReady;
-        //            else
-        //                gameTicker.Status.TryGetValue(session.UserId, out status);
-
-        //            readyState = status switch
-        //            {
-        //                LobbyPlayerStatus.NotReady => Loc.GetString("lobby-state-player-status-not-ready"),
-        //                LobbyPlayerStatus.Ready => Loc.GetString("lobby-state-player-status-ready"),
-        //                LobbyPlayerStatus.Observer => Loc.GetString("lobby-state-player-status-observer"),
-        //                _ => string.Empty,
-        //            };
-        //        }
-
-        //        _lobby.OnlinePlayerList.AddItem(session.Name, readyState);
-        //    }
-        //}
-
         private void SetReady(bool newReady)
         {
             if (EntitySystem.Get<ClientGameTicker>().IsGameStarted)
@@ -279,7 +241,6 @@ namespace Content.Client.Lobby
             }
 
             _consoleHost.ExecuteCommand($"toggleready {newReady}");
-            //UpdatePlayerList();
         }
     }
 }
