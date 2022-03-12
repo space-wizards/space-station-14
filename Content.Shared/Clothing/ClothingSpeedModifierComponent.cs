@@ -25,9 +25,12 @@ public sealed class ClothingSpeedModifierComponentState : ComponentState
     public float WalkModifier;
     public float SprintModifier;
 
-    public ClothingSpeedModifierComponentState(float walkModifier, float sprintModifier)
+    public bool Enabled;
+
+    public ClothingSpeedModifierComponentState(float walkModifier, float sprintModifier, bool enabled)
     {
         WalkModifier = walkModifier;
         SprintModifier = sprintModifier;
+        Enabled = enabled;
     }
 }

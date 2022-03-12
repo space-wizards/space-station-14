@@ -20,7 +20,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
     // Public API
 
-    public void SetClothingSpeedModifier(EntityUid uid, bool enabled, ClothingSpeedModifierComponent? component = null)
+    public void SetClothingSpeedModifierEnabled(EntityUid uid, bool enabled, ClothingSpeedModifierComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
             return;
@@ -41,7 +41,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, ClothingSpeedModifierComponent component, ref ComponentGetState args)
     {
-        args.State = new ClothingSpeedModifierComponentState(component.WalkModifier, component.SprintModifier);
+        args.State = new ClothingSpeedModifierComponentState(component.WalkModifier, component.SprintModifier, component.Enabled);
     }
 
     private void OnHandleState(EntityUid uid, ClothingSpeedModifierComponent component, ref ComponentHandleState args)
@@ -50,6 +50,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         {
             component.WalkModifier = state.WalkModifier;
             component.SprintModifier = state.SprintModifier;
+            SetClothingSpeedModifierEnabled(uid, state.Enabled, component);
         }
     }
 

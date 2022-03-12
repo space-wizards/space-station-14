@@ -18,7 +18,7 @@ namespace Content.Shared.Clothing
         protected void OnChanged()
         {
             EntitySystem.Get<SharedActionsSystem>().SetToggled(ToggleAction, On);
-            EntitySystem.Get<ClothingSpeedModifierSystem>().SetClothingSpeedModifier(Owner, On);
+            EntitySystem.Get<ClothingSpeedModifierSystem>().SetClothingSpeedModifierEnabled(Owner, On);
         }
 
         [Serializable, NetSerializable]
