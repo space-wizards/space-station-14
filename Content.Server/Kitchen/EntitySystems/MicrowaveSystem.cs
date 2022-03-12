@@ -13,13 +13,8 @@ namespace Content.Server.Kitchen.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<MicrowaveComponent, SolutionChangedEvent>(OnSolutionChange);
-            SubscribeLocalEvent<MicrowaveComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpen);
         }
 
-        private void OnAfterUIOpen(EntityUid uid, MicrowaveComponent microwave, AfterActivatableUIOpenEvent args)
-        {
-            microwave.UIDirty = true;
-        }
         private void OnSolutionChange(EntityUid uid, MicrowaveComponent component, SolutionChangedEvent args)
         {
             component.DirtyUi();

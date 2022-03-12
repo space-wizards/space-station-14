@@ -8,10 +8,10 @@ namespace Content.Server.Paper
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<PaperComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
+            SubscribeLocalEvent<PaperComponent, BeforeActivatableUIOpenEvent>(AfterUIOpen);
         }
 
-        private void AfterUIOpen(EntityUid uid, PaperComponent component, AfterActivatableUIOpenEvent args)
+        private void AfterUIOpen(EntityUid uid, PaperComponent component, BeforeActivatableUIOpenEvent args)
         {
             component.Mode = SharedPaperComponent.PaperAction.Read;
             component.UpdateUserInterface();

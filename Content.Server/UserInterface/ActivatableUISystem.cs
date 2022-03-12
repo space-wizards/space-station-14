@@ -116,6 +116,11 @@ namespace Content.Server.UserInterface
             RaiseLocalEvent((aui).Owner, oae, false);
             if (oae.Cancelled || uae.Cancelled) return false;
 
+            // Give the UI an opportunity to prepare itself if it needs to do anything
+            // before opening
+            var bae = new BeforeActivatableUIOpenEvent(user);
+            RaiseLocalEvent((aui).Owner, bae, false);
+
             SetCurrentSingleUser((aui).Owner, actor.PlayerSession, aui);
             ui.Toggle(actor.PlayerSession);
 
@@ -173,6 +178,21 @@ namespace Content.Server.UserInterface
             User = who;
         }
     }
+
+    /// <summary>
+    /// This is after it's decided the user can open the UI,
+    /// but before the UI actually opens.
+    /// Use this if you need to prepare the UI itself
+    /// </summary>
+    public sealed class BeforeActivatableUIOpenEvent : EntityEventArgs
+    {
+        public EntityUid User { get; }
+        public BeforeActivatableUIOpenEvent(EntityUid who)
+        {
+            User = who;
+        }
+    }
+
     public sealed class ActivatableUIPlayerChangedEvent : EntityEventArgs
     {
     }
