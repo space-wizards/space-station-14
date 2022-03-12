@@ -87,7 +87,7 @@
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: Maintenance Drone
-    description: Maintain the station. Ignore other beings.
+    description: Maintain the station. Ignore other beings except drones.
     rules: |
      You are bound by these laws both in-game and out-of-character:
      1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.
