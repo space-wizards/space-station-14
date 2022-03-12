@@ -83,3 +83,26 @@
     heatDamageThreshold: 360
     coldDamageThreshold: -150
     currentTemperature: 310.15
+
+- type: entity
+  name: purple_snake
+  parent: SimpleSpaceMobBase
+  id: MobPurple_snake
+  description: Favorite pet corgi.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: purple_snake
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: purple_snake
+      crit: purple_snake
+      dead: purple_snake
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
