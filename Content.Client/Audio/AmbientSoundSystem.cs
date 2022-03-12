@@ -23,7 +23,6 @@ namespace Content.Client.Audio
         [Dependency] private EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private int _maxAmbientCount;
@@ -103,7 +102,7 @@ namespace Content.Client.Audio
 
             foreach (var (comp, (stream, _)) in Enumerable.ToArray(_playingSounds))
             {
-                if (!comp.Deleted && comp.Enabled && EntityManager.GetComponent<TransformComponent>(comp.Owner).Coordinates.TryDistance(EntityManager, coordinates, out var range) &&
+                if (!comp.Deleted && comp.Enabled && Transform(comp.Owner).Coordinates.TryDistance(EntityManager, coordinates, out var range) &&
                     range <= comp.Range)
                 {
                     continue;
@@ -129,60 +128,113 @@ namespace Content.Client.Audio
             _playingSounds.Clear();
         }
 
-        /// <summary>
-        /// Get a list of ambient components in range and determine which ones to start playing.
-        /// </summary>
-        private void SampleNearby(EntityCoordinates coordinates)
+        private (Dictionary<string, List<AmbientSoundComponent>>, HashSet<AmbientSoundComponent>) GetNearbySources(EntityCoordinates coordinates)
         {
-            var compsInRange = new List<AmbientSoundComponent>();
+            var sourceDict = new Dictionary<string, List<AmbientSoundComponent>>();
+            var set = new HashSet<AmbientSoundComponent>();
 
-            foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange,
-                LookupFlags.Approximate | LookupFlags.IncludeAnchored))
+            foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer,
+                         LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {
                 if (!EntityManager.TryGetComponent(entity, out AmbientSoundComponent? ambientComp) ||
                     _playingSounds.ContainsKey(ambientComp) ||
                     !ambientComp.Enabled ||
                     // We'll also do this crude distance check because it's what we're doing in the active loop above.
-                    !EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
-                    range > ambientComp.Range - RangeBuffer)
+                    !Transform(entity).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
+                    range > ambientComp.Range)
                 {
                     continue;
                 }
 
-                compsInRange.Add(ambientComp);
+                var key = ambientComp.Sound.GetSound();
+
+                if (!sourceDict.ContainsKey(key))
+                    sourceDict[key] = new List<AmbientSoundComponent>(_maxSingleSound);
+
+                sourceDict[key].Add(ambientComp);
+                set.Add(ambientComp);
             }
 
-
-            var sorted = compsInRange.OrderByDescending(x =>
-                Transform(x.Owner).Coordinates.TryDistance(_entityManager, coordinates, out var dist) ? dist : float.MaxValue);
-
-            foreach (var comp in sorted)
+            foreach (var (key, val) in sourceDict)
             {
-                var sound = comp.Sound.GetSound();
+                sourceDict[key] = val.OrderByDescending(x =>
+                    Transform(x.Owner).Coordinates.TryDistance(EntityManager, coordinates, out var dist) ? dist : float.MaxValue).ToList();
+            }
 
-                if (PlayingCount(sound) >= _maxSingleSound)
+            return (sourceDict, set);
+        }
+
+        /// <summary>
+        /// Get a list of ambient components in range and determine which ones to start playing.
+        /// </summary>
+        private void SampleNearby(EntityCoordinates coordinates)
+        {
+            var (compsInRange, compSet) = GetNearbySources(coordinates);
+
+            var keys = compsInRange.Keys.ToHashSet();
+
+            while (keys.Count != 0)
+            {
+                if (_playingSounds.Count >= _maxAmbientCount)
                 {
-                    continue;
+                    // Go through and remove everything from compSet
+                    foreach (var toRemove in keys.SelectMany(key => compsInRange[key]))
+                    {
+                        compSet.Remove(toRemove);
+                    }
+
+                    break;
                 }
 
-                var audioParams = AudioHelpers
-                    .WithVariation(0.01f)
-                    .WithVolume(comp.Volume)
-                    .WithLoop(true)
-                    .WithAttenuation(Attenuation.LinearDistance)
-                    // Randomise start so 2 sources don't increase their volume.
-                    .WithPlayOffset(_random.NextFloat())
-                    .WithMaxDistance(comp.Range);
+                foreach (var key in keys)
+                {
+                    if (_playingSounds.Count >= _maxAmbientCount)
+                        break;
 
-                var stream = SoundSystem.Play(
-                    Filter.Local(),
-                    sound,
-                    comp.Owner,
-                    audioParams);
+                    var comp = compsInRange[key].Pop();
+                    if (compsInRange[key].Count == 0)
+                        keys.Remove(key);
 
-                if (stream == null) continue;
+                    var sound = comp.Sound.GetSound();
 
-                _playingSounds[comp] = (stream, sound);
+                    if (PlayingCount(sound) >= _maxSingleSound)
+                    {
+                        keys.Remove(key);
+                        foreach (var toRemove in compsInRange[key])
+                        {
+                            compSet.Remove(toRemove);
+                        }
+                        compsInRange[key].Clear(); // reduce work later should we overrun the max sounds.
+                        continue;
+                    }
+
+                    var audioParams = AudioHelpers
+                        .WithVariation(0.01f)
+                        .WithVolume(comp.Volume)
+                        .WithLoop(true)
+                        .WithAttenuation(Attenuation.LinearDistance)
+                        // Randomise start so 2 sources don't increase their volume.
+                        .WithPlayOffset(_random.NextFloat())
+                        .WithMaxDistance(comp.Range);
+
+                    var stream = SoundSystem.Play(
+                        Filter.Local(),
+                        sound,
+                        comp.Owner,
+                        audioParams);
+
+                    if (stream == null) continue;
+
+                    _playingSounds[comp] = (stream, sound);
+                }
+            }
+
+            foreach (var sound in compsInRange.Values.SelectMany(x => x))
+            {
+                if (compSet.Contains(sound) || !_playingSounds.ContainsKey(sound)) continue;
+
+                _playingSounds[sound].Stream?.Stop();
+                _playingSounds.Remove(sound);
             }
         }
     }
