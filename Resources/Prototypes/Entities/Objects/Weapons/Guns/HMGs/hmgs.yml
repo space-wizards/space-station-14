@@ -42,7 +42,7 @@
       path: /Audio/Weapons/Guns/MagOut/lmg_magout.ogg
 
 - type: entity
-  name: Minigun
+  name: minigun
   id: Minigun
   parent: HMGBase
   description: Vzzzzzt! Rahrahrahrah! Vrrrrr!
