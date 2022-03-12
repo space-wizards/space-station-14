@@ -29,16 +29,11 @@ public abstract partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
 
-        SubscribeLocalEvent<SharedItemComponent, UseInHandEvent>(OnUseInHand);
-
         SubscribeAllEvent<UseSlotNetworkMessage>(OnUseSlot);
     }
 
-    private void OnUseInHand(EntityUid uid, SharedItemComponent component, UseInHandEvent args)
+    protected void QuickEquip(EntityUid uid, SharedItemComponent component, UseInHandEvent args)
     {
-        if (args.Handled || !component.QuickEquip)
-            return;
-
         if (!TryComp(args.User, out InventoryComponent? inv)
             || !TryComp(args.User, out SharedHandsComponent? hands)
             || !_prototypeManager.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var prototype))
