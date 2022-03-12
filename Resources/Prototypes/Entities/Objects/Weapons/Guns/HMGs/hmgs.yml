@@ -1,7 +1,7 @@
 - type: entity
   name: heavy machinegun
   parent: BaseItem
-  id: Heavy machinegun
+  id: HeavyMachineGun
   description: Spray and pray
   abstract: true
   components:
@@ -44,7 +44,7 @@
 - type: entity
   name: minigun
   id: Minigun
-  parent: HMGBase
+  parent: HeavyMachineGun
   description: Vzzzzzt! Rahrahrahrah! Vrrrrr!
   components:
   - type: Sprite
