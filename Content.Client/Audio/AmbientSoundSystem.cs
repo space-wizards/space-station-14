@@ -138,7 +138,7 @@ namespace Content.Client.Audio
                 if (!EntityManager.TryGetComponent(entity, out AmbientSoundComponent? ambientComp) ||
                     !ambientComp.Enabled ||
                     !EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
-                    range > ambientComp.Range - RangeBuffer)
+                    range > ambientComp.Range)
                 {
                     continue;
                 }
