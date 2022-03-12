@@ -15,9 +15,6 @@ namespace Content.Shared.Item
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        [DataField("quickEquip")]
-        public bool QuickEquip = true;
-
         /// <summary>
         ///     How much big this item is.
         /// </summary>
