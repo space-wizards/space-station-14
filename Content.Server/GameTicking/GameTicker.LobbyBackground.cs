@@ -21,7 +21,7 @@ public sealed partial class GameTicker
 
     private static readonly string[] WhitelistedBackgroundExtensions = new string[] {"png", "jpg", "jpeg"};
 
-    private const string LobbyScreenPath = "/Server Info/LobbyScreens";
+    private const string LobbyScreenPath = "/Textures/LobbyScreens";
 
     private void InitializeLobbyBackground()
     {

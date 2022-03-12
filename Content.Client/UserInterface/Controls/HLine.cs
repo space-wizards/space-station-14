@@ -44,14 +44,3 @@ public sealed class HLine : Container
     }
 
 }
-
-
-/*
- <PanelContainer>
-                    <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}"
-                                          ContentMarginTopOverride="2" />
-                    </PanelContainer.PanelOverride>
-                </PanelContainer>
-
-*/

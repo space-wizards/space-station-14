@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Client.HUD.UI;
 using Content.Client.Inventory;
 using Content.Client.Preferences;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
@@ -54,13 +55,6 @@ namespace Content.Client.Lobby.UI
             {
                 Orientation = LayoutOrientation.Vertical
             };
-
-            var vSpacer = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical,
-                MinHeight = 5
-            };
-
             _unloaded = new Label { Text = Loc.GetString("lobby-character-preview-panel-unloaded-preferences-label") };
 
             _loaded = new BoxContainer
@@ -72,11 +66,11 @@ namespace Content.Client.Lobby.UI
             {
                 Orientation = LayoutOrientation.Horizontal
             };
-
+            var _vSpacer = new VSpacer();
 
             _loaded.AddChild(_summaryLabel);
             _loaded.AddChild(_viewBox);
-            _loaded.AddChild(vSpacer);
+            _loaded.AddChild(_vSpacer);
             _loaded.AddChild(CharacterSetupButton);
 
             vBox.AddChild(header);
