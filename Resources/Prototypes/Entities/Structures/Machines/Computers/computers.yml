@@ -228,11 +228,11 @@
   name: body scanner computer
   description: That's a body scanner.
   components:
-  - type: CloningConsole
+  - type: BodyScanner
   - type: UserInterface
     interfaces:
-    - key: enum.CloningConsoleUiKey.Key
-      type: CloningConsoleBoundUserInterface
+    - key: enum.BodyScannerUiKey.Key
+      type: BodyScannerBoundUserInterface
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
@@ -442,3 +442,28 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+
+- type: entity
+  parent: ComputerBase
+  id: computerCloningConsole
+  name: cloning console computer
+  description: Used to scan and clone some very unfortunate people.
+  components:
+  - type: CloningConsole
+  - type: UserInterface
+    interfaces:
+    - key: enum.CloningConsoleUiKey.Key
+      type: CloningConsoleBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: generic_key
+      screen: dna
+  - type: ApcPowerReceiver
+    powerLoad: 500
+  - type: Computer
+    board: CloningConsoleComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#1f8c28"
