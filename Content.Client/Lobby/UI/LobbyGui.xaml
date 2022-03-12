@@ -14,10 +14,10 @@
         <!-- Parallax background -->
         <parallax:ParallaxControl />
         <TextureRect Access="Public" Name = "Background" Stretch="Scale"/>
-        <Control Margin="20 20 20 20">
+        <Control Margin="10 10 10 10" >
             <!-- Left Panel -->
-                <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSide" VerticalExpand="True"  VerticalAlignment="Top">
-                    <BoxContainer Orientation="Vertical" HorizontalAlignment="Left">
+                <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSide" VerticalExpand="True"  VerticalAlignment="Top" >
+                    <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" MaxWidth="620">
                         <info:LinkBanner Name="LinkBanner" VerticalExpand="false" Margin="3 3 3 3"/>
                         <hudUi:StripeBack>
                             <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
