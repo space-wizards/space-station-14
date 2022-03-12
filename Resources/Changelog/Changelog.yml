@@ -1,10 +1,4 @@
 Entries:
-- author: Mith-randalf
-  changes:
-  - {message: 'Following numerous lawsuits relating to so-called ''shitcurity'', Nanotrasen
-      is now actively hiring brig Wardens for its deep-space stations.', type: Add}
-  id: 697
-  time: '2021-12-03T02:01:18.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Balance pass on thrusters to make them usable for ships large and small,
@@ -2988,3 +2982,9 @@ Entries:
   - {message: A whole bunch of resprites for various guns and melee weapons, type: Tweak}
   id: 1196
   time: '2022-03-12T22:29:17.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: There's intel of an unknown enemy corp creating experimental mechas
+      and testing them on stations., type: Add}
+  id: 1197
+  time: '2022-03-12T23:14:17.0000000+00:00'
