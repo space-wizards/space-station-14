@@ -59,10 +59,9 @@ namespace Content.Server.Medical
 
         private void OnActivated(EntityUid uid, MedicalScannerComponent scannerComponent, ActivateInWorldEvent args)
         {
-            if (!TryComp<ActorComponent>(args.User, out var actor) || !IsPowered(scannerComponent))
+            if (!IsPowered(scannerComponent))
                 return;
 
-            scannerComponent.UserInterface?.Toggle(actor.PlayerSession);
             UpdateUserInterface(uid, scannerComponent);
         }
 
