@@ -1,11 +1,6 @@
 Entries:
 - author: Peptide90
   changes:
-  - {message: Corrected the names of a bunch of clothing items., type: Fix}
-  id: 690
-  time: '2021-12-01T21:19:36.0000000+00:00'
-- author: Peptide90
-  changes:
   - {message: Added LV cable to the autolathe., type: Add}
   id: 691
   time: '2021-12-02T02:49:45.0000000+00:00'
@@ -2979,3 +2974,8 @@ Entries:
   - {message: Machine UIs should behave more consistently., type: Fix}
   id: 1189
   time: '2022-03-12T18:26:06.0000000+00:00'
+- author: Todd
+  changes:
+  - {message: added 3 new lobby themes., type: Add}
+  id: 1190
+  time: '2022-03-12T18:44:30.0000000+00:00'
