@@ -1,6 +1,8 @@
 diagnoser-cant-use-swab = {CAPITALIZE(THE($machine))} rejects {THE($swab)}.
 diagnoser-insert-swab = You insert {THE($swab)} into {THE($machine)}.
 diagnoser-disease-report = Disease Report: {CAPITALIZE($disease)}
+diagnoser-disease-report-none = Bill of Good Health
+diagnoser-disease-report-none-contents = No diseases were found in this sample.
 diagnoser-disease-report-name = Disease Name: {CAPITALIZE($disease)}
 diagnoser-disease-report-cureresist-none = Medication Resistance: None
 diagnoser-disease-report-cureresist-low = Medication Resistance: Low

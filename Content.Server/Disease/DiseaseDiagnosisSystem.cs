@@ -89,7 +89,7 @@ namespace Content.Server.Disease
             if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used))
                 return;
 
-            if (!TryComp<DiseaseSwabComponent>(args.Used, out var swab) || swab.Disease == null)
+            if (!TryComp<DiseaseSwabComponent>(args.Used, out var swab))
             {
                 _popupSystem.PopupEntity(Loc.GetString("diagnoser-cant-use-swab", ("machine", uid), ("swab", args.Used)), uid, Filter.Entities(args.User));
                 return;
@@ -105,11 +105,19 @@ namespace Content.Server.Disease
             if (!TryComp<PaperComponent>(printed, out var paper))
                 return;
 
-            var reportTitle = Loc.GetString("diagnoser-disease-report", ("disease", component.Disease.Name));
-
+            var reportTitle = string.Empty;
+            var contents = string.Empty;
+            if (component.Disease != null)
+            {
+                reportTitle = Loc.GetString("diagnoser-disease-report", ("disease", component.Disease.Name));
+                contents = AssembleDiseaseReport(component.Disease);
+            } else
+            {
+                reportTitle = Loc.GetString("diagnoser-disease-report-none");
+                contents = Loc.GetString("diagnoser-disease-report-none-contents");
+            }
             MetaData(printed).EntityName = reportTitle;
 
-            var contents = AssembleDiseaseReport(component.Disease);
             paper.SetContent(contents);
         }
 
