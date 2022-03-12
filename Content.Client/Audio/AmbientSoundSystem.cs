@@ -60,6 +60,7 @@ namespace Content.Client.Audio
         public override void Shutdown()
         {
             base.Shutdown();
+            ClearSounds();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.UnsubValueChanged(CCVars.AmbientCooldown, SetCooldown);
             configManager.UnsubValueChanged(CCVars.MaxAmbientSources, SetAmbientCount);
@@ -103,7 +104,7 @@ namespace Content.Client.Audio
 
             var coordinates = playerManager.Coordinates;
 
-            SampleNearby(coordinates);
+            ProcessNearbyAmbience(coordinates);
         }
 
         private void ClearSounds()
@@ -121,7 +122,7 @@ namespace Content.Client.Audio
             //TODO: Make this produce a hashset of nearby entities again.
             var sourceDict = new Dictionary<string, List<AmbientSoundComponent>>(16);
 
-            foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer, LookupFlags.IncludeAnchored))
+            foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer, LookupFlags.IncludeAnchored | LookupFlags.Approximate))
             {
                 if (!EntityManager.TryGetComponent(entity, out AmbientSoundComponent? ambientComp) ||
                     !ambientComp.Enabled ||
@@ -151,7 +152,7 @@ namespace Content.Client.Audio
         /// <summary>
         /// Get a list of ambient components in range and determine which ones to start playing.
         /// </summary>
-        private void SampleNearby(EntityCoordinates coordinates)
+        private void ProcessNearbyAmbience(EntityCoordinates coordinates)
         {
             var compsInRange= GetNearbySources(coordinates);
 
