@@ -151,7 +151,7 @@ namespace Content.Server.Drone
             {
                 if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("drone-too-close"), uid, Filter.Entities(uid));
+                    _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", entity)), uid, Filter.Entities(uid));
                     return true;
                 }
             }
