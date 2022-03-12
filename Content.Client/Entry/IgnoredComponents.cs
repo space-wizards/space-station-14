@@ -55,6 +55,7 @@ namespace Content.Client.Entry
             "Food",
             "DeployableBarrier",
             "MagicMirror",
+            "DiseaseSwab",
             "FloorTile",
             "RandomInsulation",
             "Electrified",

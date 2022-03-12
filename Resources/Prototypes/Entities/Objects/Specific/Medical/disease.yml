@@ -1,0 +1,17 @@
+- type: entity
+  parent: BaseItem
+  id: DiseaseSwab
+  name: mouth swab
+  description: Used to take saliva samples to test for diseases.
+  components:
+  - type: Item
+    size: 1
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Tools/matches.rsi
+    layers:
+      - state: match_unlit
+  - type: Tag
+    tags:
+    - Recyclable
+  - type: DiseaseSwab

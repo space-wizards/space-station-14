@@ -14,7 +14,7 @@ using Content.Server.Nutrition.EntitySystems;
 
 namespace Content.Server.Disease
 {
-    public class DiseaseSystem : EntitySystem
+    public sealed class DiseaseSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ISerializationManager _serializationManager = default!;

@@ -64,7 +64,7 @@ namespace Content.Server.Medical
             });
         }
 
-        private async void OnTargetScanSuccessful(TargetScanSuccessfulEvent args)
+        private void OnTargetScanSuccessful(TargetScanSuccessfulEvent args)
         {
             args.Component.CancelToken = null;
             UpdateScannedUser(args.Component.Owner, args.User, args.Target, args.Component);
