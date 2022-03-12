@@ -16,6 +16,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
 using Robust.Shared.Player;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.Drone
 {
@@ -24,6 +25,8 @@ namespace Content.Server.Drone
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -101,7 +104,7 @@ namespace Content.Server.Drone
                     {
                         var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
                         AddComp<UnremoveableComponent>(item);
-                        hands.PutInHand(item);
+                        _handsSystem.TryPickup(uid, item);
                         drone.ToolUids.Add(item);
                     }
                 }

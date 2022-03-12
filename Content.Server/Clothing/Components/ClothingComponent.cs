@@ -1,5 +1,6 @@
 using Content.Server.Hands.Components;
 using Content.Shared.Clothing;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
@@ -55,7 +56,7 @@ namespace Content.Server.Clothing.Components
                     if (!invSystem.TryEquip(eventArgs.User, Owner, slotDef.Name, true, inventory: inv))
                         continue;
 
-                    hands.PutInHandOrDrop(slotEntity.Value);
+                    EntitySystem.Get<SharedHandsSystem>().PickupOrDrop(eventArgs.User, slotEntity.Value);
                 }
                 else
                 {

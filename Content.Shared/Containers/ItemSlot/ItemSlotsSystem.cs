@@ -1,20 +1,16 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Containers.ItemSlots
@@ -26,6 +22,7 @@ namespace Content.Shared.Containers.ItemSlots
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
@@ -174,11 +171,11 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 // Drop the held item onto the floor. Return if the user cannot drop.
-                if (!hands.Drop(args.Used))
+                if (!_handsSystem.TryDrop(args.User, args.Used, hands: hands))
                     return;
 
                 if (slot.Item != null)
-                    hands.TryPutInAnyHand(slot.Item.Value);
+                    _handsSystem.TryPickupAnyHand(args.User, slot.Item.Value, handsComp: hands);
 
                 Insert(uid, slot, args.Used, args.User, excludeUserAudio: args.Predicted);
                 args.Handled = true;
@@ -286,18 +283,17 @@ namespace Content.Shared.Containers.ItemSlots
             if (!Resolve(user, ref hands, false))
                 return false;
 
-            if (!hands.TryGetActiveHeldEntity(out var item))
+            if (hands.ActiveHand?.HeldEntity is not EntityUid held)
                 return false;
-            var heldItem = item.Value;
 
-            if (!CanInsert(uid, item.Value, slot))
+            if (!CanInsert(uid, held, slot))
                 return false;
 
             // hands.Drop(item) checks CanDrop action blocker
-            if (hands.Drop(heldItem))
+            if (_handsSystem.TryDrop(user, hands.ActiveHand))
                 return false;
 
-            Insert(uid, slot, heldItem, user);
+            Insert(uid, slot, held, user);
             return true;
         }
         #endregion
@@ -373,8 +369,8 @@ namespace Content.Shared.Containers.ItemSlots
             if (!TryEject(uid, slot, user, out var item, excludeUserAudio))
                 return false;
 
-            if (user != null && EntityManager.TryGetComponent(user.Value, out SharedHandsComponent? hands))
-                hands.PutInHand(item.Value);
+            if (user != null)
+                _handsSystem.PickupOrDrop(user.Value, item.Value);
 
             return true;
         }

@@ -324,10 +324,7 @@ public sealed partial class GunSystem
         component.MagazineContainer.Remove(mag.Value);
         SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundMagEject.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2));
 
-        if (TryComp(user, out HandsComponent? handsComponent))
-        {
-            handsComponent.PutInHandOrDrop(EntityManager.GetComponent<SharedItemComponent>(mag.Value));
-        }
+        _handsSystem.PickupOrDrop(user, mag.Value);
 
         component.Dirty(EntityManager);
         UpdateMagazineAppearance(component);

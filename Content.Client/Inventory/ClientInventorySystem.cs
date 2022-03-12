@@ -185,15 +185,15 @@ namespace Content.Client.Inventory
             if (!Resolve(uid, ref hands, false))
                 return;
 
-            if (!hands.TryGetActiveHeldEntity(out var heldEntity))
+            if (hands.CurrentlyHeldEntity is not EntityUid heldEntity)
                 return;
 
             if(!TryGetSlotContainer(uid, slot, out var containerSlot, out var slotDef, inventoryComponent))
                 return;
 
-            _itemSlotManager.HoverInSlot(button, heldEntity.Value,
-                CanEquip(uid, heldEntity.Value, slot, out _, slotDef, inventoryComponent) &&
-                containerSlot.CanInsert(heldEntity.Value, EntityManager));
+            _itemSlotManager.HoverInSlot(button, heldEntity,
+                CanEquip(uid, heldEntity, slot, out _, slotDef, inventoryComponent) &&
+                containerSlot.CanInsert(heldEntity, EntityManager));
         }
 
         private void HandleSlotButtonPressed(EntityUid uid, string slot, ItemSlotButton button,
@@ -206,7 +206,7 @@ namespace Content.Client.Inventory
                 return;
 
             // only raise event if either itemUid is not null, or the user is holding something
-            if (itemUid != null || TryComp(uid, out SharedHandsComponent? hands) && hands.TryGetActiveHeldEntity(out _))
+            if (itemUid != null || TryComp(uid, out SharedHandsComponent? hands) && hands.CurrentlyHeldEntity != null)
                 EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot)); 
         }
 

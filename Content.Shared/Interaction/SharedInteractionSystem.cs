@@ -217,7 +217,7 @@ namespace Content.Shared.Interaction
 
             // Does the user have hands?
             Hand? hand;
-            if (!TryComp(user, out SharedHandsComponent? hands) || !hands.TryGetActiveHand(out hand))
+            if (!TryComp(user, out SharedHandsComponent? hands) || hands.ActiveHand == null)
                 return;
 
             var inRangeUnobstructed = target == null
@@ -225,7 +225,7 @@ namespace Content.Shared.Interaction
                 : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
             // empty-hand interactions
-            if (hand.HeldEntity == null)
+            if (hands.CurrentlyHeldEntity is not EntityUid held)
             {
                 if (inRangeUnobstructed && target != null)
                     InteractHand(user, target.Value);
@@ -237,7 +237,7 @@ namespace Content.Shared.Interaction
             if (checkCanUse && !_actionBlockerSystem.CanUseHeldEntity(user))
                 return;
 
-            if (target == hand.HeldEntity)
+            if (target == held)
             {
                 UseInHandInteraction(user, target.Value, checkCanUse: false, checkCanInteract: false);
                 return;
@@ -247,7 +247,7 @@ namespace Content.Shared.Interaction
             {
                 InteractUsing(
                     user,
-                    hand.HeldEntity.Value,
+                    held,
                     target.Value,
                     coordinates,
                     checkCanInteract: false,
@@ -258,7 +258,7 @@ namespace Content.Shared.Interaction
 
             InteractUsingRanged(
                 user,
-                hand.HeldEntity.Value,
+                held,
                 target,
                 coordinates,
                 inRangeUnobstructed);

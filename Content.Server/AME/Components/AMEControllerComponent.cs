@@ -7,6 +7,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.AME;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Popups;
@@ -29,6 +30,7 @@ namespace Content.Server.AME.Components
     public sealed class AMEControllerComponent : SharedAMEControllerComponent, IActivate, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(AMEControllerUiKey.Key);
         private bool _injecting;
@@ -132,7 +134,7 @@ namespace Content.Server.AME.Components
                 return;
             }
 
-            var activeHandEntity = hands.GetActiveHandItem?.Owner;
+            var activeHandEntity = hands.CurrentlyHeldEntity;
             if (activeHandEntity == null)
             {
                 UserInterface?.Open(actor.PlayerSession);
@@ -240,10 +242,7 @@ namespace Content.Server.AME.Components
             _jarSlot.Remove(jar);
             UpdateUserInterface();
 
-            if (!_entities.TryGetComponent<HandsComponent?>(user, out var hands) || !_entities.TryGetComponent<SharedItemComponent?>(jar, out var item))
-                return;
-            if (hands.CanPutInHand(item))
-                hands.PutInHand(item);
+            _sysMan.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, jar);
         }
 
         private void ToggleInjection()
@@ -336,13 +335,13 @@ namespace Content.Server.AME.Components
                 return true;
             }
 
-            if (hands.GetActiveHandItem == null)
+            if (hands.CurrentlyHeldEntity == null)
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-nothing-in-hands-text"));
                 return false;
             }
 
-            var activeHandEntity = hands.GetActiveHandItem.Owner;
+            var activeHandEntity = hands.CurrentlyHeldEntity;
             if (_entities.HasComponent<AMEFuelContainerComponent?>(activeHandEntity))
             {
                 if (HasJar)
@@ -352,7 +351,7 @@ namespace Content.Server.AME.Components
 
                 else
                 {
-                    _jarSlot.Insert(activeHandEntity);
+                    _jarSlot.Insert(activeHandEntity.Value);
                     Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-success"));
                     UpdateUserInterface();
                 }

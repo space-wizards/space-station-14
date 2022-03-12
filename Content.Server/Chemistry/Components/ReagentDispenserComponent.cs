@@ -313,7 +313,7 @@ namespace Content.Server.Chemistry.Components
                 return;
             }
 
-            var activeHandEntity = hands.GetActiveHandItem?.Owner;
+            var activeHandEntity = hands.CurrentlyHeldEntity;
             if (activeHandEntity == null)
             {
                 UserInterface?.Open(actor.PlayerSession);

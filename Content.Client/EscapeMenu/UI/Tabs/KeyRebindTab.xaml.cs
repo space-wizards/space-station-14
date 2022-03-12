@@ -108,7 +108,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AddHeader("ui-options-header-interaction-basic");
             AddButton(EngineKeyFunctions.Use);
             AddButton(ContentKeyFunctions.WideAttack);
-            AddButton(ContentKeyFunctions.ActivateItemInHand);
+            AddButton(ContentKeyFunctions.UseItemInHand);
             AddButton(ContentKeyFunctions.AltActivateItemInHand);
             AddButton(ContentKeyFunctions.ActivateItemInWorld);
             AddButton(ContentKeyFunctions.AltActivateItemInWorld);

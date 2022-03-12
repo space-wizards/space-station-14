@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using static Robust.Shared.GameObjects.SharedSpriteComponent;
+
 
 namespace Content.Shared.Hands
 {
@@ -73,15 +70,9 @@ namespace Content.Shared.Hands
         /// </summary>
         public EntityUid User { get; }
 
-        /// <summary>
-        ///     Item in the hand that was deselected.
-        /// </summary>
-        public EntityUid Item { get; }
-
-        public HandDeselectedEvent(EntityUid user, EntityUid item)
+        public HandDeselectedEvent(EntityUid user)
         {
             User = user;
-            Item = item;
         }
     }
 
@@ -96,15 +87,9 @@ namespace Content.Shared.Hands
         /// </summary>
         public EntityUid User { get; }
 
-        /// <summary>
-        ///     Item in the hand that was selected.
-        /// </summary>
-        public EntityUid Item { get; }
-
-        public HandSelectedEvent(EntityUid user, EntityUid item)
+        public HandSelectedEvent(EntityUid user)
         {
             User = user;
-            Item = item;
         }
     }
 
@@ -230,5 +215,65 @@ namespace Content.Shared.Hands
     public sealed class DidUnequipHandEvent : UnequippedHandEvent
     {
         public DidUnequipHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
+    }
+
+    /// <summary>
+    /// A message that calls the use interaction on an item in hand, presumed for now the interaction will occur only on the active hand.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class UseInHandMsg : EntityEventArgs
+    {
+    }
+
+    /// <summary>
+    /// A message that calls the activate interaction on the item in the specified hand.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class ActivateInHandMsg : EntityEventArgs
+    {
+        public string HandName { get; }
+
+        public ActivateInHandMsg(string handName)
+        {
+            HandName = handName;
+        }
+    }
+
+    /// <summary>
+    ///     Uses the item in the active hand on the item in the specified hand.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class ClientInteractUsingInHandMsg : EntityEventArgs
+    {
+        public string HandName { get; }
+
+        public ClientInteractUsingInHandMsg(string handName)
+        {
+            HandName = handName;
+        }
+    }
+
+    /// <summary>
+    ///     Moves an item from one hand to the active hand.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class MoveItemFromHandMsg : EntityEventArgs
+    {
+        public string HandName { get; }
+
+        public MoveItemFromHandMsg(string handName)
+        {
+            HandName = handName;
+        }
+    }
+
+    public sealed class HandCountChangedEvent : EntityEventArgs
+    {
+        public HandCountChangedEvent(EntityUid sender)
+        {
+            Sender = sender;
+        }
+
+        public EntityUid Sender { get; }
     }
 }

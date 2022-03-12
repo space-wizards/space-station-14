@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -17,18 +18,10 @@ namespace Content.Server.AI.WorldState.States.Hands
 
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent))
             {
-                return result;
+                return new List<string>();
             }
 
-            foreach (var hand in handsComponent.ActivePriorityEnumerable())
-            {
-                if (handsComponent.GetItem(hand) == null)
-                {
-                    result.Add(hand);
-                }
-            }
-
-            return result;
+            return handsComponent.Hands.Values.Where(hand => hand.IsEmpty).Select(hand => hand.Name).ToList();
         }
     }
 }

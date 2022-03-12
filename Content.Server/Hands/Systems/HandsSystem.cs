@@ -29,6 +29,10 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
+using Content.Shared.Interaction;
+using Content.Shared.Pulling.Components;
+using Content.Server.Pulling;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.Hands.Systems
 {
@@ -43,13 +47,15 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly StrippableSystem _strippableSystem = default!;
         [Dependency] private readonly SharedHandVirtualItemSystem _virtualSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly PullingSystem _pullingSystem = default!;
+        
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<HandsComponent, ExaminedEvent>(HandleExamined);
-            SubscribeNetworkEvent<ActivateInHandMsg>(HandleActivateInHand);
+            SubscribeNetworkEvent<ActivateInHandMsg>(HandleActivateItemInHand);
             SubscribeNetworkEvent<ClientInteractUsingInHandMsg>(HandleInteractUsingInHand);
             SubscribeNetworkEvent<UseInHandMsg>(HandleUseInHand);
             SubscribeNetworkEvent<MoveItemFromHandMsg>(HandleMoveItemFromHand);
@@ -59,11 +65,13 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
 
+            SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
+
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
 
             CommandBinds.Builder
-                .Bind(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(s => HandleActivateItem(s)))
-                .Bind(ContentKeyFunctions.AltActivateItemInHand, InputCmdHandler.FromDelegate(s => HandleActivateItem(s, true)))
+                .Bind(ContentKeyFunctions.UseItemInHand, InputCmdHandler.FromDelegate(HandleUseItem))
+                .Bind(ContentKeyFunctions.AltActivateItemInHand, InputCmdHandler.FromDelegate(HandleAltUseInHand))
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
                 .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
@@ -79,15 +87,19 @@ namespace Content.Server.Hands.Systems
 
         private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
         {
-            args.State = new HandsComponentState(hands.Hands, hands.ActiveHand);
+            args.State = new HandsComponentState(hands);
         }
 
         private void OnDisarmed(EntityUid uid, HandsComponent component, DisarmedEvent args)
         {
-            if (args.Handled || component.BreakPulls())
+            if (args.Handled)
                 return;
 
-            if (component.ActiveHand == null || !component.Drop(component.ActiveHand, false))
+            // Break any pulls
+            if (TryComp(uid, out SharedPullerComponent? puller) && puller.Pulling is EntityUid pulled && TryComp(pulled, out SharedPullableComponent? pullable))
+                _pullingSystem.TryStopPull(pullable);
+
+            if (_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
                 return;
 
             var targetName = Name(args.Target);
@@ -103,9 +115,9 @@ namespace Content.Server.Hands.Systems
         }
 
         #region EntityInsertRemove
-        public override void RemoveHeldEntityFromHand(EntityUid uid, Hand hand, SharedHandsComponent? hands = null)
+        public override void DoDrop(EntityUid uid, Hand hand, SharedHandsComponent? hands = null)
         {
-            base.RemoveHeldEntityFromHand(uid, hand, hands);
+            base.DoDrop(uid, hand, hands);
 
             // update gui of anyone stripping this entity.
             _strippableSystem.SendUpdate(uid);
@@ -114,15 +126,16 @@ namespace Content.Server.Hands.Systems
                 sprite.RenderOrder = EntityManager.CurrentTick.Value;
         }
 
-        public override void PutEntityIntoHand(EntityUid uid, Hand hand, EntityUid entity, SharedHandsComponent? hands = null)
+        public override void DoPickup(EntityUid uid, Hand hand, EntityUid entity, SharedHandsComponent? hands = null)
         {
-            base.PutEntityIntoHand(uid, hand, entity, hands);
+            base.DoPickup(uid, hand, entity, hands);
 
             // update gui of anyone stripping this entity.
             _strippableSystem.SendUpdate(uid);
 
             _logSystem.Add(LogType.Pickup, LogImpact.Low, $"{uid} picked up {entity}");
         }
+
 
         public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
             EntityUid? exclude)
@@ -138,12 +151,10 @@ namespace Content.Server.Hands.Systems
             RaiseNetworkEvent(new PickupAnimationEvent(item, initialPosition, finalPosition), filter);
         }
 
-        protected override void HandleContainerRemoved(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args)
+        private void HandleEntityRemoved(EntityUid uid, SharedHandsComponent component, EntRemovedFromContainerMessage args)
         {
             if (!Deleted(args.Entity) && TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
                 _virtualSystem.Delete(@virtual, uid);
-
-            base.HandleContainerRemoved(uid, component, args);
         }
         #endregion
 
@@ -154,10 +165,9 @@ namespace Content.Server.Hands.Systems
                 return;
 
             // Cancel pull if all hands full.
-            if (component.Hands.All(hand => !hand.IsEmpty))
+            if (!component.Hands.Values.Any(hand => hand.IsEmpty))
                 args.Cancelled = true;
         }
-
 
         private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
         {
@@ -177,7 +187,7 @@ namespace Content.Server.Hands.Systems
 
             // Try find hand that is doing this pull.
             // and clear it.
-            foreach (var hand in component.Hands)
+            foreach (var hand in component.Hands.Values)
             {
                 if (hand.HeldEntity == null
                     || !TryComp(hand.HeldEntity, out HandVirtualItemComponent? virtualItem)
@@ -193,30 +203,38 @@ namespace Content.Server.Hands.Systems
         #region interactions
         private void HandleMoveItemFromHand(MoveItemFromHandMsg msg, EntitySessionEventArgs args)
         {
-            if (TryComp(args.SenderSession.AttachedEntity, out SharedHandsComponent? hands))
-                hands.TryMoveHeldEntityToActiveHand(msg.HandName);
+            if (args.SenderSession.AttachedEntity != null)
+                TryMoveHeldEntityToActiveHand(args.SenderSession.AttachedEntity.Value, msg.HandName);
         }
+
         private void HandleUseInHand(UseInHandMsg msg, EntitySessionEventArgs args)
         {
-            if (TryComp(args.SenderSession.AttachedEntity, out SharedHandsComponent? hands))
-                hands.ActivateItem();
+            if (args.SenderSession.AttachedEntity != null)
+                TryUseItemInHand(args.SenderSession.AttachedEntity.Value);
         }
+
+        private void HandleAltUseInHand(ICommonSession? session)
+        {
+            if (session?.AttachedEntity != null)
+                TryUseItemInHand(session.AttachedEntity.Value, true);
+        }
+
+        private void HandleActivateItemInHand(ActivateInHandMsg msg, EntitySessionEventArgs args)
+        {
+            if (args.SenderSession.AttachedEntity != null)
+                TryActivateItemInHand(args.SenderSession.AttachedEntity.Value);
+        }
+
         private void HandleInteractUsingInHand(ClientInteractUsingInHandMsg msg, EntitySessionEventArgs args)
         {
-            if (TryComp(args.SenderSession.AttachedEntity, out SharedHandsComponent? hands))
-                hands.InteractHandWithActiveHand(msg.HandName);
+            if (args.SenderSession.AttachedEntity != null)
+                TryInteractHandWithActiveHand(args.SenderSession.AttachedEntity.Value, msg.HandName);
         }
 
-        private void HandleActivateInHand(ActivateInHandMsg msg, EntitySessionEventArgs args)
+        private void HandleUseItem(ICommonSession? session)
         {
-            if (TryComp(args.SenderSession.AttachedEntity, out SharedHandsComponent? hands))
-                hands.ActivateHeldEntity(msg.HandName);
-        }
-
-        private void HandleActivateItem(ICommonSession? session, bool altInteract = false)
-        {
-            if (TryComp(session?.AttachedEntity, out SharedHandsComponent? hands))
-                hands.ActivateItem(altInteract);
+            if (session?.AttachedEntity != null)
+                TryUseItemInHand(session.AttachedEntity.Value);
         }
 
         private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
@@ -228,20 +246,20 @@ namespace Content.Server.Hands.Systems
                 !Exists(player) ||
                 player.IsInContainer() ||
                 !TryComp(player, out SharedHandsComponent? hands) ||
-                !hands.TryGetActiveHeldEntity(out var throwEnt) ||
+                hands.CurrentlyHeldEntity is not EntityUid throwEnt ||
                 !_actionBlockerSystem.CanThrow(player))
                 return false;
 
-            if (EntityManager.TryGetComponent(throwEnt.Value, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
+            if (EntityManager.TryGetComponent(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = _stackSystem.Split(throwEnt.Value, 1, EntityManager.GetComponent<TransformComponent>(player).Coordinates, stack);
+                var splitStack = _stackSystem.Split(throwEnt, 1, EntityManager.GetComponent<TransformComponent>(player).Coordinates, stack);
 
                 if (splitStack is not {Valid: true})
                     return false;
 
                 throwEnt = splitStack.Value;
             }
-            else if (!hands.Drop(throwEnt.Value))
+            else if (!TryDrop(player, throwEnt, hands: hands))
                 return false;
 
             var direction = coords.ToMapPos(EntityManager) - Transform(player).WorldPosition;
@@ -251,7 +269,7 @@ namespace Content.Server.Hands.Systems
             direction = direction.Normalized * Math.Min(direction.Length, hands.ThrowRange);
 
             var throwStrength = hands.ThrowForceMultiplier;
-            throwEnt.Value.TryThrow(direction, throwStrength, player);
+            throwEnt.TryThrow(direction, throwStrength, player);
 
             return true;
         }
@@ -287,7 +305,7 @@ namespace Content.Server.Hands.Systems
                 return;
             }
 
-            if (hands.ActiveHandIsHoldingEntity())
+            if (hands.ActiveHand?.HeldEntity != null)
             {
                 storageComponent.PlayerInsertHeldEntity(plyEnt);
             }
@@ -302,8 +320,7 @@ namespace Content.Server.Hands.Systems
                     var lastStoredEntity = Enumerable.Last(storageComponent.StoredEntities);
                     if (storageComponent.Remove(lastStoredEntity))
                     {
-                        if (!hands.TryPickupEntityToActiveHand(lastStoredEntity, animateUser: true))
-                            Transform(lastStoredEntity).Coordinates = Transform(plyEnt).Coordinates;
+                        PickupOrDrop(plyEnt, lastStoredEntity, animateUser: true, handsComp: hands);
                     }
                 }
             }
@@ -313,12 +330,12 @@ namespace Content.Server.Hands.Systems
         //TODO: Actually shows all items/clothing/etc.
         private void HandleExamined(EntityUid uid, HandsComponent component, ExaminedEvent args)
         {
-            foreach (var inhand in component.GetAllHeldItems())
+            foreach (var inhand in EnumerateHeld(uid, component))
             {
-                if (HasComp<HandVirtualItemComponent>(inhand.Owner))
+                if (HasComp<HandVirtualItemComponent>(inhand))
                     continue;
 
-                args.PushText(Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand.Owner)));
+                args.PushText(Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand)));
             }
         }
     }

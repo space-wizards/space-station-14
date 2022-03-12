@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
@@ -7,6 +7,7 @@ using Content.Server.Kitchen.Events;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Kitchen.Components;
@@ -16,10 +17,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -29,6 +26,7 @@ namespace Content.Server.Kitchen.EntitySystems
     internal sealed class ReagentGrinderSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         private Queue<ReagentGrinderComponent> _uiUpdateQueue = new();
 
@@ -267,7 +265,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 !EntityManager.TryGetComponent<SharedItemComponent?>(beaker, out var item))
                 return;
 
-            hands.PutInHandOrDrop(item);
+            _handsSystem.PickupOrDrop(user.Value, beaker, handsComp: hands, item: item);
 
             component.HeldBeaker = null;
             EnqueueUiUpdate(component);

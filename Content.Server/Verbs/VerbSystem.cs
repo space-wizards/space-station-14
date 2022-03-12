@@ -102,7 +102,7 @@ namespace Content.Server.Verbs
             // first get the held item. again.
             EntityUid? holding = null;
             if (TryComp(user, out SharedHandsComponent? hands) &&
-                hands.TryGetActiveHeldEntity(out var heldEntity))
+                hands.CurrentlyHeldEntity is EntityUid heldEntity)
             {
                 holding = heldEntity;
             }

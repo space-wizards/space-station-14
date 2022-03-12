@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory.Events;
@@ -10,9 +11,6 @@ using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -25,6 +23,7 @@ public abstract partial class InventorySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private void InitializeEquip()
@@ -75,7 +74,7 @@ public abstract partial class InventorySystem
         if (!TryComp(actor, out InventoryComponent? inventory) || !TryComp<SharedHandsComponent>(actor, out var hands))
             return;
 
-        hands.TryGetActiveHeldEntity(out var held);
+        var held = hands.CurrentlyHeldEntity;
         TryGetSlotEntity(actor, ev.Slot, out var itemUid, inventory);
 
         // attempt to perform some interaction
@@ -89,8 +88,8 @@ public abstract partial class InventorySystem
         // un-equip to hands
         if (itemUid != null)
         {
-            if (hands.CanPickupEntityToActiveHand(itemUid.Value) && TryUnequip(actor, ev.Slot, inventory: inventory))
-                hands.PutInHand(itemUid.Value, false);
+            if (_handsSystem.CanPickupAnyHand(actor, itemUid.Value, handsComp: hands) && TryUnequip(actor, ev.Slot, inventory: inventory))
+                _handsSystem.TryPickup(actor, itemUid.Value, checkActionBlocker: false, handsComp: hands);
             return;
         }
 
@@ -106,7 +105,7 @@ public abstract partial class InventorySystem
             return;
         }
 
-        if (hands.TryDropNoInteraction())
+        if (_handsSystem.TryDropNoInteraction(actor, hands.ActiveHand!, hands: hands))
             TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory);
         }
 

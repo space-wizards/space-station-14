@@ -21,6 +21,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -38,6 +39,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -220,18 +222,12 @@ namespace Content.Server.Nutrition.EntitySystems
             var finisher = EntityManager.SpawnEntity(component.TrashPrototype, position);
 
             // If the user is holding the item
-            if (user != null &&
-                EntityManager.TryGetComponent(user.Value, out HandsComponent? handsComponent) &&
-                handsComponent.IsHolding(component.Owner))
+            if (user != null && _handsSystem.IsHolding(user.Value, component.Owner, out var hand))
             {
                 EntityManager.DeleteEntity((component).Owner);
 
                 // Put the trash in the user's hand
-                if (EntityManager.TryGetComponent(finisher, out SharedItemComponent? item) &&
-                    handsComponent.CanPutInHand(item))
-                {
-                    handsComponent.PutInHand(item);
-                }
+                _handsSystem.TryPickup(user.Value, finisher, hand);
                 return;
             }
 
@@ -326,10 +322,10 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var usedTypes = UtensilType.None;
 
-            foreach (var item in hands.GetAllHeldItems())
+            foreach (var item in _handsSystem.EnumerateHeld(user, hands))
             {
                 // Is utensil?
-                if (!EntityManager.TryGetComponent(item.Owner, out UtensilComponent? utensil))
+                if (!EntityManager.TryGetComponent(item, out UtensilComponent? utensil))
                     continue;
 
                 if ((utensil.Types & component.Utensil) != 0 && // Acceptable type?
