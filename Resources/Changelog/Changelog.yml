@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Masks & some headwear now blocks eating & drinking, type: Tweak}
-  id: 694
-  time: '2021-12-02T14:51:05.0000000+00:00'
 - author: hubismal
   changes:
   - {message: pAIs have been outfitted with cheap ringtone synthesizers to play their
@@ -2981,3 +2976,9 @@ Entries:
       after 4 throws.', type: Tweak}
   id: 1193
   time: '2022-03-12T22:07:27.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Guitar and other items now correctly react on quick equipment key (Z
+      by default)., type: Fix}
+  id: 1194
+  time: '2022-03-12T22:09:11.0000000+00:00'
