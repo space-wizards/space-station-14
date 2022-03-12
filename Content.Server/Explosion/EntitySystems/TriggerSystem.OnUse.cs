@@ -1,6 +1,6 @@
 using System;
 using Content.Server.Explosion.Components;
-using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Trigger;
 using Robust.Shared.GameObjects;
 
