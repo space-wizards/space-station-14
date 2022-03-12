@@ -9,6 +9,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Trinary.Components;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -28,6 +29,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private AdminLogSystem _adminLogSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
         public override void Initialize()
         {
@@ -50,7 +52,10 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             component.Enabled = false;
             if (TryComp(uid, out AppearanceComponent? appearance))
+            {
                 appearance.SetData(FilterVisuals.Enabled, false);
+                _ambientSoundSystem.SetAmbience(component.Owner, false);
+            }
 
             DirtyUI(uid, component);
             _userInterfaceSystem.TryCloseAll(uid, GasFilterUiKey.Key);
@@ -69,6 +74,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             || outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure) // No need to transfer if target is full.
             {
                 appearance?.SetData(FilterVisuals.Enabled, false);
+                _ambientSoundSystem.SetAmbience(filter.Owner, false);
                 return;
             }
 
@@ -78,6 +84,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (transferRatio <= 0)
             {
                 appearance?.SetData(FilterVisuals.Enabled, false);
+                _ambientSoundSystem.SetAmbience(filter.Owner, false);
                 return;
             }
 
@@ -94,6 +101,14 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
                 var target = filterNode.Air.Pressure < Atmospherics.MaxOutputPressure ? filterNode : inletNode;
                 _atmosphereSystem.Merge(target.Air, filteredOut);
+                if (filteredOut.Pressure != 0f)
+                {
+                    _ambientSoundSystem.SetAmbience(filter.Owner, true);
+                }
+                else
+                {
+                    _ambientSoundSystem.SetAmbience(filter.Owner, false);
+                }
             }
 
             _atmosphereSystem.Merge(outletNode.Air, removed);
