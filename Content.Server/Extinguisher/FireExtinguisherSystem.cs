@@ -8,6 +8,7 @@ using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Extinguisher;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;

@@ -8,7 +8,7 @@ using Content.Server.Weapon.Melee;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Jittering;
 using Content.Shared.Popups;

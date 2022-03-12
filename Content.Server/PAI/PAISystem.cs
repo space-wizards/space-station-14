@@ -1,5 +1,4 @@
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using Content.Shared.PAI;
 using Content.Shared.Verbs;
 using Content.Shared.Instruments;
@@ -14,6 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Content.Shared.Actions;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Server.PAI
 {
