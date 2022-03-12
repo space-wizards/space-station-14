@@ -38,7 +38,7 @@ namespace Content.Client.Audio
 
         private Dictionary<AmbientSoundComponent, (IPlayingAudioStream? Stream, string Sound)> _playingSounds = new();
 
-        private const float RangeBuffer = 0.5f;
+        private const float RangeBuffer = 3f;
 
         public override void Initialize()
         {
@@ -136,7 +136,9 @@ namespace Content.Client.Audio
             foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer, LookupFlags.IncludeAnchored))
             {
                 if (!EntityManager.TryGetComponent(entity, out AmbientSoundComponent? ambientComp) ||
-                    !ambientComp.Enabled)
+                    !ambientComp.Enabled ||
+                    !EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
+                    range > ambientComp.Range - RangeBuffer)
                 {
                     continue;
                 }
