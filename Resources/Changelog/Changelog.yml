@@ -1,9 +1,4 @@
 Entries:
-- author: Efruit
-  changes:
-  - {message: Radiation storms are scary., type: Tweak}
-  id: 689
-  time: '2021-12-01T20:21:18.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Corrected the names of a bunch of clothing items., type: Fix}
@@ -2977,3 +2972,10 @@ Entries:
       into their ghostly skull.', type: Add}
   id: 1188
   time: '2022-03-11T05:37:36.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones now have a whitelist for machine UIs they can open. Chem dispensers
+      are not included., type: Tweak}
+  - {message: Machine UIs should behave more consistently., type: Fix}
+  id: 1189
+  time: '2022-03-12T18:26:06.0000000+00:00'
