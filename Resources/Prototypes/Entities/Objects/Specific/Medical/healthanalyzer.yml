@@ -21,7 +21,8 @@
   id: HandheldHealthAnalyzerGigacancer
   suffix: gigacancer
   components:
-  - type: DiseaseInteractSource
+  - type: HealthAnalyzer
+    fake: true
     disease: Gigacancer
 
 ## I know admins will want this
@@ -31,5 +32,6 @@
   name: OwOnavirus analyzer
   suffix: admin abuse
   components:
-  - type: DiseaseInteractSource
+  - type: HealthAnalyzer
+    fake: true
     disease: OwOnavirus
