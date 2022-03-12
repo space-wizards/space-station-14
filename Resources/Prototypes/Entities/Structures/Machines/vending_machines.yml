@@ -37,6 +37,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+  - type: ActivatableUI
+    key: enum.VendingMachineUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.VendingMachineUiKey.Key
@@ -188,6 +191,9 @@
   - type: Advertise
     pack: ClothesMateAds
   - type: Speech
+  - type: Tag
+    tags:
+      - DroneUsable
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/clothing.rsi
     layers:
@@ -657,6 +663,9 @@
     radius: 1.5
     energy: 1.6
     color: "#c73434"
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   parent: VendingMachine
@@ -754,6 +763,9 @@
     radius: 1.5
     energy: 1.6
     color: "#d4ab33"
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   parent: VendingMachine

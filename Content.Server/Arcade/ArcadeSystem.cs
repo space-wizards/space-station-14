@@ -1,17 +1,39 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Arcade.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Arcade;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
+using Robust.Server.GameObjects;
+
 
 namespace Content.Server.Arcade
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public sealed class BlockGameSystem : EntitySystem
+    public sealed class ArcadeSystem : EntitySystem
     {
         private readonly List<BlockGameMessages.HighScoreEntry> _roundHighscores = new();
         private readonly List<BlockGameMessages.HighScoreEntry> _globalHighscores = new();
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<BlockGameArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpen);
+            SubscribeLocalEvent<SpaceVillainArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpenSV);
+        }
+
+        private void OnAfterUIOpen(EntityUid uid, BlockGameArcadeComponent component, AfterActivatableUIOpenEvent args)
+        {
+            var actor = Comp<ActorComponent>(args.User);
+            if (component.UserInterface?.SessionHasOpen(actor.PlayerSession) == true)
+            {
+                 component.RegisterPlayerSession(actor.PlayerSession);
+            }
+        }
+
+        private void OnAfterUIOpenSV(EntityUid uid, SpaceVillainArcadeComponent component, AfterActivatableUIOpenEvent args)
+        {
+            component.Game ??= new SpaceVillainArcadeComponent.SpaceVillainGame(component);
+        }
 
         public HighScorePlacement RegisterHighScore(string name, int score)
         {

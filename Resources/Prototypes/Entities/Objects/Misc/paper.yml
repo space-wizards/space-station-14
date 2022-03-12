@@ -10,6 +10,8 @@
     layers:
     - state: paper
   - type: Paper
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.PaperUiKey.Key
