@@ -1,6 +1,8 @@
 - type: disease
   id: Gigacancer
   name: gigacancer
+  infectious: false
+  cureResist: 0.145
   effects:
     - !type:DiseaseHealthChange
       probability: 0.5

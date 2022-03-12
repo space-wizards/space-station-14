@@ -129,7 +129,7 @@
   - type: StorageFill
     contents:
       - id: MedkitFilled
-      - id: ClothingHandsGlovesLatex
+      - id: ClothingHandsGlovesNitrile
       #- name: ClothingEyesHudMedical #Removed until working properly
       #  prob: 1
       - id: ClothingHeadsetAltMedical
