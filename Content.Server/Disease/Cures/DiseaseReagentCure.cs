@@ -24,5 +24,12 @@ namespace Content.Server.Disease.Cures
 
             return quant >= Min;
         }
+
+        public override string CureText()
+        {
+            if (Reagent == null)
+                return string.Empty;
+            return (Loc.GetString("diagnoser-cure-reagent", ("units", Min), ("reagent", Reagent)));
+        }
     }
 }

@@ -39,6 +39,7 @@ namespace Content.Client.Entry
             "Material",
             "RandomAppearance",
             "DiseaseProtection",
+            "DiseaseDiagnoser",
             "Mineable",
             "RangedMagazine",
             "Ammo",

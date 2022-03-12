@@ -7,5 +7,6 @@ namespace Content.Shared.Disease
     public abstract class DiseaseCure
     {
         public abstract bool Cure(DiseaseEffectArgs args);
+        public abstract string CureText();
     }
 }

@@ -1,0 +1,16 @@
+- type: entity
+  id: DiseaseDiagnoser
+  parent: BaseMachinePowered
+  name: Disease Diagnoser Delta Extreme
+  description: A machine that analyzes disease samples.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/seed_extractor.rsi
+    layers:
+    - state: seedextractor-off
+    - state: seedextractor-unlit
+      shader: unshaded
+    netsync: false
+  - type: DiseaseDiagnoser

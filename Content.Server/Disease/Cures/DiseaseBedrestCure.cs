@@ -24,5 +24,10 @@ namespace Content.Server.Disease.Cures
                 return true;
             return false;
         }
+
+        public override string CureText()
+        {
+            return (Loc.GetString("diagnoser-cure-bedrest", ("time", MaxLength)));
+        }
     }
 }

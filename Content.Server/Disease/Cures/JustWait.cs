@@ -19,5 +19,10 @@ namespace Content.Server.Disease.Cures
             }
             return true;
         }
+
+        public override string CureText()
+        {
+            return Loc.GetString("diagnoser-cure-wait", ("time", MaxLength));
+        }
     }
 }

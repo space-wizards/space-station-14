@@ -24,5 +24,10 @@ namespace Content.Server.Disease.Cures
 
             return false;
         }
+
+        public override string CureText()
+        {
+            return Loc.GetString("disease-cure-temp", ("max", Max), ("min", Min));
+        }
     }
 }

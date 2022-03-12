@@ -1,11 +1,15 @@
 using System.Threading;
 using Content.Server.Disease.Components;
+using Content.Shared.Disease;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Examine;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
+using Content.Server.Hands.Components;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Paper;
+using Content.Server.Tools.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Player;
 
@@ -25,6 +29,7 @@ namespace Content.Server.Disease
             base.Initialize();
             SubscribeLocalEvent<DiseaseSwabComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<DiseaseSwabComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<DiseaseDiagnoserComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
             SubscribeLocalEvent<TargetSwabSuccessfulEvent>(OnTargetSwabSuccessful);
             SubscribeLocalEvent<SwabCancelledEvent>(OnSwabCancelled);
         }
@@ -76,6 +81,38 @@ namespace Content.Server.Disease
             });
         }
 
+        private void OnAfterInteractUsing(EntityUid uid, DiseaseDiagnoserComponent component, AfterInteractUsingEvent args)
+        {
+            if (args.Handled || !args.CanReach)
+                return;
+
+            if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used))
+                return;
+
+            if (!TryComp<DiseaseSwabComponent>(args.Used, out var swab) || swab.Disease == null)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("diagnoser-cant-use-swab", ("machine", uid), ("swab", args.Used)), uid, Filter.Entities(args.User));
+                return;
+            }
+            _popupSystem.PopupEntity(Loc.GetString("diagnoser-insert-swab", ("machine", uid), ("swab", args.Used)), uid, Filter.Entities(args.User));
+
+            component.Disease = swab.Disease;
+            EntityManager.DeleteEntity(args.Used);
+
+            // spawn a piece of paper.
+            var printed = EntityManager.SpawnEntity(component.PrinterOutput, Transform(uid).Coordinates);
+
+            if (!TryComp<PaperComponent>(printed, out var paper))
+                return;
+
+            var reportTitle = Loc.GetString("diagnoser-disease-report", ("disease", component.Disease.Name));
+
+            MetaData(printed).EntityName = reportTitle;
+
+            var contents = AssembleDiseaseReport(component.Disease);
+            paper.SetContent(contents);
+        }
+
         private void OnExamined(EntityUid uid, DiseaseSwabComponent swab, ExaminedEvent args)
         {
             if (args.IsInDetailsRange)
@@ -105,6 +142,46 @@ namespace Content.Server.Disease
             args.Swab.Disease = _random.Pick(args.Carrier.Diseases);
         }
 
+        private string AssembleDiseaseReport(DiseasePrototype disease)
+        {
+            string report = string.Empty;
+            report += Loc.GetString("diagnoser-disease-report-name", ("disease", disease.Name));
+            report += System.Environment.NewLine;
+
+            if (disease.CureResist <= 0)
+            {
+                report += Loc.GetString("diagnoser-disease-report-cureresist-none");
+            } else if (disease.CureResist <= 5)
+            {
+                report += Loc.GetString("diagnoser-disease-report-cureresist-low");
+            } else if (disease.CureResist <= 14)
+            {
+                report += Loc.GetString("diagnoser-disease-report-cureresist-Medium");
+            } else
+            {
+                report += Loc.GetString("diagnoser-disease-report-cureresist-Medium");
+            }
+            report += System.Environment.NewLine;
+
+            /// Add Cures
+            if (disease.Cures.Count == 0)
+            {
+                report += Loc.GetString("diagnoser-no-cures");
+            }
+            else
+            {
+                report += Loc.GetString("diagnoser-cure-has");
+                report += System.Environment.NewLine;
+
+                foreach (var cure in disease.Cures)
+                {
+                    report += cure.CureText();
+                    report += System.Environment.NewLine;
+                }
+            }
+
+            return report;
+        }
         private static void OnSwabCancelled(SwabCancelledEvent args)
         {
             args.Swab.CancelToken = null;

@@ -1,0 +1,14 @@
+diagnoser-cant-use-swab = {CAPITALIZE(THE($machine))} rejects {THE($swab)}.
+diagnoser-insert-swab = You insert {THE($swab)} into {THE($machine)}.
+diagnoser-disease-report = Disease Report: {CAPITALIZE($disease)}
+diagnoser-disease-report-name = Disease Name: {CAPITALIZE($disease)}
+diagnoser-disease-report-cureresist-none = Medication Resistance: None
+diagnoser-disease-report-cureresist-low = Medication Resistance: Low
+diagnoser-disease-report-cureresist-medium = Medication Resistance: Medium
+diagnoser-disease-report-cureresist-high = Medication Resistance: High
+diagnoser-cure-none = The disease has no specific cures.
+diagnoser-cure-has = The disease has the following cures:
+diagnoser-cure-bedrest = Rest in bed for {$time} seconds.
+diagnoser-cure-reagent = Consume at least {$units}u of {$reagent}.
+diagnoser-cure-wait = It will go away on its own after {$time} seconds.
+diagnoser-cure-temp = Reach a body temperature below ($max)°K or above ($min)°K.
