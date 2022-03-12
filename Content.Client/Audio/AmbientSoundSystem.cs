@@ -15,6 +15,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Audio
 {
+    //TODO: This is using a incomplete version of the whole "only play nearest sounds" algo, that breaks down a bit should the ambient sound cap get hit.
+    //TODO: This'll be fixed when GetEntitiesInRange produces consistent outputs.
+
     /// <summary>
     /// Samples nearby <see cref="AmbientSoundComponent"/> and plays audio.
     /// </summary>
@@ -34,7 +37,7 @@ namespace Content.Client.Audio
         /// <summary>
         /// How many times we can be playing 1 particular sound at once.
         /// </summary>
-        private int _maxSingleSound = 16;
+        private int _maxSingleSound = 8;
 
         private Dictionary<AmbientSoundComponent, (IPlayingAudioStream? Stream, string Sound)> _playingSounds = new();
 
@@ -113,10 +116,10 @@ namespace Content.Client.Audio
             _playingSounds.Clear();
         }
 
-        private (Dictionary<string, List<AmbientSoundComponent>>, HashSet<EntityUid>) GetNearbySources(EntityCoordinates coordinates)
+        private Dictionary<string, List<AmbientSoundComponent>> GetNearbySources(EntityCoordinates coordinates)
         {
-            var sourceDict = new Dictionary<string, List<AmbientSoundComponent>>();
-            var set = new HashSet<EntityUid>();
+            //TODO: Make this produce a hashset of nearby entities again.
+            var sourceDict = new Dictionary<string, List<AmbientSoundComponent>>(16);
 
             foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer, LookupFlags.IncludeAnchored))
             {
@@ -134,7 +137,6 @@ namespace Content.Client.Audio
                     sourceDict[key] = new List<AmbientSoundComponent>(_maxSingleSound);
 
                 sourceDict[key].Add(ambientComp);
-                set.Add(ambientComp.Owner);
             }
 
             foreach (var (key, val) in sourceDict)
@@ -143,7 +145,7 @@ namespace Content.Client.Audio
                     Transform(x.Owner).Coordinates.TryDistance(EntityManager, coordinates, out var dist) ? dist : float.MaxValue).ToList();
             }
 
-            return (sourceDict, set);
+            return sourceDict;
         }
 
         /// <summary>
@@ -151,8 +153,7 @@ namespace Content.Client.Audio
         /// </summary>
         private void SampleNearby(EntityCoordinates coordinates)
         {
-            var (compsInRange, compSet) = GetNearbySources(coordinates);
-            Logger.Debug($"A: {string.Join(", ", compSet)}");
+            var compsInRange= GetNearbySources(coordinates);
 
             var keys = compsInRange.Keys.ToHashSet();
 
@@ -160,12 +161,13 @@ namespace Content.Client.Audio
             {
                 if (_playingSounds.Count >= _maxAmbientCount)
                 {
+                    /*
                     // Go through and remove everything from compSet
                     foreach (var toRemove in keys.SelectMany(key => compsInRange[key]))
                     {
-                        Logger.Debug($"removing {toRemove.Owner} from set.");
                         compSet.Remove(toRemove.Owner);
                     }
+                    */
 
                     break;
                 }
@@ -190,11 +192,11 @@ namespace Content.Client.Audio
                     if (PlayingCount(sound) >= _maxSingleSound)
                     {
                         keys.Remove(key);
-                        foreach (var toRemove in compsInRange[key])
+                        /*foreach (var toRemove in compsInRange[key])
                         {
                             Logger.Debug($"removing {toRemove.Owner} from set.");
                             compSet.Remove(toRemove.Owner);
-                        }
+                        }*/
                         compsInRange[key].Clear(); // reduce work later should we overrun the max sounds.
                         continue;
                     }
@@ -220,8 +222,21 @@ namespace Content.Client.Audio
                 }
             }
 
-            Logger.Debug($"B: {string.Join(", ", compSet)}");
+            foreach (var (comp, sound) in _playingSounds)
+            {
+                var entity = comp.Owner;
+                if (!comp.Enabled ||
+                    !EntityManager.GetComponent<TransformComponent>(entity).Coordinates
+                        .TryDistance(EntityManager, coordinates, out var range) ||
+                    range > comp.Range)
+                {
+                    _playingSounds[comp].Stream?.Stop();
+                    _playingSounds.Remove(comp);
+                }
+            }
 
+            //TODO: Put this code back in place! Currently not done this way because of GetEntitiesInRange being funny.
+            /*
             foreach (var (comp, sound) in _playingSounds)
             {
                 if (compSet.Contains(comp.Owner)) continue;
@@ -230,6 +245,7 @@ namespace Content.Client.Audio
                 _playingSounds[comp].Stream?.Stop();
                 _playingSounds.Remove(comp);
             }
+            */
         }
     }
 }
