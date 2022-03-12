@@ -6,6 +6,8 @@
   - type: Sprite
     sprite: Objects/Tanks/generic.rsi
     state: icon
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.SharedGasTankUiKey.Key

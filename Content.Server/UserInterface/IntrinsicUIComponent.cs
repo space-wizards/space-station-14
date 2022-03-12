@@ -27,8 +27,7 @@ public sealed class IntrinsicUIComponent : Component, ISerializationHooks
 [DataDefinition]
 public struct IntrinsicUIEntry
 {
-    [ViewVariables]
-    public Enum? Key { get; set; }
+    [ViewVariables] public Enum? Key { get; set; } = null;
 
     /// <summary>
     /// The BUI key that this intrinsic UI should open.
@@ -53,4 +52,6 @@ public struct IntrinsicUIEntry
             ev.Key = Key;
         }
     }
+
+    public IntrinsicUIEntry() {}
 }

@@ -8,6 +8,7 @@ using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;

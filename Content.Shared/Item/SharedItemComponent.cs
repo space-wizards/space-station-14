@@ -1,17 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Shared.Item
