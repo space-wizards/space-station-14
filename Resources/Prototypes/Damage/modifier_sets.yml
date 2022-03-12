@@ -45,9 +45,20 @@
 - type: damageModifierSet
   id: Glass
   coefficients:
-    Blunt: 0.5
+    Blunt: 1
     Slash: 0.5
-    Piercing: 1.5
+    Piercing: 1.1
+    Heat: 0
+    Shock: 0
+  flatReductions:
+    Blunt: 5
+    
+- type: damageModifierSet
+  id: RGlass
+  coefficients:
+    Blunt: 0.8
+    Slash: 0.5
+    Piercing: 0.7
     Heat: 0
     Shock: 0
   flatReductions:
