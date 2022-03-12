@@ -174,7 +174,7 @@
   - type: Clothing
     size: 5
     sprite: Objects/Tools/multitool.rsi
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - Belt
   - type: Tool
@@ -239,7 +239,7 @@
   - type: Clothing
     size: 20
     sprite: Objects/Tools/rcd.rsi
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - Belt
 

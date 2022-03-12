@@ -207,7 +207,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
     size: 24
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - Belt
     HeldPrefix: taser4
