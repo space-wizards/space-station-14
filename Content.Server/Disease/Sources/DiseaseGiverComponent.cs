@@ -4,10 +4,13 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Disease.Components
 {
     [RegisterComponent]
-    public sealed class DiseaseInteractSourceComponent : Component
+    public sealed class DiseaseGiverComponent : Component
     {
         [DataField("disease", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
         [ViewVariables(VVAccess.ReadWrite)]
         public string Disease = string.Empty;
+
+        [DataField("doAfterLength")]
+        public float DoAfterLength = 0f;
     }
 }

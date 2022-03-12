@@ -14,7 +14,7 @@ using Content.Server.Nutrition.EntitySystems;
 
 namespace Content.Server.Disease
 {
-    public sealed class DiseaseSystem : EntitySystem
+    public class DiseaseSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ISerializationManager _serializationManager = default!;
@@ -31,7 +31,6 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
             SubscribeLocalEvent<DiseasedComponent, InteractHandEvent>(OnInteractDiseasedHand);
             SubscribeLocalEvent<DiseasedComponent, InteractUsingEvent>(OnInteractDiseasedUsing);
-            SubscribeLocalEvent<DiseaseInteractSourceComponent, AfterInteractEvent>(OnAfterInteractSource);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
         }
@@ -71,20 +70,6 @@ namespace Content.Server.Disease
                   RemComp<DiseasedComponent>(diseasedComp.Owner);
             }
         }
-
-        private void OnAfterInteractSource(EntityUid uid, DiseaseInteractSourceComponent component, AfterInteractEvent args)
-        {
-            if (!args.CanReach || args.Target == null)
-                return;
-
-            if (!_prototypeManager.TryIndex(component.Disease, out DiseasePrototype? compDisease))
-                return;
-
-            if (!TryComp<DiseaseCarrierComponent>(args.Target, out var targetDiseases) || targetDiseases == null)
-                return;
-            TryAddDisease(targetDiseases, compDisease);
-        }
-
         private void OnTryCureDisease(EntityUid uid, DiseaseCarrierComponent component, CureDiseaseAttemptEvent args)
         {
             foreach (var disease in component.Diseases)
