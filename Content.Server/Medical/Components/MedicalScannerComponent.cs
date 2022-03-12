@@ -5,7 +5,6 @@ using Robust.Shared.Containers;
 namespace Content.Server.Medical.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(SharedMedicalScannerComponent))]
     public sealed class MedicalScannerComponent : SharedMedicalScannerComponent
     {
         public ContainerSlot BodyContainer = default!;

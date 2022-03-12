@@ -36,7 +36,6 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
             SubscribeLocalEvent<MedicalScannerComponent, DestructionEventArgs>(OnDestroyed);
             SubscribeLocalEvent<MedicalScannerComponent, DragDropEvent>(HandleDragDropOn);
-            // SubscribeLocalEvent<MedicalScannerComponent, ScanButtonPressedMessage>(OnScanButtonPressed);
         }
 
         private void OnComponentInit(EntityUid uid, MedicalScannerComponent scannerComponent, ComponentInit args)
@@ -112,13 +111,6 @@ namespace Content.Server.Medical
         {
             InsertBody(uid, args.Dragged, scannerComponent);
         }
-
-
-        // send body change signal?
-        // private void OnScanButtonPressed(EntityUid uid, MedicalScannerComponent scannerComponent, ScanButtonPressedMessage args)
-        // {
-        //     TrySaveCloningData(uid, scannerComponent);
-        // }
 
         private MedicalScannerStatus GetStatus(MedicalScannerComponent scannerComponent)
         {
