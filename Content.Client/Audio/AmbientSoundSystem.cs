@@ -128,20 +128,15 @@ namespace Content.Client.Audio
             _playingSounds.Clear();
         }
 
-        private (Dictionary<string, List<AmbientSoundComponent>>, HashSet<AmbientSoundComponent>) GetNearbySources(EntityCoordinates coordinates)
+        private (Dictionary<string, List<AmbientSoundComponent>>, HashSet<EntityUid>) GetNearbySources(EntityCoordinates coordinates)
         {
             var sourceDict = new Dictionary<string, List<AmbientSoundComponent>>();
-            var set = new HashSet<AmbientSoundComponent>();
+            var set = new HashSet<EntityUid>();
 
-            foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer,
-                         LookupFlags.Approximate | LookupFlags.IncludeAnchored))
+            foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer, LookupFlags.IncludeAnchored))
             {
                 if (!EntityManager.TryGetComponent(entity, out AmbientSoundComponent? ambientComp) ||
-                    _playingSounds.ContainsKey(ambientComp) ||
-                    !ambientComp.Enabled ||
-                    // We'll also do this crude distance check because it's what we're doing in the active loop above.
-                    !Transform(entity).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
-                    range > ambientComp.Range)
+                    !ambientComp.Enabled)
                 {
                     continue;
                 }
@@ -152,7 +147,7 @@ namespace Content.Client.Audio
                     sourceDict[key] = new List<AmbientSoundComponent>(_maxSingleSound);
 
                 sourceDict[key].Add(ambientComp);
-                set.Add(ambientComp);
+                set.Add(ambientComp.Owner);
             }
 
             foreach (var (key, val) in sourceDict)
@@ -170,6 +165,7 @@ namespace Content.Client.Audio
         private void SampleNearby(EntityCoordinates coordinates)
         {
             var (compsInRange, compSet) = GetNearbySources(coordinates);
+            Logger.Debug($"A: {string.Join(", ", compSet)}");
 
             var keys = compsInRange.Keys.ToHashSet();
 
@@ -180,7 +176,8 @@ namespace Content.Client.Audio
                     // Go through and remove everything from compSet
                     foreach (var toRemove in keys.SelectMany(key => compsInRange[key]))
                     {
-                        compSet.Remove(toRemove);
+                        Logger.Debug($"removing {toRemove.Owner} from set.");
+                        compSet.Remove(toRemove.Owner);
                     }
 
                     break;
@@ -191,9 +188,15 @@ namespace Content.Client.Audio
                     if (_playingSounds.Count >= _maxAmbientCount)
                         break;
 
-                    var comp = compsInRange[key].Pop();
                     if (compsInRange[key].Count == 0)
+                    {
                         keys.Remove(key);
+                        continue;
+                    }
+
+                    var comp = compsInRange[key].Pop();
+                    if (_playingSounds.ContainsKey(comp))
+                        continue;
 
                     var sound = comp.Sound.GetSound();
 
@@ -202,7 +205,8 @@ namespace Content.Client.Audio
                         keys.Remove(key);
                         foreach (var toRemove in compsInRange[key])
                         {
-                            compSet.Remove(toRemove);
+                            Logger.Debug($"removing {toRemove.Owner} from set.");
+                            compSet.Remove(toRemove.Owner);
                         }
                         compsInRange[key].Clear(); // reduce work later should we overrun the max sounds.
                         continue;
@@ -214,7 +218,7 @@ namespace Content.Client.Audio
                         .WithLoop(true)
                         .WithAttenuation(Attenuation.LinearDistance)
                         // Randomise start so 2 sources don't increase their volume.
-                        .WithPlayOffset(_random.NextFloat())
+                        .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
                         .WithMaxDistance(comp.Range);
 
                     var stream = SoundSystem.Play(
@@ -229,12 +233,15 @@ namespace Content.Client.Audio
                 }
             }
 
-            foreach (var sound in compsInRange.Values.SelectMany(x => x))
-            {
-                if (compSet.Contains(sound) || !_playingSounds.ContainsKey(sound)) continue;
+            Logger.Debug($"B: {string.Join(", ", compSet)}");
 
-                _playingSounds[sound].Stream?.Stop();
-                _playingSounds.Remove(sound);
+            foreach (var (comp, sound) in _playingSounds)
+            {
+                if (compSet.Contains(comp.Owner)) continue;
+
+                Logger.Debug($"Cancelled {comp.Owner}");
+                _playingSounds[comp].Stream?.Stop();
+                _playingSounds.Remove(comp);
             }
         }
     }
