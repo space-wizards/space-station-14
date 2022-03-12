@@ -246,7 +246,7 @@ namespace Content.Server.Hands.Systems
                 !Exists(player) ||
                 player.IsInContainer() ||
                 !TryComp(player, out SharedHandsComponent? hands) ||
-                hands.CurrentlyHeldEntity is not EntityUid throwEnt ||
+                hands.ActiveHandEntity is not EntityUid throwEnt ||
                 !_actionBlockerSystem.CanThrow(player))
                 return false;
 

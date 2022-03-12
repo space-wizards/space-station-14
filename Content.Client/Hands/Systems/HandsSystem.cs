@@ -101,7 +101,7 @@ namespace Content.Client.Hands
 
         public EntityUid? GetActiveHandEntity()
         {
-            return TryGetPlayerHands(out var hands) ? hands.CurrentlyHeldEntity : null;
+            return TryGetPlayerHands(out var hands) ? hands.ActiveHandEntity : null;
         }
 
         /// <summary>

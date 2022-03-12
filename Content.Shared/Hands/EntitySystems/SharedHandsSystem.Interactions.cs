@@ -34,10 +34,10 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!Resolve(uid, ref handsComp, false))
             return false;
 
-        if (handsComp.CurrentlyHeldEntity == null)
+        if (handsComp.ActiveHandEntity == null)
             return false;
 
-        return _interactionSystem.InteractionActivate(uid, handsComp.CurrentlyHeldEntity.Value);
+        return _interactionSystem.InteractionActivate(uid, handsComp.ActiveHandEntity.Value);
     }
 
     public bool TryInteractHandWithActiveHand(EntityUid uid, string handName, SharedHandsComponent? handsComp = null)
@@ -45,7 +45,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!Resolve(uid, ref handsComp, false))
             return false;
 
-        if (handsComp.CurrentlyHeldEntity == null)
+        if (handsComp.ActiveHandEntity == null)
             return false;
 
         if (!handsComp.Hands.TryGetValue(handName, out var hand))
@@ -54,7 +54,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (hand.HeldEntity == null)
             return false;
 
-        _interactionSystem.InteractUsing(uid, handsComp.CurrentlyHeldEntity.Value, hand.HeldEntity.Value, Transform(hand.HeldEntity.Value).Coordinates);
+        _interactionSystem.InteractUsing(uid, handsComp.ActiveHandEntity.Value, hand.HeldEntity.Value, Transform(hand.HeldEntity.Value).Coordinates);
         return true;
     }
 
@@ -63,13 +63,13 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!Resolve(uid, ref handsComp, false))
             return false;
 
-        if (handsComp.CurrentlyHeldEntity == null)
+        if (handsComp.ActiveHandEntity == null)
             return false;
 
         if (altInteract)
-            return _interactionSystem.AltInteract(uid, handsComp.CurrentlyHeldEntity.Value);
+            return _interactionSystem.AltInteract(uid, handsComp.ActiveHandEntity.Value);
         else
-            return _interactionSystem.UseInHandInteraction(uid, handsComp.CurrentlyHeldEntity.Value);
+            return _interactionSystem.UseInHandInteraction(uid, handsComp.ActiveHandEntity.Value);
     }
 
     /// <summary>

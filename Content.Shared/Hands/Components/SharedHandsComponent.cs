@@ -19,7 +19,7 @@ public abstract class SharedHandsComponent : Component
     ///     The item currently held in the active hand.
     /// </summary>
     [ViewVariables]
-    public EntityUid? CurrentlyHeldEntity => ActiveHand?.HeldEntity;
+    public EntityUid? ActiveHandEntity => ActiveHand?.HeldEntity;
 
     [ViewVariables]
     public Dictionary<string, Hand> Hands = new();

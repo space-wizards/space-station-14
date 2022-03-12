@@ -400,7 +400,7 @@ namespace Content.Server.Construction
             }
 
             if (!_actionBlocker.CanInteract(user, null)
-                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.CurrentlyHeldEntity == null)
+                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.ActiveHandEntity == null)
             {
                 Cleanup();
                 return;
@@ -425,7 +425,7 @@ namespace Content.Server.Construction
 
             var valid = false;
 
-            if (hands.CurrentlyHeldEntity is not {Valid: true} holding)
+            if (hands.ActiveHandEntity is not {Valid: true} holding)
             {
                 Cleanup();
                 return;

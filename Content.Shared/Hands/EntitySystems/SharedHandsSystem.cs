@@ -128,8 +128,8 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!Resolve(uid, ref handsComp, false))
             yield break;
 
-        if (handsComp.CurrentlyHeldEntity != null)
-            yield return handsComp.CurrentlyHeldEntity.Value;
+        if (handsComp.ActiveHandEntity != null)
+            yield return handsComp.ActiveHandEntity.Value;
 
         foreach (var name in handsComp.SortedHands)
         {

@@ -134,7 +134,7 @@ namespace Content.Server.AME.Components
                 return;
             }
 
-            var activeHandEntity = hands.CurrentlyHeldEntity;
+            var activeHandEntity = hands.ActiveHandEntity;
             if (activeHandEntity == null)
             {
                 UserInterface?.Open(actor.PlayerSession);
@@ -335,13 +335,13 @@ namespace Content.Server.AME.Components
                 return true;
             }
 
-            if (hands.CurrentlyHeldEntity == null)
+            if (hands.ActiveHandEntity == null)
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-nothing-in-hands-text"));
                 return false;
             }
 
-            var activeHandEntity = hands.CurrentlyHeldEntity;
+            var activeHandEntity = hands.ActiveHandEntity;
             if (_entities.HasComponent<AMEFuelContainerComponent?>(activeHandEntity))
             {
                 if (HasJar)

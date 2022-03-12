@@ -185,7 +185,7 @@ namespace Content.Client.Inventory
             if (!Resolve(uid, ref hands, false))
                 return;
 
-            if (hands.CurrentlyHeldEntity is not EntityUid heldEntity)
+            if (hands.ActiveHandEntity is not EntityUid heldEntity)
                 return;
 
             if(!TryGetSlotContainer(uid, slot, out var containerSlot, out var slotDef, inventoryComponent))
@@ -206,7 +206,7 @@ namespace Content.Client.Inventory
                 return;
 
             // only raise event if either itemUid is not null, or the user is holding something
-            if (itemUid != null || TryComp(uid, out SharedHandsComponent? hands) && hands.CurrentlyHeldEntity != null)
+            if (itemUid != null || TryComp(uid, out SharedHandsComponent? hands) && hands.ActiveHandEntity != null)
                 EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot)); 
         }
 

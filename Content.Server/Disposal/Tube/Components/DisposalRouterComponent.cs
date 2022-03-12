@@ -148,7 +148,7 @@ namespace Content.Server.Disposal.Tube.Components
                 return;
             }
 
-            var activeHandEntity = hands.CurrentlyHeldEntity;
+            var activeHandEntity = hands.ActiveHandEntity;
             if (activeHandEntity == null)
             {
                 OpenUserInterface(actor);

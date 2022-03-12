@@ -140,7 +140,7 @@ namespace Content.Server.Access.Systems
         {
             // check held item?
             if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands) &&
-                hands.CurrentlyHeldEntity is EntityUid heldItem &&
+                hands.ActiveHandEntity is EntityUid heldItem &&
                 TryGetIdCard(heldItem, out idCard))
             {
                 return true;

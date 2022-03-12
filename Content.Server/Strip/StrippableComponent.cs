@@ -148,7 +148,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (userHands.CurrentlyHeldEntity == null)
+                if (userHands.ActiveHandEntity == null)
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-not-holding-anything"));
                     return false;
@@ -161,7 +161,7 @@ namespace Content.Server.Strip
                 }
 
                 if (!hands.Hands.TryGetValue(handName, out var hand)
-                    || !sys.CanPickup(Owner, userHands.CurrentlyHeldEntity.Value, hand, checkActionBlocker: false, hands))
+                    || !sys.CanPickup(Owner, userHands.ActiveHandEntity.Value, hand, checkActionBlocker: false, hands))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-put-message",("owner", Owner)));
                     return false;
@@ -185,7 +185,7 @@ namespace Content.Server.Strip
             var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
-            if (userHands.CurrentlyHeldEntity is not EntityUid held)
+            if (userHands.ActiveHandEntity is not EntityUid held)
                 return;
 
             sys.TryDrop(user, checkActionBlocker: false, hands: userHands);
@@ -301,7 +301,7 @@ namespace Content.Server.Strip
                 !_entities.TryGetComponent(user, out HandsComponent? userHands))
                 return;
 
-            var placingItem = userHands.CurrentlyHeldEntity != null;
+            var placingItem = userHands.ActiveHandEntity != null;
 
             switch (obj.Message)
             {

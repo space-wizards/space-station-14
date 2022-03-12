@@ -245,12 +245,12 @@ namespace Content.Server.Storage.Components
             EnsureInitialCalculated();
 
             if (!_entityManager.TryGetComponent(player, out HandsComponent? hands) ||
-                hands.CurrentlyHeldEntity == null)
+                hands.ActiveHandEntity == null)
             {
                 return false;
             }
 
-            var toInsert = hands.CurrentlyHeldEntity;
+            var toInsert = hands.ActiveHandEntity;
 
             var handSys = _sysMan.GetEntitySystem<SharedHandsSystem>();
 

@@ -266,7 +266,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // With items in all hands
                 foreach (var hand in hands.Hands.Values)
                 {
-                    Assert.NotNull(hands.CurrentlyHeldEntity);
+                    Assert.NotNull(hands.ActiveHandEntity);
                 }
 
                 var legs = body.GetPartsOfType(BodyPartType.Leg);
@@ -288,7 +288,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // Now with no item in any hand
                 foreach (var hand in hands.Hands.Values)
                 {
-                    Assert.Null(hands.CurrentlyHeldEntity);
+                    Assert.Null(hands.ActiveHandEntity);
                 }
 
                 buckle.TryUnbuckle(human, true);

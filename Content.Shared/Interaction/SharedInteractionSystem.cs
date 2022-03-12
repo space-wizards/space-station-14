@@ -225,7 +225,7 @@ namespace Content.Shared.Interaction
                 : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
             // empty-hand interactions
-            if (hands.CurrentlyHeldEntity is not EntityUid held)
+            if (hands.ActiveHandEntity is not EntityUid held)
             {
                 if (inRangeUnobstructed && target != null)
                     InteractHand(user, target.Value);

@@ -228,7 +228,7 @@ namespace Content.Server.Kitchen.Components
                 return false;
             }
 
-            if (_entities.GetComponent<HandsComponent>(eventArgs.User).CurrentlyHeldEntity is not {Valid: true} itemEntity)
+            if (_entities.GetComponent<HandsComponent>(eventArgs.User).ActiveHandEntity is not {Valid: true} itemEntity)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("microwave-component-interact-using-no-active-hand"));
                 return false;

@@ -74,7 +74,7 @@ public abstract partial class InventorySystem
         if (!TryComp(actor, out InventoryComponent? inventory) || !TryComp<SharedHandsComponent>(actor, out var hands))
             return;
 
-        var held = hands.CurrentlyHeldEntity;
+        var held = hands.ActiveHandEntity;
         TryGetSlotEntity(actor, ev.Slot, out var itemUid, inventory);
 
         // attempt to perform some interaction

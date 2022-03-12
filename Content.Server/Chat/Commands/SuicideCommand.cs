@@ -89,7 +89,7 @@ namespace Content.Server.Chat.Commands
 
             // Held item suicide
             if (_entities.TryGetComponent(owner, out HandsComponent handsComponent)
-                && handsComponent.CurrentlyHeldEntity is EntityUid item)
+                && handsComponent.ActiveHandEntity is EntityUid item)
             {
                 var suicide = _entities.GetComponents<ISuicideAct>(item).FirstOrDefault();
 
