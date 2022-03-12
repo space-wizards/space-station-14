@@ -25,7 +25,7 @@
   - type: Clothing
     size: 40
     sprite: Objects/Weapons/Melee/spear.rsi
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - back
   - type: Construction
