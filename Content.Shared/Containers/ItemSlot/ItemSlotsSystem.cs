@@ -3,6 +3,7 @@ using Content.Shared.Acts;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Verbs;

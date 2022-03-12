@@ -7,6 +7,7 @@ using Content.Shared.Crayon;
 using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;

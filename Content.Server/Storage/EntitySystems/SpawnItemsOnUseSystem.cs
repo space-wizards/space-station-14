@@ -1,7 +1,6 @@
 using Content.Server.Storage.Components;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;

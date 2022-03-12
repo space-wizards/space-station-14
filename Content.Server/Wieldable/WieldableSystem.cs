@@ -5,7 +5,7 @@ using Content.Server.Weapon.Melee;
 using Content.Server.Wieldable.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;

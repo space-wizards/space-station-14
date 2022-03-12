@@ -7,7 +7,6 @@ using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -20,8 +19,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
