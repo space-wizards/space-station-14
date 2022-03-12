@@ -857,6 +857,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(item, dropMsg);
             if (dropMsg.Handled)
                 _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
+            Transform(item).LocalRotation = Angle.Zero;
         }
         #endregion
 
