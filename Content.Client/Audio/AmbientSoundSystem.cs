@@ -100,21 +100,6 @@ namespace Content.Client.Audio
 
             var coordinates = playerManager.Coordinates;
 
-            foreach (var (comp, (stream, _)) in Enumerable.ToArray(_playingSounds))
-            {
-                if (!comp.Deleted && comp.Enabled && Transform(comp.Owner).Coordinates.TryDistance(EntityManager, coordinates, out var range) &&
-                    range <= comp.Range)
-                {
-                    continue;
-                }
-
-                stream?.Stop();
-
-                _playingSounds.Remove(comp);
-            }
-
-            if (_playingSounds.Count >= _maxAmbientCount) return;
-
             SampleNearby(coordinates);
         }
 
