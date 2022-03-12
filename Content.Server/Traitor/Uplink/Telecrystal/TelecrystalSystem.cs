@@ -45,8 +45,7 @@ namespace Content.Server.Traitor.Uplink.Telecrystal
 
             EntityManager.DeleteEntity(uid);
 
-            var msg = Loc.GetString("telecrystal-component-sucs-inserted",
-                ("source", args.Used), ("target", args.Target));
+            var msg = Loc.GetString("telecrystal-component-sucs-inserted");
             args.User.PopupMessage(args.User, msg);
 
             args.Handled = true;
