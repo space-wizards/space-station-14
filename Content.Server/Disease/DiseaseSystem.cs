@@ -1,4 +1,5 @@
 using Content.Shared.Disease;
+using Content.Shared.Disease.Components;
 using Content.Server.Disease.Components;
 using Content.Server.Clothing.Components;
 using Content.Shared.Inventory;

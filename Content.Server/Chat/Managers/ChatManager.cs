@@ -12,6 +12,7 @@ using Content.Server.Preferences.Managers;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
+using Content.Shared.Disease.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
