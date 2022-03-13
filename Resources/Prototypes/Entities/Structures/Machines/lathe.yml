@@ -229,6 +229,9 @@
       - ThermomachineFreezerMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
+      - CrewMonitoringComputerCircuitboard
+      - VaccinatorMachineCircuitboard
+      - DiagnoserMachineCircuitboard
       - ChemMasterMachineCircuitboard
       - ChemDispenserMachineCircuitboard
       - HydroponicsTrayMachineCircuitboard
@@ -237,7 +240,6 @@
       - ProtolatheMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
       - UniformPrinterMachineCircuitboard
-      - CrewMonitoringComputerCircuitboard
       - ShuttleConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
