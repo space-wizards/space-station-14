@@ -28,8 +28,8 @@ public sealed partial class GunSystem
         if (args.Hands == null ||
             !args.CanAccess ||
             !args.CanInteract ||
-            !component.HasMagazine ||
-            !_blocker.CanPickup(args.User))
+            component.MagazineContainer.ContainedEntity is not EntityUid mag ||
+            !_blocker.CanPickup(args.User, mag))
             return;
 
         if (component.MagNeedsOpenBolt && !component.BoltOpen)
@@ -37,7 +37,7 @@ public sealed partial class GunSystem
 
         AlternativeVerb verb = new()
         {
-            Text = MetaData(component.MagazineContainer.ContainedEntity!.Value).EntityName,
+            Text = MetaData(mag).EntityName,
             Category = VerbCategory.Eject,
             Act = () => RemoveMagazine(args.User, component)
         };

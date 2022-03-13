@@ -89,7 +89,7 @@ namespace Content.Server.Strip
                     return false;
                 }
 
-                if (!handSys.CanDrop(user, userHands.ActiveHand, hands: userHands))
+                if (!handSys.CanDropHeld(user, userHands.ActiveHand, hands: userHands))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop"));
                     return false;
@@ -154,14 +154,14 @@ namespace Content.Server.Strip
                     return false;
                 }
 
-                if (!sys.CanDrop(user, userHands.ActiveHand!, hands: userHands))
+                if (!sys.CanDropHeld(user, userHands.ActiveHand!, hands: userHands))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop"));
                     return false;
                 }
 
                 if (!hands.Hands.TryGetValue(handName, out var hand)
-                    || !sys.CanPickup(Owner, userHands.ActiveHandEntity.Value, hand, checkActionBlocker: false, hands))
+                    || !sys.CanPickupToHand(Owner, userHands.ActiveHandEntity.Value, hand, checkActionBlocker: false, hands))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-put-message",("owner", Owner)));
                     return false;
@@ -264,7 +264,7 @@ namespace Content.Server.Strip
                 if (_entities.HasComponent<HandVirtualItemComponent>(hand.HeldEntity))
                     return false;
 
-                if (!handSys.CanDrop(Owner, hand, false, hands))
+                if (!handSys.CanDropHeld(Owner, hand, false, hands))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop-message",("owner", Owner)));
                     return false;

@@ -10,12 +10,12 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// <summary>
     ///     Checks if the contents of a hand is able to be removed from its container.
     /// </summary>
-    public bool CanDrop(EntityUid uid, Hand hand, bool checkActionBlocker = true, SharedHandsComponent? hands = null)
+    public bool CanDropHeld(EntityUid uid, Hand hand, bool checkActionBlocker = true, SharedHandsComponent? hands = null)
     {
         if (hand.HeldEntity == null)
             return false;
 
-        if (!hand.Container!.CanRemove(hand.HeldEntity.Value))
+        if (!hand.Container!.CanRemove(hand.HeldEntity.Value, EntityManager))
             return false;
 
         if (checkActionBlocker && !_actionBlocker.CanDrop(uid))
@@ -60,7 +60,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!Resolve(uid, ref hands))
             return false;
 
-        if (!CanDrop(uid, hand, checkActionBlocker, hands))
+        if (!CanDropHeld(uid, hand, checkActionBlocker, hands))
             return false;
 
         var entity = hand.HeldEntity!.Value;
@@ -91,7 +91,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!Resolve(uid, ref hands))
             return false;
 
-        if (!CanDrop(uid, hand, checkActionBlocker, hands))
+        if (!CanDropHeld(uid, hand, checkActionBlocker, hands))
             return false;
 
         DoDrop(uid, hand, hands);
@@ -109,7 +109,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!IsHolding(uid, entity, out var hand, hands))
             return false;
 
-        if (!CanDrop(uid, hand, checkActionBlocker, hands))
+        if (!CanDropHeld(uid, hand, checkActionBlocker, hands))
             return false;
 
         if (!targetContainer.CanInsert(entity, EntityManager))
@@ -154,7 +154,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         var entity = hand.Container.ContainedEntity.Value;
 
-        if (!hand.Container!.Remove(entity))
+        if (!hand.Container!.Remove(entity, EntityManager))
         {
             Logger.Error($"{nameof(SharedHandsComponent)} on {uid} could not remove {entity} from {hand.Container}.");
             return;

@@ -46,7 +46,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!Resolve(entity, ref item, false))
             return false;
 
-        if (!CanPickup(uid, entity, hand, checkActionBlocker, handsComp, item))
+        if (!CanPickupToHand(uid, entity, hand, checkActionBlocker, handsComp, item))
             return false;
 
         // animation
@@ -68,10 +68,13 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!TryGetEmptyHand(uid, out var hand, handsComp))
             return false;
 
-        return CanPickup(uid, entity, hand, checkActionBlocker, handsComp, item);
+        return CanPickupToHand(uid, entity, hand, checkActionBlocker, handsComp, item);
     }
 
-    public bool CanPickup(EntityUid uid, EntityUid entity, Hand hand, bool checkActionBlocker = true, SharedHandsComponent? handsComp = null, SharedItemComponent? item = null)
+    /// <summary>
+    ///     Checks whether a given item will fit into a specific user's hand. Unless otherwise specified, this will also check the general CanPickup action blocker.
+    /// </summary>
+    public bool CanPickupToHand(EntityUid uid, EntityUid entity, Hand hand, bool checkActionBlocker = true, SharedHandsComponent? handsComp = null, SharedItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
@@ -80,21 +83,17 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (handContainer == null || handContainer.ContainedEntity != null)
             return false;
 
-        if (checkActionBlocker && !_actionBlocker.CanPickup(uid))
-            return false;
-
         if (!Resolve(entity, ref item, false))
             return false;
 
         if (TryComp(entity, out PhysicsComponent? physics) && physics.BodyType == BodyType.Static)
             return false;
 
-        if (!handContainer.CanInsert(entity)) return false;
+        if (checkActionBlocker && !_actionBlocker.CanPickup(uid, entity))
+            return false;
 
-        var attempt = new AttemptItemPickupEvent();
-        RaiseLocalEvent(entity, attempt);
-
-        return !attempt.Cancelled;
+        // check can insert (including raising attempt events).
+        return handContainer.CanInsert(entity, EntityManager);
     }
 
     /// <summary>
@@ -125,7 +124,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (handContainer == null || handContainer.ContainedEntity != null)
             return;
 
-        if (!handContainer.Insert(entity))
+        if (!handContainer.Insert(entity, EntityManager))
         {
             Logger.Error($"{nameof(SharedHandsComponent)} on {uid} could not insert {entity} into {handContainer}.");
             return;

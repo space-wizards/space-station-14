@@ -145,12 +145,12 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!handsComp.Hands.TryGetValue(handName, out var hand))
             return false;
 
-        if (!CanDrop(uid, hand, checkActionBlocker, handsComp))
+        if (!CanDropHeld(uid, hand, checkActionBlocker, handsComp))
             return false;
 
         var entity = hand.HeldEntity!.Value;
 
-        if (!CanPickup(uid, entity, handsComp.ActiveHand, checkActionBlocker, handsComp))
+        if (!CanPickupToHand(uid, entity, handsComp.ActiveHand, checkActionBlocker, handsComp))
             return false;
 
         DoDrop(uid, hand, handsComp);

@@ -76,7 +76,8 @@ namespace Content.Server.Wieldable
                 return false;
             }
 
-            if (hands.CountFreeHands() < component.FreeHandsRequired)
+            if (hands.CountFreeHands()
+                < component.FreeHandsRequired)
             {
                 // TODO FLUENT need function to change 'hands' to 'hand' when there's only 1 required
                 if (!quiet)
