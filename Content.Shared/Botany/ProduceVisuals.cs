@@ -3,7 +3,7 @@
 namespace Content.Shared.Botany;
 
 [Serializable, NetSerializable]
-public enum ProduceVisuals
+public enum ProduceVisuals : byte
 {
     Potency
 }
