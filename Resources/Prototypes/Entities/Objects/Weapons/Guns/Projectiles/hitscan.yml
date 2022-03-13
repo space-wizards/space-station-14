@@ -12,6 +12,19 @@
     impactFlash: Objects/Weapons/Guns/Projectiles/laser_impact.png
 
 - type: entity
+  name: pulse
+  id: Pulse
+  abstract: true
+  components:
+  - type: Hitscan
+    damage:
+      types:
+        Heat: 25
+    spriteName: Objects/Weapons/Guns/Projectiles/pulse.png
+    muzzleFlash: Objects/Weapons/Guns/Projectiles/pulse_muzzle.png
+    impactFlash: Objects/Weapons/Guns/Projectiles/pulse_impact.png
+
+- type: entity
   name: red heavy laser
   id: RedHeavyLaser
   abstract: true

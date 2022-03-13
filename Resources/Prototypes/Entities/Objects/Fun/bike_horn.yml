@@ -11,7 +11,7 @@
     sprite: Objects/Fun/bikehorn.rsi
     size: 5
     Slots: [Belt]
-    QuickEquip: false
+    quickEquip: false
   - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:

@@ -5,6 +5,7 @@ using Content.Server.RCD.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Popups;

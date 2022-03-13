@@ -7,7 +7,7 @@
   components:
     - type: AmbientSound
       range: 4
-      volume: -5
+      volume: -4
       sound:
         path: /Audio/Effects/shuttle_thruster.ogg
     - type: Transform
@@ -60,7 +60,7 @@
       map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
       shader: unshaded
       offset: 0, 1
-      
+
 - type: entity
   id: DebugThruster
   parent: BaseThruster

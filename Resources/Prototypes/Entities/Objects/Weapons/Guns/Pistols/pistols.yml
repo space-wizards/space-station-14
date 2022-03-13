@@ -189,20 +189,22 @@
   name: lamia
   parent: PistolBase
   id: PistolLamia
-  description: A heavy pistol of Ironhammer enforcers.
+  description: A heavy pistol chambered in .40 Magnum.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
+    sprite: Objects/Weapons/Guns/Pistols/lamia.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: bolt-closed
+      map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
+    sprite: Objects/Weapons/Guns/Pistols/lamia.rsi
   - type: Item
     size: 12
-    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
+    sprite: Objects/Weapons/Guns/Pistols/lamia.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Magnum
@@ -210,7 +212,7 @@
     - Pistol
     magFillPrototype: MagazineMagnum
     autoEjectMag: true
-    fireRate: 5
+    fireRate: 3
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
@@ -227,6 +229,7 @@
       path: /Audio/Weapons/Guns/MagOut/hpistol_magout.ogg
   - type: Appearance
     visuals:
+    - type: BarrelBoltVisualizer
     - type: MagVisualizer
       magState: mag
       steps: 1
@@ -353,6 +356,36 @@
     - HCPistol
     - Smg
     magFillPrototype: MagazinePistolSmg
+    autoEjectMag: true
+    fireRate: 6
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 20
+    angleDecay: 60
+
+- type: entity
+  name: basilisk
+  parent: PistolBase
+  id: PistolBasilisk
+  description: A fully automatic handgun chambered in .40 magnum. Can use both pistol and SMG type magazines.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
+  - type: Item
+    size: 12
+    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    caliber: Magnum
+    currentSelector: Automatic
+    allSelectors:
+    - Automatic
+    magazineTypes:
+    - Pistol
+    - Smg
+    magFillPrototype: MagazineMagnum
     autoEjectMag: true
     fireRate: 6
     minAngle: 0
