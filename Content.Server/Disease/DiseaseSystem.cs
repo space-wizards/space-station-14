@@ -133,12 +133,17 @@ namespace Content.Server.Disease
         /// </summary>
         private void OnEquipped(EntityUid uid, DiseaseProtectionComponent component, GotEquippedEvent args)
         {
-            if (TryComp<ClothingComponent>(uid, out var clothing))
-                if (clothing.SlotFlags != args.SlotFlags)
-                    return;
-
+            /// This only works on clothing
+            if (!TryComp<ClothingComponent>(uid, out var clothing))
+                return;
+            /// Is the clothing in its actual slot?
+            if (!clothing.SlotFlags.HasFlag(args.SlotFlags))
+                return;
+            /// Give the user the component's disease resist
             if(TryComp<DiseaseCarrierComponent>(args.Equipee, out var carrier))
                 carrier.DiseaseResist += component.Protection;
+            /// Set the component to active to the unequip check isn't CBT
+            component.IsActive = true;
         }
         /// <summary>
         /// Called when a component with disease protection
@@ -147,8 +152,12 @@ namespace Content.Server.Disease
         /// </summary>
         private void OnUnequipped(EntityUid uid, DiseaseProtectionComponent component, GotUnequippedEvent args)
         {
+            /// Only undo the resistance if it was affecting the user
+            if (!component.IsActive)
+                return;
             if(TryComp<DiseaseCarrierComponent>(args.Equipee, out var carrier))
                 carrier.DiseaseResist -= component.Protection;
+            component.IsActive = false;
         }
         /// <summary>
         /// Called when it's already decided a disease will be cured

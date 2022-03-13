@@ -15,5 +15,10 @@ namespace Content.Server.Disease.Components
         /// </summary>
         [DataField("protection")]
         public float Protection = 0.1f;
+        /// <summary>
+        /// Is the component currently being worn and affecting someone's disease
+        /// resistance? Making the unequip check not totally CBT
+        /// </summary>
+        public bool IsActive = false;
     }
 }
