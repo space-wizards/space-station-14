@@ -31,13 +31,13 @@ namespace Content.Shared.CCVar
         /// How long we'll wait until re-sampling nearby objects for ambience.
         /// </summary>
         public static readonly CVarDef<float> AmbientCooldown =
-            CVarDef.Create("ambience.cooldown", 0.1f, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.cooldown", 0.1f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         public static readonly CVarDef<float> AmbientRange =
             CVarDef.Create("ambience.range", 5f, CVar.REPLICATED | CVar.SERVER);
 
         public static readonly CVarDef<int> MaxAmbientSources =
-            CVarDef.Create("ambience.max_sounds", 16, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.max_sounds", 16, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * Status

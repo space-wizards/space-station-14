@@ -143,7 +143,7 @@ namespace Content.Client.Audio
             foreach (var (key, val) in sourceDict)
             {
                 sourceDict[key] = val.OrderByDescending(x =>
-                    Transform(x.Owner).Coordinates.TryDistance(EntityManager, coordinates, out var dist) ? dist : float.MaxValue).ToList();
+                    Transform(x.Owner).Coordinates.TryDistance(EntityManager, coordinates, out var dist) ? dist * (x.Volume + 32) : float.MaxValue).ToList();
             }
 
             return sourceDict;
