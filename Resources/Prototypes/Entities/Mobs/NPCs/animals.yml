@@ -777,7 +777,7 @@
     bloodMaxVolume: 50
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Lizard
+    damageModifierSet: Scale
 
 - type: entity
   name: frog
@@ -952,7 +952,7 @@
     bloodMaxVolume: 50
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Lizard
+    damageModifierSet: Scale
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.

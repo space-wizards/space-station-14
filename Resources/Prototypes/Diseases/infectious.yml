@@ -27,9 +27,10 @@
   effects:
     - !type:DiseasePopUp
       probability: 0.025
+      message: burning-insides
     - !type:DiseaseSnough
       probability: 0.025
-      snoughMessage: "disease-cough"
+      snoughMessage: disease-cough
     - !type:DiseaseHealthChange
       probability: 0.015
       damage:
@@ -49,9 +50,12 @@
   cureResist: 0.1
   effects:
     - !type:DiseaseAdjustReagent
-      probability: 0.06
+      probability: 0.025
       reagent: Licoxide
       amount: 0.5
+    - !type:DiseaseSnough
+      probability: 0.02
+      snoughMessage: disease-beep
   cures:
     - !type:DiseaseJustWaitCure
       maxLength: 900
@@ -129,3 +133,6 @@
   cures:
     - !type:DiseaseBodyTemperatureCure
       min: 420 ## Reachable with a flamer
+    - !type:DiseaseReagentCure
+      reagent: Theobromine
+      amount: 10

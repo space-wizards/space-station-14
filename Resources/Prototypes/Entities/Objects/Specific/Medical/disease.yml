@@ -15,7 +15,6 @@
     - Recyclable
   - type: DiseaseSwab
 
-
 - type: entity
   parent: BaseItem
   id: Vaccine

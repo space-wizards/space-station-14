@@ -84,7 +84,7 @@
     Poison: 0.8
 
 - type: damageModifierSet
-  id: Lizard # Skin tougher, bones weaker, strong stomachs, cold-blooded (kindof)
+  id: Scale # Skin tougher, bones weaker, strong stomachs, cold-blooded (kindof)
   coefficients:
     Blunt: 1.1
     Slash: 0.9

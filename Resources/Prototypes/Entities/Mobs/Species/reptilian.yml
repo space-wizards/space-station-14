@@ -114,7 +114,7 @@
     diseaseResist: 0.1
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Lizard
+    damageModifierSet: Scale
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285
