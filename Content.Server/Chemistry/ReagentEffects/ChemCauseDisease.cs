@@ -24,8 +24,6 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("disease", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
         [ViewVariables(VVAccess.ReadWrite)]
         public string Disease = string.Empty;
-
-
         public override void Effect(ReagentEffectArgs args)
         {
             EntitySystem.Get<DiseaseSystem>().TryAddDisease(null, null, Disease, args.SolutionEntity);

@@ -16,18 +16,14 @@ namespace Content.Server.Disease.Components
         [DataField("swabDelay")]
         [ViewVariables]
         public float SwabDelay = 2f;
-
-
         /// <summary>
         /// If this swab has been used
         /// </summary>
         public bool Used = false;
-
         /// <summary>
         /// Token for interrupting swabbing do after.
         /// </summary>
         public CancellationTokenSource? CancelToken;
-
         /// <summary>
         /// The disease prototype currently on the swab
         /// </summary>

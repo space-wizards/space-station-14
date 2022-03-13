@@ -53,14 +53,12 @@ namespace Content.Server.Disease
         public override void Update(float frameTime)
         {
             foreach (var uid in AddQueue)
-            {
                 EnsureComp<DiseaseMachineRunningComponent>(uid);
-            }
+
             AddQueue.Clear();
             foreach (var uid in RemoveQueue)
-            {
                 RemComp<DiseaseMachineRunningComponent>(uid);
-            }
+
             RemoveQueue.Clear();
 
             foreach (var (runningComp, diseaseMachine) in EntityQuery<DiseaseMachineRunningComponent, DiseaseMachineComponent>(false))
@@ -98,13 +96,7 @@ namespace Content.Server.Disease
                 swab.CancelToken = null;
                 return;
             }
-            if (args.Target == null)
-                return;
-
-            if (!args.CanReach)
-                return;
-
-            if (swab.CancelToken != null)
+            if (args.Target == null || !args.CanReach)
                 return;
 
             if (!TryComp<DiseaseCarrierComponent>(args.Target, out var carrier))
@@ -149,7 +141,7 @@ namespace Content.Server.Disease
             if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
                 return;
 
-            if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used))
+            if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used)) // Don't want to accidentally breach wrenching or whatever
                 return;
 
             if (!TryComp<DiseaseSwabComponent>(args.Used, out var swab))
@@ -179,7 +171,7 @@ namespace Content.Server.Disease
             if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
                 return;
 
-            if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used))
+            if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used)) //This check ensures tools don't break without yaml ordering jank
                 return;
 
             if (!TryComp<DiseaseSwabComponent>(args.Used, out var swab) || swab.Disease == null || !swab.Disease.Infectious)
@@ -205,13 +197,9 @@ namespace Content.Server.Disease
             if (args.IsInDetailsRange)
             {
                 if (swab.Used)
-                {
                     args.PushMarkup(Loc.GetString("swab-used"));
-                }
                 else
-                {
                     args.PushMarkup(Loc.GetString("swab-unused"));
-                }
             }
         }
 
@@ -425,6 +413,6 @@ namespace Content.Server.Disease
                 Machine = machine;
             }
         }
-
     }
 }
+

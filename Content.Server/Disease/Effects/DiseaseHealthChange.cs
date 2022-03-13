@@ -17,6 +17,5 @@ namespace Content.Server.Disease.Effects
         {
             EntitySystem.Get<DamageableSystem>().TryChangeDamage(args.DiseasedEntity, Damage, true, false);
         }
-
     }
 }

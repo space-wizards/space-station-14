@@ -15,13 +15,10 @@ namespace Content.Server.Disease.Components
         [DataField("injectDelay")]
         [ViewVariables]
         public float InjectDelay = 2f;
-
-
         /// <summary>
         /// If this vaccine has been used
         /// </summary>
         public bool Used = false;
-
         /// <summary>
         /// Token for interrupting injection do after.
         /// </summary>

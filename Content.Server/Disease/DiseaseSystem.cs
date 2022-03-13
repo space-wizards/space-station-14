@@ -60,9 +60,7 @@ namespace Content.Server.Disease
         {
             base.Update(frameTime);
             foreach (var entity in AddQueue)
-            {
                 EnsureComp<DiseasedComponent>(entity);
-            }
             AddQueue.Clear();
 
             foreach (var tuple in CureQueue)
@@ -79,9 +77,7 @@ namespace Content.Server.Disease
                 if (mobState.IsDead())
                 {
                     if (_random.Prob(0.005f * frameTime)) //Mean time to remove is 200 seconds per disease
-                    {
                         CureDisease(carrierComp, _random.Pick(carrierComp.Diseases));
-                    }
                     continue;
                 }
 
@@ -94,9 +90,7 @@ namespace Content.Server.Disease
                         disease.Accumulator -= 1f;
                         foreach (var cure in disease.Cures)
                             if (cure.Cure(args))
-                            {
                                 CureDisease(carrierComp, disease);
-                            }
                         foreach (var effect in disease.Effects)
                             if (_random.Prob(effect.Probability))
                                 effect.Effect(args);
@@ -104,7 +98,6 @@ namespace Content.Server.Disease
                 }
             }
         }
-
         ///
         /// Event Handlers
         ///
@@ -170,7 +163,6 @@ namespace Content.Server.Disease
             CureQueue.Enqueue(CureTuple);
             _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Entities(carrier.Owner));
         }
-
         /// <summary>
         /// Called when someone interacts with a diseased person with an empty hand
         /// to check if they get infected
@@ -190,7 +182,6 @@ namespace Content.Server.Disease
         {
             InteractWithDiseased(args.Target, args.User);
         }
-
         /// <summary>
         /// Called when a vaccine is used on someone
         /// to handle the vaccination doafter
@@ -232,29 +223,22 @@ namespace Content.Server.Disease
                 NeedHand = true
             });
         }
-
         /// <summary>
         /// Called when a vaccine is examined.
         /// Currently doesn't do much because
         /// vaccines don't have unique art with a seperate
         /// state visualizer.
         /// </summary>
-
         private void OnExamined(EntityUid uid, DiseaseVaccineComponent vaxx, ExaminedEvent args)
         {
             if (args.IsInDetailsRange)
             {
                 if (vaxx.Used)
-                {
                     args.PushMarkup(Loc.GetString("vaxx-used"));
-                }
                 else
-                {
                     args.PushMarkup(Loc.GetString("vaxx-unused"));
-                }
             }
         }
-
         ///
         /// Helper functions
         ///
@@ -290,10 +274,8 @@ namespace Content.Server.Disease
             if (target != null)
             {
                 foreach (var disease in target.AllDiseases)
-                {
                     if (disease.Name == addedDisease?.Name) //Name because of the way protoypes work
                         return;
-                }
             var freshDisease = _serializationManager.CreateCopy(addedDisease) ?? default!;
             target.Diseases.Add(freshDisease);
             AddQueue.Enqueue(target.Owner);
@@ -353,7 +335,7 @@ namespace Content.Server.Disease
         /// Adds a disease to the carrier's
         /// past diseases to give them immunity
         /// IF they don't already have the disease.
-        /// </summary/
+        /// <summary>
         public void Vaccinate(DiseaseCarrierComponent carrier, DiseasePrototype disease)
         {
             foreach (var currentDisease in carrier.Diseases)
@@ -395,15 +377,12 @@ namespace Content.Server.Disease
                 Vaxx = vaxx;
             }
         }
-
         private sealed class TargetVaxxSuccessfulEvent : EntityEventArgs
         {
             public EntityUid User { get; }
             public EntityUid? Target { get; }
             public DiseaseVaccineComponent Vaxx { get; }
-
             public DiseaseCarrierComponent Carrier { get; }
-
             public TargetVaxxSuccessfulEvent(EntityUid user, EntityUid? target, DiseaseVaccineComponent vaxx, DiseaseCarrierComponent carrier)
             {
                 User = user;
@@ -422,7 +401,6 @@ namespace Content.Server.Disease
         public sealed class CureDiseaseAttemptEvent : EntityEventArgs
         {
             public float CureChance { get; }
-
             public CureDiseaseAttemptEvent(float cureChance)
             {
                 CureChance = cureChance;
@@ -436,7 +414,6 @@ namespace Content.Server.Disease
         public enum SneezeCoughType
         {
             Sneeze,
-
             Cough,
             None
         }

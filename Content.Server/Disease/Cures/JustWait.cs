@@ -16,12 +16,8 @@ namespace Content.Server.Disease.Cures
 
         public override bool Cure(DiseaseEffectArgs args)
         {
-            if (Ticker < MaxLength)
-            {
-                Ticker++;
-                return false;
-            }
-            return true;
+            Ticker++;
+            return Ticker >= MaxLength;
         }
 
         public override string CureText()

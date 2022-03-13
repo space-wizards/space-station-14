@@ -13,13 +13,11 @@ namespace Content.Shared.Disease
         [ViewVariables]
         [DataField("id", required: true)]
         public string ID { get; } = default!;
-
         /// <summary>
         /// This one is more important than you might think since
         /// due to the way prototypes work
         /// This is how a disease identifies another instance of itself
         /// </summary>
-
         [DataField("name")]
         public string Name { get; } = string.Empty;
 
@@ -43,7 +41,6 @@ namespace Content.Shared.Disease
         /// </summary>
         [DataField("cures", serverOnly: true)]
         public readonly List<DiseaseCure> Cures = new(0);
-
         /// <summary>
         /// This flatly reduces the probabilty disease medicine
         /// has to cure it every tick. Although, since spaceacillin is
@@ -61,6 +58,5 @@ namespace Content.Shared.Disease
         /// </summary>
         [DataField("infectious", serverOnly: true)]
         public bool Infectious = true;
-
     }
 }

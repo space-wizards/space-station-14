@@ -25,7 +25,6 @@ namespace Content.Server.Disease.Cures
             {
                 quant = bloodstream.ChemicalSolution.GetReagentQuantity(Reagent);
             }
-
             return quant >= Min;
         }
 

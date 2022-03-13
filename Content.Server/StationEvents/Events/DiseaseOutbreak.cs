@@ -28,11 +28,8 @@ public sealed class DiseaseOutbreak : StationEvent
         "VentCough",
         "AMIV"
     };
-
     public override string Name => "DiseaseOutbreak";
-
     public override float Weight => WeightNormal;
-
     protected override float EndAfter => 1.0f;
     /// <summary>
     /// Finds 2-5 random entities that can host diseases
@@ -60,7 +57,6 @@ public sealed class DiseaseOutbreak : StationEvent
 
             EntitySystem.Get<DiseaseSystem>().TryAddDisease(target, disease);
         }
-
         _chatManager.DispatchStationAnnouncement(Loc.GetString("station-event-disease-outbreak-announcement"));
     }
 }

@@ -12,19 +12,16 @@ namespace Content.Server.Disease.Components
     {
         [DataField("delay")]
         public float Delay = 5f;
-
         /// <summary>
         /// How much time we've accumulated processing
         /// </summary>
         [ViewVariables]
         public float Accumulator = 0f;
-
         /// <summary>
         /// The disease prototype currently being diagnosed
         /// </summary>
         [ViewVariables]
         public DiseasePrototype? Disease;
-
         /// <summary>
         /// What the machine will spawn
         /// </summary>

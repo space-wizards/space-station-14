@@ -1,7 +1,6 @@
 using Content.Server.Temperature.Components;
 using Content.Shared.Disease;
 
-
 namespace Content.Server.Disease.Cures
 {
     /// <summary>
@@ -16,13 +15,10 @@ namespace Content.Server.Disease.Cures
         public float Max = float.MaxValue;
         public override bool Cure(DiseaseEffectArgs args)
         {
-            if (args.EntityManager.TryGetComponent(args.DiseasedEntity, out TemperatureComponent temp))
-            {
-                if (temp.CurrentTemperature > Min && temp.CurrentTemperature < Max)
-                    return true;
-            }
+            if (!args.EntityManager.TryGetComponent(args.DiseasedEntity, out TemperatureComponent temp))
+                return false;
 
-            return false;
+            return temp.CurrentTemperature > Min && temp.CurrentTemperature < float.MaxValue;
         }
 
         public override string CureText()

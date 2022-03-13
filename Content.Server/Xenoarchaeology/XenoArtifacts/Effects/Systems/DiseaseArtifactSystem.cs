@@ -57,7 +57,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
                 if (TryComp<DiseaseCarrierComponent>(entity, out var carrier))
                     EntitySystem.Get<DiseaseSystem>().TryInfect(carrier, component.ResolveDisease);
             }
-
         }
     }
 }

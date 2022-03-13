@@ -21,11 +21,8 @@ namespace Content.Server.Disease.Cures
             if (!args.EntityManager.TryGetComponent<BuckleComponent>(args.DiseasedEntity, out var buckle))
                 return false;
             if (buckle.Buckled)
-            {
-                Ticker++;            }
-            if (Ticker >= MaxLength)
-                return true;
-            return false;
+                Ticker++;
+            return Ticker >= MaxLength;
         }
 
         public override string CureText()
