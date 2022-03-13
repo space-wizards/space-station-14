@@ -51,7 +51,10 @@ namespace Content.Server.Drone
 
         private void OnActivateUIAttempt(EntityUid uid, DroneComponent component, UserOpenActivatableUIAttemptEvent args)
         {
-            args.Cancel();
+            if (!_tagSystem.HasTag(args.Target, "DroneUsable"))
+            {
+                args.Cancel();
+            }
         }
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)

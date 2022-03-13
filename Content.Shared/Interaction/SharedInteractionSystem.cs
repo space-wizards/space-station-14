@@ -1,7 +1,5 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CombatMode;
@@ -787,25 +785,12 @@ namespace Content.Shared.Interaction
             if (checkCanUse && !_actionBlockerSystem.CanUseHeldEntity(user))
                 return false;
 
-            var useMsg = new UseInHandEvent(user, used);
+            var useMsg = new UseInHandEvent(user);
             RaiseLocalEvent(used, useMsg);
             if (useMsg.Handled)
             {
                 _useDelay.BeginDelay(used, delayComponent);
                 return true;
-            }
-
-            var uses = AllComps<IUse>(used).ToList();
-
-            // Try to use item on any components which have the interface
-            foreach (var use in uses)
-            {
-                // If a Use returns a status completion we finish our interaction
-                if (use.UseEntity(new UseEntityEventArgs(user)))
-                {
-                    _useDelay.BeginDelay(used, delayComponent);
-                    return true;
-                }
             }
 
             // else, default to activating the item

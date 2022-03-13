@@ -114,6 +114,8 @@
     - type: DisposalVisualizer
       state_free: conpipe-tagger
       state_anchored: pipe-tagger
+  - type: ActivatableUI
+    key: enum.DisposalTaggerUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.DisposalTaggerUiKey.Key
@@ -178,6 +180,8 @@
       state_anchored: pipe-j1s
   - type: Flippable
     mirrorEntity: DisposalRouterFlipped
+  - type: ActivatableUI
+    key: enum.DisposalRouterUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.DisposalRouterUiKey.Key

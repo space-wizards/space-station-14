@@ -1,26 +1,18 @@
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Shared.Audio;
-using Content.Shared.Interaction;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Research.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public sealed class ResearchConsoleComponent : SharedResearchConsoleComponent, IActivate
+    public sealed class ResearchConsoleComponent : SharedResearchConsoleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -110,20 +102,7 @@ namespace Content.Server.Research.Components
             UserInterface?.Open(session);
         }
 
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-                return;
-            if (!Powered)
-            {
-                return;
-            }
-
-            OpenUserInterface(actor.PlayerSession);
-            PlayKeyboardSound();
-        }
-
-        private void PlayKeyboardSound()
+        public void PlayKeyboardSound()
         {
             SoundSystem.Play(Filter.Pvs(Owner), _soundCollectionName.GetSound(), Owner, AudioParams.Default);
         }

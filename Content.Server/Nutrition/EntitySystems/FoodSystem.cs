@@ -21,6 +21,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Server.Nutrition.EntitySystems
 {

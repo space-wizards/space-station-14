@@ -8,7 +8,7 @@
   components:
   - type: AmbientOnPowered
   - type: AmbientSound
-    volume: -15
+    volume: -9
     range: 2
     sound:
       path: /Audio/Ambience/Objects/hdd_buzz.ogg

@@ -6,6 +6,7 @@ using Content.Shared.Audio;
 using Content.Shared.Extinguisher;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;

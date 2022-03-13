@@ -109,6 +109,7 @@
   - type: Body
     template: HumanoidTemplate
     preset: HumanPreset
+  - type: LizardAccent
 
 - type: entity
   save: false
