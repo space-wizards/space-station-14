@@ -1,18 +1,8 @@
-using System;
-using Content.Shared.Instruments;
-using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Reflection;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Enums;
-using Robust.Shared.Player;
-using Robust.Shared.Network;
-using Robust.Shared.IoC;
-using Robust.Shared.Utility;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+
 
 namespace Content.Server.UserInterface
 {

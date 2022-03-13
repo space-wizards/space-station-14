@@ -52,7 +52,7 @@
     - StringInstrument
   - type: Clothing
     size: 24
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - back
     sprite: Objects/Fun/Instruments/guitar.rsi
@@ -273,7 +273,7 @@
     size: 24
     sprite: Objects/Fun/Instruments/bike_horn.rsi
     Slots: [Belt]
-    QuickEquip: false
+    quickEquip: false
 
 - type: entity
   parent: BaseHandheldInstrument

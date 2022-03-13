@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
@@ -16,6 +17,7 @@ namespace Content.Shared.SubFloor
         [Dependency] protected readonly IMapManager MapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly TrayScannerSystem _trayScannerSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
         public override void Initialize()
         {
@@ -181,6 +183,10 @@ namespace Content.Shared.SubFloor
 
             appearance.SetData(SubFloorVisuals.Covered, hideComp.IsUnderCover);
             appearance.SetData(SubFloorVisuals.ScannerRevealed, hideComp.RevealedBy.Count != 0);
+            if (hideComp.BlockAmbience && hideComp.IsUnderCover)
+                _ambientSoundSystem.SetAmbience(uid, false);
+            else if (hideComp.BlockAmbience && !hideComp.IsUnderCover)
+                _ambientSoundSystem.SetAmbience(uid, true);
         }
     }
 

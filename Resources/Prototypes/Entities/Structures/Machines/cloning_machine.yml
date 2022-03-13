@@ -54,6 +54,8 @@
           enum.CloningPodStatus.NoMind: pod_e
           enum.CloningPodStatus.Gore: pod_g
           enum.CloningPodStatus.Idle: pod_0
+  - type: ActivatableUI
+    key: enum.CloningPodUIKey.Key #Ejecting doesn't require power so I didn't give it that component
   - type: UserInterface
     interfaces:
       - key: enum.CloningPodUIKey.Key

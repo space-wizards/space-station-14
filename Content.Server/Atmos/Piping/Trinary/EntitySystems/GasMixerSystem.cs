@@ -7,6 +7,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Trinary.Components;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -21,6 +22,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private AdminLogSystem _adminLogSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
         public override void Initialize()
         {
@@ -59,7 +61,10 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             // TODO ATMOS: Cache total moles since it's expensive.
 
             if (!mixer.Enabled)
+            {
+                _ambientSoundSystem.SetAmbience(mixer.Owner, false);
                 return;
+            }
 
             if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
@@ -67,12 +72,17 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!nodeContainer.TryGetNode(mixer.InletOneName, out PipeNode? inletOne)
                 || !nodeContainer.TryGetNode(mixer.InletTwoName, out PipeNode? inletTwo)
                 || !nodeContainer.TryGetNode(mixer.OutletName, out PipeNode? outlet))
+            {
+                _ambientSoundSystem.SetAmbience(mixer.Owner, false);
                 return;
+            }
 
             var outputStartingPressure = outlet.Air.Pressure;
 
             if (outputStartingPressure >= mixer.TargetPressure)
                 return; // Target reached, no need to mix.
+
+
 
             var generalTransfer = (mixer.TargetPressure - outputStartingPressure) * outlet.Air.Volume / Atmospherics.R;
 
@@ -102,7 +112,10 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                     return;
 
                 if (transferMolesOne <= 0 || transferMolesTwo <= 0)
+                {
+                    _ambientSoundSystem.SetAmbience(mixer.Owner, false);
                     return;
+                }
 
                 if (inletOne.Air.TotalMoles < transferMolesOne || inletTwo.Air.TotalMoles < transferMolesTwo)
                 {
@@ -125,6 +138,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 var removed = inletTwo.Air.Remove(transferMolesTwo);
                 _atmosphereSystem.Merge(outlet.Air, removed);
             }
+            _ambientSoundSystem.SetAmbience(mixer.Owner, true);
         }
 
         private void OnMixerInteractHand(EntityUid uid, GasMixerComponent component, InteractHandEvent args)
