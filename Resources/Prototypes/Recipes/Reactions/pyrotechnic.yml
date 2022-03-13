@@ -41,7 +41,7 @@
   - !type:ExplosionReactionEffect
     devastationRange: 0
     heavyImpactRange: 0
-    lightImpactRange: 2
+    lightImpactRange: 0.1
     scaled: true
     maxScale: 10 # explosion strength stops scaling at 10 chlorine + 30 fluorine
   - !type:PopupMessage
