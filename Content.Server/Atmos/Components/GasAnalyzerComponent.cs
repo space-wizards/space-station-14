@@ -14,7 +14,7 @@ namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedGasAnalyzerComponent))]
-    public sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped
+    public sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -255,14 +255,6 @@ namespace Content.Server.Atmos.Components
             }
 
             return true;
-        }
-
-        void IDropped.Dropped(DroppedEventArgs eventArgs)
-        {
-            if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-            {
-                CloseInterface(actor.PlayerSession);
-            }
         }
     }
 }
