@@ -401,6 +401,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> AdminLogsClientBatchSize =
             CVarDef.Create("adminlogs.client_batch_size", 1000, CVar.SERVERONLY);
 
+        public static readonly CVarDef<string> AdminLogsServerName =
+            CVarDef.Create("adminlogs.server_name", "unknown", CVar.SERVERONLY);
+
         /*
          * Atmos
          */

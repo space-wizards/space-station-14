@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Net;
 using System.Text.Json;
 using Content.Shared.Database;
@@ -22,6 +23,7 @@ namespace Content.Server.Database
         public DbSet<Admin> Admin { get; set; } = null!;
         public DbSet<AdminRank> AdminRank { get; set; } = null!;
         public DbSet<Round> Round { get; set; } = null!;
+        public DbSet<Server> Server { get; set; } = null!;
         public DbSet<AdminLog> AdminLog { get; set; } = null!;
         public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
         public DbSet<Whitelist> Whitelist { get; set; } = null!;
@@ -137,6 +139,11 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<ConnectionLog>()
                 .HasIndex(p => p.UserId);
+        }
+
+        public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
+        {
+            return query.Where(log => EF.Functions.Like(log.Message, "%" + searchText + "%"));
         }
     }
 
@@ -295,6 +302,20 @@ namespace Content.Server.Database
         public List<Player> Players { get; set; } = default!;
 
         public List<AdminLog> AdminLogs { get; set; } = default!;
+
+        [ForeignKey("Server")] public int ServerId { get; set; }
+        public Server Server { get; set; } = default!;
+    }
+
+    public class Server
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public string Name { get; set; } = default!;
+
+        [InverseProperty(nameof(Round.Server))]
+        public List<Round> Rounds { get; set; } = default!;
     }
 
     [Index(nameof(Type))]
