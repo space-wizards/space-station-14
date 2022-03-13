@@ -29,7 +29,7 @@
       probability: 0.025
     - !type:DiseaseSnough
       probability: 0.025
-      type: Cough
+      snoughMessage: disease-cough
     - !type:DiseaseHealthChange
       probability: 0.015
       damage:
@@ -72,7 +72,7 @@
       message: disease-steal-compulsion
     - !type:DiseaseSnough
       probability: 0.02
-      type: Cough
+      type: disease-screech
     - !type:DiseaseGenericStatusEffect
       probability: 0.3
       key: Stutter
@@ -123,6 +123,9 @@
       probability: 0.513
       reagent: Ephedrine
       amount: 1
+    - !type:DiseaseSnough
+      probability: 0.02
+      type: disease-meow
   cures:
     - !type:DiseaseBodyTemperatureCure
       min: 420 ## Reachable with a flamer

@@ -207,7 +207,7 @@ namespace Content.Server.Chat.Managers
 
             if (_entManager.HasComponent<DiseasedComponent>(source) && _entManager.TryGetComponent<DiseaseCarrierComponent>(source,out var carrier))
             {
-                EntitySystem.Get<DiseaseSystem>().SneezeCough(source, _random.Pick(carrier.Diseases), SneezeCoughType.None);
+                EntitySystem.Get<DiseaseSystem>().SneezeCough(source, _random.Pick(carrier.Diseases), string.Empty);
             }
 
             if (MessageCharacterLimit(source, message))

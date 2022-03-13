@@ -326,17 +326,13 @@ namespace Content.Server.Disease
         /// and then tries to infect anyone in range
         /// if the snougher is not wearing a mask.
         /// </summary>
-        public void SneezeCough(EntityUid uid, DiseasePrototype? disease, SneezeCoughType Snough, float infectionChance = 0.3f)
+        public void SneezeCough(EntityUid uid, DiseasePrototype? disease, string snoughMessage, bool airTransmit = true, float infectionChance = 0.3f)
         {
             var xform = Comp<TransformComponent>(uid);
+            if (snoughMessage != string.Empty)
+                _popupSystem.PopupEntity(Loc.GetString(snoughMessage, ("person", uid)), uid, Filter.Pvs(uid));
 
-            if (Snough == SneezeCoughType.Sneeze)
-                _popupSystem.PopupEntity(Loc.GetString("disease-sneeze", ("person", uid)), uid, Filter.Pvs(uid));
-            else if (Snough == SneezeCoughType.Cough)
-                _popupSystem.PopupEntity(Loc.GetString("disease-cough", ("person", uid)), uid, Filter.Pvs(uid));
-
-
-            if (disease == null || !disease.Infectious)
+            if (disease == null || !disease.Infectious || airTransmit == false)
                 return;
 
             if (_inventorySystem.TryGetSlotEntity(uid, "mask", out var maskUid) &&
