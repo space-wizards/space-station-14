@@ -15,6 +15,7 @@ using Content.Server.Power.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Disease
 {
@@ -217,46 +218,47 @@ namespace Content.Server.Disease
         /// The cure resist field tells you how
         /// effective spaceacillin etc will be.
         /// </summary>
-        private string AssembleDiseaseReport(DiseasePrototype disease)
+        private FormattedMessage AssembleDiseaseReport(DiseasePrototype disease)
         {
-            string report = string.Empty;
-            report += Loc.GetString("diagnoser-disease-report-name", ("disease", disease.Name));
-            report += '\n';
+            FormattedMessage report = new();
+            report.AddMarkup(Loc.GetString("diagnoser-disease-report-name", ("disease", disease.Name)));
+            report.PushNewline();
 
             if (disease.Infectious)
             {
-                report += Loc.GetString("diagnoser-disease-report-infectious");
-                report += '\n';
+                report.AddMarkup(Loc.GetString("diagnoser-disease-report-infectious"));
+                report.PushNewline();
             } else
             {
-                report += Loc.GetString("diagnoser-disease-report-not-infectious");
-                report += '\n';
+                report.AddMarkup(Loc.GetString("diagnoser-disease-report-not-infectious"));
+                report.PushNewline();
             }
-
-            report += disease.CureResist switch
+            string cureResistLine = string.Empty;
+            cureResistLine += disease.CureResist switch
             {
                 < 0f => Loc.GetString("diagnoser-disease-report-cureresist-none"),
                 <= 0.05f => Loc.GetString("diagnoser-disease-report-cureresist-low"),
                 <= 0.14f => Loc.GetString("diagnoser-disease-report-cureresist-medium"),
                 _ => Loc.GetString("diagnoser-disease-report-cureresist-high")
             };
-            report += '\n';
+            report.AddMarkup(cureResistLine);
+            report.PushNewline();
 
             /// Add Cures
             if (disease.Cures.Count == 0)
             {
-                report += Loc.GetString("diagnoser-no-cures");
+                report.AddMarkup(Loc.GetString("diagnoser-no-cures"));
             }
             else
             {
-                report += '\n';
-                report += Loc.GetString("diagnoser-cure-has");
-                report += '\n';
+                report.PushNewline();
+                report.AddMarkup(Loc.GetString("diagnoser-cure-has"));
+                report.PushNewline();
 
                 foreach (var cure in disease.Cures)
                 {
-                    report += cure.CureText();
-                    report += '\n';
+                    report.AddMarkup(cure.CureText());
+                    report.PushNewline();
                 }
             }
 
@@ -330,7 +332,7 @@ namespace Content.Server.Disease
                 return;
 
             var reportTitle = string.Empty;
-            var contents = string.Empty;
+            FormattedMessage contents = new();
             if (args.Machine.Disease != null)
             {
                 reportTitle = Loc.GetString("diagnoser-disease-report", ("disease", args.Machine.Disease.Name));
@@ -338,11 +340,11 @@ namespace Content.Server.Disease
             } else
             {
                 reportTitle = Loc.GetString("diagnoser-disease-report-none");
-                contents = Loc.GetString("diagnoser-disease-report-none-contents");
+                contents.AddMarkup(Loc.GetString("diagnoser-disease-report-none-contents"));
             }
             MetaData(printed).EntityName = reportTitle;
 
-            paper.SetContent(contents);
+            paper.SetContent(contents.ToMarkup());
         }
 
         /// <summary>
