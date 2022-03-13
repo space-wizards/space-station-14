@@ -7,3 +7,6 @@ ent-LauncherChinaLake = China Lake
 ent-LauncherRocket = РПГ-7
     .desc = Модифицированный древний ручной реактивный гранатомёт.
     .suffix = { "" }
+ent-LauncherMultipleRocket = multiple rocket launcher
+    .desc = A modified ancient rocket-propelled grenade launcher.
+    .suffix = { "" }

@@ -7,3 +7,6 @@ ent-LauncherChinaLake = china lake
 ent-LauncherRocket = RPG-7
     .desc = A modified ancient rocket-propelled grenade launcher.
     .suffix = { "" }
+ent-LauncherMultipleRocket = multiple rocket launcher
+    .desc = A modified ancient rocket-propelled grenade launcher.
+    .suffix = { "" }

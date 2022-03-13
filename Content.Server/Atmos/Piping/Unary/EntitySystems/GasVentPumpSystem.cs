@@ -13,6 +13,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
+using Content.Shared.Audio;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
@@ -24,6 +25,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
         public override void Initialize()
         {
@@ -52,6 +54,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 || !nodeContainer.TryGetNode(vent.InletName, out PipeNode? pipe))
             {
                 appearance?.SetData(VentPumpVisuals.State, VentPumpState.Off);
+                _ambientSoundSystem.SetAmbience(vent.Owner, false);
                 return;
             }
 
@@ -61,6 +64,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (environment == null)
             {
                 appearance?.SetData(VentPumpVisuals.State, VentPumpState.Off);
+                _ambientSoundSystem.SetAmbience(vent.Owner, false);
                 return;
             }
 
@@ -70,6 +74,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (vent.PumpDirection == VentPumpDirection.Releasing && pipe.Air.Pressure > 0)
             {
                 appearance?.SetData(VentPumpVisuals.State, VentPumpState.Out);
+                _ambientSoundSystem.SetAmbience(vent.Owner, true);
 
                 if (environment.Pressure > vent.MaxPressure)
                     return;

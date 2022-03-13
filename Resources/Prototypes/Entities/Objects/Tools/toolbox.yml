@@ -19,6 +19,9 @@
         Blunt: 10
     hitSound:
       path: "/Audio/Weapons/smash.ogg"
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: emergency toolbox
