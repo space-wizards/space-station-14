@@ -3,6 +3,7 @@ using Content.Shared.Disease;
 using Content.Shared.Disease.Components;
 using Content.Server.Disease.Components;
 using Content.Server.Clothing.Components;
+using Content.Shared.MobState.Components;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.Interaction;
@@ -43,6 +44,7 @@ namespace Content.Server.Disease
         }
 
         private Queue<EntityUid> AddQueue = new();
+        private Queue<(DiseaseCarrierComponent, DiseasePrototype)> CureQueue = new();
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -52,8 +54,25 @@ namespace Content.Server.Disease
             }
             AddQueue.Clear();
 
-            foreach (var (diseasedComp, carrierComp) in EntityQuery<DiseasedComponent, DiseaseCarrierComponent>(false))
+            foreach (var tuple in CureQueue)
             {
+                if (tuple.Item1.Diseases.Count == 1) //This is reliable unlike testing Count == 0 right after removal for reasons I don't quite get
+                    RemComp<DiseasedComponent>(tuple.Item1.Owner);
+                tuple.Item1.PastDiseases.Add(tuple.Item2);
+                tuple.Item1.Diseases.Remove(tuple.Item2);
+            }
+            CureQueue.Clear();
+
+            foreach (var (diseasedComp, carrierComp, mobState) in EntityQuery<DiseasedComponent, DiseaseCarrierComponent, MobStateComponent>(false))
+            {
+                if (mobState.IsDead())
+                {
+                    if (_random.Prob(0.005f * frameTime)) //Mean time to remove is 200 seconds per disease
+                    {
+                        CureDisease(carrierComp, _random.Pick(carrierComp.Diseases));
+                    }
+                    continue;
+                }
 
                 foreach(var disease in carrierComp.Diseases)
                 {
@@ -66,15 +85,12 @@ namespace Content.Server.Disease
                             if (cure.Cure(args))
                             {
                                 CureDisease(carrierComp, disease);
-                                return; //Prevent any effects or additional cure attempts, it can mess with some of the maths
                             }
                         foreach (var effect in disease.Effects)
                             if (_random.Prob(effect.Probability))
                                 effect.Effect(args);
                     }
                 }
-                if (carrierComp.Diseases.Count == 0)
-                  RemComp<DiseasedComponent>(diseasedComp.Owner);
             }
         }
         private void OnTryCureDisease(EntityUid uid, DiseaseCarrierComponent component, CureDiseaseAttemptEvent args)
@@ -117,9 +133,9 @@ namespace Content.Server.Disease
         {
             if (disease == null)
                 return;
-            carrier.PastDiseases.Add(disease);
-            carrier.Diseases.Remove(disease);
-            _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Pvs(carrier.Owner));
+            var CureTuple = (carrier, disease);
+            CureQueue.Enqueue(CureTuple);
+            _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Entities(carrier.Owner));
         }
 
         private void OnInteractDiseasedHand(EntityUid uid, DiseasedComponent component, InteractHandEvent args)

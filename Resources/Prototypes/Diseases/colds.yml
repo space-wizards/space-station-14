@@ -46,7 +46,7 @@
   cureResist: 0.1
   effects:
     - !type:DiseaseAdjustReagent
-      probability: 0.08
+      probability: 0.04
       reagent: Licoxide
       amount: 1
   cures:
