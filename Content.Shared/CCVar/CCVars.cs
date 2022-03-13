@@ -609,10 +609,6 @@ namespace Content.Shared.CCVar
         /*
          * Shuttles
          */
-        // Once cruising actually gets implemented I'd likely drop this speed to 3 maybe.
-        public static readonly CVarDef<float> ShuttleDockSpeedCap =
-            CVarDef.Create("shuttle.dock_speed_cap", 5f, CVar.SERVERONLY);
-
         public static readonly CVarDef<float> ShuttleMaxLinearSpeed =
             CVarDef.Create("shuttle.max_linear_speed", 13f, CVar.SERVERONLY);
 
