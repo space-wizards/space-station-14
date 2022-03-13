@@ -83,6 +83,7 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/latex.rsi
   - type: DiseaseProtection
+    protection: 0.1
 
 - type: entity
   parent: ClothingHandsBase

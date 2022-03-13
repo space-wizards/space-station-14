@@ -15,21 +15,21 @@ namespace Content.Server.Disease.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public List<DiseasePrototype> Diseases = new();
-        [ViewVariables(VVAccess.ReadWrite)]
         /// <summary>
         /// The carrier's resistance to disease
         /// </summary>
-        public float DiseaseResist = 0f;
         [ViewVariables(VVAccess.ReadWrite)]
+        public float DiseaseResist = 0f;
         /// <summary>
         /// Diseases the carrier has had, used for immunity.
         /// <summary>
-        public List<DiseasePrototype> PastDiseases = new();
         [ViewVariables(VVAccess.ReadWrite)]
+        public List<DiseasePrototype> PastDiseases = new();
         /// <summary>
         /// All the diseases the carrier has or has had.
         /// Checked against when trying to add a disease
         /// <summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public List<DiseasePrototype> AllDiseases => PastDiseases.Concat(Diseases).ToList();
     }
 }

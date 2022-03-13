@@ -22,8 +22,8 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
         public override void Initialize()
         {
             base.Initialize();
-        SubscribeLocalEvent<DiseaseArtifactComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<DiseaseArtifactComponent, ArtifactActivatedEvent>(OnActivate);
+            SubscribeLocalEvent<DiseaseArtifactComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<DiseaseArtifactComponent, ArtifactActivatedEvent>(OnActivate);
         }
 
         /// <summary>
@@ -35,8 +35,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
             {
                 var diseaseName = _random.Pick(component.ArtifactDiseases);
 
-                if (diseaseName != null)
-                    component.SpawnDisease = diseaseName;
+                component.SpawnDisease = diseaseName;
             }
 
             if (_prototypeManager.TryIndex(component.SpawnDisease, out DiseasePrototype? disease) && disease != null)
@@ -44,7 +43,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
         }
         /// <summary>
         /// When activated, blasts everyone in LOS within 3 tiles
-        /// with a high-proability disease infection attempt
+        /// with a high-probability disease infection attempt
         /// </summary>
         private void OnActivate(EntityUid uid, DiseaseArtifactComponent component, ArtifactActivatedEvent args)
         {

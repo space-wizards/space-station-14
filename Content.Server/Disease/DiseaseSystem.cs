@@ -313,8 +313,6 @@ namespace Content.Server.Disease
         /// </summary>
         public void SneezeCough(EntityUid uid, DiseasePrototype? disease, SneezeCoughType Snough, float infectionChance = 0.3f)
         {
-            IngestionBlockerComponent blocker;
-
             var xform = Comp<TransformComponent>(uid);
 
             if (Snough == SneezeCoughType.Sneeze)
@@ -327,7 +325,7 @@ namespace Content.Server.Disease
                 return;
 
             if (_inventorySystem.TryGetSlotEntity(uid, "mask", out var maskUid) &&
-                EntityManager.TryGetComponent(maskUid, out blocker) &&
+                EntityManager.TryGetComponent<IngestionBlockerComponent>(maskUid, out var blocker) &&
                 blocker.Enabled)
                 return;
 

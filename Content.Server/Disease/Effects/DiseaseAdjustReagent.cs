@@ -8,11 +8,11 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Disease.Effects
 {
-    [UsedImplicitly]
     /// <summary>
     /// Adds or removes reagents from the
     /// host's chemstream.
     /// </summary>
+    [UsedImplicitly]
     public sealed class DiseaseAdjustReagent : DiseaseEffect
     {
         /// <summary>

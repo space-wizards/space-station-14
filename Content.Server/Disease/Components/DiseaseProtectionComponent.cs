@@ -1,10 +1,10 @@
 namespace Content.Server.Disease.Components
 {
-    [RegisterComponent]
     /// <summary>
     /// Value added to clothing to give its wearer
     /// protection against infection from diseases
     /// </summary>
+    [RegisterComponent]
     public sealed class DiseaseProtectionComponent : Component
     {
         /// <summary>

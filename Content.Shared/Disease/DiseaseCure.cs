@@ -17,7 +17,7 @@ namespace Content.Shared.Disease
         /// to generate reports to tell people all of a disease's
         /// special cures using in-game methods.
         /// So it should return a localization string describing
-        /// the cure conditions.
+        /// the cure
         /// </summary>
         public abstract string CureText();
     }

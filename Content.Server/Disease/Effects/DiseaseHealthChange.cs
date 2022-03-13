@@ -4,10 +4,10 @@ using JetBrains.Annotations;
 
 namespace Content.Server.Disease.Effects
 {
-    [UsedImplicitly]
     /// <summary>
     /// Deals or heals damage to the host
     /// </summary>
+    [UsedImplicitly]
     public sealed class DiseaseHealthChange : DiseaseEffect
     {
         [DataField("damage", required: true)]

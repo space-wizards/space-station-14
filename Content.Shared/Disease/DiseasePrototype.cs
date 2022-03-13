@@ -27,6 +27,11 @@ namespace Content.Shared.Disease
         [NeverPushInheritance]
         [DataField("abstract")]
         public bool Abstract { get; private set; }
+
+        /// <summary>
+        /// Since disease isn't mapped to metabolism or anything,
+        /// it needs something to control its tickrate
+        /// </summary>
         public float Accumulator = 0f;
         /// <summary>
         /// List of effects the disease has that will

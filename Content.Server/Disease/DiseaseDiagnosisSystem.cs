@@ -90,7 +90,6 @@ namespace Content.Server.Disease
         /// </summary>
         private void OnAfterInteract(EntityUid uid, DiseaseSwabComponent swab, AfterInteractEvent args)
         {
-            IngestionBlockerComponent blocker;
             if (swab.CancelToken != null)
             {
                 swab.CancelToken.Cancel();
@@ -110,7 +109,7 @@ namespace Content.Server.Disease
             }
 
             if (_inventorySystem.TryGetSlotEntity(args.Target.Value, "mask", out var maskUid) &&
-                EntityManager.TryGetComponent(maskUid, out blocker) &&
+                EntityManager.TryGetComponent<IngestionBlockerComponent>(maskUid, out var blocker) &&
                 blocker.Enabled)
             {
                 _popupSystem.PopupEntity(Loc.GetString("swab-mask-blocked", ("target", args.Target), ("mask", maskUid)), args.User, Filter.Entities(args.User));

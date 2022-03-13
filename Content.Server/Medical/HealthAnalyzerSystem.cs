@@ -68,7 +68,9 @@ namespace Content.Server.Medical
         {
             args.Component.CancelToken = null;
             UpdateScannedUser(args.Component.Owner, args.User, args.Target, args.Component);
-
+            /// Below is for the traitor item
+            /// Piggybacking off another component's doafter is complete CBT so I gave up
+            /// and put it on the same component
             if (!args.Component.Fake || args.Component.Disease == string.Empty || args.Target == null)
                 return;
 
