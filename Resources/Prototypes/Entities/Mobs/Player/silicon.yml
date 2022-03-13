@@ -95,7 +95,7 @@
 - type: entity
   name: onestar mecha
   id: Onestar
-  parent: PlayerSiliconBase
+  parent: MobSiliconBase
   components:
   - type: Drone
     applyLaws: false
