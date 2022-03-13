@@ -14,6 +14,7 @@ using Content.Server.Tools.Components;
 using Content.Server.Power.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Player;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Disease
 {
@@ -157,6 +158,7 @@ namespace Content.Server.Disease
 
             AddQueue.Enqueue(uid);
             UpdateAppearance(uid, true, true);
+            SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/diagnoser_printing.ogg", args.User);
         }
         /// <summary>
         /// This handles the vaccinator machine up
@@ -335,8 +337,6 @@ namespace Content.Server.Disease
         {
             var power = Comp<ApcPowerReceiverComponent>(uid);
             UpdateAppearance(uid, power.Powered, false);
-            if (args.Machine.Disease == null)
-                return;
             // spawn a piece of paper.
             var printed = EntityManager.SpawnEntity(args.Machine.MachineOutput, Transform(uid).Coordinates);
 
