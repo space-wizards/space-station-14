@@ -1,16 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Balance pass on thrusters to make them usable for ships large and small,
-    type: Tweak}
-  - {message: Multiple pilots now supported properly, type: Tweak}
-  - {message: Thruster visualizer no longer gets stuck on in some situations, type: Fix}
-  - {message: Thrusters now work in the direction your console is facing instead of
-      shuttle-North, type: Tweak}
-  id: 698
-  time: '2021-12-03T02:03:06.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix ghost role takeovers of monke, type: Fix}
   id: 699
   time: '2021-12-03T09:31:14.0000000+00:00'
@@ -2988,3 +2978,8 @@ Entries:
       and testing them on stations., type: Add}
   id: 1197
   time: '2022-03-12T23:14:17.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Add lizard accent. Hissss!, type: Add}
+  id: 1198
+  time: '2022-03-13T04:23:44.0000000+00:00'
