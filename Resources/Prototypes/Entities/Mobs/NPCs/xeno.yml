@@ -106,3 +106,26 @@
     attributes:
       proper: true
       gender: male
+
+- type: entity
+  name: small_purple_snake
+  parent: SimpleSpaceMobBase
+  id: Mobsmall_purple_snake
+  description: A smaller version of the menacing purple snake from Kepler-283c.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: small_purple_snake
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: purple_snake
+      crit: dead_small_purple_snake
+      dead: dead_small_purple_snake
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
