@@ -61,7 +61,10 @@
     netsync: false
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"]
+      sprite: Fluids/smear.rsi # Placeholder
+      state: smear-0
     - map: ["enum.PuddleVisualLayers.WetFloorEffect"]
+      visible: false
   - type: Puddle
   - type: Appearance
   - type: PuddleVisuals
@@ -79,7 +82,10 @@
     netsync: false
     layers:
     - map: ["enum.PuddleVisualLayers.Puddle"]
+      sprite: Fluids/splatter.rsi # Placeholder
+      state: splatter-0
     - map: ["enum.PuddleVisualLayers.WetFloorEffect"]
+      visible: false
   - type: Puddle
   - type: Appearance
   - type: PuddleVisuals
@@ -95,6 +101,12 @@
     sprite: Fluids/splatter.rsi # Placeholder
     state: splatter-0
     netsync: false
+    layers:
+    - map: ["enum.PuddleVisualLayers.Puddle"]
+      sprite: Fluids/splatter.rsi # Placeholder
+      state: splatter-0
+    - map: ["enum.PuddleVisualLayers.WetFloorEffect"]
+      visible: false
   - type: Puddle
     slipThreshold: 20
     overflowVolume: 50
