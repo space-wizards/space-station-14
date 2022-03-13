@@ -18,6 +18,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Drone
 {
@@ -27,6 +28,7 @@ namespace Content.Server.Drone
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {
@@ -158,7 +160,8 @@ namespace Content.Server.Drone
             {
                 if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", entity)), uid, Filter.Entities(uid));
+                    if (_gameTiming.IsFirstTimePredicted)
+                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", entity)), uid, Filter.Entities(uid));
                     return true;
                 }
             }
