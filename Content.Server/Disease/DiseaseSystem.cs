@@ -209,7 +209,7 @@ namespace Content.Server.Disease
             {
                 foreach (var disease in target.AllDiseases)
                 {
-                    if (disease.Name == addedDisease?.Name)
+                    if (disease.Name == addedDisease?.Name) //Name because of the way protoypes work
                         return;
                 }
             var freshDisease = _serializationManager.CreateCopy(addedDisease) ?? default!;
@@ -239,6 +239,9 @@ namespace Content.Server.Disease
                 _popupSystem.PopupEntity(Loc.GetString("disease-cough", ("person", uid)), uid, Filter.Pvs(uid));
 
 
+            if (disease == null || !disease.Infectious)
+                return;
+
             if (_inventorySystem.TryGetSlotEntity(uid, "mask", out var maskUid) &&
                 EntityManager.TryGetComponent(maskUid, out blocker) &&
                 blocker.Enabled)
@@ -254,6 +257,11 @@ namespace Content.Server.Disease
 
         public void Vaccinate(DiseaseCarrierComponent carrier, DiseasePrototype disease)
         {
+            foreach (var currentDisease in carrier.Diseases)
+                {
+                    if (currentDisease.Name == disease.Name) //Name because of the way protoypes work
+                        return;
+                }
             carrier.PastDiseases.Add(disease);
         }
 

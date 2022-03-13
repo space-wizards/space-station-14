@@ -131,7 +131,7 @@ namespace Content.Server.Disease
             if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used))
                 return;
 
-            if (!TryComp<DiseaseSwabComponent>(args.Used, out var swab))
+            if (!TryComp<DiseaseSwabComponent>(args.Used, out var swab) || swab.Disease == null || !swab.Disease.Infectious)
             {
                 _popupSystem.PopupEntity(Loc.GetString("diagnoser-cant-use-swab", ("machine", uid), ("swab", args.Used)), uid, Filter.Entities(args.User));
                 return;
