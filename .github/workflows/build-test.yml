@@ -46,7 +46,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.100
+        dotnet-version: 6.0.300
     - name: Install dependencies
       run: dotnet restore
     - name: Build
