@@ -51,6 +51,14 @@ namespace Content.Client.Audio
             configManager.OnValueChanged(CCVars.AmbientCooldown, SetCooldown, true);
             configManager.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);
             configManager.OnValueChanged(CCVars.AmbientRange, SetAmbientRange, true);
+
+            SubscribeLocalEvent<AmbientSoundComponent, ComponentShutdown>(OnShutdown);
+        }
+
+        private void OnShutdown(EntityUid uid, AmbientSoundComponent component, ComponentShutdown args)
+        {
+            if (_playingSounds.Remove(component, out var sound))
+                sound.Stream?.Stop();
         }
 
         private void SetCooldown(float value) => _cooldown = value;
@@ -226,12 +234,13 @@ namespace Content.Client.Audio
             foreach (var (comp, sound) in _playingSounds)
             {
                 var entity = comp.Owner;
-                if (!comp.Enabled ||
+                if (comp.Deleted || // includes entity deletion
+                    !comp.Enabled ||
                     !EntityManager.GetComponent<TransformComponent>(entity).Coordinates
                         .TryDistance(EntityManager, coordinates, out var range) ||
                     range > comp.Range)
                 {
-                    _playingSounds[comp].Stream?.Stop();
+                    sound.Stream?.Stop();
                     _playingSounds.Remove(comp);
                 }
             }
