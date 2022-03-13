@@ -52,6 +52,7 @@
   - type: Tag
     tags:
     - RodMetal1
+    - DroneUsable
   - type: Sprite
     state: rods
   - type: Stack

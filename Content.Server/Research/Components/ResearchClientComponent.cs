@@ -3,15 +3,12 @@ using Content.Shared.Interaction;
 using Content.Shared.Research.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Research.Components
 {
     [RegisterComponent]
     [Virtual]
-    public class ResearchClientComponent : SharedResearchClientComponent, IActivate
+    public class ResearchClientComponent : SharedResearchClientComponent
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -55,15 +52,6 @@ namespace Content.Server.Research.Components
             UpdateUserInterface();
             UserInterface?.Open(session);
         }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
-                return;
-
-            OpenUserInterface(actor.PlayerSession);
-        }
-
         public void UpdateUserInterface()
         {
             UserInterface?.SetState(GetNewUiState());

@@ -14,6 +14,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Visuals;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.Audio;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
@@ -25,6 +26,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
         public override void Initialize()
         {
@@ -44,6 +46,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (scrubber.Welded)
             {
                 appearance?.SetData(ScrubberVisuals.State, ScrubberState.Welded);
+                _ambientSoundSystem.SetAmbience(scrubber.Owner, false);
                 return;
             }
 
@@ -57,8 +60,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             || !nodeContainer.TryGetNode(scrubber.OutletName, out PipeNode? outlet))
             {
                 appearance?.SetData(ScrubberVisuals.State, ScrubberState.Off);
+                _ambientSoundSystem.SetAmbience(scrubber.Owner, false);
                 return;
             }
+            _ambientSoundSystem.SetAmbience(scrubber.Owner, true);
 
             var environment = _atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(scrubber.Owner).Coordinates, true);
 
