@@ -18,6 +18,7 @@ namespace Content.Server.Disease.Components
         /// <summary>
         /// The carrier's resistance to disease
         /// </summary>
+        [DataField("diseaseResist")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float DiseaseResist = 0f;
         /// <summary>

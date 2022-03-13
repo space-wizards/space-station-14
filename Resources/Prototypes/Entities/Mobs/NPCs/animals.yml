@@ -675,7 +675,7 @@
     tags:
     - Trash
   - type: Recyclable
-  - type: Actions 
+  - type: Actions
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
     combatToggleAction:
@@ -707,7 +707,7 @@
       crit: dead-1
       dead: splat-1
   - type: Bloodstream
-    bloodMaxVolume: 50  
+    bloodMaxVolume: 50
 
 
 - type: entity
@@ -775,6 +775,9 @@
     interactFailureString: petting-failure-generic
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Lizard
 
 - type: entity
   name: frog
@@ -947,6 +950,9 @@
     interactFailureString: petting-failure-generic
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Lizard
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
