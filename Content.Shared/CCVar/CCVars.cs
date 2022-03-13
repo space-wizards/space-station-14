@@ -37,7 +37,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ambience.range", 5f, CVar.REPLICATED | CVar.SERVER);
 
         public static readonly CVarDef<int> MaxAmbientSources =
-            CVarDef.Create("ambience.max_sounds", 64, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.max_sounds", 16, CVar.REPLICATED | CVar.SERVER);
 
         /*
          * Status

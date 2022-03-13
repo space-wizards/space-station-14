@@ -37,7 +37,7 @@ namespace Content.Client.Audio
         /// <summary>
         /// How many times we can be playing 1 particular sound at once.
         /// </summary>
-        private int _maxSingleSound = 8;
+        private int _maxSingleSound = 6;
 
         private Dictionary<AmbientSoundComponent, (IPlayingAudioStream? Stream, string Sound)> _playingSounds = new();
 
