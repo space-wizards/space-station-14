@@ -282,7 +282,7 @@
 
 - type: Tag
   id: Trash
-  
+
 - type: Tag
   id: TrashBag
 
@@ -306,3 +306,6 @@
 
 - type: Tag
   id: Write
+
+- type: Tag
+  id: Drone

@@ -107,3 +107,7 @@
   abstract: true
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelDrone
+  components:
+  - type: Tag
+    tags:
+    - Drone

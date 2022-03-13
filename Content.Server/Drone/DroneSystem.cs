@@ -72,7 +72,7 @@ namespace Content.Server.Drone
 
                 foreach (var item in drone.ToolUids.Select((value, i) => ( value, i )))
                 {
-                    if (drone.Tools[item.i].PrototypeId == "ClothingBackpackSatchelDrone")
+                    if (_tagSystem.HasTag(item.value, "Drone"))
                     {
                         RemComp<UnremoveableComponent>(item.value);
                     }
