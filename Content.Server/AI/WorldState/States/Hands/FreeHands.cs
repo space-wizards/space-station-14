@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Hands.Components;
+using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Hands
 {
@@ -21,7 +19,7 @@ namespace Content.Server.AI.WorldState.States.Hands
                 return new List<string>();
             }
 
-            return handsComponent.Hands.Values.Where(hand => hand.IsEmpty).Select(hand => hand.Name).ToList();
+            return handsComponent.GetFreeHandNames().ToList();
         }
     }
 }

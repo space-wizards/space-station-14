@@ -1,6 +1,6 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Content.Server.Hands.Components;
+using Content.Shared.Hands.Components;
 using System.Linq;
 
 namespace Content.Server.AI.Utility.Considerations.Hands
@@ -11,12 +11,12 @@ namespace Content.Server.AI.Utility.Considerations.Hands
         {
             var owner = context.GetState<SelfState>().GetValue();
 
-            if (!owner.IsValid() || !IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out HandsComponent? handsComponent))
+            if (!owner.IsValid() || !IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out SharedHandsComponent? handsComponent))
             {
                 return 0.0f;
             }
 
-            return (float) handsComponent.Hands.Values.Count(hand => hand.IsEmpty) / handsComponent.Hands.Count;
+            return (float) handsComponent.CountFreeHands() / handsComponent.Count;
         }
     }
 }

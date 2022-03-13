@@ -6,7 +6,6 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Hands.Components;
 
 [NetworkedComponent]
-[Friend(typeof(SharedHandsSystem))]
 public abstract class SharedHandsComponent : Component
 {
     /// <summary>

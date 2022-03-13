@@ -4,6 +4,7 @@ using Content.Server.Hands.Systems;
 using Content.Server.Weapon.Melee;
 using Content.Server.Wieldable.Components;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -75,7 +76,7 @@ namespace Content.Server.Wieldable
                 return false;
             }
 
-            if (hands.Hands.Values.Count(hand => hand.IsEmpty) < component.FreeHandsRequired)
+            if (hands.CountFreeHands() < component.FreeHandsRequired)
             {
                 // TODO FLUENT need function to change 'hands' to 'hand' when there's only 1 required
                 if (!quiet)

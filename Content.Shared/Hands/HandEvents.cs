@@ -254,7 +254,7 @@ namespace Content.Shared.Hands
     }
 
     /// <summary>
-    ///     Moves an item from one hand to the active hand.
+    ///     Event raised by a client when they want to move an item held in another hand to their currently active hand
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class RequestMoveHandItemEvent : EntityEventArgs

@@ -156,7 +156,7 @@ namespace Content.Server.Hands.Systems
                 return;
 
             // Cancel pull if all hands full.
-            if (!component.Hands.Values.Any(hand => hand.IsEmpty))
+            if (!component.IsAnyHandFree())
                 args.Cancelled = true;
         }
 
