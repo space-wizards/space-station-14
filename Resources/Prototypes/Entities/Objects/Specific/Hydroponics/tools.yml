@@ -118,7 +118,7 @@
     state: icon
   - type: Clothing
     sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - belt
     size: 200

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Materials;
@@ -13,15 +11,11 @@ using Content.Shared.Power;
 using Content.Shared.Research.Prototypes;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Lathe.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public sealed class LatheComponent : SharedLatheComponent, IInteractUsing, IActivate
+    public sealed class LatheComponent : SharedLatheComponent, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -138,19 +132,6 @@ namespace Content.Server.Lathe.Components
         {
             UserInterface?.Open(session);
         }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-                return;
-            if (!Powered)
-            {
-                return;
-            }
-
-            OpenUserInterface(actor.PlayerSession);
-        }
-
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!_entMan.TryGetComponent(Owner, out MaterialStorageComponent? storage)

@@ -20,9 +20,8 @@ using Robust.Shared.Utility;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public sealed class GasTankComponent : Component, IExamine, IGasMixtureHolder, IDropped, IActivate
+    public sealed class GasTankComponent : Component, IExamine, IGasMixtureHolder, IDropped
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -145,12 +144,6 @@ namespace Content.Server.Atmos.Components
                 return new GasMixture(volume);
 
             return air;
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor)) return;
-            OpenInterface(actor.PlayerSession);
         }
 
         public void ConnectToInternals()

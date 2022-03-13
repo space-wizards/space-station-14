@@ -3,6 +3,7 @@ using Content.Server.Sound.Components;
 using Content.Server.Throwing;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;

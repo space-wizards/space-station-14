@@ -151,3 +151,61 @@
   - type: Repairable
     fuelcost: 15
     doAfterDelay: 8
+
+- type: entity
+  name: onestar mecha
+  id: Onestar
+  parent: PlayerSiliconBase
+  components:
+  - type: Drone
+    tools:
+      - id: Minigun
+      - id: EnergySword
+      - id: LauncherMultipleRocket
+      - id: XrayCannon
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Onestar Mecha
+    description: You are an experimental mecha created by who-knows-what, all you know is that you have weapons and you detect fleshy moving targets nearby...
+    rules: Use your weapons to cause havok. You are an antagonist.
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 2
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      1000: !type:DeadMobState {}
+  - type: Sprite
+    drawdepth: Mobs
+    netsync: false
+    layers:
+    - state: onestar_boss
+      sprite: Mobs/Silicon/onestar.rsi
+    - state: onestar_boss_screen
+      sprite: Mobs/Silicon/onestar.rsi
+      shader: unshaded
+  - type: MovementIgnoreGravity
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 1
+      mass: 500
+      mask:
+      - SmallImpassable
+      - MobImpassable
+      - VaultImpassable
+      - Impassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      rotate: true
+      normal: onestar_boss  
+      dead: onestar_boss_wrecked
+  - type: CombatMode

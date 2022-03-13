@@ -116,6 +116,7 @@ namespace Content.Client.Entry
             "Lung",
             "BatteryDischarger",
             "Apc",
+            "IntrinsicUI",
             "PowerProvider",
             "ApcPowerReceiver",
             "Cable",

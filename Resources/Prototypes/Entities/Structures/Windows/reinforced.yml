@@ -11,6 +11,9 @@
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 2
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:

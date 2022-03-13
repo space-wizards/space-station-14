@@ -70,6 +70,9 @@
     visuals:
     - type: AutolatheVisualizer
     - type: WiresVisualizer
+  - type: ActivatableUI
+    key: enum.LatheUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.LatheUiKey.Key
@@ -182,6 +185,9 @@
       - KitchenKnife
       - ButchCleaver
       - FlashlightLantern
+  - type: ActivatableUI
+    key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.LatheUiKey.Key
