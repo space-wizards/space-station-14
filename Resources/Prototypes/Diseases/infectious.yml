@@ -4,9 +4,9 @@
   cureResist: 0
   effects:
     - !type:DiseaseAdjustReagent
-      probability: 0.15
+      probability: 0.2
       reagent: Histamine
-      amount: 1
+      amount: 0.5
     - !type:DiseasePopUp
       probability: 0.025
     - !type:DiseaseSnough
@@ -49,9 +49,9 @@
   cureResist: 0.1
   effects:
     - !type:DiseaseAdjustReagent
-      probability: 0.03
+      probability: 0.06
       reagent: Licoxide
-      amount: 1
+      amount: 0.5
   cures:
     - !type:DiseaseJustWaitCure
       maxLength: 900
