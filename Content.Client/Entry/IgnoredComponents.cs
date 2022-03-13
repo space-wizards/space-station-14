@@ -191,6 +191,7 @@ namespace Content.Client.Entry
             "Rehydratable",
             "Headset",
             "ComputerBoard",
+            "GasAnalyzable",
             "GasCanister",
             "GasPort",
             "GasPortable",
