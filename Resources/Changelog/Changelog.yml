@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Throw pushback ratio multiplied by 10., type: Tweak}
-  id: 703
-  time: '2021-12-04T00:26:52.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed some issues preventing mobs from taking proper suffocation damage.,
@@ -2987,3 +2982,8 @@ Entries:
   - {message: 'Removed fun! No more lean, don''t do drugs kids.', type: Remove}
   id: 1202
   time: '2022-03-13T20:46:26.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Add foxes and Renault., type: Add}
+  id: 1203
+  time: '2022-03-13T23:32:33.0000000+00:00'
