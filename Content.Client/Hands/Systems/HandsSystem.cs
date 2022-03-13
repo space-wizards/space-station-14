@@ -132,7 +132,7 @@ namespace Content.Client.Hands
             {
                 // use item in hand
                 // it will always be attack_self() in my heart.
-                RaiseNetworkEvent(new UseInHandMsg());
+                EntityManager.RaisePredictiveEvent(new RequestUseInHandEvent());
                 return;
             }
 
@@ -146,23 +146,24 @@ namespace Content.Client.Hands
             if (pressedHand != hands.ActiveHand && pressedEntity != null && activeEntity != null)
             {
                 // use active item on held item
-                RaiseNetworkEvent(new ClientInteractUsingInHandMsg(pressedHand.Name));
+                EntityManager.RaisePredictiveEvent(new RequestHandInteractUsingEvent(pressedHand.Name));
                 return;
             }
 
             if (pressedHand != hands.ActiveHand && pressedEntity != null && activeEntity == null)
             {
-                // use active item on held item
-                RaiseNetworkEvent(new MoveItemFromHandMsg(pressedHand.Name));
+                // move the item to the active hand
+                EntityManager.RaisePredictiveEvent(new RequestMoveHandItemEvent(pressedHand.Name));
             }
         }
 
         /// <summary>
-        ///     Called when a user clicks on an item in their hands GUI.
+        ///     Called when a user clicks on the little "activation" icon in the hands GUI. This is currently only used
+        ///     by storage (backpacks, etc).
         /// </summary>
         public void UIHandActivate(string handName)
         {
-            RaiseNetworkEvent(new ActivateInHandMsg(handName));
+            EntityManager.RaisePredictiveEvent(new RequestActivateInHandEvent(handName));
         }
 
         #region visuals

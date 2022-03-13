@@ -218,36 +218,36 @@ namespace Content.Shared.Hands
     }
 
     /// <summary>
-    /// A message that calls the use interaction on an item in hand, presumed for now the interaction will occur only on the active hand.
+    ///     Event raised by a client when they want to use the item currently held in their hands.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class UseInHandMsg : EntityEventArgs
+    public sealed class RequestUseInHandEvent : EntityEventArgs
     {
     }
 
     /// <summary>
-    /// A message that calls the activate interaction on the item in the specified hand.
+    ///     Event raised by a client when they want to activate the item currently in their hands.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class ActivateInHandMsg : EntityEventArgs
+    public sealed class RequestActivateInHandEvent : EntityEventArgs
     {
         public string HandName { get; }
 
-        public ActivateInHandMsg(string handName)
+        public RequestActivateInHandEvent(string handName)
         {
             HandName = handName;
         }
     }
 
     /// <summary>
-    ///     Uses the item in the active hand on the item in the specified hand.
+    ///     Event raised by a client when they want to use the currently held item on some other held item
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class ClientInteractUsingInHandMsg : EntityEventArgs
+    public sealed class RequestHandInteractUsingEvent : EntityEventArgs
     {
         public string HandName { get; }
 
-        public ClientInteractUsingInHandMsg(string handName)
+        public RequestHandInteractUsingEvent(string handName)
         {
             HandName = handName;
         }
@@ -257,11 +257,11 @@ namespace Content.Shared.Hands
     ///     Moves an item from one hand to the active hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class MoveItemFromHandMsg : EntityEventArgs
+    public sealed class RequestMoveHandItemEvent : EntityEventArgs
     {
         public string HandName { get; }
 
-        public MoveItemFromHandMsg(string handName)
+        public RequestMoveHandItemEvent(string handName)
         {
             HandName = handName;
         }

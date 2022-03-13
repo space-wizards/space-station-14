@@ -1,7 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Hands.Components;
-using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
@@ -21,12 +20,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeAllEvent<RequestSetHandEvent>(HandleSetHand);
-
-        CommandBinds.Builder
-            .Bind(ContentKeyFunctions.Drop, new PointerInputCmdHandler(DropPressed))
-            .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(SwapHandsPressed, handle: false))
-            .Register<SharedHandsSystem>();
+        InitializeInteractions();
     }
 
     public override void Shutdown()

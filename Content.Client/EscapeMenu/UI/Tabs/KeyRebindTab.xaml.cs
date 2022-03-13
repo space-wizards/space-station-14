@@ -109,7 +109,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AddButton(EngineKeyFunctions.Use);
             AddButton(ContentKeyFunctions.WideAttack);
             AddButton(ContentKeyFunctions.UseItemInHand);
-            AddButton(ContentKeyFunctions.AltActivateItemInHand);
+            AddButton(ContentKeyFunctions.AltUseItemInHand);
             AddButton(ContentKeyFunctions.ActivateItemInWorld);
             AddButton(ContentKeyFunctions.AltActivateItemInWorld);
             AddButton(ContentKeyFunctions.Drop);

@@ -21,7 +21,6 @@ using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
@@ -29,7 +28,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
-using Content.Shared.Interaction;
 using Content.Shared.Pulling.Components;
 using Content.Server.Pulling;
 using Content.Shared.Hands.EntitySystems;
@@ -54,11 +52,6 @@ namespace Content.Server.Hands.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandsComponent, ExaminedEvent>(HandleExamined);
-            SubscribeNetworkEvent<ActivateInHandMsg>(HandleActivateItemInHand);
-            SubscribeNetworkEvent<ClientInteractUsingInHandMsg>(HandleInteractUsingInHand);
-            SubscribeNetworkEvent<UseInHandMsg>(HandleUseInHand);
-            SubscribeNetworkEvent<MoveItemFromHandMsg>(HandleMoveItemFromHand);
             SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] { typeof(StunSystem) });
 
             SubscribeLocalEvent<HandsComponent, PullAttemptMessage>(HandlePullAttempt);
@@ -70,8 +63,6 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
 
             CommandBinds.Builder
-                .Bind(ContentKeyFunctions.UseItemInHand, InputCmdHandler.FromDelegate(HandleUseItem))
-                .Bind(ContentKeyFunctions.AltActivateItemInHand, InputCmdHandler.FromDelegate(HandleAltUseInHand))
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
                 .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
@@ -201,42 +192,6 @@ namespace Content.Server.Hands.Systems
         #endregion
 
         #region interactions
-        private void HandleMoveItemFromHand(MoveItemFromHandMsg msg, EntitySessionEventArgs args)
-        {
-            if (args.SenderSession.AttachedEntity != null)
-                TryMoveHeldEntityToActiveHand(args.SenderSession.AttachedEntity.Value, msg.HandName);
-        }
-
-        private void HandleUseInHand(UseInHandMsg msg, EntitySessionEventArgs args)
-        {
-            if (args.SenderSession.AttachedEntity != null)
-                TryUseItemInHand(args.SenderSession.AttachedEntity.Value);
-        }
-
-        private void HandleAltUseInHand(ICommonSession? session)
-        {
-            if (session?.AttachedEntity != null)
-                TryUseItemInHand(session.AttachedEntity.Value, true);
-        }
-
-        private void HandleActivateItemInHand(ActivateInHandMsg msg, EntitySessionEventArgs args)
-        {
-            if (args.SenderSession.AttachedEntity != null)
-                TryActivateItemInHand(args.SenderSession.AttachedEntity.Value);
-        }
-
-        private void HandleInteractUsingInHand(ClientInteractUsingInHandMsg msg, EntitySessionEventArgs args)
-        {
-            if (args.SenderSession.AttachedEntity != null)
-                TryInteractHandWithActiveHand(args.SenderSession.AttachedEntity.Value, msg.HandName);
-        }
-
-        private void HandleUseItem(ICommonSession? session)
-        {
-            if (session?.AttachedEntity != null)
-                TryUseItemInHand(session.AttachedEntity.Value);
-        }
-
         private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             if (session is not IPlayerSession playerSession)
@@ -326,17 +281,5 @@ namespace Content.Server.Hands.Systems
             }
         }
         #endregion
-
-        //TODO: Actually shows all items/clothing/etc.
-        private void HandleExamined(EntityUid uid, HandsComponent component, ExaminedEvent args)
-        {
-            foreach (var inhand in EnumerateHeld(uid, component))
-            {
-                if (HasComp<HandVirtualItemComponent>(inhand))
-                    continue;
-
-                args.PushText(Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand)));
-            }
-        }
     }
 }

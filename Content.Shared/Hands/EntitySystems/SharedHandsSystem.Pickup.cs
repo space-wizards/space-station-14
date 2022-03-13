@@ -52,7 +52,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         // animation
         var xform = Transform(uid);
         var coordinateEntity = xform.ParentUid.IsValid() ? xform.ParentUid : uid;
-        var initialPosition = EntityCoordinates.FromMap(coordinateEntity, Transform(entity).MapPosition);
+        var initialPosition = EntityCoordinates.FromMap(EntityManager, coordinateEntity, Transform(entity).MapPosition);
 
         PickupAnimation(entity, initialPosition, xform.LocalPosition, animateUser ? null : uid);
         DoPickup(uid, hand, entity, handsComp);
