@@ -42,7 +42,8 @@
     devastationRange: 0
     heavyImpactRange: 0
     lightImpactRange: 2
-    scaled: false
+    scaled: true
+    maxScale: 10 # explosion strength stops scaling at 10 chlorine + 30 fluorine
   - !type:PopupMessage
     messages: [ "clf3-explosion" ]
     type: Pvs
