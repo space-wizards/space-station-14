@@ -7,7 +7,7 @@ namespace Content.Server.Disease.Cures
     public sealed class DiseaseReagentCure : DiseaseCure
     {
         [DataField("min")]
-        public FixedPoint2 Min = 1;
+        public FixedPoint2 Min = 5;
         [DataField("reagent")]
         public string? Reagent;
 

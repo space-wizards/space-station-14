@@ -2,7 +2,7 @@
   id: Gigacancer
   name: gigacancer
   infectious: false
-  cureResist: 0.145
+  cureResist: 0.15
   effects:
     - !type:DiseaseHealthChange
       probability: 0.5
@@ -15,3 +15,4 @@
     - !type:DiseaseReagentCure
       reagent: Phalanximine
       min: 15
+### Once radiation is refactored I want it to have a small chance of giving you regular cancer

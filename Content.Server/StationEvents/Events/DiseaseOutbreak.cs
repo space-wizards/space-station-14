@@ -17,7 +17,9 @@ public sealed class DiseaseOutbreak : StationEvent
     public readonly IReadOnlyList<string> NotTooSeriousDiseases = new[]
     {
         "SpaceCold",
-        "VanAusdallsRobovirus"
+        "VanAusdallsRobovirus",
+        "VentCough",
+        "AMIV"
     };
 
     public override string Name => "DiseaseOutbreak";

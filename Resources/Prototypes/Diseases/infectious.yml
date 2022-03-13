@@ -18,6 +18,75 @@
       maxLength: 400
     - !type:DiseaseReagentCure
       reagent: Ultravasculine
+    - !type:DiseaseReagentCure
+      reagent: Lean
+
+- type: disease
+  id: VentCough
+  name: Vent cough
+  effects:
+    - !type:DiseasePopUp
+      probability: 0.025
+    - !type:DiseaseSnough
+      probability: 0.025
+      type: Cough
+    - !type:DiseaseHealthChange
+      probability: 0.015
+      damage:
+        groups:
+          Caustic: 1
+  cures:
+    - !type:DiseaseBedrestCure
+      maxLength: 30
+    - !type:JustWait
+      maxLength: 600
+    - !type:DiseaseReagentCure
+      reagent: SpaceCleaner
+
+- type: disease
+  id: VanAusdallsRobovirus
+  name: Van Ausdall's Robovirus
+  cureResist: 0.1
+  effects:
+    - !type:DiseaseAdjustReagent
+      probability: 0.03
+      reagent: Licoxide
+      amount: 1
+  cures:
+    - !type:JustWait
+      maxLength: 900
+    - !type:DiseaseReagentCure
+      reagent: BeepskySmash
+
+- type: disease
+  id: AMIV
+  name: AMIV
+  cureResist: 0.10
+  effects:
+    - !type:DiseasePopUp
+      probability: 0.015
+      type: Pvs
+      message: disease-beat-chest-compulsion
+    - !type:DiseasePopUp
+      probability: 0.03
+      message: disease-steal-compulsion
+    - !type:DiseaseSnough
+      probability: 0.02
+      type: Cough
+    - !type:DiseaseGenericStatusEffect
+      probability: 0.3
+      key: Stutter
+      component: MonkeyAccent
+    - !type:DiseaseHealthChange
+      probability: 0.53
+      damage:
+        types:
+          Asphyxiation: 1
+  cures:
+    - !type:JustWait
+      maxLength: 1600
+    - !type:DiseaseReagentCure
+      reagent: BananaHonk
 
 - type: disease
   id: BleedersBite
@@ -35,23 +104,12 @@
       probability: 0.05
       message: disease-eaten-inside
   cures:
+    - !type:JustWait
+      maxLength: 900
     - !type:DiseaseBodyTemperature
       min: 360
     - !type:DiseaseReagentCure
       reagent: DemonsBlood
-
-- type: disease
-  id: VanAusdallsRobovirus
-  name: Van Ausdall's Robovirus
-  cureResist: 0.1
-  effects:
-    - !type:DiseaseAdjustReagent
-      probability: 0.04
-      reagent: Licoxide
-      amount: 1
-  cures:
-    - !type:DiseaseReagentCure
-      reagent: BeepskySmash
 
 - type: disease
   id: OwOnavirus

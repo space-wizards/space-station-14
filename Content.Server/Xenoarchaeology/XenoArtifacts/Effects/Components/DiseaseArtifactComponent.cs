@@ -37,6 +37,8 @@ public sealed class DiseaseArtifactComponent : Component
         {
             "VanAusdallsRobovirus",
             "OwOnavirus",
-            "BleedersBite"
+            "BleedersBite",
+            "Gigacancer",
+            "AMIV"
         };
 }
