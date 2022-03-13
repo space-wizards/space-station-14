@@ -1,5 +1,7 @@
 using Content.Shared.Drone;
 using Content.Server.Drone.Components;
+using Content.Shared.Actions;
+using Content.Server.Light.Components;
 using Content.Shared.MobState;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Components;
@@ -16,6 +18,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Drone
 {
@@ -24,6 +27,9 @@ namespace Content.Server.Drone
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -39,7 +45,9 @@ namespace Content.Server.Drone
 
         private void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
         {
-            if (NonDronesInRange(uid, component))
+            if (!component.ApplyLaws)
+                return;
+            if (args.Target != null && !HasComp<UnremoveableComponent>(args.Target) && NonDronesInRange(uid, component))
                 args.Cancel();
 
             if (HasComp<SharedItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
@@ -51,6 +59,8 @@ namespace Content.Server.Drone
 
         private void OnActivateUIAttempt(EntityUid uid, DroneComponent component, UserOpenActivatableUIAttemptEvent args)
         {
+            if (!component.ApplyLaws)
+                return;
             if (!_tagSystem.HasTag(args.Target, "DroneUsable"))
             {
                 args.Cancel();
@@ -109,6 +119,11 @@ namespace Content.Server.Drone
                     }
                 }
 
+                if (TryComp<ActionsComponent>(uid, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
+                {
+                    _actionsSystem.AddAction(uid, flashlight.ToggleAction, null, actions);
+                }
+
                 drone.AlreadyAwoken = true;
             }
         }
@@ -145,7 +160,8 @@ namespace Content.Server.Drone
             {
                 if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("drone-too-close"), uid, Filter.Entities(uid));
+                    if (_gameTiming.IsFirstTimePredicted)
+                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", entity)), uid, Filter.Entities(uid));
                     return true;
                 }
             }
