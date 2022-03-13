@@ -4,6 +4,10 @@ using Content.Server.Body.Components;
 
 namespace Content.Server.Disease.Cures
 {
+    /// <summary>
+    /// Cures the disease if a certain amount of reagent
+    /// is in the host's chemstream.
+    /// </summary>
     public sealed class DiseaseReagentCure : DiseaseCure
     {
         [DataField("min")]

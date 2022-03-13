@@ -5,15 +5,19 @@ using Content.Server.Disease;
 using Content.Server.Disease.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
-
+using Content.Shared.Interaction;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
 {
+    /// <summary>
+    /// Handles disease-producing artifacts
+    /// </summary>
     public sealed class DiseaseArtifactSystem : EntitySystem
     {
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {
@@ -22,6 +26,9 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
         SubscribeLocalEvent<DiseaseArtifactComponent, ArtifactActivatedEvent>(OnActivate);
         }
 
+        /// <summary>
+        /// Makes sure this artifact is assigned a disease
+        /// </summary>
         private void OnMapInit(EntityUid uid, DiseaseArtifactComponent component, MapInitEvent args)
         {
             if (component.SpawnDisease == string.Empty && component.ArtifactDiseases.Count != 0)
@@ -35,12 +42,18 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
             if (_prototypeManager.TryIndex(component.SpawnDisease, out DiseasePrototype? disease) && disease != null)
                 component.ResolveDisease = disease;
         }
-
+        /// <summary>
+        /// When activated, blasts everyone in LOS within 3 tiles
+        /// with a high-proability disease infection attempt
+        /// </summary>
         private void OnActivate(EntityUid uid, DiseaseArtifactComponent component, ArtifactActivatedEvent args)
         {
             var xform = Transform(uid);
-            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, 1.5f))
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, 3f))
             {
+                if (!_interactionSystem.InRangeUnobstructed(uid, entity, 3f))
+                    continue;
+
                 if (TryComp<DiseaseCarrierComponent>(entity, out var carrier))
                     EntitySystem.Get<DiseaseSystem>().TryInfect(carrier, component.ResolveDisease);
             }

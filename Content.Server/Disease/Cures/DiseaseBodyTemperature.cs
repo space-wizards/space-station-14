@@ -5,8 +5,7 @@ using Content.Shared.Disease;
 namespace Content.Server.Disease.Cures
 {
     /// <summary>
-    ///     Requires the solution entity to be above or below a certain temperature.
-    ///     Used for things like cryoxadone and pyroxadone.
+    ///     Cures the disease if temperature is within certain bounds.
     /// </summary>
     public sealed class DiseaseBodyTemperature : DiseaseCure
     {

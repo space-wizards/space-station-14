@@ -5,26 +5,28 @@ using JetBrains.Annotations;
 namespace Content.Server.Disease.Effects
 {
     /// <summary>
-    ///     Shamelessly modified from the chemistry version.
-    ///     Adds a generic status effect to the entity,
-    ///     not worrying about things like how to affect the time it lasts for
-    ///     or component fields or anything. Just adds a component to an entity
-    ///     for a given time. Easy.
+    /// Adds a generic status effect to the entity.
+    /// Differs from the chem version in its defaults
+    /// to better facilitate adding components that
+    /// last the length of the disease.
     /// </summary>
-    /// <remarks>
-    ///     Can be used for things like adding accents or something. I don't know. Go wild.
-    /// </remarks>
     [UsedImplicitly]
     public sealed class DiseaseGenericStatusEffect : DiseaseEffect
     {
+        /// <summary>
+        /// The status effect key
+        /// Prevents other components from being with the same key
+        /// </summary>
         [DataField("key", required: true)]
         public string Key = default!;
-
+        /// <summary>
+        /// The component to add
+        /// </summary>
         [DataField("component")]
         public string Component = String.Empty;
 
         [DataField("time")]
-        public float Time = 1.015f;
+        public float Time = 1.01f; /// I'm afraid if this was exact the key could get stolen by another thing
 
         /// <remarks>
         ///     true - refresh status effect time,  false - accumulate status effect time
@@ -55,7 +57,7 @@ namespace Content.Server.Disease.Effects
             }
         }
     }
-
+    /// See status effects for how these work
     public enum StatusEffectDiseaseType
     {
         Add,

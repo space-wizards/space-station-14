@@ -3,6 +3,10 @@ using Content.Shared.Disease;
 
 namespace Content.Client.Disease
 {
+    /// <summary>
+    /// Controls client-side visuals for the
+    /// disease machines.
+    /// </summary>
     public sealed class DiseaseMachineSystem : VisualizerSystem<DiseaseMachineVisualsComponent>
     {
         protected override void OnAppearanceChange(EntityUid uid, DiseaseMachineVisualsComponent component, ref AppearanceChangeEvent args)

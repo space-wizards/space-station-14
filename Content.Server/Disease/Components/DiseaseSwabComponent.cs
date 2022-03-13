@@ -4,7 +4,10 @@ using Content.Shared.Disease;
 namespace Content.Server.Disease.Components
 {
     [RegisterComponent]
-    /// For the swabs you use to take samples of diseases
+    /// <summary>
+    /// For mouth swabs used to collect and process
+    /// disease samples.
+    /// </summary>
     public class DiseaseSwabComponent : Component
     {
         /// <summary>

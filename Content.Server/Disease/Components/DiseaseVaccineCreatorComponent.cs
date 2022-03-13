@@ -1,7 +1,10 @@
 namespace Content.Server.Disease.Components
 {
     [RegisterComponent]
-    /// For the swabs you use to take samples of diseases
+    /// <summary>
+    /// Controls disease machine behavior specific to the
+    /// vaccine creating machine
+    /// </summary>
     public class DiseaseVaccineCreatorComponent : Component
     {}
 }

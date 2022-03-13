@@ -3,7 +3,10 @@ using Content.Server.Buckle.Components;
 
 namespace Content.Server.Disease.Cures
 {
-    /// Lie down for a time to cure this one
+    /// <summary>
+    /// Cures the disease after a certain amount of time
+    /// strapped.
+    /// </summary>
     /// TODO: Revisit after bed pr merged
     public sealed class DiseaseBedrestCure : DiseaseCure
     {

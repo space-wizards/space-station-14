@@ -4,6 +4,10 @@ using Content.Shared.Disease;
 namespace Content.Server.Disease.Components
 {
     [RegisterComponent]
+    /// <summary>
+    /// Allows the enity to be infected with diseases.
+    /// Please use only on mobs.
+    /// </summary>
     public sealed class DiseaseCarrierComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]

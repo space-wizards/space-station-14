@@ -11,8 +11,16 @@ namespace Content.Shared.Disease
         /// </summary>
         [DataField("probability")]
         public float Probability = 1.0f;
+        /// <summary>
+        /// What effect the disease will have.
+        /// </summary>
         public abstract void Effect(DiseaseEffectArgs args);
     }
+    /// <summary>
+    /// What you have to work with in any disease effect/cure.
+    /// Includes an entity manager because it is out of scope
+    /// otherwise.
+    /// </summary>
     public readonly record struct DiseaseEffectArgs(
         EntityUid DiseasedEntity,
         DiseasePrototype Disease,

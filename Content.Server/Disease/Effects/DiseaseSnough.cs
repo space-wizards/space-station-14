@@ -4,6 +4,11 @@ using JetBrains.Annotations;
 namespace Content.Server.Disease
 {
     [UsedImplicitly]
+
+    /// <summary>
+    /// Makes the diseased sneeze or cough
+    /// or neither.
+    /// </summary>
     public sealed class DiseaseSnough : DiseaseEffect
     {
         [DataField("type")]

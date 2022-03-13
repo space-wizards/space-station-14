@@ -4,7 +4,9 @@ namespace Content.Shared.Disease.Components
 {
     [NetworkedComponent]
     [RegisterComponent]
-    /// This is only used for updating, learn from my mistake don't try having data on update components
+    /// This is added to anyone with at least 1 disease
+    /// and helps cull event subscriptions and entity queries
+    /// when they are not relevant.
     public sealed class DiseasedComponent : Component
     {}
 }

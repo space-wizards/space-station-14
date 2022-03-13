@@ -45,7 +45,12 @@ namespace Content.Server.Disease
 
         private Queue<EntityUid> AddQueue = new();
         private Queue<EntityUid> RemoveQueue = new();
-        public override async void Update(float frameTime)
+
+        /// <summary>
+        /// This handles running disease machines
+        /// to handle their delay and visuals.
+        /// </summary>
+        public override void Update(float frameTime)
         {
             foreach (var uid in AddQueue)
             {
@@ -76,6 +81,14 @@ namespace Content.Server.Disease
         ///
         /// Event Handlers
         ///
+
+        /// <summary>
+        /// This handles using swabs on other people
+        /// and checks that the swab isn't already used
+        /// and the other person's mouth is accessible
+        /// and then adds a random disease from that person
+        /// to the swab if they have any
+        /// </summary>
         private void OnAfterInteract(EntityUid uid, DiseaseSwabComponent swab, AfterInteractEvent args)
         {
             IngestionBlockerComponent blocker;
@@ -122,10 +135,13 @@ namespace Content.Server.Disease
                 NeedHand = true
             });
         }
-
+        /// <summary>
+        /// This handles the disease diagnoser machine up
+        /// until it's turned on. It has some slight
+        /// differences in checks from the vaccinator.
+        /// </summary>
         private void OnAfterInteractUsing(EntityUid uid, DiseaseDiagnoserComponent component, AfterInteractUsingEvent args)
         {
-
             var machine = Comp<DiseaseMachineComponent>(uid);
             if (args.Handled || !args.CanReach)
                 return;
@@ -150,8 +166,11 @@ namespace Content.Server.Disease
             AddQueue.Enqueue(uid);
             UpdateAppearance(uid, true, true);
         }
-
-
+        /// <summary>
+        /// This handles the vaccinator machine up
+        /// until it's turned on. It has some slight
+        /// differences in checks from the diagnoser.
+        /// </summary>
         private void OnAfterInteractUsingVaccine(EntityUid uid, DiseaseVaccineCreatorComponent component, AfterInteractUsingEvent args)
         {
             if (args.Handled || !args.CanReach)
@@ -177,7 +196,10 @@ namespace Content.Server.Disease
             UpdateAppearance(uid, true, true);
         }
 
-
+        /// <summary>
+        /// This handles swab examination text
+        /// so you can tell if they are used or not.
+        /// </summary>
         private void OnExamined(EntityUid uid, DiseaseSwabComponent swab, ExaminedEvent args)
         {
             if (args.IsInDetailsRange)
@@ -196,6 +218,14 @@ namespace Content.Server.Disease
         ///
         /// Helper functions
         ///
+
+        /// <summary>
+        /// This assembles a disease report
+        /// With its basic details and
+        /// specific cures (i.e. not spaceacillin).
+        /// The cure resist field tells you how
+        /// effective spaceacillin etc will be.
+        /// </summary>
         private string AssembleDiseaseReport(DiseasePrototype disease)
         {
             string report = string.Empty;
@@ -250,10 +280,20 @@ namespace Content.Server.Disease
         ///
         /// Appearance stuff
         ///
+
+        /// <summary>
+        /// Initializes the appearance for all kinds of disease machines
+        /// since they use the same sytem
+        /// </summary>
         private void OnComponentStartup(EntityUid uid, DiseaseMachineComponent component, ComponentStartup args)
         {
             UpdateAppearance(uid, false, false);
         }
+
+        /// <summary>
+        /// Appearance helper function to
+        /// set the component's power and running states.
+        /// </summary>
         private void UpdateAppearance(EntityUid uid, bool isOn, bool isRunning)
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
@@ -262,7 +302,9 @@ namespace Content.Server.Disease
             appearance.SetData(DiseaseMachineVisuals.IsOn, isOn);
             appearance.SetData(DiseaseMachineVisuals.IsRunning, isRunning);
         }
-
+        /// <summary>
+        /// Makes sure the machine is visually off/on.
+        /// </summary>
         private void OnPowerChanged(EntityUid uid, DiseaseMachineComponent component, PowerChangedEvent args)
         {
             UpdateAppearance(uid, args.Powered, false);
@@ -270,6 +312,11 @@ namespace Content.Server.Disease
         ///
         /// Private events
         ///
+
+        /// <summary>
+        /// Copies a disease prototype to the swab
+        /// after the doafter completes.
+        /// </summary>
         private void OnTargetSwabSuccessful(TargetSwabSuccessfulEvent args)
         {
             if (args.Target == null)
@@ -284,11 +331,18 @@ namespace Content.Server.Disease
             args.Swab.Disease = _random.Pick(args.Carrier.Diseases);
         }
 
+        /// <summary>
+        /// Cancels the swab doafter if needed.
+        /// </summary>
         private static void OnSwabCancelled(SwabCancelledEvent args)
         {
             args.Swab.CancelToken = null;
         }
 
+        /// <summary>
+        /// Prints a diagnostic report with its findings.
+        /// Also cancels the animation.
+        /// </summary>
         private void OnDiagnoserFinished(EntityUid uid, DiseaseDiagnoserComponent component, DiseaseMachineFinishedEvent args)
         {
             var power = Comp<ApcPowerReceiverComponent>(uid);
@@ -316,7 +370,10 @@ namespace Content.Server.Disease
 
             paper.SetContent(contents);
         }
-
+        /// <summary>
+        /// Prints a vaccine that will vaccinate
+        /// against the disease on the inserted swab.
+        /// <summary>
         private void OnVaccinatorFinished(EntityUid uid, DiseaseVaccineCreatorComponent component, DiseaseMachineFinishedEvent args)
         {
             var power = Comp<ApcPowerReceiverComponent>(uid);
@@ -338,7 +395,7 @@ namespace Content.Server.Disease
                 Swab = swab;
             }
         }
-
+        /// These two are just standard doafter stuff
         private sealed class TargetSwabSuccessfulEvent : EntityEventArgs
         {
             public EntityUid User { get; }
@@ -355,7 +412,11 @@ namespace Content.Server.Disease
                 Carrier = carrier;
             }
         }
-
+        /// <summary>
+        /// Fires when a disease machine is done
+        /// with its production delay and ready to
+        /// create a report or vaccine
+        /// </summary>
         private sealed class DiseaseMachineFinishedEvent : EntityEventArgs
         {
             public DiseaseMachineComponent Machine {get;}

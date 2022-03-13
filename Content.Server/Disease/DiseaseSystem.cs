@@ -18,6 +18,10 @@ using Content.Server.Nutrition.EntitySystems;
 
 namespace Content.Server.Disease
 {
+
+    /// <summary>
+    /// Handles disease propagation & curing
+    /// </summary>
     public sealed class DiseaseSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -39,12 +43,19 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<DiseaseVaccineComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<DiseaseVaccineComponent, ExaminedEvent>(OnExamined);
+            /// Private events stuff
             SubscribeLocalEvent<TargetVaxxSuccessfulEvent>(OnTargetVaxxSuccessful);
             SubscribeLocalEvent<VaxxCancelledEvent>(OnVaxxCancelled);
         }
 
         private Queue<EntityUid> AddQueue = new();
         private Queue<(DiseaseCarrierComponent, DiseasePrototype)> CureQueue = new();
+
+        /// <summary>
+        /// First, adds or removes diseased component from the queues and clears them.
+        /// Then, iterates over every diseased component to check for their effects
+        /// and cures
+        /// </summary>
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -93,6 +104,16 @@ namespace Content.Server.Disease
                 }
             }
         }
+
+        ///
+        /// Event Handlers
+        ///
+
+        /// <summary>
+        /// Used when something is trying to cure ANY disease on the target,
+        /// not for special disease interactions. Randomly
+        /// tries to cure every disease on the target.
+        /// </summary>
         private void OnTryCureDisease(EntityUid uid, DiseaseCarrierComponent component, CureDiseaseAttemptEvent args)
         {
             foreach (var disease in component.Diseases)
@@ -112,7 +133,11 @@ namespace Content.Server.Disease
                 }
             }
         }
-
+        /// <summary>
+        /// Called when a component with disease protection
+        /// is equipped so it can be added to the person's
+        /// total disease resistance
+        /// </summary>
         private void OnEquipped(EntityUid uid, DiseaseProtectionComponent component, GotEquippedEvent args)
         {
             if (TryComp<ClothingComponent>(uid, out var clothing))
@@ -122,13 +147,21 @@ namespace Content.Server.Disease
             if(TryComp<DiseaseCarrierComponent>(args.Equipee, out var carrier))
                 carrier.DiseaseResist += component.Protection;
         }
-
-
+        /// <summary>
+        /// Called when a component with disease protection
+        /// is unequipped so it can be removed from the person's
+        /// total disease resistance
+        /// </summary>
         private void OnUnequipped(EntityUid uid, DiseaseProtectionComponent component, GotUnequippedEvent args)
         {
             if(TryComp<DiseaseCarrierComponent>(args.Equipee, out var carrier))
                 carrier.DiseaseResist -= component.Protection;
         }
+        /// <summary>
+        /// Called when it's already decided a disease will be cured
+        /// so it can be safely queued up to be removed from the target
+        /// and added to past disease history (for immunity)
+        /// </summary>
         private void CureDisease(DiseaseCarrierComponent carrier, DiseasePrototype? disease)
         {
             if (disease == null)
@@ -138,6 +171,10 @@ namespace Content.Server.Disease
             _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Entities(carrier.Owner));
         }
 
+        /// <summary>
+        /// Called when someone interacts with a diseased person with an empty hand
+        /// to check if they get infected
+        /// </summary>
         private void OnInteractDiseasedHand(EntityUid uid, DiseasedComponent component, InteractHandEvent args)
         {
             if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
@@ -145,12 +182,19 @@ namespace Content.Server.Disease
 
             InteractWithDiseased (args.Target, args.User);
         }
-
+        /// <summary>
+        /// Called when someone interacts with a diseased person with any object
+        /// to check if they get infected
+        /// </summary>
         private void OnInteractDiseasedUsing(EntityUid uid, DiseasedComponent component, InteractUsingEvent args)
         {
             InteractWithDiseased(args.Target, args.User);
         }
 
+        /// <summary>
+        /// Called when a vaccine is used on someone
+        /// to handle the vaccination doafter
+        /// </summary>
         private void OnAfterInteract(EntityUid uid, DiseaseVaccineComponent vaxx, AfterInteractEvent args)
         {
             if (vaxx.CancelToken != null)
@@ -189,6 +233,13 @@ namespace Content.Server.Disease
             });
         }
 
+        /// <summary>
+        /// Called when a vaccine is examined.
+        /// Currently doesn't do much because
+        /// vaccines don't have unique art with a seperate
+        /// state visualizer.
+        /// </summary>
+
         private void OnExamined(EntityUid uid, DiseaseVaccineComponent vaxx, ExaminedEvent args)
         {
             if (args.IsInDetailsRange)
@@ -204,6 +255,14 @@ namespace Content.Server.Disease
             }
         }
 
+        ///
+        /// Helper functions
+        ///
+
+        /// <summary>
+        /// Tries to infect anyone that
+        /// interacts with a diseased person or body
+        /// </summary>
         private void InteractWithDiseased(EntityUid diseased, EntityUid target)
         {
             if (!TryComp<DiseaseCarrierComponent>(target, out var carrier))
@@ -213,6 +272,13 @@ namespace Content.Server.Disease
             if (disease != null)
                 TryInfect(carrier, disease, 0.4f);
         }
+        /// <summary>
+        /// Adds a disease to a target
+        /// if it's not already in their current
+        /// or past diseases. If you want this
+        /// to not be guaranteed you are looking
+        /// for TryInfect.
+        /// </summary>
         public void TryAddDisease(DiseaseCarrierComponent? target, DiseasePrototype? addedDisease, string? diseaseName = null, EntityUid host = default!)
         {
             if (diseaseName != null && _prototypeManager.TryIndex(diseaseName, out DiseasePrototype? diseaseProto))
@@ -233,6 +299,12 @@ namespace Content.Server.Disease
             AddQueue.Enqueue(target.Owner);
             }
         }
+        /// <summary>
+        /// Pits the infection chance against the
+        /// person's disease resistance and
+        /// rolls the dice to see if they get
+        /// the disease.
+        /// </summary>
         public void TryInfect(DiseaseCarrierComponent carrier, DiseasePrototype? disease, float chance = 0.7f)
         {
             if(disease == null || !disease.Infectious)
@@ -243,6 +315,11 @@ namespace Content.Server.Disease
             if (_random.Prob(infectionChance))
                 TryAddDisease(carrier, disease);
         }
+        /// <summary>
+        /// Plays a sneeze/cough popup if applicable
+        /// and then tries to infect anyone in range
+        /// if the snougher is not wearing a mask.
+        /// </summary>
         public void SneezeCough(EntityUid uid, DiseasePrototype? disease, SneezeCoughType Snough, float infectionChance = 0.3f)
         {
             IngestionBlockerComponent blocker;
@@ -263,14 +340,20 @@ namespace Content.Server.Disease
                 blocker.Enabled)
                 return;
 
-            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, infectionChance))
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, 2f))
             {
+                if (!_interactionSystem.InRangeUnobstructed(uid, entity))
+                    continue;
+
                 if (TryComp<DiseaseCarrierComponent>(entity, out var carrier))
                     TryInfect(carrier, disease, 0.3f);
             }
-
         }
-
+        /// <summary>
+        /// Adds a disease to the carrier's
+        /// past diseases to give them immunity
+        /// IF they don't already have the disease.
+        /// </summary/
         public void Vaccinate(DiseaseCarrierComponent carrier, DiseasePrototype disease)
         {
             foreach (var currentDisease in carrier.Diseases)
@@ -281,6 +364,14 @@ namespace Content.Server.Disease
             carrier.PastDiseases.Add(disease);
         }
 
+        ///
+        /// Private Events Stuff
+        ///
+
+        /// <summary>
+        /// Injects the vaccine into the target
+        /// if the doafter is completed
+        /// </summary>
         private void OnTargetVaxxSuccessful(TargetVaxxSuccessfulEvent args)
         {
             if (args.Vaxx.Disease == null)
@@ -288,11 +379,14 @@ namespace Content.Server.Disease
             Vaccinate(args.Carrier, args.Vaxx.Disease);
             EntityManager.DeleteEntity(args.Vaxx.Owner);
         }
-
+        /// <summary>
+        /// Cancels the vaccine doafter
+        /// </summary>
         private static void OnVaxxCancelled(VaxxCancelledEvent args)
         {
             args.Vaxx.CancelToken = null;
         }
+        /// These two are standard doafter stuff you can ignore
         private sealed class VaxxCancelledEvent : EntityEventArgs
         {
             public readonly DiseaseVaccineComponent Vaxx;
@@ -319,6 +413,12 @@ namespace Content.Server.Disease
             }
         }
     }
+        /// <summary>
+        /// This event is fired by chems
+        /// and other brute-force rather than
+        /// specific cures. It will roll the dice to attempt
+        /// to cure each disease on the target
+        /// </summary>
         public sealed class CureDiseaseAttemptEvent : EntityEventArgs
         {
             public float CureChance { get; }
@@ -328,7 +428,11 @@ namespace Content.Server.Disease
                 CureChance = cureChance;
             }
         }
-
+        /// <summary>
+        /// Controls whether the snough is a sneeze, cough
+        /// or neither. If none, will not create
+        /// a popup. Mostly used for talking
+        /// </summary>
         public enum SneezeCoughType
         {
             Sneeze,

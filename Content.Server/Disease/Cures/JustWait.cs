@@ -2,6 +2,10 @@ using Content.Shared.Disease;
 
 namespace Content.Server.Disease.Cures
 {
+    /// <summary>
+    /// Automatically removes the disease after a
+    /// certain amount of time.
+    /// </summary>
     public sealed class JustWait : DiseaseCure
     {
         [ViewVariables(VVAccess.ReadWrite)]

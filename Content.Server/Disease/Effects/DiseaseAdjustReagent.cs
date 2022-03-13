@@ -4,12 +4,15 @@ using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Content.Server.Body.Components;
 using Content.Shared.Disease;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Disease.Effects
 {
     [UsedImplicitly]
+    /// <summary>
+    /// Adds or removes reagents from the
+    /// host's chemstream.
+    /// </summary>
     public sealed class DiseaseAdjustReagent : DiseaseEffect
     {
         /// <summary>

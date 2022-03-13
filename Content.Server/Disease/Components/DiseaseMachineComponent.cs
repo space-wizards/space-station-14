@@ -5,7 +5,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Disease.Components
 {
     [RegisterComponent]
-    /// For the swabs you use to take samples of diseases
+    /// <summary>
+    /// For shared behavior between both disease machines
+    /// </summary>
     public class DiseaseMachineComponent : Component
     {
         [DataField("delay")]

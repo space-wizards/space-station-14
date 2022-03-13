@@ -4,7 +4,9 @@ using Content.Shared.Disease;
 namespace Content.Server.Disease.Components
 {
     [RegisterComponent]
-    /// For the swabs you use to take samples of diseases
+    /// <summary>
+    /// For disease vaccines
+    /// </summary>
     public class DiseaseVaccineComponent : Component
     {
         /// <summary>
@@ -16,17 +18,17 @@ namespace Content.Server.Disease.Components
 
 
         /// <summary>
-        /// If this swab has been used
+        /// If this vaccine has been used
         /// </summary>
         public bool Used = false;
 
         /// <summary>
-        /// Token for interrupting swabbing do after.
+        /// Token for interrupting injection do after.
         /// </summary>
         public CancellationTokenSource? CancelToken;
 
         /// <summary>
-        /// The disease prototype currently on the swab
+        /// The disease prototype currently on the vaccine
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public DiseasePrototype? Disease;
