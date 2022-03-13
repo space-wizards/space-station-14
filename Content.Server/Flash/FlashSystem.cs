@@ -4,6 +4,7 @@ using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
 using Content.Shared.Flash;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
@@ -18,7 +19,7 @@ namespace Content.Server.Flash
 {
     internal sealed class FlashSystem : SharedFlashSystem
     {
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
@@ -44,8 +45,8 @@ namespace Content.Server.Flash
 
         private void OnMetaFlagRemoval(EntityUid uid, FlashableComponent component, ref MetaFlagRemoveAttemptEvent args)
         {
-            if (component.LifeStage > ComponentLifeStage.Initialized) return;
-            args.Cancelled = true;
+            if (component.LifeStage == ComponentLifeStage.Running)
+                args.Cancelled = true;
         }
 
         private void OnFlashableStartup(EntityUid uid, FlashableComponent component, ComponentStartup args)

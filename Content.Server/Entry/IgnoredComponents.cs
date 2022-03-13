@@ -18,7 +18,8 @@ namespace Content.Server.Entry
             "CharacterInfo",
             "ItemCabinetVisuals",
             "PuddleVisuals",
-            "HandheldGPS"
+            "HandheldGPS",
+            "PotencyVisuals"
         };
     }
 }

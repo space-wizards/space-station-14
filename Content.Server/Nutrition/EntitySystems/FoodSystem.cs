@@ -21,6 +21,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -259,6 +260,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     TryFeed(uid, ev.User, component);
                 },
+                IconTexture = "/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png",
                 Text = Loc.GetString("food-system-verb-eat"),
                 Priority = -1
             };

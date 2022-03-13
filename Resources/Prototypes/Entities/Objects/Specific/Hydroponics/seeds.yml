@@ -282,3 +282,14 @@
       seed: gatfruit
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/gatfruit.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of onion seeds
+  description: "Not a shallot."
+  id: OnionSeeds
+  components:
+    - type: Seed
+      seed: onion
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/onion.rsi

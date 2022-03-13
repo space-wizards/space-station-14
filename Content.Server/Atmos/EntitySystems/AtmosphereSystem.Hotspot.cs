@@ -15,7 +15,7 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
         private const int HotspotSoundCooldownCycles = 200;
 

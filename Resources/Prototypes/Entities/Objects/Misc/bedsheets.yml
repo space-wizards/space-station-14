@@ -14,7 +14,7 @@
     netsync: false
   - type: Clothing
     size: 10
-    QuickEquip: true
+    quickEquip: true
     Slots:
     - neck
 

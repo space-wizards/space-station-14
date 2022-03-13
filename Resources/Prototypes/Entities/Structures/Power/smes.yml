@@ -8,6 +8,7 @@
     mode: SnapgridCenter
   components:
     - type: AmbientSound
+      volume: -7
       range: 3
       sound:
         path: /Audio/Ambience/Objects/periodic_beep.ogg

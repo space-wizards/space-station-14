@@ -8,6 +8,7 @@
   - type: AtmosDevice
   - type: SubFloorHide
     blockInteractions: false
+    blockAmbience: false
   - type: NodeContainer
     nodes:
       inlet:
@@ -50,6 +51,12 @@
   - type: Construction
     graph: GasBinary
     node: pressurepump
+  - type: AmbientSound
+    enabled: false
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/gas_pump.ogg
 
 - type: entity
   parent: GasBinaryBase
@@ -67,10 +74,13 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpVolume
-          map: [ "enum.SubfloorLayers.FirstLayer" ]
+          map: [ "enum.SubfloorLayers.FirstLayer", "enum.PressurePumpVisualizer+Layers.Enabled" ]
     - type: Appearance
       visuals:
         - type: PipeColorVisualizer
+        - type: PressurePumpVisualizer
+          disabledState: pumpVolume
+          enabledState: pumpVolumeOn
     - type: GasVolumePump
     - type: UserInterface
       interfaces:
@@ -79,6 +89,12 @@
     - type: Construction
       graph: GasBinary
       node: volumepump
+    - type: AmbientSound
+      enabled: false
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_pump.ogg
 
 - type: entity
   parent: GasBinaryBase
@@ -104,6 +120,12 @@
     - type: Construction
       graph: GasBinary
       node: passivegate
+    - type: AmbientSound
+      enabled: true
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_hiss.ogg
 
 - type: entity
   parent: GasBinaryBase
@@ -145,6 +167,12 @@
     - type: Construction
       graph: GasBinary
       node: valve
+    - type: AmbientSound
+      enabled: false
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_hiss.ogg
 
 - type: entity
   parent: GasBinaryBase

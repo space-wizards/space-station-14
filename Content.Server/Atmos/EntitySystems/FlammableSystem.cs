@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
+using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
@@ -54,10 +55,13 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void IgniteOnCollide(EntityUid uid, IgniteOnCollideComponent component, StartCollideEvent args)
         {
-            var otherfixture = args.OtherFixture.Body.Owner;
-            if (EntityManager.TryGetComponent(otherfixture, out FlammableComponent flammable))
-                flammable.FireStacks += component.FireStacks;
-                Ignite(otherfixture, flammable);
+            var otherFixture = args.OtherFixture.Body.Owner;
+
+            if (!EntityManager.TryGetComponent(otherFixture, out FlammableComponent flammable))
+                return;
+
+            flammable.FireStacks += component.FireStacks;
+            Ignite(otherFixture, flammable);
         }
 
         private void OnInteractUsingEvent(EntityUid uid, FlammableComponent flammable, InteractUsingEvent args)
@@ -208,9 +212,9 @@ namespace Content.Server.Atmos.EntitySystems
                 var fireStackDelta = fireStackMod - flammable.FireStacks;
                 if (fireStackDelta > 0)
                 {
-                    AdjustFireStacks((flammable).Owner, fireStackDelta, flammable);
+                    AdjustFireStacks(flammable.Owner, fireStackDelta, flammable);
                 }
-                Ignite((flammable).Owner, flammable);
+                Ignite(flammable.Owner, flammable);
             }
             _fireEvents.Clear();
 
@@ -244,7 +248,10 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     // TODO FLAMMABLE: further balancing
                     var damageScale = Math.Min((int)flammable.FireStacks, 5);
-                    _temperatureSystem.ChangeHeat(uid, 12500 * damageScale);
+                    
+                    if(TryComp(uid, out TemperatureComponent? temp))
+                        _temperatureSystem.ChangeHeat(uid, 12500 * damageScale, false, temp);
+
                     _damageableSystem.TryChangeDamage(uid, flammable.Damage * damageScale);
 
                     AdjustFireStacks(uid, -0.1f * (flammable.Resisting ? 10f : 1f), flammable);

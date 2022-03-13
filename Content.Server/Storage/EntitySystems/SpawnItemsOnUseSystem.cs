@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Storage.Components;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -48,7 +48,7 @@ namespace Content.Server.Storage.EntitySystems
             }
 
             if (component.Sound != null)
-                SoundSystem.Play(Filter.Pvs(uid), component.Sound.GetSound());
+                SoundSystem.Play(Filter.Pvs(uid), component.Sound.GetSound(), uid);
 
             component.Uses--;
             if (component.Uses == 0)

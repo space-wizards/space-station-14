@@ -72,6 +72,8 @@ namespace Content.Server.Climbing
 
         private void OnGlassClimbed(EntityUid uid, GlassTableComponent component, ClimbedOnEvent args)
         {
+            if (TryComp<PhysicsComponent>(args.Climber, out var physics) && physics.Mass <= component.MassLimit)
+                return;
             _damageableSystem.TryChangeDamage(args.Climber, component.ClimberDamage);
             _damageableSystem.TryChangeDamage(uid, component.TableDamage);
             _stunSystem.TryParalyze(args.Climber, TimeSpan.FromSeconds(component.StunTime), true);

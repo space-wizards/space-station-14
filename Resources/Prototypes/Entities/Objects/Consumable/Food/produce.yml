@@ -10,6 +10,8 @@
     netsync: false
     state: produce
   - type: Produce
+  - type: PotencyVisuals
+  - type: Appearance
   - type: Extractable
     grindableSolutionName: food
 
@@ -25,6 +27,8 @@
     netsync: false
     state: produce
   - type: Produce
+  - type: PotencyVisuals
+  - type: Appearance
   - type: Extractable
     grindableSolutionName: food
 

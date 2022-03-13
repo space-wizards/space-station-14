@@ -601,6 +601,7 @@ namespace Content.Client.Actions
 
             fillEvent.Action.ClientExclusive = true;
             fillEvent.Action.Temporary = true;
+            fillEvent.Action.AutoPopulate = false;
 
             Ui.Component.Actions.Add(fillEvent.Action);
             Assignments.AssignSlot(hotbar, index, fillEvent.Action);
@@ -608,11 +609,9 @@ namespace Content.Client.Actions
             Ui.UpdateUI();
         }
 
-        public void SaveActionAssignments(string path)
+        /*public void SaveActionAssignments(string path)
         {
-            // Disabled until YamlMappingFix's sandbox issues are resolved.
-
-            /*
+            
             // Currently only tested with temporary innate actions (i.e., mapping actions). No guarantee it works with
             // other actions. If its meant to be used for full game state saving/loading, the entity that provides
             // actions needs to keep the same uid.
@@ -630,8 +629,7 @@ namespace Content.Client.Actions
             using var writer = _resourceManager.UserData.OpenWriteText(new ResourcePath(path).ToRootedPath());
             var stream = new YamlStream { new(sequence.ToSequenceNode()) };
             stream.Save(new YamlMappingFix(new Emitter(writer)), false);
-            */
-        }
+        }*/
 
         /// <summary>
         ///     Load actions and their toolbar assignments from a file.

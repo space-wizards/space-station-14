@@ -45,7 +45,7 @@
   name: ephedrine
   group: Narcotics
   desc: Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing.
-  physicalDesc: Bone white
+  physicalDesc: powdery
   color: "#D2FFFA"
   boilingPoint: 255.0
   meltingPoint: 36.0
