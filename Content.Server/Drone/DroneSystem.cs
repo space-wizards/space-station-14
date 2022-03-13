@@ -103,8 +103,7 @@ namespace Content.Server.Drone
                    foreach (var entry in drone.Tools)
                    {
                        var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
-                       if (item.ToString() != "ClothingBackpackSatchelDrone")
-                       {AddComp<UnremoveableComponent>(item);}
+                       AddComp<UnremoveableComponent>(item);
                        hands.PutInHand(item);
                        drone.ToolUids.Add(item);
                    }
