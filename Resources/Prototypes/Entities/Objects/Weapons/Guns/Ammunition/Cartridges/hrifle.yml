@@ -24,3 +24,4 @@
   components:
   - type: Ammo
     projectile: BulletMinigun
+    caseless: true

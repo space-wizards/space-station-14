@@ -312,6 +312,7 @@ namespace Content.Client.Entry
             "Spreader",
             "GrowingKudzu",
             "MonkeyAccent",
+            "LizardAccent",
             "ReplacementAccent",
             "ResistLocker",
             "IgniteOnCollide",
