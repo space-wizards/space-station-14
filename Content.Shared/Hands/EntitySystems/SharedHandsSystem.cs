@@ -59,7 +59,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!handsComp.Hands.Remove(handName, out var hand))
             return;
 
-        TryDrop(uid, hand, null, false, handsComp);
+        TryDrop(uid, hand, null, false, true, handsComp);
         hand.Container?.Shutdown();
         handsComp.SortedHands.Remove(hand.Name);
 

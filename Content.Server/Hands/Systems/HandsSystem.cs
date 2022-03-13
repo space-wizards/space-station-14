@@ -106,9 +106,9 @@ namespace Content.Server.Hands.Systems
         }
 
         #region EntityInsertRemove
-        public override void DoDrop(EntityUid uid, Hand hand, SharedHandsComponent? hands = null)
+        public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? hands = null)
         {
-            base.DoDrop(uid, hand, hands);
+            base.DoDrop(uid, hand,doDropInteraction, hands);
 
             // update gui of anyone stripping this entity.
             _strippableSystem.SendUpdate(uid);
