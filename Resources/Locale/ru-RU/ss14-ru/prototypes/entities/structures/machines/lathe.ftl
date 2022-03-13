@@ -10,3 +10,6 @@ ent-CircuitImprinter = Circuit Imprinter
 ent-SecurityTechFab = Security TechFab
     .desc = Prints security equipment and some basics.
     .suffix = { "" }
+ent-UniformPrinter = uniform printer
+    .desc = Prints new or replacement uniforms.
+    .suffix = { "" }
