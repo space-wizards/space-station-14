@@ -31,7 +31,7 @@ public sealed class DiseaseArtifactComponent : Component
         "VanAusdallsRobovirus",
         "OwOnavirus",
         "BleedersBite",
-        "Gigacancer",
+        "Ultragigacancer",
         "AMIV"
     };
 }
