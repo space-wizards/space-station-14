@@ -148,7 +148,7 @@ namespace Content.Server.Cuffs.Components
                     continue;
                 }
 
-                sys.TryDrop(Owner, hand, checkActionBlocker: false, hands: handsComponent);
+                sys.TryDrop(Owner, hand, checkActionBlocker: false, handsComp: handsComponent);
             }
         }
 

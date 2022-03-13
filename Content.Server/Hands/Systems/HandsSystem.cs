@@ -214,7 +214,7 @@ namespace Content.Server.Hands.Systems
 
                 throwEnt = splitStack.Value;
             }
-            else if (!TryDrop(player, throwEnt, hands: hands))
+            else if (!TryDrop(player, throwEnt, handsComp: hands))
                 return false;
 
             var direction = coords.ToMapPos(EntityManager) - Transform(player).WorldPosition;

@@ -81,7 +81,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
         if (TryComp(session?.AttachedEntity, out SharedHandsComponent? hands) && hands.ActiveHand != null)
-            TryDrop(session!.AttachedEntity!.Value, hands.ActiveHand, coords, hands: hands);
+            TryDrop(session!.AttachedEntity!.Value, hands.ActiveHand, coords, handsComp: hands);
 
         // always send to server.
         return false;
@@ -145,7 +145,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!handsComp.Hands.TryGetValue(handName, out var hand))
             return false;
 
-        if (!CanDropHeld(uid, hand, checkActionBlocker, handsComp))
+        if (!CanDropHeld(uid, hand, checkActionBlocker))
             return false;
 
         var entity = hand.HeldEntity!.Value;
@@ -159,14 +159,14 @@ public abstract partial class SharedHandsSystem : EntitySystem
     }
 
     //TODO: Actually shows all items/clothing/etc.
-    private void HandleExamined(EntityUid uid, SharedHandsComponent component, ExaminedEvent args)
+    private void HandleExamined(EntityUid uid, SharedHandsComponent handsComp, ExaminedEvent args)
     {
-        foreach (var inhand in EnumerateHeld(uid, component))
+        foreach (var inhand in EnumerateHeld(uid, handsComp))
         {
             if (HasComp<HandVirtualItemComponent>(inhand))
                 continue;
 
-            args.PushText(Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand)));
+            args.PushText(Loc.GetString("comp-hands-examine", ("user", handsComp.Owner), ("item", inhand)));
         }
     }
 }

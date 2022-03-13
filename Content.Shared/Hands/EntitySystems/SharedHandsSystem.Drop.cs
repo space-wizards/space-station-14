@@ -10,7 +10,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// <summary>
     ///     Checks if the contents of a hand is able to be removed from its container.
     /// </summary>
-    public bool CanDropHeld(EntityUid uid, Hand hand, bool checkActionBlocker = true, SharedHandsComponent? hands = null)
+    public bool CanDropHeld(EntityUid uid, Hand hand, bool checkActionBlocker = true)
     {
         if (hand.HeldEntity == null)
             return false;
@@ -27,44 +27,44 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// <summary>
     ///     Attempts to drop the item in the currently active hand.
     /// </summary>
-    public bool TryDrop(EntityUid uid, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true, SharedHandsComponent? hands = null)
+    public bool TryDrop(EntityUid uid, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true, SharedHandsComponent? handsComp = null)
     {
-        if (!Resolve(uid, ref hands))
+        if (!Resolve(uid, ref handsComp))
             return false;
 
-        if (hands.ActiveHand == null)
+        if (handsComp.ActiveHand == null)
             return false;
 
-        return TryDrop(uid, hands.ActiveHand, targetDropLocation, checkActionBlocker, doDropInteraction, hands);
+        return TryDrop(uid, handsComp.ActiveHand, targetDropLocation, checkActionBlocker, doDropInteraction, handsComp);
     }
 
     /// <summary>
     ///     Drops an item at the target location.
     /// </summary>
-    public bool TryDrop(EntityUid uid, EntityUid entity, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true, SharedHandsComponent? hands = null)
+    public bool TryDrop(EntityUid uid, EntityUid entity, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true, SharedHandsComponent? handsComp = null)
     {
-        if (!Resolve(uid, ref hands))
+        if (!Resolve(uid, ref handsComp))
             return false;
 
-        if (!IsHolding(uid, entity, out var hand, hands))
+        if (!IsHolding(uid, entity, out var hand, handsComp))
             return false;
 
-        return TryDrop(uid, hand, targetDropLocation, checkActionBlocker, doDropInteraction, hands);
+        return TryDrop(uid, hand, targetDropLocation, checkActionBlocker, doDropInteraction, handsComp);
     }
 
     /// <summary>
     ///     Drops a hands contents at the target location.
     /// </summary>
-    public bool TryDrop(EntityUid uid, Hand hand, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true, SharedHandsComponent? hands = null)
+    public bool TryDrop(EntityUid uid, Hand hand, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true, SharedHandsComponent? handsComp = null)
     {
-        if (!Resolve(uid, ref hands))
+        if (!Resolve(uid, ref handsComp))
             return false;
 
-        if (!CanDropHeld(uid, hand, checkActionBlocker, hands))
+        if (!CanDropHeld(uid, hand, checkActionBlocker))
             return false;
 
         var entity = hand.HeldEntity!.Value;
-        DoDrop(uid, hand, doDropInteraction: doDropInteraction, hands);
+        DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
 
         var xform = Transform(uid);
 
@@ -83,21 +83,21 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// <summary>
     ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor in-between.
     /// </summary>
-    public bool TryDropIntoContainer(EntityUid uid, EntityUid entity, BaseContainer targetContainer, bool checkActionBlocker = true, SharedHandsComponent? hands = null)
+    public bool TryDropIntoContainer(EntityUid uid, EntityUid entity, BaseContainer targetContainer, bool checkActionBlocker = true, SharedHandsComponent? handsComp = null)
     {
-        if (!Resolve(uid, ref hands))
+        if (!Resolve(uid, ref handsComp))
             return false;
 
-        if (!IsHolding(uid, entity, out var hand, hands))
+        if (!IsHolding(uid, entity, out var hand, handsComp))
             return false;
 
-        if (!CanDropHeld(uid, hand, checkActionBlocker, hands))
+        if (!CanDropHeld(uid, hand, checkActionBlocker))
             return false;
 
         if (!targetContainer.CanInsert(entity, EntityManager))
             return false;
 
-        DoDrop(uid, hand, false, hands);
+        DoDrop(uid, hand, false, handsComp);
         targetContainer.Insert(entity);
         return true;
     }
@@ -126,9 +126,9 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// <summary>
     ///     Removes the contents of a hand from its container. Assumes that the removal is allowed. In general, you should not be calling this directly.
     /// </summary>
-    public virtual void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? hands = null)
+    public virtual void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? handsComp = null)
     {
-        if (!Resolve(uid, ref hands))
+        if (!Resolve(uid, ref handsComp))
             return;
 
         if (hand.Container?.ContainedEntity == null)
@@ -142,7 +142,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
             return;
         }
 
-        Dirty(hands);
+        Dirty(handsComp);
 
         if (doDropInteraction)
             _interactionSystem.DroppedInteraction(uid, entity);
@@ -153,7 +153,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         var didUnequip = new DidUnequipHandEvent(uid, entity, hand);
         RaiseLocalEvent(uid, didUnequip);
 
-        if (hand == hands.ActiveHand)
+        if (hand == handsComp.ActiveHand)
             RaiseLocalEvent(entity, new HandDeselectedEvent(uid), false);
     }
 }

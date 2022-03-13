@@ -89,7 +89,7 @@ namespace Content.Server.Strip
                     return false;
                 }
 
-                if (!handSys.CanDropHeld(user, userHands.ActiveHand, hands: userHands))
+                if (!handSys.CanDropHeld(user, userHands.ActiveHand))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop"));
                     return false;
@@ -129,7 +129,7 @@ namespace Content.Server.Strip
             if (result != DoAfterStatus.Finished) return;
 
             if (userHands.ActiveHand?.HeldEntity is EntityUid held
-                && handSys.TryDrop(user, userHands.ActiveHand, hands: userHands))
+                && handSys.TryDrop(user, userHands.ActiveHand, handsComp: userHands))
             {
                 invSystem.TryEquip(user, Owner, held, slot);
             }
@@ -154,7 +154,7 @@ namespace Content.Server.Strip
                     return false;
                 }
 
-                if (!sys.CanDropHeld(user, userHands.ActiveHand!, hands: userHands))
+                if (!sys.CanDropHeld(user, userHands.ActiveHand!))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop"));
                     return false;
@@ -188,7 +188,7 @@ namespace Content.Server.Strip
             if (userHands.ActiveHandEntity is not EntityUid held)
                 return;
 
-            sys.TryDrop(user, checkActionBlocker: false, hands: userHands);
+            sys.TryDrop(user, checkActionBlocker: false, handsComp: userHands);
             sys.TryPickup(Owner, held, handName, checkActionBlocker: false, animateUser: true, handsComp: hands);
             // hand update will trigger strippable update
         }
@@ -264,7 +264,7 @@ namespace Content.Server.Strip
                 if (_entities.HasComponent<HandVirtualItemComponent>(hand.HeldEntity))
                     return false;
 
-                if (!handSys.CanDropHeld(Owner, hand, false, hands))
+                if (!handSys.CanDropHeld(Owner, hand, false))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop-message",("owner", Owner)));
                     return false;
@@ -290,7 +290,7 @@ namespace Content.Server.Strip
             if (!hands.Hands.TryGetValue(handName, out var hand) || hand.HeldEntity is not EntityUid held)
                 return;
 
-            handSys.TryDrop(Owner, hand, checkActionBlocker: false, hands: hands);
+            handSys.TryDrop(Owner, hand, checkActionBlocker: false, handsComp: hands);
             handSys.PickupOrDrop(user, held, handsComp: userHands);
             // hand update will trigger strippable update
         }

@@ -254,7 +254,7 @@ namespace Content.Server.Storage.Components
 
             var handSys = _sysMan.GetEntitySystem<SharedHandsSystem>();
 
-            if (!handSys.TryDrop(player, toInsert.Value, hands: hands))
+            if (!handSys.TryDrop(player, toInsert.Value, handsComp: hands))
             {
                 Owner.PopupMessage(player, "Can't insert.");
                 return false;

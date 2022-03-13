@@ -172,7 +172,7 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 // Drop the held item onto the floor. Return if the user cannot drop.
-                if (!_handsSystem.TryDrop(args.User, args.Used, hands: hands))
+                if (!_handsSystem.TryDrop(args.User, args.Used, handsComp: hands))
                     return;
 
                 if (slot.Item != null)

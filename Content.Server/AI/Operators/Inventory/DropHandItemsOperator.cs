@@ -24,7 +24,7 @@ namespace Content.Server.AI.Operators.Inventory
             foreach (var hand in handsComponent.Hands.Values)
             {
                 if (!hand.IsEmpty)
-                    sys.TryDrop(_owner, hand, hands: handsComponent);
+                    sys.TryDrop(_owner, hand, handsComp: handsComponent);
             }
 
             return Outcome.Success;
