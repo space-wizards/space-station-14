@@ -49,7 +49,7 @@ namespace Content.Server.Disease
         }
 
         private Queue<EntityUid> AddQueue = new();
-        private Queue<(DiseaseCarrierComponent, DiseasePrototype)> CureQueue = new();
+        private Queue<(DiseaseCarrierComponent carrier, DiseasePrototype disease)> CureQueue = new();
 
         /// <summary>
         /// First, adds or removes diseased component from the queues and clears them.
@@ -65,10 +65,10 @@ namespace Content.Server.Disease
 
             foreach (var tuple in CureQueue)
             {
-                if (tuple.Item1.Diseases.Count == 1) //This is reliable unlike testing Count == 0 right after removal for reasons I don't quite get
-                    RemComp<DiseasedComponent>(tuple.Item1.Owner);
-                tuple.Item1.PastDiseases.Add(tuple.Item2);
-                tuple.Item1.Diseases.Remove(tuple.Item2);
+                if (tuple.carrier.Diseases.Count == 1) //This is reliable unlike testing Count == 0 right after removal for reasons I don't quite get
+                    RemComp<DiseasedComponent>(tuple.carrier.Owner);
+                tuple.carrier.PastDiseases.Add(tuple.disease);
+                tuple.carrier.Diseases.Remove(tuple.disease);
             }
             CureQueue.Clear();
 
@@ -295,7 +295,7 @@ namespace Content.Server.Disease
             {
                 foreach (var disease in target.AllDiseases)
                 {
-                    if (disease.Name == addedDisease?.Name) //Name because of the way protoypes work
+                    if (disease.ID == addedDisease?.ID) //ID because of the way protoypes work
                         return;
                 }
                 var freshDisease = _serializationManager.CreateCopy(addedDisease) ?? default!;
@@ -363,7 +363,7 @@ namespace Content.Server.Disease
         {
             foreach (var currentDisease in carrier.Diseases)
                 {
-                    if (currentDisease.Name == disease.Name) //Name because of the way protoypes work
+                    if (currentDisease.ID == disease.ID) //ID because of the way protoypes work
                         return;
                 }
             carrier.PastDiseases.Add(disease);

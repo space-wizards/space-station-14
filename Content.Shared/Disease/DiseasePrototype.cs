@@ -13,11 +13,7 @@ namespace Content.Shared.Disease
         [ViewVariables]
         [DataField("id", required: true)]
         public string ID { get; } = default!;
-        /// <summary>
-        /// This one is more important than you might think since
-        /// due to the way prototypes work
-        /// This is how a disease identifies another instance of itself
-        /// </summary>
+
         [DataField("name")]
         public string Name { get; } = string.Empty;
 

@@ -35,7 +35,6 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseDiagnoserComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, AfterInteractUsingEvent>(OnAfterInteractUsingVaccine);
             /// Visuals
-            SubscribeLocalEvent<DiseaseMachineComponent, ComponentStartup>(OnComponentStartup);
             SubscribeLocalEvent<DiseaseMachineComponent, PowerChangedEvent>(OnPowerChanged);
             /// Private Events
             SubscribeLocalEvent<DiseaseDiagnoserComponent, DiseaseMachineFinishedEvent>(OnDiagnoserFinished);
@@ -266,15 +265,6 @@ namespace Content.Server.Disease
         ///
         /// Appearance stuff
         ///
-
-        /// <summary>
-        /// Initializes the appearance for all kinds of disease machines
-        /// since they use the same sytem
-        /// </summary>
-        private void OnComponentStartup(EntityUid uid, DiseaseMachineComponent component, ComponentStartup args)
-        {
-            UpdateAppearance(uid, false, false);
-        }
 
         /// <summary>
         /// Appearance helper function to
