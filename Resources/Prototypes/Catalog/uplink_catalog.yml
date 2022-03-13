@@ -289,6 +289,6 @@
   id: UplinkGigacancerScanner
   category: Misc
   itemId: HandheldHealthAnalyzerGigacancer
-  listingName: Gigacancer Health Analyzer
-  description: Works like a normal health analyzer other than giving everyone it scans gigacancer.
+  listingName: Ultragigacancer Health Analyzer
+  description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
   price: 5

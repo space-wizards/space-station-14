@@ -1,6 +1,6 @@
 - type: disease
-  id: Gigacancer
-  name: gigacancer
+  id: Ultragigacancer
+  name: ultragigacancer
   infectious: false
   cureResist: 0.15
   effects:

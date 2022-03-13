@@ -23,7 +23,7 @@
   components:
   - type: HealthAnalyzer
     fake: true
-    disease: Gigacancer
+    disease: Ultragigacancer
 
 ## I know admins will want this
 - type: entity
