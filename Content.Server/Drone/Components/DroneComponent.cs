@@ -9,5 +9,13 @@ namespace Content.Server.Drone.Components
         public List<EntityUid> ToolUids = new();
         public bool AlreadyAwoken = false;
         public float InteractionBlockRange = 2.15f;
+
+        /// <summary>
+        /// If you are using drone component for
+        /// something that shouldn't have restrictions set this to
+        /// false.
+        /// </summary>
+        [DataField("applyLaws")]
+        public bool ApplyLaws = true;
     }
 }

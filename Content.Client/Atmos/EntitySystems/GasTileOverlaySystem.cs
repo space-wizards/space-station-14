@@ -13,7 +13,6 @@ namespace Content.Client.Atmos.EntitySystems
     [UsedImplicitly]
     internal sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
@@ -41,7 +40,7 @@ namespace Content.Client.Atmos.EntitySystems
         {
             base.Initialize();
             SubscribeNetworkEvent<GasOverlayMessage>(HandleGasOverlayMessage);
-            _mapManager.OnGridRemoved += OnGridRemoved;
+            SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
 
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
@@ -118,17 +117,16 @@ namespace Content.Client.Atmos.EntitySystems
         public override void Shutdown()
         {
             base.Shutdown();
-            _mapManager.OnGridRemoved -= OnGridRemoved;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
             overlayManager.RemoveOverlay<GasTileOverlay>();
             overlayManager.RemoveOverlay<FireTileOverlay>();
         }
 
-        private void OnGridRemoved(MapId mapId, GridId gridId)
+        private void OnGridRemoved(GridRemovalEvent ev)
         {
-            if (_tileData.ContainsKey(gridId))
+            if (_tileData.ContainsKey(ev.GridId))
             {
-                _tileData.Remove(gridId);
+                _tileData.Remove(ev.GridId);
             }
         }
 

@@ -20,6 +20,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly SharedContainerSystem _containers = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
+
         private const float ExposedUpdateDelay = 1f;
         private float _exposedTimer = 0f;
 
@@ -34,35 +35,30 @@ namespace Content.Server.Atmos.EntitySystems
             InitializeCVars();
             InitializeGrid();
 
-            #region Events
 
-            // Map events.
-            _mapManager.TileChanged += OnTileChanged;
+            SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
-            #endregion
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
 
-            _mapManager.TileChanged -= OnTileChanged;
-
             ShutdownCommands();
         }
 
-        private void OnTileChanged(object? sender, TileChangedEventArgs eventArgs)
+        private void OnTileChanged(TileChangedEvent ev)
         {
             // When a tile changes, we want to update it only if it's gone from
             // space -> not space or vice versa. So if the old tile is the
             // same as the new tile in terms of space-ness, ignore the change
 
-            if (eventArgs.NewTile.IsSpace() == eventArgs.OldTile.IsSpace())
+            if (ev.NewTile.IsSpace(_tileDefinitionManager) == ev.OldTile.IsSpace(_tileDefinitionManager))
             {
                 return;
             }
 
-            InvalidateTile(eventArgs.NewTile.GridIndex, eventArgs.NewTile.GridIndices);
+            InvalidateTile(ev.NewTile.GridIndex, ev.NewTile.GridIndices);
         }
 
         public override void Update(float frameTime)

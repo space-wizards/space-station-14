@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Hands.Components;
@@ -9,18 +8,13 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedGasAnalyzerComponent))]
-    public sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IActivate
+    public sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -263,24 +257,12 @@ namespace Content.Server.Atmos.Components
             return true;
         }
 
-
-
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
             if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 CloseInterface(actor.PlayerSession);
             }
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-            {
-                ToggleInterface(actor.PlayerSession);
-                return;
-            }
-            return;
         }
     }
 }

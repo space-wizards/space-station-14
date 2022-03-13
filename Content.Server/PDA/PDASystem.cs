@@ -15,6 +15,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Server.PDA
 {

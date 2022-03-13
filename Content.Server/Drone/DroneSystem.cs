@@ -43,6 +43,8 @@ namespace Content.Server.Drone
 
         private void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
         {
+            if (!component.ApplyLaws)
+                return;
             if (args.Target != null && !HasComp<UnremoveableComponent>(args.Target) && NonDronesInRange(uid, component))
                 args.Cancel();
 
@@ -55,7 +57,12 @@ namespace Content.Server.Drone
 
         private void OnActivateUIAttempt(EntityUid uid, DroneComponent component, UserOpenActivatableUIAttemptEvent args)
         {
-            args.Cancel();
+            if (!component.ApplyLaws)
+                return;
+            if (!_tagSystem.HasTag(args.Target, "DroneUsable"))
+            {
+                args.Cancel();
+            }
         }
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)

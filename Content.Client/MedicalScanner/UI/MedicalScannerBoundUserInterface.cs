@@ -1,7 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 
 namespace Content.Client.MedicalScanner.UI
@@ -23,7 +22,7 @@ namespace Content.Client.MedicalScanner.UI
                 Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
             _window.OnClose += Close;
-            _window.ScanButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.ScanDNA));
+            _window.ScanButton.OnPressed += _ => SendMessage(new ScanButtonPressedMessage());
             _window.OpenCentered();
         }
 
@@ -31,7 +30,10 @@ namespace Content.Client.MedicalScanner.UI
         {
             base.UpdateState(state);
 
-            _window?.Populate((MedicalScannerBoundUserInterfaceState) state);
+            if (state is not MedicalScannerBoundUserInterfaceState cast)
+                return;
+
+            _window?.Populate(cast);
         }
 
         protected override void Dispose(bool disposing)
@@ -39,6 +41,9 @@ namespace Content.Client.MedicalScanner.UI
             base.Dispose(disposing);
             if (!disposing)
                 return;
+
+            if (_window != null)
+                _window.OnClose -= Close;
 
             _window?.Dispose();
         }

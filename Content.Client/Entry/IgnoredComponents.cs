@@ -110,6 +110,7 @@ namespace Content.Client.Entry
             "Lung",
             "BatteryDischarger",
             "Apc",
+            "IntrinsicUI",
             "PowerProvider",
             "ApcPowerReceiver",
             "Cable",
@@ -317,6 +318,7 @@ namespace Content.Client.Entry
             "EnergySword",
             "DoorRemote",
             "InteractionPopup",
+            "HealthAnalyzer"
         };
     }
 }
