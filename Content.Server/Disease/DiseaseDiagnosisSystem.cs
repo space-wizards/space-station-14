@@ -127,6 +127,7 @@ namespace Content.Server.Disease
                 NeedHand = true
             });
         }
+
         /// <summary>
         /// This handles the disease diagnoser machine up
         /// until it's turned on. It has some slight
@@ -159,6 +160,7 @@ namespace Content.Server.Disease
             UpdateAppearance(uid, true, true);
             SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/diagnoser_printing.ogg", uid);
         }
+
         /// <summary>
         /// This handles the vaccinator machine up
         /// until it's turned on. It has some slight
@@ -220,32 +222,26 @@ namespace Content.Server.Disease
         {
             string report = string.Empty;
             report += Loc.GetString("diagnoser-disease-report-name", ("disease", disease.Name));
-            report += System.Environment.NewLine;
+            report += '\n';
 
             if (disease.Infectious)
             {
                 report += Loc.GetString("diagnoser-disease-report-infectious");
-                report += System.Environment.NewLine;
+                report += '\n';
             } else
             {
                 report += Loc.GetString("diagnoser-disease-report-not-infectious");
-                report += System.Environment.NewLine;
+                report += '\n';
             }
 
-            if (disease.CureResist <= 0)
+            report += disease.CureResist switch
             {
-                report += Loc.GetString("diagnoser-disease-report-cureresist-none");
-            } else if (disease.CureResist <= 0.05)
-            {
-                report += Loc.GetString("diagnoser-disease-report-cureresist-low");
-            } else if (disease.CureResist <= 0.14)
-            {
-                report += Loc.GetString("diagnoser-disease-report-cureresist-medium");
-            } else
-            {
-                report += Loc.GetString("diagnoser-disease-report-cureresist-high");
-            }
-            report += System.Environment.NewLine;
+                < 0f => Loc.GetString("diagnoser-disease-report-cureresist-none"),
+                <= 0.05f => Loc.GetString("diagnoser-disease-report-cureresist-low"),
+                <= 0.14f => Loc.GetString("diagnoser-disease-report-cureresist-medium"),
+                _ => Loc.GetString("diagnoser-disease-report-cureresist-high")
+            };
+            report += '\n';
 
             /// Add Cures
             if (disease.Cures.Count == 0)
@@ -254,14 +250,14 @@ namespace Content.Server.Disease
             }
             else
             {
-                report += System.Environment.NewLine;
+                report += '\n';
                 report += Loc.GetString("diagnoser-cure-has");
-                report += System.Environment.NewLine;
+                report += '\n';
 
                 foreach (var cure in disease.Cures)
                 {
                     report += cure.CureText();
-                    report += System.Environment.NewLine;
+                    report += '\n';
                 }
             }
 
@@ -358,6 +354,7 @@ namespace Content.Server.Disease
 
             paper.SetContent(contents);
         }
+
         /// <summary>
         /// Prints a vaccine that will vaccinate
         /// against the disease on the inserted swab.
@@ -375,6 +372,10 @@ namespace Content.Server.Disease
 
             vaxxComp.Disease = args.Machine.Disease;
         }
+
+        /// <summary>
+        /// Cancels the mouth-swabbing doafter
+        /// </summary>
         private sealed class SwabCancelledEvent : EntityEventArgs
         {
             public readonly DiseaseSwabComponent Swab;
@@ -383,7 +384,10 @@ namespace Content.Server.Disease
                 Swab = swab;
             }
         }
-        /// These two are just standard doafter stuff
+
+        /// <summary>
+        /// Fires if the doafter for swabbing someone's mouth succeeds
+        /// </summary>
         private sealed class TargetSwabSuccessfulEvent : EntityEventArgs
         {
             public EntityUid User { get; }
@@ -400,6 +404,7 @@ namespace Content.Server.Disease
                 Carrier = carrier;
             }
         }
+
         /// <summary>
         /// Fires when a disease machine is done
         /// with its production delay and ready to

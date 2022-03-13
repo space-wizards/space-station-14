@@ -41,6 +41,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
             if (_prototypeManager.TryIndex(component.SpawnDisease, out DiseasePrototype? disease) && disease != null)
                 component.ResolveDisease = disease;
         }
+
         /// <summary>
         /// When activated, blasts everyone in LOS within 3 tiles
         /// with a high-probability disease infection attempt

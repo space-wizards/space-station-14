@@ -29,6 +29,11 @@ namespace Content.Shared.Disease
         public bool Abstract { get; private set; }
 
         /// <summary>
+        /// Controls how often a disease ticks.
+        /// </summary>
+        public float TickTime = 1f;
+
+        /// <summary>
         /// Since disease isn't mapped to metabolism or anything,
         /// it needs something to control its tickrate
         /// </summary>

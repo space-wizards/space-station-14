@@ -85,19 +85,24 @@ namespace Content.Server.Disease
                 {
                     var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
                     disease.Accumulator += frameTime;
-                    if (disease.Accumulator >= 1f)
+                    if (disease.Accumulator >= disease.TickTime)
                     {
-                        disease.Accumulator -= 1f;
+                        disease.Accumulator -= disease.TickTime;
                         foreach (var cure in disease.Cures)
+                        {
                             if (cure.Cure(args))
                                 CureDisease(carrierComp, disease);
+                        }
                         foreach (var effect in disease.Effects)
+                        {
                             if (_random.Prob(effect.Probability))
                                 effect.Effect(args);
+                        }
                     }
                 }
             }
         }
+
         ///
         /// Event Handlers
         ///
@@ -126,6 +131,7 @@ namespace Content.Server.Disease
                 }
             }
         }
+
         /// <summary>
         /// Called when a component with disease protection
         /// is equipped so it can be added to the person's
@@ -145,6 +151,7 @@ namespace Content.Server.Disease
             /// Set the component to active to the unequip check isn't CBT
             component.IsActive = true;
         }
+
         /// <summary>
         /// Called when a component with disease protection
         /// is unequipped so it can be removed from the person's
@@ -159,19 +166,19 @@ namespace Content.Server.Disease
                 carrier.DiseaseResist -= component.Protection;
             component.IsActive = false;
         }
+
         /// <summary>
         /// Called when it's already decided a disease will be cured
         /// so it can be safely queued up to be removed from the target
         /// and added to past disease history (for immunity)
         /// </summary>
-        private void CureDisease(DiseaseCarrierComponent carrier, DiseasePrototype? disease)
+        private void CureDisease(DiseaseCarrierComponent carrier, DiseasePrototype disease)
         {
-            if (disease == null)
-                return;
             var CureTuple = (carrier, disease);
             CureQueue.Enqueue(CureTuple);
             _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Entities(carrier.Owner));
         }
+
         /// <summary>
         /// Called when someone interacts with a diseased person with an empty hand
         /// to check if they get infected
@@ -180,9 +187,9 @@ namespace Content.Server.Disease
         {
             if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
                 return;
-
             InteractWithDiseased (args.Target, args.User);
         }
+
         /// <summary>
         /// Called when someone interacts with a diseased person with any object
         /// to check if they get infected
@@ -191,6 +198,7 @@ namespace Content.Server.Disease
         {
             InteractWithDiseased(args.Target, args.User);
         }
+
         /// <summary>
         /// Called when a vaccine is used on someone
         /// to handle the vaccination doafter
@@ -232,6 +240,7 @@ namespace Content.Server.Disease
                 NeedHand = true
             });
         }
+
         /// <summary>
         /// Called when a vaccine is examined.
         /// Currently doesn't do much because
@@ -248,6 +257,7 @@ namespace Content.Server.Disease
                     args.PushMarkup(Loc.GetString("vaxx-unused"));
             }
         }
+
         ///
         /// Helper functions
         ///
@@ -265,6 +275,7 @@ namespace Content.Server.Disease
             if (disease != null)
                 TryInfect(carrier, disease, 0.4f);
         }
+
         /// <summary>
         /// Adds a disease to a target
         /// if it's not already in their current
@@ -283,13 +294,16 @@ namespace Content.Server.Disease
             if (target != null)
             {
                 foreach (var disease in target.AllDiseases)
+                {
                     if (disease.Name == addedDisease?.Name) //Name because of the way protoypes work
                         return;
-            var freshDisease = _serializationManager.CreateCopy(addedDisease) ?? default!;
-            target.Diseases.Add(freshDisease);
-            AddQueue.Enqueue(target.Owner);
+                }
+                var freshDisease = _serializationManager.CreateCopy(addedDisease) ?? default!;
+                target.Diseases.Add(freshDisease);
+                AddQueue.Enqueue(target.Owner);
             }
         }
+
         /// <summary>
         /// Pits the infection chance against the
         /// person's disease resistance and
@@ -306,6 +320,7 @@ namespace Content.Server.Disease
             if (_random.Prob(infectionChance))
                 TryAddDisease(carrier, disease);
         }
+
         /// <summary>
         /// Plays a sneeze/cough popup if applicable
         /// and then tries to infect anyone in range
@@ -338,6 +353,7 @@ namespace Content.Server.Disease
                     TryInfect(carrier, disease, 0.3f);
             }
         }
+
         /// <summary>
         /// Adds a disease to the carrier's
         /// past diseases to give them immunity
@@ -368,6 +384,7 @@ namespace Content.Server.Disease
             Vaccinate(args.Carrier, args.Vaxx.Disease);
             EntityManager.DeleteEntity(args.Vaxx.Owner);
         }
+
         /// <summary>
         /// Cancels the vaccine doafter
         /// </summary>
@@ -399,29 +416,31 @@ namespace Content.Server.Disease
             }
         }
     }
+
         /// <summary>
         /// This event is fired by chems
         /// and other brute-force rather than
         /// specific cures. It will roll the dice to attempt
         /// to cure each disease on the target
         /// </summary>
-        public sealed class CureDiseaseAttemptEvent : EntityEventArgs
+    public sealed class CureDiseaseAttemptEvent : EntityEventArgs
+    {
+        public float CureChance { get; }
+        public CureDiseaseAttemptEvent(float cureChance)
         {
-            public float CureChance { get; }
-            public CureDiseaseAttemptEvent(float cureChance)
-            {
-                CureChance = cureChance;
-            }
+            CureChance = cureChance;
         }
-        /// <summary>
-        /// Controls whether the snough is a sneeze, cough
-        /// or neither. If none, will not create
-        /// a popup. Mostly used for talking
-        /// </summary>
-        public enum SneezeCoughType
-        {
-            Sneeze,
-            Cough,
-            None
-        }
+    }
+
+    /// <summary>
+    /// Controls whether the snough is a sneeze, cough
+    /// or neither. If none, will not create
+    /// a popup. Mostly used for talking
+    /// </summary>
+    public enum SneezeCoughType
+    {
+        Sneeze,
+        Cough,
+        None
+    }
 }
