@@ -158,7 +158,7 @@ namespace Content.Server.Disease
 
             AddQueue.Enqueue(uid);
             UpdateAppearance(uid, true, true);
-            SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/diagnoser_printing.ogg", args.User);
+            SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/diagnoser_printing.ogg", uid);
         }
         /// <summary>
         /// This handles the vaccinator machine up
@@ -188,6 +188,7 @@ namespace Content.Server.Disease
 
             AddQueue.Enqueue(uid);
             UpdateAppearance(uid, true, true);
+            SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/vaccinator_running.ogg", uid);
         }
 
         /// <summary>

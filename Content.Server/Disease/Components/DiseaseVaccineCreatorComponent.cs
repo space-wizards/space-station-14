@@ -5,6 +5,6 @@ namespace Content.Server.Disease.Components
     /// Controls disease machine behavior specific to the
     /// vaccine creating machine
     /// </summary>
-    public class DiseaseVaccineCreatorComponent : Component
+    public sealed class DiseaseVaccineCreatorComponent : Component
     {}
 }

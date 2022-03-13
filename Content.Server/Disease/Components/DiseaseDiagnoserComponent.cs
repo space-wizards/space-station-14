@@ -4,6 +4,6 @@ namespace Content.Server.Disease.Components
     /// <summary>
     /// To give the disease diagnosing machine specific behavior
     /// </summary>
-    public class DiseaseDiagnoserComponent : Component
+    public sealed class DiseaseDiagnoserComponent : Component
     {}
 }

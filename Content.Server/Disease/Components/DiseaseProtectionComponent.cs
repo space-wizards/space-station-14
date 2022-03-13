@@ -5,7 +5,7 @@ namespace Content.Server.Disease.Components
     /// Value added to clothing to give its wearer
     /// protection against infection from diseases
     /// </summary>
-    public class DiseaseProtectionComponent : Component
+    public sealed class DiseaseProtectionComponent : Component
     {
         /// <summary>
         /// Float value between 0 and 1, will be subtracted
