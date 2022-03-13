@@ -88,7 +88,7 @@
   name: purple_snake
   parent: SimpleSpaceMobBase
   id: MobPurple_snake
-  description: Favorite pet corgi.
+  description: A menacing purple snake from Kepler-283c.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -100,8 +100,8 @@
     visuals:
     - type: DamageStateVisualizer
       normal: purple_snake
-      crit: purple_snake
-      dead: purple_snake
+      crit: dead_purple_snake
+      dead: dead_purple_snake
   - type: Grammar
     attributes:
       proper: true
