@@ -1,9 +1,4 @@
 Entries:
-- author: shaeone
-  changes:
-  - {message: Modified gyroscope sprite., type: Tweak}
-  id: 700
-  time: '2021-12-03T09:39:18.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'The metaphysical department has finally learned what a monkey is, and
@@ -2988,3 +2983,8 @@ Entries:
     type: Tweak}
   id: 1199
   time: '2022-03-13T09:53:01.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Plant produce now scales in size depending on its potency., type: Add}
+  id: 1200
+  time: '2022-03-13T10:11:03.0000000+00:00'
