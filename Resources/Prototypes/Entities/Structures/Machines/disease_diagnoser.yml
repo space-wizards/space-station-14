@@ -7,10 +7,18 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    sprite: Structures/Machines/seed_extractor.rsi
+    sprite: Structures/Machines/diagnoser.rsi
     layers:
-    - state: seedextractor-off
-    - state: seedextractor-unlit
+    - state: icon
+      map: ["enum.DiseaseMachineVisualLayers.IsRunning"]
+    - state: unlit
       shader: unshaded
+      map: ["enum.DiseaseMachineVisualLayers.IsOn"]
     netsync: false
   - type: DiseaseDiagnoser
+  - type: DiseaseMachine
+    machineOutput: Paper
+  - type: Appearance
+  - type: DiseaseMachineVisuals
+    idleState: icon
+    runningState: running

@@ -52,6 +52,8 @@ namespace Content.Client.Entry
             "ResearchClient",
             "IdCardConsole",
             "ThermalRegulator",
+            "DiseaseMachineRunning",
+            "DiseaseMachine",
             "AtmosFixMarker",
             "CablePlacer",
             "Drink",

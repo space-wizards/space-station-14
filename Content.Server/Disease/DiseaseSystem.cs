@@ -286,6 +286,7 @@ namespace Content.Server.Disease
             if (args.Vaxx.Disease == null)
                 return;
             Vaccinate(args.Carrier, args.Vaxx.Disease);
+            EntityManager.DeleteEntity(args.Vaxx.Owner);
         }
 
         private static void OnVaxxCancelled(VaxxCancelledEvent args)

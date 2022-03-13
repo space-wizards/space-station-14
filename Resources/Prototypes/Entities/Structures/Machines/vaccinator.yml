@@ -1,16 +1,25 @@
 - type: entity
   id: Vaccinator
   parent: BaseMachinePowered
-  name: Vaccintor
+  name: Vaccinator
   description: A machine that creates vaccines.
   placement:
     mode: SnapgridCenter
   components:
   - type: Sprite
-    sprite: Structures/Machines/seed_extractor.rsi
+    sprite: Structures/Machines/vaccinator.rsi
     layers:
-    - state: seedextractor-off
-    - state: seedextractor-unlit
+    - state: icon
+      map: ["enum.DiseaseMachineVisualLayers.IsRunning"]
+    - state: unlit
       shader: unshaded
+      map: ["enum.DiseaseMachineVisualLayers.IsOn"]
     netsync: false
   - type: DiseaseVaccineCreator
+  - type: DiseaseMachine
+    machineOutput: Vaccine
+  - type: Appearance
+  - type: DiseaseMachineVisuals
+    idleState: icon
+    runningState: running
+
