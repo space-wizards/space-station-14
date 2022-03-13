@@ -62,12 +62,8 @@ namespace Content.Server.Database
             // ReSharper restore StringLiteralTypo
 
             modelBuilder.Entity<AdminLog>()
-                .Property<NpgsqlTsVector>("search_vector");
-                //.IsGeneratedTsVectorColumn("english", "message", "json");
-
-            modelBuilder.Entity<AdminLog>()
-                .HasIndex("search_vector")
-                .HasMethod("GIN");
+                .HasIndex(l => l.Message)
+                .IsTsVectorExpressionIndex("english");
 
             foreach(var entity in modelBuilder.Model.GetEntityTypes())
             {
@@ -81,7 +77,7 @@ namespace Content.Server.Database
 
         public override IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
         {
-            return query.Where(log => EF.Property<NpgsqlTsVector>(log, "search_vector").Matches(searchText));
+            return query.Where(log => EF.Functions.ToTsVector("english", log.Message).Matches(searchText));
         }
     }
 }

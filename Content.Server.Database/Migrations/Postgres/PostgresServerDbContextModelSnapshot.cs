@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using NpgsqlTypes;
 
 #nullable disable
 
@@ -118,22 +117,17 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("type");
 
-                    b.Property<NpgsqlTsVector>("search_vector")
-                        .HasColumnType("tsvector")
-                        .HasColumnName("search_vector");
-
                     b.HasKey("Id", "RoundId")
                         .HasName("PK_admin_log");
+
+                    b.HasIndex("Message")
+                        .HasAnnotation("Npgsql:TsVectorConfig", "english");
 
                     b.HasIndex("RoundId")
                         .HasDatabaseName("IX_admin_log_round_id");
 
                     b.HasIndex("Type")
                         .HasDatabaseName("IX_admin_log_type");
-
-                    b.HasIndex("search_vector");
-
-                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("search_vector"), "GIN");
 
                     b.ToTable("admin_log", (string)null);
                 });

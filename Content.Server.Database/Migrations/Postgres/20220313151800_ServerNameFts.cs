@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using NpgsqlTypes;
 
 #nullable disable
 
@@ -16,12 +15,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 type: "integer",
                 nullable: false,
                 defaultValue: 0);
-
-            migrationBuilder.AddColumn<NpgsqlTsVector>(
-                name: "search_vector",
-                table: "admin_log",
-                type: "tsvector",
-                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "server",
@@ -48,10 +41,10 @@ namespace Content.Server.Database.Migrations.Postgres
                 column: "server_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_admin_log_search_vector",
+                name: "IX_admin_log_message",
                 table: "admin_log",
-                column: "search_vector")
-                .Annotation("Npgsql:IndexMethod", "GIN");
+                column: "message")
+                .Annotation("Npgsql:TsVectorConfig", "english");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_round_server_server_id",
@@ -60,13 +53,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 principalTable: "server",
                 principalColumn: "server_id",
                 onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.Sql(
-                @"CREATE TRIGGER admin_log_search_vector_update BEFORE INSERT OR UPDATE
-              ON admin_log FOR EACH ROW EXECUTE PROCEDURE
-              tsvector_update_trigger(search_vector, 'pg_catalog.english', message);");
-
-            migrationBuilder.Sql("UPDATE admin_log SET search_vector = to_tsvector('english', message)");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -83,16 +69,12 @@ namespace Content.Server.Database.Migrations.Postgres
                 table: "round");
 
             migrationBuilder.DropIndex(
-                name: "IX_admin_log_search_vector",
+                name: "IX_admin_log_message",
                 table: "admin_log");
 
             migrationBuilder.DropColumn(
                 name: "server_id",
                 table: "round");
-
-            migrationBuilder.DropColumn(
-                name: "search_vector",
-                table: "admin_log");
         }
     }
 }
