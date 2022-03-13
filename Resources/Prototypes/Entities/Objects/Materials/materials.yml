@@ -41,6 +41,9 @@
   components:
   - type: Stack
     stackType: Cloth
+  - type: Material
+    materials:
+    - Cloth
   - type: Sprite
     state: cloth_3
   - type: Appearance
@@ -123,6 +126,9 @@
   components:
   - type: Stack
     stackType: Durathread
+  - type: Material
+    materials:
+    - Durathread
   - type: Sprite
     state: durathread_3
   - type: Appearance

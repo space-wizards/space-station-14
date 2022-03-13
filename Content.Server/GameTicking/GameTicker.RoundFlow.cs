@@ -6,6 +6,7 @@ using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Server.Station;
+using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
@@ -190,10 +191,15 @@ namespace Content.Server.GameTicking
             RoundLengthMetric.Set(0);
 
             var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
+            var serverName = _configurationManager.GetCVar(CCVars.AdminLogsServerName);
             // TODO FIXME AAAAAAAAAAAAAAAAAAAH THIS IS BROKEN
             // Task.Run as a terrible dirty workaround to avoid synchronization context deadlock from .Result here.
             // This whole setup logic should be made asynchronous so we can properly wait on the DB AAAAAAAAAAAAAH
-            RoundId = Task.Run(async () => await _db.AddNewRound(playerIds)).Result;
+            RoundId = Task.Run(async () =>
+            {
+                var server = await _db.AddOrGetServer(serverName);
+                return await _db.AddNewRound(server, playerIds);
+            }).Result;
 
             var startingEvent = new RoundStartingEvent();
             RaiseLocalEvent(startingEvent);

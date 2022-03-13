@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -635,19 +636,21 @@ namespace Content.Shared.Hands.Components
         }
 
         /// <summary>
-        ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
+        ///     Puts an item any hand, preferring the active hand, or puts it on the floor under the player.
         /// </summary>
         public void PutInHandOrDrop(EntityUid entity, bool checkActionBlocker = true)
         {
-            if (!PutInHand(entity, checkActionBlocker))
-                _entMan.GetComponent<TransformComponent>(entity).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
+            if (PutInHand(entity, checkActionBlocker))
+                return;
+
+            _entMan.GetComponent<TransformComponent>(entity).AttachParentToContainerOrGrid(_entMan);
+            _entMan.EventBus.RaiseLocalEvent(entity, new DroppedEvent(Owner));
         }
 
         public void PutInHandOrDrop(SharedItemComponent item, bool checkActionBlocker = true)
         {
             PutInHandOrDrop(item.Owner, checkActionBlocker);
         }
-
 
         /// <summary>
         ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
