@@ -1,30 +1,17 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
-using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.Components
@@ -36,9 +23,8 @@ namespace Content.Server.Chemistry.Components
     /// Messages sent from the client are used to handle ui button presses.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedReagentDispenserComponent))]
-    public sealed class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate
+    public sealed class ReagentDispenserComponent : SharedReagentDispenserComponent
     {
         private static ReagentInventoryComparer _comparer = new();
         public static string SolutionName = "reagent";
@@ -294,30 +280,6 @@ namespace Content.Server.Chemistry.Components
                 .TryAddReagent(beaker, solution, Inventory[dispenseIndex].ID, _dispenseAmount, out _);
 
             UpdateUserInterface();
-        }
-
-        /// <summary>
-        /// Called when you click the owner entity with an empty hand. Opens the UI client-side if possible.
-        /// </summary>
-        /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
-        void IActivate.Activate(ActivateEventArgs args)
-        {
-            if (!_entities.TryGetComponent(args.User, out ActorComponent? actor))
-            {
-                return;
-            }
-
-            if (!_entities.TryGetComponent(args.User, out HandsComponent? hands))
-            {
-                Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-activate-no-hands"));
-                return;
-            }
-
-            var activeHandEntity = hands.GetActiveHandItem?.Owner;
-            if (activeHandEntity == null)
-            {
-                UserInterface?.Open(actor.PlayerSession);
-            }
         }
 
         private void ClickSound()

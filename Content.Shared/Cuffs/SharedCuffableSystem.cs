@@ -20,7 +20,6 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<SharedCuffableComponent, InteractionAttemptEvent>(OnInteractAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
-            SubscribeLocalEvent<SharedCuffableComponent, AttackAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, PickupAttemptEvent>(OnPickupAttempt);
         }
@@ -73,11 +72,6 @@ namespace Content.Shared.Cuffs
             // is this a self-equip, or are they being stripped?
             if (args.Unequipee == uid)
                 CheckAct(uid, component, args);
-        }
-
-        private void OnAttackAttempt(EntityUid uid, SharedCuffableComponent component, AttackAttemptEvent args)
-        {
-            CheckAct(uid, component, args);
         }
 
         private void OnDropAttempt(EntityUid uid, SharedCuffableComponent component, DropAttemptEvent args)

@@ -16,7 +16,7 @@
     sprite: Objects/Devices/pda.rsi
     state: pda
   - type: Clothing
-    QuickEquip: false
+    quickEquip: false
     size: 10
     Slots:
     - idcard
