@@ -15,10 +15,10 @@
         <parallax:ParallaxControl />
         <TextureRect Access="Public" Name = "Background" Stretch="Scale"/>
         <Control Margin="10 10 10 10" >
-            <!-- Left Panel -->
-                <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSide" VerticalExpand="True"  VerticalAlignment="Top" >
-                    <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" MaxWidth="620">
-                        <info:LinkBanner Name="LinkBanner" VerticalExpand="false" Margin="3 3 3 3"/>
+            <!-- Left Top Panel -->
+                <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalExpand="True"  VerticalAlignment="Top" >
+                    <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="620">
+                        <info:LinkBanner Name="LinkBanner" VerticalExpand="false" HorizontalAlignment="Center" Margin="3 3 3 3"/>
                         <hudUi:StripeBack>
                             <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
                                 <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public" Text="{Loc 'ui-lobby-observe-button'}" StyleClasses="ButtonBig"  WindowType="{x:Type lobbyUi:ObserveWarningWindow}"/>
@@ -32,6 +32,10 @@
                             </BoxContainer></hudUi:StripeBack>
                     </BoxContainer>
                 </PanelContainer>
+            <!-- Left Bot Panel -->
+            <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" MaxWidth="620">
+                <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3"/>
+            </BoxContainer>
             <!-- RightPanel Panel -->
             <PanelContainer Name="RightSide" StyleClasses="AngleRect" HorizontalAlignment= "Right" VerticalExpand="True" VerticalAlignment="Stretch">
                 <BoxContainer Orientation="Vertical">

@@ -32,26 +32,12 @@ namespace Content.Client.Info
 
             var wikiButton = new Button {Text = Loc.GetString("server-info-wiki-button")};
             wikiButton.OnPressed += args => uriOpener.OpenUri(UILinks.Wiki);
-
-            var reportButton = new Button {Text = Loc.GetString("server-info-report-button")};
-            reportButton.OnPressed += args => uriOpener.OpenUri(UILinks.BugReport);
-
-            var creditsButton = new Button {Text = Loc.GetString("server-info-credits-button")};
-            creditsButton.OnPressed += args => new CreditsWindow().Open();
-
-            var changelogButton = new ChangelogButton
-            {
-                HorizontalExpand = true,
-                HorizontalAlignment = HAlignment.Right
-            };
-
+            var changelogButton = new ChangelogButton();
+            buttons.AddChild(changelogButton);
             buttons.AddChild(rulesButton);
             buttons.AddChild(discordButton);
             buttons.AddChild(websiteButton);
             buttons.AddChild(wikiButton);
-            buttons.AddChild(reportButton);
-            buttons.AddChild(creditsButton);
-            buttons.AddChild(changelogButton);
         }
     }
 }
