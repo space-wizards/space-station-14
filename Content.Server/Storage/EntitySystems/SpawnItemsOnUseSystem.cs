@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Storage.Components;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

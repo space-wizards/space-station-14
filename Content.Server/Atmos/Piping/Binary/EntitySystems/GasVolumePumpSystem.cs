@@ -6,6 +6,7 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -21,8 +22,9 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
         public override void Initialize()
         {
@@ -59,6 +61,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 || !nodeContainer.TryGetNode(pump.OutletName, out PipeNode? outlet))
             {
                 appearance?.SetData(PumpVisuals.Enabled, false);
+                _ambientSoundSystem.SetAmbience(pump.Owner, false);
+                _ambientSoundSystem.SetAmbience(pump.Owner, false);
                 return;
             }
 
@@ -74,6 +78,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             appearance?.SetData(PumpVisuals.Enabled, true);
+            _ambientSoundSystem.SetAmbience(pump.Owner, true);
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
             var transferRatio = (float)(pump.TransferRate * (_gameTiming.CurTime - device.LastProcess).TotalSeconds) / inlet.Air.Volume;

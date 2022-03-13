@@ -1,17 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Shared.Item
@@ -20,7 +11,7 @@ namespace Content.Shared.Item
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.
     /// </summary>
     [NetworkedComponent()]
-    public abstract class SharedItemComponent : Component, IInteractHand
+    public abstract class SharedItemComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -96,22 +87,6 @@ namespace Content.Shared.Item
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sprite")]
         public readonly string? RsiPath;
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            var user = eventArgs.User;
-
-            if (!_entMan.TryGetComponent(user, out SharedHandsComponent hands))
-                return false;
-
-            var activeHand = hands.ActiveHand;
-
-            if (activeHand == null)
-                return false;
-
-            // hands checks action blockers
-            return hands.TryPickupEntityToActiveHand(Owner, animateUser: true);
-        }
 
         public void RemovedFromSlot()
         {

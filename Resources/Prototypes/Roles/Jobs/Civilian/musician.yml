@@ -7,8 +7,12 @@
   icon: "Musician"
   supervisors: "whoever hires you"
   access:
-  - Maintenance
+  - Maintenance # TODO Remove maint access for all gimmick jobs once access work is completed
   - Theatre
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: MikuDay
+    prototype: BoxPerformer
 
 - type: startingGear
   id: MusicianGear

@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Components;
 using Content.Server.Shuttles.EntitySystems;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
@@ -17,26 +17,21 @@ public sealed class AutomaticAtmosSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        _mapManager.TileChanged += MapManagerOnTileChanged;
+        SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
     }
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _mapManager.TileChanged -= MapManagerOnTileChanged;
-    }
 
-    private void MapManagerOnTileChanged(object? sender, TileChangedEventArgs e)
+    private void OnTileChanged(TileChangedEvent ev)
     {
         // Only if a atmos-holding tile has been added or removed.
         // Also, these calls are surprisingly slow.
         // TODO: Make tiledefmanager cache the IsSpace property, and turn this lookup-through-two-interfaces into
         // TODO: a simple array lookup, as tile IDs are likely contiguous, and there's at most 2^16 possibilities anyway.
-        if (!((e.OldTile.IsSpace(_tileDefinitionManager) && !e.NewTile.IsSpace(_tileDefinitionManager)) ||
-            (!e.OldTile.IsSpace(_tileDefinitionManager) && e.NewTile.IsSpace(_tileDefinitionManager))))
+        if (!((ev.OldTile.IsSpace(_tileDefinitionManager) && !ev.NewTile.IsSpace(_tileDefinitionManager)) ||
+            (!ev.OldTile.IsSpace(_tileDefinitionManager) && ev.NewTile.IsSpace(_tileDefinitionManager))))
             return;
 
-        var uid = _mapManager.GetGridEuid(e.NewTile.GridIndex);
+        var uid = _mapManager.GetGridEuid(ev.NewTile.GridIndex);
         if (!TryComp<PhysicsComponent>(uid, out var physics))
             return;
 

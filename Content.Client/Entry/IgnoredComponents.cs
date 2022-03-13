@@ -23,7 +23,6 @@ namespace Content.Client.Entry
             "EmitSoundOnLand",
             "NameIdentifier",
             "EmitSoundOnActivate",
-            "FootstepModifier",
             "HeatResistance",
             "EntityStorage",
             "MeleeWeapon",
@@ -110,6 +109,7 @@ namespace Content.Client.Entry
             "Lung",
             "BatteryDischarger",
             "Apc",
+            "IntrinsicUI",
             "PowerProvider",
             "ApcPowerReceiver",
             "Cable",
@@ -302,6 +302,7 @@ namespace Content.Client.Entry
             "Spreader",
             "GrowingKudzu",
             "MonkeyAccent",
+            "LizardAccent",
             "ReplacementAccent",
             "ResistLocker",
             "IgniteOnCollide",
@@ -317,6 +318,7 @@ namespace Content.Client.Entry
             "EnergySword",
             "DoorRemote",
             "InteractionPopup",
+            "HealthAnalyzer"
         };
     }
 }

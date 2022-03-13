@@ -1,9 +1,6 @@
 using Content.Client.Items.Components;
 using Content.Shared.Item;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Clothing
 {
@@ -16,6 +13,9 @@ namespace Content.Client.Clothing
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("femaleMask")]
         public FemaleClothingMask FemaleMask { get; } = FemaleClothingMask.UniformFull;
+
+        [DataField("quickEquip")]
+        public bool QuickEquip = true;
 
         public string? InSlot;
     }

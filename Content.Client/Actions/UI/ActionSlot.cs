@@ -64,7 +64,7 @@ namespace Content.Client.Actions.UI
             SlotIndex = slotIndex;
             MouseFilter = MouseFilterMode.Stop;
 
-            MinSize = (64, 64);
+            SetSize = (64, 64);
             VerticalAlignment = VAlignment.Top;
             TooltipDelay = CustomTooltipDelay;
             TooltipSupplier = SupplyTooltip;

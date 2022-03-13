@@ -33,7 +33,7 @@
 - type: species
   id: Teshari
   name: Teshari
-  roundStart: false
+  roundStart: true
   prototype: MobTeshari
   dollPrototype: MobTeshariDummy
   skinColoration: Hues
