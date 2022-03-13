@@ -1156,7 +1156,7 @@
     pieces: 3
   - type: InteractionPopup
     successChance: 0.5
-    interactSuccessString: petting-success-soft-floofy
+    interactSuccessString: petting-success-dog
     interactFailureString: petting-failure-generic
   - type: Grammar
     attributes:
