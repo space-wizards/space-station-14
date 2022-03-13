@@ -226,7 +226,8 @@ namespace Content.Client.Audio
             foreach (var (comp, sound) in _playingSounds)
             {
                 var entity = comp.Owner;
-                if (!comp.Enabled ||
+                if (comp.Deleted || // includes entity deletion
+                    !comp.Enabled ||
                     !EntityManager.GetComponent<TransformComponent>(entity).Coordinates
                         .TryDistance(EntityManager, coordinates, out var range) ||
                     range > comp.Range)
