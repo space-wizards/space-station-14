@@ -1,12 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: 'The metaphysical department has finally learned what a monkey is, and
-      has adjusted soul binding to monkeys accordingly.', type: Fix}
-  id: 701
-  time: '2021-12-03T17:11:51.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: The Salvage department is now partially there., type: Add}
   id: 702
   time: '2021-12-03T22:24:19.0000000+00:00'
@@ -2988,3 +2982,8 @@ Entries:
   - {message: Plant produce now scales in size depending on its potency., type: Add}
   id: 1200
   time: '2022-03-13T10:11:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Lizards now correctly no longer show up at roundstart., type: Fix}
+  id: 1201
+  time: '2022-03-13T15:42:07.0000000+00:00'
