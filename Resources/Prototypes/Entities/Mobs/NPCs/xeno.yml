@@ -108,7 +108,7 @@
       gender: male
 
 - type: entity
-  name: small_purple_snake
+  name: purple snake
   parent: SimpleSpaceMobBase
   id: Mobsmall_purple_snake
   description: A smaller version of the menacing purple snake from Kepler-283c.
