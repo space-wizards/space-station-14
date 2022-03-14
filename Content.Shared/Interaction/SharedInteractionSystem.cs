@@ -47,7 +47,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
         [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
 
-        public const float InteractionRange = 1.2f;
+        public const float InteractionRange = 1.4f;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
         public const float MaxRaycastRange = 100;
@@ -744,7 +744,7 @@ namespace Content.Shared.Interaction
                 _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
                 return true;
             }
-            
+
             var activatable = AllComps<IActivate>(used).FirstOrDefault();
             if (activatable == null)
                 return false;

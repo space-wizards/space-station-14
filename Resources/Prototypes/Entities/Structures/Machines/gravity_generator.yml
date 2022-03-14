@@ -31,7 +31,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-1.5,-1.5,1.5,1.5"
+          bounds: "-1.2,-1.2,1.2,1"
       mass: 500
       mask:
       - Impassable
