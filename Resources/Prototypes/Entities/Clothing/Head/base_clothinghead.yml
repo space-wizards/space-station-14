@@ -48,6 +48,8 @@
   - type: Tag
     tags:
     - HidesHair
+  - type: DiseaseProtection
+    protection: 0.05
 
 - type: entity
   abstract: true

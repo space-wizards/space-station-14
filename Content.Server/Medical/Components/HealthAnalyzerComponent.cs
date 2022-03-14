@@ -1,7 +1,9 @@
 using System.Threading;
 using Content.Server.UserInterface;
 using Content.Shared.MedicalScanner;
+using Content.Shared.Disease;
 using Robust.Server.GameObjects;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Medical.Components
 {
@@ -23,5 +25,19 @@ namespace Content.Server.Medical.Components
         /// </summary>
         public CancellationTokenSource? CancelToken;
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(HealthAnalyzerUiKey.Key);
+
+        /// <summary>
+        /// Is this actually going to give people the disease below
+        /// </summary>
+        [DataField("fake")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Fake = false;
+
+        /// <summary>
+        /// The disease this will give people if Fake == true
+        /// </summary>
+        [DataField("disease", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string Disease = string.Empty;
     }
 }
