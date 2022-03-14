@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Airlock access to high security areas has been updated to include only
-      those who need it., type: Tweak}
-  id: 709
-  time: '2021-12-05T03:20:06.0000000+00:00'
 - author: Mith-randalf
   changes:
   - {message: 'Fixed some clothing names, applied armour to previously unarmoured
@@ -2997,3 +2991,10 @@ Entries:
     type: Add}
   id: 1208
   time: '2022-03-14T15:00:23.0000000+00:00'
+- author: Spillhelm53
+  changes:
+  - {message: 'Mops can now be used to add or remove liquid from most containers.
+      However, Nanotrasen continues to recommend its company-made "Big Yella" brand
+      mop buckets for best results.', type: Add}
+  id: 1209
+  time: '2022-03-14T21:02:26.0000000+00:00'
