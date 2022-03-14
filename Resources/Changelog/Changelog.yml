@@ -1,15 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: Tools (along with many other objects) have been stripped of their insulated
-      property. Go get some real insulated gloves!, type: Fix}
-  id: 705
-  time: '2021-12-04T09:59:09.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Fixed flares so they now burn longer and burn out slower., type: Fix}
-  id: 706
-  time: '2021-12-04T18:50:25.0000000+00:00'
 - author: Rane
   changes:
   - {message: Added nettles! They're an amazing source of histamine when cultivated
@@ -2991,3 +2980,14 @@ Entries:
       a work in progress. Please report any issues with monitor scaling.', type: Tweak}
   id: 1204
   time: '2022-03-14T02:33:19.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Hardsuits now noticeably slow you down. Wear something else., type: Tweak}
+  id: 1205
+  time: '2022-03-14T06:03:50.0000000+00:00'
+- author: router
+  changes:
+  - {message: Desoxyephedrine no longer hardcounters the speedboost it's supposed
+      to be granting., type: Tweak}
+  id: 1206
+  time: '2022-03-14T06:04:02.0000000+00:00'
