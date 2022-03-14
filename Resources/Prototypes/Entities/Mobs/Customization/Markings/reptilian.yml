@@ -1,0 +1,80 @@
+- type: marking
+  id: LizardFrillsAquatic
+  bodyPart: HeadSide
+  markingCategory: Head
+  unrestricted: false
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi/
+    state: frills_aquatic
+
+- type: marking
+  id: LizardFrillsShort
+  bodyPart: HeadSide
+  markingCategory: Head
+  unrestricted: false
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi/
+    state: frills_short
+
+- type: marking
+  id: LizardFrillsSimple
+  bodyPart: HeadSide
+  markingCategory: Head
+  unrestricted: false
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi/
+    state: frills_simple
+
+- type: marking
+  id: LizardHornsAngler
+  bodyPart: HeadTop
+  markingCategory: Head
+  unrestricted: false
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi/
+    state: horns_angler
+
+- type: marking
+  id: LizardHornsCurled
+  bodyPart: HeadTop
+  markingCategory: Head
+  unrestricted: false
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi/
+    state: horns_curled
+
+- type: marking
+  id: LizardHornsRam
+  bodyPart: HeadTop
+  markingCategory: Head
+  unrestricted: false
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi/
+    state: horns_ram
+
+- type: marking
+  id: LizardHornsShort
+  bodyPart: HeadTop
+  markingCategory: Head
+  unrestricted: false
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi/
+    state: horns_short
+
+- type: marking
+  id: LizardHornsSimple
+  bodyPart: HeadTop
+  markingCategory: Head
+  unrestricted: false
+  speciesRestrictions: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi/
+    state: horns_simple
+

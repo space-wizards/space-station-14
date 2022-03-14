@@ -53,7 +53,7 @@ namespace Content.Client.Markings
             for (int i = 0; i < _usedMarkingList.Count; i++)
             {
                 Marking marking = _usedMarkingList[i];
-                if (_markingManager.IsValidMarking(marking, out MarkingPrototype? newMarking))
+                if (_markingManager.IsValidMarking(marking, out MarkingPrototype? newMarking) && newMarking.SpeciesRestrictions.Contains(_currentSpecies))
                 {
                     // TODO: Composite sprite preview, somehow.
                     var _item = new ItemList.Item(CMarkingsUsed)

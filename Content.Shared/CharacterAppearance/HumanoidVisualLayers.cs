@@ -11,8 +11,8 @@ namespace Content.Shared.CharacterAppearance
         Chest,
         Head,
         Snout,
-        Frills,
-        Horns,
+        HeadSide, // side parts (i.e., frills)
+        HeadTop,  // top parts (i.e., ears)
         Eyes,
         RArm,
         LArm,

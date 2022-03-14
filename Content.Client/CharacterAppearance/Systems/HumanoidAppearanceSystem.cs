@@ -26,7 +26,7 @@ namespace Content.Client.CharacterAppearance.Systems
             HumanoidVisualLayers.Chest,
             HumanoidVisualLayers.Head,
             HumanoidVisualLayers.Snout,
-            HumanoidVisualLayers.Frills,
+            HumanoidVisualLayers.HeadSide,
             HumanoidVisualLayers.TailBehind,
             HumanoidVisualLayers.TailFront,
             HumanoidVisualLayers.Eyes,

@@ -95,13 +95,8 @@
       - map: [ "belt" ]
       - map: [ "neck" ]
       - map: [ "back" ]
-      - map: [ "enum.HumanoidVisualLayers.Frills" ]
-        state: frills_simple
-        color: "#34a223"
-        sprite: Mobs/Customization/reptilian_parts.rsi
-      - map: [ "enum.HumanoidVisualLayers.Horns" ]
-        state: horns_simple
-        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+      - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
       - map: [ "mask" ]
       - map: [ "head" ]
       - map: [ "pocket1" ]
@@ -204,12 +199,8 @@
       - map: [ "belt" ]
       - map: [ "neck" ]
       - map: [ "back" ]
-      - map: [ "enum.HumanoidVisualLayers.Frills" ]
-        state: frills_simple
-        sprite: Mobs/Customization/reptilian_parts.rsi
-      - map: [ "enum.HumanoidVisualLayers.Horns" ]
-        state: horns_simple
-        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+      - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
       - map: [ "mask" ]
       - map: [ "head" ]
       - map: [ "pocket1" ]
