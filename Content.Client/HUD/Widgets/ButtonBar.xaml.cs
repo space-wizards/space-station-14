@@ -15,8 +15,10 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.HUD.Widgets
 {
     [GenerateTypedNameReferences]
-    internal sealed partial class ButtonBar : BoxContainer
+    internal sealed partial class ButtonBar : HudWidget
     {
+
+
 
     }
 }

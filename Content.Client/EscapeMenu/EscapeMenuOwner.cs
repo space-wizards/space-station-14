@@ -27,7 +27,7 @@ namespace Content.Client.EscapeMenu
 
         private void StateManagerOnOnStateChanged(StateChangedEventArgs obj)
         {
-            if (obj.NewState is GameScreenBase)
+            if (obj.NewState is GamePlayStateBase)
             {
                 // Switched TO GameScreen.
                 _escapeMenu = new UI.EscapeMenu(_consoleHost);
@@ -37,7 +37,7 @@ namespace Content.Client.EscapeMenu
                 _inputManager.SetInputCommand(EngineKeyFunctions.EscapeMenu,
                     InputCmdHandler.FromDelegate(_ => Enabled()));
             }
-            else if (obj.OldState is GameScreenBase)
+            else if (obj.OldState is GamePlayStateBase)
             {
                 // Switched FROM GameScreen.
                 _escapeMenu?.Dispose();

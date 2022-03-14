@@ -194,7 +194,7 @@ namespace Content.Client.Chat.Managers
             // can always hear server (nobody can actually send server messages).
             FilterableChannels |= ChatChannel.Server;
 
-            if (_stateManager.CurrentState is GameScreenBase)
+            if (_stateManager.CurrentState is GamePlayStateBase)
             {
                 // can always hear local / radio / emote when in the game
                 FilterableChannels |= ChatChannel.Local;

@@ -92,7 +92,7 @@ namespace Content.Client.Verbs
         {
             result = null;
 
-            if (_stateManager.CurrentState is not GameScreenBase gameScreenBase)
+            if (_stateManager.CurrentState is not GamePlayStateBase gameScreenBase)
                 return false;
 
             var player = _playerManager.LocalPlayer?.ControlledEntity;

@@ -17,87 +17,100 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Reflection;
 using Robust.Shared.Sandboxing;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Viewport;
 
-public sealed partial class GameplayState : GameScreenBase, IMainViewportState
+public interface IGameHud
 {
+    public void AddGameHudWidget<T>() where T : HudWidget;
+    public void RemoveGameHudWidget<T>() where T : HudWidget;
+    public T? GetUIWidget<T>() where T : HudWidget;
+}
 
-        private readonly Dictionary<System.Type, Control?> _gameHudWidgets = new Dictionary<Type, Control?>();
+public sealed partial class GameplayState : IGameHud
+{
+    public GameplayState()
+    {
+        RegisterHudWidgets();
+    }
+    [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 
-
-        private void InitializeGameHud()
+    private readonly Dictionary<System.Type, Control?> _gameHudWidgets = new();
+    private void InitializeGameHud()
+    {
+        foreach (var key in _gameHudWidgets.Keys)
         {
-            foreach (var key in _gameHudWidgets.Keys)
+            //prevent double initialization if widgets are already initialized for some reason
+            if (_gameHudWidgets[key] != null) continue;
+            var control = (Control)_sandboxHelper.CreateInstance(key);
+            _gameHudWidgets[key] = control;
+            _userInterfaceManager.StateRoot.AddChild(control);
+        }
+    }
+    private void ShutDownGameHud()
+    {
+        foreach (var widgetData in _gameHudWidgets)
+        {
+            Internal_RemoveHudWidget(widgetData.Key);
+        }
+    }
+
+    //uses reflection to automatically register all widget types to the hud
+    private void RegisterHudWidgets()
+    {
+        {
+            var widgetTypes = _reflectionManager.GetAllChildren<HudWidget>();
+            foreach (var widgetType in widgetTypes)
             {
-                //prevent double initialization if widgets are already initialized for some reason
-                if (_gameHudWidgets[key] != null) continue;
-                var control = (Control)_sandboxHelper.CreateInstance(key);
-                _gameHudWidgets[key] = control;
-                _userInterfaceManager.StateRoot.AddChild(control);
+                _gameHudWidgets[widgetType] = null;
             }
         }
-        private void ShutDownGameHud()
+    }
+
+    //adds a new hud widget to the hud
+    public void AddGameHudWidget<T>() where T : HudWidget
+    {
+        if (!Initialized) throw new System.Exception("Tried to add a widget before GameHud was initialized!");
+
+        if (_gameHudWidgets.ContainsKey(typeof(T)))
         {
-            foreach (var widgetData in _gameHudWidgets)
-            {
-                Internal_RemoveHudWidget(widgetData.Key);
-            }
+            //if the widget is registered with the hud but not initialized, initialize it
+            _gameHudWidgets[typeof(T)] ??= (Control) _sandboxHelper.CreateInstance(typeof(T));
         }
-
-        //function to register a new widget
-        public void RegisterGameHudWidget<T>() where T : Control, IHudWidget
+        else
         {
-            _gameHudWidgets.Add(typeof(T), null);
+            //if the widget is not registered, then register and initialize it
+            var control = (Control)_sandboxHelper.CreateInstance(typeof(T));
+            _gameHudWidgets[typeof(T)] = control;
+            _userInterfaceManager.StateRoot.AddChild(control);
         }
+    }
+    //internal function to remove a widget from the gamehud without de-registering it
+    private void Internal_RemoveHudWidget(System.Type type)
+    {
+        var widget = _gameHudWidgets[type];
+        //return out if the control is null
+        if (widget == null) return;
+        _userInterfaceManager.StateRoot.RemoveChild(widget);
+        widget?.Dispose();
+    }
 
-        //adds a new hud widget to the hud
-        public void AddGameHudWidget<T>() where T : Control, IHudWidget
-        {
-            if (!Initialized) throw new System.Exception("Tried to add a widget before GameHud was initialized!");
+    //Remove a widget from the game hud
+    public void RemoveGameHudWidget<T>() where T : HudWidget
+    {
+        Internal_RemoveHudWidget(typeof(T));
+    }
 
-            if (_gameHudWidgets.ContainsKey(typeof(T)))
-            {
-                //if the widget is registered with the hud but not initialized, initialize it
-                _gameHudWidgets[typeof(T)] ??= (Control) _sandboxHelper.CreateInstance(typeof(T));
-            }
-            else
-            {
-                //if the widget is not registered, then register and initialize it
-                var control = (Control)_sandboxHelper.CreateInstance(typeof(T));
-                _gameHudWidgets[typeof(T)] = control;
-                _userInterfaceManager.StateRoot.AddChild(control);
-            }
-
-        }
-
-        //internal function to remove a widget from the gamehud without de-registering it
-        private void Internal_RemoveHudWidget(System.Type type)
-        {
-            var widget = _gameHudWidgets[type];
-            //return out if the control is null
-            if (widget == null) return;
-            _userInterfaceManager.StateRoot.RemoveChild(widget);
-            widget?.Dispose();
-        }
-
-        //Remove a widget from the game hud
-        public void RemoveGameHudWidget<T>() where T : Control, IHudWidget
-        {
-            Internal_RemoveHudWidget(typeof(T));
-        }
-
-        //Grabs a reference to the specified widget from the HUD
-        public T? GetUIWidget<T>() where T : Control, IHudWidget
-        {
-            if (!_gameHudWidgets.TryGetValue(typeof(T), out var widget)) return null;
-            //return a null control if it isn't found
-            if (widget == null) return null;
-            return (T)widget;
-        }
-
-
+    //Grabs a reference to the specified widget from the HUD
+    public T? GetUIWidget<T>() where T : HudWidget
+    {
+        if (!_gameHudWidgets.TryGetValue(typeof(T), out var widget)) return null;
+        //return a null control if it isn't found
+        if (widget == null) return null;
+        return (T)widget;
+    }
 }

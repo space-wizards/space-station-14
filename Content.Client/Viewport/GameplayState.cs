@@ -23,7 +23,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Viewport
 {
-    public sealed partial class GameplayState : GameScreenBase, IMainViewportState
+    public sealed partial class GameplayState : GamePlayStateBase, IMainViewportState
     {
         public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
 

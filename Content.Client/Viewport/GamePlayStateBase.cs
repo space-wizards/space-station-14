@@ -22,7 +22,7 @@ namespace Content.Client.Viewport
     // Ok actually it's fine.
     // Instantiated dynamically through the StateManager, Dependencies will be resolved.
     [Virtual]
-    public class GameScreenBase : State, IEntityEventSubscriber
+    public class GamePlayStateBase : State, IEntityEventSubscriber
     {
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
