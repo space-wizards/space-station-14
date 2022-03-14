@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Cigars and clown/mime masks no longer block drinking & eating., type: Fix}
-  id: 708
-  time: '2021-12-04T18:56:27.0000000+00:00'
 - author: Rane
   changes:
   - {message: Airlock access to high security areas has been updated to include only
@@ -2996,3 +2991,9 @@ Entries:
   - {message: Fixed broken localization string for the vent cough disease., type: Fix}
   id: 1207
   time: '2022-03-14T06:05:02.0000000+00:00'
+- author: Carou
+  changes:
+  - {message: 'Added animated friendly purple snake, with the id: purple_snake.',
+    type: Add}
+  id: 1208
+  time: '2022-03-14T15:00:23.0000000+00:00'
