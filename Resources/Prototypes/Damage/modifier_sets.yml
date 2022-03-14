@@ -52,7 +52,7 @@
     Shock: 0
   flatReductions:
     Blunt: 5
-    
+
 - type: damageModifierSet
   id: RGlass
   coefficients:
@@ -82,6 +82,15 @@
     Piercing: 1.2
     Cold: 1.5
     Poison: 0.8
+
+- type: damageModifierSet
+  id: Scale # Skin tougher, bones weaker, strong stomachs, cold-blooded (kindof)
+  coefficients:
+    Blunt: 1.1
+    Slash: 0.9
+    Cold: 1.5
+    Heat: 0.9
+    Poison: 0.9
 
 # Represents which damage types should be modified
 # in relation to how they cause bloodloss damage.

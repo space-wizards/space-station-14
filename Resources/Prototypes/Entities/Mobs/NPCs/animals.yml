@@ -675,7 +675,7 @@
     tags:
     - Trash
   - type: Recyclable
-  - type: Actions 
+  - type: Actions
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
     combatToggleAction:
@@ -686,6 +686,7 @@
       autoPopulate: false
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: DiseaseCarrier #The other class lab animal and disease vector
 
 
 - type: entity
@@ -707,7 +708,8 @@
       crit: dead-1
       dead: splat-1
   - type: Bloodstream
-    bloodMaxVolume: 50  
+    bloodMaxVolume: 50
+  - type: DiseaseCarrier #Why doesn't this save if it's only on the parent wtf
 
 
 - type: entity
@@ -730,6 +732,7 @@
       dead: splat-2
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: DiseaseCarrier
 
 
 - type: entity
@@ -775,6 +778,9 @@
     interactFailureString: petting-failure-generic
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
 
 - type: entity
   name: frog
@@ -947,6 +953,9 @@
     interactFailureString: petting-failure-generic
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -1162,7 +1171,7 @@
       gender: epicene
   - type: Bloodstream
     bloodMaxVolume: 100
-      
+
 - type: entity
   name: Renault
   parent: MobFox
