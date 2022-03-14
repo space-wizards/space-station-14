@@ -87,7 +87,7 @@
 - type: entity
   name: purple_snake
   parent: SimpleSpaceMobBase
-  id: MobPurple_snake
+  id: MobPurpleSnake
   description: A menacing purple snake from Kepler-283c.
   components:
   - type: Sprite
