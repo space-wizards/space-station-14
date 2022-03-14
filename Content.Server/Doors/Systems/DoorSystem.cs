@@ -305,13 +305,6 @@ public sealed class DoorSystem : SharedDoorSystem
         if (door.OpenSound != null)
             PlaySound(uid, door.OpenSound.GetSound(), AudioParams.Default.WithVolume(-5), user, predicted);
 
-        // I'm not sure what the intent here is/was? It plays a sound if the user is opening a door with a hands
-        // component, but no actual hands!? What!? Is this the sound of them head-butting the door to get it to open??
-        // I'm 99% sure something is wrong here, but I kind of want to keep it this way.
-
-        if (user != null && TryComp(user.Value, out SharedHandsComponent? hands) && hands.Hands.Count == 0)
-            PlaySound(uid, door.TryOpenDoorSound.GetSound(), AudioParams.Default.WithVolume(-2), user, predicted);
-
         if(lastState == DoorState.Emagging && TryComp<AirlockComponent>(door.Owner, out var airlockComponent))
             airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
     }
