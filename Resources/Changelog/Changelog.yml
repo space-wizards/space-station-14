@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed some issues preventing mobs from taking proper suffocation damage.,
-    type: Fix}
-  id: 704
-  time: '2021-12-04T08:11:48.0000000+00:00'
 - author: vulppine
   changes:
   - {message: Tools (along with many other objects) have been stripped of their insulated
@@ -2987,3 +2981,13 @@ Entries:
   - {message: Add foxes and Renault., type: Add}
   id: 1203
   time: '2022-03-13T23:32:33.0000000+00:00'
+- author: Jezithyr
+  changes:
+  - {message: Rewrote the lobby UI, type: Add}
+  - {message: Added adminhelp button to the lobby screen, type: Add}
+  - {message: 'Added the ability to add custom lobby screens, (You can have multiple
+      and picks a random one!)', type: Add}
+  - {message: 'rewrote the backend of the lobby ui to be slightly less ass, still
+      a work in progress. Please report any issues with monitor scaling.', type: Tweak}
+  id: 1204
+  time: '2022-03-14T02:33:19.0000000+00:00'
