@@ -3,6 +3,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
 using Content.Server.Tools;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Examine;
 using Content.Shared.Temperature;
 using Content.Shared.Verbs;
@@ -30,8 +31,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (_examineSystem.IsInDetailsRange(args.User, args.Target))
             {
                 var held = args.Using;
-
-                var enabled = held != null;
+                var enabled = held != null && EntityManager.HasComponent<SharedGasAnalyzerComponent>(held);
                 var verb = new ExamineVerb
                 {
                     Disabled = !enabled,
@@ -57,9 +57,8 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var node in nodeContainer.Nodes)
             {
-                if (!(node.Value is PipeNode))
+                if (node.Value is not PipeNode pn)
                     continue;
-                var pn = (PipeNode)node.Value;
                 float pressure = pn.Air.Pressure;
                 float temp = pn.Air.Temperature;
                 return Loc.GetString("gas-analyzable-system-statistics",
