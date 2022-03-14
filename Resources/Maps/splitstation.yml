@@ -105,7 +105,7 @@ grids:
   - ind: "-2,-5"
     tiles: KwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAKwAAACsAAAAxAAAAMQAAADEAAAArAAAAKwAAACsAAAAxAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAAiAAAAMQAAADEAAAAxAAAAKwAAACsAAAAxAAAAMQAAADEAAAArAAAAKwAAACsAAAArAAAAMQAAACIAAAAiAAAAIgAAACIAAAAiAAAAMQAAACsAAAArAAAAMQAAACsAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAAiAAAAIgAAACIAAAAiAAAAIgAAADEAAAArAAAAKwAAADEAAAArAAAAKwAAACsAAAArAAAALQAAAC0AAAAxAAAAIgAAACIAAAAiAAAAIgAAACIAAAAiAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAAC0AAAAtAAAAMQAAACIAAAAiAAAAIgAAACIAAAAiAAAAMQAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAAtAAAALQAAADEAAAAiAAAAIgAAACIAAAAiAAAAIgAAADEAAAArAAAAKwAAADEAAAArAAAAKwAAACsAAAArAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAKwAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAlAAAAJQAAACUAAAAlAAAAMQAAAAAAAAAAAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAJQAAACUAAAAlAAAAJQAAADEAAAAAAAAAAAAAAA==
   - ind: "0,-5"
-    tiles: KwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAMQAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAABgAAAAxAAAAMQAAADEAAAAYAAAAMQAAADEAAAAxAAAAKwAAACsAAAArAAAAMQAAADEAAAAYAAAAGAAAABgAAAAYAAAAMQAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAACsAAAArAAAAKwAAADEAAAAxAAAAGAAAABgAAAAYAAAAGAAAADEAAAAYAAAAGAAAABgAAAAYAAAAGAAAADEAAAArAAAAKwAAACsAAAAxAAAAGAAAABgAAAAYAAAAGAAAABgAAAAxAAAAGAAAABgAAAAYAAAAGAAAABgAAAAxAAAAKwAAACsAAAArAAAAKwAAADEAAAAYAAAAGAAAABgAAAAYAAAAMQAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAACsAAAArAAAAKwAAACsAAAAxAAAAMQAAABgAAAAxAAAAGAAAADEAAAAYAAAAGAAAABgAAAAYAAAAGAAAADEAAAArAAAAKwAAACsAAAAxAAAAGAAAABgAAAAYAAAAGAAAABgAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAACsAAAAxAAAAMQAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAArAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAArAAAAKwAAACsAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAKwAAACsAAAArAAAAMQAAAA==
+    tiles: KwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAMQAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAABgAAAAxAAAAMQAAADEAAAAYAAAAMQAAADEAAAAxAAAAKwAAACsAAAArAAAAMQAAADEAAAAYAAAAGAAAABgAAAAYAAAAMQAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAACsAAAArAAAAKwAAADEAAAAxAAAAGAAAABgAAAAYAAAAGAAAADEAAAAYAAAAGAAAABgAAAAYAAAAGAAAADEAAAArAAAAKwAAACsAAAAxAAAAGAAAABgAAAAYAAAAGAAAABgAAAAxAAAAGAAAABgAAAAYAAAAGAAAABgAAAAxAAAAKwAAACsAAAArAAAAKwAAADEAAAAYAAAAGAAAABgAAAAYAAAAMQAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAACsAAAArAAAAKwAAACsAAAAxAAAAMQAAABgAAAAxAAAAGAAAADEAAAAYAAAAGAAAABgAAAAYAAAAGAAAADEAAAArAAAAKwAAACsAAAAxAAAAGAAAABgAAAAYAAAAGAAAABgAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAACsAAAAxAAAAMQAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAArAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAArAAAAKwAAACsAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAKwAAACsAAAArAAAAMQAAAA==
   - ind: "1,-5"
     tiles: IgAAACIAAAAiAAAAIgAAACIAAAAxAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAALQAAAC0AAAAtAAAALQAAACIAAAAiAAAAIgAAACIAAAAiAAAAMQAAACsAAAArAAAAMQAAADEAAAAxAAAAMQAAACsAAAArAAAAKwAAADEAAAAiAAAAIgAAACIAAAAiAAAAIgAAADEAAAArAAAAKwAAADEAAAAxAAAAMQAAADEAAAArAAAAKwAAACsAAAAxAAAAIgAAACIAAAAiAAAAIgAAACIAAAAxAAAAKwAAACsAAAAxAAAAMQAAADEAAAAxAAAAKwAAACsAAAArAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAACsAAAArAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAAxAAAAMQAAADEAAAAOAAAADgAAAA4AAAAOAAAAMQAAADEAAAAxAAAAMQAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAADgAAAA4AAAAOAAAADgAAACsAAAArAAAAKwAAACsAAAArAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAAA4AAAAOAAAADgAAAA4AAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAOAAAADgAAAA4AAAAOAAAAKwAAACsAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAADgAAAA4AAAAOAAAADgAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADAAAAAwAAAADgAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-3,-1"
@@ -147,7 +147,7 @@ grids:
   - ind: "-2,-6"
     tiles: JQAAACUAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACUAAAAlAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAAlAAAAJQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAArAAAAKwAAADEAAAAxAAAAMQAAADEAAAAxAAAAJQAAACUAAAAxAAAALQAAADEAAAAxAAAAMQAAAC0AAAAxAAAAKwAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAACUAAAAlAAAAMQAAAC0AAAAxAAAAMQAAADEAAAAtAAAAMQAAACsAAAArAAAAMQAAADEAAAAxAAAAMQAAADEAAAAlAAAAJQAAADEAAAAtAAAAMQAAADEAAAAxAAAALQAAADEAAAArAAAAKwAAAC0AAAAtAAAALQAAAC0AAAAtAAAAJQAAACUAAAAxAAAALQAAAC0AAAAtAAAALQAAAC0AAAAtAAAAKwAAACsAAAAtAAAALQAAAC0AAAAtAAAALQAAACUAAAAlAAAAMQAAAC0AAAAtAAAAMQAAAC0AAAAtAAAAMQAAACsAAAArAAAAMQAAADEAAAAxAAAAMQAAADEAAAAlAAAAJQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAArAAAAKwAAADEAAAAxAAAAMQAAADEAAAAxAAAAJQAAACUAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAKwAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAACUAAAAlAAAAMQAAADEAAAAtAAAALQAAAC0AAAAxAAAAKwAAACsAAAArAAAAMQAAACsAAAArAAAAKwAAACsAAAAlAAAAJQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAArAAAAKwAAADEAAAArAAAAKwAAACsAAAArAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAAC0AAAAtAAAAMQAAACIAAAAiAAAAIgAAACIAAAAiAAAAMQAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAAiAAAAIgAAACIAAAAiAAAAIgAAACIAAAArAAAAKwAAADEAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAAxAAAAIgAAACIAAAAiAAAAIgAAACIAAAAxAAAAKwAAACsAAAAxAAAAKwAAACsAAAArAAAAKwAAAA==
   - ind: "0,-6"
-    tiles: KwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAMQAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAArAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAKwAAACsAAAArAAAAKwAAACIAAAAiAAAAIgAAACIAAAAiAAAAMQAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAACsAAAArAAAAKwAAACsAAAAiAAAAIgAAACIAAAAiAAAAIgAAADEAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAArAAAAKwAAACsAAAAxAAAAIgAAACIAAAAiAAAAIgAAACIAAAAxAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAKwAAACsAAAArAAAAMQAAACIAAAAiAAAAIgAAACIAAAAiAAAAMQAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAACsAAAArAAAAKwAAADEAAAAiAAAAIgAAACIAAAAiAAAAIgAAADEAAAAYAAAAGAAAABgAAAAYAAAAGAAAADEAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAKwAAACsAAAArAAAAMQAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAABgAAAAYAAAAGAAAABgAAAAxAAAAGAAAACsAAAArAAAAKwAAADEAAAAYAAAAGAAAABgAAAAYAAAAGAAAADEAAAAYAAAAGAAAABgAAAAYAAAAMQAAABgAAAArAAAAKwAAACsAAAArAAAAGAAAABgAAAAYAAAAGAAAABgAAAAxAAAAGAAAABgAAAAYAAAAGAAAADEAAAAYAAAAKwAAACsAAAArAAAAKwAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAABgAAAAYAAAAGAAAABgAAAAxAAAAGAAAACsAAAArAAAAKwAAADEAAAAYAAAAGAAAABgAAAAYAAAAGAAAADEAAAAYAAAAGAAAABgAAAAYAAAAMQAAABgAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAAYAAAAMQAAADEAAAAxAAAAMQAAADEAAAAYAAAAMQAAADEAAAAxAAAAKwAAACsAAAArAAAAMQAAAA==
+    tiles: KwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAMQAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAArAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAKwAAACsAAAArAAAAKwAAACIAAAAiAAAAIgAAACIAAAAiAAAAMQAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAACsAAAArAAAAKwAAACsAAAAiAAAAIgAAACIAAAAiAAAAIgAAADEAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAArAAAAKwAAACsAAAAxAAAAIgAAACIAAAAiAAAAIgAAACIAAAAxAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAKwAAACsAAAArAAAAMQAAACIAAAAiAAAAIgAAACIAAAAiAAAAMQAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAACsAAAArAAAAKwAAADEAAAAiAAAAIgAAACIAAAAiAAAAIgAAADEAAAAYAAAAGAAAABgAAAAYAAAAGAAAADEAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAKwAAACsAAAArAAAAMQAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAABgAAAAYAAAAGAAAABgAAAAxAAAAGAAAACsAAAArAAAAKwAAADEAAAAYAAAAGAAAABgAAAAYAAAAGAAAADEAAAAYAAAAGAAAABgAAAAYAAAAMQAAABgAAAArAAAAKwAAACsAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAxAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAKwAAACsAAAArAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAABgAAAAYAAAAGAAAABgAAAAxAAAAGAAAACsAAAArAAAAKwAAADEAAAAYAAAAGAAAABgAAAAYAAAAGAAAADEAAAAYAAAAGAAAABgAAAAYAAAAMQAAABgAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAAYAAAAMQAAADEAAAAxAAAAMQAAADEAAAAYAAAAMQAAADEAAAAxAAAAKwAAACsAAAArAAAAMQAAAA==
   - ind: "1,-6"
     tiles: JAAAACQAAAAkAAAAMQAAACQAAAAkAAAAJAAAADEAAAAxAAAAMQAAADEAAAAxAAAAGAAAABgAAAAxAAAAGAAAACQAAAAkAAAAJAAAADEAAAAkAAAAJAAAACQAAAAxAAAAMQAAADEAAAAxAAAAMQAAABgAAAAYAAAAMQAAABgAAAAxAAAAJAAAADEAAAAxAAAAMQAAACQAAAAxAAAAMQAAACsAAAArAAAAMQAAADEAAAAxAAAAGAAAADEAAAAxAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAAxAAAAKwAAACsAAAArAAAAKwAAACsAAAAxAAAAJAAAADEAAAAxAAAAMQAAACQAAAAxAAAAMQAAACsAAAArAAAAMQAAADEAAAAxAAAAGAAAADEAAAAxAAAAJAAAACQAAAAkAAAAMQAAACQAAAAkAAAAJAAAADEAAAAxAAAAMQAAADEAAAAxAAAAGAAAABgAAAAxAAAAGAAAACQAAAAkAAAAJAAAADEAAAAkAAAAJAAAACQAAAAxAAAAMQAAADEAAAAxAAAAMQAAABgAAAAYAAAAMQAAABgAAAAkAAAAJAAAACQAAAAxAAAAJAAAACQAAAAkAAAAMQAAADEAAAAxAAAAMQAAADEAAAAYAAAAGAAAADEAAAAYAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAADEAAAAxAAAAMQAAAA4AAAAOAAAADgAAAA4AAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAADEAAAAxAAAAMQAAADEAAAAOAAAADgAAAA4AAAAOAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAADEAAAAxAAAAMQAAACsAAAArAAAAKwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAArAAAAKwAAACsAAAAxAAAAIgAAACIAAAAiAAAAIgAAACIAAAAxAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAALQAAAC0AAAAtAAAALQAAAA==
   - ind: "1,-7"
@@ -236,196 +236,170 @@ entities:
 - uid: 0
   type: WallSolid
   components:
-  - rot: 3.141592653589793 rad
-    pos: 20.5,8.5
+  - pos: 10.5,-3.5
     parent: 105
     type: Transform
 - uid: 1
-  type: WallSolid
+  type: CableApcExtension
   components:
-  - pos: 13.5,2.5
+  - pos: 17.5,2.5
     parent: 105
     type: Transform
+  - visible: False
+    type: Sprite
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
 - uid: 2
-  type: ReinforcedWindow
+  type: TableGlass
   components:
-  - pos: -0.5,-22.5
+  - pos: 2.5,-11.5
     parent: 105
     type: Transform
 - uid: 3
   type: WallSolid
   components:
-  - pos: 26.5,-20.5
+  - pos: 23.5,-11.5
     parent: 105
     type: Transform
 - uid: 4
-  type: WallSolid
+  type: WindoorSecurityLocked
   components:
-  - pos: -13.5,-11.5
+  - rot: -1.5707963267948966 rad
+    pos: -6.5,-11.5
     parent: 105
     type: Transform
 - uid: 5
   type: WallSolid
   components:
-  - pos: -14.5,-3.5
+  - rot: 3.141592653589793 rad
+    pos: 5.5,8.5
     parent: 105
     type: Transform
 - uid: 6
-  type: WallSolid
+  type: AirlockChiefMedicalOfficerLocked
   components:
-  - rot: 3.141592653589793 rad
-    pos: 10.5,8.5
+  - pos: -15.5,-10.5
     parent: 105
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 7
-  type: WallSolid
+  type: AirlockMaint
   components:
-  - pos: 12.5,5.5
+  - pos: 18.5,-5.5
     parent: 105
     type: Transform
 - uid: 8
-  type: WallSolid
+  type: AirlockMaintJanitorLocked
   components:
-  - pos: 19.5,-25.5
+  - pos: 4.5,-10.5
     parent: 105
     type: Transform
 - uid: 9
-  type: ReinforcedWindow
+  type: WallSolid
   components:
-  - pos: 4.5,-18.5
+  - pos: 13.5,5.5
     parent: 105
     type: Transform
 - uid: 10
-  type: ReinforcedWindow
+  type: WarpPoint
   components:
-  - pos: -13.5,3.5
+  - pos: -45.5,-9.5
     parent: 105
     type: Transform
+  - location: Surgery / Virology
+    type: WarpPoint
 - uid: 11
-  type: AirlockExternalGlassShuttleLocked
+  type: WallSolid
   components:
-  - pos: 11.5,13.5
+  - pos: 6.5,-25.5
     parent: 105
     type: Transform
 - uid: 12
   type: WallSolid
   components:
-  - pos: 9.5,-0.5
+  - pos: -13.5,-10.5
     parent: 105
     type: Transform
 - uid: 13
-  type: WallSolid
+  type: CableHV
   components:
-  - pos: -13.5,-6.5
+  - pos: -23.5,-38.5
     parent: 105
     type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
 - uid: 14
-  type: Chair
+  type: CableHV
   components:
-  - pos: 6.5,7.5
+  - pos: -22.5,-38.5
     parent: 105
     type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
 - uid: 15
-  type: WallSolid
+  type: ReinforcedWindow
   components:
-  - pos: 29.5,-19.5
+  - pos: -0.5,9.5
     parent: 105
     type: Transform
 - uid: 16
-  type: CableApcExtension
+  type: WallSolid
   components:
-  - pos: 23.5,2.5
+  - pos: -13.5,-7.5
     parent: 105
     type: Transform
-  - visible: False
-    type: Sprite
-  - enabled: False
-    type: AmbientSound
+- uid: 17
+  type: DrinkMelonLiquorBottleFull
+  components:
+  - pos: 14.549824,-0.21772157
+    parent: 105
+    type: Transform
   - canCollide: False
     type: Physics
-- uid: 17
+- uid: 18
   type: WallSolid
   components:
   - rot: 3.141592653589793 rad
-    pos: 1.5,-7.5
-    parent: 105
-    type: Transform
-- uid: 18
-  type: ReinforcedWindow
-  components:
-  - pos: -3.5,0.5
+    pos: 21.5,8.5
     parent: 105
     type: Transform
 - uid: 19
-  type: ShuttersWindowOpen
-  components:
-  - pos: -2.5,-3.5
-    parent: 105
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 20
   type: WallSolid
   components:
-  - pos: 23.5,-9.5
+  - pos: -0.5,-25.5
     parent: 105
     type: Transform
-- uid: 21
-  type: WallReinforced
+- uid: 20
+  type: Poweredlight
   components:
-  - pos: -4.5,-11.5
+  - rot: -1.5707963267948966 rad
+    pos: 22.5,-21.5
+    parent: 105
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 21
+  type: SpawnPointBartender
+  components:
+  - pos: 12.5,3.5
     parent: 105
     type: Transform
 - uid: 22
-  type: AirlockEngineering
-  components:
-  - pos: -0.5,-5.5
-    parent: 105
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 23
-  type: WallSolid
-  components:
-  - pos: 19.5,5.5
-    parent: 105
-    type: Transform
-- uid: 24
-  type: Airlock
-  components:
-  - pos: 14.5,-8.5
-    parent: 105
-    type: Transform
-- uid: 25
-  type: WallReinforced
-  components:
-  - pos: -4.5,-12.5
-    parent: 105
-    type: Transform
-- uid: 26
-  type: WallSolid
-  components:
-  - pos: -16.5,-3.5
-    parent: 105
-    type: Transform
-- uid: 27
-  type: WallReinforced
-  components:
-  - pos: 20.5,11.5
-    parent: 105
-    type: Transform
-- uid: 28
   type: CableApcExtension
   components:
-  - pos: 15.5,-9.5
+  - pos: 19.5,-8.5
     parent: 105
     type: Transform
   - visible: False
@@ -434,139 +408,34 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
-- uid: 29
-  type: ShuttersWindowOpen
-  components:
-  - pos: -3.5,-3.5
-    parent: 105
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 30
-  type: WallSolid
-  components:
-  - pos: 26.5,-19.5
-    parent: 105
-    type: Transform
-- uid: 31
-  type: ReinforcedWindow
-  components:
-  - pos: 3.5,6.5
-    parent: 105
-    type: Transform
-- uid: 32
-  type: WallSolid
-  components:
-  - pos: 26.5,-22.5
-    parent: 105
-    type: Transform
-- uid: 33
-  type: VendingMachineVendomat
-  components:
-  - pos: 7.5,7.5
-    parent: 105
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-- uid: 34
-  type: WallSolid
-  components:
-  - pos: -18.5,-7.5
-    parent: 105
-    type: Transform
-- uid: 35
-  type: Chair
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 4.5,3.5
-    parent: 105
-    type: Transform
-- uid: 36
-  type: ShuttersWindowOpen
-  components:
-  - pos: -1.5,-3.5
-    parent: 105
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 37
-  type: WallSolid
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 17.5,8.5
-    parent: 105
-    type: Transform
-- uid: 38
-  type: WallSolid
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 8.5,8.5
-    parent: 105
-    type: Transform
-- uid: 39
-  type: AirlockChiefEngineerLocked
-  components:
-  - pos: -15.5,-7.5
-    parent: 105
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 40
-  type: ShuttersWindowOpen
-  components:
-  - pos: -11.5,-3.5
-    parent: 105
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 41
-  type: WallSolid
-  components:
-  - pos: 11.5,-13.5
-    parent: 105
-    type: Transform
-- uid: 42
-  type: WallSolid
-  components:
-  - pos: 23.5,-21.5
-    parent: 105
-    type: Transform
-- uid: 43
-  type: WallSolid
-  components:
-  - pos: 10.5,-20.5
-    parent: 105
-    type: Transform
-- uid: 44
+- uid: 23
   type: WallReinforced
   components:
-  - pos: -4.5,-10.5
+  - pos: -0.5,-4.5
     parent: 105
     type: Transform
-- uid: 45
-  type: ClosetEmergencyFilledRandom
+- uid: 24
+  type: AirlockMaint
   components:
-  - pos: 1.4999968,-9.499975
+  - pos: -0.5,-8.5
+    parent: 105
+    type: Transform
+- uid: 25
+  type: Airlock
+  components:
+  - pos: 18.5,-8.5
+    parent: 105
+    type: Transform
+- uid: 26
+  type: AirlockMaint
+  components:
+  - pos: -60.5,-32.5
+    parent: 105
+    type: Transform
+- uid: 27
+  type: ClosetFireFilled
+  components:
+  - pos: 2.5,10.5
     parent: 105
     type: Transform
   - isPlaceable: False
@@ -575,43 +444,42 @@ entities:
       EntityStorageComponent: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 46
-  type: WallReinforced
+- uid: 28
+  type: Airlock
   components:
-  - pos: -13.5,10.5
+  - pos: -0.5,-27.5
     parent: 105
     type: Transform
-- uid: 47
-  type: CableApcExtension
-  components:
-  - pos: 23.5,-4.5
-    parent: 105
-    type: Transform
-  - visible: False
-    type: Sprite
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-- uid: 48
-  type: WallReinforced
-  components:
-  - pos: -6.5,-12.5
-    parent: 105
-    type: Transform
-- uid: 49
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 29
   type: WallSolid
   components:
-  - pos: 23.5,-10.5
+  - pos: -20.5,-7.5
     parent: 105
     type: Transform
-- uid: 50
-  type: ReinforcedWindow
+- uid: 30
+  type: WallSolid
   components:
-  - pos: -41.5,-125.5
+  - rot: 3.141592653589793 rad
+    pos: 4.5,8.5
     parent: 105
     type: Transform
-- uid: 51
+- uid: 31
+  type: WallSolid
+  components:
+  - pos: 11.5,-14.5
+    parent: 105
+    type: Transform
+- uid: 32
+  type: WallSolid
+  components:
+  - pos: -17.5,-3.5
+    parent: 105
+    type: Transform
+- uid: 33
   type: ShuttersWindowOpen
   components:
   - pos: -10.5,-3.5
@@ -625,45 +493,46 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 52
+- uid: 34
+  type: ReinforcedWindow
+  components:
+  - pos: -41.5,-125.5
+    parent: 105
+    type: Transform
+- uid: 35
   type: WallSolid
   components:
-  - pos: -17.5,-3.5
+  - pos: 23.5,-10.5
     parent: 105
     type: Transform
-- uid: 53
-  type: WallSolid
+- uid: 36
+  type: WallReinforced
   components:
-  - pos: 11.5,-14.5
+  - pos: -6.5,-12.5
     parent: 105
     type: Transform
-- uid: 54
-  type: WallSolid
+- uid: 37
+  type: CableApcExtension
   components:
-  - rot: 3.141592653589793 rad
-    pos: 4.5,8.5
+  - pos: 23.5,-4.5
     parent: 105
     type: Transform
-- uid: 55
-  type: WallSolid
+  - visible: False
+    type: Sprite
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 38
+  type: WallReinforced
   components:
-  - pos: -20.5,-7.5
+  - pos: -13.5,10.5
     parent: 105
     type: Transform
-- uid: 56
-  type: Airlock
+- uid: 39
+  type: ClosetEmergencyFilledRandom
   components:
-  - pos: -0.5,-27.5
-    parent: 105
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 57
-  type: ClosetFireFilled
-  components:
-  - pos: 2.5,10.5
+  - pos: 1.4999968,-9.499975
     parent: 105
     type: Transform
   - isPlaceable: False
@@ -672,197 +541,139 @@ entities:
       EntityStorageComponent: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 58
-  type: AirlockMaint
+- uid: 40
+  type: WallReinforced
   components:
-  - pos: -60.5,-32.5
+  - pos: -4.5,-10.5
     parent: 105
     type: Transform
-- uid: 59
-  type: Airlock
-  components:
-  - pos: 18.5,-8.5
-    parent: 105
-    type: Transform
-- uid: 60
+- uid: 41
   type: WallSolid
   components:
-  - pos: 23.5,-23.5
+  - pos: 10.5,-20.5
     parent: 105
     type: Transform
-- uid: 61
-  type: AirlockMaint
-  components:
-  - pos: -0.5,-8.5
-    parent: 105
-    type: Transform
-- uid: 62
+- uid: 42
   type: WallSolid
   components:
-  - pos: -0.5,-4.5
+  - pos: 23.5,-21.5
     parent: 105
     type: Transform
-- uid: 63
-  type: CableApcExtension
+- uid: 43
+  type: WallSolid
   components:
-  - pos: 19.5,-8.5
+  - pos: 11.5,-13.5
     parent: 105
     type: Transform
-  - visible: False
-    type: Sprite
-  - enabled: False
-    type: AmbientSound
+- uid: 44
+  type: ShuttersWindowOpen
+  components:
+  - pos: -11.5,-3.5
+    parent: 105
+    type: Transform
   - canCollide: False
     type: Physics
-- uid: 64
-  type: SpawnPointBartender
-  components:
-  - pos: 12.5,3.5
-    parent: 105
-    type: Transform
-- uid: 65
-  type: Poweredlight
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 22.5,-21.5
-    parent: 105
-    type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
+  - airBlocked: False
+    type: Airtight
   - containers:
-      light_bulb: !type:ContainerSlot {}
+      board: !type:Container
+        ents: []
     type: ContainerContainer
-- uid: 66
-  type: WallSolid
+- uid: 45
+  type: AirlockChiefEngineerLocked
   components:
-  - pos: -0.5,-25.5
-    parent: 105
-    type: Transform
-- uid: 67
-  type: WallSolid
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 21.5,8.5
-    parent: 105
-    type: Transform
-- uid: 68
-  type: DrinkMelonLiquorBottleFull
-  components:
-  - pos: 14.549824,-0.21772157
-    parent: 105
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 69
-  type: WallSolid
-  components:
-  - pos: -13.5,-7.5
-    parent: 105
-    type: Transform
-- uid: 70
-  type: ReinforcedWindow
-  components:
-  - pos: -0.5,9.5
-    parent: 105
-    type: Transform
-- uid: 71
-  type: CableHV
-  components:
-  - pos: -22.5,-38.5
-    parent: 105
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-- uid: 72
-  type: CableHV
-  components:
-  - pos: -23.5,-38.5
-    parent: 105
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-- uid: 73
-  type: WallSolid
-  components:
-  - pos: -13.5,-10.5
-    parent: 105
-    type: Transform
-- uid: 74
-  type: WallSolid
-  components:
-  - pos: 6.5,-25.5
-    parent: 105
-    type: Transform
-- uid: 75
-  type: WarpPoint
-  components:
-  - pos: -45.5,-9.5
-    parent: 105
-    type: Transform
-  - location: Surgery / Virology
-    type: WarpPoint
-- uid: 76
-  type: WallSolid
-  components:
-  - pos: 13.5,5.5
-    parent: 105
-    type: Transform
-- uid: 77
-  type: AirlockMaintJanitorLocked
-  components:
-  - pos: 4.5,-10.5
-    parent: 105
-    type: Transform
-- uid: 78
-  type: AirlockMaint
-  components:
-  - pos: 18.5,-5.5
-    parent: 105
-    type: Transform
-- uid: 79
-  type: AirlockChiefMedicalOfficerLocked
-  components:
-  - pos: -15.5,-10.5
+  - pos: -15.5,-7.5
     parent: 105
     type: Transform
   - containers:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 80
+- uid: 46
   type: WallSolid
   components:
   - rot: 3.141592653589793 rad
-    pos: 5.5,8.5
+    pos: 8.5,8.5
     parent: 105
     type: Transform
-- uid: 81
-  type: WindoorSecurityLocked
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -6.5,-11.5
-    parent: 105
-    type: Transform
-- uid: 82
+- uid: 47
   type: WallSolid
   components:
-  - pos: 23.5,-11.5
+  - rot: 3.141592653589793 rad
+    pos: 17.5,8.5
     parent: 105
     type: Transform
-- uid: 83
-  type: TableGlass
+- uid: 48
+  type: ShuttersWindowOpen
   components:
-  - pos: 2.5,-11.5
+  - pos: -1.5,-3.5
     parent: 105
     type: Transform
-- uid: 84
+  - canCollide: False
+    type: Physics
+  - airBlocked: False
+    type: Airtight
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 49
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 4.5,3.5
+    parent: 105
+    type: Transform
+- uid: 50
+  type: WallSolid
+  components:
+  - pos: -18.5,-7.5
+    parent: 105
+    type: Transform
+- uid: 51
+  type: VendingMachineVendomat
+  components:
+  - pos: 7.5,7.5
+    parent: 105
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 52
+  type: WallSolid
+  components:
+  - pos: 26.5,-22.5
+    parent: 105
+    type: Transform
+- uid: 53
+  type: ReinforcedWindow
+  components:
+  - pos: 3.5,6.5
+    parent: 105
+    type: Transform
+- uid: 54
+  type: WallSolid
+  components:
+  - pos: 26.5,-19.5
+    parent: 105
+    type: Transform
+- uid: 55
+  type: ShuttersWindowOpen
+  components:
+  - pos: -3.5,-3.5
+    parent: 105
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - airBlocked: False
+    type: Airtight
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 56
   type: CableApcExtension
   components:
-  - pos: 17.5,2.5
+  - pos: 15.5,-9.5
     parent: 105
     type: Transform
   - visible: False
@@ -871,10 +682,198 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
-- uid: 85
+- uid: 57
+  type: WallReinforced
+  components:
+  - pos: 20.5,11.5
+    parent: 105
+    type: Transform
+- uid: 58
   type: WallSolid
   components:
-  - pos: 10.5,-3.5
+  - pos: -16.5,-3.5
+    parent: 105
+    type: Transform
+- uid: 59
+  type: WallReinforced
+  components:
+  - pos: -4.5,-12.5
+    parent: 105
+    type: Transform
+- uid: 60
+  type: Airlock
+  components:
+  - pos: 14.5,-8.5
+    parent: 105
+    type: Transform
+- uid: 61
+  type: WallSolid
+  components:
+  - pos: 19.5,5.5
+    parent: 105
+    type: Transform
+- uid: 62
+  type: AirlockEngineering
+  components:
+  - pos: -0.5,-5.5
+    parent: 105
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 63
+  type: WallReinforced
+  components:
+  - pos: -4.5,-11.5
+    parent: 105
+    type: Transform
+- uid: 64
+  type: ShuttersWindowOpen
+  components:
+  - pos: -2.5,-3.5
+    parent: 105
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - airBlocked: False
+    type: Airtight
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 65
+  type: WallReinforced
+  components:
+  - pos: 2.5,-3.5
+    parent: 105
+    type: Transform
+- uid: 66
+  type: WallSolid
+  components:
+  - pos: 29.5,-19.5
+    parent: 105
+    type: Transform
+- uid: 67
+  type: Chair
+  components:
+  - pos: 6.5,7.5
+    parent: 105
+    type: Transform
+- uid: 68
+  type: WallSolid
+  components:
+  - pos: -13.5,-6.5
+    parent: 105
+    type: Transform
+- uid: 69
+  type: AirlockExternalGlassShuttleLocked
+  components:
+  - pos: 11.5,13.5
+    parent: 105
+    type: Transform
+- uid: 70
+  type: ReinforcedWindow
+  components:
+  - pos: -13.5,3.5
+    parent: 105
+    type: Transform
+- uid: 71
+  type: ReinforcedWindow
+  components:
+  - pos: 4.5,-18.5
+    parent: 105
+    type: Transform
+- uid: 72
+  type: WallSolid
+  components:
+  - pos: 19.5,-25.5
+    parent: 105
+    type: Transform
+- uid: 73
+  type: WallSolid
+  components:
+  - pos: 12.5,5.5
+    parent: 105
+    type: Transform
+- uid: 74
+  type: WallSolid
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 10.5,8.5
+    parent: 105
+    type: Transform
+- uid: 75
+  type: WallSolid
+  components:
+  - pos: -14.5,-3.5
+    parent: 105
+    type: Transform
+- uid: 76
+  type: WallSolid
+  components:
+  - pos: 26.5,-20.5
+    parent: 105
+    type: Transform
+- uid: 77
+  type: WallSolid
+  components:
+  - pos: 13.5,2.5
+    parent: 105
+    type: Transform
+- uid: 78
+  type: WallSolid
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 20.5,8.5
+    parent: 105
+    type: Transform
+- uid: 79
+  type: WallSolid
+  components:
+  - pos: 23.5,-23.5
+    parent: 105
+    type: Transform
+- uid: 80
+  type: WallSolid
+  components:
+  - pos: 23.5,-9.5
+    parent: 105
+    type: Transform
+- uid: 81
+  type: ReinforcedWindow
+  components:
+  - pos: -3.5,0.5
+    parent: 105
+    type: Transform
+- uid: 82
+  type: CableApcExtension
+  components:
+  - pos: 23.5,2.5
+    parent: 105
+    type: Transform
+  - visible: False
+    type: Sprite
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 83
+  type: WallSolid
+  components:
+  - pos: 9.5,-0.5
+    parent: 105
+    type: Transform
+- uid: 84
+  type: WallSolid
+  components:
+  - pos: -13.5,-11.5
+    parent: 105
+    type: Transform
+- uid: 85
+  type: ReinforcedWindow
+  components:
+  - pos: -0.5,-22.5
     parent: 105
     type: Transform
 - uid: 86
@@ -18761,6 +18760,10 @@ entities:
       -51,-113: 5
       -50,-119: 5
       -49,-119: 5
+      -23,-128: 5
+      -15,-134: 5
+      -9,-136: 5
+      -6,-136: 5
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -18830,60 +18833,60 @@ entities:
       - 0
     type: GridAtmosphere
   - joints:
-      docking10903: !type:WeldJoint
+      docking10911: !type:WeldJoint
         bodyB: 2697
         bodyA: 105
-        id: docking10903
+        id: docking10911
         localAnchorB: 9,4.5
         localAnchorA: -2,6.5
         referenceAngle: 0.00033087155
-        damping: 920139.5
-        stiffness: 8259154
-      docking13136: !type:WeldJoint
+        damping: 920401.56
+        stiffness: 8261505.5
+      docking13144: !type:WeldJoint
         bodyB: 2638
         bodyA: 105
-        id: docking13136
+        id: docking13144
         localAnchorB: 0.49999997,-1
         localAnchorA: -49.5,6
         referenceAngle: -8.451205E-05
-        damping: 920139.5
-        stiffness: 8259154
-      docking13137: !type:WeldJoint
+        damping: 920401.56
+        stiffness: 8261505.5
+      docking13145: !type:WeldJoint
         bodyB: 2638
         bodyA: 105
-        id: docking13137
+        id: docking13145
         localAnchorB: 2.5,-1
         localAnchorA: -47.5,6
         referenceAngle: -8.451205E-05
-        damping: 920139.5
-        stiffness: 8259154
-      docking13144: !type:WeldJoint
+        damping: 920401.56
+        stiffness: 8261505.5
+      docking13152: !type:WeldJoint
         bodyB: 105
         bodyA: 2638
-        id: docking13144
+        id: docking13152
         localAnchorB: -49.5,6
         localAnchorA: 0.49999997,-1
         referenceAngle: 8.451205E-05
-        damping: 2142.882
-        stiffness: 19234.465
-      docking13145: !type:WeldJoint
+        damping: 2142.8833
+        stiffness: 19234.477
+      docking13153: !type:WeldJoint
         bodyB: 105
         bodyA: 2638
-        id: docking13145
+        id: docking13153
         localAnchorB: -47.5,6
         localAnchorA: 2.5,-1
         referenceAngle: 8.451205E-05
-        damping: 2142.882
-        stiffness: 19234.465
-      docking13311: !type:WeldJoint
+        damping: 2142.8833
+        stiffness: 19234.477
+      docking13319: !type:WeldJoint
         bodyB: 105
         bodyA: 2697
-        id: docking13311
+        id: docking13319
         localAnchorB: -2,6.5
         localAnchorA: 9,4.5
         referenceAngle: -0.00033087155
-        damping: 7333.0703
-        stiffness: 65821.49
+        damping: 7333.088
+        stiffness: 65821.65
     type: Joint
 - uid: 106
   type: PoweredSmallLight
@@ -18950,9 +18953,9 @@ entities:
     parent: 105
     type: Transform
 - uid: 114
-  type: WallSolid
+  type: WallReinforced
   components:
-  - pos: 3.5,-5.5
+  - pos: 3.5,-6.5
     parent: 105
     type: Transform
 - uid: 115
@@ -19069,9 +19072,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 128
-  type: WallSolid
+  type: WallReinforced
   components:
-  - pos: -0.5,-3.5
+  - pos: -0.5,-6.5
     parent: 105
     type: Transform
 - uid: 129
@@ -19227,9 +19230,9 @@ entities:
     parent: 105
     type: Transform
 - uid: 152
-  type: WallSolid
+  type: WallReinforced
   components:
-  - pos: 3.5,-3.5
+  - pos: 2.5,-7.5
     parent: 105
     type: Transform
 - uid: 153
@@ -19403,9 +19406,9 @@ entities:
     parent: 105
     type: Transform
 - uid: 177
-  type: WallSolid
+  type: WallReinforced
   components:
-  - pos: -0.5,-7.5
+  - pos: 0.5,-3.5
     parent: 105
     type: Transform
 - uid: 178
@@ -20127,10 +20130,9 @@ entities:
     parent: 105
     type: Transform
 - uid: 282
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: 3.5,-7.5
+  - pos: 3.5,-4.5
     parent: 105
     type: Transform
 - uid: 283
@@ -20355,10 +20357,9 @@ entities:
     parent: 105
     type: Transform
 - uid: 314
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: 2.5,-7.5
+  - pos: 3.5,-3.5
     parent: 105
     type: Transform
 - uid: 315
@@ -20368,10 +20369,9 @@ entities:
     parent: 105
     type: Transform
 - uid: 316
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: 0.5,-7.5
+  - pos: 1.5,-3.5
     parent: 105
     type: Transform
 - uid: 317
@@ -21023,7 +21023,7 @@ entities:
     type: Transform
   - dockedWith: 2809
     type: Docking
-  - SecondsUntilStateChange: -197.66629
+  - SecondsUntilStateChange: -291.73138
     changeAirtight: False
     state: Opening
     type: Door
@@ -21559,9 +21559,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 479
-  type: WallSolid
+  type: WallReinforced
   components:
-  - pos: 2.5,-3.5
+  - pos: 0.5,-7.5
     parent: 105
     type: Transform
 - uid: 480
@@ -22108,9 +22108,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 550
-  type: WallSolid
+  type: WallReinforced
   components:
-  - pos: -0.5,-6.5
+  - pos: -0.5,-3.5
     parent: 105
     type: Transform
 - uid: 551
@@ -22126,9 +22126,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 552
-  type: WallSolid
+  type: WallReinforced
   components:
-  - pos: 3.5,-4.5
+  - pos: 3.5,-7.5
     parent: 105
     type: Transform
 - uid: 553
@@ -22268,9 +22268,9 @@ entities:
     parent: 105
     type: Transform
 - uid: 574
-  type: WallSolid
+  type: WallReinforced
   components:
-  - pos: 1.5,-3.5
+  - pos: 1.5,-7.5
     parent: 105
     type: Transform
 - uid: 575
@@ -22375,10 +22375,9 @@ entities:
     parent: 105
     type: Transform
 - uid: 590
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: 3.5,-6.5
+  - pos: 3.5,-5.5
     parent: 105
     type: Transform
 - uid: 591
@@ -22720,9 +22719,9 @@ entities:
     parent: 105
     type: Transform
 - uid: 637
-  type: WallSolid
+  type: WallReinforced
   components:
-  - pos: 0.5,-3.5
+  - pos: -0.5,-7.5
     parent: 105
     type: Transform
 - uid: 638
@@ -38209,7 +38208,7 @@ entities:
     type: Transform
   - dockedWith: 2642
     type: Docking
-  - SecondsUntilStateChange: -197.66629
+  - SecondsUntilStateChange: -291.73138
     changeAirtight: False
     state: Opening
     type: Door
@@ -38222,7 +38221,7 @@ entities:
     type: Transform
   - dockedWith: 2643
     type: Docking
-  - SecondsUntilStateChange: -197.66629
+  - SecondsUntilStateChange: -291.73138
     changeAirtight: False
     state: Opening
     type: Door
@@ -38259,42 +38258,42 @@ entities:
   - chunkCollection: {}
     type: DecalGrid
   - joints:
-      docking13136: !type:WeldJoint
+      docking13144: !type:WeldJoint
         bodyB: 2638
         bodyA: 105
-        id: docking13136
+        id: docking13144
         localAnchorB: 0.49999997,-1
         localAnchorA: -49.5,6
         referenceAngle: -8.451205E-05
-        damping: 920139.5
-        stiffness: 8259154
-      docking13137: !type:WeldJoint
+        damping: 920401.56
+        stiffness: 8261505.5
+      docking13145: !type:WeldJoint
         bodyB: 2638
         bodyA: 105
-        id: docking13137
+        id: docking13145
         localAnchorB: 2.5,-1
         localAnchorA: -47.5,6
         referenceAngle: -8.451205E-05
-        damping: 920139.5
-        stiffness: 8259154
-      docking13144: !type:WeldJoint
+        damping: 920401.56
+        stiffness: 8261505.5
+      docking13152: !type:WeldJoint
         bodyB: 105
         bodyA: 2638
-        id: docking13144
+        id: docking13152
         localAnchorB: -49.5,6
         localAnchorA: 0.49999997,-1
         referenceAngle: 8.451205E-05
-        damping: 2142.882
-        stiffness: 19234.465
-      docking13145: !type:WeldJoint
+        damping: 2142.8833
+        stiffness: 19234.477
+      docking13153: !type:WeldJoint
         bodyB: 105
         bodyA: 2638
-        id: docking13145
+        id: docking13153
         localAnchorB: -47.5,6
         localAnchorA: 2.5,-1
         referenceAngle: 8.451205E-05
-        damping: 2142.882
-        stiffness: 19234.465
+        damping: 2142.8833
+        stiffness: 19234.477
     type: Joint
 - uid: 2639
   type: WallSolid
@@ -38328,7 +38327,7 @@ entities:
     type: Transform
   - dockedWith: 2634
     type: Docking
-  - SecondsUntilStateChange: -197.66629
+  - SecondsUntilStateChange: -291.73138
     changeAirtight: False
     state: Opening
     type: Door
@@ -38340,7 +38339,7 @@ entities:
     type: Transform
   - dockedWith: 2635
     type: Docking
-  - SecondsUntilStateChange: -197.66629
+  - SecondsUntilStateChange: -291.73138
     changeAirtight: False
     state: Opening
     type: Door
@@ -38749,24 +38748,24 @@ entities:
   - chunkCollection: {}
     type: DecalGrid
   - joints:
-      docking10903: !type:WeldJoint
+      docking10911: !type:WeldJoint
         bodyB: 2697
         bodyA: 105
-        id: docking10903
+        id: docking10911
         localAnchorB: 9,4.5
         localAnchorA: -2,6.5
         referenceAngle: 0.00033087155
-        damping: 920139.5
-        stiffness: 8259154
-      docking13311: !type:WeldJoint
+        damping: 920401.56
+        stiffness: 8261505.5
+      docking13319: !type:WeldJoint
         bodyB: 105
         bodyA: 2697
-        id: docking13311
+        id: docking13319
         localAnchorB: -2,6.5
         localAnchorA: 9,4.5
         referenceAngle: -0.00033087155
-        damping: 7333.0703
-        stiffness: 65821.49
+        damping: 7333.088
+        stiffness: 65821.65
     type: Joint
 - uid: 2698
   type: WallSolid
@@ -39609,7 +39608,7 @@ entities:
     type: Transform
   - dockedWith: 401
     type: Docking
-  - SecondsUntilStateChange: -197.66629
+  - SecondsUntilStateChange: -291.73138
     changeAirtight: False
     state: Opening
     type: Door
@@ -40049,21 +40048,21 @@ entities:
     parent: 105
     type: Transform
 - uid: 2870
-  type: WallSolid
+  type: WallReinforced
   components:
-  - pos: -0.5,-91.5
+  - pos: -0.5,-93.5
     parent: 105
     type: Transform
 - uid: 2871
-  type: WallSolid
+  type: WallReinforced
   components:
   - pos: -0.5,-92.5
     parent: 105
     type: Transform
 - uid: 2872
-  type: WallSolid
+  type: WallReinforced
   components:
-  - pos: -0.5,-93.5
+  - pos: -0.5,-91.5
     parent: 105
     type: Transform
 - uid: 2873
@@ -43413,93 +43412,93 @@ entities:
     parent: 105
     type: Transform
 - uid: 3260
-  type: WallSolid
-  components:
-  - pos: 0.5,-96.5
-    parent: 105
-    type: Transform
-- uid: 3261
-  type: WallSolid
+  type: WallReinforced
   components:
   - pos: -0.5,-96.5
     parent: 105
     type: Transform
-- uid: 3262
-  type: WallSolid
+- uid: 3261
+  type: WallReinforced
   components:
   - pos: -0.5,-95.5
     parent: 105
     type: Transform
-- uid: 3263
-  type: WallSolid
+- uid: 3262
+  type: WallReinforced
   components:
-  - pos: 1.5,-96.5
+  - pos: 0.5,-96.5
+    parent: 105
+    type: Transform
+- uid: 3263
+  type: WallReinforced
+  components:
+  - pos: 11.5,-97.5
     parent: 105
     type: Transform
 - uid: 3264
-  type: WallSolid
-  components:
-  - pos: 2.5,-96.5
-    parent: 105
-    type: Transform
-- uid: 3265
-  type: WallSolid
-  components:
-  - pos: 3.5,-96.5
-    parent: 105
-    type: Transform
-- uid: 3266
-  type: WallSolid
-  components:
-  - pos: 4.5,-96.5
-    parent: 105
-    type: Transform
-- uid: 3267
-  type: WallSolid
-  components:
-  - pos: 5.5,-96.5
-    parent: 105
-    type: Transform
-- uid: 3268
-  type: WallSolid
-  components:
-  - pos: 6.5,-96.5
-    parent: 105
-    type: Transform
-- uid: 3269
-  type: WallSolid
-  components:
-  - pos: 7.5,-96.5
-    parent: 105
-    type: Transform
-- uid: 3270
-  type: WallSolid
-  components:
-  - pos: 8.5,-96.5
-    parent: 105
-    type: Transform
-- uid: 3271
-  type: WallSolid
-  components:
-  - pos: 9.5,-96.5
-    parent: 105
-    type: Transform
-- uid: 3272
-  type: WallSolid
-  components:
-  - pos: 10.5,-96.5
-    parent: 105
-    type: Transform
-- uid: 3273
-  type: WallSolid
+  type: WallReinforced
   components:
   - pos: 11.5,-96.5
     parent: 105
     type: Transform
-- uid: 3274
-  type: WallSolid
+- uid: 3265
+  type: WallReinforced
   components:
-  - pos: 11.5,-97.5
+  - pos: 10.5,-96.5
+    parent: 105
+    type: Transform
+- uid: 3266
+  type: WallReinforced
+  components:
+  - pos: 9.5,-96.5
+    parent: 105
+    type: Transform
+- uid: 3267
+  type: WallReinforced
+  components:
+  - pos: 8.5,-96.5
+    parent: 105
+    type: Transform
+- uid: 3268
+  type: WallReinforced
+  components:
+  - pos: 7.5,-96.5
+    parent: 105
+    type: Transform
+- uid: 3269
+  type: WallReinforced
+  components:
+  - pos: 6.5,-96.5
+    parent: 105
+    type: Transform
+- uid: 3270
+  type: WallReinforced
+  components:
+  - pos: 5.5,-96.5
+    parent: 105
+    type: Transform
+- uid: 3271
+  type: WallReinforced
+  components:
+  - pos: 4.5,-96.5
+    parent: 105
+    type: Transform
+- uid: 3272
+  type: WallReinforced
+  components:
+  - pos: 3.5,-96.5
+    parent: 105
+    type: Transform
+- uid: 3273
+  type: WallReinforced
+  components:
+  - pos: 2.5,-96.5
+    parent: 105
+    type: Transform
+- uid: 3274
+  type: WallReinforced
+  components:
+  - pos: 1.5,-96.5
     parent: 105
     type: Transform
 - uid: 3275
@@ -43585,7 +43584,7 @@ entities:
     parent: 105
     type: Transform
 - uid: 3287
-  type: AirlockHeadOfSecurityLocked
+  type: AirlockHeadOfSecurityGlassLocked
   components:
   - pos: 15.5,-78.5
     parent: 105
@@ -74417,6 +74416,8 @@ entities:
   - pos: 15.5,-78.5
     parent: 105
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - canCollide: False
     type: Physics
 - uid: 6847
@@ -128260,6 +128261,8 @@ entities:
     type: Physics
   - color: '#0055CCFF'
     type: AtmosPipeColor
+  - enabled: False
+    type: AmbientSound
 - uid: 13408
   type: GasPipeStraight
   components:
@@ -176583,4 +176586,130 @@ entities:
   - pos: 5.5,-22.5
     parent: 105
     type: Transform
+- uid: 17784
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 11.5,-80.5
+    parent: 105
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 17785
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 11.5,-96.5
+    parent: 105
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 17786
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -4.5,-96.5
+    parent: 105
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 17787
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -9.5,-113.5
+    parent: 105
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 17788
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 0.5,-125.5
+    parent: 105
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 17789
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -13.5,-124.5
+    parent: 105
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 17790
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -23.5,-109.5
+    parent: 105
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 17791
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -23.5,-87.5
+    parent: 105
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 17792
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -23.5,-70.5
+    parent: 105
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 17793
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -9.5,-51.5
+    parent: 105
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 17794
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -16.5,-37.5
+    parent: 105
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 17795
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -4.5,-30.5
+    parent: 105
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 17796
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -4.5,-12.5
+    parent: 105
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 17797
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -13.5,0.5
+    parent: 105
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
 ...
