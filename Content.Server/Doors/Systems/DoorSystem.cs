@@ -18,6 +18,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
+using Content.Shared.Hands.Components;
 using System.Linq;
 
 namespace Content.Server.Doors.Systems;
@@ -42,7 +43,6 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<DoorComponent, WeldCancelledEvent>(OnWeldCancelled);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
-        SubscribeLocalEvent<DoorComponent, DoorStateChangedEvent>(OnStateChanged);
     }
 
     protected override void SetCollidable(EntityUid uid, bool collidable,
@@ -279,6 +279,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if(!container.Insert(board))
             Logger.Warning($"Couldn't insert board {ToPrettyString(board)} into door {ToPrettyString(uid)}!");
     }
+
     private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
     {
         if(TryComp<AirlockComponent>(uid, out var airlockComponent))
@@ -292,16 +293,27 @@ public sealed class DoorSystem : SharedDoorSystem
         }
     }
 
-    private void OnStateChanged(EntityUid uid, DoorComponent component, DoorStateChangedEvent args)
+    public override void StartOpening(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
     {
-        if (args.PreviousState == DoorState.Emagging)
-        {
-            if(TryComp<AirlockComponent>(uid, out var airlockComponent))
-            {
-                StartOpening(uid);
-                airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
-            }
-        }
+        if (!Resolve(uid, ref door))
+            return;
+
+        DoorState lastState = door.State;
+
+        SetState(uid, DoorState.Opening, door);
+
+        if (door.OpenSound != null)
+            PlaySound(uid, door.OpenSound.GetSound(), AudioParams.Default.WithVolume(-5), user, predicted);
+
+        // I'm not sure what the intent here is/was? It plays a sound if the user is opening a door with a hands
+        // component, but no actual hands!? What!? Is this the sound of them head-butting the door to get it to open??
+        // I'm 99% sure something is wrong here, but I kind of want to keep it this way.
+
+        if (user != null && TryComp(user.Value, out SharedHandsComponent? hands) && hands.Hands.Count == 0)
+            PlaySound(uid, door.TryOpenDoorSound.GetSound(), AudioParams.Default.WithVolume(-2), user, predicted);
+
+        if(lastState == DoorState.Emagging && TryComp<AirlockComponent>(door.Owner, out var airlockComponent))
+            airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
     }
 }
 

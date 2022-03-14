@@ -100,7 +100,6 @@ public abstract class SharedDoorSystem : EntitySystem
             return;
 
         door.CurrentlyCrushing = new(state.CurrentlyCrushing);
-        DoorState previous = door.State;
         door.State = state.DoorState;
         door.NextStateChange = state.NextStateChange;
         door.Partial = state.Partial;
@@ -110,11 +109,11 @@ public abstract class SharedDoorSystem : EntitySystem
         else
             _activeDoors.Add(door);
 
-        RaiseLocalEvent(uid, new DoorStateChangedEvent(door.State, previous), false);
+        RaiseLocalEvent(uid, new DoorStateChangedEvent(door.State), false);
         UpdateAppearance(uid, door);
     }
 
-    protected void SetState(EntityUid uid, DoorState state, DoorComponent? door = null)
+    protected virtual void SetState(EntityUid uid, DoorState state, DoorComponent? door = null)
     {
         if (!Resolve(uid, ref door))
             return;
@@ -148,10 +147,9 @@ public abstract class SharedDoorSystem : EntitySystem
                     _activeDoors.Remove(door);
                 break;
         }
-        DoorState previous = door.State;
         door.State = state;
         door.Dirty();
-        RaiseLocalEvent(uid, new DoorStateChangedEvent(state, previous), false);
+        RaiseLocalEvent(uid, new DoorStateChangedEvent(state), false);
         UpdateAppearance(uid, door);
     }
 
@@ -554,7 +552,7 @@ public abstract class SharedDoorSystem : EntitySystem
     /// <summary>
     ///     Makes a door proceed to the next state (if applicable).
     /// </summary>
-    private void NextState(DoorComponent door, TimeSpan time)
+    public virtual void NextState(DoorComponent door, TimeSpan time)
     {
         door.NextStateChange = null;
 
@@ -589,7 +587,7 @@ public abstract class SharedDoorSystem : EntitySystem
                 break;
 
             case DoorState.Emagging:
-                SetState(door.Owner, DoorState.Closed, door);
+                StartOpening(door.Owner, door);
                 break;
 
             case DoorState.Open:
