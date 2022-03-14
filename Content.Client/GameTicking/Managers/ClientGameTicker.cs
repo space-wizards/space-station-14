@@ -107,7 +107,7 @@ namespace Content.Client.GameTicking.Managers
 
         private void JoinGame(TickerJoinGameEvent message)
         {
-            _stateManager.RequestStateChange<GameScreen>();
+            _stateManager.RequestStateChange<GameplayState>();
         }
 
         private void LobbyCountdown(TickerLobbyCountdownEvent message)

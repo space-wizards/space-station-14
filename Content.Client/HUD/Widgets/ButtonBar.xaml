@@ -1,0 +1,79 @@
+﻿<BoxContainer xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths"
+         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+         xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+         xmlns:parallax="clr-namespace:Content.Client.Parallax"
+         xmlns:vote="clr-namespace:Content.Client.Voting.UI"
+         xmlns:style="clr-namespace:Content.Client.Stylesheets"
+         xmlns:hudUi="clr-namespace:Content.Client.HUD.UI"
+         xmlns:chatUi="clr-namespace:Content.Client.Chat.UI"
+         xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
+         xmlns:info="clr-namespace:Content.Client.Info"
+         Orientation="Horizontal" SeparationOverride="8"
+         >
+    <ui:TexturedButton
+        Name="EscapeButton"
+        Access="Protected"
+        TexturePath="/Textures/Interface/hamburger.svg.192dpi.png"
+        ToolTip="{Loc 'game-hud-open-escape-menu-button-tooltip'}"
+        MinSize="70 64"
+        StyleIdentifier="{x:Static style:StyleBase.ButtonOpenRight}"
+        />
+    <ui:TexturedButton
+        Name="CharacterButton"
+        Access="Protected"
+        TexturePath="/Textures/Interface/character.svg.192dpi.png"
+        ToolTip="{Loc 'game-hud-open-character-menu-button-tooltip'}"
+        MinSize="42 64"
+        StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <ui:TexturedButton
+        Name="InventoryButton"
+        Access="Protected"
+        TexturePath="/Textures/Interface/inventory.svg.192dpi.png"
+        ToolTip="{Loc 'game-hud-open-inventory-menu-button-tooltip'}"
+        MinSize="42 64"
+        StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <ui:TexturedButton
+        Name="CraftingButton"
+        Access="Protected"
+        TexturePath="/Textures/Interface/hammer.svg.192dpi.png"
+        ToolTip="{Loc 'game-hud-open-crafting-menu-button-tooltip'}"
+        MinSize="42 64"
+        StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <ui:TexturedButton
+        Name="ActionButton"
+        Access="Protected"
+        TexturePath="/Textures/Interface/fist.svg.192dpi.png"
+        ToolTip="{Loc 'game-hud-open-actions-menu-button-tooltip'}"
+        MinSize="42 64"
+        StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <ui:TexturedButton
+        Name="AdminButton"
+        Access="Protected"
+        TexturePath="/Textures/Interface/gavel.svg.192dpi.png"
+        ToolTip="{Loc 'game-hud-open-admin-menu-button-tooltip'}"
+        MinSize="42 64"
+        StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <ui:TexturedButton
+        Name="SandboxButton"
+        Access="Protected"
+        TexturePath="/Textures/Interface/sandbox.svg.192dpi.png"
+        ToolTip="{Loc 'game-hud-open-sandbox-menu-button-tooltip'}"
+        MinSize="42 64"
+        StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <ui:TexturedButton
+        Name="InfoButton"
+        Access="Protected"
+        TexturePath="/Textures/Interface/info.svg.192dpi.png"
+        ToolTip="{Loc 'ui-options-function-open-info'}"
+        MinSize="42 64"
+        StyleIdentifier="{x:Static style:StyleBase.ButtonOpenLeft}"
+        />
+</BoxContainer>

@@ -25,7 +25,6 @@ namespace Content.Client.IoC
     {
         public static void Register()
         {
-            IoCManager.Register<IGameHud, GameHud>();
             IoCManager.Register<IParallaxManager, ParallaxManager>();
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();

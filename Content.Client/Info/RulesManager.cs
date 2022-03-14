@@ -37,7 +37,7 @@ public sealed class RulesManager : SharedRulesManager
 
     private void OnStateChanged(StateChangedEventArgs args)
     {
-        if (args.NewState is not (GameScreen or LobbyState))
+        if (args.NewState is not (GameplayState or LobbyState))
             return;
         _stateManager.OnStateChanged -= OnStateChanged;
 

@@ -34,15 +34,21 @@ namespace Content.Client.Viewport
 
         private ClickableEntityComparer _comparer = default!;
 
+        //-- possibly move this to the base state, this is a useful thing to be able to check.
+        private bool _initialized = false;
+        public bool Initialized => _initialized;
+
         public override void Startup()
         {
             _inputManager.KeyBindStateChanged += OnKeyBindStateChanged;
             _comparer = new ClickableEntityComparer(_entityManager);
+            _initialized = true;
         }
 
         public override void Shutdown()
         {
             _inputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
+            _initialized = false;
         }
 
         public EntityUid? GetEntityUnderPosition(MapCoordinates coordinates)

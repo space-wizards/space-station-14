@@ -75,7 +75,7 @@ namespace Content.Client.Audio
             {
                 StartLobbyMusic();
             }
-            else if (args.NewState is GameScreen && _configManager.GetCVar(CCVars.AmbienceBasicEnabled))
+            else if (args.NewState is GameplayState && _configManager.GetCVar(CCVars.AmbienceBasicEnabled))
             {
                 StartAmbience();
             }
@@ -113,7 +113,7 @@ namespace Content.Client.Audio
             {
                 EndAmbience();
             }
-            else if (_stateManager.CurrentState is GameScreen)
+            else if (_stateManager.CurrentState is GameplayState)
             {
                 StartAmbience();
             }

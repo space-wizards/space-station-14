@@ -288,7 +288,7 @@ namespace Content.Client.DragDrop
 
             IList<EntityUid> entities;
 
-            if (_stateManager.CurrentState is GameScreen screen)
+            if (_stateManager.CurrentState is GameplayState screen)
             {
                 entities = screen.GetEntitiesUnderPosition(args.Coordinates);
             }

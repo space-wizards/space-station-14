@@ -108,7 +108,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
         // Potentially change someday? who knows.
         var currentState = _stateManager.CurrentState;
 
-        if (currentState is not GameScreen screen) return;
+        if (currentState is not GameplayState screen) return;
 
         EntityUid? entityToClick = null;
         var renderScale = 1;
