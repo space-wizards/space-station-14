@@ -1,10 +1,13 @@
 using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
+using Content.Server.Disease;
+using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
 
 namespace Content.Server.Medical
@@ -12,6 +15,7 @@ namespace Content.Server.Medical
     public sealed class HealthAnalyzerSystem : EntitySystem
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -64,6 +68,22 @@ namespace Content.Server.Medical
         {
             args.Component.CancelToken = null;
             UpdateScannedUser(args.Component.Owner, args.User, args.Target, args.Component);
+            /// Below is for the traitor item
+            /// Piggybacking off another component's doafter is complete CBT so I gave up
+            /// and put it on the same component
+            if (!args.Component.Fake || args.Component.Disease == string.Empty || args.Target == null)
+                return;
+
+            EntitySystem.Get<DiseaseSystem>().TryAddDisease(null, null, args.Component.Disease, args.Target.Value);
+
+            if (args.User == args.Target)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("disease-scanner-gave-self", ("disease", args.Component.Disease)),
+                    args.User, Filter.Entities(args.User));
+                return;
+            }
+            _popupSystem.PopupEntity(Loc.GetString("disease-scanner-gave-other", ("target", args.Target), ("disease", args.Component.Disease)),
+                args.User, Filter.Entities(args.User));
         }
 
         private void OpenUserInterface(EntityUid user, HealthAnalyzerComponent healthAnalyzer)

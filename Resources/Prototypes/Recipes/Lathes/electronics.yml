@@ -164,6 +164,27 @@
      Glass: 900
 
 - type: latheRecipe
+  id: VaccinatorMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: VaccinatorMachineCircuitboard
+  completetime: 100
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
+  id: DiagnoserMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: DiagnoserMachineCircuitboard
+  completetime: 100
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+
+- type: latheRecipe
   id: ReagentGrinderMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: ReagentGrinderMachineCircuitboard
