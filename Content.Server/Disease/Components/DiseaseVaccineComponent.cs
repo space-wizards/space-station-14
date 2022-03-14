@@ -3,10 +3,10 @@ using Content.Shared.Disease;
 
 namespace Content.Server.Disease.Components
 {
-    [RegisterComponent]
     /// <summary>
     /// For disease vaccines
     /// </summary>
+    [RegisterComponent]
     public sealed class DiseaseVaccineComponent : Component
     {
         /// <summary>
