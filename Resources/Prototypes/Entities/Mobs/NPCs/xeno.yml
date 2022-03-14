@@ -85,7 +85,7 @@
     currentTemperature: 310.15
 
 - type: entity
-  name: purple_snake
+  name: purple snake
   parent: SimpleSpaceMobBase
   id: MobPurpleSnake
   description: A menacing purple snake from Kepler-283c.
