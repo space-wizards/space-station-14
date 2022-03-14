@@ -21,7 +21,6 @@ namespace Content.Server.Clothing
 
             SubscribeLocalEvent<MagbootsComponent, GetVerbsEvent<ActivationVerb>>(AddToggleVerb);
             SubscribeLocalEvent<MagbootsComponent, SlipAttemptEvent>(OnSlipAttempt);
-            SubscribeLocalEvent<MagbootsComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
             SubscribeLocalEvent<MagbootsComponent, GotEquippedEvent>(OnGotEquipped);
             SubscribeLocalEvent<MagbootsComponent, GotUnequippedEvent>(OnGotUnequipped);
         }
@@ -61,11 +60,6 @@ namespace Content.Server.Clothing
             {
                 UpdateMagbootEffects(args.Equipee, uid, true, component);
             }
-        }
-
-        private void OnRefreshMovespeed(EntityUid uid, MagbootsComponent component, RefreshMovementSpeedModifiersEvent args)
-        {
-            args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
         }
 
         private void AddToggleVerb(EntityUid uid, MagbootsComponent component, GetVerbsEvent<ActivationVerb> args)
