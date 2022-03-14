@@ -110,7 +110,7 @@
 - type: entity
   name: purple snake
   parent: SimpleSpaceMobBase
-  id: Mobsmall_purple_snake
+  id: MobSmallPurpleSnake
   description: A smaller version of the menacing purple snake from Kepler-283c.
   components:
   - type: Sprite
