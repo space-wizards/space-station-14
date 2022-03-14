@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: TimerTriggerGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: timerTrigger
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 0.5
+      - material: Cable
+        amount: 5
+        doAfter: 0.5
+  - node: timerTrigger
+    entity: TimerTrigger

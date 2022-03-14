@@ -1,0 +1,31 @@
+# Misc electronic trigger devices.
+
+- type: entity
+  parent: BaseItem
+  id: TimerTrigger
+  name: timer trigger
+  description: A configurable timer.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/timer.rsi
+    state: timer
+  - type: Item
+    size: 5
+  - type: Construction
+    graph: TimerTriggerGraph
+    node: timerTrigger
+  - type: PayloadTrigger
+    components:
+    - type: OnUseTimerTrigger
+      delay: 5
+      delayOptions: [1, 3, 5, 10, 15, 30]
+    - type: EmitSoundOnUse
+      sound: /Audio/Items/crowbar.ogg # close enough to a generic click sound
+
+# TODO:
+# - proximity
+# - voice
+# - machine linking
+# - device network
+# - biometric/health (maybe just via device nets?)
+# - booby-trap / on-storage-open

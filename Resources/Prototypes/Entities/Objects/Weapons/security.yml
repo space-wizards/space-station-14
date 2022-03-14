@@ -56,7 +56,7 @@
   id: PortableFlasher
   description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
   components:
-    - type: SoundOnTrigger
+    - type: EmitSoundOnTrigger
       sound:
         path: /Audio/Weapons/flash.ogg
     - type: FlashOnTrigger

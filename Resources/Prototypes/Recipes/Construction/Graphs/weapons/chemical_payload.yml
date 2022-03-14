@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: ChemicalPayloadGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: chemicalPayload
+      steps:
+      - material: Plastic
+        amount: 5
+        doAfter: 0.5
+      - material: Cable
+        amount: 3
+        doAfter: 0.5
+  - node: chemicalPayload
+    entity: ChemicalPayload
