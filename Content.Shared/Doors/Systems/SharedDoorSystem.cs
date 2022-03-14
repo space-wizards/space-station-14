@@ -113,7 +113,7 @@ public abstract class SharedDoorSystem : EntitySystem
         UpdateAppearance(uid, door);
     }
 
-    protected virtual void SetState(EntityUid uid, DoorState state, DoorComponent? door = null)
+    protected void SetState(EntityUid uid, DoorState state, DoorComponent? door = null)
     {
         if (!Resolve(uid, ref door))
             return;
@@ -147,6 +147,7 @@ public abstract class SharedDoorSystem : EntitySystem
                     _activeDoors.Remove(door);
                 break;
         }
+
         door.State = state;
         door.Dirty();
         RaiseLocalEvent(uid, new DoorStateChangedEvent(state), false);
@@ -552,7 +553,7 @@ public abstract class SharedDoorSystem : EntitySystem
     /// <summary>
     ///     Makes a door proceed to the next state (if applicable).
     /// </summary>
-    public virtual void NextState(DoorComponent door, TimeSpan time)
+    private void NextState(DoorComponent door, TimeSpan time)
     {
         door.NextStateChange = null;
 
