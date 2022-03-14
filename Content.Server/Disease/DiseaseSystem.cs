@@ -185,9 +185,7 @@ namespace Content.Server.Disease
         /// </summary>
         private void OnInteractDiseasedHand(EntityUid uid, DiseasedComponent component, InteractHandEvent args)
         {
-            if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
-                return;
-            InteractWithDiseased (args.Target, args.User);
+            InteractWithDiseased(args.Target, args.User);
         }
 
         /// <summary>
@@ -266,14 +264,15 @@ namespace Content.Server.Disease
         /// Tries to infect anyone that
         /// interacts with a diseased person or body
         /// </summary>
-        private void InteractWithDiseased(EntityUid diseased, EntityUid target)
+        private void InteractWithDiseased(EntityUid diseased, EntityUid target, DiseaseCarrierComponent? diseasedCarrier = null)
         {
-            if (!TryComp<DiseaseCarrierComponent>(target, out var carrier))
+            if (!Resolve(diseased, ref diseasedCarrier, false) ||
+                diseasedCarrier.Diseases.Count == 0 ||
+                !TryComp<DiseaseCarrierComponent>(target, out var carrier))
                 return;
 
-            var disease = _random.Pick(Comp<DiseaseCarrierComponent>(diseased).Diseases);
-            if (disease != null)
-                TryInfect(carrier, disease, 0.4f);
+            var disease = _random.Pick(diseasedCarrier.Diseases);
+            TryInfect(carrier, disease, 0.4f);
         }
 
         /// <summary>
@@ -283,25 +282,22 @@ namespace Content.Server.Disease
         /// to not be guaranteed you are looking
         /// for TryInfect.
         /// </summary>
-        public void TryAddDisease(DiseaseCarrierComponent? target, DiseasePrototype? addedDisease, string? diseaseName = null, EntityUid host = default!)
+        public void TryAddDisease(DiseaseCarrierComponent? target, DiseasePrototype? addedDisease, string? diseaseName = null, EntityUid? host = null)
         {
             if (diseaseName != null && _prototypeManager.TryIndex(diseaseName, out DiseasePrototype? diseaseProto))
                 addedDisease = diseaseProto;
 
-            if (host != default!)
-                target = Comp<DiseaseCarrierComponent>(host);
+            if (!TryComp(host, out target))
+                return;
 
-            if (target != null)
+            foreach (var disease in target.AllDiseases)
             {
-                foreach (var disease in target.AllDiseases)
-                {
-                    if (disease.ID == addedDisease?.ID) //ID because of the way protoypes work
-                        return;
-                }
-                var freshDisease = _serializationManager.CreateCopy(addedDisease) ?? default!;
-                target.Diseases.Add(freshDisease);
-                AddQueue.Enqueue(target.Owner);
+                if (disease.ID == addedDisease?.ID) //ID because of the way protoypes work
+                    return;
             }
+            var freshDisease = _serializationManager.CreateCopy(addedDisease) ?? default!;
+            target.Diseases.Add(freshDisease);
+            AddQueue.Enqueue(target.Owner);
         }
 
         /// <summary>
@@ -312,7 +308,7 @@ namespace Content.Server.Disease
         /// </summary>
         public void TryInfect(DiseaseCarrierComponent carrier, DiseasePrototype? disease, float chance = 0.7f)
         {
-            if(disease == null || !disease.Infectious)
+            if(disease is not { Infectious: true })
                 return;
             var infectionChance = chance - carrier.DiseaseResist;
             if (infectionChance <= 0)
@@ -326,13 +322,14 @@ namespace Content.Server.Disease
         /// and then tries to infect anyone in range
         /// if the snougher is not wearing a mask.
         /// </summary>
-        public void SneezeCough(EntityUid uid, DiseasePrototype? disease, string snoughMessage, bool airTransmit = true, float infectionChance = 0.3f)
+        public void SneezeCough(EntityUid uid, DiseasePrototype? disease, string snoughMessage, bool airTransmit = true, TransformComponent? xform = null)
         {
-            var xform = Comp<TransformComponent>(uid);
-            if (snoughMessage != string.Empty)
+            if (!Resolve(uid, ref xform)) return;
+
+            if (!string.IsNullOrEmpty(snoughMessage))
                 _popupSystem.PopupEntity(Loc.GetString(snoughMessage, ("person", uid)), uid, Filter.Pvs(uid));
 
-            if (disease == null || !disease.Infectious || airTransmit == false)
+            if (disease is not { Infectious: true } || !airTransmit)
                 return;
 
             if (_inventorySystem.TryGetSlotEntity(uid, "mask", out var maskUid) &&
@@ -340,13 +337,14 @@ namespace Content.Server.Disease
                 blocker.Enabled)
                 return;
 
+            var carrierQuery = GetEntityQuery<DiseaseCarrierComponent>();
+
             foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, 2f))
             {
-                if (!_interactionSystem.InRangeUnobstructed(uid, entity))
-                    continue;
+                if (!carrierQuery.TryGetComponent(entity, out var carrier) ||
+                    !_interactionSystem.InRangeUnobstructed(uid, entity)) continue;
 
-                if (TryComp<DiseaseCarrierComponent>(entity, out var carrier))
-                    TryInfect(carrier, disease, 0.3f);
+                TryInfect(carrier, disease, 0.3f);
             }
         }
 
@@ -354,14 +352,14 @@ namespace Content.Server.Disease
         /// Adds a disease to the carrier's
         /// past diseases to give them immunity
         /// IF they don't already have the disease.
-        /// <summary>
+        /// </summary>
         public void Vaccinate(DiseaseCarrierComponent carrier, DiseasePrototype disease)
         {
             foreach (var currentDisease in carrier.Diseases)
-                {
-                    if (currentDisease.ID == disease.ID) //ID because of the way protoypes work
-                        return;
-                }
+            {
+                if (currentDisease.ID == disease.ID) //ID because of the way protoypes work
+                    return;
+            }
             carrier.PastDiseases.Add(disease);
         }
 
