@@ -12,9 +12,6 @@
     size: 10
     sprite: Objects/Specific/Janitorial/mop.rsi
   - type: Absorbent
-  - type: Tag
-    tags:
-      - Mop
   - type: SolutionContainerManager
     solutions:
       absorbed:
@@ -22,6 +19,7 @@
   - type: Tag
     tags:
       - DroneUsable #No bucket because it holds chems, they can drag the thing around instead
+      - Mop
 
 - type: entity
   name: mop bucket
