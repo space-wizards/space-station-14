@@ -21,12 +21,13 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// <summary>
         /// The disease to add.
         /// </summary>
-        [DataField("disease", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
+        [DataField("disease", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>), required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public string Disease = string.Empty;
+        public string Disease = default!;
+
         public override void Effect(ReagentEffectArgs args)
         {
-            EntitySystem.Get<DiseaseSystem>().TryAddDisease(null, null, Disease, args.SolutionEntity);
+            EntitySystem.Get<DiseaseSystem>().TryAddDisease(args.SolutionEntity, Disease);
         }
     }
 }
