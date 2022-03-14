@@ -180,10 +180,10 @@
       gender: epicene
 
 - type: entity
-  name: cat
+  name: Runtime
   parent: SimpleMobBase
   id: MobCat
-  description: Feline pet, very funny.
+  description: Professional mouse hunter. Escape artist.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -226,10 +226,10 @@
       gender: epicene
 
 - type: entity
-  name: calico cat
+  name: Exception
   id: MobCatCalico
   parent: MobCat
-  description: Feline pet, very funny.
+  description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -276,10 +276,10 @@
       gender: epicene
 
 - type: entity
-  name: caracal cat
+  name: Floppa
   id: MobCatCaracal
   parent: MobCat
-  description: Hilarious.
+  description: He out here.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -298,7 +298,7 @@
       gender: epicene
 
 - type: entity
-  name: sloth
+  name: Paperwork
   parent: SimpleMobBase
   id: MobSloth
   description: Very slow animal. For people with low energy.
@@ -343,7 +343,7 @@
       gender: epicene
 
 - type: entity
-  name: ferret
+  name: Bandito
   parent: SimpleMobBase
   id: MobFerret
   description: Just a silly little guy!
