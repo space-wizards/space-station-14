@@ -51,7 +51,12 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         {
             component.WalkModifier = state.WalkModifier;
             component.SprintModifier = state.SprintModifier;
-            SetClothingSpeedModifierEnabled(uid, state.Enabled, component);
+            component.Enabled = state.Enabled;
+
+            if (_container.TryGetContainingContainer(uid, out var container))
+            {
+                _movementSpeed.RefreshMovementSpeedModifiers(container.Owner);
+            }
         }
     }
 
