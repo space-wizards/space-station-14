@@ -27,17 +27,10 @@ namespace Content.Server.Medical.Components
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(HealthAnalyzerUiKey.Key);
 
         /// <summary>
-        /// Is this actually going to give people the disease below
-        /// </summary>
-        [DataField("fake")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Fake = false;
-
-        /// <summary>
-        /// The disease this will give people if Fake == true
+        /// The disease this will give people.
         /// </summary>
         [DataField("disease", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
         [ViewVariables(VVAccess.ReadWrite)]
-        public string Disease = string.Empty;
+        public string? Disease;
     }
 }

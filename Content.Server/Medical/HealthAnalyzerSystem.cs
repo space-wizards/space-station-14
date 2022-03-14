@@ -72,7 +72,7 @@ namespace Content.Server.Medical
             // Below is for the traitor item
             // Piggybacking off another component's doafter is complete CBT so I gave up
             // and put it on the same component
-            if (!args.Component.Fake || args.Component.Disease == string.Empty || args.Target == null)
+            if (string.IsNullOrEmpty(args.Component.Disease) || args.Target == null)
                 return;
 
             _disease.TryAddDisease(args.Target.Value, args.Component.Disease);
