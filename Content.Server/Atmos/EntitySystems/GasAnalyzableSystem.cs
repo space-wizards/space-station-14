@@ -9,6 +9,7 @@ using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -55,19 +56,33 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref nodeContainer))
                 return Loc.GetString("gas-analyzable-system-internal-error-missing-component");
 
+            List<string> portNames = new List<string>();
+            List<string> portData = new List<string>();
             foreach (var node in nodeContainer.Nodes)
             {
                 if (node.Value is not PipeNode pn)
                     continue;
                 float pressure = pn.Air.Pressure;
                 float temp = pn.Air.Temperature;
-                return Loc.GetString("gas-analyzable-system-statistics",
+                portNames.Add(node.Key);
+                portData.Add(Loc.GetString("gas-analyzable-system-statistics",
                     ("pressure", pressure),
                     ("tempK", $"{temp:0.#}"),
                     ("tempC", $"{TemperatureHelpers.KelvinToCelsius(temp):0.#}")
-                );
+                ));
             }
-            return Loc.GetString("gas-anlayzable-system-internal-error-no-gas-node");
+
+            int count = portNames.Count;
+            if (count == 0)
+                return Loc.GetString("gas-anlayzable-system-internal-error-no-gas-node");
+            else if (count == 1)
+                // omit names if only one node
+                return Loc.GetString("gas-analyzable-system-header") + "\n" + portData[0];
+            else
+            {
+                var outputs = portNames.Zip(portData, ((name, data) => name + ":\n" + data));
+                return Loc.GetString("gas-analyzable-system-header") + "\n\n" + String.Join("\n\n", outputs);
+            }
         }
     }
 }
