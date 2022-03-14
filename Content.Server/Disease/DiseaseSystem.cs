@@ -330,7 +330,7 @@ namespace Content.Server.Disease
             if (infectionChance <= 0)
                 return;
             if (_random.Prob(infectionChance))
-                TryAddDisease(carrier.Owner, disease, target: carrier);
+                TryAddDisease(carrier.Owner, disease, carrier);
         }
 
         /// <summary>
