@@ -5,7 +5,7 @@
   cureResist: 0.15
   effects:
     - !type:DiseaseHealthChange
-      probability: 0.5
+      probability: 0.35
       damage:
         types:
           Cellular: 1
