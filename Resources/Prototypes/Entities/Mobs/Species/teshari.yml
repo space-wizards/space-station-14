@@ -67,6 +67,14 @@
       color: "#6060FF"
       sprite: Mobs/Species/Teshari/parts.rsi
       state: r_hand
+    - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
+      state: l_foot
+    - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+      color: "#6060FF"
+      sprite: Mobs/Species/Teshari/parts.rsi
+      state: r_foot
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi

@@ -39,6 +39,10 @@
       "directions": 4
     },
     {
+      "name": "r_foot",
+      "directions": 4
+    },
+    {
       "name": "r_hand",
       "directions": 4
     },
@@ -52,6 +56,14 @@
     },
     {
       "name": "torso_m",
+      "directions": 4
+    },
+    {
+      "name": "groin_f",
+      "directions": 4
+    },
+    {
+      "name": "groin_m",
       "directions": 4
     }
   ]
