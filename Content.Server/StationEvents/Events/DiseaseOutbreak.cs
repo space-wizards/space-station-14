@@ -40,17 +40,14 @@ public sealed class DiseaseOutbreak : StationEvent
     public override void Startup()
     {
         base.Startup();
-
-        List<(DiseaseCarrierComponent carrier, MobStateComponent mobState)> targetList =
-            _entityManager.EntityQuery<DiseaseCarrierComponent, MobStateComponent>().ToList();
-        _random.Shuffle(targetList);
-        /// We're going to filter the above out to only alive mobs. Might change after future mobstate rework
         List<DiseaseCarrierComponent> aliveList = new();
-        foreach (var target in targetList)
+        foreach (var (carrier, mobState) in _entityManager.EntityQuery<DiseaseCarrierComponent, MobStateComponent>())
         {
-            if (!target.mobState.IsDead())
-                aliveList.Add(target.carrier);
+            if (!mobState.IsDead())
+                aliveList.Add(carrier);
         }
+        _random.Shuffle(aliveList);
+        /// We're going to filter the above out to only alive mobs. Might change after future mobstate rework
 
         var toInfect = _random.Next(2, 5);
 
