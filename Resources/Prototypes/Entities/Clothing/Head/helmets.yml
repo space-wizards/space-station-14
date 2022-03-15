@@ -158,7 +158,7 @@
     sprite: Clothing/Head/Helmets/wizardhelm.rsi
   - type: IngestionBlocker
 
-  - type: entity
+- type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetFire
   name: fire helmet
