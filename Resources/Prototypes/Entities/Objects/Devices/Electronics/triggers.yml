@@ -1,4 +1,11 @@
 # Misc electronic trigger devices.
+# TODO:
+# - proximity
+# - voice
+# - machine linking
+# - device network
+# - biometric/health (maybe just via device nets?)
+# - booby-trap / on-storage-open
 
 - type: entity
   parent: BaseItem
@@ -18,14 +25,6 @@
     components:
     - type: OnUseTimerTrigger
       delay: 5
-      delayOptions: [1, 3, 5, 10, 15, 30]
-    - type: EmitSoundOnUse
-      sound: /Audio/Items/crowbar.ogg # close enough to a generic click sound
-
-# TODO:
-# - proximity
-# - voice
-# - machine linking
-# - device network
-# - biometric/health (maybe just via device nets?)
-# - booby-trap / on-storage-open
+      delayOptions: [3, 5, 10, 15, 30]
+      initialBeepDelay: 0
+      beepSound: /Audio/Machines/Nuke/general_beep.ogg

@@ -104,23 +104,8 @@ public sealed partial class TriggerSystem
     {
         if (args.Handled) return;
 
-        Trigger(uid, args.User, component);
+        HandleTimerTrigger(uid, args.User, component.Delay, component.BeepInterval, component.InitialBeepDelay, component.BeepSound, component.BeepParams);
         args.Handled = true;
-    }
-
-    // TODO: Need to split this out so it's a generic "OnUseTimerTrigger" component.
-    private void Trigger(EntityUid uid, EntityUid user, OnUseTimerTriggerComponent component)
-    {
-        if (component.Used)
-            return;
-
-        if (component.SingleUse)
-            component.Used = true;
-
-        if (TryComp<AppearanceComponent>(uid, out var appearance))
-            appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);
-
-        HandleTimerTrigger(TimeSpan.FromSeconds(component.Delay), uid, user);
     }
 
     public static VerbCategory TimerOptions = new("verb-categories-timer", "/Textures/Interface/VerbIcons/clock.svg.192dpi.png");

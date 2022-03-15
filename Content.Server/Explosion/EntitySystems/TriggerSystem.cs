@@ -14,6 +14,8 @@ using Content.Shared.Payload.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.Sound;
+using Content.Shared.Trigger;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -151,19 +153,28 @@ namespace Content.Server.Explosion.EntitySystems
             EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent);
         }
 
-        public void HandleTimerTrigger(TimeSpan delay, EntityUid triggered, EntityUid? user = null)
+        public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay , float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound, AudioParams beepParams)
         {
-            if (delay.TotalSeconds <= 0)
+            if (delay <= 0)
             {
-                Trigger(triggered, user);
+                RemComp<ActiveTimerTriggerComponent>(uid);
+                Trigger(uid, user);
                 return;
             }
 
-            Timer.Spawn(delay, () =>
-            {
-                if (Deleted(triggered)) return;
-                Trigger(triggered, user);
-            });
+            if (HasComp<ActiveTimerTriggerComponent>(uid))
+                return;
+
+            var active = AddComp<ActiveTimerTriggerComponent>(uid);
+            active.TimeRemaining = delay;
+            active.User = user;
+            active.BeepParams = beepParams;
+            active.BeepSound = beepSound;
+            active.BeepInterval = beepInterval;
+            active.TimeUntilBeep = initialBeepDelay == null ? active.BeepInterval : initialBeepDelay.Value;
+
+            if (TryComp<AppearanceComponent>(uid, out var appearance))
+                appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);
         }
 
         public override void Update(float frameTime)
@@ -171,6 +182,36 @@ namespace Content.Server.Explosion.EntitySystems
             base.Update(frameTime);
 
             UpdateProximity(frameTime);
+            UpdateTimer(frameTime);
+        }
+
+        private void UpdateTimer(float frameTime)
+        {
+            HashSet<EntityUid> toRemove = new();
+            foreach (var timer in EntityQuery<ActiveTimerTriggerComponent>())
+            {
+                timer.TimeRemaining -= frameTime;
+                timer.TimeUntilBeep -= frameTime;
+
+                if (timer.TimeRemaining <= 0)
+                {
+                    Trigger(timer.Owner, timer.User);
+                    toRemove.Add(timer.Owner);
+                    continue;
+                }
+
+                if (timer.BeepSound == null || timer.TimeUntilBeep > 0)
+                    continue;
+
+                timer.TimeUntilBeep += timer.BeepInterval;
+                var filter = Filter.Pvs(timer.Owner, entityManager: EntityManager);
+                SoundSystem.Play(filter, timer.BeepSound.GetSound(), timer.Owner, timer.BeepParams);
+            }
+
+            foreach (var uid in toRemove)
+            {
+                RemComp<ActiveTimerTriggerComponent>(uid);
+            }
         }
     }
 }

@@ -1,3 +1,6 @@
+using Content.Shared.Sound;
+using Robust.Shared.Audio;
+
 namespace Content.Server.Explosion.Components
 {
     [RegisterComponent]
@@ -12,10 +15,22 @@ namespace Content.Server.Explosion.Components
         [DataField("delayOptions")]
         public List<float>? DelayOptions = null;
 
-        [DataField("singleUse")]
-        public readonly bool SingleUse = true;
+        /// <summary>
+        ///     If not null, this timer will periodically play this sound wile active.
+        /// </summary>
+        [DataField("beepSound")]
+        public SoundSpecifier? BeepSound;
 
-        [DataField("used")]
-        public bool Used = false;
+        /// <summary>
+        ///     Time before beeping starts. Defaults to a single beep interval. If set to zero, will emit a beep immediately after use.
+        /// </summary>
+        [DataField("initialBeepDelay")]
+        public float? InitialBeepDelay;
+
+        [DataField("beepInterval")]
+        public float BeepInterval = 1;
+
+        [DataField("beepParams")]
+        public AudioParams BeepParams = AudioParams.Default.WithVolume(-2f);
     }
 }
