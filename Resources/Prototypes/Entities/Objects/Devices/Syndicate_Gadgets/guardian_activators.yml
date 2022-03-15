@@ -15,15 +15,12 @@
   name: magical lamp
   id: MagicalLamp
   parent: BaseItem
-  description: I guess the wizard federation had to cut costs after the jhin merchandise scandal
+  description: The wizard federation had to cut costs after the jinn merchandise scandal somehow.
   components:
   - type: Sprite
     sprite: Objects/Misc/Lights/lamp.rsi
     layers:
       - state: lamp
-      - state: lamp-on
-        shader: unshaded
-        visible: false
   - type: GuardianCreator
     guardianProto: MobIfritGuardian
 

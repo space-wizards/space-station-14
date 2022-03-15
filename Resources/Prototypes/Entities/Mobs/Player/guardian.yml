@@ -68,6 +68,10 @@
         Blunt: 22
   - type: Actions
   - type: Guardian
+  - type: InteractionPopup
+    interactSuccessString: petting-success-holo
+    interactFailureString: petting-failure-holo
+    successChance: 0.7
 
 # From the uplink injector
 - type: entity
@@ -80,10 +84,6 @@
     makeSentient: true
     name: Holoparasite
     description: Listen to your owner. Don't tank damage. Punch people hard.
-  - type: InteractionPopup
-    interactSuccessString: petting-success-holo
-    interactFailureString: petting-failure-holo
-    successChance: 0.7
   - type: NameIdentifier
     group: Holoparasite
   - type: Sprite
@@ -98,17 +98,12 @@
   name: Ifrit
   parent: MobGuardianBase
   id: MobIfritGuardian
-  description: A corrupted jhin, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into it's owner's life to sustain itself.
+  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into it's owner's life to sustain itself.
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: Ifrit
     description: Listen to your owner. Don't tank damage. Punch people hard.
-  - type: InteractionPopup
-    interactSuccessString: petting-success-holo
-    interactFailureString: petting-failure-holo
-  - type: NameIdentifier
-    group: Holoparasite
   - type: Sprite
     layers:
     - state: magic_base
