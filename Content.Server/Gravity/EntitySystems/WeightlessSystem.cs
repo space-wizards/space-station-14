@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Content.Server.Alert;
+using System.Collections.Generic;
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;
 using Content.Shared.Gravity;
@@ -15,8 +14,9 @@ namespace Content.Server.Gravity.EntitySystems
     public class WeightlessSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
-        private readonly Dictionary<GridId, List<ServerAlertsComponent>> _alerts = new();
+        private readonly Dictionary<GridId, List<AlertsComponent>> _alerts = new();
 
         public override void Initialize()
         {
@@ -25,6 +25,7 @@ namespace Content.Server.Gravity.EntitySystems
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GravityChangedMessage>(GravityChanged);
             SubscribeLocalEvent<EntParentChangedMessage>(EntParentChanged);
+            SubscribeLocalEvent<AlertsComponent, AlertSyncEvent>(HandleAlertSyncEvent);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -32,7 +33,7 @@ namespace Content.Server.Gravity.EntitySystems
             _alerts.Clear();
         }
 
-        public void AddAlert(ServerAlertsComponent status)
+        public void AddAlert(AlertsComponent status)
         {
             var gridId = EntityManager.GetComponent<TransformComponent>(status.Owner).GridID;
             var alerts = _alerts.GetOrNew(gridId);
@@ -43,16 +44,16 @@ namespace Content.Server.Gravity.EntitySystems
             {
                 if (EntityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
                 {
-                    RemoveWeightless(status);
+                    RemoveWeightless(status.Owner);
                 }
                 else
                 {
-                    AddWeightless(status);
+                    AddWeightless(status.Owner);
                 }
             }
         }
 
-        public void RemoveAlert(ServerAlertsComponent status)
+        public void RemoveAlert(AlertsComponent status)
         {
             var grid = EntityManager.GetComponent<TransformComponent>(status.Owner).GridID;
             if (!_alerts.TryGetValue(grid, out var statuses))
@@ -74,31 +75,31 @@ namespace Content.Server.Gravity.EntitySystems
             {
                 foreach (var status in statuses)
                 {
-                    RemoveWeightless(status);
+                    RemoveWeightless(status.Owner);
                 }
             }
             else
             {
                 foreach (var status in statuses)
                 {
-                    AddWeightless(status);
+                    AddWeightless(status.Owner);
                 }
             }
         }
 
-        private void AddWeightless(ServerAlertsComponent status)
+        private void AddWeightless(EntityUid euid)
         {
-            status.ShowAlert(AlertType.Weightless);
+            _alertsSystem.ShowAlert(euid, AlertType.Weightless);
         }
 
-        private void RemoveWeightless(ServerAlertsComponent status)
+        private void RemoveWeightless(EntityUid euid)
         {
-            status.ClearAlert(AlertType.Weightless);
+            _alertsSystem.ClearAlert(euid, AlertType.Weightless);
         }
 
         private void EntParentChanged(ref EntParentChangedMessage ev)
         {
-            if (!EntityManager.TryGetComponent(ev.Entity, out ServerAlertsComponent? status))
+            if (!EntityManager.TryGetComponent(ev.Entity, out AlertsComponent? status))
             {
                 return;
             }
@@ -118,6 +119,19 @@ namespace Content.Server.Gravity.EntitySystems
             var newStatuses = _alerts.GetOrNew(newGrid);
 
             newStatuses.Add(status);
+        }
+
+        private void HandleAlertSyncEvent(EntityUid uid, AlertsComponent component, AlertSyncEvent args)
+        {
+            switch (component.LifeStage)
+            {
+                case ComponentLifeStage.Starting:
+                    AddAlert(component);
+                    break;
+                case ComponentLifeStage.Removing:
+                    RemoveAlert(component);
+                    break;
+            }
         }
     }
 }

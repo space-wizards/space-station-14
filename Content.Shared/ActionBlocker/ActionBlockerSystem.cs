@@ -82,25 +82,9 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanAttack(EntityUid uid)
+        public bool CanAttack(EntityUid uid, EntityUid? target = null)
         {
-            var ev = new AttackAttemptEvent(uid);
-            RaiseLocalEvent(uid, ev);
-
-            return !ev.Cancelled;
-        }
-
-        public bool CanEquip(EntityUid uid)
-        {
-            var ev = new EquipAttemptEvent(uid);
-            RaiseLocalEvent(uid, ev);
-
-            return !ev.Cancelled;
-        }
-
-        public bool CanUnequip(EntityUid uid)
-        {
-            var ev = new UnequipAttemptEvent(uid);
+            var ev = new AttackAttemptEvent(uid, target);
             RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;

@@ -32,7 +32,7 @@
       - Opaque
       - MobImpassable
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -53,8 +53,6 @@
   - type: LatheDatabase
     static: true
     recipes:
-      - Brutepack
-      - Ointment
       - Wirecutter
       - Screwdriver
       - Welder
@@ -113,7 +111,7 @@
       - MobImpassable
   - type: ResearchClient
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -137,44 +135,55 @@
       - LightTube
       - LightBulb
       - SheetSteel
-      - GlassStack
+      - SheetGlass1
       - SheetRGlass
       - SheetPlastic
       - CableStack
       - CableMVStack
       - CableHVStack
-      - ConveyorAssembly
+      - ConveyorBeltAssembly
       - RCD
       - RCDAmmo
-      - Scythe
-      - Hatchet
+      - HydroponicsToolScythe
+      - HydroponicsToolHatchet
       - Shovel
       - Scalpel
       - Retractor
       - Cautery
       - Drill
-      - BoneSaw
+      - Saw
       - Hemostat
       - Beaker
       - LargeBeaker
       - CryostasisBeaker
       - Dropper
       - Syringe
+      - PillCanister
       - Flash
       - Handcuffs
       - Stunbaton
-      - CartridgePistolBase
-      - ShellShotgunBase
-      - CartridgeLRifleBase
-      - CartridgeMagnumBase
-      - FirelockElectronics
+      - CartridgePistol
+      - ShellShotgun
+      - CartridgeLRifle
+      - CartridgeMagnum
+      - ShellShotgunBeanbag
+      - CartridgePistolRubber
+      - CartridgeMagnumRubber
+      - CartridgeClRifleRubber
+      - CartridgeLRifleRubber
+      - CartridgeSRifleRubber
       - MicroManipulatorStockPart
       - ScanningModuleStockPart
       - MicroLaserStockPart
       - MatterBinStockPart
       - CapacitorStockPart
+      - FirelockElectronics
       - DoorElectronics
       - APCElectronics
+      - SMESMachineCircuitboard
+      - SubstationMachineCircuitboard
+      - AirAlarmElectronics
+      - FireAlarmElectronics
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - ChemMasterMachineCircuitboard
@@ -183,6 +192,9 @@
       - SolarControlComputerCircuitboard
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
+      - KitchenReagentGrinderMachineCircuitboard
+      - CrewMonitoringComputerCircuitboard
+      - ShuttleConsoleCircuitboard
       - Bucket
       - MopItem
       - SprayBottle

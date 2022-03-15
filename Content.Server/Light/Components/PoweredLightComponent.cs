@@ -7,6 +7,8 @@ using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Light.Components
@@ -17,16 +19,14 @@ namespace Content.Server.Light.Components
     [RegisterComponent, Friend(typeof(PoweredLightSystem))]
     public class PoweredLightComponent : Component
     {
-        public override string Name => "PoweredLight";
-
         [DataField("burnHandSound")]
         public SoundSpecifier BurnHandSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
         [DataField("turnOnSound")]
         public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Machines/light_tube_on.ogg");
 
-        [DataField("hasLampOnSpawn")]
-        public bool HasLampOnSpawn = true;
+        [DataField("hasLampOnSpawn", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? HasLampOnSpawn = null;
 
         [DataField("bulb")]
         public LightBulbType BulbType;

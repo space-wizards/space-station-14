@@ -25,8 +25,6 @@ namespace Content.Server.Headset
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
 
-        public override string Name => "Headset";
-
         private RadioSystem _radioSystem = default!;
 
         [DataField("channels")]
@@ -70,7 +68,7 @@ namespace Content.Server.Headset
                 msg.Channel = ChatChannel.Radio;
                 msg.Message = message;
                 //Square brackets are added here to avoid issues with escaping
-                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", Name: _entMan.GetComponent<MetaDataComponent>(source).EntityName));
+                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", _entMan.GetComponent<MetaDataComponent>(source).EntityName));
                 _netManager.ServerSendMessage(msg, playerChannel);
             }
         }
@@ -86,7 +84,7 @@ namespace Content.Server.Headset
             RadioRequested = false;
         }
 
-        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             message.AddText(Loc.GetString("examine-radio-frequency", ("frequency", BroadcastFrequency)));
             message.AddText("\n");

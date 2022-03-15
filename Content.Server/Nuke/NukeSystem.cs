@@ -46,8 +46,7 @@ namespace Content.Server.Nuke
             // anchoring logic
             SubscribeLocalEvent<NukeComponent, AnchorAttemptEvent>(OnAnchorAttempt);
             SubscribeLocalEvent<NukeComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
-            SubscribeLocalEvent<NukeComponent, AnchoredEvent>(OnWasAnchored);
-            SubscribeLocalEvent<NukeComponent, UnanchoredEvent>(OnWasUnanchored);
+            SubscribeLocalEvent<NukeComponent, AnchorStateChangedEvent>(OnAnchorChanged);
 
             // ui events
             SubscribeLocalEvent<NukeComponent, NukeEjectMessage>(OnEjectButtonPressed);
@@ -62,6 +61,9 @@ namespace Content.Server.Nuke
         {
             component.RemainingTime = component.Timer;
             _itemSlots.AddItemSlot(uid, component.Name, component.DiskSlot);
+
+            UpdateStatus(uid, component);
+            UpdateUserInterface(uid, component);
         }
 
         public override void Update(float frameTime)
@@ -101,6 +103,8 @@ namespace Content.Server.Nuke
 
         private void OnItemSlotChanged(EntityUid uid, NukeComponent component, ContainerModifiedMessage args)
         {
+            if (!component.Initialized) return;
+
             if (args.Container.ID != component.DiskSlot.ID)
                 return;
 
@@ -149,12 +153,7 @@ namespace Content.Server.Nuke
             }
         }
 
-        private void OnWasUnanchored(EntityUid uid, NukeComponent component, UnanchoredEvent args)
-        {
-            UpdateUserInterface(uid, component);
-        }
-
-        private void OnWasAnchored(EntityUid uid, NukeComponent component, AnchoredEvent args)
+        private void OnAnchorChanged(EntityUid uid, NukeComponent component, ref AnchorStateChangedEvent args)
         {
             UpdateUserInterface(uid, component);
         }

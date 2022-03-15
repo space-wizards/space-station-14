@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.IP;
 using Content.Server.Preferences.Managers;
-using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
@@ -33,7 +31,7 @@ namespace Content.Server.Database
         private readonly Task _dbReadyTask;
         private readonly SqliteServerDbContext _prefsCtx;
 
-        public ServerDbSqlite(DbContextOptions<ServerDbContext> options)
+        public ServerDbSqlite(DbContextOptions<SqliteServerDbContext> options)
         {
             _prefsCtx = new SqliteServerDbContext(options);
 
@@ -69,28 +67,22 @@ namespace Content.Server.Database
 
             // SQLite can't do the net masking stuff we need to match IP address ranges.
             // So just pull down the whole list into memory.
-            var bans = await db.SqliteDbContext.Ban
-                .Include(p => p.Unban)
-                .Where(p => p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow))
-                .ToListAsync();
+            var bans = await GetAllBans(db.SqliteDbContext, includeUnbanned: false);
 
             return bans.FirstOrDefault(b => BanMatches(b, address, userId, hwId)) is { } foundBan
                 ? ConvertBan(foundBan)
                 : null;
         }
 
-        public override async Task<List<ServerBanDef>> GetServerBansAsync(
-            IPAddress? address,
+        public override async Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId)
+            ImmutableArray<byte>? hwId, bool includeUnbanned)
         {
             await using var db = await GetDbImpl();
 
             // SQLite can't do the net masking stuff we need to match IP address ranges.
             // So just pull down the whole list into memory.
-            var queryBans = await db.SqliteDbContext.Ban
-                .Include(p => p.Unban)
-                .ToListAsync();
+            var queryBans = await GetAllBans(db.SqliteDbContext, includeUnbanned);
 
             return queryBans
                 .Where(b => BanMatches(b, address, userId, hwId))
@@ -98,8 +90,22 @@ namespace Content.Server.Database
                 .ToList()!;
         }
 
+        private static async Task<List<ServerBan>> GetAllBans(
+            SqliteServerDbContext db,
+            bool includeUnbanned)
+        {
+            IQueryable<ServerBan> query = db.Ban.Include(p => p.Unban);
+            if (!includeUnbanned)
+            {
+                query = query.Where(p =>
+                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow));
+            }
+
+            return await query.ToListAsync();
+        }
+
         private static bool BanMatches(
-            SqliteServerBan ban,
+            ServerBan ban,
             IPAddress? address,
             NetUserId? userId,
             ImmutableArray<byte>? hwId)
@@ -126,7 +132,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
-            db.SqliteDbContext.Ban.Add(new SqliteServerBan
+            db.SqliteDbContext.Ban.Add(new ServerBan
             {
                 Address = serverBan.Address,
                 Reason = serverBan.Reason,
@@ -144,7 +150,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
-            db.SqliteDbContext.Unban.Add(new SqliteServerUnban
+            db.SqliteDbContext.Unban.Add(new ServerUnban
             {
                 BanId = serverUnban.BanId,
                 UnbanningAdmin = serverUnban.UnbanningAdmin?.UserId,
@@ -165,7 +171,7 @@ namespace Content.Server.Database
                 record.LastSeenHWId?.ToImmutableArray());
         }
 
-        private static ServerBanDef? ConvertBan(SqliteServerBan? ban)
+        private static ServerBanDef? ConvertBan(ServerBan? ban)
         {
             if (ban == null)
             {
@@ -198,7 +204,7 @@ namespace Content.Server.Database
                 unban);
         }
 
-        private static ServerUnbanDef? ConvertUnban(SqliteServerUnban? unban)
+        private static ServerUnbanDef? ConvertUnban(ServerUnban? unban)
         {
             if (unban == null)
             {
@@ -217,21 +223,30 @@ namespace Content.Server.Database
                 unban.UnbanTime);
         }
 
-        public override async Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address,
-            ImmutableArray<byte> hwId)
+        public override async Task<int>  AddConnectionLogAsync(
+            NetUserId userId,
+            string userName,
+            IPAddress address,
+            ImmutableArray<byte> hwId,
+            ConnectionDenyReason? denied)
         {
             await using var db = await GetDbImpl();
 
-            db.SqliteDbContext.ConnectionLog.Add(new SqliteConnectionLog
+            var connectionLog = new ConnectionLog
             {
-                Address = address.ToString(),
+                Address = address,
                 Time = DateTime.UtcNow,
                 UserId = userId.UserId,
                 UserName = userName,
-                HWId = hwId.ToArray()
-            });
+                HWId = hwId.ToArray(),
+                Denied = denied
+            };
+
+            db.SqliteDbContext.ConnectionLog.Add(connectionLog);
 
             await db.SqliteDbContext.SaveChangesAsync();
+
+            return connectionLog.Id;
         }
 
         public override async Task<((Admin, string? lastUserName)[] admins, AdminRank[])> GetAllAdminAndRanksAsync(
@@ -250,18 +265,6 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
-        private async Task<int> NextId<TModel>(DbSet<TModel> set, Func<TModel, int> selector) where TModel : class
-        {
-            var id = 1;
-
-            if (await set.AnyAsync())
-            {
-                id = set.Max(selector) + 1;
-            }
-
-            return id;
-        }
-
         public override async Task<int> AddNewRound(params Guid[] playerIds)
         {
             await using var db = await GetDb();
@@ -270,9 +273,15 @@ namespace Content.Server.Database
                 .Where(player => playerIds.Contains(player.UserId))
                 .ToListAsync();
 
+            var nextId = 1;
+            if (await db.DbContext.Round.AnyAsync())
+            {
+                nextId = db.DbContext.Round.Max(round => round.Id) + 1;
+            }
+
             var round = new Round
             {
-                Id = await NextId(db.DbContext.Round, round => round.Id),
+                Id = nextId,
                 Players = players
             };
 
@@ -287,7 +296,12 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var nextId = await NextId(db.DbContext.AdminLog, log => log.Id);
+            var nextId = 1;
+            if (await db.DbContext.AdminLog.AnyAsync())
+            {
+                nextId = db.DbContext.AdminLog.Max(round => round.Id) + 1;
+            }
+
             var entities = new Dictionary<int, AdminLogEntity>();
 
             foreach (var (log, entityData) in logs)
@@ -300,6 +314,11 @@ namespace Content.Server.Database
                     var entity = entities.GetOrNew(id);
                     entity.Name = name;
                     logEntities.Add(entity);
+                }
+
+                foreach (var player in log.Players)
+                {
+                    player.LogId = log.Id;
                 }
 
                 log.Entities = logEntities;

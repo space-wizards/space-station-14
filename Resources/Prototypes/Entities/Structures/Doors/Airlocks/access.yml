@@ -95,6 +95,14 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
+    
+- type: entity
+  parent: AirlockCargo
+  id: AirlockQuartermasterLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
 
 - type: entity
   parent: AirlockMedical
@@ -119,6 +127,14 @@
   components:
   - type: AccessReader
     access: [["Research"]]
+    
+- type: entity
+  parent: AirlockScience
+  id: AirlockMedicalScienceLocked
+  suffix: Medical/Science, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"], ["Medical"]]
 
 - type: entity
   parent: AirlockCommand
@@ -127,6 +143,8 @@
   components:
   - type: AccessReader
     access: [["Command"]]
+  - type: Wires
+    LayoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommand
@@ -183,6 +201,18 @@
   components:
   - type: AccessReader
     access: [["Security"]]
+  - type: Wires
+    LayoutId: AirlockSecurity
+    
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockBrigLocked
+  suffix: Brig, Locked
+  components:
+  - type: AccessReader
+    access: [["Brig"]]
+  - type: Wires
+    LayoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockSecurity
@@ -191,6 +221,8 @@
   components:
   - type: AccessReader
     access: [["Armory"]]
+  - type: Wires
+    LayoutId: AirlockArmory
 
 - type: entity
   parent: AirlockSecurity
@@ -252,7 +284,7 @@
 - type: entity
   parent: AirlockEngineeringGlass
   id: AirlockEngineeringGlassLocked
-  suffix: Glass, Locked
+  suffix: Engineering, Locked
   components:
   - type: AccessReader
     access: [["Engineering"]]
@@ -264,6 +296,14 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
+    
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockQuartermasterGlassLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
 
 - type: entity
   parent: AirlockMedicalGlass
@@ -304,6 +344,22 @@
   components:
   - type: AccessReader
     access: [["Security"]]
+    
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockBrigGlassLocked
+  suffix: Brig, Locked
+  components:
+  - type: AccessReader
+    access: [["Brig"]]
+  
+- type: entity
+  parent: AirlockEVALocked
+  id: AirlockEVAGlassLocked
+  suffix: EVA, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]
 
 # Maintenance Hatches
 - type: entity
@@ -421,7 +477,7 @@
 - type: entity
   parent: AirlockMaint
   id: AirlockMaintRnDLocked
-  suffix: RnD, Locked
+  suffix: Science, Locked
   components:
   - type: AccessReader
     access: [["Research"]]
@@ -429,7 +485,7 @@
 - type: entity
   parent: AirlockMaint
   id: AirlockMaintRnDMedLocked
-  suffix: Med/RnD, Locked
+  suffix: Medical/Science, Locked
   components:
   - type: AccessReader
     access: [["Research"], ["Medical"]]

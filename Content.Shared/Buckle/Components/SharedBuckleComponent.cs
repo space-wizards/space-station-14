@@ -13,8 +13,6 @@ namespace Content.Shared.Buckle.Components
     [NetworkedComponent()]
     public abstract class SharedBuckleComponent : Component, IDraggable
     {
-        public sealed override string Name => "Buckle";
-
         /// <summary>
         ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.
         /// </summary>
@@ -28,8 +26,6 @@ namespace Content.Shared.Buckle.Components
         public abstract bool Buckled { get; }
 
         public EntityUid? LastEntityBuckledTo { get; set; }
-
-        public bool IsOnStrapEntityThisFrame { get; set; }
 
         public bool DontCollide { get; set; }
 

@@ -12,12 +12,8 @@ namespace Content.Server.Botany.Components
     [RegisterComponent]
     public class SeedExtractorComponent : Component, IInteractUsing
     {
-        [ComponentDependency] private readonly ApcPowerReceiverComponent? _powerReceiver = default!;
-
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-
-        public override string Name => "SeedExtractor";
 
         // TODO: Upgradeable machines.
         private int _minSeeds = 1;
@@ -25,12 +21,12 @@ namespace Content.Server.Botany.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!_powerReceiver?.Powered ?? false)
+            if (!_entMan.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var powerReceiverComponent) || !powerReceiverComponent.Powered)
                 return false;
 
             if (_entMan.TryGetComponent(eventArgs.Using, out ProduceComponent? produce) && produce.Seed != null)
             {
-                eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", Name: _entMan.GetComponent<MetaDataComponent>(eventArgs.Using).EntityName)));
+                eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", _entMan.GetComponent<MetaDataComponent>(eventArgs.Using).EntityName)));
 
                 _entMan.QueueDeleteEntity(eventArgs.Using);
 

@@ -5,7 +5,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/saltern.yml
+  mapPath: /Maps/saltern.yml
   minPlayers: 0
   maxPlayers: 20
   fallback: true
@@ -31,6 +31,8 @@
     Scientist: [ 2, 3 ]
     HeadOfSecurity: [ 1, 1 ]
     SecurityOfficer: [ 2, 3 ]
+    Chaplain: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
 
 - type: gameMap
   id: packedstation
@@ -39,8 +41,12 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: 'VG'
-  mapPath: Maps/packedstation.yml
+  mapPath: /Maps/packedstation.yml
   minPlayers: 15
+  conditions:
+    - !type:HolidayMapCondition
+      inverted: true
+      holidays: [ "Christmas" ]
   overflowJobs:
     - Assistant
   availableJobs:
@@ -65,6 +71,8 @@
     SecurityOfficer: [ 2, 3 ]
     Chaplain: [ 1, 1 ]
     Warden: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
+    Lawyer: [ 1, 2 ]
 
 - type: gameMap
   id: knightship
@@ -73,7 +81,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/knightship.yml
+  mapPath: /Maps/knightship.yml
   minPlayers: 0
   maxPlayers: 8
   overflowJobs: []
@@ -86,3 +94,62 @@
     MedicalDoctor: [ 1, 1 ]
     ResearchDirector: [ 1, 1 ]
     Botanist: [ 1, 1 ]
+
+- type: gameMap
+  id: ssreach
+  mapName: 'Reach'
+  mapNameTemplate: '{0} Reach {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: /Maps/ssreach.yml
+  minPlayers: 8
+  maxPlayers: 25
+  overflowJobs:
+    - Assistant
+  availableJobs:
+    CargoTechnician: [ 1, 1 ]
+    Assistant: [ 4, 8 ]
+    Bartender: [ 1, 1 ]
+    Botanist: [ 1, 1 ]
+    Chef: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 1, 2 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 1, 1 ]
+    Chemist: [ 1, 1 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 2, 4 ]
+    Janitor: [ 1, 1 ]
+
+- type: gameMap
+  id: dart
+  mapName: 'Dart'
+  mapNameTemplate: '{0} Dart {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: /Maps/dart.yml
+  minPlayers: 0
+  votable: false
+  overflowJobs: []
+  availableJobs:
+    Captain: [ 1, 1 ]
+
+- type: gameMap
+  id: moonrise
+  mapName: 'Moonrise ERC'
+  mapNameTemplate: '{0} Moonrise {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: 'VG'
+  mapPath: /Maps/moonrise.yml
+  minPlayers: 0
+  votable: false
+  overflowJobs: []
+  availableJobs:
+    Captain: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    SecurityOfficer: [ 3, 6 ]

@@ -1,4 +1,4 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:ui="clr-namespace:Content.Client.Kitchen.UI"
             Title="{Loc grinder-menu-title}" MinSize="512 256" SetSize="512 256">
 <BoxContainer Orientation="Horizontal">
@@ -12,4 +12,4 @@
         <Control MinSize="8 0"/>
         <ui:LabelledContentBox Name="BeakerContentBox" LabelText="{Loc grinder-menu-beaker-content-box-label}" ButtonText="{Loc grinder-menu-beaker-content-box-button}" VerticalExpand="True" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

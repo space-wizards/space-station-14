@@ -48,7 +48,7 @@ public class AdminLogsEui : BaseEui
     {
         var request = new LogsRequest(
             LogsControl.SelectedRoundId,
-            LogsControl.SelectedTypes.ToList(),
+            LogsControl.SelectedTypes.ToHashSet(),
             null,
             null,
             null,
@@ -98,24 +98,9 @@ public class AdminLogsEui : BaseEui
         LogsControl.PopOutButton.Visible = false;
     }
 
-    private bool TrySetFirstState(AdminLogsEuiState state)
-    {
-        if (!FirstState)
-        {
-            return false;
-        }
-
-        FirstState = false;
-        LogsControl.SetCurrentRound(state.RoundId);
-        LogsControl.SetRoundSpinBox(state.RoundId);
-        return true;
-    }
-
     public override void HandleState(EuiStateBase state)
     {
         var s = (AdminLogsEuiState) state;
-
-        var first = TrySetFirstState(s);
 
         if (s.IsLoading)
         {
@@ -125,10 +110,14 @@ public class AdminLogsEui : BaseEui
         LogsControl.SetCurrentRound(s.RoundId);
         LogsControl.SetPlayers(s.Players);
 
-        if (first)
+        if (!FirstState)
         {
-            RequestLogs();
+            return;
         }
+
+        FirstState = false;
+        LogsControl.SetRoundSpinBox(s.RoundId);
+        RequestLogs();
     }
 
     public override void HandleMessage(EuiMessageBase msg)

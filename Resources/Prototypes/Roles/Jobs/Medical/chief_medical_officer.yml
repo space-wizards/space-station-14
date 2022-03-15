@@ -22,13 +22,13 @@
 - type: startingGear
   id: CMOGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitCMO
-    backpack: ClothingBackpackMedicalFilled
+    jumpsuit: ClothingUniformJumpsuitCMO
+    back: ClothingBackpackMedicalFilled
     shoes: ClothingShoesColorBrown
-    outerclothing: ClothingOuterCoatLabCmo
-    idcard: CMOPDA
+    outerClothing: ClothingOuterCoatLabCmo
+    id: CMOPDA
     ears: ClothingHeadsetAltMedical
-    belt: ClothingBeltMedical
+    belt: ClothingBeltMedicalFilled
   innerclothingskirt: ClothingUniformJumpskirtCMO
   satchel: ClothingBackpackSatchelMedicalFilled
   duffelbag: ClothingBackpackDuffelMedicalFilled

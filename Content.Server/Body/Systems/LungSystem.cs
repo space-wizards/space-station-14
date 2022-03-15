@@ -7,6 +7,7 @@ using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
+using Content.Shared.Inventory.Events;
 using Content.Shared.MobState.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -27,6 +28,26 @@ public class LungSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<LungComponent, AddedToBodyEvent>(OnAddedToBody);
+        SubscribeLocalEvent<BreathToolComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<BreathToolComponent, GotUnequippedEvent>(OnGotUnequipped);
+    }
+
+    private void OnGotUnequipped(EntityUid uid, BreathToolComponent component, GotUnequippedEvent args)
+    {
+        component.DisconnectInternals();
+    }
+
+    private void OnGotEquipped(EntityUid uid, BreathToolComponent component, GotEquippedEvent args)
+    {
+
+        if ((args.SlotFlags & component.AllowedSlots) != component.AllowedSlots) return;
+        component.IsFunctional = true;
+
+        if (TryComp(args.Equipee, out InternalsComponent? internals))
+        {
+            component.ConnectedInternalsEntity = args.Equipee;
+            internals.ConnectBreathTool(uid);
+        }
     }
 
     private void OnAddedToBody(EntityUid uid, LungComponent component, AddedToBodyEvent args)
@@ -36,9 +57,9 @@ public class LungSystem : EntitySystem
 
     public void Gasp(EntityUid uid,
         LungComponent? lung=null,
-        SharedMechanismComponent? mech=null)
+        MechanismComponent? mech=null)
     {
-        if (!Resolve(uid, ref lung))
+        if (!Resolve(uid, ref lung, ref mech))
             return;
 
         if (_gameTiming.CurTime >= lung.LastGaspPopupTime + lung.GaspPopupCooldown)
@@ -47,12 +68,15 @@ public class LungSystem : EntitySystem
             _popupSystem.PopupEntity(Loc.GetString("lung-behavior-gasp"), uid, Filter.Pvs(uid));
         }
 
+        if (mech.Body != null && TryComp((mech.Body).Owner, out MobStateComponent? mobState) && !mobState.IsAlive())
+            return;
+
         Inhale(uid, lung.CycleDelay);
     }
 
     public void UpdateLung(EntityUid uid,
         LungComponent? lung=null,
-        SharedMechanismComponent? mech=null)
+        MechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;
@@ -104,7 +128,7 @@ public class LungSystem : EntitySystem
     /// </summary>
     public void Inhale(EntityUid uid, float frameTime,
         LungComponent? lung=null,
-        SharedMechanismComponent? mech=null)
+        MechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;
@@ -135,7 +159,7 @@ public class LungSystem : EntitySystem
     /// </summary>
     public void TakeGasFrom(EntityUid uid, float frameTime, GasMixture from,
         LungComponent? lung=null,
-        SharedMechanismComponent? mech=null)
+        MechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;
@@ -162,7 +186,7 @@ public class LungSystem : EntitySystem
     /// </summary>
     public void Exhale(EntityUid uid, float frameTime,
         LungComponent? lung=null,
-        SharedMechanismComponent? mech=null)
+        MechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;
@@ -180,7 +204,7 @@ public class LungSystem : EntitySystem
     /// </summary>
     public void PushGasTo(EntityUid uid, GasMixture to,
         LungComponent? lung=null,
-        SharedMechanismComponent? mech=null)
+        MechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;

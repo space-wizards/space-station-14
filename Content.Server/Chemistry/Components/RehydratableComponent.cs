@@ -11,8 +11,6 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     public class RehydratableComponent : Component
     {
-        public override string Name => "Rehydratable";
-
         [ViewVariables]
         [DataField("catalyst")]
         internal string CatalystPrototype = "Water";

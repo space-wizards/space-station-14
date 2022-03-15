@@ -38,7 +38,7 @@ namespace Content.Client.Administration.Managers
 
         public bool CanViewVar()
         {
-            return _adminData?.CanViewVar() ?? false;
+            return CanCommand("vv");
         }
 
         public bool CanAdminPlace()

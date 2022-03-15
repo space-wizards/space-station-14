@@ -36,13 +36,13 @@ namespace Content.Shared.Actions.Prototypes
         /// Name to show in UI. Accepts formatting.
         /// </summary>
         [DataField("name")]
-        public FormattedMessage Name { get; private set; } = FormattedMessage.Empty;
+        public FormattedMessage Name { get; private set; } = new();
 
         /// <summary>
         /// Description to show in UI. Accepts formatting.
         /// </summary>
         [DataField("description")]
-        public FormattedMessage Description { get; } = FormattedMessage.Empty;
+        public FormattedMessage Description { get; } = new();
 
         /// <summary>
         /// Requirements message to show in UI. Accepts formatting, but generally should be avoided
@@ -101,10 +101,8 @@ namespace Content.Shared.Actions.Prototypes
 
         public virtual void AfterDeserialization()
         {
-            Name = new FormattedMessage(new []
-            {
-                new Section {Content=ID}
-            });
+            Name = new FormattedMessage();
+            Name.AddText(ID);
 
             if (BehaviorType == BehaviorType.None)
             {

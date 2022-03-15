@@ -42,6 +42,7 @@ namespace Content.Tests.Server.Preferences
         {
             return new(
                 "Charlie Charlieson",
+                "Human",
                 21,
                 Sex.Male,
                 Gender.Epicene,
@@ -66,7 +67,7 @@ namespace Content.Tests.Server.Preferences
 
         private static ServerDbSqlite GetDb()
         {
-            var builder = new DbContextOptionsBuilder<ServerDbContext>();
+            var builder = new DbContextOptionsBuilder<SqliteServerDbContext>();
             var conn = new SqliteConnection("Data Source=:memory:");
             conn.Open();
             builder.UseSqlite(conn);

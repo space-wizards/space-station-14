@@ -23,6 +23,10 @@ namespace Content.Client.Morgue.Visualizers
             {
                 sprite.LayerSetVisible(BodyBagVisualLayers.Label, labelVal);
             }
+            else
+            {
+                sprite.LayerSetVisible(BodyBagVisualLayers.Label, false);
+            }
         }
     }
 

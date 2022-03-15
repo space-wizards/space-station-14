@@ -60,5 +60,12 @@ namespace Content.Server.Tools.Components
         /// </remarks>
         [DataField("litMeleeDamageBonus")]
         public DamageSpecifier LitMeleeDamageBonus = new();
+
+        /// <summary>
+        ///     Whether the item is safe to refill while lit without exploding the tank.
+        /// </summary>
+        [DataField("tankSafe")]
+        public bool TankSafe = false; //I have no idea what I'm doing
+
     }
 }

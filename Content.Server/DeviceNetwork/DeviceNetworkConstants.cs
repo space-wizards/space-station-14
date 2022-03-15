@@ -24,6 +24,12 @@ namespace Content.Server.DeviceNetwork
         /// </summary>
         public const string CmdSetState = "set_state";
 
+        /// <summary>
+        /// The command for a device that just updated its state
+        /// E.g. suit sensors broadcasting owners vitals state
+        /// </summary>
+        public const string CmdUpdatedState = "updated_state";
+
         #endregion
 
         #region SetState

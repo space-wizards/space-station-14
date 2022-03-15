@@ -9,7 +9,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Light.Components
@@ -149,9 +148,9 @@ namespace Content.Server.Light.Components
             }
         }
 
-        void IExamine.Examine(FormattedMessage.Builder message, bool inDetailsRange)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMessage(Basic.BuildMarkup(Loc.GetString("emergency-light-component-on-examine",("batteryStateText", Loc.GetString(BatteryStateText[State])))));
+            message.AddMarkup(Loc.GetString("emergency-light-component-on-examine",("batteryStateText", Loc.GetString(BatteryStateText[State]))));
         }
 
         public enum EmergencyLightState

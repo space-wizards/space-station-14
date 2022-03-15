@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Shared.Access;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
@@ -35,6 +36,9 @@ namespace Content.Shared.Roles
         [DataField("requireAdminNotify")]
         public bool RequireAdminNotify { get; } = false;
 
+        [DataField("setPreference")]
+        public bool SetPreference { get; } = true;
+
         [DataField("canBeAntag")]
         public bool CanBeAntag { get; } = true;
 
@@ -45,7 +49,7 @@ namespace Content.Shared.Roles
         [DataField("head")]
         public bool IsHead { get; private set; }
 
-        [DataField("startingGear")]
+        [DataField("startingGear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
         public string? StartingGear { get; private set; }
 
         [DataField("icon")] public string Icon { get; } = string.Empty;

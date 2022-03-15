@@ -29,8 +29,6 @@ namespace Content.Shared.Buckle.Components
     [NetworkedComponent()]
     public abstract class SharedStrapComponent : Component, IDragDropOn
     {
-        public sealed override string Name => "Strap";
-
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged, out SharedBuckleComponent? buckleComponent)) return false;
@@ -57,11 +55,13 @@ namespace Content.Shared.Buckle.Components
     }
 
     [Serializable, NetSerializable]
-    public enum StrapVisuals
+    public enum StrapVisuals : byte
     {
-        RotationAngle
+        RotationAngle,
+        BuckledState
     }
 
+    // TODO : Convert this to an Entity Message. Careful, it will Break ShuttleControllerComponent (only place where it's used)
     [Serializable, NetSerializable]
 #pragma warning disable 618
     public abstract class StrapChangeMessage : ComponentMessage

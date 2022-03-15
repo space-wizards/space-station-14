@@ -6,7 +6,8 @@ namespace Content.Shared.Botany
     [Serializable, NetSerializable]
     public enum PlantHolderVisuals
     {
-        Plant,
+        PlantRsi,
+        PlantState,
         HealthLight,
         WaterLight,
         NutritionLight,

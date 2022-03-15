@@ -15,8 +15,6 @@ namespace Content.Server.Light.Components
     [RegisterComponent, Friend(typeof(LightBulbSystem))]
     public class LightBulbComponent : Component, IBreakAct
     {
-        public override string Name => "LightBulb";
-
         [DataField("color")]
         public Color Color = Color.White;
 
@@ -29,8 +27,17 @@ namespace Content.Server.Light.Components
         [DataField("BurningTemperature")]
         public int BurningTemperature = 1400;
 
+        [DataField("lightEnergy")]
+        public float LightEnergy = 0.8f;
+
+        [DataField("lightRadius")]
+        public float LightRadius = 10;
+
+        [DataField("lightSoftness")]
+        public float LightSoftness = 1;
+
         [DataField("PowerUse")]
-        public int PowerUse = 40;
+        public int PowerUse = 60;
 
         [DataField("breakSound")]
         public SoundSpecifier BreakSound = new SoundCollectionSpecifier("GlassBreak");

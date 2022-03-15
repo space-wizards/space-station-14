@@ -9,6 +9,7 @@ using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Damage
@@ -21,17 +22,20 @@ namespace Content.Shared.Damage
     ///     functions to apply resistance sets and supports basic math operations to modify this dictionary.
     /// </remarks>
     [DataDefinition]
-    public class DamageSpecifier
+    public class DamageSpecifier : IEquatable<DamageSpecifier>
     {
+        [JsonPropertyName("types")]
         [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]
         private readonly Dictionary<string,FixedPoint2>? _damageTypeDictionary;
 
+        [JsonPropertyName("groups")]
         [DataField("groups", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageGroupPrototype>))]
         private readonly Dictionary<string, FixedPoint2>? _damageGroupDictionary;
 
         /// <summary>
         ///     Main DamageSpecifier dictionary. Most DamageSpecifier functions exist to somehow modifying this.
         /// </summary>
+        [JsonIgnore]
         [ViewVariables(VVAccess.ReadWrite)]
         public Dictionary<string, FixedPoint2> DamageDict
         {
@@ -43,6 +47,7 @@ namespace Content.Shared.Damage
             }
             set => _damageDict = value;
         }
+        [JsonIgnore]
         private Dictionary<string, FixedPoint2>? _damageDict;
 
         /// <summary>
@@ -53,11 +58,13 @@ namespace Content.Shared.Damage
         ///     in another. For this purpose, you should instead use <see cref="TrimZeros()"/> and then check the <see
         ///     cref="Empty"/> property.
         /// </remarks>
+        [JsonIgnore]
         public FixedPoint2 Total => DamageDict.Values.Sum();
 
         /// <summary>
         ///     Whether this damage specifier has any entries.
         /// </summary>
+        [JsonIgnore]
         public bool Empty => DamageDict.Count == 0;
 
         #region constructors
@@ -377,7 +384,21 @@ namespace Content.Shared.Damage
             return newDamage;
         }
 
-        public static DamageSpecifier operator -(DamageSpecifier damageSpecA, DamageSpecifier damageSpecB) => damageSpecA + -damageSpecB;
+        // Here we define the subtraction operator explicitly, rather than implicitly via something like X + (-1 * Y).
+        // This is faster because FixedPoint2 multiplication is somewhat involved.
+        public static DamageSpecifier operator -(DamageSpecifier damageSpecA, DamageSpecifier damageSpecB)
+        {
+            DamageSpecifier newDamage = new(damageSpecA);
+
+            foreach (var entry in damageSpecB.DamageDict)
+            {
+                if (!newDamage.DamageDict.TryAdd(entry.Key, -entry.Value))
+                {
+                    newDamage.DamageDict[entry.Key] -= entry.Value;
+                }
+            }
+            return newDamage;
+        }
 
         public static DamageSpecifier operator +(DamageSpecifier damageSpec) => damageSpec;
 
@@ -386,6 +407,20 @@ namespace Content.Shared.Damage
         public static DamageSpecifier operator *(float factor, DamageSpecifier damageSpec) => damageSpec * factor;
 
         public static DamageSpecifier operator *(FixedPoint2 factor, DamageSpecifier damageSpec) => damageSpec * factor;
+
+        public bool Equals(DamageSpecifier? other)
+        {
+            if (other == null || DamageDict.Count != other.DamageDict.Count)
+                return false;
+
+            foreach (var (key, value) in DamageDict)
+            {
+                if (!other.DamageDict.TryGetValue(key, out var otherValue) || value != otherValue)
+                    return false;
+            }
+
+            return true;
+        }
     }
     #endregion
 }

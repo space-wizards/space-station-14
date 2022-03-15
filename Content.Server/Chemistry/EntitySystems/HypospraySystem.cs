@@ -1,4 +1,4 @@
-﻿using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
@@ -20,7 +20,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnSolutionChange(EntityUid uid, HyposprayComponent component, SolutionChangedEvent args)
         {
-            component.Dirty();
+            Dirty(component);
         }
 
         public void OnAfterInteract(EntityUid uid, HyposprayComponent comp, AfterInteractEvent args)

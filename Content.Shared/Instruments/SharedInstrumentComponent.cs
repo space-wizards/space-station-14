@@ -12,28 +12,26 @@ namespace Content.Shared.Instruments;
 [NetworkedComponent, Friend(typeof(SharedInstrumentSystem))]
 public class SharedInstrumentComponent : Component
 {
-    public override string Name => "Instrument";
-
     [ViewVariables]
     public bool Playing { get; set; }
 
     [ViewVariables]
     public uint LastSequencerTick { get; set; }
 
-    [DataField("program")]
+    [DataField("program"), ViewVariables(VVAccess.ReadWrite)]
     public byte InstrumentProgram { get; set; }
 
-    [DataField("bank")]
+    [DataField("bank"), ViewVariables(VVAccess.ReadWrite)]
     public byte InstrumentBank { get; set; }
 
-    [DataField("allowPercussion")]
+    [DataField("allowPercussion"), ViewVariables(VVAccess.ReadWrite)]
     public bool AllowPercussion { get; set; }
 
-    [DataField("allowProgramChange")]
+    [DataField("allowProgramChange"), ViewVariables(VVAccess.ReadWrite)]
     public bool AllowProgramChange { get ; set; }
 
-    [DataField("respectMidiLimits")]
-    public bool RespectMidiLimits { get; set; }
+    [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite)]
+    public bool RespectMidiLimits { get; set; } = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public bool DirtyRenderer { get; set; }

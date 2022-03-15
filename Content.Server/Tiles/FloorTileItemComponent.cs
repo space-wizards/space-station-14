@@ -18,12 +18,12 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Tiles
 {
     [RegisterComponent]
+    [ComponentProtoName("FloorTile")]
     public class FloorTileItemComponent : Component, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
-        public override string Name => "FloorTile";
         [DataField("outputs", customTypeSerializer: typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
         private List<string>? _outputTiles;
 
@@ -82,7 +82,7 @@ namespace Content.Server.Tiles
                     var tile = mapGrid.GetTileRef(location);
                     var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
-                    if (HasBaseTurf(currentTileDefinition, baseTurf.Name))
+                    if (HasBaseTurf(currentTileDefinition, baseTurf.ID))
                     {
                         if (!EntitySystem.Get<StackSystem>().Use(Owner, 1, stack))
                             continue;

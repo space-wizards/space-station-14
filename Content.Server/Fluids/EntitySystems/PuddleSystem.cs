@@ -37,7 +37,7 @@ namespace Content.Server.Fluids.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PuddleComponent, UnanchoredEvent>(OnUnanchored);
+            SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
             SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnUpdate);
             SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnInit);
@@ -95,12 +95,10 @@ namespace Content.Server.Fluids.EntitySystems
             }
         }
 
-        private void OnUnanchored(EntityUid uid, PuddleComponent puddle, UnanchoredEvent unanchoredEvent)
+        private void OnAnchorChanged(EntityUid uid, PuddleComponent puddle, ref AnchorStateChangedEvent args)
         {
-            if (!EntityManager.GetComponent<TransformComponent>(puddle.Owner).Anchored)
-                return;
-
-            EntityManager.QueueDeleteEntity(puddle.Owner);
+            if (!args.Anchored)
+                QueueDel(uid);
         }
 
         /// <summary>

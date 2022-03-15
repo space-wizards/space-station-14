@@ -37,7 +37,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
-    graph: airlock
+    graph: Airlock
     node: assembly
   placement:
     mode: SnapgridCenter

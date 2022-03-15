@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.Movement.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.EntitySystems;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Maps;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
@@ -50,10 +49,10 @@ namespace Content.Server.Physics.Controllers
             base.UpdateBeforeSolve(prediction, frameTime);
             _excludedMobs.Clear();
 
-            foreach (var (mobMover, mover, physics) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
+            foreach (var (mobMover, mover, physics, xform) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent, TransformComponent>())
             {
                 _excludedMobs.Add(mover.Owner);
-                HandleMobMovement(mover, physics, mobMover);
+                HandleMobMovement(mover, physics, mobMover, xform);
             }
 
             HandleShuttleMovement(frameTime);
@@ -107,7 +106,7 @@ namespace Content.Server.Physics.Controllers
             // then do the movement input once for it.
             foreach (var (shuttle, pilots) in _shuttlePilots)
             {
-                if (shuttle.Paused || !EntityManager.TryGetComponent((shuttle).Owner, out PhysicsComponent? body)) continue;
+                if (Paused(shuttle.Owner) || !TryComp(shuttle.Owner, out PhysicsComponent? body)) continue;
 
                 // Collate movement linear and angular inputs together
                 var linearInput = Vector2.Zero;
@@ -130,7 +129,7 @@ namespace Content.Server.Physics.Controllers
 
                             if (sprint.Equals(Vector2.Zero)) continue;
 
-                            var offsetRotation = EntityManager.GetComponent<TransformComponent>((console).Owner).LocalRotation;
+                            var offsetRotation = EntityManager.GetComponent<TransformComponent>(console.Owner).LocalRotation;
 
                             linearInput += offsetRotation.RotateVec(new Vector2(0f, sprint.Y));
                             angularInput += sprint.X;
@@ -179,7 +178,7 @@ namespace Content.Server.Physics.Controllers
                     var angle = linearInput.ToWorldAngle();
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
-                    var shuttleNorth = EntityManager.GetComponent<TransformComponent>((body).Owner).WorldRotation.ToWorldVec();
+                    var shuttleNorth = EntityManager.GetComponent<TransformComponent>(body.Owner).WorldRotation.ToWorldVec();
 
                     // Won't just do cardinal directions.
                     foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
@@ -203,20 +202,25 @@ namespace Content.Server.Physics.Controllers
                         }
 
                         float length;
+                        Angle thrustAngle;
 
                         switch (dir)
                         {
                             case DirectionFlag.North:
                                 length = linearInput.Y;
+                                thrustAngle = new Angle(MathF.PI);
                                 break;
                             case DirectionFlag.South:
                                 length = -linearInput.Y;
+                                thrustAngle = new Angle(0f);
                                 break;
                             case DirectionFlag.East:
                                 length = linearInput.X;
+                                thrustAngle = new Angle(MathF.PI / 2f);
                                 break;
                             case DirectionFlag.West:
                                 length = -linearInput.X;
+                                thrustAngle = new Angle(-MathF.PI / 2f);
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
@@ -233,7 +237,7 @@ namespace Content.Server.Physics.Controllers
                         }
 
                         body.ApplyLinearImpulse(
-                            angle.RotateVec(shuttleNorth) *
+                            thrustAngle.RotateVec(shuttleNorth) *
                             speed *
                             frameTime);
                     }
@@ -302,9 +306,10 @@ namespace Content.Server.Physics.Controllers
 
             mobMover.StepSoundDistance -= distanceNeeded;
 
-            if (EntityManager.TryGetComponent<InventoryComponent?>(mover.Owner, out var inventory)
-                && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
-                && EntityManager.TryGetComponent<FootstepModifierComponent?>(item.Owner, out var modifier))
+            var invSystem = EntitySystem.Get<InventorySystem>();
+
+            if (invSystem.TryGetSlotEntity(mover.Owner, "shoes", out var shoes) &&
+                EntityManager.TryGetComponent<FootstepModifierComponent>(shoes, out var modifier))
             {
                 modifier.PlayFootstep();
             }

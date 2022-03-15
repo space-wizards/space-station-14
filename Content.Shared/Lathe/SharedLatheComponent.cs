@@ -14,9 +14,6 @@ namespace Content.Shared.Lathe
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-
-        public override string Name => "Lathe";
-
         public bool CanProduce(LatheRecipePrototype recipe, int quantity = 1)
         {
             if (!_entMan.TryGetComponent(Owner, out SharedMaterialStorageComponent? storage)
@@ -32,9 +29,9 @@ namespace Content.Shared.Lathe
             return true;
         }
 
-        public bool CanProduce(string ID, int quantity = 1)
+        public bool CanProduce(string id, int quantity = 1)
         {
-            return PrototypeManager.TryIndex(ID, out LatheRecipePrototype? recipe) && CanProduce(recipe, quantity);
+            return PrototypeManager.TryIndex(id, out LatheRecipePrototype? recipe) && CanProduce(recipe, quantity);
         }
 
         /// <summary>

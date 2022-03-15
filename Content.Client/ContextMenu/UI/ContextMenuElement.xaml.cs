@@ -7,7 +7,6 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 
 namespace Content.Client.ContextMenu.UI
 {
@@ -19,6 +18,7 @@ namespace Content.Client.ContextMenu.UI
     public partial class ContextMenuElement : ContainerButton
     {
         public const string StyleClassContextMenuButton = "contextMenuButton";
+        public const string StyleClassContextMenuExpansionTexture = "contextMenuExpansionTexture";
 
         public const float ElementMargin = 2;
         public const float ElementHeight = 32;
@@ -46,14 +46,7 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     Convenience property to set label text.
         /// </summary>
-        public string Text {
-            set
-            {
-                var b = new Basic();
-                b.AddMarkupPermissive(value.Trim());
-                Label.SetMessage(b.Render());
-            }
-        }
+        public virtual string Text { set => Label.SetMessage(FormattedMessage.FromMarkupPermissive(value.Trim())); }
 
         public ContextMenuElement(string? text = null)
         {
@@ -63,9 +56,6 @@ namespace Content.Client.ContextMenu.UI
 
             if (text != null)
                 Text = text;
-
-            ExpansionIndicator.Texture = IoCManager.Resolve<IResourceCache>()
-                .GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
         }
 
         protected override void Dispose(bool disposing)
@@ -103,7 +93,8 @@ namespace Content.Client.ContextMenu.UI
             if (_subMenu?.Visible ?? true)
                 return;
 
-            RemoveStylePseudoClass(StylePseudoClassHover);
+            if (HasStylePseudoClass(StylePseudoClassHover))
+                RemoveStylePseudoClass(StylePseudoClassHover);
         }
     }
 }

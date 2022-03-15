@@ -1,8 +1,8 @@
 using System;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -42,7 +42,7 @@ namespace Content.Server.Stack
         public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, SharedStackComponent? stack = null)
         {
             if (!Resolve(uid, ref stack))
-                return default;
+                return null;
 
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
@@ -51,7 +51,7 @@ namespace Content.Server.Stack
 
             // Try to remove the amount of things we want to split from the original stack...
             if (!Use(uid, amount, stack))
-                return default;
+                return null;
 
             // Set the output parameter in the event instance to the newly split stack.
             var entity = Spawn(prototype, spawnPosition);
@@ -180,7 +180,7 @@ namespace Content.Server.Stack
             if (Split(uid, amount, userTransform.Coordinates, stack) is not {} split)
                 return;
 
-            if (TryComp<HandsComponent>(userUid, out var hands) && TryComp<ItemComponent>(split, out var item))
+            if (TryComp<HandsComponent>(userUid, out var hands) && TryComp<SharedItemComponent>(split, out var item))
             {
                 hands.PutInHandOrDrop(item);
             }

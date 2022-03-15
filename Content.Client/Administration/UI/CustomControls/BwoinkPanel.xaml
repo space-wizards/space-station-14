@@ -1,0 +1,7 @@
+﻿<BoxContainer
+    xmlns="https://spacestation14.io"
+    Orientation="Vertical"
+    HorizontalExpand="true">
+    <OutputPanel Name="TextOutput" VerticalExpand="true" />
+    <HistoryLineEdit Name="SenderLineEdit" />
+</BoxContainer>

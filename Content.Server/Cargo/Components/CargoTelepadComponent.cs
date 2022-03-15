@@ -27,7 +27,6 @@ namespace Content.Server.Cargo.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        public override string Name => "CargoTelepad";
 
         private const float TeleportDuration = 0.5f;
         private const float TeleportDelay = 15f;
@@ -142,7 +141,7 @@ namespace Content.Server.Cargo.Components
             // attempt to attach the label
             if (_entMan.TryGetComponent(product, out PaperLabelComponent label))
             {
-                EntitySystem.Get<ItemSlotsSystem>().TryInsert(Owner, label.LabelSlot, printed);
+                EntitySystem.Get<ItemSlotsSystem>().TryInsert(Owner, label.LabelSlot, printed, null);
             }
         }
 

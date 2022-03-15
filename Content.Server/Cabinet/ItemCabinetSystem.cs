@@ -43,7 +43,7 @@ namespace Content.Server.Cabinet
         private void OnComponentStartup(EntityUid uid, ItemCabinetComponent cabinet, ComponentStartup args)
         {
             UpdateAppearance(uid, cabinet);
-            _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot.ID, !cabinet.Opened);
+            _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot, !cabinet.Opened);
         }
 
         private void UpdateAppearance(EntityUid uid,
@@ -59,6 +59,8 @@ namespace Content.Server.Cabinet
 
         private void OnContainerModified(EntityUid uid, ItemCabinetComponent cabinet, ContainerModifiedMessage args)
         {
+            if (!cabinet.Initialized) return;
+
             if (args.Container.ID == cabinet.CabinetSlot.ID)
                 UpdateAppearance(uid, cabinet);
         }
@@ -103,7 +105,7 @@ namespace Content.Server.Cabinet
 
             cabinet.Opened = !cabinet.Opened;
             SoundSystem.Play(Filter.Pvs(uid), cabinet.DoorSound.GetSound(), uid, AudioHelpers.WithVariation(0.15f));
-            _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot.ID, !cabinet.Opened);
+            _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot, !cabinet.Opened);
 
             UpdateAppearance(uid, cabinet);
         }

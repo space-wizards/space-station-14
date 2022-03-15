@@ -59,16 +59,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkJarMetroid
-  name: jar metroid
-  description: ''
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/jar_metroid.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkJarWhat
   name: jar of something
   description: You can't really tell what this is.

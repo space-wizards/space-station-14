@@ -11,8 +11,6 @@ namespace Content.Shared.CombatMode
     [NetworkedComponent()]
     public abstract class SharedCombatModeComponent : Component
     {
-        public override string Name => "CombatMode";
-
         private bool _isInCombatMode;
         private TargetingZone _activeZone;
 

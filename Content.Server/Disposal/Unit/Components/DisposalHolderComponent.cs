@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Content.Server.Atmos;
 using Content.Server.Disposal.Tube.Components;
-using Content.Server.Items;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -19,8 +19,6 @@ namespace Content.Server.Disposal.Unit.Components
     public class DisposalHolderComponent : Component, IGasMixtureHolder
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "DisposalHolder";
 
         public Container Container = null!;
 
@@ -81,7 +79,7 @@ namespace Content.Server.Disposal.Unit.Components
                 return false;
             }
 
-            return _entMan.HasComponent<ItemComponent>(entity) ||
+            return _entMan.HasComponent<SharedItemComponent>(entity) ||
                    _entMan.HasComponent<SharedBodyComponent>(entity);
         }
 

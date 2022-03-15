@@ -1,7 +1,7 @@
 ﻿- type: construction
   name: computer
   id: Computer
-  graph: computer
+  graph: Computer
   startNode: start
   targetNode: computer
   category: Machines
@@ -14,7 +14,7 @@
 - type: construction
   name: machine frame
   id: MachineFrame
-  graph: machine
+  graph: Machine
   startNode: start
   targetNode: machine
   category: Machines
@@ -23,3 +23,15 @@
   icon:
     sprite: Structures/Machines/parts.rsi
     state: "box_0"
+
+- type: construction
+  name: destroyed machine frame
+  id: MachineFrameDestroyed
+  graph: Machine
+  startNode: start
+  targetNode: destroyedMachineFrame
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Machines/parts.rsi
+    state: "destroyed"

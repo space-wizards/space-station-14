@@ -19,12 +19,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
     [NetworkedComponent()]
     public class ClientBatteryBarrelComponent : Component, IItemStatus
     {
-        public override string Name => "BatteryBarrel";
-
         private StatusControl? _statusControl;
-
-        [DataField("cellSlot", required: true)]
-        public ItemSlot CellSlot = default!;
 
         /// <summary>
         ///     Count of bullets in the magazine.
@@ -34,18 +29,6 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
         /// </remarks>
         [ViewVariables]
         public (int count, int max)? MagazineCount { get; private set; }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-            EntitySystem.Get<ItemSlotsSystem>().AddItemSlot(Owner, $"{Name}-powercell-container", CellSlot);
-        }
-
-        protected override void OnRemove()
-        {
-            base.OnRemove();
-            EntitySystem.Get<ItemSlotsSystem>().RemoveItemSlot(Owner, CellSlot);
-        }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {

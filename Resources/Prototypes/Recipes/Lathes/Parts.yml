@@ -5,7 +5,7 @@
   completetime: 250
   materials:
     Steel: 50
-    Glass: 50
+    Plastic: 50
 
 - type: latheRecipe
   id: MatterBinStockPart
@@ -14,7 +14,7 @@
   completetime: 250
   materials:
     Steel: 50
-    Glass: 50
+    Plastic: 50
 
 - type: latheRecipe
   id: MicroLaserStockPart
@@ -24,6 +24,7 @@
   materials:
     Steel: 50
     Glass: 50
+    Plastic: 50
 
 - type: latheRecipe
   id: MicroManipulatorStockPart
@@ -32,7 +33,7 @@
   completetime: 250
   materials:
     Steel: 50
-    Glass: 50
+    Plastic: 50
 
 - type: latheRecipe
   id: ScanningModuleStockPart
@@ -42,3 +43,4 @@
   materials:
     Steel: 50
     Glass: 50
+    Plastic: 50

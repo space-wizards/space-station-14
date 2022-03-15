@@ -1,32 +1,29 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
+using Content.Server.Timing;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Popups;
+using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -41,19 +38,18 @@ namespace Content.Server.Interaction
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
-        [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
         public override void Initialize()
         {
+            base.Initialize();
+
             SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropRequestEvent);
-            SubscribeNetworkEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
 
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use,
                     new PointerInputCmdHandler(HandleUseInteraction))
-                .Bind(ContentKeyFunctions.AltActivateItemInWorld,
-                    new PointerInputCmdHandler(HandleAltUseInteraction))
                 .Bind(ContentKeyFunctions.WideAttack,
                     new PointerInputCmdHandler(HandleWideAttack))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,
@@ -67,36 +63,6 @@ namespace Content.Server.Interaction
         {
             CommandBinds.Unregister<InteractionSystem>();
             base.Shutdown();
-        }
-
-        #region Client Input Validation
-        private bool ValidateClientInput(ICommonSession? session, EntityCoordinates coords, EntityUid uid, [NotNullWhen(true)] out EntityUid? userEntity)
-        {
-            userEntity = null;
-
-            if (!coords.IsValid(EntityManager))
-            {
-                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
-                return false;
-            }
-
-            if (uid.IsClientSide())
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
-                return false;
-            }
-
-            userEntity = ((IPlayerSession?) session)?.AttachedEntity;
-
-            if (userEntity == null || !userEntity.Value.IsValid())
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client sent interaction with no attached entity. Session={session}");
-                return false;
-            }
-
-            return true;
         }
 
         public override bool CanAccessViaStorage(EntityUid user, EntityUid target)
@@ -119,36 +85,10 @@ namespace Content.Server.Interaction
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
             return storage.SubscribedSessions.Contains(actor.PlayerSession);
         }
-        #endregion
 
-        /// <summary>
-        ///     Handles the event were a client uses an item in their inventory or in their hands, either by
-        ///     alt-clicking it or pressing 'E' while hovering over it.
-        /// </summary>
-        private void HandleInteractInventorySlotEvent(InteractInventorySlotEvent msg, EntitySessionEventArgs args)
+        protected override void BeginDelay(UseDelayComponent? component = null)
         {
-            if (Deleted(msg.ItemUid))
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client sent inventory interaction with an invalid target item. Session={args.SenderSession}");
-                return;
-            }
-
-            var itemCoords = Transform(msg.ItemUid).Coordinates;
-
-            // client sanitization
-            if (!ValidateClientInput(args.SenderSession, itemCoords, msg.ItemUid, out var userEntity))
-            {
-                Logger.InfoS("system.interaction", $"Inventory interaction validation failed.  Session={args.SenderSession}");
-                return;
-            }
-
-            if (msg.AltInteract)
-                // Use 'UserInteraction' function - behaves as if the user alt-clicked the item in the world.
-                UserInteraction(userEntity.Value, itemCoords, msg.ItemUid, msg.AltInteract);
-            else
-                // User used 'E'. We want to activate it, not simulate clicking on the item
-                InteractionActivate(userEntity.Value, msg.ItemUid);
+            _useDelay.BeginDelay(component);
         }
 
         #region Drag drop
@@ -175,6 +115,10 @@ namespace Content.Server.Interaction
 
             // trigger dragdrops on the dropped entity
             RaiseLocalEvent(msg.Dropped, interactionArgs);
+
+            if (interactionArgs.Handled)
+                return;
+
             foreach (var dragDrop in AllComps<IDraggable>(msg.Dropped))
             {
                 if (dragDrop.CanDrop(interactionArgs) &&
@@ -186,6 +130,10 @@ namespace Content.Server.Interaction
 
             // trigger dragdropons on the targeted entity
             RaiseLocalEvent(msg.Target, interactionArgs, false);
+
+            if (interactionArgs.Handled)
+                return;
+
             foreach (var dragDropOn in AllComps<IDragDropOn>(msg.Target))
             {
                 if (dragDropOn.CanDragDropOn(interactionArgs) &&
@@ -258,20 +206,6 @@ namespace Content.Server.Interaction
             return true;
         }
 
-        public bool HandleAltUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-        {
-            // client sanitization
-            if (!ValidateClientInput(session, coords, uid, out var userEntity))
-            {
-                Logger.InfoS("system.interaction", $"Alt-use input validation failed");
-                return true;
-            }
-
-            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null, altInteract : true );
-
-            return true;
-        }
-
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             if (!ValidateClientInput(session, coords, uid, out var userEntity))
@@ -296,96 +230,13 @@ namespace Content.Server.Interaction
         }
 
         /// <summary>
-        ///     Resolves user interactions with objects.
-        /// </summary>
-        /// <remarks>
-        ///     Checks Whether combat mode is enabled and whether the user can actually interact with the given entity.
-        /// </remarks>
-        /// <param name="altInteract">Whether to use default or alternative interactions (usually as a result of
-        /// alt+clicking). If combat mode is enabled, the alternative action is to perform the default non-combat
-        /// interaction. Having an item in the active hand also disables alternative interactions.</param>
-        public async void UserInteraction(EntityUid user, EntityCoordinates coordinates, EntityUid? target, bool altInteract = false)
-        {
-            // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
-            if (!altInteract && TryComp(user, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
-            {
-                DoAttack(user, coordinates, false, target);
-                return;
-            }
-
-            if (!ValidateInteractAndFace(user, coordinates))
-                return;
-
-            if (!_actionBlockerSystem.CanInteract(user))
-                return;
-
-            // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
-            // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)
-            if (target != null && !Deleted(target.Value) && !user.IsInSameOrParentContainer(target.Value) && !CanAccessViaStorage(user, target.Value))
-            {
-                Logger.WarningS("system.interaction",
-                    $"User entity {ToPrettyString(user):user} clicked on object {ToPrettyString(target.Value):target} that isn't the parent, child, or in the same container");
-                return;
-            }
-
-            // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (!TryComp(user, out HandsComponent? hands))
-                return;
-
-            var item = hands.GetActiveHand?.Owner;
-
-            // TODO: Replace with body interaction range when we get something like arm length or telekinesis or something.
-            var inRangeUnobstructed = user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true);
-            if (target == null || Deleted(target.Value) || !inRangeUnobstructed)
-            {
-                if (item == null)
-                    return;
-
-                if (!await InteractUsingRanged(user, item.Value, target, coordinates, inRangeUnobstructed) &&
-                    !inRangeUnobstructed)
-                {
-                    var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                    user.PopupMessage(message);
-                }
-
-                return;
-            }
-
-            // We are close to the nearby object.
-            if (altInteract)
-                // Perform alternative interactions, using context menu verbs.
-                AltInteract(user, target.Value);
-            else if (item != null && item != target)
-                // We are performing a standard interaction with an item, and the target isn't the same as the item
-                // currently in our hand. We will use the item in our hand on the nearby object via InteractUsing
-                await InteractUsing(user, item.Value, target.Value, coordinates);
-            else if (item == null)
-                // Since our hand is empty we will use InteractHand/Activate
-                InteractHand(user, target.Value);
-        }
-
-        private bool ValidateInteractAndFace(EntityUid user, EntityCoordinates coordinates)
-        {
-            // Verify user is on the same map as the entity they clicked on
-            if (coordinates.GetMapId(EntityManager) != Transform(user).MapID)
-            {
-                Logger.WarningS("system.interaction",
-                    $"User entity {ToPrettyString(user):user} clicked on a map they aren't located on");
-                return false;
-            }
-
-            _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager));
-
-            return true;
-        }
-
-        /// <summary>
         /// Uses an empty hand on an entity
         /// Finds components with the InteractHand interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
-        public void InteractHand(EntityUid user, EntityUid target)
+        public override void InteractHand(EntityUid user, EntityUid target)
         {
+            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
             if (!_actionBlockerSystem.CanInteract(user))
                 return;
 
@@ -416,8 +267,9 @@ namespace Content.Server.Interaction
         /// Will have two behaviors, either "uses" the used entity at range on the target entity if it is capable of accepting that action
         /// Or it will use the used entity itself on the position clicked, regardless of what was there
         /// </summary>
-        public async Task<bool> InteractUsingRanged(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
+        public override async Task<bool> InteractUsingRanged(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
+            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
             if (InteractDoBefore(user, used, inRangeUnobstructed ? target : null, clickLocation, false))
                 return true;
 
@@ -425,41 +277,30 @@ namespace Content.Server.Interaction
             {
                 var rangedMsg = new RangedInteractEvent(user, used, target.Value, clickLocation);
                 RaiseLocalEvent(target.Value, rangedMsg);
+
                 if (rangedMsg.Handled)
                     return true;
-
-                var rangedInteractions = AllComps<IRangedInteract>(target.Value).ToList();
-                var rangedInteractionEventArgs = new RangedInteractEventArgs(user, used, clickLocation);
-
-                // See if we have a ranged interaction
-                foreach (var t in rangedInteractions)
-                {
-                    // If an InteractUsingRanged returns a status completion we finish our interaction
-#pragma warning disable 618
-                    if (t.RangedInteract(rangedInteractionEventArgs))
-#pragma warning restore 618
-                        return true;
-                }
             }
 
             return await InteractDoAfter(user, used, inRangeUnobstructed ? target : null, clickLocation, false);
         }
 
-        public void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack, EntityUid? targetUid = null)
+        public override void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack, EntityUid? target = null)
         {
+            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!_actionBlockerSystem.CanAttack(user))
+            if (!_actionBlockerSystem.CanAttack(user, target))
                 return;
 
             if (!wideAttack)
             {
                 // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
-                if (targetUid != null && !Deleted(targetUid.Value) && !user.IsInSameOrParentContainer(targetUid.Value) && !CanAccessViaStorage(user, targetUid.Value))
+                if (target != null && !Deleted(target.Value) && !ContainerSystem.IsInSameOrParentContainer(user, target.Value) && !CanAccessViaStorage(user, target.Value))
                 {
                     Logger.WarningS("system.interaction",
-                        $"User entity {ToPrettyString(user):user} clicked on object {ToPrettyString(targetUid.Value):target} that isn't the parent, child, or in the same container");
+                        $"User entity {ToPrettyString(user):user} clicked on object {ToPrettyString(target.Value):target} that isn't the parent, child, or in the same container");
                     return;
                 }
 
@@ -471,7 +312,7 @@ namespace Content.Server.Interaction
             // Verify user has a hand, and find what object they are currently holding in their active hand
             if (TryComp(user, out HandsComponent? hands))
             {
-                var item = hands.GetActiveHand?.Owner;
+                var item = hands.GetActiveHandItem?.Owner;
 
                 if (item != null && !Deleted(item.Value))
                 {
@@ -488,15 +329,15 @@ namespace Content.Server.Interaction
                     }
                     else
                     {
-                        var ev = new ClickAttackEvent(item.Value, user, coordinates, targetUid);
+                        var ev = new ClickAttackEvent(item.Value, user, coordinates, target);
                         RaiseLocalEvent(item.Value, ev, false);
 
                         if (ev.Handled)
                         {
-                            if (targetUid != null)
+                            if (target != null)
                             {
                                 _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
-                                    $"{ToPrettyString(user):user} attacked {ToPrettyString(targetUid.Value):target} with {ToPrettyString(item.Value):used} at {coordinates}");
+                                    $"{ToPrettyString(user):user} attacked {ToPrettyString(target.Value):target} with {ToPrettyString(item.Value):used} at {coordinates}");
                             }
                             else
                             {
@@ -508,10 +349,10 @@ namespace Content.Server.Interaction
                         }
                     }
                 }
-                else if (!wideAttack && targetUid != null && HasComp<ItemComponent>(targetUid.Value))
+                else if (!wideAttack && target != null && HasComp<SharedItemComponent>(target.Value))
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
-                    InteractHand(user, targetUid.Value);
+                    InteractHand(user, target.Value);
                     return;
                 }
             }
@@ -527,14 +368,14 @@ namespace Content.Server.Interaction
             }
             else
             {
-                var ev = new ClickAttackEvent(user, user, coordinates, targetUid);
+                var ev = new ClickAttackEvent(user, user, coordinates, target);
                 RaiseLocalEvent(user, ev, false);
                 if (ev.Handled)
                 {
-                    if (targetUid != null)
+                    if (target != null)
                     {
                         _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
-                            $"{ToPrettyString(user):user} attacked {ToPrettyString(targetUid.Value):target} at {coordinates}");
+                            $"{ToPrettyString(user):user} attacked {ToPrettyString(target.Value):target} at {coordinates}");
                     }
                     else
                     {
