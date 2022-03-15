@@ -2,7 +2,6 @@
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.Manager.Result;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
@@ -47,7 +46,7 @@ namespace Content.Shared.Construction.Steps
             return null;
         }
 
-        public DeserializationResult Read(ISerializationManager serializationManager,
+        public ConstructionGraphStep Read(ISerializationManager serializationManager,
             MappingDataNode node,
             IDependencyCollection dependencies,
             bool skipHook,
@@ -57,7 +56,7 @@ namespace Content.Shared.Construction.Steps
                        throw new ArgumentException(
                            "Tried to convert invalid YAML node mapping to ConstructionGraphStep!");
 
-            return serializationManager.Read(type, node, context, skipHook);
+            return (ConstructionGraphStep)serializationManager.Read(type, node, context, skipHook)!;
         }
 
         public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
