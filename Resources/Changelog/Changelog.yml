@@ -1,12 +1,6 @@
 Entries:
 - author: Peptide90
   changes:
-  - {message: More in depth tutorial. Press F1 to learn some basics about the server.
-      More to come in future., type: Add}
-  id: 714
-  time: '2021-12-10T17:43:04.0000000+00:00'
-- author: Peptide90
-  changes:
   - {message: 'Sad day for Cargonia. All secure crates have been buffed so your basic
       tools won''t break them anymore,', type: Tweak}
   id: 715
@@ -3002,3 +2996,8 @@ Entries:
   - {message: Added flip flap to the lobby themes., type: Add}
   id: 1213
   time: '2022-03-15T12:28:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You can no longer construct 'destroyed machine frames'., type: Tweak}
+  id: 1214
+  time: '2022-03-15T22:54:30.0000000+00:00'
