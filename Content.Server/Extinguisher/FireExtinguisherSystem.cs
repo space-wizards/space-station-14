@@ -1,19 +1,14 @@
-﻿using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Popups;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
-using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Extinguisher;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Extinguisher;
@@ -28,7 +23,6 @@ public sealed class FireExtinguisherSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<FireExtinguisherComponent, ComponentInit>(OnFireExtinguisherInit);
-        SubscribeLocalEvent<FireExtinguisherComponent, DroppedEvent>(OnDropped);
         SubscribeLocalEvent<FireExtinguisherComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<FireExtinguisherComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<FireExtinguisherComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
@@ -41,12 +35,6 @@ public sealed class FireExtinguisherSystem : EntitySystem
         {
             UpdateAppearance(uid, component);
         }
-    }
-
-    private void OnDropped(EntityUid uid, FireExtinguisherComponent component, DroppedEvent args)
-    {
-        // idk why this has to be done??????????
-        UpdateAppearance(uid, component);
     }
 
     private void OnUseInHand(EntityUid uid, FireExtinguisherComponent component, UseInHandEvent args)

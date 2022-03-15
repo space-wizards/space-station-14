@@ -26,7 +26,7 @@
   - type: Clothing
     size: 20
     sprite: Objects/Weapons/Melee/fireaxe.rsi
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - back
   - type: Tool
