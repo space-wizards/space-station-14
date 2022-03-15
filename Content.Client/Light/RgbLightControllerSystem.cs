@@ -140,7 +140,7 @@ namespace Content.Client.Light
                 else
                 {
                     // admeme fuck-ups or bad yaml?
-                    Logger.Warning($"RGB light attempted to us invalid sprite index {index} on entity {ToPrettyString(uid)}");
+                    Logger.Warning($"RGB light attempted to use invalid sprite index {index} on entity {ToPrettyString(uid)}");
                     rgb.Layers.Remove(index);
                 }
             }
