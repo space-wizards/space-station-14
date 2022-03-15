@@ -10,6 +10,7 @@
       - material: Steel
         amount: 5
         doAfter: 1
+
   - node: emptyCase
     entity: ModularGrenade      
     actions:
@@ -19,12 +20,15 @@
     - to: wiredCase
       steps:
       - material: Cable
+        doAfter: 0.5
 
   - node: wiredCase
     entity: ModularGrenade      
     actions:
     - !type:SpriteStateChange
       state: wired
+    - !type:PlaySound
+      sound: /Audio/Machines/button.ogg
     edges:
     - to: emptyCase
       steps:
@@ -44,6 +48,8 @@
     actions:
     - !type:SpriteStateChange
       state: no-payload
+    - !type:PlaySound
+      sound: /Audio/Machines/button.ogg
     edges:
     - to: wiredCase
       steps:
@@ -63,6 +69,10 @@
     actions:
     - !type:SpriteStateChange
       state: complete
+    - !type:PlaySound
+      sound: /Audio/Machines/button.ogg
+    - !type:AdminLog
+      message: "A grenade was crafted"
     edges:
     - to: caseWithTrigger
       steps:

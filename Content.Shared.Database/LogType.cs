@@ -64,5 +64,6 @@ public enum LogType
     GhostRoleTaken = 60,
     Chat = 61,
     Action = 62,
+    Construction = 63,
     Emag = 69,
 }
