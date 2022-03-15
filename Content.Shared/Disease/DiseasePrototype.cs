@@ -28,6 +28,7 @@ namespace Content.Shared.Disease
         /// <summary>
         /// Controls how often a disease ticks.
         /// </summary>
+        [ViewVariables]
         public float TickTime = 1f;
 
         /// <summary>
