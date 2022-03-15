@@ -238,10 +238,14 @@
   - type: Sprite
     sprite: Structures/Power/Generation/rtg.rsi
     state: rtg
+  - type: AmbientSound
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/buzzing.ogg
 # TODO: need radioactive fallout when destroyed
 
 - type: entity
-  parent: BaseGenerator
+  parent: GeneratorRTG
   id: GeneratorRTGDamaged
   name: damaged RTG
   description: A Radioisotope Thermoelectric Generator for long term power. This one has damaged shielding.
