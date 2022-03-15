@@ -1,10 +1,4 @@
 Entries:
-- author: pointer-to-null
-  changes:
-  - {message: Fixed the status effects cooldown time accumulation. (Major clown nerf).,
-    type: Fix}
-  id: 712
-  time: '2021-12-07T06:18:07.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Rules now pop up on the first connection to the server, type: Add}
@@ -3002,3 +2996,9 @@ Entries:
       rather than being position-dependent', type: Fix}
   id: 1211
   time: '2022-03-15T03:57:54.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some UI bugs. Ian should no longer be able to make announcements,
+    type: Fix}
+  id: 1212
+  time: '2022-03-15T03:59:20.0000000+00:00'
