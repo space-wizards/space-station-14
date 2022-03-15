@@ -7,6 +7,7 @@ using Content.Shared.Crayon;
 using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -115,7 +116,7 @@ public sealed class CrayonSystem : EntitySystem
 
     private void OnCrayonDropped(EntityUid uid, CrayonComponent component, DroppedEvent args)
     {
-        if (TryComp<ActorComponent>(args.UserUid, out var actor))
+        if (TryComp<ActorComponent>(args.User, out var actor))
             component.UserInterface?.Close(actor.PlayerSession);
     }
 }

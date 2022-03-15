@@ -8,6 +8,7 @@
     - type: AtmosDevice
     - type: SubFloorHide
       blockInteractions: false
+      blockAmbience: false
     - type: NodeContainer
       nodes:
         inlet:
@@ -58,6 +59,12 @@
     - type: Construction
       graph: GasTrinary
       node: filter
+    - type: AmbientSound
+      enabled: false
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_hiss.ogg
 
 - type: entity
   parent: GasFilter
@@ -136,6 +143,12 @@
     - type: Construction
       graph: GasTrinary
       node: mixer
+    - type: AmbientSound
+      enabled: false
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_hiss.ogg
 
 - type: entity
   parent: GasMixer

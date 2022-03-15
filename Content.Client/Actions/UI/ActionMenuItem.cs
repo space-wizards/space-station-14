@@ -41,7 +41,7 @@ namespace Content.Client.Actions.UI
             Action = action;
             _onControlFocusExited = onControlFocusExited;
 
-            MinSize = (64, 64);
+            SetSize = (64, 64);
             VerticalAlignment = VAlignment.Top;
 
             _bigActionIcon = new TextureRect

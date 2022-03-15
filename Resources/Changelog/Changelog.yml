@@ -1,157 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Weedkiller and Pest-B-Gone now harms kudzu., type: Add}
-  id: 686
-  time: '2021-11-30T22:58:37.776324+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Shuttle movement now uses significantly less bandwidth., type: Fix}
-  id: 687
-  time: '2021-12-01T07:32:37.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Instruments network again, type: Fix}
-  id: 688
-  time: '2021-12-01T14:00:11.0000000+00:00'
-- author: Efruit
-  changes:
-  - {message: Radiation storms are scary., type: Tweak}
-  id: 689
-  time: '2021-12-01T20:21:18.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Corrected the names of a bunch of clothing items., type: Fix}
-  id: 690
-  time: '2021-12-01T21:19:36.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added LV cable to the autolathe., type: Add}
-  id: 691
-  time: '2021-12-02T02:49:45.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Touching insulated wires with your bare hands no longer shocks you.,
-    type: Tweak}
-  - {message: Electrocution now stuns you for a much shorter duration., type: Tweak}
-  id: 692
-  time: '2021-12-02T03:03:38.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Donk pockets now fit into their boxes again., type: Fix}
-  id: 693
-  time: '2021-12-02T14:37:40.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Masks & some headwear now blocks eating & drinking, type: Tweak}
-  id: 694
-  time: '2021-12-02T14:51:05.0000000+00:00'
-- author: hubismal
-  changes:
-  - {message: pAIs have been outfitted with cheap ringtone synthesizers to play their
-      own music., type: Add}
-  id: 695
-  time: '2021-12-02T18:49:18.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'In-game chat now has a sanitizer that removes smilies. You can now
-      put :) or similar at the end of your message to emote automatically.', type: Add}
-  id: 696
-  time: '2021-12-03T00:49:19.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: 'Following numerous lawsuits relating to so-called ''shitcurity'', Nanotrasen
-      is now actively hiring brig Wardens for its deep-space stations.', type: Add}
-  id: 697
-  time: '2021-12-03T02:01:18.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Balance pass on thrusters to make them usable for ships large and small,
-    type: Tweak}
-  - {message: Multiple pilots now supported properly, type: Tweak}
-  - {message: Thruster visualizer no longer gets stuck on in some situations, type: Fix}
-  - {message: Thrusters now work in the direction your console is facing instead of
-      shuttle-North, type: Tweak}
-  id: 698
-  time: '2021-12-03T02:03:06.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix ghost role takeovers of monke, type: Fix}
-  id: 699
-  time: '2021-12-03T09:31:14.0000000+00:00'
-- author: shaeone
-  changes:
-  - {message: Modified gyroscope sprite., type: Tweak}
-  id: 700
-  time: '2021-12-03T09:39:18.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'The metaphysical department has finally learned what a monkey is, and
-      has adjusted soul binding to monkeys accordingly.', type: Fix}
-  id: 701
-  time: '2021-12-03T17:11:51.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: The Salvage department is now partially there., type: Add}
-  id: 702
-  time: '2021-12-03T22:24:19.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Throw pushback ratio multiplied by 10., type: Tweak}
-  id: 703
-  time: '2021-12-04T00:26:52.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed some issues preventing mobs from taking proper suffocation damage.,
-    type: Fix}
-  id: 704
-  time: '2021-12-04T08:11:48.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: Tools (along with many other objects) have been stripped of their insulated
-      property. Go get some real insulated gloves!, type: Fix}
-  id: 705
-  time: '2021-12-04T09:59:09.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Fixed flares so they now burn longer and burn out slower., type: Fix}
-  id: 706
-  time: '2021-12-04T18:50:25.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Added nettles! They're an amazing source of histamine when cultivated
-      to high potency or ground up., type: Add}
-  id: 707
-  time: '2021-12-04T18:55:04.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Cigars and clown/mime masks no longer block drinking & eating., type: Fix}
-  id: 708
-  time: '2021-12-04T18:56:27.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Airlock access to high security areas has been updated to include only
-      those who need it., type: Tweak}
-  id: 709
-  time: '2021-12-05T03:20:06.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: 'Fixed some clothing names, applied armour to previously unarmoured
-      clothes, tweaked some armour values.', type: Tweak}
-  id: 710
-  time: '2021-12-05T06:39:52.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added construction for main crates and deconstruction for all crates.
-      Use a screwdriver to deconstruct crates., type: Add}
-  id: 711
-  time: '2021-12-06T22:10:04.0000000+00:00'
-- author: pointer-to-null
-  changes:
-  - {message: Fixed the status effects cooldown time accumulation. (Major clown nerf).,
-    type: Fix}
-  id: 712
-  time: '2021-12-07T06:18:07.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Rules now pop up on the first connection to the server, type: Add}
@@ -2975,3 +2822,183 @@ Entries:
       up when maps are updated., type: Add}
   id: 1185
   time: '2022-03-09T19:59:44.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: It's now possible to carry an acoustic guitar on your back., type: Add}
+  id: 1186
+  time: '2022-03-10T13:59:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Footstep sounds are now predicted and won't sound delayed., type: Tweak}
+  id: 1187
+  time: '2022-03-11T01:48:03.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: 'Admin ghosts now have the cargo shuttle console, communications console,
+      crew monitoring console, mass scanner console, and solar control console built
+      into their ghostly skull.', type: Add}
+  id: 1188
+  time: '2022-03-11T05:37:36.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones now have a whitelist for machine UIs they can open. Chem dispensers
+      are not included., type: Tweak}
+  - {message: Machine UIs should behave more consistently., type: Fix}
+  id: 1189
+  time: '2022-03-12T18:26:06.0000000+00:00'
+- author: Todd
+  changes:
+  - {message: added 3 new lobby themes., type: Add}
+  id: 1190
+  time: '2022-03-12T18:44:30.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug allowing some botany seeds to preserve their potency across
+      rounds., type: Fix}
+  id: 1191
+  time: '2022-03-12T22:06:41.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Lean can now be made and has effects., type: Tweak}
+  id: 1192
+  time: '2022-03-12T22:07:07.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: All windows are now less susceptible to piercing damage and more to
+      blunt., type: Tweak}
+  - {message: 'Spears now take cable, a glass shard and 2 rods to craft. They break
+      after 4 throws.', type: Tweak}
+  id: 1193
+  time: '2022-03-12T22:07:27.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Guitar and other items now correctly react on quick equipment key (Z
+      by default)., type: Fix}
+  id: 1194
+  time: '2022-03-12T22:09:11.0000000+00:00'
+- author: moony
+  changes:
+  - {message: All atmos devices now produce ambient noise when operating., type: Add}
+  - {message: Wiring now has mains hum., type: Add}
+  - {message: Atmos piping has gas movement noise., type: Add}
+  - {message: 'Ambient audio volume levels have been raised, so you can hear them
+      without an explosion blowing your eardrums out.', type: Tweak}
+  id: 1195
+  time: '2022-03-12T22:20:31.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: Pulse carbine and pistol for ERT, type: Add}
+  - {message: Pulse hitscan projectile, type: Add}
+  - {message: The Lamia handgun is now using its own sprite instead of the gyropistol's,
+    type: Tweak}
+  - {message: A whole bunch of resprites for various guns and melee weapons, type: Tweak}
+  id: 1196
+  time: '2022-03-12T22:29:17.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: There's intel of an unknown enemy corp creating experimental mechas
+      and testing them on stations., type: Add}
+  id: 1197
+  time: '2022-03-12T23:14:17.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Add lizard accent. Hissss!, type: Add}
+  id: 1198
+  time: '2022-03-13T04:23:44.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones now have an innate flashlight., type: Add}
+  - {message: Onestar Mechs are no longer bound by drone laws., type: Fix}
+  - {message: Drones can now toggle all their innate tools within range of people.,
+    type: Tweak}
+  - {message: 'Added power cells, toolboxes and certain boxes to the drone whitelist.',
+    type: Tweak}
+  id: 1199
+  time: '2022-03-13T09:53:01.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Plant produce now scales in size depending on its potency., type: Add}
+  id: 1200
+  time: '2022-03-13T10:11:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Lizards now correctly no longer show up at roundstart., type: Fix}
+  id: 1201
+  time: '2022-03-13T15:42:07.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Removed fun! No more lean, don''t do drugs kids.', type: Remove}
+  id: 1202
+  time: '2022-03-13T20:46:26.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Add foxes and Renault., type: Add}
+  id: 1203
+  time: '2022-03-13T23:32:33.0000000+00:00'
+- author: Jezithyr
+  changes:
+  - {message: Rewrote the lobby UI, type: Add}
+  - {message: Added adminhelp button to the lobby screen, type: Add}
+  - {message: 'Added the ability to add custom lobby screens, (You can have multiple
+      and picks a random one!)', type: Add}
+  - {message: 'rewrote the backend of the lobby ui to be slightly less ass, still
+      a work in progress. Please report any issues with monitor scaling.', type: Tweak}
+  id: 1204
+  time: '2022-03-14T02:33:19.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Hardsuits now noticeably slow you down. Wear something else., type: Tweak}
+  id: 1205
+  time: '2022-03-14T06:03:50.0000000+00:00'
+- author: router
+  changes:
+  - {message: Desoxyephedrine no longer hardcounters the speedboost it's supposed
+      to be granting., type: Tweak}
+  id: 1206
+  time: '2022-03-14T06:04:02.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Coffee, Tea, and Energy drinks now contain a small amount of theobromine.',
+    type: Add}
+  - {message: Ultragigancer progression slowed a bit. It still fulfills its purpose
+      of taking up a bunch of medbay resources., type: Tweak}
+  - {message: You can no longer insert swabs into disease machines while they are
+      currently making something., type: Fix}
+  - {message: Fixed broken localization string for the vent cough disease., type: Fix}
+  id: 1207
+  time: '2022-03-14T06:05:02.0000000+00:00'
+- author: Carou
+  changes:
+  - {message: 'Added animated friendly purple snake, with the id: purple_snake.',
+    type: Add}
+  id: 1208
+  time: '2022-03-14T15:00:23.0000000+00:00'
+- author: Spillhelm53
+  changes:
+  - {message: 'Mops can now be used to add or remove liquid from most containers.
+      However, Nanotrasen continues to recommend its company-made "Big Yella" brand
+      mop buckets for best results.', type: Add}
+  id: 1209
+  time: '2022-03-14T21:02:26.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Added new generator types: 2x portable generators. Research their boards
+      to build them.', type: Add}
+  - {message: Added the RTG. Find them in a deep space wreck and try not to get burnt...,
+    type: Add}
+  - {message: Added wallmount generator and substation for use in shuttles and escape
+      pods., type: Add}
+  id: 1210
+  time: '2022-03-15T01:27:39.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed some audio files that were causing sound effects to play globally,
+      rather than being position-dependent', type: Fix}
+  id: 1211
+  time: '2022-03-15T03:57:54.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some UI bugs. Ian should no longer be able to make announcements,
+    type: Fix}
+  id: 1212
+  time: '2022-03-15T03:59:20.0000000+00:00'

@@ -17,6 +17,10 @@
         description: action-decription-magboot-toggle
         itemIconStyle: NoItem
         event: !type:ToggleActionEvent
+    - type: ClothingSpeedModifier
+      walkModifier: 0.85
+      sprintModifier: 0.65
+      enabled: false
 
 - type: entity
   parent: ClothingShoesBootsMag
@@ -30,5 +34,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
   - type: Magboots
-    walkMoveCoeffecient: 1
-    sprintMoveCoeffecient: 1
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+    enabled: false

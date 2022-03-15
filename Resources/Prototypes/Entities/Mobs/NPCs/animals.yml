@@ -625,7 +625,7 @@
       state: mouse-0
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    QuickEquip: false
+    quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
     HeldPrefix: 0
     Slots:
@@ -688,6 +688,7 @@
       autoPopulate: false
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: DiseaseCarrier #The other class lab animal and disease vector
 
 
 - type: entity
@@ -710,6 +711,7 @@
       dead: splat-1
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: DiseaseCarrier #Why doesn't this save if it's only on the parent wtf
 
 
 - type: entity
@@ -732,6 +734,7 @@
       dead: splat-2
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: DiseaseCarrier
 
 
 - type: entity
@@ -777,6 +780,9 @@
     interactFailureString: petting-failure-generic
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
 
 - type: entity
   name: frog
@@ -949,6 +955,9 @@
     interactFailureString: petting-failure-generic
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -1115,6 +1124,64 @@
   components:
   - type: InteractionPopup
     successChance: 0.7
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+
+- type: entity
+  name: fox
+  parent: SimpleMobBase
+  id: MobFox
+  description: They're a fox.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/fox.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: fox
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: fox
+      crit: fox_dead
+      dead: fox_dead
+  - type: Butcherable
+    spawned: FoodMeat
+    pieces: 3
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: Bloodstream
+    bloodMaxVolume: 100
+
+- type: entity
+  name: Renault
+  parent: MobFox
+  id: MobFoxRenault
+  description: The captain's trustworthy fox.
+  components:
+  - type: InteractionPopup
+    successChance: 1
   - type: Grammar
     attributes:
       proper: true

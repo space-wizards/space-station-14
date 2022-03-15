@@ -1,6 +1,7 @@
 using Content.Server.Tools.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;

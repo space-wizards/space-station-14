@@ -2,7 +2,7 @@ using System;
 using Content.Server.Popups;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
