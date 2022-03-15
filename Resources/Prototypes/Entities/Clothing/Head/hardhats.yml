@@ -102,7 +102,7 @@
   - type: TemperatureProtection
     coefficient: 0.01 # This is temp until fires aren't 9000K+.
   - type: PressureProtection
-    highPressureMultiplier: 0.5
+    highPressureMultiplier: 0.85 # Same value as suit.
   - type: Tag
     tags:
     - HidesHair
