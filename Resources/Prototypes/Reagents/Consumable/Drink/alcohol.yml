@@ -93,6 +93,22 @@
   spritePath: kahluaglass.rsi
 
 - type: reagent
+  id: Lean
+  name: lean
+  parent: BaseAlcohol
+  desc: Turn up for days.
+  physicalDesc: bubbly
+  color: "#9400D3"
+
+- type: reagent
+  id: Leanshine
+  name: leanshine
+  parent: BaseAlcohol
+  desc: Lean mixed with moonshine. Turn up for months.
+  physicalDesc: bubbly
+  color: "#9d5fb8"
+
+- type: reagent
   id: MelonLiquor
   name: melon liquor
   parent: BaseAlcohol
@@ -603,6 +619,7 @@
   desc: Artisanal homemade liquor. What could go wrong?
   physicalDesc: strong-smelling
   color: "#d1d7d155"
+  spritePath: moonshineglass.rsi
 
 - type: reagent
   id: Neurotoxin

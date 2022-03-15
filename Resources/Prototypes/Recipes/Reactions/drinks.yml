@@ -317,6 +317,16 @@
     IrishCream: 3
 
 - type: reaction
+  id: Leanshine
+  reactants:
+    Lean:
+      amount: 1
+    Moonshine:
+      amount: 1
+  products:
+    Leanshine: 2
+
+- type: reaction
   id: Lemonade
   reactants:
     JuiceLemon:

@@ -1063,6 +1063,23 @@
 
 - type: entity
   parent: DrinkGlassBase
+  id: DrinkLeanshineGlass
+  name: leanshine
+  description: an abomination against every deity ever.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Leanshine
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/leanshineglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkLemonadeGlass
   name: lemonade glass
   description: Oh the nostalgia...
@@ -1597,7 +1614,7 @@
           Quantity: 50
   - type: Drink
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/glass_clear.rsi
+    sprite: Objects/Consumable/Drinks/moonshineglass.rsi
 
 - type: entity
   parent: DrinkGlassBase

@@ -180,6 +180,21 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
+  id: DrinkLeanshineBottleFull
+  name: Madlad Daemon's decrepit leanshine
+  description: A jug of a horrible smelling purple liquid.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Leanshine
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/leanshinebottle.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
   id: DrinkMelonLiquorBottleFull
   name: emeraldine melon liquor
   description: A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light.
@@ -192,6 +207,21 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alco-green.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkMoonshineBottleFull
+  name: wild lightnin' moonshine
+  description: A jug of (hopefully) high quality moonshine. #thigh quality
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Moonshine
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/moonshinebottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull

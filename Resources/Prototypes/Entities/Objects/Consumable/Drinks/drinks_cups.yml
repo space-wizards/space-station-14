@@ -189,14 +189,14 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkLean
-  name: Grape Juice
-  description: Damn, no fun allowed.
+  name: Lean
+  description: fun allowed.
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
         reagents:
-        - ReagentId: Water
+        - ReagentId: Lean
           Quantity: 20
         maxVol: 20
   - type: Sprite
