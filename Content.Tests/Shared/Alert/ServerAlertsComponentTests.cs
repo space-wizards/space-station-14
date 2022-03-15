@@ -42,7 +42,7 @@ namespace Content.Tests.Shared.Alert
             var factory = IoCManager.Resolve<IComponentFactory>();
             factory.RegisterClass<AlertsComponent>();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
-            prototypeManager.Resync();
+            prototypeManager.ResolveResults();
 
             var entSys = IoCManager.Resolve<IEntitySystemManager>();
             entSys.LoadExtraSystemType<ServerAlertsSystem>();
