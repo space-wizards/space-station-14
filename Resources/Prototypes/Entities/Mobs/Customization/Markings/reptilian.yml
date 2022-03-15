@@ -73,7 +73,7 @@
   bodyPart: HeadTop
   markingCategory: Head
   unrestricted: false
-  speciesRestrictions: [Reptilian]
+  speciesRestriction: [Reptilian]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi/
     state: horns_simple
