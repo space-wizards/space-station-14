@@ -1,1 +1,1 @@
-telecrystal-component-sucs-inserted = You slot the telecrystals into the uplink
+telecrystal-component-sucs-inserted = You slot {THE($source)} into {THE($target)}.
