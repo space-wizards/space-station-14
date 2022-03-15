@@ -44,15 +44,17 @@ namespace Content.Shared.GameTicking
     {
         public bool IsRoundStarted { get; }
         public string? LobbySong { get; }
+        public string? LobbyBackground { get; }
         public bool YouAreReady { get; }
         // UTC.
         public TimeSpan StartTime { get; }
         public bool Paused { get; }
 
-        public TickerLobbyStatusEvent(bool isRoundStarted, string? lobbySong, bool youAreReady, TimeSpan startTime, bool paused)
+        public TickerLobbyStatusEvent(bool isRoundStarted, string? lobbySong, string? lobbyBackground, bool youAreReady, TimeSpan startTime, bool paused)
         {
             IsRoundStarted = isRoundStarted;
             LobbySong = lobbySong;
+            LobbyBackground = lobbyBackground;
             YouAreReady = youAreReady;
             StartTime = startTime;
             Paused = paused;

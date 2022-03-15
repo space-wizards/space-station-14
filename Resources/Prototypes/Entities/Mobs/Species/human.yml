@@ -5,6 +5,79 @@
   abstract: true
   save: false
   components:
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [Touch, Ingestion]
+    reactions:
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPieReaction
+  - type: Flashable
+  - type: Hands
+  - type: MovementSpeedModifier
+  - type: MovedByPressure
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.7 #per second, scales with pressure and other constants.
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+  - type: Hunger
+    damage:
+      types:
+        Blunt: 2
+  - type: Thirst
+    damage:
+      types:
+        Blunt: 2
+  # Organs
+  - type: InjectableSolution
+    solution: chemicals
+  - type: DrawableSolution
+    solution: bloodstream
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
+  - type: Bloodstream
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
+  - type: DiseaseCarrier
+  # Other
+  - type: Inventory
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: full
   - type: Sprite
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
@@ -83,6 +156,7 @@
     - map: [ "head" ]
     - map: [ "pocket1" ]
     - map: [ "pocket2" ]
+
 
 - type: entity
   parent: MobOrganicDummy
