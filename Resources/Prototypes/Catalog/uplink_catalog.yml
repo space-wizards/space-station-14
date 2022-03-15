@@ -125,8 +125,8 @@
   id: UplinkEmag
   category: Utility
   itemId: Emag
-  listingName: Eletromagnetic Card
-  description: The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Moderate cooldown between usages.
+  listingName: Electromagnetic Card
+  description: The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
   icon: /Textures/Objects/Tools/emag.rsi/icon.png
   price: 8
 
