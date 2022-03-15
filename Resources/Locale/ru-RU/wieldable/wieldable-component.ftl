@@ -1,7 +1,7 @@
 ### Locale for wielding items; i.e. two-handing them
 
-wieldable-component-successful-wield = Вы привариваете { $item }.
-wieldable-component-failed-wield = Вы отвариваете { $item }.
+wieldable-component-successful-wield = Вы берёте в две руки { $item }.
+wieldable-component-failed-wield = Вы берёте в одну руку { $item }.
 wieldable-component-no-hands = Вам не хватает рук!
 wieldable-component-not-enough-free-hands =
     Чтобы использовать { $item } вам понадобится { $number ->
