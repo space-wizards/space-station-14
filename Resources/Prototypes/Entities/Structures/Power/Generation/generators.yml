@@ -8,10 +8,10 @@
   placement:
     mode: SnapgridCenter
   components:
-  #- type: AmbientSound
-  #  range: 5
-  #  sound:
-  #    path: /Audio/Ambience/Objects/engine_hum.ogg
+  - type: AmbientSound
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/engine_hum.ogg
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -231,7 +231,7 @@
   id: GeneratorRTG
   name: RTG
   description: A Radioisotope Thermoelectric Generator for long term power.
-  suffix: 20kW
+  suffix: 10kW
   components:
   - type: PowerSupplier
     supplyRate: 10000 # supposed to be low power at no fuel cost to power derelicts
@@ -245,7 +245,7 @@
   id: GeneratorRTGDamaged
   name: damaged RTG
   description: A Radioisotope Thermoelectric Generator for long term power. This one has damaged shielding.
-  suffix: 20kW
+  suffix: 10kW
   components:
   - type: PowerSupplier
     supplyRate: 10000
