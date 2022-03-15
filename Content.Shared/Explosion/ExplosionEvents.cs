@@ -45,6 +45,8 @@ public sealed class ExplosionEvent : EntityEventArgs
 
     public int ExplosionId;
 
+    public ushort SpaceTileSize;
+
     public ExplosionEvent(
         int explosionId,
         MapCoordinates epicenter,
@@ -52,7 +54,8 @@ public sealed class ExplosionEvent : EntityEventArgs
         List<float> intensity,
         Dictionary<int, List<Vector2i>>? spaceTiles,
         Dictionary<GridId, Dictionary<int, List<Vector2i>>> tiles,
-        Matrix3 spaceMatrix)
+        Matrix3 spaceMatrix,
+        ushort spaceTileSize)
     {
         Epicenter = epicenter;
         SpaceTiles = spaceTiles;
@@ -61,6 +64,7 @@ public sealed class ExplosionEvent : EntityEventArgs
         TypeID = typeID;
         SpaceMatrix = spaceMatrix;
         ExplosionId = explosionId;
+        SpaceTileSize = spaceTileSize;
     }
 }
 

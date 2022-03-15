@@ -151,6 +151,7 @@ internal sealed class Explosion
     public EntityUid LightEntity;
     public MapId Map;
     public int Explosionid;
+    public ushort SpaceTileSize;
 
     public Matrix3 SpaceMatrix;
 
@@ -177,6 +178,7 @@ internal sealed class Explosion
         Explosionid = args.ExplosionId;
         FireColor = type.FireColor;
         LightEntity = lightEntity;
+        SpaceTileSize = args.SpaceTileSize;
 
         var fireRsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(type.TexturePath).RSI;
         foreach (var state in fireRsi)

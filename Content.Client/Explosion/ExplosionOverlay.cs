@@ -30,6 +30,7 @@ public sealed class ExplosionOverlay : Overlay
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IEntityManager _entMan = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
@@ -51,34 +52,37 @@ public sealed class ExplosionOverlay : Overlay
         var drawHandle = args.WorldHandle;
         drawHandle.UseShader(_shader);
 
-        if (ActiveExplosion != null)
+        var xforms = _entMan.GetEntityQuery<TransformComponent>();
+
+        if (ActiveExplosion != null && ActiveExplosion.Map == args.Viewport.Eye?.Position.MapId)
         {
-            DrawExplosion(drawHandle, args.WorldBounds, ActiveExplosion, Index);
+            DrawExplosion(drawHandle, args.WorldBounds, ActiveExplosion, Index, xforms);
         }
 
         foreach (var exp in CompletedExplosions)
         {
-            DrawExplosion(drawHandle, args.WorldBounds, exp, exp.Intensity.Count);
+            if (exp.Map == args.Viewport.Eye?.Position.MapId)
+                DrawExplosion(drawHandle, args.WorldBounds, exp, exp.Intensity.Count, xforms);
         }
 
         drawHandle.SetTransform(Matrix3.Identity);
     }
 
-    private void DrawExplosion(DrawingHandleWorld drawHandle, Box2Rotated worldBounds, Explosion exp, int index)
+    private void DrawExplosion(DrawingHandleWorld drawHandle, Box2Rotated worldBounds, Explosion exp, int index, EntityQuery<TransformComponent> xforms)
     {
-        if (exp.Map != _eyeManager.CurrentMap)
-            return;
-
         Box2 gridBounds;
         foreach (var (gridId, tiles) in exp.Tiles)
         {
             if (!_mapManager.TryGetGrid(gridId, out var grid))
                 continue;
 
-            gridBounds = grid.InvWorldMatrix.TransformBox(worldBounds);
-            drawHandle.SetTransform(grid.WorldMatrix);
+            var xform = xforms.GetComponent(grid.GridEntityId);
+            var (_, _, worldMatrix, invWorldMatrix) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 
-            DrawTiles(drawHandle, gridBounds, index, tiles, exp);
+            gridBounds = invWorldMatrix.TransformBox(worldBounds);
+            drawHandle.SetTransform(worldMatrix);
+
+            DrawTiles(drawHandle, gridBounds, index, tiles, exp, grid.TileSize);
         }
 
         if (exp.SpaceTiles == null)
@@ -87,7 +91,7 @@ public sealed class ExplosionOverlay : Overlay
         gridBounds = Matrix3.Invert(exp.SpaceMatrix).TransformBox(worldBounds);
         drawHandle.SetTransform(exp.SpaceMatrix);
         
-        DrawTiles(drawHandle, gridBounds, index, exp.SpaceTiles, exp);
+        DrawTiles(drawHandle, gridBounds, index, exp.SpaceTiles, exp, exp.SpaceTileSize);
     }
 
     private void DrawTiles(
@@ -95,7 +99,8 @@ public sealed class ExplosionOverlay : Overlay
         Box2 gridBounds,
         int index,
         Dictionary<int, List<Vector2i>> tileSets,
-        Explosion exp)
+        Explosion exp,
+        ushort tileSize)
     {
         for (var j = 0; j < index; j++)
         {
@@ -107,13 +112,13 @@ public sealed class ExplosionOverlay : Overlay
 
             foreach (var tile in tiles)
             {
-                Vector2 bottomLeft = (tile.X, tile.Y);
+                Vector2 centre = ((Vector2) tile + 0.5f) * tileSize;
 
-                if (!gridBounds.Contains((bottomLeft + 0.5f) * 1f))
+                if (!gridBounds.Contains(centre))
                     continue;
 
                 var texture = _robustRandom.Pick(frames);
-                drawHandle.DrawTexture(texture, bottomLeft, exp.FireColor);
+                drawHandle.DrawTextureRect(texture, Box2.CenteredAround(centre, (tileSize, tileSize)), exp.FireColor);
             }
         }
     }

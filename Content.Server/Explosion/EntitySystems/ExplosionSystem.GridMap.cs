@@ -44,13 +44,13 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     Take our map of grid edges, where each is defHined in their own grid's reference frame, and map those
     ///     edges all onto one grids reference frame.
     /// </summary>
-    public (Dictionary<Vector2i, BlockedSpaceTile>, float) TransformGridEdges(MapId targetMap, GridId? referenceGrid, List<GridId> localGrids)
+    public (Dictionary<Vector2i, BlockedSpaceTile>, ushort) TransformGridEdges(MapId targetMap, GridId? referenceGrid, List<GridId> localGrids)
     {
         Dictionary<Vector2i, BlockedSpaceTile> transformedEdges = new();
 
         var targetMatrix = Matrix3.Identity;
         Angle targetAngle = new();
-        var tileSize = (float) DefaultTileSize;
+        var tileSize = DefaultTileSize;
 
         // if the explosion is centered on some grid (and not just space), get the transforms.
         if (referenceGrid != null)
@@ -59,12 +59,12 @@ public sealed partial class ExplosionSystem : EntitySystem
             var xform = Transform(targetGrid.GridEntityId);
             targetAngle = xform.WorldRotation;
             targetMatrix = xform.InvWorldMatrix;
-            tileSize = (float) targetGrid.TileSize;
+            tileSize = targetGrid.TileSize;
         }
 
         var offsetMatrix = Matrix3.Identity;
-        offsetMatrix.R0C2 = tileSize / 2;
-        offsetMatrix.R1C2 = tileSize / 2;
+        offsetMatrix.R0C2 = tileSize / 2f;
+        offsetMatrix.R1C2 = tileSize / 2f;
 
         // Here we can end up with a triple nested for loop:
         // foreach other grid
@@ -95,7 +95,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             var matrix = offsetMatrix * xform.WorldMatrix * targetMatrix;
             var angle = xform.WorldRotation - targetAngle;
 
-            var (x, y) = angle.RotateVec((tileSize / 4, tileSize / 4));
+            var (x, y) = angle.RotateVec((tileSize / 4f, tileSize / 4f));
 
             foreach (var (tile, dir) in edges)
             {
@@ -186,19 +186,19 @@ public sealed partial class ExplosionSystem : EntitySystem
                 }
 
                 // check north
-                if (edge.Box.Contains(tileCenter + (0, tileSize / 2)))
+                if (edge.Box.Contains(tileCenter + (0, tileSize / 2f)))
                     data.UnblockedDirections &= ~AtmosDirection.North;
 
                 // check south
-                if (edge.Box.Contains(tileCenter + (0, -tileSize / 2)))
+                if (edge.Box.Contains(tileCenter + (0, -tileSize / 2f)))
                     data.UnblockedDirections &= ~AtmosDirection.South;
 
                 // check east
-                if (edge.Box.Contains(tileCenter + (tileSize / 2, 0)))
+                if (edge.Box.Contains(tileCenter + (tileSize / 2f, 0)))
                     data.UnblockedDirections &= ~AtmosDirection.East;
 
                 // check west
-                if (edge.Box.Contains(tileCenter + (-tileSize / 2, 0)))
+                if (edge.Box.Contains(tileCenter + (-tileSize / 2f, 0)))
                     data.UnblockedDirections &= ~AtmosDirection.West;
             }
         }

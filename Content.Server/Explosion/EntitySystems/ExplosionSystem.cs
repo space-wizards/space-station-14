@@ -247,7 +247,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             tileLists.Add(grid.Grid.Index, grid.TileLists);
         }
 
-        return new ExplosionEvent(_explosionCounter, epicenter, id, iterationIntensity, spaceTiles, tileLists, spaceMatrix);
+        return new ExplosionEvent(_explosionCounter, epicenter, id, iterationIntensity, spaceTiles, tileLists, spaceMatrix, spaceData?.TileSize ?? DefaultTileSize);
     }
 
     private void CameraShake(float range, MapCoordinates epicenter, float totalIntensity)

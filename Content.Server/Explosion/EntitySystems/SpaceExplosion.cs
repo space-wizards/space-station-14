@@ -18,10 +18,12 @@ public sealed class SpaceExplosion : TileExplosion
     /// </summary>
     public Dictionary<GridId, HashSet<Vector2i>> GridJump = new();
 
+    public ushort TileSize = ExplosionSystem.DefaultTileSize;
+
     public SpaceExplosion(ExplosionSystem system, MapId targetMap, GridId? referenceGrid, List<GridId> localGrids)
     {
-        (_gridBlockMap, var tileSize) = system.TransformGridEdges(targetMap, referenceGrid, localGrids);
-        system.GetUnblockedDirections(_gridBlockMap, tileSize);
+        (_gridBlockMap, TileSize) = system.TransformGridEdges(targetMap, referenceGrid, localGrids);
+        system.GetUnblockedDirections(_gridBlockMap, TileSize);
     }
 
     public int AddNewTiles(int iteration, HashSet<Vector2i> inputSpaceTiles)

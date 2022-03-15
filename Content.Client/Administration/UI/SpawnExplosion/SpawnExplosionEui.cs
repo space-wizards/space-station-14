@@ -71,5 +71,6 @@ public sealed class SpawnExplosionEui : BaseEui
         _debugOverlay.TotalIntensity = data.TotalIntensity;
         _debugOverlay.Map = data.Explosion.Epicenter.MapId;
         _debugOverlay.SpaceMatrix = data.Explosion.SpaceMatrix;
+        _debugOverlay.SpaceTileSize = data.Explosion.SpaceTileSize;
     }
 }

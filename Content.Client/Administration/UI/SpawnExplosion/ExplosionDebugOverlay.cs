@@ -19,6 +19,7 @@ public sealed class ExplosionDebugOverlay : Overlay
     public List<float> Intensity = new();
     public float TotalIntensity;
     public float Slope;
+    public ushort SpaceTileSize;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace | OverlaySpace.ScreenSpace;
 
@@ -37,7 +38,7 @@ public sealed class ExplosionDebugOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (Map != _eyeManager.CurrentMap)
+        if (Map != args.Viewport.Eye?.Position.MapId)
             return;
 
         if (Tiles.Count == 0 && SpaceTiles == null)
@@ -58,16 +59,17 @@ public sealed class ExplosionDebugOverlay : Overlay
     {
         var handle = args.ScreenHandle;
         Box2 gridBounds;
+        var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
 
         foreach (var (gridId, tileSets) in Tiles)
         {
             if (!_mapManager.TryGetGrid(gridId, out var grid))
                 continue;
 
-            var gridXform = _entityManager.GetComponent<TransformComponent>(grid.GridEntityId);
-            gridBounds = gridXform.InvWorldMatrix.TransformBox(args.WorldBounds);
-
-            DrawText(handle, gridBounds, gridXform.WorldMatrix, tileSets);
+            var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+            var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
+            gridBounds = invMatrix.TransformBox(args.WorldBounds);
+            DrawText(handle, gridBounds, matrix, tileSets, grid.TileSize);
         }
 
         if (SpaceTiles == null)
@@ -75,14 +77,15 @@ public sealed class ExplosionDebugOverlay : Overlay
 
         gridBounds = Matrix3.Invert(SpaceMatrix).TransformBox(args.WorldBounds);
 
-        DrawText(handle, gridBounds, SpaceMatrix, SpaceTiles);
+        DrawText(handle, gridBounds, SpaceMatrix, SpaceTiles, SpaceTileSize);
     }
 
     private void DrawText(
         DrawingHandleScreen handle,
         Box2 gridBounds,
         Matrix3 transform,
-        Dictionary<int, List<Vector2i>> tileSets)
+        Dictionary<int, List<Vector2i>> tileSets,
+        ushort tileSize)
     {
         for (var i = 1; i < Intensity.Count; i++)
         {
@@ -91,11 +94,13 @@ public sealed class ExplosionDebugOverlay : Overlay
 
             foreach (var tile in tiles)
             {
+                var centre = ((Vector2) tile + 0.5f) * tileSize;
+
                 // is the center of this tile visible to the user?
-                if (!gridBounds.Contains((Vector2) tile + 0.5f))
+                if (!gridBounds.Contains(centre))
                     continue;
 
-                var worldCenter = transform.Transform((Vector2) tile + 0.5f);
+                var worldCenter = transform.Transform(centre);
 
                 var screenCenter = _eyeManager.WorldToScreen(worldCenter);
 
@@ -111,7 +116,7 @@ public sealed class ExplosionDebugOverlay : Overlay
         if (tileSets.ContainsKey(0))
         {
             var epicenter = tileSets[0].First();
-            var worldCenter = transform.Transform((Vector2) epicenter + 0.5f);
+            var worldCenter = transform.Transform(((Vector2) epicenter + 0.5f) * tileSize);
             var screenCenter = _eyeManager.WorldToScreen(worldCenter) + (-24, -24);
             var text = $"{Intensity![0]:F2}\nΣ={TotalIntensity:F1}\nΔ={Slope:F1}";
             handle.DrawString(_font, screenCenter, text);
@@ -122,17 +127,18 @@ public sealed class ExplosionDebugOverlay : Overlay
     {
         var handle = args.WorldHandle;
         Box2 gridBounds;
+        var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
 
         foreach (var (gridId, tileSets) in Tiles)
         {
             if (!_mapManager.TryGetGrid(gridId, out var grid))
                 continue;
 
-            var gridXform = _entityManager.GetComponent<TransformComponent>(grid.GridEntityId);
-            handle.SetTransform(gridXform.WorldMatrix);
-            gridBounds = gridXform.InvWorldMatrix.TransformBox(args.WorldBounds);
-
-            DrawTiles(handle, gridBounds, tileSets);
+            var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+            var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
+            gridBounds = invWorldMatrix.TransformBox(args.WorldBounds);
+            handle.SetTransform(worldMatrix);
+            DrawTiles(handle, gridBounds, tileSets, SpaceTileSize);
         }
 
         if (SpaceTiles == null)
@@ -141,13 +147,14 @@ public sealed class ExplosionDebugOverlay : Overlay
         gridBounds = Matrix3.Invert(SpaceMatrix).TransformBox(args.WorldBounds);
         handle.SetTransform(SpaceMatrix);
 
-        DrawTiles(handle, gridBounds, SpaceTiles);
+        DrawTiles(handle, gridBounds, SpaceTiles, SpaceTileSize);
     }
 
     private void DrawTiles(
         DrawingHandleWorld handle,
         Box2 gridBounds,
-        Dictionary<int, List<Vector2i>> tileSets)
+        Dictionary<int, List<Vector2i>> tileSets,
+        ushort tileSize)
     {
         for (var i = 0; i < Intensity.Count; i++)
         {
@@ -161,11 +168,13 @@ public sealed class ExplosionDebugOverlay : Overlay
 
             foreach (var tile in tiles)
             {
+                var centre = ((Vector2) tile + 0.5f) * tileSize;
+
                 // is the center of this tile visible to the user?
-                if (!gridBounds.Contains((Vector2) tile + 0.5f))
+                if (!gridBounds.Contains(centre))
                     continue;
 
-                var box = Box2.UnitCentered.Translated((Vector2) tile + 0.5f);
+                var box = Box2.UnitCentered.Translated(centre);
                 handle.DrawRect(box, color, false);
                 handle.DrawRect(box, colorTransparent);
             }
