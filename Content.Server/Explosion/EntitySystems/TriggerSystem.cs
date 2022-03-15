@@ -9,11 +9,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Timer = Robust.Shared.Timing.Timer;
-using Content.Shared.Payload.Components;
-using Content.Shared.Chemistry.Components;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Shared.Database;
 using Content.Shared.Sound;
 using Content.Shared.Trigger;
 
@@ -42,7 +37,6 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly FlashSystem _flashSystem = default!;
         [Dependency] private readonly DoorSystem _sharedDoorSystem = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         public override void Initialize()
@@ -58,42 +52,6 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
             SubscribeLocalEvent<ToggleDoorOnTriggerComponent, TriggerEvent>(HandleDoorTrigger);
-            SubscribeLocalEvent<ChemicalPayloadComponent, TriggerEvent>(HandleChemichalPayloadTrigger);
-        }
-
-        private void HandleChemichalPayloadTrigger(EntityUid uid, ChemicalPayloadComponent component, TriggerEvent args)
-        {
-            if (component.BeakerSlotA.Item is not EntityUid beakerA)
-                return;
-
-            if (component.BeakerSlotB.Item is not EntityUid beakerB)
-                return;
-
-            if (!TryComp(beakerA, out FitsInDispenserComponent? compA))
-                return;
-
-            if (!TryComp(beakerB, out FitsInDispenserComponent? compB))
-                return;
-
-            if (!_solutionSystem.TryGetSolution(beakerA, compA.Solution, out var solutionA))
-                return;
-
-            if (!_solutionSystem.TryGetSolution(beakerB, compB.Solution, out var solutionB))
-                return;
-
-            if (solutionA.TotalVolume == 0 || solutionB.TotalVolume == 0)
-                return;
-
-            var solStringA = SolutionContainerSystem.ToPrettyString(solutionA);
-            var solStringB = SolutionContainerSystem.ToPrettyString(solutionB);
-
-            _logSystem.Add(LogType.ChemicalReaction,
-                $"Chemical bomb payload {ToPrettyString(uid):payload} at {Transform(uid).MapPosition:location} is combining two solutions: {solStringA:solutionA} and {solStringB:solutionB}");
-
-            // entity will be deleted anyway, just modify the max volume instead of creating a new solution.
-            solutionA.MaxVolume = Shared.FixedPoint.FixedPoint2.MaxValue;
-            solutionA.CanReact = true;
-            _solutionSystem.TryAddSolution(component.BeakerSlotA.Item!.Value, solutionA, solutionB);
         }
 
         #region Explosions

@@ -1,4 +1,10 @@
+using Content.Server.Administration.Logs;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Content.Shared.Payload.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
@@ -7,9 +13,12 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Payload.EntitySystems;
 
-public sealed class PayloadCaseSystem : EntitySystem
+public sealed class PayloadSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
+    [Dependency] private readonly AdminLogSystem _logSystem = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
 
@@ -21,6 +30,7 @@ public sealed class PayloadCaseSystem : EntitySystem
         SubscribeLocalEvent<PayloadTriggerComponent, TriggerEvent>(OnTriggerTriggered);
         SubscribeLocalEvent<PayloadCaseComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
         SubscribeLocalEvent<PayloadCaseComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
+        SubscribeLocalEvent<ChemicalPayloadComponent, TriggerEvent>(HandleChemichalPayloadTrigger);
     }
 
     private void OnCaseTriggered(EntityUid uid, PayloadCaseComponent component, TriggerEvent args)
@@ -97,5 +107,45 @@ public sealed class PayloadCaseSystem : EntitySystem
         }
 
         trigger.GrantedComponents.Clear();
+    }
+
+    private void HandleChemichalPayloadTrigger(EntityUid uid, ChemicalPayloadComponent component, TriggerEvent args)
+    {
+        if (component.BeakerSlotA.Item is not EntityUid beakerA)
+            return;
+
+        if (component.BeakerSlotB.Item is not EntityUid beakerB)
+            return;
+
+        if (!TryComp(beakerA, out FitsInDispenserComponent? compA))
+            return;
+
+        if (!TryComp(beakerB, out FitsInDispenserComponent? compB))
+            return;
+
+        if (!_solutionSystem.TryGetSolution(beakerA, compA.Solution, out var solutionA))
+            return;
+
+        if (!_solutionSystem.TryGetSolution(beakerB, compB.Solution, out var solutionB))
+            return;
+
+        if (solutionA.TotalVolume == 0 || solutionB.TotalVolume == 0)
+            return;
+
+        var solStringA = SolutionContainerSystem.ToPrettyString(solutionA);
+        var solStringB = SolutionContainerSystem.ToPrettyString(solutionB);
+
+        _logSystem.Add(LogType.ChemicalReaction,
+            $"Chemical bomb payload {ToPrettyString(uid):payload} at {Transform(uid).MapPosition:location} is combining two solutions: {solStringA:solutionA} and {solStringB:solutionB}");
+
+        solutionA.MaxVolume += solutionB.MaxVolume;
+        _solutionSystem.TryAddSolution(beakerA, solutionA, solutionB);
+        solutionB.RemoveAllSolution();
+
+        // The grenade might be a dud. Redistribute solution:
+        var tmpSol = _solutionSystem.SplitSolution(beakerA, solutionA, solutionA.CurrentVolume * solutionB.MaxVolume / solutionA.MaxVolume);
+        _solutionSystem.TryAddSolution(beakerB, solutionB, tmpSol);
+        solutionA.MaxVolume -= solutionB.MaxVolume;
+        _solutionSystem.UpdateChemicals(beakerA, solutionA, false);
     }
 }
