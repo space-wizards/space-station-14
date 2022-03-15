@@ -116,6 +116,8 @@
     - ChemMasterMachineCircuitboard
     - ChemDispenserMachineCircuitboard
     - CrewMonitoringComputerCircuitboard
+    - VaccinatorMachineCircuitboard
+    - DiagnoserMachineCircuitboard
     - HandheldCrewMonitor
 
 # Security Technology Tree
@@ -247,6 +249,7 @@
     - AutolatheMachineCircuitboard
     - ProtolatheMachineCircuitboard
     - CircuitImprinterMachineCircuitboard
+    - UniformPrinterMachineCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
 

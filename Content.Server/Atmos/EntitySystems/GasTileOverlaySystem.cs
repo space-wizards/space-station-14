@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -65,9 +65,9 @@ namespace Content.Server.Atmos.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-            _mapManager.OnGridRemoved += OnGridRemoved;
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.NetGasOverlayTickRate, value => _updateCooldown = value > 0.0f ? 1 / value : float.MaxValue, true);
             configManager.OnValueChanged(CVars.NetMaxUpdateRange, value => _updateRange = value + RangeOffset, true);
@@ -78,7 +78,6 @@ namespace Content.Server.Atmos.EntitySystems
         {
             base.Shutdown();
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
-            _mapManager.OnGridRemoved -= OnGridRemoved;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -112,11 +111,11 @@ namespace Content.Server.Atmos.EntitySystems
             return chunk;
         }
 
-        private void OnGridRemoved(MapId mapId, GridId gridId)
+        private void OnGridRemoved(GridRemovalEvent ev)
         {
-            if (_overlay.ContainsKey(gridId))
+            if (_overlay.ContainsKey(ev.GridId))
             {
-                _overlay.Remove(gridId);
+                _overlay.Remove(ev.GridId);
             }
         }
 

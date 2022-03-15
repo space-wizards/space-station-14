@@ -80,9 +80,8 @@ namespace Content.Client.DragDrop
             _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
             // needs to fire on mouseup and mousedown so we can detect a drag / drop
             CommandBinds.Builder
-                .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false))
+                .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false), new[] { typeof(SharedInteractionSystem) })
                 .Register<DragDropSystem>();
-
         }
 
         public override void Shutdown()
@@ -364,7 +363,7 @@ namespace Content.Client.DragDrop
             // TODO: Duplicated in SpriteSystem and TargetOutlineSystem. Should probably be cached somewhere for a frame?
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
             var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
-            var pvsEntities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.IncludeAnchored);
+            var pvsEntities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.IncludeAnchored);
             foreach (var pvsEntity in pvsEntities)
             {
                 if (!EntityManager.TryGetComponent(pvsEntity, out ISpriteComponent? inRangeSprite) ||

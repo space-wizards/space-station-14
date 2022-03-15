@@ -19,7 +19,7 @@ namespace Content.Server.Nuke
         [Dependency] private readonly NukeCodeSystem _codes = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IChatManager _chat = default!;
 
         public override void Initialize()

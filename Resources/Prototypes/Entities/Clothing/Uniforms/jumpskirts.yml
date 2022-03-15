@@ -89,6 +89,8 @@
     sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
+  - type: DiseaseProtection
+    protection: 0.15
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -199,6 +201,8 @@
     sprite: Clothing/Uniforms/Jumpskirt/medical.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/medical.rsi
+  - type: DiseaseProtection
+    protection: 0.1
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -221,6 +225,8 @@
     sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
+  - type: DiseaseProtection
+    protection: 0.1
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -469,3 +475,14 @@
     sprite: Clothing/Uniforms/Jumpskirt/Color/maroon.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/Color/maroon.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPerformer
+  name: performer's jumpskirt
+  description: Hi, I'm Scott, president of Donk Pizza. Have you heard of [FAMOUS VIRTUAL PERFORMER]?
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/performer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/performer.rsi

@@ -48,6 +48,14 @@ namespace Content.Shared.PDA
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class PDAShowMusicMessage : BoundUserInterfaceMessage
+    {
+        public PDAShowMusicMessage()
+        {
+
+        }
+    }
 
     [Serializable, NetSerializable]
     public sealed class PDARequestUpdateInterfaceMessage : BoundUserInterfaceMessage

@@ -161,6 +161,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/cmo.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cmo.rsi
+  - type: DiseaseProtection
+    protection: 0.15
 
 - type: entity
   parent: ClothingUniformBase
@@ -293,6 +295,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/medical.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/medical.rsi
+  - type: DiseaseProtection
+    protection: 0.1
 
 - type: entity
   parent: ClothingUniformBase
@@ -315,6 +319,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/paramedic.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/paramedic.rsi
+  - type: DiseaseProtection
+    protection: 0.1
 
 - type: entity
   parent: ClothingUniformBase
@@ -618,7 +624,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/librarian.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/librarian.rsi
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerRed
@@ -629,7 +635,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/lawyerred.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/lawyerred.rsi
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerBlue
@@ -640,7 +646,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/lawyerblue.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/lawyerblue.rsi
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerBlack
@@ -651,7 +657,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/lawyerblack.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/lawyerblack.rsi
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerPurple
@@ -662,7 +668,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitPyjamaSyndicateBlack

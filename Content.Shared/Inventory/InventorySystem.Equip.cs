@@ -1,8 +1,7 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.EntitySystems;
@@ -10,9 +9,6 @@ using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -34,6 +30,39 @@ public abstract partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
 
         SubscribeAllEvent<UseSlotNetworkMessage>(OnUseSlot);
+    }
+
+    protected void QuickEquip(EntityUid uid, SharedItemComponent component, UseInHandEvent args)
+    {
+        if (!TryComp(args.User, out InventoryComponent? inv)
+            || !TryComp(args.User, out SharedHandsComponent? hands)
+            || !_prototypeManager.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var prototype))
+            return;
+
+        foreach (var slotDef in prototype.Slots)
+        {
+            if (!CanEquip(args.User, uid, slotDef.Name, out _, slotDef, inv))
+                continue;
+
+            if (TryGetSlotEntity(args.User, slotDef.Name, out var slotEntity, inv))
+            {
+                if (!TryUnequip(args.User, slotDef.Name, true, inventory: inv))
+                    continue;
+
+                if (!TryEquip(args.User, uid, slotDef.Name, true, inventory: inv))
+                    continue;
+
+                hands.PutInHandOrDrop(slotEntity.Value);
+            }
+            else
+            {
+                if (!TryEquip(args.User, uid, slotDef.Name, true, inventory: inv))
+                    continue;
+            }
+
+            args.Handled = true;
+            break;
+        }
     }
 
     private void OnEntRemoved(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)

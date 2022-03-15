@@ -55,14 +55,11 @@ namespace Content.MapRenderer.Painters
                 return;
             }
 
-            if (!_decals.TryGetValue(grid.Index, out var decals))
-            {
-                Console.WriteLine($"No decals found on grid {grid.Index}");
-                return;
-            }
+            // Decals are always painted before entities, and are also optional.
+            if (_decals.TryGetValue(grid.Index, out var decals))
+                _decalPainter.Run(gridCanvas, decals);
 
-            // Decals are always painted before entities.
-            _decalPainter.Run(gridCanvas, decals);
+
             _entityPainter.Run(gridCanvas, entities);
             Console.WriteLine($"{nameof(GridPainter)} painted grid {grid.Index} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }

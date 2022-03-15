@@ -1,20 +1,24 @@
 using Content.Shared.Drone;
 using Content.Server.Drone.Components;
+using Content.Shared.Actions;
+using Content.Server.Light.Components;
 using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Examine;
-using Content.Server.Popups;
-using Content.Server.Mind.Components;
-using Content.Server.Ghost.Roles.Components;
-using Content.Server.Hands.Components;
-using Content.Shared.Body.Components;
-using Content.Server.UserInterface;
-using Content.Shared.Emoting;
-using Robust.Shared.Player;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
+using Content.Shared.Item;
+using Content.Shared.Emoting;
+using Content.Shared.Body.Components;
+using Content.Server.Popups;
+using Content.Server.Mind.Components;
+using Content.Server.Ghost.Components;
+using Content.Server.Ghost.Roles.Components;
+using Content.Server.Hands.Components;
+using Content.Server.UserInterface;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Drone
 {
@@ -22,6 +26,10 @@ namespace Content.Server.Drone
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -37,15 +45,26 @@ namespace Content.Server.Drone
 
         private void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
         {
-            if (HasComp<MobStateComponent>(args.Target) && !HasComp<DroneComponent>(args.Target))
-            {
+            if (!component.ApplyLaws)
+                return;
+            if (args.Target != null && !HasComp<UnremoveableComponent>(args.Target) && NonDronesInRange(uid, component))
                 args.Cancel();
+
+            if (HasComp<SharedItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
+            {
+                if (!_tagSystem.HasAnyTag(args.Target.Value, "DroneUsable", "Trash"))
+                    args.Cancel();
             }
         }
 
         private void OnActivateUIAttempt(EntityUid uid, DroneComponent component, UserOpenActivatableUIAttemptEvent args)
         {
-            args.Cancel();
+            if (!component.ApplyLaws)
+                return;
+            if (!_tagSystem.HasTag(args.Target, "DroneUsable"))
+            {
+                args.Cancel();
+            }
         }
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)
@@ -81,7 +100,6 @@ namespace Content.Server.Drone
         private void OnMindAdded(EntityUid uid, DroneComponent drone, MindAddedMessage args)
         {
             UpdateDroneAppearance(uid, DroneStatus.On);
-            _tagSystem.AddTag(uid, "DoorBumpOpener");
             _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid, Filter.Pvs(uid));
 
             if (drone.AlreadyAwoken == false)
@@ -101,6 +119,11 @@ namespace Content.Server.Drone
                     }
                 }
 
+                if (TryComp<ActionsComponent>(uid, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
+                {
+                    _actionsSystem.AddAction(uid, flashlight.ToggleAction, null, actions);
+                }
+
                 drone.AlreadyAwoken = true;
             }
         }
@@ -108,7 +131,6 @@ namespace Content.Server.Drone
         private void OnMindRemoved(EntityUid uid, DroneComponent drone, MindRemovedMessage args)
         {
             UpdateDroneAppearance(uid, DroneStatus.Off);
-            _tagSystem.RemoveTag(uid, "DoorBumpOpener");
             EnsureComp<GhostTakeoverAvailableComponent>(uid);
         }
 
@@ -129,6 +151,21 @@ namespace Content.Server.Drone
             {
                 appearance.SetData(DroneVisuals.Status, status);
             }
+        }
+
+        private bool NonDronesInRange(EntityUid uid, DroneComponent component)
+        {
+            var xform = Comp<TransformComponent>(uid);
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, component.InteractionBlockRange))
+            {
+                if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
+                {
+                    if (_gameTiming.IsFirstTimePredicted)
+                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", entity)), uid, Filter.Entities(uid));
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
