@@ -43,10 +43,12 @@ namespace Content.Server.Traitor.Uplink.Telecrystal
             if (!_accounts.AddToBalance(acc, tcCount))
                 return;
 
-            EntityManager.DeleteEntity(uid);
+            var msg = Loc.GetString("telecrystal-component-sucs-inserted",
+            ("source", args.Used), ("target", args.Target));
 
-            var msg = Loc.GetString("telecrystal-component-sucs-inserted");
             args.User.PopupMessage(args.User, msg);
+
+            EntityManager.DeleteEntity(uid);
 
             args.Handled = true;
         }
