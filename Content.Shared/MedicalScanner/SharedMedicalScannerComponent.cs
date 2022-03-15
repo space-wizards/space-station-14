@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Body.Components;
-using Content.Shared.Damage;
 using Content.Shared.DragDrop;
-using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MedicalScanner
@@ -15,25 +9,11 @@ namespace Content.Shared.MedicalScanner
         [Serializable, NetSerializable]
         public sealed class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly EntityUid? Entity;
-            public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup;
-            public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerType;
-            public readonly bool IsScanned;
+            public readonly bool IsScannable;
 
-            public MedicalScannerBoundUserInterfaceState(
-                EntityUid? entity,
-                DamageableComponent? damageable,
-                bool isScanned)
+            public MedicalScannerBoundUserInterfaceState(bool isScannable)
             {
-                Entity = entity;
-                DamagePerGroup = damageable?.DamagePerGroup ?? new();
-                DamagePerType = damageable?.Damage?.DamageDict ?? new();
-                IsScanned = isScanned;
-            }
-
-            public bool HasDamage()
-            {
-                return DamagePerType.Count > 0;
+                IsScannable = isScannable;
             }
         }
 
@@ -61,20 +41,8 @@ namespace Content.Shared.MedicalScanner
         }
 
         [Serializable, NetSerializable]
-        public enum UiButton
+        public sealed class ScanButtonPressedMessage : BoundUserInterfaceMessage
         {
-            ScanDNA,
-        }
-
-        [Serializable, NetSerializable]
-        public sealed class UiButtonPressedMessage : BoundUserInterfaceMessage
-        {
-            public readonly UiButton Button;
-
-            public UiButtonPressedMessage(UiButton button)
-            {
-                Button = button;
-            }
         }
 
         public bool CanInsert(EntityUid entity)

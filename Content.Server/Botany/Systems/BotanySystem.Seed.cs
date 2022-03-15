@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Botany.Components;
 using Content.Server.Kitchen.Components;
+using Content.Shared.Botany;
 using Content.Shared.Examine;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
@@ -123,6 +124,11 @@ public sealed partial class BotanySystem
 
             produce.SeedName = proto.ID;
             ProduceGrown(entity, produce);
+
+            if (TryComp<AppearanceComponent>(entity, out var appearance))
+            {
+                appearance.SetData(ProduceVisuals.Potency, proto.Potency);
+            }
 
             if (proto.Mysterious)
             {

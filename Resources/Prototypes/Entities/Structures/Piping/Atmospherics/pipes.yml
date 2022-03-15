@@ -65,6 +65,12 @@
   - type: Tag
     tags:
     - Pipe
+  - type: AmbientSound
+    enabled: true
+    volume: -15
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/gas_hiss.ogg
 
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 

@@ -6,23 +6,29 @@
     "x": 32,
     "y": 32
   },
-  "states": [
-    {
-      "name": "icon"
-    },
-    {
-      "name": "base"
-    },
-    {
-      "name": "mag-0"
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    }
-  ]
+    "states": [
+       {
+         "name": "icon"
+       },
+       {
+         "name": "base"
+       },
+       {
+         "name": "bolt-closed"
+       },
+       {
+          "name": "bolt-open"
+       },
+       {
+          "name": "mag-0"
+       },
+       {
+          "name": "inhand-left",
+          "directions": 4
+       },
+       {
+          "name": "inhand-right",
+          "directions": 4
+       }
+    ]
 }

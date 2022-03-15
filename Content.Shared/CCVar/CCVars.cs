@@ -31,13 +31,13 @@ namespace Content.Shared.CCVar
         /// How long we'll wait until re-sampling nearby objects for ambience.
         /// </summary>
         public static readonly CVarDef<float> AmbientCooldown =
-            CVarDef.Create("ambience.cooldown", 0.5f, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.cooldown", 0.1f, CVar.REPLICATED | CVar.SERVER);
 
         public static readonly CVarDef<float> AmbientRange =
             CVarDef.Create("ambience.range", 5f, CVar.REPLICATED | CVar.SERVER);
 
         public static readonly CVarDef<int> MaxAmbientSources =
-            CVarDef.Create("ambience.max_sounds", 6, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.max_sounds", 64, CVar.REPLICATED | CVar.SERVER);
 
         /*
          * Status
@@ -60,6 +60,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool>
             EventsEnabled = CVarDef.Create("events.enabled", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Disables most functionality in the GameTicker.
+        /// </summary>
         public static readonly CVarDef<bool>
             GameDummyTicker = CVarDef.Create("game.dummyticker", false, CVar.ARCHIVE | CVar.SERVERONLY);
 
@@ -154,6 +157,15 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> SoftMaxPlayers =
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
 
+#if EXCEPTION_TOLERANCE
+        /// <summary>
+        ///     Amount of times round start must fail before the server is shut down.
+        ///     Set to 0 or a negative number to disable.
+        /// </summary>
+        public static readonly CVarDef<int> RoundStartFailShutdownCount =
+            CVarDef.Create("game.round_start_fail_shutdown_count", 5, CVar.SERVERONLY | CVar.SERVER);
+#endif
+
         /*
          * Discord
          */
@@ -229,6 +241,24 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<string> DatabaseSqliteDbPath =
             CVarDef.Create("database.sqlite_dbpath", "preferences.db", CVar.SERVERONLY);
+
+        /// <summary>
+        /// Milliseconds to asynchronously delay all SQLite database acquisitions with.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to 1 on DEBUG, 0 on RELEASE.
+        /// This is intended to help catch .Result deadlock bugs that only happen on postgres
+        /// (because SQLite is not actually asynchronous normally)
+        /// </remarks>
+        public static readonly CVarDef<int> DatabaseSqliteDelay =
+            CVarDef.Create("database.sqlite_delay", DefaultSqliteDelay, CVar.SERVERONLY);
+
+#if DEBUG
+        private const int DefaultSqliteDelay = 1;
+#else
+        private const int DefaultSqliteDelay = 0;
+#endif
+
 
         public static readonly CVarDef<string> DatabasePgHost =
             CVarDef.Create("database.pg_host", "localhost", CVar.SERVERONLY);
@@ -370,6 +400,9 @@ namespace Content.Shared.CCVar
         // How many logs to send to the client at once
         public static readonly CVarDef<int> AdminLogsClientBatchSize =
             CVarDef.Create("adminlogs.client_batch_size", 1000, CVar.SERVERONLY);
+
+        public static readonly CVarDef<string> AdminLogsServerName =
+            CVarDef.Create("adminlogs.server_name", "unknown", CVar.SERVERONLY);
 
         /*
          * Atmos
@@ -579,9 +612,24 @@ namespace Content.Shared.CCVar
         /*
          * Shuttles
          */
-        // Once cruising actually gets implemented I'd likely drop this speed to 3 maybe.
-        public static readonly CVarDef<float> ShuttleDockSpeedCap =
-            CVarDef.Create("shuttle.dock_speed_cap", 5f, CVar.SERVERONLY);
+        public static readonly CVarDef<float> ShuttleMaxLinearSpeed =
+            CVarDef.Create("shuttle.max_linear_speed", 13f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularSpeed =
+            CVarDef.Create("shuttle.max_angular_speed", 1.4f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularAcc =
+            CVarDef.Create("shuttle.max_angular_acc", 2f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularMomentum =
+            CVarDef.Create("shuttle.max_angular_momentum", 60000f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleIdleLinearDamping =
+            CVarDef.Create("shuttle.idle_linear_damping", 50f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleIdleAngularDamping =
+            CVarDef.Create("shuttle.idle_angular_damping", 100f, CVar.SERVERONLY);
+
 
         /*
          * VIEWPORT

@@ -234,10 +234,15 @@ namespace Content.Server.Construction
                 return null;
             }
 
-            var newEntity = EntityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, EntityManager.GetComponent<TransformComponent>(user).Coordinates);
+            var newEntityProto = graph.Nodes[edge.Target].Entity;
+            var newEntity = EntityManager.SpawnEntity(newEntityProto, EntityManager.GetComponent<TransformComponent>(user).Coordinates);
 
-            // Yes, this should throw if it's missing the component.
-            var construction = EntityManager.GetComponent<ConstructionComponent>(newEntity);
+            if (!TryComp(newEntity, out ConstructionComponent? construction))
+            {
+                _sawmill.Error($"Initial construction does not have a valid target entity! It is missing a ConstructionComponent.\nGraph: {graph.ID}, Initial Target: {edge.Target}, Ent. Prototype: {newEntityProto}\nCreated Entity {ToPrettyString(newEntity)} will be deleted.");
+                Del(newEntity); // Screw you, make proper construction graphs.
+                return null;
+            }
 
             // We attempt to set the pathfinding target.
             SetPathfindingTarget(newEntity, targetNode.Name, construction);
