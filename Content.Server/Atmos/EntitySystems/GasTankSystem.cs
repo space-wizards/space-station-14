@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Actions;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -21,6 +22,12 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUIVerb);
             SubscribeLocalEvent<GasTankComponent, GetActionsEvent>(OnGetActions);
             SubscribeLocalEvent<GasTankComponent, ToggleActionEvent>(OnActionToggle);
+            SubscribeLocalEvent<GasTankComponent, DroppedEvent>(OnDropped);
+        }
+
+        private void OnDropped(EntityUid uid, GasTankComponent component, DroppedEvent args)
+        {
+            component.DisconnectFromInternals(args.User);
         }
 
         private void OnGetActions(EntityUid uid, GasTankComponent component, GetActionsEvent args)

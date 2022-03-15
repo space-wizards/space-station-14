@@ -174,13 +174,16 @@
   - type: Clothing
     size: 5
     sprite: Objects/Tools/multitool.rsi
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - Belt
   - type: Tool
     qualities:
       - Pulsing
   - type: SignalLinker
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: power drill
@@ -236,7 +239,7 @@
   - type: Clothing
     size: 20
     sprite: Objects/Tools/rcd.rsi
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - Belt
 

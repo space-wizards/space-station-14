@@ -8,6 +8,9 @@
     - HEAD
   - type: Sprite
     state: icon
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   abstract: true
@@ -45,6 +48,8 @@
   - type: Tag
     tags:
     - HidesHair
+  - type: DiseaseProtection
+    protection: 0.05
 
 - type: entity
   abstract: true

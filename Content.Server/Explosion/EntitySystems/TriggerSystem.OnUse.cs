@@ -1,8 +1,7 @@
 using Content.Server.Explosion.Components;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Trigger;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 

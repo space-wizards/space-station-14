@@ -1,13 +1,7 @@
-﻿using Content.Server.Botany.Components;
-using Content.Shared.Botany;
-using Content.Shared.Chemistry.Components;
+using Content.Server.Botany.Components;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
@@ -24,17 +18,13 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            var chance = MathHelper.Lerp(15f, 150f, plantHolderComp.Seed.Potency) * 3.5f;
-
-            if (random.Prob(chance))
+            if (plantHolderComp.Seed.Potency < 100 && random.Prob(0.1f))
             {
                 plantHolderComp.CheckForDivergence(true);
                 plantHolderComp.Seed.Potency++;
             }
 
-            chance = MathHelper.Lerp(6f, 2f, plantHolderComp.Seed.Yield) * 0.15f;
-
-            if (random.Prob(chance))
+            if (plantHolderComp.Seed.Yield > 1 && random.Prob(0.1f))
             {
                 plantHolderComp.CheckForDivergence(true);
                 plantHolderComp.Seed.Yield--;

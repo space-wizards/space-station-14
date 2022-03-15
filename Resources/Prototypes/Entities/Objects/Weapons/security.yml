@@ -23,7 +23,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunbaton.rsi
     HeldPrefix: off
-    QuickEquip: false
+    quickEquip: false
     size: 20
     Slots:
     - Belt

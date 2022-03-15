@@ -188,7 +188,7 @@
     sprite: Objects/Fun/ducky.rsi
     state: icon
   - type: Clothing
-    QuickEquip: false
+    quickEquip: false
     sprite: Objects/Fun/ducky.rsi
     Slots:
     - HEAD

@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Client.HUD.UI;
 using Content.Client.Inventory;
 using Content.Client.Preferences;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
@@ -23,23 +24,20 @@ namespace Content.Client.Lobby.UI
 {
     public sealed class LobbyCharacterPreviewPanel : Control
     {
-        private readonly IEntityManager _entMan;
-        private readonly IClientPreferencesManager _preferencesManager;
-        private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+
         private EntityUid? _previewDummy;
         private readonly Label _summaryLabel;
         private readonly BoxContainer _loaded;
         private readonly BoxContainer _viewBox;
         private readonly Label _unloaded;
 
-        public LobbyCharacterPreviewPanel(IEntityManager entityManager,
-            IClientPreferencesManager preferencesManager,
-            IPrototypeManager prototypeManager)
+        public LobbyCharacterPreviewPanel()
         {
-            _entMan = entityManager;
-            _preferencesManager = preferencesManager;
-            _prototypeManager = prototypeManager;
-
+            IoCManager.InjectDependencies(this);
             var header = new NanoHeading
             {
                 Text = Loc.GetString("lobby-character-preview-panel-header")
@@ -57,9 +55,6 @@ namespace Content.Client.Lobby.UI
             {
                 Orientation = LayoutOrientation.Vertical
             };
-
-            vBox.AddChild(header);
-
             _unloaded = new Label { Text = Loc.GetString("lobby-character-preview-panel-unloaded-preferences-label") };
 
             _loaded = new BoxContainer
@@ -67,17 +62,18 @@ namespace Content.Client.Lobby.UI
                 Orientation = LayoutOrientation.Vertical,
                 Visible = false
             };
-
-            _loaded.AddChild(CharacterSetupButton);
-            _loaded.AddChild(_summaryLabel);
-
             _viewBox = new BoxContainer
             {
                 Orientation = LayoutOrientation.Horizontal
             };
+            var _vSpacer = new VSpacer();
 
+            _loaded.AddChild(_summaryLabel);
             _loaded.AddChild(_viewBox);
+            _loaded.AddChild(_vSpacer);
+            _loaded.AddChild(CharacterSetupButton);
 
+            vBox.AddChild(header);
             vBox.AddChild(_loaded);
             vBox.AddChild(_unloaded);
             AddChild(vBox);
@@ -95,7 +91,7 @@ namespace Content.Client.Lobby.UI
             _preferencesManager.OnServerDataLoaded -= UpdateUI;
 
             if (!disposing) return;
-            if (_previewDummy != null) _entMan.DeleteEntity(_previewDummy.Value);
+            if (_previewDummy != null) _entityManager.DeleteEntity(_previewDummy.Value);
             _previewDummy = default;
         }
 
@@ -103,7 +99,7 @@ namespace Content.Client.Lobby.UI
         {
             return new()
             {
-                Sprite = _entMan.GetComponent<ISpriteComponent>(entity),
+                Sprite = _entityManager.GetComponent<ISpriteComponent>(entity),
                 OverrideDirection = direction,
                 Scale = (2, 2)
             };
@@ -126,7 +122,7 @@ namespace Content.Client.Lobby.UI
                 }
                 else
                 {
-                    _previewDummy = _entMan.SpawnEntity(_prototypeManager.Index<SpeciesPrototype>(selectedCharacter.Species).DollPrototype, MapCoordinates.Nullspace);
+                    _previewDummy = _entityManager.SpawnEntity(_prototypeManager.Index<SpeciesPrototype>(selectedCharacter.Species).DollPrototype, MapCoordinates.Nullspace);
                     var viewSouth = MakeSpriteView(_previewDummy.Value, Direction.South);
                     var viewNorth = MakeSpriteView(_previewDummy.Value, Direction.North);
                     var viewWest = MakeSpriteView(_previewDummy.Value, Direction.West);

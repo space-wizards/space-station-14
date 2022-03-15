@@ -12,7 +12,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Grenades/grenade.rsi
     size: 5
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - Belt
   - type: OnUseTimerTrigger
@@ -51,7 +51,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Grenades/flashbang.rsi
     size: 5
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - Belt
   - type: OnUseTimerTrigger

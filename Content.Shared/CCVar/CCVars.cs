@@ -31,13 +31,13 @@ namespace Content.Shared.CCVar
         /// How long we'll wait until re-sampling nearby objects for ambience.
         /// </summary>
         public static readonly CVarDef<float> AmbientCooldown =
-            CVarDef.Create("ambience.cooldown", 0.5f, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.cooldown", 0.1f, CVar.REPLICATED | CVar.SERVER);
 
         public static readonly CVarDef<float> AmbientRange =
             CVarDef.Create("ambience.range", 5f, CVar.REPLICATED | CVar.SERVER);
 
         public static readonly CVarDef<int> MaxAmbientSources =
-            CVarDef.Create("ambience.max_sounds", 6, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.max_sounds", 64, CVar.REPLICATED | CVar.SERVER);
 
         /*
          * Status
@@ -401,6 +401,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> AdminLogsClientBatchSize =
             CVarDef.Create("adminlogs.client_batch_size", 1000, CVar.SERVERONLY);
 
+        public static readonly CVarDef<string> AdminLogsServerName =
+            CVarDef.Create("adminlogs.server_name", "unknown", CVar.SERVERONLY);
+
         /*
          * Atmos
          */
@@ -609,9 +612,24 @@ namespace Content.Shared.CCVar
         /*
          * Shuttles
          */
-        // Once cruising actually gets implemented I'd likely drop this speed to 3 maybe.
-        public static readonly CVarDef<float> ShuttleDockSpeedCap =
-            CVarDef.Create("shuttle.dock_speed_cap", 5f, CVar.SERVERONLY);
+        public static readonly CVarDef<float> ShuttleMaxLinearSpeed =
+            CVarDef.Create("shuttle.max_linear_speed", 13f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularSpeed =
+            CVarDef.Create("shuttle.max_angular_speed", 1.4f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularAcc =
+            CVarDef.Create("shuttle.max_angular_acc", 2f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularMomentum =
+            CVarDef.Create("shuttle.max_angular_momentum", 60000f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleIdleLinearDamping =
+            CVarDef.Create("shuttle.idle_linear_damping", 50f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleIdleAngularDamping =
+            CVarDef.Create("shuttle.idle_angular_damping", 100f, CVar.SERVERONLY);
+
 
         /*
          * VIEWPORT

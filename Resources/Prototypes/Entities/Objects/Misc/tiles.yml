@@ -15,6 +15,9 @@
         Blunt: 10
   - type: Stack
     count: 1
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: steel tile
@@ -351,7 +354,7 @@
       - FloorArcadeBlue
   - type: Stack
     stackType: FloorTileStackArcadeBlue
-      
+
 - type: entity
   name: red arcade floor
   parent: FloorTileItemBase
@@ -367,7 +370,7 @@
       - FloorArcadeRed
   - type: Stack
     stackType: FloorTileStackArcadeRed
-      
+
 - type: entity
   name: eighties floor
   parent: FloorTileItemBase
@@ -400,7 +403,7 @@
       - FloorShuttleWhite
   - type: Stack
     stackType: FloorTileStackShuttleWhite
-    
+
 - type: entity
   name: blue shuttle floor
   parent: FloorTileItemBase
@@ -416,7 +419,7 @@
       - FloorShuttleBlue
   - type: Stack
     stackType: FloorTileStackShuttleBlue
-    
+
 - type: entity
   name: orange shuttle floor
   parent: FloorTileItemBase
@@ -432,7 +435,7 @@
       - FloorShuttleOrange
   - type: Stack
     stackType: FloorTileStackShuttleOrange
-    
+
 - type: entity
   name: purple shuttle floor
   parent: FloorTileItemBase
@@ -448,7 +451,7 @@
       - FloorShuttlePurple
   - type: Stack
     stackType: FloorTileStackShuttlePurple
-    
+
 - type: entity
   name: red shuttle floor
   parent: FloorTileItemBase
@@ -539,7 +542,7 @@
     outputs:
       - plating
       - floor_grass
-      
+
 - type: entity
   name: jungle grass tile
   parent: FloorTileItemBase

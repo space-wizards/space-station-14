@@ -197,6 +197,28 @@
     energy: 0.5
 
 - type: entity
+  id: WeakBulletRocket
+  name: weak rocket
+  parent: TriggerBulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Projectiles/rocket.rsi
+    state: frag
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    devastationRange: 0
+    heavyImpactRange: 0
+    lightImpactRange: 1
+    flashRange: 10
+  - type: PointLight
+    radius: 3.5
+    color: orange
+    energy: 0.5
+
+
+- type: entity
   id: BulletGrenadeBaton
   name: baton grenade
   parent: BulletBase

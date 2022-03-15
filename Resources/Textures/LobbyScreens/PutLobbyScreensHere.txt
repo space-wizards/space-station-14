@@ -1,0 +1,2 @@
+Note:
+Only png and jpgs files are supported
