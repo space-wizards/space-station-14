@@ -159,6 +159,7 @@
   - type: IngestionBlocker
 
   - type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHelmetFire
   name: fire helmet
   description: An atmos techs best friend. Provides some heat resistance and looks cool.
