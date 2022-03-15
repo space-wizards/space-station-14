@@ -1,10 +1,4 @@
 Entries:
-- author: Mith-randalf
-  changes:
-  - {message: 'Fixed some clothing names, applied armour to previously unarmoured
-      clothes, tweaked some armour values.', type: Tweak}
-  id: 710
-  time: '2021-12-05T06:39:52.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added construction for main crates and deconstruction for all crates.
@@ -2998,3 +2992,13 @@ Entries:
       mop buckets for best results.', type: Add}
   id: 1209
   time: '2022-03-14T21:02:26.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Added new generator types: 2x portable generators. Research their boards
+      to build them.', type: Add}
+  - {message: Added the RTG. Find them in a deep space wreck and try not to get burnt...,
+    type: Add}
+  - {message: Added wallmount generator and substation for use in shuttles and escape
+      pods., type: Add}
+  id: 1210
+  time: '2022-03-15T01:27:39.0000000+00:00'
