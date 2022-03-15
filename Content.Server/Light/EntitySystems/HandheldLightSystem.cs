@@ -173,7 +173,7 @@ namespace Content.Server.Light.EntitySystems
             _activeLights.Remove(component);
             component.LastLevel = null;
             component.Dirty(EntityManager);
-            
+
             if (makeNoise)
                 SoundSystem.Play(Filter.Pvs(component.Owner), component.TurnOffSound.GetSound(), component.Owner);
 
