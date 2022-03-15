@@ -20,6 +20,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     [UsedImplicitly]
     public sealed class GasValveSystem : EntitySystem
     {
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -68,11 +70,13 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 {
                     inlet.AddAlwaysReachable(outlet);
                     outlet.AddAlwaysReachable(inlet);
+                    _ambientSoundSystem.SetAmbience(component.Owner, true);
                 }
                 else
                 {
                     inlet.RemoveAlwaysReachable(outlet);
                     outlet.RemoveAlwaysReachable(inlet);
+                    _ambientSoundSystem.SetAmbience(component.Owner, false);
                 }
             }
         }

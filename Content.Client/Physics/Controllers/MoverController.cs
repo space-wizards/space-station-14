@@ -85,7 +85,7 @@ namespace Content.Client.Physics.Controllers
 
         protected override bool CanSound()
         {
-            return _timing.IsFirstTimePredicted;
+            return _timing.IsFirstTimePredicted && _timing.InSimulation;
         }
     }
 }

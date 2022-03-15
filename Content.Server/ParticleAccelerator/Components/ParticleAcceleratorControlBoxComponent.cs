@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -9,18 +7,10 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
 using Content.Server.WireHacking;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Interaction;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 using static Content.Shared.Wires.SharedWiresComponent;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -32,9 +22,8 @@ namespace Content.Server.ParticleAccelerator.Components
     ///     Is the computer thing people interact with to control the PA.
     ///     Also contains primary logic for actual PA behavior, part scanning, etc...
     /// </summary>
-    [ComponentReference(typeof(IActivate))]
     [RegisterComponent]
-    public sealed class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IActivate, IWires
+    public sealed class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IWires
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -210,30 +199,6 @@ namespace Content.Server.ParticleAccelerator.Components
 
             UserInterface?.SetState(state);
         }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-            {
-                return;
-            }
-
-            if (_entMan.TryGetComponent<WiresComponent?>(Owner, out var wires) && wires.IsPanelOpen)
-            {
-                wires.OpenInterface(actor.PlayerSession);
-            }
-            else
-            {
-                if (!ConsolePowered)
-                {
-                    return;
-                }
-
-                UserInterface?.Toggle(actor.PlayerSession);
-                UpdateUI();
-            }
-        }
-
         protected override void OnRemove()
         {
             UserInterface?.CloseAll();
