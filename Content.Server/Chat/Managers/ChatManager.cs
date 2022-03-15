@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Content.Server.Administration.Logs;
@@ -10,6 +8,9 @@ using Content.Server.MoMMI;
 using Content.Server.Players;
 using Content.Server.Preferences.Managers;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Disease;
+using Content.Server.Disease.Components;
+using Content.Shared.Disease.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -22,10 +23,6 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
@@ -109,19 +106,19 @@ namespace Content.Server.Chat.Managers
             DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-admin-ooc-chat-enabled-message" : "chat-manager-admin-ooc-chat-disabled-message"));
         }
 
-        public void DispatchServerAnnouncement(string message)
+        public void DispatchServerAnnouncement(string message, Color? colorOverride = null)
         {
             var messageWrap = Loc.GetString("chat-manager-server-wrap-message");
-            NetMessageToAll(ChatChannel.Server, message, messageWrap);
+            NetMessageToAll(ChatChannel.Server, message, messageWrap, colorOverride);
             Logger.InfoS("SERVER", message);
 
             _logs.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
         }
 
-        public void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true)
+        public void DispatchStationAnnouncement(string message, string sender = "Central Command", bool playDefaultSound = true, Color? colorOverride = null)
         {
             var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
-            NetMessageToAll(ChatChannel.Radio, message, messageWrap);
+            NetMessageToAll(ChatChannel.Radio, message, messageWrap, colorOverride);
             if (playDefaultSound)
             {
                 SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
@@ -206,6 +203,11 @@ namespace Content.Server.Chat.Managers
             if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(source))
             {
                 return;
+            }
+
+            if (_entManager.HasComponent<DiseasedComponent>(source) && _entManager.TryGetComponent<DiseaseCarrierComponent>(source,out var carrier))
+            {
+                EntitySystem.Get<DiseaseSystem>().SneezeCough(source, _random.Pick(carrier.Diseases), string.Empty);
             }
 
             if (MessageCharacterLimit(source, message))
@@ -596,12 +598,16 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendMessage(msg, client);
         }
 
-        public void NetMessageToAll(ChatChannel channel, string message, string messageWrap)
+        public void NetMessageToAll(ChatChannel channel, string message, string messageWrap, Color? colorOverride = null)
         {
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = channel;
             msg.Message = message;
             msg.MessageWrap = messageWrap;
+            if (colorOverride != null)
+            {
+                msg.MessageColorOverride = colorOverride.Value;
+            }
             _netManager.ServerSendToAll(msg);
         }
 

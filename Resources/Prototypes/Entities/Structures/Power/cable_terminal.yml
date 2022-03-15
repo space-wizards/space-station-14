@@ -33,6 +33,8 @@
             - !type:DoActsBehavior
               acts: ["Destruction"]
     - type: SubFloorHide
+      blockAmbience: false
+      blockInteractions: false
     - type: Construction
       graph: CableTerminal
       node: cable_terminal

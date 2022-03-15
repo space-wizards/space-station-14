@@ -48,6 +48,11 @@ namespace Content.Client.PDA
                 SendMessage(new PDAShowUplinkMessage());
             };
 
+            _menu.ActivateMusicButton.OnPressed += _ =>
+            {
+                SendMessage(new PDAShowMusicMessage());
+            };
+
             _menu.AccessRingtoneButton.OnPressed += _ =>
             {
                 SendMessage(new PDAShowRingtoneMessage());
@@ -91,6 +96,7 @@ namespace Content.Client.PDA
                     _menu.EjectIdButton.Visible = msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null;
                     _menu.EjectPenButton.Visible = msg.HasPen;
                     _menu.ActivateUplinkButton.Visible = msg.HasUplink;
+                    _menu.ActivateMusicButton.Visible = msg.CanPlayMusic;
 
                     break;
                 }

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -18,6 +17,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Shared.Hands.Components
 {
@@ -636,19 +636,21 @@ namespace Content.Shared.Hands.Components
         }
 
         /// <summary>
-        ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
+        ///     Puts an item any hand, preferring the active hand, or puts it on the floor under the player.
         /// </summary>
         public void PutInHandOrDrop(EntityUid entity, bool checkActionBlocker = true)
         {
-            if (!PutInHand(entity, checkActionBlocker))
-                _entMan.GetComponent<TransformComponent>(entity).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
+            if (PutInHand(entity, checkActionBlocker))
+                return;
+
+            _entMan.GetComponent<TransformComponent>(entity).AttachParentToContainerOrGrid(_entMan);
+            _entMan.EventBus.RaiseLocalEvent(entity, new DroppedEvent(Owner));
         }
 
         public void PutInHandOrDrop(SharedItemComponent item, bool checkActionBlocker = true)
         {
             PutInHandOrDrop(item.Owner, checkActionBlocker);
         }
-
 
         /// <summary>
         ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
@@ -708,47 +710,6 @@ namespace Content.Shared.Hands.Components
             return false;
         }
     }
-
-    #region visualizerData
-    [Serializable, NetSerializable]
-    public enum HandsVisuals : byte
-    {
-        VisualState
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class HandsVisualState : ICloneable
-    {
-        public List<HandVisualState> Hands { get; } = new();
-
-        public HandsVisualState(List<HandVisualState> hands)
-        {
-            Hands = hands;
-        }
-
-        public object Clone()
-        {
-            return new HandsVisualState(new List<HandVisualState>(Hands));
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public struct HandVisualState
-    {
-        public string RsiPath { get; }
-        public string? EquippedPrefix { get; }
-        public HandLocation Location { get; }
-        public Color Color { get; }
-
-        public HandVisualState(string rsiPath, string? equippedPrefix, HandLocation location, Color color)
-        {
-            RsiPath = rsiPath;
-            EquippedPrefix = equippedPrefix;
-            Location = location;
-            Color = color;
-        }
-    }
-    #endregion
 
     [Serializable, NetSerializable]
     public sealed class Hand

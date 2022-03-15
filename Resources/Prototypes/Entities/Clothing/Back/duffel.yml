@@ -10,7 +10,7 @@
   - type: Clothing
     sprite: Clothing/Back/Duffels/duffel.rsi
     size: 9999
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - back
   - type: Storage

@@ -19,7 +19,13 @@
         amount: 1
       - id: PlushieLizard
         amount: 1
+      - id: PlushieSpaceLizard
+        amount: 1
       - id: PlushieVox
+        amount: 1
+      - id: PlushieRouny
+        amount: 1
+      - id: PlushieRatvar
         amount: 1
 
 - type: entity

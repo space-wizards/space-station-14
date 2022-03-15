@@ -4,7 +4,7 @@ using Content.Server.Hands.Systems;
 using Content.Server.Weapon.Melee;
 using Content.Server.Wieldable.Components;
 using Content.Shared.Hands;
-using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -28,7 +28,7 @@ namespace Content.Server.Wieldable
             SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<WieldableComponent, ItemWieldedEvent>(OnItemWielded);
             SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
-            SubscribeLocalEvent<WieldableComponent, UnequippedHandEvent>(OnItemLeaveHand);
+            SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
             SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
             SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
 
@@ -208,7 +208,7 @@ namespace Content.Server.Wieldable
             _virtualItemSystem.DeleteInHandsMatching(args.User.Value, uid);
         }
 
-        private void OnItemLeaveHand(EntityUid uid, WieldableComponent component, UnequippedHandEvent args)
+        private void OnItemLeaveHand(EntityUid uid, WieldableComponent component, GotUnequippedHandEvent args)
         {
             if (!component.Wielded || component.Owner != args.Unequipped)
                 return;

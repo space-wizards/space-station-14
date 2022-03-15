@@ -9,6 +9,8 @@
     - type: ComputerVisualizer
       key: atmos_key
       screen: "alert-2"
+  - type: Computer
+    board: AlertsComputerCircuitboard
 
 - type: entity
   parent: ComputerBase
@@ -71,6 +73,8 @@
     radius: 1.5
     energy: 1.6
     color: "#c9c042"
+  - type: Computer
+    board: PowerComputerCircuitboard
 
 - type: entity
   parent: ComputerBase
@@ -87,6 +91,26 @@
     radius: 1.5
     energy: 1.6
     color: "#1f8c28"
+  - type: Computer
+    board: MedicalRecordsComputerCircuitboard
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerCriminalRecords
+  name: criminal records computer
+  description: This can be used to check criminal records.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: security_key
+      screen: security
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#1f8c28"
+  - type: Computer
+    board: CriminalRecordsComputerCircuitboard
 
 - type: entity
   parent: ComputerBase
@@ -132,6 +156,9 @@
   - type: ResearchClient
   - type: ResearchConsole
   - type: TechnologyDatabase
+  - type: ActivatableUI
+    key: enum.ResearchConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.ResearchConsoleUiKey.Key
@@ -202,6 +229,9 @@
   description: That's a body scanner.
   components:
   - type: BodyScanner
+  - type: ActivatableUI
+    key: enum.BodyScannerUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.BodyScannerUiKey.Key
@@ -271,6 +301,10 @@
     radius: 1.5
     energy: 1.6
     color: "#e6e227"
+  - type: Tag
+    tags:
+      - DroneUsable
+
 
 - type: entity
   parent: ComputerBase

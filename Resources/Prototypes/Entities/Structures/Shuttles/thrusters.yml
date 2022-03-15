@@ -7,7 +7,7 @@
   components:
     - type: AmbientSound
       range: 4
-      volume: -5
+      volume: -4
       sound:
         path: /Audio/Effects/shuttle_thruster.ogg
     - type: Transform
@@ -62,6 +62,31 @@
       offset: 0, 1
 
 - type: entity
+  id: DebugThruster
+  parent: BaseThruster
+  name: thruster
+  suffix: DEBUG
+  description: It goes nyooooooom. It doesn't need power nor space.
+  components:
+  - type: Thruster
+    requireSpace: false
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
+  - type: Sprite
+    sprite: Structures/Shuttles/thruster.rsi
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+    - state: thrust_burn_unshaded
+      map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+      shader: unshaded
+      offset: 0, 1
+
+- type: entity
   id: Gyroscope
   parent: BaseThruster
   name: Gyroscope
@@ -69,7 +94,8 @@
   components:
   - type: Thruster
     thrusterType: Angular
-    impulse: 200
+    requireSpace: false
+    thrust: 5000
   - type: Sprite
     # Listen I'm not the biggest fan of the sprite but it was the most appropriate thing I could find.
     sprite: Structures/Shuttles/gyroscope.rsi

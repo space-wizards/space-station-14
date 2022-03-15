@@ -45,6 +45,9 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: ActivatableUI
+    key: enum.ChemMasterUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key

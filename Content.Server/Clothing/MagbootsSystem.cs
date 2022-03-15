@@ -1,18 +1,17 @@
 using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Clothing.Components;
+using Content.Shared.Actions;
 using Content.Shared.Alert;
+using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Slippery;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Clothing
 {
-    public sealed class MagbootsSystem : EntitySystem
+    public sealed class MagbootsSystem : SharedMagbootsSystem
     {
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
@@ -22,7 +21,6 @@ namespace Content.Server.Clothing
 
             SubscribeLocalEvent<MagbootsComponent, GetVerbsEvent<ActivationVerb>>(AddToggleVerb);
             SubscribeLocalEvent<MagbootsComponent, SlipAttemptEvent>(OnSlipAttempt);
-            SubscribeLocalEvent<MagbootsComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
             SubscribeLocalEvent<MagbootsComponent, GotEquippedEvent>(OnGotEquipped);
             SubscribeLocalEvent<MagbootsComponent, GotUnequippedEvent>(OnGotUnequipped);
         }
@@ -62,11 +60,6 @@ namespace Content.Server.Clothing
             {
                 UpdateMagbootEffects(args.Equipee, uid, true, component);
             }
-        }
-
-        private void OnRefreshMovespeed(EntityUid uid, MagbootsComponent component, RefreshMovementSpeedModifiersEvent args)
-        {
-            args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
         }
 
         private void AddToggleVerb(EntityUid uid, MagbootsComponent component, GetVerbsEvent<ActivationVerb> args)

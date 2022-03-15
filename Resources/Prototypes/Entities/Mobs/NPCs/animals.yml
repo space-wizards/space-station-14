@@ -42,6 +42,10 @@
     successChance: 0.2
     interactSuccessString: petting-success-soft-floofy
     interactFailureString: petting-failure-bat
+  - type: SentienceTarget
+    flavorKind: organic
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 - type: entity
   name: bee
@@ -88,6 +92,8 @@
   - type: Tag
     tags:
     - Bee
+  - type: Bloodstream
+    bloodMaxVolume: 0.1
 
 - type: entity
   name: bee
@@ -110,6 +116,9 @@
   - type: AiFactionTag
     factions:
     - SimpleHostile
+  - type: Bloodstream
+    bloodMaxVolume: 0.1
+
 
 - type: entity
   name: chicken
@@ -138,6 +147,8 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/chicken_cluck_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: mallard duck #Quack
@@ -166,6 +177,8 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/duck_quack_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: white duck #Quack
@@ -194,6 +207,8 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/duck_quack_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: brown duck #Quack
@@ -222,6 +237,8 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/duck_quack_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: butterfly
@@ -272,6 +289,8 @@
       normal: butterfly
       crit: dead
       dead: dead
+  - type: Bloodstream
+    bloodMaxVolume: 0.1
 
 - type: entity
   name: cow
@@ -327,6 +346,7 @@
     interactSuccessString: petting-success-soft-floofy
     interactFailureString: petting-failure-generic
 
+
 - type: entity
   name: crab
   parent: SimpleMobBase
@@ -366,6 +386,8 @@
     successChance: 0.5
     interactSuccessString: petting-success-crab
     interactFailureString: petting-failure-crab
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 - type: entity
   name: goat
@@ -434,6 +456,8 @@
     successChance: 0.1 # Yeah, good luck with that.
     interactSuccessString: petting-success-goose
     interactFailureString: petting-failure-goose
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: gorilla
@@ -469,6 +493,8 @@
   - type: Butcherable
     spawned: FoodMeat
     pieces: 4
+  - type: Bloodstream
+    bloodMaxVolume: 300
 
 - type: entity
   name: kangaroo
@@ -546,13 +572,15 @@
   components:
   - type: NameIdentifier
     group: Monkey
-  - type: GhostTakeoverAvailable
-    makeSentient: true
-    name: monkey
-    description: Ook ook!
-    rules: |
-      Being a monkey does NOT give you a free pass to kill, RDM or self-antag.
-
+  - type: SentienceTarget
+    flavorKind: primate
+  - type: Inventory
+    templateId: monkey
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -569,7 +597,6 @@
       normal: monkey
       crit: dead
       dead: dead
-    - type: HandsVisualizer
     - type: FireVisualizer
       sprite: Mobs/Effects/onfire.rsi
       normalState: Monkey_burning
@@ -596,7 +623,7 @@
       state: mouse-0
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    QuickEquip: false
+    quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
     HeldPrefix: 0
     Slots:
@@ -637,6 +664,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+        - ReagentId: Blood
+          Quantity: 50
   - type: Butcherable
     spawned: FoodMeat
     pieces: 1
@@ -646,8 +675,18 @@
     tags:
     - Trash
   - type: Recyclable
-  - type: Actions # TODO: Remove CombatMode when Prototype Composition is added
-    innateActions: []
+  - type: Actions
+  # TODO: Remove CombatMode when Prototype Composition is added
+  - type: CombatMode
+    combatToggleAction:
+      enabled: false
+      autoPopulate: false
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: DiseaseCarrier #The other class lab animal and disease vector
 
 
 - type: entity
@@ -668,6 +707,10 @@
       normal: mouse-1
       crit: dead-1
       dead: splat-1
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: DiseaseCarrier #Why doesn't this save if it's only on the parent wtf
+
 
 - type: entity
   parent: MobMouse
@@ -687,10 +730,13 @@
       normal: mouse-2
       crit: dead-2
       dead: splat-2
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: DiseaseCarrier
 
 
 - type: entity
-  name: lizard
+  name: lizard #Weh
   parent: SimpleMobBase
   id: MobLizard
   description: I think it's lost.
@@ -730,6 +776,11 @@
     successChance: 0.3
     interactSuccessString: petting-success-reptile
     interactFailureString: petting-failure-generic
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
 
 - type: entity
   name: frog
@@ -772,6 +823,8 @@
     successChance: 0.6
     interactSuccessString: petting-success-frog
     interactFailureString: petting-failure-generic
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
@@ -815,6 +868,8 @@
     successChance: 0.6
     interactSuccessString: petting-success-bird
     interactFailureString: petting-failure-generic
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 - type: entity
   name: penguin
@@ -896,6 +951,11 @@
     successChance: 0.6
     interactSuccessString: petting-success-reptile
     interactFailureString: petting-failure-generic
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -937,6 +997,19 @@
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
     interactFailureString: petting-failure-generic
+
+- type: entity
+  name: tarantula
+  parent: MobGiantSpider
+  id: MobGiantSpiderAngry
+  components:
+    - type: AiFactionTag
+      factions:
+        - Xeno
+    - type: UtilityAI
+      behaviorSets:
+        - Idle
+        - UnarmedAttackHostiles
 
 - type: entity
   name: possum
@@ -1049,6 +1122,64 @@
   components:
   - type: InteractionPopup
     successChance: 0.7
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+
+- type: entity
+  name: fox
+  parent: SimpleMobBase
+  id: MobFox
+  description: They're a fox.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/fox.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: fox
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: fox
+      crit: fox_dead
+      dead: fox_dead
+  - type: Butcherable
+    spawned: FoodMeat
+    pieces: 3
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: Bloodstream
+    bloodMaxVolume: 100
+
+- type: entity
+  name: Renault
+  parent: MobFox
+  id: MobFoxRenault
+  description: The captain's trustworthy fox.
+  components:
+  - type: InteractionPopup
+    successChance: 1
   - type: Grammar
     attributes:
       proper: true
