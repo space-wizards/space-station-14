@@ -45,6 +45,8 @@
   description: A cute toy that resembles a bee plushie while you're on LSD.
   components:
   - type: PointLight
+    radius: 1.5
+    energy: 2
   - type: RgbLightController
 
 - type: entity
