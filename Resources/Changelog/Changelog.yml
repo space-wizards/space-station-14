@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Rules now pop up on the first connection to the server, type: Add}
-  id: 713
-  time: '2021-12-09T22:22:49.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: More in depth tutorial. Press F1 to learn some basics about the server.
@@ -3002,3 +2997,8 @@ Entries:
     type: Fix}
   id: 1212
   time: '2022-03-15T03:59:20.0000000+00:00'
+- author: Todd
+  changes:
+  - {message: Added flip flap to the lobby themes., type: Add}
+  id: 1213
+  time: '2022-03-15T12:28:24.0000000+00:00'
