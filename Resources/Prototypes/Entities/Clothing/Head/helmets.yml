@@ -157,3 +157,40 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/wizardhelm.rsi
   - type: IngestionBlocker
+
+  - type: entity
+  id: ClothingHeadHelmetFire
+  name: fire helmet
+  description: An atmos techs best friend. Provides some heat resistance and looks cool.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/firehelmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/firehelmet.rsi
+    size: 15
+  - type: IngestionBlocker
+  - type: PowerCellSlot
+    cellSlot:
+      startingItem: PowerCellSmallHigh
+  - type: TemperatureProtection
+    coefficient: 0.01 # This is temp until fires aren't 9000K+.
+  - type: PressureProtection
+    highPressureMultiplier: 0.85 # Same value as suit.
+  - type: Tag
+    tags:
+    - HidesHair
+  - type: DiseaseProtection
+    protection: 0.05
+  - type: PointLight
+    enabled: false
+    radius: 3
+  - type: Appearance
+    visuals:
+    - type: FlashLightVisualizer
+  - type: HandheldLight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent

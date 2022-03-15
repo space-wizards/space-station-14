@@ -83,28 +83,3 @@
     sprite: Clothing/Head/Hardhats/yellow.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardhats/yellow.rsi
-
-- type: entity
-  parent: ClothingHeadHatHardhatBase #Moved from hardsuit helmet to hard hat.
-  id: ClothingHeadHelmetFire
-  name: fire helmet
-  description: An atmos techs best friend. Provides some heat resistance and looks cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Helmets/firehelmet.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Helmets/firehelmet.rsi
-    size: 15
-  - type: IngestionBlocker
-  - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellSmallHigh
-  - type: TemperatureProtection
-    coefficient: 0.01 # This is temp until fires aren't 9000K+.
-  - type: PressureProtection
-    highPressureMultiplier: 0.85 # Same value as suit.
-  - type: Tag
-    tags:
-    - HidesHair
-  - type: DiseaseProtection
-    protection: 0.05
