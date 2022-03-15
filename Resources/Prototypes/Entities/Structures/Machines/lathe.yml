@@ -229,6 +229,9 @@
       - ThermomachineFreezerMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
+      - CrewMonitoringComputerCircuitboard
+      - VaccinatorMachineCircuitboard
+      - DiagnoserMachineCircuitboard
       - ChemMasterMachineCircuitboard
       - ChemDispenserMachineCircuitboard
       - HydroponicsTrayMachineCircuitboard
@@ -237,7 +240,6 @@
       - ProtolatheMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
       - UniformPrinterMachineCircuitboard
-      - CrewMonitoringComputerCircuitboard
       - ShuttleConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
@@ -249,8 +251,21 @@
   parent: Protolathe
   id: SecurityTechFab
   name: Security TechFab
-  description: Prints security equipment and some basics.
+  description: Prints equipment for use by security crew.
   components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/security_techfab.rsi
+    layers:
+    - state: icon
+      map: ["enum.ProtolatheVisualLayers.Base"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
+    - state: icon
+      map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ProtolatheDatabase
     protolatherecipes:
       - Flash
