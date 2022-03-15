@@ -15,7 +15,6 @@ namespace Content.Server.Explosion.Components;
 [RegisterComponent]
 public sealed class ExplosiveComponent : Component
 {
-    public override string Name => "Explosive";
 
     /// <summary>
     ///     The explosion prototype. This determines the damage types, the tile-break chance, and some visual
@@ -26,7 +25,7 @@ public sealed class ExplosiveComponent : Component
     public string ExplosionType = default!;
 
     /// <summary>
-    ///     The maximum intensity the explosion can have on a single time. This limits the maximum damage and tile
+    ///     The maximum intensity the explosion can have on a single tile. This limits the maximum damage and tile
     ///     break chance the explosion can achieve at any given location.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
@@ -53,7 +52,7 @@ public sealed class ExplosiveComponent : Component
     public float TotalIntensity = 10;
 
     /// <summary>
-    ///     Avoid somehow double-triggering this explosion (e.g. by damaging this entity from it's own explosion.
+    ///     Avoid somehow double-triggering this explosion (e.g. by damaging this entity from its own explosion.
     /// </summary>
     public bool Exploded;
 }

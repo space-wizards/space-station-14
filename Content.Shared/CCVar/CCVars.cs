@@ -356,7 +356,7 @@ namespace Content.Shared.CCVar
         ///     How many tiles the explosion system will process per tick
         /// </summary>
         /// <remarks>
-        ///     Setting this too high will put a large load on a single tick. Setting this  too low will lead to
+        ///     Setting this too high will put a large load on a single tick. Setting this too low will lead to
         ///     unnaturally "slow" explosions.
         /// </remarks>
         public static readonly CVarDef<int> ExplosionTilesPerTick =

@@ -41,7 +41,7 @@ public sealed class ExplosionCommand : IConsoleCommand
 
     // Note that if you change the arguments, you should also update the client-side SpawnExplosionWindow, as that just
     // uses this command.
-    public string Help => "Usage: explosion intensity [slope] [maxIntensity] [x y] [mapId] [prototypeId]";
+    public string Help => "Usage: explosion [intensity] [slope] [maxIntensity] [x y] [mapId] [prototypeId]";
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
