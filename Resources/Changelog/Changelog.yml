@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added construction for main crates and deconstruction for all crates.
-      Use a screwdriver to deconstruct crates., type: Add}
-  id: 711
-  time: '2021-12-06T22:10:04.0000000+00:00'
 - author: pointer-to-null
   changes:
   - {message: Fixed the status effects cooldown time accumulation. (Major clown nerf).,
@@ -3002,3 +2996,9 @@ Entries:
       pods., type: Add}
   id: 1210
   time: '2022-03-15T01:27:39.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed some audio files that were causing sound effects to play globally,
+      rather than being position-dependent', type: Fix}
+  id: 1211
+  time: '2022-03-15T03:57:54.0000000+00:00'
