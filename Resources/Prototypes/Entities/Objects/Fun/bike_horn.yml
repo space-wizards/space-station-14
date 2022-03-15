@@ -24,4 +24,4 @@
       collection: BikeHorn
   - type: Tag
     tags:
-    - Payload
+    - Payload # yes, you can make re-usable prank grenades

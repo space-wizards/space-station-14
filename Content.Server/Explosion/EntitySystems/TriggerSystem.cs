@@ -211,6 +211,10 @@ namespace Content.Server.Explosion.EntitySystems
             foreach (var uid in toRemove)
             {
                 RemComp<ActiveTimerTriggerComponent>(uid);
+
+                // In case this is a re-usable grenade, un-prime it.
+                if (TryComp<AppearanceComponent>(uid, out var appearance))
+                    appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Unprimed);
             }
         }
     }

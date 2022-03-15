@@ -164,7 +164,6 @@
   - type: Construction
     graph: ModularGrenadeGraph
     node: emptyCase
-  - type: DeleteOnTrigger
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -181,3 +180,4 @@
       key: enum.Trigger.TriggerVisuals.VisualState
       states:
         enum.Trigger.TriggerVisualState.Primed: primed
+        enum.Trigger.TriggerVisualState.Unprimed: complete

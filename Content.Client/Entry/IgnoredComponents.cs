@@ -23,6 +23,7 @@ namespace Content.Client.Entry
             "EmitSoundOnLand",
             "EmitSoundOnTrigger",
             "EmitSoundOnActivate",
+            "NameIdentifier",
             "HeatResistance",
             "EntityStorage",
             "MeleeWeapon",
