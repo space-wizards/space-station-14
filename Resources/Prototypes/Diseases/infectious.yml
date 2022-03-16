@@ -18,11 +18,11 @@
       maxLength: 400
     - !type:DiseaseReagentCure
       reagent: Ultravasculine
+    - !type:DiseaseReagentCure
+      reagent: Codeine
     - !type:DiseaseReagentCure ### In Loving Memory, Lean
       reagent: Lean            ### 2022/03/12 - 2022/03/13 
 #The Pro-Lean vs Anti-Lean War of 2022
-    - !type:DiseaseReagentCure
-      reagent: Leanshine
 
 - type: disease
   id: VentCough

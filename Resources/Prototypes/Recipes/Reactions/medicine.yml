@@ -11,6 +11,18 @@
     Dylovene: 3
 
 - type: reaction
+  id: Codeine
+  reactants:
+    Carbon:
+      amount: 1
+    Nitrogen:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products:
+    Codeine: 3
+
+- type: reaction
   id: Cryptobiolin
   reactants:
     Potassium:

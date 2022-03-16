@@ -93,22 +93,6 @@
   spritePath: kahluaglass.rsi
 
 - type: reagent
-  id: Lean
-  name: lean
-  parent: BaseAlcohol
-  desc: Turn up for days.
-  physicalDesc: bubbly
-  color: "#9400D3"
-  spritePath: lean.rsi
-  metabolisms:
-    Narcotic:
-      effects:
-      - !type:GenericStatusEffect
-        key: Stutter
-        component: StutteringAccent
-      - !type:Jitter
-
-- type: reagent
   id: Leanshine
   name: leanshine
   parent: BaseAlcohol

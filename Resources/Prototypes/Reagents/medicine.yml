@@ -78,6 +78,21 @@
             Brute: -2
 
 - type: reagent
+  id: Codeine
+  name: codeine
+  group: Medicine
+  desc:  An opioid pain reliever used to treat mild pain. It is also used to reduce coughing.
+  physicalDesc: opaque
+  color: "#301934"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -1
+
+- type: reagent
   id: Cryoxadone
   name: cryoxadone
   group: Medicine

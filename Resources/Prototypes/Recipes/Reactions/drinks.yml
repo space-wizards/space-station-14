@@ -317,6 +317,16 @@
     IrishCream: 3
 
 - type: reaction
+  id: Lean
+  reactants:
+    Codeine:
+      amount: 1
+    SpaceUp:
+      amount: 2
+  products:
+    Lean: 2
+
+- type: reaction
   id: Leanshine
   reactants:
     Lean:
