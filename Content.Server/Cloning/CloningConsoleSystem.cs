@@ -27,7 +27,7 @@ namespace Content.Server.Cloning.CloningConsole
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        private const float UpdateRate = 3f;
+        private const float UpdateRate = 2f;
         private float _updateDif;
         public override void Initialize()
         {
@@ -171,8 +171,6 @@ namespace Content.Server.Cloning.CloningConsole
                 return;
             var profile = GetPlayerProfileAsync(mindUser.Value);
             bool cloningSuccessful = _cloningSystem.TryCloning(consoleComponent.CloningPod.Value, mind, profile, cloningPod);
-            if (cloningSuccessful)
-                consoleComponent.CloningHistory.Add(profile.Name);
         }
 
         private CloningConsoleBoundUserInterfaceState GetUserInterfaceState(CloningConsoleComponent consoleComponent)
@@ -244,7 +242,6 @@ namespace Content.Server.Cloning.CloningConsole
             return new CloningConsoleBoundUserInterfaceState(
                 scanBodyInfo,
                 cloneBodyInfo,
-                consoleComponent.CloningHistory,
                 _gameTiming.CurTime,
                 cloningProgress,
                 cloningTime,

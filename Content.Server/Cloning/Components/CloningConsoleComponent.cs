@@ -1,7 +1,5 @@
 using Content.Server.UserInterface;
 using Robust.Server.GameObjects;
-using Content.Server.Medical.Components;
-using Content.Server.Cloning.Components;
 using Content.Shared.Cloning.CloningConsole;
 
 namespace Content.Server.Cloning.CloningConsole
@@ -15,7 +13,5 @@ namespace Content.Server.Cloning.CloningConsole
         public EntityUid? GeneticScanner = null;
         [ViewVariables]
         public EntityUid? CloningPod = null;
-        [ViewVariables]
-        public List<String> CloningHistory = new List<string>();
     }
 }

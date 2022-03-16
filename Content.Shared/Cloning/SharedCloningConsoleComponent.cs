@@ -7,7 +7,6 @@ namespace Content.Shared.Cloning.CloningConsole
         {
             public readonly string? ScannerBodyInfo;
             public readonly string? ClonerBodyInfo;
-            public readonly List<string> CloneHistory;
             // When this state was created.
             // The reason this is used rather than a start time is because cloning can be interrupted.
             public readonly TimeSpan ReferenceTime;
@@ -22,11 +21,10 @@ namespace Content.Shared.Cloning.CloningConsole
             public readonly ClonerStatus CloningStatus;
             public readonly bool ScannerConnected;
             public readonly bool ClonerConnected;
-            public CloningConsoleBoundUserInterfaceState(string? scannerBodyInfo, string? cloningBodyInfo, List<string> cloneHistory, TimeSpan refTime, float progress, float maximum, bool progressing, bool mindPresent, ClonerStatus cloningStatus, bool scannerConnected, bool clonerConnected)
+            public CloningConsoleBoundUserInterfaceState(string? scannerBodyInfo, string? cloningBodyInfo, TimeSpan refTime, float progress, float maximum, bool progressing, bool mindPresent, ClonerStatus cloningStatus, bool scannerConnected, bool clonerConnected)
             {
                 ScannerBodyInfo = scannerBodyInfo;
                 ClonerBodyInfo = cloningBodyInfo;
-                CloneHistory = cloneHistory;
                 ReferenceTime = refTime;
                 Progress = progress;
                 Maximum = maximum;

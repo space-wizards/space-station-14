@@ -74,14 +74,5 @@
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>
-        <BoxContainer Name="History"
-                      Orientation="Vertical"
-                      VerticalExpand="True"
-                      HorizontalExpand="True"
-                      MinSize="100 100">
-            <ScrollContainer VerticalExpand="true" MinSize="200 0">
-                <BoxContainer Name="HistoryList" Orientation="Vertical" />
-            </ScrollContainer>
-        </BoxContainer>
     </TabContainer>
 </DefaultWindow>
