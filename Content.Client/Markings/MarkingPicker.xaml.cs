@@ -44,11 +44,6 @@ namespace Content.Client.Markings
             _usedMarkingList = newMarkings;
             _currentSpecies = species;
 
-            CMarkingsUsed.Clear();
-            CMarkingColors.Visible = false;
-            _selectedMarking = null;
-            _selectedUnusedMarking = null;
-            
             List<Marking> toRemove = PopulateUsed();
 
             if (toRemove.Count != 0)
@@ -110,6 +105,8 @@ namespace Content.Client.Markings
         public void Populate()
         {
             CMarkingsUnused.Clear();
+            _selectedUnusedMarking = null;
+
             var markings = _markingManager.CategorizedMarkings();
             foreach (var marking in markings[_selectedMarkingCategory])
             {
@@ -125,13 +122,16 @@ namespace Content.Client.Markings
         public List<Marking> PopulateUsed()
         {
             CMarkingsUsed.Clear();
+            CMarkingColors.Visible = false;
+            _selectedMarking = null;
+
             List<Marking> toRemove = new();
             for (var i = 0; i < _usedMarkingList.Count; i++)
             {
                 var marking = _usedMarkingList[i];
                 if (_markingManager.IsValidMarking(marking, out MarkingPrototype? newMarking))
                 {
-                    if (newMarking.SpeciesRestrictions.Contains(_currentSpecies) && !newMarking.Unrestricted)
+                    if (!newMarking.SpeciesRestrictions.Contains(_currentSpecies) && !newMarking.Unrestricted)
                     {
                         toRemove.Add(marking);
                         continue;
@@ -231,17 +231,9 @@ namespace Content.Client.Markings
         {
             _currentSpecies = species;
             var markingCount = _usedMarkingList.Count;
-            List<Marking> toRemove = new();
-            for (int i = 0; i < markingCount; i++)
-            {
-                var markingPrototype = _markingManager.Markings()[_usedMarkingList[i].MarkingId];
-                if (!markingPrototype.SpeciesRestrictions.Contains(species) && !markingPrototype.Unrestricted)
-                {
-                    toRemove.Add(_usedMarkingList[i]);
-                }
-
-            }
-
+            Populate();
+            List<Marking> toRemove = PopulateUsed();
+            
             if (toRemove.Count != 0)
             {
                 foreach (var i in toRemove)
@@ -251,9 +243,6 @@ namespace Content.Client.Markings
                 
                 OnMarkingRemoved?.Invoke(_usedMarkingList);
             }
-
-            Populate();
-            PopulateUsed();
         }
 
         private void OnCategoryChange(OptionButton.ItemSelectedEventArgs category)
