@@ -1,18 +1,6 @@
 Entries:
 - author: Peptide90
   changes:
-  - {message: 'Sad day for Cargonia. All secure crates have been buffed so your basic
-      tools won''t break them anymore,', type: Tweak}
-  id: 715
-  time: '2021-12-11T23:07:52.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Airlock access to rooms under the service department has been updated
-      to include only those who need it., type: Tweak}
-  id: 716
-  time: '2021-12-11T23:08:11.0000000+00:00'
-- author: Peptide90
-  changes:
   - {message: Improved stats of emergency suit and reduced heat resistance of fire
       suit, type: Tweak}
   - {message: Changed spawn probabilities in fire closets and emergency toolboxes.
@@ -3001,3 +2989,17 @@ Entries:
   - {message: You can no longer construct 'destroyed machine frames'., type: Tweak}
   id: 1214
   time: '2022-03-15T22:54:30.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: 'Drones now have access to the Omnitool, a T-Ray Scanner, and a satchel!',
+    type: Add}
+  - {message: Drones have 1 less available hands., type: Tweak}
+  id: 1215
+  time: '2022-03-16T01:11:30.0000000+00:00'
+- author: EmoGarbage
+  changes:
+  - {message: 'Added the Space Tick, a new salvage mob to terrorize hardworking salvage
+      specialists.', type: Add}
+  - {message: Tweaked salvage mob spawners to allow the Space Tick to generate., type: Tweak}
+  id: 1216
+  time: '2022-03-16T01:11:36.0000000+00:00'
