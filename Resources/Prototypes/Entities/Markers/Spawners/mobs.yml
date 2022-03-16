@@ -27,9 +27,9 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobCat
-      - MobCatCalico
-      - MobCatCaracal
+      - MobCatRuntime
+      - MobCatException
+      - MobCatFloppa
 
 - type: entity
   name: Corgi Spawner
@@ -98,3 +98,83 @@
   - type: ConditionalSpawner
     prototypes:
       - MobFoxRenault
+
+- type: entity
+  name: Runtime Spawner
+  id: SpawnMobCatRuntime
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatRuntime
+      
+  - type: entity
+  name: Exception Spawner
+  id: SpawnMobCatException
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatException
+
+- type: entity
+  name: Floppa Spawner
+  id: SpawnMobCatFloppa
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatFloppa
+
+- type: entity
+  name: Cat Spawner
+  id: SpawnMobCat
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatRuntime
+      - MobCatException
+      - MobCatFloppa
+
+- type: entity
+  name: Paperwork Spawner
+  id: SpawnMobPaperwork
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobPaperwork
+
+- type: entity
+  name: Bandito Spawner
+  id: SpawnMobBandito
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobBandito
