@@ -88,7 +88,24 @@ namespace Content.Client.Markings
             CMarkingRankDown.OnPressed += _ => SwapMarkingDown();
         }
 
-        private string GetMarkingName(MarkingPrototype marking) => Loc.GetString($"{marking.Name}");
+        private List<string> GetMarkingStateNames(MarkingPrototype marking)
+        {
+            List<string> result = new(); 
+            foreach (var markingState in marking.Sprites)
+            {
+                switch (markingState)
+                {
+                    case SpriteSpecifier.Rsi rsi:
+                        result.Add(Loc.GetString($"marking-{marking.ID}-{rsi.RsiState}"));
+                        break;
+                    case SpriteSpecifier.Texture texture:
+                        result.Add(Loc.GetString($"marking-{marking.ID}-{texture.TexturePath.Filename}"));
+                        break;
+                }
+            }
+
+            return result;
+        }
 
         public void Populate()
         {
@@ -98,7 +115,7 @@ namespace Content.Client.Markings
             {
                 if (_usedMarkingList.Contains(marking.AsMarking())) continue;
                 if (!marking.SpeciesRestrictions.Contains(_currentSpecies) && !marking.Unrestricted) continue;
-                var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", marking.Sprites[0].Frame0());
+                var item = CMarkingsUnused.AddItem($"{marking.Name}", marking.Sprites[0].Frame0());
                 item.Metadata = marking;
             }
         }
@@ -116,7 +133,7 @@ namespace Content.Client.Markings
                 {
                     var _item = new ItemList.Item(CMarkingsUsed)
                     {
-                        Text = $"{GetMarkingName(newMarking)} ({newMarking.MarkingCategory})", 
+                        Text = $"{newMarking.Name} ({newMarking.MarkingCategory})", 
                         Icon = newMarking.Sprites[0].Frame0(),
                         Selectable = true,
                         Metadata = newMarking,
@@ -241,6 +258,7 @@ namespace Content.Client.Markings
         {
             _selectedMarking = CMarkingsUsed[item.ItemIndex];
             var prototype = (MarkingPrototype) _selectedMarking.Metadata!;
+            var stateNames = GetMarkingStateNames(prototype);
             _currentMarkingColors.Clear();
             CMarkingColors.RemoveAllChildren();
             List<List<ColorSlider>> colorSliders = new();
@@ -258,9 +276,7 @@ namespace Content.Client.Markings
                 ColorSlider colorSliderG = new ColorSlider(StyleNano.StyleClassSliderGreen);
                 ColorSlider colorSliderB = new ColorSlider(StyleNano.StyleClassSliderBlue);
 
-                var rsi = (SpriteSpecifier.Rsi) prototype.Sprites[i];
-                var name = $"{prototype.Name}-{rsi.RsiState}";
-                colorContainer.AddChild(new Label { Text = $"{Loc.GetString(name)} color:" });
+                colorContainer.AddChild(new Label { Text = $"{stateNames[i]} color:" });
                 colorContainer.AddChild(colorSliderR);
                 colorContainer.AddChild(colorSliderG);
                 colorContainer.AddChild(colorSliderB);
@@ -318,7 +334,7 @@ namespace Content.Client.Markings
             CMarkingsUnused.Remove(_selectedUnusedMarking);
             var item = new ItemList.Item(CMarkingsUsed)
             {
-                Text = $"{GetMarkingName(marking)} ({marking.MarkingCategory})", 
+                Text = $"{marking.Name} ({marking.MarkingCategory})", 
                 Icon = marking.Sprites[0].Frame0(),
                 Selectable = true,
                 Metadata = marking,
@@ -339,7 +355,7 @@ namespace Content.Client.Markings
 
             if (marking.MarkingCategory == _selectedMarkingCategory)
             {
-                var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", marking.Sprites[0].Frame0());
+                var item = CMarkingsUnused.AddItem($"{marking.Name}", marking.Sprites[0].Frame0());
                 item.Metadata = marking;
             }
             _selectedMarking = null;
