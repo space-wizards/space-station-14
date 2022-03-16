@@ -1,4 +1,6 @@
-﻿<Control xmlns="https://spacestation14.io">
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:pt="clr-namespace:Content.Client.Administration.UI.Tabs.PlayerTab"
+         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Name="PlayerCount" HorizontalExpand="True" SizeFlagsStretchRatio="0.50"
@@ -10,7 +12,10 @@
         </BoxContainer>
         <Control MinSize="0 5" />
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
-            <BoxContainer Orientation="Vertical" Name="PlayerList" />
+            <BoxContainer Orientation="Vertical" Name="PlayerList">
+                <pt:PlayerTabHeader Name="ListHeader" />
+                <cc:HSeparator />
+            </BoxContainer>
         </ScrollContainer>
     </BoxContainer>
 </Control>
