@@ -291,9 +291,9 @@ namespace Content.Client.Markings
                 colorContainer.AddChild(colorSliderB);
 
                 var currentColor = new Color(
-                    _usedMarkingList[item.ItemIndex].MarkingColors[i].RByte,
-                    _usedMarkingList[item.ItemIndex].MarkingColors[i].GByte,
-                    _usedMarkingList[item.ItemIndex].MarkingColors[i].BByte
+                    _usedMarkingList[_usedMarkingList.Count - 1 - item.ItemIndex].MarkingColors[i].RByte,
+                    _usedMarkingList[_usedMarkingList.Count - 1 - item.ItemIndex].MarkingColors[i].GByte,
+                    _usedMarkingList[_usedMarkingList.Count - 1 - item.ItemIndex].MarkingColors[i].BByte
                 );
                 _currentMarkingColors.Add(currentColor);
                 int colorIndex = _currentMarkingColors.IndexOf(currentColor);
