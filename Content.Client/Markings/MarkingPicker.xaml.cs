@@ -129,8 +129,14 @@ namespace Content.Client.Markings
             for (var i = 0; i < _usedMarkingList.Count; i++)
             {
                 var marking = _usedMarkingList[i];
-                if (_markingManager.IsValidMarking(marking, out MarkingPrototype? newMarking) && newMarking.SpeciesRestrictions.Contains(_currentSpecies))
+                if (_markingManager.IsValidMarking(marking, out MarkingPrototype? newMarking))
                 {
+                    if (newMarking.SpeciesRestrictions.Contains(_currentSpecies) && !newMarking.Unrestricted)
+                    {
+                        toRemove.Add(marking);
+                        continue;
+                    }
+
                     var _item = new ItemList.Item(CMarkingsUsed)
                     {
                         Text = $"{newMarking.Name} ({newMarking.MarkingCategory})", 
@@ -218,6 +224,9 @@ namespace Content.Client.Markings
 
         // repopulate in case markings are restricted,
         // and also filter out any markings that are now invalid
+        // attempt to preserve any existing markings as well:
+        // it would be frustrating to otherwise have all markings
+        // cleared, imo
         public void SetSpecies(string species)
         {
             _currentSpecies = species;
@@ -226,7 +235,7 @@ namespace Content.Client.Markings
             for (int i = 0; i < markingCount; i++)
             {
                 var markingPrototype = _markingManager.Markings()[_usedMarkingList[i].MarkingId];
-                if (!markingPrototype.SpeciesRestrictions.Contains(species))
+                if (!markingPrototype.SpeciesRestrictions.Contains(species) && !markingPrototype.Unrestricted)
                 {
                     toRemove.Add(_usedMarkingList[i]);
                 }
