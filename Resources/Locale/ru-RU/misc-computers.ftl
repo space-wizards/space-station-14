@@ -1,1 +1,1 @@
-radar-window-title = Mass Scanner Console
+radar-window-title = Терминал детектора масс

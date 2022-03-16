@@ -1,6 +1,6 @@
-ent-CrateArmorySMG = smg crate
-    .desc = Contains two high-powered, semiautomatic rifles with six mags. Requires Armory access to open.
+ent-CrateArmorySMG = ящик с ПП
+    .desc = Содержит два мощных пистолета-пулемёта и шесть магазинов. Чтобы открыть необходим доступ к Оружейной.
     .suffix = { "" }
-ent-CrateArmoryShotgun = shotgun crate
-    .desc = For when the enemy absolutely needs to be replaced with lead. Contains two Gladstone Combat Shotguns, and some standard shotgun shells. Requires Armory access to open.
+ent-CrateArmoryShotgun = ящик с дробовиками
+    .desc = Когда необходимо нашпиговать врага свинцом. Содержит два дробовика Глэдстоун, и немного обычных ружейных патронов. Чтобы открыть необходим доступ к Оружейной.
     .suffix = { "" }

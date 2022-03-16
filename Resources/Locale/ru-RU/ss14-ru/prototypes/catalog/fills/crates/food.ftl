@@ -1,3 +1,3 @@
-ent-CrateFoodPizza = emergency pizza delivery
-    .desc = Help do your part to end station hunger by distributing pizza to underfunded departments!
+ent-CrateFoodPizza = экстренная доставка пиццы
+    .desc = Внесите свой вклад в борьбу с голодом на станции, доставляя пиццу в отделы с недостаточным финансированием!
     .suffix = { "" }
