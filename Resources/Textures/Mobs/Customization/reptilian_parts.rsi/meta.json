@@ -39,6 +39,22 @@
             "name": "tail_ltiger_behind",
             "directions": 4
         },
+	{
+	    "name": "tail_smooth",
+	    "directions": 4
+	},
+	{
+	    "name": "tail_spikes",
+	    "directions": 4
+	},
+	{
+	    "name": "tail_dtiger",
+	    "directions": 4
+	},
+	{
+	    "name": "tail_ltiger",
+	    "directions": 4
+	},
         {
             "name": "snout_round",
             "directions": 4

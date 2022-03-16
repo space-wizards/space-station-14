@@ -121,7 +121,7 @@
     layers:
       - map: [ "enum.HumanoidVisualLayers.TailBehind" ]
         color: "#34a223"
-        state: tail_smooth_behind
+        state: tail_smooth
         sprite: Mobs/Customization/reptilian_parts.rsi
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
         color: "#34a223"
@@ -192,10 +192,6 @@
       - map: [ "ears" ]
       - map: [ "outerClothing" ]
       - map: [ "eyes" ]
-      - map: [ "enum.HumanoidVisualLayers.TailFront" ]
-        color: "#34a223"
-        state: tail_smooth_front
-        sprite: Mobs/Customization/reptilian_parts.rsi
       - map: [ "belt" ]
       - map: [ "neck" ]
       - map: [ "back" ]
