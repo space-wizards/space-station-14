@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Clickable;
 using Robust.Client.GameObjects;
@@ -9,14 +7,11 @@ using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Viewport
+namespace Content.Client.Gameplay
 {
     // OH GOD.
     // Ok actually it's fine.

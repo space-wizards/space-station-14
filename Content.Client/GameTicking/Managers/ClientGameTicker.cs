@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
 using Content.Client.Viewport;

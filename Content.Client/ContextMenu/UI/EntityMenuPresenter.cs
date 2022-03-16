@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Examine;
+using Content.Client.Gameplay;
 using Content.Client.Verbs;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;

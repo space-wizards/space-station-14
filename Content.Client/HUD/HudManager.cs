@@ -1,46 +1,53 @@
-﻿using Content.Client.Alerts.UI;
-using Content.Client.Chat;
-using Content.Client.Chat.Managers;
-using Content.Client.Chat.UI;
-using Content.Client.Construction.UI;
-using Content.Client.Hands;
-using Content.Client.HUD;
-using Content.Client.HUD.UI;
-using Content.Client.Voting;
-using Content.Shared.Chat;
-using Content.Shared.CCVar;
-using Robust.Client.Graphics;
-using Robust.Client.Input;
+﻿using Content.Client.Options.UI;
+using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Reflection;
 using Robust.Shared.Sandboxing;
-using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Viewport;
+namespace Content.Client.HUD;
 
-public interface IGameHud
+
+public interface IHudManager
 {
+    public void Initialize();
+    public void Startup();
+    public void Shutdown();
+    public void ShowUIWidget<T>(bool enabled) where T : HudWidget;
     public void AddGameHudWidget<T>() where T : HudWidget;
     public void RemoveGameHudWidget<T>() where T : HudWidget;
     public T? GetUIWidget<T>() where T : HudWidget;
+    public EscapeMenu? EscapeMenu { get; }
+
 }
 
-public sealed partial class GameplayState : IGameHud
+public sealed class HudManager  : IHudManager
 {
-    public GameplayState()
+    [Dependency] private readonly ISandboxHelper _sandboxHelper = default!;
+    [Dependency] private readonly IReflectionManager _reflectionManager = default!;
+    [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+
+    private readonly Dictionary<System.Type, Control?> _gameHudWidgets = new();
+
+    public LayoutContainer? StateRoot => _userInterfaceManager.StateRoot;
+
+    private EscapeMenu? _escapeMenu = default!;
+
+    //if escape menu is null create a new escape menu
+    public EscapeMenu? EscapeMenu => _escapeMenu ?? new EscapeMenu(_consoleHost);
+
+    public HudManager()
+    {
+        IoCManager.InjectDependencies(this);
+    }
+
+    public void Initialize()
     {
         RegisterHudWidgets();
     }
-    [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 
-    private readonly Dictionary<System.Type, Control?> _gameHudWidgets = new();
-    private void InitializeGameHud()
+    public void Startup()
     {
         foreach (var key in _gameHudWidgets.Keys)
         {
@@ -50,13 +57,24 @@ public sealed partial class GameplayState : IGameHud
             _gameHudWidgets[key] = control;
             _userInterfaceManager.StateRoot.AddChild(control);
         }
+        _escapeMenu = new EscapeMenu(_consoleHost);
     }
-    private void ShutDownGameHud()
+
+    public void Shutdown()
     {
         foreach (var widgetData in _gameHudWidgets)
         {
             Internal_RemoveHudWidget(widgetData.Key);
         }
+
+        _escapeMenu?.Dispose();
+    }
+
+    public void ShowUIWidget<T>(bool enabled) where T : HudWidget
+    {
+        var widget = _gameHudWidgets[typeof(T)];
+        if (widget == null) return;
+        widget.Visible = enabled;
     }
 
     //uses reflection to automatically register all widget types to the hud
@@ -74,8 +92,6 @@ public sealed partial class GameplayState : IGameHud
     //adds a new hud widget to the hud
     public void AddGameHudWidget<T>() where T : HudWidget
     {
-        if (!Initialized) throw new System.Exception("Tried to add a widget before GameHud was initialized!");
-
         if (_gameHudWidgets.ContainsKey(typeof(T)))
         {
             //if the widget is registered with the hud but not initialized, initialize it
@@ -96,7 +112,7 @@ public sealed partial class GameplayState : IGameHud
         //return out if the control is null
         if (widget == null) return;
         _userInterfaceManager.StateRoot.RemoveChild(widget);
-        widget?.Dispose();
+        widget.Dispose();
     }
 
     //Remove a widget from the game hud

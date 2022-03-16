@@ -1,4 +1,5 @@
 ﻿using Content.Client.Chat.UI;
+using Content.Client.Gameplay;
 using Content.Client.Viewport;
 using Content.Shared.Chat;
 using Content.Shared.Input;

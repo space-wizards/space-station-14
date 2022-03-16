@@ -3,9 +3,9 @@ using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.CharacterInterface;
 using Content.Client.Chat.Managers;
-using Content.Client.EscapeMenu;
 using Content.Client.Eui;
 using Content.Client.Flash;
+using Content.Client.Gameplay;
 using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.Input;
@@ -43,6 +43,7 @@ using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -56,82 +57,93 @@ namespace Content.Client.Entry
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
-        [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner = default!;
         [Dependency] private readonly IGameController _gameController = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IComponentFactory _componentFactory = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IClientAdminManager _adminManager = default!;
+        [Dependency] private readonly IParallaxManager _parallaxManager = default!;
+        [Dependency] private readonly IStylesheetManager _stylesheetManager = default!;
+        [Dependency] private readonly IScreenshotHook _screenshotHook = default!;
+        [Dependency] private readonly ChangelogManager _changelogManager = default!;
+        [Dependency] private readonly RulesManager _rulesManager = default!;
+        [Dependency] private readonly ViewportManager _viewportManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IOverlayManager _overlayManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IClientPreferencesManager _clientPreferencesManager = default!;
+        [Dependency] private readonly IStationEventManager _stationEventManager = default!;
+        [Dependency] private readonly EuiManager _euiManager = default!;
+        [Dependency] private readonly IVoteManager _voteManager = default!;
+        [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
 
         public override void Init()
         {
-            var factory = IoCManager.Resolve<IComponentFactory>();
-            var prototypes = IoCManager.Resolve<IPrototypeManager>();
+            ClientContentIoC.Register();
+            IoCManager.BuildGraph();
+            IoCManager.InjectDependencies(this);
 
-            factory.DoAutoRegistrations();
+            _componentFactory.DoAutoRegistrations();
 
             foreach (var ignoreName in IgnoredComponents.List)
             {
-                factory.RegisterIgnore(ignoreName);
+                _componentFactory.RegisterIgnore(ignoreName);
             }
 
-            factory.RegisterClass<SharedResearchConsoleComponent>();
-            factory.RegisterClass<SharedLatheComponent>();
-            factory.RegisterClass<SharedSpawnPointComponent>();
-            factory.RegisterClass<SharedVendingMachineComponent>();
-            factory.RegisterClass<SharedWiresComponent>();
-            factory.RegisterClass<SharedCargoConsoleComponent>();
-            factory.RegisterClass<SharedReagentDispenserComponent>();
-            factory.RegisterClass<SharedChemMasterComponent>();
-            factory.RegisterClass<SharedGravityGeneratorComponent>();
-            factory.RegisterClass<SharedAMEControllerComponent>();
+            _componentFactory.RegisterClass<SharedResearchConsoleComponent>();
+            _componentFactory.RegisterClass<SharedLatheComponent>();
+            _componentFactory.RegisterClass<SharedSpawnPointComponent>();
+            _componentFactory.RegisterClass<SharedVendingMachineComponent>();
+            _componentFactory.RegisterClass<SharedWiresComponent>();
+            _componentFactory.RegisterClass<SharedCargoConsoleComponent>();
+            _componentFactory.RegisterClass<SharedReagentDispenserComponent>();
+            _componentFactory.RegisterClass<SharedChemMasterComponent>();
+            _componentFactory.RegisterClass<SharedGravityGeneratorComponent>();
+            _componentFactory.RegisterClass<SharedAMEControllerComponent>();
 
-            prototypes.RegisterIgnore("accent");
-            prototypes.RegisterIgnore("material");
-            prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
-            prototypes.RegisterIgnore("gasReaction");
-            prototypes.RegisterIgnore("seed"); // Seeds prototypes are server-only.
-            prototypes.RegisterIgnore("barSign");
-            prototypes.RegisterIgnore("objective");
-            prototypes.RegisterIgnore("holiday");
-            prototypes.RegisterIgnore("aiFaction");
-            prototypes.RegisterIgnore("gameMap");
-            prototypes.RegisterIgnore("behaviorSet");
-            prototypes.RegisterIgnore("advertisementsPack");
-            prototypes.RegisterIgnore("metabolizerType");
-            prototypes.RegisterIgnore("metabolismGroup");
-            prototypes.RegisterIgnore("salvageMap");
-            prototypes.RegisterIgnore("gamePreset");
-            prototypes.RegisterIgnore("gameRule");
-            prototypes.RegisterIgnore("worldSpell");
-            prototypes.RegisterIgnore("entitySpell");
-            prototypes.RegisterIgnore("instantSpell");
-
-            ClientContentIoC.Register();
+            _prototypeManager.RegisterIgnore("accent");
+            _prototypeManager.RegisterIgnore("material");
+            _prototypeManager.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
+            _prototypeManager.RegisterIgnore("gasReaction");
+            _prototypeManager.RegisterIgnore("seed"); // Seeds prototypes are server-only.
+            _prototypeManager.RegisterIgnore("barSign");
+            _prototypeManager.RegisterIgnore("objective");
+            _prototypeManager.RegisterIgnore("holiday");
+            _prototypeManager.RegisterIgnore("aiFaction");
+            _prototypeManager.RegisterIgnore("gameMap");
+            _prototypeManager.RegisterIgnore("behaviorSet");
+            _prototypeManager.RegisterIgnore("advertisementsPack");
+            _prototypeManager.RegisterIgnore("metabolizerType");
+            _prototypeManager.RegisterIgnore("metabolismGroup");
+            _prototypeManager.RegisterIgnore("salvageMap");
+            _prototypeManager.RegisterIgnore("gamePreset");
+            _prototypeManager.RegisterIgnore("gameRule");
+            _prototypeManager.RegisterIgnore("worldSpell");
+            _prototypeManager.RegisterIgnore("entitySpell");
+            _prototypeManager.RegisterIgnore("instantSpell");
 
             foreach (var callback in TestingCallbacks)
             {
                 var cast = (ClientModuleTestingCallbacks) callback;
                 cast.ClientBeforeIoC?.Invoke();
             }
+            _componentFactory.GenerateNetIds();
 
-            IoCManager.BuildGraph();
-            factory.GenerateNetIds();
-
-            IoCManager.Resolve<IClientAdminManager>().Initialize();
-            IoCManager.Resolve<IParallaxManager>().LoadParallax();
-            IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
-            IoCManager.Resolve<IStylesheetManager>().Initialize();
-            IoCManager.Resolve<IScreenshotHook>().Initialize();
-            IoCManager.Resolve<ChangelogManager>().Initialize();
-            IoCManager.Resolve<RulesManager>().Initialize();
-            IoCManager.Resolve<ViewportManager>().Initialize();
-
-            IoCManager.InjectDependencies(this);
-
-            _escapeMenuOwner.Initialize();
+            _adminManager.Initialize();
+            _parallaxManager.LoadParallax();
+            _baseClient.PlayerJoinedServer += SubscribePlayerAttachmentEvents;
+            _stylesheetManager.Initialize();
+            _screenshotHook.Initialize();
+            _changelogManager.Initialize();
+            _rulesManager.Initialize();
+            _viewportManager.Initialize();
 
             _baseClient.PlayerJoinedServer += (_, _) =>
             {
-                IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
+                _mapManager.CreateNewMapEntity(MapId.Nullspace);
             };
         }
 
@@ -175,26 +187,20 @@ namespace Content.Client.Entry
             base.PostInit();
 
             // Setup key contexts
-            var inputMan = IoCManager.Resolve<IInputManager>();
-            ContentContexts.SetupContexts(inputMan.Contexts);
+            ContentContexts.SetupContexts(_inputManager.Contexts);
+            _overlayManager.AddOverlay(new ParallaxOverlay());
+            _overlayManager.AddOverlay(new SingularityOverlay());
+            _overlayManager.AddOverlay(new CritOverlay()); //Hopefully we can cut down on this list... don't see why a death overlay needs to be instantiated here.
+            _overlayManager.AddOverlay(new CircleMaskOverlay());
+            _overlayManager.AddOverlay(new FlashOverlay());
+            _overlayManager.AddOverlay(new RadiationPulseOverlay());
 
-            IoCManager.Resolve<IGameHud>().Initialize();
-
-            var overlayMgr = IoCManager.Resolve<IOverlayManager>();
-            overlayMgr.AddOverlay(new ParallaxOverlay());
-            overlayMgr.AddOverlay(new SingularityOverlay());
-            overlayMgr.AddOverlay(new CritOverlay()); //Hopefully we can cut down on this list... don't see why a death overlay needs to be instantiated here.
-            overlayMgr.AddOverlay(new CircleMaskOverlay());
-            overlayMgr.AddOverlay(new FlashOverlay());
-            overlayMgr.AddOverlay(new RadiationPulseOverlay());
-
-            IoCManager.Resolve<IChatManager>().Initialize();
-            IoCManager.Resolve<IClientPreferencesManager>().Initialize();
-            IoCManager.Resolve<IStationEventManager>().Initialize();
-            IoCManager.Resolve<EuiManager>().Initialize();
-            IoCManager.Resolve<IVoteManager>().Initialize();
-            IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
-
+            _chatManager.Initialize();
+            _clientPreferencesManager.Initialize();
+            _stationEventManager.Initialize();
+            _euiManager.Initialize();
+            _voteManager.Initialize();
+            _gamePrototypeLoadManager.Initialize();
             _baseClient.RunLevelChanged += (_, args) =>
             {
                 if (args.NewLevel == ClientRunLevel.Initialize)
@@ -205,7 +211,7 @@ namespace Content.Client.Entry
             };
 
             // Disable engine-default viewport since we use our own custom viewport control.
-            IoCManager.Resolve<IUserInterfaceManager>().MainViewport.Visible = false;
+            _userInterfaceManager.MainViewport.Visible = false;
 
             SwitchToDefaultState();
         }
@@ -238,7 +244,7 @@ namespace Content.Client.Entry
             {
                 case ModUpdateLevel.FramePreEngine:
                     // TODO: Turn IChatManager into an EntitySystem and remove the line below.
-                    IoCManager.Resolve<IChatManager>().FrameUpdate(frameEventArgs);
+                    _chatManager.FrameUpdate(frameEventArgs);
                     break;
             }
         }

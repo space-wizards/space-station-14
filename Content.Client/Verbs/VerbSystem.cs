@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
+using Content.Client.Gameplay;
 using Content.Client.Popups;
 using Content.Client.Verbs.UI;
 using Content.Client.Viewport;

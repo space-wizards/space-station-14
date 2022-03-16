@@ -8,7 +8,7 @@ namespace Content.Client.HUD;
 //stop people from trying to hardcode widgets :D, use XAML!
 public abstract class HudWidget : Control
 {
-    [Dependency] protected IGameHud GameHud = default!;
+    [Dependency] protected IHudManager HudManager = default!;
     protected HudWidget()
     {
         IoCManager.InjectDependencies(this);

@@ -6,24 +6,24 @@ using Content.Client.Construction.UI;
 using Content.Client.Hands;
 using Content.Client.HUD;
 using Content.Client.HUD.UI;
+using Content.Client.Viewport;
 using Content.Client.Voting;
-using Content.Shared.Chat;
 using Content.Shared.CCVar;
+using Content.Shared.Chat;
+using Robust.Client.Console;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+using Robust.Shared.Reflection;
 using Robust.Shared.Sandboxing;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Viewport
+namespace Content.Client.Gameplay
 {
-    public sealed partial class GameplayState : GamePlayStateBase, IMainViewportState
+    public sealed class GameplayState : GamePlayStateBase, IMainViewportState
     {
         public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
 
@@ -31,11 +31,11 @@ namespace Content.Client.Viewport
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
+        [Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly ISandboxHelper _sandboxHelper = default!;
 
         [ViewVariables] private ChatBox? _gameChat;
         private ConstructionMenuPresenter? _constructionMenu;
@@ -43,6 +43,12 @@ namespace Content.Client.Viewport
         private FpsCounter _fpsCounter = default!;
 
         public MainViewport Viewport { get; private set; } = default!;
+
+        public GameplayState()
+        {
+            IoCManager.InjectDependencies(this);
+            _hudManager.Initialize();
+        }
 
         public override void Startup()
         {
@@ -83,8 +89,8 @@ namespace Content.Client.Viewport
             _userInterfaceManager.StateRoot.AddChild(_fpsCounter);
             _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
             _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
+            _hudManager.Startup();
 
-            InitializeGameHud();
         }
 
         public override void Shutdown()
@@ -99,7 +105,7 @@ namespace Content.Client.Viewport
             // Clear viewport to some fallback, whatever.
             _eyeManager.MainViewport = _userInterfaceManager.MainViewport;
             _fpsCounter.Dispose();
-            ShutDownGameHud();
+            _hudManager.Shutdown();
         }
 
         /// <summary>

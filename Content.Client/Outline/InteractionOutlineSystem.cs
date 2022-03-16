@@ -1,4 +1,5 @@
 using Content.Client.ContextMenu.UI;
+using Content.Client.Gameplay;
 using Content.Client.Interactable;
 using Content.Client.Interactable.Components;
 using Content.Client.Viewport;

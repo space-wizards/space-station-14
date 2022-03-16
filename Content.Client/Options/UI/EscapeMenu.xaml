@@ -1,6 +1,7 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:changelog="clr-namespace:Content.Client.Changelog"
             xmlns:ui="clr-namespace:Content.Client.Voting.UI"
+            xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
             Title="{Loc 'ui-escape-title'}"
             Resizable="False">
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Chat.UI;
+using Content.Client.Gameplay;
 using Content.Client.Ghost;
 using Content.Client.Viewport;
 using Content.Shared.Administration;

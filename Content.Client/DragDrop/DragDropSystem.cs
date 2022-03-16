@@ -1,3 +1,4 @@
+using Content.Client.Gameplay;
 using Content.Client.Outline;
 using Content.Client.Viewport;
 using Content.Shared.ActionBlocker;

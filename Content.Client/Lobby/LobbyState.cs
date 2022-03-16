@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
-using Content.Client.EscapeMenu.UI;
 using Content.Client.GameTicking.Managers;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
@@ -25,6 +24,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using Content.Client.Options.UI;
+
 
 namespace Content.Client.Lobby
 {

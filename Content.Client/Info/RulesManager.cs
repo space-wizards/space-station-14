@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;

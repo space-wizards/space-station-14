@@ -2,8 +2,9 @@
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
-using Content.Client.EscapeMenu;
+using Content.Client.Options;
 using Content.Client.Eui;
+using Content.Client.Gameplay;
 using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.Items.Managers;
@@ -25,10 +26,9 @@ namespace Content.Client.IoC
     {
         public static void Register()
         {
-            IoCManager.Register<IGameHud, GameplayState>();
+            IoCManager.Register<IHudManager, HudManager>();
             IoCManager.Register<IParallaxManager, ParallaxManager>();
             IoCManager.Register<IChatManager, ChatManager>();
-            IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();
             IoCManager.Register<IModuleManager, ClientModuleManager>();
             IoCManager.Register<IClientPreferencesManager, ClientPreferencesManager>();
             IoCManager.Register<IItemSlotManager, ItemSlotManager>();
