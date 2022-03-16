@@ -18,7 +18,6 @@ namespace Content.Client.CloningConsole.UI
         public CloningConsoleWindow()
         {
             RobustXamlLoader.Load(this);
-
         }
         private CloningConsoleBoundUserInterfaceState? _lastUpdate;
         private List<string> _historyManager = default!;
@@ -157,7 +156,6 @@ namespace Content.Client.CloningConsole.UI
         {
             public string CloneName { get; set; } = default!;
             public Label EntityLabel { get; private set; }
-            public TextureRect EntityTextureRect { get; private set; }
             public int Index { get; set; }
 
             public HistoryRow()
@@ -167,14 +165,6 @@ namespace Content.Client.CloningConsole.UI
                     Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
-                        (EntityTextureRect = new TextureRect
-                        {
-                            MinSize = (32, 32),
-                            HorizontalAlignment = HAlignment.Center,
-                            VerticalAlignment = VAlignment.Center,
-                            Stretch = TextureRect.StretchMode.KeepAspectCentered,
-                            CanShrink = true
-                        }),
                         (EntityLabel = new Label
                         {
                             VerticalAlignment = VAlignment.Center,
