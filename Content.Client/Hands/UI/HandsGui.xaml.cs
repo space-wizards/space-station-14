@@ -20,10 +20,10 @@ using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Hands
+namespace Content.Client.Hands.UI
 {
     [GenerateTypedNameReferences]
-    public sealed partial class HandsGui : Control
+    public sealed partial class HandsGui : HudWidget
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;

@@ -22,6 +22,7 @@ namespace Content.Client.Items.UI
         private const string HighlightShader = "SelectionOutlineInrange";
 
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+        [Dependency] private readonly IHudManager _hudManager = default!;
 
         public EntityUid? Entity { get; set; }
         public TextureRect Button { get; }
@@ -42,7 +43,7 @@ namespace Content.Client.Items.UI
         private string _textureName;
         private string _storageTextureName;
 
-        public ItemSlotButton(int size, string textureName, string storageTextureName, IGameHud gameHud)
+        public ItemSlotButton(int size, string textureName, string storageTextureName)
         {
             _textureName = textureName;
             _storageTextureName = storageTextureName;

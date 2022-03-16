@@ -23,7 +23,7 @@ namespace Content.Client.Hands
     public sealed class HandsSystem : SharedHandsSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override void Initialize()

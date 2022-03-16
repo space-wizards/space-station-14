@@ -5,6 +5,7 @@ using Content.Client.Examine;
 using Content.Client.HUD.UI;
 using Content.Client.Resources;
 using Content.Client.Targeting;
+using Content.Client.Targeting.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
 using Content.Shared.Verbs;

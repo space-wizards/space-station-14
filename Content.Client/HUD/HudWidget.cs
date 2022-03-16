@@ -1,14 +1,17 @@
 ﻿using Content.Client.Viewport;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.HUD;
 
 
 [Virtual]
 //stop people from trying to hardcode widgets :D, use XAML!
-public abstract class HudWidget : Control
+public abstract class HudWidget : BoxContainer
 {
-    [Dependency] protected IHudManager HudManager = default!;
+    [Dependency] protected readonly IHudManager HudManager = default!;
+
+    protected LayoutContainer? RootContainer => HudManager.StateRoot;
     protected HudWidget()
     {
         IoCManager.InjectDependencies(this);

@@ -1,9 +1,18 @@
-﻿using Content.Client.Options.UI;
+﻿using System.Linq;
+using Content.Client.Options.UI;
+using Content.Client.Resources;
+using Content.Shared.CCVar;
+using Content.Shared.HUD;
 using Robust.Client.Console;
+using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Sandboxing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.HUD;
 
@@ -13,6 +22,7 @@ public interface IHudManager
     public void Initialize();
     public void Startup();
     public void Shutdown();
+    public LayoutContainer? StateRoot { get; }
     public void ShowUIWidget<T>(bool enabled) where T : HudWidget;
     public void AddGameHudWidget<T>() where T : HudWidget;
     public void RemoveGameHudWidget<T>() where T : HudWidget;
@@ -27,9 +37,11 @@ public sealed class HudManager  : IHudManager
     [Dependency] private readonly IReflectionManager _reflectionManager = default!;
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IResourceCache _resourceCache = default!;
 
     private readonly Dictionary<System.Type, Control?> _gameHudWidgets = new();
-
     public LayoutContainer? StateRoot => _userInterfaceManager.StateRoot;
 
     private EscapeMenu? _escapeMenu = default!;
@@ -87,6 +99,38 @@ public sealed class HudManager  : IHudManager
                 _gameHudWidgets[widgetType] = null;
             }
         }
+    }
+
+    public bool ValidateHudTheme(int idx)
+    {
+        if (!_prototypeManager.TryIndex(idx.ToString(), out HudThemePrototype? _))
+        {
+            Logger.ErrorS("hud", "invalid HUD theme id {0}, using different theme",
+                idx);
+            var proto = _prototypeManager.EnumeratePrototypes<HudThemePrototype>().FirstOrDefault();
+            if (proto == null)
+            {
+                throw new NullReferenceException("No valid HUD prototypes!");
+            }
+            var id = int.Parse(proto.ID);
+            _configManager.SetCVar(CCVars.HudTheme, id);
+            return false;
+        }
+        return true;
+    }
+
+    public Texture GetHudTexture(string path)
+    {
+        var id = _configManager.GetCVar<int>("hud.theme");
+        var dir = string.Empty;
+        if (!_prototypeManager.TryIndex(id.ToString(), out HudThemePrototype? proto))
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+        dir = proto.Path;
+
+        var resourcePath = (new ResourcePath("/Textures/Interface/Inventory") / dir) / path;
+        return _resourceCache.GetTexture(resourcePath);
     }
 
     //adds a new hud widget to the hud

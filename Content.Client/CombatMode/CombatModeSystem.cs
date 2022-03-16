@@ -1,3 +1,4 @@
+using Content.Client.CombatMode.UI;
 using Content.Client.HUD;
 using Content.Shared.CombatMode;
 using Content.Shared.Targeting;
@@ -12,14 +13,15 @@ namespace Content.Client.CombatMode
     [UsedImplicitly]
     public sealed class CombatModeSystem : SharedCombatModeSystem
     {
-        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IHudManager _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-
+        private CombatPanel? _combatPanel;
         public override void Initialize()
         {
             base.Initialize();
-
-            _gameHud.OnTargetingZoneChanged = OnTargetingZoneChanged;
+            _combatPanel = _gameHud.GetUIWidget<CombatPanel>();
+            if (_combatPanel == null) throw  new SystemException("Combat panel not found, cannot setup targeting!");
+            _combatPanel.OnTargetZoneChanged += OnTargetingZoneChanged;
 
             SubscribeLocalEvent<CombatModeComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());
             SubscribeLocalEvent<CombatModeComponent, PlayerDetachedEvent>((_, component, _) => component.PlayerDetached());
