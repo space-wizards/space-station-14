@@ -1,21 +1,4 @@
 Entries:
-- author: Sergal
-  changes:
-  - {message: Punching now actually sounds like punching., type: Add}
-  - {message: 'Everything that is considered a melee weapon now has more sound variations,
-      smack!', type: Add}
-  id: 718
-  time: '2021-12-11T23:12:40.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Unlit welders no longer deal burn damage when used in melee., type: Fix}
-  id: 719
-  time: '2021-12-11T23:12:48.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Admins can now create custom game objects on the fly., type: Add}
-  id: 720
-  time: '2021-12-11T23:28:16.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: The Chef on Packed now has a full container of Universal Enzyme., type: Tweak}
@@ -3000,3 +2983,21 @@ Entries:
   - {message: Added a variation of the cute bee plushie, type: Add}
   id: 1217
   time: '2022-03-16T18:42:08.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: 'Due to a budget oversight, SS14 is now equipped with rotatable arcade
+      machines.', type: Fix}
+  id: 1218
+  time: '2022-03-16T21:30:05.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: 'Due to a budgetary oversight, possums and raccoons are now smaller.
+      Also Ferrets are a little bigger.', type: Tweak}
+  id: 1219
+  time: '2022-03-16T21:30:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed gas tank UIs not showing the current output pressure when opened.,
+    type: Fix}
+  id: 1220
+  time: '2022-03-16T21:30:40.0000000+00:00'
