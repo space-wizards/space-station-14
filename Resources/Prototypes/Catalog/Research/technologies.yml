@@ -119,6 +119,7 @@
     - VaccinatorMachineCircuitboard
     - DiagnoserMachineCircuitboard
     - HandheldCrewMonitor
+    - CloningConsoleComputerCircuitboard
 
 # Security Technology Tree
 
@@ -326,7 +327,7 @@
     - SolarControlComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
     - GeneratorUraniumMachineCircuitboard
-    
+
 - type: technology
   name: "compact power technology"
   id: CompactPowerTechnology

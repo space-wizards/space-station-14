@@ -243,6 +243,7 @@
       - ShuttleConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
+      - CloningConsoleComputerCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
 
