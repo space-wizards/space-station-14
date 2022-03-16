@@ -106,7 +106,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
 
         private int Compare(string x, string y)
         {
-            return string.Compare(x, y, StringComparison.Ordinal);
+            return string.Compare(x, y, StringComparison.OrdinalIgnoreCase);
         }
 
         private void HeaderClicked(Header header)
