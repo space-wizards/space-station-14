@@ -16,3 +16,6 @@ ent-SpawnMobRaccoonMorticia = Raccoon Morticia Spawner
 ent-SpawnMobDrone = Drone Spawner
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
+ent-SpawnMobFoxRenault = Fox Renault Spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = { "" }

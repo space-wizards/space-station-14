@@ -28,3 +28,6 @@ ent-RadiateArtifact = { ent-BaseXenoArtifact }
 ent-GasArtifact = { ent-BaseXenoArtifact }
     .suffix = Gas
     .desc = { ent-BaseXenoArtifact.desc }
+ent-DiseaseArtifact = { ent-BaseXenoArtifact }
+    .suffix = Disease
+    .desc = { ent-BaseXenoArtifact.desc }

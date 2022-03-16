@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Drone;
 using Content.Server.Drone.Components;
 using Content.Shared.Actions;
@@ -88,9 +89,16 @@ namespace Content.Server.Drone
             {
                 var body = Comp<SharedBodyComponent>(uid); //There's no way something can have a mobstate but not a body...
 
-                foreach (var item in drone.ToolUids)
+                foreach (var item in drone.ToolUids.Select((value, i) => ( value, i )))
                 {
-                    EntityManager.DeleteEntity(item);
+                    if (_tagSystem.HasTag(item.value, "Drone"))
+                    {
+                        RemComp<UnremoveableComponent>(item.value);
+                    }
+                    else
+                    {
+                        EntityManager.DeleteEntity(item.value);
+                    }
                 }
                 body.Gib();
                 EntityManager.DeleteEntity(uid);
@@ -111,12 +119,12 @@ namespace Content.Server.Drone
                 if (TryComp<HandsComponent>(uid, out var hands) && hands.Count >= drone.Tools.Count)
                 {
                    foreach (var entry in drone.Tools)
-                    {
-                        var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
-                        AddComp<UnremoveableComponent>(item);
-                        hands.PutInHand(item);
-                        drone.ToolUids.Add(item);
-                    }
+                   {
+                       var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
+                       AddComp<UnremoveableComponent>(item);
+                       hands.PutInHand(item);
+                       drone.ToolUids.Add(item);
+                   }
                 }
 
                 if (TryComp<ActionsComponent>(uid, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))

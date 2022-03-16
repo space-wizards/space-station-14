@@ -71,18 +71,33 @@
     sprite: Clothing/Hands/Gloves/ihscombat.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/ihscombat.rsi
-
+#### Medical
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesLatex
   name: latex gloves
-  description: Thin sterile latex gloves.
+  description: Thin sterile latex gloves. Basic PPE for any doctor.
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/latex.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/latex.rsi
+  - type: DiseaseProtection
+    protection: 0.1
 
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesNitrile
+  name: nitrile gloves
+  description: High-quality nitrile gloves. Expensive medical PPE.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/blue.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/blue.rsi
+  - type: DiseaseProtection
+    protection: 0.15
+####
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesLeather

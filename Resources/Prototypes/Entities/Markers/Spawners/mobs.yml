@@ -85,3 +85,16 @@
   - type: ConditionalSpawner
     prototypes:
       - Drone
+
+- type: entity
+  name: Fox Renault Spawner
+  id: SpawnMobFoxRenault
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobFoxRenault

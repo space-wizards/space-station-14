@@ -1,7 +1,5 @@
 using System.Text.Json.Serialization;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;

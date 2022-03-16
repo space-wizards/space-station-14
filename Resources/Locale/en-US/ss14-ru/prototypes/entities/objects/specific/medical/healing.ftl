@@ -46,3 +46,6 @@ ent-SyringeInaprovaline = inaprovaline syringe
 ent-SyringeTranexamicAcid = tranexamic acid syringe
     .desc = { ent-Syringe.desc }
     .suffix = { "" }
+ent-SyringeSpaceacillin = spaceacillin syringe
+    .desc = { ent-Syringe.desc }
+    .suffix = { "" }

@@ -28,3 +28,6 @@ ent-RCDAmmo = RCD Ammo
 ent-Shovel = shovel
     .desc = A large tool for digging and moving dirt.
     .suffix = { "" }
+ent-Omnitool = omnitool
+    .desc = A drone's best friend.
+    .suffix = { "" }
