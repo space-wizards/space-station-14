@@ -1020,7 +1020,6 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/possum.rsi
-    scale: 0.7, 0.7 # Possums are pretty huge on Goonstation, let's scale them down a little.
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: possum
@@ -1079,7 +1078,6 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/raccoon.rsi
-    scale: 0.7, 0.7
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: raccoon
