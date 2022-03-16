@@ -12,12 +12,14 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
     [GenerateTypedNameReferences]
     public sealed partial class PlayerTab : Control
     {
+        private const string ArrowUp = "↑";
+        private const string ArrowDown = "↓";
         private readonly Color _altColor = Color.FromHex("#292B38");
         private readonly Color _defaultColor = Color.FromHex("#2F2F3B");
         private readonly AdminSystem _adminSystem;
         private readonly List<PlayerTabEntry> _players = new();
 
-        private Headers _headerClicked = Headers.Username;
+        private Header _headerClicked = Header.Username;
         private bool _ascending = true;
 
         public event Action<BaseButton.ButtonEventArgs>? OnEntryPressed;
@@ -57,22 +59,9 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
             PlayerCount.Text = $"Players: {playerManager.PlayerCount}";
 
             var sortedPlayers = new List<PlayerInfo>(players);
-            sortedPlayers.Sort((x, y) =>
-            {
-                if (!_ascending)
-                {
-                    (x, y) = (y, x);
-                }
+            sortedPlayers.Sort(Compare);
 
-                return _headerClicked switch
-                {
-                    Headers.Username => Compare(x.Username, y.Username),
-                    Headers.Character => Compare(x.CharacterName, y.CharacterName),
-                    Headers.Job => Compare(x.StartingJob, y.StartingJob),
-                    Headers.Antagonist => x.Antag.CompareTo(y.Antag),
-                    _ => 1
-                };
-            });
+            UpdateHeaderSymbols();
 
             var useAltColor = false;
             foreach (var player in sortedPlayers)
@@ -92,12 +81,35 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
             }
         }
 
+        private void UpdateHeaderSymbols()
+        {
+            ListHeader.ResetHeaderText();
+            ListHeader.GetHeader(_headerClicked).Text += $" {(_ascending ? ArrowUp : ArrowDown)}";
+        }
+
+        private int Compare(PlayerInfo x, PlayerInfo y)
+        {
+            if (!_ascending)
+            {
+                (x, y) = (y, x);
+            }
+
+            return _headerClicked switch
+            {
+                Header.Username => Compare(x.Username, y.Username),
+                Header.Character => Compare(x.CharacterName, y.CharacterName),
+                Header.Job => Compare(x.StartingJob, y.StartingJob),
+                Header.Antagonist => x.Antag.CompareTo(y.Antag),
+                _ => 1
+            };
+        }
+
         private int Compare(string x, string y)
         {
             return string.Compare(x, y, StringComparison.Ordinal);
         }
 
-        private void HeaderClicked(Headers header)
+        private void HeaderClicked(Header header)
         {
             if (_headerClicked == header)
             {

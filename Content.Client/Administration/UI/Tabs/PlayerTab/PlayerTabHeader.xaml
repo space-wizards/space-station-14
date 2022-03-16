@@ -1,5 +1,5 @@
 ﻿<ContainerButton xmlns="https://spacestation14.io"
-                 xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                  EnableAllKeybinds="True">
     <PanelContainer Name="BackgroundColorPanel" Access="Public"/>
     <BoxContainer Orientation="Horizontal"
@@ -11,21 +11,21 @@
                ClipText="True"
                Text="{Loc player-tab-username}"
                MouseFilter="Pass"/>
-        <customControls:VSeparator/>
+        <cc:VSeparator/>
         <Label Name="CharacterLabel"
                SizeFlagsStretchRatio="3"
                HorizontalExpand="True"
                ClipText="True"
                Text="{Loc player-tab-character}"
                MouseFilter="Pass"/>
-        <customControls:VSeparator/>
+        <cc:VSeparator/>
         <Label Name="JobLabel"
                SizeFlagsStretchRatio="3"
                HorizontalExpand="True"
                ClipText="True"
                Text="{Loc player-tab-job}"
                MouseFilter="Pass"/>
-        <customControls:VSeparator/>
+        <cc:VSeparator/>
         <Label Name="AntagonistLabel"
                SizeFlagsStretchRatio="2"
                HorizontalExpand="True"

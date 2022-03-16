@@ -2,13 +2,14 @@
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Input;
 
 namespace Content.Client.Administration.UI.Tabs.PlayerTab;
 
 [GenerateTypedNameReferences]
 public sealed partial class PlayerTabHeader : ContainerButton
 {
-    public event Action<Headers>? OnHeaderClicked;
+    public event Action<Header>? OnHeaderClicked;
 
     public PlayerTabHeader()
     {
@@ -20,28 +21,55 @@ public sealed partial class PlayerTabHeader : ContainerButton
         AntagonistLabel.OnKeyBindDown += AntagonistClicked;
     }
 
+    public Label GetHeader(Header header)
+    {
+        return header switch
+        {
+            Header.Username => UsernameLabel,
+            Header.Character => CharacterLabel,
+            Header.Job => JobLabel,
+            Header.Antagonist => AntagonistLabel,
+            _ => throw new ArgumentOutOfRangeException(nameof(header), header, null)
+        };
+    }
+
+    public void ResetHeaderText()
+    {
+        UsernameLabel.Text = Loc.GetString("player-tab-username");
+        CharacterLabel.Text = Loc.GetString("player-tab-character");
+        JobLabel.Text = Loc.GetString("player-tab-job");
+        AntagonistLabel.Text = Loc.GetString("player-tab-antagonist");
+    }
+
+    private void HeaderClicked(GUIBoundKeyEventArgs args, Header header)
+    {
+        if (args.Function != EngineKeyFunctions.UIClick)
+        {
+            return;
+        }
+
+        OnHeaderClicked?.Invoke(header);
+        args.Handle();
+    }
+
     private void UsernameClicked(GUIBoundKeyEventArgs args)
     {
-        OnHeaderClicked?.Invoke(Headers.Username);
-        args.Handle();
+        HeaderClicked(args, Header.Username);
     }
 
     private void CharacterClicked(GUIBoundKeyEventArgs args)
     {
-        OnHeaderClicked?.Invoke(Headers.Character);
-        args.Handle();
+        HeaderClicked(args, Header.Character);
     }
 
     private void JobClicked(GUIBoundKeyEventArgs args)
     {
-        OnHeaderClicked?.Invoke(Headers.Job);
-        args.Handle();
+        HeaderClicked(args, Header.Job);
     }
 
     private void AntagonistClicked(GUIBoundKeyEventArgs args)
     {
-        OnHeaderClicked?.Invoke(Headers.Antagonist);
-        args.Handle();
+        HeaderClicked(args, Header.Antagonist);
     }
 
     protected override void Dispose(bool disposing)
@@ -57,7 +85,7 @@ public sealed partial class PlayerTabHeader : ContainerButton
         }
     }
 
-    public enum Headers
+    public enum Header
     {
         Username,
         Character,
