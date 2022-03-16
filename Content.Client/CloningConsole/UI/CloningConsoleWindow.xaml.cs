@@ -82,29 +82,29 @@ namespace Content.Client.CloningConsole.UI
             {
                 GeneticScannerContents.Visible = true;
                 GeneticScannerMissing.Visible = false;
-                CloneButton.Disabled = state.CloningStatus != ClonerStatusState.Ready;
+                CloneButton.Disabled = state.CloningStatus != ClonerStatus.Ready;
 
                 switch (state.CloningStatus)
                     {
-                        case ClonerStatusState.NoClonerDetected:
+                        case ClonerStatus.NoClonerDetected:
                             CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-no-cloner"));
                             break;
-                        case ClonerStatusState.Ready:
+                        case ClonerStatus.Ready:
                             CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-ready"));
                             break;
-                        case ClonerStatusState.ClonerOccupied:
+                        case ClonerStatus.ClonerOccupied:
                             CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-occupied"));
                             break;
-                        case ClonerStatusState.ScannerEmpty:
+                        case ClonerStatus.ScannerEmpty:
                             CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-empty"));
                             break;
-                        case ClonerStatusState.ScannerOccupantAlive:
+                        case ClonerStatus.ScannerOccupantAlive:
                             CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-scanner-occupant-alive"));
                             break;
-                        case ClonerStatusState.OccupantMetaphyiscal:
+                        case ClonerStatus.OccupantMetaphyiscal:
                             CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-already-alive"));
                             break;
-                        case ClonerStatusState.NoMindDetected:
+                        case ClonerStatus.NoMindDetected:
                             CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-no-mind"));
                             break;
                     }

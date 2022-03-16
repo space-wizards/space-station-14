@@ -177,7 +177,7 @@ namespace Content.Server.Cloning.CloningConsole
 
         private CloningConsoleBoundUserInterfaceState GetUserInterfaceState(CloningConsoleComponent consoleComponent)
         {
-            ClonerStatusState clonerStatus = ClonerStatusState.Ready;
+            ClonerStatus clonerStatus = ClonerStatus.Ready;
 
             // genetic scanner info
             string scanBodyInfo = "Unknown";
@@ -193,7 +193,7 @@ namespace Content.Server.Cloning.CloningConsole
 
                 // GET STATE
                 if (scanBody == null)
-                    clonerStatus = ClonerStatusState.ScannerEmpty;
+                    clonerStatus = ClonerStatus.ScannerEmpty;
                 else
                 if (TryComp<MobStateComponent>(scanBody, out var mobState))
                 {
@@ -201,13 +201,13 @@ namespace Content.Server.Cloning.CloningConsole
 
                     if (!mobState.IsDead())
                     {
-                        clonerStatus = ClonerStatusState.ScannerOccupantAlive;
+                        clonerStatus = ClonerStatus.ScannerOccupantAlive;
                     }
                     else
                     {
                         if (mindComp == null || mindComp.Mind == null || mindComp.Mind.UserId == null || !_playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out var client))
                         {
-                            clonerStatus = ClonerStatusState.NoMindDetected;
+                            clonerStatus = ClonerStatus.NoMindDetected;
                         }
                     }
                 }
@@ -233,12 +233,12 @@ namespace Content.Server.Cloning.CloningConsole
                 clonerMindPresent = clonePod.Status == CloningPodStatus.Cloning;
                 if (cloneBody != null)
                 {
-                    clonerStatus = ClonerStatusState.ClonerOccupied;
+                    clonerStatus = ClonerStatus.ClonerOccupied;
                 }
             }
             else
             {
-                clonerStatus = ClonerStatusState.NoClonerDetected;
+                clonerStatus = ClonerStatus.NoClonerDetected;
             }
 
             return new CloningConsoleBoundUserInterfaceState(

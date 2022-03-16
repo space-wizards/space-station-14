@@ -19,10 +19,10 @@ namespace Content.Shared.Cloning.CloningConsole
             // If true, cloning is progressing (predict clone progress)
             public readonly bool Progressing;
             public readonly bool MindPresent;
-            public readonly ClonerStatusState CloningStatus;
+            public readonly ClonerStatus CloningStatus;
             public readonly bool ScannerConnected;
             public readonly bool ClonerConnected;
-            public CloningConsoleBoundUserInterfaceState(string? scannerBodyInfo, string? cloningBodyInfo, List<string> cloneHistory, TimeSpan refTime, float progress, float maximum, bool progressing, bool mindPresent, ClonerStatusState cloningStatus, bool scannerConnected, bool clonerConnected)
+            public CloningConsoleBoundUserInterfaceState(string? scannerBodyInfo, string? cloningBodyInfo, List<string> cloneHistory, TimeSpan refTime, float progress, float maximum, bool progressing, bool mindPresent, ClonerStatus cloningStatus, bool scannerConnected, bool clonerConnected)
             {
                 ScannerBodyInfo = scannerBodyInfo;
                 ClonerBodyInfo = cloningBodyInfo;
@@ -39,7 +39,7 @@ namespace Content.Shared.Cloning.CloningConsole
         }
 
         [Serializable, NetSerializable]
-        public enum ClonerStatusState
+        public enum ClonerStatus
         {
             Ready,
             ScannerEmpty,
