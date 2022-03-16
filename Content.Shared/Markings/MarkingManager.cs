@@ -13,6 +13,7 @@ namespace Content.Shared.Markings
 
         private readonly List<MarkingPrototype> _index = new();
         private readonly Dictionary<MarkingCategories, List<MarkingPrototype>> _markingDict = new();
+        private readonly Dictionary<string, MarkingPrototype> _markings = new();
 
         public void Initialize()
         {
@@ -25,10 +26,11 @@ namespace Content.Shared.Markings
             {
                 _index.Add(prototype);
                 _markingDict[prototype.MarkingCategory].Add(prototype);
+                _markings.Add(prototype.ID, prototype);
             }
         }
 
-        public IReadOnlyList<MarkingPrototype> Markings() => _index;
+        public IReadOnlyDictionary<string, MarkingPrototype> Markings() => _markings;
         public IReadOnlyDictionary<MarkingCategories, List<MarkingPrototype>> CategorizedMarkings() => _markingDict;
 
         public IReadOnlyDictionary<MarkingCategories, List<MarkingPrototype>> MarkingsBySpecies(string species)

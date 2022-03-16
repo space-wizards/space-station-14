@@ -42,44 +42,23 @@ namespace Content.Client.Markings
         public void SetData(List<Marking> newMarkings, string species)
         {
             _usedMarkingList = newMarkings;
+            _currentSpecies = species;
+
             CMarkingsUsed.Clear();
             CMarkingColors.Visible = false;
             _selectedMarking = null;
             _selectedUnusedMarking = null;
-            _currentSpecies = species;
             
-            // ugly little O(n * m) loop going on here, but it's more or less
-            // all client-side, so whatever
-            for (int i = 0; i < _usedMarkingList.Count; i++)
+            List<Marking> toRemove = PopulateUsed();
+
+            if (toRemove.Count != 0)
             {
-                Marking marking = _usedMarkingList[i];
-                if (_markingManager.IsValidMarking(marking, out MarkingPrototype? newMarking) && newMarking.SpeciesRestrictions.Contains(_currentSpecies))
+                foreach (var marking in toRemove)
                 {
-                    // TODO: Composite sprite preview, somehow.
-                    var _item = new ItemList.Item(CMarkingsUsed)
-                    {
-                        Text = $"{GetMarkingName(newMarking)} ({newMarking.MarkingCategory})", 
-                        Icon = newMarking.Sprites[0].Frame0(),
-                        Selectable = true,
-                        Metadata = newMarking,
-                        IconModulate = marking.MarkingColors[0]
-                    };
-                    CMarkingsUsed.Insert(0, _item);
-
-                    if (marking.MarkingColors.Count != _usedMarkingList[i].MarkingColors.Count)
-                    {
-                        _usedMarkingList[i] = new Marking(marking.MarkingId, marking.MarkingColors);
-                    }
+                    _usedMarkingList.Remove(marking);
                 }
 
-                foreach (var unusedMarking in CMarkingsUnused)
-                {
-                    if (unusedMarking.Metadata == newMarking)
-                    {
-                        CMarkingsUnused.Remove(unusedMarking);
-                        break;
-                    }
-                }
+                OnMarkingRemoved?.Invoke(_usedMarkingList);
             }
         }
 
@@ -122,6 +101,50 @@ namespace Content.Client.Markings
                 var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", marking.Sprites[0].Frame0());
                 item.Metadata = marking;
             }
+        }
+
+        // Populate the used marking list. Returns a list of markings that weren't
+        // valid to add to the marking list.
+        public List<Marking> PopulateUsed()
+        {
+            CMarkingsUsed.Clear();
+            List<Marking> toRemove = new();
+            for (var i = 0; i < _usedMarkingList.Count; i++)
+            {
+                var marking = _usedMarkingList[i];
+                if (_markingManager.IsValidMarking(marking, out MarkingPrototype? newMarking) && newMarking.SpeciesRestrictions.Contains(_currentSpecies))
+                {
+                    var _item = new ItemList.Item(CMarkingsUsed)
+                    {
+                        Text = $"{GetMarkingName(newMarking)} ({newMarking.MarkingCategory})", 
+                        Icon = newMarking.Sprites[0].Frame0(),
+                        Selectable = true,
+                        Metadata = newMarking,
+                        IconModulate = marking.MarkingColors[0]
+                    };
+                    CMarkingsUsed.Insert(0, _item);
+
+                    if (marking.MarkingColors.Count != _usedMarkingList[i].MarkingColors.Count)
+                    {
+                        _usedMarkingList[i] = new Marking(marking.MarkingId, marking.MarkingColors);
+                    }
+
+                    foreach (var unusedMarking in CMarkingsUnused)
+                    {
+                        if (unusedMarking.Metadata == newMarking)
+                        {
+                            CMarkingsUnused.Remove(unusedMarking);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    toRemove.Add(marking);
+                }
+            }
+
+            return toRemove;
         }
 
         private void SwapMarkingUp()
@@ -182,22 +205,29 @@ namespace Content.Client.Markings
         {
             _currentSpecies = species;
             var markingCount = _usedMarkingList.Count;
-            for (int i = 0; i < _usedMarkingList.Count; i++)
+            List<Marking> toRemove = new();
+            for (int i = 0; i < markingCount; i++)
             {
-                var markingPrototype = (MarkingPrototype) CMarkingsUsed[i].Metadata!;
+                var markingPrototype = _markingManager.Markings()[_usedMarkingList[i].MarkingId];
                 if (!markingPrototype.SpeciesRestrictions.Contains(species))
                 {
-                    _usedMarkingList.RemoveAt(i);
+                    toRemove.Add(_usedMarkingList[i]);
                 }
 
             }
 
-            if (markingCount != CMarkingsUsed.Count)
+            if (toRemove.Count != 0)
             {
+                foreach (var i in toRemove)
+                {
+                    _usedMarkingList.Remove(i);
+                }
+                
                 OnMarkingRemoved?.Invoke(_usedMarkingList);
             }
 
             Populate();
+            PopulateUsed();
         }
 
         private void OnCategoryChange(OptionButton.ItemSelectedEventArgs category)
@@ -229,8 +259,8 @@ namespace Content.Client.Markings
                 ColorSlider colorSliderB = new ColorSlider(StyleNano.StyleClassSliderBlue);
 
                 var rsi = (SpriteSpecifier.Rsi) prototype.Sprites[i];
-                var name = Loc.GetString($"{prototype.Name}-{rsi.RsiState}");
-                colorContainer.AddChild(new Label { Text = $"{name} color:" });
+                var name = $"{prototype.Name}-{rsi.RsiState}";
+                colorContainer.AddChild(new Label { Text = $"{Loc.GetString(name)} color:" });
                 colorContainer.AddChild(colorSliderR);
                 colorContainer.AddChild(colorSliderG);
                 colorContainer.AddChild(colorSliderB);
