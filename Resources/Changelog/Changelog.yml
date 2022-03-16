@@ -1,12 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Improved stats of emergency suit and reduced heat resistance of fire
-      suit, type: Tweak}
-  - {message: Changed spawn probabilities in fire closets and emergency toolboxes.
-      Added flare to survival box., type: Tweak}
-  id: 717
-  time: '2021-12-11T23:08:51.0000000+00:00'
 - author: Sergal
   changes:
   - {message: Punching now actually sounds like punching., type: Add}
@@ -3003,3 +2995,8 @@ Entries:
   - {message: Tweaked salvage mob spawners to allow the Space Tick to generate., type: Tweak}
   id: 1216
   time: '2022-03-16T01:11:36.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Added a variation of the cute bee plushie, type: Add}
+  id: 1217
+  time: '2022-03-16T18:42:08.0000000+00:00'
