@@ -2,8 +2,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cloning.CloningConsole
 {
-    public abstract class SharedCloningConsoleComponent : Component
-    {
         [Serializable, NetSerializable]
         public sealed class CloningConsoleBoundUserInterfaceState : BoundUserInterfaceState
         {
@@ -62,7 +60,8 @@ namespace Content.Shared.Cloning.CloningConsole
         public enum UiButton
         {
             Clone,
-            Eject
+            Eject,
+            Refresh
 
         }
 
@@ -76,5 +75,4 @@ namespace Content.Shared.Cloning.CloningConsole
                 Button = button;
             }
         }
-    }
 }

@@ -4,7 +4,7 @@ using Robust.Shared.Containers;
 namespace Content.Server.Cloning.Components
 {
     [RegisterComponent]
-    public sealed class CloningPodComponent : SharedCloningPodComponent
+    public sealed class CloningPodComponent : Component
     {
         [ViewVariables] public ContainerSlot BodyContainer = default!;
         [ViewVariables] public Mind.Mind? CapturedMind;

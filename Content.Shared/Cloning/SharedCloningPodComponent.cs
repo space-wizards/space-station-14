@@ -2,22 +2,17 @@
 
 namespace Content.Shared.Cloning
 {
-    public abstract class SharedCloningPodComponent : Component
+    [Serializable, NetSerializable]
+    public enum CloningPodVisuals : byte
     {
-
-        [Serializable, NetSerializable]
-        public enum CloningPodVisuals : byte
-        {
-            Status
-        }
-
-        [Serializable, NetSerializable]
-        public enum CloningPodStatus : byte
-        {
-            Idle,
-            Cloning,
-            Gore,
-            NoMind
-        }
+        Status
+    }
+    [Serializable, NetSerializable]
+    public enum CloningPodStatus : byte
+    {
+        Idle,
+        Cloning,
+        Gore,
+        NoMind
     }
 }

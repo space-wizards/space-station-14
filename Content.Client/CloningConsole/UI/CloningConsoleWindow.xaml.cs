@@ -6,9 +6,9 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using System.Diagnostics;
 using Robust.Shared.Timing;
+using Content.Shared.Cloning.CloningConsole;
 
 using static Robust.Client.UserInterface.Controls.BoxContainer;
-using static Content.Shared.Cloning.CloningConsole.SharedCloningConsoleComponent;
 
 namespace Content.Client.CloningConsole.UI
 {
@@ -52,13 +52,13 @@ namespace Content.Client.CloningConsole.UI
         {
             HistoryList.RemoveAllChildren();
 
-            foreach (var historyItem in _historyManager)
+            for (var i = (_historyManager.Count - 1); i >= 0; i--)
             {
                 var historyRowItem = new HistoryRow
                 {
-                  CloneName = historyItem
+                  CloneName = _historyManager[i]
                 };
-                historyRowItem.EntityLabel.Text = historyItem;
+                historyRowItem.EntityLabel.Text = _historyManager[i];
 
                 HistoryList.AddChild(historyRowItem);
             }

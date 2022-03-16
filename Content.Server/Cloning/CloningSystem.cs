@@ -11,7 +11,7 @@ using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Content.Server.EUI;
 using Robust.Shared.Containers;
-using static Content.Shared.Cloning.SharedCloningPodComponent;
+using Content.Shared.Cloning;
 
 namespace Content.Server.Cloning
 {
@@ -40,7 +40,7 @@ namespace Content.Server.Cloning
 
         private void UpdateAppearance(CloningPodComponent clonePod)
         {
-            if (TryComp<AppearanceComponent>(clonePod.Owner, out AppearanceComponent? appearance))
+            if (TryComp<AppearanceComponent>(clonePod.Owner, out var appearance))
                 appearance.SetData(CloningPodVisuals.Status, clonePod.Status);
         }
 
@@ -48,7 +48,7 @@ namespace Content.Server.Cloning
         {
             if (!ClonesWaitingForMind.TryGetValue(mind, out var entity) ||
                 !EntityManager.EntityExists(entity) ||
-                !TryComp<MindComponent>(entity, out MindComponent? mindComp) ||
+                !TryComp<MindComponent>(entity, out var mindComp) ||
                 mindComp.Mind != null)
                 return;
 
@@ -57,14 +57,14 @@ namespace Content.Server.Cloning
             ClonesWaitingForMind.Remove(mind);
         }
 
-        private void HandleMindAdded(EntityUid uid, BeingClonedComponent component, MindAddedMessage message)
+        private void HandleMindAdded(EntityUid uid, BeingClonedComponent clonedComponent, MindAddedMessage message)
         {
-            if (component.Parent == EntityUid.Invalid ||
-                !EntityManager.EntityExists(component.Parent) ||
-                !TryComp<CloningPodComponent>(component.Parent, out CloningPodComponent? cloningPodComponent) ||
-                component.Owner != cloningPodComponent.BodyContainer?.ContainedEntity)
+            if (clonedComponent.Parent == EntityUid.Invalid ||
+                !EntityManager.EntityExists(clonedComponent.Parent) ||
+                !TryComp<CloningPodComponent>(clonedComponent.Parent, out var cloningPodComponent) ||
+                clonedComponent.Owner != cloningPodComponent.BodyContainer?.ContainedEntity)
             {
-                EntityManager.RemoveComponent<BeingClonedComponent>(component.Owner);
+                EntityManager.RemoveComponent<BeingClonedComponent>(clonedComponent.Owner);
                 return;
             }
             UpdateStatus(CloningPodStatus.Cloning, cloningPodComponent);
@@ -72,15 +72,17 @@ namespace Content.Server.Cloning
 
         public bool IsPowered(CloningPodComponent clonepod)
         {
-            if (!TryComp<ApcPowerReceiverComponent>(clonepod.Owner, out ApcPowerReceiverComponent? receiver))
-            {
+            if (!TryComp<ApcPowerReceiverComponent>(clonepod.Owner, out var receiver))
                 return false;
-            }
+
             return receiver.Powered;
         }
 
-        public bool TryCloning(Mind.Mind mind, HumanoidCharacterProfile hcp, CloningPodComponent clonePod)
+        public bool TryCloning(EntityUid uid, Mind.Mind mind, HumanoidCharacterProfile hcp, CloningPodComponent? clonePod)
         {
+            if (!Resolve(uid, ref clonePod))
+                return false;
+
             if (clonePod.BodyContainer.ContainedEntity != null)
                 return false;
 
@@ -89,7 +91,7 @@ namespace Content.Server.Cloning
                 if (EntityManager.EntityExists(clone) &&
                     TryComp<MobStateComponent>(clone, out var cloneState) &&
                     !cloneState.IsDead() &&
-                    TryComp<MindComponent>(clone, out MindComponent? cloneMindComp) &&
+                    TryComp<MindComponent>(clone, out var cloneMindComp) &&
                     (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
                     return false; // Mind already has clone
 
@@ -109,14 +111,16 @@ namespace Content.Server.Cloning
                 return false;
 
             // Get species from player profile, this needs to get it from entity getting cloned instead
+            // This is currently the reason that someone can get scanned after being changed/chose ghost role and will be cloned
+            // as the one from their player profile.
+            // CHANGE THIS IN THE FUTURE TO GRAB DETAILS FROM SCANNED MOB
             var speciesProto = _prototype.Index<SpeciesPrototype>(hcp.Species).Prototype;
-            var mob = EntityManager.SpawnEntity(speciesProto, transform.MapPosition);
+            var mob = Spawn(speciesProto, transform.MapPosition);
             EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, hcp);
 
+            // set name if they have it
             if (TryComp<MetaDataComponent>(mob, out var meta))
-            {
                 meta.EntityName = hcp.Name;
-            }
 
             var cloneMindReturn = EntityManager.AddComponent<BeingClonedComponent>(mob);
             cloneMindReturn.Mind = mind;
@@ -137,7 +141,7 @@ namespace Content.Server.Cloning
 
         public override void Update(float frameTime)
         {
-            foreach (var (cloning, power) in EntityManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>())
+            foreach (var cloning in EntityManager.EntityQuery<CloningPodComponent>())
             {
                 if (!IsPowered(cloning))
                     continue;

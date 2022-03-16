@@ -7,14 +7,14 @@ using Content.Shared.Cloning.CloningConsole;
 namespace Content.Server.Cloning.CloningConsole
 {
     [RegisterComponent]
-    public sealed class CloningConsoleComponent : SharedCloningConsoleComponent
+    public sealed class CloningConsoleComponent : Component
     {
         [ViewVariables]
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CloningConsoleUiKey.Key);
         [ViewVariables]
-        public MedicalScannerComponent? GeneticScanner = null;
+        public EntityUid? GeneticScanner = null;
         [ViewVariables]
-        public CloningPodComponent? CloningPod = null;
+        public EntityUid? CloningPod = null;
         [ViewVariables]
         public List<String> CloningHistory = new List<string>();
     }
