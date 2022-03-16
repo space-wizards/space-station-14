@@ -28,3 +28,6 @@ ent-RCDAmmo = RCD картридж
 ent-Shovel = лопата
     .desc = Большой инструмент для копания и перемещения грунта.
     .suffix = { "" }
+ent-Omnitool = omnitool
+    .desc = A drone's best friend.
+    .suffix = { "" }
