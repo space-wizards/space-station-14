@@ -317,26 +317,6 @@
     IrishCream: 3
 
 - type: reaction
-  id: Lean
-  reactants:
-    FourteenLoko:
-      amount: 2
-    WeldingFuel:
-      amount: 1
-  products:
-    Lean: 3
-
-- type: reaction
-  id: LeanShine
-  reactants:
-    Lean:
-      amount: 1
-    Moonshine:
-      amount: 1
-  products:
-    LeanShine: 2
-
-- type: reaction
   id: Lemonade
   reactants:
     JuiceLemon:

@@ -9,6 +9,7 @@ using Content.Shared.Station;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;
+using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
@@ -21,7 +22,6 @@ namespace Content.Client.GameTicking.Managers
     public sealed class ClientGameTicker : SharedGameTicker
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
-
         [ViewVariables] private bool _initialized;
         private Dictionary<StationId, Dictionary<string, int>>  _jobsAvailable = new();
         private Dictionary<StationId, string> _stationNames = new();
@@ -29,6 +29,7 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
         [ViewVariables] public string? LobbySong { get; private set; }
+        [ViewVariables] public string? LobbyBackground { get; private set; }
         [ViewVariables] public bool DisallowedLateJoin { get; private set; }
         [ViewVariables] public string? ServerInfoBlob { get; private set; }
         [ViewVariables] public TimeSpan StartTime { get; private set; }
@@ -89,6 +90,7 @@ namespace Content.Client.GameTicking.Managers
             IsGameStarted = message.IsRoundStarted;
             AreWeReady = message.YouAreReady;
             LobbySong = message.LobbySong;
+            LobbyBackground = message.LobbyBackground;
             Paused = message.Paused;
             if (IsGameStarted)
                 Status.Clear();
