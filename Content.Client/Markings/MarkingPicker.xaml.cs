@@ -44,6 +44,7 @@ namespace Content.Client.Markings
             _usedMarkingList = newMarkings;
             _currentSpecies = species;
 
+            Populate();
             List<Marking> toRemove = PopulateUsed();
 
             if (toRemove.Count != 0)

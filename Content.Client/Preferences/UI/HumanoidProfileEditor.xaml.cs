@@ -594,7 +594,6 @@ namespace Content.Client.Preferences.UI
             CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
 
             NeedsDummyRebuild = true;
-            CMarkings.SetSpecies(Profile.Species); // Populate the markings tab here, because it means the profile is fully loaded.
             UpdateControls();
         }
 
