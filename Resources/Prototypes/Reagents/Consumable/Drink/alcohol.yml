@@ -99,6 +99,14 @@
   desc: Turn up for days.
   physicalDesc: bubbly
   color: "#9400D3"
+  spritePath: lean.rsi
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
 
 - type: reagent
   id: Leanshine
@@ -107,6 +115,14 @@
   desc: Lean mixed with moonshine. Turn up for months.
   physicalDesc: bubbly
   color: "#9d5fb8"
+  spritePath: leanshineglass.rsi
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
 
 - type: reagent
   id: MelonLiquor
