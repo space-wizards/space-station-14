@@ -51,6 +51,17 @@ namespace Content.Client.Markings
             _usedMarkingList = newMarkings;
             _currentSpecies = species;
 
+            _prototypeManager.TryIndex(species, out SpeciesPrototype? speciesPrototype);
+
+            var bodyPrototype = speciesPrototype!.Prototype;
+            _prototypeManager.TryIndex(bodyPrototype, out EntityPrototype? body);
+
+            body!.TryGetComponent("Markings", out MarkingsComponent? markingsComponent);
+
+            PointLimits = markingsComponent!.LayerPoints;
+            PointsUsed = new(PointLimits);
+
+
             Populate();
             List<Marking> toRemove = PopulateUsed();
 
