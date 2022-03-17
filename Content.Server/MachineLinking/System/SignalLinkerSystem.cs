@@ -20,6 +20,7 @@ namespace Content.Server.MachineLinking.System
 {
     public sealed class SignalLinkerSystem : EntitySystem
     {
+        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -76,7 +77,7 @@ namespace Content.Server.MachineLinking.System
         {
             foreach (var receiverPort in component.Inputs)
                 foreach (var transmitterPort in receiverPort.Transmitters)
-                    transmitterPort.Receivers.Remove((component.Owner, receiverPort.Name));
+                    transmitterPort.Receivers.Remove((uid, receiverPort.Name));
         }
 
         private void OnTransmitterInteractUsing(EntityUid uid, SignalTransmitterComponent component, InteractUsingEvent args)
@@ -95,11 +96,13 @@ namespace Content.Server.MachineLinking.System
                 return;
             }
 
-            var bui = component.Owner.GetUIOrNull(SignalTransmitterUiKey.Key);
-            if (bui == null) return;
-            bui.Open(actor.PlayerSession);
-            bui.SetState(new SignalPortsState(component.Outputs.Select(port => port.Name).ToArray()));
-            args.Handled = true;
+            if (_userInterfaceSystem.TryGetUi(uid, SignalTransmitterUiKey.Key, out var bui))
+            {
+                bui.Open(actor.PlayerSession);
+                bui.SetState(new SignalPortsState(component.Outputs.Select(port => port.Name).ToArray()));
+                args.Handled = true;
+                return;
+            }
         }
 
         private void OnReceiverInteractUsing(EntityUid uid, SignalReceiverComponent component, InteractUsingEvent args)
@@ -118,11 +121,13 @@ namespace Content.Server.MachineLinking.System
                 return;
             }
 
-            var bui = component.Owner.GetUIOrNull(SignalReceiverUiKey.Key);
-            if (bui == null) return;
-            bui.Open(actor.PlayerSession);
-            bui.SetState(new SignalPortsState(component.Inputs.Select(port => port.Name).ToArray()));
-            args.Handled = true;
+            if (_userInterfaceSystem.TryGetUi(uid, SignalReceiverUiKey.Key, out var bui))
+            {
+                bui.Open(actor.PlayerSession);
+                bui.SetState(new SignalPortsState(component.Inputs.Select(port => port.Name).ToArray()));
+                args.Handled = true;
+                return;
+            }
         }
 
         private void OnTransmitterUIMessage(EntityUid uid, SignalTransmitterComponent component,
