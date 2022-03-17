@@ -29,10 +29,11 @@ namespace Content.Server.MachineLinking.System
             SubscribeLocalEvent<SignalTransmitterComponent, ComponentStartup>(OnTransmitterStartup);
             SubscribeLocalEvent<SignalTransmitterComponent, ComponentRemove>(OnTransmitterRemoved);
             SubscribeLocalEvent<SignalTransmitterComponent, InteractUsingEvent>(OnTransmitterInteractUsing);
+            SubscribeLocalEvent<SignalTransmitterComponent, SignalPortSelected>(OnTransmitterSignalPortSelected);
 
-            SubscribeLocalEvent<SignalReceiverComponent, ComponentStartup>(OnReceiverStartup);
             SubscribeLocalEvent<SignalReceiverComponent, ComponentRemove>(OnReceiverRemoved);
             SubscribeLocalEvent<SignalReceiverComponent, InteractUsingEvent>(OnReceiverInteractUsing);
+            SubscribeLocalEvent<SignalReceiverComponent, SignalPortSelected>(OnReceiverSignalPortSelected);
         }
 
         private void OnTransmitterInvokePort(EntityUid uid, SignalTransmitterComponent component, InvokePortEvent args)
@@ -42,18 +43,8 @@ namespace Content.Server.MachineLinking.System
                 RaiseLocalEvent(receiver.entity, new SignalReceivedEvent(receiver.port), false);
         }
 
-        private void OnReceiverStartup(EntityUid uid, SignalReceiverComponent component, ComponentStartup args)
-        {
-            if (component.Owner.GetUIOrNull(SignalReceiverUiKey.Key) is { } ui)
-                ui.OnReceiveMessage += msg => OnReceiverUIMessage(uid, component, msg);
-        }
-
-
         private void OnTransmitterStartup(EntityUid uid, SignalTransmitterComponent component, ComponentStartup args)
         {
-            if (component.Owner.GetUIOrNull(SignalTransmitterUiKey.Key) is { } ui)
-                ui.OnReceiveMessage += msg => OnTransmitterUIMessage(uid, component, msg);
-
             // validate links and give receivers a reference to their linked transmitter(s)
             foreach (var transmitterPort in component.Outputs)
                 foreach (var (receiver, receiverPortName) in transmitterPort.Receivers)
@@ -130,36 +121,24 @@ namespace Content.Server.MachineLinking.System
             }
         }
 
-        private void OnTransmitterUIMessage(EntityUid uid, SignalTransmitterComponent component,
-            ServerBoundUserInterfaceMessage msg)
+        private void OnTransmitterSignalPortSelected(EntityUid uid, SignalTransmitterComponent component, SignalPortSelected args)
         {
-            if (msg.Session.AttachedEntity is not { } attached) return;
-            switch (msg.Message)
-            {
-                case SignalPortSelected portSelected:
-                    if (msg.Session.AttachedEntity != default &&
-                        TryComp(msg.Session.AttachedEntity, out HandsComponent? hands) &&
-                        hands.ActiveHandEntity is EntityUid heldEntity &&
-                        TryComp(heldEntity, out SignalLinkerComponent? signalLinkerComponent))
-                        LinkerTransmitterInteraction(attached, signalLinkerComponent, component, portSelected.Port);
-                    break;
-            }
+            if (args.Session.AttachedEntity is { } attached &&
+                attached != default &&
+                TryComp(attached, out HandsComponent? hands) &&
+                hands.ActiveHandEntity is EntityUid heldEntity &&
+                TryComp(heldEntity, out SignalLinkerComponent? signalLinkerComponent))
+                LinkerTransmitterInteraction(attached, signalLinkerComponent, component, args.Port);
         }
 
-        private void OnReceiverUIMessage(EntityUid uid, SignalReceiverComponent component,
-            ServerBoundUserInterfaceMessage msg)
+        private void OnReceiverSignalPortSelected(EntityUid uid, SignalReceiverComponent component, SignalPortSelected args)
         {
-            if (msg.Session.AttachedEntity is not { } attached) return;
-            switch (msg.Message)
-            {
-                case SignalPortSelected portSelected:
-                    if (msg.Session.AttachedEntity != default &&
-                        TryComp(msg.Session.AttachedEntity, out HandsComponent? hands) &&
-                        hands.ActiveHandEntity is EntityUid heldEntity &&
-                        TryComp(heldEntity, out SignalLinkerComponent? signalLinkerComponent))
-                        LinkerReceiverInteraction(attached, signalLinkerComponent, component, portSelected.Port);
-                    break;
-            }
+            if (args.Session.AttachedEntity is { } attached &&
+                attached != default &&
+                TryComp(attached, out HandsComponent? hands) &&
+                hands.ActiveHandEntity is EntityUid heldEntity &&
+                TryComp(heldEntity, out SignalLinkerComponent? signalLinkerComponent))
+                LinkerReceiverInteraction(attached, signalLinkerComponent, component, args.Port);
         }
 
         private void LinkerTransmitterInteraction(EntityUid entity, SignalLinkerComponent linkerComponent,
