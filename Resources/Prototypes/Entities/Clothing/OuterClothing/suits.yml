@@ -49,7 +49,7 @@
     highPressureMultiplier: 0.85
     lowPressureMultiplier: 25
   - type: TemperatureProtection
-    coefficient: 0.01
+    coefficient: 0.03
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/fire.rsi
   - type: Armor
