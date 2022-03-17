@@ -33,7 +33,7 @@
     layers:
       - map: [ "enum.HumanoidVisualLayers.Tail" ]
         sprite: Mobs/Customization/masking_helpers.rsi
-        state: female_none
+        state: none
         visible: false
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
         color: "#34a223"
@@ -45,7 +45,7 @@
         state: head_m
       - map: [ "enum.HumanoidVisualLayers.Snout" ]
         sprite: Mobs/Customization/masking_helpers.rsi
-        state: female_none
+        state: none
         visible: false
       - map: [ "enum.HumanoidVisualLayers.Eyes" ]
         color: "#008800"
@@ -109,11 +109,11 @@
       - map: [ "back" ]
       - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
         sprite: Mobs/Customization/masking_helpers.rsi
-        state: female_none
+        state: none
         visible: false
       - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
         sprite: Mobs/Customization/masking_helpers.rsi
-        state: female_none
+        state: none
         visible: false
       - map: [ "mask" ]
       - map: [ "head" ]
