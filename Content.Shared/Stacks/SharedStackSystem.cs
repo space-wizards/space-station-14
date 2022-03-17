@@ -1,12 +1,12 @@
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using System.Linq;
 
 namespace Content.Shared.Stacks
 {
@@ -14,6 +14,7 @@ namespace Content.Shared.Stacks
     public abstract class SharedStackSystem : EntitySystem
     {
         [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
+        [Dependency] protected readonly SharedHandsSystem HandsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
@@ -99,41 +100,31 @@ namespace Content.Shared.Stacks
         ///     to place it in the user's hand normally.
         /// </remarks>
         public void TryMergeToHands(
-            EntityUid donor,
-            EntityUid holder,
-            SharedStackComponent? donorStack = null,
+            EntityUid item,
+            EntityUid user,
+            SharedStackComponent? itemStack = null,
             SharedHandsComponent? hands = null)
         {
-            if (!Resolve(holder, ref hands, false))
+            if (!Resolve(user, ref hands, false))
                 return;
 
-            if (!Resolve(donor, ref donorStack, false))
+            if (!Resolve(item, ref itemStack, false))
             {
-                hands.PutInHandOrDrop(donor);
+                // This isn't even a stack. Just try to pickup as normal.
+                HandsSystem.PickupOrDrop(user, item, handsComp: hands);
                 return;
             }
 
             // This is shit code until hands get fixed and give an easy way to enumerate over items, starting with the currently active item.
-            var items = hands.GetAllHeldEntities().ToList();
-            if (hands.TryGetActiveHeldEntity(out var entity))
+            foreach (var held in HandsSystem.EnumerateHeld(user, hands))
             {
-                items.Remove(entity.Value);
-                items.Insert(0, entity.Value);
-            }
+                TryMergeStacks(item, held, out _, donorStack: itemStack);
 
-            foreach (var item in items)
-            {
-                if (donorStack.Count == 0)
+                if (itemStack.Count == 0)
                     return;
-
-                TryMergeStacks(donor, item, out _, donorStack);
             }
 
-            if (donorStack.Count == 0)
-                return;
-
-            // TODO hands ECS: put in any hand or drop
-            hands.PutInHandOrDrop(donor);
+            HandsSystem.PickupOrDrop(user, item, handsComp: hands);
         }
 
         public void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
