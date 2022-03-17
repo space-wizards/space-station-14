@@ -14,6 +14,8 @@
   - type: Appearance
     visuals:
     - type: MicrowaveVisualizer
+  - type: ActivatableUI
+    key: enum.MicrowaveUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.MicrowaveUiKey.Key
@@ -26,10 +28,9 @@
           bounds: "-0.3,-0.16,0.3,0.16"
       mass: 25
       layer:
-      - MobMask
-      - Opaque
+      - SmallImpassable
       mask:
-      - MobMask
+      - VaultImpassable
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/microwave.rsi
@@ -48,3 +49,5 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+  - type: ApcPowerReceiver
+    powerLoad: 400

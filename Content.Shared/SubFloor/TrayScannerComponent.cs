@@ -1,33 +1,33 @@
-using System;
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.SubFloor;
 
 [RegisterComponent]
 [NetworkedComponent]
-public class TrayScannerComponent : Component
+public sealed class TrayScannerComponent : Component
 {
-    public override string Name { get; } = "TrayScanner";
-
+    /// <summary>
+    ///     Whether the scanner is currently on.
+    /// </summary>
     [ViewVariables]
-    public bool Toggled { get; set; }
+    public bool Enabled { get; set; }
 
-    // this should always be rounded
+    /// <summary>
+    ///     Last position of the scanner. Rounded to integers to avoid excessive entity lookups when moving.
+    /// </summary>
     [ViewVariables]
-    public Vector2 LastLocation { get; set; }
+    public Vector2i? LastLocation { get; set; }
 
-    // range of the scanner itself
+    /// <summary>
+    ///     Radius in which the scanner will reveal entities. Centered on the <see cref="LastLocation"/>.
+    /// </summary>
     [DataField("range")]
-    public float Range { get; set; } = 0.5f;
+    public float Range { get; set; } = 2.5f;
 
-    // exclude entities that are not the set
-    // of entities in range & entities already revealed
+    /// <summary>
+    ///     The sub-floor entities that this scanner is currently revealing.
+    /// </summary>
     [ViewVariables]
     public HashSet<EntityUid> RevealedSubfloors = new();
 }
@@ -35,10 +35,10 @@ public class TrayScannerComponent : Component
 [Serializable, NetSerializable]
 public sealed class TrayScannerState : ComponentState
 {
-    public bool Toggled { get; }
+    public bool Enabled;
 
-    public TrayScannerState(bool toggle)
+    public TrayScannerState(bool enabled)
     {
-        Toggled = toggle;
+        Enabled = enabled;
     }
 }

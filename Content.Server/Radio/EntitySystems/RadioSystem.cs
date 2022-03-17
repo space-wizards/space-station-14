@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Radio.EntitySystems
 {
     [UsedImplicitly]
-    public class RadioSystem : EntitySystem
+    public sealed class RadioSystem : EntitySystem
     {
         private readonly List<string> _messages = new();
 

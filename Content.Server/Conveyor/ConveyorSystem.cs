@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.Models;
 using Content.Server.Power.Components;
+using Content.Server.Recycling;
+using Content.Server.Recycling.Components;
 using Content.Server.Stunnable;
 using Content.Shared.Conveyor;
 using Content.Shared.Item;
@@ -18,10 +20,10 @@ using Robust.Shared.Physics;
 
 namespace Content.Server.Conveyor
 {
-    public class ConveyorSystem : EntitySystem
+    public sealed class ConveyorSystem : EntitySystem
     {
+        [Dependency] private RecyclerSystem _recycler = default!;
         [Dependency] private StunSystem _stunSystem = default!;
-        [Dependency] private IEntityLookup _entityLookup = default!;
 
         public override void Initialize()
         {
@@ -88,6 +90,15 @@ namespace Content.Server.Conveyor
                 TwoWayLeverSignal.Right => ConveyorState.Forward,
                 _ => ConveyorState.Off
             };
+
+            if (TryComp<RecyclerComponent>(component.Owner, out var recycler))
+            {
+                if (component.State != ConveyorState.Off)
+                    _recycler.EnableRecycler(recycler);
+                else
+                    _recycler.DisableRecycler(recycler);
+            }
+
             UpdateAppearance(component);
         }
 
@@ -110,56 +121,6 @@ namespace Content.Server.Conveyor
             }
 
             return true;
-        }
-
-        /// <summary>
-        ///     Calculates the angle in which entities on top of this conveyor
-        ///     belt are pushed in
-        /// </summary>
-        /// <returns>
-        ///     The angle when taking into account if the conveyor is reversed
-        /// </returns>
-        public Angle GetAngle(ConveyorComponent component)
-        {
-            var adjustment = component.State == ConveyorState.Reversed ? MathHelper.Pi/2 : -MathHelper.Pi/2;
-            var radians = MathHelper.DegreesToRadians(component.Angle);
-
-            return new Angle(EntityManager.GetComponent<TransformComponent>(component.Owner).LocalRotation.Theta + radians + adjustment);
-        }
-
-        public IEnumerable<(EntityUid, IPhysBody)> GetEntitiesToMove(ConveyorComponent comp)
-        {
-            //todo uuuhhh cache this
-            foreach (var entity in _entityLookup.GetEntitiesIntersecting(comp.Owner, flags: LookupFlags.Approximate))
-            {
-                if (Deleted(entity))
-                {
-                    continue;
-                }
-
-                if (entity == comp.Owner)
-                {
-                    continue;
-                }
-
-                if (!EntityManager.TryGetComponent(entity, out IPhysBody? physics) ||
-                    physics.BodyType == BodyType.Static || physics.BodyStatus == BodyStatus.InAir || entity.IsWeightless())
-                {
-                    continue;
-                }
-
-                if (EntityManager.HasComponent<IMapGridComponent>(entity))
-                {
-                    continue;
-                }
-
-                if (entity.IsInContainer())
-                {
-                    continue;
-                }
-
-                yield return (entity, physics);
-            }
         }
     }
 }

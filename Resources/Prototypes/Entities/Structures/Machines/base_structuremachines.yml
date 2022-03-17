@@ -5,6 +5,7 @@
   components:
   - type: InteractionOutline
   - type: Anchorable
+    delay: 2
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -39,4 +40,5 @@
   id: BaseMachinePowered
   components:
   - type: ApcPowerReceiver
+    powerLoad: 1000
   - type: ExtensionCableReceiver

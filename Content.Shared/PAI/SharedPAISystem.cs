@@ -24,7 +24,6 @@ namespace Content.Shared.PAI
             base.Initialize();
             SubscribeLocalEvent<PAIComponent, UseAttemptEvent>(OnUseAttempt);
             SubscribeLocalEvent<PAIComponent, InteractionAttemptEvent>(OnInteractAttempt);
-            SubscribeLocalEvent<PAIComponent, AttackAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<PAIComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<PAIComponent, PickupAttemptEvent>(OnPickupAttempt);
             SubscribeLocalEvent<PAIComponent, MovementAttemptEvent>(OnMoveAttempt);
@@ -50,11 +49,6 @@ namespace Content.Shared.PAI
         }
 
         private void OnInteractAttempt(EntityUid uid, PAIComponent component, InteractionAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
-        private void OnAttackAttempt(EntityUid uid, PAIComponent component, AttackAttemptEvent args)
         {
             args.Cancel();
         }

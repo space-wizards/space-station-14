@@ -54,7 +54,9 @@
     - type: LightBulbVisualizer
   - type: Tag
     tags:
+    - Recyclable
     - Trash
+  - type: Recyclable
 
 # Lighting color values gathered from
 # https://andi-siess.de/rgb-to-color-temperature/
@@ -126,7 +128,7 @@
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal
-    
+
 - type: entity
   parent: BaseLightbulb
   name: sodium light tube

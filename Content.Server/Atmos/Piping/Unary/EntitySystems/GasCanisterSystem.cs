@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
@@ -8,29 +7,24 @@ using Content.Server.Hands.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Database;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Players;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasCanisterSystem : EntitySystem
+    public sealed class GasCanisterSystem : EntitySystem
     {
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -79,16 +73,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
-        private bool CheckInteract(ICommonSession session)
-        {
-            if (session.AttachedEntity is not {Valid: true} uid
-                || !_actionBlockerSystem.CanInteract(uid)
-                || !_actionBlockerSystem.CanUse(uid))
-                return false;
-
-            return true;
-        }
-
         private void DirtyUI(EntityUid uid,
             GasCanisterComponent? canister = null, NodeContainerComponent? nodeContainer = null,
             ContainerManagerComponent? containerManager = null)
@@ -120,9 +104,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnHoldingTankEjectMessage(EntityUid uid, GasCanisterComponent canister, GasCanisterHoldingTankEjectMessage args)
         {
-            if (!CheckInteract(args.Session))
-                return;
-
             if (!EntityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager)
                 || !containerManager.TryGetContainer(canister.ContainerName, out var container))
                 return;
@@ -136,9 +117,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnCanisterChangeReleasePressure(EntityUid uid, GasCanisterComponent canister, GasCanisterChangeReleasePressureMessage args)
         {
-            if (!CheckInteract(args.Session))
-                return;
-
             var pressure = Math.Clamp(args.Pressure, canister.MinReleasePressure, canister.MaxReleasePressure);
 
             _adminLogSystem.Add(LogType.CanisterPressure, LogImpact.Medium, $"{ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} set the release pressure on {ToPrettyString(uid):canister} to {args.Pressure}");
@@ -149,9 +127,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnCanisterChangeReleaseValve(EntityUid uid, GasCanisterComponent canister, GasCanisterChangeReleaseValveMessage args)
         {
-            if (!CheckInteract(args.Session))
-                return;
-
             var impact = LogImpact.High;
             if (EntityManager.TryGetComponent(uid, out ContainerManagerComponent containerManager)
                 && containerManager.TryGetContainer(canister.ContainerName, out var container))
@@ -211,11 +186,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 }
             }
 
-            DirtyUI(uid, canister, nodeContainer, containerManager);
-
             // If last pressure is very close to the current pressure, do nothing.
             if (MathHelper.CloseToPercent(canister.Air.Pressure, canister.LastPressure))
                 return;
+
+            DirtyUI(uid, canister, nodeContainer, containerManager);
 
             canister.LastPressure = canister.Air.Pressure;
 
@@ -268,14 +243,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!EntityManager.TryGetComponent(args.Used, out GasTankComponent? _))
                 return;
 
-            // Check the user has hands.
-            if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
-                return;
-
-            if (!args.User.InRangeUnobstructed(canister, SharedInteractionSystem.InteractionRange, popup: true))
-                return;
-
-            if (!hands.Drop(args.Used, container))
+            if (!_handsSystem.TryDropIntoContainer(args.User, args.Used, container))
                 return;
 
             _adminLogSystem.Add(LogType.CanisterTankInserted, LogImpact.Medium, $"Player {ToPrettyString(args.User):player} inserted tank {ToPrettyString(container.ContainedEntities[0]):tank} into {ToPrettyString(canister):canister}");

@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         [ViewVariables]
         private readonly Dictionary<IPlayerSession, LobbyPlayerStatus> _playersInLobby = new();
@@ -71,7 +71,7 @@ namespace Content.Server.GameTicking
         private TickerLobbyStatusEvent GetStatusMsg(IPlayerSession session)
         {
             _playersInLobby.TryGetValue(session, out var status);
-            return new TickerLobbyStatusEvent(RunLevel != GameRunLevel.PreRoundLobby, LobbySong, status == LobbyPlayerStatus.Ready, _roundStartTime, Paused);
+            return new TickerLobbyStatusEvent(RunLevel != GameRunLevel.PreRoundLobby, LobbySong, LobbyBackground,status == LobbyPlayerStatus.Ready, _roundStartTime, Paused);
         }
 
         private void SendStatusToAll()

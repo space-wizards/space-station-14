@@ -1,6 +1,7 @@
 using System;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Stacks;
@@ -21,10 +22,11 @@ namespace Content.Server.Stack
     ///     This is a good example for learning how to code in an ECS manner.
     /// </summary>
     [UsedImplicitly]
-    public class StackSystem : SharedStackSystem
+    public sealed class StackSystem : SharedStackSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
 
@@ -33,7 +35,7 @@ namespace Content.Server.Stack
             base.Initialize();
 
             SubscribeLocalEvent<StackComponent, InteractUsingEvent>(OnStackInteractUsing);
-            SubscribeLocalEvent<StackComponent, GetAlternativeVerbsEvent>(OnStackAlternativeInteract);
+            SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
         }
 
         /// <summary>
@@ -126,12 +128,12 @@ namespace Content.Server.Stack
             args.Handled = true;
         }
 
-        private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetAlternativeVerbsEvent args)
+        private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            Verb halve = new()
+            AlternativeVerb halve = new()
             {
                 Text = Loc.GetString("comp-stack-split-halve"),
                 Category = VerbCategory.Split,
@@ -146,7 +148,7 @@ namespace Content.Server.Stack
                 if (amount >= stack.Count)
                     continue;
 
-                Verb verb = new()
+                AlternativeVerb verb = new()
                 {
                     Text = amount.ToString(),
                     Category = VerbCategory.Split,
@@ -180,10 +182,7 @@ namespace Content.Server.Stack
             if (Split(uid, amount, userTransform.Coordinates, stack) is not {} split)
                 return;
 
-            if (TryComp<HandsComponent>(userUid, out var hands) && TryComp<SharedItemComponent>(split, out var item))
-            {
-                hands.PutInHandOrDrop(item);
-            }
+            _handsSystem.PickupOrDrop(userUid, split);
 
             _popupSystem.PopupCursor(Loc.GetString("comp-stack-split"), Filter.Entities(userUid));
         }

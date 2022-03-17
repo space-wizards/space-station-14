@@ -2,7 +2,7 @@ using Content.Server.Cuffs.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Cuffs;
-using Content.Shared.Hands.Components;
+using Content.Shared.Hands;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -27,10 +27,10 @@ namespace Content.Server.Cuffs
             SubscribeLocalEvent<HandCountChangedEvent>(OnHandCountChanged);
             SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
 
-            SubscribeLocalEvent<CuffableComponent, GetOtherVerbsEvent>(AddUncuffVerb);
+            SubscribeLocalEvent<CuffableComponent, GetVerbsEvent<Verb>>(AddUncuffVerb);
         }
 
-        private void AddUncuffVerb(EntityUid uid, CuffableComponent component, GetOtherVerbsEvent args)
+        private void AddUncuffVerb(EntityUid uid, CuffableComponent component, GetVerbsEvent<Verb> args)
         {
             // Can the user access the cuffs, and is there even anything to uncuff?
             if (!args.CanAccess || component.CuffedHandCount == 0)
@@ -83,7 +83,7 @@ namespace Content.Server.Cuffs
             else
             {
                 // Check if the user can interact.
-                if (!_actionBlockerSystem.CanInteract(args.User))
+                if (!_actionBlockerSystem.CanInteract(args.User, args.Target))
                 {
                     args.Cancel();
                 }
@@ -122,7 +122,7 @@ namespace Content.Server.Cuffs
             {
                 cuffable.CanStillInteract = handCount > cuffable.CuffedHandCount;
                 cuffable.CuffedStateChanged();
-                cuffable.Dirty();
+                Dirty(cuffable);
             }
         }
     }
@@ -131,7 +131,7 @@ namespace Content.Server.Cuffs
     /// Event fired on the User when the User attempts to cuff the Target.
     /// Should generate popups on the User.
     /// </summary>
-    public class UncuffAttemptEvent : CancellableEntityEventArgs
+    public sealed class UncuffAttemptEvent : CancellableEntityEventArgs
     {
         public readonly EntityUid User;
         public readonly EntityUid Target;

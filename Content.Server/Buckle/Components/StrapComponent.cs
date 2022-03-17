@@ -18,7 +18,7 @@ namespace Content.Server.Buckle.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrapComponent))]
-    public class StrapComponent : SharedStrapComponent, IInteractHand, ISerializationHooks, IDestroyAct
+    public sealed class StrapComponent : SharedStrapComponent, IInteractHand, ISerializationHooks, IDestroyAct
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -162,10 +162,6 @@ namespace Content.Server.Buckle.Components
                 appearance.SetData("StrapState", true);
             }
 
-#pragma warning disable 618
-            SendMessage(new StrapMessage(buckle.Owner, Owner));
-#pragma warning restore 618
-
             return true;
         }
 
@@ -184,9 +180,6 @@ namespace Content.Server.Buckle.Components
                 }
 
                 _occupiedSize -= buckle.Size;
-#pragma warning disable 618
-                SendMessage(new UnStrapMessage(buckle.Owner, Owner));
-#pragma warning restore 618
             }
         }
 

@@ -9,7 +9,7 @@ using Robust.Shared.Players;
 namespace Content.Server.Pulling
 {
     [UsedImplicitly]
-    public class PullingSystem : SharedPullingSystem
+    public sealed class PullingSystem : SharedPullingSystem
     {
         public override void Initialize()
         {

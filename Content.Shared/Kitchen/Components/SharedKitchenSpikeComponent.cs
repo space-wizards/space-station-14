@@ -12,11 +12,9 @@ namespace Content.Shared.Kitchen.Components
 {
     public abstract class SharedKitchenSpikeComponent : Component, IDragDropOn
     {
-        public override string Name => "KitchenSpike";
-
         [ViewVariables]
         [DataField("delay")]
-        public float SpikeDelay = 12.0f;
+        public float SpikeDelay = 7.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sound")]

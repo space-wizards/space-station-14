@@ -13,11 +13,10 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Plants.Systems
 {
-    public class PottedPlantHideSystem : EntitySystem
+    public sealed class PottedPlantHideSystem : EntitySystem
     {
         [Dependency] private readonly SecretStashSystem _stashSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
 
         public override void Initialize()
         {
@@ -37,9 +36,6 @@ namespace Content.Server.Plants.Systems
             if (args.Handled)
                 return;
 
-            // standard interaction checks
-            if (!_blocker.CanInteract(args.User)) return;
-
             Rustle(uid, component);
             args.Handled = _stashSystem.TryHideItem(uid, args.User, args.Used);
         }
@@ -48,9 +44,6 @@ namespace Content.Server.Plants.Systems
         {
             if (args.Handled)
                 return;
-
-            // standard interaction checks
-            if (!_blocker.CanInteract(args.User)) return;
 
             Rustle(uid, component);
 

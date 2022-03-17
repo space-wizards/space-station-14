@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
     [UsedImplicitly]
-    public class PlantAdjustWater : PlantAdjustAttribute
+    public sealed class PlantAdjustWater : PlantAdjustAttribute
     {
         public override void Effect(ReagentEffectArgs args)
         {

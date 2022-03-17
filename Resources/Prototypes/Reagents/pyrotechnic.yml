@@ -112,9 +112,8 @@
       - !type:FlammableReaction
         multiplier: 0.3
       - !type:Ignite
-      - !type:DoAction
+      - !type:Scream
         probability: 0.2
-        action: HumanScream
       - !type:PopupMessage
         messages: [ "clf3-it-burns", "clf3-get-away" ]
         probability: 0.3

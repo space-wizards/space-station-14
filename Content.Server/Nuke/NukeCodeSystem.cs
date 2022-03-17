@@ -1,9 +1,6 @@
 using Content.Server.Chat.Managers;
 using Content.Server.Communications;
 using Content.Shared.GameTicking;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Random;
 
 namespace Content.Server.Nuke
@@ -12,12 +9,12 @@ namespace Content.Server.Nuke
     ///     Nuclear code is generated once per round
     ///     One code works for all nukes
     /// </summary>
-    public class NukeCodeSystem : EntitySystem
+    public sealed class NukeCodeSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IChatManager _chat = default!;
 
-        public const int CodeLength = 6;
+        private const int CodeLength = 6;
         public string Code { get; private set; } = default!;
 
         public override void Initialize()
@@ -47,7 +44,7 @@ namespace Content.Server.Nuke
         public void GenerateNewCode()
         {
             var ret = "";
-            for (int i = 0; i < CodeLength; i++)
+            for (var i = 0; i < CodeLength; i++)
             {
                 var c = (char) _random.Next('0', '9' + 1);
                 ret += c;

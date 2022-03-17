@@ -15,8 +15,6 @@ namespace Content.Shared.Climbing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public sealed override string Name => "Climbing";
-
         protected bool IsOnClimbableThisFrame
         {
             get
@@ -25,7 +23,7 @@ namespace Content.Shared.Climbing
 
                 foreach (var entity in physicsComponent.GetBodiesIntersecting())
                 {
-                    if ((entity.CollisionLayer & (int) CollisionGroup.SmallImpassable) != 0) return true;
+                    if ((entity.CollisionLayer & (int) CollisionGroup.VaultImpassable) != 0) return true;
                 }
 
                 return false;
@@ -85,11 +83,11 @@ namespace Content.Shared.Climbing
             {
                 if (value)
                 {
-                    fixture.CollisionMask &= ~(int) CollisionGroup.SmallImpassable;
+                    fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
                 }
                 else
                 {
-                    fixture.CollisionMask |= (int) CollisionGroup.SmallImpassable;
+                    fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
                 }
             }
         }

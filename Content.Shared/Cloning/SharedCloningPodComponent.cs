@@ -5,12 +5,11 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cloning
 {
+    [Virtual]
     public class SharedCloningPodComponent : Component
     {
-        public override string Name => "CloningPod";
-
         [Serializable, NetSerializable]
-        public class CloningPodBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class CloningPodBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly Dictionary<int, string?> MindIdName;
             // When this state was created.
@@ -66,7 +65,7 @@ namespace Content.Shared.Cloning
         }
 
         [Serializable, NetSerializable]
-        public class CloningPodUiButtonPressedMessage : BoundUserInterfaceMessage
+        public sealed class CloningPodUiButtonPressedMessage : BoundUserInterfaceMessage
         {
             public readonly UiButton Button;
             public readonly int? ScanId;

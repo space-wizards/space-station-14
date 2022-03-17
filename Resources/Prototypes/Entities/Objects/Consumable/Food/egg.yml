@@ -108,6 +108,8 @@
   - type: Tag
     tags:
     - Egg
+    - Trash
+  - type: Recyclable
 
 # Egg
 

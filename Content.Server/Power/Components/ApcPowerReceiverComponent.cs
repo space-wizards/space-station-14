@@ -21,12 +21,10 @@ namespace Content.Server.Power.Components
     /// </summary>
     [RegisterComponent]
 #pragma warning disable 618
-    public class ApcPowerReceiverComponent : Component, IExamine
+    public sealed class ApcPowerReceiverComponent : Component, IExamine
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "ApcPowerReceiver";
 
         [ViewVariables]
         public bool Powered => (MathHelper.CloseToPercent(NetworkLoad.ReceivingPower, Load) || !NeedsPower) && !PowerDisabled;
@@ -107,7 +105,7 @@ namespace Content.Server.Power.Components
     }
 
 #pragma warning disable 618
-    public class PowerChangedMessage : ComponentMessage
+    public sealed class PowerChangedMessage : ComponentMessage
 #pragma warning restore 618
     {
         public readonly bool Powered;

@@ -1,19 +1,19 @@
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 
 namespace Content.Shared.Placeable
 {
-    public class PlaceableSurfaceSystem : EntitySystem
+    public sealed class PlaceableSurfaceSystem : EntitySystem
     {
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PlaceableSurfaceComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<PlaceableSurfaceComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
             SubscribeLocalEvent<PlaceableSurfaceComponent, ComponentHandleState>(OnHandleState);
         }
 
@@ -44,27 +44,21 @@ namespace Content.Shared.Placeable
             surface.Dirty();
         }
 
-        private void OnInteractUsing(EntityUid uid, PlaceableSurfaceComponent surface, InteractUsingEvent args)
+        private void OnAfterInteractUsing(EntityUid uid, PlaceableSurfaceComponent surface, AfterInteractUsingEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.CanReach)
                 return;
 
             if (!surface.IsPlaceable)
                 return;
 
-            if(!EntityManager.TryGetComponent<SharedHandsComponent?>(args.User, out var handComponent))
-                return;
-
-            if (!args.ClickLocation.IsValid(EntityManager))
-                return;
-
-            if(!handComponent.TryDropEntity(args.Used, EntityManager.GetComponent<TransformComponent>(surface.Owner).Coordinates))
+            if (!_handsSystem.TryDrop(args.User, args.Used))
                 return;
 
             if (surface.PlaceCentered)
-                EntityManager.GetComponent<TransformComponent>(args.Used).LocalPosition = EntityManager.GetComponent<TransformComponent>(args.Target).LocalPosition + surface.PositionOffset;
+                Transform(args.Used).LocalPosition = Transform(uid).LocalPosition + surface.PositionOffset;
             else
-                EntityManager.GetComponent<TransformComponent>(args.Used).Coordinates = args.ClickLocation;
+                Transform(args.Used).Coordinates = args.ClickLocation;
 
             args.Handled = true;
         }

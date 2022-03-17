@@ -139,7 +139,7 @@ namespace Content.Server.Chemistry.Components
             var xform = _entities.GetComponent<TransformComponent>(Owner);
             var mapGrid = MapManager.GetGrid(xform.GridID);
             var tile = mapGrid.GetTileRef(xform.Coordinates.ToVector2i(_entities, MapManager));
-            var lookup = IoCManager.Resolve<IEntityLookup>();
+            var lookup = EntitySystem.Get<EntityLookupSystem>();
 
             var solutionFraction = 1 / Math.Floor(averageExposures);
 

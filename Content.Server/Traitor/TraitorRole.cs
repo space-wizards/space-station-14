@@ -6,7 +6,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Traitor
 {
-    public class TraitorRole : Role
+    public sealed class TraitorRole : Role
     {
         public AntagPrototype Prototype { get; }
 

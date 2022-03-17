@@ -1,5 +1,5 @@
 - type: entity
-  id: Decorated Fir Tree
+  id: DecoratedFirTree
   parent: BaseStructure
   name: Decorated Fir Tree
   description: A very festive tree for a very festive holiday.

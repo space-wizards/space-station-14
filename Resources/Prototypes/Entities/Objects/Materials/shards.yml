@@ -25,7 +25,9 @@
         Slash: 2
   - type: Tag
     tags:
+    - Recyclable
     - Trash
+  - type: Recyclable
 
 - type: entity
   parent: ShardBase

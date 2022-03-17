@@ -32,13 +32,12 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Storage.Components
 {
     [RegisterComponent]
+    [Virtual]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
     public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IExAct
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "EntityStorage";
 
         private const float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
 
@@ -476,7 +475,7 @@ namespace Content.Server.Storage.Components
 
         protected virtual IEnumerable<EntityUid> DetermineCollidingEntities()
         {
-            var entityLookup = IoCManager.Resolve<IEntityLookup>();
+            var entityLookup = EntitySystem.Get<EntityLookupSystem>();
             return entityLookup.GetEntitiesIntersecting(Owner, _enteringRange, LookupFlags.Approximate);
         }
 

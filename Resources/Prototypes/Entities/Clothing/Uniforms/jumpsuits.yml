@@ -55,6 +55,21 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSalvageSpecialist
+  name: salvage specialist's jumpsuit
+  description: It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/salvage.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/salvage.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9 # Those overalls ARE sturdy.
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitChiefEngineer
   name: chief engineer's jumpsuit
   description: It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of Chief Engineer. It has minor radiation shielding.
@@ -134,6 +149,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
+    femaleMask: UniformTop
 
 - type: entity
   parent: ClothingUniformBase
@@ -145,6 +161,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/cmo.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cmo.rsi
+  - type: DiseaseProtection
+    protection: 0.15
 
 - type: entity
   parent: ClothingUniformBase
@@ -277,6 +295,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/medical.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/medical.rsi
+  - type: DiseaseProtection
+    protection: 0.1
 
 - type: entity
   parent: ClothingUniformBase
@@ -299,6 +319,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/paramedic.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/paramedic.rsi
+  - type: DiseaseProtection
+    protection: 0.1
 
 - type: entity
   parent: ClothingUniformBase
@@ -602,7 +624,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/librarian.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/librarian.rsi
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerRed
@@ -613,7 +635,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/lawyerred.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/lawyerred.rsi
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerBlue
@@ -624,7 +646,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/lawyerblue.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/lawyerblue.rsi
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerBlack
@@ -635,7 +657,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/lawyerblack.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/lawyerblack.rsi
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerPurple
@@ -646,3 +668,47 @@
     sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPyjamaSyndicateBlack
+  name: black syndicate pyjamas
+  description: For those long nights in perma.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicateblack.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicateblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPyjamaSyndicatePink
+  name: pink syndicate pyjamas
+  description: For those long nights in perma.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatepink.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatepink.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPyjamaSyndicateRed
+  name: red syndicate pyjamas
+  description: For those long nights in perma.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatered.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatered.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitNanotrasen
+  name: nanotrasen jumpsuit
+  description: A stately blue jumpsuit to represent NanoTrasen.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/nanotrasen.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/nanotrasen.rsi

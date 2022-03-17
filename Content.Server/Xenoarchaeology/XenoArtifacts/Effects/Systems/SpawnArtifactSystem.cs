@@ -1,25 +1,22 @@
-using Content.Server.Clothing.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Content.Shared.Hands.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
-public class SpawnArtifactSystem : EntitySystem
+public sealed class SpawnArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SpawnArtifactComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<SpawnArtifactComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SpawnArtifactComponent, ArtifactActivatedEvent>(OnActivate);
     }
-    private void OnInit(EntityUid uid, SpawnArtifactComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, SpawnArtifactComponent component, MapInitEvent args)
     {
         ChooseRandomPrototype(uid, component);
     }
@@ -43,12 +40,7 @@ public class SpawnArtifactSystem : EntitySystem
 
         // if there is an user - try to put spawned item in their hands
         // doesn't work for spawners
-        if (args.Activator != null &&
-            EntityManager.TryGetComponent(args.Activator.Value, out SharedHandsComponent? hands) &&
-            EntityManager.HasComponent<ItemComponent>(spawned))
-        {
-            hands.TryPutInAnyHand(spawned);
-        }
+        _handsSystem.PickupOrDrop(args.Activator, spawned);
     }
 
     private void ChooseRandomPrototype(EntityUid uid, SpawnArtifactComponent? component = null)

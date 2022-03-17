@@ -7,7 +7,7 @@ using static Content.Shared.Access.Components.SharedIdCardConsoleComponent;
 
 namespace Content.Client.Access.UI
 {
-    public class IdCardConsoleBoundUserInterface : BoundUserInterface
+    public sealed class IdCardConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;

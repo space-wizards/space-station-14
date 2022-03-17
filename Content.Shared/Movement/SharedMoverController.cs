@@ -1,18 +1,20 @@
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
+using Content.Shared.Inventory;
+using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Pulling.Components;
-using JetBrains.Annotations;
+using Content.Shared.Tag;
+using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Movement
@@ -23,11 +25,18 @@ namespace Content.Shared.Movement
     /// </summary>
     public abstract class SharedMoverController : VirtualController
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
 
-        private ActionBlockerSystem _blocker = default!;
-        private SharedPhysicsSystem _broadPhaseSystem = default!;
+        private const float StepSoundMoveDistanceRunning = 2;
+        private const float StepSoundMoveDistanceWalking = 1.5f;
+
+        private const float FootstepVariation = 0f;
+        private const float FootstepVolume = 1f;
 
         private bool _relativeMovement;
 
@@ -39,8 +48,6 @@ namespace Content.Shared.Movement
         public override void Initialize()
         {
             base.Initialize();
-            _broadPhaseSystem = EntitySystem.Get<SharedPhysicsSystem>();
-            _blocker = EntitySystem.Get<ActionBlockerSystem>();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
             UpdatesBefore.Add(typeof(SharedTileFrictionController));
@@ -89,19 +96,21 @@ namespace Content.Shared.Movement
                 mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
-                transform.WorldRotation = worldTotal.GetDir().ToAngle();
+                transform.LocalRotation = transform.GridID != GridId.Invalid
+                    ? total.ToWorldAngle()
+                    : worldTotal.ToWorldAngle();
 
-            physicsComponent.LinearVelocity = worldTotal;
+            _physics.SetLinearVelocity(physicsComponent, worldTotal);
         }
 
         /// <summary>
         ///     Movement while considering actionblockers, weightlessness, etc.
         /// </summary>
-        /// <param name="mover"></param>
-        /// <param name="physicsComponent"></param>
-        /// <param name="mobMover"></param>
-        protected void HandleMobMovement(IMoverComponent mover, PhysicsComponent physicsComponent,
-            IMobMoverComponent mobMover)
+        protected void HandleMobMovement(
+            IMoverComponent mover,
+            PhysicsComponent physicsComponent,
+            IMobMoverComponent mobMover,
+            TransformComponent xform)
         {
             DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
 
@@ -112,22 +121,21 @@ namespace Content.Shared.Movement
             }
 
             UsedMobMovement[mover.Owner] = true;
-            var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
-            var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: _entityManager);
+            var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: EntityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
 
             // Handle wall-pushes.
             if (weightless)
             {
                 // No gravity: is our entity touching anything?
-                var touching = IsAroundCollider(_broadPhaseSystem, transform, mobMover, physicsComponent);
+                var touching = IsAroundCollider(_physics, xform, mobMover, physicsComponent);
 
                 if (!touching)
                 {
-                    if (transform.GridID != GridId.Invalid)
-                        mover.LastGridAngle = GetParentGridAngle(transform, mover);
+                    if (xform.GridID != GridId.Invalid)
+                        mover.LastGridAngle = GetParentGridAngle(xform, mover);
 
-                    transform.WorldRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
+                    xform.WorldRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
                     return;
                 }
             }
@@ -137,7 +145,7 @@ namespace Content.Shared.Movement
             // This is relative to the map / grid we're on.
             var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
 
-            var parentRotation = GetParentGridAngle(transform, mover);
+            var parentRotation = GetParentGridAngle(xform, mover);
 
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
@@ -146,19 +154,29 @@ namespace Content.Shared.Movement
             if (weightless)
                 worldTotal *= mobMover.WeightlessStrength;
 
-            if (transform.GridID != GridId.Invalid)
+            if (xform.GridID != GridId.Invalid)
                 mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
             {
                 // This should have its event run during island solver soooo
-                transform.DeferUpdates = true;
-                transform.WorldRotation = worldTotal.GetDir().ToAngle();
-                transform.DeferUpdates = false;
-                HandleFootsteps(mover, mobMover);
+                xform.DeferUpdates = true;
+                xform.LocalRotation = xform.GridID != GridId.Invalid
+                    ? total.ToWorldAngle()
+                    : worldTotal.ToWorldAngle();
+                xform.DeferUpdates = false;
+
+                if (TryGetSound(mover, mobMover, xform, out var variation, out var sound))
+                {
+                    SoundSystem.Play(
+                        GetSoundPlayers(mover.Owner),
+                        sound,
+                        mover.Owner,
+                        AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume));
+                }
             }
 
-            physicsComponent.LinearVelocity = worldTotal;
+            _physics.SetLinearVelocity(physicsComponent, worldTotal);
         }
 
         public bool UseMobMovement(EntityUid uid)
@@ -178,7 +196,7 @@ namespace Content.Shared.Movement
         /// <summary>
         ///     Used for weightlessness to determine if we are near a wall.
         /// </summary>
-        public static bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
+        private bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
         {
             var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
 
@@ -191,7 +209,7 @@ namespace Content.Shared.Movement
                     !otherCollider.CanCollide ||
                     ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
                     (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
-                    (IoCManager.Resolve<IEntityManager>().TryGetComponent(otherCollider.Owner, out SharedPullableComponent? pullable) && pullable.BeingPulled))
+                    (TryComp(otherCollider.Owner, out SharedPullableComponent? pullable) && pullable.BeingPulled))
                 {
                     continue;
                 }
@@ -202,7 +220,87 @@ namespace Content.Shared.Movement
             return false;
         }
 
-        // TODO: Need a predicted client version that only plays for our own entity and then have server-side ignore our session (for that entity only)
-        protected virtual void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover) {}
+        // TODO: Predicted audio moment.
+        protected abstract Filter GetSoundPlayers(EntityUid mover);
+
+        protected abstract bool CanSound();
+
+        private bool TryGetSound(IMoverComponent mover, IMobMoverComponent mobMover, TransformComponent xform, out float variation, [NotNullWhen(true)] out string? sound)
+        {
+            sound = null;
+            variation = 0f;
+
+            if (!CanSound() || !_tags.HasTag(mover.Owner, "FootstepSound")) return false;
+
+            var coordinates = xform.Coordinates;
+            var gridId = coordinates.GetGridId(EntityManager);
+            var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
+
+            // Handle footsteps.
+            if (_mapManager.GridExists(gridId))
+            {
+                // Can happen when teleporting between grids.
+                if (!coordinates.TryDistance(EntityManager, mobMover.LastPosition, out var distance) ||
+                    distance > distanceNeeded)
+                {
+                    mobMover.StepSoundDistance = distanceNeeded;
+                }
+                else
+                {
+                    mobMover.StepSoundDistance += distance;
+                }
+            }
+            else
+            {
+                // In space no one can hear you squeak
+                return false;
+            }
+
+            DebugTools.Assert(gridId != GridId.Invalid);
+            mobMover.LastPosition = coordinates;
+
+            if (mobMover.StepSoundDistance < distanceNeeded) return false;
+
+            mobMover.StepSoundDistance -= distanceNeeded;
+
+            if (_inventory.TryGetSlotEntity(mover.Owner, "shoes", out var shoes) &&
+                EntityManager.TryGetComponent<FootstepModifierComponent>(shoes, out var modifier))
+            {
+                sound = modifier.SoundCollection.GetSound();
+                variation = modifier.Variation;
+                return true;
+            }
+
+            return TryGetFootstepSound(gridId, coordinates, out variation, out sound);
+        }
+
+        private bool TryGetFootstepSound(GridId gridId, EntityCoordinates coordinates, out float variation, [NotNullWhen(true)] out string? sound)
+        {
+            variation = 0f;
+            sound = null;
+            var grid = _mapManager.GetGrid(gridId);
+            var tile = grid.GetTileRef(coordinates);
+
+            if (tile.IsSpace(_tileDefinitionManager)) return false;
+
+            // If the coordinates have a FootstepModifier component
+            // i.e. component that emit sound on footsteps emit that sound
+            foreach (var maybeFootstep in grid.GetAnchoredEntities(tile.GridIndices))
+            {
+                if (EntityManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
+                {
+                    sound = footstep.SoundCollection.GetSound();
+                    variation = footstep.Variation;
+                    return true;
+                }
+            }
+
+            // Walking on a tile.
+            var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
+            sound = def.FootstepSounds?.GetSound();
+            variation = FootstepVariation;
+
+            return !string.IsNullOrEmpty(sound);
+        }
     }
 }

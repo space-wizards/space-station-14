@@ -20,7 +20,7 @@ namespace Content.Server.Strip
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StrippableComponent, GetOtherVerbsEvent>(AddStripVerb);
+            SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<Verb>>(AddStripVerb);
             SubscribeLocalEvent<StrippableComponent, DidEquipEvent>(OnDidEquip);
             SubscribeLocalEvent<StrippableComponent, DidUnequipEvent>(OnDidUnequip);
             SubscribeLocalEvent<StrippableComponent, ComponentInit>(OnCompInit);
@@ -76,24 +76,22 @@ namespace Content.Server.Strip
 
             if (TryComp(uid, out HandsComponent? handsComp))
             {
-                foreach (var hand in handsComp.HandNames)
+                foreach (var hand in handsComp.Hands.Values)
                 {
-                    var owner = handsComp.GetItem(hand)?.Owner;
-
-                    if (!owner.HasValue || HasComp<HandVirtualItemComponent>(owner.Value))
+                    if (hand.HeldEntity == null || HasComp<HandVirtualItemComponent>(hand.HeldEntity))
                     {
-                        hands[hand] = "None";
+                        hands[hand.Name] = "None";
                         continue;
                     }
 
-                    hands[hand] = Name(owner.Value);
+                    hands[hand.Name] = Name(hand.HeldEntity.Value);
                 }
             }
 
             strippableComponent.UserInterface.SetState(new StrippingBoundUserInterfaceState(inventory, hands, cuffs));
         }
 
-        private void AddStripVerb(EntityUid uid, StrippableComponent component, GetOtherVerbsEvent args)
+        private void AddStripVerb(EntityUid uid, StrippableComponent component, GetVerbsEvent<Verb> args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract || args.Target == args.User)
                 return;

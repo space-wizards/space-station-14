@@ -9,7 +9,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public class OwoifyCommand : IConsoleCommand
+public sealed class OwoifyCommand : IConsoleCommand
 {
     public string Command => "owoify";
 

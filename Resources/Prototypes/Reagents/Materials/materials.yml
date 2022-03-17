@@ -1,3 +1,16 @@
+
+- type: material
+  id: Cloth
+  stack: Cloth
+  name: cloth
+  icon: /Textures/Objects/Materials/materials.rsi/cloth.png
+
+- type: material
+  id: Durathread
+  stack: Durathread
+  name: durathread
+  icon: /Textures/Objects/Materials/materials.rsi/durathread.png
+
 - type: material
   id: Plasma
   stack: Plasma

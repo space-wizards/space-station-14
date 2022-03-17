@@ -11,6 +11,7 @@ using Content.Server.Throwing;
 using Content.Server.Tools.Components;
 using Content.Shared.Camera;
 using Content.Shared.CombatMode;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.PneumaticCannon;
@@ -19,22 +20,19 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.PneumaticCannon
 {
-    public class PneumaticCannonSystem : EntitySystem
+    public sealed class PneumaticCannonSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
         [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         private HashSet<PneumaticCannonComponent> _currentlyFiring = new();
 
@@ -45,8 +43,8 @@ namespace Content.Server.PneumaticCannon
             SubscribeLocalEvent<PneumaticCannonComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<PneumaticCannonComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<PneumaticCannonComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<PneumaticCannonComponent, GetAlternativeVerbsEvent>(OnAlternativeVerbs);
-            SubscribeLocalEvent<PneumaticCannonComponent, GetOtherVerbsEvent>(OnOtherVerbs);
+            SubscribeLocalEvent<PneumaticCannonComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerbs);
+            SubscribeLocalEvent<PneumaticCannonComponent, GetVerbsEvent<Verb>>(OnOtherVerbs);
         }
 
         public override void Update(float frameTime)
@@ -285,20 +283,20 @@ namespace Content.Server.PneumaticCannon
             return false;
         }
 
-        private void OnAlternativeVerbs(EntityUid uid, PneumaticCannonComponent component, GetAlternativeVerbsEvent args)
+        private void OnAlternativeVerbs(EntityUid uid, PneumaticCannonComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (component.GasTankSlot.ContainedEntities.Count == 0 || !component.GasTankRequired)
                 return;
             if (!args.CanInteract)
                 return;
 
-            Verb ejectTank = new();
+            AlternativeVerb ejectTank = new();
             ejectTank.Act = () => TryRemoveGasTank(component, args.User);
             ejectTank.Text = Loc.GetString("pneumatic-cannon-component-verb-gas-tank-name");
             args.Verbs.Add(ejectTank);
         }
 
-        private void OnOtherVerbs(EntityUid uid, PneumaticCannonComponent component, GetOtherVerbsEvent args)
+        private void OnOtherVerbs(EntityUid uid, PneumaticCannonComponent component, GetVerbsEvent<Verb> args)
         {
             if (!args.CanInteract)
                 return;
@@ -320,11 +318,8 @@ namespace Content.Server.PneumaticCannon
 
             if (component.GasTankSlot.Remove(contained))
             {
-                if (EntityManager.TryGetComponent<HandsComponent?>(user, out var hands))
-                {
-                    hands.PutInHand(contained);
-                }
-
+                _handsSystem.TryPickupAnyHand(user, contained);
+                
                 user.PopupMessage(Loc.GetString("pneumatic-cannon-component-gas-tank-remove",
                     ("tank", contained), ("cannon", component.Owner)));
                 UpdateAppearance(component);

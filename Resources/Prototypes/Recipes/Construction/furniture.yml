@@ -100,6 +100,23 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+    
+- type: construction
+  name: pilots chair
+  id: chairPilotSeat
+  graph: Seat
+  startNode: start
+  targetNode: chairPilotSeat
+  category: Furniture
+  description: Fit for a captain.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: shuttle
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
 
 - type: construction
   name: wooden chair
@@ -302,6 +319,24 @@
   icon:
     sprite: Structures/Furniture/furniture.rsi
     state: dogbed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+#racks
+- type: construction
+  id: Rack
+  name: rack
+  description: A rack for storing things on.
+  graph: Rack
+  startNode: start
+  targetNode: Rack
+  category: Furniture
+  icon:
+    sprite: Structures/Furniture/furniture.rsi
+    state: rack
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

@@ -1,13 +1,12 @@
-﻿using Content.Shared.Pointing.Components;
+using Content.Shared.Pointing.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Pointing.Components
 {
     [RegisterComponent]
-    public class PointingArrowComponent : SharedPointingArrowComponent
+    [ComponentReference(typeof(SharedPointingArrowComponent))]
+    public sealed class PointingArrowComponent : SharedPointingArrowComponent
     {
         protected override void Startup()
         {

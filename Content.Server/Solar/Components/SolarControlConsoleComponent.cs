@@ -11,8 +11,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.Solar.Components
 {
     [RegisterComponent]
-    public class SolarControlConsoleComponent : Component
+    public sealed class SolarControlConsoleComponent : Component
     {
-        public override string Name => "SolarControlConsole";
     }
 }

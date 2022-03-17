@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.AME
 {
     [UsedImplicitly]
-    public class AntimatterEngineSystem : EntitySystem
+    public sealed class AntimatterEngineSystem : EntitySystem
     {
         private float _accumulatedFrameTime;
 

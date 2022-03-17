@@ -1,12 +1,11 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
-public class ArtifactGasTriggerSystem : EntitySystem
+public sealed class ArtifactGasTriggerSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -15,7 +14,16 @@ public class ArtifactGasTriggerSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ArtifactGasTriggerComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ArtifactGasTriggerComponent, RandomizeTriggerEvent>(OnRandomizeTrigger);
+    }
+
+    private void OnRandomizeTrigger(EntityUid uid, ArtifactGasTriggerComponent component, RandomizeTriggerEvent args)
+    {
+        if (component.ActivationGas == null)
+        {
+            var gas = _random.Pick(component.PossibleGases);
+            component.ActivationGas = gas;
+        }
     }
 
     public override void Update(float frameTime)
@@ -25,27 +33,18 @@ public class ArtifactGasTriggerSystem : EntitySystem
         foreach (var (trigger, transform) in query)
         {
             if (trigger.ActivationGas == null)
-                return;
+                continue;
 
-            var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates, true);
+            var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates);
             if (environment == null)
-                return;
+                continue;
 
             // check if outside there is enough moles to activate artifact
             var moles = environment.GetMoles(trigger.ActivationGas.Value);
             if (moles < trigger.ActivationMoles)
-                return;
+                continue;
 
             _artifactSystem.TryActivateArtifact(trigger.Owner);
-        }
-    }
-
-    private void OnInit(EntityUid uid, ArtifactGasTriggerComponent component, ComponentInit args)
-    {
-        if (component.ActivationGas == null)
-        {
-            var gas = _random.Pick(component.PossibleGases);
-            component.ActivationGas = gas;
         }
     }
 }

@@ -16,11 +16,10 @@
     sprite: Objects/Tools/bucket.rsi
     Slots:
     - HEAD
-  - type: Bucket
   - type: SolutionContainerManager
     solutions:
       bucket:
-        maxVol: 500
+        maxVol: 100
   - type: SolutionTransfer
     transferAmount: 50
     maxTransferAmount: 100

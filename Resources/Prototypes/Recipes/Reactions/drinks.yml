@@ -317,16 +317,6 @@
     IrishCream: 3
 
 - type: reaction
-  id: LeanShine
-  reactants:
-    Lean:
-      amount: 1
-    Moonshine:
-      amount: 1
-  products:
-    LeanShine: 2
-
-- type: reaction
   id: Lemonade
   reactants:
     JuiceLemon:
@@ -551,3 +541,24 @@
       amount: 1
   products:
     WhiteRussian: 3
+
+- type: reaction
+  id: HotRamen
+  minTemp: 323.15
+  reactants:
+    DryRamen:
+      amount: 3
+    Water:
+      amount: 1
+  products:
+    HotRamen: 3
+
+- type: reaction
+  id: Pilk
+  reactants:
+    Cola:
+      amount: 1
+    Milk:
+      amount: 1
+  products:
+    Pilk: 2

@@ -6,10 +6,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Power.Components
 {
     [RegisterComponent]
-    public class ApcPowerProviderComponent : BaseApcNetComponent
+    [ComponentProtoName("PowerProvider")]
+    public sealed class ApcPowerProviderComponent : BaseApcNetComponent
     {
-        public override string Name => "PowerProvider";
-
         [ViewVariables] public List<ApcPowerReceiverComponent> LinkedReceivers { get; } = new();
 
         public void AddReceiver(ApcPowerReceiverComponent receiver)

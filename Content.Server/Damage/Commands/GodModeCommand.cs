@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Damage.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class GodModeCommand : IConsoleCommand
+    public sealed class GodModeCommand : IConsoleCommand
     {
         public string Command => "godmode";
         public string Description => "Makes your entity or another invulnerable to almost anything. May have irreversible changes.";

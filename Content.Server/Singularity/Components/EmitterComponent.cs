@@ -11,10 +11,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
-    public class EmitterComponent : Component
+    public sealed class EmitterComponent : Component
     {
-        public override string Name => "Emitter";
-
         public CancellationTokenSource? TimerCancel;
 
         // whether the power switch is in "on"

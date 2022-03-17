@@ -8,10 +8,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public class MeleeChemicalInjectorComponent : Component
+    public sealed class MeleeChemicalInjectorComponent : Component
     {
-        public override string Name => "MeleeChemicalInjector";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("transferAmount")]
         public FixedPoint2 TransferAmount { get; set; } = FixedPoint2.New(1);

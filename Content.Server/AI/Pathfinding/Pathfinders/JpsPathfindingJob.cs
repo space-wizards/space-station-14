@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Pathfinding.Pathfinders
 {
-    public class JpsPathfindingJob : Job<Queue<TileRef>>
+    public sealed class JpsPathfindingJob : Job<Queue<TileRef>>
     {
         // Some of this is probably fugly due to other structural changes in pathfinding so it could do with optimisation
         // Realistically it's probably not getting used given it doesn't support tile costs which can be very useful

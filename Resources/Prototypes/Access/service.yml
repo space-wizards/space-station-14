@@ -1,0 +1,31 @@
+- type: accessLevel
+  id: Bar
+
+- type: accessLevel
+  id: Kitchen
+
+- type: accessLevel
+  id: Hydroponics
+
+- type: accessLevel
+  id: Service
+
+- type: accessLevel
+  id: Janitor
+
+- type: accessLevel
+  id: Theatre
+
+- type: accessLevel
+  id: Chapel
+
+- type: accessGroup
+  id: Service
+  tags:
+  - Bar
+  - Kitchen
+  - Hydroponics
+  - Service
+  - Janitor
+  - Theatre
+  - Chapel

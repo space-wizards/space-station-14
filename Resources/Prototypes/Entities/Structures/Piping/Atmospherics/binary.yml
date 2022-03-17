@@ -6,6 +6,9 @@
     mode: SnapgridCenter
   components:
   - type: AtmosDevice
+  - type: SubFloorHide
+    blockInteractions: false
+    blockAmbience: false
   - type: NodeContainer
     nodes:
       inlet:
@@ -33,11 +36,9 @@
       state: pipeStraight
       map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - state: pumpPressure
-      map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer", "enum.PressurePumpVisualizer+Layers.Enabled" ]
+      map: [ "enum.SubfloorLayers.FirstLayer", "enum.PressurePumpVisualizer+Layers.Enabled" ]
   - type: Appearance
     visuals:
-    - type: SubFloorShowLayerVisualizer
-    - type: PipeConnectorVisualizer
     - type: PipeColorVisualizer
     - type: PressurePumpVisualizer
       disabledState: pumpPressure
@@ -47,6 +48,15 @@
     interfaces:
       - key: enum.GasPressurePumpUiKey.Key
         type: GasPressurePumpBoundUserInterface
+  - type: Construction
+    graph: GasBinary
+    node: pressurepump
+  - type: AmbientSound
+    enabled: false
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/gas_pump.ogg
 
 - type: entity
   parent: GasBinaryBase
@@ -64,17 +74,27 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpVolume
-          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.SubfloorLayers.FirstLayer", "enum.PressurePumpVisualizer+Layers.Enabled" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
+        - type: PressurePumpVisualizer
+          disabledState: pumpVolume
+          enabledState: pumpVolumeOn
     - type: GasVolumePump
     - type: UserInterface
       interfaces:
         - key: enum.GasVolumePumpUiKey.Key
           type: GasVolumePumpBoundUserInterface
+    - type: Construction
+      graph: GasBinary
+      node: volumepump
+    - type: AmbientSound
+      enabled: false
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_pump.ogg
 
 - type: entity
   parent: GasBinaryBase
@@ -92,13 +112,20 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpPassiveGate
-          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasPassiveGate
+    - type: Construction
+      graph: GasBinary
+      node: passivegate
+    - type: AmbientSound
+      enabled: true
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_hiss.ogg
 
 - type: entity
   parent: GasBinaryBase
@@ -117,11 +144,9 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpManualValve
-          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer", "enum.GasValveVisualizer+Layers.Enabled" ]
+          map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasValveVisualizer+Layers.Enabled" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: GasValveVisualizer
           disabledState: pumpManualValve
@@ -139,6 +164,15 @@
           nodeGroupID: Pipe
           pipeDirection: South
           volume: 100
+    - type: Construction
+      graph: GasBinary
+      node: valve
+    - type: AmbientSound
+      enabled: false
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_hiss.ogg
 
 - type: entity
   parent: GasBinaryBase
@@ -156,11 +190,9 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: gasCanisterPort
-          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasPort
     - type: NodeContainer
@@ -169,6 +201,9 @@
           !type:PortPipeNode
           nodeGroupID: Pipe
           pipeDirection: South
+    - type: Construction
+      graph: GasBinary
+      node: port
 
 - type: entity
   parent: GasUnaryBase
@@ -187,11 +222,12 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
-          map: [ "enum.VentVisualLayers.Vent", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+          map: [ "enum.VentVisualLayers.Vent", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
       visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: VentPumpVisualizer
     - type: GasVentPump
+    - type: Construction
+      graph: GasBinary
+      node: dualportventpump

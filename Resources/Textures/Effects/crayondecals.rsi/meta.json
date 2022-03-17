@@ -4,539 +4,538 @@
         "x": 32,
         "y": 32
     },
-    "license": "CC 3.0 BY-SA",
+    "license": "CC-BY-SA-3.0",
     "copyright": "From https://github.com/tgstation/tgstation/blob/master/icons/effects/crayondecal.dmi at c6803492ab2a5e523aae7b9b1a9e847ba155f1cf",
     "states": [
         {
-            "name": "0",
+            "name": "0"
 
         },
         {
-            "name": "1",
+            "name": "1"
 
         },
         {
-            "name": "2",
+            "name": "2"
 
         },
         {
-            "name": "3",
+            "name": "3"
 
         },
         {
-            "name": "4",
+            "name": "4"
 
         },
         {
-            "name": "5",
+            "name": "5"
 
         },
         {
-            "name": "6",
+            "name": "6"
 
         },
         {
-            "name": "7",
+            "name": "7"
 
         },
         {
-            "name": "8",
+            "name": "8"
 
         },
         {
-            "name": "9",
+            "name": "9"
 
         },
         {
-            "name": "Blasto",
+            "name": "Blasto"
 
         },
         {
-            "name": "Clandestine",
+            "name": "Clandestine"
 
         },
         {
-            "name": "Cyber",
+            "name": "Cyber"
 
         },
         {
-            "name": "Diablo",
+            "name": "Diablo"
 
         },
         {
-            "name": "Donk",
+            "name": "Donk"
 
         },
         {
-            "name": "Gene",
+            "name": "Gene"
 
         },
         {
-            "name": "Gib",
+            "name": "Gib"
 
         },
         {
-            "name": "Max",
+            "name": "Max"
 
         },
         {
-            "name": "Newton",
+            "name": "Newton"
 
         },
         {
-            "name": "North",
+            "name": "North"
 
         },
         {
-            "name": "Omni",
+            "name": "Omni"
 
         },
         {
-            "name": "Osiron",
+            "name": "Osiron"
 
         },
         {
-            "name": "Prima",
+            "name": "Prima"
 
         },
         {
-            "name": "Psyke",
+            "name": "Psyke"
 
         },
         {
-            "name": "Sirius",
+            "name": "Sirius"
 
         },
         {
-            "name": "Sleeping Carp",
+            "name": "Sleeping Carp"
 
         },
         {
-            "name": "Tunnel",
+            "name": "Tunnel"
 
         },
         {
-            "name": "Waffle",
+            "name": "Waffle"
 
         },
         {
-            "name": "Zero-G",
+            "name": "Zero-G"
 
         },
         {
-            "name": "a",
-
+            "name": "a"
         },
         {
-            "name": "ampersand",
+            "name": "ampersand"
 
         },
         {
-            "name": "amyjon",
+            "name": "amyjon"
 
         },
         {
-            "name": "antilizard",
+            "name": "antilizard"
 
         },
         {
-            "name": "arrow",
+            "name": "arrow"
 
         },
         {
-            "name": "b",
+            "name": "b"
 
         },
         {
-            "name": "beepsky",
+            "name": "beepsky"
 
         },
         {
-            "name": "biohazard",
+            "name": "biohazard"
 
         },
         {
-            "name": "blueprint",
+            "name": "blueprint"
 
         },
         {
-            "name": "body",
+            "name": "body"
 
         },
         {
-            "name": "bottle",
+            "name": "bottle"
 
         },
         {
-            "name": "brush",
+            "name": "brush"
 
         },
         {
-            "name": "c",
+            "name": "c"
 
         },
         {
-            "name": "carp",
+            "name": "carp"
 
         },
         {
-            "name": "cat",
+            "name": "cat"
 
         },
         {
-            "name": "chevron",
+            "name": "chevron"
 
         },
         {
-            "name": "clawprint",
+            "name": "clawprint"
 
         },
         {
-            "name": "clown",
+            "name": "clown"
 
         },
         {
-            "name": "comma",
+            "name": "comma"
 
         },
         {
-            "name": "corgi",
+            "name": "corgi"
 
         },
         {
-            "name": "credit",
+            "name": "credit"
 
         },
         {
-            "name": "cyka",
+            "name": "cyka"
 
         },
         {
-            "name": "d",
+            "name": "d"
 
         },
         {
-            "name": "danger",
+            "name": "danger"
 
         },
         {
-            "name": "disk",
+            "name": "disk"
 
         },
         {
-            "name": "dot",
+            "name": "dot"
 
         },
         {
-            "name": "dwarf",
+            "name": "dwarf"
 
         },
         {
-            "name": "e",
+            "name": "e"
 
         },
         {
-            "name": "electricdanger",
+            "name": "electricdanger"
 
         },
         {
-            "name": "end",
+            "name": "end"
 
         },
         {
-            "name": "engie",
+            "name": "engie"
 
         },
         {
-            "name": "equals",
+            "name": "equals"
 
         },
         {
-            "name": "evac",
+            "name": "evac"
 
         },
         {
-            "name": "exclamationmark",
+            "name": "exclamationmark"
 
         },
         {
-            "name": "f",
+            "name": "f"
 
         },
         {
-            "name": "face",
+            "name": "face"
 
         },
         {
-            "name": "fireaxe",
+            "name": "fireaxe"
 
         },
         {
-            "name": "firedanger",
+            "name": "firedanger"
 
         },
         {
-            "name": "food",
+            "name": "food"
 
         },
         {
-            "name": "footprint",
+            "name": "footprint"
 
         },
         {
-            "name": "g",
+            "name": "g"
 
         },
         {
-            "name": "ghost",
+            "name": "ghost"
 
         },
         {
-            "name": "guy",
+            "name": "guy"
 
         },
         {
-            "name": "h",
+            "name": "h"
 
         },
         {
-            "name": "heart",
+            "name": "heart"
 
         },
         {
-            "name": "i",
+            "name": "i"
 
         },
         {
-            "name": "j",
+            "name": "j"
 
         },
         {
-            "name": "k",
+            "name": "k"
 
         },
         {
-            "name": "l",
+            "name": "l"
 
         },
         {
-            "name": "largebrush",
+            "name": "largebrush"
 
         },
         {
-            "name": "like",
+            "name": "like"
 
         },
         {
-            "name": "line",
+            "name": "line"
 
         },
         {
-            "name": "m",
+            "name": "m"
 
         },
         {
-            "name": "matt",
+            "name": "matt"
 
         },
         {
-            "name": "med",
+            "name": "med"
 
         },
         {
-            "name": "minus",
+            "name": "minus"
 
         },
         {
-            "name": "n",
+            "name": "n"
 
         },
         {
-            "name": "nay",
+            "name": "nay"
 
         },
         {
-            "name": "o",
+            "name": "o"
 
         },
         {
-            "name": "p",
+            "name": "p"
 
         },
         {
-            "name": "pawprint",
+            "name": "pawprint"
 
         },
         {
-            "name": "peace",
+            "name": "peace"
 
         },
         {
-            "name": "percent",
+            "name": "percent"
 
         },
         {
-            "name": "plus",
+            "name": "plus"
 
         },
         {
-            "name": "pound",
+            "name": "pound"
 
         },
         {
-            "name": "prolizard",
+            "name": "prolizard"
 
         },
         {
-            "name": "q",
+            "name": "q"
 
         },
         {
-            "name": "questionmark",
+            "name": "questionmark"
 
         },
         {
-            "name": "r",
+            "name": "r"
 
         },
         {
-            "name": "radiation",
+            "name": "radiation"
 
         },
         {
-            "name": "revolution",
+            "name": "revolution"
 
         },
         {
-            "name": "rune1",
+            "name": "rune1"
 
         },
         {
-            "name": "rune2",
+            "name": "rune2"
 
         },
         {
-            "name": "rune3",
+            "name": "rune3"
 
         },
         {
-            "name": "rune4",
+            "name": "rune4"
 
         },
         {
-            "name": "rune5",
+            "name": "rune5"
 
         },
         {
-            "name": "rune6",
+            "name": "rune6"
 
         },
         {
-            "name": "s",
+            "name": "s"
 
         },
         {
-            "name": "safe",
+            "name": "safe"
 
         },
         {
-            "name": "scroll",
+            "name": "scroll"
 
         },
         {
-            "name": "shop",
+            "name": "shop"
 
         },
         {
-            "name": "shortline",
+            "name": "shortline"
 
         },
         {
-            "name": "shotgun",
+            "name": "shotgun"
 
         },
         {
-            "name": "skull",
+            "name": "skull"
 
         },
         {
-            "name": "slash",
+            "name": "slash"
 
         },
         {
-            "name": "smallbrush",
+            "name": "smallbrush"
 
         },
         {
-            "name": "snake",
+            "name": "snake"
 
         },
         {
-            "name": "space",
+            "name": "space"
 
         },
         {
-            "name": "splatter",
+            "name": "splatter"
 
         },
         {
-            "name": "star",
+            "name": "star"
 
         },
         {
-            "name": "stickman",
+            "name": "stickman"
 
         },
         {
-            "name": "t",
+            "name": "t"
 
         },
         {
-            "name": "taser",
+            "name": "taser"
 
         },
         {
-            "name": "thinline",
+            "name": "thinline"
 
         },
         {
-            "name": "toilet",
+            "name": "toilet"
 
         },
         {
-            "name": "toolbox",
+            "name": "toolbox"
 
         },
         {
-            "name": "trade",
+            "name": "trade"
 
         },
         {
-            "name": "u",
+            "name": "u"
 
         },
         {
-            "name": "uboa",
+            "name": "uboa"
 
         },
         {
-            "name": "v",
+            "name": "v"
 
         },
         {
-            "name": "w",
+            "name": "w"
 
         },
         {
-            "name": "x",
+            "name": "x"
 
         },
         {
-            "name": "y",
+            "name": "y"
 
         },
         {
-            "name": "z",
+            "name": "z"
 
         }
     ]

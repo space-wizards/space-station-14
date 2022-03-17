@@ -96,7 +96,7 @@
     - CryostasisBeaker
     - Dropper
     - Syringe
-    - KitchenReagentGrinderMachineCircuitboard
+    - ReagentGrinderMachineCircuitboard
     - PillCanister
 
 - type: technology
@@ -116,6 +116,9 @@
     - ChemMasterMachineCircuitboard
     - ChemDispenserMachineCircuitboard
     - CrewMonitoringComputerCircuitboard
+    - VaccinatorMachineCircuitboard
+    - DiagnoserMachineCircuitboard
+    - HandheldCrewMonitor
 
 # Security Technology Tree
 
@@ -133,6 +136,24 @@
     - Flash
     - Handcuffs
     - Stunbaton
+
+- type: technology
+  name: "non-lethal technology"
+  id: NonLethalTechnology
+  description: For the softer approach to detaining.
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
+    state: base
+  requiredPoints: 8000
+  requiredTechnologies:
+     - SecurityTechnology
+  unlockedRecipes:
+    - ShellShotgunBeanbag
+    - CartridgePistolRubber
+    - CartridgeMagnumRubber
+    - CartridgeClRifleRubber
+    - CartridgeLRifleRubber
+    - CartridgeSRifleRubber
 
 - type: technology
   name: "ballistic technology"
@@ -227,6 +248,8 @@
     - FireExtinguisher
     - AutolatheMachineCircuitboard
     - ProtolatheMachineCircuitboard
+    - CircuitImprinterMachineCircuitboard
+    - UniformPrinterMachineCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
 
@@ -244,6 +267,19 @@
     - SheetRGlass
     - SheetGlass1
 
+- type: technology
+  name: advanced atmospherics technology
+  id: AdvancedAtmosTechnology
+  description: As if it can get more advanced.
+  icon:
+    sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+    state: freezer_off
+  requiredPoints: 3000
+  requiredTechnologies:
+  - IndustrialEngineering
+  unlockedRecipes:
+  - ThermomachineFreezerMachineCircuitBoard
+
 # Avionics Circuitry Technology Tree
 
 - type: technology
@@ -258,6 +294,7 @@
     - IndustrialEngineering
   unlockedRecipes:
     - ShuttleConsoleCircuitboard
+    - Drone
 
 # Electromagnetic Theory Technology Tree
 
@@ -282,8 +319,44 @@
     - APCElectronics
     - SMESMachineCircuitboard
     - SubstationMachineCircuitboard
+    - WallmountSubstationElectronics
+    - WallmountGeneratorElectronics
+    - WallmountGeneratorAPUElectronics
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
+    - GeneratorPlasmaMachineCircuitboard
+    - GeneratorUraniumMachineCircuitboard
+    
+- type: technology
+  name: "compact power technology"
+  id: CompactPowerTechnology
+  description: Power, but smaller.
+  icon:
+    sprite: Structures/Power/apc.rsi
+    state: apc0
+  requiredPoints: 5000
+  requiredTechnologies:
+    - ElectromagneticTheory
+  unlockedRecipes:
+    - WallmountSubstationElectronics
+    - WallmountGeneratorElectronics
+    - WallmountGeneratorAPUElectronics
+    - GeneratorPlasmaMachineCircuitboard
+    - GeneratorUraniumMachineCircuitboard
+
+- type: technology
+  name: "applied musicology"
+  id: AppliedMusicology
+  description: Bringing you the latest in audio-audio technology.
+  icon:
+    sprite: Objects/Fun/Instruments/guitar.rsi
+    state: icon
+  requiredPoints: 10000
+  requiredTechnologies:
+    - ElectromagneticTheory
+  unlockedRecipes:
+    - SynthesizerInstrument
+    - DawInstrumentMachineCircuitboard
 
 # Basic Parts Technology Tree
 

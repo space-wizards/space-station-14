@@ -11,7 +11,7 @@ namespace Content.IntegrationTests.Tests.Pathfinding
 {
     [TestFixture]
     [TestOf(typeof(PathfindingChunk))]
-    public class PathfindingChunkTest : ContentIntegrationTest
+    public sealed class PathfindingChunkTest : ContentIntegrationTest
     {
         [Test]
         public async Task Test()
