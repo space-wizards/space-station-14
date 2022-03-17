@@ -248,16 +248,13 @@ namespace Content.Client.Markings
             }
 
             var visualDest = src + places; // what it would visually look like
-
             var visualTemp = CMarkingsUsed[visualDest];
             CMarkingsUsed[visualDest] = CMarkingsUsed[src];
             CMarkingsUsed[src] = visualTemp;
 
             var backingSrc = _usedMarkingList.Count - 1 - src; // what it actually needs to be
-            var backingDest = backingSrc - places; // what it actually needs to be
-
+            var backingDest = backingSrc - places;             
             var backingTemp = _usedMarkingList[backingDest];
-
             _usedMarkingList[backingDest] = _usedMarkingList[backingSrc];
             _usedMarkingList[backingSrc] = backingTemp;
             

@@ -128,7 +128,6 @@ namespace Content.Client.Markings
             // the current body.
             foreach (var (layerType, points) in usedPoints)
             {
-                Logger.DebugS("Markings", $"Leftover points: {layerType}: {points.Points}");
                 if (points.Required && points.Points > 0)
                 {
                     while (points.Points > 0)
