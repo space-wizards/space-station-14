@@ -64,6 +64,16 @@ namespace Content.Client.Markings
 
             Dictionary<MarkingCategories, MarkingPoints> usedPoints = new(markings.LayerPoints);
 
+            foreach (var (category, points) in markings.LayerPoints)
+            {
+                usedPoints[category] = new MarkingPoints()
+                {
+                    Points = points.Points,
+                    Required = points.Required,
+                    DefaultMarkings = points.DefaultMarkings 
+                };
+            }
+
             // Reverse ordering
             for (int i = appearance.Markings.Count - 1; i >= 0; i--)
             {
