@@ -18,7 +18,6 @@ namespace Content.Server.Bed
         {
             base.Initialize();
             SubscribeLocalEvent<HealOnBuckleComponent, BuckleChangeEvent>(ManageUpdateList);
-            SubscribeLocalEvent<StasisBedComponent, ComponentStartup>(OnComponentStartup);
             SubscribeLocalEvent<StasisBedComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<StasisBedComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<StasisBedComponent, GotEmaggedEvent>(OnEmagged);
@@ -60,11 +59,6 @@ namespace Content.Server.Bed
             }
         }
 
-        private void OnComponentStartup(EntityUid uid, StasisBedComponent component, ComponentStartup args)
-        {
-            UpdateAppearance(uid, false);
-        }
-
         private void UpdateAppearance(EntityUid uid, bool isOn)
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
@@ -72,6 +66,7 @@ namespace Content.Server.Bed
 
             appearance.SetData(StasisBedVisuals.IsOn, isOn);
         }
+
         private void OnBuckleChange(EntityUid uid, StasisBedComponent component, BuckleChangeEvent args)
         {
             // In testing this also received an unbuckle event when the bed is destroyed
