@@ -222,9 +222,9 @@ namespace Content.Client.Actions.UI
             _lockButton.OnPressed += OnLockPressed;
             _settingsButton.OnPressed += OnToggleActionsMenu;
             _loadoutContainer.OnKeyBindDown += OnHotbarPaginate;
-            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonToggled += OnToggleActionsMenuTopButton;
-            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonDown = false;
-            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonVisible = true;
+            //_hudManager.GetUIWidget<ButtonBar>().ActionsButtonToggled += OnToggleActionsMenuTopButton;
+            //_hudManager.GetUIWidget<ButtonBar>().ActionsButtonDown = false; //TODO: Unfuck this
+            //_hudManager.GetUIWidget<ButtonBar>().ActionsButtonVisible = true;
         }
 
         protected override void ExitedTree()

@@ -13,20 +13,21 @@ namespace Content.Client.CombatMode
     [UsedImplicitly]
     public sealed class CombatModeSystem : SharedCombatModeSystem
     {
-        [Dependency] private readonly IHudManager _gameHud = default!;
+        [Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         private CombatPanelWidget? _combatPanel;
         public override void Initialize()
         {
             base.Initialize();
-            _combatPanel = _gameHud.GetUIWidget<CombatPanelWidget>();
-            if (_combatPanel == null) throw  new Exception("Combat panel not found, cannot setup targeting!");
-            _combatPanel.OnTargetZoneChanged += OnTargetingZoneChanged;
-
             SubscribeLocalEvent<CombatModeComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());
             SubscribeLocalEvent<CombatModeComponent, PlayerDetachedEvent>((_, component, _) => component.PlayerDetached());
-        }
+            _hudManager.OnHudInit += (hudManager) => //Lambdas are great <3
+            {
+                _combatPanel = hudManager.GetUIWidget<CombatPanelWidget>();
+                _combatPanel.OnTargetZoneChanged += OnTargetingZoneChanged;
 
+            };
+        }
         public override void Shutdown()
         {
             CommandBinds.Unregister<CombatModeSystem>();

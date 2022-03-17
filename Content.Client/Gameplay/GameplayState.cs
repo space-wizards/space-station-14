@@ -49,7 +49,6 @@ namespace Content.Client.Gameplay
         {
             IoCManager.InjectDependencies(this);
             _hudManager.Initialize();
-            _hudManager.RegisterDefaultPreset<DefaultHud>();
         }
 
         public override void Startup()

@@ -1,5 +1,6 @@
 ﻿using Robust.Client.UserInterface;
 using Robust.Shared.Sandboxing;
+using TerraFX.Interop.Windows;
 
 namespace Content.Client.HUD;
 
@@ -8,8 +9,11 @@ public abstract class HudPreset
 {
     [Dependency] private readonly IHudManager _hudManager = default!;
     [Dependency] private readonly ISandboxHelper _sandboxHelper = default!;
-    protected abstract void DefineWidgets();
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+    protected abstract void DefineWidgetsAndLinkedSystems();
+
     private readonly Dictionary<System.Type, HudWidget> _widgets = new();
+    private readonly List<System.Type> _linkedEntitySystemTypes = new();
     private readonly Control _presetRoot;
     public Control RootContainer => _presetRoot;
     protected HudPreset()
@@ -20,10 +24,14 @@ public abstract class HudPreset
     }
     internal void Initialize()
     {
-        DefineWidgets();
+        DefineWidgetsAndLinkedSystems();
         foreach (var widgetData in _widgets)
         {
             _presetRoot.AddChild(widgetData.Value);
+        }
+        foreach (var systemType in _linkedEntitySystemTypes)
+        {
+            ((IHasHudConnection)_entitySystemManager.GetEntitySystem(systemType)).LinkHudElements(_hudManager);
         }
     }
 
@@ -45,6 +53,12 @@ public abstract class HudPreset
         _widgets[typeof(T)] = (T)_sandboxHelper.CreateInstance(typeof(T));
     }
 
+    public bool HasWidget<T>() where T : HudWidget
+    {
+        return _widgets.ContainsKey(typeof(T));
+    }
+
+
     //get a hud widget from this preset by type
     public T? GetWidget<T>() where T : HudWidget
     {
@@ -64,6 +78,10 @@ public abstract class HudPreset
     //dispose of this preset, this should not be manually called
     internal void Dispose()
     {
+        foreach (var systemType in _linkedEntitySystemTypes)
+        {
+            ((IHasHudConnection)_entitySystemManager.GetEntitySystem(systemType)).UnLinkHudElements(_hudManager);
+        }
         UnloadPreset();
         foreach (var widget in _widgets)
         {
@@ -72,5 +90,9 @@ public abstract class HudPreset
         _presetRoot.Dispose();
     }
 
+    protected void RegisterLinkedEntitySystem<T>() where T : IEntitySystem, IHasHudConnection
+    {
+        _linkedEntitySystemTypes.Add(typeof(T));
+    }
 
 }

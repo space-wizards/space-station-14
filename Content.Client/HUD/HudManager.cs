@@ -17,11 +17,16 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.HUD;
 
+public interface IHasHudConnection
+{
+    public void LinkHudElements(IHudManager hudManager);
+    public void UnLinkHudElements(IHudManager hudManager);
+}
+
 
 public interface IHudManager
 {
     public void Initialize();
-    public void RegisterDefaultPreset<T>() where T : HudPreset;
     public void Startup();
     public void Shutdown();
     public LayoutContainer? StateRoot { get; }
@@ -34,7 +39,8 @@ public interface IHudManager
     public void ShowUIWidget<T>(bool enabled) where T : HudWidget;
     public T GetUIWidget<T>() where T : HudWidget;
     //a nullsafe version of get UI widget that doesn't throw exceptions
-    public T? GetUIWidgetNullSafe<T>() where T : HudWidget;
+    public T? GetUIWidgetOrNull<T>() where T : HudWidget;
+    public bool HasWidget<T>() where T : HudWidget;
     public EscapeMenu? EscapeMenu { get; }
 
     //Do Not abuse these or I will eat you
@@ -55,13 +61,14 @@ public sealed class HudManager  : IHudManager
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
     private HudPreset? _activeHudPreset;
+
     public HudPreset? ActivePreset => _activeHudPreset;
-    private HudPreset? _defaultHudPreset;
+    private readonly HudPreset _defaultHudPreset = new DefaultHud();
 
     private readonly Dictionary<System.Type, HudPreset> _hudPresets = new();
     public LayoutContainer? StateRoot => _userInterfaceManager.StateRoot;
 
-    private EscapeMenu? _escapeMenu = default!;
+    private EscapeMenu? _escapeMenu;
 
     //if escape menu is null create a new escape menu
     public EscapeMenu? EscapeMenu => _escapeMenu ?? new EscapeMenu(_consoleHost);
@@ -69,32 +76,27 @@ public sealed class HudManager  : IHudManager
     public HudManager()
     {
         IoCManager.InjectDependencies(this);
-
-
     }
     public void Initialize()
     {
         RegisterHudPresets();
-    }
-
-    public void RegisterDefaultPreset<T>() where T: HudPreset
-    {
-        if (_defaultHudPreset == null) return;
-        _defaultHudPreset = _hudPresets[typeof(T)];
+        _activeHudPreset = _defaultHudPreset;
+        _escapeMenu = new EscapeMenu(_consoleHost);
     }
 
     public void Startup()
     {
-        _escapeMenu = new EscapeMenu(_consoleHost);
-        _userInterfaceManager.StateRoot.AddChild(_escapeMenu);
-        _activeHudPreset = _defaultHudPreset;
+        _userInterfaceManager.StateRoot.AddChild(_escapeMenu!);
         _activeHudPreset!.LoadPreset();//This will never be null at runtime
     }
 
     public void Shutdown()
     {
         _escapeMenu?.Dispose();
-        _activeHudPreset!.UnloadPreset();//This will never be null at runtime
+        foreach (var preset in _hudPresets)
+        {
+            preset.Value.Dispose();
+        }
     }
 
     private void RegisterHudPresets()
@@ -108,6 +110,11 @@ public sealed class HudManager  : IHudManager
             hudPreset.Initialize();
         }
         _activeHudPreset = _hudPresets[presetTypes[0]]; //by default set the hud preset to the first type found.
+    }
+
+    public bool HasWidget<T>() where T : HudWidget
+    {
+        return _activeHudPreset!.HasWidget<T>();
     }
 
     public T GetHudPreset<T>() where T : HudPreset
@@ -184,7 +191,7 @@ public sealed class HudManager  : IHudManager
         return widget;
     }
 
-    public T? GetUIWidgetNullSafe<T>() where T : HudWidget
+    public T? GetUIWidgetOrNull<T>() where T : HudWidget
     {
         return _activeHudPreset!.GetWidget<T>();
     }

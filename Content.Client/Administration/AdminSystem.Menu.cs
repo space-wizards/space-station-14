@@ -50,25 +50,38 @@ namespace Content.Client.Administration
             {
                 // when status changes, show the top button if we can open admin menu.
                 // if we can't or we lost admin status, close it and hide the button.
-                _hudManager.GetUIWidget<ButtonBar>().AdminButtonVisible = CanOpen();
-                if (!_hudManager.GetUIWidget<ButtonBar>().AdminButtonVisible)
+                _hudManager.DifferedExec += (hudmanager) =>
                 {
-                    Close();
-                }
+                    var buttons = hudmanager.GetUIWidgetOrNull<ButtonBar>();
+                    if (buttons == null) return;
+                    buttons.AdminButtonVisible = CanOpen();
+                    if (!buttons.AdminButtonVisible)
+                    {
+                        Close();
+                    }
+                };
             };
-            _hudManager.GetUIWidget<ButtonBar>().AdminButtonToggled += (open) =>
+            _hudManager.OnHudInit += (hudManager) => //Lambdas are great <3
             {
-                if (open)
-                {
-                    TryOpen();
-                }
-                else
-                {
-                    Close();
-                }
+                var buttonBar = _hudManager.GetUIWidgetOrNull<ButtonBar>();
+                if (buttonBar == null) return;
+                _hudManager.GetUIWidget<ButtonBar>().AdminButtonToggled +=
+                    (open) =>
+                    {
+                        if (open)
+                        {
+                            TryOpen();
+                        }
+                        else
+                        {
+                            Close();
+                        }
+                    };
+                buttonBar.AdminButtonVisible = CanOpen();
+                buttonBar.AdminButtonDown = false;
             };
-            _hudManager.GetUIWidget<ButtonBar>().AdminButtonVisible = CanOpen();
-            _hudManager.GetUIWidget<ButtonBar>().AdminButtonDown = false;
+
+
         }
 
 
