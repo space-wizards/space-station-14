@@ -498,7 +498,7 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/Color/capformaldress.rsi
     
- - type: entity
+- type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCentcomFormalDress
   name: central command formal dress
