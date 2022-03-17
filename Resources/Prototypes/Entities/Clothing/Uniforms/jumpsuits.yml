@@ -735,7 +735,7 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/centcomformal.rsi 
     
- - type: entity
+- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHosFormal
   name: hos's formal suit
