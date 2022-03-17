@@ -592,7 +592,7 @@
 
 - type: entity
   parent: BaseSign
-  id: SignWarningCorrosives
+  id: SignCorrosives
   name: corrosives warning sign
   components:
   - type: Sprite
@@ -600,7 +600,7 @@
 
 - type: entity
   parent: BaseSign
-  id: SignWarningCryogenics
+  id: SignCryogenics
   name: cryogenics warning sign
   components:
   - type: Sprite
@@ -608,7 +608,7 @@
 
 - type: entity
   parent: BaseSign
-  id: SignWarningDanger
+  id: SignDanger
   name: danger warning sign
   components:
   - type: Sprite
@@ -616,7 +616,7 @@
 
 - type: entity
   parent: BaseSign
-  id: SignWarningExplosives
+  id: SignExplosives
   name: explosives warning sign
   components:
   - type: Sprite
@@ -624,7 +624,7 @@
 
 - type: entity
   parent: BaseSign
-  id: SignWarningFlammable
+  id: SignFlammable
   name: flammable warning sign
   components:
   - type: Sprite
@@ -632,7 +632,7 @@
 
 - type: entity
   parent: BaseSign
-  id: SignWarningLaser
+  id: SignLaser
   name: laser warning sign
   components:
   - type: Sprite
@@ -640,7 +640,7 @@
     
 - type: entity
   parent: BaseSign
-  id: SignWarningMagnetics
+  id: SignMagnetics
   name: magnetics warning sign
   components:
   - type: Sprite
@@ -648,7 +648,7 @@
 
 - type: entity
   parent: BaseSign
-  id: SignWarningMemetic
+  id: SignMemetic
   name: memetic warning sign
   components:
   - type: Sprite
@@ -656,7 +656,7 @@
 
 - type: entity
   parent: BaseSign
-  id: SignWarningSecure
+  id: SignSecure
   name: secure sign
   components:
   - type: Sprite
@@ -664,7 +664,7 @@
 
 - type: entity
   parent: BaseSign
-  id: SignWarningSecurearea
+  id: SignSecurearea
   name: secure area sign
   components:
   - type: Sprite
@@ -672,7 +672,7 @@
     
 - type: entity
   parent: BaseSign
-  id: SignWarningShock
+  id: SignShock
   name: shock sign
   components:
   - type: Sprite
@@ -680,7 +680,7 @@
 
 - type: entity
   parent: BaseSign
-  id: SignWarningOptical
+  id: SignOptical
   name: optical warning sign
   components:
   - type: Sprite
@@ -688,7 +688,7 @@
 
 - type: entity
   parent: BaseSign
-  id: SignWarningOxidants
+  id: SignOxidants
   name: oxidants warning sign
   components:
   - type: Sprite
@@ -696,7 +696,7 @@
 
 - type: entity
   parent: BaseSign
-  id: SignWarningRadiation
+  id: SignRadiation
   name: radiation warning sign
   components:
   - type: Sprite
