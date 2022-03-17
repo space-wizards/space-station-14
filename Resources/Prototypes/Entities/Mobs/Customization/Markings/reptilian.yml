@@ -1,7 +1,7 @@
 - type: marking
   id: LizardFrillsAquatic
   bodyPart: HeadSide
-  markingCategory: Head
+  markingCategory: HeadSide
   unrestricted: false
   speciesRestriction: [Reptilian]
   sprites:
@@ -11,7 +11,7 @@
 - type: marking
   id: LizardFrillsShort
   bodyPart: HeadSide
-  markingCategory: Head
+  markingCategory: HeadSide
   unrestricted: false
   speciesRestriction: [Reptilian]
   sprites:
@@ -21,7 +21,7 @@
 - type: marking
   id: LizardFrillsSimple
   bodyPart: HeadSide
-  markingCategory: Head
+  markingCategory: HeadSide
   unrestricted: false
   speciesRestriction: [Reptilian]
   sprites:
@@ -31,7 +31,7 @@
 - type: marking
   id: LizardHornsAngler
   bodyPart: HeadTop
-  markingCategory: Head
+  markingCategory: HeadTop
   unrestricted: false
   speciesRestriction: [Reptilian]
   sprites:
@@ -41,7 +41,7 @@
 - type: marking
   id: LizardHornsCurled
   bodyPart: HeadTop
-  markingCategory: Head
+  markingCategory: HeadTop
   unrestricted: false
   speciesRestriction: [Reptilian]
   sprites:
@@ -51,7 +51,7 @@
 - type: marking
   id: LizardHornsRam
   bodyPart: HeadTop
-  markingCategory: Head
+  markingCategory: HeadTop
   unrestricted: false
   speciesRestriction: [Reptilian]
   sprites:
@@ -61,7 +61,7 @@
 - type: marking
   id: LizardHornsShort
   bodyPart: HeadTop
-  markingCategory: Head
+  markingCategory: HeadTop
   unrestricted: false
   speciesRestriction: [Reptilian]
   sprites:
@@ -71,7 +71,7 @@
 - type: marking
   id: LizardHornsSimple
   bodyPart: HeadTop
-  markingCategory: Head
+  markingCategory: HeadTop
   unrestricted: false
   speciesRestriction: [Reptilian]
   sprites:
@@ -121,7 +121,7 @@
 - type: marking
   id: LizardSnoutRound
   bodyPart: Snout
-  markingCategory: Head
+  markingCategory: Snout
   unrestricted: false
   followSkinColor: true
   speciesRestriction: [Reptilian]
@@ -132,7 +132,7 @@
 - type: marking
   id: LizardSnoutSharp
   bodyPart: Snout
-  markingCategory: Head
+  markingCategory: Snout
   unrestricted: false
   followSkinColor: true
   speciesRestriction: [Reptilian]

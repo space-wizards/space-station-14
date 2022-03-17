@@ -7,6 +7,9 @@ namespace Content.Shared.Markings
     public enum MarkingCategories
     {
         Head,
+        HeadTop,
+        HeadSide,
+        Snout,
         Chest,
         Arms,
         Legs,

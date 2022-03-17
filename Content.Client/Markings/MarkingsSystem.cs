@@ -63,7 +63,7 @@ namespace Content.Client.Markings
             if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite)) return;
             List<Marking> totalMarkings = new(appearance.Markings);
 
-            Dictionary<HumanoidVisualLayers, MarkingPoints> usedPoints = new(markings.LayerPoints);
+            Dictionary<MarkingCategories, MarkingPoints> usedPoints = new(markings.LayerPoints);
 
             // Reverse ordering
             for (int i = appearance.Markings.Count - 1; i >= 0; i--)
@@ -74,7 +74,7 @@ namespace Content.Client.Markings
                     continue;
                 }
 
-                if (usedPoints.TryGetValue(markingPrototype.BodyPart, out MarkingPoints? points))
+                if (usedPoints.TryGetValue(markingPrototype.MarkingCategory, out MarkingPoints? points))
                 {
                     if (points.Points == 0)
                     {
@@ -128,7 +128,7 @@ namespace Content.Client.Markings
             // the current body.
             foreach (var (layerType, points) in usedPoints)
             {
-                Logger.DebugS("Markings", $"Leftover points: {layerType}: {points}");
+                Logger.DebugS("Markings", $"Leftover points: {layerType}: {points.Points}");
                 if (points.Required && points.Points > 0)
                 {
                     while (points.Points > 0)
@@ -137,7 +137,7 @@ namespace Content.Client.Markings
                         // points.Points needs to be subtracted
                         if (points.DefaultMarkings.TryGetValue(points.Points - 1, out var marking)
                                 && _markingManager.Markings().TryGetValue(marking, out var markingPrototype)
-                                && markingPrototype.BodyPart == layerType // check if this actually belongs on this layer, too
+                                && markingPrototype.MarkingCategory == layerType // check if this actually belongs on this layer, too
                                 && sprite.LayerMapTryGet(markingPrototype.BodyPart, out int targetLayer))
                         {
                             for (int j = 0; j < markingPrototype.Sprites.Count(); j++)

@@ -27,7 +27,7 @@ namespace Content.Shared.Markings
         // the first instance of a marking in that category will be added to a character
         // upon round start.
         [DataField("layerPoints")]
-        public Dictionary<HumanoidVisualLayers, MarkingPoints> LayerPoints = new();
+        public Dictionary<MarkingCategories, MarkingPoints> LayerPoints = new();
     }
 
     public sealed class ActiveMarking

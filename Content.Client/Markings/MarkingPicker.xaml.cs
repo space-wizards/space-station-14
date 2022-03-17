@@ -14,6 +14,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -23,6 +24,7 @@ namespace Content.Client.Markings
     public sealed partial class MarkingPicker : Control
     {
         [Dependency] private readonly MarkingManager _markingManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         
         public Action<List<Marking>>? OnMarkingAdded;
         public Action<List<Marking>>? OnMarkingRemoved;

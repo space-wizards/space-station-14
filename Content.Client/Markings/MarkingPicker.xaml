@@ -8,6 +8,7 @@
                 <Label Text="{Loc 'markings-unused'}" />
                 <OptionButton Name="CMarkingCategoryButton" />
                 <ItemList Name="CMarkingsUnused" VerticalExpand="True" MinSize="300 250" />
+                <Label Text="{Loc 'marking-points-remaining'}" />
                 <Button Name="CMarkingAdd" Text="{Loc 'markings-add'}" />
             </BoxContainer>
             <!-- Used markings -->
