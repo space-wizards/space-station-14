@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.Models;
+using Content.Server.MachineLinking.Exceptions;
 using Content.Server.Power.Components;
 using Content.Server.Recycling;
 using Content.Server.Recycling.Components;
@@ -13,7 +14,6 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -57,39 +57,29 @@ namespace Content.Server.Conveyor
 
         private void OnLinkAttempt(EntityUid uid, ConveyorComponent component, LinkAttemptEvent args)
         {
-            if (args.TransmitterComponent.Outputs.GetPort(args.TransmitterPort).Signal is TwoWayLeverSignal signal &&
-                signal != TwoWayLeverSignal.Middle)
-            {
-                args.Cancel();
-                _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true);
-                component.Owner.PopupMessage(args.Attemptee, Loc.GetString("conveyor-component-failed-link"));
-            }
+
         }
 
         private void OnPortDisconnected(EntityUid uid, ConveyorComponent component, PortDisconnectedEvent args)
         {
-            SetState(component, TwoWayLeverSignal.Middle);
+            
         }
 
         private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)
         {
-            switch (args.Port)
+            SetState(component, args.Port switch
             {
-                case "state":
-                    SetState(component, (TwoWayLeverSignal) args.Value!);
-                    break;
+                "Forward" => ConveyorState.Forward,
+                "Reverse" => ConveyorState.Reversed,
+                "Off" => ConveyorState.Off,
+                _ => throw new PortNotFoundException()
             }
+            );
         }
 
-        private void SetState(ConveyorComponent component, TwoWayLeverSignal signal)
+        private void SetState(ConveyorComponent component, ConveyorState state)
         {
-            component.State = signal switch
-            {
-                TwoWayLeverSignal.Left => ConveyorState.Reversed,
-                TwoWayLeverSignal.Middle => ConveyorState.Off,
-                TwoWayLeverSignal.Right => ConveyorState.Forward,
-                _ => ConveyorState.Off
-            };
+            component.State = state;
 
             if (TryComp<RecyclerComponent>(component.Owner, out var recycler))
             {

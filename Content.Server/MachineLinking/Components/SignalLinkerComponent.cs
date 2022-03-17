@@ -7,6 +7,6 @@ namespace Content.Server.MachineLinking.Components
     public sealed class SignalLinkerComponent : Component
     {
         [ViewVariables]
-        public (SignalTransmitterComponent transmitter, string port)? Port;
+        public (SignalTransmitterComponent transmitter, string port)? savedPort;
     }
 }

@@ -11,9 +11,9 @@ namespace Content.Server.MachineLinking.Components
     public sealed class SignalReceiverComponent : Component
     {
         [DataField("inputs")]
-        private List<SignalPort> _inputs = new();
+        private List<SignalReceiverPort> _inputs = new();
 
         [ViewVariables]
-        public IReadOnlyList<SignalPort> Inputs => _inputs;
+        public IReadOnlyList<SignalReceiverPort> Inputs => _inputs;
     }
 }

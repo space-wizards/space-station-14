@@ -11,9 +11,9 @@ namespace Content.Server.MachineLinking.Components
     public sealed class SignalTransmitterComponent : Component
     {
         [DataField("outputs")]
-        private List<SignalPort> _outputs = new();
+        private List<SignalTransmitterPort> _outputs = new();
 
         [ViewVariables]
-        public IReadOnlyList<SignalPort> Outputs => _outputs;
+        public IReadOnlyList<SignalTransmitterPort> Outputs => _outputs;
     }
 }
