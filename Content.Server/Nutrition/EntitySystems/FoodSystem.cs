@@ -127,12 +127,14 @@ namespace Content.Server.Nutrition.EntitySystems
                 _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to eat {ToPrettyString(food.Owner):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
             }
 
+            var moveBreak = user != target;
+
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, forceFeed ? food.ForceFeedDelay : food.Delay, food.CancelToken.Token, target)
             {
-                BreakOnUserMove = true,
+                BreakOnUserMove = moveBreak,
                 BreakOnDamage = true,
                 BreakOnStun = true,
-                BreakOnTargetMove = true,
+                BreakOnTargetMove = moveBreak,
                 MovementThreshold = 0.01f,
                 TargetFinishedEvent = new FeedEvent(user, food, foodSolution, utensils),
                 BroadcastCancelledEvent = new ForceFeedCancelledEvent(food),

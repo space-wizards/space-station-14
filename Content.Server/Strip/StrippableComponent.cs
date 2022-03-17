@@ -7,6 +7,7 @@ using Content.Server.UserInterface;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
@@ -238,6 +239,9 @@ namespace Content.Server.Strip
 
             if (invSystem.TryGetSlotEntity(Owner, slot, out var item) && invSystem.TryUnequip(user, Owner, slot))
             {
+                // Raise a dropped event, so that things like gas tank internals properly deactivate when stripping
+                _entities.EventBus.RaiseLocalEvent(item.Value, new DroppedEvent(user));
+
                 _sysMan.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, item.Value);
             }
 

@@ -836,45 +836,14 @@ namespace Content.Shared.Interaction
         }
         #endregion
 
-        #region Drop
-        /// <summary>
-        /// Activates the Dropped behavior of an object
-        /// Verifies that the user is capable of doing the drop interaction first
-        /// </summary>
-        public bool TryDroppedInteraction(EntityUid user, EntityUid item)
-        {
-            if (!_actionBlockerSystem.CanDrop(user)) return false;
-
-            DroppedInteraction(user, item);
-            return true;
-        }
-
-        /// <summary>
-        ///     Calls Dropped on all components that implement the IDropped interface
-        ///     on an entity that has been dropped.
-        /// </summary>
         public void DroppedInteraction(EntityUid user, EntityUid item)
         {
-            var dropMsg = new DroppedEvent(user, item);
+            var dropMsg = new DroppedEvent(user);
             RaiseLocalEvent(item, dropMsg);
             if (dropMsg.Handled)
-            {
                 _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
-                return;
-            }
-
             Transform(item).LocalRotation = Angle.Zero;
-
-            var comps = AllComps<IDropped>(item).ToList();
-
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.Dropped(new DroppedEventArgs(user));
-            }
-            _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
         }
-        #endregion
         #endregion
 
         /// <summary>

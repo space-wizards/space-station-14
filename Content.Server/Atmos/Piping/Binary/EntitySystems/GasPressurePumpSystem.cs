@@ -8,6 +8,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -20,9 +21,10 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     [UsedImplicitly]
     public sealed class GasPressurePumpSystem : EntitySystem
     {
-        [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
         public override void Initialize()
         {
@@ -59,6 +61,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 || !nodeContainer.TryGetNode(pump.OutletName, out PipeNode? outlet))
             {
                 appearance?.SetData(PumpVisuals.Enabled, false);
+                _ambientSoundSystem.SetAmbience(pump.Owner, false);
                 return;
             }
 
@@ -67,12 +70,14 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (MathHelper.CloseToPercent(pump.TargetPressure, outputStartingPressure))
             {
                 appearance?.SetData(PumpVisuals.Enabled, false);
+                _ambientSoundSystem.SetAmbience(pump.Owner, false);
                 return; // No need to pump gas if target has been reached.
             }
 
             if (inlet.Air.TotalMoles > 0 && inlet.Air.Temperature > 0)
             {
                 appearance?.SetData(PumpVisuals.Enabled, true);
+                _ambientSoundSystem.SetAmbience(pump.Owner, true);
 
                 // We calculate the necessary moles to transfer using our good ol' friend PV=nRT.
                 var pressureDelta = pump.TargetPressure - outputStartingPressure;

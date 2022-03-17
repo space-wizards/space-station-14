@@ -49,6 +49,9 @@
   - type: Appearance
     visuals:
     - type: MedicalScannerVisualizer
+  - type: ActivatableUI
+    key: enum.MedicalScannerUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.MedicalScannerUiKey.Key

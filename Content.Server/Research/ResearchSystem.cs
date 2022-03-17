@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+using Content.Server.UserInterface;
 using Content.Server.Research.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
+
 
 namespace Content.Server.Research
 {
@@ -13,6 +13,17 @@ namespace Content.Server.Research
         private float _timer = ResearchConsoleUIUpdateTime;
         private readonly List<ResearchServerComponent> _servers = new();
         public IReadOnlyList<ResearchServerComponent> Servers => _servers;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<ResearchConsoleComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpen);
+        }
+
+        private void OnAfterUIOpen(EntityUid uid, ResearchConsoleComponent component, AfterActivatableUIOpenEvent args)
+        {
+            component.PlayKeyboardSound();
+        }
 
         public bool RegisterServer(ResearchServerComponent server)
         {

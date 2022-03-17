@@ -25,6 +25,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Client.Inventory
 {
@@ -67,7 +68,17 @@ namespace Content.Client.Inventory
             SubscribeLocalEvent<ClientInventoryComponent, DidEquipEvent>(OnDidEquip);
             SubscribeLocalEvent<ClientInventoryComponent, DidUnequipEvent>(OnDidUnequip);
 
+            SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
+
             _config.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
+        }
+
+        private void OnUseInHand(EntityUid uid, ClothingComponent component, UseInHandEvent args)
+        {
+            if (args.Handled || !component.QuickEquip)
+                return;
+
+            QuickEquip(uid, component, args);
         }
 
         private void OnDidUnequip(EntityUid uid, ClientInventoryComponent component, DidUnequipEvent args)

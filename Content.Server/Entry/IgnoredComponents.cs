@@ -17,7 +17,9 @@ namespace Content.Server.Entry
             "ClientEntitySpawner",
             "CharacterInfo",
             "ItemCabinetVisuals",
-            "HandheldGPS"
+            "DiseaseMachineVisuals",
+            "HandheldGPS",
+            "PotencyVisuals"
         };
     }
 }

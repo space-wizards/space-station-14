@@ -18,14 +18,13 @@ public sealed class StandingStateSystem : EntitySystem
         if (!TryComp(uid, out SharedHandsComponent? handsComp))
             return;
 
-
         var worldRotation = EntityManager.GetComponent<TransformComponent>(uid).WorldRotation.ToVec();
         foreach (var hand in handsComp.Hands.Values)
         {
             if (hand.HeldEntity is not EntityUid held)
                 continue;
 
-            if (!_handsSystem.TryDrop(uid, hand, null, false, handsComp))
+            if (!_handsSystem.TryDrop(uid, hand, null, checkActionBlocker: false, handsComp: handsComp))
                 continue;
             
             Throwing.ThrowHelper.TryThrow(held,

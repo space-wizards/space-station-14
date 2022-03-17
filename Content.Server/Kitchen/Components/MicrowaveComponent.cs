@@ -30,8 +30,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Kitchen.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public sealed class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISuicideAct, IBreakAct
+    public sealed class MicrowaveComponent : SharedMicrowaveComponent, IInteractUsing, ISuicideAct, IBreakAct
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -76,13 +75,13 @@ namespace Content.Server.Kitchen.Components
 
         private bool HasContents => _storage.ContainedEntities.Count > 0;
 
-        private bool _uiDirty = true;
+        public bool UIDirty = true;
         private bool _lostPower;
         private int _currentCookTimeButtonIndex;
 
         public void DirtyUi()
         {
-            _uiDirty = true;
+            UIDirty = true;
         }
 
         private Container _storage = default!;
@@ -121,7 +120,7 @@ namespace Content.Server.Kitchen.Components
                     {
                         EjectSolids();
                         ClickSound();
-                        _uiDirty = true;
+                        UIDirty = true;
                     }
 
                     break;
@@ -130,7 +129,7 @@ namespace Content.Server.Kitchen.Components
                     {
                         EjectSolid(msg.EntityID);
                         ClickSound();
-                        _uiDirty = true;
+                        UIDirty = true;
                     }
                     break;
 
@@ -138,7 +137,7 @@ namespace Content.Server.Kitchen.Components
                     _currentCookTimeButtonIndex = msg.ButtonIndex;
                     _currentCookTimerTime = msg.NewCookTime;
                     ClickSound();
-                    _uiDirty = true;
+                    UIDirty = true;
                     break;
             }
         }
@@ -157,7 +156,7 @@ namespace Content.Server.Kitchen.Components
                 _lostPower = true;
                 EjectSolids();
                 _busy = false;
-                _uiDirty = true;
+                UIDirty = true;
             }
 
             if (_busy && _broken)
@@ -167,10 +166,10 @@ namespace Content.Server.Kitchen.Components
                 _lostPower = true;
                 EjectSolids();
                 _busy = false;
-                _uiDirty = true;
+                UIDirty = true;
             }
 
-            if (_uiDirty)
+            if (UIDirty)
             {
                 UserInterface?.SetState(new MicrowaveUpdateUserInterfaceState
                 (
@@ -179,7 +178,7 @@ namespace Content.Server.Kitchen.Components
                     _currentCookTimeButtonIndex,
                     _currentCookTimerTime
                 ));
-                _uiDirty = false;
+                UIDirty = false;
             }
         }
 
@@ -201,17 +200,6 @@ namespace Content.Server.Kitchen.Components
         {
             _broken = true;
             SetAppearance(MicrowaveVisualState.Broken);
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor) || !Powered)
-            {
-                return;
-            }
-
-            _uiDirty = true;
-            UserInterface?.Toggle(actor.PlayerSession);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -242,7 +230,7 @@ namespace Content.Server.Kitchen.Components
 
             var ent = food.Owner; //Get the entity of the ItemComponent.
             _storage.Insert(ent);
-            _uiDirty = true;
+            UIDirty = true;
             return true;
         }
 
@@ -353,10 +341,10 @@ namespace Content.Server.Kitchen.Components
                 SetAppearance(MicrowaveVisualState.Idle);
                 _busy = false;
 
-                _uiDirty = true;
+                UIDirty = true;
             });
             _lostPower = false;
-            _uiDirty = true;
+            UIDirty = true;
         }
 
         /// <summary>
@@ -544,7 +532,7 @@ namespace Content.Server.Kitchen.Components
 
             _currentCookTimerTime = 10;
             ClickSound();
-            _uiDirty = true;
+            UIDirty = true;
             Wzhzhzh();
             return SuicideKind.Heat;
         }
