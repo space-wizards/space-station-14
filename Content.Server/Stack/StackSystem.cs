@@ -1,5 +1,3 @@
-using Content.Server.Hands.Components;
-using Content.Shared.Item;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -126,10 +124,7 @@ namespace Content.Server.Stack
             if (Split(uid, amount, userTransform.Coordinates, stack) is not {} split)
                 return;
 
-            if (TryComp<HandsComponent>(userUid, out var hands) && TryComp<SharedItemComponent>(split, out var item))
-            {
-                hands.PutInHandOrDrop(item);
-            }
+            HandsSystem.PickupOrDrop(userUid, split);
 
             PopupSystem.PopupCursor(Loc.GetString("comp-stack-split"), Filter.Entities(userUid));
         }

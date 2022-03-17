@@ -401,6 +401,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> AdminLogsClientBatchSize =
             CVarDef.Create("adminlogs.client_batch_size", 1000, CVar.SERVERONLY);
 
+        public static readonly CVarDef<string> AdminLogsServerName =
+            CVarDef.Create("adminlogs.server_name", "unknown", CVar.SERVERONLY);
+
         /*
          * Atmos
          */
@@ -504,7 +507,7 @@ namespace Content.Shared.CCVar
          * OOC
          */
 
-        public static readonly CVarDef<bool> OocEnabled = CVarDef.Create("ooc.enabled", true, CVar.NOTIFY);
+        public static readonly CVarDef<bool> OocEnabled = CVarDef.Create("ooc.enabled", true, CVar.NOTIFY | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> AdminOocEnabled =
             CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
@@ -513,7 +516,7 @@ namespace Content.Shared.CCVar
          * LOOC
          */
 
-        public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY);
+        public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> AdminLoocEnabled =
             CVarDef.Create("looc.enabled_admin", true, CVar.NOTIFY);
@@ -609,10 +612,6 @@ namespace Content.Shared.CCVar
         /*
          * Shuttles
          */
-        // Once cruising actually gets implemented I'd likely drop this speed to 3 maybe.
-        public static readonly CVarDef<float> ShuttleDockSpeedCap =
-            CVarDef.Create("shuttle.dock_speed_cap", 5f, CVar.SERVERONLY);
-
         public static readonly CVarDef<float> ShuttleMaxLinearSpeed =
             CVarDef.Create("shuttle.max_linear_speed", 13f, CVar.SERVERONLY);
 
