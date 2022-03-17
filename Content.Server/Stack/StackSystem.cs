@@ -25,6 +25,18 @@ namespace Content.Server.Stack
             SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
         }
 
+        public override void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            base.SetCount(uid, amount, component);
+
+            // Queue delete stack if count reaches zero.
+            if (component.Count <= 0)
+                QueueDel(uid);
+        }
+
         /// <summary>
         ///     Try to split this stack into two. Returns a non-null <see cref="Robust.Shared.GameObjects.EntityUid"/> if successful.
         /// </summary>

@@ -127,7 +127,7 @@ namespace Content.Shared.Stacks
             HandsSystem.PickupOrDrop(user, item, handsComp: hands);
         }
 
-        public void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
+        public virtual void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
@@ -152,10 +152,6 @@ namespace Content.Shared.Stacks
 
             component.Count = amount;
             Dirty(component);
-
-            // Queue delete stack if count reaches zero.
-            if(component.Count <= 0)
-                QueueDel(uid);
 
             // Change appearance data.
             if (TryComp(uid, out AppearanceComponent? appearance))
