@@ -22,10 +22,15 @@ public sealed class GameMapManager : IGameMapManager
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
 
+    [ViewVariables]
     private readonly Queue<string> _previousMaps = new Queue<string>();
+    [ViewVariables]
     private GameMapPrototype _currentMap = default!;
+    [ViewVariables]
     private bool _currentMapForced;
+    [ViewVariables]
     private bool _mapRotationEnabled;
+    [ViewVariables]
     private int _mapQueueDepth = 1;
 
     public void Initialize()
@@ -170,10 +175,12 @@ public sealed class GameMapManager : IGameMapManager
 
     public GameMapPrototype? SelectMapInQueue()
     {
+        Logger.InfoS("mapsel", string.Join(", ", _previousMaps));
         var eligible = CurrentlyEligibleMaps()
             .Where(x => x.Votable)
             .Select(x => (proto: x, weight: GetMapQueuePriority(x.ID)))
             .OrderByDescending(x => x.weight).ToArray();
+        Logger.InfoS("mapsel", string.Join(", ", eligible.Select(x => (x.proto.ID, x.weight))));
         if (eligible.Length is 0)
             return null;
 
