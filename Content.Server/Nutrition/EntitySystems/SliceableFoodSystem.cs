@@ -5,13 +5,11 @@ using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -19,6 +17,8 @@ namespace Content.Server.Nutrition.EntitySystems
     internal sealed class SliceableFoodSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {
@@ -67,9 +67,9 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (EntityManager.TryGetComponent(user, out HandsComponent? handsComponent))
             {
-                if (ContainerHelpers.IsInContainer(component.Owner))
+                if (_containerSystem.IsEntityInContainer(component.Owner))
                 {
-                    handsComponent.PutInHandOrDrop(EntityManager.GetComponent<SharedItemComponent>(sliceUid));
+                    _handsSystem.PickupOrDrop(user, sliceUid, handsComp: handsComponent);
                 }
             }
 
