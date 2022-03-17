@@ -19,6 +19,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
 using Robust.Shared.Player;
+using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Drone
@@ -28,6 +29,7 @@ namespace Content.Server.Drone
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -118,13 +120,18 @@ namespace Content.Server.Drone
 
                 if (TryComp<HandsComponent>(uid, out var hands) && hands.Count >= drone.Tools.Count)
                 {
-                   foreach (var entry in drone.Tools)
-                   {
-                       var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
-                       AddComp<UnremoveableComponent>(item);
-                       hands.PutInHand(item);
-                       drone.ToolUids.Add(item);
-                   }
+                    foreach (var entry in drone.Tools)
+                    {
+                        var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
+                        AddComp<UnremoveableComponent>(item);
+                        if (!_handsSystem.TryPickupAnyHand(uid, item, checkActionBlocker: false))
+                        {
+                            QueueDel(item);
+                            Logger.Error($"Drone ({ToPrettyString(uid)}) failed to pick up innate item ({ToPrettyString(item)})");
+                            continue;
+                        }
+                        drone.ToolUids.Add(item);
+                    }
                 }
 
                 if (TryComp<ActionsComponent>(uid, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))

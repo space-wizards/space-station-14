@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Shared.Item;
@@ -30,7 +30,7 @@ namespace Content.Server.DoAfter
 
         // NeedHand
         private readonly string? _activeHand;
-        private readonly SharedItemComponent? _activeItem;
+        private readonly EntityUid? _activeItem;
 
         public DoAfter(DoAfterEventArgs eventArgs, IEntityManager entityManager)
         {
@@ -52,8 +52,8 @@ namespace Content.Server.DoAfter
             // (or if there is no item there we need to keep it free).
             if (eventArgs.NeedHand && entityManager.TryGetComponent(eventArgs.User, out HandsComponent? handsComponent))
             {
-                _activeHand = handsComponent.ActiveHand;
-                _activeItem = handsComponent.GetActiveHandItem;
+                _activeHand = handsComponent.ActiveHand?.Name;
+                _activeItem = handsComponent.ActiveHandEntity;
             }
 
             Tcs = new TaskCompletionSource<DoAfterStatus>();
@@ -152,13 +152,13 @@ namespace Content.Server.DoAfter
                 }
                 else
                 {
-                    var currentActiveHand = handsComponent.ActiveHand;
+                    var currentActiveHand = handsComponent.ActiveHand?.Name;
                     if (_activeHand != currentActiveHand)
                     {
                         return true;
                     }
 
-                    var currentItem = handsComponent.GetActiveHandItem;
+                    var currentItem = handsComponent.ActiveHandEntity;
                     if (_activeItem != currentItem)
                     {
                         return true;

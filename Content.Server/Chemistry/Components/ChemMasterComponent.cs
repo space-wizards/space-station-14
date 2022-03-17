@@ -1,14 +1,12 @@
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Hands.Components;
 using Content.Server.Labels.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
-using Content.Shared.Item;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -28,6 +26,7 @@ namespace Content.Server.Chemistry.Components
     public sealed class ChemMasterComponent : SharedChemMasterComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         [ViewVariables]
         private uint _pillType = 1;
@@ -276,6 +275,9 @@ namespace Content.Server.Chemistry.Components
                 return;
             }
 
+            var handSys = _sysMan.GetEntitySystem<SharedHandsSystem>();
+            var solSys = _sysMan.GetEntitySystem<SolutionContainerSystem>();
+
             if (action == UiAction.CreateBottles)
             {
                 var individualVolume = BufferSolution.TotalVolume / FixedPoint2.New(bottleAmount);
@@ -298,25 +300,12 @@ namespace Content.Server.Chemistry.Components
                     labelComponent.CurrentLabel = label;
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
-                    var bottleSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(bottle, "drink");
+                    var bottleSolution = solSys.EnsureSolution(bottle, "drink");
 
-                    EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(bottle, bottleSolution, bufferSolution);
+                    solSys.TryAddSolution(bottle, bottleSolution, bufferSolution);
 
                     //Try to give them the bottle
-                    if (_entities.TryGetComponent<HandsComponent?>(user, out var hands) &&
-                        _entities.TryGetComponent<SharedItemComponent?>(bottle, out var item))
-                    {
-                        if (hands.CanPutInHand(item))
-                        {
-                            hands.PutInHand(item);
-                            continue;
-                        }
-                    }
-
-                    //Put it on the floor
-                    _entities.GetComponent<TransformComponent>(bottle).Coordinates = _entities.GetComponent<TransformComponent>(user).Coordinates;
-                    //Give it an offset
-                    bottle.RandomOffset(0.2f);
+                    handSys.PickupOrDrop(user, bottle);
                 }
             }
             else //Pills
@@ -342,7 +331,7 @@ namespace Content.Server.Chemistry.Components
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
                     var pillSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(pill, "food");
-                    EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(pill, pillSolution, bufferSolution);
+                    solSys.TryAddSolution(pill, pillSolution, bufferSolution);
 
                     //Change pill Sprite component state
                     if (!_entities.TryGetComponent(pill, out SpriteComponent? sprite))
@@ -352,20 +341,7 @@ namespace Content.Server.Chemistry.Components
                     sprite?.LayerSetState(0, "pill" + _pillType);
 
                     //Try to give them the bottle
-                    if (_entities.TryGetComponent<HandsComponent?>(user, out var hands) &&
-                        _entities.TryGetComponent<SharedItemComponent?>(pill, out var item))
-                    {
-                        if (hands.CanPutInHand(item))
-                        {
-                            hands.PutInHand(item);
-                            continue;
-                        }
-                    }
-
-                    //Put it on the floor
-                    _entities.GetComponent<TransformComponent>(pill).Coordinates = _entities.GetComponent<TransformComponent>(user).Coordinates;
-                    //Give it an offset
-                    pill.RandomOffset(0.2f);
+                    handSys.PickupOrDrop(user, pill);
                 }
             }
 

@@ -134,7 +134,7 @@ namespace Content.Server.MachineLinking.System
                 case SignalPortSelected portSelected:
                     if (msg.Session.AttachedEntity != default &&
                         TryComp(msg.Session.AttachedEntity, out HandsComponent? hands) &&
-                        hands.TryGetActiveHeldEntity(out var heldEntity) &&
+                        hands.ActiveHandEntity is EntityUid heldEntity &&
                         TryComp(heldEntity, out SignalLinkerComponent? signalLinkerComponent))
                         LinkerTransmitterInteraction(attached, signalLinkerComponent, component, portSelected.Port);
                     break;
@@ -150,7 +150,7 @@ namespace Content.Server.MachineLinking.System
                 case SignalPortSelected portSelected:
                     if (msg.Session.AttachedEntity != default &&
                         TryComp(msg.Session.AttachedEntity, out HandsComponent? hands) &&
-                        hands.TryGetActiveHeldEntity(out var heldEntity) &&
+                        hands.ActiveHandEntity is EntityUid heldEntity &&
                         TryComp(heldEntity, out SignalLinkerComponent? signalLinkerComponent))
                         LinkerReceiverInteraction(attached, signalLinkerComponent, component, portSelected.Port);
                     break;
