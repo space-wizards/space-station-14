@@ -62,7 +62,7 @@ namespace Content.Client.Markings
             if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite)) return;
             List<Marking> totalMarkings = new(appearance.Markings);
 
-            Dictionary<MarkingCategories, MarkingPoints> usedPoints = new(markings.LayerPoints);
+            Dictionary<MarkingCategories, MarkingPoints> usedPoints = new();
 
             foreach (var (category, points) in markings.LayerPoints)
             {

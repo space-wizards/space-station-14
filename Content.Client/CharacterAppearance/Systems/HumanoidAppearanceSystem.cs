@@ -98,6 +98,7 @@ namespace Content.Client.CharacterAppearance.Systems
             {
                 // Not every mob may have the furry layers hence we just skip it.
                 if (!sprite.LayerMapTryGet(layer, out var actualLayer)) continue;
+                if (!sprite[actualLayer].Visible) continue;
 
                 sprite.LayerSetColor(actualLayer, component.Appearance.SkinColor);
             }
