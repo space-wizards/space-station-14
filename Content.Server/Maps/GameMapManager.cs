@@ -162,7 +162,6 @@ public sealed class GameMapManager : IGameMapManager
 
     public GameMapPrototype? SelectMapInQueue()
     {
-        Logger.Debug(string.Join(", ", _previousMaps));
         var eligible = CurrentlyEligibleMaps()
             .Where(x => x.Votable)
             .Select(x => (proto: x, weight: GetMapQueuePriority(x.ID)))
