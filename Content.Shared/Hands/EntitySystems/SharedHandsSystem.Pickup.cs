@@ -10,7 +10,7 @@ namespace Content.Shared.Hands.EntitySystems;
 public abstract partial class SharedHandsSystem : EntitySystem
 {
     /// <summary>
-    ///     Tries to pick up an entity to a specific hand.
+    ///     Tries to pick up an entity to a specific hand. If no explicit hand is specified, defaults to using the currently active hand.
     /// </summary>
     public bool TryPickup(EntityUid uid, EntityUid entity, string? handName = null, bool checkActionBlocker = true, bool animateUser = false, SharedHandsComponent? handsComp = null, SharedItemComponent? item = null)
     {
@@ -27,6 +27,13 @@ public abstract partial class SharedHandsSystem : EntitySystem
         return TryPickup(uid, entity, hand, checkActionBlocker, animateUser, handsComp, item);
     }
 
+    /// <summary>
+    ///     Attempts to pick up an item into any empty hand. Prioritizes the currently active hand.
+    /// </summary>
+    /// <remarks>
+    ///     If one empty hand fails to pick up the item, this will NOT check other hands. If ever hand-specific item
+    ///     restrictions are added, there a might need to be a TryPickupAllHands or something like that.
+    /// </remarks>
     public bool TryPickupAnyHand(EntityUid uid, EntityUid entity, bool checkActionBlocker = true, bool animateUser = false, SharedHandsComponent? handsComp = null, SharedItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))

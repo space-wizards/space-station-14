@@ -124,7 +124,7 @@ namespace Content.Server.Drone
                     {
                         var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
                         AddComp<UnremoveableComponent>(item);
-                        if (!_handsSystem.TryPickup(uid, item, checkActionBlocker: false))
+                        if (!_handsSystem.TryPickupAnyHand(uid, item, checkActionBlocker: false))
                         {
                             QueueDel(item);
                             Logger.Error($"Drone ({ToPrettyString(uid)}) failed to pick up innate item ({ToPrettyString(item)})");

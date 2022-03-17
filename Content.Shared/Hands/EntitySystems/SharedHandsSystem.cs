@@ -78,6 +78,9 @@ public abstract partial class SharedHandsSystem : EntitySystem
         TrySetActiveHand(eventArgs.SenderSession.AttachedEntity.Value, msg.HandName);
     }
 
+    /// <summary>
+    ///     Get any empty hand. Prioritizes the currently active hand.
+    /// </summary>
     public bool TryGetEmptyHand(EntityUid uid, [NotNullWhen(true)] out Hand? emptyHand, SharedHandsComponent? handComp = null)
     {
         emptyHand = null;
@@ -97,7 +100,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Enumerate over hands, with the active hand being first.
+    ///     Enumerate over hands, starting with the currently active hand.
     /// </summary>
     public IEnumerable<Hand> EnumerateHands(EntityUid uid, SharedHandsComponent? handsComp = null)
     {
