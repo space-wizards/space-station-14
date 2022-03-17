@@ -14,7 +14,7 @@ namespace Content.Client.Suspicion
     [RegisterComponent]
     public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
-        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
@@ -118,7 +118,7 @@ namespace Content.Client.Suspicion
                 _gui.Parent?.RemoveChild(_gui);
             }
 
-            _gameHud.SuspicionContainer.AddChild(_gui);
+            //_gameHud.SuspicionContainer.AddChild(_gui); //TODO: unfuck this
             _gui.UpdateLabel();
 
             if (_antagonist ?? false)

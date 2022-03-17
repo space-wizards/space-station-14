@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Animations;
+using Content.Client.Hands.UI;
 using Content.Client.HUD;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -302,7 +303,7 @@ namespace Content.Client.Hands
         private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
         {
             component.Gui = new HandsGui(component, this);
-            _gameHud.HandsContainer.AddChild(component.Gui);
+            //_gameHud.HandsContainer.AddChild(component.Gui); //TODO: readd this
             component.Gui.SetPositionFirst();
             UpdateGui(component);
         }

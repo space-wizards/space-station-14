@@ -86,7 +86,7 @@ namespace Content.Client.Ghost
                 component.Gui.Update();
             }
 
-             _gameHud.HandsContainer.AddChild(component.Gui);
+            // _gameHud.HandsContainer.AddChild(component.Gui); //TODO: Unfuck this
             GhostVisibility = true;
             component.IsAttached = true;
         }

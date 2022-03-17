@@ -30,7 +30,7 @@ using Content.Shared.Interaction.Events;
 
 namespace Content.Client.Inventory
 {
-    [UsedImplicitly]
+    [UsedImplicitly] //TODO: unfuck this
     public sealed class ClientInventorySystem : InventorySystem
     {
         [Dependency] private readonly IHudManager _hudManager = default!;
@@ -116,9 +116,9 @@ namespace Content.Client.Inventory
             if(!component.AttachedToGameHud) return;
 
             _hudManager.GetUIWidget<ButtonBar>().InventoryButtonVisible = false;
-            _gameHud.BottomLeftInventoryQuickButtonContainer.RemoveChild(component.BottomLeftButtons);
-            _gameHud.BottomRightInventoryQuickButtonContainer.RemoveChild(component.BottomRightButtons);
-            _gameHud.TopInventoryQuickButtonContainer.RemoveChild(component.TopQuickButtons);
+            //_gameHud.BottomLeftInventoryQuickButtonContainer.RemoveChild(component.BottomLeftButtons);
+            //_gameHud.BottomRightInventoryQuickButtonContainer.RemoveChild(component.BottomRightButtons);
+            //_gameHud.TopInventoryQuickButtonContainer.RemoveChild(component.TopQuickButtons);
             component.AttachedToGameHud = false;
         }
 
@@ -132,9 +132,9 @@ namespace Content.Client.Inventory
             if(component.AttachedToGameHud) return;
 
             _hudManager.GetUIWidget<ButtonBar>().InventoryButtonVisible = true;
-            _gameHud.BottomLeftInventoryQuickButtonContainer.AddChild(component.BottomLeftButtons);
-            _gameHud.BottomRightInventoryQuickButtonContainer.AddChild(component.BottomRightButtons);
-            _gameHud.TopInventoryQuickButtonContainer.AddChild(component.TopQuickButtons);
+            //_gameHud.BottomLeftInventoryQuickButtonContainer.AddChild(component.BottomLeftButtons);
+            //_gameHud.BottomRightInventoryQuickButtonContainer.AddChild(component.BottomRightButtons);
+            //_gameHud.TopInventoryQuickButtonContainer.AddChild(component.TopQuickButtons);
             component.AttachedToGameHud = true;
         }
 
@@ -151,7 +151,7 @@ namespace Content.Client.Inventory
                 {
                     foreach (var btn in slotButton.Value)
                     {
-                        btn.RefreshTextures(_gameHud);
+                        //btn.RefreshTextures(_gameHud);
                     }
                 }
             }
@@ -249,7 +249,7 @@ namespace Content.Client.Inventory
                     window.OnClose += () =>
                     {
                         _hudManager.GetUIWidget<ButtonBar>().InventoryButtonDown = false;
-                        _gameHud.TopInventoryQuickButtonContainer.Visible = false;
+                        //_gameHud.TopInventoryQuickButtonContainer.Visible = false;
                     };
                     var windowContents = new LayoutContainer
                     {
@@ -260,8 +260,8 @@ namespace Content.Client.Inventory
 
                     ItemSlotButton GetButton(SlotDefinition definition, string textureBack)
                     {
-                        var btn = new ItemSlotButton(ButtonSize, $"{definition.TextureName}.png", textureBack,
-                            _gameHud)
+                        //var btn = new ItemSlotButton(ButtonSize, $"{definition.TextureName}.png", textureBack, _gameHud)
+                        var btn = new ItemSlotButton()
                         {
                             OnStoragePressed = (e) =>
                             {
@@ -353,7 +353,7 @@ namespace Content.Client.Inventory
         private void HandleOpenInventoryMenu()
         {
             _hudManager.GetUIWidget<ButtonBar>().InventoryButtonDown = !_hudManager.GetUIWidget<ButtonBar>().InventoryButtonDown;
-            _gameHud.TopInventoryQuickButtonContainer.Visible = _hudManager.GetUIWidget<ButtonBar>().InventoryButtonDown;
+           // _gameHud.TopInventoryQuickButtonContainer.Visible = _hudManager.GetUIWidget<ButtonBar>().InventoryButtonDown;
         }
     }
 }

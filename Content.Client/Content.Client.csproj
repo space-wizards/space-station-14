@@ -26,6 +26,11 @@
   <ItemGroup>
     <Folder Include="EscapeMenu\UI\Tabs" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="CombatMode\UI\CombatPanelWidget.xaml.cs">
+      <DependentUpon>CombatPanelWidget.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />

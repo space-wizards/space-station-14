@@ -3,12 +3,16 @@ using Content.Client.Cooldown;
 using Content.Client.HUD;
 using Content.Client.Inventory;
 using Content.Client.Items.Managers;
+using Content.Client.Resources;
 using Content.Client.Stylesheets;
+using Content.Client.UserInterface.Controls;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
+using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
@@ -23,13 +27,13 @@ namespace Content.Client.Items.UI
         private const string HighlightShader = "SelectionOutlineInrange";
 
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
-        [Dependency] private readonly IHudManager _hudManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         public EntityUid? Entity { get; set; }
         public TextureRect Button { get; }
         public SpriteView SpriteView { get; }
         public SpriteView HoverSpriteView { get; }
-        public TextureButton StorageButton { get; }
+        public TexturedButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
 
         public Action<GUIBoundKeyEventArgs>? OnPressed { get; set; }
@@ -41,8 +45,15 @@ namespace Content.Client.Items.UI
 
         private readonly PanelContainer _highlightRect;
 
-        private string _textureName;
-        private string _storageTextureName;
+        public string ButtonTexture
+        {
+            set => Button.Texture = _resourceCache.GetTexture(value);
+        }
+
+        public string StorageTexture
+        {
+            set => StorageButton.TextureNormal = _resourceCache.GetTexture(value);
+        }
 
         public ItemSlotButton()
         {
@@ -77,7 +88,7 @@ namespace Content.Client.Items.UI
                 OverrideDirection = Direction.South
             });
 
-            AddChild(StorageButton = new TextureButton
+            AddChild(StorageButton = new TexturedButton
             {
                 Scale = (0.75f, 0.75f),
                 HorizontalAlignment = HAlignment.Right,
@@ -111,16 +122,7 @@ namespace Content.Client.Items.UI
             {
                 Visible = false,
             });
-
-            RefreshTextures(gameHud);
         }
-
-        public void RefreshTextures(IGameHud gameHud)
-        {
-            Button.Texture = gameHud.GetHudTexture(_textureName);
-            StorageButton.TextureNormal = gameHud.GetHudTexture(_storageTextureName);
-        }
-
         protected override void EnteredTree()
         {
             base.EnteredTree();

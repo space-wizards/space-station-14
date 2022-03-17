@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Content.Client.DragDrop;
 using Content.Client.HUD;
+using Content.Client.HUD.Widgets;
 using Content.Client.Stylesheets;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
@@ -59,14 +60,14 @@ namespace Content.Client.Actions.UI
         private readonly Button _clearButton;
         private readonly GridContainer _resultsGrid;
         private readonly TextureRect _dragShadow;
-        private readonly IGameHud _gameHud;
+        private readonly IHudManager _hudManager;
         private readonly DragDropHelper<ActionMenuItem> _dragDropHelper;
         private readonly IEntityManager _entMan;
 
         public ActionMenu(ActionsUI actionsUI)
         {
             _actionsUI = actionsUI;
-            _gameHud = IoCManager.Resolve<IGameHud>();
+            _hudManager = IoCManager.Resolve<IHudManager>();
             _entMan = IoCManager.Resolve<IEntityManager>();
 
             Title = Loc.GetString("ui-actionmenu-title");
@@ -143,7 +144,7 @@ namespace Content.Client.Actions.UI
             _clearButton.OnPressed += OnClearButtonPressed;
             _searchBar.OnTextChanged += OnSearchTextChanged;
             _filterButton.OnItemSelected += OnFilterItemSelected;
-            _gameHud.ActionsButtonDown = true;
+            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonDown = true;
         }
 
         protected override void ExitedTree()
@@ -153,7 +154,7 @@ namespace Content.Client.Actions.UI
             _clearButton.OnPressed -= OnClearButtonPressed;
             _searchBar.OnTextChanged -= OnSearchTextChanged;
             _filterButton.OnItemSelected -= OnFilterItemSelected;
-            _gameHud.ActionsButtonDown = false;
+            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonDown = false;
             foreach (var actionMenuControl in _resultsGrid.Children)
             {
                 var actionMenuItem = (ActionMenuItem) actionMenuControl;

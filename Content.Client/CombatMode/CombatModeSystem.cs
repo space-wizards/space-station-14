@@ -15,11 +15,11 @@ namespace Content.Client.CombatMode
     {
         [Dependency] private readonly IHudManager _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        private CombatPanel? _combatPanel;
+        private CombatPanelWidget? _combatPanel;
         public override void Initialize()
         {
             base.Initialize();
-            _combatPanel = _gameHud.GetUIWidget<CombatPanel>();
+            _combatPanel = _gameHud.GetUIWidget<CombatPanelWidget>();
             if (_combatPanel == null) throw  new SystemException("Combat panel not found, cannot setup targeting!");
             _combatPanel.OnTargetZoneChanged += OnTargetingZoneChanged;
 

@@ -1,5 +1,6 @@
 using Content.Client.DragDrop;
 using Content.Client.HUD;
+using Content.Client.HUD.Widgets;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Shared.Actions;
@@ -25,7 +26,7 @@ namespace Content.Client.Actions.UI
         private const float DragDeadZone = 10f;
         private const float CustomTooltipDelay = 0.4f;
         internal readonly ActionsSystem System;
-        private readonly IGameHud _gameHud;
+        private readonly IHudManager _hudManager;
 
         /// <summary>
         ///     The action component of the currently attached entity.
@@ -78,7 +79,7 @@ namespace Content.Client.Actions.UI
             SetValue(LayoutContainer.DebugProperty, true);
             System = system;
             Component = component;
-            _gameHud = IoCManager.Resolve<IGameHud>();
+            _hudManager = IoCManager.Resolve<IHudManager>();
             _menu = new ActionMenu(this);
 
             LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.End);
@@ -221,9 +222,9 @@ namespace Content.Client.Actions.UI
             _lockButton.OnPressed += OnLockPressed;
             _settingsButton.OnPressed += OnToggleActionsMenu;
             _loadoutContainer.OnKeyBindDown += OnHotbarPaginate;
-            _gameHud.ActionsButtonToggled += OnToggleActionsMenuTopButton;
-            _gameHud.ActionsButtonDown = false;
-            _gameHud.ActionsButtonVisible = true;
+            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonToggled += OnToggleActionsMenuTopButton;
+            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonDown = false;
+            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonVisible = true;
         }
 
         protected override void ExitedTree()
@@ -234,9 +235,9 @@ namespace Content.Client.Actions.UI
             _lockButton.OnPressed -= OnLockPressed;
             _settingsButton.OnPressed -= OnToggleActionsMenu;
             _loadoutContainer.OnKeyBindDown -= OnHotbarPaginate;
-            _gameHud.ActionsButtonToggled -= OnToggleActionsMenuTopButton;
-            _gameHud.ActionsButtonDown = false;
-            _gameHud.ActionsButtonVisible = false;
+            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonToggled -= OnToggleActionsMenuTopButton;
+            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonDown = false;
+            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonVisible = false;
         }
 
         protected override void Resized()

@@ -41,6 +41,11 @@ namespace Content.Client.Hands.UI
 
         private string? ActiveHand { get; set; }
 
+        public HandsGui()
+        {
+
+        }
+
         public HandsGui(HandsComponent hands, HandsSystem handsSystem)
         {
             _handsComponent = hands;
@@ -50,7 +55,7 @@ namespace Content.Client.Hands.UI
             IoCManager.InjectDependencies(this);
 
             StatusPanel = ItemStatusPanel.FromSide(HandLocation.Middle);
-            StatusContainer.AddChild(StatusPanel);
+            //StatusContainer.AddChild(StatusPanel);
             StatusPanel.SetPositionFirst();
         }
 
@@ -159,7 +164,7 @@ namespace Content.Client.Hands.UI
                 _ => "hand_l.png"
             };
 
-            return new HandButton(ClientInventorySystem.ButtonSize, buttonTextureName, StorageTexture, _gameHud, BlockedTexture, buttonLocation);
+            return new HandButton();
         }
 
         private void UpdateHudTheme(int idx)

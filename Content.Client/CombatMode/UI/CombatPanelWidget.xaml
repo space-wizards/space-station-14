@@ -1,4 +1,4 @@
-﻿<combat:CombatPanel xmlns="https://spacestation14.io"
+﻿<combat:CombatPanelWidget xmlns="https://spacestation14.io"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths"
         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
@@ -15,10 +15,9 @@
         Orientation="Vertical"
         HorizontalAlignment="Left"
         VerticalAlignment="Bottom"
-        Name = "Comabt Panel"
+        Name = "CombatPanel"
         HorizontalExpand="True"
         VerticalExpand="True"
-        Margin=""
 >
 <targeting:TargetingDoll Name="TargetingDoll" Access="Public"/>
-</combat:CombatPanel>
+</combat:CombatPanelWidget>

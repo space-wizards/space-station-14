@@ -1,3 +1,4 @@
+using Content.Client.Hands.UI;
 using Content.Shared.Hands.Components;
 
 namespace Content.Client.Hands

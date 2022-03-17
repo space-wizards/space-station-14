@@ -36,11 +36,11 @@ namespace Content.Client.CombatMode
             }
         }
 
-        public void PlayerDetached() { _hudManager.ShowUIWidget<CombatPanel>(false); }
+        public void PlayerDetached() { _hudManager.ShowUIWidget<CombatPanelWidget>(false); }
 
         public void PlayerAttached()
         {
-            _hudManager.ShowUIWidget<CombatPanel>(true); // TODO BOBBY SYSTEM Make the targeting doll actually do something.
+            _hudManager.ShowUIWidget<CombatPanelWidget>(true); // TODO BOBBY SYSTEM Make the targeting doll actually do something.
             UpdateHud();
         }
 
@@ -51,7 +51,7 @@ namespace Content.Client.CombatMode
                 return;
             }
             //Combat panel should never be null in gameplay. If this throws an nullref exception, someone else fucked up
-            _hudManager.GetUIWidget<CombatPanel>()!.ActiveTargetZone = ActiveZone;
+            _hudManager.GetUIWidget<CombatPanelWidget>()!.ActiveTargetZone = ActiveZone;
         }
     }
 }

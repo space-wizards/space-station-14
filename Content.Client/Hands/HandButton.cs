@@ -11,13 +11,13 @@ namespace Content.Client.Hands
         private bool _activeHand;
         private bool _highlighted;
 
-        public HandButton(int size, string textureName, string storageTextureName, IGameHud gameHud, Texture blockedTexture, HandLocation location) : base(size, textureName, storageTextureName, gameHud)
+        public HandButton()
         {
-            Location = location;
-
+            //Location = location;
+            //TODO: Unfuck this
             AddChild(Blocked = new TextureRect
             {
-                Texture = blockedTexture,
+                //Texture = blockedTexture,
                 TextureScale = (2, 2),
                 MouseFilter = MouseFilterMode.Stop,
                 Visible = false

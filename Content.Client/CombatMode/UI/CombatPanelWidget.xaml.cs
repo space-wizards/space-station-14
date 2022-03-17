@@ -9,14 +9,14 @@ namespace Content.Client.CombatMode.UI;
 
 
 [GenerateTypedNameReferences]
-public sealed partial class CombatPanel : HudWidget
+public sealed partial class CombatPanelWidget : HudWidget
 {
     public event Action<TargetingZone>? OnTargetZoneChanged {
         add => TargetingDoll.OnZoneChanged += value;
         remove => TargetingDoll.OnZoneChanged -= value;
     }
     public TargetingZone ActiveTargetZone { get => TargetingDoll.ActiveZone; set => TargetingDoll.ActiveZone = value; }
-    public CombatPanel()
+    public CombatPanelWidget()
     {
         RobustXamlLoader.Load(this);
         LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.Begin);
