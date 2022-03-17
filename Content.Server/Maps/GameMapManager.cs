@@ -39,7 +39,7 @@ public sealed class GameMapManager : IGameMapManager
         }, true);
         _configurationManager.OnValueChanged(CCVars.GameMapForced, value => _currentMapForced = value, true);
         _configurationManager.OnValueChanged(CCVars.GameMapRotation, value => _mapRotationEnabled = value, true);
-        _configurationManager.OnValueChanged(CCVars.GameMapQueueDepth, value =>
+        _configurationManager.OnValueChanged(CCVars.GameMapMemoryDepth, value =>
         {
             _mapQueueDepth = value;
             // Drain excess.

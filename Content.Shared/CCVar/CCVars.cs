@@ -128,10 +128,14 @@ namespace Content.Shared.CCVar
 
         /// <summary>
         /// The depth of the queue used to calculate which map is next in rotation.
+        /// This is how long the game "remembers" that some map was put in play. Default is 16 rounds.
         /// </summary>
         public static readonly CVarDef<int>
-            GameMapQueueDepth = CVarDef.Create("game.map_queue_depth", 16, CVar.SERVERONLY);
+            GameMapMemoryDepth = CVarDef.Create("game.map_memory_depth", 16, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Is map rotation enabled?
+        /// </summary>
         public static readonly CVarDef<bool>
             GameMapRotation = CVarDef.Create<bool>("game.map_rotation", true, CVar.SERVERONLY);
 
