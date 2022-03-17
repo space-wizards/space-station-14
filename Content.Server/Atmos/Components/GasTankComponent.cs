@@ -91,12 +91,6 @@ namespace Content.Server.Atmos.Components
             }
         }
 
-        public void OpenInterface(IPlayerSession session)
-        {
-            _userInterface?.Open(session);
-            UpdateUserInterface(true);
-        }
-
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             message.AddMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(Air?.Pressure ?? 0))));

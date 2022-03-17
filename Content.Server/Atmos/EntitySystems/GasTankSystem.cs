@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Actions;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Toggleable;
@@ -19,10 +20,16 @@ namespace Content.Server.Atmos.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUIVerb);
+            SubscribeLocalEvent<GasTankComponent, BeforeActivatableUIOpenEvent>(BeforeUiOpen);
             SubscribeLocalEvent<GasTankComponent, GetActionsEvent>(OnGetActions);
             SubscribeLocalEvent<GasTankComponent, ToggleActionEvent>(OnActionToggle);
             SubscribeLocalEvent<GasTankComponent, DroppedEvent>(OnDropped);
+        }
+
+        private void BeforeUiOpen(EntityUid uid, GasTankComponent component, BeforeActivatableUIOpenEvent args)
+        {
+            // Only initial update includes output pressure information, to avoid overwriting client-input as the updates come in.
+            component.UpdateUserInterface(true);
         }
 
         private void OnDropped(EntityUid uid, GasTankComponent component, DroppedEvent args)
@@ -43,18 +50,6 @@ namespace Content.Server.Atmos.EntitySystems
             component.ToggleInternals();
 
             args.Handled = true;
-        }
-
-        private void AddOpenUIVerb(EntityUid uid, GasTankComponent component, GetVerbsEvent<ActivationVerb> args)
-        {
-            if (!args.CanAccess ||  !EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
-                return;
-
-            ActivationVerb verb = new();
-            verb.Act = () => component.OpenInterface(actor.PlayerSession);
-            verb.Text = Loc.GetString("control-verb-open-control-panel-text");
-            // TODO VERBS add "open UI" icon?
-            args.Verbs.Add(verb);
         }
 
         public override void Update(float frameTime)

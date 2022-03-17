@@ -59,7 +59,7 @@ namespace Content.Client.Weapons.Ranged
                 return;
             }
 
-            if (!hands.TryGetActiveHeldEntity(out var held) || !EntityManager.TryGetComponent(held, out ClientRangedWeaponComponent? weapon))
+            if (hands.ActiveHandEntity is not EntityUid held || !EntityManager.TryGetComponent(held, out ClientRangedWeaponComponent? weapon))
             {
                 _blocked = true;
                 return;

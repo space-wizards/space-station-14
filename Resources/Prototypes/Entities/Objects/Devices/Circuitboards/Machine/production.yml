@@ -271,6 +271,29 @@
           DefaultPrototype: SaxophoneInstrument
           ExamineName: Woodwind Instrument
 
+- type: entity
+  id: GeneratorPlasmaMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: generator (plasma) machine board
+  components:
+    - type: MachineBoard
+      prototype: GeneratorPlasma
+      requirements:
+        Capacitor: 1
+      materialRequirements:
+        CableHV: 5
+        
+- type: entity
+  id: GeneratorUraniumMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: generator (uranium) machine board
+  components:
+    - type: MachineBoard
+      prototype: GeneratorUranium
+      requirements:
+        Capacitor: 2
+      materialRequirements:
+        CableHV: 10
 
 - type: entity
   id: ReagentGrinderMachineCircuitboard

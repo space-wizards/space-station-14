@@ -205,6 +205,9 @@
   id: MonkeyCube
 
 - type: Tag
+  id: Mop
+
+- type: Tag
   id: NoSpinOnThrow
 
 - type: Tag
@@ -311,4 +314,10 @@
   id: Wrench
 
 - type: Tag
+  id: Wringer
+
+- type: Tag
   id: Write
+
+- type: Tag
+  id: Drone

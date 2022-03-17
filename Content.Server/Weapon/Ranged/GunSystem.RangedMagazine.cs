@@ -70,16 +70,8 @@ public sealed partial class GunSystem
         if (TakeAmmo(component) is not {Valid: true} ammo)
             return;
 
-        var itemComponent = EntityManager.GetComponent<SharedItemComponent>(ammo);
-        if (!handsComponent.CanPutInHand(itemComponent))
-        {
-            Transform(ammo).Coordinates = Transform(args.User).Coordinates;
-            EjectCasing(ammo);
-        }
-        else
-        {
-            handsComponent.PutInHand(itemComponent);
-        }
+        _handsSystem.PickupOrDrop(args.User, ammo, handsComp: handsComponent);
+        EjectCasing(ammo);
 
         args.Handled = true;
     }
