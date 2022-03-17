@@ -127,6 +127,15 @@ namespace Content.Shared.CCVar
             GameMapForced = CVarDef.Create("game.mapforced", false, CVar.SERVERONLY);
 
         /// <summary>
+        /// The depth of the queue used to calculate which map is next in rotation.
+        /// </summary>
+        public static readonly CVarDef<int>
+            GameMapQueueDepth = CVarDef.Create("game.map_queue_depth", 16, CVar.SERVERONLY);
+
+        public static readonly CVarDef<bool>
+            GameMapRotation = CVarDef.Create<bool>("game.map_rotation", true, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationOffset =
@@ -562,7 +571,7 @@ namespace Content.Shared.CCVar
         ///     See vote.enabled, but specific to map votes
         /// </summary>
         public static readonly CVarDef<bool> VoteMapEnabled =
-            CVarDef.Create("vote.map_enabled", true, CVar.SERVERONLY);
+            CVarDef.Create("vote.map_enabled", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     The required ratio of the server that must agree for a restart round vote to go through.
