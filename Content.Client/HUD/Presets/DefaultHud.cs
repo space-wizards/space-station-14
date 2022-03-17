@@ -7,7 +7,7 @@ public sealed class DefaultHud : HudPreset
 {
     protected override void DefineWidgets()
     {
-        RegisterWidget(new ButtonBar());
-        RegisterWidget(new CombatPanel());
+        RegisterWidget<CombatPanel>();
+        RegisterWidget<ButtonBar>();
     }
 }

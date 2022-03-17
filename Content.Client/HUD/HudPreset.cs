@@ -39,9 +39,10 @@ public abstract class HudPreset
     }
 
     //register a new hud widget in this preset, internal use only
-    protected void RegisterWidget(HudWidget widget)
+    protected void RegisterWidget<T>() where T: HudWidget, new()
     {
-        _widgets[widget.GetType()] = widget;
+        if (_widgets.ContainsKey(typeof(T))) return;
+        _widgets[typeof(T)] = new T();
     }
 
     //get a hud widget from this preset by type
