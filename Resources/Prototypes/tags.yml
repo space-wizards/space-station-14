@@ -321,3 +321,6 @@
 
 - type: Tag
   id: Write
+
+- type: Tag
+  id: Drone

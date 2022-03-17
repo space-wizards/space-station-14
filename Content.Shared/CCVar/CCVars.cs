@@ -507,7 +507,7 @@ namespace Content.Shared.CCVar
          * OOC
          */
 
-        public static readonly CVarDef<bool> OocEnabled = CVarDef.Create("ooc.enabled", true, CVar.NOTIFY);
+        public static readonly CVarDef<bool> OocEnabled = CVarDef.Create("ooc.enabled", true, CVar.NOTIFY | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> AdminOocEnabled =
             CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
@@ -516,7 +516,7 @@ namespace Content.Shared.CCVar
          * LOOC
          */
 
-        public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY);
+        public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> AdminLoocEnabled =
             CVarDef.Create("looc.enabled_admin", true, CVar.NOTIFY);
