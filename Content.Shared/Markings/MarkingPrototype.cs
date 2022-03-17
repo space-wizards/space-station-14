@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Markings
 {
     [Prototype("marking")]
-    public sealed class MarkingPrototype : IPrototype, ISerializationHooks
+    public sealed class MarkingPrototype : IPrototype
     {
         [DataField("id", required: true)]
         public string ID { get; } = "uwu";
@@ -34,11 +34,6 @@ namespace Content.Shared.Markings
         public Marking AsMarking()
         {
             return new Marking(ID, Sprites.Count);
-        }
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            Name = Loc.GetString($"marking-{ID}");
         }
     }
 }

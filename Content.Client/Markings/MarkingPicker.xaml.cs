@@ -84,6 +84,7 @@ namespace Content.Client.Markings
             CMarkingRankDown.OnPressed += _ => SwapMarkingDown();
         }
 
+        private string GetMarkingName(MarkingPrototype marking) => Loc.GetString($"marking-{marking.ID}");
         private List<string> GetMarkingStateNames(MarkingPrototype marking)
         {
             List<string> result = new(); 
@@ -113,7 +114,7 @@ namespace Content.Client.Markings
             {
                 if (_usedMarkingList.Contains(marking.AsMarking())) continue;
                 if (!marking.SpeciesRestrictions.Contains(_currentSpecies) && !marking.Unrestricted) continue;
-                var item = CMarkingsUnused.AddItem($"{marking.Name}", marking.Sprites[0].Frame0());
+                var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", marking.Sprites[0].Frame0());
                 item.Metadata = marking;
             }
         }
@@ -333,7 +334,7 @@ namespace Content.Client.Markings
             CMarkingsUnused.Remove(_selectedUnusedMarking);
             var item = new ItemList.Item(CMarkingsUsed)
             {
-                Text = $"{marking.Name} ({marking.MarkingCategory})", 
+                Text = $"{GetMarkingName(marking)} ({marking.MarkingCategory})", 
                 Icon = marking.Sprites[0].Frame0(),
                 Selectable = true,
                 Metadata = marking,
@@ -354,7 +355,7 @@ namespace Content.Client.Markings
 
             if (marking.MarkingCategory == _selectedMarkingCategory)
             {
-                var item = CMarkingsUnused.AddItem($"{marking.Name}", marking.Sprites[0].Frame0());
+                var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", marking.Sprites[0].Frame0());
                 item.Metadata = marking;
             }
             _selectedMarking = null;

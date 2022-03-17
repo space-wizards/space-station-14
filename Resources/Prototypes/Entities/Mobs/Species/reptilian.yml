@@ -119,7 +119,7 @@
     drawdepth: Mobs
     scale: 1, 1
     layers:
-      - map: [ "enum.HumanoidVisualLayers.TailBehind" ]
+      - map: [ "enum.HumanoidVisualLayers.Tail" ]
         color: "#34a223"
         state: tail_smooth
         sprite: Mobs/Customization/reptilian_parts.rsi
