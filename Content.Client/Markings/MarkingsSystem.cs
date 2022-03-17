@@ -16,7 +16,6 @@ namespace Content.Client.Markings
     public sealed class MarkingsSystem : EntitySystem
     {
         [Dependency] private readonly MarkingManager _markingManager = default!;
-        // [Dependency] private readonly MarkingsSpeciesManager _speciesManager = default!;
 
         public override void Initialize()
         {
@@ -94,13 +93,11 @@ namespace Content.Client.Markings
                     var rsi = (SpriteSpecifier.Rsi) markingPrototype.Sprites[j];
                     string layerId = $"{markingPrototype.ID}-{rsi.RsiState}";
 
-                    /*
                     if (sprite.LayerMapTryGet(layerId, out var existingLayer))
                     {
                         sprite.RemoveLayer(existingLayer);
                         sprite.LayerMapRemove(marking.MarkingId);
                     }
-                    */
 
                     int layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
                     sprite.LayerMapSet(layerId, layer);
@@ -144,13 +141,11 @@ namespace Content.Client.Markings
                                 var rsi = (SpriteSpecifier.Rsi) markingPrototype.Sprites[j];
                                 string layerId = $"{markingPrototype.ID}-{rsi.RsiState}";
 
-                                /*
                                 if (sprite.LayerMapTryGet(layerId, out var existingLayer))
                                 {
                                     sprite.RemoveLayer(existingLayer);
                                     sprite.LayerMapRemove(markingPrototype.ID);
                                 }
-                                */
 
                                 int layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
                                 sprite.LayerMapSet(layerId, layer);

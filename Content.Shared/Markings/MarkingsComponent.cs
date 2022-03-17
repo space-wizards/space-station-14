@@ -13,7 +13,7 @@ namespace Content.Shared.Markings
         public string LastBase = "human";
         public Dictionary<HumanoidVisualLayers, List<Marking>> ActiveMarkings = new();
 
-        // Layer points for the attached mob. This is verified client side (FOR NOW),
+        // Layer points for the attached mob. This is verified client side (but should be verified server side, eventually as well),
         // but upon render for the given entity with this component, it will start subtracting
         // points from this set. Upon depletion, no more sprites in this layer will be
         // rendered. If an entry is null, however, it is considered 'unlimited points' for
@@ -29,19 +29,7 @@ namespace Content.Shared.Markings
         [DataField("layerPoints")]
         public Dictionary<MarkingCategories, MarkingPoints> LayerPoints = new();
     }
-
-    public sealed class ActiveMarking
-    {
-        public Marking Marking { get; }
-        public bool IsDefault { get; }
-
-        public ActiveMarking(Marking marking, bool isDefault)
-        {
-            Marking = marking;
-            IsDefault = isDefault;
-        }
-    }
-
+    
     [DataDefinition]
     public sealed class MarkingPoints
     {
