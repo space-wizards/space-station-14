@@ -664,7 +664,7 @@
 
 - type: entity
   parent: BaseSign
-  id: SignWarningSecureArea
+  id: SignWarningSecurearea
   name: secure area sign
   components:
   - type: Sprite
