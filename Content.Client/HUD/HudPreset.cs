@@ -7,7 +7,7 @@ namespace Content.Client.HUD;
 public abstract class HudPreset
 {
     [Dependency] private readonly IHudManager _hudManager = default!;
-
+    [Dependency] private readonly ISandboxHelper _sandboxHelper = default!;
     protected abstract void DefineWidgets();
     private readonly Dictionary<System.Type, HudWidget> _widgets = new();
     private readonly Control _presetRoot;
@@ -42,7 +42,7 @@ public abstract class HudPreset
     protected void RegisterWidget<T>() where T: HudWidget, new()
     {
         if (_widgets.ContainsKey(typeof(T))) return;
-        _widgets[typeof(T)] = new T();
+        _widgets[typeof(T)] = (T)_sandboxHelper.CreateInstance(typeof(T));
     }
 
     //get a hud widget from this preset by type

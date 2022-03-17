@@ -24,7 +24,6 @@ namespace Content.Client.Hands
     public sealed class HandsSystem : SharedHandsSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override void Initialize()
@@ -279,14 +278,14 @@ namespace Content.Client.Hands
         #region Gui
         public void UpdateGui(HandsComponent? hands = null)
         {
-            if (hands == null && !TryGetPlayerHands(out hands) || hands.Gui == null)
-                return;
-
-            var states = hands.Hands
-                .Select(hand => new GuiHand(hand.Name, hand.Location, hand.HeldEntity))
-                .ToArray();
-
-            hands.Gui.Update(new HandsGuiState(states, hands.ActiveHand));
+            // if (hands == null && !TryGetPlayerHands(out hands) || hands.Gui == null)
+            //     return;
+            //
+            // var states = hands.Hands
+            //     .Select(hand => new GuiHand(hand.Name, hand.Location, hand.HeldEntity))
+            //     .ToArray();
+            //
+            // hands.Gui.Update(new HandsGuiState(states, hands.ActiveHand));
         }
 
         public override bool TrySetActiveHand(EntityUid uid, string? value, SharedHandsComponent? handComp = null)
@@ -302,9 +301,6 @@ namespace Content.Client.Hands
 
         private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
         {
-            component.Gui = new HandsGui(component, this);
-            //_gameHud.HandsContainer.AddChild(component.Gui); //TODO: readd this
-            component.Gui.SetPositionFirst();
             UpdateGui(component);
         }
 

@@ -20,7 +20,7 @@ namespace Content.Client.CombatMode
         {
             base.Initialize();
             _combatPanel = _gameHud.GetUIWidget<CombatPanelWidget>();
-            if (_combatPanel == null) throw  new SystemException("Combat panel not found, cannot setup targeting!");
+            if (_combatPanel == null) throw  new Exception("Combat panel not found, cannot setup targeting!");
             _combatPanel.OnTargetZoneChanged += OnTargetingZoneChanged;
 
             SubscribeLocalEvent<CombatModeComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());

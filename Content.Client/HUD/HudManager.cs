@@ -100,7 +100,7 @@ public sealed class HudManager  : IHudManager
     private void RegisterHudPresets()
     {
         var presetTypes = _reflectionManager.GetAllChildren<HudPreset>().ToList();
-        if (presetTypes.Count == 0) throw new SystemException("No Hud presets found!");
+        if (presetTypes.Count == 0) throw new NullReferenceException("No Hud presets found!");
         foreach (var presetType in presetTypes)
         {
             var hudPreset = (HudPreset) _sandboxHelper.CreateInstance(presetType);
@@ -180,10 +180,9 @@ public sealed class HudManager  : IHudManager
     public T GetUIWidget<T>() where T : HudWidget
     {
         var widget = _activeHudPreset!.GetWidget<T>();
-        if (widget == null) throw new SystemException(typeof(T).Name + " was not found in active Hud preset!");
+        if (widget == null) throw new NullReferenceException(typeof(T).Name + " was not found in active Hud preset!");
         return widget;
     }
-
 
     public T? GetUIWidgetNullSafe<T>() where T : HudWidget
     {
