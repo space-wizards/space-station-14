@@ -25,6 +25,7 @@ public interface IHudManager
     public void Startup();
     public void Shutdown();
     public LayoutContainer? StateRoot { get; }
+    public HudPreset? ActivePreset { get; }
     public T GetHudPreset<T>() where T : HudPreset;
     public bool SwitchHudPreset<T>() where T : HudPreset;
     public bool ValidateHudTheme(int idx);
@@ -52,6 +53,7 @@ public sealed class HudManager  : IHudManager
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
     private HudPreset? _activeHudPreset;
+    public HudPreset? ActivePreset => _activeHudPreset;
     private HudPreset? _defaultHudPreset;
 
     private readonly Dictionary<System.Type, HudPreset> _hudPresets = new();
@@ -99,7 +101,9 @@ public sealed class HudManager  : IHudManager
         if (presetTypes.Count == 0) throw new SystemException("No Hud presets found!");
         foreach (var presetType in presetTypes)
         {
-            _hudPresets[presetType] = (HudPreset) _sandboxHelper.CreateInstance(presetType);
+            var hudPreset = (HudPreset) _sandboxHelper.CreateInstance(presetType);
+            _hudPresets[presetType] = hudPreset;
+            hudPreset.Initialize();
         }
         _activeHudPreset = _hudPresets[presetTypes[0]]; //by default set the hud preset to the first type found.
     }

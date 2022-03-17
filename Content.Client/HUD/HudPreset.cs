@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Sandboxing;
+﻿using Robust.Client.UserInterface;
+using Robust.Shared.Sandboxing;
 
 namespace Content.Client.HUD;
 
@@ -7,28 +8,34 @@ public abstract class HudPreset
 {
     [Dependency] private readonly IHudManager _hudManager = default!;
 
-    public abstract void DefineWidgets();
-
+    protected abstract void DefineWidgets();
     private readonly Dictionary<System.Type, HudWidget> _widgets = new();
+    private readonly Control _presetRoot;
+    public Control RootContainer => _presetRoot;
     protected HudPreset()
     {
         IoCManager.InjectDependencies(this);
+        _presetRoot = new Control();
+        _presetRoot.Name = this.GetType().Name;
     }
-
-    public void LoadPreset()
+    internal void Initialize()
     {
+        DefineWidgets();
         foreach (var widgetData in _widgets)
         {
-            _hudManager.AddNewControl(widgetData.Value);
+            _presetRoot.AddChild(widgetData.Value);
         }
     }
 
-    public void UnloadPreset()
+
+    internal void LoadPreset()
     {
-        foreach (var widgetData in _widgets)
-        {
-            _hudManager.RemoveControl(widgetData.Value);
-        }
+        _hudManager.AddNewControl(_presetRoot);
+    }
+
+    internal void UnloadPreset()
+    {
+        _hudManager.RemoveControl(_presetRoot);
     }
 
     //register a new hud widget in this preset, internal use only
@@ -53,14 +60,15 @@ public abstract class HudPreset
         _hudManager.ShowUIWidget<T>(show);
     }
 
-    //dispose of this preset
-    public void Dispose()
+    //dispose of this preset, this should not be manually called
+    internal void Dispose()
     {
         UnloadPreset();
         foreach (var widget in _widgets)
         {
             widget.Value?.Dispose();
         }
+        _presetRoot.Dispose();
     }
 
 

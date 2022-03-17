@@ -5,7 +5,7 @@ namespace Content.Client.HUD.Presets;
 
 public sealed class DefaultHud : HudPreset
 {
-    public override void DefineWidgets()
+    protected override void DefineWidgets()
     {
         RegisterWidget(new ButtonBar());
         RegisterWidget(new CombatPanel());

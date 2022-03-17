@@ -11,7 +11,7 @@ public abstract class HudWidget : BoxContainer
 {
     [Dependency] protected readonly IHudManager HudManager = default!;
 
-    protected LayoutContainer? RootContainer => HudManager.StateRoot;
+    protected LayoutContainer? Layout => HudManager.StateRoot;
     protected HudWidget()
     {
         IoCManager.InjectDependencies(this);
