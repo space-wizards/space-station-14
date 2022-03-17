@@ -8,14 +8,14 @@
   "copyright": "Made by EmoGarbage404", 
   "states": [
     {
-      "name": "icon", 
+      "name": "icon"
     },
     {
       "name": "penguin", 
       "directions": 4
     },
     {
-      "name": "dead",
+      "name": "dead"
     }
   ]
 }
