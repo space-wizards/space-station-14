@@ -49,7 +49,9 @@ public sealed class GameMapManager : IGameMapManager
             }
         }, true);
 
-        foreach (var map in AllVotableMaps())
+        var maps = AllVotableMaps().ToArray();
+        _random.Shuffle(maps);
+        foreach (var map in maps)
         {
             if (_previousMaps.Count >= _mapQueueDepth)
                 break;
@@ -95,8 +97,7 @@ public sealed class GameMapManager : IGameMapManager
     public void SelectRandomMap()
     {
         var maps = CurrentlyEligibleMaps().ToList();
-        _random.Shuffle(maps);
-        _currentMap = maps[0];
+        _currentMap = _random.Pick(maps);
         _currentMapForced = false;
     }
 
