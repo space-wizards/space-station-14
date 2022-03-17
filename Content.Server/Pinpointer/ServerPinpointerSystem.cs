@@ -1,6 +1,7 @@
 using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
 using System.Linq;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Pinpointer
 {
@@ -19,8 +20,15 @@ namespace Content.Server.Pinpointer
             TogglePinpointer(uid, component);
 
             // try to find target from whitelist
-            if (component.IsActive && component.Component != null && EntityManager.ComponentFactory.TryGetRegistration(component.Component, out var reg))
+            if (component.IsActive && component.Component != null)
             {
+                if (!EntityManager.ComponentFactory.TryGetRegistration(component.Component, out var reg))
+                {
+                    Logger.Error($"Unable to find component registration for {component.Component} for pinpointer!");
+                    DebugTools.Assert(false);
+                    return;
+                }
+
                 var target = FindTargetFromComponent(uid, reg.Type);
                 SetTarget(uid, target, component);
             }
@@ -62,7 +70,7 @@ namespace Content.Server.Pinpointer
                 if (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
                     compXform.MapID != mapId) continue;
 
-                var dist = (_transform.GetWorldPosition(comp.Owner, xformQuery) - worldPos).LengthSquared;
+                var dist = (_transform.GetWorldPosition(compXform, xformQuery) - worldPos).LengthSquared;
                 l.TryAdd(dist, comp.Owner);
             }
 
