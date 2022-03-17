@@ -103,11 +103,18 @@ namespace Content.Server.Cloning.CloningConsole
 
         private void FindDevices(EntityUid Owner, CloningConsoleComponent cloneConsoleComp)
         {
+            bool hasChanged = false;
             if (!EntityManager.EntityExists(cloneConsoleComp.CloningPod))
+            {
+                hasChanged = true;
                 cloneConsoleComp.CloningPod = null;
+            }
 
             if (!EntityManager.EntityExists(cloneConsoleComp.GeneticScanner))
+            {
+                hasChanged = true;
                 cloneConsoleComp.GeneticScanner = null;
+            }
 
             if (TryComp<TransformComponent>(Owner, out var transformComp) && transformComp.Anchored)
             {
@@ -118,13 +125,19 @@ namespace Content.Server.Cloning.CloningConsole
                     if (TryComp<MedicalScannerComponent>(entity, out var geneticScanner))
                     {
                         cloneConsoleComp.GeneticScanner = entity;
+                        hasChanged = true;
                         continue;
                     }
 
                     if (TryComp<CloningPodComponent>(entity, out var cloningPod))
+                    {
+                        hasChanged = true;
                         cloneConsoleComp.CloningPod = entity;
+                    }
                 }
             }
+            if (hasChanged)
+                UpdateUserInterface(cloneConsoleComp);
             return;
         }
 

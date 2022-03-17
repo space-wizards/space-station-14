@@ -60,7 +60,6 @@ namespace Content.Shared.Cloning.CloningConsole
             Clone,
             Eject,
             Refresh
-
         }
 
         [Serializable, NetSerializable]
