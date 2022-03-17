@@ -231,18 +231,6 @@
   id: MobCatRuntime
   description: Professional mouse hunter. Escape artist.
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: cat
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: cat
-      crit: cat_dead
-      dead: cat_dead
   - type: Grammar
     attributes:
       gender: female
@@ -275,18 +263,6 @@
   parent: MobCat
   description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: cat2
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: cat2
-      crit: cat2_dead
-      dead: cat2_dead
   - type: Grammar
     attributes:
       gender: male
@@ -347,18 +323,6 @@
   parent: MobCat
   description: He out here.
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/caracal.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: caracal_flop
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: caracal_flop
-      crit: caracal_dead
-      dead: caracal_dead
   - type: Grammar
     attributes:
       gender: male
@@ -461,18 +425,6 @@
   id: MobPaperwork
   description: Very slow animal. For people with low energy.
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/sloth.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: sloth
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: sloth
-      crit: sloth_dead
-      dead: sloth_dead
   - type: Grammar
     attributes:
       gender: male
@@ -483,19 +435,6 @@
   id: MobBandito
   description: Just a silly little guy!
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/ferret.rsi
-    scale: 0.7, 0.7
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: ferret
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: ferret
-      crit: ferret_dead
-      dead: ferret_dead
   - type: Grammar
     attributes:
       gender: male
