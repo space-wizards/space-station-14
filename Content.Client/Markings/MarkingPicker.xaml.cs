@@ -59,8 +59,16 @@ namespace Content.Client.Markings
             body!.TryGetComponent("Markings", out MarkingsComponent? markingsComponent);
 
             PointLimits = markingsComponent!.LayerPoints;
-            PointsUsed = new(PointLimits);
 
+            foreach (var (category, points) in PointLimits)
+            {
+                PointsUsed[category] = new MarkingPoints()
+                {
+                    Points = points.Points,
+                    Required = points.Required,
+                    DefaultMarkings = points.DefaultMarkings 
+                };
+            }
 
             Populate();
             List<Marking> toRemove = PopulateUsed();
@@ -278,7 +286,16 @@ namespace Content.Client.Markings
             body!.TryGetComponent("Markings", out MarkingsComponent? markingsComponent);
 
             PointLimits = markingsComponent!.LayerPoints;
-            PointsUsed = new(PointLimits);
+
+            foreach (var (category, points) in PointLimits)
+            {
+                PointsUsed[category] = new MarkingPoints()
+                {
+                    Points = points.Points,
+                    Required = points.Required,
+                    DefaultMarkings = points.DefaultMarkings 
+                };
+            }
             
             Populate();
             List<Marking> toRemove = PopulateUsed();
