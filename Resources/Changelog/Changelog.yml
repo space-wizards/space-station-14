@@ -1,9 +1,4 @@
 Entries:
-- author: DelleVelleD
-  changes:
-  - {message: Fixed booze and soda dispensers colliding with tables., type: Fix}
-  id: 723
-  time: '2021-12-12T15:02:28.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug preventing people from breaking out of handcuffs., type: Fix}
@@ -3005,3 +3000,12 @@ Entries:
       to 4 TC for obvious reasons.', type: Tweak}
   id: 1222
   time: '2022-03-17T18:46:19.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'The game now supports an automated map rotation that cycles through
+      all eligible maps, preferring whatever maps haven''t been played recently.',
+    type: Add}
+  - {message: 'Map voting has been disabled on Wizard''s Den, in favor of automated
+      rotation.', type: Tweak}
+  id: 1223
+  time: '2022-03-17T18:59:53.0000000+00:00'
