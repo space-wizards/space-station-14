@@ -494,9 +494,9 @@
   description: A dress for special occassions.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/Color/capformaldress.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/capformaldress.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/Color/capformaldress.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/capformaldress.rsi
     
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -505,9 +505,9 @@
   description: A dress for special occassions
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/Color/centcomformaldress.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/centcomformaldress.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/Color/centcomformaldress.rsi   
+    sprite: Clothing/Uniforms/Jumpskirt/centcomformaldress.rsi   
     
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -516,7 +516,7 @@
   description: A dress for special occassions.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/Color/hosformaldress.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/Color/hosformaldress.rsi      
+    sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi      
     
