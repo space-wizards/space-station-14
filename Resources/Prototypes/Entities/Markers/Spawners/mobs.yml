@@ -139,8 +139,8 @@
       - MobCatFloppa
 
 - type: entity
-  name: Cat Spawner
-  id: SpawnMobCat
+  name: Generic Cat Spawner
+  id: SpawnMobCatGeneric
   parent: MarkerBase
   components:
   - type: Sprite
@@ -149,9 +149,9 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobCatRuntime
-      - MobCatException
-      - MobCatFloppa
+      - MobCat
+      - MobCatCalico
+      - MobCatCaracal
 
 - type: entity
   name: Paperwork Spawner
