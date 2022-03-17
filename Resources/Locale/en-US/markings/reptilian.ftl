@@ -21,3 +21,21 @@ marking-LizardHornsShort = Lizard Horns (Short)
 
 marking-LizardHornsSimple-horns_simple = Lizard Horns
 marking-LizardHornsSimple = Lizard Horns
+
+marking-LizardTailSmooth-tail_smooth = Lizard Tail (Smooth)
+marking-LizardTailSmooth = Lizard Tail (Smooth)
+
+marking-LizardTailSpikes-tail_spikes = Lizard Tail (Spiky)
+marking-LizardTailSpikes = Lizard Tail (Spiky)
+
+marking-LizardTailLTiger-tail_ltiger = Lizard Tail (Light Tiger Stripes)
+marking-LizardTailLTiger = Lizard Tail (Light Tiger Stripes)
+
+marking-LizardTailDTiger-tail_dtiger = Lizard Tail (Dark Tiger Stripes)
+marking-LizardTailDTiger = Lizard Tail (Dark Tiger Stripes)
+
+marking-LizardSnoutRound-snout_round = Lizard Snout (Round)
+marking-LizardSnoutRound = Lizard Snout (Round)
+
+marking-LizardSnoutSharp-snout_sharp = Lizard Snout (Sharp)
+marking-LizardSnoutSharp = Lizard Snout (Sharp)

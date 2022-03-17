@@ -1,10 +1,10 @@
 <Control xmlns="https://spacestation14.io">
     <!-- Primary container -->
-    <BoxContainer Orientation="Vertical">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
         <!-- Marking lists -->
-        <BoxContainer Orientation="Horizontal" SeparationOverride="5">
+        <BoxContainer Orientation="Horizontal" SeparationOverride="5" HorizontalExpand="True">
             <!-- Unused markings -->
-            <BoxContainer Orientation="Vertical">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                 <Label Text="{Loc 'markings-unused'}" />
                 <OptionButton Name="CMarkingCategoryButton" />
                 <ItemList Name="CMarkingsUnused" VerticalExpand="True" MinSize="300 250" />
@@ -12,7 +12,7 @@
                 <Button Name="CMarkingAdd" Text="{Loc 'markings-add'}" />
             </BoxContainer>
             <!-- Used markings -->
-            <BoxContainer Orientation="Vertical">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                 <Label Text="{Loc 'markings-used'}" />
                 <ItemList Name="CMarkingsUsed" VerticalExpand="True" MinSize="300 250" />
                 <BoxContainer Orientation="Horizontal" SeparationOverride="5">

@@ -72,7 +72,7 @@ namespace Content.Client.Markings
 
             for (int i = 0; i < _markingCategories.Count; i++)
             {
-                CMarkingCategoryButton.AddItem(_markingCategories[i].ToString(), i);
+                CMarkingCategoryButton.AddItem(Loc.GetString($"markings-category-{_markingCategories[i].ToString()}"), i);
             }
             CMarkingCategoryButton.SelectId(_markingCategories.IndexOf(MarkingCategories.Chest));
             CMarkingCategoryButton.OnItemSelected +=  OnCategoryChange;
@@ -167,7 +167,7 @@ namespace Content.Client.Markings
 
                     var _item = new ItemList.Item(CMarkingsUsed)
                     {
-                        Text = $"{newMarking.Name} ({newMarking.MarkingCategory})", 
+                        Text = Loc.GetString("marking-used", ("marking-name", $"{GetMarkingName(newMarking)}"), ("marking-category", Loc.GetString($"markings-category-{newMarking.MarkingCategory}"))), 
                         Icon = newMarking.Sprites[0].Frame0(),
                         Selectable = true,
                         Metadata = newMarking,
@@ -403,7 +403,7 @@ namespace Content.Client.Markings
             CMarkingsUnused.Remove(_selectedUnusedMarking);
             var item = new ItemList.Item(CMarkingsUsed)
             {
-                Text = $"{GetMarkingName(marking)} ({marking.MarkingCategory})", 
+                Text = Loc.GetString("marking-used", ("marking-name", $"{GetMarkingName(marking)}"), ("marking-category", Loc.GetString($"markings-category-{marking.MarkingCategory}"))), 
                 Icon = marking.Sprites[0].Frame0(),
                 Selectable = true,
                 Metadata = marking,

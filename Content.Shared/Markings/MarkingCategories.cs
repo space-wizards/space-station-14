@@ -13,7 +13,6 @@ namespace Content.Shared.Markings
         Chest,
         Arms,
         Legs,
-        Ears,
         Tail,
         Overlay
     }
