@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.CharacterInfo.Components;
 using Content.Client.HUD;
+using Content.Client.HUD.Widgets;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -16,7 +17,7 @@ namespace Content.Client.CharacterInterface
     [UsedImplicitly]
     public sealed class CharacterInterfaceSystem : EntitySystem
     {
-        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
 
@@ -53,7 +54,7 @@ namespace Content.Client.CharacterInterface
                 SetSize = (545, 400)
             };
 
-            comp.Window.OnClose += () => _gameHud.CharacterButtonDown = false;
+            comp.Window.OnClose += () => _hudManager.GetUIWidget<ButtonBar>().CharacterButtonDown = false;
         }
 
         private void OnComponentRemove(EntityUid uid, CharacterInterfaceComponent comp, ComponentRemove args)
@@ -80,8 +81,8 @@ namespace Content.Client.CharacterInterface
             if (comp.Window == null)
                 return;
 
-            _gameHud.CharacterButtonVisible = true;
-            _gameHud.CharacterButtonToggled += b =>
+            _hudManager.GetUIWidget<ButtonBar>().CharacterButtonVisible = true;
+            _hudManager.GetUIWidget<ButtonBar>().CharacterButtonToggled += b =>
             {
                 if (b)
                     comp.Window.OpenCentered();
@@ -95,7 +96,7 @@ namespace Content.Client.CharacterInterface
             if (comp.Window == null)
                 return;
 
-            _gameHud.CharacterButtonVisible = false;
+            _hudManager.GetUIWidget<ButtonBar>().CharacterButtonVisible = false;
             comp.Window.Close();
         }
 
@@ -124,7 +125,7 @@ namespace Content.Client.CharacterInterface
 
         private void _setOpenValue(DefaultWindow menu, bool value)
         {
-            _gameHud.CharacterButtonDown = value;
+            _hudManager.GetUIWidget<ButtonBar>().CharacterButtonDown = value;
             if (value)
                 menu.OpenCentered();
             else

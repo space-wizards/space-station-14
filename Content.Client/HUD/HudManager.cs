@@ -32,7 +32,9 @@ public interface IHudManager
     public Texture GetHudTexture(string path);
     public bool IsWidgetShown<T>() where T : HudWidget;
     public void ShowUIWidget<T>(bool enabled) where T : HudWidget;
-    public T? GetUIWidget<T>() where T : HudWidget;
+    public T GetUIWidget<T>() where T : HudWidget;
+    //a nullsafe version of get UI widget that doesn't throw exceptions
+    public T? GetUIWidgetNullSafe<T>() where T : HudWidget;
     public EscapeMenu? EscapeMenu { get; }
 
     //Do Not abuse these or I will eat you
@@ -175,7 +177,15 @@ public sealed class HudManager  : IHudManager
         _activeHudPreset!.ShowWidget<T>(enabled);
     }
 
-    public T? GetUIWidget<T>() where T : HudWidget
+    public T GetUIWidget<T>() where T : HudWidget
+    {
+        var widget = _activeHudPreset!.GetWidget<T>();
+        if (widget == null) throw new SystemException(typeof(T).Name + " was not found in active Hud preset!");
+        return widget;
+    }
+
+
+    public T? GetUIWidgetNullSafe<T>() where T : HudWidget
     {
         return _activeHudPreset!.GetWidget<T>();
     }

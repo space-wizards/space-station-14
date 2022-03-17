@@ -16,7 +16,7 @@
 >
     <ui:TexturedButton
         Name="EscapeButton"
-        Access="Protected"
+        Access="Public"
         TexturePath="/Textures/Interface/hamburger.svg.192dpi.png"
         ToolTip="{Loc 'game-hud-open-escape-menu-button-tooltip'}"
         MinSize="70 64"
@@ -24,7 +24,7 @@
         />
     <ui:TexturedButton
         Name="CharacterButton"
-        Access="Protected"
+        Access="Public"
         TexturePath="/Textures/Interface/character.svg.192dpi.png"
         ToolTip="{Loc 'game-hud-open-character-menu-button-tooltip'}"
         MinSize="42 64"
@@ -32,7 +32,7 @@
         />
     <ui:TexturedButton
         Name="InventoryButton"
-        Access="Protected"
+        Access="Public"
         TexturePath="/Textures/Interface/inventory.svg.192dpi.png"
         ToolTip="{Loc 'game-hud-open-inventory-menu-button-tooltip'}"
         MinSize="42 64"
@@ -40,7 +40,7 @@
         />
     <ui:TexturedButton
         Name="CraftingButton"
-        Access="Protected"
+        Access="Public"
         TexturePath="/Textures/Interface/hammer.svg.192dpi.png"
         ToolTip="{Loc 'game-hud-open-crafting-menu-button-tooltip'}"
         MinSize="42 64"
@@ -48,7 +48,7 @@
         />
     <ui:TexturedButton
         Name="ActionButton"
-        Access="Protected"
+        Access="Public"
         TexturePath="/Textures/Interface/fist.svg.192dpi.png"
         ToolTip="{Loc 'game-hud-open-actions-menu-button-tooltip'}"
         MinSize="42 64"
@@ -56,7 +56,7 @@
         />
     <ui:TexturedButton
         Name="AdminButton"
-        Access="Protected"
+        Access="Public"
         TexturePath="/Textures/Interface/gavel.svg.192dpi.png"
         ToolTip="{Loc 'game-hud-open-admin-menu-button-tooltip'}"
         MinSize="42 64"
@@ -64,7 +64,7 @@
         />
     <ui:TexturedButton
         Name="SandboxButton"
-        Access="Protected"
+        Access="Public"
         TexturePath="/Textures/Interface/sandbox.svg.192dpi.png"
         ToolTip="{Loc 'game-hud-open-sandbox-menu-button-tooltip'}"
         MinSize="42 64"
@@ -72,7 +72,7 @@
         />
     <ui:TexturedButton
         Name="InfoButton"
-        Access="Protected"
+        Access="Public"
         TexturePath="/Textures/Interface/info.svg.192dpi.png"
         ToolTip="{Loc 'ui-options-function-open-info'}"
         MinSize="42 64"

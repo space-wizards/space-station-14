@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Client.Cooldown;
 using Content.Client.HUD;
+using Content.Client.Inventory;
 using Content.Client.Items.Managers;
 using Content.Client.Stylesheets;
 using Robust.Client.GameObjects;
@@ -43,13 +44,11 @@ namespace Content.Client.Items.UI
         private string _textureName;
         private string _storageTextureName;
 
-        public ItemSlotButton(int size, string textureName, string storageTextureName)
+        public ItemSlotButton()
         {
-            _textureName = textureName;
-            _storageTextureName = storageTextureName;
             IoCManager.InjectDependencies(this);
 
-            MinSize = (size, size);
+            MinSize = (ClientInventorySystem.ButtonSize, ClientInventorySystem.ButtonSize);
 
             AddChild(Button = new TextureRect
             {

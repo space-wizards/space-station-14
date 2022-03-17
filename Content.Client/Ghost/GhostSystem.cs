@@ -13,7 +13,7 @@ namespace Content.Client.Ghost
     public sealed class GhostSystem : SharedGhostSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameHud _gameHud = default!;
+        //[Dependency] private readonly IGameHud _gameHud = default!;
 
         // Changes to this value are manually propagated.
         // No good way to get an event into the UI.
@@ -86,7 +86,7 @@ namespace Content.Client.Ghost
                 component.Gui.Update();
             }
 
-            _gameHud.HandsContainer.AddChild(component.Gui);
+             _gameHud.HandsContainer.AddChild(component.Gui);
             GhostVisibility = true;
             component.IsAttached = true;
         }

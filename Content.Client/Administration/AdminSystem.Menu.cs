@@ -3,6 +3,7 @@ using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
 using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.HUD;
+using Content.Client.HUD.Widgets;
 using Content.Client.Verbs;
 using Content.Shared.Input;
 using Robust.Client.Console;
@@ -23,7 +24,7 @@ namespace Content.Client.Administration
     {
         [Dependency] private readonly INetManager _netManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IClientAdminManager _clientAdminManager = default!;
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
@@ -49,13 +50,13 @@ namespace Content.Client.Administration
             {
                 // when status changes, show the top button if we can open admin menu.
                 // if we can't or we lost admin status, close it and hide the button.
-                _gameHud.AdminButtonVisible = CanOpen();
-                if (!_gameHud.AdminButtonVisible)
+                _hudManager.GetUIWidget<ButtonBar>().AdminButtonVisible = CanOpen();
+                if (!_hudManager.GetUIWidget<ButtonBar>().AdminButtonVisible)
                 {
                     Close();
                 }
             };
-            _gameHud.AdminButtonToggled += (open) =>
+            _hudManager.GetUIWidget<ButtonBar>().AdminButtonToggled += (open) =>
             {
                 if (open)
                 {
@@ -66,8 +67,8 @@ namespace Content.Client.Administration
                     Close();
                 }
             };
-            _gameHud.AdminButtonVisible = CanOpen();
-            _gameHud.AdminButtonDown = false;
+            _hudManager.GetUIWidget<ButtonBar>().AdminButtonVisible = CanOpen();
+            _hudManager.GetUIWidget<ButtonBar>().AdminButtonDown = false;
         }
 
 

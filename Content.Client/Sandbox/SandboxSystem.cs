@@ -1,6 +1,7 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Decals.UI;
 using Content.Client.HUD;
+using Content.Client.HUD.Widgets;
 using Content.Client.Markers;
 using Content.Client.SubFloor;
 using Content.Shared.Administration;
@@ -39,12 +40,12 @@ namespace Content.Client.Sandbox
         public readonly Button ShowMarkersButton; //Shows spawn points
         public readonly Button ShowBbButton; //Shows bounding boxes
         public readonly Button MachineLinkingButton; // Enables/disables machine linking mode.
-        private readonly IGameHud _gameHud;
+        private readonly IHudManager _hudManager;
 
         public SandboxWindow()
         {
             Resizable = false;
-            _gameHud = IoCManager.Resolve<IGameHud>();
+            _hudManager = IoCManager.Resolve<IHudManager>();
 
             Title = Loc.GetString("sandbox-window-title");
 
@@ -102,13 +103,13 @@ namespace Content.Client.Sandbox
         protected override void EnteredTree()
         {
             base.EnteredTree();
-            _gameHud.SandboxButtonDown = true;
+            _hudManager.GetUIWidget<ButtonBar>().SandboxButtonDown = true;
         }
 
         protected override void ExitedTree()
         {
             base.ExitedTree();
-            _gameHud.SandboxButtonDown = false;
+            _hudManager.GetUIWidget<ButtonBar>().SandboxButtonDown = false;
         }
 
     }
@@ -116,7 +117,7 @@ namespace Content.Client.Sandbox
     public sealed class SandboxSystem : SharedSandboxSystem
     {
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
@@ -137,7 +138,7 @@ namespace Content.Client.Sandbox
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
 
             _adminManager.AdminStatusUpdated += OnAdminStatus;
-            _gameHud.SandboxButtonToggled += SandboxButtonPressed;
+            _hudManager.GetUIWidget<ButtonBar>().SandboxButtonToggled += SandboxButtonPressed;
 
             // Do these need cleanup?
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,
@@ -168,7 +169,7 @@ namespace Content.Client.Sandbox
         /// </summary>
         private void Disable()
         {
-            _gameHud.SandboxButtonVisible = false;
+            _hudManager.GetUIWidget<ButtonBar>().SandboxButtonVisible = false;
             _sandboxWindow?.Close();
             _sandboxWindow = null;
             _spawnWindow?.Close();
@@ -178,7 +179,7 @@ namespace Content.Client.Sandbox
 
         private void Enable()
         {
-            _gameHud.SandboxButtonVisible = true;
+            _hudManager.GetUIWidget<ButtonBar>().SandboxButtonVisible = true;
         }
 
         private void OnRoundRestart(RoundRestartCleanupEvent ev)
@@ -194,7 +195,7 @@ namespace Content.Client.Sandbox
         {
             base.Shutdown();
             // TODO: Gamehud moment
-            _gameHud.SandboxButtonToggled -= SandboxButtonPressed;
+            _hudManager.GetUIWidget<ButtonBar>().SandboxButtonToggled -= SandboxButtonPressed;
             _adminManager.AdminStatusUpdated -= OnAdminStatus;
         }
 
@@ -227,7 +228,7 @@ namespace Content.Client.Sandbox
                 return;
 
             SandboxAllowed = newAllowed;
-            _gameHud.SandboxButtonVisible = CanSandbox();
+            _hudManager.GetUIWidget<ButtonBar>().SandboxButtonVisible = CanSandbox();
 
             if (!CanSandbox())
                 Disable();

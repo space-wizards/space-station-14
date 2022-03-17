@@ -27,7 +27,6 @@ namespace Content.Client.Hands.UI
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
-        [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly INetConfigurationManager _configManager = default!;
 
         private readonly HandsSystem _handsSystem;
@@ -79,12 +78,10 @@ namespace Content.Client.Hands.UI
 
         private void UpdateGui()
         {
-            HandsContainer.DisposeAllChildren();
             var entManager = IoCManager.Resolve<IEntityManager>();
             foreach (var hand in _hands)
             {
                 var newButton = MakeHandButton(hand.HandLocation);
-                HandsContainer.AddChild(newButton);
                 hand.HandButton = newButton;
 
                 var handName = hand.Name;
