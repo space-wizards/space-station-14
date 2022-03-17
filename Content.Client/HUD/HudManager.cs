@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Client.HUD.Presets;
 using Content.Client.Options.UI;
 using Content.Client.Resources;
 using Content.Shared.CCVar;
@@ -20,14 +21,23 @@ namespace Content.Client.HUD;
 public interface IHudManager
 {
     public void Initialize();
+    public void RegisterDefaultPreset<T>() where T : HudPreset;
     public void Startup();
     public void Shutdown();
     public LayoutContainer? StateRoot { get; }
+    public T GetHudPreset<T>() where T : HudPreset;
+    public bool SwitchHudPreset<T>() where T : HudPreset;
+    public bool ValidateHudTheme(int idx);
+    public Texture GetHudTexture(string path);
+    public bool IsWidgetShown<T>() where T : HudWidget;
     public void ShowUIWidget<T>(bool enabled) where T : HudWidget;
-    public void AddGameHudWidget<T>() where T : HudWidget;
-    public void RemoveGameHudWidget<T>() where T : HudWidget;
     public T? GetUIWidget<T>() where T : HudWidget;
     public EscapeMenu? EscapeMenu { get; }
+
+    //Do Not abuse these or I will eat you
+    public void AddNewControl(Control control);
+
+    public void RemoveControl(Control control);
 
 }
 
@@ -41,7 +51,10 @@ public sealed class HudManager  : IHudManager
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-    private readonly Dictionary<System.Type, Control?> _gameHudWidgets = new();
+    private HudPreset? _activeHudPreset;
+    private HudPreset? _defaultHudPreset;
+
+    private readonly Dictionary<System.Type, HudPreset> _hudPresets = new();
     public LayoutContainer? StateRoot => _userInterfaceManager.StateRoot;
 
     private EscapeMenu? _escapeMenu = default!;
@@ -52,53 +65,67 @@ public sealed class HudManager  : IHudManager
     public HudManager()
     {
         IoCManager.InjectDependencies(this);
-    }
 
+
+    }
     public void Initialize()
     {
-        RegisterHudWidgets();
+        RegisterHudPresets();
+    }
+
+    public void RegisterDefaultPreset<T>() where T: HudPreset
+    {
+        if (_defaultHudPreset == null) return;
+        _defaultHudPreset = _hudPresets[typeof(T)];
     }
 
     public void Startup()
     {
-        foreach (var key in _gameHudWidgets.Keys)
-        {
-            //prevent double initialization if widgets are already initialized for some reason
-            if (_gameHudWidgets[key] != null) continue;
-            var control = (Control)_sandboxHelper.CreateInstance(key);
-            _gameHudWidgets[key] = control;
-            _userInterfaceManager.StateRoot.AddChild(control);
-        }
         _escapeMenu = new EscapeMenu(_consoleHost);
+        _userInterfaceManager.StateRoot.AddChild(_escapeMenu);
+        _activeHudPreset = _defaultHudPreset;
+        _activeHudPreset!.LoadPreset();//This will never be null at runtime
     }
 
     public void Shutdown()
     {
-        foreach (var widgetData in _gameHudWidgets)
-        {
-            Internal_RemoveHudWidget(widgetData.Key);
-        }
-
         _escapeMenu?.Dispose();
+        _activeHudPreset!.UnloadPreset();//This will never be null at runtime
     }
 
-    public void ShowUIWidget<T>(bool enabled) where T : HudWidget
+    private void RegisterHudPresets()
     {
-        var widget = _gameHudWidgets[typeof(T)];
-        if (widget == null) return;
-        widget.Visible = enabled;
-    }
-
-    //uses reflection to automatically register all widget types to the hud
-    private void RegisterHudWidgets()
-    {
+        var presetTypes = _reflectionManager.GetAllChildren<HudPreset>().ToList();
+        if (presetTypes.Count == 0) throw new SystemException("No Hud presets found!");
+        foreach (var presetType in presetTypes)
         {
-            var widgetTypes = _reflectionManager.GetAllChildren<HudWidget>();
-            foreach (var widgetType in widgetTypes)
-            {
-                _gameHudWidgets[widgetType] = null;
-            }
+            _hudPresets[presetType] = (HudPreset) _sandboxHelper.CreateInstance(presetType);
         }
+        _activeHudPreset = _hudPresets[presetTypes[0]]; //by default set the hud preset to the first type found.
+    }
+
+    public T GetHudPreset<T>() where T : HudPreset
+    {
+        return (T) _hudPresets[typeof(T)];
+    }
+
+    public bool SwitchHudPreset<T>() where T : HudPreset
+    {
+        if (_activeHudPreset!.GetType() == typeof(T)) return false;
+        _activeHudPreset.UnloadPreset();
+        _activeHudPreset = _hudPresets[typeof(T)];
+        _activeHudPreset.LoadPreset();
+        return true;
+    }
+
+    public void AddNewControl(Control control)
+    {
+        StateRoot?.AddChild(control);
+    }
+
+    public void RemoveControl(Control control)
+    {
+        StateRoot?.RemoveChild(control);
     }
 
     public bool ValidateHudTheme(int idx)
@@ -133,44 +160,19 @@ public sealed class HudManager  : IHudManager
         return _resourceCache.GetTexture(resourcePath);
     }
 
-    //adds a new hud widget to the hud
-    public void AddGameHudWidget<T>() where T : HudWidget
+    public bool IsWidgetShown<T>() where T: HudWidget
     {
-        if (_gameHudWidgets.ContainsKey(typeof(T)))
-        {
-            //if the widget is registered with the hud but not initialized, initialize it
-            _gameHudWidgets[typeof(T)] ??= (Control) _sandboxHelper.CreateInstance(typeof(T));
-        }
-        else
-        {
-            //if the widget is not registered, then register and initialize it
-            var control = (Control)_sandboxHelper.CreateInstance(typeof(T));
-            _gameHudWidgets[typeof(T)] = control;
-            _userInterfaceManager.StateRoot.AddChild(control);
-        }
-    }
-    //internal function to remove a widget from the gamehud without de-registering it
-    private void Internal_RemoveHudWidget(System.Type type)
-    {
-        var widget = _gameHudWidgets[type];
-        //return out if the control is null
-        if (widget == null) return;
-        _userInterfaceManager.StateRoot.RemoveChild(widget);
-        widget.Dispose();
-    }
-
-    //Remove a widget from the game hud
-    public void RemoveGameHudWidget<T>() where T : HudWidget
-    {
-        Internal_RemoveHudWidget(typeof(T));
+        return _activeHudPreset!.IsWidgetShown<T>();
     }
 
     //Grabs a reference to the specified widget from the HUD
+    public void ShowUIWidget<T>(bool enabled) where T : HudWidget
+    {
+        _activeHudPreset!.ShowWidget<T>(enabled);
+    }
+
     public T? GetUIWidget<T>() where T : HudWidget
     {
-        if (!_gameHudWidgets.TryGetValue(typeof(T), out var widget)) return null;
-        //return a null control if it isn't found
-        if (widget == null) return null;
-        return (T)widget;
+        return _activeHudPreset!.GetWidget<T>();
     }
 }

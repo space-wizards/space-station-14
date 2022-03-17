@@ -5,6 +5,7 @@ using Content.Client.Chat.UI;
 using Content.Client.Construction.UI;
 using Content.Client.Hands;
 using Content.Client.HUD;
+using Content.Client.HUD.Presets;
 using Content.Client.HUD.UI;
 using Content.Client.Viewport;
 using Content.Client.Voting;
@@ -48,6 +49,7 @@ namespace Content.Client.Gameplay
         {
             IoCManager.InjectDependencies(this);
             _hudManager.Initialize();
+            _hudManager.RegisterDefaultPreset<DefaultHud>();
         }
 
         public override void Startup()
