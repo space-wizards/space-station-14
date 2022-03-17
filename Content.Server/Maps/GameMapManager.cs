@@ -48,6 +48,13 @@ public sealed class GameMapManager : IGameMapManager
                 _previousMaps.Dequeue();
             }
         }, true);
+
+        foreach (var map in AllVotableMaps())
+        {
+            if (_previousMaps.Count >= _mapQueueDepth)
+                break;
+            _previousMaps.Enqueue(map.ID);
+        }
     }
 
     public IEnumerable<GameMapPrototype> CurrentlyEligibleMaps()
