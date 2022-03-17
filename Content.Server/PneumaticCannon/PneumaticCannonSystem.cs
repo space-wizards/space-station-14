@@ -11,6 +11,7 @@ using Content.Server.Throwing;
 using Content.Server.Tools.Components;
 using Content.Shared.Camera;
 using Content.Shared.CombatMode;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.PneumaticCannon;
@@ -19,11 +20,7 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -35,6 +32,7 @@ namespace Content.Server.PneumaticCannon
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
         [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         private HashSet<PneumaticCannonComponent> _currentlyFiring = new();
 
@@ -320,11 +318,8 @@ namespace Content.Server.PneumaticCannon
 
             if (component.GasTankSlot.Remove(contained))
             {
-                if (EntityManager.TryGetComponent<HandsComponent?>(user, out var hands))
-                {
-                    hands.PutInHand(contained);
-                }
-
+                _handsSystem.TryPickupAnyHand(user, contained);
+                
                 user.PopupMessage(Loc.GetString("pneumatic-cannon-component-gas-tank-remove",
                     ("tank", contained), ("cannon", component.Owner)));
                 UpdateAppearance(component);

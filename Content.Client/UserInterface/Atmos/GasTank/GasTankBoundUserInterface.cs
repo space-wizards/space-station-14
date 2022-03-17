@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -38,7 +38,8 @@ namespace Content.Client.UserInterface.Atmos.GasTank
         {
             base.UpdateState(state);
 
-            _window?.UpdateState((GasTankBoundUserInterfaceState) state);
+            if (state is GasTankBoundUserInterfaceState cast)
+                _window?.UpdateState(cast);
         }
 
         protected override void Dispose(bool disposing)

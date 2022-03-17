@@ -1,8 +1,7 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
-using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
@@ -28,10 +27,23 @@ namespace Content.Server.UserInterface
             // *THIS IS A BLATANT WORKAROUND!* RATIONALE: Microwaves need it
             SubscribeLocalEvent<ActivatableUIComponent, EntParentChangedMessage>(OnParentChanged);
             SubscribeLocalEvent<ActivatableUIComponent, BoundUIClosedEvent>(OnUIClose);
+            SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
 
             SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
 
             SubscribeLocalEvent<ServerUserInterfaceComponent, OpenUiActionEvent>(OnActionPerform);
+        }
+
+        private void OnBoundInterfaceInteractAttempt(BoundUserInterfaceMessageAttempt ev)
+        {
+            if (!TryComp(ev.Target, out ActivatableUIComponent? comp))
+                return;
+
+            if (!comp.RequireHands)
+                return;
+
+            if (!TryComp(ev.Sender.AttachedEntity, out SharedHandsComponent? hands) || hands.Hands.Count == 0)
+                ev.Cancel();
         }
 
         private void OnActionPerform(EntityUid uid, ServerUserInterfaceComponent component, OpenUiActionEvent args)
@@ -57,7 +69,7 @@ namespace Content.Server.UserInterface
             if (component.InHandsOnly && args.Using != uid)
                 return;
 
-            if (!args.CanInteract && !HasComp<GhostComponent>(args.User))
+            if (!args.CanInteract && (!component.AllowSpectator || !HasComp<GhostComponent>(args.User)))
                 return;
 
             ActivationVerb verb = new();

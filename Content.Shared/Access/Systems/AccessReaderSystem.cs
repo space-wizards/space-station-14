@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Emag.Systems;
 using Content.Shared.PDA;
 using Content.Shared.Access.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Shared.Access.Systems
 {
@@ -18,6 +13,7 @@ namespace Content.Shared.Access.Systems
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -54,7 +50,7 @@ namespace Content.Shared.Access.Systems
         /// <remarks>
         ///     If no access is found, an empty set is used instead.
         /// </remarks>
-        /// <param name="entity">The entity to be searched for access.</param>
+        /// <param name="entity">The entity to bor access.</param>
         public bool IsAllowed(AccessReaderComponent reader, EntityUid entity)
         {
             var tags = FindAccessTags(entity);
@@ -78,14 +74,10 @@ namespace Content.Shared.Access.Systems
             if (FindAccessTagsItem(uid, out var tags))
                 return tags;
 
-            // maybe access component inside its hands?
-            if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands))
+            foreach (var item in _handsSystem.EnumerateHeld(uid))
             {
-                if (hands.TryGetActiveHeldEntity(out var heldItem) &&
-                    FindAccessTagsItem(heldItem.Value, out tags))
-                {
+                if (FindAccessTagsItem(item, out tags))
                     return tags;
-                }
             }
 
             // maybe its inside an inventory slot?
