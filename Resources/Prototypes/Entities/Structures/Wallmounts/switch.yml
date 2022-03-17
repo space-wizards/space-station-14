@@ -15,9 +15,8 @@
   - type: Rotatable
   - type: SignalTransmitter
     outputs:
-      - name: state
-        type: bool
-      - name: stateChange
+      - name: on
+      - name: off
   - type: UserInterface
     interfaces:
       - key: enum.SignalTransmitterUiKey.Key
@@ -78,3 +77,37 @@
     mode: SnapgridCenter
     snap:
       - Wallmount
+
+- type: entity
+  id: TwoWayLever
+  name: two way lever
+  description: A two way lever.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Sprite
+      netsync: false
+      sprite: Structures/conveyor.rsi
+      state: switch-off
+    - type: TwoWayLever
+    - type: SignalTransmitter
+      outputs:
+        - name: Left
+        - name: Right
+        - name: Middle
+    - type: UserInterface
+      interfaces:
+      - key: enum.SignalTransmitterUiKey.Key
+        type: SignalPortSelectorBoundUserInterface
+    - type: Appearance
+      visuals:
+        - type: TwoWayLeverVisualizer
+          state_forward: switch-fwd
+          state_off: switch-off
+          state_reversed: switch-rev
+    - type: Construction
+      graph: LeverGraph
+      node: lever
+
