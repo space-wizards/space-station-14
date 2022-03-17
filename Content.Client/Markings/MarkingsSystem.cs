@@ -26,11 +26,6 @@ namespace Content.Client.Markings
 
         private void OnMarkingsInit(EntityUid uid, MarkingsComponent component, ComponentInit __)
         {
-            foreach (HumanoidVisualLayers layer in HumanoidAppearanceSystem.BodyPartLayers)
-            {
-                component.ActiveMarkings.Add(layer, new List<Marking>());
-            }
-
         }
 
         public void ToggleMarkingVisibility(EntityUid uid, SpriteComponent body, HumanoidVisualLayers layer, bool toggle)
@@ -38,14 +33,37 @@ namespace Content.Client.Markings
             if(!EntityManager.TryGetComponent(uid, out MarkingsComponent? markings)) return;
 
             if (markings.ActiveMarkings.TryGetValue(layer, out List<Marking>? layerMarkings))
-                foreach (Marking marking in layerMarkings)
-                    body.LayerSetVisible(marking.MarkingId, toggle);
+                foreach (Marking activeMarking in layerMarkings)
+                    body.LayerSetVisible(activeMarking.MarkingId, toggle);
+        }
+
+        public void SetActiveMarkings(EntityUid uid, List<Marking> markingList, MarkingsComponent? markings = null)
+        {
+            if (!Resolve(uid, ref markings))
+            {
+                return;
+            }
+
+            markings.ActiveMarkings.Clear();
+
+            foreach (HumanoidVisualLayers layer in HumanoidAppearanceSystem.BodyPartLayers)
+            {
+                markings.ActiveMarkings.Add(layer, new List<Marking>());
+            }
+
+            foreach (var marking in markingList)
+            {
+                markings.ActiveMarkings[_markingManager.Markings()[marking.MarkingId].BodyPart].Add(marking);
+            }
         }
         
         public void UpdateMarkings(EntityUid uid, MarkingsComponent markings, SharedHumanoidAppearanceSystem.ChangedHumanoidAppearanceEvent args)
         {
             var appearance = args.Appearance;
             if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite)) return;
+            List<Marking> totalMarkings = new(appearance.Markings);
+
+            Dictionary<HumanoidVisualLayers, MarkingPoints> usedPoints = new(markings.LayerPoints);
 
             // Reverse ordering
             for (int i = appearance.Markings.Count - 1; i >= 0; i--)
@@ -56,6 +74,16 @@ namespace Content.Client.Markings
                     continue;
                 }
 
+                if (usedPoints.TryGetValue(markingPrototype.BodyPart, out MarkingPoints? points))
+                {
+                    if (points.Points == 0)
+                    {
+                        continue;
+                    }
+
+                    points.Points--;
+                }
+
                 if (!sprite.LayerMapTryGet(markingPrototype.BodyPart, out int targetLayer))
                 {
                     continue;
@@ -64,21 +92,81 @@ namespace Content.Client.Markings
                 for (int j = 0; j < markingPrototype.Sprites.Count(); j++)
                 {
                     var rsi = (SpriteSpecifier.Rsi) markingPrototype.Sprites[j];
-                    string layerId = $"{markingPrototype.Name}-{rsi.RsiState}";
+                    string layerId = $"{markingPrototype.ID}-{rsi.RsiState}";
 
+                    /*
                     if (sprite.LayerMapTryGet(layerId, out var existingLayer))
                     {
                         sprite.RemoveLayer(existingLayer);
                         sprite.LayerMapRemove(marking.MarkingId);
                     }
+                    */
 
                     int layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
                     sprite.LayerMapSet(layerId, layer);
-                    sprite.LayerSetColor(layerId, marking.MarkingColors[j]);
+                    if (markingPrototype.FollowSkinColor)
+                    {
+                        sprite.LayerSetColor(layerId, appearance.SkinColor);
+                    }
+                    else
+                    {
+                        sprite.LayerSetColor(layerId, marking.MarkingColors[j]);
+                    }
                 }
 
-                // _activeMarkings[markingPrototype.BodyPart].Add(marking);
             }
+
+            // for each layer, check if it's required and
+            // if the points are greater than zero
+            //
+            // if so, then we start applying default markings
+            // until the point requirement is satisfied - 
+            // this can also mean that a specific set of markings
+            // is applied on top of existing markings
+            //
+            // All default markings will follow the skin color of
+            // the current body.
+            foreach (var (layerType, points) in usedPoints)
+            {
+                Logger.DebugS("Markings", $"Leftover points: {layerType}: {points}");
+                if (points.Required && points.Points > 0)
+                {
+                    while (points.Points > 0)
+                    {
+                        // this all has to be checked, continues shouldn't occur because
+                        // points.Points needs to be subtracted
+                        if (points.DefaultMarkings.TryGetValue(points.Points - 1, out var marking)
+                                && _markingManager.Markings().TryGetValue(marking, out var markingPrototype)
+                                && markingPrototype.BodyPart == layerType // check if this actually belongs on this layer, too
+                                && sprite.LayerMapTryGet(markingPrototype.BodyPart, out int targetLayer))
+                        {
+                            for (int j = 0; j < markingPrototype.Sprites.Count(); j++)
+                            {
+                                var rsi = (SpriteSpecifier.Rsi) markingPrototype.Sprites[j];
+                                string layerId = $"{markingPrototype.ID}-{rsi.RsiState}";
+
+                                /*
+                                if (sprite.LayerMapTryGet(layerId, out var existingLayer))
+                                {
+                                    sprite.RemoveLayer(existingLayer);
+                                    sprite.LayerMapRemove(markingPrototype.ID);
+                                }
+                                */
+
+                                int layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
+                                sprite.LayerMapSet(layerId, layer);
+                                sprite.LayerSetColor(layerId, appearance.SkinColor);
+                            }
+
+                            totalMarkings.Add(markingPrototype.AsMarking());
+                        }
+
+                        points.Points--;
+                    }
+                }
+            }
+
+            SetActiveMarkings(uid, totalMarkings, markings);
         }
     }
 }

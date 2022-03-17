@@ -9,16 +9,23 @@
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
     state: full
+  - type: Markings
+    layerPoints:
+      Tail:
+        points: 1
+        required: true
+        defaultMarkings: [LizardTailSmooth] 
+      Snout:
+        points: 1
+        required: true
+        defaultMarkings: [LizardSnoutRound]
   - type: Sprite
     netsync: false
     noRot: true
     drawdepth: Mobs
     scale: 1, 1
     layers:
-      - map: [ "enum.HumanoidVisualLayers.TailBehind" ]
-        color: "#34a223"
-        state: tail_smooth_behind
-        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "enum.HumanoidVisualLayers.Tail" ]
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
         color: "#34a223"
         sprite: Mobs/Species/Reptilian/parts.rsi
@@ -28,9 +35,6 @@
         sprite: Mobs/Species/Reptilian/parts.rsi
         state: head_m
       - map: [ "enum.HumanoidVisualLayers.Snout" ]
-        color: "#34a223"
-        state: snout_round
-        sprite: Mobs/Customization/reptilian_parts.rsi
       - map: [ "enum.HumanoidVisualLayers.Eyes" ]
         color: "#008800"
         sprite: Mobs/Customization/eyes.rsi
@@ -88,10 +92,6 @@
       - map: [ "ears" ]
       - map: [ "outerClothing" ]
       - map: [ "eyes" ]
-      - map: [ "enum.HumanoidVisualLayers.TailFront" ]
-        color: "#34a223"
-        state: tail_smooth_front
-        sprite: Mobs/Customization/reptilian_parts.rsi
       - map: [ "belt" ]
       - map: [ "neck" ]
       - map: [ "back" ]
@@ -113,6 +113,16 @@
   abstract: true
   description: A dummy reptilian meant to be used in character setup.
   components:
+  - type: Markings
+    layerPoints:
+      Tail:
+        points: 1
+        required: true
+        defaultMarkings: [LizardTailSmooth] 
+      Snout:
+        points: 1
+        required: true
+        defaultMarkings: [LizardSnoutRound]
   - type: Sprite
     netsync: false
     noRot: true
@@ -120,9 +130,6 @@
     scale: 1, 1
     layers:
       - map: [ "enum.HumanoidVisualLayers.Tail" ]
-        color: "#34a223"
-        state: tail_smooth
-        sprite: Mobs/Customization/reptilian_parts.rsi
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
         color: "#34a223"
         sprite: Mobs/Species/Reptilian/parts.rsi
@@ -132,9 +139,6 @@
         sprite: Mobs/Species/Reptilian/parts.rsi
         state: head_m
       - map: [ "enum.HumanoidVisualLayers.Snout" ]
-        color: "#34a223"
-        state: snout_round
-        sprite: Mobs/Customization/reptilian_parts.rsi
       - map: [ "enum.HumanoidVisualLayers.Eyes" ]
         color: "#008800"
         sprite: Mobs/Customization/eyes.rsi

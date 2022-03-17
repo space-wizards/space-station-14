@@ -489,6 +489,16 @@ namespace Content.Client.Preferences.UI
             IsDirty = true;
         }
 
+        private void OnMarkingColorChange(List<Marking> markings) 
+        {
+            if (Profile is null)
+                return;
+
+            Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithMarkings(markings));
+            IsDirty = true;
+        }
+
+
         private void OnSkinColorOnValueChanged()
         {
             if (Profile is null) return;
@@ -542,6 +552,7 @@ namespace Content.Client.Preferences.UI
             }
 
             IsDirty = true;
+            NeedsDummyRebuild = true; // ugh - fix this asap
         }
 
         protected override void Dispose(bool disposing)

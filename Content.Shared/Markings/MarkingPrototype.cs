@@ -28,6 +28,9 @@ namespace Content.Shared.Markings
         [DataField("unrestricted", required: true)]
         public bool Unrestricted { get; } = default!;
 
+        [DataField("followSkinColor")]
+        public bool FollowSkinColor { get; } = false;
+
         [DataField("sprites", required: true)]
         public List<SpriteSpecifier> Sprites { get; private set; } = default!;
 
