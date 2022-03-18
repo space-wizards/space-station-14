@@ -1,6 +1,7 @@
 using System;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Stacks;
@@ -25,6 +26,7 @@ namespace Content.Server.Stack
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
 
@@ -180,10 +182,7 @@ namespace Content.Server.Stack
             if (Split(uid, amount, userTransform.Coordinates, stack) is not {} split)
                 return;
 
-            if (TryComp<HandsComponent>(userUid, out var hands) && TryComp<SharedItemComponent>(split, out var item))
-            {
-                hands.PutInHandOrDrop(item);
-            }
+            _handsSystem.PickupOrDrop(userUid, split);
 
             _popupSystem.PopupCursor(Loc.GetString("comp-stack-split"), Filter.Entities(userUid));
         }

@@ -129,6 +129,13 @@
   icon: /Textures/Objects/Tools/emag.rsi/icon.png
   price: 8
 
+- type: uplinkListing
+  id: UplinkHypopen
+  category: Utility
+  itemId: Hypopen
+  description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
+  price: 4
+
 # Bundles
 
 - type: uplinkListing
@@ -224,6 +231,13 @@
 # Misc
 
 - type: uplinkListing
+  id: UplinkCyberpen
+  category: Misc
+  itemId: CyberPen
+  description: Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
+  price: 4
+
+- type: uplinkListing
   id: UplinkBalloon
   category: Misc
   itemId: BalloonSyn
@@ -242,12 +256,6 @@
   category: Misc
   itemId: RevolverCapGun
   price: 4
-
-- type: uplinkListing
-  id: UplinkPen
-  category: Misc
-  itemId: Pen
-  price: 2
 
 - type: uplinkListing
   id: UplinkCigarettes
