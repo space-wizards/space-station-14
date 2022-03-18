@@ -7,6 +7,7 @@ using Content.Shared.HUD;
 using Robust.Client.Console;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
@@ -19,8 +20,8 @@ namespace Content.Client.HUD;
 
 public interface IHasHudConnection
 {
-    public void LinkHudElements(IHudManager hudManager);
-    public void UnLinkHudElements(IHudManager hudManager);
+    public void LinkHudElements(IHudManager hudManager, HudPreset preset);
+    public void UnLinkHudElements(IHudManager hudManager,HudPreset preset);
 }
 
 
@@ -41,6 +42,7 @@ public interface IHudManager
     //a nullsafe version of get UI widget that doesn't throw exceptions
     public T? GetUIWidgetOrNull<T>() where T : HudWidget;
     public bool HasWidget<T>() where T : HudWidget;
+    public bool EscapeMenuVisible { get; set; }
     public EscapeMenu? EscapeMenu { get; }
 
     //Do Not abuse these or I will eat you
@@ -57,17 +59,27 @@ public sealed class HudManager  : IHudManager
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
     private HudPreset? _activeHudPreset;
 
     public HudPreset? ActivePreset => _activeHudPreset;
-    private readonly HudPreset _defaultHudPreset = new DefaultHud();
+    private HudPreset DefaultHudPreset => _defaultHudPreset!;
+    private HudPreset? _defaultHudPreset = null;
 
-    private readonly Dictionary<System.Type, HudPreset> _hudPresets = new();
+    private readonly Dictionary<System.Type, HudPreset?> _hudPresets = new();
     public LayoutContainer? StateRoot => _userInterfaceManager.StateRoot;
-
+    public bool EscapeMenuVisible
+    {
+        get => _escapeMenu is {Visible: true};
+        set
+        {
+            if (_escapeMenu == null) return;
+            _escapeMenu.Visible = value;
+        }
+    }
     private EscapeMenu? _escapeMenu;
 
     //if escape menu is null create a new escape menu
@@ -80,14 +92,41 @@ public sealed class HudManager  : IHudManager
     public void Initialize()
     {
         RegisterHudPresets();
-        _activeHudPreset = _defaultHudPreset;
-        _escapeMenu = new EscapeMenu(_consoleHost);
+        _stateManager.OnStateChanged += OnStateChanged;
+    }
+
+    private void OnStateChanged(StateChangedEventArgs args)
+    {
+        if (_activeHudPreset == null) return;
+        if (_activeHudPreset.SupportsState(args.NewState))
+        {
+            if (_activeHudPreset.IsAttachedToRoot) return;
+            _activeHudPreset.LoadPreset();
+            return;
+        }
+        if (_activeHudPreset.IsAttachedToRoot)
+        {
+            _activeHudPreset.UnloadPreset();
+        }
+    }
+
+    private void SetDefaultHudPreset<T>() where T: HudPreset
+    {
+        if (_hudPresets.TryGetValue(typeof(T), out var preset))
+        {
+            _defaultHudPreset = preset;
+            return;
+        }
+        _defaultHudPreset = _hudPresets.First().Value;
     }
 
     public void Startup()
     {
-        _userInterfaceManager.StateRoot.AddChild(_escapeMenu!);
-        _activeHudPreset!.LoadPreset();//This will never be null at runtime
+        LoadAllPresets();
+        SetDefaultHudPreset<DefaultHud>();
+        _activeHudPreset = _defaultHudPreset;
+        _escapeMenu = new EscapeMenu(_consoleHost);
+        EscapeMenuVisible = false;
     }
 
     public void Shutdown()
@@ -95,7 +134,7 @@ public sealed class HudManager  : IHudManager
         _escapeMenu?.Dispose();
         foreach (var preset in _hudPresets)
         {
-            preset.Value.Dispose();
+            preset.Value?.Dispose();
         }
     }
 
@@ -105,11 +144,18 @@ public sealed class HudManager  : IHudManager
         if (presetTypes.Count == 0) throw new NullReferenceException("No Hud presets found!");
         foreach (var presetType in presetTypes)
         {
-            var hudPreset = (HudPreset) _sandboxHelper.CreateInstance(presetType);
-            _hudPresets[presetType] = hudPreset;
+            _hudPresets[presetType] = null;
+        }
+    }
+
+    private void LoadAllPresets()
+    {
+        foreach (var presetData in _hudPresets)
+        {
+            var hudPreset = (HudPreset) _sandboxHelper.CreateInstance(presetData.Key);
+            _hudPresets[presetData.Key] = hudPreset;
             hudPreset.Initialize();
         }
-        _activeHudPreset = _hudPresets[presetTypes[0]]; //by default set the hud preset to the first type found.
     }
 
     public bool HasWidget<T>() where T : HudWidget
@@ -119,15 +165,19 @@ public sealed class HudManager  : IHudManager
 
     public T GetHudPreset<T>() where T : HudPreset
     {
-        return (T) _hudPresets[typeof(T)];
+        return (T) _hudPresets[typeof(T)]!;
     }
 
     public bool SwitchHudPreset<T>() where T : HudPreset
     {
+        //Don't double set the hud preset
         if (_activeHudPreset!.GetType() == typeof(T)) return false;
-        _activeHudPreset.UnloadPreset();
-        _activeHudPreset = _hudPresets[typeof(T)];
-        _activeHudPreset.LoadPreset();
+        //unload the current preset if it's loaded
+        if (_activeHudPreset.IsAttachedToRoot) _activeHudPreset.UnloadPreset();
+        //update the active preset
+        _activeHudPreset = _hudPresets[typeof(T)]!;
+        //if the current state supports the preset load it
+        if (_activeHudPreset.SupportsState(_stateManager.CurrentState)) _activeHudPreset.LoadPreset();
         return true;
     }
 

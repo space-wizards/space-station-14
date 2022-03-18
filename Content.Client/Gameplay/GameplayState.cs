@@ -48,7 +48,6 @@ namespace Content.Client.Gameplay
         public GameplayState()
         {
             IoCManager.InjectDependencies(this);
-            _hudManager.Initialize();
         }
 
         public override void Startup()
@@ -90,7 +89,6 @@ namespace Content.Client.Gameplay
             _userInterfaceManager.StateRoot.AddChild(_fpsCounter);
             _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
             _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
-            _hudManager.Startup();
 
         }
 
@@ -106,7 +104,6 @@ namespace Content.Client.Gameplay
             // Clear viewport to some fallback, whatever.
             _eyeManager.MainViewport = _userInterfaceManager.MainViewport;
             _fpsCounter.Dispose();
-            _hudManager.Shutdown();
         }
 
         /// <summary>

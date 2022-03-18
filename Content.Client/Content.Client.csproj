@@ -24,9 +24,6 @@
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="EscapeMenu\UI\Tabs" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Update="CombatMode\UI\CombatPanelWidget.xaml.cs">
       <DependentUpon>CombatPanelWidget.xaml</DependentUpon>
     </Compile>

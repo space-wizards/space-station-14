@@ -45,13 +45,13 @@ namespace Content.Client.Sandbox
         public readonly Button MachineLinkingButton; // Enables/disables machine linking mode.
         private readonly IHudManager _hudManager;
         public delegate void TreeInteract(bool state);
-        private readonly TreeInteract? _onTreeInteract;
+        private readonly TreeInteract? _onMenuInteract;
         public SandboxWindow(TreeInteract? onTreeInteract)
         {
 
             Resizable = false;
             _hudManager = IoCManager.Resolve<IHudManager>();
-            _onTreeInteract = onTreeInteract;
+            _onMenuInteract = onTreeInteract;
 
             Title = Loc.GetString("sandbox-window-title");
 
@@ -109,13 +109,13 @@ namespace Content.Client.Sandbox
         protected override void EnteredTree()
         {
             base.EnteredTree();
-            _onTreeInteract?.Invoke(true);
+            _onMenuInteract?.Invoke(true);
         }
 
         protected override void ExitedTree()
         {
             base.ExitedTree();
-            _onTreeInteract?.Invoke(false);
+            _onMenuInteract?.Invoke(false);
         }
 
     }
@@ -130,15 +130,14 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
         public bool SandboxAllowed { get; private set; }
+        private Action? _onSandboxEnabled = null;
+        private Action? _onSandboxDisabled = null;
+        private SandboxWindow.TreeInteract? _onMenuInteract = null ;
         private SandboxWindow? _sandboxWindow;
         private EntitySpawnWindow? _spawnWindow;
         private TileSpawnWindow? _tilesSpawnWindow;
         private DecalPlacerWindow? _decalSpawnWindow;
-        private SandboxWindow.TreeInteract? _onTreeInteract = null ;
 
-        private delegate void SandboxEnable(bool enabled);
-
-        private SandboxEnable? _checkEnabled = null;
 
         public override void Initialize()
         {
@@ -146,7 +145,7 @@ namespace Content.Client.Sandbox
             SubscribeNetworkEvent<MsgSandboxStatus>(OnSandboxStatus);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
 
-            _adminManager.AdminStatusUpdated += OnAdminStatus;
+            _adminManager.AdminStatusUpdated += CheckStatus;
 
             // Do these need cleanup?
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,
@@ -159,7 +158,7 @@ namespace Content.Client.Sandbox
                 InputCmdHandler.FromDelegate(session => ToggleDecalsWindow()));
         }
 
-        private void OnAdminStatus()
+        private void CheckStatus()
         {
             if (CanSandbox())
                 Enable();
@@ -177,7 +176,7 @@ namespace Content.Client.Sandbox
         /// </summary>
         private void Disable()
         {
-            _checkEnabled?.Invoke(false);
+            _onSandboxDisabled?.Invoke();
             _sandboxWindow?.Close();
             _sandboxWindow = null;
             _spawnWindow?.Close();
@@ -187,7 +186,7 @@ namespace Content.Client.Sandbox
 
         private void Enable()
         {
-            _checkEnabled?.Invoke(true);
+            _onSandboxEnabled?.Invoke();
         }
 
         private void OnRoundRestart(RoundRestartCleanupEvent ev)
@@ -202,7 +201,7 @@ namespace Content.Client.Sandbox
         public override void Shutdown()
         {
             base.Shutdown();
-            _adminManager.AdminStatusUpdated -= OnAdminStatus;
+            _adminManager.AdminStatusUpdated -= CheckStatus;
         }
 
         private void OnSandboxStatus(MsgSandboxStatus ev)
@@ -248,7 +247,7 @@ namespace Content.Client.Sandbox
                 return;
             }
 
-            _sandboxWindow = new SandboxWindow(_onTreeInteract);
+            _sandboxWindow = new SandboxWindow(_onMenuInteract);
 
             _sandboxWindow.OnClose += SandboxWindowOnClose;
 
@@ -444,19 +443,23 @@ namespace Content.Client.Sandbox
             _consoleHost.ExecuteCommand("signallink");
         }
 
-        public void LinkHudElements(IHudManager hudManager)
+        public void LinkHudElements(IHudManager hudManager, HudPreset preset)
         {
-            var buttons = hudManager.GetUIWidget<ButtonBar>();
-            _onTreeInteract += (state) => { buttons.SandboxButtonDown = state;};
-            _checkEnabled += (state) => { buttons.SandboxButtonVisible = state; };
-            buttons.SandboxButtonToggled += SandboxButtonPressed;
+            var buttonBar = preset.GetWidget<ButtonBar>();
+            buttonBar.SandboxButtonToggled += SandboxButtonPressed;
+            _onSandboxEnabled += () => { buttonBar.SandboxButtonVisible = true; };
+            _onSandboxDisabled += () => { buttonBar.SandboxButtonVisible = false; };
+            _onMenuInteract += (buttonDown) => { buttonBar.SandboxButtonDown = buttonDown; };
+            CheckStatus();
+
         }
-        public void UnLinkHudElements(IHudManager hudManager)
+        public void UnLinkHudElements(IHudManager hudManager, HudPreset preset)
         {
-            var buttons = hudManager.GetUIWidget<ButtonBar>();
-            _onTreeInteract = null;
-            _checkEnabled = null;
-            buttons.SandboxButtonToggled -= SandboxButtonPressed;
+            preset.GetWidget<ButtonBar>().SandboxButtonToggled -= SandboxButtonPressed;
+            CheckStatus();
+            _onSandboxEnabled = null;
+            _onSandboxDisabled = null;
+            _onMenuInteract = null;
         }
     }
 }

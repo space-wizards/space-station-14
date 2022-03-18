@@ -20,11 +20,10 @@ using Robust.Shared.Network;
 
 namespace Content.Client.Administration
 {
-    public sealed partial class AdminSystem
+    public sealed partial class AdminSystem: IHasHudConnection
     {
         [Dependency] private readonly INetManager _netManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IClientAdminManager _clientAdminManager = default!;
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
@@ -37,7 +36,7 @@ namespace Content.Client.Administration
 
         private AdminMenuWindow? _window;
         private readonly List<BaseWindow> _commandWindows = new();
-
+        private Action? _adminStatusUpdated = null;
         private void InitializeMenu()
         {
             // Reset the AdminMenu Window on disconnect
@@ -50,40 +49,10 @@ namespace Content.Client.Administration
             {
                 // when status changes, show the top button if we can open admin menu.
                 // if we can't or we lost admin status, close it and hide the button.
-                _hudManager.DifferedExec += (hudmanager) =>
-                {
-                    var buttons = hudmanager.GetUIWidgetOrNull<ButtonBar>();
-                    if (buttons == null) return;
-                    buttons.AdminButtonVisible = CanOpen();
-                    if (!buttons.AdminButtonVisible)
-                    {
-                        Close();
-                    }
-                };
-            };
-            _hudManager.OnHudInit += (hudManager) => //Lambdas are great <3
-            {
-                var buttonBar = _hudManager.GetUIWidgetOrNull<ButtonBar>();
-                if (buttonBar == null) return;
-                _hudManager.GetUIWidget<ButtonBar>().AdminButtonToggled +=
-                    (open) =>
-                    {
-                        if (open)
-                        {
-                            TryOpen();
-                        }
-                        else
-                        {
-                            Close();
-                        }
-                    };
-                buttonBar.AdminButtonVisible = CanOpen();
-                buttonBar.AdminButtonDown = false;
-            };
+                _adminStatusUpdated?.Invoke();
 
-
+            };
         }
-
 
         public void ResetWindow()
         {
@@ -176,6 +145,41 @@ namespace Content.Client.Administration
                 return;
 
             args.Event.Handle();
+        }
+
+        private void SetupAdminButton(bool open)
+        {
+            if (open)
+            {
+                TryOpen();
+            }
+            else
+            {
+                Close();
+            }
+        }
+
+        public void LinkHudElements(IHudManager hudManager, HudPreset preset)
+        {
+            var buttonBar = preset.GetWidget<ButtonBar>();
+            buttonBar.AdminButtonToggled += SetupAdminButton;
+            buttonBar.AdminButtonVisible = CanOpen();
+            buttonBar.AdminButtonDown = false;
+            _adminStatusUpdated = () => //I fucking love lambdas
+            {
+                buttonBar.AdminButtonVisible = CanOpen();
+                if (!buttonBar.AdminButtonVisible)
+                {
+                    Close();
+                }
+            };
+        }
+
+        public void UnLinkHudElements(IHudManager hudManager, HudPreset preset)
+        {
+            var buttonBar = preset.GetWidget<ButtonBar>();
+            buttonBar.AdminButtonToggled -= SetupAdminButton;
+            _adminStatusUpdated = null;
         }
     }
 }

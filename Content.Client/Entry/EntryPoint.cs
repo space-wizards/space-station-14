@@ -55,6 +55,7 @@ namespace Content.Client.Entry
 {
     public sealed class EntryPoint : GameClient
     {
+        [Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
         [Dependency] private readonly IGameController _gameController = default!;
@@ -131,7 +132,6 @@ namespace Content.Client.Entry
                 cast.ClientBeforeIoC?.Invoke();
             }
             _componentFactory.GenerateNetIds();
-
             _adminManager.Initialize();
             _parallaxManager.LoadParallax();
             _baseClient.PlayerJoinedServer += SubscribePlayerAttachmentEvents;
@@ -140,11 +140,10 @@ namespace Content.Client.Entry
             _changelogManager.Initialize();
             _rulesManager.Initialize();
             _viewportManager.Initialize();
-
-            _baseClient.PlayerJoinedServer += (_, _) =>
-            {
-                _mapManager.CreateNewMapEntity(MapId.Nullspace);
-            };
+            _hudManager.Initialize();
+            _baseClient.PlayerJoinedServer += (_, _) => { _hudManager.Startup();};
+            _baseClient.PlayerLeaveServer += (_, _) => { _hudManager.Shutdown();};
+            _baseClient.PlayerJoinedServer += (_, _) => { _mapManager.CreateNewMapEntity(MapId.Nullspace);};
         }
 
         /// <summary>
@@ -185,7 +184,6 @@ namespace Content.Client.Entry
         public override void PostInit()
         {
             base.PostInit();
-
             // Setup key contexts
             ContentContexts.SetupContexts(_inputManager.Contexts);
             _overlayManager.AddOverlay(new ParallaxOverlay());

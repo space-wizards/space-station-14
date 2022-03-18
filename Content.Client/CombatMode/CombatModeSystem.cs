@@ -11,22 +11,14 @@ using Robust.Shared.IoC;
 namespace Content.Client.CombatMode
 {
     [UsedImplicitly]
-    public sealed class CombatModeSystem : SharedCombatModeSystem
+    public sealed class CombatModeSystem : SharedCombatModeSystem, IHasHudConnection
     {
-        [Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        private CombatPanelWidget? _combatPanel;
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<CombatModeComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());
             SubscribeLocalEvent<CombatModeComponent, PlayerDetachedEvent>((_, component, _) => component.PlayerDetached());
-            _hudManager.OnHudInit += (hudManager) => //Lambdas are great <3
-            {
-                _combatPanel = hudManager.GetUIWidget<CombatPanelWidget>();
-                _combatPanel.OnTargetZoneChanged += OnTargetingZoneChanged;
-
-            };
         }
         public override void Shutdown()
         {
@@ -44,8 +36,18 @@ namespace Content.Client.CombatMode
         {
             EntityManager.RaisePredictiveEvent(new CombatModeSystemMessages.SetTargetZoneMessage(obj));
         }
-    }
 
+        public void LinkHudElements(IHudManager hudManager, HudPreset preset)
+        {
+            preset.GetWidget<CombatPanelWidget>().OnTargetZoneChanged += OnTargetingZoneChanged;
+        }
+
+        public void UnLinkHudElements(IHudManager hudManager, HudPreset preset)
+        {
+            preset.GetWidget<CombatPanelWidget>().OnTargetZoneChanged -= OnTargetingZoneChanged;
+        }
+    }
+    //All hail A, the mighty. This single class is responsible for holding this codebase together.
     public static class A
     {
     }
