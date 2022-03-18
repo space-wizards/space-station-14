@@ -1,6 +1,7 @@
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
 using Content.Server.Doors.Systems;
+using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -20,10 +21,11 @@ namespace Content.Server.MachineLinking.System
 
         private void OnSignalReceived(EntityUid uid, DoorSignalControlComponent component, SignalReceivedEvent args)
         {
+            if (!TryComp(uid, out DoorComponent? door)) return;
             switch (args.Port)
             {
-                case "Open": _doorSystem.TryOpen(uid); break;
-                case "Close": _doorSystem.TryClose(uid); break;
+                case "Open": if (door.State != DoorState.Open) _doorSystem.TryOpen(uid, door); break;
+                case "Close": if (door.State != DoorState.Closed) _doorSystem.TryClose(uid, door); break;
                 case "Toggle": _doorSystem.TryToggleDoor(uid); break;
             }
         }

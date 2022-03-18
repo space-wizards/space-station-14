@@ -50,6 +50,8 @@
     interfaces:
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
+    - key: enum.SignalReceiverUiKey.Key
+      type: SignalPortSelectorBoundUserInterface
   - type: Airtight
     fixVacuum: true
   - type: Damageable
@@ -72,10 +74,6 @@
     - name: Open
     - name: Close
     - name: Toggle
-  - type: UserInterface
-    interfaces:
-      - key: enum.SignalReceiverUiKey.Key
-        type: SignalPortSelectorBoundUserInterface
   placement:
     mode: SnapgridCenter
 

@@ -276,6 +276,7 @@ namespace Content.Client.Entry
             "Uplink",
             "SpawnItemsOnUse",
             "AmbientOnPowered",
+            "DoorSignalControl",
             "Wieldable",
             "IncreaseDamageOnWield",
             "TabletopGame",
