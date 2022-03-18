@@ -2,7 +2,6 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths"
            xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
-           xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
            xmlns:parallax="clr-namespace:Content.Client.Parallax"
            xmlns:vote="clr-namespace:Content.Client.Voting.UI"
            xmlns:style="clr-namespace:Content.Client.Stylesheets"
@@ -11,69 +10,81 @@
            xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
            xmlns:info="clr-namespace:Content.Client.Info"
            xmlns:widgets="clr-namespace:Content.Client.HUD.Widgets"
-           Orientation="Horizontal" SeparationOverride="8"
+           xmlns:h="clr-namespace:Content.Client.UserInterface.Helpers"
+           xmlns:ic="clr-namespace:Robust.Shared.Input;assembly=Robust.Shared"
+           xmlns:is="clr-namespace:Content.Shared.Input;assembly=Content.Shared"
+           Orientation="Horizontal"
+           SeparationOverride="8"
            Name = "Buttonbar"
 >
-    <ui:TexturedButton
+    <hudUi:TopButton
         Name="EscapeButton"
-        Access="Public"
-        TexturePath="/Textures/Interface/hamburger.svg.192dpi.png"
+        Access="Internal"
+        Icon="{h:Tex '/Textures/Interface/hamburger.svg.192dpi.png'}"
+        BoundKey = "{x:Static ic:EngineKeyFunctions.EscapeMenu}"
         ToolTip="{Loc 'game-hud-open-escape-menu-button-tooltip'}"
         MinSize="70 64"
         StyleIdentifier="{x:Static style:StyleBase.ButtonOpenRight}"
         />
-    <ui:TexturedButton
+    <hudUi:TopButton
         Name="CharacterButton"
-        Access="Public"
-        TexturePath="/Textures/Interface/character.svg.192dpi.png"
+        Access="Internal"
+        Icon="{h:Tex /Textures/Interface/character.svg.192dpi.png}"
         ToolTip="{Loc 'game-hud-open-character-menu-button-tooltip'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenCharacterMenu}"
         MinSize="42 64"
         StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
         />
-    <ui:TexturedButton
+    <hudUi:TopButton
         Name="InventoryButton"
-        Access="Public"
-        TexturePath="/Textures/Interface/inventory.svg.192dpi.png"
+        Access="Internal"
+        Icon="{h:Tex /Textures/Interface/inventory.svg.192dpi.png}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenInventoryMenu}"
         ToolTip="{Loc 'game-hud-open-inventory-menu-button-tooltip'}"
         MinSize="42 64"
         StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
         />
-    <ui:TexturedButton
+    <hudUi:TopButton
         Name="CraftingButton"
-        Access="Public"
-        TexturePath="/Textures/Interface/hammer.svg.192dpi.png"
+        Access="Internal"
+        Icon="{h:Tex /Textures/Interface/hammer.svg.192dpi.png}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenCraftingMenu}"
         ToolTip="{Loc 'game-hud-open-crafting-menu-button-tooltip'}"
         MinSize="42 64"
         StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
         />
-    <ui:TexturedButton
+    <hudUi:TopButton
         Name="ActionButton"
-        Access="Public"
-        TexturePath="/Textures/Interface/fist.svg.192dpi.png"
+        Access="Internal"
+        Icon="{h:Tex /Textures/Interface/fist.svg.192dpi.png}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenActionsMenu}"
         ToolTip="{Loc 'game-hud-open-actions-menu-button-tooltip'}"
         MinSize="42 64"
         StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
         />
-    <ui:TexturedButton
+    <hudUi:TopButton
         Name="AdminButton"
-        Access="Public"
-        TexturePath="/Textures/Interface/gavel.svg.192dpi.png"
+        Access="Internal"
+        Icon="{h:Tex /Textures/Interface/gavel.svg.192dpi.png}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenAdminMenu}"
         ToolTip="{Loc 'game-hud-open-admin-menu-button-tooltip'}"
         MinSize="42 64"
         StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
         />
-    <ui:TexturedButton
+    <hudUi:TopButton
         Name="SandboxButton"
-        Access="Public"
-        TexturePath="/Textures/Interface/sandbox.svg.192dpi.png"
+        Access="Internal"
+        Icon="{h:Tex /Textures/Interface/sandbox.svg.192dpi.png}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenSandboxWindow}"
         ToolTip="{Loc 'game-hud-open-sandbox-menu-button-tooltip'}"
         MinSize="42 64"
         StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
         />
-    <ui:TexturedButton
+    <hudUi:TopButton
         Name="InfoButton"
-        Access="Public"
-        TexturePath="/Textures/Interface/info.svg.192dpi.png"
+        Access="Internal"
+        Icon="{h:Tex /Textures/Interface/info.svg.192dpi.png}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenInfo}"
         ToolTip="{Loc 'ui-options-function-open-info'}"
         MinSize="42 64"
         StyleIdentifier="{x:Static style:StyleBase.ButtonOpenLeft}"

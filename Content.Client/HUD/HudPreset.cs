@@ -1,5 +1,6 @@
 ﻿using Robust.Client.State;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Sandboxing;
 
 namespace Content.Client.HUD;
@@ -12,17 +13,17 @@ public abstract class HudPreset
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     protected abstract void DefinePreset();
 
-    private readonly Dictionary<System.Type, HudWidget> _widgets = new();
-    private readonly HashSet<System.Type> _allowedStates = new();
-    private readonly List<System.Type> _linkedEntitySystemTypes = new();
-    private readonly Control _presetRoot;
+    private readonly Dictionary<Type, HudWidget> _widgets = new();
+    private readonly HashSet<Type> _allowedStates = new();
+    private readonly List<Type> _linkedEntitySystemTypes = new();
+    private readonly LayoutContainer _presetRoot;
     private bool _isAttachedToRoot = false;
     public bool IsAttachedToRoot => _isAttachedToRoot;
-    public Control RootContainer => _presetRoot;
+    public LayoutContainer RootContainer => _presetRoot;
     protected HudPreset()
     {
         IoCManager.InjectDependencies(this);
-        _presetRoot = new Control();
+        _presetRoot = new LayoutContainer();
         _presetRoot.Name = this.GetType().Name;
     }
     internal void Initialize()

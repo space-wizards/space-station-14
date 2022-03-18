@@ -11,6 +11,7 @@ namespace Content.Client.HUD.UI;
 
 internal sealed class TopButton : ContainerButton
 {
+    [Dependency] private readonly IInputManager _inputManager = default!;
     public const string StyleClassLabelTopButton = "topButtonLabel";
     public const string StyleClassRedTopButton = "topButtonLabel";
     private const float CustomTooltipDelay = 0.4f;
@@ -25,45 +26,44 @@ internal sealed class TopButton : ContainerButton
     private Color NormalColor => HasStyleClass(StyleClassRedTopButton) ? ColorRedNormal : ColorNormal;
     private Color HoveredColor => HasStyleClass(StyleClassRedTopButton) ? ColorRedHovered : ColorHovered;
 
-    private readonly TextureRect _textureRect;
-    private readonly Label _label;
-    private readonly BoundKeyFunction _function;
-    private readonly IInputManager _inputManager;
+    private BoundKeyFunction _function;
+    private readonly BoxContainer _root;
+    private readonly TextureRect _buttonIcon;
+    private readonly Label _buttonLabel;
+    public Texture? Icon { get => _buttonIcon.Texture; set => _buttonIcon.Texture = value; }
+    public BoundKeyFunction BoundKey { get => _function; set => _function = value;}
+    public BoxContainer ButtonRoot => _root;
 
-    public TopButton(Texture texture, BoundKeyFunction function, IInputManager inputManager)
+    public TopButton()
     {
-        _function = function;
-        _inputManager = inputManager;
         TooltipDelay = CustomTooltipDelay;
-
-        AddChild(
-            new BoxContainer
+        _buttonIcon = new TextureRect()
+        {
+            TextureScale = (0.5f, 0.5f),
+            HorizontalAlignment = HAlignment.Center,
+            VerticalAlignment = VAlignment.Center,
+            VerticalExpand = true,
+            Margin = new Thickness(0, VertPad),
+            ModulateSelfOverride = NormalColor,
+            Stretch = TextureRect.StretchMode.KeepCentered
+        };
+        _buttonLabel = new Label
+        {
+            Text = ShortKeyName(_function),
+            HorizontalAlignment = HAlignment.Center,
+            ModulateSelfOverride = NormalColor,
+            StyleClasses = {StyleClassLabelTopButton}
+        };
+        _root = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
+            Children =
             {
-                Orientation = BoxContainer.LayoutOrientation.Vertical,
-                Children =
-                {
-                    (_textureRect = new TextureRect
-                    {
-                        TextureScale = (0.5f, 0.5f),
-                        Texture = texture,
-                        HorizontalAlignment = HAlignment.Center,
-                        VerticalAlignment = VAlignment.Center,
-                        VerticalExpand = true,
-                        Margin = new Thickness(0, VertPad),
-                        ModulateSelfOverride = NormalColor,
-                        Stretch = TextureRect.StretchMode.KeepCentered
-                    }),
-                    (_label = new Label
-                    {
-                        Text = ShortKeyName(_function),
-                        HorizontalAlignment = HAlignment.Center,
-                        ModulateSelfOverride = NormalColor,
-                        StyleClasses = {StyleClassLabelTopButton}
-                    })
-                }
+                _buttonIcon,
+                _buttonLabel
             }
-        );
-
+        };
+        AddChild(_root);
         ToggleMode = true;
     }
 
@@ -84,12 +84,12 @@ internal sealed class TopButton : ContainerButton
 
     private void OnKeyBindingChanged(IKeyBinding obj)
     {
-        _label.Text = ShortKeyName(_function);
+        _buttonLabel.Text = ShortKeyName(_function);
     }
 
     private void OnKeyBindingChanged()
     {
-        _label.Text = ShortKeyName(_function);
+        _buttonLabel.Text = ShortKeyName(_function);
     }
 
     private string ShortKeyName(BoundKeyFunction keyFunction)
@@ -198,22 +198,21 @@ internal sealed class TopButton : ContainerButton
 
     private void UpdateChildColors()
     {
-        if (_label == null || _textureRect == null) return;
         switch (DrawMode)
         {
             case DrawModeEnum.Normal:
-                _textureRect.ModulateSelfOverride = NormalColor;
-                _label.ModulateSelfOverride = NormalColor;
+                _buttonIcon.ModulateSelfOverride = NormalColor;
+                _buttonLabel.ModulateSelfOverride = NormalColor;
                 break;
 
             case DrawModeEnum.Pressed:
-                _textureRect.ModulateSelfOverride = ColorPressed;
-                _label.ModulateSelfOverride = ColorPressed;
+                _buttonIcon.ModulateSelfOverride = ColorPressed;
+                _buttonLabel.ModulateSelfOverride = ColorPressed;
                 break;
 
             case DrawModeEnum.Hover:
-                _textureRect.ModulateSelfOverride = HoveredColor;
-                _label.ModulateSelfOverride = HoveredColor;
+                _buttonIcon.ModulateSelfOverride = HoveredColor;
+                _buttonLabel.ModulateSelfOverride = HoveredColor;
                 break;
 
             case DrawModeEnum.Disabled:
