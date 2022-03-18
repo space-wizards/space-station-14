@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug preventing people from breaking out of handcuffs., type: Fix}
-  - {message: fixed not being able to open morgues., type: Fix}
-  id: 724
-  time: '2021-12-12T17:53:03.0000000+00:00'
 - author: Efruit
   changes:
   - {message: Rich text is now... rich-er. Expect more fancy text effects as the system
@@ -3009,3 +3003,8 @@ Entries:
       rotation.', type: Tweak}
   id: 1223
   time: '2022-03-17T18:59:53.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pulling throwing no longer gives you perpetual motion., type: Fix}
+  id: 1224
+  time: '2022-03-18T03:18:35.0000000+00:00'
