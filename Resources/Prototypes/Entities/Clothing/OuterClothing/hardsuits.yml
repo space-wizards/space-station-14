@@ -20,7 +20,7 @@
         Blunt: 0.95 #less physical protection but significantly more atmospheric protections than engi
         Slash: 0.95
         Piercing: 0.95
-        Heat: 0.55
+        Heat: 0.35
         Radiation: 0.25
 
 - type: entity
