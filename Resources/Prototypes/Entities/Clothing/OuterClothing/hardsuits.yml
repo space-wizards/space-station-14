@@ -9,7 +9,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/atmospherics.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.5
+    highPressureMultiplier: 0.45
     lowPressureMultiplier: 100
   - type: ClothingSpeedModifier
     walkModifier: 0.65
