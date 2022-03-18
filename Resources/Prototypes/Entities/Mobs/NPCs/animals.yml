@@ -969,7 +969,7 @@
     arc: bite
     damage:
       groups:
-        Brute: 0
+        Brute: 3
 
 - type: entity
   name: snake
