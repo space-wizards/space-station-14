@@ -209,7 +209,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/boxstation.yml
+  mapPath: /Maps/boxstation.yml
   minPlayers: 30
   maxPlayers: 80
   conditions:
