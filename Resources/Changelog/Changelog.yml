@@ -1,10 +1,4 @@
 Entries:
-- author: Efruit
-  changes:
-  - {message: Rich text is now... rich-er. Expect more fancy text effects as the system
-      gets adopted., type: Add}
-  id: 725
-  time: '2021-12-13T02:25:42.0000000+00:00'
 - author: StanberyTrask
   changes:
   - {message: 'added railing sprites, prototype, and construction graph', type: Add}
@@ -3008,3 +3002,9 @@ Entries:
   - {message: Pulling throwing no longer gives you perpetual motion., type: Fix}
   id: 1224
   time: '2022-03-18T03:18:35.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: 'A port of Delta Station, the largest map ever made for Space Station
+      13, is now playable! The map is still a beta.', type: Add}
+  id: 1225
+  time: '2022-03-18T21:43:53.0000000+00:00'
