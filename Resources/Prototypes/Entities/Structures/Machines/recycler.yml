@@ -51,6 +51,10 @@
   - type: Conveyor
   - type: SignalReceiver
     inputs:
-      - name: Forward
-      - name: Reverse
-      - name: Off
+    - name: Forward
+    - name: Reverse
+    - name: Off
+  - type: UserInterface
+    interfaces:
+    - key: enum.SignalReceiverUiKey.Key
+      type: SignalPortSelectorBoundUserInterface
