@@ -914,7 +914,7 @@
   name: syndicate grenade penguin
   parent: SimpleMobBase
   id: MobGrenadePenguin
-  description: Penguins weaponized by the syndicate to carry dangerous explosives. They peck you like little awful bastards
+  description: Penguins weaponized by the syndicate to carry dangerous explosives. They peck you like awful little bastards.
   components:
   - type: UtilityAI
     behaviorSets:
