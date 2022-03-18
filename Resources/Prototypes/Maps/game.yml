@@ -212,10 +212,6 @@
   mapPath: /Maps/boxstation.yml
   minPlayers: 30
   maxPlayers: 80
-  conditions:
-    - !type:HolidayMapCondition
-      inverted: true
-      holidays: [ "Christmas" ]
   overflowJobs:
     - Assistant
   availableJobs:
