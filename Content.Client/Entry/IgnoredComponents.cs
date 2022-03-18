@@ -280,8 +280,6 @@ namespace Content.Client.Entry
             "IncreaseDamageOnWield",
             "TabletopGame",
             "LitOnPowered",
-            "TriggerOnSignalReceived",
-            "ToggleDoorOnTrigger",
             "DeviceNetworkComponent",
             "WiredNetworkConnection",
             "WirelessNetworkConnection",

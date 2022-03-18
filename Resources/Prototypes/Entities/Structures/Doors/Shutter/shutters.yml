@@ -68,9 +68,9 @@
     mode: NoSprite
   - type: SignalReceiver
     inputs:
-    - name: pressed
-  - type: ToggleDoorOnTrigger
-  - type: TriggerOnSignalReceived
+    - name: Open
+    - name: Close
+    - name: Toggle
   placement:
     mode: SnapgridCenter
 
