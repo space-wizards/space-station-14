@@ -33,7 +33,7 @@ namespace Content.Client.Inventory
     [UsedImplicitly] //TODO: unfuck this
     public sealed class ClientInventorySystem : InventorySystem
     {
-        [Dependency] private readonly IHudManager _hudManager = default!;
+        //[Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
@@ -115,7 +115,7 @@ namespace Content.Client.Inventory
         {
             if(!component.AttachedToGameHud) return;
 
-            _hudManager.GetUIWidget<ButtonBar>().InventoryButtonVisible = false;
+            //_hudManager.GetUIWidget<ButtonBar>().InventoryButtonVisible = false;
             //_gameHud.BottomLeftInventoryQuickButtonContainer.RemoveChild(component.BottomLeftButtons);
             //_gameHud.BottomRightInventoryQuickButtonContainer.RemoveChild(component.BottomRightButtons);
             //_gameHud.TopInventoryQuickButtonContainer.RemoveChild(component.TopQuickButtons);
@@ -131,7 +131,7 @@ namespace Content.Client.Inventory
         {
             if(component.AttachedToGameHud) return;
 
-            _hudManager.GetUIWidget<ButtonBar>().InventoryButtonVisible = true;
+            //_hudManager.GetUIWidget<ButtonBar>().InventoryButtonVisible = true;
             //_gameHud.BottomLeftInventoryQuickButtonContainer.AddChild(component.BottomLeftButtons);
             //_gameHud.BottomRightInventoryQuickButtonContainer.AddChild(component.BottomRightButtons);
             //_gameHud.TopInventoryQuickButtonContainer.AddChild(component.TopQuickButtons);
@@ -140,10 +140,10 @@ namespace Content.Client.Inventory
 
         private void UpdateHudTheme(int obj)
         {
-            if (!_hudManager.ValidateHudTheme(obj))
-            {
-                return;
-            }
+            //if (!_hudManager.ValidateHudTheme(obj))
+            //{
+            //    return;
+           //}
 
             foreach (var inventoryComponent in EntityManager.EntityQuery<ClientInventoryComponent>(true))
             {
@@ -248,7 +248,7 @@ namespace Content.Client.Inventory
                     };
                     window.OnClose += () =>
                     {
-                        _hudManager.GetUIWidget<ButtonBar>().InventoryButtonDown = false;
+                        //_hudManager.GetUIWidget<ButtonBar>().InventoryButtonDown = false;
                         //_gameHud.TopInventoryQuickButtonContainer.Visible = false;
                     };
                     var windowContents = new LayoutContainer
@@ -352,7 +352,7 @@ namespace Content.Client.Inventory
 
         private void HandleOpenInventoryMenu()
         {
-            _hudManager.GetUIWidget<ButtonBar>().InventoryButtonDown = !_hudManager.GetUIWidget<ButtonBar>().InventoryButtonDown;
+            //_hudManager.GetUIWidget<ButtonBar>().InventoryButtonDown = !_hudManager.GetUIWidget<ButtonBar>().InventoryButtonDown;
            // _gameHud.TopInventoryQuickButtonContainer.Visible = _hudManager.GetUIWidget<ButtonBar>().InventoryButtonDown;
         }
     }

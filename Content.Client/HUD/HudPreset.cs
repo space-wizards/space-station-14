@@ -12,22 +12,25 @@ public abstract class HudPreset
     [Dependency] private readonly ISandboxHelper _sandboxHelper = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     protected abstract void DefinePreset();
-
+    protected virtual Thickness Margins => new Thickness(0);
     private readonly Dictionary<Type, HudWidget> _widgets = new();
     private readonly HashSet<Type> _allowedStates = new();
     private readonly List<Type> _linkedEntitySystemTypes = new();
-    private readonly LayoutContainer _presetRoot;
+    private readonly BoxContainer _presetRoot;
     private bool _isAttachedToRoot = false;
     public bool IsAttachedToRoot => _isAttachedToRoot;
-    public LayoutContainer RootContainer => _presetRoot;
+    public BoxContainer RootContainer => _presetRoot;
     protected HudPreset()
     {
         IoCManager.InjectDependencies(this);
-        _presetRoot = new LayoutContainer();
+        _presetRoot = new BoxContainer();
+        _presetRoot.HorizontalExpand = true;
+        _presetRoot.VerticalExpand = true;
         _presetRoot.Name = this.GetType().Name;
     }
     internal void Initialize()
     {
+        _presetRoot.Margin = Margins;
         DefinePreset();
         foreach (var widgetData in _widgets)
         {
@@ -44,14 +47,24 @@ public abstract class HudPreset
         return _allowedStates.Contains(state.GetType());
     }
 
+    private void OnResized()
+    {
+        _presetRoot.SetSize = _hudManager.StateRoot!.Size;
+    }
+
+
     internal void LoadPreset()
     {
         _hudManager.AddNewControl(_presetRoot);
+        _hudManager.StateRoot!.OnResized += OnResized;
+        _presetRoot.SetSize = _hudManager.StateRoot!.Size;
+        _presetRoot.Margin = Margins;
         _isAttachedToRoot = true;
     }
 
     internal void UnloadPreset()
     {
+        _hudManager.StateRoot!.OnResized -= OnResized;
         _hudManager.RemoveControl(_presetRoot);
         _isAttachedToRoot = false;
     }

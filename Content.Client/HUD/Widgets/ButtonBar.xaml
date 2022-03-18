@@ -13,9 +13,12 @@
            xmlns:h="clr-namespace:Content.Client.UserInterface.Helpers"
            xmlns:ic="clr-namespace:Robust.Shared.Input;assembly=Robust.Shared"
            xmlns:is="clr-namespace:Content.Shared.Input;assembly=Content.Shared"
-           Orientation="Horizontal"
-           SeparationOverride="8"
            Name = "Buttonbar"
+           VerticalExpand="False"
+           Orientation="Horizontal"
+           HorizontalAlignment="Left"
+           VerticalAlignment="Top"
+           SeparationOverride="5"
 >
     <hudUi:TopButton
         Name="EscapeButton"
@@ -24,7 +27,7 @@
         BoundKey = "{x:Static ic:EngineKeyFunctions.EscapeMenu}"
         ToolTip="{Loc 'game-hud-open-escape-menu-button-tooltip'}"
         MinSize="70 64"
-        StyleIdentifier="{x:Static style:StyleBase.ButtonOpenRight}"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonOpenRight}"
         />
     <hudUi:TopButton
         Name="CharacterButton"
@@ -33,7 +36,7 @@
         ToolTip="{Loc 'game-hud-open-character-menu-button-tooltip'}"
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenCharacterMenu}"
         MinSize="42 64"
-        StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
     <hudUi:TopButton
         Name="InventoryButton"
@@ -42,7 +45,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenInventoryMenu}"
         ToolTip="{Loc 'game-hud-open-inventory-menu-button-tooltip'}"
         MinSize="42 64"
-        StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
     <hudUi:TopButton
         Name="CraftingButton"
@@ -51,7 +54,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenCraftingMenu}"
         ToolTip="{Loc 'game-hud-open-crafting-menu-button-tooltip'}"
         MinSize="42 64"
-        StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
     <hudUi:TopButton
         Name="ActionButton"
@@ -60,7 +63,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenActionsMenu}"
         ToolTip="{Loc 'game-hud-open-actions-menu-button-tooltip'}"
         MinSize="42 64"
-        StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
     <hudUi:TopButton
         Name="AdminButton"
@@ -69,7 +72,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenAdminMenu}"
         ToolTip="{Loc 'game-hud-open-admin-menu-button-tooltip'}"
         MinSize="42 64"
-        StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
     <hudUi:TopButton
         Name="SandboxButton"
@@ -78,7 +81,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenSandboxWindow}"
         ToolTip="{Loc 'game-hud-open-sandbox-menu-button-tooltip'}"
         MinSize="42 64"
-        StyleIdentifier="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
     <hudUi:TopButton
         Name="InfoButton"
@@ -87,6 +90,6 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenInfo}"
         ToolTip="{Loc 'ui-options-function-open-info'}"
         MinSize="42 64"
-        StyleIdentifier="{x:Static style:StyleBase.ButtonOpenLeft}"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonOpenLeft}"
         />
 </widgets:ButtonBar>

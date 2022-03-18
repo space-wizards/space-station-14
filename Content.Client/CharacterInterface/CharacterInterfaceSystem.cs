@@ -17,7 +17,7 @@ namespace Content.Client.CharacterInterface
     [UsedImplicitly]
     public sealed class CharacterInterfaceSystem : EntitySystem
     {
-        [Dependency] private readonly IHudManager _hudManager = default!;
+        //[Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
 
@@ -54,7 +54,7 @@ namespace Content.Client.CharacterInterface
                 SetSize = (545, 400)
             };
 
-            comp.Window.OnClose += () => _hudManager.GetUIWidget<ButtonBar>().CharacterButtonDown = false;
+            //comp.Window.OnClose += () => _hudManager.GetUIWidget<ButtonBar>().CharacterButtonDown = false;
         }
 
         private void OnComponentRemove(EntityUid uid, CharacterInterfaceComponent comp, ComponentRemove args)
@@ -81,14 +81,14 @@ namespace Content.Client.CharacterInterface
             if (comp.Window == null)
                 return;
 
-            _hudManager.GetUIWidget<ButtonBar>().CharacterButtonVisible = true;
-            _hudManager.GetUIWidget<ButtonBar>().CharacterButtonToggled += b =>
-            {
-                if (b)
-                    comp.Window.OpenCentered();
-                else
-                    comp.Window.Close();
-            };
+            //_hudManager.GetUIWidget<ButtonBar>().CharacterButtonVisible = true;
+            //_hudManager.GetUIWidget<ButtonBar>().CharacterButtonToggled += b =>
+            //{
+           //     if (b)
+           //         comp.Window.OpenCentered();
+           //     else
+           //         comp.Window.Close();
+            //};
         }
 
         private void OnPlayerDetached(EntityUid uid, CharacterInterfaceComponent comp, PlayerDetachedEvent args)
@@ -96,7 +96,7 @@ namespace Content.Client.CharacterInterface
             if (comp.Window == null)
                 return;
 
-            _hudManager.GetUIWidget<ButtonBar>().CharacterButtonVisible = false;
+            //_hudManager.GetUIWidget<ButtonBar>().CharacterButtonVisible = false;
             comp.Window.Close();
         }
 
@@ -125,7 +125,7 @@ namespace Content.Client.CharacterInterface
 
         private void _setOpenValue(DefaultWindow menu, bool value)
         {
-            _hudManager.GetUIWidget<ButtonBar>().CharacterButtonDown = value;
+            //_hudManager.GetUIWidget<ButtonBar>().CharacterButtonDown = value;
             if (value)
                 menu.OpenCentered();
             else

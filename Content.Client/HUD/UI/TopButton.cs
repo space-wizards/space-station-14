@@ -30,12 +30,25 @@ internal sealed class TopButton : ContainerButton
     private readonly BoxContainer _root;
     private readonly TextureRect _buttonIcon;
     private readonly Label _buttonLabel;
+
+    public string AppendStyleClass { set => AddStyleClass(value); }
     public Texture? Icon { get => _buttonIcon.Texture; set => _buttonIcon.Texture = value; }
-    public BoundKeyFunction BoundKey { get => _function; set => _function = value;}
+
+    public BoundKeyFunction BoundKey
+    {
+        get => _function;
+        set
+        {
+            _function = value;
+            _buttonLabel.Text = ShortKeyName(value);
+        }
+    }
+
     public BoxContainer ButtonRoot => _root;
 
     public TopButton()
     {
+        IoCManager.InjectDependencies(this);
         TooltipDelay = CustomTooltipDelay;
         _buttonIcon = new TextureRect()
         {
@@ -49,7 +62,7 @@ internal sealed class TopButton : ContainerButton
         };
         _buttonLabel = new Label
         {
-            Text = ShortKeyName(_function),
+            Text = "",
             HorizontalAlignment = HAlignment.Center,
             ModulateSelfOverride = NormalColor,
             StyleClasses = {StyleClassLabelTopButton}
@@ -198,6 +211,7 @@ internal sealed class TopButton : ContainerButton
 
     private void UpdateChildColors()
     {
+        if (_buttonIcon == null || _buttonLabel == null) return;
         switch (DrawMode)
         {
             case DrawModeEnum.Normal:

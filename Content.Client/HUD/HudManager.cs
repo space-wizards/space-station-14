@@ -33,6 +33,8 @@ public interface IHudManager
     public LayoutContainer? StateRoot { get; }
     public HudPreset? ActivePreset { get; }
     public T GetHudPreset<T>() where T : HudPreset;
+    public void SpawnActivePreset();
+    public void DespawnActivePreset();
     public bool SwitchHudPreset<T>() where T : HudPreset;
     public bool ValidateHudTheme(int idx);
     public Texture GetHudTexture(string path);
@@ -92,22 +94,21 @@ public sealed class HudManager  : IHudManager
     public void Initialize()
     {
         RegisterHudPresets();
-        _stateManager.OnStateChanged += OnStateChanged;
     }
 
-    private void OnStateChanged(StateChangedEventArgs args)
+    public void SpawnActivePreset()
     {
         if (_activeHudPreset == null) return;
-        if (_activeHudPreset.SupportsState(args.NewState))
-        {
-            if (_activeHudPreset.IsAttachedToRoot) return;
-            _activeHudPreset.LoadPreset();
-            return;
-        }
-        if (_activeHudPreset.IsAttachedToRoot)
-        {
-            _activeHudPreset.UnloadPreset();
-        }
+        if (!_activeHudPreset.SupportsState(_stateManager.CurrentState)) return;
+        if (_activeHudPreset.IsAttachedToRoot) return;
+        _activeHudPreset.LoadPreset();
+    }
+
+    public void DespawnActivePreset()
+    {
+        if (_activeHudPreset == null) return;
+        if (!_activeHudPreset.IsAttachedToRoot) return;
+        _activeHudPreset.UnloadPreset();
     }
 
     private void SetDefaultHudPreset<T>() where T: HudPreset

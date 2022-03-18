@@ -89,11 +89,12 @@ namespace Content.Client.Gameplay
             _userInterfaceManager.StateRoot.AddChild(_fpsCounter);
             _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
             _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
-
+            _hudManager.SpawnActivePreset();
         }
 
         public override void Shutdown()
         {
+            _hudManager.DespawnActivePreset();
             _overlayManager.RemoveOverlay<ShowHandItemOverlay>();
             DisposePresenters();
 

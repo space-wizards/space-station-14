@@ -9,12 +9,14 @@ namespace Content.Client.HUD.Presets;
 [UsedImplicitly]
 public sealed class DefaultHud : HudPreset
 {
+    protected override Thickness Margins => new Thickness(10);
+
     protected override void DefinePreset()
     {
         RegisterAllowedState<GameplayState>();
         RegisterLinkedEntitySystem<SandboxSystem>();
         RegisterLinkedEntitySystem<CombatModeSystem>();
-        RegisterWidget<CombatPanelWidget>();
         RegisterWidget<ButtonBar>();
+        RegisterWidget<CombatPanelWidget>();
     }
 }

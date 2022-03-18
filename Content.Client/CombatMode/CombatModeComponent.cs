@@ -14,7 +14,7 @@ namespace Content.Client.CombatMode
     public sealed class CombatModeComponent : SharedCombatModeComponent
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IHudManager _hudManager = default!;
+        //[Dependency] private readonly IHudManager _hudManager = default!;
 
         public override bool IsInCombatMode
         {
@@ -36,11 +36,11 @@ namespace Content.Client.CombatMode
             }
         }
 
-        public void PlayerDetached() { _hudManager.ShowUIWidget<CombatPanelWidget>(false); }
+        public void PlayerDetached() { } // _hudManager.ShowUIWidget<CombatPanelWidget>(false); }
 
         public void PlayerAttached()
         {
-            _hudManager.ShowUIWidget<CombatPanelWidget>(true); // TODO BOBBY SYSTEM Make the targeting doll actually do something.
+            //_hudManager.ShowUIWidget<CombatPanelWidget>(true); // TODO BOBBY SYSTEM Make the targeting doll actually do something.
             UpdateHud();
         }
 
@@ -50,8 +50,7 @@ namespace Content.Client.CombatMode
             {
                 return;
             }
-            //Combat panel should never be null in gameplay. If this throws an nullref exception, someone else fucked up
-            _hudManager.GetUIWidget<CombatPanelWidget>()!.ActiveTargetZone = ActiveZone;
+            //_hudManager.GetUIWidget<CombatPanelWidget>()!.ActiveTargetZone = ActiveZone;
         }
     }
 }
