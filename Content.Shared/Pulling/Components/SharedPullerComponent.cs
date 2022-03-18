@@ -28,6 +28,7 @@ namespace Content.Shared.Pulling.Components
             if (Pulling != default)
             {
                 // This is absolute paranoia but it's also absolutely necessary. Too many puller state bugs. - 20kdc
+                // Good thing Pulling is nullable now.
                 Logger.ErrorS("c.go.c.pulling", "PULLING STATE CORRUPTION IMMINENT IN PULLER {0} - OnRemove called when Pulling is set!", Owner);
             }
             base.OnRemove();
