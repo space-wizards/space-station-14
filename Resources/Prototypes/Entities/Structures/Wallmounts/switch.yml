@@ -15,8 +15,8 @@
   - type: Rotatable
   - type: SignalTransmitter
     outputs:
-      - name: on
-      - name: off
+      - name: On
+      - name: Off
   - type: UserInterface
     interfaces:
       - key: enum.SignalTransmitterUiKey.Key

@@ -17,7 +17,7 @@ namespace Content.Server.MachineLinking.System
         private void OnInteracted(EntityUid uid, SignalSwitchComponent component, InteractHandEvent args)
         {
             component.State = !component.State;
-            RaiseLocalEvent(uid, new InvokePortEvent(component.State ? "on" : "off"), false);
+            RaiseLocalEvent(uid, new InvokePortEvent(component.State ? "On" : "Off"), false);
             args.Handled = true;
         }
     }

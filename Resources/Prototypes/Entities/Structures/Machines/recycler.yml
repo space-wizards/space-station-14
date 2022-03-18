@@ -51,6 +51,6 @@
   - type: Conveyor
   - type: SignalReceiver
     inputs:
-      - name: state
-        type: Content.Shared.MachineLinking.TwoWayLeverSignal
-        maxConnections: 1
+      - name: Forward
+      - name: Reverse
+      - name: Off

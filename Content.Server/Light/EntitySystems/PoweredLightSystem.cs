@@ -330,9 +330,9 @@ namespace Content.Server.Light.EntitySystems
         {
             switch (args.Port)
             {
-                case "state":
-                    ToggleLight(uid, component);
-                    break;
+                case "On": SetState(uid, true, component); break;
+                case "Off": SetState(uid, false, component); break;
+                case "Toggle": ToggleLight(uid, component); break;
             }
         }
 

@@ -34,8 +34,9 @@
     offset: "0, -0.5"
   - type: SignalReceiver
     inputs:
-      - name: state
-        type: bool
+    - name: On
+    - name: Off
+    - name: Toggle
   - type: UserInterface
     interfaces:
       - key: enum.SignalReceiverUiKey.Key

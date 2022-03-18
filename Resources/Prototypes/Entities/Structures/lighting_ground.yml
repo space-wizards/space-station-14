@@ -35,8 +35,9 @@
           path: /Audio/Effects/metalbreak.ogg
   - type: SignalReceiver
     inputs:
-      - name: state
-        type: bool
+    - name: On
+    - name: Off
+    - name: Toggle
   - type: UserInterface
     interfaces:
       - key: enum.SignalReceiverUiKey.Key

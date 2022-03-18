@@ -62,19 +62,17 @@ namespace Content.Server.Conveyor
 
         private void OnPortDisconnected(EntityUid uid, ConveyorComponent component, PortDisconnectedEvent args)
         {
-            
+
         }
 
         private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)
         {
-            SetState(component, args.Port switch
+            switch (args.Port)
             {
-                "Forward" => ConveyorState.Forward,
-                "Reverse" => ConveyorState.Reversed,
-                "Off" => ConveyorState.Off,
-                _ => throw new PortNotFoundException()
+                case "Forward": SetState(component, ConveyorState.Forward); break;
+                case "Reverse": SetState(component, ConveyorState.Reversed); break;
+                case "Off": SetState(component, ConveyorState.Off); break;
             }
-            );
         }
 
         private void SetState(ConveyorComponent component, ConveyorState state)

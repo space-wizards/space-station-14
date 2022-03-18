@@ -66,11 +66,16 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
+  - type: DoorSignalControl
   - type: SignalReceiver
     inputs:
     - name: Open
     - name: Close
     - name: Toggle
+  - type: UserInterface
+    interfaces:
+      - key: enum.SignalReceiverUiKey.Key
+        type: SignalPortSelectorBoundUserInterface
   placement:
     mode: SnapgridCenter
 
