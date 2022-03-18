@@ -138,8 +138,6 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
-    highPressureMultiplier: 1
-    lowPressureMultiplier: 100
 
 - type: entity
   parent: ClothingOuterHardsuitBase
