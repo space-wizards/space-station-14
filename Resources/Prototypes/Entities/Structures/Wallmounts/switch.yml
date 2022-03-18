@@ -15,8 +15,8 @@
   - type: Rotatable
   - type: SignalTransmitter
     outputs:
-      - name: On
-      - name: Off
+      On: []
+      Off: []
   - type: UserInterface
     interfaces:
       - key: enum.SignalTransmitterUiKey.Key
@@ -43,7 +43,7 @@
   - type: Rotatable
   - type: SignalTransmitter
     outputs:
-      - name: pressed
+      pressed: []
   placement:
     mode: SnapgridCenter
     snap:
@@ -94,9 +94,9 @@
     - type: TwoWayLever
     - type: SignalTransmitter
       outputs:
-        - name: Left
-        - name: Right
-        - name: Middle
+        Left: []
+        Right: []
+        Middle: []
     - type: UserInterface
       interfaces:
       - key: enum.SignalTransmitterUiKey.Key

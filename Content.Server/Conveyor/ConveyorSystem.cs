@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.MachineLinking.Events;
-using Content.Server.MachineLinking.Models;
 using Content.Server.MachineLinking.Exceptions;
 using Content.Server.Power.Components;
 using Content.Server.Recycling;

@@ -71,9 +71,9 @@
   - type: DoorSignalControl
   - type: SignalReceiver
     inputs:
-    - name: Open
-    - name: Close
-    - name: Toggle
+      Open: []
+      Close: []
+      Toggle: []
   placement:
     mode: SnapgridCenter
 

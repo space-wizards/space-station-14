@@ -18,9 +18,9 @@
     drawdepth: FloorObjects
   - type: SignalReceiver
     inputs:
-      - name: Forward
-      - name: Reverse
-      - name: Off
+      Forward: []
+      Reverse: []
+      Off: []
   - type: UserInterface
     interfaces:
       - key: enum.SignalReceiverUiKey.Key
