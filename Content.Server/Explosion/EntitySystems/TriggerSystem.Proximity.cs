@@ -19,7 +19,7 @@ public sealed partial class TriggerSystem
     {
         SubscribeLocalEvent<TriggerOnProximityComponent, StartCollideEvent>(OnProximityStartCollide);
         SubscribeLocalEvent<TriggerOnProximityComponent, EndCollideEvent>(OnProximityEndCollide);
-        SubscribeLocalEvent<TriggerOnProximityComponent, ComponentStartup>(OnProximityStartup);
+        SubscribeLocalEvent<TriggerOnProximityComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TriggerOnProximityComponent, ComponentShutdown>(OnProximityShutdown);
         SubscribeLocalEvent<TriggerOnProximityComponent, AnchorStateChangedEvent>(OnProximityAnchor);
     }
@@ -49,7 +49,7 @@ public sealed partial class TriggerSystem
         component.Colliding.Clear();
     }
 
-    private void OnProximityStartup(EntityUid uid, TriggerOnProximityComponent component, ComponentStartup args)
+    private void OnMapInit(EntityUid uid, TriggerOnProximityComponent component, MapInitEvent args)
     {
         component.Enabled = !component.RequiresAnchored ||
                             EntityManager.GetComponent<TransformComponent>(uid).Anchored;
