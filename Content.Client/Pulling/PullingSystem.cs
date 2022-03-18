@@ -13,6 +13,9 @@ namespace Content.Client.Pulling
             base.Initialize();
 
             UpdatesAfter.Add(typeof(PhysicsSystem));
+
+            SubscribeLocalEvent<SharedPullableComponent, PullableMoveMessage>(OnPullableMove);
+            SubscribeLocalEvent<SharedPullableComponent, PullableStopMovingMessage>(OnPullableStopMove);
         }
     }
 }

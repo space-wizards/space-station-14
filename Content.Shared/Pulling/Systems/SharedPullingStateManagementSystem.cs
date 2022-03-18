@@ -1,8 +1,24 @@
+using System;
 using System.Linq;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.GameTicking;
+using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling.Events;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Input.Binding;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Dynamics.Joints;
+using Robust.Shared.Players;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Pulling
 {
@@ -36,6 +52,9 @@ namespace Content.Shared.Pulling
         {
             var pullerPhysics = EntityManager.GetComponent<PhysicsComponent>(puller.Owner);
             var pullablePhysics = EntityManager.GetComponent<PhysicsComponent>(pullable.Owner);
+
+            // MovingTo shutdown
+            ForceSetMovingTo(pullable, null);
 
             // Joint shutdown
             if (EntityManager.TryGetComponent<JointComponent?>(puller.Owner, out var jointComp))
@@ -133,6 +152,32 @@ namespace Content.Shared.Pulling
         {
             // DO NOT ADD ADDITIONAL LOGIC IN THIS FUNCTION. Do it in ForceRelationship.
             ForceRelationship(null, pullable);
+        }
+
+        public void ForceSetMovingTo(SharedPullableComponent pullable, EntityCoordinates? movingTo)
+        {
+            if (pullable.MovingTo == movingTo)
+            {
+                return;
+            }
+
+            // Don't allow setting a MovingTo if there's no puller.
+            // The other half of this guarantee (shutting down a MovingTo if the puller goes away) is enforced in ForceRelationship.
+            if ((pullable.Puller == null) && (movingTo != null))
+            {
+                return;
+            }
+
+            pullable.MovingTo = movingTo;
+
+            if (movingTo == null)
+            {
+                RaiseLocalEvent(pullable.Owner, new PullableStopMovingMessage());
+            }
+            else
+            {
+                RaiseLocalEvent(pullable.Owner, new PullableMoveMessage());
+            }
         }
     }
 }
