@@ -1,11 +1,9 @@
-using Content.Server.Throwing;
 using Content.Shared.Input;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Map;
 using Robust.Shared.Players;
 
 namespace Content.Server.Pulling
@@ -18,6 +16,9 @@ namespace Content.Server.Pulling
             base.Initialize();
 
             UpdatesAfter.Add(typeof(PhysicsSystem));
+
+            SubscribeLocalEvent<SharedPullableComponent, PullableMoveMessage>(OnPullableMove);
+            SubscribeLocalEvent<SharedPullableComponent, PullableStopMovingMessage>(OnPullableStopMove);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ReleasePulledObject, InputCmdHandler.FromDelegate(HandleReleasePulledObject))
@@ -42,33 +43,6 @@ namespace Content.Server.Pulling
             }
 
             TryStopPull(pullable);
-        }
-
-        public override bool TryMoveTo(SharedPullableComponent pullable, EntityCoordinates to)
-        {
-            if (!base.TryMoveTo(pullable, to)) return false;
-
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var pullableXform = xformQuery.GetComponent(pullable.Owner);
-            var targetPos = to.ToMap(EntityManager);
-
-            if (targetPos.MapId != pullableXform.MapID) return false;
-
-            var pullablePos = pullableXform.WorldPosition;
-
-            if (pullablePos.EqualsApprox(targetPos.Position, 0.01f)) return false;
-
-            var vec = (targetPos.Position - pullablePos);
-
-            // Just move it to the spot for finetuning
-            if (vec.Length < 0.15f)
-            {
-                pullableXform.WorldPosition = targetPos.Position;
-                return true;
-            }
-
-            pullable.Owner.TryThrow(vec, 3f);
-            return true;
         }
     }
 }

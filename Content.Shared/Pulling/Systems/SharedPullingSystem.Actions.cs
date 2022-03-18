@@ -4,8 +4,11 @@ using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling.Events;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics;
+using Robust.Shared.Log;
 
 namespace Content.Shared.Pulling
 {
@@ -26,12 +29,12 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!EntityManager.TryGetComponent<IPhysBody?>(pulled, out var physics))
+            if (!EntityManager.TryGetComponent<IPhysBody?>(pulled, out var _physics))
             {
                 return false;
             }
 
-            if (physics.BodyType == BodyType.Static)
+            if (_physics.BodyType == BodyType.Static)
             {
                 return false;
             }
@@ -178,7 +181,7 @@ namespace Content.Shared.Pulling
             return true;
         }
 
-        public virtual bool TryMoveTo(SharedPullableComponent pullable, EntityCoordinates to)
+        public bool TryMoveTo(SharedPullableComponent pullable, EntityCoordinates to)
         {
             if (pullable.Puller == null)
             {
@@ -190,8 +193,13 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            // Action handled under server
+            _pullSm.ForceSetMovingTo(pullable, to);
             return true;
+        }
+
+        public void StopMoveTo(SharedPullableComponent pullable)
+        {
+            _pullSm.ForceSetMovingTo(pullable, null);
         }
     }
 }

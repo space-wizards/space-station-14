@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
-using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Rotatable;
@@ -34,6 +33,9 @@ namespace Content.Shared.Pulling
         private readonly Dictionary<EntityUid, EntityUid> _pullers =
             new();
 
+        private readonly HashSet<SharedPullableComponent> _moving = new();
+        private readonly HashSet<SharedPullableComponent> _stoppedMoving = new();
+
         /// <summary>
         ///     If distance between puller and pulled entity lower that this threshold,
         ///     pulled entity will not change its rotation.
@@ -48,6 +50,8 @@ namespace Content.Shared.Pulling
         ///     As of further adjustments, should divide cleanly into 90 degrees
         /// </summary>
         private const float ThresholdRotAngle = 22.5f;
+
+        public IReadOnlySet<SharedPullableComponent> Moving => _moving;
 
         public override void Initialize()
         {
@@ -102,7 +106,7 @@ namespace Content.Shared.Pulling
         {
             if (args.Pulled.Owner != uid)
                 return;
-
+            
             _alertsSystem.ShowAlert(component.Owner, AlertType.Pulled);
         }
 
@@ -114,9 +118,19 @@ namespace Content.Shared.Pulling
             _alertsSystem.ClearAlert(component.Owner, AlertType.Pulled);
         }
 
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            _moving.ExceptWith(_stoppedMoving);
+            _stoppedMoving.Clear();
+        }
+
         public void Reset(RoundRestartCleanupEvent ev)
         {
             _pullers.Clear();
+            _moving.Clear();
+            _stoppedMoving.Clear();
         }
 
         private void OnPullStarted(PullStartedMessage message)
@@ -127,6 +141,16 @@ namespace Content.Shared.Pulling
         private void OnPullStopped(PullStoppedMessage message)
         {
             RemovePuller(message.Puller.Owner);
+        }
+
+        protected void OnPullableMove(EntityUid uid, SharedPullableComponent component, PullableMoveMessage args)
+        {
+            _moving.Add(component);
+        }
+
+        protected void OnPullableStopMove(EntityUid uid, SharedPullableComponent component, PullableStopMovingMessage args)
+        {
+            _stoppedMoving.Add(component);
         }
 
         private void PullerMoved(ref MoveEvent ev)
@@ -192,9 +216,6 @@ namespace Content.Shared.Pulling
             {
                 return false;
             }
-
-            // No leverage until this is tweaked more
-            if (player.IsWeightless(entityManager: EntityManager)) return false;
 
             TryMoveTo(pullable, coords);
 
