@@ -95,12 +95,18 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanPickup(EntityUid uid)
+        public bool CanPickup(EntityUid user, EntityUid item)
         {
-            var ev = new PickupAttemptEvent(uid);
-            RaiseLocalEvent(uid, ev);
+            var userEv = new PickupAttemptEvent(user, item);
+            RaiseLocalEvent(user, userEv, false);
 
-            return !ev.Cancelled;
+            if (userEv.Cancelled)
+                return false;
+
+            var itemEv = new GettingPickedUpAttemptEvent(user, item);
+            RaiseLocalEvent(item, itemEv, false);
+            return !itemEv.Cancelled;
+
         }
 
         public bool CanEmote(EntityUid uid)

@@ -11,6 +11,7 @@ using Content.Shared.Physics;
 using Content.Shared.Access.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Doors.Components;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Server.Remotes
 {

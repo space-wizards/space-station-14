@@ -1,9 +1,4 @@
-using System.Collections.Generic;
 using Content.Server.Storage;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-
 
 namespace Content.Server.Drone.Components
 {
@@ -13,6 +8,14 @@ namespace Content.Server.Drone.Components
         [DataField("tools")] public List<EntitySpawnEntry> Tools = new();
         public List<EntityUid> ToolUids = new();
         public bool AlreadyAwoken = false;
-        public float InteractionBlockRange = 2.5f;
+        public float InteractionBlockRange = 2.15f;
+
+        /// <summary>
+        /// If you are using drone component for
+        /// something that shouldn't have restrictions set this to
+        /// false.
+        /// </summary>
+        [DataField("applyLaws")]
+        public bool ApplyLaws = true;
     }
 }

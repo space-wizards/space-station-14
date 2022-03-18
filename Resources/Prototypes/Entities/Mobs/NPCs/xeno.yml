@@ -83,3 +83,50 @@
     heatDamageThreshold: 360
     coldDamageThreshold: -150
     currentTemperature: 310.15
+
+- type: entity
+  name: purple snake
+  parent: SimpleSpaceMobBase
+  id: MobPurpleSnake
+  description: A menacing purple snake from Kepler-283c.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: purple_snake
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: purple_snake
+      crit: dead_purple_snake
+      dead: dead_purple_snake
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+
+- type: entity
+  name: purple snake
+  parent: SimpleSpaceMobBase
+  id: MobSmallPurpleSnake
+  suffix: small
+  description: A smaller version of the menacing purple snake from Kepler-283c.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: small_purple_snake
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: purple_snake
+      crit: dead_small_purple_snake
+      dead: dead_small_purple_snake
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male

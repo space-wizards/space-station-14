@@ -206,21 +206,13 @@ namespace Content.Server.AI.Pathfinding
             SubscribeLocalEvent<CollisionChangeMessage>(QueueCollisionChangeMessage);
             SubscribeLocalEvent<MoveEvent>(QueueMoveEvent);
             SubscribeLocalEvent<AccessReaderChangeMessage>(QueueAccessChangeMessage);
+            SubscribeLocalEvent<GridRemovalEvent>(HandleGridRemoval);
+            SubscribeLocalEvent<GridModifiedEvent>(QueueGridChange);
+            SubscribeLocalEvent<TileChangedEvent>(QueueTileChange);
 
             // Handle all the base grid changes
             // Anything that affects traversal (i.e. collision layer) is handled separately.
-            _mapManager.OnGridRemoved += HandleGridRemoval;
-            _mapManager.GridChanged += QueueGridChange;
-            _mapManager.TileChanged += QueueTileChange;
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            _mapManager.OnGridRemoved -= HandleGridRemoval;
-            _mapManager.GridChanged -= QueueGridChange;
-            _mapManager.TileChanged -= QueueTileChange;
+            
         }
 
         private void HandleTileUpdate(TileRef tile)
@@ -231,25 +223,25 @@ namespace Content.Server.AI.Pathfinding
             node.UpdateTile(tile);
         }
 
-        private void HandleGridRemoval(MapId mapId, GridId gridId)
+        private void HandleGridRemoval(GridRemovalEvent ev)
         {
-            if (_graph.ContainsKey(gridId))
+            if (_graph.ContainsKey(ev.GridId))
             {
-                _graph.Remove(gridId);
+                _graph.Remove(ev.GridId);
             }
         }
 
-        private void QueueGridChange(object? sender, GridChangedEventArgs eventArgs)
+        private void QueueGridChange(GridModifiedEvent ev)
         {
-            foreach (var (position, _) in eventArgs.Modified)
+            foreach (var (position, _) in ev.Modified)
             {
-                _tileUpdateQueue.Enqueue(eventArgs.Grid.GetTileRef(position));
+                _tileUpdateQueue.Enqueue(ev.Grid.GetTileRef(position));
             }
         }
 
-        private void QueueTileChange(object? sender, TileChangedEventArgs eventArgs)
+        private void QueueTileChange(TileChangedEvent ev)
         {
-            _tileUpdateQueue.Enqueue(eventArgs.NewTile);
+            _tileUpdateQueue.Enqueue(ev.NewTile);
         }
 
         private void QueueAccessChangeMessage(AccessReaderChangeMessage message)
