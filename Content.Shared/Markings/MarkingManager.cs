@@ -47,18 +47,7 @@ namespace Content.Shared.Markings
 
         public bool IsValidMarking(Marking marking, [NotNullWhen(true)] out MarkingPrototype? markingResult)
         {
-            foreach (var markingPrototype in _index)
-            {
-                if (marking.MarkingId == markingPrototype.ID)
-                {
-                    markingResult = markingPrototype;
-                    return true;
-                }
-            }
-
-            Logger.DebugS("Markings", $"An error occurred while validing a marking. Marking: {marking}");
-            markingResult = null;
-            return false;
+            return _markings.TryGetValue(marking.MarkingId, out markingResult);
         }
 
         private void OnPrototypeReload(PrototypesReloadedEventArgs args)

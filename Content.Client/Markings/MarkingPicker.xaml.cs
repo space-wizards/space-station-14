@@ -44,7 +44,7 @@ namespace Content.Client.Markings
 
         private List<MarkingCategories> _markingCategories = Enum.GetValues<MarkingCategories>().ToList();
 
-        private string _currentSpecies = "Human"; // mmmmm
+        private string _currentSpecies = SpeciesManager.DefaultSpecies; // mmmmm
 
         public void SetData(List<Marking> newMarkings, string species)
         {
