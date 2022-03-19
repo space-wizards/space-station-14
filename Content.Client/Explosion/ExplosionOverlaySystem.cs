@@ -16,6 +16,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
     private ExplosionOverlay _overlay = default!;
 
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly IMapManager _mapMan = default!;
 
 
     /// <summary>
@@ -42,14 +43,22 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
         // increment the lifetime of completed explosions, and remove them if they have been ons screen for more
         // than ExplosionPersistence seconds
-        foreach (var explosion in _overlay.CompletedExplosions.ToArray())
+        for (int i = _overlay.CompletedExplosions.Count - 1; i>= 0; i--) 
         {
+            var explosion = _overlay.CompletedExplosions[i];
+
+            if (_mapMan.IsMapPaused(explosion.Map))
+                continue;
+
             explosion.Lifetime += frameTime;
 
             if (explosion.Lifetime >= ExplosionPersistence)
             {
                 EntityManager.QueueDeleteEntity(explosion.LightEntity);
-                _overlay.CompletedExplosions.Remove(explosion);
+
+                // Remove-swap
+                _overlay.CompletedExplosions[i] = _overlay.CompletedExplosions[^1];
+                _overlay.CompletedExplosions.RemoveAt(_overlay.CompletedExplosions.Count - 1);
             }
         }
     }
