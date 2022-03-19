@@ -1,5 +1,4 @@
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Tag;
 using Robust.Shared.Physics;
 using Robust.Shared.Timing;
@@ -54,25 +53,22 @@ public sealed class ThrowingSystem : EntitySystem
         }
 
         var comp = EnsureComp<ThrownItemComponent>(uid);
-        if (HasComp<SharedItemComponent>(uid))
+        comp.Thrower = user;
+        // Give it a l'il spin.
+        if (!_tagSystem.HasTag(uid, "NoSpinOnThrow"))
+            physics.ApplyAngularImpulse(ThrowAngularImpulse);
+        else
         {
-            comp.Thrower = user;
-            // Give it a l'il spin.
-            if (!_tagSystem.HasTag(uid, "NoSpinOnThrow"))
-                physics.ApplyAngularImpulse(ThrowAngularImpulse);
-            else
+            if (transform == null)
             {
-                if (transform == null)
-                {
-                    xformQuery ??= GetEntityQuery<TransformComponent>();
-                    transform = xformQuery.Value.GetComponent(uid);
-                }
-                transform.LocalRotation = direction.ToWorldAngle() - Math.PI;
+                xformQuery ??= GetEntityQuery<TransformComponent>();
+                transform = xformQuery.Value.GetComponent(uid);
             }
-
-            if (user != null)
-                _interactionSystem.ThrownInteraction(user.Value, uid);
+            transform.LocalRotation = direction.ToWorldAngle() - Math.PI;
         }
+
+        if (user != null)
+            _interactionSystem.ThrownInteraction(user.Value, uid);
 
         var impulseVector = direction.Normalized * strength * physics.Mass;
         physics.ApplyLinearImpulse(impulseVector);
