@@ -6,7 +6,7 @@
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
   mapPath: /Maps/delta.yml
-  minPlayers: 40
+  minPlayers: 60
   overflowJobs:
     - Assistant
   availableJobs:
