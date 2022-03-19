@@ -8,6 +8,12 @@
   - type: Transform
     anchored: true
   - type: ReagentGrinder
+    beakerSlot:
+      whitelist:
+        components:
+        - FitsInDispenser
+  - type: ActivatableUI
+    key: enum.ReagentGrinderUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.ReagentGrinderUiKey.Key
