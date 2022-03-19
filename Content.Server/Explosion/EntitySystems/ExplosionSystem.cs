@@ -55,6 +55,8 @@ public sealed partial class ExplosionSystem : EntitySystem
     {
         base.Initialize();
 
+        DebugTools.Assert(_prototypeManager.HasIndex<ExplosionPrototype>(DefaultExplosionPrototypeId));
+
         // handled in ExplosionSystemGridMap.cs
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
         SubscribeLocalEvent<GridStartupEvent>(OnGridStartup);
@@ -64,6 +66,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // handled in ExplosionSystemAirtight.cs
         SubscribeLocalEvent<AirtightComponent, DamageChangedEvent>(OnAirtightDamaged);
         SubscribeCvars();
+        InitAirtightMap();
     }
 
     public override void Shutdown()

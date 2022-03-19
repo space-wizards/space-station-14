@@ -22,7 +22,7 @@ public sealed class GridExplosion : TileExplosion
 
     private float _maxIntensity;
     private float _intensityStepSize;
-    private string _typeID;
+    private int _typeIndex;
 
     private UniqueVector2iSet _spaceTiles = new();
     private UniqueVector2iSet _processedSpaceTiles = new();
@@ -36,7 +36,7 @@ public sealed class GridExplosion : TileExplosion
         Dictionary<Vector2i, TileData> airtightMap,
         float maxIntensity,
         float intensityStepSize,
-        string typeID,
+        int typeIndex,
         Dictionary<Vector2i, NeighborFlag> edgeTiles,
         GridId? referenceGrid,
         Matrix3 spaceMatrix,
@@ -46,7 +46,7 @@ public sealed class GridExplosion : TileExplosion
         _airtightMap = airtightMap;
         _maxIntensity = maxIntensity;
         _intensityStepSize = intensityStepSize;
-        _typeID = typeID;
+        _typeIndex = typeIndex;
         _edgeTiles = edgeTiles;
 
         // initialise SpaceTiles
@@ -183,11 +183,7 @@ public sealed class GridExplosion : TileExplosion
             NewBlockedTiles.Add(tile);
 
             // At what explosion iteration would this blocker be destroyed?
-
-            if (!tileData.ExplosionTolerance.TryGetValue(_typeID, out var sealIntegrity))
-                sealIntegrity = float.MaxValue; // indestructible airtight entity
-
-            var clearIteration = iteration + (int) MathF.Ceiling(sealIntegrity / _intensityStepSize);
+            var clearIteration = iteration + (int) MathF.Ceiling(tileData.ExplosionTolerance[_typeIndex] / _intensityStepSize);
             if (FreedTileLists.TryGetValue(clearIteration, out var list))
                 list.Add(tile);
             else
@@ -257,8 +253,7 @@ public sealed class GridExplosion : TileExplosion
             if (_airtightMap.TryGetValue(tile, out var tileData))
             {
                 blockedDirections = tileData.BlockedDirections;
-                if (!tileData.ExplosionTolerance.TryGetValue(_typeID, out sealIntegrity))
-                    sealIntegrity = float.MaxValue; // indestructible airtight entity
+                sealIntegrity = tileData.ExplosionTolerance[_typeIndex];
             }
 
             // First, yield any neighboring tiles that are not blocked by airtight entities on this tile

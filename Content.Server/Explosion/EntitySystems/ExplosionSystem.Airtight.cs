@@ -12,6 +12,24 @@ public sealed partial class ExplosionSystem : EntitySystem
 {
     [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
 
+    private readonly Dictionary<string, int> _explosionTypes = new();
+
+    private void InitAirtightMap()
+    {
+        // Currently explosion prototype hot-reload isn't supported, as it would involve completely re-computing the
+        // airtight map. Could be done, just not yet implemented.
+
+        // for storing airtight entity damage thresholds for all anchored airtight entities, we will use integers in
+        // place of id-strings. This initializes the string <--> id association.
+        // This allows us to replace a Dictionary<string, float> with just a float[].
+        int index = 0;
+        foreach (var prototype in _prototypeManager.EnumeratePrototypes<ExplosionPrototype>())
+        {
+            _explosionTypes.Add(prototype.ID, index);
+            index++;
+        }
+    }
+
     // The explosion intensity required to break an entity depends on the explosion type. So it is stored in a
     // Dictionary<string, float>
     //
@@ -41,7 +59,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// </remarks>
     public void UpdateAirtightMap(IMapGrid grid, Vector2i tile, EntityQuery<AirtightComponent>? query = null)
     {
-        Dictionary<string, float>  tolerance = new();
+        var tolerance = new float[_explosionTypes.Count];
         var blockedDirections = AtmosDirection.Invalid;
 
         if (!_airtightMap.ContainsKey(grid.Index))
@@ -57,10 +75,10 @@ public sealed partial class ExplosionSystem : EntitySystem
                 continue;
 
             blockedDirections |= airtight.AirBlockedDirection;
-            foreach (var (type, value) in GetExplosionTolerance(uid, damageQuery, destructibleQuery))
+            var entityTolerances = GetExplosionTolerance(uid, damageQuery, destructibleQuery);
+            for (var i = 0; i < tolerance.Length; i++)
             {
-                if (!tolerance.TryAdd(type, value))
-                    tolerance[type] = Math.Max(tolerance[type], value);
+                tolerance[i] = Math.Max(tolerance[i], entityTolerances[i]);
             }
         }
 
@@ -91,7 +109,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <summary>
     ///     Return a dictionary that specifies how intense a given explosion type needs to be in order to destroy an entity.
     /// </summary>
-    public Dictionary<string, float> GetExplosionTolerance(
+    public float[] GetExplosionTolerance(
         EntityUid uid,
         EntityQuery<DamageableComponent> damageQuery,
         EntityQuery<DestructibleComponent> destructibleQuery)
@@ -105,22 +123,34 @@ public sealed partial class ExplosionSystem : EntitySystem
             totalDamageTarget = _destructibleSystem.DestroyedAt(uid, destructible);
         }
 
-        Dictionary<string, float> explosionTolerance = new();
+        var explosionTolerance = new float[_explosionTypes.Count];
         if (totalDamageTarget == FixedPoint2.MaxValue || !damageQuery.TryGetComponent(uid, out var damageable))
+        {
+            for (var i = 0; i < explosionTolerance.Length; i++)
+            {
+                explosionTolerance[i] = float.MaxValue;
+            }
             return explosionTolerance;
+        }
 
         // What multiple of each explosion type damage set will result in the damage exceeding the required amount? This
         // does not support entities dynamically changing explosive resistances (e.g. via clothing). But these probably
         // shouldn't be airtight structures anyways....
 
-        foreach (var explosionType in _prototypeManager.EnumeratePrototypes<ExplosionPrototype>())
+        foreach (var (id, index) in _explosionTypes)
         {
+            if (!_prototypeManager.TryIndex<ExplosionPrototype>(id, out var explosionType))
+                continue;
+
             // evaluate the damage that this damage type would do to this entity
             var damagePerIntensity = FixedPoint2.Zero;
             foreach (var (type, value) in explosionType.DamagePerIntensity.DamageDict)
             {
                 if (!damageable.Damage.DamageDict.ContainsKey(type))
+                {
+                    explosionTolerance[index] = float.MaxValue;
                     continue;
+                }
 
                 var ev = new GetExplosionResistanceEvent(explosionType.ID);
                 RaiseLocalEvent(uid, ev, false);
@@ -128,7 +158,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 damagePerIntensity += value * Math.Clamp(0, 1 - ev.Resistance, 1);
             }
 
-            explosionTolerance[explosionType.ID] = (float) ((totalDamageTarget - damageable.TotalDamage) / damagePerIntensity);
+            explosionTolerance[index] = (float) ((totalDamageTarget - damageable.TotalDamage) / damagePerIntensity);
         }
 
         return explosionTolerance;
@@ -140,12 +170,12 @@ public sealed partial class ExplosionSystem : EntitySystem
 /// </summary>
 public struct TileData
 {
-    public TileData(Dictionary<string, float> explosionTolerance, AtmosDirection blockedDirections)
+    public TileData(float[] explosionTolerance, AtmosDirection blockedDirections)
     {
         ExplosionTolerance = explosionTolerance;
         BlockedDirections = blockedDirections;
     }
 
-    public Dictionary<string, float> ExplosionTolerance;
+    public float[] ExplosionTolerance;
     public AtmosDirection BlockedDirections = AtmosDirection.Invalid;
 }

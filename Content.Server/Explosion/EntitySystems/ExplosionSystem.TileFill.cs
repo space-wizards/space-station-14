@@ -32,6 +32,12 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (totalIntensity <= 0 || slope <= 0)
             return null;
 
+        if (!_explosionTypes.TryGetValue(typeID, out var typeIndex))
+        {
+            Logger.Error("Attempted to spawn explosion using a prototype that was not defined during initialization. Explosion prototype hot-reload is not currently supported.");
+            return null;
+        }
+
         Vector2i initialTile;
         GridId? epicentreGrid = null;
         var (localGrids, referenceGrid, maxDistance) = GetLocalGrids(epicenter, totalIntensity, slope, maxIntensity);
@@ -97,7 +103,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 airtightMap,
                 maxIntensity,
                 stepSize,
-                typeID,
+                typeIndex,
                 _gridEdges[epicentreGrid.Value],
                 referenceGrid,
                 spaceMatrix,
@@ -186,7 +192,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                         airtightMap,
                         maxIntensity,
                         stepSize,
-                        typeID,
+                        typeIndex,
                         _gridEdges[grid],
                         referenceGrid,
                         spaceMatrix,
