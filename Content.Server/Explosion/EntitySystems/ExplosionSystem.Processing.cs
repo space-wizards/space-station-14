@@ -326,10 +326,16 @@ public sealed partial class ExplosionSystem : EntitySystem
         {
             var ev = new GetExplosionResistanceEvent(id);
             RaiseLocalEvent(uid, ev, false);
-            var coeff = Math.Clamp(0, 1 - ev.Resistance, 1);
 
-            if (!MathHelper.CloseTo(0, coeff))
-                _damageableSystem.TryChangeDamage(uid, damage * coeff, ignoreResistances: true);
+            if (ev.Resistance == 0)
+            {
+                // no damage-dict multiplication required.
+                _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true);
+            }
+            else if (ev.Resistance < 1)
+            {
+                _damageableSystem.TryChangeDamage(uid, damage * (1 - ev.Resistance), ignoreResistances: true);
+            }
         }
 
         // throw
@@ -338,7 +344,8 @@ public sealed partial class ExplosionSystem : EntitySystem
             && !EntityManager.IsQueuedForDeletion(uid))
         {
             xform ??= Transform(uid);
-            // TODO purge throw helpers
+            // TODO purge throw helpers. Currently this will generate warnings when trying to throw mobs. But cant check
+            // body & pass it as an input this helper.
             uid.TryThrow(xform.WorldPosition - epicenter.Position, throwForce);
         }
 
