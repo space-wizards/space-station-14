@@ -14,6 +14,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -40,9 +41,21 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     private AudioParams _audioParams = AudioParams.Default.WithVolume(-3f);
 
+    /// <summary>
+    ///     The "default" explosion prototype.
+    /// </summary>
+    /// <remarks>
+    ///     Generally components should specify an explosion prototype via a yaml datafield, so that the yaml-linter can
+    ///     find errors. However some components, like rogue arrows, or some commands like the admin-smite need to have
+    ///     a "default" option specified outside of yaml data-fields. Hence this const string.
+    /// </remarks>
+    public const string DefaultExplosionPrototypeId = "Default";
+
     public override void Initialize()
     {
         base.Initialize();
+
+        DebugTools.Assert(_prototypeManager.HasIndex<ExplosionPrototype>(DefaultExplosionPrototypeId));
 
         // handled in ExplosionSystemGridMap.cs
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);

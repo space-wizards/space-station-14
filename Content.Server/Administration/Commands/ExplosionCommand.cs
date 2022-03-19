@@ -106,7 +106,6 @@ public sealed class ExplosionCommand : IConsoleCommand
                 coords = new MapCoordinates((x, y), xform.MapID);
             else
                 coords = xform.MapPosition;
-
         }
 
         ExplosionPrototype? type;

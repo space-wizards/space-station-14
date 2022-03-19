@@ -101,7 +101,7 @@ namespace Content.Server.Pointing.EntitySystems
                 {
                     return;
                 }
-                _explosion.QueueExplosion(uid, "Default", 50, 3, 10);
+                _explosion.QueueExplosion(uid, ExplosionSystem.DefaultExplosionPrototypeId, 50, 3, 10);
                 EntityManager.QueueDeleteEntity(uid);
             }
         }

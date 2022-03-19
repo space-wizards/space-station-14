@@ -156,7 +156,10 @@ namespace Content.Server.Administration
                 verb.Act = () =>
                 {
                     var coords = Transform(args.Target).MapPosition;
-                    Timer.Spawn(_gameTiming.TickPeriod, () => _explosionSystem.QueueExplosion(coords, "Default", 30, 4, 8), CancellationToken.None);
+                    Timer.Spawn(_gameTiming.TickPeriod,
+                        () => _explosionSystem.QueueExplosion(coords, ExplosionSystem.DefaultExplosionPrototypeId, 30, 4, 8),
+                        CancellationToken.None);
+
                     if (TryComp(args.Target, out SharedBodyComponent? body))
                     {
                         body.Gib();
