@@ -9,6 +9,10 @@
     anchored: true
   - type: ReagentGrinder
     beakerSlot:
+      insertSound: /Audio/Machines/machine_switch.ogg
+      ejectSound: /Audio/Machines/machine_switch.ogg
+      soundOptions:
+        volume: -2
       whitelist:
         components:
         - FitsInDispenser
