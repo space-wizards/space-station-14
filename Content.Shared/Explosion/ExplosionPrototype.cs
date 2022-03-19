@@ -2,6 +2,7 @@ using Content.Shared.Damage;
 using Content.Shared.Sound;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Explosion;
 
@@ -57,8 +58,8 @@ public sealed class ExplosionPrototype : IPrototype
     [DataField("Sound")]
     public readonly SoundSpecifier Sound = new SoundCollectionSpecifier("explosion");
 
-    [DataField("texturePath", customTypeSerializer:typeof(ResourcePathSerializer))]
-    public readonly string TexturePath = "/Textures/Effects/fire.rsi";
+    [DataField("texturePath")]
+    public readonly ResourcePath TexturePath = new("/Textures/Effects/fire.rsi");
 
     // Theres probably a better way to do this. Currently Atmos just hard codes a constant int, so I have no one to
     // steal code from.

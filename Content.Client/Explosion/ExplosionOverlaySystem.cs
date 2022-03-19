@@ -17,7 +17,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
-
+    [Dependency] private readonly IResourceCache _resCache = default!;
 
     /// <summary>
     ///     For how many seconds should an explosion stay on-screen once it has finished expanding?
@@ -109,7 +109,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
         if (_overlay.ActiveExplosion == null)
         {
-            _overlay.ActiveExplosion = new(args, type, lightEntity);
+            _overlay.ActiveExplosion = new(args, type, lightEntity, _resCache);
             return;
         }
 
@@ -121,13 +121,13 @@ public sealed class ExplosionOverlaySystem : EntitySystem
         {
             // This is a newer explosion. Add the old-currently-active explosions to the completed list
             _overlay.CompletedExplosions.Add(_overlay.ActiveExplosion);
-            _overlay.ActiveExplosion = new(args, type, lightEntity);
+            _overlay.ActiveExplosion = new(args, type, lightEntity, _resCache);
         }
         else
         {
             // explosions were out of order. keep the active one, and directly add the received one to the completed
             // list.
-            _overlay.CompletedExplosions.Add(new(args, type, lightEntity));
+            _overlay.CompletedExplosions.Add(new(args, type, lightEntity, _resCache));
             return;
         }
     }
@@ -177,7 +177,7 @@ internal sealed class Explosion
 
     public Color? FireColor;
 
-    internal Explosion(ExplosionEvent args, ExplosionPrototype type, EntityUid lightEntity)
+    internal Explosion(ExplosionEvent args, ExplosionPrototype type, EntityUid lightEntity, IResourceCache resCache)
     {
         Map = args.Epicenter.MapId;
         SpaceTiles = args.SpaceTiles;
@@ -189,7 +189,7 @@ internal sealed class Explosion
         LightEntity = lightEntity;
         SpaceTileSize = args.SpaceTileSize;
 
-        var fireRsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(type.TexturePath).RSI;
+        var fireRsi = resCache.GetResource<RSIResource>(type.TexturePath).RSI;
         foreach (var state in fireRsi)
         {
             FireFrames.Add(state.GetFrames(RSI.State.Direction.South));

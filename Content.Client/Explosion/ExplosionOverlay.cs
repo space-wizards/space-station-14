@@ -27,7 +27,6 @@ public sealed class ExplosionOverlay : Overlay
     /// </summary>
     internal List<Explosion> CompletedExplosions = new ();
 
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
