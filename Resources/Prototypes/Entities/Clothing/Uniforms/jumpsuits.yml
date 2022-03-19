@@ -717,7 +717,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCapFormal
   name: captain's formal suit
-  description: A suit for special occassions.
+  description: A suit for special occasions.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/capformal.rsi
@@ -728,7 +728,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcommFormal
   name: central command formal suit
-  description: A suit for special occassions.
+  description: A suit for special occasions.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/centcomformal.rsi
@@ -739,7 +739,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHosFormal
   name: hos's formal suit
-  description: A suit for special occassions.
+  description: A suit for special occasions.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/hosformal.rsi
