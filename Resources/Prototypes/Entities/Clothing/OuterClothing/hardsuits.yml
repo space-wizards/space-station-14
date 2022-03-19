@@ -9,15 +9,18 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/atmospherics.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.5
+    highPressureMultiplier: 0.45
     lowPressureMultiplier: 100
+  - type: ClothingSpeedModifier
+    walkModifier: 0.65
+    sprintModifier: 0.65 #less armor than engineering but slightly higher move speed so they can get to breaches a bit faster
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9
-        Slash: 0.9
+        Blunt: 0.95 #less physical protection but significantly more atmospheric protections than engi
+        Slash: 0.95
         Piercing: 0.95
-        Heat: 0.8 #All default but having a little better heat prot makes sense based on the description
+        Heat: 0.35
         Radiation: 0.25
 
 - type: entity
@@ -83,14 +86,17 @@
   - type: PressureProtection
     highPressureMultiplier: 0.65
     lowPressureMultiplier: 100
+  - type: ClothingSpeedModifier
+    walkModifier: 0.65
+    sprintModifier: 0.55 #slightly slower than magboot walking
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.90
-        Slash: 0.90
-        Piercing: 0.95
-        Heat: 0.90
-        Radiation: 0.05 #all default, rad armor is higher
+        Blunt: 0.9 #higher physical protections than atmo but less enviro 
+        Slash: 0.85
+        Piercing: 0.9
+        Heat: 0.85
+        Radiation: 0.35 
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -105,13 +111,16 @@
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 100
+  - type: ClothingSpeedModifier
+    walkModifier: 0.65
+    sprintModifier: 0.75 #It's the advanced hardsuit it should be a little faster than engineering imo
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.95
-        Heat: 0.8
+        Slash: 0.85
+        Piercing: 0.9
+        Heat: 0.55
         Radiation: 0.05 #combines the engi and atmos bonuses
 
 #The voidsuit and eva suit are not techically 'hardsuits' but this seems to be the place for all EVA-capable outer clothing. This may be worth reevaluating when we have a lot more items.
@@ -126,8 +135,9 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ihsvoid.rsi
   - type: PressureProtection
-    highPressureMultiplier: 1
-    lowPressureMultiplier: 100
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -194,6 +204,9 @@
     lowPressureMultiplier: 100
   - type: DiseaseProtection
     protection: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7 #higher speed to reflect description but not as high as cap/eva
+    sprintModifier: 0.7
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -214,8 +227,11 @@
         Blunt: 0.6 #increased blunt as per description, for bomb survival
         Slash: 0.9
         Piercing: 0.95
-        Heat: 0.9
+        Heat: 0.65 #increased enviro due to science getting increasingly involved with artifact testing
         Radiation: 0.25
+  - type: ClothingSpeedModifier
+    walkModifier: 0.65 #heavier armor but still a bit faster than engineering
+    sprintModifier: 0.6
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -230,6 +246,17 @@
   - type: PressureProtection
     highPressureMultiplier: 0.75
     lowPressureMultiplier: 100
+  - type: ClothingSpeedModifier
+    walkModifier: 0.65 #higher move speed because ive seen salvage teams straight up stealing eva to go about salvaging faster
+    sprintModifier: 0.55
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85 #closer stats to what the mining suit had in 13
+        Slash: 0.85
+        Piercing: 0.9
+        Heat: 0.9
+        Radiation: 0.5
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -266,7 +293,18 @@
   - type: PressureProtection
     highPressureMultiplier: 0.75
     lowPressureMultiplier: 100
-
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7 #faster than sec hardsuit because HoS hardsuit should be better imo, sec hardsuit retains default hardsuit movespeed to discourage continual wear
+    sprintModifier: 0.55
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7 #slightly higher than sec hardsuit
+        Slash: 0.75
+        Piercing: 0.7
+        Heat: 0.8 
+        Radiation: 0.25
+        
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSyndie
@@ -287,7 +325,7 @@
     modifiers:
       coefficients:
         Blunt: 0.6
-        Slash: 0.6
+        Slash: 0.55
         Piercing: 0.4
         Heat: 0.4 #all the combat numbers are pumped up here
         Radiation: 0.20
@@ -314,5 +352,5 @@
         Blunt: 0.6
         Slash: 0.6
         Piercing: 0.4
-        Heat: 0.4 #same as the nukie suit
+        Heat: 0.25 #higher heat resist due to spell casting
         Radiation: 0.20

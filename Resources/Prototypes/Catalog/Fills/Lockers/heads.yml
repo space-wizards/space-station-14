@@ -51,8 +51,6 @@
         prob: 1
       - id: TaserGun
         prob: 1
-      - id: ClothingShoesColorBlack
-        prob: 0.7
       - id: ClothingHeadHelmetHardsuitCap
         prob: 1
       - id: CommsComputerCircuitboard
@@ -67,6 +65,9 @@
         prob: 0.25
       - id: ClothingBeltSheathFilled
       - id: DoorRemoteCommand
+      - id: ClothingNeckCloakCapFormal
+      - id: ClothingUniformJumpsuitCapFormal
+      - id: ClothingUniformJumpskirtCapFormalDress
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -212,3 +213,5 @@
       - id: CigarGoldCase
         prob: 0.50
       - id: DoorRemoteSecurity
+      - id: ClothingUniformJumpskirtHosFormal
+      - id: ClothingUniformJumpsuitHosFormal
