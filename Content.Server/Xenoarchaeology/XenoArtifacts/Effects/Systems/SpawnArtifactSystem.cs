@@ -1,7 +1,6 @@
-using Content.Server.Clothing.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
@@ -9,6 +8,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 public sealed class SpawnArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
     public override void Initialize()
     {
@@ -40,12 +40,7 @@ public sealed class SpawnArtifactSystem : EntitySystem
 
         // if there is an user - try to put spawned item in their hands
         // doesn't work for spawners
-        if (args.Activator != null &&
-            EntityManager.TryGetComponent(args.Activator.Value, out SharedHandsComponent? hands) &&
-            EntityManager.HasComponent<ItemComponent>(spawned))
-        {
-            hands.TryPutInAnyHand(spawned);
-        }
+        _handsSystem.PickupOrDrop(args.Activator, spawned);
     }
 
     private void ChooseRandomPrototype(EntityUid uid, SpawnArtifactComponent? component = null)
