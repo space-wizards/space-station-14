@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix AHelp and Quit command permissions, type: Fix}
-  id: 727
-  time: '2021-12-13T05:45:49.0000000+00:00'
 - author: DelleVelleD
   changes:
   - {message: Fixed power devices remaining connected to the network after unwrenching,
@@ -3009,3 +3004,9 @@ Entries:
       Please continue to report any issues you're having., type: Tweak}
   id: 1226
   time: '2022-03-19T00:50:59.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added new directional signs for more departments. Look out for these
+      in a future map update., type: Add}
+  id: 1227
+  time: '2022-03-19T03:27:45.0000000+00:00'
