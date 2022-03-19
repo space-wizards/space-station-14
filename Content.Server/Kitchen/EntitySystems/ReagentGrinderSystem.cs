@@ -57,10 +57,17 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnContainerModified(EntityUid uid, ReagentGrinderComponent component, ContainerModifiedMessage args)
         {
+            EnqueueUiUpdate(component);
+
+            if (args.Container.ID != SharedReagentGrinderComponent.BeakerSlotId)
+                return;
+
             if (TryComp(component.Owner, out AppearanceComponent? appearance))
                 appearance.SetData(SharedReagentGrinderComponent.ReagentGrinderVisualState.BeakerAttached, component.BeakerSlot.HasItem);
 
-            EnqueueUiUpdate(component);
+            component.BeakerSolution = null;
+            if (component.BeakerSlot.Item != null)
+                _solutionsSystem.TryGetFitsInDispenser(component.BeakerSlot.Item.Value, out component.BeakerSolution);
         }
 
         private void ExtractableScaling(EntityUid uid, StackComponent component, ExtractableScalingEvent args)
@@ -211,7 +218,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         canGrind,
                         comp.Chamber.ContainedEntities.Select(item => item).ToArray(),
                         //Remember the beaker can be null!
-                        comp.HeldBeaker?.Contents.ToArray()
+                        comp.BeakerSolution?.Contents.ToArray()
                     ));
             }
         }
@@ -227,7 +234,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver) || !receiver.Powered ||
                 component.Busy || component.Chamber.ContainedEntities.Count <= 0 ||
                 component.BeakerSlot.Item is not EntityUid beakerEntity ||
-                !_solutionsSystem.TryGetFitsInDispenser(beakerEntity, out var beaker))
+                component.BeakerSolution == null)
             {
                 return;
             }
@@ -252,10 +259,10 @@ namespace Content.Server.Kitchen.EntitySystems
 
                             var juiceEvent = new ExtractableScalingEvent(); // default of scalar is always 1.0
                             RaiseLocalEvent(item, juiceEvent, false);
-                            if (beaker.CurrentVolume + solution.CurrentVolume * juiceEvent.Scalar >
-                                beaker.MaxVolume) continue;
+                            if (component.BeakerSolution.CurrentVolume + solution.CurrentVolume * juiceEvent.Scalar >
+                                component.BeakerSolution.MaxVolume) continue;
                             solution.ScaleSolution(juiceEvent.Scalar);
-                            _solutionsSystem.TryAddSolution(beakerEntity, beaker, solution);
+                            _solutionsSystem.TryAddSolution(beakerEntity, component.BeakerSolution, solution);
                             EntityManager.DeleteEntity(item);
                         }
 
@@ -283,10 +290,10 @@ namespace Content.Server.Kitchen.EntitySystems
                                 RaiseLocalEvent(item, juiceEvent);
                             }
 
-                            if (beaker.CurrentVolume + juiceMe.JuiceSolution.TotalVolume * juiceEvent.Scalar > beaker.MaxVolume)
+                            if (component.BeakerSolution.CurrentVolume + juiceMe.JuiceSolution.TotalVolume * juiceEvent.Scalar > component.BeakerSolution.MaxVolume)
                                 continue;
                             juiceMe.JuiceSolution.ScaleSolution(juiceEvent.Scalar);
-                            _solutionsSystem.TryAddSolution(beakerEntity, component.HeldBeaker, juiceMe.JuiceSolution);
+                            _solutionsSystem.TryAddSolution(beakerEntity, component.BeakerSolution, juiceMe.JuiceSolution);
                             EntityManager.DeleteEntity(item);
                         }
 

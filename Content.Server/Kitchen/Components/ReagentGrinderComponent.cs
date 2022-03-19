@@ -18,7 +18,7 @@ namespace Content.Server.Kitchen.Components
         /// <summary>
         /// Can be null since we won't always have a beaker in the grinder.
         /// </summary>
-        [ViewVariables] public Solution? HeldBeaker;
+        [ViewVariables] public Solution? BeakerSolution;
 
         /// <summary>
         /// Contains the things that are going to be ground or juiced.
