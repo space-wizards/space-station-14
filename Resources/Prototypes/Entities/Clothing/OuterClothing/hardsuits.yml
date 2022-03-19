@@ -33,6 +33,9 @@
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 100
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: Armor
     modifiers:
       coefficients:
@@ -55,6 +58,9 @@
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 100
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
   - type: Armor
     modifiers:
       coefficients:
@@ -133,6 +139,9 @@
     sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: PressureProtection
     highPressureMultiplier: 1
     lowPressureMultiplier: 100
@@ -152,6 +161,9 @@
   - type: PressureProtection
     highPressureMultiplier: 1
     lowPressureMultiplier: 100
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -268,6 +280,9 @@
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 100
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
   - type: Armor
     modifiers:
       coefficients:
@@ -290,6 +305,9 @@
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 100
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: Armor
     modifiers:
       coefficients:

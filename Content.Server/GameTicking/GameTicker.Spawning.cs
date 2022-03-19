@@ -13,6 +13,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
@@ -33,6 +34,7 @@ namespace Content.Server.GameTicking
 
         [Dependency] private readonly IdCardSystem _cardSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         /// <summary>
         /// Can't yet be removed because every test ever seems to depend on it. I'll make removing this a different PR.
@@ -319,14 +321,15 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            if (EntityManager.TryGetComponent(entity, out HandsComponent? handsComponent))
+            if (!TryComp(entity, out HandsComponent? handsComponent))
+                return;
+
+            var inhand = startingGear.Inhand;
+            var coords = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
+            foreach (var (hand, prototype) in inhand)
             {
-                var inhand = startingGear.Inhand;
-                foreach (var (hand, prototype) in inhand)
-                {
-                    var inhandEntity = EntityManager.SpawnEntity(prototype, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
-                    handsComponent.TryPickupEntity(hand, inhandEntity, checkActionBlocker: false);
-                }
+                var inhandEntity = EntityManager.SpawnEntity(prototype, coords);
+                _handsSystem.TryPickup(entity, inhandEntity, hand, checkActionBlocker: false, handsComp: handsComponent);
             }
         }
 

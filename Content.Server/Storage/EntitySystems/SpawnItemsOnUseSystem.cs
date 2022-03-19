@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
 using Content.Server.Storage.Components;
-using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -13,6 +10,7 @@ namespace Content.Server.Storage.EntitySystems
     public sealed class SpawnItemsOnUseSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -57,10 +55,9 @@ namespace Content.Server.Storage.EntitySystems
                 EntityManager.DeleteEntity(uid);
             }
 
-            if (entityToPlaceInHands != null
-                && EntityManager.TryGetComponent<SharedHandsComponent?>(args.User, out var hands))
+            if (entityToPlaceInHands != null)
             {
-                hands.TryPutInAnyHand(entityToPlaceInHands.Value);
+                _handsSystem.PickupOrDrop(args.User, entityToPlaceInHands.Value);
             }
         }
     }

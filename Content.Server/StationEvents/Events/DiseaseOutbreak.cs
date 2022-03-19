@@ -47,15 +47,17 @@ public sealed class DiseaseOutbreak : StationEvent
 
         var diseaseName = _random.Pick(NotTooSeriousDiseases);
 
-        if (!_prototypeManager.TryIndex(diseaseName, out DiseasePrototype? disease) || disease == null)
+        if (!_prototypeManager.TryIndex(diseaseName, out DiseasePrototype? disease))
             return;
+
+        var diseaseSystem = EntitySystem.Get<DiseaseSystem>();
 
         foreach (var target in targetList)
         {
             if (toInfect-- == 0)
                 break;
 
-            EntitySystem.Get<DiseaseSystem>().TryAddDisease(target, disease);
+            diseaseSystem.TryAddDisease(target.Owner, disease, target);
         }
         _chatManager.DispatchStationAnnouncement(Loc.GetString("station-event-disease-outbreak-announcement"));
     }

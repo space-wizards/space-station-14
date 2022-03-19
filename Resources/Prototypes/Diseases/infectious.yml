@@ -27,7 +27,7 @@
   effects:
     - !type:DiseasePopUp
       probability: 0.025
-      message: burning-insides
+      message: generic-reagent-effect-burning-insides
     - !type:DiseaseSnough
       probability: 0.025
       snoughMessage: disease-cough

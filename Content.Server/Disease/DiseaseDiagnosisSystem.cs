@@ -139,7 +139,7 @@ namespace Content.Server.Disease
             if (args.Handled || !args.CanReach)
                 return;
 
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
+            if (HasComp<DiseaseMachineRunningComponent>(uid) || TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
                 return;
 
             if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used)) // Don't want to accidentally breach wrenching or whatever
@@ -171,7 +171,7 @@ namespace Content.Server.Disease
             if (args.Handled || !args.CanReach)
                 return;
 
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
+            if (HasComp<DiseaseMachineRunningComponent>(uid) || TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
                 return;
 
             if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used)) //This check ensures tools don't break without yaml ordering jank
