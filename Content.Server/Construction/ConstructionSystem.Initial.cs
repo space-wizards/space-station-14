@@ -28,7 +28,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
-        
+
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
         // This is bound to be replaced by a better alternative (probably using dummy entities)
@@ -80,7 +80,7 @@ namespace Content.Server.Construction
 
             foreach (var near in _lookupSystem.GetEntitiesInRange(user!, 2f, LookupFlags.Approximate))
             {
-                if (_interactionSystem.InRangeUnobstructed(pos, near, 2f)) 
+                if (_interactionSystem.InRangeUnobstructed(pos, near, 2f) && _containerSystem.IsInSameOrParentContainer(user, near)) 
                     yield return near;
             }
         }
