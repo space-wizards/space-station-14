@@ -23,10 +23,10 @@ public sealed partial class ExplosionSystem : EntitySystem
     // indices to this tile-data struct.
     private Dictionary<GridId, Dictionary<Vector2i, TileData>> _airtightMap = new();
 
-    public void UpdateAirtightMap(GridId gridId, Vector2i tile)
+    public void UpdateAirtightMap(GridId gridId, Vector2i tile, EntityQuery<AirtightComponent>? query = null)
     {
         if (_mapManager.TryGetGrid(gridId, out var grid))
-            UpdateAirtightMap(grid, tile);
+            UpdateAirtightMap(grid, tile, query);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     something like a normal and a reinforced windoor on the same tile. But given that this is a pretty rare
     ///     occurrence, I am fine with this.
     /// </remarks>
-    public void UpdateAirtightMap(IMapGrid grid, Vector2i tile)
+    public void UpdateAirtightMap(IMapGrid grid, Vector2i tile, EntityQuery<AirtightComponent>? query = null)
     {
         Dictionary<string, float>  tolerance = new();
         var blockedDirections = AtmosDirection.Invalid;
@@ -47,13 +47,17 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!_airtightMap.ContainsKey(grid.Index))
             _airtightMap[grid.Index] = new();
 
+        query ??= EntityManager.GetEntityQuery<AirtightComponent>();
+        var damageQuery = EntityManager.GetEntityQuery<DamageableComponent>();
+        var destructibleQuery = EntityManager.GetEntityQuery<DestructibleComponent>();
+
         foreach (var uid in grid.GetAnchoredEntities(tile))
         {
-            if (!EntityManager.TryGetComponent(uid, out AirtightComponent? airtight) || !airtight.AirBlocked)
+            if (!query.Value.TryGetComponent(uid, out var airtight) || !airtight.AirBlocked)
                 continue;
 
             blockedDirections |= airtight.AirBlockedDirection;
-            foreach (var (type, value) in GetExplosionTolerance(uid))
+            foreach (var (type, value) in GetExplosionTolerance(uid, damageQuery, destructibleQuery))
             {
                 if (!tolerance.TryAdd(type, value))
                     tolerance[type] = Math.Max(tolerance[type], value);
@@ -87,16 +91,22 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <summary>
     ///     Return a dictionary that specifies how intense a given explosion type needs to be in order to destroy an entity.
     /// </summary>
-    public Dictionary<string, float> GetExplosionTolerance(EntityUid uid)
+    public Dictionary<string, float> GetExplosionTolerance(
+        EntityUid uid,
+        EntityQuery<DamageableComponent> damageQuery,
+        EntityQuery<DestructibleComponent> destructibleQuery)
     {
         // How much total damage is needed to destroy this entity? This also includes "break" behaviors. This ASSUMES
         // that this will result in a non-airtight entity.Entities that ONLY break via construction graph node changes
         // are currently effectively "invincible" as far as this is concerned. This really should be done more rigorously.
-        var totalDamageTarget = _destructibleSystem.DestroyedAt(uid);
+        var totalDamageTarget = FixedPoint2.MaxValue;
+        if (destructibleQuery.TryGetComponent(uid, out var destructible))
+        {
+            totalDamageTarget = _destructibleSystem.DestroyedAt(uid, destructible);
+        }
 
         Dictionary<string, float> explosionTolerance = new();
-
-        if (totalDamageTarget == FixedPoint2.MaxValue || !TryComp(uid, out DamageableComponent? damageable))
+        if (totalDamageTarget == FixedPoint2.MaxValue || !damageQuery.TryGetComponent(uid, out var damageable))
             return explosionTolerance;
 
         // What multiple of each explosion type damage set will result in the damage exceeding the required amount? This

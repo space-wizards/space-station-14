@@ -106,7 +106,9 @@ namespace Content.Server.Atmos.EntitySystems
             if (!gridId.IsValid())
                 return;
 
-            _explosionSystem.UpdateAirtightMap(gridId, pos);
+            var query = EntityManager.GetEntityQuery<AirtightComponent>();
+            _explosionSystem.UpdateAirtightMap(gridId, pos, query);
+            // TODO make atmos system use query
             _atmosphereSystem.UpdateAdjacent(gridId, pos);
             _atmosphereSystem.InvalidateTile(gridId, pos);
 
