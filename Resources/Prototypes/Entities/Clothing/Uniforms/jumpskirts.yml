@@ -491,7 +491,7 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCapFormalDress
   name: captain's formal dress
-  description: A dress for special occassions.
+  description: A dress for special occasions.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/capformaldress.rsi
@@ -502,7 +502,7 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCentcomFormalDress
   name: central command formal dress
-  description: A dress for special occassions
+  description: A dress for special occasions
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/centcomformaldress.rsi
@@ -513,7 +513,7 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtHosFormal
   name: hos's formal dress
-  description: A dress for special occassions.
+  description: A dress for special occasions.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
