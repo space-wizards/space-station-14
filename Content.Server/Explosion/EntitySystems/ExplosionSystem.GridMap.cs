@@ -156,7 +156,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         {
             foreach (var (tile, dir) in localEdges)
             {
-                // grids cannot overlap, so tile should NEVER be an existing entry.
+                // grids cannot overlap, so tile should never be an existing entry.
+                // if this ever changes, this needs to do a try-get.
                 var data = new BlockedSpaceTile();
                 transformedEdges[tile] = data;
                 
@@ -220,7 +221,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// </summary>
     private void OnTileChanged(object? sender, TileChangedEventArgs e)
     {
-        // only need to update the grid-edge map if the tile changed from space to not-space.
+        // only need to update the grid-edge map if a tile was added or removed from the grid.
         if (!e.NewTile.Tile.IsEmpty && !e.OldTile.IsEmpty)
             return;
 
