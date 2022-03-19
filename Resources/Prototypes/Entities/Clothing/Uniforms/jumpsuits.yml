@@ -726,7 +726,7 @@
     
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitCentcommFormal
+  id: ClothingUniformJumpsuitCentcomFormal
   name: central command formal suit
   description: A suit for special occasions.
   components:
