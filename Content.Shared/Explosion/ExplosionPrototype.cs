@@ -1,11 +1,18 @@
 using Content.Shared.Damage;
 using Content.Shared.Sound;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Explosion;
 
+/// <summary>
+///     Explosion Prototype. Determines damage, tile break probabilities, and visuals.
+/// </summary>
+/// <remarks>
+///     Does not currently support prototype hot-reloading. The explosion-intensity required to destroy airtight
+///     entities is evaluated and stored by the explosion system. Adding or removing a prototype would require updating
+///     that map of airtight entities. This could be done, but is just not yet implemented.
+/// </remarks>
 [Prototype("explosion")]
 public sealed class ExplosionPrototype : IPrototype
 {

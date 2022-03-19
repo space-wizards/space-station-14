@@ -1,3 +1,5 @@
+#  Does not currently support prototype hot-reloading. See comments in c# file.
+
 - type: explosion
   id: Default
   damagePerIntensity:
