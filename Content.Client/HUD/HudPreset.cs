@@ -70,10 +70,12 @@ public abstract class HudPreset
     }
 
     //register a new hud widget in this preset, internal use only
-    protected void RegisterWidget<T>() where T: HudWidget, new()
+    protected T RegisterWidget<T>() where T: HudWidget, new()
     {
-        if (_widgets.ContainsKey(typeof(T))) return;
-        _widgets[typeof(T)] = (T)_sandboxHelper.CreateInstance(typeof(T));
+        if (_widgets.ContainsKey(typeof(T))) throw new Exception("Hud Widget not found");
+        var newWidget = (T)_sandboxHelper.CreateInstance(typeof(T));
+        _widgets[typeof(T)] = newWidget;
+        return newWidget;
     }
 
     public bool HasWidget<T>() where T : HudWidget

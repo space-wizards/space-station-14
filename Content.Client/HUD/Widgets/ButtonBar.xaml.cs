@@ -36,7 +36,6 @@ namespace Content.Client.HUD.Widgets
             SandboxButton.OnToggled += args => SandboxButtonToggled?.Invoke(args.Pressed);
             InfoButton.OnToggled += args => InfoButtonToggled?.Invoke(args.Pressed);
             InfoButton.OnToggled += ButtonInfoToggledHandler;
-            LayoutContainer.SetAnchorAndMarginPreset(this, LayoutContainer.LayoutPreset.TopLeft, margin: 10);
         }
 
         private void ButtonInfoToggledHandler(BaseButton.ButtonToggledEventArgs obj)

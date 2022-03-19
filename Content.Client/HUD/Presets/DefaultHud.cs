@@ -4,6 +4,7 @@ using Content.Client.Gameplay;
 using Content.Client.HUD.Widgets;
 using Content.Client.Sandbox;
 using JetBrains.Annotations;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.HUD.Presets;
 [UsedImplicitly]
@@ -16,7 +17,8 @@ public sealed class DefaultHud : HudPreset
         RegisterAllowedState<GameplayState>();
         RegisterLinkedEntitySystem<SandboxSystem>();
         RegisterLinkedEntitySystem<CombatModeSystem>();
-        RegisterWidget<ButtonBar>();
+
+        RegisterWidget<ButtonBar>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.TopLeft, margin: 10);
         RegisterWidget<CombatPanelWidget>();
     }
 }
