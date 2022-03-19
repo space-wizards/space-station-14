@@ -1,10 +1,4 @@
 Entries:
-- author: DelleVelleD
-  changes:
-  - {message: Fixed power devices remaining connected to the network after unwrenching,
-    type: Fix}
-  id: 728
-  time: '2021-12-13T05:45:54.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: You can now pull another player even if they have their hands full.,
@@ -3010,3 +3004,11 @@ Entries:
       in a future map update., type: Add}
   id: 1227
   time: '2022-03-19T03:27:45.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Added formal clothing for captain and HoS., type: Add}
+  - {message: Added atmospheric technician firesuit., type: Add}
+  - {message: Added admin cloak and miner cloak., type: Add}
+  - {message: All hardsuits now have accurate stats and movespeeds, type: Add}
+  id: 1228
+  time: '2022-03-19T07:19:44.0000000+00:00'
