@@ -1,3 +1,3 @@
-ent-Skub = skub
-    .desc = Skub is the fifth Chaos God.
+ent-Skub = скаб
+    .desc = Скаб - это пятый Бог Хаоса.
     .suffix = { "" }

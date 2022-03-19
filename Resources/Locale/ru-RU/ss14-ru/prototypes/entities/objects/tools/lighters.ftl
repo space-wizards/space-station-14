@@ -1,6 +1,6 @@
-ent-Lighter = basic lighter
-    .desc = A simple plastic cigarette lighter.
+ent-Lighter = простая зажигалка
+    .desc = Простая пластмассовая зажигалка.
     .suffix = { "" }
-ent-CheapLighter = cheap lighter
-    .desc = A dangerously inexpensive plastic lighter, don't burn your thumb!
+ent-CheapLighter = дешёвая зажигалка
+    .desc = Опасно дешёвая пластиковая зажигалка, не обожгите большой палец!
     .suffix = { "" }

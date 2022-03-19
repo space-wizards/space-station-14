@@ -1,6 +1,6 @@
-ent-DiceBag = bag of dice
-    .desc = Contains all the luck you'll ever need.
+ent-DiceBag = мешочек с костями
+    .desc = Содержит всю удачу, которая вам только может понадобиться.
     .suffix = { "" }
-ent-MagicDiceBag = bag of dice
+ent-MagicDiceBag = мешочек с костями
     .desc = { ent-DiceBag.desc }
     .suffix = { "" }

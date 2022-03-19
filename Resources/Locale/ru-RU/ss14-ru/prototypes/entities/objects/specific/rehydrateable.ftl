@@ -1,6 +1,6 @@
-ent-MonkeyCube = monkey cube
-    .desc = Just add water!
+ent-MonkeyCube = обезьяний кубик
+    .desc = Просто добавь воды!
     .suffix = { "" }
-ent-DehydratedSpaceCarp = dehydrated space carp
-    .desc = Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
+ent-DehydratedSpaceCarp = обезвоженный космический карп
+    .desc = Выглядит как плюшевый игрушечный карп, но стоит только добавить воды, и он превращается в настоящего космического карпа!
     .suffix = { "" }

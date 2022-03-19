@@ -1,3 +1,3 @@
-ent-Flare = emergency flare
-    .desc = A flare that produces a very bright light for a short while. Point the flame away from yourself.
+ent-Flare = аварийный фальшфейер
+    .desc = Фальшфейер, дающий очень яркий свет на короткое время. Направляйте огонь в сторону от себя.
     .suffix = { "" }

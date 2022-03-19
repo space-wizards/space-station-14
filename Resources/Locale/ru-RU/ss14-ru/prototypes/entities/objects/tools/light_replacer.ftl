@@ -1,3 +1,3 @@
-ent-LightReplacer = light replacer
-    .desc = An item which uses magnets to easily replace broken lights.
+ent-LightReplacer = лампозаменитель
+    .desc = Устройство, использующее магниты для легкой замены сломанных лампочек.
     .suffix = { "" }

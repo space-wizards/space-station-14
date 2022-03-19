@@ -1,6 +1,6 @@
-ent-BackgammonBoard = backgammon board
-    .desc = Old fashioned game of dice and pieces.
+ent-BackgammonBoard = доска для нард
+    .desc = Старомодная игра в кости и фишки.
     .suffix = { "" }
-ent-BackgammonBoardTabletop = backgammon
+ent-BackgammonBoardTabletop = нарды
     .desc = { "" }
     .suffix = { "" }

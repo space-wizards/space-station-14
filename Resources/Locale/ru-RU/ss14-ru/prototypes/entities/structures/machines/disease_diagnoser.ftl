@@ -1,3 +1,3 @@
-ent-DiseaseDiagnoser = Disease Diagnoser Delta Extreme
-    .desc = A machine that analyzes disease samples.
+ent-DiseaseDiagnoser = Диагностировщик заболеваний Дельта Экстрим
+    .desc = Машина, анализирующая пробы на наличие заболеваний.
     .suffix = { "" }

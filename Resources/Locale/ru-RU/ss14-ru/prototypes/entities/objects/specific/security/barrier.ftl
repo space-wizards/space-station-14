@@ -1,3 +1,3 @@
-ent-DeployableBarrier = deployable barrier
-    .desc = A deployable barrier. Swipe your ID card to lock/unlock it.
+ent-DeployableBarrier = развёртываемый барьер
+    .desc = Развертываемый барьер. Для блокировки/разблокировки проведите по нему ID-картой.
     .suffix = { "" }

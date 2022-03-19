@@ -1,9 +1,9 @@
-ent-MopItem = mop
-    .desc = A mop that can't be stopped, viscera cleanup detail awaits.
+ent-MopItem = швабра
+    .desc = Швабра, которую невозможно остановить, viscera cleanup detail ждёт вас.
     .suffix = { "" }
-ent-MopBucket = mop bucket
-    .desc = Holds water and the tears of the janitor.
-    .suffix = Full
-ent-WetFloorSign = wet floor sign
-    .desc = Caution! Wet Floor!
+ent-MopBucket = ведро для швабры
+    .desc = Содержит воду и слезы уборщика.
+    .suffix = Полное
+ent-WetFloorSign = знак "мокрый пол"
+    .desc = Осторожно! Мокрый пол!
     .suffix = { "" }

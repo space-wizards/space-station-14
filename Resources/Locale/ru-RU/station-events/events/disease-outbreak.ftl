@@ -1,1 +1,1 @@
-station-event-disease-outbreak-announcement = Ship systems have detected that some crewmates have been infected with a disease.
+station-event-disease-outbreak-announcement = Системы судна обнаружили, что некоторые члены экипажа инфицированы каким-то заболеванием.

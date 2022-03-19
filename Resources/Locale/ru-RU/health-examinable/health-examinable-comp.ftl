@@ -1,2 +1,2 @@
-health-examinable-verb-text = Health
-health-examinable-verb-disabled = Not close enough
+health-examinable-verb-text = Здоровье
+health-examinable-verb-disabled = Недостаточно близко

@@ -1,3 +1,3 @@
-ent-HandLabeler = hand labeler
-    .desc = A hand labeler, used to label items and objects.
+ent-HandLabeler = ручной этикетировщик
+    .desc = Ручной этикетировщик, используемый для маркировки предметов и объектов.
     .suffix = { "" }

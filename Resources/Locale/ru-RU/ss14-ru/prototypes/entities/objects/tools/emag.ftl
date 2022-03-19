@@ -1,3 +1,3 @@
-ent-Emag = cryptographic sequencer
-    .desc = The iconic card of ill omen.
+ent-Emag = криптографический секвенсор
+    .desc = Знаковая карта дурного знамения.
     .suffix = { "" }

@@ -1,6 +1,6 @@
-ent-ParchisBoard = parchís board
-    .desc = Cross and circle board game famous for destroying countless friendships.
+ent-ParchisBoard = доска для парчис
+    .desc = Настольная игра с крестом и кружками, известная тем, что разрушила бесчисленное количество дружеских отношений.
     .suffix = { "" }
-ent-ParchisBoardTabletop = parchís
+ent-ParchisBoardTabletop = парчис
     .desc = { "" }
     .suffix = { "" }

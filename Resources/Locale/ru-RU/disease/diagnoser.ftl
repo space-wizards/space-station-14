@@ -1,20 +1,20 @@
-diagnoser-cant-use-swab = { CAPITALIZE(THE($machine)) } rejects { THE($swab) }.
-diagnoser-insert-swab = You insert { THE($swab) } into { THE($machine) }.
-diagnoser-disease-report = Disease Report: { CAPITALIZE($disease) }
-diagnoser-disease-report-none = Bill of Good Health
-diagnoser-disease-report-none-contents = [color=green]No diseases were found in this sample.[/color]
-diagnoser-disease-report-name = Disease Name: { CAPITALIZE($disease) }
-diagnoser-disease-report-infectious = Infectious: [color=red]Yes[/color]
-diagnoser-disease-report-not-infectious = Infectious: [color=green]No[/color]
-diagnoser-disease-report-cureresist-none = Medication Resistance: [color=green]None[/color]
-diagnoser-disease-report-cureresist-low = Medication Resistance: [color=yellow]Low[/color]
-diagnoser-disease-report-cureresist-medium = Medication Resistance: [color=orange]Medium[/color]
-diagnoser-disease-report-cureresist-high = Medication Resistance: [color=red]High[/color]
-diagnoser-cure-none = The disease has no specific cures.
-diagnoser-cure-has = The disease has the following cures:
-diagnoser-cure-bedrest = Rest in bed for { $time } seconds.
-diagnoser-cure-reagent = Consume at least { $units }u of { $reagent }.
-diagnoser-cure-wait = It will go away on its own after { $time } seconds.
-diagnoser-cure-temp = Reach a body temperature below { $max }°K or above { $min }°K.
-diagnoser-cure-temp-min = Reach a body temperature above { $min }°K.
-diagnoser-cure-temp-max = Reach a body temperature below { $max }°K.
+diagnoser-cant-use-swab = { CAPITALIZE($machine) } не принимает { $swab }.
+diagnoser-insert-swab = Вы вставляете { $swab } в { $machine }.
+diagnoser-disease-report = Отчет о болезни: { CAPITALIZE($disease) }
+diagnoser-disease-report-none = Отчет о хорошем здоровье
+diagnoser-disease-report-none-contents = [color=green]В этом образце не было обнаружено никаких заболеваний.[/color]
+diagnoser-disease-report-name = Название болезни: { CAPITALIZE($disease) }
+diagnoser-disease-report-infectious = Передаётся: [color=red]Да[/color]
+diagnoser-disease-report-not-infectious = Передаётся: [color=green]Нет[/color]
+diagnoser-disease-report-cureresist-none = Устойчивость к лекарствам: [color=green]Нет[/color]
+diagnoser-disease-report-cureresist-low = Устойчивость к лекарствам: [color=yellow]Низкая[/color]
+diagnoser-disease-report-cureresist-medium = Устойчивость к лекарствам: [color=orange]Средняя[/color]
+diagnoser-disease-report-cureresist-high = Устойчивость к лекарствам: [color=red]Высокая[/color]
+diagnoser-cure-none = Эта болезнь не имеет специфических методов лечения.
+diagnoser-cure-has = Эта болезнь лечится следующим образом:
+diagnoser-cure-bedrest = Отдых в постели в течение { $time } секунд.
+diagnoser-cure-reagent = Употребление не менее { $units }ед. { $reagent }.
+diagnoser-cure-wait = Она пройдет сама по себе после { $time } секунд.
+diagnoser-cure-temp = Достижение температуры тела ниже { $max }°K или выше { $min }°K.
+diagnoser-cure-temp-min = Достижение температуры тела выше { $min }°K.
+diagnoser-cure-temp-max = Достижение температуры тела ниже { $max }°K.

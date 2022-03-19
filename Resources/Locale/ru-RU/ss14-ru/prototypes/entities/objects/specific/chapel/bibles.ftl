@@ -1,3 +1,3 @@
-ent-Bible = bible
-    .desc = New Interstellar Version 2340
+ent-Bible = библия
+    .desc = Новая межзвездная версия 2340
     .suffix = { "" }
