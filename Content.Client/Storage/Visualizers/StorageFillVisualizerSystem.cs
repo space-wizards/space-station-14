@@ -16,7 +16,7 @@ public sealed class StorageFillVisualizerSystem : VisualizerSystem<StorageFillVi
         if (!args.Component.TryGetData(StorageFillVisuals.FillLevel, out int level))
             return;
 
-        var state = $"{component.FillBaseName}_{level}";
-        sprite.LayerSetState(StorageFillLayers.FillLevel, state);
+        var state = $"{component.FillBaseName}-{level}";
+        sprite.LayerSetState(StorageFillLayers.Fill, state);
     }
 }

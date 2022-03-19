@@ -24,5 +24,5 @@ public enum StorageFillVisuals : byte
 [Serializable, NetSerializable]
 public enum StorageFillLayers : byte
 {
-    FillLevel
+    Fill
 }
