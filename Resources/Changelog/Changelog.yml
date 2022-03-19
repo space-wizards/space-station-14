@@ -1,12 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: You can now pull another player even if they have their hands full.,
-    type: Tweak}
-  id: 729
-  time: '2021-12-13T05:46:09.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: 'The collision for broken grilles have been fixed, you can now walk
       through them again.', type: Fix}
   id: 730
@@ -3012,3 +3006,9 @@ Entries:
   - {message: All hardsuits now have accurate stats and movespeeds, type: Add}
   id: 1228
   time: '2022-03-19T07:19:44.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: You must be 16 or older to play now. Users under 16 will be banned.,
+    type: Tweak}
+  id: 1229
+  time: '2022-03-19T18:03:34.0000000+00:00'
