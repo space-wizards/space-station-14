@@ -216,7 +216,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         foreach (var (entity, xform) in list)
         {
             processed.Add(entity);
-            ProcessEntity(entity, epicenter, processed, damage, throwForce, id, false, xform);
+            ProcessEntity(entity, epicenter, damage, throwForce, id, false, xform);
         }
 
         // process anchored entities
@@ -224,7 +224,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         foreach (var entity in grid.GetAnchoredEntities(tile).ToList())
         {
             processed.Add(entity);
-            ProcessEntity(entity, epicenter, processed, damage, throwForce, id, true);
+            ProcessEntity(entity, epicenter, damage, throwForce, id, true);
             tileBlocked |= IsBlockingTurf(entity);
         }
 
@@ -246,7 +246,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         {
             // Here we only throw, no dealing damage. Containers n such might drop their entities after being destroyed, but
             // they should handle their own damage pass-through, with their own damage reduction calculation.
-            ProcessEntity(entity, epicenter, processed, null, throwForce, id, false, xform);
+            ProcessEntity(entity, epicenter, null, throwForce, id, false, xform);
         }
 
         return !tileBlocked;
@@ -300,7 +300,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         foreach (var (entity, xform) in list)
         {
             processed.Add(entity);
-            ProcessEntity(entity, epicenter, processed, damage, throwForce, id, false, xform);
+            ProcessEntity(entity, epicenter, damage, throwForce, id, false, xform);
         }
 
         if (throwForce <= 0)
@@ -312,14 +312,14 @@ public sealed partial class ExplosionSystem : EntitySystem
         _entityLookup.FastEntitiesIntersecting(lookup, ref worldBox, callback);
         foreach (var (entity, xform) in list)
         {
-            ProcessEntity(entity, epicenter, processed, null, throwForce, id, false, xform);
+            ProcessEntity(entity, epicenter, null, throwForce, id, false, xform);
         }
     }
 
     /// <summary>
     ///     This function actually applies the explosion affects to an entity.
     /// </summary>
-    private void ProcessEntity(EntityUid uid, MapCoordinates epicenter, HashSet<EntityUid> processed, DamageSpecifier? damage, float throwForce, string id, bool anchored, TransformComponent? xform = null)
+    private void ProcessEntity(EntityUid uid, MapCoordinates epicenter, DamageSpecifier? damage, float throwForce, string id, bool anchored, TransformComponent? xform = null)
     {
         // damage
         if (damage != null)
@@ -335,8 +335,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // throw
         if (!anchored
             && throwForce > 0
-            && !EntityManager.IsQueuedForDeletion(uid)
-            && HasComp<ExplosionLaunchedComponent>(uid))
+            && !EntityManager.IsQueuedForDeletion(uid))
         {
             xform ??= Transform(uid);
             // TODO purge throw helpers
@@ -485,7 +484,10 @@ sealed class Explosion
         {
             _currentIntensity = _tileSetIntensity[CurrentIteration];
             _currentDamage = ExplosionType.DamagePerIntensity * _currentIntensity;
-            _currentThrowForce = Area > _system.ThrowLimit ? 0 : 10 * MathF.Sqrt(_currentIntensity);
+
+            // only throw if either the explosion is small, or if this is the outer ring of a large explosion.
+            var doThrow = Area < _system.ThrowLimit || CurrentIteration > _tileSetIntensity.Count - 6;
+            _currentThrowForce = doThrow ? 10 * MathF.Sqrt(_currentIntensity) : 0;
 
             // for each grid/space tile set
             while (_currentDataIndex < _explosionData.Count)
