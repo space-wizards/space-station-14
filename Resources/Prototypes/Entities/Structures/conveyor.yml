@@ -33,6 +33,15 @@
   - type: Construction
     graph: ConveyorGraph
     node: entity
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      # if ConveyorBeltAssembly becomes craftable, maybe spawn some of the ingredients?
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   id: ConveyorBeltAssembly
@@ -79,3 +88,11 @@
     - type: Construction
       graph: LeverGraph
       node: lever
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
