@@ -23,7 +23,7 @@ public sealed class OpenExplosionEui : IConsoleCommand
         var player = shell.Player as IPlayerSession;
         if (player == null)
         {
-            shell.WriteLine("This does not work from the server console.");
+            shell.WriteError("This does not work from the server console.");
             return;
         }
 
@@ -47,27 +47,27 @@ public sealed class ExplosionCommand : IConsoleCommand
     {
         if (args.Length == 0 || args.Length == 4 || args.Length > 7)
         {
-            shell.WriteLine("Wrong number of arguments.");
+            shell.WriteError("Wrong number of arguments.");
             return;
         }
 
         if (!float.TryParse(args[0], out var intensity))
         {
-            shell.WriteLine($"Failed to parse intensity: {args[0]}");
+            shell.WriteError($"Failed to parse intensity: {args[0]}");
             return;
         }
  
         float slope = 5;
         if (args.Length > 1 && !float.TryParse(args[1], out slope))
         {
-            shell.WriteLine($"Failed to parse float: {args[1]}");
+            shell.WriteError($"Failed to parse float: {args[1]}");
             return;
         }
 
         float maxIntensity = 100;
         if (args.Length > 2 && !float.TryParse(args[2], out maxIntensity))
         {
-            shell.WriteLine($"Failed to parse float: {args[2]}");
+            shell.WriteError($"Failed to parse float: {args[2]}");
             return;
         }
 
@@ -77,7 +77,7 @@ public sealed class ExplosionCommand : IConsoleCommand
             if (!float.TryParse(args[3], out x) ||
                 !float.TryParse(args[4], out y))
             {
-                shell.WriteLine($"Failed to parse coordinates: {(args[3], args[4])}");
+                shell.WriteError($"Failed to parse coordinates: {(args[3], args[4])}");
                 return;
             }
         }
@@ -87,7 +87,7 @@ public sealed class ExplosionCommand : IConsoleCommand
         {
             if (!int.TryParse(args[5], out var parsed))
             {
-                shell.WriteLine($"Failed to parse map ID: {args[5]}");
+                shell.WriteError($"Failed to parse map ID: {args[5]}");
                 return;
             }
             coords = new MapCoordinates((x, y), new(parsed));
@@ -98,7 +98,7 @@ public sealed class ExplosionCommand : IConsoleCommand
             var entMan = IoCManager.Resolve<IEntityManager>();
             if (!entMan.TryGetComponent(shell.Player?.AttachedEntity, out TransformComponent? xform))
             {
-                shell.WriteLine($"Failed get default coordinates/map via player's transform. Need to specify explicitly.");
+                shell.WriteError($"Failed get default coordinates/map via player's transform. Need to specify explicitly.");
                 return;
             }
 
@@ -115,7 +115,7 @@ public sealed class ExplosionCommand : IConsoleCommand
         {
             if (!protoMan.TryIndex(args[6], out type))
             {
-                shell.WriteLine($"Unknown explosion prototype: {args[6]}");
+                shell.WriteError($"Unknown explosion prototype: {args[6]}");
                 return;
             }
         }
@@ -129,6 +129,7 @@ public sealed class ExplosionCommand : IConsoleCommand
             type = types.First();
         }
 
-        EntitySystem.Get<ExplosionSystem>().QueueExplosion(coords, type.ID, intensity, slope, maxIntensity);
+        var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+        sysMan.GetEntitySystem<ExplosionSystem>().QueueExplosion(coords, type.ID, intensity, slope, maxIntensity);
     }
 }
