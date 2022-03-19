@@ -18,8 +18,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// </summary>
     private void OnGridStartup(GridStartupEvent ev)
     {
-        if (!_mapManager.TryGetGrid(ev.GridId, out var grid))
-            return;
+        var grid = _mapManager.GetGrid(ev.GridId);
 
         Dictionary<Vector2i, NeighborFlag> edges = new();
         _gridEdges[ev.GridId] = edges;
@@ -41,7 +40,10 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     Take our map of grid edges, where each is defHined in their own grid's reference frame, and map those
     ///     edges all onto one grids reference frame.
     /// </summary>
-    public (Dictionary<Vector2i, BlockedSpaceTile>, ushort) TransformGridEdges(MapId targetMap, GridId? referenceGrid, List<GridId> localGrids)
+    public (Dictionary<Vector2i, BlockedSpaceTile>, ushort) TransformGridEdges(
+        MapCoordinates epicentre,
+        GridId? referenceGrid,
+        List<GridId> localGrids)
     {
         Dictionary<Vector2i, BlockedSpaceTile> transformedEdges = new();
 
@@ -68,7 +70,6 @@ public sealed partial class ExplosionSystem : EntitySystem
         //   foreach edge tile in that grid
         //     foreach tile in our grid that touches that tile (vast majority of the time: 1 tile, but could be up to 4)
 
-        HashSet<Vector2i> transformedTiles = new();
         foreach (var gridToTransform in localGrids)
         {
             // we treat the target grid separately
@@ -78,8 +79,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (!_gridEdges.TryGetValue(gridToTransform, out var edges))
                 continue;
 
-            if (!_mapManager.TryGetGrid(gridToTransform, out var grid) ||
-                grid.ParentMapId != targetMap)
+            if (!_mapManager.TryGetGrid(gridToTransform, out var grid))
                 continue;
 
             if (grid.TileSize != tileSize)
@@ -88,9 +88,13 @@ public sealed partial class ExplosionSystem : EntitySystem
                 continue;
             }
 
-            var xform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
-            var matrix = offsetMatrix * xform.WorldMatrix * targetMatrix;
-            var angle = xform.WorldRotation - targetAngle;
+            var xforms = EntityManager.GetEntityQuery<TransformComponent>();
+            var xform = xforms.GetComponent(grid.GridEntityId);
+            var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrid) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
+
+            var localEpicentre = (Vector2i) invGridWorldMatrid.Transform(epicentre.Position);
+            var matrix = offsetMatrix * gridWorldMatrix * targetMatrix;
+            var angle = gridWorldRotation - targetAngle;
 
             var (x, y) = angle.RotateVec((tileSize / 4f, tileSize / 4f));
 
@@ -115,11 +119,14 @@ public sealed partial class ExplosionSystem : EntitySystem
                 // Instead of just mapping the center of the tile, we map for points on that tile. This is basically a
                 // shitty approximation to doing a proper check to get all space-tiles that intersect this grid tile.
                 // Not perfect, but works well enough.
-                transformedTiles.Clear();
-                transformedTiles.Add(new((int) MathF.Floor(center.X + x), (int) MathF.Floor(center.Y + y)));  // center of tile, offset by (0.25, 0.25) in tile coordinates
-                transformedTiles.Add(new((int) MathF.Floor(center.X - y), (int) MathF.Floor(center.Y + x)));  // center offset by (-0.25, 0.25)
-                transformedTiles.Add(new((int) MathF.Floor(center.X - x), (int) MathF.Floor(center.Y - y)));  // offset by (-0.25, -0.25)
-                transformedTiles.Add(new((int) MathF.Floor(center.X + y), (int) MathF.Floor(center.Y - x)));  // offset by (0.25, -0.25)
+
+                HashSet<Vector2i> transformedTiles = new()
+                {
+                    new((int) MathF.Floor(center.X + x), (int) MathF.Floor(center.Y + x)),  // center of tile, offset by (0.25, 0.25) in tile coordinates
+                    new((int) MathF.Floor(center.X - y), (int) MathF.Floor(center.Y - y)),  // center offset by (-0.25, 0.25)
+                    new((int) MathF.Floor(center.X - x), (int) MathF.Floor(center.Y + y)),  // offset by (-0.25, -0.25)
+                    new((int) MathF.Floor(center.X + y), (int) MathF.Floor(center.Y - x)),  // offset by (0.25, -0.25)
+                };
 
                 foreach (var newIndices in transformedTiles)
                 {

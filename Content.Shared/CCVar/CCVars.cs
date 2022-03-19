@@ -360,7 +360,7 @@ namespace Content.Shared.CCVar
         ///     unnaturally "slow" explosions.
         /// </remarks>
         public static readonly CVarDef<int> ExplosionTilesPerTick =
-            CVarDef.Create("explosion.tilespertick", 100, CVar.SERVERONLY);
+            CVarDef.Create("explosion.tiles_per_tick", 100, CVar.SERVERONLY);
 
         /// <summary>
         ///     Upper limit on the size of an explosion before physics-throwing is disabled.
@@ -371,7 +371,7 @@ namespace Content.Shared.CCVar
         ///     incrementally. 
         /// </remarks>
         public static readonly CVarDef<int> ExplosionThrowLimit =
-            CVarDef.Create("explosion.throwlimit", 400, CVar.SERVERONLY);
+            CVarDef.Create("explosion.throw_limit", 400, CVar.SERVERONLY);
 
         /// <summary>
         ///     If this is true, explosion processing will pause the NodeGroupSystem to pause updating.
@@ -382,7 +382,7 @@ namespace Content.Shared.CCVar
         ///     every tick as the explosion shreds the station, causing significant slowdown.
         /// </remarks>
         public static readonly CVarDef<bool> ExplosionSleepNodeSys =
-            CVarDef.Create("explosion.nodesleep", true, CVar.SERVERONLY);
+            CVarDef.Create("explosion.node_sleep", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     Upper limit on the total area that an explosion can affect before the neighbor-finding algorithm just
@@ -392,7 +392,7 @@ namespace Content.Shared.CCVar
         ///     Actual area may be larger, as it currently doesn't terminate mid neighbor finding. I.e., area may be that of a ~51 tile radius circle instead.
         /// </remarks>
         public static readonly CVarDef<int> ExplosionMaxArea =
-            CVarDef.Create("explosion.maxarea", (int) 3.14f * 50 * 50, CVar.SERVERONLY);
+            CVarDef.Create("explosion.max_area", (int) 3.14f * 50 * 50, CVar.SERVERONLY);
 
         /// <summary>
         ///     Upper limit on the number of neighbor finding steps for the explosion system neighbor-finding algorithm.
@@ -402,7 +402,7 @@ namespace Content.Shared.CCVar
         ///     instances, <see cref="ExplosionMaxArea"/> will likely be hit before this becomes a limiting factor.
         /// </remarks>
         public static readonly CVarDef<int> ExplosionMaxIterations =
-            CVarDef.Create("explosion.maxiterations", 150, CVar.SERVERONLY);
+            CVarDef.Create("explosion.max_iterations", 150, CVar.SERVERONLY);
 
         /// <summary>
         ///     Max Time in milliseconds to spend processing explosions every tick.
@@ -413,7 +413,7 @@ namespace Content.Shared.CCVar
         ///     spawning cannot currently be interrupted & resumed, and may lead to exceeding this time limit.
         /// </remarks>
         public static readonly CVarDef<float> ExplosionMaxProcessingTime =
-            CVarDef.Create("explosion.maxtime", 7f, CVar.SERVERONLY);
+            CVarDef.Create("explosion.max_tick_time", 7f, CVar.SERVERONLY);
 
         /// <summary>
         ///     If the explosion is being processed incrementally over several ticks, this variable determines whether
@@ -425,7 +425,7 @@ namespace Content.Shared.CCVar
         ///     expands, just suddenly at the end.
         /// </remarks>
         public static readonly CVarDef<bool> ExplosionIncrementalTileBreaking =
-            CVarDef.Create("explosion.incrementaltile", false, CVar.SERVERONLY);
+            CVarDef.Create("explosion.incremental_tile", false, CVar.SERVERONLY);
 
         /*
          * Admin logs

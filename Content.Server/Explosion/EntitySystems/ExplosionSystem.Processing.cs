@@ -245,7 +245,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         foreach (var (entity, xform) in list)
         {
             // Here we only throw, no dealing damage. Containers n such might drop their entities after being destroyed, but
-            // they handle their own damage pass-through.
+            // they should handle their own damage pass-through, with their own damage reduction calculation.
             ProcessEntity(entity, epicenter, processed, null, throwForce, id, false, xform);
         }
 
