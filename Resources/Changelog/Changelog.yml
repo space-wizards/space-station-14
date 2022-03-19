@@ -1,9 +1,4 @@
 Entries:
-- author: StanberyTrask
-  changes:
-  - {message: 'added railing sprites, prototype, and construction graph', type: Add}
-  id: 726
-  time: '2021-12-13T05:03:21.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix AHelp and Quit command permissions, type: Fix}
@@ -3008,3 +3003,9 @@ Entries:
       13, is now playable! The map is still a beta.', type: Add}
   id: 1225
   time: '2022-03-18T21:43:53.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Fixes a number of issues on Delta Station. Thank you for testing it!
+      Please continue to report any issues you're having., type: Tweak}
+  id: 1226
+  time: '2022-03-19T00:50:59.0000000+00:00'
