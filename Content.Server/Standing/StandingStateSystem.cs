@@ -1,6 +1,7 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Standing;
+using Content.Shared.Throwing;
 using Robust.Shared.Random;
 
 namespace Content.Server.Standing;
@@ -9,6 +10,7 @@ public sealed class StandingStateSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
 
     private void FallOver(EntityUid uid, StandingStateComponent component, DropHandItemsEvent args)
     {
@@ -26,8 +28,8 @@ public sealed class StandingStateSystem : EntitySystem
 
             if (!_handsSystem.TryDrop(uid, hand, null, checkActionBlocker: false, handsComp: handsComp))
                 continue;
-            
-            Throwing.ThrowHelper.TryThrow(held,
+
+            _throwingSystem.TryThrow(held,
                 _random.NextAngle().RotateVec(direction / dropAngle + worldRotation / 50),
                 0.5f * dropAngle * _random.NextFloat(-0.9f, 1.1f),
                 uid, 0);
