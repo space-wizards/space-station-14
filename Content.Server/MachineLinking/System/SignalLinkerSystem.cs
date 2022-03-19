@@ -144,7 +144,7 @@ namespace Content.Server.MachineLinking.System
         private void LinkerTransmitterInteraction(EntityUid entity, SignalLinkerComponent linkerComponent,
             SignalTransmitterComponent transmitter, string transmitterPort)
         {
-            linkerComponent.savedPort = (transmitter, transmitterPort);
+            linkerComponent.savedPort = new() { uid = transmitter.Owner, port = transmitterPort };
             entity.PopupMessageCursor(Loc.GetString("signal-linker-component-saved-port",
                     ("port", transmitterPort), ("machine", transmitter.Owner)));
         }
@@ -153,8 +153,9 @@ namespace Content.Server.MachineLinking.System
             SignalReceiverComponent receiver, string receiverPort)
         {
             if (!linker.savedPort.HasValue) return;
-            var (transmitter, transmitterPort) = linker.savedPort.Value;
-            if (!transmitter.Outputs.TryGetValue(transmitterPort, out var receivers)) return;
+            var identifier = linker.savedPort.Value;
+            if (!TryComp(identifier.uid, out SignalTransmitterComponent? transmitter)) return;
+            if (!transmitter.Outputs.TryGetValue(identifier.port, out var receivers)) return;
             if (!receiver.Inputs.TryGetValue(receiverPort, out var transmitters)) return;
 
             if (receivers.Contains(new() { uid = receiver.Owner, port = receiverPort }))
@@ -162,7 +163,7 @@ namespace Content.Server.MachineLinking.System
                 if (receivers.Remove(new() { uid = receiver.Owner, port = receiverPort }))
                 {
                     RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(receiverPort));
-                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(transmitterPort));
+                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(identifier.port));
                     entity.PopupMessageCursor(Loc.GetString("signal-linker-component-unlinked-port",
                         ("port", receiverPort), ("machine", receiver)));
                 }
@@ -175,14 +176,14 @@ namespace Content.Server.MachineLinking.System
                     return;
                 }
 
-                var linkAttempt = new LinkAttemptEvent(entity, transmitter, transmitterPort, receiver, receiverPort);
+                var linkAttempt = new LinkAttemptEvent(entity, transmitter, identifier.port, receiver, receiverPort);
                 RaiseLocalEvent(receiver.Owner, linkAttempt);
                 RaiseLocalEvent(transmitter.Owner, linkAttempt);
 
                 if (linkAttempt.Cancelled) return;
 
                 receivers.Add(new() { uid = receiver.Owner, port = receiverPort });
-                transmitters.Add(new() { uid = transmitter.Owner, port = transmitterPort });
+                transmitters.Add(new() { uid = transmitter.Owner, port = identifier.port });
 
                 entity.PopupMessageCursor(Loc.GetString("signal-linker-component-linked-port",
                     ("port", receiverPort), ("machine", receiver.Owner)));
