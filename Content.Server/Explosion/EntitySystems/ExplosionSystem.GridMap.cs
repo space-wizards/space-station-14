@@ -26,9 +26,6 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         foreach (var tileRef in grid.GetAllTiles())
         {
-            if (tileRef.Tile.IsEmpty)
-                continue;
-
             if (IsEdge(grid, tileRef.GridIndices, out var dir))
                 edges.Add(tileRef.GridIndices, dir);
         }
