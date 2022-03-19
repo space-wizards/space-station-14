@@ -122,11 +122,13 @@ public sealed class ExplosionCommand : IConsoleCommand
         else
         {
             // no prototype was specified, so lets default to whichever one was defined first
-            var types = protoMan.EnumeratePrototypes<ExplosionPrototype>();
-            if (!types.Any())
-                return;
+            type = protoMan.EnumeratePrototypes<ExplosionPrototype>().FirstOrDefault();
 
-            type = types.First();
+            if (type == null)
+            {
+                shell.WriteError($"Prototype manager has no explosion prototypes?");
+                return;
+            }
         }
 
         var sysMan = IoCManager.Resolve<IEntitySystemManager>();
