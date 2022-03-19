@@ -33,7 +33,7 @@ public sealed class StorageFillVisualizerSystem : EntitySystem
     private void UpdateAppearance(EntityUid uid, ServerStorageComponent? storage = null, AppearanceComponent? appearance = null,
         StorageFillVisualizerComponent? component = null)
     {
-        if (!Resolve(uid, ref storage, ref appearance, ref component))
+        if (!Resolve(uid, ref storage, ref appearance, ref component, false))
             return;
 
         var level = ContentHelpers.RoundToEqualLevels(storage.StorageUsed, storage.StorageCapacityMax, component.MaxFillLevels);
