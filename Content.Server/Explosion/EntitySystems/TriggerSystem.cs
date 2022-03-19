@@ -11,6 +11,7 @@ using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Content.Shared.Sound;
 using Content.Shared.Trigger;
+using Content.Shared.Database;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -122,6 +123,17 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (HasComp<ActiveTimerTriggerComponent>(uid))
                 return;
+
+            if (user != null)
+            {
+                _logSystem.Add(LogType.Trigger,
+                    $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}");
+            }
+            else
+            {
+                _logSystem.Add(LogType.Trigger,
+                    $"{delay} second timer trigger started on entity {ToPrettyString(uid):timer}");
+            }
 
             var active = AddComp<ActiveTimerTriggerComponent>(uid);
             active.TimeRemaining = delay;

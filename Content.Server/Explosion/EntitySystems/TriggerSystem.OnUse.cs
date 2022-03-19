@@ -103,7 +103,15 @@ public sealed partial class TriggerSystem
     {
         if (args.Handled) return;
 
-        HandleTimerTrigger(uid, args.User, component.Delay, component.BeepInterval, component.InitialBeepDelay, component.BeepSound, component.BeepParams);
+        HandleTimerTrigger(
+            uid,
+            args.User,
+            component.Delay,
+            component.BeepInterval,
+            component.InitialBeepDelay,
+            component.BeepSound,
+            component.BeepParams);
+
         args.Handled = true;
     }
 

@@ -65,5 +65,6 @@ public enum LogType
     Chat = 61,
     Action = 62,
     Construction = 63,
+    Trigger = 64,
     Emag = 69,
 }
