@@ -9,6 +9,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -162,15 +163,15 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     Used for a variation of <see cref="TurfHelpers.IsBlockedTurf()"/> that makes use of the fact that we have
     ///     already done an entity lookup on a tile, and don't need to do so again.
     /// </remarks>
-    public bool IsBlockingTurf(EntityUid uid)
+    public bool IsBlockingTurf(EntityUid uid, EntityQuery<PhysicsComponent> physicsQuery)
     {
         if (EntityManager.IsQueuedForDeletion(uid))
             return false;
 
-        if (!TryComp(uid, out IPhysBody? body))
+        if (!physicsQuery.TryGetComponent(uid, out var physics))
             return false;
 
-        return body.CanCollide && body.Hard && (body.CollisionLayer & (int) CollisionGroup.Impassable) != 0;
+        return physics.CanCollide && physics.Hard && (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0;
     }
 
     /// <summary>
@@ -184,21 +185,24 @@ public sealed partial class ExplosionSystem : EntitySystem
         DamageSpecifier damage,
         MapCoordinates epicenter,
         HashSet<EntityUid> processed,
-        string id)
+        string id,
+        EntityQuery<TransformComponent> xformQuery,
+        EntityQuery<DamageableComponent> damageQuery,
+        EntityQuery<PhysicsComponent> physicsQuery)
     {
         var gridBox = new Box2(tile * grid.TileSize, (tile + 1) * grid.TileSize);
 
         // get the entities on a tile. Note that we cannot process them directly, or we get
         // enumerator-changed-while-enumerating errors.
         List<(EntityUid, TransformComponent?) > list = new();
-        var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
 
         EntityUidQueryCallback callback = uid =>
         {
             if (processed.Contains(uid))
                 return;
 
-            var xform = xformQuery.GetComponent(uid);
+            if (!xformQuery.TryGetComponent(uid, out var xform))
+                return;
 
             if (xform.ParentUid != grid.GridEntityId)
             {
@@ -216,7 +220,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         foreach (var (entity, xform) in list)
         {
             processed.Add(entity);
-            ProcessEntity(entity, epicenter, damage, throwForce, id, false, xform);
+            ProcessEntity(entity, epicenter, damage, throwForce, id, damageQuery, physicsQuery, xform);
         }
 
         // process anchored entities
@@ -224,8 +228,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         foreach (var entity in grid.GetAnchoredEntities(tile).ToList())
         {
             processed.Add(entity);
-            ProcessEntity(entity, epicenter, damage, throwForce, id, true);
-            tileBlocked |= IsBlockingTurf(entity);
+            ProcessEntity(entity, epicenter, damage, throwForce, id, damageQuery, physicsQuery);
+            tileBlocked |= IsBlockingTurf(entity, physicsQuery);
         }
 
         // Next, we get the intersecting entities AGAIN, but purely for throwing. This way, glass shards spawned from
@@ -246,7 +250,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         {
             // Here we only throw, no dealing damage. Containers n such might drop their entities after being destroyed, but
             // they should handle their own damage pass-through, with their own damage reduction calculation.
-            ProcessEntity(entity, epicenter, null, throwForce, id, false, xform);
+            ProcessEntity(entity, epicenter, null, throwForce, id, damageQuery, physicsQuery, xform);
         }
 
         return !tileBlocked;
@@ -263,12 +267,14 @@ public sealed partial class ExplosionSystem : EntitySystem
         DamageSpecifier damage,
         MapCoordinates epicenter,
         HashSet<EntityUid> processed,
-        string id)
+        string id,
+        EntityQuery<TransformComponent> xformQuery,
+        EntityQuery<DamageableComponent> damageQuery,
+        EntityQuery<PhysicsComponent> physicsQuery)
     {
         var gridBox = new Box2(tile * DefaultTileSize, (DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
         List<(EntityUid, TransformComponent)> list = new();
-        var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
 
         EntityUidQueryCallback callback = uid =>
         {
@@ -300,7 +306,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         foreach (var (entity, xform) in list)
         {
             processed.Add(entity);
-            ProcessEntity(entity, epicenter, damage, throwForce, id, false, xform);
+            ProcessEntity(entity, epicenter, damage, throwForce, id, damageQuery, physicsQuery, xform);
         }
 
         if (throwForce <= 0)
@@ -312,17 +318,25 @@ public sealed partial class ExplosionSystem : EntitySystem
         _entityLookup.FastEntitiesIntersecting(lookup, ref worldBox, callback);
         foreach (var (entity, xform) in list)
         {
-            ProcessEntity(entity, epicenter, null, throwForce, id, false, xform);
+            ProcessEntity(entity, epicenter, null, throwForce, id, damageQuery, physicsQuery, xform);
         }
     }
 
     /// <summary>
     ///     This function actually applies the explosion affects to an entity.
     /// </summary>
-    private void ProcessEntity(EntityUid uid, MapCoordinates epicenter, DamageSpecifier? damage, float throwForce, string id, bool anchored, TransformComponent? xform = null)
+    private void ProcessEntity(
+        EntityUid uid,
+        MapCoordinates epicenter,
+        DamageSpecifier? damage,
+        float throwForce,
+        string id,
+        EntityQuery<DamageableComponent> damageQuery,
+        EntityQuery<PhysicsComponent> physicsQuery,
+        TransformComponent? xform = null)
     {
         // damage
-        if (damage != null)
+        if (damage != null && damageQuery.TryGetComponent(uid, out var damageable))
         {
             var ev = new GetExplosionResistanceEvent(id);
             RaiseLocalEvent(uid, ev, false);
@@ -330,22 +344,23 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (ev.Resistance == 0)
             {
                 // no damage-dict multiplication required.
-                _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true);
+                _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true, damageable: damageable);
             }
             else if (ev.Resistance < 1)
             {
-                _damageableSystem.TryChangeDamage(uid, damage * (1 - ev.Resistance), ignoreResistances: true);
+                _damageableSystem.TryChangeDamage(uid, damage * (1 - ev.Resistance), ignoreResistances: true, damageable: damageable);
             }
         }
 
         // throw
-        if (!anchored
+        if (xform != null
+            && !xform.Anchored 
             && throwForce > 0
-            && !EntityManager.IsQueuedForDeletion(uid))
+            && !EntityManager.IsQueuedForDeletion(uid)
+            && physicsQuery.TryGetComponent(uid, out var physics)
+            && physics.BodyType == BodyType.Dynamic)
         {
-            xform ??= Transform(uid);
-            // TODO purge throw helpers. Currently this will generate warnings when trying to throw mobs. But cant check
-            // body & pass it as an input this helper.
+            // TODO purge throw helpers and pass in physics component
             uid.TryThrow(xform.WorldPosition - epicenter.Position, throwForce);
         }
 
@@ -435,6 +450,10 @@ sealed class Explosion
     private int _currentDataIndex;
     private Dictionary<IMapGrid, List<(Vector2i, Tile)>> _tileUpdateDict = new();
 
+    private EntityQuery<TransformComponent> _xformQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
+    private EntityQuery<DamageableComponent> _damageQuery;
+
     public int Area;
 
     private readonly ExplosionSystem _system;
@@ -455,6 +474,10 @@ sealed class Explosion
         _tileSetIntensity = tileSetIntensity;
         Epicenter = epicenter;
         Area = area;
+
+        _xformQuery = entMan.GetEntityQuery<TransformComponent>();
+        _physicsQuery = entMan.GetEntityQuery<PhysicsComponent>();
+        _damageQuery = entMan.GetEntityQuery<DamageableComponent>();
 
         if (spaceData != null)
         {
@@ -573,7 +596,10 @@ sealed class Explosion
                     _currentDamage,
                     Epicenter,
                     ProcessedEntities,
-                    ExplosionType.ID);
+                    ExplosionType.ID,
+                    _xformQuery,
+                    _damageQuery,
+                    _physicsQuery);
 
                 // was there a blocking entity on the tile that was not destroyed by the explosion?
                 if (canDamageFloor)
@@ -589,7 +615,10 @@ sealed class Explosion
                     _currentDamage,
                     Epicenter,
                     ProcessedEntities,
-                    ExplosionType.ID);
+                    ExplosionType.ID,
+                    _xformQuery,
+                    _damageQuery,
+                    _physicsQuery);
             }
 
             if (!MoveNext())
