@@ -34,7 +34,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         Vector2i initialTile;
         GridId? epicentreGrid = null;
-        var (localGrids, referenceGrid) = GetLocalGrids(epicenter, totalIntensity, slope, maxIntensity);
+        var (localGrids, referenceGrid, maxDistance) = GetLocalGrids(epicenter, totalIntensity, slope, maxIntensity);
 
         // get the epicenter tile indices
         if (_mapManager.TryFindGridAt(epicenter, out var candidateGrid) &&
@@ -110,7 +110,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         else
         {
             // set up the space explosion data
-            spaceData = new SpaceExplosion(this, epicenter.MapId, referenceGrid, localGrids);
+            spaceData = new SpaceExplosion(this, epicenter, referenceGrid, localGrids, maxDistance);
             spaceData.InitTile(initialTile);
         }
 
@@ -202,7 +202,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
             // if space-data is null, but some grid-based explosion reached space, we need to initialize it.
             if (spaceData == null && previousSpaceJump.Count != 0)
-                spaceData = new SpaceExplosion(this, epicenter.MapId, referenceGrid, localGrids);
+                spaceData = new SpaceExplosion(this, epicenter, referenceGrid, localGrids, maxDistance);
 
             // If the explosion has reached space, do that neighbors finding step as well.
             if (spaceData != null)
@@ -250,7 +250,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     match a separate grid. This is done so that if you have something like a tiny suicide-bomb shuttle exploding
     ///     near a large station, the explosion will still orient to match the station, not the tiny shuttle.
     /// </remarks>
-    public (List<GridId>, GridId?) GetLocalGrids(MapCoordinates epicenter, float totalIntensity, float slope, float maxIntensity)
+    public (List<GridId>, GridId?, float) GetLocalGrids(MapCoordinates epicenter, float totalIntensity, float slope, float maxIntensity)
     {
         // Get the explosion radius (approx radius if it were in open-space). Note that if the explosion is confined in
         // some directions but not in others, the actual explosion may reach further than this distance from the
@@ -285,12 +285,13 @@ public sealed partial class ExplosionSystem : EntitySystem
         // explosions. So instead of using the largest possible distance that an explosion could theoretically travel
         // and using that for the grid look-up, we will just arbitrarily fudge the lookup size to be twice the diameter.
 
-        box = box.Scale(4); // box with width and height of 4*radius.
+        radius *= 4;
+        box = Box2.CenteredAround(epicenter.Position, (radius, radius));
         var mapGrids = _mapManager.FindGridsIntersecting(epicenter.MapId, box).ToList();
         var grids = mapGrids.Select(x => x.Index).ToList();
 
         if (referenceGrid != null)
-            return (grids, referenceGrid);
+            return (grids, referenceGrid, radius);
 
         // We still don't have are reference grid. So lets also look in the enlarged region
         foreach (var grid in mapGrids)
@@ -302,7 +303,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             }
         }
 
-        return (grids, referenceGrid);
+        return (grids, referenceGrid, radius);
     }
 
     public ExplosionEvent? GenerateExplosionPreview(SpawnExplosionEuiMsg.PreviewRequest request)

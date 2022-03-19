@@ -43,13 +43,15 @@ public sealed partial class ExplosionSystem : EntitySystem
     public (Dictionary<Vector2i, BlockedSpaceTile>, ushort) TransformGridEdges(
         MapCoordinates epicentre,
         GridId? referenceGrid,
-        List<GridId> localGrids)
+        List<GridId> localGrids,
+        float maxDistance)
     {
         Dictionary<Vector2i, BlockedSpaceTile> transformedEdges = new();
 
         var targetMatrix = Matrix3.Identity;
         Angle targetAngle = new();
         var tileSize = DefaultTileSize;
+        var maxDistanceSq = (int) (maxDistance * maxDistance);
 
         // if the explosion is centered on some grid (and not just space), get the transforms.
         if (referenceGrid != null)
@@ -100,6 +102,11 @@ public sealed partial class ExplosionSystem : EntitySystem
 
             foreach (var (tile, dir) in edges)
             {
+                // if a tile is further than max distance from the epicentre, we just ignore it.
+                var delta = tile - localEpicentre;
+                if (delta.X * delta.X + delta.Y * delta.Y > maxDistanceSq) // no Vector2.Length???
+                    continue;
+
                 var center = matrix.Transform(tile);
 
                 if ((dir & NeighborFlag.Cardinal) == 0)

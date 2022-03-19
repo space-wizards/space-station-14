@@ -20,9 +20,9 @@ public sealed class SpaceExplosion : TileExplosion
 
     public ushort TileSize = ExplosionSystem.DefaultTileSize;
 
-    public SpaceExplosion(ExplosionSystem system, MapId targetMap, GridId? referenceGrid, List<GridId> localGrids)
+    public SpaceExplosion(ExplosionSystem system, MapCoordinates epicentre, GridId? referenceGrid, List<GridId> localGrids, float maxDistance)
     {
-        (_gridBlockMap, TileSize) = system.TransformGridEdges(targetMap, referenceGrid, localGrids);
+        (_gridBlockMap, TileSize) = system.TransformGridEdges(epicentre, referenceGrid, localGrids, maxDistance);
         system.GetUnblockedDirections(_gridBlockMap, TileSize);
     }
 
