@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Nanotrasen has thrown a clown into the singularity to improve stability
-      by 20%., type: Fix}
-  id: 741
-  time: '2021-12-15T02:47:13.0000000+00:00'
 - author: Matz05
   changes:
   - {message: Added burger buns! Craftable using one dough slice in the microwave
@@ -3021,3 +3015,11 @@ Entries:
       were equipped., type: Fix}
   id: 1240
   time: '2022-03-20T22:29:20.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station's beta atmos system is now complete!, type: Tweak}
+  - {message: Fixed the chemistry desk and EVA on Delta., type: Tweak}
+  - {message: Added some lights to Delta. Please let me know of any spots that are
+      too dim., type: Tweak}
+  id: 1241
+  time: '2022-03-20T23:04:53.0000000+00:00'
