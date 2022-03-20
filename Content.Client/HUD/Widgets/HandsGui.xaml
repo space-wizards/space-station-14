@@ -8,14 +8,11 @@
     HorizontalAlignment="Center"
     VerticalAlignment="Bottom"
 >
-    <ui:LeftHandButton
-        BlockedTexturePath="blocked.png"
-        StorageTexturePath="back.png"
-        ButtonTexturePath="hand_l.png"
-        />
-    <ui:RightHandButton
-        BlockedTexturePath="blocked.png"
-        StorageTexturePath="back.png"
-        ButtonTexturePath="hand_r.png"
-        />
+    <PanelContainer>
+        <BoxContainer>
+            <ui:HandsContainer/>
+        </BoxContainer>
+    </PanelContainer>
+
+
 </widget:HandsGui>
