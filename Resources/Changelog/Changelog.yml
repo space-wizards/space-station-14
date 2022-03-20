@@ -1,15 +1,4 @@
 Entries:
-- author: zlodo
-  changes:
-  - {message: Combat gloves now actually work., type: Fix}
-  id: 739
-  time: '2021-12-14T13:08:19.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: T-Ray Scanner can now be obtained from Youtool! As well as some engineering
-      toolboxes and lockers., type: Add}
-  id: 740
-  time: '2021-12-14T20:21:41.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Nanotrasen has thrown a clown into the singularity to improve stability
@@ -3014,3 +3003,21 @@ Entries:
       free to enjoy books!, type: Fix}
   id: 1238
   time: '2022-03-20T21:59:57.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Disease Outbreak event will no longer infect dead mobs., type: Fix}
+  - {message: Fixed typo in the name of a drink., type: Fix}
+  - {message: Renamed 'Medicine Resistance' in the disease report to 'Spaceacillin
+      Resistance' to make it more clear., type: Tweak}
+  - {message: Disease reports now use the player-facing name of any special cure reagents.,
+    type: Tweak}
+  - {message: Updated vaccine description to help out people who have somehow made
+      it to 2022 anno Domini without understanding what a vaccine is for., type: Tweak}
+  id: 1239
+  time: '2022-03-20T22:29:12.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug causing clothing layers to be drawn in the order that they
+      were equipped., type: Fix}
+  id: 1240
+  time: '2022-03-20T22:29:20.0000000+00:00'
