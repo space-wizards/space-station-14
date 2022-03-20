@@ -43,13 +43,13 @@ namespace Content.Shared.CCVar
         /// The minimum value the user can set for ambience.max_sounds
         /// </summary>
         public static readonly CVarDef<int> MinMaxAmbientSourcesConfigured =
-            CVarDef.Create("ambience.min_max_sounds_configured", 16, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.min_max_sounds_configured", 16, CVar.REPLICATED | CVar.SERVER | CVar.CHEAT);
 
         /// <summary>
         /// The maximum value the user can set for ambience.max_sounds
         /// </summary>
         public static readonly CVarDef<int> MaxMaxAmbientSourcesConfigured =
-            CVarDef.Create("ambience.max_max_sounds_configured", 64, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.max_max_sounds_configured", 64, CVar.REPLICATED | CVar.SERVER | CVar.CHEAT);
 
         /// <summary>
         /// Ambience volume.
