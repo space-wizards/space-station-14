@@ -79,6 +79,12 @@ namespace Content.Client.Hands
                 }
                 component.SortedHands = new(state.HandNames);
             }
+
+            if (component.ActiveHand == null && state.ActiveHand == null) return; //edge case
+            if (component.ActiveHand != null && state.ActiveHand != component.ActiveHand.Name)
+            {
+                SetActiveHand(uid, component.Hands[state.ActiveHand!], component);
+            }
         }
         #endregion
 
@@ -180,7 +186,6 @@ namespace Content.Client.Hands
             if (handComp.Hands.TryGetValue(args.Container.ID, out var hand))
             {
                 UpdateHandVisuals(uid, args.Entity, hand);
-                if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.UpdateHandGui(hand);
             }
         }
 
@@ -191,6 +196,8 @@ namespace Content.Client.Hands
         {
             if (!Resolve(uid, ref handComp, ref sprite, false))
                 return;
+
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.UpdateHandGui(hand);
 
             if (!handComp.ShowInHands)
                 return;
@@ -249,7 +256,6 @@ namespace Content.Client.Hands
 
                 sprite.LayerSetData(index, layerData);
             }
-
             RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers));
         }
 
@@ -297,8 +303,11 @@ namespace Content.Client.Hands
         {
             base.AddHand(uid, handName, handLocation, handsComp);
             if (handsComp == null) return;
-            var newHand = handsComp.Hands[handName];
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.RegisterHand(newHand);
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.RegisterHand(handsComp.Hands[handName]);
+            if (handsComp.ActiveHand == null)
+            {
+                SetActiveHand(uid, handsComp.Hands[handName], handsComp);
+            }
         }
 
         public override void RemoveHand(EntityUid uid, string handName, SharedHandsComponent? handsComp = null)
@@ -316,13 +325,13 @@ namespace Content.Client.Hands
         private void RegisterUiListeners()
         {
             if (_handsManager == null) return;
-            OnHandActivate += _handsManager.SetActiveHand;
+            OnHandSetActive += _handsManager.SetActiveHand;
         }
 
         private void DeregisterUiListeners()
         {
             if (_handsManager == null) return;
-            OnHandActivate -= _handsManager.SetActiveHand;
+            OnHandSetActive -= _handsManager.SetActiveHand;
         }
 
         public void LinkHudElements(IHudManager hudManager, HudPreset preset)

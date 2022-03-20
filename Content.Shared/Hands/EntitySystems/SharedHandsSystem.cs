@@ -16,7 +16,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
-    protected Action<Hand?>? OnHandActivate;
+    protected Action<SharedHandsComponent?>? OnHandSetActive;
 
     public override void Initialize()
     {
@@ -178,12 +178,11 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (hand == null)
         {
             handComp.ActiveHand = null;
-            OnHandActivate?.Invoke(null);
             return true;
         }
 
         handComp.ActiveHand = hand;
-        OnHandActivate?.Invoke(hand);
+        OnHandSetActive?.Invoke(handComp);
 
         if (hand.HeldEntity != null)
             RaiseLocalEvent(hand.HeldEntity.Value, new HandSelectedEvent(uid), false);

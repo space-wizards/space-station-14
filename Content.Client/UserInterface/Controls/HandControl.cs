@@ -18,22 +18,16 @@ namespace Content.Client.UserInterface.Controls
         private const string LeftHandTextureFile = "hand_l.png";
         private const string MidHandTextureFile = "hand.png";
         private const string RightHandTextureFile = "hand_R.png";
+        private const string HighlightTextureFile = "slot_highlight.png";
         private readonly IItemSlotManager _itemSlotManager;
         private readonly IEntityManager _entManager;
-        private bool _activeHand = false;
         private readonly HandsContainer _parent;
         private HandLocation _location;
         private EntityUid? _heldItem;
         public bool Active
         {
-            get => _activeHand;
-            set
-            {
-                if (_activeHand == value) return;
-                _activeHand = value;
-                UpdateSlotHighlighted();
-            }
-
+            get => HighlightRect.Visible;
+            set => Highlight(value);
         }
         public EntityUid? HeldItem
         {
@@ -43,6 +37,7 @@ namespace Content.Client.UserInterface.Controls
                 if (_heldItem == value) return;
                 _heldItem = value;
                 _itemSlotManager.SetItemSlot(this, _heldItem);
+                //UpdateSlotHighlighted();
                 UpdateBlockedState();
             }
         }
@@ -54,9 +49,9 @@ namespace Content.Client.UserInterface.Controls
             } }
         public HandControl(HandsContainer parent,HandLocation location,IEntityManager entManager, IItemSlotManager slotManager, EntityUid? heldItem,string handName)
         {
-            Active = false;
             _entManager = entManager;
             _itemSlotManager = slotManager;
+            HighlightOverride = true;
             AddChild(Blocked = new TextureRect
             {
                 TextureScale = (2, 2),
@@ -64,6 +59,7 @@ namespace Content.Client.UserInterface.Controls
                 Visible = false
             });
             _parent = parent;
+            HighlightRect.Texture = Theme.ResolveTexture(HighlightTextureFile);
             Blocked.Texture = Theme.ResolveTexture(BlockedTextureFile);
             StorageButton.TextureNormal = Theme.ResolveTexture(StorageTextureFile);
             UpdateHandIcon(location);
@@ -102,14 +98,11 @@ namespace Content.Client.UserInterface.Controls
             Blocked.Visible = HeldItem != null &&  _entManager.HasComponent<HandVirtualItemComponent>(HeldItem.Value);
         }
 
-        private void UpdateHighlight()
-        {
-            base.Highlight(Active);
-        }
         public override void UpdateTheme(HudTheme newTheme)
         {
             base.UpdateTheme(newTheme);
             Blocked.Texture = Theme.ResolveTexture(BlockedTextureFile);
+            HighlightRect.Texture = Theme.ResolveTexture(HighlightTextureFile);
             UpdateHandIcon(Location);
         }
     }

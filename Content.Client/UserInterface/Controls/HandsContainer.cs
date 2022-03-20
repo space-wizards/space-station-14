@@ -24,22 +24,7 @@ public sealed class HandsContainer : Control
     private readonly Dictionary<string, HandControl> _hands = new();
     private readonly GridContainer _grid;
 
-    public HandControl? ActiveHand
-    {
-        get => _activeHand;
-        set
-        {
-            if (_activeHand != value)
-            {
-                if (_activeHand != null)
-                {
-                    _activeHand.Active = false;
-                }
-                _activeHand = value;
-                if (_activeHand != null) _activeHand.Active = true;
-            }
-        }
-    }
+    public HandControl? ActiveHand => _activeHand;
 
     private HandControl? _activeHand = null;
     public HandsContainer()
@@ -93,15 +78,24 @@ public sealed class HandsContainer : Control
         AddHandToGui(newHand);
     }
 
-    public void SetActiveHand(Hand? handData)
+    public void SetActiveHand(SharedHandsComponent? handComp)
     {
-        if (handData == null)
+        if (handComp == null)
         {
-
+             if (_activeHand != null) _activeHand.Active = false;
             return;
         }
-        ActiveHand = null;
-        _hands[handData.Name].Active = true;
+
+        if (handComp.ActiveHand == null)
+        {
+            if (_activeHand != null) _activeHand.Active = false;
+            _activeHand = null;
+            return;
+        }
+
+        if (_activeHand != null) _activeHand.Active = false;
+        _activeHand = _hands[handComp.ActiveHand.Name];
+        _activeHand.Active = true;
     }
 
     public void RemoveHand(string name)
@@ -114,11 +108,13 @@ public sealed class HandsContainer : Control
     public void RemoveHand(Hand handData)
     {
         RemoveHand(handData.Name);
+        SetActiveHand(HandsComponent);
     }
 
     public void RegisterHand(Hand handData)
     {
         RegisterHand(handData.Name, handData.Location, handData.HeldEntity);
+        SetActiveHand(HandsComponent);
     }
 
     public void UpdateHandGui(Hand handData)
@@ -166,16 +162,4 @@ public sealed class HandsContainer : Control
         _grid.RemoveChild(control);
     }
 
-    // public struct HandData
-    // {
-    //     public string Name { get; }
-    //     public HandLocation Location { get; }
-    //
-    //
-    //     public HandData(string name, HandLocation location)
-    //     {
-    //         Name = name;
-    //         Location = location;
-    //     }
-    // }
 }

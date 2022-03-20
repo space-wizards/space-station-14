@@ -22,10 +22,12 @@ namespace Content.Client.UserInterface.Controls
 
         public EntityUid? Entity { get; set; }
         public TextureRect Button { get; }
+        public TextureRect HighlightRect { get; }
         public SpriteView SpriteView { get; }
         public SpriteView HoverSpriteView { get; }
         public TextureButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
+        public bool HighlightOverride { get; set; }
 
         public Texture ButtonTexture => Theme.ResolveTexture(ButtonTexturePath);
         private string _buttonTexturePath = "";
@@ -55,25 +57,22 @@ namespace Content.Client.UserInterface.Controls
         public bool EntityHover => HoverSpriteView.Sprite != null;
         public bool MouseIsHovering;
 
-        private readonly PanelContainer _highlightRect;
-
         public ItemSlotButton()
         {
             IoCManager.InjectDependencies(this);
             Theme = HudThemes.DefaultTheme;
             MinSize = (ClientInventorySystem.ButtonSize, ClientInventorySystem.ButtonSize);
-
+            HighlightOverride = false;
             AddChild(Button = new TextureRect
             {
                 TextureScale = (2, 2),
                 MouseFilter = MouseFilterMode.Stop
             });
-
-            AddChild(_highlightRect = new PanelContainer
+            AddChild(HighlightRect = new TextureRect()
             {
-                StyleClasses = { StyleNano.StyleClassHandSlotHighlight },
-                MinSize = (32, 32),
-                Visible = false
+                Visible = false,
+                TextureScale = (2, 2),
+                MouseFilter = MouseFilterMode.Ignore
             });
 
             Button.OnKeyBindDown += OnButtonPressed;
@@ -152,7 +151,7 @@ namespace Content.Client.UserInterface.Controls
 
         public void UpdateSlotHighlighted()
         {
-            Highlight(_itemSlotManager.IsHighlighted(Entity));
+            internal_highlight(_itemSlotManager.IsHighlighted(Entity));
         }
 
         public void ClearHover()
@@ -169,16 +168,15 @@ namespace Content.Client.UserInterface.Controls
             }
         }
 
-        public virtual void Highlight(bool highlight)
+        private void internal_highlight(bool highLight)
         {
-            if (highlight)
-            {
-                _highlightRect.Visible = true;
-            }
-            else
-            {
-                _highlightRect.Visible = false;
-            }
+            if (HighlightOverride) return; //do not use internal highlighting if override is enabled
+            HighlightRect.Visible = highLight;
+        }
+
+        public void Highlight(bool highlight)
+        {
+            HighlightRect.Visible = highlight;
         }
 
         private void OnButtonPressed(GUIBoundKeyEventArgs args)
