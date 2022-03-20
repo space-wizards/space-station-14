@@ -1,6 +1,9 @@
 ent-HoloparasiteInjector = инъектор голопаразита
     .desc = Сложнейшее произведение искусства основанное на наномашинах позволяющее пользователю стать носителем голопаразита.
     .suffix = { "" }
+ent-MagicalLamp = magical lamp
+    .desc = The wizard federation had to cut costs after the jinn merchandise scandal somehow.
+    .suffix = { "" }
 ent-BoxHoloparasite = коробка с голопаразитом
     .desc = Коробка, содержащая инъектор голопаразита
     .suffix = { "" }
