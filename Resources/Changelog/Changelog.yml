@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Mobs drop their held items when falling to the floor again., type: Fix}
-  id: 732
-  time: '2021-12-13T20:47:53.0000000+00:00'
 - author: shaeone
   changes:
   - {message: Added a decorated tree and presents!, type: Add}
@@ -3012,3 +3007,9 @@ Entries:
   - {message: Emitter crates now cost 3000 credits for Cargo., type: Tweak}
   id: 1231
   time: '2022-03-19T18:22:28.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Crafting items via the construction menu should no longer attempt to
+      take items from other users inventories., type: Fix}
+  id: 1232
+  time: '2022-03-20T01:46:08.0000000+00:00'

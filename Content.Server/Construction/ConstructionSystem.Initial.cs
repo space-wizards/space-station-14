@@ -27,6 +27,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -75,9 +76,12 @@ namespace Content.Server.Construction
                 }
             }
 
-            foreach (var near in EntitySystem.Get<EntityLookupSystem>().GetEntitiesInRange(user!, 2f, LookupFlags.Approximate))
+            var pos = Transform(user).MapPosition;
+
+            foreach (var near in _lookupSystem.GetEntitiesInRange(user!, 2f, LookupFlags.Approximate))
             {
-                yield return near;
+                if (_interactionSystem.InRangeUnobstructed(pos, near, 2f) && _containerSystem.IsInSameOrParentContainer(user, near)) 
+                    yield return near;
             }
         }
 
