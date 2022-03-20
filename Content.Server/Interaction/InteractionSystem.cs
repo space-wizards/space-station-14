@@ -218,7 +218,7 @@ namespace Content.Server.Interaction
             // Verify user has a hand, and find what object they are currently holding in their active hand
             if (TryComp(user, out HandsComponent? hands))
             {
-                var item = hands.GetActiveHandItem?.Owner;
+                var item = hands.ActiveHandEntity;
 
                 if (item != null && !Deleted(item.Value))
                 {

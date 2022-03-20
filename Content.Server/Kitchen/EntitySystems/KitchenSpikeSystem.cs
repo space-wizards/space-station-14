@@ -60,11 +60,11 @@ namespace Content.Server.Kitchen.EntitySystems
             if(args.Handled)
                 return;
 
-            if (!Spikeable(uid, args.User, args.Dragged, component))
-                return;
+            args.Handled = true;
 
-            if (TrySpike(uid, args.User, args.Dragged, component))
-                args.Handled = true;
+            if (Spikeable(uid, args.User, args.Dragged, component))
+                TrySpike(uid, args.User, args.Dragged, component);
+                
         }
         private void OnInteractHand(EntityUid uid, KitchenSpikeComponent component, InteractHandEvent args)
         {
@@ -170,7 +170,17 @@ namespace Content.Server.Kitchen.EntitySystems
                 return false;
             }
 
-            return true;
+            switch (butcherable.Type)
+            {
+                case ButcheringType.Spike:
+                    return true;
+                case ButcheringType.Knife:
+                    _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher-knife", ("victim", victimUid), ("this", uid)), victimUid, Filter.Entities(userUid));
+                    return false;
+                default:
+                    _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victimUid), ("this", uid)), victimUid, Filter.Entities(userUid));
+                    return false;
+            }
         }
 
         public bool TrySpike(EntityUid uid, EntityUid userUid, EntityUid victimUid, KitchenSpikeComponent? component = null,
@@ -178,9 +188,6 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (!Resolve(uid, ref component) || component.InUse ||
                 !Resolve(victimUid, ref butcherable) || butcherable.BeingButchered)
-                return false;
-
-            if (butcherable.Type != ButcheringType.Spike)
                 return false;
 
             // THE WHAT? (again)

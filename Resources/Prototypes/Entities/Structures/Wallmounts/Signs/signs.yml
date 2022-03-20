@@ -11,13 +11,58 @@
 
 - type: entity
   parent: BaseSign
-  id: SignDirectionalSec
-  name: sec sign
-  description: A direction sign, pointing out which way Security is.
+  id: SignDirectionalBridge
+  name: bridge sign
+  description: A direction sign, pointing out which way the Bridge is.
   components:
   - type: Sprite
-    state: direction_sec
+    state: direction_bridge
 
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalBrig
+  name: brig sign
+  description: A direction sign, pointing out which way the Brig is.
+  components:
+  - type: Sprite
+    state: direction_brig
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalChapel
+  name: chapel sign
+  description: A direction sign, pointing out which way the Chapel is.
+  components:
+  - type: Sprite
+    state: direction_chapel
+    
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalCryo
+  name: cryo sign
+  description: A direction sign, pointing out the way to cryogenics.
+  components:
+  - type: Sprite
+    state: direction_cryo
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalDorms
+  name: dorms sign
+  description: A direction sign, pointing out which way the Dorms are.
+  components:
+  - type: Sprite
+    state: direction_dorms
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalEng
+  name: engineering sign
+  description: A direction sign, pointing out which way the Engineering department is.
+  components:
+  - type: Sprite
+    state: direction_eng
+    
 - type: entity
   parent: BaseSign
   id: SignDirectionalEvac
@@ -29,12 +74,21 @@
 
 - type: entity
   parent: BaseSign
-  id: SignDirectionalBridge
-  name: bridge sign
-  description: A direction sign, pointing out which way the Bridge is.
+  id: SignDirectionalGravity
+  name: gravity sign
+  description: A direction sign, pointing out which way the gravity generator is.
   components:
   - type: Sprite
-    state: direction_bridge
+    state: direction_gravity
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalHydro
+  name: hydro sign
+  description: A direction sign, pointing out which way hydroponics is.
+  components:
+  - type: Sprite
+    state: direction_hydro
 
 - type: entity
   parent: BaseSign
@@ -47,12 +101,13 @@
 
 - type: entity
   parent: BaseSign
-  id: SignDirectionalEng
-  name: engineering sign
-  description: A direction sign, pointing out which way the Engineering department is.
+  id: SignDirectionalSalvage
+  name: salvage sign
+  description: A direction sign, pointing out which way the Salvage department is.
   components:
   - type: Sprite
-    state: direction_eng
+    state: direction_salvage
+
 
 - type: entity
   parent: BaseSign
@@ -65,12 +120,39 @@
 
 - type: entity
   parent: BaseSign
+  id: SignDirectionalSec
+  name: sec sign
+  description: A direction sign, pointing out which way Security is.
+  components:
+  - type: Sprite
+    state: direction_sec
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalSolar
+  name: solars sign
+  description: A direction sign, pointing out which way solars are.
+  components:
+  - type: Sprite
+    state: direction_solar
+
+- type: entity
+  parent: BaseSign
   id: SignDirectionalSupply
   name: supply sign
   description: A direction sign, pointing to some supplies.
   components:
   - type: Sprite
     state: direction_supply
+    
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalWash
+  name: washroom sign
+  description: A direction sign, pointing to the way to a washroom.
+  components:
+  - type: Sprite
+    state: direction_wash
 
 # Regular Signs
 # Descriptions intentionally left empty.
@@ -125,107 +207,35 @@
 
 - type: entity
   parent: BaseSign
-  id: SignHydro1
-  name: hydro sign
+  id: SignBio
+  name: bio sign
   components:
   - type: Sprite
-    state: hydro1
+    state: bio
 
 - type: entity
   parent: BaseSign
-  id: SignHydro2
-  name: hydro sign
+  id: SignBiohazard
+  name: biohazard sign
   components:
   - type: Sprite
-    state: hydro2
+    state: biohazard
+    
+- type: entity
+  parent: BaseSign
+  id: SignBridge
+  name: bridge sign
+  components:
+  - type: Sprite
+    state: bridge
 
 - type: entity
   parent: BaseSign
-  id: SignHydro3
-  name: hydro sign
+  id: SignCanisters
+  name: canisters sign
   components:
   - type: Sprite
-    state: hydro3
-
-- type: entity
-  parent: BaseSign
-  id: SignLibrary
-  name: library sign
-  components:
-  - type: Sprite
-    state: biblio
-
-- type: entity
-  parent: BaseSign
-  id: SignChapel
-  name: chapel sign
-  components:
-  - type: Sprite
-    state: chapel
-
-- type: entity
-  parent: BaseSign
-  id: SignHead
-  name: head sign
-  components:
-  - type: Sprite
-    state: commander
-
-- type: entity
-  parent: BaseSign
-  id: SignConference
-  name: conference room sign
-  components:
-  - type: Sprite
-    state: conference_room
-
-- type: entity
-  parent: BaseSign
-  id: SignDrones
-  name: drones sign
-  components:
-  - type: Sprite
-    state: drones
-
-- type: entity
-  parent: BaseSign
-  id: SignEngine
-  name: engine sign
-  components:
-  - type: Sprite
-    state: engine
-
-- type: entity
-  parent: BaseSign
-  id: SignCloning
-  name: cloning sign
-  components:
-  - type: Sprite
-    state: cloning
-
-- type: entity
-  parent: BaseSign
-  id: SignInterrogation
-  name: interrogation sign
-  components:
-  - type: Sprite
-    state: interrogation
-
-- type: entity
-  parent: BaseSign
-  id: SignSurgery
-  name: surgery sign
-  components:
-  - type: Sprite
-    state: surgery
-
-- type: entity
-  parent: BaseSign
-  id: SignTelecomms
-  name: telecomms sign
-  components:
-  - type: Sprite
-    state: telecoms
+    state: canisters
 
 - type: entity
   parent: BaseSign
@@ -242,6 +252,14 @@
   components:
   - type: Sprite
     state: cargo_dock
+  
+- type: entity
+  parent: BaseSign
+  id: SignChapel
+  name: chapel sign
+  components:
+  - type: Sprite
+    state: chapel
 
 - type: entity
   parent: BaseSign
@@ -269,11 +287,52 @@
 
 - type: entity
   parent: BaseSign
-  id: SignShipDock
-  name: docking sign
+  id: SignCloning
+  name: cloning sign
   components:
   - type: Sprite
-    state: dock
+    state: cloning
+
+- type: entity
+  parent: BaseSign
+  id: SignConference
+  name: conference room sign
+  components:
+  - type: Sprite
+    state: conference_room
+
+- type: entity
+  parent: BaseSign
+  id: SignDisposalSpace
+  name: disposal sign
+  description: "Disposal: Leads to space"
+  components:
+  - type: Sprite
+    state: deathsposal
+
+- type: entity
+  parent: BaseSign
+  id: SignDoors
+  name: doors sign
+  components:
+  - type: Sprite
+    state: doors
+ 
+- type: entity
+  parent: BaseSign
+  id: SignDrones
+  name: drones sign
+  components:
+  - type: Sprite
+    state: drones
+
+- type: entity
+  parent: BaseSign
+  id: SignEngine
+  name: engine sign
+  components:
+  - type: Sprite
+    state: engine
 
 - type: entity
   parent: BaseSign
@@ -285,11 +344,43 @@
 
 - type: entity
   parent: BaseSign
+  id: SignEscapePods
+  name: escape pods sign
+  components:
+  - type: Sprite
+    state: pods
+
+- type: entity
+  parent: BaseSign
   id: SignEVA
   name: EVA sign
   components:
   - type: Sprite
     state: eva
+
+- type: entity
+  parent: BaseSign
+  id: SignElectrical
+  name: electrical sign
+  components:
+  - type: Sprite
+    state: electrical
+
+- type: entity
+  parent: BaseSign
+  id: SignExamroom
+  name: examination room sign
+  components:
+  - type: Sprite
+    state: examroom
+
+- type: entity
+  parent: BaseSign
+  id: SignFire
+  name: fire sign
+  components:
+  - type: Sprite
+    state: fire
 
 - type: entity
   parent: BaseSign
@@ -301,11 +392,75 @@
 
 - type: entity
   parent: BaseSign
+  id: SignHead
+  name: head sign
+  components:
+  - type: Sprite
+    state: commander
+
+- type: entity
+  parent: BaseSign
+  id: SignHydro1
+  name: hydro sign
+  components:
+  - type: Sprite
+    state: hydro1
+
+- type: entity
+  parent: BaseSign
+  id: SignHydro2
+  name: hydro sign
+  components:
+  - type: Sprite
+    state: hydro2
+
+- type: entity
+  parent: BaseSign
+  id: SignHydro3
+  name: hydro sign
+  components:
+  - type: Sprite
+    state: hydro3
+
+- type: entity
+  parent: BaseSign
+  id: SignInterrogation
+  name: interrogation sign
+  components:
+  - type: Sprite
+    state: interrogation
+
+- type: entity
+  parent: BaseSign
+  id: SignLibrary
+  name: library sign
+  components:
+  - type: Sprite
+    state: biblio
+
+- type: entity
+  parent: BaseSign
+  id: SignMail
+  name: mail sign
+  components:
+  - type: Sprite
+    state: mail
+
+- type: entity
+  parent: BaseSign
   id: SignMedical
   name: medbay sign
   components:
   - type: Sprite
     state: medbay
+    
+- type: entity
+  parent: BaseSign
+  id: SignMinerDock
+  name: miner dock sign
+  components:
+  - type: Sprite
+    state: miner_dock
 
 - type: entity
   parent: BaseSign
@@ -314,6 +469,14 @@
   components:
   - type: Sprite
     state: morgue
+
+- type: entity
+  parent: BaseSign
+  id: SignNosmoking
+  name: nosmoking sign
+  components:
+  - type: Sprite
+    state: nosmoking
 
 - type: entity
   parent: BaseSign
@@ -330,6 +493,14 @@
   components:
   - type: Sprite
     state: rnd
+    
+- type: entity
+  parent: BaseSign
+  id: SignRobo
+  name: robo sign
+  components:
+  - type: Sprite
+    state: robo
 
 - type: entity
   parent: BaseSign
@@ -357,6 +528,46 @@
 
 - type: entity
   parent: BaseSign
+  id: SignShield
+  name: shield sign
+  components:
+  - type: Sprite
+    state: shield
+
+- type: entity
+  parent: BaseSign
+  id: SignShipDock
+  name: docking sign
+  components:
+  - type: Sprite
+    state: dock
+
+- type: entity
+  parent: BaseSign
+  id: SignSpace
+  name: space sign
+  components:
+  - type: Sprite
+    state: space
+
+- type: entity
+  parent: BaseSign
+  id: SignSurgery
+  name: surgery sign
+  components:
+  - type: Sprite
+    state: surgery
+
+- type: entity
+  parent: BaseSign
+  id: SignTelecomms
+  name: telecomms sign
+  components:
+  - type: Sprite
+    state: telecoms
+
+- type: entity
+  parent: BaseSign
   id: SignToxins
   name: toxins sign
   components:
@@ -373,40 +584,16 @@
 
 - type: entity
   parent: BaseSign
-  id: SignBridge
-  name: bridge sign
+  id: SignVirology
+  name: virology sign
   components:
   - type: Sprite
-    state: bridge
-
-- type: entity
-  parent: BaseSign
-  id: SignBio
-  name: bio sign
-  components:
-  - type: Sprite
-    state: bio
-
-- type: entity
-  parent: BaseSign
-  id: SignBiohazard
-  name: biohazard sign
-  components:
-  - type: Sprite
-    state: biohazard
-
-- type: entity
-  parent: BaseSign
-  id: SignCanisters
-  name: canisters sign
-  components:
-  - type: Sprite
-    state: canisters
+    state: virology
 
 - type: entity
   parent: BaseSign
   id: SignCorrosives
-  name: corrosives sign
+  name: corrosives warning sign
   components:
   - type: Sprite
     state: corrosives
@@ -414,7 +601,7 @@
 - type: entity
   parent: BaseSign
   id: SignCryogenics
-  name: cryogenics sign
+  name: cryogenics warning sign
   components:
   - type: Sprite
     state: cryogenics
@@ -422,64 +609,23 @@
 - type: entity
   parent: BaseSign
   id: SignDanger
-  name: danger sign
+  name: danger warning sign
   components:
   - type: Sprite
     state: danger
 
 - type: entity
   parent: BaseSign
-  id: SignDisposalSpace
-  name: disposal sign
-  description: "Disposal: Leads to space"
-  components:
-  - type: Sprite
-    state: deathsposal
-
-- type: entity
-  parent: BaseSign
-  id: SignDoors
-  name: doors sign
-  components:
-  - type: Sprite
-    state: doors
-
-- type: entity
-  parent: BaseSign
-  id: SignElectrical
-  name: electrical sign
-  components:
-  - type: Sprite
-    state: electrical
-
-- type: entity
-  parent: BaseSign
-  id: SignExamroom
-  name: examination room sign
-  components:
-  - type: Sprite
-    state: examroom
-
-- type: entity
-  parent: BaseSign
   id: SignExplosives
-  name: explosives sign
+  name: explosives warning sign
   components:
   - type: Sprite
     state: explosives
 
 - type: entity
   parent: BaseSign
-  id: SignFire
-  name: fire sign
-  components:
-  - type: Sprite
-    state: fire
-
-- type: entity
-  parent: BaseSign
   id: SignFlammable
-  name: flammable sign
+  name: flammable warning sign
   components:
   - type: Sprite
     state: flammable
@@ -487,90 +633,26 @@
 - type: entity
   parent: BaseSign
   id: SignLaser
-  name: laser sign
+  name: laser warning sign
   components:
   - type: Sprite
     state: laser
-
+    
 - type: entity
   parent: BaseSign
   id: SignMagnetics
-  name: magnetics sign
+  name: magnetics warning sign
   components:
   - type: Sprite
     state: magnetics
 
 - type: entity
   parent: BaseSign
-  id: SignMail
-  name: mail sign
-  components:
-  - type: Sprite
-    state: mail
-
-- type: entity
-  parent: BaseSign
   id: SignMemetic
-  name: memetic sign
+  name: memetic warning sign
   components:
   - type: Sprite
     state: memetic
-
-- type: entity
-  parent: BaseSign
-  id: SignMinerDock
-  name: miner dock sign
-  components:
-  - type: Sprite
-    state: miner_dock
-
-- type: entity
-  parent: BaseSign
-  id: SignNosmoking
-  name: nosmoking sign
-  components:
-  - type: Sprite
-    state: nosmoking
-
-- type: entity
-  parent: BaseSign
-  id: SignOptical
-  name: optical sign
-  components:
-  - type: Sprite
-    state: optical
-
-- type: entity
-  parent: BaseSign
-  id: SigN
-  name: oxidants signoxidants
-  components:
-  - type: Sprite
-    state: oxidants
-
-- type: entity
-  parent: BaseSign
-  id: SignPods
-  name: pods sign
-  components:
-  - type: Sprite
-    state: pods
-
-- type: entity
-  parent: BaseSign
-  id: SignRadiation
-  name: radiation sign
-  components:
-  - type: Sprite
-    state: radiation
-
-- type: entity
-  parent: BaseSign
-  id: SignRobo
-  name: robo sign
-  components:
-  - type: Sprite
-    state: robo
 
 - type: entity
   parent: BaseSign
@@ -583,19 +665,11 @@
 - type: entity
   parent: BaseSign
   id: SignSecurearea
-  name: securearea sign
+  name: secure area sign
   components:
   - type: Sprite
     state: securearea
-
-- type: entity
-  parent: BaseSign
-  id: SignShield
-  name: shield sign
-  components:
-  - type: Sprite
-    state: shield
-
+    
 - type: entity
   parent: BaseSign
   id: SignShock
@@ -606,19 +680,27 @@
 
 - type: entity
   parent: BaseSign
-  id: SignSpace
-  name: space sign
+  id: SignOptical
+  name: optical warning sign
   components:
   - type: Sprite
-    state: space
+    state: optical
 
 - type: entity
   parent: BaseSign
-  id: SignVirology
-  name: virology sign
+  id: SignOxidants
+  name: oxidants warning sign
   components:
   - type: Sprite
-    state: virology
+    state: oxidants
+
+- type: entity
+  parent: BaseSign
+  id: SignRadiation
+  name: radiation warning sign
+  components:
+  - type: Sprite
+    state: radiation
 
 - type: entity
   parent: BaseSign

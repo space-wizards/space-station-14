@@ -10,6 +10,7 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
@@ -25,6 +26,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -43,20 +45,17 @@ namespace Content.Server.Construction
         // LEGACY CODE. See warning at the top of the file!
         private IEnumerable<EntityUid> EnumerateNearby(EntityUid user)
         {
-            if (EntityManager.TryGetComponent(user, out HandsComponent? hands))
+            foreach (var item in _handsSystem.EnumerateHeld(user))
             {
-                foreach (var itemComponent in hands?.GetAllHeldItems()!)
+                if (TryComp(item, out ServerStorageComponent? storage))
                 {
-                    if (EntityManager.TryGetComponent(itemComponent.Owner, out ServerStorageComponent? storage))
+                    foreach (var storedEntity in storage.StoredEntities!)
                     {
-                        foreach (var storedEntity in storage.StoredEntities!)
-                        {
-                            yield return storedEntity;
-                        }
+                        yield return storedEntity;
                     }
-
-                    yield return itemComponent.Owner;
                 }
+
+                yield return item;
             }
 
             if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
@@ -334,7 +333,7 @@ namespace Content.Server.Construction
             }
 
             if (await Construct(user, "item_construction", constructionGraph, edge, targetNode) is {Valid: true} item)
-                hands.PutInHandOrDrop(item);
+                _handsSystem.PickupOrDrop(user, item);
         }
 
         // LEGACY CODE. See warning at the top of the file!
@@ -401,7 +400,7 @@ namespace Content.Server.Construction
             }
 
             if (!_actionBlocker.CanInteract(user, null)
-                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHandItem == null)
+                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.ActiveHandEntity == null)
             {
                 Cleanup();
                 return;
@@ -426,7 +425,7 @@ namespace Content.Server.Construction
 
             var valid = false;
 
-            if (hands.GetActiveHandItem?.Owner is not {Valid: true} holding)
+            if (hands.ActiveHandEntity is not {Valid: true} holding)
             {
                 Cleanup();
                 return;

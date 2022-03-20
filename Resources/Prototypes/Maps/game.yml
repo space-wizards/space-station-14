@@ -88,6 +88,7 @@
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
   mapPath: /Maps/knightship.yml
+  votable: false
   minPlayers: 0
   maxPlayers: 8
   overflowJobs: []
