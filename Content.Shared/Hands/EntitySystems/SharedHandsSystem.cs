@@ -31,13 +31,13 @@ public abstract partial class SharedHandsSystem : EntitySystem
         CommandBinds.Unregister<SharedHandsSystem>();
     }
 
-    public virtual Hand? AddHand(EntityUid uid, string handName, HandLocation handLocation, SharedHandsComponent? handsComp = null)
+    public virtual void AddHand(EntityUid uid, string handName, HandLocation handLocation, SharedHandsComponent? handsComp = null)
     {
         if (!Resolve(uid, ref handsComp, false))
-            return null;
+            return;
 
         if (handsComp.Hands.ContainsKey(handName))
-            return null;
+            return;
 
         var container = _containerSystem.EnsureContainer<ContainerSlot>(uid, handName);
         container.OccludesLight = false;
@@ -51,7 +51,6 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         RaiseLocalEvent(uid, new HandCountChangedEvent(uid), false);
         Dirty(handsComp);
-        return newHand;
     }
 
     public virtual void RemoveHand(EntityUid uid, string handName, SharedHandsComponent? handsComp = null)

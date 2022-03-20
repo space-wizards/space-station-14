@@ -53,35 +53,32 @@ namespace Content.Client.Hands
 
             var handsModified = component.Hands.Count != state.Hands.Count;
             var manager = EnsureComp<ContainerManagerComponent>(uid);
-            List<Hand> addedHands = new();
-            foreach (var hand in state.Hands)
-            {
-                if (component.Hands.TryAdd(hand.Name, hand))
-                {
-                    hand.Container = _containerSystem.EnsureContainer<ContainerSlot>(uid, hand.Name, manager);
-                    addedHands.Add(hand);
-                    handsModified = true;
-                }
-            }
             if (handsModified)
             {
+                List<Hand> addedHands = new();
+                foreach (var hand in state.Hands)
+                {
+                    if (component.Hands.TryAdd(hand.Name, hand))
+                    {
+                        hand.Container = _containerSystem.EnsureContainer<ContainerSlot>(uid, hand.Name, manager);
+                        addedHands.Add(hand);
+                    }
+                }
                 foreach (var name in component.Hands.Keys)
                 {
                     if (!state.HandNames.Contains(name))
                     {
-                        if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.RemoveHand(name);
+                        RemoveHand(uid, name, component);
                         //component.Hands.Remove(name);
                     }
                 }
                 foreach (var hand in addedHands)
                 {
                     //component.Hands.Add(hand.Name,hand);
-                    if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.RegisterHand(hand);
+                    AddHand(uid, hand, component);
                 }
                 component.SortedHands = new(state.HandNames);
             }
-
-            TrySetActiveHand(uid, state.ActiveHand, component);
         }
         #endregion
 
@@ -289,11 +286,19 @@ namespace Content.Client.Hands
             DeregisterUiListeners();
         }
         #endregion
-        public override Hand? AddHand(EntityUid uid, string handName, HandLocation handLocation, SharedHandsComponent? handsComp = null)
+
+        private void AddHand(EntityUid uid, Hand newHand, SharedHandsComponent? handsComp = null)
         {
-            var newHand = base.AddHand(uid, handName, handLocation, handsComp);
-            if (newHand != null && (uid == _playerManager.LocalPlayer?.ControlledEntity)) _handsManager?.RegisterHand(newHand);
-            return newHand;
+            //This can probably be cleaned up a bit
+            AddHand(uid, newHand.Name, newHand.Location, handsComp);
+        }
+
+        public override void AddHand(EntityUid uid, string handName, HandLocation handLocation, SharedHandsComponent? handsComp = null)
+        {
+            base.AddHand(uid, handName, handLocation, handsComp);
+            if (handsComp == null) return;
+            var newHand = handsComp.Hands[handName];
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.RegisterHand(newHand);
         }
 
         public override void RemoveHand(EntityUid uid, string handName, SharedHandsComponent? handsComp = null)
