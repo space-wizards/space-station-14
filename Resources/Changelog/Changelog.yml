@@ -1,18 +1,4 @@
 Entries:
-- author: Mith-randalf
-  changes:
-  - {message: 'Using information extracted from captured Assistants, security now
-      have access to single-use zipties from the security dispenser and cargo''s new
-      restraints crate.', type: Add}
-  id: 737
-  time: '2021-12-14T05:17:27.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: NanoTrasen has supplied its stations with t-ray scanners. No longer
-      will engineers (or other curious crewmembers) have to rip up floor tiles to
-      reveal what is underneath., type: Add}
-  id: 738
-  time: '2021-12-14T07:46:47.0000000+00:00'
 - author: zlodo
   changes:
   - {message: Combat gloves now actually work., type: Fix}
@@ -3016,3 +3002,15 @@ Entries:
   - {message: fixed holoparasite ToS not being readable, type: Fix}
   id: 1236
   time: '2022-03-20T13:04:47.0000000+00:00'
+- author: CrudeWax
+  changes:
+  - {message: fixed the popup for inserting TC into the uplink, type: Fix}
+  - {message: updated emag to look more like the rest of the ID cards, type: Tweak}
+  id: 1237
+  time: '2022-03-20T21:59:50.0000000+00:00'
+- author: CrudeWax
+  changes:
+  - {message: fixes all written information to be actually readable. You are finally
+      free to enjoy books!, type: Fix}
+  id: 1238
+  time: '2022-03-20T21:59:57.0000000+00:00'
