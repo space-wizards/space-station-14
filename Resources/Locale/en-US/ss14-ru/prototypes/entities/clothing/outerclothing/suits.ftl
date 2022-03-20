@@ -28,3 +28,6 @@ ent-ClothingOuterAerostaticBomberJacket = aerostatic bomber jacket
 ent-ClothingOuterDiscoAssBlazer = disco ass blazer
     .desc = Looks like someone skinned this blazer off some long extinct disco-animal. It has an enigmatic white rectangle on the back and the right sleeve.
     .suffix = { "" }
+ent-ClothingOuterSuitAtmosFire = atmos fire suit
+    .desc = An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame.
+    .suffix = { "" }

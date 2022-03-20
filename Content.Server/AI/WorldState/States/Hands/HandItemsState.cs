@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-using Content.Server.Hands.Components;
+using System.Linq;
+using Content.Shared.Hands.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Hands
 {
@@ -12,23 +10,7 @@ namespace Content.Server.AI.WorldState.States.Hands
         public override string Name => "HandItems";
         public override List<EntityUid> GetValue()
         {
-            var result = new List<EntityUid>();
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent))
-            {
-                return result;
-            }
-
-            foreach (var hand in handsComponent.ActivePriorityEnumerable())
-            {
-                var item = handsComponent.GetItem(hand);
-
-                if (item != null)
-                {
-                    result.Add(item.Owner);
-                }
-            }
-
-            return result;
+            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedHandsSystem>().EnumerateHeld(Owner).ToList();
         }
     }
 }

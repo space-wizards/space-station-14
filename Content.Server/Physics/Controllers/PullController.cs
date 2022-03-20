@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Pulling;
+using Content.Shared.Pulling.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -23,7 +24,7 @@ namespace Content.Server.Physics.Controllers
         private const float AccelModifierLowMass = 5.0f; // roundstart saltern emergency crowbar
         // Used to control settling (turns off pulling).
         private const float MaximumSettleVelocity = 0.1f;
-        private const float MaximumSettleDistance = 0.01f;
+        private const float MaximumSettleDistance = 0.1f;
         // Settle shutdown control.
         // Mustn't be too massive, as that causes severe mispredicts *and can prevent it ever resolving*.
         // Exists to bleed off "I pulled my crowbar" overshoots.
@@ -39,8 +40,17 @@ namespace Content.Server.Physics.Controllers
         public override void Initialize()
         {
             UpdatesAfter.Add(typeof(MoverController));
+            SubscribeLocalEvent<SharedPullerComponent, MoveEvent>(OnPullerMove);
 
             base.Initialize();
+        }
+
+        private void OnPullerMove(EntityUid uid, SharedPullerComponent component, ref MoveEvent args)
+        {
+            if (component.Pulling == null ||
+                !TryComp<SharedPullableComponent>(component.Pulling.Value, out var pullable)) return;
+
+            _pullableSystem.StopMoveTo(pullable);
         }
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)

@@ -84,6 +84,7 @@ namespace Content.Server.Disposal.Tube.Components
         {
             SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
+
         protected override void OnRemove()
         {
             base.OnRemove();

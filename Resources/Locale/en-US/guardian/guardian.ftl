@@ -12,7 +12,7 @@ guardian-available = Your guardian now has a soul.
 
 # Guardian action
 
-action-name-guardian = Toggle guardian manifestation
+action-name-guardian = Toggle Guardian
 action-description-guardian = Either manifests the guardian or recalls it back into your body
 
 ## Guardian entity specific

@@ -25,4 +25,3 @@ ent-ClothingShoesColorWhite = белые туфли
 ent-ClothingShoesColorYellow = жёлтые туфли
     .desc = Стильные жёлтые туфли.
     .suffix = { "" }
-    

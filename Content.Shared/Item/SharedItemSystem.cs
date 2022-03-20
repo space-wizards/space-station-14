@@ -1,17 +1,17 @@
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Localization;
-using System;
 
 namespace Content.Shared.Item
 {
     public abstract class SharedItemSystem : EntitySystem
     {
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -30,13 +30,7 @@ namespace Content.Shared.Item
             if (args.Handled)
                 return;
 
-            if (!TryComp(args.User, out SharedHandsComponent? hands))
-                return;
-
-            if (hands.ActiveHand == null)
-                return;
-
-            args.Handled = hands.TryPickupEntity(hands.ActiveHand, uid, false, animateUser: false);
+            args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
         }
 
         private void OnHandleState(EntityUid uid, SharedItemComponent component, ref ComponentHandleState args)
@@ -74,11 +68,11 @@ namespace Content.Shared.Item
                 args.Using != null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
-                !args.Hands.CanPickupEntityToActiveHand(args.Target))
+                !_handsSystem.CanPickupAnyHand(args.User, args.Target, handsComp: args.Hands, item: component))
                 return;
 
             InteractionVerb verb = new();
-            verb.Act = () => args.Hands.TryPickupEntityToActiveHand(args.Target);
+            verb.Act = () => _handsSystem.TryPickupAnyHand(args.User, args.Target, checkActionBlocker: false, handsComp: args.Hands, item: component);
             verb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
 
             // if the item already in a container (that is not the same as the user's), then change the text.

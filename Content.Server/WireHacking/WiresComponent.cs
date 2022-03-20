@@ -338,7 +338,7 @@ namespace Content.Server.WireHacking
                 return false;
             }
 
-            if (handsComponent.GetActiveHand()?.HeldEntity is not { Valid: true } activeHandEntity ||
+            if (handsComponent.ActiveHand?.HeldEntity is not { Valid: true } activeHandEntity ||
                 !_entities.TryGetComponent(activeHandEntity, out tool))
             {
                 return false;

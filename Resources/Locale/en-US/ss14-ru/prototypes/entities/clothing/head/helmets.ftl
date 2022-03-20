@@ -40,3 +40,6 @@ ent-ClothingHeadHelmetWizardHelm = wizard helm
 ent-ClothingHeadHelmetFire = fire helmet
     .desc = An atmos techs best friend. Provides some heat resistance and looks cool.
     .suffix = { "" }
+ent-ClothingHeadHelmetAtmosFire = atmos fire helmet
+    .desc = An atmos fire helmet, able to keep the user cool in any situation.
+    .suffix = { "" }
