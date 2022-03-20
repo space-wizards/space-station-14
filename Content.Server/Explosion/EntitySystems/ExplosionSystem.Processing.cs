@@ -26,15 +26,6 @@ public sealed partial class ExplosionSystem : EntitySystem
     // but then need to ignore PVS? Eeehh this works well enough for now.
 
     /// <summary>
-    ///     Arbitrary definition for when an explosion is large enough to require separating the area/tile-finding and
-    ///     the processing into separate ticks.
-    /// </summary>
-    /// <remarks>
-    ///     Only used when the explosion processing is not limited by time.
-    /// </remarks>
-    public const int NukeArea = 400;
-
-    /// <summary>
     ///     Used to limit explosion processing time. See <see cref="MaxProcessingTime"/>.
     /// </summary>
     internal readonly Stopwatch Stopwatch = new();
@@ -109,15 +100,8 @@ public sealed partial class ExplosionSystem : EntitySystem
                     // snooze power network (recipients look for new suppliers as wires get destroyed).
                 }
 
-                // if this is a single-tick explosion (i.e., not severely limited by number of tiles per tick or
-                // processing time, we want to process large explosion on a tick separate from the one they were
-                // generated on.
-                if (_activeExplosion.Area > NukeArea
-                    && MaxProcessingTime >= _gameTiming.TickPeriod.TotalMilliseconds)
-                {
-                    // start processing next turn.
-                    break;
-                }
+                if (_activeExplosion.Area > SingleTickAreaLimit)
+                    break; // start processing next turn.
             }
 
             // TODO EXPLOSION  check if active explosion is on a paused map. If it is... I guess support swapping out &

@@ -427,6 +427,27 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ExplosionIncrementalTileBreaking =
             CVarDef.Create("explosion.incremental_tile", false, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Client-side explosion visuals: for how many seconds should an explosion stay on-screen once it has
+        ///     finished expanding?
+        /// </summary>
+        public static readonly CVarDef<float> ExplosionPersistence =
+            CVarDef.Create("explosion.persistence", 0.3f, CVar.REPLICATED);
+
+        /// <summary>
+        ///     If an explosion covers a larger area than this number, the damaging/processing will always start during
+        ///     the next tick, instead of during the same tick that the explosion was generated in.
+        /// </summary>
+        /// <remarks>
+        ///     This value can be used to ensure that for large explosions the area/tile calculation and the explosion
+        ///     processing/damaging occurs in separate ticks. This helps reduce the single-tick lag if both <see
+        ///     cref="ExplosionMaxProcessingTime"/> and <see cref="ExplosionTilesPerTick"/> are large. I.e., instead of
+        ///     a single tick explosion, this cvar allows for a configuration that results in a two-tick explosion,
+        ///     though most of the computational cost is still in the second tick.
+        /// </remarks>
+        public static readonly CVarDef<int> ExplosionSingleTickAreaLimit =
+            CVarDef.Create("explosion.single_tick_area_limit", 400, CVar.SERVERONLY);
+
         /*
          * Admin logs
          */

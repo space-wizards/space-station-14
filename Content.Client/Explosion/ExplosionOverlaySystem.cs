@@ -1,7 +1,9 @@
+using Content.Shared.CCVar;
 using Content.Shared.Explosion;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -18,11 +20,12 @@ public sealed class ExplosionOverlaySystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly IResourceCache _resCache = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     /// <summary>
     ///     For how many seconds should an explosion stay on-screen once it has finished expanding?
     /// </summary>
-    public const float ExplosionPersistence = 0.3f;
+    public float ExplosionPersistence = 0.3f;
 
     public override void Initialize()
     {
@@ -31,11 +34,15 @@ public sealed class ExplosionOverlaySystem : EntitySystem
         SubscribeNetworkEvent<ExplosionEvent>(OnExplosion);
         SubscribeNetworkEvent<ExplosionOverlayUpdateEvent>(HandleExplosionUpdate);
 
+        _cfg.OnValueChanged(CCVars.ExplosionPersistence, SetExplosionPersistence, true);
+
         var overlayManager = IoCManager.Resolve<IOverlayManager>();
         _overlay = new ExplosionOverlay();
         if (!overlayManager.HasOverlay<ExplosionOverlay>())
             overlayManager.AddOverlay(_overlay);
     }
+
+    private void SetExplosionPersistence(float value) => ExplosionPersistence = value;
 
     public override void FrameUpdate(float frameTime)
     {
@@ -145,6 +152,8 @@ public sealed class ExplosionOverlaySystem : EntitySystem
     public override void Shutdown()
     {
         base.Shutdown();
+
+        _cfg.UnsubValueChanged(CCVars.ExplosionPersistence, SetExplosionPersistence);
 
         var overlayManager = IoCManager.Resolve<IOverlayManager>();
         if (overlayManager.HasOverlay<ExplosionOverlay>())

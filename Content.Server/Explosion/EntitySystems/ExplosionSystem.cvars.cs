@@ -11,6 +11,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     public int ThrowLimit { get; private set; }
     public bool SleepNodeSys { get; private set; }
     public bool IncrementalTileBreaking { get; private set; }
+    public int SingleTickAreaLimit {get; private set; }
 
     private void SubscribeCvars()
     {
@@ -21,6 +22,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         _cfg.OnValueChanged(CCVars.ExplosionMaxIterations, SetMaxIterations, true);
         _cfg.OnValueChanged(CCVars.ExplosionMaxProcessingTime, SetMaxProcessingTime, true);
         _cfg.OnValueChanged(CCVars.ExplosionIncrementalTileBreaking, SetIncrementalTileBreaking, true);
+        _cfg.OnValueChanged(CCVars.ExplosionSingleTickAreaLimit, SetSingleTickAreaLimit, true);
     }
 
     private void UnsubscribeCvars()
@@ -32,6 +34,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         _cfg.UnsubValueChanged(CCVars.ExplosionMaxIterations, SetMaxIterations);
         _cfg.UnsubValueChanged(CCVars.ExplosionMaxProcessingTime, SetMaxProcessingTime);
         _cfg.UnsubValueChanged(CCVars.ExplosionIncrementalTileBreaking, SetIncrementalTileBreaking);
+        _cfg.UnsubValueChanged(CCVars.ExplosionSingleTickAreaLimit, SetSingleTickAreaLimit);
     }
 
     private void SetTilesPerTick(int value) => TilesPerTick = value;
@@ -41,4 +44,5 @@ public sealed partial class ExplosionSystem : EntitySystem
     private void SetMaxIterations(int value) => MaxIterations = value;
     private void SetMaxProcessingTime(float value) => MaxProcessingTime = value;
     private void SetIncrementalTileBreaking(bool value) => IncrementalTileBreaking = value;
+    private void SetSingleTickAreaLimit(int value) => SingleTickAreaLimit = value;
 }
