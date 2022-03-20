@@ -152,15 +152,10 @@ public sealed partial class GunSystem
             return false;
         }
 
-        if (TryComp(ammo, out ItemComponent? item))
+        if (!_handsSystem.TryPickup(user, ammo, handsComp: handsComponent))
         {
-            if (!handsComponent.CanPutInHand(item))
-            {
-                TryInsertAmmo(user, ammo, ammoBox);
-                return false;
-            }
-
-            handsComponent.PutInHand(item);
+            TryInsertAmmo(user, ammo, ammoBox);
+            return false;
         }
 
         UpdateAmmoBoxAppearance(ammoBox.Owner, ammoBox);

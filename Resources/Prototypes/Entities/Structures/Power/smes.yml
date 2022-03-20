@@ -1,3 +1,4 @@
+# Base SMES
 - type: entity
   abstract: true
   id: BaseSMES
@@ -58,3 +59,14 @@
       LayoutId: SMES
     - type: Machine
       board: SMESMachineCircuitboard
+
+# SMES' in use
+
+- type: entity
+  parent: BaseSMES
+  id: SMESBasic
+  suffix: Basic, 10MW
+  components:
+  - type: Battery
+    maxCharge: 10000000
+    startingCharge: 10000000

@@ -1,27 +1,30 @@
-﻿using Robust.Shared.GameObjects;
+namespace Content.Shared.Item;
 
-namespace Content.Shared.Item
+/// <summary>
+///     Raised on a *mob* when it tries to pickup something
+/// </summary>
+public sealed class PickupAttemptEvent : BasePickupAttemptEvent
 {
-    /// <summary>
-    /// Raised on a *mob* when it tries to pickup something
-    /// </summary>
-    public sealed class PickupAttemptEvent : CancellableEntityEventArgs
-    {
-        public PickupAttemptEvent(EntityUid uid)
-        {
-            Uid = uid;
-        }
+    public PickupAttemptEvent(EntityUid user, EntityUid item) : base(user, item) { }
+}
 
-        public EntityUid Uid { get; }
-    }
+/// <summary>
+///     Raised directed at entity being picked up when someone tries to pick it up
+/// </summary>
+public sealed class GettingPickedUpAttemptEvent : BasePickupAttemptEvent
+{
+    public GettingPickedUpAttemptEvent(EntityUid user, EntityUid item) : base(user, item) { }
+}
 
-    /// <summary>
-    /// Raised on the *item* when tried to be picked up
-    /// </summary>
-    /// <remarks>
-    /// Doesn't just handle "items" but calling it "PickedUpAttempt" is too close to "Pickup" for the sleep deprived brain.
-    /// </remarks>
-    public sealed class AttemptItemPickupEvent : CancellableEntityEventArgs
+[Virtual]
+public class BasePickupAttemptEvent : CancellableEntityEventArgs
+{
+    public readonly EntityUid User;
+    public readonly EntityUid Item;
+
+    public BasePickupAttemptEvent(EntityUid user, EntityUid item)
     {
+        User = user;
+        Item = item;
     }
 }

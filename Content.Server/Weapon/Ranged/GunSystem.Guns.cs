@@ -36,7 +36,7 @@ public sealed partial class GunSystem
     {
         if (!TryComp(gun.Owner, out ServerRangedBarrelComponent? barrel)) return;
 
-        if (!TryComp(user, out HandsComponent? hands) || hands.GetActiveHand()?.HeldEntity != gun.Owner) return;
+        if (!TryComp(user, out HandsComponent? hands) || hands.ActiveHand?.HeldEntity != gun.Owner) return;
 
         if (!TryComp(user, out CombatModeComponent? combat) ||
             !combat.IsInCombatMode ||
