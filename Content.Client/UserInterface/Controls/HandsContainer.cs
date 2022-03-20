@@ -64,7 +64,7 @@ public sealed class HandsContainer : Control
          _handsSystem.TryGetPlayerHands(out _playerHands);
     }
 
-    private void RegisterHand(string name, HandLocation location)
+    private void RegisterHand(string name, HandLocation location, EntityUid? heldItem = null)
     {
         var newHand = new HandControl(this, location, _entityManager, _itemSlotManager);
         newHand.OnPressed += args => OnHandPressed(args, name);
@@ -81,6 +81,34 @@ public sealed class HandsContainer : Control
         {
             _itemSlotManager.UpdateCooldown(handData.Value, handData.Value.HeldItem);
         }
+    }
+
+    public void LoadHands(HandsComponent component)
+    {
+        _playerHands = component;
+        foreach (var handData in _playerHands.Hands)
+        {
+            RegisterHand(handData.Name, handData.Location, handData.HeldEntity);
+        }
+    }
+
+    public void UpdateHands(HandsComponent? component)
+    {
+        if (component == null) { UnloadHands();
+            return;
+        }
+
+    }
+
+
+    public void UnloadHands()
+    {
+        foreach (var handData in _hands.Values)
+        {
+            handData.Dispose();
+        }
+        _hands.Clear();
+        _playerHands = null;
     }
 
     // public struct HandData

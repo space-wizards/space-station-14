@@ -57,7 +57,7 @@ namespace Content.Client.UserInterface.Controls
                 _location = value;
                 UpdateHandIcon(value);
             } }
-        public HandControl(HandsContainer parent,HandLocation location,IEntityManager entManager, IItemSlotManager slotManager)
+        public HandControl(HandsContainer parent,HandLocation location,IEntityManager entManager, IItemSlotManager slotManager, EntityUid? heldItem = null)
         {
             _entManager = entManager;
             _itemSlotManager = slotManager;
@@ -71,7 +71,7 @@ namespace Content.Client.UserInterface.Controls
             Blocked.Texture = Theme.ResolveTexture(BlockedTextureFile);
             StorageButton.TextureNormal = Theme.ResolveTexture(StorageTextureFile);
             UpdateHandIcon(location);
-            UpdateBlockedState();
+            HeldItem = heldItem;
         }
 
         public override void Highlight(bool highlight)

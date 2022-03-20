@@ -10,7 +10,7 @@
 >
     <PanelContainer>
         <BoxContainer>
-            <ui:HandsContainer/>
+            <ui:HandsContainer Name="HandsManager" Access="Public"/>
         </BoxContainer>
     </PanelContainer>
 

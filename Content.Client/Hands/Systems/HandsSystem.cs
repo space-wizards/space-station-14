@@ -3,6 +3,8 @@ using System.Linq;
 using Content.Client.Animations;
 using Content.Client.Hands.UI;
 using Content.Client.HUD;
+using Content.Client.HUD.Widgets;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Item;
@@ -21,10 +23,13 @@ using Robust.Shared.Timing;
 namespace Content.Client.Hands
 {
     [UsedImplicitly]
-    public sealed class HandsSystem : SharedHandsSystem
+    public sealed class HandsSystem : SharedHandsSystem, IHasHudConnection
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+
+        private HandsContainer? _handsManager;
+
 
         public override void Initialize()
         {
@@ -301,24 +306,28 @@ namespace Content.Client.Hands
 
         private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
         {
-            UpdateGui(component);
+            _handsManager?.LoadHands(component);
         }
 
-        private static void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)
+        private void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)
         {
-            ClearGui(component);
+            _handsManager?.UnloadHands();
         }
 
-        private static void HandleCompRemove(EntityUid uid, HandsComponent component, ComponentRemove args)
+        private void HandleCompRemove(EntityUid uid, HandsComponent component, ComponentRemove args)
         {
-            ClearGui(component);
-        }
-
-        private static void ClearGui(HandsComponent comp)
-        {
-            comp.Gui?.Orphan();
-            comp.Gui = null;
+            _handsManager?.UnloadHands();
         }
         #endregion
+
+        public void LinkHudElements(IHudManager hudManager, HudPreset preset)
+        {
+            _handsManager = preset.GetWidget<HandsGui>().HandsManager;
+        }
+
+        public void UnLinkHudElements(IHudManager hudManager, HudPreset preset)
+        {
+            _handsManager = null;
+        }
     }
 }
