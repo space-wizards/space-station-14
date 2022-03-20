@@ -19,7 +19,7 @@ public sealed class SpawnExplosionEui : BaseEui
     {
         IoCManager.InjectDependencies(this);
         _window = new SpawnExplosionWindow(this);
-        _window.OnClose += () => SendMessage(new SpawnExplosionEuiMsg.Close());
+        _window.OnClose += SendClosedMessage;
     }
 
     public override void Opened()
@@ -31,9 +31,14 @@ public sealed class SpawnExplosionEui : BaseEui
     public override void Closed()
     {
         base.Closed();
-        _window.OnClose -= () => SendMessage(new SpawnExplosionEuiMsg.Close());
+        _window.OnClose -= SendClosedMessage;
         _window.Close();
         ClearOverlay();
+    }
+
+    public void SendClosedMessage()
+    {
+        SendMessage(new SpawnExplosionEuiMsg.Close());
     }
 
     public void ClearOverlay()

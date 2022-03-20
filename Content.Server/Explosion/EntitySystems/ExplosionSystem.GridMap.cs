@@ -37,7 +37,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Take our map of grid edges, where each is defHined in their own grid's reference frame, and map those
+    ///     Take our map of grid edges, where each is defined in their own grid's reference frame, and map those
     ///     edges all onto one grids reference frame.
     /// </summary>
     public (Dictionary<Vector2i, BlockedSpaceTile>, ushort) TransformGridEdges(

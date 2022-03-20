@@ -162,7 +162,6 @@ public sealed class ExplosionDebugOverlay : Overlay
             var colorTransparent = color;
             colorTransparent.A = 0.2f;
 
-
             if (!tileSets.TryGetValue(i, out var tiles))
                 continue;
 

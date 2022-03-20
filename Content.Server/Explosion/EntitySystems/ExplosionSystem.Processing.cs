@@ -123,7 +123,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             // TODO EXPLOSION  check if active explosion is on a paused map. If it is... I guess support swapping out &
             // storing the "currently active" explosion?
 
-            var processed = _activeExplosion.Proccess(tilesRemaining);
+            var processed = _activeExplosion.Process(tilesRemaining);
             tilesRemaining -= processed;
 
             // has the explosion finished processing?
@@ -564,7 +564,7 @@ sealed class Explosion
         return false;
     }
 
-    public int Proccess(int processingTarget)
+    public int Process(int processingTarget)
     {
         // In case the explosion terminated early last tick due to exceeding the allocated processing time, use this
         // time to update the tiles.
