@@ -12,7 +12,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using YamlDotNet.Core.Tokens;
 
 namespace Content.Client.Audio
 {
@@ -56,6 +55,13 @@ namespace Content.Client.Audio
             _cfg.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);
             _cfg.OnValueChanged(CCVars.AmbientRange, SetAmbientRange, true);
             _cfg.OnValueChanged(CCVars.AmbienceVolume, SetAmbienceVolume, true);
+            SubscribeLocalEvent<AmbientSoundComponent, ComponentShutdown>(OnShutdown);
+        }
+
+        private void OnShutdown(EntityUid uid, AmbientSoundComponent component, ComponentShutdown args)
+        {
+            if (_playingSounds.Remove(component, out var sound))
+                sound.Stream?.Stop();
         }
 
         private void SetAmbienceVolume(float value) => _ambienceVolume = value;
@@ -233,12 +239,13 @@ namespace Content.Client.Audio
             foreach (var (comp, sound) in _playingSounds)
             {
                 var entity = comp.Owner;
-                if (!comp.Enabled ||
+                if (comp.Deleted || // includes entity deletion
+                    !comp.Enabled ||
                     !EntityManager.GetComponent<TransformComponent>(entity).Coordinates
                         .TryDistance(EntityManager, coordinates, out var range) ||
                     range > comp.Range)
                 {
-                    _playingSounds[comp].Stream?.Stop();
+                    sound.Stream?.Stop();
                     _playingSounds.Remove(comp);
                 }
             }

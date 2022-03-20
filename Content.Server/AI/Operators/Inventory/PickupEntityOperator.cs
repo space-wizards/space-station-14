@@ -1,5 +1,6 @@
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
@@ -24,42 +25,22 @@ namespace Content.Server.AI.Operators.Inventory
         public override Outcome Execute(float frameTime)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            var interactionSystem = sysMan.GetEntitySystem<InteractionSystem>();
+            var handsSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
             if (entMan.Deleted(_target)
                 || !entMan.HasComponent<SharedItemComponent>(_target)
                 || _target.IsInContainer()
-                || !EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(_owner, _target, popup: true))
+                || !interactionSystem.InRangeUnobstructed(_owner, _target, popup: true))
             {
                 return Outcome.Failed;
             }
 
-            if (!entMan.TryGetComponent(_owner, out HandsComponent? handsComponent))
-            {
+            // select empty hand
+            if (!handsSys.TrySelectEmptyHand(_owner))
                 return Outcome.Failed;
-            }
-
-            var emptyHands = false;
-
-            foreach (var hand in handsComponent.ActivePriorityEnumerable())
-            {
-                if (handsComponent.GetItem(hand) == null)
-                {
-                    if (handsComponent.ActiveHand != hand)
-                    {
-                        handsComponent.ActiveHand = hand;
-                    }
-
-                    emptyHands = true;
-                    break;
-                }
-            }
-
-            if (!emptyHands)
-            {
-                return Outcome.Failed;
-            }
-
-            var interactionSystem = EntitySystem.Get<InteractionSystem>();
+            
             interactionSystem.InteractHand(_owner, _target);
             return Outcome.Success;
         }

@@ -116,7 +116,7 @@ public sealed class CrayonSystem : EntitySystem
 
     private void OnCrayonDropped(EntityUid uid, CrayonComponent component, DroppedEvent args)
     {
-        if (TryComp<ActorComponent>(args.UserUid, out var actor))
+        if (TryComp<ActorComponent>(args.User, out var actor))
             component.UserInterface?.Close(actor.PlayerSession);
     }
 }

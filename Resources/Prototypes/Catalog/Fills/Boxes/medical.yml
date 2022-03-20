@@ -57,7 +57,17 @@
     layers:
       - state: box
       - state: latex
-      
+
+- type: entity
+  name: mouth swab box
+  parent: BoxCardboard
+  id: BoxMouthSwab
+  components:
+  - type: StorageFill
+    contents:
+      - id: DiseaseSwab
+        amount: 30
+
 - type: entity
   name: body bag box
   parent: BoxCardboard

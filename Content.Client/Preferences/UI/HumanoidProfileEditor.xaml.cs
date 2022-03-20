@@ -177,7 +177,7 @@ namespace Content.Client.Preferences.UI
 
             #region Species
 
-            _speciesList = prototypeManager.EnumeratePrototypes<SpeciesPrototype>().ToList();
+            _speciesList = prototypeManager.EnumeratePrototypes<SpeciesPrototype>().Where(o => o.RoundStart).ToList();
             for (var i = 0; i < _speciesList.Count; i++)
             {
                 CSpeciesButton.AddItem(_speciesList[i].Name, i);
