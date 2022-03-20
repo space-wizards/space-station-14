@@ -53,6 +53,16 @@ namespace Content.Client.Hands
 
             var handsModified = component.Hands.Count != state.Hands.Count;
             var manager = EnsureComp<ContainerManagerComponent>(uid);
+            List<Hand> addedHands = new();
+            foreach (var hand in state.Hands)
+            {
+                if (component.Hands.TryAdd(hand.Name, hand))
+                {
+                    hand.Container = _containerSystem.EnsureContainer<ContainerSlot>(uid, hand.Name, manager);
+                    addedHands.Add(hand);
+                    handsModified = true;
+                }
+            }
             if (handsModified)
             {
                 foreach (var name in component.Hands.Keys)
@@ -63,13 +73,10 @@ namespace Content.Client.Hands
                         //component.Hands.Remove(name);
                     }
                 }
-                foreach (var hand in state.Hands)
+                foreach (var hand in addedHands)
                 {
-                    if (!component.Hands.ContainsKey(hand.Name))
-                    {
-                        //component.Hands.Add(hand.Name,hand);
-                        if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.RegisterHand(hand);
-                    }
+                    //component.Hands.Add(hand.Name,hand);
+                    if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.RegisterHand(hand);
                 }
                 component.SortedHands = new(state.HandNames);
             }
