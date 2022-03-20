@@ -406,3 +406,14 @@
     sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi
+   
+   - type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPaperBag
+  name: paperbag hat
+  description: Shy? Or just hiding something monstrous?
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/PaperBag.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/PaperBag.rsi
