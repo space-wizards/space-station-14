@@ -76,7 +76,7 @@ namespace Content.Client.Audio
             {
                 StartLobbyMusic();
             }
-            else if (args.NewState is GameScreen)
+            else if (args.NewState is GameplayState)
             {
                 StartAmbience();
             }
@@ -107,7 +107,7 @@ namespace Content.Client.Audio
 
         private void AmbienceCVarChanged(float volume)
         {
-            if (_stateManager.CurrentState is GameScreen)
+            if (_stateManager.CurrentState is GameplayState)
             {
                 StartAmbience();
             }

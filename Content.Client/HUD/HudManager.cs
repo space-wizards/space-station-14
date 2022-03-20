@@ -45,7 +45,7 @@ public interface IHudManager
     public T? GetUIWidgetOrNull<T>() where T : HudWidget;
     public bool HasWidget<T>() where T : HudWidget;
     public bool EscapeMenuVisible { get; set; }
-    public EscapeMenu? EscapeMenu { get; }
+    public Options.UI.EscapeMenu? EscapeMenu { get; }
 
     //Do Not abuse these or I will eat you
     public void AddNewControl(Control control);
@@ -82,10 +82,10 @@ public sealed class HudManager  : IHudManager
             _escapeMenu.Visible = value;
         }
     }
-    private EscapeMenu? _escapeMenu;
+    private Options.UI.EscapeMenu? _escapeMenu;
 
     //if escape menu is null create a new escape menu
-    public EscapeMenu? EscapeMenu => _escapeMenu ?? new EscapeMenu(_consoleHost);
+    public Options.UI.EscapeMenu? EscapeMenu => _escapeMenu ?? new Options.UI.EscapeMenu(_consoleHost);
 
     public HudManager()
     {
@@ -126,7 +126,7 @@ public sealed class HudManager  : IHudManager
         LoadAllPresets();
         SetDefaultHudPreset<DefaultHud>();
         _activeHudPreset = _defaultHudPreset;
-        _escapeMenu = new EscapeMenu(_consoleHost);
+        _escapeMenu = new Options.UI.EscapeMenu(_consoleHost);
         EscapeMenuVisible = false;
     }
 

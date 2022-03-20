@@ -73,6 +73,38 @@ public sealed class HandsContainer : Control
         throw new Exception("Duplicate handName detected!: "+ name);
     }
 
+    public void SetActiveHand(Hand? handData)
+    {
+        if (handData == null)
+        {
+
+            return;
+        }
+        ActiveHand = null;
+        _hands[handData.Name].Active = true;
+    }
+
+    public void RemoveHand(string name)
+    {
+        _hands[name].Dispose();
+        _hands.Remove(name);
+    }
+
+    public void RemoveHand(Hand handData)
+    {
+        RemoveHand(handData.Name);
+    }
+
+    public void RegisterHand(Hand handData)
+    {
+        RegisterHand(handData.Name, handData.Location, handData.HeldEntity);
+    }
+
+    public void UpdateHand(Hand handData)
+    {
+        _hands[handData.Name].HeldItem = handData.HeldEntity;
+    }
+
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
@@ -88,18 +120,9 @@ public sealed class HandsContainer : Control
         _playerHands = component;
         foreach (var handData in _playerHands.Hands)
         {
-            RegisterHand(handData.Name, handData.Location, handData.HeldEntity);
+            RegisterHand(handData.Value);
         }
     }
-
-    public void UpdateHands(HandsComponent? component)
-    {
-        if (component == null) { UnloadHands();
-            return;
-        }
-
-    }
-
 
     public void UnloadHands()
     {

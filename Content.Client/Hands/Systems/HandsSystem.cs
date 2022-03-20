@@ -41,6 +41,8 @@ namespace Content.Client.Hands
             SubscribeLocalEvent<HandsComponent, ComponentRemove>(HandleCompRemove);
             SubscribeLocalEvent<HandsComponent, ComponentHandleState>(HandleComponentState);
             SubscribeLocalEvent<HandsComponent, VisualsChangedEvent>(OnVisualsChanged);
+            SubscribeLocalEvent<HandsComponent, EquippedHandEvent>(OnItemEquipped);
+            SubscribeLocalEvent<HandsComponent, UnequippedHandEvent>(OnItemUnequipped);
 
             SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
         }
@@ -74,9 +76,6 @@ namespace Content.Client.Hands
             }
 
             TrySetActiveHand(uid, state.ActiveHand, component);
-
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
-                UpdateGui();
         }
         #endregion
 
@@ -103,6 +102,17 @@ namespace Content.Client.Hands
             ReusableAnimations.AnimateEntityPickup(item, initialPosition, finalPosition);
         }
         #endregion
+
+        private void OnItemEquipped(EntityUid uid, SharedHandsComponent handComp, EquippedHandEvent args)
+        {
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.UpdateHand(args.Hand);
+        }
+
+        private void OnItemUnequipped(EntityUid uid, SharedHandsComponent handComp, UnequippedHandEvent args)
+        {
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.UpdateHand(args.Hand);
+        }
+
 
         public EntityUid? GetActiveHandEntity()
         {
@@ -188,9 +198,6 @@ namespace Content.Client.Hands
             if (!Resolve(uid, ref handComp, ref sprite, false))
                 return;
 
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
-                UpdateGui();
-
             if (!handComp.ShowInHands)
                 return;
 
@@ -263,44 +270,67 @@ namespace Content.Client.Hands
         #endregion
 
         #region Gui
-        public void UpdateGui(HandsComponent? hands = null)
-        {
-            // if (hands == null && !TryGetPlayerHands(out hands) || hands.Gui == null)
-            //     return;
-            //
-            // var states = hands.Hands
-            //     .Select(hand => new GuiHand(hand.Name, hand.Location, hand.HeldEntity))
-            //     .ToArray();
-            //
-            // hands.Gui.Update(new HandsGuiState(states, hands.ActiveHand));
-        }
 
         public override bool TrySetActiveHand(EntityUid uid, string? value, SharedHandsComponent? handComp = null)
         {
             if (!base.TrySetActiveHand(uid, value, handComp))
                 return false;
 
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
-                UpdateGui();
-
             return true;
         }
 
         private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
         {
-            _handsManager?.LoadHands(component);
+            if (_handsManager == null) return;
+            _handsManager.LoadHands(component);
+            RegisterUiListeners();
         }
 
         private void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)
         {
+            if (_handsManager == null) return;
             _handsManager?.UnloadHands();
+            DeregisterUiListeners();
         }
 
         private void HandleCompRemove(EntityUid uid, HandsComponent component, ComponentRemove args)
         {
+            if (_handsManager == null) return;
             _handsManager?.UnloadHands();
+            DeregisterUiListeners();
         }
         #endregion
+
+        public override Hand? AddHand(EntityUid uid, string handName, HandLocation handLocation, SharedHandsComponent? handsComp = null)
+        {
+            var newHand = base.AddHand(uid, handName, handLocation, handsComp);
+            if (newHand != null && (uid == _playerManager.LocalPlayer?.ControlledEntity)) _handsManager?.RegisterHand(newHand);
+            return newHand;
+        }
+
+        public override void RemoveHand(EntityUid uid, string handName, SharedHandsComponent? handsComp = null)
+        {
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity && handsComp != null)
+            {
+                if (handsComp.Hands.TryGetValue(handName, out var hand))
+                {
+                    _handsManager?.RemoveHand(hand);
+                }
+            }
+            base.RemoveHand(uid, handName, handsComp);
+        }
+
+        private void RegisterUiListeners()
+        {
+            if (_handsManager == null) return;
+            OnHandActivate += _handsManager.SetActiveHand;
+        }
+
+        private void DeregisterUiListeners()
+        {
+            if (_handsManager == null) return;
+            OnHandActivate -= _handsManager.SetActiveHand;
+        }
 
         public void LinkHudElements(IHudManager hudManager, HudPreset preset)
         {
