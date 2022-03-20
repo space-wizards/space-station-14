@@ -1,13 +1,18 @@
+using System.Linq;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Decals
 {
     public sealed class DecalSystem : SharedDecalSystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly SharedTransformSystem _transforms = default!;
         [Dependency] private readonly SpriteSystem _sprites = default!;
@@ -26,6 +31,58 @@ namespace Content.Client.Decals
             SubscribeNetworkEvent<DecalChunkUpdateEvent>(OnChunkUpdate);
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalPlayer;
+            var ent = localPlayer?.ControlledEntity;
+
+            if (localPlayer == null || ent == null) return;
+
+            // var viewers = localPlayer.Session.ViewSubscriptions.ToHashSet();
+            var viewers = new HashSet<EntityUid>(1) { ent.Value };
+
+            var chunksInRange = GetChunksForViewers(viewers);
+
+            // If we ever spawn a billion grids then this may be a problem but eh.
+            foreach (var comp in EntityQuery<DecalGridComponent>(true))
+            {
+                var gridId = comp.Owner;
+                var toRemove = new RemQueue<Vector2i>();
+
+                // Kill the grid
+                if (!chunksInRange.TryGetValue(_mapManager.GetGridEuid(comp.Owner), out var knownChunks))
+                {
+                    foreach (var (index, _) in comp.ChunkCollection.ChunkCollection)
+                    {
+                        toRemove.Add(index);
+                    }
+                }
+                else
+                {
+                    foreach (var (index, _) in comp.ChunkCollection.ChunkCollection)
+                    {
+                        if (knownChunks.Contains(index)) continue;
+
+                        toRemove.Add(index);
+                    }
+                }
+
+                foreach (var index in toRemove)
+                {
+                    var chunk = comp.ChunkCollection.ChunkCollection[index];
+
+                    foreach (var (id, _) in chunk)
+                    {
+                        RemoveDecalFromRenderIndex(gridId, id);
+                    }
+
+                    comp.ChunkCollection.ChunkCollection.Remove(index);
+                }
+            }
         }
 
         public void ToggleOverlay()
@@ -112,21 +169,6 @@ namespace Content.Client.Decals
                     }
 
                     chunkCollection[indices] = newChunkData;
-                }
-
-                // Now we'll cull old chunks out of range as the server will send them to us anyway.
-                var toRemove = new RemQueue<Vector2i>();
-
-                foreach (var (index, _) in chunkCollection)
-                {
-                    if (gridChunks.ContainsKey(index)) continue;
-
-                    toRemove.Add(index);
-                }
-
-                foreach (var index in toRemove)
-                {
-                    chunkCollection.Remove(index);
                 }
             }
         }

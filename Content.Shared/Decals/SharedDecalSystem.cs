@@ -16,6 +16,7 @@ namespace Content.Shared.Decals
 
         protected readonly Dictionary<GridId, Dictionary<uint, Vector2i>> ChunkIndex = new();
 
+        // TODO:L Changing this is going to break serialization so need to update that so it doesn't.
         public const int ChunkSize = 32;
         public static Vector2i GetChunkIndices(Vector2 coordinates) => new ((int) Math.Floor(coordinates.X / ChunkSize), (int) Math.Floor(coordinates.Y / ChunkSize));
 

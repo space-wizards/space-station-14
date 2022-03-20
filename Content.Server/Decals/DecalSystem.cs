@@ -296,10 +296,9 @@ namespace Content.Server.Decals
         {
             base.Update(frameTime);
 
-
             foreach (var session in Filter.Broadcast().Recipients)
             {
-                if(session is not IPlayerSession playerSession || playerSession.Status != SessionStatus.InGame)
+                if (session is not IPlayerSession { Status: SessionStatus.InGame } playerSession)
                     continue;
 
                 var chunks = GetChunksForSession(playerSession);
