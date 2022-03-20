@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.MachineLinking.Events;
-using Content.Server.MachineLinking.Exceptions;
 using Content.Server.Power.Components;
 using Content.Server.Recycling;
 using Content.Server.Recycling.Components;
-using Content.Server.Stunnable;
 using Content.Shared.Conveyor;
 using Content.Shared.Item;
 using Content.Shared.MachineLinking;
@@ -22,15 +20,11 @@ namespace Content.Server.Conveyor
     public sealed class ConveyorSystem : EntitySystem
     {
         [Dependency] private RecyclerSystem _recycler = default!;
-        [Dependency] private StunSystem _stunSystem = default!;
-
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<ConveyorComponent, SignalReceivedEvent>(OnSignalReceived);
-            SubscribeLocalEvent<ConveyorComponent, PortDisconnectedEvent>(OnPortDisconnected);
-            SubscribeLocalEvent<ConveyorComponent, LinkAttemptEvent>(OnLinkAttempt);
             SubscribeLocalEvent<ConveyorComponent, PowerChangedEvent>(OnPowerChanged);
         }
 
@@ -54,24 +48,10 @@ namespace Content.Server.Conveyor
             }
         }
 
-        private void OnLinkAttempt(EntityUid uid, ConveyorComponent component, LinkAttemptEvent args)
-        {
-
-        }
-
-        private void OnPortDisconnected(EntityUid uid, ConveyorComponent component, PortDisconnectedEvent args)
-        {
-
-        }
-
         private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)
         {
-            switch (args.Port)
-            {
-                case "Forward": SetState(component, ConveyorState.Forward); break;
-                case "Reverse": SetState(component, ConveyorState.Reversed); break;
-                case "Off": SetState(component, ConveyorState.Off); break;
-            }
+            if (Enum.TryParse(args.Port, out ConveyorState state))
+                SetState(component, state);
         }
 
         private void SetState(ConveyorComponent component, ConveyorState state)
