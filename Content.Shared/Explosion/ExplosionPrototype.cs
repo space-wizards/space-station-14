@@ -68,6 +68,12 @@ public sealed class ExplosionPrototype : IPrototype
     [DataField("texturePath")]
     public readonly ResourcePath TexturePath = new("/Textures/Effects/fire.rsi");
 
+    /// <summary>
+    ///     How intense does the explosion have to be at a tile to advance to the next fire texture state?
+    /// </summary>
+    [DataField("intensityPerState")]
+    public float IntensityPerState = 12;
+
     // Theres probably a better way to do this. Currently Atmos just hard codes a constant int, so I have no one to
     // steal code from.
     [DataField("fireStates")]

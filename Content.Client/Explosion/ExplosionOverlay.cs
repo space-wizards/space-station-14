@@ -33,11 +33,6 @@ public sealed class ExplosionOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
-    /// <summary>
-    ///     How intense does the explosion have to be at a tile to advance to the next fire texture state?
-    /// </summary>
-    public const int IntensityPerState = 12;
-
     private ShaderInstance _shader;
 
     public ExplosionOverlay()
@@ -106,7 +101,7 @@ public sealed class ExplosionOverlay : Overlay
             if (!tileSets.TryGetValue(j, out var tiles))
                 continue;
 
-            var frameIndex = (int) Math.Min(exp.Intensity[j] / IntensityPerState, exp.FireFrames.Count - 1);
+            var frameIndex = (int) Math.Min(exp.Intensity[j] / exp.IntensityPerState, exp.FireFrames.Count - 1);
             var frames = exp.FireFrames[frameIndex];
 
             foreach (var tile in tiles)

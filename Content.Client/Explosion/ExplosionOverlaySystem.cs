@@ -163,15 +163,16 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
 internal sealed class Explosion
 {
-    public Dictionary<int, List<Vector2i>>? SpaceTiles;
-    public Dictionary<GridId, Dictionary<int, List<Vector2i>>> Tiles;
-    public List<float> Intensity;
-    public EntityUid LightEntity;
-    public MapId Map;
-    public int Explosionid;
-    public ushort SpaceTileSize;
+    public readonly Dictionary<int, List<Vector2i>>? SpaceTiles;
+    public readonly Dictionary<GridId, Dictionary<int, List<Vector2i>>> Tiles;
+    public readonly List<float> Intensity;
+    public readonly EntityUid LightEntity;
+    public readonly MapId Map;
+    public readonly int Explosionid;
+    public readonly ushort SpaceTileSize;
+    public readonly float IntensityPerState;
 
-    public Matrix3 SpaceMatrix;
+    public readonly Matrix3 SpaceMatrix;
 
     /// <summary>
     ///     How long have we been drawing this explosion, starting from the time the explosion was fully drawn.
@@ -182,9 +183,9 @@ internal sealed class Explosion
     ///     The textures used for the explosion fire effect. Each fire-state is associated with an explosion
     ///     intensity range, and each stat itself has several textures.
     /// </summary>
-    public List<Texture[]> FireFrames = new();
+    public readonly List<Texture[]> FireFrames = new();
 
-    public Color? FireColor;
+    public readonly Color? FireColor;
 
     internal Explosion(ExplosionEvent args, ExplosionPrototype type, EntityUid lightEntity, IResourceCache resCache)
     {
@@ -197,6 +198,7 @@ internal sealed class Explosion
         FireColor = type.FireColor;
         LightEntity = lightEntity;
         SpaceTileSize = args.SpaceTileSize;
+        IntensityPerState = type.IntensityPerState;
 
         var fireRsi = resCache.GetResource<RSIResource>(type.TexturePath).RSI;
         foreach (var state in fireRsi)
