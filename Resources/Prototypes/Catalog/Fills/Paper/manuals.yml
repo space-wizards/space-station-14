@@ -26,6 +26,8 @@
     netsync: false
     sprite: Objects/Misc/guardian_info.rsi
     state: guardian_info
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.PaperUiKey.Key
