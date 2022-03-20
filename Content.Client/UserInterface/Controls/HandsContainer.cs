@@ -23,14 +23,34 @@ public sealed class HandsContainer : Control
     public List<HandControl> Hands => _hands.Values.ToList();
     private readonly Dictionary<string, HandControl> _hands = new();
     private readonly GridContainer _grid;
-    public HandControl? ActiveHand { get; set; }
 
+    public HandControl? ActiveHand
+    {
+        get => _activeHand;
+        set
+        {
+            if (_activeHand != value)
+            {
+                if (_activeHand != null)
+                {
+                    _activeHand.Active = false;
+                }
+                _activeHand = value;
+                if (_activeHand != null) _activeHand.Active = true;
+            }
+        }
+    }
+
+    private HandControl? _activeHand = null;
     public HandsContainer()
     {
         IoCManager.InjectDependencies(this);
         _handsSystem = _systemManager.GetEntitySystem<HandsSystem>();
         _handsSystem.TryGetPlayerHands(out _playerHands);
         AddChild(_grid = new GridContainer());
+        _grid.Columns = 4;
+        _grid.HorizontalAlignment = HAlignment.Center;
+
     }
     public bool TryGetHand(string name, out HandControl hand)
     {
@@ -69,8 +89,8 @@ public sealed class HandsContainer : Control
         var newHand = new HandControl(this, location, _entityManager, _itemSlotManager);
         newHand.OnPressed += args => OnHandPressed(args, name);
         newHand.OnStoragePressed += args => OnStoragePressed(name);
-        if (_hands.TryAdd(name, newHand)) return;
-        throw new Exception("Duplicate handName detected!: "+ name);
+        if (!_hands.TryAdd(name, newHand)) throw new Exception("Duplicate handName detected!: " + name);
+        AddHandToGui(newHand);
     }
 
     public void SetActiveHand(Hand? handData)
@@ -86,6 +106,7 @@ public sealed class HandsContainer : Control
 
     public void RemoveHand(string name)
     {
+        RemoveHandFromGui(_hands[name]);
         _hands[name].Dispose();
         _hands.Remove(name);
     }
@@ -120,6 +141,7 @@ public sealed class HandsContainer : Control
         _playerHands = component;
         foreach (var handData in _playerHands.Hands)
         {
+            Logger.Debug(handData.Key);
             RegisterHand(handData.Value);
         }
     }
@@ -132,6 +154,16 @@ public sealed class HandsContainer : Control
         }
         _hands.Clear();
         _playerHands = null;
+    }
+
+    private void AddHandToGui(HandControl control)
+    {
+        _grid.AddChild(control);
+    }
+
+    private void RemoveHandFromGui(HandControl control)
+    {
+        _grid.RemoveChild(control);
     }
 
     // public struct HandData

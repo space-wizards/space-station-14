@@ -271,14 +271,6 @@ namespace Content.Client.Hands
 
         #region Gui
 
-        public override bool TrySetActiveHand(EntityUid uid, string? value, SharedHandsComponent? handComp = null)
-        {
-            if (!base.TrySetActiveHand(uid, value, handComp))
-                return false;
-
-            return true;
-        }
-
         private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
         {
             if (_handsManager == null) return;

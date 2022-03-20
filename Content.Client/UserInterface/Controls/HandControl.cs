@@ -8,23 +8,33 @@ using Robust.Shared.Input;
 
 namespace Content.Client.UserInterface.Controls
 {
-    [Virtual]
-    public class HandControl : ItemSlotButton
+    public sealed class HandControl : ItemSlotButton
     {
         public TextureRect Blocked { get; }
         public Texture BlockedTexture => Theme.ResolveTexture(BlockedTextureFile);
         private const string BlockedTextureFile = "blocked.png";
         private const string StorageTextureFile = "back.png";
         private const string LeftHandTextureFile = "hand_l.png";
-        private const string MidHandTextureFile = "hand_l.png";
-        private const string RightHandTextureFile = "hand_l.png";
+        private const string MidHandTextureFile = "hand.png";
+        private const string RightHandTextureFile = "hand_R.png";
         private readonly IItemSlotManager _itemSlotManager;
         private readonly IEntityManager _entManager;
-        private bool _activeHand;
+        private bool _activeHand = false;
         private bool _highlighted;
         private readonly HandsContainer _parent;
         private HandLocation _location;
         private EntityUid? _heldItem;
+        public bool Active
+        {
+            get => _activeHand;
+            set
+            {
+                if (_activeHand == value) return;
+                _activeHand = value;
+                UpdateHighlight();
+            }
+
+        }
 
         public EntityUid? HeldItem
         {
@@ -37,20 +47,6 @@ namespace Content.Client.UserInterface.Controls
                 UpdateBlockedState();
             }
         }
-        public bool Active
-        {
-            get => _activeHand;
-            set
-            {
-                _activeHand = value;
-                if (value)
-                {
-                    if (_parent.ActiveHand != null) _parent.ActiveHand.Active = false;
-                    _parent.ActiveHand = this;
-                }
-                UpdateHighlight();
-            }
-        }
         public HandLocation Location { get => _location;
             set
             {
@@ -59,6 +55,7 @@ namespace Content.Client.UserInterface.Controls
             } }
         public HandControl(HandsContainer parent,HandLocation location,IEntityManager entManager, IItemSlotManager slotManager, EntityUid? heldItem = null)
         {
+            Active = false;
             _entManager = entManager;
             _itemSlotManager = slotManager;
             AddChild(Blocked = new TextureRect
@@ -102,7 +99,7 @@ namespace Content.Client.UserInterface.Controls
                 }
             }
 
-            Location = location;
+            _location = location;
         }
 
         private void UpdateBlockedState()
@@ -112,8 +109,7 @@ namespace Content.Client.UserInterface.Controls
 
         private void UpdateHighlight()
         {
-            // always stay highlighted if active
-            base.Highlight(_activeHand || _highlighted);
+            base.Highlight(Active || _highlighted);
         }
         public override void UpdateTheme(HudTheme newTheme)
         {

@@ -1,5 +1,6 @@
 ﻿using Content.Client.CombatMode;
 using Content.Client.Gameplay;
+using Content.Client.Hands;
 using Content.Client.HUD.Widgets;
 using Content.Client.Sandbox;
 using JetBrains.Annotations;
@@ -17,6 +18,7 @@ public sealed class DefaultHud : HudPreset
         RegisterAllowedState<GameplayState>();
         RegisterLinkedEntitySystem<SandboxSystem>();
         RegisterLinkedEntitySystem<CombatModeSystem>();
+        RegisterLinkedEntitySystem<HandsSystem>();
 
         RegisterWidget<MenuBar>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.TopLeft, margin: 10);
         RegisterWidget<HandsGui>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.CenterBottom, margin: 10);
