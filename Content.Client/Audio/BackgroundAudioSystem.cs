@@ -120,7 +120,7 @@ namespace Content.Client.Audio
         {
             EndAmbience();
             var file = _robustRandom.Pick(_ambientCollection.PickFiles).ToString();
-            _ambientStream = SoundSystem.Play(Filter.Local(), file, _ambientParams.WithVolume(_configManager.GetCVar(CCVars.AmbienceVolume)));
+            _ambientStream = SoundSystem.Play(Filter.Local(), file, _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
         }
 
         private void EndAmbience()
