@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Client.HUD;
 using Content.Client.Inventory;
 using Content.Client.Items.Managers;
-using Content.Client.Items.UI;
 using Content.Client.Resources;
 using Content.Shared.CCVar;
 using Content.Shared.Hands.Components;
@@ -23,14 +22,14 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Hands.UI
 {
     [GenerateTypedNameReferences]
-    public sealed partial class HandsGui : HudWidget
+    public sealed partial class LegacyHandsGui : HudWidget
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         [Dependency] private readonly INetConfigurationManager _configManager = default!;
         private string StorageTexture => "back.png";
         private Texture BlockedTexture => _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
-        public HandsGui()
+        public LegacyHandsGui()
         {
             RobustXamlLoader.Load(this);
         }

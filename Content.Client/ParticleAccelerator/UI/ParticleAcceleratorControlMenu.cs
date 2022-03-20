@@ -1,7 +1,7 @@
 using System;
-using Content.Client.HUD.UI;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Singularity.Components;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;

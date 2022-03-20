@@ -1,4 +1,3 @@
-using Content.Client.CombatMode.UI;
 using Content.Client.HUD;
 using Content.Shared.CombatMode;
 using Content.Shared.Targeting;

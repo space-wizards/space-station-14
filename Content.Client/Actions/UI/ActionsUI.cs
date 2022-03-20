@@ -15,6 +15,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using MenuBar = Content.Client.HUD.Widgets.MenuBar;
 
 namespace Content.Client.Actions.UI
 {
@@ -235,9 +236,9 @@ namespace Content.Client.Actions.UI
             _lockButton.OnPressed -= OnLockPressed;
             _settingsButton.OnPressed -= OnToggleActionsMenu;
             _loadoutContainer.OnKeyBindDown -= OnHotbarPaginate;
-            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonToggled -= OnToggleActionsMenuTopButton;
-            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonDown = false;
-            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonVisible = false;
+            _hudManager.GetUIWidget<MenuBar>().ActionsButtonToggled -= OnToggleActionsMenuTopButton;
+            _hudManager.GetUIWidget<MenuBar>().ActionsButtonDown = false;
+            _hudManager.GetUIWidget<MenuBar>().ActionsButtonVisible = false;
         }
 
         protected override void Resized()

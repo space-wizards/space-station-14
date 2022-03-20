@@ -1,7 +1,7 @@
-﻿<ui:HandsGui xmlns="https://spacestation14.io"
+﻿<ui:LegacyHandsGui xmlns="https://spacestation14.io"
                                  xmlns:ui="clr-namespace:Content.Client.Hands.UI">
     <BoxContainer Orientation="Vertical">
         <Control Name="StatusContainer" />
         <BoxContainer Name="HandsContainer" Orientation="Horizontal" HorizontalAlignment="Center" />
     </BoxContainer>
-</ui:HandsGui>
+</ui:LegacyHandsGui>

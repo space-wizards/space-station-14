@@ -1,5 +1,5 @@
 using System;
-using Content.Client.Items.UI;
+using Content.Client.UserInterface.Controls;
 using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 

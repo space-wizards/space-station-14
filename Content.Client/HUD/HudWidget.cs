@@ -1,6 +1,7 @@
 ﻿using Content.Client.Viewport;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.XAML;
 using TerraFX.Interop.Windows;
 namespace Content.Client.HUD;
 

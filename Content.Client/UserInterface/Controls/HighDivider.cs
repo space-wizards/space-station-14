@@ -2,7 +2,7 @@ using Content.Client.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.HUD.UI
+namespace Content.Client.UserInterface.Controls
 {
     public sealed class HighDivider : Control
     {

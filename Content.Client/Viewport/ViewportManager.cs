@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Content.Client.HUD.UI;
+using Content.Client.UserInterface.Controls;
 using Content.Shared;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;

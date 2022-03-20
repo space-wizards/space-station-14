@@ -1,5 +1,5 @@
 ﻿<Control xmlns="https://spacestation14.io"
-         xmlns:hudUi="clr-namespace:Content.Client.HUD.UI">
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
             <CheckBox Name="VSyncCheckBox" Text="{Loc 'ui-options-vsync'}" />
@@ -37,11 +37,11 @@
             <CheckBox Name="ViewportLowResCheckBox" Text="{Loc 'ui-options-vp-low-res'}" />
             <CheckBox Name="FpsCounterCheckBox" Text="{Loc 'ui-options-fps-counter'}" />
         </BoxContainer>
-        <hudUi:StripeBack HasBottomEdge="False" HasMargins="False">
+        <controls:StripeBack HasBottomEdge="False" HasMargins="False">
             <Button Name="ApplyButton"
                     Text="{Loc 'ui-options-apply'}"
                     TextAlign="Center"
                     HorizontalAlignment="Right" />
-        </hudUi:StripeBack>
+        </controls:StripeBack>
     </BoxContainer>
 </Control>

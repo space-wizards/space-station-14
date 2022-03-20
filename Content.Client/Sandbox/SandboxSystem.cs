@@ -20,6 +20,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using MenuBar = Content.Client.HUD.Widgets.MenuBar;
 
 namespace Content.Client.Sandbox
 {
@@ -445,7 +446,7 @@ namespace Content.Client.Sandbox
 
         public void LinkHudElements(IHudManager hudManager, HudPreset preset)
         {
-            var buttonBar = preset.GetWidget<ButtonBar>();
+            var buttonBar = preset.GetWidget<MenuBar>();
             buttonBar.SandboxButtonToggled += SandboxButtonPressed;
             _onSandboxEnabled += () => { buttonBar.SandboxButtonVisible = true; };
             _onSandboxDisabled += () => { buttonBar.SandboxButtonVisible = false; };
@@ -455,7 +456,7 @@ namespace Content.Client.Sandbox
         }
         public void UnLinkHudElements(IHudManager hudManager, HudPreset preset)
         {
-            preset.GetWidget<ButtonBar>().SandboxButtonToggled -= SandboxButtonPressed;
+            preset.GetWidget<MenuBar>().SandboxButtonToggled -= SandboxButtonPressed;
             CheckStatus();
             _onSandboxEnabled = null;
             _onSandboxDisabled = null;

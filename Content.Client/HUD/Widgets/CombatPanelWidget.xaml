@@ -1,4 +1,4 @@
-﻿<combat:CombatPanelWidget xmlns="https://spacestation14.io"
+﻿<widgets:CombatPanelWidget xmlns="https://spacestation14.io"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths"
         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
@@ -6,12 +6,11 @@
         xmlns:parallax="clr-namespace:Content.Client.Parallax"
         xmlns:vote="clr-namespace:Content.Client.Voting.UI"
         xmlns:style="clr-namespace:Content.Client.Stylesheets"
-        xmlns:hudUi="clr-namespace:Content.Client.HUD.UI"
         xmlns:chatUi="clr-namespace:Content.Client.Chat.UI"
         xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
         xmlns:info="clr-namespace:Content.Client.Info"
-        xmlns:combat="clr-namespace:Content.Client.CombatMode.UI"
         xmlns:targeting="clr-namespace:Content.Client.Targeting.UI"
+        xmlns:widgets="clr-namespace:Content.Client.HUD.Widgets"
         Orientation="Vertical"
         HorizontalAlignment="Left"
         VerticalAlignment="Bottom"
@@ -20,4 +19,4 @@
         VerticalExpand="True"
 >
 <targeting:TargetingDoll Name="TargetingDoll" Access="Public"/>
-</combat:CombatPanelWidget>
+</widgets:CombatPanelWidget>

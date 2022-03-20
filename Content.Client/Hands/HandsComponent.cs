@@ -14,7 +14,7 @@ namespace Content.Client.Hands
         [DataField("showInHands")]
         public bool ShowInHands = true;
 
-        public HandsGui? Gui { get; set; }
+        public LegacyHandsGui? Gui { get; set; }
 
         /// <summary>
         ///     Data about the current sprite layers that the hand is contributing to the owner entity. Used for sprite in-hands.

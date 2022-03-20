@@ -15,6 +15,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Timing;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using MenuBar = Content.Client.HUD.Widgets.MenuBar;
 
 namespace Content.Client.Actions.UI
 {
@@ -144,7 +145,7 @@ namespace Content.Client.Actions.UI
             _clearButton.OnPressed += OnClearButtonPressed;
             _searchBar.OnTextChanged += OnSearchTextChanged;
             _filterButton.OnItemSelected += OnFilterItemSelected;
-            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonDown = true;
+            _hudManager.GetUIWidget<MenuBar>().ActionsButtonDown = true;
         }
 
         protected override void ExitedTree()
@@ -154,7 +155,7 @@ namespace Content.Client.Actions.UI
             _clearButton.OnPressed -= OnClearButtonPressed;
             _searchBar.OnTextChanged -= OnSearchTextChanged;
             _filterButton.OnItemSelected -= OnFilterItemSelected;
-            _hudManager.GetUIWidget<ButtonBar>().ActionsButtonDown = false;
+            _hudManager.GetUIWidget<MenuBar>().ActionsButtonDown = false;
             foreach (var actionMenuControl in _resultsGrid.Children)
             {
                 var actionMenuItem = (ActionMenuItem) actionMenuControl;

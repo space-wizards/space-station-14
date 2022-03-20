@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Content.Client.Items.UI;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Inventory;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;

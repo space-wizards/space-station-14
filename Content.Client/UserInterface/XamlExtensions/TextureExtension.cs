@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Client.ResourceManagement;
 
-namespace Content.Client.UserInterface.Helpers;
+namespace Content.Client.UserInterface.XamlExtensions;
 
 
 [PublicAPI]

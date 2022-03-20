@@ -1,6 +1,6 @@
 using Content.Client.CharacterInterface;
-using Content.Client.HUD.UI;
 using Content.Client.Stylesheets;
+using Content.Client.UserInterface.Controls;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;

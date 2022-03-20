@@ -1,6 +1,6 @@
 <Control xmlns="https://spacestation14.io"
-         xmlns:hudUi="clr-namespace:Content.Client.HUD.UI"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
          x:Class="Content.Client.Options.UI.Tabs.NetworkTab">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
@@ -18,7 +18,7 @@
                 <Control MinSize="4 0"/>
             </BoxContainer>
         </BoxContainer>
-        <hudUi:StripeBack HasBottomEdge="False" HasMargins="False">
+        <controls:StripeBack HasBottomEdge="False" HasMargins="False">
             <BoxContainer Orientation="Horizontal"
                           Align="End"
                           HorizontalExpand="True"
@@ -34,6 +34,6 @@
                         TextAlign="Center"
                         HorizontalAlignment="Right" />
             </BoxContainer>
-        </hudUi:StripeBack>
+        </controls:StripeBack>
     </BoxContainer>
 </Control>

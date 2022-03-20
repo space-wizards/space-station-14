@@ -17,6 +17,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using MenuBar = Content.Client.HUD.Widgets.MenuBar;
 
 namespace Content.Client.Administration
 {
@@ -161,7 +162,7 @@ namespace Content.Client.Administration
 
         public void LinkHudElements(IHudManager hudManager, HudPreset preset)
         {
-            var buttonBar = preset.GetWidget<ButtonBar>();
+            var buttonBar = preset.GetWidget<MenuBar>();
             buttonBar.AdminButtonToggled += SetupAdminButton;
             buttonBar.AdminButtonVisible = CanOpen();
             buttonBar.AdminButtonDown = false;
@@ -177,7 +178,7 @@ namespace Content.Client.Administration
 
         public void UnLinkHudElements(IHudManager hudManager, HudPreset preset)
         {
-            var buttonBar = preset.GetWidget<ButtonBar>();
+            var buttonBar = preset.GetWidget<MenuBar>();
             buttonBar.AdminButtonToggled -= SetupAdminButton;
             _adminStatusUpdated = null;
         }

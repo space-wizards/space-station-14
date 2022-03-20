@@ -6,7 +6,6 @@
               xmlns:parallax="clr-namespace:Content.Client.Parallax"
               xmlns:vote="clr-namespace:Content.Client.Voting.UI"
               xmlns:style="clr-namespace:Content.Client.Stylesheets"
-              xmlns:hudUi="clr-namespace:Content.Client.HUD.UI"
               xmlns:chatUi="clr-namespace:Content.Client.Chat.UI"
               xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
               xmlns:info="clr-namespace:Content.Client.Info"

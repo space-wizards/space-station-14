@@ -1,4 +1,3 @@
-using Content.Client.CombatMode.UI;
 using Content.Client.HUD;
 using Content.Shared.CombatMode;
 using Content.Shared.Targeting;
@@ -39,12 +38,12 @@ namespace Content.Client.CombatMode
 
         public void LinkHudElements(IHudManager hudManager, HudPreset preset)
         {
-            preset.GetWidget<CombatPanelWidget>().OnTargetZoneChanged += OnTargetingZoneChanged;
+            //preset.GetWidget<CombatPanelWidget>().OnTargetZoneChanged += OnTargetingZoneChanged;
         }
 
         public void UnLinkHudElements(IHudManager hudManager, HudPreset preset)
         {
-            preset.GetWidget<CombatPanelWidget>().OnTargetZoneChanged -= OnTargetingZoneChanged;
+            //preset.GetWidget<CombatPanelWidget>().OnTargetZoneChanged -= OnTargetingZoneChanged;
         }
     }
     //All hail A, the mighty. This single class is responsible for holding this codebase together.

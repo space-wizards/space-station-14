@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameTicking.Managers;
-using Content.Client.HUD.UI;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Roles;
 using Content.Shared.Station;
 using Robust.Client.Console;

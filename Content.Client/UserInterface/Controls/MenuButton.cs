@@ -3,13 +3,11 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
-namespace Content.Client.HUD.UI;
+namespace Content.Client.UserInterface.Controls;
 
-internal sealed class TopButton : ContainerButton
+internal sealed class MenuButton : ContainerButton
 {
     [Dependency] private readonly IInputManager _inputManager = default!;
     public const string StyleClassLabelTopButton = "topButtonLabel";
@@ -46,7 +44,7 @@ internal sealed class TopButton : ContainerButton
 
     public BoxContainer ButtonRoot => _root;
 
-    public TopButton()
+    public MenuButton()
     {
         IoCManager.InjectDependencies(this);
         TooltipDelay = CustomTooltipDelay;

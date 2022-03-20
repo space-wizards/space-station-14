@@ -1,0 +1,21 @@
+﻿<widget:HandsGui
+    xmlns="https://spacestation14.io"
+    xmlns:widget="clr-namespace:Content.Client.HUD.Widgets"
+    xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    Name = "HandsInterface"
+    VerticalExpand="False"
+    Orientation="Horizontal"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Bottom"
+>
+    <ui:LeftHandButton
+        BlockedTexturePath="blocked.png"
+        StorageTexturePath="back.png"
+        ButtonTexturePath="hand_l.png"
+        />
+    <ui:RightHandButton
+        BlockedTexturePath="blocked.png"
+        StorageTexturePath="back.png"
+        ButtonTexturePath="hand_r.png"
+        />
+</widget:HandsGui>

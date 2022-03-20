@@ -6,7 +6,7 @@ using Content.Client.HUD;
 using Content.Client.HUD.Widgets;
 using Content.Shared.Input;
 using Content.Client.Items.Managers;
-using Content.Client.Items.UI;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.CCVar;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;

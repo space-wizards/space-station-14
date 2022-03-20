@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Content.Client.Examine;
-using Content.Client.Items.UI;
 using Content.Client.Storage;
+using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs;
 using Content.Shared.Cooldown;
 using Content.Shared.Hands.Components;

@@ -6,7 +6,6 @@
          xmlns:parallax="clr-namespace:Content.Client.Parallax"
          xmlns:vote="clr-namespace:Content.Client.Voting.UI"
          xmlns:style="clr-namespace:Content.Client.Stylesheets"
-         xmlns:hudUi="clr-namespace:Content.Client.HUD.UI"
          xmlns:chatUi="clr-namespace:Content.Client.Chat.UI"
          xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
          xmlns:info="clr-namespace:Content.Client.Info">
@@ -19,7 +18,7 @@
                 <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalExpand="True"  VerticalAlignment="Top" >
                     <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="620">
                         <info:LinkBanner Name="LinkBanner" VerticalExpand="false" HorizontalAlignment="Center" Margin="3 3 3 3"/>
-                        <hudUi:StripeBack>
+                        <ui:StripeBack>
                             <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
                                 <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public" Text="{Loc 'ui-lobby-observe-button'}" StyleClasses="ButtonBig"  WindowType="{x:Type lobbyUi:ObserveWarningWindow}"/>
                                 <Label Name="StartTime"
@@ -29,7 +28,7 @@
                                        StyleClasses="LabelBig" HorizontalExpand="True" />
                                 <Button Name="ReadyButton" Access="Public" ToggleMode="True" Text="{Loc 'ui-lobby-ready-up-button'}"
                                         StyleClasses="ButtonBig" />
-                            </BoxContainer></hudUi:StripeBack>
+                            </BoxContainer></ui:StripeBack>
                     </BoxContainer>
                 </PanelContainer>
             <!-- Left Bot Panel -->
@@ -56,7 +55,7 @@
                 </BoxContainer>
                 <ui:HSpacer Spacing="10"/>
                 <!-- Server info -->
-                <hudUi:NanoHeading Text="{Loc 'ui-lobby-server-info-block'}" />
+                <ui:NanoHeading Text="{Loc 'ui-lobby-server-info-block'}" />
                 <info:ServerInfo Name="ServerInfo" Access="Public" MinSize="0 30" VerticalExpand="false" Margin="3 3 3 3" MaxWidth="400"/>
                 <ui:HSpacer Spacing="5"/>
                 <lobbyUi:LobbyCharacterPreviewPanel Name="CharacterPreview" Access="Public"></lobbyUi:LobbyCharacterPreviewPanel>
