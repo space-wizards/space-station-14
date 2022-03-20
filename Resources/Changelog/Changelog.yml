@@ -1,9 +1,4 @@
 Entries:
-- author: Venomii
-  changes:
-  - {message: Added automatic laugh emote when saying "lol" or "lmao"., type: Add}
-  id: 735
-  time: '2021-12-14T01:33:46.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Pointing at entities works again., type: Fix}
@@ -3016,3 +3011,8 @@ Entries:
   - {message: Gas analyzers can now be used to examine contents of pipes., type: Add}
   id: 1234
   time: '2022-03-20T05:10:48.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Pineapple botany sprite was fixed., type: Fix}
+  id: 1235
+  time: '2022-03-20T12:46:41.0000000+00:00'
