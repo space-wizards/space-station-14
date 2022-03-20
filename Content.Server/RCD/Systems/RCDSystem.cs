@@ -129,7 +129,7 @@ namespace Content.Server.RCD.Systems
                     if (!tile.IsBlockedTurf(true)) //Delete the turf
                     {
                         mapGrid.SetTile(snapPos, Tile.Empty);
-                        _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to space grid: {tile.GridIndex} tile: {snapPos}");
+                        _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridIndex} tile: {snapPos} to space");
                     }
                     else //Delete what the user targeted
                     {
