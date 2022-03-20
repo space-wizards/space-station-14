@@ -33,58 +33,6 @@ namespace Content.Client.Decals
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
         }
 
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-
-            var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalPlayer;
-            var ent = localPlayer?.ControlledEntity;
-
-            if (localPlayer == null || ent == null) return;
-
-            // var viewers = localPlayer.Session.ViewSubscriptions.ToHashSet();
-            var viewers = new HashSet<EntityUid>(1) { ent.Value };
-
-            var chunksInRange = GetChunksForViewers(viewers);
-
-            // If we ever spawn a billion grids then this may be a problem but eh.
-            foreach (var comp in EntityQuery<DecalGridComponent>(true))
-            {
-                var gridId = comp.Owner;
-                var toRemove = new RemQueue<Vector2i>();
-
-                // Kill the grid
-                if (!chunksInRange.TryGetValue(_mapManager.GetGridEuid(comp.Owner), out var knownChunks))
-                {
-                    foreach (var (index, _) in comp.ChunkCollection.ChunkCollection)
-                    {
-                        toRemove.Add(index);
-                    }
-                }
-                else
-                {
-                    foreach (var (index, _) in comp.ChunkCollection.ChunkCollection)
-                    {
-                        if (knownChunks.Contains(index)) continue;
-
-                        toRemove.Add(index);
-                    }
-                }
-
-                foreach (var index in toRemove)
-                {
-                    var chunk = comp.ChunkCollection.ChunkCollection[index];
-
-                    foreach (var (id, _) in chunk)
-                    {
-                        RemoveDecalFromRenderIndex(gridId, id);
-                    }
-
-                    comp.ChunkCollection.ChunkCollection.Remove(index);
-                }
-            }
-        }
-
         public void ToggleOverlay()
         {
             if (_overlayManager.HasOverlay<DecalOverlay>())
@@ -169,6 +117,61 @@ namespace Content.Client.Decals
                     }
 
                     chunkCollection[indices] = newChunkData;
+                }
+            }
+
+            CullChunks();
+        }
+
+        /// <summary>
+        /// Removes out of range chunks so they are no longer considered for rendering.
+        /// </summary>
+        private void CullChunks()
+        {
+            var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalPlayer;
+            var ent = localPlayer?.ControlledEntity;
+
+            if (localPlayer == null || ent == null) return;
+
+            // var viewers = localPlayer.Session.ViewSubscriptions.ToHashSet();
+            var viewers = new HashSet<EntityUid>(1) { ent.Value };
+
+            var chunksInRange = GetChunksForViewers(viewers);
+
+            // If we ever spawn a billion grids then this may be a problem but eh.
+            foreach (var comp in EntityQuery<DecalGridComponent>(true))
+            {
+                var gridId = comp.Owner;
+                var toRemove = new RemQueue<Vector2i>();
+
+                // Kill the grid
+                if (!chunksInRange.TryGetValue(_mapManager.GetGridEuid(comp.Owner), out var knownChunks))
+                {
+                    foreach (var (index, _) in comp.ChunkCollection.ChunkCollection)
+                    {
+                        toRemove.Add(index);
+                    }
+                }
+                else
+                {
+                    foreach (var (index, _) in comp.ChunkCollection.ChunkCollection)
+                    {
+                        if (knownChunks.Contains(index)) continue;
+
+                        toRemove.Add(index);
+                    }
+                }
+
+                foreach (var index in toRemove)
+                {
+                    var chunk = comp.ChunkCollection.ChunkCollection[index];
+
+                    foreach (var (id, _) in chunk)
+                    {
+                        RemoveDecalFromRenderIndex(gridId, id);
+                    }
+
+                    comp.ChunkCollection.ChunkCollection.Remove(index);
                 }
             }
         }
