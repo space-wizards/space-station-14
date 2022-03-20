@@ -15,7 +15,7 @@
   - type: Clothing
     size: 15
     sprite: Objects/Tanks/generic.rsi
-    QuickEquip: false
+    quickEquip: false
   - type: GasTank
     toggleAction:
       name: action-name-internals-toggle

@@ -1,4 +1,12 @@
 - type: reagent
+  id: Cryptobiolin
+  name: cryptobiolin
+  group: Medicine
+  desc: Causes confusion and dizziness. This is essential to make Spaceacillin.
+  physicalDesc: fizzy
+  color: "#081a80"
+
+- type: reagent
   id: Dylovene
   name: dylovene
   group: Medicine
@@ -308,8 +316,7 @@
       - !type:HealthChange
         damage:
           types:
-            # close enough to what it says
-            Poison: -1
+            Cellular: -1
             Radiation: 1
 
 - type: reagent
@@ -339,6 +346,18 @@
         damage:
           groups:
             Caustic: -5
+
+- type: reagent
+  id: Spaceacillin
+  name: spaceacillin
+  group: Medicine
+  desc: A theta-lactam antibiotic. A common and very useful medicine, effective against many diseases likely to be encountered in space. Slows progression of diseases.
+  physicalDesc: opaque
+  color: "#9942f5"
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:ChemCureDisease
 
 - type: reagent
   id: Stellibinin

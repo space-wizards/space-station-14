@@ -8,6 +8,7 @@
     - type: AtmosDevice
     - type: SubFloorHide
       blockInteractions: false
+      blockAmbience: false
     - type: NodeContainer
       nodes:
         pipe:
@@ -51,6 +52,12 @@
       graph: GasUnary
       node: ventpump
     - type: VentCritterSpawnLocation
+    - type: AmbientSound
+      enabled: false
+      volume: -12
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_vent.ogg
 
 - type: entity
   parent: GasUnaryBase
@@ -115,6 +122,12 @@
     - type: Construction
       graph: GasUnary
       node: ventscrubber
+    - type: AmbientSound
+      enabled: false
+      volume: -12
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_vent.ogg
 
 - type: entity
   parent: GasUnaryBase

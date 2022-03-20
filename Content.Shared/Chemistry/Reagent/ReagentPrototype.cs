@@ -28,8 +28,8 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [DataField("name")]
-        public string Name { get; } = string.Empty;
+        [DataField("name", required: true)]
+        public string Name { get; } = default!;
 
         [DataField("group")]
         public string Group { get; } = "Unknown";
@@ -41,11 +41,11 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("abstract")]
         public bool Abstract { get; private set; }
 
-        [DataField("desc")]
-        public string Description { get; } = string.Empty;
+        [DataField("desc", required: true)]
+        public string Description { get; } = default!;
 
-        [DataField("physicalDesc")]
-        public string PhysicalDescription { get; } = string.Empty;
+        [DataField("physicalDesc", required: true)]
+        public string PhysicalDescription { get; } = default!;
 
         [DataField("color")]
         public Color SubstanceColor { get; } = Color.White;

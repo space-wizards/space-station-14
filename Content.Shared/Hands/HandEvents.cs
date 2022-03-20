@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using static Robust.Shared.GameObjects.SharedSpriteComponent;
+
 
 namespace Content.Shared.Hands
 {
@@ -73,15 +70,9 @@ namespace Content.Shared.Hands
         /// </summary>
         public EntityUid User { get; }
 
-        /// <summary>
-        ///     Item in the hand that was deselected.
-        /// </summary>
-        public EntityUid Item { get; }
-
-        public HandDeselectedEvent(EntityUid user, EntityUid item)
+        public HandDeselectedEvent(EntityUid user)
         {
             User = user;
-            Item = item;
         }
     }
 
@@ -96,15 +87,9 @@ namespace Content.Shared.Hands
         /// </summary>
         public EntityUid User { get; }
 
-        /// <summary>
-        ///     Item in the hand that was selected.
-        /// </summary>
-        public EntityUid Item { get; }
-
-        public HandSelectedEvent(EntityUid user, EntityUid item)
+        public HandSelectedEvent(EntityUid user)
         {
             User = user;
-            Item = item;
         }
     }
 
@@ -230,5 +215,65 @@ namespace Content.Shared.Hands
     public sealed class DidUnequipHandEvent : UnequippedHandEvent
     {
         public DidUnequipHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
+    }
+
+    /// <summary>
+    ///     Event raised by a client when they want to use the item currently held in their hands.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class RequestUseInHandEvent : EntityEventArgs
+    {
+    }
+
+    /// <summary>
+    ///     Event raised by a client when they want to activate the item currently in their hands.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class RequestActivateInHandEvent : EntityEventArgs
+    {
+        public string HandName { get; }
+
+        public RequestActivateInHandEvent(string handName)
+        {
+            HandName = handName;
+        }
+    }
+
+    /// <summary>
+    ///     Event raised by a client when they want to use the currently held item on some other held item
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class RequestHandInteractUsingEvent : EntityEventArgs
+    {
+        public string HandName { get; }
+
+        public RequestHandInteractUsingEvent(string handName)
+        {
+            HandName = handName;
+        }
+    }
+
+    /// <summary>
+    ///     Event raised by a client when they want to move an item held in another hand to their currently active hand
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class RequestMoveHandItemEvent : EntityEventArgs
+    {
+        public string HandName { get; }
+
+        public RequestMoveHandItemEvent(string handName)
+        {
+            HandName = handName;
+        }
+    }
+
+    public sealed class HandCountChangedEvent : EntityEventArgs
+    {
+        public HandCountChangedEvent(EntityUid sender)
+        {
+            Sender = sender;
+        }
+
+        public EntityUid Sender { get; }
     }
 }

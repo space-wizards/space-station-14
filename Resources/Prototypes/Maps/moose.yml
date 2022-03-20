@@ -6,7 +6,7 @@
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
   mapPath: /Maps/moose.yml
-  minPlayers: 18
+  minPlayers: 0
   maxPlayers: 35
   overflowJobs:
     - Assistant
@@ -35,5 +35,5 @@
     Librarian: [ 1, 1 ]
     Lawyer: [ 1, 1 ]
     Quartermaster: [ 1, 1 ]
-    SalvageSpecialist: [ 1, 2 ] 
+    SalvageSpecialist: [ 1, 2 ]
     Musician: [ 1, 1 ]

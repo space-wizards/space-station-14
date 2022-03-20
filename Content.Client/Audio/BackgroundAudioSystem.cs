@@ -30,8 +30,8 @@ namespace Content.Client.Audio
 
         private SoundCollectionPrototype _ambientCollection = default!;
 
-        private AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
-        private AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
+        private readonly AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
+        private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
 
         private IPlayingAudioStream? _ambientStream;
         private IPlayingAudioStream? _lobbyStream;
@@ -42,7 +42,7 @@ namespace Content.Client.Audio
 
             _ambientCollection = _prototypeManager.Index<SoundCollectionPrototype>("AmbienceBase");
 
-            _configManager.OnValueChanged(CCVars.AmbienceBasicEnabled, AmbienceCVarChanged);
+            _configManager.OnValueChanged(CCVars.AmbienceVolume, AmbienceCVarChanged);
             _configManager.OnValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
 
             _stateManager.OnStateChanged += StateManagerOnStateChanged;
@@ -76,7 +76,7 @@ namespace Content.Client.Audio
             {
                 StartLobbyMusic();
             }
-            else if (args.NewState is GameplayState && _configManager.GetCVar(CCVars.AmbienceBasicEnabled))
+            else if (args.NewState is GameScreen)
             {
                 StartAmbience();
             }
@@ -95,10 +95,7 @@ namespace Content.Client.Audio
             else
             {
                 EndLobbyMusic();
-                if (_configManager.GetCVar(CCVars.AmbienceBasicEnabled))
-                {
-                    StartAmbience();
-                }
+                StartAmbience();
             }
         }
 
@@ -108,13 +105,9 @@ namespace Content.Client.Audio
             EndLobbyMusic();
         }
 
-        private void AmbienceCVarChanged(bool ambienceEnabled)
+        private void AmbienceCVarChanged(float volume)
         {
-            if (!ambienceEnabled)
-            {
-                EndAmbience();
-            }
-            else if (_stateManager.CurrentState is GameplayState)
+            if (_stateManager.CurrentState is GameScreen)
             {
                 StartAmbience();
             }
@@ -128,7 +121,7 @@ namespace Content.Client.Audio
         {
             EndAmbience();
             var file = _robustRandom.Pick(_ambientCollection.PickFiles).ToString();
-            _ambientStream = SoundSystem.Play(Filter.Local(), file, _ambientParams);
+            _ambientStream = SoundSystem.Play(Filter.Local(), file, _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
         }
 
         private void EndAmbience()

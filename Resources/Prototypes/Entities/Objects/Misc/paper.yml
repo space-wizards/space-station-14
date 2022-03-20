@@ -72,6 +72,28 @@
     size: 2
 
 - type: entity
+  name: Cybersun pen
+  parent: BaseItem
+  id: CyberPen
+  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. It's not literally pointless, only figuratively.
+  components:
+  - type: Tag
+    tags:
+    - Write
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: overpriced_pen
+    netsync: false
+  - type: Pickaxe
+    damage:
+      types:
+        Piercing: 5
+  - type: Item
+    sprite: Objects/Misc/bureaucracy.rsi
+    HeldPrefix: overpriced_pen
+    size: 2
+
+- type: entity
   id: BoxFolderBase
   parent: BoxBase
   name: folder
@@ -113,6 +135,8 @@
     visuals:
     - type: MappedItemVisualizer
 
+    
+    
 - type: entity
   id: BoxFolderRed
   parent: BoxFolderBase
@@ -183,4 +207,3 @@
     - state: folder-colormap
       color: "#3f3f3f"
     - state: folder-base
-

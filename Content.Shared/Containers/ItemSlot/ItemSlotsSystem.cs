@@ -1,6 +1,7 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
@@ -8,14 +9,9 @@ using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Containers.ItemSlots
@@ -27,6 +23,7 @@ namespace Content.Shared.Containers.ItemSlots
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
@@ -175,11 +172,11 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 // Drop the held item onto the floor. Return if the user cannot drop.
-                if (!hands.Drop(args.Used))
+                if (!_handsSystem.TryDrop(args.User, args.Used, handsComp: hands))
                     return;
 
                 if (slot.Item != null)
-                    hands.TryPutInAnyHand(slot.Item.Value);
+                    _handsSystem.TryPickupAnyHand(args.User, slot.Item.Value, handsComp: hands);
 
                 Insert(uid, slot, args.Used, args.User, excludeUserAudio: args.Predicted);
                 args.Handled = true;
@@ -287,18 +284,17 @@ namespace Content.Shared.Containers.ItemSlots
             if (!Resolve(user, ref hands, false))
                 return false;
 
-            if (!hands.TryGetActiveHeldEntity(out var item))
+            if (hands.ActiveHand?.HeldEntity is not EntityUid held)
                 return false;
-            var heldItem = item.Value;
 
-            if (!CanInsert(uid, item.Value, slot))
+            if (!CanInsert(uid, held, slot))
                 return false;
 
             // hands.Drop(item) checks CanDrop action blocker
-            if (hands.Drop(heldItem))
+            if (_handsSystem.TryDrop(user, hands.ActiveHand))
                 return false;
 
-            Insert(uid, slot, heldItem, user);
+            Insert(uid, slot, held, user);
             return true;
         }
         #endregion
@@ -374,8 +370,8 @@ namespace Content.Shared.Containers.ItemSlots
             if (!TryEject(uid, slot, user, out var item, excludeUserAudio))
                 return false;
 
-            if (user != null && EntityManager.TryGetComponent(user.Value, out SharedHandsComponent? hands))
-                hands.PutInHand(item.Value);
+            if (user != null)
+                _handsSystem.PickupOrDrop(user.Value, item.Value);
 
             return true;
         }
@@ -384,25 +380,27 @@ namespace Content.Shared.Containers.ItemSlots
         #region Verbs
         private void AddEjectVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (args.Hands == null || !args.CanAccess ||!args.CanInteract ||
-                !_actionBlockerSystem.CanPickup(args.User))
+            if (args.Hands == null || !args.CanAccess ||!args.CanInteract)
             {
                 return;
             }
 
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (!CanEject(slot))
-                    continue;
-
                 if (slot.EjectOnInteract)
                     // For this item slot, ejecting/inserting is a primary interaction. Instead of an eject category
                     // alt-click verb, there will be a "Take item" primary interaction verb.
                     continue;
 
+                if (!CanEject(slot))
+                    continue;
+
+                if (!_actionBlockerSystem.CanPickup(args.User, slot.Item!.Value))
+                    continue;
+
                 var verbSubject = slot.Name != string.Empty
                     ? Loc.GetString(slot.Name)
-                    : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
+                    : EntityManager.GetComponent<MetaDataComponent>(slot.Item.Value).EntityName ?? string.Empty;
 
                 AlternativeVerb verb = new();
                 verb.IconEntity = slot.Item;
@@ -428,28 +426,28 @@ namespace Content.Shared.Containers.ItemSlots
                 return;
 
             // If there are any slots that eject on left-click, add a "Take <item>" verb.
-            if (_actionBlockerSystem.CanPickup(args.User))
+            foreach (var slot in itemSlots.Slots.Values)
             {
-                foreach (var slot in itemSlots.Slots.Values)
-                {
-                    if (!slot.EjectOnInteract || !CanEject(slot))
-                        continue;
+                if (!slot.EjectOnInteract || !CanEject(slot))
+                    continue;
 
-                    var verbSubject = slot.Name != string.Empty
-                        ? Loc.GetString(slot.Name)
-                        : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
+                if (!_actionBlockerSystem.CanPickup(args.User, slot.Item!.Value))
+                    continue;
 
-                    InteractionVerb takeVerb = new();
-                    takeVerb.IconEntity = slot.Item;
-                    takeVerb.Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true);
+                var verbSubject = slot.Name != string.Empty
+                    ? Loc.GetString(slot.Name)
+                    : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
 
-                    if (slot.EjectVerbText == null)
-                        takeVerb.Text = Loc.GetString("take-item-verb-text", ("subject", verbSubject));
-                    else
-                        takeVerb.Text = Loc.GetString(slot.EjectVerbText);
+                InteractionVerb takeVerb = new();
+                takeVerb.IconEntity = slot.Item;
+                takeVerb.Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true);
 
-                    args.Verbs.Add(takeVerb);
-                }
+                if (slot.EjectVerbText == null)
+                    takeVerb.Text = Loc.GetString("take-item-verb-text", ("subject", verbSubject));
+                else
+                    takeVerb.Text = Loc.GetString(slot.EjectVerbText);
+
+                args.Verbs.Add(takeVerb);
             }
 
             // Next, add the insert-item verbs
