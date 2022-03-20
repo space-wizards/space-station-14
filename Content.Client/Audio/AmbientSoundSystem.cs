@@ -34,17 +34,18 @@ namespace Content.Client.Audio
         private float _maxAmbientRange;
         private float _cooldown;
         private float _accumulator;
+        private float _ambienceVolume = 0.0f;
 
         /// <summary>
         /// How many times we can be playing 1 particular sound at once.
         /// </summary>
-        private int _maxSingleSound = 6;
+        private int MaxSingleSound => (int) (_maxAmbientCount / (16.0f / 6.0f));
 
         private Dictionary<AmbientSoundComponent, (IPlayingAudioStream? Stream, string Sound)> _playingSounds = new();
 
         private const float RangeBuffer = 3f;
 
-        private float _ambienceVolume = 0.0f;
+
 
         public override void Initialize()
         {
@@ -148,7 +149,7 @@ namespace Content.Client.Audio
                 var key = ambientComp.Sound.GetSound();
 
                 if (!sourceDict.ContainsKey(key))
-                    sourceDict[key] = new List<AmbientSoundComponent>(_maxSingleSound);
+                    sourceDict[key] = new List<AmbientSoundComponent>(MaxSingleSound);
 
                 sourceDict[key].Add(ambientComp);
             }
@@ -203,7 +204,7 @@ namespace Content.Client.Audio
 
                     var sound = comp.Sound.GetSound();
 
-                    if (PlayingCount(sound) >= _maxSingleSound)
+                    if (PlayingCount(sound) >= MaxSingleSound)
                     {
                         keys.Remove(key);
                         /*foreach (var toRemove in compsInRange[key])
