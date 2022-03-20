@@ -102,4 +102,12 @@
     - type: Construction
       graph: LeverGraph
       node: lever
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 

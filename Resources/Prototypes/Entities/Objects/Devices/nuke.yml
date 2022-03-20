@@ -28,7 +28,7 @@
         ejectSound:
           path: /Audio/Machines/terminal_insert_disc.ogg
         whitelist:
-          tags:
+          components:
           - NukeDisk
     - type: InteractionOutline
     - type: ActivatableUI
