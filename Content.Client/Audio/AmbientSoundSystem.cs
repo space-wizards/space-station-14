@@ -12,6 +12,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using YamlDotNet.Core.Tokens;
 
 namespace Content.Client.Audio
 {
@@ -24,6 +25,7 @@ namespace Content.Client.Audio
     public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     {
         [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -43,16 +45,20 @@ namespace Content.Client.Audio
 
         private const float RangeBuffer = 3f;
 
+        private float _ambienceVolume = 0.0f;
+
         public override void Initialize()
         {
             base.Initialize();
             UpdatesOutsidePrediction = true;
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-            configManager.OnValueChanged(CCVars.AmbientCooldown, SetCooldown, true);
-            configManager.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);
-            configManager.OnValueChanged(CCVars.AmbientRange, SetAmbientRange, true);
+
+            _cfg.OnValueChanged(CCVars.AmbientCooldown, SetCooldown, true);
+            _cfg.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);
+            _cfg.OnValueChanged(CCVars.AmbientRange, SetAmbientRange, true);
+            _cfg.OnValueChanged(CCVars.AmbienceVolume, SetAmbienceVolume, true);
         }
 
+        private void SetAmbienceVolume(float value) => _ambienceVolume = value;
         private void SetCooldown(float value) => _cooldown = value;
         private void SetAmbientCount(int value) => _maxAmbientCount = value;
         private void SetAmbientRange(float value) => _maxAmbientRange = value;
@@ -61,10 +67,11 @@ namespace Content.Client.Audio
         {
             base.Shutdown();
             ClearSounds();
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-            configManager.UnsubValueChanged(CCVars.AmbientCooldown, SetCooldown);
-            configManager.UnsubValueChanged(CCVars.MaxAmbientSources, SetAmbientCount);
-            configManager.UnsubValueChanged(CCVars.AmbientRange, SetAmbientRange);
+
+            _cfg.UnsubValueChanged(CCVars.AmbientCooldown, SetCooldown);
+            _cfg.UnsubValueChanged(CCVars.MaxAmbientSources, SetAmbientCount);
+            _cfg.UnsubValueChanged(CCVars.AmbientRange, SetAmbientRange);
+            _cfg.UnsubValueChanged(CCVars.AmbienceVolume, SetAmbienceVolume);
         }
 
         private int PlayingCount(string countSound)
@@ -204,7 +211,7 @@ namespace Content.Client.Audio
 
                     var audioParams = AudioHelpers
                         .WithVariation(0.01f)
-                        .WithVolume(comp.Volume)
+                        .WithVolume(comp.Volume + _ambienceVolume)
                         .WithLoop(true)
                         .WithAttenuation(Attenuation.LinearDistance)
                         // Randomise start so 2 sources don't increase their volume.
