@@ -407,7 +407,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi
    
-   - type: entity
+ - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadPaperBag
   name: paperbag hat
