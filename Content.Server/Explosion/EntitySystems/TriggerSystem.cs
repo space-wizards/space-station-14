@@ -67,7 +67,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
         {
-            _explosions.TriggerExplosive(uid);
+            _explosions.TriggerExplosive(uid, user: args.User);
         }
 
         #region Flash

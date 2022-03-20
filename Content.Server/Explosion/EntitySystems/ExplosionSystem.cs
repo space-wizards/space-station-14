@@ -1,9 +1,11 @@
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Robust.Server.Containers;
 using Robust.Server.Player;
@@ -33,6 +35,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
     [Dependency] private readonly CameraRecoilSystem _recoilSystem = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly AdminLogSystem _logsSystem = default!;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -91,7 +94,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     specified in the yaml / by the component, but determined dynamically (e.g., by the quantity of a
     ///     solution in a reaction).
     /// </remarks>
-    public void TriggerExplosive(EntityUid uid, ExplosiveComponent? explosive = null, bool delete = true, float? totalIntensity = null, float? radius = null)
+    public void TriggerExplosive(EntityUid uid, ExplosiveComponent? explosive = null, bool delete = true, float? totalIntensity = null, float? radius = null, EntityUid? user = null)
     {
         // log missing: false, because some entities (e.g. liquid tanks) attempt to trigger explosions when damaged,
         // but may not actually be explosive.
@@ -113,7 +116,8 @@ public sealed partial class ExplosionSystem : EntitySystem
             explosive.ExplosionType,
             (float) totalIntensity,
             explosive.IntensitySlope,
-            explosive.MaxIntensity);
+            explosive.MaxIntensity,
+            user);
 
         if (delete)
             EntityManager.QueueDeleteEntity(uid);
@@ -176,11 +180,26 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// </summary>
     public void QueueExplosion(EntityUid uid,
         string typeId,
-        float intensity,
+        float totalIntensity,
         float slope,
-        float maxTileIntensity)
+        float maxTileIntensity,
+        EntityUid? user = null,
+        bool addLog = false)
     {
-        QueueExplosion(Transform(uid).MapPosition, typeId, intensity, slope, maxTileIntensity);
+        var pos = Transform(uid).MapPosition;
+
+
+        QueueExplosion(pos, typeId, totalIntensity, slope, maxTileIntensity, addLog: false);
+
+        if (!addLog)
+            return;
+
+        if (user == null)
+            _logsSystem.Add(LogType.Explosion, LogImpact.High,
+                $"{ToPrettyString(uid):entity} exploded at {pos:coordinates} with intensity {totalIntensity} slope {slope}");
+        else
+            _logsSystem.Add(LogType.Explosion, LogImpact.High,
+                $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode at {pos:coordinates} with intensity {totalIntensity} slope {slope}");
     }
 
     /// <summary>
@@ -190,7 +209,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         string typeId,
         float totalIntensity,
         float slope,
-        float maxTileIntensity)
+        float maxTileIntensity,
+        bool addLog = false)
     {
         if (totalIntensity <= 0 || slope <= 0)
             return;
@@ -201,6 +221,9 @@ public sealed partial class ExplosionSystem : EntitySystem
             return;
         }
 
+        if (addLog) // dont log if already created a separate, more detailed, log.
+            _logsSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
+        
         _explosionQueue.Enqueue(() => SpawnExplosion(epicenter, type, totalIntensity,
             slope, maxTileIntensity));
     }
