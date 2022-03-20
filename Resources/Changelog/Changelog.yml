@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Pointing at entities works again., type: Fix}
-  id: 736
-  time: '2021-12-14T02:21:55.0000000+00:00'
 - author: Mith-randalf
   changes:
   - {message: 'Using information extracted from captured Assistants, security now
@@ -3016,3 +3011,8 @@ Entries:
   - {message: Pineapple botany sprite was fixed., type: Fix}
   id: 1235
   time: '2022-03-20T12:46:41.0000000+00:00'
+- author: CrudeWax
+  changes:
+  - {message: fixed holoparasite ToS not being readable, type: Fix}
+  id: 1236
+  time: '2022-03-20T13:04:47.0000000+00:00'
