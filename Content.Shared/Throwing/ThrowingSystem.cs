@@ -15,6 +15,10 @@ public sealed class ThrowingSystem : EntitySystem
     /// </summary>
     public const float FlyTime = 0.15f;
 
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly ThrownItemSystem _thrownSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
+
     /// <summary>
     ///     Tries to throw the entity if it has a physics component, otherwise does nothing.
     /// </summary>
@@ -23,11 +27,6 @@ public sealed class ThrowingSystem : EntitySystem
     /// <param name="strength">How much the direction vector should be multiplied for velocity.</param>
     /// <param name="user"></param>
     /// <param name="pushbackRatio">The ratio of impulse applied to the thrower - defaults to 10 because otherwise it's not enough to properly recover from getting spaced</param>
-
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly ThrownItemSystem _thrownSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
-    
     public void TryThrow(
         EntityUid uid,
         Vector2 direction,
