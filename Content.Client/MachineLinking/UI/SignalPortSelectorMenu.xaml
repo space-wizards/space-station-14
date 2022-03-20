@@ -1,4 +1,13 @@
-<customControls:DefaultWindow xmlns:customControls="https://spacestation14.io"
-    Title="Port Selector" MinSize="200 200">
-    <customControls:ItemList Name="ButtonContainer" VerticalExpand="True" HorizontalExpand="True" SelectMode="Button"/>
-</customControls:DefaultWindow>
+<DefaultWindow xmlns="https://spacestation14.io" Title="Port Selector" MinSize="400 200">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.5">
+            <RichTextLabel Name="HeaderLeft"/>
+            <ItemList Name="ButtonContainerLeft" VerticalExpand="True" HorizontalExpand="True" SelectMode="Button"/>
+        </BoxContainer>
+        <Control MinSize="10 0"/>
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.5">
+            <RichTextLabel Name="HeaderRight"/>
+            <ItemList Name="ButtonContainerRight" VerticalExpand="True" HorizontalExpand="True" SelectMode="Button"/>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

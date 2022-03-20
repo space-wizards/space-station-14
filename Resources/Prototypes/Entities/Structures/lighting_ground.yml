@@ -38,10 +38,6 @@
       On: []
       Off: []
       Toggle: []
-  - type: UserInterface
-    interfaces:
-      - key: enum.SignalReceiverUiKey.Key
-        type: SignalPortSelectorBoundUserInterface
 
 
 - type: entity

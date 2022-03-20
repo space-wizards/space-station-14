@@ -17,10 +17,6 @@
     outputs:
       On: []
       Off: []
-  - type: UserInterface
-    interfaces:
-      - key: enum.SignalTransmitterUiKey.Key
-        type: SignalPortSelectorBoundUserInterface
   placement:
     mode: SnapgridCenter
     snap:
@@ -97,10 +93,6 @@
         Left: []
         Right: []
         Middle: []
-    - type: UserInterface
-      interfaces:
-      - key: enum.SignalTransmitterUiKey.Key
-        type: SignalPortSelectorBoundUserInterface
     - type: Appearance
       visuals:
         - type: TwoWayLeverVisualizer

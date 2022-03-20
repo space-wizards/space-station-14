@@ -7,6 +7,9 @@ namespace Content.Server.MachineLinking.Components
     public sealed class SignalLinkerComponent : Component
     {
         [ViewVariables]
-        public PortIdentifier? savedPort;
+        public EntityUid? savedTransmitter;
+
+        [ViewVariables]
+        public EntityUid? savedReceiver;
     }
 }

@@ -20,16 +20,22 @@ namespace Content.Client.MachineLinking.UI
 
         public void UpdateState(SignalPortsState state)
         {
-            ButtonContainer.Clear();
-            foreach (var port in state.Ports)
+            HeaderLeft.SetMessage(state.TransmitterName);
+            ButtonContainerLeft.Clear();
+            foreach (var port in state.TransmitterPorts)
             {
-                var portBtn = new ItemList.Item(ButtonContainer)
-                {
-                    Text = port.Key,
-                    Disabled = !port.Value
-                };
-                portBtn.OnSelected += _ => _bui.OnPortSelected(port.Key);
-                ButtonContainer.Add(portBtn);
+                var portButton = new ItemList.Item(ButtonContainerLeft) { Text = port };
+                portButton.OnSelected += _ => _bui.OnTransmitterPortSelected(port);
+                ButtonContainerLeft.Add(portButton);
+            }
+
+            HeaderRight.SetMessage(state.ReceiverName);
+            ButtonContainerRight.Clear();
+            foreach (var port in state.ReceiverPorts)
+            {
+                var portButton = new ItemList.Item(ButtonContainerRight) { Text = port };
+                portButton.OnSelected += _ => _bui.OnReceiverPortSelected(port);
+                ButtonContainerRight.Add(portButton);
             }
         }
     }

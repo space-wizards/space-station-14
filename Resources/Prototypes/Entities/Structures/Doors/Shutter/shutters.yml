@@ -50,8 +50,6 @@
     interfaces:
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
-    - key: enum.SignalReceiverUiKey.Key
-      type: SignalPortSelectorBoundUserInterface
   - type: Airtight
     fixVacuum: true
   - type: Damageable

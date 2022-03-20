@@ -54,7 +54,3 @@
       Forward: []
       Reverse: []
       Off: []
-  - type: UserInterface
-    interfaces:
-    - key: enum.SignalReceiverUiKey.Key
-      type: SignalPortSelectorBoundUserInterface

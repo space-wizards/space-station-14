@@ -9,29 +9,37 @@ namespace Content.Shared.MachineLinking
     [Serializable, NetSerializable]
     public sealed class SignalPortsState : BoundUserInterfaceState
     {
+        public readonly string TransmitterName;
         /// <summary>
-        /// A Dictionary containing all ports and wether or not they can be selected.
+        /// A List of all ports on the selected transmitter
         /// </summary>
-        public readonly Dictionary<string, bool> Ports;
+        public readonly List<string> TransmitterPorts;
 
-        public SignalPortsState(string[] ports) : this(ports.ToDictionary(s => s, _ => true))
-        {
-        }
+        public readonly string ReceiverName;
+        /// <summary>
+        /// A List of all ports on the selected receiver
+        /// </summary>
+        public readonly List<string> ReceiverPorts;
 
-        public SignalPortsState(Dictionary<string, bool> ports)
+        public SignalPortsState(string transmitterName, List<string> transmitterPorts, string receiverName, List<string> receiverPorts)
         {
-            Ports = ports;
+            TransmitterName = transmitterName;
+            TransmitterPorts = transmitterPorts;
+            ReceiverName = receiverName;
+            ReceiverPorts = receiverPorts;
         }
     }
 
     [Serializable, NetSerializable]
     public sealed class SignalPortSelected : BoundUserInterfaceMessage
     {
-        public readonly string Port;
+        public readonly string TransmitterPort;
+        public readonly string ReceiverPort;
 
-        public SignalPortSelected(string port)
+        public SignalPortSelected(string transmitterPort, string receiverPort)
         {
-            Port = port;
+            TransmitterPort = transmitterPort;
+            ReceiverPort = receiverPort;
         }
     }
 }
