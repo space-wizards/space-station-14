@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Species;
@@ -28,13 +29,13 @@ public sealed class SpeciesPrototype : IPrototype
     /// <summary>
     /// Prototype used by the species as a body.
     /// </summary>
-    [DataField("prototype", required: true)]
+    [DataField("prototype", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype { get; } = default!;
 
     /// <summary>
     /// Prototype used by the species for the dress-up doll in various menus.
     /// </summary>
-    [DataField("dollPrototype", required: true)]
+    [DataField("dollPrototype", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string DollPrototype { get; } = default!;
 
     /// <summary>

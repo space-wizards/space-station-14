@@ -118,6 +118,9 @@
   id: Donut
 
 - type: Tag
+  id: DroneUsable
+
+- type: Tag
   id: Egg
 
 - type: Tag
@@ -164,7 +167,7 @@
 
 - type: Tag
   id: HidesHair # for headwear.
-  
+
 - type: Tag
   id: Hoe
 
@@ -202,10 +205,10 @@
   id: MonkeyCube
 
 - type: Tag
-  id: NoSpinOnThrow
+  id: Mop
 
 - type: Tag
-  id: NukeDisk
+  id: NoSpinOnThrow
 
 - type: Tag
   id: Ointment
@@ -285,7 +288,7 @@
 
 - type: Tag
   id: Trash
-  
+
 - type: Tag
   id: TrashBag
 
@@ -308,4 +311,10 @@
   id: Wrench
 
 - type: Tag
+  id: Wringer
+
+- type: Tag
   id: Write
+
+- type: Tag
+  id: Drone

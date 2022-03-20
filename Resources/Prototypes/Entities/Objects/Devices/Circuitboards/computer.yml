@@ -8,6 +8,9 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: cpuboard
+    - type: Tag
+      tags:
+        - DroneUsable
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -26,7 +29,7 @@
   components:
     - type: ComputerBoard
       prototype: ComputerPowerMonitoring
-      
+
 - type: entity
   parent: BaseComputerCircuitboard
   id: MedicalRecordsComputerCircuitboard
@@ -35,7 +38,7 @@
   components:
     - type: ComputerBoard
       prototype: ComputerMedicalRecords
-      
+
 - type: entity
   parent: BaseComputerCircuitboard
   id: CriminalRecordsComputerCircuitboard

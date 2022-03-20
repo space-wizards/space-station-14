@@ -54,7 +54,6 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<StunnedComponent, ThrowAttemptEvent>(OnThrowAttempt);
             SubscribeLocalEvent<StunnedComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<StunnedComponent, PickupAttemptEvent>(OnPickupAttempt);
-            SubscribeLocalEvent<StunnedComponent, AttackAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<StunnedComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<StunnedComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
         }
@@ -232,11 +231,6 @@ namespace Content.Shared.Stunnable
         }
 
         private void OnPickupAttempt(EntityUid uid, StunnedComponent stunned, PickupAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
-        private void OnAttackAttempt(EntityUid uid, StunnedComponent stunned, AttackAttemptEvent args)
         {
             args.Cancel();
         }

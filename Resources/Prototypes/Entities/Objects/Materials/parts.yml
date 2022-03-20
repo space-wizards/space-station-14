@@ -10,6 +10,17 @@
   - type: Item
     sprite: Objects/Materials/parts.rsi
   - type: ItemStatus
+  - type: Tag
+    tags:
+      - DroneUsable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: PartBase
@@ -49,6 +60,7 @@
   - type: Tag
     tags:
     - RodMetal1
+    - DroneUsable
   - type: Sprite
     state: rods
   - type: Stack

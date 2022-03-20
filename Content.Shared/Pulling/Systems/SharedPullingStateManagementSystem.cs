@@ -135,8 +135,8 @@ namespace Content.Shared.Pulling
                 RaiseLocalEvent(pullable.Owner, message);
 
                 // Networking
-                puller.Dirty();
-                pullable.Dirty();
+                Dirty(puller);
+                Dirty(pullable);
             }
         }
 

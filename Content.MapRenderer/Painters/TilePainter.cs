@@ -44,7 +44,7 @@ namespace Content.MapRenderer.Painters
                 var x = (int) (tile.X + xOffset);
                 var y = (int) (tile.Y + yOffset);
                 var sprite = _sTileDefinitionManager[tile.Tile.TypeId].SpriteName;
-                var image = images[sprite];
+                var image = images[sprite][tile.Tile.Variant];
 
                 gridCanvas.Mutate(o => o.DrawImage(image, new Point(x * tileSize, y * tileSize), 1));
 
@@ -54,7 +54,7 @@ namespace Content.MapRenderer.Painters
             Console.WriteLine($"{nameof(TilePainter)} painted {i} tiles on grid {grid.Index} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
 
-        private Dictionary<string, Image> GetTileImages(
+        private Dictionary<string, List<Image>> GetTileImages(
             ITileDefinitionManager tileDefinitionManager,
             IResourceCache resourceCache,
             int tileSize)
@@ -62,11 +62,12 @@ namespace Content.MapRenderer.Painters
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var images = new Dictionary<string, Image>();
+            var images = new Dictionary<string, List<Image>>();
 
             foreach (var definition in tileDefinitionManager)
             {
                 var sprite = definition.SpriteName;
+                images[sprite] = new List<Image>(definition.Variants);
 
                 if (string.IsNullOrEmpty(sprite))
                 {
@@ -74,14 +75,18 @@ namespace Content.MapRenderer.Painters
                 }
 
                 using var stream = resourceCache.ContentFileRead($"{TilesPath}{sprite}.png");
-                Image tileImage = Image.Load<Rgba32>(stream);
+                Image tileSheet = Image.Load<Rgba32>(stream);
 
-                if (tileImage.Width != tileSize || tileImage.Height != tileSize)
+                if (tileSheet.Width != tileSize * definition.Variants || tileSheet.Height != tileSize)
                 {
                     throw new NotSupportedException($"Unable to use tiles with a dimension other than {tileSize}x{tileSize}.");
                 }
 
-                images[sprite] = tileImage;
+                for (var i = 0; i < definition.Variants; i++)
+                {
+                    var tileImage = tileSheet.Clone(o => o.Crop(new Rectangle(tileSize * i, 0, 32, 32)));
+                    images[sprite].Add(tileImage);
+                }
             }
 
             Console.WriteLine($"Indexed all tile images in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
