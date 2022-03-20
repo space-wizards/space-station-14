@@ -22,12 +22,6 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
-        ///     Whether the basic 'hum' ambience will be enabled.
-        /// </summary>
-        public static readonly CVarDef<bool> AmbienceBasicEnabled =
-            CVarDef.Create("ambience.basic_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
-
-        /// <summary>
         /// How long we'll wait until re-sampling nearby objects for ambience. Should be pretty fast, but doesn't have to match the tick rate.
         /// </summary>
         public static readonly CVarDef<float> AmbientCooldown =

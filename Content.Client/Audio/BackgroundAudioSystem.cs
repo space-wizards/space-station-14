@@ -41,7 +41,7 @@ namespace Content.Client.Audio
 
             _ambientCollection = _prototypeManager.Index<SoundCollectionPrototype>("AmbienceBase");
 
-            _configManager.OnValueChanged(CCVars.AmbienceBasicEnabled, AmbienceCVarChanged);
+            _configManager.OnValueChanged(CCVars.AmbienceVolume, AmbienceCVarChanged);
             _configManager.OnValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
 
             _stateManager.OnStateChanged += StateManagerOnStateChanged;
@@ -75,9 +75,9 @@ namespace Content.Client.Audio
             {
                 StartLobbyMusic();
             }
-            else if (args.NewState is GameScreen && _configManager.GetCVar(CCVars.AmbienceBasicEnabled))
+            else if (args.NewState is GameScreen)
             {
-                StartAmbience();
+                StartAmbience( _configManager.GetCVar(CCVars.AmbienceVolume));
             }
         }
 
@@ -94,10 +94,7 @@ namespace Content.Client.Audio
             else
             {
                 EndLobbyMusic();
-                if (_configManager.GetCVar(CCVars.AmbienceBasicEnabled))
-                {
-                    StartAmbience();
-                }
+                StartAmbience(_configManager.GetCVar(CCVars.AmbienceVolume));
             }
         }
 
@@ -107,15 +104,11 @@ namespace Content.Client.Audio
             EndLobbyMusic();
         }
 
-        private void AmbienceCVarChanged(bool ambienceEnabled)
+        private void AmbienceCVarChanged(float volume)
         {
-            if (!ambienceEnabled)
+            if (_stateManager.CurrentState is GameScreen)
             {
-                EndAmbience();
-            }
-            else if (_stateManager.CurrentState is GameScreen)
-            {
-                StartAmbience();
+                StartAmbience(volume);
             }
             else
             {
@@ -123,11 +116,11 @@ namespace Content.Client.Audio
             }
         }
 
-        private void StartAmbience()
+        private void StartAmbience(float volume)
         {
             EndAmbience();
             var file = _robustRandom.Pick(_ambientCollection.PickFiles).ToString();
-            _ambientStream = SoundSystem.Play(Filter.Local(), file, _ambientParams);
+            _ambientStream = SoundSystem.Play(Filter.Local(), file, _ambientParams.WithVolume(volume));
         }
 
         private void EndAmbience()
