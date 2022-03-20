@@ -1,11 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Cargonia didn't learn. Crates are now buffed harder so no more cargo
-      AME or laser crates., type: Tweak}
-  - {message: Buffed some secure lockers too., type: Tweak}
-  id: 734
-  time: '2021-12-14T00:44:59.0000000+00:00'
 - author: Venomii
   changes:
   - {message: Added automatic laugh emote when saying "lol" or "lmao"., type: Add}
@@ -3018,3 +3011,8 @@ Entries:
     type: Add}
   id: 1233
   time: '2022-03-20T04:45:52.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Gas analyzers can now be used to examine contents of pipes., type: Add}
+  id: 1234
+  time: '2022-03-20T05:10:48.0000000+00:00'
