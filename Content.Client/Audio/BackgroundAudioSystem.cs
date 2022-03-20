@@ -29,8 +29,8 @@ namespace Content.Client.Audio
 
         private SoundCollectionPrototype _ambientCollection = default!;
 
-        private AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
-        private AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
+        private readonly AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
+        private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
 
         private IPlayingAudioStream? _ambientStream;
         private IPlayingAudioStream? _lobbyStream;
@@ -77,7 +77,7 @@ namespace Content.Client.Audio
             }
             else if (args.NewState is GameScreen)
             {
-                StartAmbience( _configManager.GetCVar(CCVars.AmbienceVolume));
+                StartAmbience();
             }
         }
 
@@ -94,7 +94,7 @@ namespace Content.Client.Audio
             else
             {
                 EndLobbyMusic();
-                StartAmbience(_configManager.GetCVar(CCVars.AmbienceVolume));
+                StartAmbience();
             }
         }
 
@@ -108,7 +108,7 @@ namespace Content.Client.Audio
         {
             if (_stateManager.CurrentState is GameScreen)
             {
-                StartAmbience(volume);
+                StartAmbience();
             }
             else
             {
@@ -116,11 +116,11 @@ namespace Content.Client.Audio
             }
         }
 
-        private void StartAmbience(float volume)
+        private void StartAmbience()
         {
             EndAmbience();
             var file = _robustRandom.Pick(_ambientCollection.PickFiles).ToString();
-            _ambientStream = SoundSystem.Play(Filter.Local(), file, _ambientParams.WithVolume(volume));
+            _ambientStream = SoundSystem.Play(Filter.Local(), file, _ambientParams.WithVolume(_configManager.GetCVar(CCVars.AmbienceVolume)));
         }
 
         private void EndAmbience()
