@@ -1,6 +1,7 @@
 ﻿using Content.Client.Hands;
 using Content.Client.Items.Managers;
 using Content.Shared.Hands.Components;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -20,7 +21,6 @@ namespace Content.Client.UserInterface.Controls
         private readonly IItemSlotManager _itemSlotManager;
         private readonly IEntityManager _entManager;
         private bool _activeHand = false;
-        private bool _highlighted;
         private readonly HandsContainer _parent;
         private HandLocation _location;
         private EntityUid? _heldItem;
@@ -31,11 +31,10 @@ namespace Content.Client.UserInterface.Controls
             {
                 if (_activeHand == value) return;
                 _activeHand = value;
-                UpdateHighlight();
+                UpdateSlotHighlighted();
             }
 
         }
-
         public EntityUid? HeldItem
         {
             get => _heldItem;
@@ -53,7 +52,7 @@ namespace Content.Client.UserInterface.Controls
                 _location = value;
                 UpdateHandIcon(value);
             } }
-        public HandControl(HandsContainer parent,HandLocation location,IEntityManager entManager, IItemSlotManager slotManager, EntityUid? heldItem = null)
+        public HandControl(HandsContainer parent,HandLocation location,IEntityManager entManager, IItemSlotManager slotManager, EntityUid? heldItem,string handName)
         {
             Active = false;
             _entManager = entManager;
@@ -68,13 +67,9 @@ namespace Content.Client.UserInterface.Controls
             Blocked.Texture = Theme.ResolveTexture(BlockedTextureFile);
             StorageButton.TextureNormal = Theme.ResolveTexture(StorageTextureFile);
             UpdateHandIcon(location);
+            Name = handName + "_Hand";
             HeldItem = heldItem;
-        }
-
-        public override void Highlight(bool highlight)
-        {
-            _highlighted = highlight;
-            UpdateHighlight();
+            if (HeldItem != null)_itemSlotManager.SetItemSlot(this, _heldItem);
         }
 
         public void UpdateHandIcon(HandLocation location)
@@ -109,7 +104,7 @@ namespace Content.Client.UserInterface.Controls
 
         private void UpdateHighlight()
         {
-            base.Highlight(Active || _highlighted);
+            base.Highlight(Active);
         }
         public override void UpdateTheme(HudTheme newTheme)
         {

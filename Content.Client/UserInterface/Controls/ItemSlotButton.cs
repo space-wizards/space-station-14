@@ -133,6 +133,11 @@ namespace Content.Client.UserInterface.Controls
             UpdateSlotHighlighted();
         }
 
+        public void UpdateSprite(SpriteComponent? sprite)
+        {
+            SpriteView.Sprite = sprite;
+        }
+
         protected override void ExitedTree()
         {
             base.ExitedTree();

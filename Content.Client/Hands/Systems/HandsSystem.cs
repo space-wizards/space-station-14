@@ -41,8 +41,6 @@ namespace Content.Client.Hands
             SubscribeLocalEvent<HandsComponent, ComponentRemove>(HandleCompRemove);
             SubscribeLocalEvent<HandsComponent, ComponentHandleState>(HandleComponentState);
             SubscribeLocalEvent<HandsComponent, VisualsChangedEvent>(OnVisualsChanged);
-            SubscribeLocalEvent<HandsComponent, EquippedHandEvent>(OnItemEquipped);
-            SubscribeLocalEvent<HandsComponent, UnequippedHandEvent>(OnItemUnequipped);
 
             SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
         }
@@ -102,16 +100,6 @@ namespace Content.Client.Hands
             ReusableAnimations.AnimateEntityPickup(item, initialPosition, finalPosition);
         }
         #endregion
-
-        private void OnItemEquipped(EntityUid uid, SharedHandsComponent handComp, EquippedHandEvent args)
-        {
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.UpdateHand(args.Hand);
-        }
-
-        private void OnItemUnequipped(EntityUid uid, SharedHandsComponent handComp, UnequippedHandEvent args)
-        {
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.UpdateHand(args.Hand);
-        }
 
 
         public EntityUid? GetActiveHandEntity()
@@ -187,6 +175,7 @@ namespace Content.Client.Hands
             if (handComp.Hands.TryGetValue(args.Container.ID, out var hand))
             {
                 UpdateHandVisuals(uid, args.Entity, hand);
+                if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.UpdateHandGui(hand);
             }
         }
 

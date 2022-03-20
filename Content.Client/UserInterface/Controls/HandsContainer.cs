@@ -86,7 +86,7 @@ public sealed class HandsContainer : Control
 
     private void RegisterHand(string name, HandLocation location, EntityUid? heldItem = null)
     {
-        var newHand = new HandControl(this, location, _entityManager, _itemSlotManager);
+        var newHand = new HandControl(this, location, _entityManager, _itemSlotManager, heldItem, name);
         newHand.OnPressed += args => OnHandPressed(args, name);
         newHand.OnStoragePressed += args => OnStoragePressed(name);
         if (!_hands.TryAdd(name, newHand)) throw new Exception("Duplicate handName detected!: " + name);
@@ -121,7 +121,7 @@ public sealed class HandsContainer : Control
         RegisterHand(handData.Name, handData.Location, handData.HeldEntity);
     }
 
-    public void UpdateHand(Hand handData)
+    public void UpdateHandGui(Hand handData)
     {
         _hands[handData.Name].HeldItem = handData.HeldEntity;
     }
