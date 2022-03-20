@@ -125,7 +125,7 @@
   id: UplinkEmag
   category: Utility
   itemId: Emag
-  description: This sequencer, or "emag", can be used to open or hack a huge variety of items around the station.
+  description: The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
   icon: /Textures/Objects/Tools/emag.rsi/icon.png
   price: 8
 
