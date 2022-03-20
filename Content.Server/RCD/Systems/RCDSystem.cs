@@ -75,46 +75,25 @@ namespace Content.Server.RCD.Systems
 
             if (!args.ClickLocation.IsValid(EntityManager)) return;
 
-            var gridID = args.ClickLocation.GetGridId(EntityManager);
-            Vector2i? snapPos = null;
-            IMapGrid? mapGrid = null;
-            TileRef? tile = null;
-
-            // Check if fixing it failed / get final grid ID
+            var clickLocationMod = args.ClickLocation;
+            // Initial validity check
+            if (!clickLocationMod.IsValid(EntityManager))
+                return;
+            // Try to fix it (i.e. if clicking on space)
+            // Note: Ideally there'd be a better way, but there isn't right now.
+            var gridID = clickLocationMod.GetGridId(EntityManager);
             if (!gridID.IsValid())
             {
-                if (rcd.Mode == RcdMode.Floors)
-                {
-                    // Find nearest spot to build in space
-                    var mapPos = args.ClickLocation.ToMap(EntityManager);
-
-                    foreach (var grid in _mapManager.FindGridsIntersecting(mapPos.MapId,
-                                 new Box2(mapPos.Position - Vector2.One, mapPos.Position + Vector2.One)))
-                    {
-                        mapGrid = grid;
-                        gridID = grid.Index;
-                        snapPos = grid.WorldToTile(mapPos.Position);
-                        tile = grid.GetTileRef(snapPos.Value);
-                        break;
-                    }
-
-                    if (!gridID.IsValid())
-                        return;
-                }
-                else
-                {
-                    return;
-                }
+                clickLocationMod = clickLocationMod.AlignWithClosestGridTile();
+                gridID = clickLocationMod.GetGridId(EntityManager);
             }
-            else
-            {
-                mapGrid = _mapManager.GetGrid(gridID);
-                tile = mapGrid.GetTileRef(args.ClickLocation);
-                snapPos = tile.Value.GridIndices;
-            }
-
-            if (mapGrid == null || tile == null || snapPos == null)
+            // Check if fixing it failed / get final grid ID
+            if (!gridID.IsValid())
                 return;
+
+            var mapGrid = _mapManager.GetGrid(gridID);
+            var tile = mapGrid.GetTileRef(clickLocationMod);
+            var snapPos = mapGrid.TileIndicesFor(clickLocationMod);
 
             //No changing mode mid-RCD
             var startingMode = rcd.Mode;
@@ -128,7 +107,7 @@ namespace Content.Server.RCD.Systems
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 NeedHand = true,
-                ExtraCheck = () => IsRCDStillValid(rcd, args, mapGrid, tile.Value, startingMode) //All of the sanity checks are here
+                ExtraCheck = () => IsRCDStillValid(rcd, args, mapGrid, tile, startingMode) //All of the sanity checks are here
             };
 
             var result = await _doAfterSystem.WaitDoAfter(doAfterEventArgs);
@@ -142,15 +121,15 @@ namespace Content.Server.RCD.Systems
             {
                 //Floor mode just needs the tile to be a space tile (subFloor)
                 case RcdMode.Floors:
-                    mapGrid.SetTile(snapPos.Value, new Tile(_tileDefinitionManager["floor_steel"].TileId));
-                    _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.Value.GridIndex} {snapPos.Value} to floor_steel");
+                    mapGrid.SetTile(snapPos, new Tile(_tileDefinitionManager["floor_steel"].TileId));
+                    _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridIndex} {snapPos} to floor_steel");
                     break;
                 //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.
                 case RcdMode.Deconstruct:
-                    if (!tile.Value.IsBlockedTurf(true)) //Delete the turf
+                    if (!tile.IsBlockedTurf(true)) //Delete the turf
                     {
-                        mapGrid.SetTile(snapPos.Value, Tile.Empty);
-                        _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to space grid: {tile.Value.GridIndex} tile: {snapPos.Value}");
+                        mapGrid.SetTile(snapPos, Tile.Empty);
+                        _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to space grid: {tile.GridIndex} tile: {snapPos}");
                     }
                     else //Delete what the user targeted
                     {
@@ -164,14 +143,14 @@ namespace Content.Server.RCD.Systems
                 //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile,
                 // thus we early return to avoid the tile set code.
                 case RcdMode.Walls:
-                    var ent = EntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos.Value));
+                    var ent = EntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
                     Transform(ent).LocalRotation = Angle.Zero; // Walls always need to point south.
-                    _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos.Value} on grid {mapGrid.Index}");
+                    _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.Index}");
                     break;
                 case RcdMode.Airlock:
-                    var airlock = EntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos.Value));
+                    var airlock = EntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));
                     Transform(airlock).LocalRotation = Transform(rcd.Owner).LocalRotation; //Now apply icon smoothing.
-                    _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos.Value} on grid {mapGrid.Index}");
+                    _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.Index}");
                     break;
                 default:
                     args.Handled = true;
