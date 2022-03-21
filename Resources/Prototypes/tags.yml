@@ -170,7 +170,7 @@
 
 - type: Tag
   id: HidesHair # for headwear.
-  
+
 - type: Tag
   id: Hoe
 
@@ -212,9 +212,6 @@
 
 - type: Tag
   id: NoSpinOnThrow
-
-- type: Tag
-  id: NukeDisk
 
 - type: Tag
   id: Ointment

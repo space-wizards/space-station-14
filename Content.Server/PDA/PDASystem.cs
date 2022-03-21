@@ -8,14 +8,9 @@ using Content.Server.Traitor.Uplink.Components;
 using Content.Server.PDA.Ringer;
 using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Instruments;
-using Content.Shared.Interaction;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Content.Shared.Interaction.Events;
 
 namespace Content.Server.PDA
 {
@@ -31,7 +26,6 @@ namespace Content.Server.PDA
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PDAComponent, ActivateInWorldEvent>(OnActivateInWorld);
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
         }
 
@@ -42,20 +36,6 @@ namespace Content.Server.PDA
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             if (ui != null)
                 ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
-        }
-
-        private void OnUse(EntityUid uid, PDAComponent pda, UseInHandEvent args)
-        {
-            if (args.Handled)
-                return;
-            args.Handled = OpenUI(pda, args.User);
-        }
-
-        private void OnActivateInWorld(EntityUid uid, PDAComponent pda, ActivateInWorldEvent args)
-        {
-            if (args.Handled)
-                return;
-            args.Handled = OpenUI(pda, args.User);
         }
 
         protected override void OnItemInserted(EntityUid uid, PDAComponent pda, EntInsertedIntoContainerMessage args)

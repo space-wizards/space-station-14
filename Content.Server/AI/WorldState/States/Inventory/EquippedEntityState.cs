@@ -15,7 +15,7 @@ namespace Content.Server.AI.WorldState.States.Inventory
 
         public override EntityUid? GetValue()
         {
-            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<HandsComponent>(Owner)?.GetActiveHandItem?.Owner;
+            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<HandsComponent>(Owner)?.ActiveHandEntity;
         }
     }
 }

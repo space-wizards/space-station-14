@@ -1,4 +1,4 @@
-﻿using Content.Server.Disposal.Tube.Components;
+using Content.Server.Disposal.Tube.Components;
 using Content.Server.UserInterface;
 using Content.Server.Hands.Components;
 using Content.Shared.Movement;
@@ -81,7 +81,7 @@ namespace Content.Server.Disposal.Tube
                 return;
             }
 
-            var activeHandEntity = hands.GetActiveHandItem?.Owner;
+            var activeHandEntity = hands.ActiveHandEntity;
             if (activeHandEntity != null)
             {
                 args.Cancel();
@@ -96,7 +96,7 @@ namespace Content.Server.Disposal.Tube
                 return;
             }
 
-            var activeHandEntity = hands.GetActiveHandItem?.Owner;
+            var activeHandEntity = hands.ActiveHandEntity;
             if (activeHandEntity != null)
             {
                 args.Cancel();
