@@ -3,7 +3,7 @@
   
 # Client 
 - name: Content.Client 
-  href: api/Robust.Client/
+  href: api/Content.Client/
 
 # Server
 - name: Content.Server
