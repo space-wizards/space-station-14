@@ -81,7 +81,7 @@
     bulb: Tube
     damage:
       types:
-        Heat: 20
+        Heat: 5
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetworkComponent
@@ -105,7 +105,7 @@
     hasLampOnSpawn: LightTube
     damage:
       types:
-        Heat: 20
+        Heat: 5
 
 - type: entity
   id: PoweredlightLED
@@ -117,8 +117,8 @@
     hasLampOnSpawn: LedLightTube
     damage:
       types:
-        Heat: 20
-
+        Heat: 5
+     
 - type: entity
   parent: WallLight
   id: UnpoweredLightLED
@@ -140,8 +140,8 @@
     hasLampOnSpawn: ExteriorLightTube
     damage:
       types:
-        Heat: 20
-
+        Heat: 5
+        
 - type: entity
   parent: WallLight
   id: UnpoweredLightExterior
@@ -164,8 +164,8 @@
     hasLampOnSpawn: SodiumLightTube
     damage:
       types:
-        Heat: 20
-
+        Heat: 5
+        
 - type: entity
   parent: WallLight
   id: UnpoweredLightSodium
@@ -247,7 +247,7 @@
     bulb: Bulb
     damage:
       types:
-        Heat: 20
+        Heat: 5
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetworkComponent
@@ -268,4 +268,4 @@
     hasLampOnSpawn: LightBulb
     damage:
       types:
-        Heat: 20
+        Heat: 5
