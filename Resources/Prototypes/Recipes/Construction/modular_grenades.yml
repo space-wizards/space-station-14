@@ -1,17 +1,3 @@
-# grenades, payloads, and triggers
-
-- type: construction
-  name: chemical payload
-  id: ChemicalPayloadRecipe
-  graph: ChemicalPayloadGraph
-  startNode: start
-  targetNode: chemicalPayload
-  category: Weapons # It doesn't HAVE to be a weapon. But it usually is.
-  icon:
-    sprite: Objects/Devices/payload.rsi
-    state: payload-empty
-  objectType: Item
-
 - type: construction
   name: Modular Grenade
   id: ModularGrenadeRecipe
@@ -23,16 +9,4 @@
   icon:
     sprite: Objects/Weapons/Grenades/modular.rsi
     state: complete
-  objectType: Item
-
-- type: construction
-  name: timer trigger
-  id: TimerTriggerRecipe
-  graph: TimerTriggerGraph
-  startNode: start
-  targetNode: timerTrigger
-  category: Weapons
-  icon:
-    sprite: Objects/Devices/timer.rsi
-    state: timer
   objectType: Item
