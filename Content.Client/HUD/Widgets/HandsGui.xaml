@@ -2,17 +2,19 @@
     xmlns="https://spacestation14.io"
     xmlns:widget="clr-namespace:Content.Client.HUD.Widgets"
     xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
-    Name = "HandsInterface"
+    Name="HandsInterface"
     VerticalExpand="False"
-    Orientation="Horizontal"
-    HorizontalAlignment="Center"
     VerticalAlignment="Bottom"
->
-    <PanelContainer>
-        <BoxContainer>
-            <ui:HandsContainer Name="HandsManager" Access="Public"/>
-        </BoxContainer>
-    </PanelContainer>
+    Orientation="Horizontal"
 
-
+    HorizontalAlignment="Center"
+    >
+   <BoxContainer>
+       <ui:HandsDisplay
+           Name="HandsManager"
+           Columns="6"
+           Access="Public"
+           HorizontalAlignment="Center"
+           ColumnSeparation="5" />
+   </BoxContainer>
 </widget:HandsGui>

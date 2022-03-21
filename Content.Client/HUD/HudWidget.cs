@@ -21,9 +21,12 @@ public abstract class HudWidget : BoxContainer
     public HudWidget SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset preset,
         LayoutContainer.LayoutPresetMode presetMode = LayoutContainer.LayoutPresetMode.MinSize, int margin = 0)
     {
-        LayoutContainer.SetAnchorAndMarginPreset(this, preset, margin: 10);
+        LayoutContainer.SetAnchorAndMarginPreset(this, preset, presetMode, margin);
         return this;
     }
+
+
+
     public HudWidget SetLayoutPosition(Vector2 pos)
     {
         LayoutContainer.SetPosition(this, pos);

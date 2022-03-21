@@ -20,7 +20,7 @@ public sealed class DefaultHud : HudPreset
         RegisterLinkedEntitySystem<CombatModeSystem>();
         RegisterLinkedEntitySystem<HandsSystem>();
 
-        RegisterWidget<MenuBar>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.TopLeft, margin: 10);
+        RegisterWidget<MenuBar>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.TopLeft,margin: 10);
         RegisterWidget<HandsGui>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.CenterBottom, margin: 10);
         //RegisterWidget<CombatPanelWidget>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.BottomRight);
     }

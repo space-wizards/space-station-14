@@ -16,17 +16,18 @@ public abstract class HudPreset
     private readonly Dictionary<Type, HudWidget> _widgets = new();
     private readonly HashSet<Type> _allowedStates = new();
     private readonly List<Type> _linkedEntitySystemTypes = new();
-    private readonly BoxContainer _presetRoot;
+    private readonly Control _presetRoot;
     private bool _isAttachedToRoot = false;
     public bool IsAttachedToRoot => _isAttachedToRoot;
-    public BoxContainer RootContainer => _presetRoot;
+    public Control RootContainer => _presetRoot;
     protected HudPreset()
     {
         IoCManager.InjectDependencies(this);
-        _presetRoot = new BoxContainer();
-        _presetRoot.HorizontalExpand = true;
-        _presetRoot.VerticalExpand = true;
-        _presetRoot.Name = this.GetType().Name;
+        _presetRoot = new Control()
+        {
+            Name = GetType().Name+"_HudPreset"
+        };
+        _presetRoot.MouseFilter = Control.MouseFilterMode.Ignore;
     }
     internal void Initialize()
     {
@@ -50,6 +51,7 @@ public abstract class HudPreset
     private void OnResized()
     {
         _presetRoot.SetSize = _hudManager.StateRoot!.Size;
+        _presetRoot.Arrange(_hudManager.StateRoot.Rect);
     }
 
 

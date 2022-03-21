@@ -21,7 +21,7 @@ namespace Content.Client.UserInterface.Controls
         private const string HighlightTextureFile = "slot_highlight.png";
         private readonly IItemSlotManager _itemSlotManager;
         private readonly IEntityManager _entManager;
-        private readonly HandsContainer _parent;
+        private readonly HandsDisplay _parent;
         private HandLocation _location;
         private EntityUid? _heldItem;
         public bool Active
@@ -47,7 +47,7 @@ namespace Content.Client.UserInterface.Controls
                 _location = value;
                 UpdateHandIcon(value);
             } }
-        public HandControl(HandsContainer parent,HandLocation location,IEntityManager entManager, IItemSlotManager slotManager, EntityUid? heldItem,string handName)
+        public HandControl(HandsDisplay parent,HandLocation location,IEntityManager entManager, IItemSlotManager slotManager, EntityUid? heldItem,string handName)
         {
             _entManager = entManager;
             _itemSlotManager = slotManager;

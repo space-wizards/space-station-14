@@ -26,7 +26,7 @@ namespace Content.Client.Hands
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
-        private HandsContainer? _handsManager;
+        private HandsDisplay? _handsManager;
 
 
         public override void Initialize()
