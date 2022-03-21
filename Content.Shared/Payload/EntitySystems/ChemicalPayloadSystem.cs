@@ -28,15 +28,15 @@ public sealed class ChemicalPayloadSystem : EntitySystem
         if (!Resolve(uid, ref component, ref appearance, false))
             return;
 
-        var filled = ChemicalPaylodFilledSlots.None;
+        var filled = ChemicalPayloadFilledSlots.None;
 
         if (component.BeakerSlotA.HasItem)
-            filled |= ChemicalPaylodFilledSlots.Left;
+            filled |= ChemicalPayloadFilledSlots.Left;
 
         if (component.BeakerSlotB.HasItem)
-            filled |= ChemicalPaylodFilledSlots.Right;
+            filled |= ChemicalPayloadFilledSlots.Right;
 
-        appearance.SetData(ChemicalPaylodVisuals.Slots, filled);
+        appearance.SetData(ChemicalPayloadVisuals.Slots, filled);
     }
 
     private void OnComponentInit(EntityUid uid, ChemicalPayloadComponent payload, ComponentInit args)

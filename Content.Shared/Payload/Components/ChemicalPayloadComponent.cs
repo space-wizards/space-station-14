@@ -17,14 +17,14 @@ public sealed class ChemicalPayloadComponent : Component
 }
 
 [Serializable, NetSerializable]
-public enum ChemicalPaylodVisuals : byte
+public enum ChemicalPayloadVisuals : byte
 {
     Slots
 }
 
 [Flags]
 [Serializable, NetSerializable]
-public enum ChemicalPaylodFilledSlots : byte
+public enum ChemicalPayloadFilledSlots : byte
 {
     None = 0,
     Left = 1 << 0,

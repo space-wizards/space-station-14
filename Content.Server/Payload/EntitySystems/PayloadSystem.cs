@@ -4,7 +4,6 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
-using Content.Shared.FixedPoint;
 using Content.Shared.Payload.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
@@ -30,7 +29,7 @@ public sealed class PayloadSystem : EntitySystem
         SubscribeLocalEvent<PayloadTriggerComponent, TriggerEvent>(OnTriggerTriggered);
         SubscribeLocalEvent<PayloadCaseComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
         SubscribeLocalEvent<PayloadCaseComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
-        SubscribeLocalEvent<ChemicalPayloadComponent, TriggerEvent>(HandleChemichalPayloadTrigger);
+        SubscribeLocalEvent<ChemicalPayloadComponent, TriggerEvent>(HandleChemicalPayloadTrigger);
     }
 
     private void OnCaseTriggered(EntityUid uid, PayloadCaseComponent component, TriggerEvent args)
@@ -109,28 +108,19 @@ public sealed class PayloadSystem : EntitySystem
         trigger.GrantedComponents.Clear();
     }
 
-    private void HandleChemichalPayloadTrigger(EntityUid uid, ChemicalPayloadComponent component, TriggerEvent args)
+    private void HandleChemicalPayloadTrigger(EntityUid uid, ChemicalPayloadComponent component, TriggerEvent args)
     {
-        if (component.BeakerSlotA.Item is not EntityUid beakerA)
+        if (component.BeakerSlotA.Item is not EntityUid beakerA
+            || component.BeakerSlotB.Item is not EntityUid beakerB
+            || !TryComp(beakerA, out FitsInDispenserComponent? compA)
+            || !TryComp(beakerB, out FitsInDispenserComponent? compB)
+            || !_solutionSystem.TryGetSolution(beakerA, compA.Solution, out var solutionA)
+            || !_solutionSystem.TryGetSolution(beakerB, compB.Solution, out var solutionB)
+            || solutionA.TotalVolume == 0
+            || solutionB.TotalVolume == 0)
+        {
             return;
-
-        if (component.BeakerSlotB.Item is not EntityUid beakerB)
-            return;
-
-        if (!TryComp(beakerA, out FitsInDispenserComponent? compA))
-            return;
-
-        if (!TryComp(beakerB, out FitsInDispenserComponent? compB))
-            return;
-
-        if (!_solutionSystem.TryGetSolution(beakerA, compA.Solution, out var solutionA))
-            return;
-
-        if (!_solutionSystem.TryGetSolution(beakerB, compB.Solution, out var solutionB))
-            return;
-
-        if (solutionA.TotalVolume == 0 || solutionB.TotalVolume == 0)
-            return;
+        }
 
         var solStringA = SolutionContainerSystem.ToPrettyString(solutionA);
         var solStringB = SolutionContainerSystem.ToPrettyString(solutionB);

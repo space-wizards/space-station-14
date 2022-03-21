@@ -71,9 +71,9 @@
   - type: Appearance
     visuals:
     - type: GenericEnumVisualizer
-      key: enum.ChemicalPaylodVisuals.Slots
+      key: enum.ChemicalPayloadVisuals.Slots
       states:
-        enum.ChemicalPaylodFilledSlots.None: payload-empty
-        enum.ChemicalPaylodFilledSlots.Left: payload-chemical-left
-        enum.ChemicalPaylodFilledSlots.Right: payload-chemical-right
-        enum.ChemicalPaylodFilledSlots.Both: payload-chemical-armed
+        enum.ChemicalPayloadFilledSlots.None: payload-empty
+        enum.ChemicalPayloadFilledSlots.Left: payload-chemical-left
+        enum.ChemicalPayloadFilledSlots.Right: payload-chemical-right
+        enum.ChemicalPayloadFilledSlots.Both: payload-chemical-armed

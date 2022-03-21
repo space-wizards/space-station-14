@@ -1,3 +1,4 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Payload.Components;
@@ -16,11 +17,11 @@ namespace Content.Shared.Payload.Components;
 ///     Secondly, if the entity that this component is attached to is ever triggered directly (e.g., via a device
 ///     network message), the trigger will be forwarded to the device that this entity is installed in (if any).
 /// </remarks>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class PayloadTriggerComponent : Component
 {
     /// <summary>
-    ///     If true, triggering this entity will also cause the parent of this entity to be triggerd.
+    ///     If true, triggering this entity will also cause the parent of this entity to be triggered.
     /// </summary>
     public bool Active = false;
 
