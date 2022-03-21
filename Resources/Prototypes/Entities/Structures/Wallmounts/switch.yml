@@ -39,7 +39,7 @@
   - type: Rotatable
   - type: SignalTransmitter
     outputs:
-      pressed: []
+      Pressed: []
   placement:
     mode: SnapgridCenter
     snap:

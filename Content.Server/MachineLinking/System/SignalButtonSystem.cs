@@ -18,7 +18,7 @@ namespace Content.Server.MachineLinking.System
 
         private void OnInteractHand(EntityUid uid, SignalButtonComponent component, InteractHandEvent args)
         {
-            RaiseLocalEvent(uid, new InvokePortEvent("pressed"), false);
+            RaiseLocalEvent(uid, new InvokePortEvent("Pressed"), false);
             args.Handled = true;
         }
     }
