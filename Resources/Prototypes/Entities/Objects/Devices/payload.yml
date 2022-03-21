@@ -58,9 +58,6 @@
   - type: Sprite
     sprite: Objects/Devices/payload.rsi
     state: payload-empty
-  - type: Construction
-    graph: ChemicalPayloadGraph
-    node: chemicalPayload
   - type: ChemicalPayload
     beakerSlotA: &slotDef
       whitelist: 

@@ -18,9 +18,6 @@
     state: timer
   - type: Item
     size: 5
-  - type: Construction
-    graph: TimerTriggerGraph
-    node: timerTrigger
   - type: PayloadTrigger
     components:
     - type: OnUseTimerTrigger
