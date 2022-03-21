@@ -20,6 +20,8 @@ namespace Content.Client.MachineLinking.UI
             _bui = boundUserInterface;
             links = new(ButtonContainerLeft, ButtonContainerRight);
             ContainerMiddle.AddChild(links);
+            ButtonClear.OnPressed += _ => _bui.OnClearPressed();
+            ButtonLinkAll.OnPressed += _ => _bui.OnLinkAllPressed();
         }
 
         public void UpdateState(SignalPortsState state)

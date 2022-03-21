@@ -58,6 +58,20 @@ namespace Content.Client.MachineLinking.UI
             }
         }
 
+        public void OnClearPressed()
+        {
+            _selectedTransmitterPort = null;
+            _selectedReceiverPort = null;
+            SendMessage(new LinkerClearSelected());
+        }
+
+        public void OnLinkAllPressed()
+        {
+            _selectedTransmitterPort = null;
+            _selectedReceiverPort = null;
+            SendMessage(new LinkerLinkAllSelected());
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

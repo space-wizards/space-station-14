@@ -34,6 +34,8 @@ namespace Content.Server.MachineLinking.System
             SubscribeLocalEvent<SignalReceiverComponent, InteractUsingEvent>(OnReceiverInteractUsing);
 
             SubscribeLocalEvent<SignalLinkerComponent, SignalPortSelected>(OnSignalPortSelected);
+            SubscribeLocalEvent<SignalLinkerComponent, LinkerClearSelected>(OnLinkerClearSelected);
+            SubscribeLocalEvent<SignalLinkerComponent, LinkerLinkAllSelected>(OnLinkerLinkAllSelected);
             SubscribeLocalEvent<SignalLinkerComponent, BoundUIClosedEvent>(OnLinkerUIClosed);
         }
 
@@ -201,6 +203,33 @@ namespace Content.Server.MachineLinking.System
                     ("machine1", transmitter.Owner), ("port1", args.TransmitterPort),
                     ("machine2", receiver.Owner), ("port2", args.ReceiverPort)));
             }
+            TryUI(actor, linker, transmitter, receiver);
+        }
+
+        private void OnLinkerClearSelected(EntityUid uid, SignalLinkerComponent linker, LinkerClearSelected args)
+        {
+            if (!TryComp(linker.savedTransmitter, out SignalTransmitterComponent? transmitter) ||
+                !TryComp(linker.savedReceiver, out SignalReceiverComponent? receiver) ||
+                args.Session.AttachedEntity is not EntityUid attached || attached == default ||
+                !TryComp(attached, out ActorComponent? actor))
+                return;
+            foreach (var (port, receivers) in transmitter.Outputs)
+                if (receivers.RemoveAll(id => id.uid == receiver.Owner) > 0)
+                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(port));
+            foreach (var (port, transmitters) in receiver.Inputs)
+                if (transmitters.RemoveAll(id => id.uid == transmitter.Owner) > 0)
+                    RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(port));
+            TryUI(actor, linker, transmitter, receiver);
+        }
+
+        private void OnLinkerLinkAllSelected(EntityUid uid, SignalLinkerComponent linker, LinkerLinkAllSelected args)
+        {
+            if (!TryComp(linker.savedTransmitter, out SignalTransmitterComponent? transmitter) ||
+                !TryComp(linker.savedReceiver, out SignalReceiverComponent? receiver) ||
+                args.Session.AttachedEntity is not EntityUid attached || attached == default ||
+                !TryComp(attached, out ActorComponent? actor))
+                return;
+            // TODO
             TryUI(actor, linker, transmitter, receiver);
         }
 

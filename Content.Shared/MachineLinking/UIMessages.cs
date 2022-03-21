@@ -45,4 +45,10 @@ namespace Content.Shared.MachineLinking
             ReceiverPort = receiverPort;
         }
     }
+
+    [Serializable, NetSerializable]
+    public sealed class LinkerClearSelected : BoundUserInterfaceMessage { }
+
+    [Serializable, NetSerializable]
+    public sealed class LinkerLinkAllSelected : BoundUserInterfaceMessage { }
 }
