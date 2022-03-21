@@ -21,12 +21,15 @@ namespace Content.Shared.MachineLinking
         /// </summary>
         public readonly List<string> ReceiverPorts;
 
-        public SignalPortsState(string transmitterName, List<string> transmitterPorts, string receiverName, List<string> receiverPorts)
+        public readonly List<(int, int)> Links;
+
+        public SignalPortsState(string transmitterName, List<string> transmitterPorts, string receiverName, List<string> receiverPorts, List<(int, int)> links)
         {
             TransmitterName = transmitterName;
             TransmitterPorts = transmitterPorts;
             ReceiverName = receiverName;
             ReceiverPorts = receiverPorts;
+            Links = links;
         }
     }
 
