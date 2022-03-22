@@ -354,3 +354,28 @@
         Piercing: 0.4
         Heat: 0.25 #higher heat resist due to spell casting
         Radiation: 0.20
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitLing
+  name: organic space suit
+  description: Inflates the changeling's flesh into a huge, bulky, spaceworthy mass of pressure and temperature-resistant organic tissue to facilitate space travel. A source of oxygen is still required for spacewalking, and because the suit is made up of the changeling's flesh, it provides no damage resistance and can be injected directly into with syringes. Slows chemical regeneration while active.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 100
+  - type: ClothingSpeedModifier
+    walkModifier: .8
+    sprintModifier: .8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 1
+        Heat: 0.5
+        Radiation: 0.3
