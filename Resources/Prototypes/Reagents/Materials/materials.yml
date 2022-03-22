@@ -4,6 +4,7 @@
   stack: Cloth
   name: cloth
   icon: /Textures/Objects/Materials/materials.rsi/cloth.png
+  color: "#FFFFFF"
 
 - type: material
   id: Durathread
@@ -16,21 +17,25 @@
   stack: Plasma
   name: plasma
   icon: Objects/Materials/Sheets/other.rsi/plasma.png
+  color: "#FF3300"
 
 - type: material
   id: Phoron
   stack: Phoron
   name: phoron
   icon: Objects/Materials/Sheets/other.rsi/phoron.png
+  color: "#FF3300"
 
 - type: material
   id: Plastic
   stack: Plastic
   name: plastic
   icon: Objects/Materials/Sheets/other.rsi/plastic.png
+  color: "#676767"
 
 - type: material
   id: Wood
   stack: WoodPlank
   name: wood
   icon: Objects/Materials/materials.rsi/wood.png
+  color: "#966F33"
