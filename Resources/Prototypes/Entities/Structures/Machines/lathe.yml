@@ -9,14 +9,16 @@
     netsync: false
     layers:
     - state: icon
-      map: ["enum.AutolatheVisualLayers.Base"]
+      map: ["enum.LatheVisualLayers.IsRunning"]
     - state: unlit
       shader: unshaded
-      map: ["enum.AutolatheVisualLayers.BaseUnlit"]
-    - state: building
-      map: ["enum.AutolatheVisualLayers.AnimationLayer"]
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: ["enum.LatheVisualLayers.IsOn"]
+    - state: inserting_metal
+      map: ["enum.LatheVisualLayers.IsInserting"]
+  - type: Appearance
+  - type: LatheVisuals
+    idleState: icon
+    runningState: building
   - type: Physics
     bodyType: Static
   - type: Fixtures
