@@ -124,3 +124,30 @@
   desc: An illegal compound which induces a number of effects such as loss of balance and visual artefacts.
   physicalDesc: syrupy
   color: "#63806e"
+
+- type: reagent
+  id: Nocturine
+  name: nocturine
+  group: Narcotics
+  desc: Makes you feel very tired and unable to stand up.
+  physicalDesc: powdery
+  color: "#128e80"
+  boilingPoint: 444.0
+  meltingPoint: 128.0
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 60
+        damage:
+          types:
+            Poison: 1
+      - !type:Paralyze
+        paralyzeTime: 2
+        refresh: false
+      - !type:GenericStatusEffect
+        key: Stutter
+        time: 5
+        component: StutteringAccent
