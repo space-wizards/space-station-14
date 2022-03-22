@@ -282,6 +282,7 @@ namespace Content.Client.Entry
             "IncreaseDamageOnWield",
             "TabletopGame",
             "LitOnPowered",
+            "TriggerOnSignalReceived",
             "DeviceNetworkComponent",
             "WiredNetworkConnection",
             "WirelessNetworkConnection",
