@@ -24,132 +24,15 @@ namespace Content.Server.Lathe.Components
         public Queue<LatheRecipePrototype> Queue { get; } = new();
 
         [ViewVariables]
-        public bool Producing { get; private set; }
+        public bool Producing { get; set; }
 
         private bool Inserting = false;
 
         [ViewVariables]
-        private LatheRecipePrototype? _producingRecipe;
+        public LatheRecipePrototype? ProducingRecipe;
         [ViewVariables]
-        private bool Powered => !_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
-
         private static readonly TimeSpan InsertionTime = TimeSpan.FromSeconds(0.9f);
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(LatheUiKey.Key);
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            }
-        }
-
-        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
-        {
-            if (!Powered)
-                return;
-
-            switch (message.Message)
-            {
-                case LatheQueueRecipeMessage msg:
-                    PrototypeManager.TryIndex(msg.ID, out LatheRecipePrototype? recipe);
-                    if (recipe != null!)
-                        for (var i = 0; i < msg.Quantity; i++)
-                        {
-                            Queue.Enqueue(recipe);
-                            UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue()));
-                        }
-                    break;
-                case LatheSyncRequestMessage _:
-                    if (!_entMan.HasComponent<MaterialStorageComponent>(Owner)) return;
-                    UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue()));
-                    if (_producingRecipe != null)
-                        UserInterface?.SendMessage(new LatheProducingRecipeMessage(_producingRecipe.ID));
-                    break;
-
-                case LatheServerSelectionMessage _:
-                    if (!_entMan.TryGetComponent(Owner, out ResearchClientComponent? researchClient)) return;
-                    researchClient.OpenUserInterface(message.Session);
-                    break;
-
-                case LatheServerSyncMessage _:
-                    if (!_entMan.TryGetComponent(Owner, out TechnologyDatabaseComponent? database)
-                    || !_entMan.TryGetComponent(Owner, out ProtolatheDatabaseComponent? protoDatabase)) return;
-
-                    if (database.SyncWithServer())
-                        protoDatabase.Sync();
-
-                    break;
-            }
-
-
-        }
-
-        internal bool Produce(LatheRecipePrototype recipe)
-        {
-            if (Producing || !Powered || !CanProduce(recipe) || !_entMan.TryGetComponent(Owner, out MaterialStorageComponent? storage)) return false;
-
-            UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue()));
-
-            Producing = true;
-            _producingRecipe = recipe;
-
-            foreach (var (material, amount) in recipe.RequiredMaterials)
-            {
-                // This should always return true, otherwise CanProduce fucked up.
-                storage.RemoveMaterial(material, amount);
-            }
-
-            UserInterface?.SendMessage(new LatheProducingRecipeMessage(recipe.ID));
-
-            SetAppearance(Powered, Producing, Inserting);
-
-            Owner.SpawnTimer(recipe.CompleteTime, () =>
-            {
-                Producing = false;
-                _producingRecipe = null;
-                _entMan.SpawnEntity(recipe.Result, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
-                UserInterface?.SendMessage(new LatheStoppedProducingRecipeMessage());
-                SetAppearance(Powered, Producing, Inserting);
-            });
-
-            return true;
-        }
-
-        public void OpenUserInterface(IPlayerSession session)
-        {
-            UserInterface?.Open(session);
-        }
-
-        private void SetAppearance(bool isOn, bool isRunning, bool isInserting)
-        {
-            if (!_entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearance))
-                return;
-
-            appearance.SetData(LatheVisuals.IsOn, isOn);
-            appearance.SetData(LatheVisuals.IsRunning, isRunning);
-            appearance.SetData(LatheVisuals.IsInserting, isInserting);
-        }
-
-        private Queue<string> GetIdQueue()
-        {
-            var queue = new Queue<string>();
-            foreach (var recipePrototype in Queue)
-            {
-                queue.Enqueue(recipePrototype.ID);
-            }
-
-            return queue;
-        }
-
-        private enum LatheState : byte
-        {
-            Base,
-            Inserting,
-            Producing
-        }
+        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(LatheUiKey.Key);
     }
 }
