@@ -19,14 +19,9 @@ namespace Content.Client.Markings
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<MarkingsComponent, ComponentInit>(OnMarkingsInit);
             SubscribeLocalEvent<MarkingsComponent, SharedHumanoidAppearanceSystem.ChangedHumanoidAppearanceEvent>(UpdateMarkings);
         }
-
-        private void OnMarkingsInit(EntityUid uid, MarkingsComponent component, ComponentInit __)
-        {
-        }
-
+        
         public void ToggleMarkingVisibility(EntityUid uid, SpriteComponent body, HumanoidVisualLayers layer, bool toggle)
         {
             if(!EntityManager.TryGetComponent(uid, out MarkingsComponent? markings)) return;

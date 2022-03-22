@@ -8,9 +8,6 @@ namespace Content.Shared.Markings
     [RegisterComponent]
     public sealed class MarkingsComponent : Component
     {
-        public override string Name => "Markings";
-
-        public string LastBase = "human";
         public Dictionary<HumanoidVisualLayers, List<Marking>> ActiveMarkings = new();
 
         // Layer points for the attached mob. This is verified client side (but should be verified server side, eventually as well),

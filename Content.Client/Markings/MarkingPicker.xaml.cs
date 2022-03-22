@@ -51,12 +51,10 @@ namespace Content.Client.Markings
             _usedMarkingList = newMarkings;
             _currentSpecies = species;
 
-            _prototypeManager.TryIndex(species, out SpeciesPrototype? speciesPrototype);
+            SpeciesPrototype speciesPrototype = _prototypeManager[species];
+            EntityPrototype body = _prototypeManager[speciesPrototype.Prototype];
 
-            var bodyPrototype = speciesPrototype!.Prototype;
-            _prototypeManager.TryIndex(bodyPrototype, out EntityPrototype? body);
-
-            body!.TryGetComponent("Markings", out MarkingsComponent? markingsComponent);
+            body.TryGetComponent("Markings", out MarkingsComponent? markingsComponent);
 
             PointLimits = markingsComponent!.LayerPoints;
 
@@ -278,12 +276,11 @@ namespace Content.Client.Markings
         {
             _currentSpecies = species;
             var markingCount = _usedMarkingList.Count;
-            _prototypeManager.TryIndex(species, out SpeciesPrototype? speciesPrototype);
 
-            var bodyPrototype = speciesPrototype!.Prototype;
-            _prototypeManager.TryIndex(bodyPrototype, out EntityPrototype? body);
-
-            body!.TryGetComponent("Markings", out MarkingsComponent? markingsComponent);
+            SpeciesPrototype speciesPrototype = _prototypeManager[species];
+            EntityPrototype body = _prototypeManager[speciesPrototype.Prototype];
+            
+            body.TryGetComponent("Markings", out MarkingsComponent? markingsComponent);
 
             PointLimits = markingsComponent!.LayerPoints;
 
@@ -341,7 +338,7 @@ namespace Content.Client.Markings
 
             var stateNames = GetMarkingStateNames(prototype);
             _currentMarkingColors.Clear();
-            CMarkingColors.RemoveAllChildren();
+            CMarkingColors.DisposeAllChildren();
             List<List<ColorSlider>> colorSliders = new();
             for (int i = 0; i < prototype.Sprites.Count; i++)
             {
