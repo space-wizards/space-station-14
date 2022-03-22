@@ -21,6 +21,18 @@ namespace Content.Server.MachineLinking.System
     public sealed class SignalLinkerSystem : EntitySystem
     {
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+
+        private static readonly (string, string)[][] _defaultMappings =
+        {
+            new [] { ("Pressed", "Toggle") },
+            new [] { ("On", "On"), ("Off", "Off") },
+            new [] { ("On", "Open"), ("Off", "Close") },
+            new [] { ("On", "Forward"), ("Off", "Off") },
+            new [] { ("Left", "On"), ("Right", "On"), ("Middle", "Off") },
+            new [] { ("Left", "Open"), ("Right", "Open"), ("Middle", "Close") },
+            new [] { ("Left", "Forward"), ("Right", "Reverse"), ("Middle", "Off") },
+        };
+
         public override void Initialize()
         {
             base.Initialize();
@@ -222,7 +234,7 @@ namespace Content.Server.MachineLinking.System
             {
                 TryLink(transmitter, receiver, args, attached);
             }
-            
+
             TryUpdateUI(linker, transmitter, receiver);
         }
 
@@ -245,24 +257,13 @@ namespace Content.Server.MachineLinking.System
 
         private void OnLinkerLinkDefaultSelected(EntityUid uid, SignalLinkerComponent linker, LinkerLinkDefaultSelected args)
         {
-            List<List<(string, string)>> mappings = new()
-            {
-                new() { ("Pressed", "Toggle") },
-                new() { ("On", "On"), ("Off", "Off") },
-                new() { ("On", "Open"), ("Off", "Close") },
-                new() { ("On", "Forward"), ("Off", "Off") },
-                new() { ("Left", "On"), ("Right", "On"), ("Middle", "Off") },
-                new() { ("Left", "Open"), ("Right", "Open"), ("Middle", "Close") },
-                new() { ("Left", "Forward"), ("Right", "Reverse"), ("Middle", "Off") },
-            };
-
             if (!TryComp(linker.savedTransmitter, out SignalTransmitterComponent? transmitter) ||
                 !TryComp(linker.savedReceiver, out SignalReceiverComponent? receiver) ||
                 args.Session.AttachedEntity is not EntityUid attached || attached == default ||
                 !TryComp(attached, out ActorComponent? actor))
                 return;
 
-            if (mappings.TryFirstOrDefault(map => !map.ExceptBy(transmitter.Outputs.Keys, item => item.Item1).Any() &&
+            if (_defaultMappings.TryFirstOrDefault(map => !map.ExceptBy(transmitter.Outputs.Keys, item => item.Item1).Any() &&
                 !map.ExceptBy(receiver.Inputs.Keys, item => item.Item2).Any(), out var mapping))
             {
                 foreach (var (port, receivers) in transmitter.Outputs)
