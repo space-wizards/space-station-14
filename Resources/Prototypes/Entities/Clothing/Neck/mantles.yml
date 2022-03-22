@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakCap
+  name: captain's cloak
+  description: A pompous and comfy blue cloak with a nice gold trim, while not particularly valuable as your other posessions, it sure is fancy.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/cap.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Cloaks/cap.rsi
