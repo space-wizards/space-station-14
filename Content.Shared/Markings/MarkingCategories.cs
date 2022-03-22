@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Markings
 {
     [Serializable, NetSerializable]
-    public enum MarkingCategories
+    public enum MarkingCategories : byte
     {
         Head,
         HeadTop,
