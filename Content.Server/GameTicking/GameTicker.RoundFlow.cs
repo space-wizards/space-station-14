@@ -200,6 +200,7 @@ namespace Content.Server.GameTicking
                 var server = await _db.AddOrGetServer(serverName);
                 return await _db.AddNewRound(server, playerIds);
             }).Result;
+            SendDiscordStartRoundAlert();
 
             var startingEvent = new RoundStartingEvent();
             RaiseLocalEvent(startingEvent);
@@ -385,7 +386,6 @@ namespace Content.Server.GameTicking
             _sawmill.Info("Restarting round!");
 
             SendServerMessage(Loc.GetString("game-ticker-restart-round"));
-            SendDiscordStartRoundAlert();
 
             RoundNumberMetric.Inc();
 
