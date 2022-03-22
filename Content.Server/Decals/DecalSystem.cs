@@ -29,6 +29,9 @@ namespace Content.Server.Decals
             new DefaultObjectPool<Dictionary<GridId, HashSet<Vector2i>>>(
                 new DefaultPooledObjectPolicy<Dictionary<GridId, HashSet<Vector2i>>>(), 64);
 
+        // Pool if we ever parallelise.
+        private HashSet<EntityUid> _viewers = new(64);
+
         public override void Initialize()
         {
             base.Initialize();
@@ -310,7 +313,7 @@ namespace Content.Server.Decals
 
             foreach (var session in Filter.Broadcast().Recipients)
             {
-                if(session is not IPlayerSession playerSession || playerSession.Status != SessionStatus.InGame)
+                if (session is not IPlayerSession { Status: SessionStatus.InGame } playerSession)
                     continue;
 
                 var chunks = GetChunksForSession(playerSession);
@@ -385,7 +388,7 @@ namespace Content.Server.Decals
 
         private HashSet<EntityUid> GetSessionViewers(IPlayerSession session)
         {
-            var viewers = new HashSet<EntityUid>();
+            var viewers = _viewers;
             if (session.Status != SessionStatus.InGame || session.AttachedEntity is null)
                 return viewers;
 
@@ -401,7 +404,10 @@ namespace Content.Server.Decals
 
         private Dictionary<GridId, HashSet<Vector2i>> GetChunksForSession(IPlayerSession session)
         {
-            return GetChunksForViewers(GetSessionViewers(session));
+            var viewers = GetSessionViewers(session);
+            var chunks = GetChunksForViewers(viewers);
+            viewers.Clear();
+            return chunks;
         }
 
         private Dictionary<GridId, HashSet<Vector2i>> GetChunksForViewers(HashSet<EntityUid> viewers)
