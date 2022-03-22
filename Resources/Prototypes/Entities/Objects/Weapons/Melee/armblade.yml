@@ -12,7 +12,7 @@
     damage:
       types:
         Slash: 20
-	      Piercing: 10
+        Piercing: 10
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
