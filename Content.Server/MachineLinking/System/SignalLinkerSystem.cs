@@ -43,7 +43,7 @@ namespace Content.Server.MachineLinking.System
         private void OnTransmitterInvokePort(EntityUid uid, SignalTransmitterComponent component, InvokePortEvent args)
         {
             foreach (var receiver in component.Outputs[args.Port])
-                RaiseLocalEvent(receiver.uid, new SignalReceivedEvent(receiver.port), false);
+                RaiseLocalEvent(receiver.Uid, new SignalReceivedEvent(receiver.Port), false);
         }
 
         private void OnTransmitterStartup(EntityUid uid, SignalTransmitterComponent component, ComponentStartup args)
@@ -51,29 +51,29 @@ namespace Content.Server.MachineLinking.System
             // validate links and give receivers a reference to their linked transmitter(s)
             foreach (var (transmitterPort, receivers) in component.Outputs)
                 foreach (var receiver in receivers)
-                    if (!TryComp(receiver.uid, out SignalReceiverComponent? receiverComponent) ||
-                        !receiverComponent.Inputs.TryGetValue(receiver.port, out var transmitters))
+                    if (!TryComp(receiver.Uid, out SignalReceiverComponent? receiverComponent) ||
+                        !receiverComponent.Inputs.TryGetValue(receiver.Port, out var transmitters))
                         receivers.Remove(receiver); // TODO log error
-                    else if (!transmitters.Contains(new() { uid = uid, port = transmitterPort }))
-                        receivers.Add(new() { uid = uid, port = transmitterPort });
+                    else if (!transmitters.Contains(new() { Uid = uid, Port = transmitterPort }))
+                        receivers.Add(new() { Uid = uid, Port = transmitterPort });
         }
 
         private void OnTransmitterRemoved(EntityUid uid, SignalTransmitterComponent component, ComponentRemove args)
         {
             foreach (var (transmitterPort, receivers) in component.Outputs)
                 foreach (var receiver in receivers)
-                    if (TryComp(receiver.uid, out SignalReceiverComponent? receiverComponent) &&
-                        receiverComponent.Inputs.TryGetValue(receiver.port, out var transmitters))
-                        transmitters.Remove(new() { uid = uid, port = transmitterPort });
+                    if (TryComp(receiver.Uid, out SignalReceiverComponent? receiverComponent) &&
+                        receiverComponent.Inputs.TryGetValue(receiver.Port, out var transmitters))
+                        transmitters.Remove(new() { Uid = uid, Port = transmitterPort });
         }
 
         private void OnReceiverRemoved(EntityUid uid, SignalReceiverComponent component, ComponentRemove args)
         {
             foreach (var (receiverPort, transmitters) in component.Inputs)
                 foreach (var transmitter in transmitters)
-                    if (TryComp(transmitter.uid, out SignalTransmitterComponent? transmitterComponent) &&
-                        transmitterComponent.Outputs.TryGetValue(transmitter.port, out var receivers))
-                        receivers.Remove(new() { uid = uid, port = receiverPort });
+                    if (TryComp(transmitter.Uid, out SignalTransmitterComponent? transmitterComponent) &&
+                        transmitterComponent.Outputs.TryGetValue(transmitter.Port, out var receivers))
+                        receivers.Remove(new() { Uid = uid, Port = receiverPort });
         }
 
         private void OnTransmitterInteractUsing(EntityUid uid, SignalTransmitterComponent transmitter, InteractUsingEvent args)
@@ -144,8 +144,8 @@ namespace Content.Server.MachineLinking.System
             List<(int, int)> links = new();
             foreach (var (ok, i) in outKeys.Select((s, i) => (s, i)))
                 foreach (var re in transmitter.Outputs[ok])
-                    if (re.uid == receiver.Owner)
-                        links.Add((i, inKeys.IndexOf(re.port)));
+                    if (re.Uid == receiver.Owner)
+                        links.Add((i, inKeys.IndexOf(re.Port)));
 
             bui.SetState(new SignalPortsState($"{Name(transmitter.Owner)} ({transmitter.Owner})", outKeys,
                 $"{Name(receiver.Owner)} ({receiver.Owner})", inKeys, links));
@@ -180,8 +180,8 @@ namespace Content.Server.MachineLinking.System
                 return false;
             }
 
-            receivers.Add(new() { uid = receiver.Owner, port = args.ReceiverPort });
-            transmitters.Add(new() { uid = transmitter.Owner, port = args.TransmitterPort });
+            receivers.Add(new() { Uid = receiver.Owner, Port = args.ReceiverPort });
+            transmitters.Add(new() { Uid = transmitter.Owner, Port = args.TransmitterPort });
             popupUid?.PopupMessageCursor(Loc.GetString("signal-linker-component-linked-port",
                 ("machine1", transmitter.Owner), ("port1", args.TransmitterPort),
                 ("machine2", receiver.Owner), ("port2", args.ReceiverPort)));
@@ -201,11 +201,11 @@ namespace Content.Server.MachineLinking.System
                 !TryComp(attached, out ActorComponent? actor))
                 return;
 
-            if (receivers.Contains(new() { uid = receiver.Owner, port = args.ReceiverPort }) ||
-                transmitters.Contains(new() { uid = transmitter.Owner, port = args.TransmitterPort }))
+            if (receivers.Contains(new() { Uid = receiver.Owner, Port = args.ReceiverPort }) ||
+                transmitters.Contains(new() { Uid = transmitter.Owner, Port = args.TransmitterPort }))
             { // link already exists, remove it
-                if (receivers.Remove(new() { uid = receiver.Owner, port = args.ReceiverPort }) &&
-                    transmitters.Remove(new() { uid = transmitter.Owner, port = args.TransmitterPort }))
+                if (receivers.Remove(new() { Uid = receiver.Owner, Port = args.ReceiverPort }) &&
+                    transmitters.Remove(new() { Uid = transmitter.Owner, Port = args.TransmitterPort }))
                 {
                     RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(args.ReceiverPort));
                     RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(args.TransmitterPort));
@@ -233,11 +233,11 @@ namespace Content.Server.MachineLinking.System
                 return;
 
             foreach (var (port, receivers) in transmitter.Outputs)
-                if (receivers.RemoveAll(id => id.uid == receiver.Owner) > 0)
+                if (receivers.RemoveAll(id => id.Uid == receiver.Owner) > 0)
                     RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(port));
 
             foreach (var (port, transmitters) in receiver.Inputs)
-                if (transmitters.RemoveAll(id => id.uid == transmitter.Owner) > 0)
+                if (transmitters.RemoveAll(id => id.Uid == transmitter.Owner) > 0)
                     RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(port));
 
             TryUpdateUI(linker, transmitter, receiver);
@@ -266,11 +266,11 @@ namespace Content.Server.MachineLinking.System
                 !map.ExceptBy(receiver.Inputs.Keys, item => item.Item2).Any(), out var mapping))
             {
                 foreach (var (port, receivers) in transmitter.Outputs)
-                    if (receivers.RemoveAll(id => id.uid == receiver.Owner) > 0)
+                    if (receivers.RemoveAll(id => id.Uid == receiver.Owner) > 0)
                         RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(port));
 
                 foreach (var (port, transmitters) in receiver.Inputs)
-                    if (transmitters.RemoveAll(id => id.uid == transmitter.Owner) > 0)
+                    if (transmitters.RemoveAll(id => id.Uid == transmitter.Owner) > 0)
                         RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(port));
 
                 foreach (var (t, r) in mapping)

@@ -11,10 +11,10 @@ namespace Content.Server.MachineLinking.Components
     public struct PortIdentifier
     {
         [DataField("uid")]
-        public EntityUid uid;
+        public EntityUid Uid;
 
         [DataField("port")]
-        public string port;
+        public string Port;
     }
 
     [RegisterComponent]
