@@ -24,14 +24,15 @@ namespace Content.Server.Lathe.Components
         public Queue<LatheRecipePrototype> Queue { get; } = new();
 
         [ViewVariables]
-        public bool Producing { get; set; }
-
-        private bool Inserting = false;
-
-        [ViewVariables]
         public LatheRecipePrototype? ProducingRecipe;
         [ViewVariables]
-        private static readonly TimeSpan InsertionTime = TimeSpan.FromSeconds(0.9f);
+        public float InsertionTime = 0.9f;
+
+        public float InsertionAccumulator = 0f;
+        [ViewVariables]
+        public float ProducingAccumulator = 0f;
+        [ViewVariables]
+        public float? ProductionTime => ProducingRecipe?.CompleteTime / 100;
 
         [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(LatheUiKey.Key);
     }

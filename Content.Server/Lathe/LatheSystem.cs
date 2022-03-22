@@ -7,7 +7,6 @@ using Content.Shared.Interaction;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
-using Robust.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -23,14 +22,49 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<LatheComponent, ComponentInit>(OnComponentInit);
         }
+
+        // These queues are to add/remove COMPONENTS to the lathes
+        private Queue<EntityUid> ProducingAddQueue = new();
+        private Queue<EntityUid> ProducingRemoveQueue = new();
+        private Queue<EntityUid> InsertingAddQueue = new();
+        private Queue<EntityUid> InsertingRemoveQueue = new();
+
         public override void Update(float frameTime)
         {
+            foreach (var uid in ProducingAddQueue)
+                EnsureComp<LatheProducingComponent>(uid);
+            ProducingAddQueue.Clear();
+            foreach (var uid in ProducingRemoveQueue)
+                RemComp<LatheProducingComponent>(uid);
+            ProducingRemoveQueue.Clear();
+            foreach (var uid in InsertingAddQueue)
+                EnsureComp<LatheProducingComponent>(uid);
+            InsertingAddQueue.Clear();
+            foreach (var uid in InsertingRemoveQueue)
+                RemComp<LatheProducingComponent>(uid);
+            InsertingRemoveQueue.Clear();
+
             foreach (var comp in EntityManager.EntityQuery<LatheComponent>())
             {
-                if (comp.Producing == false && comp.Queue.Count > 0)
+                if (!HasComp<LatheProducingComponent>(comp.Owner) && comp.Queue.Count > 0)
                 {
                     Produce(comp, comp.Queue.Dequeue());
                 }
+            }
+
+            foreach (var (producingComp, lathe) in EntityQuery<LatheProducingComponent, LatheComponent>(false))
+            {
+                if (lathe.ProducingRecipe == null)
+                    return;
+                if (lathe.ProducingAccumulator < lathe.ProductionTime)
+                {
+                    lathe.ProducingAccumulator += frameTime;
+                    continue;
+                }
+                lathe.ProducingAccumulator = 0;
+
+                FinishProducing(lathe.ProducingRecipe, lathe);
+
             }
         }
 
@@ -79,7 +113,8 @@ namespace Content.Server.Lathe
 
         internal bool Produce(LatheComponent component, LatheRecipePrototype recipe)
         {
-            if (component.Producing || !component.CanProduce(recipe) || !TryComp(component.Owner, out MaterialStorageComponent? storage))
+            if (HasComp<LatheProducingComponent>(component.Owner) || !component.CanProduce(recipe)
+                || !TryComp(component.Owner, out MaterialStorageComponent? storage))
                 return false;
 
             if (TryComp<ApcPowerReceiverComponent>(component.Owner, out var receiver) && !receiver.Powered)
@@ -87,7 +122,6 @@ namespace Content.Server.Lathe
 
             component.UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue(component)));
 
-            component.Producing = true;
             component.ProducingRecipe = recipe;
 
             foreach (var (material, amount) in recipe.RequiredMaterials)
@@ -97,15 +131,16 @@ namespace Content.Server.Lathe
             }
 
             component.UserInterface?.SendMessage(new LatheProducingRecipeMessage(recipe.ID));
-
-            component.Owner.SpawnTimer(recipe.CompleteTime, () =>
-            {
-                component.Producing = false;
-                component.ProducingRecipe = null;
-                EntityManager.SpawnEntity(recipe.Result, Comp<TransformComponent>(component.Owner).Coordinates);
-                component.UserInterface?.SendMessage(new LatheStoppedProducingRecipeMessage());
-            });
+            ProducingAddQueue.Enqueue(component.Owner);
             return true;
+        }
+
+        private void FinishProducing(LatheRecipePrototype recipe, LatheComponent component)
+        {
+            component.ProducingRecipe = null;
+            EntityManager.SpawnEntity(recipe.Result, Comp<TransformComponent>(component.Owner).Coordinates);
+            component.UserInterface?.SendMessage(new LatheStoppedProducingRecipeMessage());
+            ProducingRemoveQueue.Enqueue(component.Owner);
         }
         private void UserInterfaceOnOnReceiveMessage(EntityUid uid, LatheComponent component, ServerBoundUserInterfaceMessage message)
         {
