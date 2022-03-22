@@ -14,11 +14,11 @@ using Robust.Server.Player;
 namespace Content.Server.Lathe.Components
 {
     [RegisterComponent]
-    public sealed class LatheComponent : SharedLatheComponent, IInteractUsing
+    public sealed class LatheComponent : SharedLatheComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public const int VolumePerSheet = 100;
+        public int VolumePerSheet = 100;
 
         [ViewVariables]
         public Queue<LatheRecipePrototype> Queue { get; } = new();
@@ -122,46 +122,6 @@ namespace Content.Server.Lathe.Components
         public void OpenUserInterface(IPlayerSession session)
         {
             UserInterface?.Open(session);
-        }
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            if (!_entMan.TryGetComponent(Owner, out MaterialStorageComponent? storage)
-                ||  !_entMan.TryGetComponent(eventArgs.Using, out MaterialComponent? material)) return false;
-
-            var multiplier = 1;
-
-            if (_entMan.TryGetComponent(eventArgs.Using, out StackComponent? stack)) multiplier = stack.Count;
-
-            var totalAmount = 0;
-
-            // Check if it can insert all materials.
-            foreach (var mat in material.MaterialIds)
-            {
-                // TODO: Change how MaterialComponent works so this is not hard-coded.
-                if (!storage.CanInsertMaterial(mat, VolumePerSheet * multiplier)) return false;
-                totalAmount += VolumePerSheet * multiplier;
-            }
-
-            // Check if it can take ALL of the material's volume.
-            if (storage.CanTakeAmount(totalAmount)) return false;
-
-            foreach (var mat in material.MaterialIds)
-            {
-                storage.InsertMaterial(mat, VolumePerSheet * multiplier);
-            }
-
-            Inserting = true;
-            SetAppearance(Powered, Producing, Inserting);
-
-            Owner.SpawnTimer(InsertionTime, () =>
-            {
-                Inserting = false;
-                SetAppearance(Powered, Producing, Inserting);
-            });
-
-            _entMan.DeleteEntity(eventArgs.Using);
-
-            return true;
         }
 
         private void SetAppearance(bool isOn, bool isRunning, bool isInserting)
