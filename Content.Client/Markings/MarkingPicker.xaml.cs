@@ -51,8 +51,8 @@ namespace Content.Client.Markings
             _usedMarkingList = newMarkings;
             _currentSpecies = species;
 
-            SpeciesPrototype speciesPrototype = _prototypeManager[species];
-            EntityPrototype body = _prototypeManager[speciesPrototype.Prototype];
+            SpeciesPrototype speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(species);
+            EntityPrototype body = _prototypeManager.Index<EntityPrototype>(speciesPrototype.Prototype);
 
             body.TryGetComponent("Markings", out MarkingsComponent? markingsComponent);
 
@@ -137,7 +137,7 @@ namespace Content.Client.Markings
             foreach (var marking in markings[_selectedMarkingCategory])
             {
                 if (_usedMarkingList.Contains(marking.AsMarking())) continue;
-                if (!marking.SpeciesRestrictions.Contains(_currentSpecies) && !marking.Unrestricted) continue;
+                if (marking.SpeciesRestrictions != null && !marking.SpeciesRestrictions.Contains(_currentSpecies)) continue;
                 var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", marking.Sprites[0].Frame0());
                 item.Metadata = marking;
             }
@@ -166,7 +166,7 @@ namespace Content.Client.Markings
                 var marking = _usedMarkingList[i];
                 if (_markingManager.IsValidMarking(marking, out MarkingPrototype? newMarking))
                 {
-                    if (!newMarking.SpeciesRestrictions.Contains(_currentSpecies) && !newMarking.Unrestricted)
+                    if (newMarking.SpeciesRestrictions != null && !newMarking.SpeciesRestrictions.Contains(_currentSpecies))
                     {
                         toRemove.Add(marking);
                         continue;
@@ -277,8 +277,8 @@ namespace Content.Client.Markings
             _currentSpecies = species;
             var markingCount = _usedMarkingList.Count;
 
-            SpeciesPrototype speciesPrototype = _prototypeManager[species];
-            EntityPrototype body = _prototypeManager[speciesPrototype.Prototype];
+            SpeciesPrototype speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(species);
+            EntityPrototype body = _prototypeManager.Index<EntityPrototype>(speciesPrototype.Prototype);
             
             body.TryGetComponent("Markings", out MarkingsComponent? markingsComponent);
 

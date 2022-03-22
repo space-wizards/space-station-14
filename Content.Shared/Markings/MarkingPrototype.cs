@@ -23,10 +23,7 @@ namespace Content.Shared.Markings
         public MarkingCategories MarkingCategory { get; } = default!;
 
         [DataField("speciesRestriction")]
-        public List<string> SpeciesRestrictions { get; } = new List<string>();
-
-        [DataField("unrestricted", required: true)]
-        public bool Unrestricted { get; } = default!;
+        public List<string>? SpeciesRestrictions { get; }
 
         [DataField("followSkinColor")]
         public bool FollowSkinColor { get; } = false;

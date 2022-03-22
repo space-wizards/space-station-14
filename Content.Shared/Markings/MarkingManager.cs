@@ -39,7 +39,7 @@ namespace Content.Shared.Markings
 
             foreach (var list in result.Values)
             {
-                list.RemoveAll(marking => !marking.SpeciesRestrictions.Contains(species) && !marking.Unrestricted );
+                list.RemoveAll(marking => marking.SpeciesRestrictions != null && marking.SpeciesRestrictions.Contains(species));
             }
 
             return result;
