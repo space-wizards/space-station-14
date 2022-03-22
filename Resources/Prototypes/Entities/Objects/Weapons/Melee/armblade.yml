@@ -15,7 +15,7 @@
         Piercing: 10
   - type: Item
     size: 15
-    sprite: Objects/Weapons/Melee/captain_sabre.rsi
+    sprite: Objects/Weapons/Melee/armblade.rsi
   - type: Tool
     qualities:
       - Prying
