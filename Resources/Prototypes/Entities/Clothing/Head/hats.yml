@@ -422,11 +422,12 @@
     minTransferAmount: 5
     maxTransferAmount: 15
     canChangeTransferAmount: true
-    toggleAction:
-      #icon: Clothing/Shoes/Boots/magboots.rsi/icon.png
-      name: transfer-solution-verb-get-data-text
-      description: action-decription-magboot-toggle
-      event: !type:ToggleActionEvent
+    #TODO: Sproke hat sidebar action. couldn't do it and was struggling. -Emo
+    #toggleAction:
+    #  icon: Clothing/Shoes/Boots/magboots.rsi/icon.png
+    #  name: transfer-solution-verb-get-data-text
+    #  description: action-decription-magboot-toggle
+    #  event: !type:ToggleActionEvent
   - type: Drink
     isOpen: true
   - type: SolutionContainerManager
