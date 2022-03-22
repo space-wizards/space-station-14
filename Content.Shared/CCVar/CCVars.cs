@@ -22,23 +22,40 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
-        ///     Whether the basic 'hum' ambience will be enabled.
-        /// </summary>
-        public static readonly CVarDef<bool> AmbienceBasicEnabled =
-            CVarDef.Create("ambience.basic_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
-
-        /// <summary>
-        /// How long we'll wait until re-sampling nearby objects for ambience.
+        /// How long we'll wait until re-sampling nearby objects for ambience. Should be pretty fast, but doesn't have to match the tick rate.
         /// </summary>
         public static readonly CVarDef<float> AmbientCooldown =
-            CVarDef.Create("ambience.cooldown", 0.1f, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.cooldown", 0.1f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        /// <summary>
+        /// How large of a range to sample for ambience.
+        /// </summary>
         public static readonly CVarDef<float> AmbientRange =
             CVarDef.Create("ambience.range", 5f, CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        /// Maximum simultaneous ambient sounds.
+        /// </summary>
         public static readonly CVarDef<int> MaxAmbientSources =
-            CVarDef.Create("ambience.max_sounds", 64, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.max_sounds", 16, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        /// <summary>
+        /// The minimum value the user can set for ambience.max_sounds
+        /// </summary>
+        public static readonly CVarDef<int> MinMaxAmbientSourcesConfigured =
+            CVarDef.Create("ambience.min_max_sounds_configured", 16, CVar.REPLICATED | CVar.SERVER | CVar.CHEAT);
+
+        /// <summary>
+        /// The maximum value the user can set for ambience.max_sounds
+        /// </summary>
+        public static readonly CVarDef<int> MaxMaxAmbientSourcesConfigured =
+            CVarDef.Create("ambience.max_max_sounds_configured", 64, CVar.REPLICATED | CVar.SERVER | CVar.CHEAT);
+
+        /// <summary>
+        /// Ambience volume.
+        /// </summary>
+        public static readonly CVarDef<float> AmbienceVolume =
+            CVarDef.Create("ambience.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
         /*
          * Status
          */
