@@ -21,11 +21,14 @@ namespace Content.Client.Lathe
                 if (args.Component.TryGetData(LatheVisuals.IsRunning, out bool isRunning))
                 {
                     var state = isRunning ? component.RunningState : component.IdleState;
+                    sprite.LayerSetAnimationTime(LatheVisualLayers.IsRunning, 0f);
                     sprite.LayerSetState(LatheVisualLayers.IsRunning, state);
                 }
                 if (args.Component.TryGetData(LatheVisuals.IsInserting, out bool isInserting))
                     if (args.Component.TryGetData(LatheVisuals.InsertingColor, out Color color))
                         sprite.LayerSetColor(LatheVisualLayers.IsInserting, color);
+
+                    sprite.LayerSetAnimationTime(LatheVisualLayers.IsInserting, 0f);
                     sprite.LayerSetVisible(LatheVisualLayers.IsInserting, isInserting);
             }
         }

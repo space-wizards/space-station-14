@@ -26,7 +26,7 @@ namespace Content.Server.Lathe.Components
         [ViewVariables]
         public LatheRecipePrototype? ProducingRecipe;
         [ViewVariables]
-        public float InsertionTime = 0.9f;
+        public float InsertionTime = 0.79f; // 0.01 off for animation timing
 
         public float InsertionAccumulator = 0f;
         [ViewVariables]

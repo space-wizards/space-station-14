@@ -12,5 +12,6 @@ namespace Content.Shared.Lathe
     {
         IsRunning,
         IsInserting,
+        InsertingColor
     }
 }
