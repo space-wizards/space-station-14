@@ -15,8 +15,16 @@ namespace Content.Server.MachineLinking.System
         public override void Initialize()
         {
             base.Initialize();
-
+            SubscribeLocalEvent<DoorSignalControlComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<DoorSignalControlComponent, SignalReceivedEvent>(OnSignalReceived);
+        }
+        
+        private void OnInit(EntityUid uid, DoorSignalControlComponent component, ComponentInit args)
+        {
+            var receiver = EnsureComp<SignalReceiverComponent>(uid);
+            foreach (string port in new[] { "Open", "Close", "Toggle" })
+                if (!receiver.Inputs.ContainsKey(port))
+                    receiver.AddPort(port);
         }
 
         private void OnSignalReceived(EntityUid uid, DoorSignalControlComponent component, SignalReceivedEvent args)

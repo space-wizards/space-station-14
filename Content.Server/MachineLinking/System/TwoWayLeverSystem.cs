@@ -12,8 +12,16 @@ namespace Content.Server.MachineLinking.System
         public override void Initialize()
         {
             base.Initialize();
-
+            SubscribeLocalEvent<TwoWayLeverComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<TwoWayLeverComponent, InteractHandEvent>(OnInteractHand);
+        }
+
+        private void OnInit(EntityUid uid, TwoWayLeverComponent component, ComponentInit args)
+        {
+            var transmitter = EnsureComp<SignalTransmitterComponent>(uid);
+            foreach (string state in Enum.GetNames<TwoWayLeverState>())
+                if (!transmitter.Outputs.ContainsKey(state))
+                    transmitter.AddPort(state);
         }
 
         private void OnInteractHand(EntityUid uid, TwoWayLeverComponent component, InteractHandEvent args)

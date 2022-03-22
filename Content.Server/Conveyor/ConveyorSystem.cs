@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
 using Content.Server.Power.Components;
 using Content.Server.Recycling;
 using Content.Server.Recycling.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.Item;
-using Content.Shared.MachineLinking;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
@@ -24,9 +24,19 @@ namespace Content.Server.Conveyor
         {
             base.Initialize();
 
+            SubscribeLocalEvent<ConveyorComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ConveyorComponent, SignalReceivedEvent>(OnSignalReceived);
             SubscribeLocalEvent<ConveyorComponent, PowerChangedEvent>(OnPowerChanged);
         }
+
+        private void OnInit(EntityUid uid, ConveyorComponent component, ComponentInit args)
+        {
+            var receiver = EnsureComp<SignalReceiverComponent>(uid);
+            foreach (string port in Enum.GetNames<ConveyorState>())
+                if (!receiver.Inputs.ContainsKey(port))
+                    receiver.AddPort(port);
+        }
+
 
         private void OnPowerChanged(EntityUid uid, ConveyorComponent component, PowerChangedEvent args)
         {

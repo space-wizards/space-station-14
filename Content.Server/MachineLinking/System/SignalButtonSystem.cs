@@ -12,8 +12,15 @@ namespace Content.Server.MachineLinking.System
         public override void Initialize()
         {
             base.Initialize();
-
+            SubscribeLocalEvent<SignalButtonComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<SignalButtonComponent, InteractHandEvent>(OnInteractHand);
+        }
+
+        private void OnInit(EntityUid uid, SignalButtonComponent component, ComponentInit args)
+        {
+            var transmitter = EnsureComp<SignalTransmitterComponent>(uid);
+            if (!transmitter.Outputs.ContainsKey("Pressed"))
+                transmitter.AddPort("Pressed");
         }
 
         private void OnInteractHand(EntityUid uid, SignalButtonComponent component, InteractHandEvent args)

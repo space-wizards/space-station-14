@@ -13,10 +13,6 @@
     state: on
   - type: SignalSwitch
   - type: Rotatable
-  - type: SignalTransmitter
-    outputs:
-      On: []
-      Off: []
   placement:
     mode: SnapgridCenter
     snap:
@@ -37,9 +33,6 @@
     state: dead
   - type: SignalButton
   - type: Rotatable
-  - type: SignalTransmitter
-    outputs:
-      Pressed: []
   placement:
     mode: SnapgridCenter
     snap:
@@ -88,11 +81,6 @@
       sprite: Structures/conveyor.rsi
       state: switch-off
     - type: TwoWayLever
-    - type: SignalTransmitter
-      outputs:
-        Left: []
-        Right: []
-        Middle: []
     - type: Appearance
       visuals:
         - type: TwoWayLeverVisualizer

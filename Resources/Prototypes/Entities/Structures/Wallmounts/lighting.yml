@@ -32,11 +32,6 @@
     energy: 0.8
     softness: 1
     offset: "0, -0.5"
-  - type: SignalReceiver
-    inputs:
-      On: []
-      Off: []
-      Toggle: []
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

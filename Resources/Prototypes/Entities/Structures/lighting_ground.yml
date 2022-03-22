@@ -33,11 +33,6 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
-  - type: SignalReceiver
-    inputs:
-      On: []
-      Off: []
-      Toggle: []
 
 
 - type: entity

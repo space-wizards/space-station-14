@@ -67,11 +67,6 @@
     key: walls
     mode: NoSprite
   - type: DoorSignalControl
-  - type: SignalReceiver
-    inputs:
-      Open: []
-      Close: []
-      Toggle: []
   placement:
     mode: SnapgridCenter
 
