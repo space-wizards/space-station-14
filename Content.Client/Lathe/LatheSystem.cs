@@ -24,6 +24,8 @@ namespace Content.Client.Lathe
                     sprite.LayerSetState(LatheVisualLayers.IsRunning, state);
                 }
                 if (args.Component.TryGetData(LatheVisuals.IsInserting, out bool isInserting))
+                    if (args.Component.TryGetData(LatheVisuals.InsertingColor, out Color color))
+                        sprite.LayerSetColor(LatheVisualLayers.IsInserting, color);
                     sprite.LayerSetVisible(LatheVisualLayers.IsInserting, isInserting);
             }
         }

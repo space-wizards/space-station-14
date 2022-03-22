@@ -3,6 +3,7 @@
   stack: Glass
   name: glass
   icon: Objects/Materials/Sheets/glass.rsi/glass.png
+  color: "#CCCCCC"
 
 - type: material
   id: ReinforcedGlass

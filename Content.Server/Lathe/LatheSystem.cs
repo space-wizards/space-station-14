@@ -1,5 +1,6 @@
 using Content.Server.Lathe.Components;
 using Content.Shared.Lathe;
+using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Server.Research.Components;
 using JetBrains.Annotations;
@@ -116,17 +117,22 @@ namespace Content.Server.Lathe
             // Check if it can take ALL of the material's volume.
             if (storage.StorageLimit != -1 && !storage.CanTakeAmount(totalAmount))
                 return;
-
+            var lastMat = string.Empty;
             foreach (var mat in material.MaterialIds)
             {
                 storage.InsertMaterial(mat, component.VolumePerSheet * multiplier);
+                lastMat = mat;
             }
+
+            _prototypeManager.TryIndex(lastMat, out MaterialPrototype? matProto);
 
             EntityManager.QueueDeleteEntity(args.Used);
             InsertingAddQueue.Enqueue(uid);
+            if (matProto != null)
+            {
+                UpdateInsertingAppearance(uid, true, matProto.Color);
+            }
             UpdateInsertingAppearance(uid, true);
-
-            args.Handled = true;
         }
 
         internal bool Produce(LatheComponent component, LatheRecipePrototype recipe)
@@ -171,12 +177,14 @@ namespace Content.Server.Lathe
             appearance.SetData(LatheVisuals.IsRunning, isRunning);
         }
 
-        private void UpdateInsertingAppearance(EntityUid uid, bool isInserting)
+        private void UpdateInsertingAppearance(EntityUid uid, bool isInserting, Color? color = null)
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
                 return;
 
             appearance.SetData(LatheVisuals.IsInserting, isInserting);
+            if (color != null)
+                appearance.SetData(LatheVisuals.InsertingColor, color);
         }
         private void UserInterfaceOnOnReceiveMessage(EntityUid uid, LatheComponent component, ServerBoundUserInterfaceMessage message)
         {
