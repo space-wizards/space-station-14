@@ -69,17 +69,7 @@ namespace Content.Client.Markings
             }
 
             Populate();
-            List<Marking> toRemove = PopulateUsed();
-
-            if (toRemove.Count != 0)
-            {
-                foreach (var marking in toRemove)
-                {
-                    _usedMarkingList.Remove(marking);
-                }
-
-                OnMarkingRemoved?.Invoke(_usedMarkingList);
-            }
+            PopulateUsed();
         }
 
         public MarkingPicker()
@@ -154,13 +144,13 @@ namespace Content.Client.Markings
 
         // Populate the used marking list. Returns a list of markings that weren't
         // valid to add to the marking list.
-        public List<Marking> PopulateUsed()
+        public void PopulateUsed()
         {
             CMarkingsUsed.Clear();
             CMarkingColors.Visible = false;
             _selectedMarking = null;
 
-            List<Marking> toRemove = new();
+            bool isDirty = false;
             for (var i = 0; i < _usedMarkingList.Count; i++)
             {
                 var marking = _usedMarkingList[i];
@@ -168,7 +158,10 @@ namespace Content.Client.Markings
                 {
                     if (newMarking.SpeciesRestrictions != null && !newMarking.SpeciesRestrictions.Contains(_currentSpecies))
                     {
-                        toRemove.Add(marking);
+                        _usedMarkingList.RemoveAt(i);
+                        isDirty = true;
+                        i--;
+
                         continue;
                     }
 
@@ -209,13 +202,18 @@ namespace Content.Client.Markings
                 }
                 else
                 {
-                    toRemove.Add(marking);
+                    _usedMarkingList.RemoveAt(i);
+                    isDirty = true;
+                    i--;
                 }
             }
 
+            if (isDirty)
+            {
+                OnMarkingRemoved?.Invoke(_usedMarkingList);
+            }
+
             UpdatePoints();
-            
-            return toRemove;
         }
 
         private void SwapMarkingUp()
@@ -295,17 +293,7 @@ namespace Content.Client.Markings
             }
             
             Populate();
-            List<Marking> toRemove = PopulateUsed();
-            
-            if (toRemove.Count != 0)
-            {
-                foreach (var i in toRemove)
-                {
-                    _usedMarkingList.Remove(i);
-                }
-                
-                OnMarkingRemoved?.Invoke(_usedMarkingList);
-            }
+            PopulateUsed();
         }
 
         private void UpdatePoints()
