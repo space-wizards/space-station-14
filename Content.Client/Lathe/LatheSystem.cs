@@ -18,13 +18,13 @@ namespace Content.Client.Lathe
                 if (args.Component.TryGetData(SharedWiresComponent.WiresVisuals.MaintenancePanelState, out bool panel))
                     sprite.LayerSetVisible(WiresVisualizer.WiresVisualLayers.MaintenancePanel, panel);
                 // Lathe specific stuff
-                if (args.Component.TryGetData(LatheVisuals.IsInserting, out bool isInserting)
-                    && args.Component.TryGetData(LatheVisuals.IsRunning, out bool isRunning))
+                if (args.Component.TryGetData(LatheVisuals.IsRunning, out bool isRunning))
                 {
                     var state = isRunning ? component.RunningState : component.IdleState;
                     sprite.LayerSetState(LatheVisualLayers.IsRunning, state);
-                    sprite.LayerSetVisible(LatheVisualLayers.IsInserting, isInserting);
                 }
+                if (args.Component.TryGetData(LatheVisuals.IsInserting, out bool isInserting))
+                    sprite.LayerSetVisible(LatheVisualLayers.IsInserting, isInserting);
             }
         }
     }

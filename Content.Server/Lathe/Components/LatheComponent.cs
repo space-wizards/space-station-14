@@ -32,7 +32,7 @@ namespace Content.Server.Lathe.Components
         [ViewVariables]
         public float ProducingAccumulator = 0f;
         [ViewVariables]
-        public float? ProductionTime => ProducingRecipe?.CompleteTime / 100;
+        public float? ProductionTime => ProducingRecipe?.CompleteTime / 1000;
 
         [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(LatheUiKey.Key);
     }

@@ -17,6 +17,7 @@ namespace Content.Server.Entry
             "ClientEntitySpawner",
             "CharacterInfo",
             "ItemCabinetVisuals",
+            "LatheVisuals",
             "DiseaseMachineVisuals",
             "HandheldGPS",
             "PotencyVisuals"
