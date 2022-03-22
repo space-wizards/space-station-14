@@ -1,6 +1,6 @@
 ﻿using Content.Server.AME.Components;
+using Content.Server.Power.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.AME
 {
@@ -8,6 +8,12 @@ namespace Content.Server.AME
     public sealed class AntimatterEngineSystem : EntitySystem
     {
         private float _accumulatedFrameTime;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<AMEControllerComponent, PowerChangedEvent>(OnAMEPowerChange);
+        }
 
         public override void Update(float frameTime)
         {
@@ -22,6 +28,11 @@ namespace Content.Server.AME
                 _accumulatedFrameTime -= 10;
             }
 
+        }
+
+        private static void OnAMEPowerChange(EntityUid uid, AMEControllerComponent component, ref PowerChangedEvent args)
+        {
+            component.UpdateUserInterface();
         }
     }
 }

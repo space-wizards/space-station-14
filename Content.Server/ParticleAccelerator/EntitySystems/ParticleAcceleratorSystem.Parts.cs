@@ -1,18 +1,14 @@
 ﻿using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class ParticleAcceleratorPartSystem : EntitySystem
+    public sealed partial class ParticleAcceleratorSystem
     {
-        public override void Initialize()
+        private void InitializePartSystem()
         {
-            base.Initialize();
-
-            EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
+            SubscribeLocalEvent<ParticleAcceleratorPartComponent, RotateEvent>(OnRotateEvent);
             SubscribeLocalEvent<ParticleAcceleratorPartComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
         }
 
@@ -24,12 +20,9 @@ namespace Content.Server.ParticleAccelerator.EntitySystems
             component.OnAnchorChanged();
         }
 
-        private void RotateEvent(ref RotateEvent ev)
+        private static void OnRotateEvent(EntityUid uid, ParticleAcceleratorPartComponent component, ref RotateEvent args)
         {
-            if (EntityManager.TryGetComponent(ev.Sender, out ParticleAcceleratorPartComponent? part))
-            {
-                part.Rotated();
-            }
+            component.Rotated();
         }
     }
 }

@@ -68,25 +68,6 @@ namespace Content.Server.Chemistry.Components
             _bufferSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage:
-                    OnPowerChanged();
-                    break;
-            }
-        }
-
-        private void OnPowerChanged()
-        {
-            UpdateUserInterface();
-        }
-
         /// <summary>
         /// Handles ui messages from the client. For things such as button presses
         /// which interact with the world and require server action.

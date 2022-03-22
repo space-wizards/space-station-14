@@ -99,20 +99,6 @@ namespace Content.Server.ParticleAccelerator.Components
             _apcPowerReceiverComponent!.Load = 250;
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage powerChanged:
-                    OnPowerStateChanged(powerChanged);
-                    break;
-            }
-        }
-
         protected override void Startup()
         {
             base.Startup();
@@ -122,7 +108,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
         // This is the power state for the PA control box itself.
         // Keep in mind that the PA itself can keep firing as long as the HV cable under the power box has... power.
-        private void OnPowerStateChanged(PowerChangedMessage e)
+        public void OnPowerStateChanged(PowerChangedEvent e)
         {
             UpdateAppearance();
 
