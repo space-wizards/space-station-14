@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.MachineLinking.Components;
@@ -75,7 +76,7 @@ namespace Content.Server.MachineLinking.System
                         receivers.Remove(new() { uid = uid, port = receiverPort });
         }
 
-        private void OnTransmitterInteractUsing(EntityUid uid, SignalTransmitterComponent component, InteractUsingEvent args)
+        private void OnTransmitterInteractUsing(EntityUid uid, SignalTransmitterComponent transmitter, InteractUsingEvent args)
         {
             if (args.Handled) return;
 
@@ -92,14 +93,15 @@ namespace Content.Server.MachineLinking.System
                 return;
             }
 
-            if (TryUI(actor, linker, component, receiver))
+            if (TryOpenUI(actor, linker, out var bui))
             {
+                TryUpdateUI(linker, transmitter, receiver, bui);
                 args.Handled = true;
                 return;
             }
         }
 
-        private void OnReceiverInteractUsing(EntityUid uid, SignalReceiverComponent component, InteractUsingEvent args)
+        private void OnReceiverInteractUsing(EntityUid uid, SignalReceiverComponent receiver, InteractUsingEvent args)
         {
             if (args.Handled) return;
 
@@ -116,33 +118,39 @@ namespace Content.Server.MachineLinking.System
                 return;
             }
 
-            if (TryUI(actor, linker, transmitter, component))
+            if (TryOpenUI(actor, linker, out var bui))
             {
+                TryUpdateUI(linker, transmitter, receiver, bui);
                 args.Handled = true;
                 return;
             }
         }
 
-        private bool TryUI(ActorComponent actor, SignalLinkerComponent linker, SignalTransmitterComponent transmitter, SignalReceiverComponent receiver)
+        private bool TryOpenUI(ActorComponent actor, SignalLinkerComponent linker, [NotNullWhen(true)] out BoundUserInterface? bui)
         {
-            if (_userInterfaceSystem.TryGetUi(linker.Owner, SignalLinkerUiKey.Key, out var bui))
-            {
-                bui.Open(actor.PlayerSession);
-
-                var outKeys = transmitter.Outputs.Keys.ToList();
-                var inKeys = receiver.Inputs.Keys.ToList();
-                // TODO this could probably be rewritten nicely with linq
-                List<(int, int)> links = new();
-                foreach (var (ok, i) in outKeys.Select((s, i) => (s, i)))
-                    foreach (var re in transmitter.Outputs[ok])
-                        if (re.uid == receiver.Owner)
-                            links.Add((i, inKeys.IndexOf(re.port)));
-
-                bui.SetState(new SignalPortsState($"{Name(transmitter.Owner)} ({transmitter.Owner})", outKeys,
-                    $"{Name(receiver.Owner)} ({receiver.Owner})", inKeys, links));
-                return true;
-            }
+            if (_userInterfaceSystem.TryGetUi(linker.Owner, SignalLinkerUiKey.Key, out bui))
+                return bui.Open(actor.PlayerSession);
             return false;
+        }
+
+        private bool TryUpdateUI(SignalLinkerComponent linker, SignalTransmitterComponent transmitter, SignalReceiverComponent receiver, BoundUserInterface? bui = null)
+        {
+            if (bui == null && !_userInterfaceSystem.TryGetUi(linker.Owner, SignalLinkerUiKey.Key, out bui))
+                return false;
+
+            var outKeys = transmitter.Outputs.Keys.ToList();
+            var inKeys = receiver.Inputs.Keys.ToList();
+            // TODO this could probably be rewritten nicely with linq
+            List<(int, int)> links = new();
+            foreach (var (ok, i) in outKeys.Select((s, i) => (s, i)))
+                foreach (var re in transmitter.Outputs[ok])
+                    if (re.uid == receiver.Owner)
+                        links.Add((i, inKeys.IndexOf(re.port)));
+
+            bui.SetState(new SignalPortsState($"{Name(transmitter.Owner)} ({transmitter.Owner})", outKeys,
+                $"{Name(receiver.Owner)} ({receiver.Owner})", inKeys, links));
+            return true;
+
         }
 
         private bool TryLink(SignalTransmitterComponent transmitter, SignalReceiverComponent receiver, SignalPortSelected args, EntityUid? popupUid = null)
@@ -214,23 +222,25 @@ namespace Content.Server.MachineLinking.System
             {
                 TryLink(transmitter, receiver, args, attached);
             }
-            TryUI(actor, linker, transmitter, receiver);
+            
+            TryUpdateUI(linker, transmitter, receiver);
         }
 
         private void OnLinkerClearSelected(EntityUid uid, SignalLinkerComponent linker, LinkerClearSelected args)
         {
             if (!TryComp(linker.savedTransmitter, out SignalTransmitterComponent? transmitter) ||
-                !TryComp(linker.savedReceiver, out SignalReceiverComponent? receiver) ||
-                args.Session.AttachedEntity is not EntityUid attached || attached == default ||
-                !TryComp(attached, out ActorComponent? actor))
+                !TryComp(linker.savedReceiver, out SignalReceiverComponent? receiver))
                 return;
+
             foreach (var (port, receivers) in transmitter.Outputs)
                 if (receivers.RemoveAll(id => id.uid == receiver.Owner) > 0)
                     RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(port));
+
             foreach (var (port, transmitters) in receiver.Inputs)
                 if (transmitters.RemoveAll(id => id.uid == transmitter.Owner) > 0)
                     RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(port));
-            TryUI(actor, linker, transmitter, receiver);
+
+            TryUpdateUI(linker, transmitter, receiver);
         }
 
         private void OnLinkerLinkDefaultSelected(EntityUid uid, SignalLinkerComponent linker, LinkerLinkDefaultSelected args)
@@ -258,13 +268,16 @@ namespace Content.Server.MachineLinking.System
                 foreach (var (port, receivers) in transmitter.Outputs)
                     if (receivers.RemoveAll(id => id.uid == receiver.Owner) > 0)
                         RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(port));
+
                 foreach (var (port, transmitters) in receiver.Inputs)
                     if (transmitters.RemoveAll(id => id.uid == transmitter.Owner) > 0)
                         RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(port));
+
                 foreach (var (t, r) in mapping)
                     TryLink(transmitter, receiver, new(t, r));
             }
-            TryUI(actor, linker, transmitter, receiver);
+
+            TryUpdateUI(linker, transmitter, receiver);
         }
 
         private void OnLinkerUIClosed(EntityUid uid, SignalLinkerComponent component, BoundUIClosedEvent args)
