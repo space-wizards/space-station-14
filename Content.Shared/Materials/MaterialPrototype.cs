@@ -1,10 +1,7 @@
 using Content.Shared.Stacks;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Materials
 {
@@ -16,7 +13,7 @@ namespace Content.Shared.Materials
     public sealed class MaterialPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [DataField("parent")]
+        [ParentDataField(typeof(PrototypeIdSerializer<MaterialPrototype>))]
         public string? Parent { get; } = null;
 
         [ViewVariables]
@@ -24,7 +21,7 @@ namespace Content.Shared.Materials
         public bool Abstract { get; } = false;
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables]

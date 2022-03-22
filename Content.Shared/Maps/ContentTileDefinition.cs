@@ -13,7 +13,7 @@ namespace Content.Shared.Maps
     [Prototype("tile")]
     public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
-        [DataField("parent", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
+        [ParentDataFieldAttribute(typeof(PrototypeIdSerializer<ContentTileDefinition>))]
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
@@ -22,7 +22,7 @@ namespace Content.Shared.Maps
 
         public string Path => "/Textures/Tiles/";
 
-        [DataField("id", required: true)] public string ID { get; } = string.Empty;
+        [IdDataFieldAttribute] public string ID { get; } = string.Empty;
 
         public ushort TileId { get; private set; }
 

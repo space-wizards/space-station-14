@@ -12,13 +12,13 @@ namespace Content.Shared.Disease
     public sealed class DiseasePrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("name")]
         public string Name { get; } = string.Empty;
 
-        [DataField("parent", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
+        [ParentDataFieldAttribute(typeof(PrototypeIdSerializer<DiseasePrototype>))]
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
