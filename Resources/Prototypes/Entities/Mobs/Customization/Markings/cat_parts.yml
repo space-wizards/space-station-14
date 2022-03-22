@@ -2,7 +2,6 @@
   id: CatEars
   bodyPart: HeadTop
   markingCategory: HeadTop
-  unrestricted: false
   speciesRestriction: [Human]
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi/
@@ -14,7 +13,6 @@
   id: CatTail
   bodyPart: Tail
   markingCategory: Tail
-  unrestricted: false
   speciesRestriction: [Human]
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi/
