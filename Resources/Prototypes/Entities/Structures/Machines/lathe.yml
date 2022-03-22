@@ -12,9 +12,11 @@
       map: ["enum.LatheVisualLayers.IsRunning"]
     - state: unlit
       shader: unshaded
-      map: ["enum.LatheVisualLayers.IsOn"]
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: inserting_metal
       map: ["enum.LatheVisualLayers.IsInserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
   - type: LatheVisuals
     idleState: icon
@@ -68,10 +70,6 @@
       - CableStack
       - HandheldGPSBasic
       - HandheldHealthAnalyzer
-  - type: Appearance
-    visuals:
-    - type: AutolatheVisualizer
-    - type: WiresVisualizer
   - type: ActivatableUI
     key: enum.LatheUiKey.Key
   - type: ActivatableUIRequiresPower
