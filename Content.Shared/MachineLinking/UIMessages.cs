@@ -50,5 +50,5 @@ namespace Content.Shared.MachineLinking
     public sealed class LinkerClearSelected : BoundUserInterfaceMessage { }
 
     [Serializable, NetSerializable]
-    public sealed class LinkerLinkAllSelected : BoundUserInterfaceMessage { }
+    public sealed class LinkerLinkDefaultSelected : BoundUserInterfaceMessage { }
 }

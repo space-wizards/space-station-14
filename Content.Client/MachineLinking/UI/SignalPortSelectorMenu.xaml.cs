@@ -21,7 +21,7 @@ namespace Content.Client.MachineLinking.UI
             links = new(ButtonContainerLeft, ButtonContainerRight);
             ContainerMiddle.AddChild(links);
             ButtonClear.OnPressed += _ => _bui.OnClearPressed();
-            ButtonLinkAll.OnPressed += _ => _bui.OnLinkAllPressed();
+            ButtonLinkDefault.OnPressed += _ => _bui.OnLinkDefaultPressed();
         }
 
         public void UpdateState(SignalPortsState state)

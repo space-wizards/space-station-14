@@ -65,11 +65,11 @@ namespace Content.Client.MachineLinking.UI
             SendMessage(new LinkerClearSelected());
         }
 
-        public void OnLinkAllPressed()
+        public void OnLinkDefaultPressed()
         {
             _selectedTransmitterPort = null;
             _selectedReceiverPort = null;
-            SendMessage(new LinkerLinkAllSelected());
+            SendMessage(new LinkerLinkDefaultSelected());
         }
 
         protected override void Dispose(bool disposing)

@@ -35,7 +35,7 @@ namespace Content.Server.MachineLinking.System
 
             SubscribeLocalEvent<SignalLinkerComponent, SignalPortSelected>(OnSignalPortSelected);
             SubscribeLocalEvent<SignalLinkerComponent, LinkerClearSelected>(OnLinkerClearSelected);
-            SubscribeLocalEvent<SignalLinkerComponent, LinkerLinkAllSelected>(OnLinkerLinkAllSelected);
+            SubscribeLocalEvent<SignalLinkerComponent, LinkerLinkDefaultSelected>(OnLinkerLinkDefaultSelected);
             SubscribeLocalEvent<SignalLinkerComponent, BoundUIClosedEvent>(OnLinkerUIClosed);
         }
 
@@ -233,7 +233,7 @@ namespace Content.Server.MachineLinking.System
             TryUI(actor, linker, transmitter, receiver);
         }
 
-        private void OnLinkerLinkAllSelected(EntityUid uid, SignalLinkerComponent linker, LinkerLinkAllSelected args)
+        private void OnLinkerLinkDefaultSelected(EntityUid uid, SignalLinkerComponent linker, LinkerLinkDefaultSelected args)
         {
             List<List<(string, string)>> mappings = new()
             {

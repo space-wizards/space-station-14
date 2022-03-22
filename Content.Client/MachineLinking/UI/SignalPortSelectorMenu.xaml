@@ -13,7 +13,7 @@
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Button Name="ButtonClear" Text="Clear"/>
-            <Button Name="ButtonLinkAll" Text="Link All"/>
+            <Button Name="ButtonLinkDefault" Text="Link Defaults"/>
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>
