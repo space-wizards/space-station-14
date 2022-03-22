@@ -16,6 +16,7 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/armblade.rsi
+    prefix: inhand
   - type: Tool
     qualities:
       - Prying
