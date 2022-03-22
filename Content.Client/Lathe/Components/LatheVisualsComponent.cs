@@ -12,12 +12,4 @@ public sealed class LatheVisualsComponent : Component
 
     [DataField("runningState", required: true)]
     public string RunningState = default!;
-
-    [DataField("insertingState")]
-    public string InsertingState = default!;
-
-    // This visualizer is pretty generic and not everything has
-    // any inserting animations at all.
-    [DataField("hasInsertingAnims")]
-    public bool HasInsertingAnims = true;
 }

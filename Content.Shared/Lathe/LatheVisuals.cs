@@ -10,9 +10,7 @@ namespace Content.Shared.Lathe
     /// </summary>
     public enum LatheVisuals : byte
     {
-        IsOn,
         IsRunning,
         IsInserting,
-        PanelOpen
     }
 }

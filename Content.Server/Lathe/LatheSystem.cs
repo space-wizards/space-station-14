@@ -38,10 +38,10 @@ namespace Content.Server.Lathe
                 RemComp<LatheProducingComponent>(uid);
             ProducingRemoveQueue.Clear();
             foreach (var uid in InsertingAddQueue)
-                EnsureComp<LatheProducingComponent>(uid);
+                EnsureComp<LatheInsertingComponent>(uid);
             InsertingAddQueue.Clear();
             foreach (var uid in InsertingRemoveQueue)
-                RemComp<LatheProducingComponent>(uid);
+                RemComp<LatheInsertingComponent>(uid);
             InsertingRemoveQueue.Clear();
 
             foreach (var comp in EntityManager.EntityQuery<LatheComponent>())
@@ -52,10 +52,22 @@ namespace Content.Server.Lathe
                 }
             }
 
+            foreach (var (insertingComp, lathe) in EntityQuery<LatheInsertingComponent, LatheComponent>(false))
+            {
+                if (lathe.InsertionAccumulator < lathe.InsertionTime)
+                {
+                    lathe.InsertionAccumulator += frameTime;
+                    continue;
+                }
+                lathe.InsertionAccumulator = 0;
+                UpdateInsertingAppearance(lathe.Owner, false);
+                InsertingRemoveQueue.Enqueue(lathe.Owner);
+            }
+
             foreach (var (producingComp, lathe) in EntityQuery<LatheProducingComponent, LatheComponent>(false))
             {
                 if (lathe.ProducingRecipe == null)
-                    return;
+                    continue;
                 if (lathe.ProducingAccumulator < lathe.ProductionTime)
                 {
                     lathe.ProducingAccumulator += frameTime;
@@ -64,7 +76,6 @@ namespace Content.Server.Lathe
                 lathe.ProducingAccumulator = 0;
 
                 FinishProducing(lathe.ProducingRecipe, lathe);
-
             }
         }
 
@@ -74,6 +85,11 @@ namespace Content.Server.Lathe
             {
                 component.UserInterface.OnReceiveMessage += msg => UserInterfaceOnOnReceiveMessage(uid, component, msg);
             }
+
+            if (!TryComp<AppearanceComponent>(uid, out var appearance))
+                return;
+            appearance.SetData(LatheVisuals.IsInserting, false);
+            appearance.SetData(LatheVisuals.IsRunning, false);
         }
 
         private void OnInteractUsing(EntityUid uid, LatheComponent component, InteractUsingEvent args)
@@ -107,6 +123,8 @@ namespace Content.Server.Lathe
             }
 
             EntityManager.QueueDeleteEntity(args.Used);
+            InsertingAddQueue.Enqueue(uid);
+            UpdateInsertingAppearance(uid, true);
 
             args.Handled = true;
         }
@@ -131,6 +149,7 @@ namespace Content.Server.Lathe
             }
 
             component.UserInterface?.SendMessage(new LatheProducingRecipeMessage(recipe.ID));
+            UpdateRunningAppearance(component.Owner, true);
             ProducingAddQueue.Enqueue(component.Owner);
             return true;
         }
@@ -141,6 +160,23 @@ namespace Content.Server.Lathe
             EntityManager.SpawnEntity(recipe.Result, Comp<TransformComponent>(component.Owner).Coordinates);
             component.UserInterface?.SendMessage(new LatheStoppedProducingRecipeMessage());
             ProducingRemoveQueue.Enqueue(component.Owner);
+            UpdateRunningAppearance(component.Owner, false);
+        }
+
+        private void UpdateRunningAppearance(EntityUid uid, bool isRunning)
+        {
+            if (!TryComp<AppearanceComponent>(uid, out var appearance))
+                return;
+
+            appearance.SetData(LatheVisuals.IsRunning, isRunning);
+        }
+
+        private void UpdateInsertingAppearance(EntityUid uid, bool isInserting)
+        {
+            if (!TryComp<AppearanceComponent>(uid, out var appearance))
+                return;
+
+            appearance.SetData(LatheVisuals.IsInserting, isInserting);
         }
         private void UserInterfaceOnOnReceiveMessage(EntityUid uid, LatheComponent component, ServerBoundUserInterfaceMessage message)
         {
