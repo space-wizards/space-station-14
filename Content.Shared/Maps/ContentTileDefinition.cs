@@ -17,7 +17,7 @@ namespace Content.Shared.Maps
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
-        [DataField("abstract")]
+        [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
         public string Path => "/Textures/Tiles/";

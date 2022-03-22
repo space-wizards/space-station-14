@@ -38,7 +38,7 @@ namespace Content.Shared.Chemistry.Reagent
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
-        [DataField("abstract")]
+        [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
         [DataField("desc", required: true)]

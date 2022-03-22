@@ -17,7 +17,7 @@ namespace Content.Shared.Materials
         public string? Parent { get; } = null;
 
         [ViewVariables]
-        [DataField("abstract")]
+        [AbstractDataFieldAttribute]
         public bool Abstract { get; } = false;
 
         [ViewVariables]

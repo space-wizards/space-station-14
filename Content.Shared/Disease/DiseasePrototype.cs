@@ -22,7 +22,7 @@ namespace Content.Shared.Disease
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
-        [DataField("abstract")]
+        [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
         /// <summary>
