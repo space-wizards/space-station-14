@@ -1,6 +1,5 @@
 using Robust.Shared.Serialization;
 
-
 namespace Content.Shared.Lathe;
 
         /// <summary>
@@ -13,8 +12,6 @@ namespace Content.Shared.Lathe;
             {
             }
         }
-
-
 
         /// <summary>
         ///     Sent to the server to sync the lathe's technology database with the research server.
