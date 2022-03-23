@@ -1,4 +1,4 @@
-name: Update JSON files on wiki
+name: Update Wiki
 
 on:
   push:
@@ -14,33 +14,42 @@ on:
       - 'RobustToolbox/'
 
 jobs:
-  wiki:
-    name: Build and publish JSON for the wiki
+  update-wiki:
+    name: Build and Publish JSON blobs to wiki
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup submodule
+    steps:    
+    - name: Checkout Master
+      uses: actions/checkout@v2
+      
+    - name: Setup Submodule
       run: |
         git submodule update --init --recursive
-    - name: Pull engine updates
+    
+    - name: Pull Engine Updates
       uses: space-wizards/submodule-dependency@v0.1.5
+    
     - name: Update Engine Submodules
       run: |
         cd RobustToolbox/
         git submodule update --init --recursive
+    
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.100
-    - name: Install dependencies
+   
+    - name: Install Dependencies
       run: dotnet restore
-    - name: Build
+    
+    - name: Build Project
       run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors=nullable /m
-    - name: Generate JSON
+    
+    - name: Generate JSON blobs for prototypes
       run: dotnet ./bin/Content.Server/Content.Server.dll --cvar autogen.destination_file=prototypes.json
       continue-on-error: true
-    - name: Upload chem_prototypes.json
+    
+    - name: Upload chem_prototypes.json to wiki
       uses: jtmullen/mediawiki-edit-action@v0.1.1
       with:
         wiki_text_file: ./bin/Content.Server/data/chem_prototypes.json
@@ -49,7 +58,8 @@ jobs:
         api_url: https://wiki.station14.ru/api.php
         username: ${{ secrets.WIKI_BOT_USER }}
         password: ${{ secrets.WIKI_BOT_PASS }}
-    - name: Upload react_prototypes.json
+    
+    - name: Upload react_prototypes.json to wiki
       uses: jtmullen/mediawiki-edit-action@v0.1.1
       with:
         wiki_text_file: ./bin/Content.Server/data/react_prototypes.json
