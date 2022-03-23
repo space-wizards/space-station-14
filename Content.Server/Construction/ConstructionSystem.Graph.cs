@@ -18,6 +18,15 @@ namespace Content.Server.Construction
         {
         }
 
+        /// <summary>
+        ///     Sets a container on an entity as being handled by Construction. This essentially means that it will
+        ///     be transferred if the entity prototype changes. <seealso cref="ChangeEntity"/>
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="container">The container identifier. This method does not check whether the container exists.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>Whether we could set the container as being handled by construction or not. Also returns false if
+        ///          the entity does not have a <see cref="ConstructionComponent"/>.</returns>
         public bool AddContainer(EntityUid uid, string container, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
@@ -26,14 +35,32 @@ namespace Content.Server.Construction
             return construction.Containers.Add(container);
         }
 
+        /// <summary>
+        ///     Gets the current construction graph of an entity, or null.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>The current construction graph of an entity or null if invalid. Also returns null if the entity
+        ///          does not have a <see cref="ConstructionComponent"/>.</returns>
+        /// <remarks>An entity with a valid construction state will always have a valid graph.</remarks>
         public ConstructionGraphPrototype? GetCurrentGraph(EntityUid uid, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction, false))
                 return null;
 
+            // If the set graph prototype does not exist, also return null. This could be due to admemes changing values
+            // in ViewVariables, so even though the construction state is invalid, just return null.
             return _prototypeManager.TryIndex(construction.Graph, out ConstructionGraphPrototype? graph) ? graph : null;
         }
 
+        /// <summary>
+        ///     Gets the construction graph node the entity is currently at, or null.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>The current construction graph node the entity is currently at, or null if invalid. Also returns
+        ///          null if the entity does not have a <see cref="ConstructionComponent"/>.</returns>
+        /// <remarks>An entity with a valid construction state will always be at a valid node.</remarks>
         public ConstructionGraphNode? GetCurrentNode(EntityUid uid, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction, false))
@@ -45,6 +72,14 @@ namespace Content.Server.Construction
             return GetCurrentGraph(uid, construction) is not {} graph ? null : GetNodeFromGraph(graph, nodeIdentifier);
         }
 
+        /// <summary>
+        ///     Gets the construction graph edge the entity is currently at, or null.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>The construction graph edge the entity is currently at, if any. Also returns null if the entity
+        ///          does not have a <see cref="ConstructionComponent"/>.</returns>
+        /// <remarks>An entity with a valid construction state might not always be at an edge.</remarks>
         public ConstructionGraphEdge? GetCurrentEdge(EntityUid uid, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction, false))
@@ -56,6 +91,14 @@ namespace Content.Server.Construction
             return GetCurrentNode(uid, construction) is not {} node ? null : GetEdgeFromNode(node, edgeIndex);
         }
 
+        /// <summary>
+        ///     Gets the construction graph step the entity is currently at, or null.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>The construction graph step the entity is currently at, if any. Also returns null if the entity
+        ///          does not have a <see cref="ConstructionComponent"/>.</returns>
+        /// <remarks>An entity with a valid construction state might not always be at a step or an edge.</remarks>
         public ConstructionGraphStep? GetCurrentStep(EntityUid uid, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction, false))
@@ -67,6 +110,15 @@ namespace Content.Server.Construction
             return GetStepFromEdge(edge, construction.StepIndex);
         }
 
+        /// <summary>
+        ///     Gets the construction graph node the entity's construction pathfinding is currently targeting, if any.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>The construction graph node the entity's construction pathfinding is currently targeting, or null
+        ///          if it's not currently targeting any node. Also returns null if the entity does not have a
+        ///          <see cref="ConstructionComponent"/>.</returns>
+        /// <remarks>Target nodes are entirely optional and only used for pathfinding purposes.</remarks>
         public ConstructionGraphNode? GetTargetNode(EntityUid uid, ConstructionComponent? construction)
         {
             if (!Resolve(uid, ref construction))
@@ -81,6 +133,16 @@ namespace Content.Server.Construction
             return GetNodeFromGraph(graph, targetNodeId);
         }
 
+        /// <summary>
+        ///     Gets the construction graph edge the entity's construction pathfinding is currently targeting, if any.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>The construction graph edge the entity's construction pathfinding is currently targeting, or null
+        ///          if it's not currently targeting any edge. Also returns null if the entity does not have a
+        ///          <see cref="ConstructionComponent"/>.</returns>
+        /// <remarks>Target edges are entirely optional and only used for pathfinding purposes. The targeted edge will
+        ///          be an edge on the current construction node the entity is at.</remarks>
         public ConstructionGraphEdge? GetTargetEdge(EntityUid uid, ConstructionComponent? construction)
         {
             if (!Resolve(uid, ref construction))
@@ -95,6 +157,13 @@ namespace Content.Server.Construction
             return GetEdgeFromNode(node, targetEdgeIndex);
         }
 
+        /// <summary>
+        ///     Gets both the construction edge and step the entity is currently at, if any.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>A tuple containing the current edge and step the entity's construction state is at.</returns>
+        /// <remarks>The edge, step or both could be null. A valid construction state does not necessarily need them.</remarks>
         public (ConstructionGraphEdge? edge, ConstructionGraphStep? step) GetCurrentEdgeAndStep(EntityUid uid,
             ConstructionComponent? construction = null)
         {
@@ -111,21 +180,49 @@ namespace Content.Server.Construction
             return (edge, step);
         }
 
+        /// <summary>
+        ///     Gets a node from a construction graph given its identifier.
+        /// </summary>
+        /// <param name="graph">The construction graph where to get the node.</param>
+        /// <param name="id">The identifier that corresponds to the node.</param>
+        /// <returns>The node that corresponds to the identifier, or null if it doesn't exist.</returns>
         public ConstructionGraphNode? GetNodeFromGraph(ConstructionGraphPrototype graph, string id)
         {
             return graph.Nodes.TryGetValue(id, out var node) ? node : null;
         }
 
+        /// <summary>
+        ///     Gets an edge from a construction node given its index.
+        /// </summary>
+        /// <param name="node">The construction node where to get the edge.</param>
+        /// <param name="index">The index or position of the edge on the node.</param>
+        /// <returns>The edge on that index in the construction node, or null if none.</returns>
         public ConstructionGraphEdge? GetEdgeFromNode(ConstructionGraphNode node, int index)
         {
             return node.Edges.Count > index ? node.Edges[index] : null;
         }
 
+        /// <summary>
+        ///     Gets a step from a construction edge given its index.
+        /// </summary>
+        /// <param name="edge">The construction edge where to get the step.</param>
+        /// <param name="index">The index or position of the step on the edge.</param>
+        /// <returns>The edge on that index in the construction edge, or null if none.</returns>
         public ConstructionGraphStep? GetStepFromEdge(ConstructionGraphEdge edge, int index)
         {
             return edge.Steps.Count > index ? edge.Steps[index] : null;
         }
 
+        /// <summary>
+        ///     Performs a node change on a construction entity, optionally performing the actions for the new node.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="userUid">An optional user entity, for actions.</param>
+        /// <param name="id">The identifier of the node to change to.</param>
+        /// <param name="performActions">Whether the actions for the new node will be performed or not.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>Whether the node change succeeded or not. Also returns false if the entity does not have a <see cref="ConstructionComponent"/>.</returns>
+        /// <remarks>This method also updates the construction pathfinding automatically, if the node change succeeds.</remarks>
         public bool ChangeNode(EntityUid uid, EntityUid? userUid, string id, bool performActions = true, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
@@ -152,6 +249,20 @@ namespace Content.Server.Construction
             return true;
         }
 
+        /// <summary>
+        ///     Performs an entity prototype change on a construction entity.
+        ///     The old entity will be removed, and a new one will be spawned in its place. Some values will be kept,
+        ///     and any containers handled by construction will be transferred to the new entity as well.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="userUid">An optional user entity, for actions.</param>
+        /// <param name="newEntity">The entity prototype identifier for the new entity.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <param name="metaData">The metadata component of the target entity. Will be resolved if null.</param>
+        /// <param name="transform">The transform component of the target entity. Will be resolved if null.</param>
+        /// <param name="containerManager">The container manager component of the target entity. Will be resolved if null,
+        ///                                but it is an optional component and not required for the method to work.</param>
+        /// <returns>The new entity, or null if the method did not succeed.</returns>
         private EntityUid? ChangeEntity(EntityUid uid, EntityUid? userUid, string newEntity,
             ConstructionComponent? construction = null,
             MetaDataComponent? metaData = null,
@@ -189,7 +300,7 @@ namespace Content.Server.Construction
             }
 
             // Transform transferring.
-            var newTransform = EntityManager.GetComponent<TransformComponent>(newUid);
+            var newTransform = Transform(newUid);
             newTransform.LocalRotation = transform.LocalRotation;
             newTransform.Anchored = transform.Anchored;
 
@@ -217,7 +328,7 @@ namespace Content.Server.Construction
                 }
             }
 
-            EntityManager.QueueDeleteEntity(uid);
+            QueueDel(uid);
 
             if(GetCurrentNode(newUid, newConstruction) is {} node)
                 PerformActions(newUid, userUid, node.Actions);
@@ -225,6 +336,18 @@ namespace Content.Server.Construction
             return newUid;
         }
 
+        /// <summary>
+        ///     Performs a construction graph change on a construction entity, also changing the node to a valid one on
+        ///     the new graph.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="userUid">An optional user entity, for actions.</param>
+        /// <param name="graphId">The identifier for the construction graph to switch to.</param>
+        /// <param name="nodeId">The identifier for a node on the new construction graph to switch to.</param>
+        /// <param name="performActions">Whether actions on the new node will be performed or not.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>Whether the construction graph change succeeded or not. Returns false if the entity does not have
+        ///          a <see cref="ConstructionComponent"/>.</returns>
         public bool ChangeGraph(EntityUid uid, EntityUid? userUid, string graphId, string nodeId, bool performActions = true, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
@@ -233,7 +356,7 @@ namespace Content.Server.Construction
             if (!_prototypeManager.TryIndex<ConstructionGraphPrototype>(graphId, out var graph))
                 return false;
 
-            if(GetNodeFromGraph(graph, nodeId) is not {} node)
+            if(GetNodeFromGraph(graph, nodeId) is not {})
                 return false;
 
             construction.Graph = graphId;
