@@ -176,7 +176,7 @@ namespace Content.Shared.Chemistry.Components
         public FixedPoint2 RemoveReagent(string reagentId, FixedPoint2 quantity)
         {
             if(quantity <= 0)
-                return 0;
+                return FixedPoint2.Zero;
 
             for (var i = 0; i < Contents.Count; i++)
             {
@@ -201,7 +201,7 @@ namespace Content.Shared.Chemistry.Components
             }
 
             // Reagent is not on the solution...
-            return 0;
+            return FixedPoint2.Zero;
         }
 
         /// <summary>
