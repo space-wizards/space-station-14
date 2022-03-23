@@ -1,0 +1,11 @@
+- type: entity
+  id: StatueVenus
+  parent: BaseStructure
+  name: statue of a pure maiden
+  description: An ancient marble statue. The subject is depicted with a floor-length braid and is wielding a toolbox.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/statues.rsi
+    state: venus
+    drawdepth: Mobs
+    offset: "0.0,0.5"
