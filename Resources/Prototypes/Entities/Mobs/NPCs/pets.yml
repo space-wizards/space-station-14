@@ -387,3 +387,174 @@
   - type: Grammar
     attributes:
       gender: epicene
+
+- type: entity
+  name: bingus
+  parent: SimpleMobBase
+  id: MobBingus
+  description: Bingus my beloved...
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/bingus.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: bingus
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable 
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: bingus
+      crit: bingus_dead
+      dead: bingus_dead
+  - type: Butcherable
+    spawned: FoodMeat
+    pieces: 2
+  - type: InteractionPopup
+    successChance: 0.9 
+    interactSuccessString: petting-success-cat
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+      
+- type: entity
+  name: mcgriff
+  parent: SimpleMobBase
+  id: MobMcGriff
+  description: This dog can tell something smells around here, and that something is CRIME!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/mcgriff.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mcgriff
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable 
+      - SmallImpassable
+      - VaultImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: mcgriff
+      crit: mcgriff_dead
+      dead: mcgriff_dead
+  - type: Butcherable
+    spawned: FoodMeat
+    pieces: 2
+  - type: ReplacementAccent
+    accent: dog
+  - type: InteractionPopup
+    successChance: 0.5 
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+
+- type: entity
+  name: paperwork
+  parent: MobSloth
+  id: MobPaperwork
+  description: Took up a new job sorting books in the library after he got transferred from space station 13. He seems to be just as slow at this.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/paperwork.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: paperwork
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: paperwork
+      crit: paperwork_dead
+      dead: paperwork_dead
+  - type: Butcherable
+    spawned: FoodMeat
+    pieces: 3
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-sloth
+    interactFailureString: petting-failure-sloth
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+      
+- type: entity
+  name: walter
+  parent: SimpleMobBase
+  id: MobWalter
+  description: He likes chems and treats. Walter.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/walter.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: walter
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable 
+      - SmallImpassable
+      - VaultImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: walter
+      crit: walter_dead
+      dead: walter_dead
+  - type: Butcherable
+    spawned: FoodMeat
+    pieces: 3
+  - type: ReplacementAccent
+    accent: dog
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
