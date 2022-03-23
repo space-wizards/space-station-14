@@ -1,3 +1,3 @@
 ent-Emag = cryptographic sequencer
-    .desc = The iconic card of ill omen.
+    .desc = The all-in-one hacking solution. The thinking man's lockpick. The iconic EMAG.
     .suffix = { "" }

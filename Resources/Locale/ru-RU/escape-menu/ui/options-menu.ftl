@@ -12,7 +12,8 @@ ui-options-reset-all = Сбросить всё
 
 ui-options-master-volume = Основная громкость:
 ui-options-midi-volume = MIDI (Инструменты) громкость:
-ui-options-ambient-hum = Окружающий шум
+ui-options-ambience-volume = Громкость окружения:
+ui-options-ambience-max-sounds = Кол-во одновременных звуков окружения:
 ui-options-lobby-music = Музыка в лобби
 ui-options-volume-label = Громкость
 ui-options-volume-percent = { TOSTRING($volume, "P0") }
