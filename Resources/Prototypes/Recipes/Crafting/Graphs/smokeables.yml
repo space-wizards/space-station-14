@@ -90,16 +90,11 @@
       edges:
         - to: ground
           steps:
-            - prototype: LeavesCannabisDried
+            - material: LeavesCannabisDried
+              amount: 2
               icon:
                 sprite: Objects/Specific/Hydroponics/cannabis.rsi
                 state: dried
-              name: dried cannabis leaves
-            - prototype: LeavesCannabisDried
-              icon:
-                sprite: Objects/Specific/Hydroponics/cannabis.rsi
-                state: dried
-              name: dried cannabis leaves
               doAfter: 5
     - node: ground
       entity: GroundCannabis
@@ -112,16 +107,11 @@
       edges:
         - to: ground
           steps:
-          - prototype: LeavesTobaccoDried
+          - material: LeavesTobaccoDried
+            amount: 2
             icon:
               sprite: Objects/Specific/Hydroponics/tobacco.rsi
               state: dried
-            name: dried tobacco leaves
-          - prototype: LeavesTobaccoDried
-            icon:
-              sprite: Objects/Specific/Hydroponics/tobacco.rsi
-              state: dried
-            name: dried tobacco leaves
             doAfter: 5
 
     - node: ground
