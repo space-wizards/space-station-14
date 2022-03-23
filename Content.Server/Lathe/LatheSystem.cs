@@ -11,6 +11,7 @@ using Content.Server.Stack;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
+using Robust.Shared.Audio;
 using JetBrains.Annotations;
 
 namespace Content.Server.Lathe
@@ -161,6 +162,10 @@ namespace Content.Server.Lathe
             }
 
             component.UserInterface?.SendMessage(new LatheProducingRecipeMessage(recipe.ID));
+            if (component.ProducingSound != null)
+            {
+                SoundSystem.Play(Filter.Pvs(component.Owner), component.ProducingSound.GetSound(), component.Owner);
+            }
             UpdateRunningAppearance(component.Owner, true);
             ProducingAddQueue.Enqueue(component.Owner);
             return true;

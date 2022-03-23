@@ -243,6 +243,8 @@
       - DawInstrumentMachineCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
+  - type: Lathe
+    producingSound: /Audio/Machines/circuitprinter.ogg
 
 - type: entity
   parent: Protolathe
@@ -364,3 +366,5 @@
       map: ["enum.LatheVisualLayers.IsRunning"]
   - type: Machine
     board: UniformPrinterMachineCircuitboard
+  - type: Lathe
+    producingSound: /Audio/Machines/uniformprinter.ogg

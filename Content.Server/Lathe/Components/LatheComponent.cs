@@ -1,15 +1,9 @@
-using System.Threading.Tasks;
-using Content.Server.Materials;
-using Content.Server.Power.Components;
-using Content.Server.Research.Components;
-using Content.Server.Stack;
+
 using Content.Server.UserInterface;
-using Content.Shared.Interaction;
 using Content.Shared.Lathe;
 using Content.Shared.Research.Prototypes;
-using Robust.Shared.GameObjects;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
+using Content.Shared.Sound;
 
 namespace Content.Server.Lathe.Components
 {
@@ -33,6 +27,9 @@ namespace Content.Server.Lathe.Components
         public float ProducingAccumulator = 0f;
         [ViewVariables]
         public float? ProductionTime => ProducingRecipe?.CompleteTime / 1000;
+
+        [DataField("producingSound")]
+        public SoundSpecifier? ProducingSound;
 
         [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(LatheUiKey.Key);
     }
