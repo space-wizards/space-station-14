@@ -50,14 +50,6 @@ namespace Content.Server.Lathe
                 RemComp<LatheInsertingComponent>(uid);
             InsertingRemoveQueue.Clear();
 
-            foreach (var comp in EntityManager.EntityQuery<LatheComponent>())
-            {
-                if (!HasComp<LatheProducingComponent>(comp.Owner) && comp.Queue.Count > 0)
-                {
-                    Produce(comp, comp.Queue.Dequeue());
-                }
-            }
-
             foreach (var (insertingComp, lathe) in EntityQuery<LatheInsertingComponent, LatheComponent>(false))
             {
                 if (lathe.InsertionAccumulator < lathe.InsertionTime)
@@ -142,10 +134,13 @@ namespace Content.Server.Lathe
             UpdateInsertingAppearance(uid, true);
         }
 
-        internal bool Produce(LatheComponent component, LatheRecipePrototype recipe)
+        internal bool Produce(LatheComponent component, LatheRecipePrototype recipe, bool SkipCheck = false)
         {
-            if (HasComp<LatheProducingComponent>(component.Owner) || !component.CanProduce(recipe)
+            if (!component.CanProduce(recipe)
                 || !TryComp(component.Owner, out MaterialStorageComponent? storage))
+                return false;
+
+            if (!SkipCheck && HasComp<LatheProducingComponent>(component.Owner))
                 return false;
 
             if (TryComp<ApcPowerReceiverComponent>(component.Owner, out var receiver) && !receiver.Powered)
@@ -176,6 +171,12 @@ namespace Content.Server.Lathe
             component.ProducingRecipe = null;
             EntityManager.SpawnEntity(recipe.Result, Comp<TransformComponent>(component.Owner).Coordinates);
             component.UserInterface?.SendMessage(new LatheStoppedProducingRecipeMessage());
+            // Continue to next in queue if there are items left
+            if (component.Queue.Count > 0)
+            {
+                Produce(component, component.Queue.Dequeue(), true);
+                return;
+            }
             ProducingRemoveQueue.Enqueue(component.Owner);
             UpdateRunningAppearance(component.Owner, false);
         }
@@ -212,6 +213,9 @@ namespace Content.Server.Lathe
                             component.Queue.Enqueue(recipe);
                             component.UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue(component)));
                         }
+                        if (!HasComp<LatheProducingComponent>(component.Owner) && component.Queue.Count > 0)
+                            Produce(component, component.Queue.Dequeue());
+
                     break;
                 case LatheSyncRequestMessage _:
                     if (!HasComp<MaterialStorageComponent>(uid)) return;
