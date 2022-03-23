@@ -14,6 +14,8 @@ namespace Content.Client.MachineLinking.UI
         private SignalPortSelectorBoundUserInterface _bui;
         private LinksRender links;
 
+        private ButtonGroup buttonGroup = new();
+
         public SignalPortSelectorMenu(SignalPortSelectorBoundUserInterface boundUserInterface)
         {
             RobustXamlLoader.Load(this);
@@ -30,7 +32,7 @@ namespace Content.Client.MachineLinking.UI
             ButtonContainerLeft.RemoveAllChildren();
             foreach (var port in state.TransmitterPorts)
             {
-                var portButton = new Button() { Text = port };
+                var portButton = new Button() { Text = port, ToggleMode = true, Group = buttonGroup };
                 portButton.OnPressed += _ => _bui.OnTransmitterPortSelected(port);
                 ButtonContainerLeft.AddChild(portButton);
             }
@@ -39,7 +41,7 @@ namespace Content.Client.MachineLinking.UI
             ButtonContainerRight.RemoveAllChildren();
             foreach (var port in state.ReceiverPorts)
             {
-                var portButton = new Button() { Text = port };
+                var portButton = new Button() { Text = port, ToggleMode = true, Group = buttonGroup };
                 portButton.OnPressed += _ => _bui.OnReceiverPortSelected(port);
                 ButtonContainerRight.AddChild(portButton);
             }
