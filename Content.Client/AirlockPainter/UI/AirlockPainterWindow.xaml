@@ -1,7 +1,6 @@
-<DefaultWindow xmlns="https://spacestation14.io"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            Title="Airlock Painter">
-    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
-        <ItemList Name="SpriteList" />
-    </BoxContainer>
+<DefaultWindow xmlns="https://spacestation14.io">
+    <ItemList Name="SpriteList"
+              SizeFlagsStretchRatio="8"
+              VerticalExpand="True">
+    </ItemList>
 </DefaultWindow>

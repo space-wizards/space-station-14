@@ -18,4 +18,15 @@ namespace Content.Shared.AirlockPainter
       Index = index;
     }
   }
+
+  [Serializable, NetSerializable]
+  public sealed class AirlockPainterBoundUserInterfaceState : BoundUserInterfaceState
+  {
+    public List<string> SpriteList { get; set; } = new();
+
+    public AirlockPainterBoundUserInterfaceState(List<string> spriteList)
+    {
+      this.SpriteList = spriteList;
+    }
+  }
 }

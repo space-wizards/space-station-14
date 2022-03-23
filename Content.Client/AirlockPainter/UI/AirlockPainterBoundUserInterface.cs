@@ -1,6 +1,5 @@
 using Content.Shared.AirlockPainter;
 using Robust.Client.GameObjects;
-using Content.Shared.SharedAirlockPainter;
 
 namespace Content.Client.AirlockPainter.UI
 {
@@ -16,10 +15,7 @@ namespace Content.Client.AirlockPainter.UI
     {
       base.Open();
 
-      if(!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out SharedAirlockPainterComponent? component))
-        return;
-
-      _window = new AirlockPainterWindow(component.SpriteList);
+      _window = new AirlockPainterWindow();
       if (State != null)
         UpdateState(State);
 
@@ -33,6 +29,16 @@ namespace Content.Client.AirlockPainter.UI
     {
       SendMessage(new AirlockPainterSpritePickedMessage(index));
       Close();
+    }
+
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+      Logger.Debug("Updating state");
+      base.UpdateState(state);
+      if (_window == null || state is not AirlockPainterBoundUserInterfaceState cast)
+        return;
+
+      _window.SetSpriteList(cast.SpriteList);
     }
   }
 }

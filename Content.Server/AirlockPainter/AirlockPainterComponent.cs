@@ -1,15 +1,17 @@
 using Content.Shared.Whitelist;
-using Robust.Shared.GameStates;
 
-namespace Content.Shared.SharedAirlockPainter
+namespace Content.Server.AirlockPainter
 {
-    [NetworkedComponent]
-    public abstract class SharedAirlockPainterComponent : Component
+    [RegisterComponent]
+    public sealed class AirlockPainterComponent : Component
     {
         [DataField("spriteList")]
         public List<string> SpriteList = new();
 
         [DataField("whitelist")]
         public EntityWhitelist Whitelist = new();
+
+        [DataField("index")]
+        public int Index = 0;
     }
 }
