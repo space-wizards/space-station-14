@@ -122,7 +122,7 @@ namespace Content.Server.MachineLinking.System
                 return;
             }
 
-            if (TryOpenUI(actor, linker, out var bui))
+            if (TryGetOrOpenUI(actor, linker, out var bui))
             {
                 TryUpdateUI(linker, transmitter, receiver, bui);
                 args.Handled = true;
@@ -148,7 +148,7 @@ namespace Content.Server.MachineLinking.System
                 return;
             }
 
-            if (TryOpenUI(actor, linker, out var bui))
+            if (TryGetOrOpenUI(actor, linker, out var bui))
             {
                 TryUpdateUI(linker, transmitter, receiver, bui);
                 args.Handled = true;
@@ -156,10 +156,13 @@ namespace Content.Server.MachineLinking.System
             }
         }
 
-        private bool TryOpenUI(ActorComponent actor, SignalLinkerComponent linker, [NotNullWhen(true)] out BoundUserInterface? bui)
+        private bool TryGetOrOpenUI(ActorComponent actor, SignalLinkerComponent linker, [NotNullWhen(true)] out BoundUserInterface? bui)
         {
             if (_userInterfaceSystem.TryGetUi(linker.Owner, SignalLinkerUiKey.Key, out bui))
-                return bui.Open(actor.PlayerSession);
+            {   
+                bui.Open(actor.PlayerSession);
+                return true;
+            }
             return false;
         }
 
