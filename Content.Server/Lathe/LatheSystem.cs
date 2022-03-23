@@ -3,13 +3,15 @@ using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Server.Research.Components;
-using JetBrains.Annotations;
 using Content.Shared.Interaction;
 using Content.Server.Materials;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Player;
+using JetBrains.Annotations;
 
 namespace Content.Server.Lathe
 {
@@ -17,6 +19,8 @@ namespace Content.Server.Lathe
     public sealed class LatheSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -128,6 +132,8 @@ namespace Content.Server.Lathe
 
             EntityManager.QueueDeleteEntity(args.Used);
             InsertingAddQueue.Enqueue(uid);
+            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
+                ("item", args.Used)), uid, Filter.Entities(args.User));
             if (matProto != null)
             {
                 UpdateInsertingAppearance(uid, true, matProto.Color);
