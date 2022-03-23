@@ -411,7 +411,7 @@
   parent: ClothingHeadBase
   id: ClothingSprokeHat
   name: sproke hat
-  description: dev
+  description: The peak of hyrdative headwear, able to keep your favorite beverages at the tip of your tongue and the top of your head.
   components:
   - type: Clickable
   - type: Sprite
