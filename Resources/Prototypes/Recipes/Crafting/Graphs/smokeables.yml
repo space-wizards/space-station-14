@@ -92,9 +92,6 @@
           steps:
             - material: LeavesCannabisDried
               amount: 2
-              icon:
-                sprite: Objects/Specific/Hydroponics/cannabis.rsi
-                state: dried
               doAfter: 5
     - node: ground
       entity: GroundCannabis
@@ -109,9 +106,6 @@
           steps:
           - material: LeavesTobaccoDried
             amount: 2
-            icon:
-              sprite: Objects/Specific/Hydroponics/tobacco.rsi
-              state: dried
             doAfter: 5
 
     - node: ground
