@@ -98,3 +98,42 @@
   - type: ConditionalSpawner
     prototypes:
       - MobFoxRenault
+
+- type: entity
+  name:  McGriff Spawner
+  id: SpawnMobMcGriff
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobMcGriff
+      
+- type: entity
+  name: Sloth Paperwork Spawner
+  id: SpawnMobSlothPaperwork
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobPaperwork
+      
+- type: entity
+  name: Walter Spawner
+  id: SpawnMobWalter
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobWalter
