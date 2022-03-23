@@ -29,7 +29,7 @@ namespace Content.Client.MachineLinking.UI
         public void UpdateState(SignalPortsState state)
         {
             HeaderLeft.SetMessage(state.TransmitterName);
-            ButtonContainerLeft.RemoveAllChildren();
+            ButtonContainerLeft.DisposeAllChildren();
             foreach (var port in state.TransmitterPorts)
             {
                 var portButton = new Button() { Text = port, ToggleMode = true, Group = buttonGroup };
@@ -38,7 +38,7 @@ namespace Content.Client.MachineLinking.UI
             }
 
             HeaderRight.SetMessage(state.ReceiverName);
-            ButtonContainerRight.RemoveAllChildren();
+            ButtonContainerRight.DisposeAllChildren();
             foreach (var port in state.ReceiverPorts)
             {
                 var portButton = new Button() { Text = port, ToggleMode = true, Group = buttonGroup };
