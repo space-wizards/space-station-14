@@ -1,27 +1,8 @@
-using System;
-using System.Threading.Tasks;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.UserInterface;
-using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Popups;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Movement.EntitySystems;
-using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
-using Content.Shared.Clothing;
 using Content.Shared.Toggleable;
 
 namespace Content.Server.Clothing.Components
