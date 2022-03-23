@@ -25,6 +25,7 @@ namespace Content.Server.Disease
         /// <summary>
         [DataField("snoughSound")]
         public SoundSpecifier? SnoughSound;
+        /// <summary>
         /// Whether to spread the disease through the air
         /// </summary>
         [DataField("airTransmit")]
