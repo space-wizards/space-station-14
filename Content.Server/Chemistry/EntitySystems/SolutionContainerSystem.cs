@@ -304,11 +304,10 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         var removedSolution = new Solution();
 
-        // We have to make a clone of contents as the original list might change...
-        var contents = solution.Contents.ToArray();
-        for (var i = 0; i < contents.Length; i++)
+        // RemoveReagent does a RemoveSwap, meaning we don't have to copy the list if we iterate it backwards.
+        for (var i = solution.Contents.Count-1; i >= 0; i--)
         {
-            var (reagentId, _) = contents[i];
+            var (reagentId, _) = solution.Contents[i];
 
             var removedQuantity = solution.RemoveReagent(reagentId, quantity);
 
