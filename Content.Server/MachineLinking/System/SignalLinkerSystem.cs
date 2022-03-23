@@ -316,13 +316,13 @@ namespace Content.Server.MachineLinking.System
 
         private bool IsInRange(SignalTransmitterComponent transmitterComponent, SignalReceiverComponent receiverComponent)
         {
-            if (TryComp(transmitterComponent.Owner, out ApcPowerReceiverComponent? transmitterPowerReceiverComponent) &&
-                TryComp(receiverComponent.Owner, out ApcPowerReceiverComponent? receiverPowerReceiverComponent)
-                ) // TODO && are they on the same powernet?
+            if (TryComp(transmitterComponent.Owner, out ApcPowerReceiverComponent? transmitterPower) &&
+                TryComp(receiverComponent.Owner, out ApcPowerReceiverComponent? receiverPower) &&
+                transmitterPower.Provider?.Net == receiverPower.Provider?.Net)
                 return true;
 
             return Comp<TransformComponent>(transmitterComponent.Owner).MapPosition.InRange(
-                   Comp<TransformComponent>(receiverComponent.Owner).MapPosition, 30f); // TODO should this be a constant?
+                   Comp<TransformComponent>(receiverComponent.Owner).MapPosition, transmitterComponent.TransmissionRange);
         }
     }
 }

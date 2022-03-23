@@ -26,15 +26,23 @@ namespace Content.Server.MachineLinking.Components
     [RegisterComponent]
     public sealed class SignalTransmitterComponent : Component
     {
+        /// <summary>
+        ///     How far the device can transmit a signal wirelessly.
+        ///     Devices farther than this range can still transmit if they are
+        ///     on the same powernet.
+        /// </summary>
+        [DataField("transmissionRange")]
+        public float TransmissionRange = 30f;
+
         [DataField("outputs")]
         private Dictionary<string, List<PortIdentifier>> _outputs = new();
+
+        [ViewVariables]
+        public IReadOnlyDictionary<string, List<PortIdentifier>> Outputs => _outputs;
 
         public void AddPort(string name)
         {
             _outputs.Add(name, new());
         }
-
-        [ViewVariables]
-        public IReadOnlyDictionary<string, List<PortIdentifier>> Outputs => _outputs;
     }
 }
