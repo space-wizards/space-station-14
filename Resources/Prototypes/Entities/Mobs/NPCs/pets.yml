@@ -226,6 +226,16 @@
       gender: epicene
 
 - type: entity
+  name: Runtime
+  parent: MobCat
+  id: MobCatRuntime
+  description: Professional mouse hunter. Escape artist.
+  components:
+  - type: Grammar
+    attributes:
+      gender: female
+
+- type: entity
   name: calico cat
   id: MobCatCalico
   parent: MobCat
@@ -246,6 +256,16 @@
   - type: Grammar
     attributes:
       gender: epicene
+
+- type: entity
+  name: Exception
+  id: MobCatException
+  parent: MobCat
+  description: Ask nicely, and maybe they'll give you one of their spare lives.
+  components:
+  - type: Grammar
+    attributes:
+      gender: male
 
 - type: entity
   name: space cat
@@ -296,6 +316,16 @@
   - type: Grammar
     attributes:
       gender: epicene
+
+- type: entity
+  name: Floppa
+  id: MobCatFloppa
+  parent: MobCat
+  description: He out here.
+  components:
+  - type: Grammar
+    attributes:
+      gender: male
 
 - type: entity
   name: sloth
@@ -387,6 +417,16 @@
   - type: Grammar
     attributes:
       gender: epicene
+
+- type: entity
+  name: Bandito
+  parent: MobFerret
+  id: MobBandito
+  description: Just a silly little guy!
+  components:
+  - type: Grammar
+    attributes:
+      gender: male
 
 - type: entity
   name: bingus
