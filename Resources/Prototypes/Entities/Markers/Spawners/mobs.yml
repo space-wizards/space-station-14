@@ -112,7 +112,7 @@
     prototypes:
       - MobCatRuntime
       
-  - type: entity
+- type: entity
   name: Exception Spawner
   id: SpawnMobCatException
   parent: MarkerBase
@@ -152,19 +152,6 @@
       - MobCat
       - MobCatCalico
       - MobCatCaracal
-
-- type: entity
-  name: Paperwork Spawner
-  id: SpawnMobPaperwork
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: green
-      - state: ai
-  - type: ConditionalSpawner
-    prototypes:
-      - MobPaperwork
 
 - type: entity
   name: Bandito Spawner

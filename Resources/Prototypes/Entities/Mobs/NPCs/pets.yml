@@ -420,16 +420,6 @@
       gender: epicene
 
 - type: entity
-  name: Paperwork
-  parent: MobSloth
-  id: MobPaperwork
-  description: Very slow animal. For people with low energy.
-  components:
-  - type: Grammar
-    attributes:
-      gender: male
-
-- type: entity
   name: Bandito
   parent: MobFerret
   id: MobBandito
