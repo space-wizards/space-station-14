@@ -28,8 +28,8 @@ public sealed partial class GunSystem
         if (args.Hands == null ||
             !args.CanAccess ||
             !args.CanInteract ||
-            !component.HasMagazine ||
-            !_blocker.CanPickup(args.User))
+            component.MagazineContainer.ContainedEntity is not EntityUid mag ||
+            !_blocker.CanPickup(args.User, mag))
             return;
 
         if (component.MagNeedsOpenBolt && !component.BoltOpen)
@@ -37,7 +37,7 @@ public sealed partial class GunSystem
 
         AlternativeVerb verb = new()
         {
-            Text = MetaData(component.MagazineContainer.ContainedEntity!.Value).EntityName,
+            Text = MetaData(mag).EntityName,
             Category = VerbCategory.Eject,
             Act = () => RemoveMagazine(args.User, component)
         };
@@ -325,10 +325,7 @@ public sealed partial class GunSystem
         component.MagazineContainer.Remove(mag.Value);
         SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundMagEject.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2));
 
-        if (TryComp(user, out HandsComponent? handsComponent))
-        {
-            handsComponent.PutInHandOrDrop(EntityManager.GetComponent<SharedItemComponent>(mag.Value));
-        }
+        _handsSystem.PickupOrDrop(user, mag.Value);
 
         component.Dirty(EntityManager);
         UpdateMagazineAppearance(component);

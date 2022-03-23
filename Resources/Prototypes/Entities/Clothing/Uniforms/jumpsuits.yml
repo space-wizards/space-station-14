@@ -712,3 +712,37 @@
     sprite: Clothing/Uniforms/Jumpsuit/nanotrasen.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/nanotrasen.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCapFormal
+  name: captain's formal suit
+  description: A suit for special occasions.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/capformal.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/capformal.rsi
+    
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCentcomFormal
+  name: central command formal suit
+  description: A suit for special occasions.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/centcomformal.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/centcomformal.rsi 
+    
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHosFormal
+  name: hos's formal suit
+  description: A suit for special occasions.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hosformal.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hosformal.rsi 
+     

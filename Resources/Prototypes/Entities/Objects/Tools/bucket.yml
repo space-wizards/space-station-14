@@ -16,7 +16,6 @@
     sprite: Objects/Tools/bucket.rsi
     Slots:
     - HEAD
-  - type: Bucket
   - type: SolutionContainerManager
     solutions:
       bucket:

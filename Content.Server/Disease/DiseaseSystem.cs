@@ -15,6 +15,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Content.Shared.Inventory.Events;
 using Content.Server.Nutrition.EntitySystems;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Disease
 {
@@ -43,7 +44,7 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<DiseaseVaccineComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<DiseaseVaccineComponent, ExaminedEvent>(OnExamined);
-            /// Private events stuff
+            // Private events stuff
             SubscribeLocalEvent<TargetVaxxSuccessfulEvent>(OnTargetVaxxSuccessful);
             SubscribeLocalEvent<VaxxCancelledEvent>(OnVaxxCancelled);
         }
@@ -60,7 +61,10 @@ namespace Content.Server.Disease
         {
             base.Update(frameTime);
             foreach (var entity in AddQueue)
+            {
                 EnsureComp<DiseasedComponent>(entity);
+            }
+
             AddQueue.Clear();
 
             foreach (var tuple in CureQueue)
@@ -72,16 +76,19 @@ namespace Content.Server.Disease
             }
             CureQueue.Clear();
 
-            foreach (var (diseasedComp, carrierComp, mobState) in EntityQuery<DiseasedComponent, DiseaseCarrierComponent, MobStateComponent>(false))
+            foreach (var (_, carrierComp, mobState) in EntityQuery<DiseasedComponent, DiseaseCarrierComponent, MobStateComponent>())
             {
+                DebugTools.Assert(carrierComp.Diseases.Count > 0);
+
                 if (mobState.IsDead())
                 {
                     if (_random.Prob(0.005f * frameTime)) //Mean time to remove is 200 seconds per disease
                         CureDisease(carrierComp, _random.Pick(carrierComp.Diseases));
+
                     continue;
                 }
 
-                foreach(var disease in carrierComp.Diseases)
+                foreach (var disease in carrierComp.Diseases)
                 {
                     var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
                     disease.Accumulator += frameTime;
@@ -139,16 +146,16 @@ namespace Content.Server.Disease
         /// </summary>
         private void OnEquipped(EntityUid uid, DiseaseProtectionComponent component, GotEquippedEvent args)
         {
-            /// This only works on clothing
+            // This only works on clothing
             if (!TryComp<ClothingComponent>(uid, out var clothing))
                 return;
-            /// Is the clothing in its actual slot?
+            // Is the clothing in its actual slot?
             if (!clothing.SlotFlags.HasFlag(args.SlotFlags))
                 return;
-            /// Give the user the component's disease resist
+            // Give the user the component's disease resist
             if(TryComp<DiseaseCarrierComponent>(args.Equipee, out var carrier))
                 carrier.DiseaseResist += component.Protection;
-            /// Set the component to active to the unequip check isn't CBT
+            // Set the component to active to the unequip check isn't CBT
             component.IsActive = true;
         }
 
@@ -159,7 +166,7 @@ namespace Content.Server.Disease
         /// </summary>
         private void OnUnequipped(EntityUid uid, DiseaseProtectionComponent component, GotUnequippedEvent args)
         {
-            /// Only undo the resistance if it was affecting the user
+            // Only undo the resistance if it was affecting the user
             if (!component.IsActive)
                 return;
             if(TryComp<DiseaseCarrierComponent>(args.Equipee, out var carrier))
@@ -282,12 +289,9 @@ namespace Content.Server.Disease
         /// to not be guaranteed you are looking
         /// for TryInfect.
         /// </summary>
-        public void TryAddDisease(DiseaseCarrierComponent? target, DiseasePrototype? addedDisease, string? diseaseName = null, EntityUid? host = null)
+        public void TryAddDisease(EntityUid host, DiseasePrototype addedDisease, DiseaseCarrierComponent? target = null)
         {
-            if (diseaseName != null && _prototypeManager.TryIndex(diseaseName, out DiseasePrototype? diseaseProto))
-                addedDisease = diseaseProto;
-
-            if (!TryComp(host, out target))
+            if (!Resolve(host, ref target, false))
                 return;
 
             foreach (var disease in target.AllDiseases)
@@ -295,9 +299,21 @@ namespace Content.Server.Disease
                 if (disease.ID == addedDisease?.ID) //ID because of the way protoypes work
                     return;
             }
-            var freshDisease = _serializationManager.CreateCopy(addedDisease) ?? default!;
+
+            var freshDisease = _serializationManager.CreateCopy(addedDisease);
+
+            if (freshDisease == null) return;
+
             target.Diseases.Add(freshDisease);
             AddQueue.Enqueue(target.Owner);
+        }
+
+        public void TryAddDisease(EntityUid host, string? addedDisease, DiseaseCarrierComponent? target = null)
+        {
+            if (addedDisease == null || !_prototypeManager.TryIndex<DiseasePrototype>(addedDisease, out var added))
+                return;
+
+            TryAddDisease(host, added, target);
         }
 
         /// <summary>
@@ -314,7 +330,7 @@ namespace Content.Server.Disease
             if (infectionChance <= 0)
                 return;
             if (_random.Prob(infectionChance))
-                TryAddDisease(carrier, disease);
+                TryAddDisease(carrier.Owner, disease, carrier);
         }
 
         /// <summary>

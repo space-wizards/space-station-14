@@ -14,6 +14,7 @@ namespace Content.Server.Medical
 {
     public sealed class HealthAnalyzerSystem : EntitySystem
     {
+        [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
@@ -68,13 +69,13 @@ namespace Content.Server.Medical
         {
             args.Component.CancelToken = null;
             UpdateScannedUser(args.Component.Owner, args.User, args.Target, args.Component);
-            /// Below is for the traitor item
-            /// Piggybacking off another component's doafter is complete CBT so I gave up
-            /// and put it on the same component
-            if (!args.Component.Fake || args.Component.Disease == string.Empty || args.Target == null)
+            // Below is for the traitor item
+            // Piggybacking off another component's doafter is complete CBT so I gave up
+            // and put it on the same component
+            if (string.IsNullOrEmpty(args.Component.Disease) || args.Target == null)
                 return;
 
-            EntitySystem.Get<DiseaseSystem>().TryAddDisease(null, null, args.Component.Disease, args.Target.Value);
+            _disease.TryAddDisease(args.Target.Value, args.Component.Disease);
 
             if (args.User == args.Target)
             {

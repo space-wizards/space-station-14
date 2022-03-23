@@ -351,7 +351,6 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/ferret.rsi
-    scale: 0.7, 0.7
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ferret

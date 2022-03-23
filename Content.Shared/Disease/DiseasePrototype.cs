@@ -1,11 +1,12 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-/// <summary>
-/// Diseases encompass everything from viruses to cancers to heart disease.
-/// It's not just a virology thing.
-/// </summary>
+
 namespace Content.Shared.Disease
 {
+    /// <summary>
+    /// Diseases encompass everything from viruses to cancers to heart disease.
+    /// It's not just a virology thing.
+    /// </summary>
     [Prototype("disease")]
     [DataDefinition]
     public sealed class DiseasePrototype : IPrototype, IInheritingPrototype
