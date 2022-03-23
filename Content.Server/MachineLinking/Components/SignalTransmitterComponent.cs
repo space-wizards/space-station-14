@@ -15,6 +15,12 @@ namespace Content.Server.MachineLinking.Components
 
         [DataField("port")]
         public string Port;
+
+        public PortIdentifier(EntityUid uid, string port)
+        {
+            Uid = uid;
+            Port = port;
+        }
     }
 
     [RegisterComponent]
