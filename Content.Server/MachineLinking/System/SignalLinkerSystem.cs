@@ -57,51 +57,59 @@ namespace Content.Server.MachineLinking.System
         private void OnTransmitterStartup(EntityUid uid, SignalTransmitterComponent transmitter, ComponentStartup args)
         {
             // validate links
-            foreach (var g in transmitter.Outputs.SelectMany(x => x.Value.Select(r => (x.Key, r.Uid, r.Port))).GroupBy(r => r.Uid))
-                if (TryComp(g.Key, out SignalReceiverComponent? receiver))
-                    foreach (var rp in g.GroupBy(r => r.Port))
-                        if (!receiver.Inputs.TryGetValue(rp.Key, out var rpv))
-                            foreach (var tp in rp)
-                                transmitter.Outputs[tp.Key].Remove(new(g.Key, rp.Key));
-                        else
-                            rpv.AddRange(rp.Select(x => new PortIdentifier(uid, x.Key)).Except(rpv));
-                else
-                    foreach (var tp in g.DistinctBy(x => x.Key))
-                        transmitter.Outputs[tp.Key].RemoveAll(tpi => tpi.Uid == g.Key);
+            Dictionary<EntityUid, SignalReceiverComponent?> uidCache = new();
+            foreach (var tport in transmitter.Outputs)
+                foreach (var rport in tport.Value)
+                {
+                    if (!uidCache.TryGetValue(rport.Uid, out var receiver))
+                        uidCache.Add(rport.Uid, receiver = CompOrNull<SignalReceiverComponent>(rport.Uid));
+                    if (receiver == null || !receiver.Inputs.TryGetValue(rport.Port, out var rpv))
+                        tport.Value.Remove(rport);
+                    else if (!rpv.Contains(new(uid, tport.Key)))
+                        rpv.Add(new(uid, tport.Key));
+                }
         }
 
         private void OnReceiverStartup(EntityUid uid, SignalReceiverComponent receiver, ComponentStartup args)
         {
             // validate links
-            foreach (var g in receiver.Inputs.SelectMany(x => x.Value.Select(t => (x.Key, t.Uid, t.Port))).GroupBy(t => t.Uid))
-                if (TryComp(g.Key, out SignalTransmitterComponent? transmitter))
-                    foreach (var tp in g.GroupBy(t => t.Port))
-                        if (!transmitter.Outputs.TryGetValue(tp.Key, out var tpv))
-                            foreach (var rp in tp)
-                                receiver.Inputs[rp.Key].Remove(new(g.Key, tp.Key));
-                        else
-                            tpv.AddRange(tp.Select(x => new PortIdentifier(uid, x.Key)).Except(tpv));
-                else
-                    foreach (var rp in g.DistinctBy(x => x.Key))
-                        receiver.Inputs[rp.Key].RemoveAll(rpi => rpi.Uid == g.Key);
+            Dictionary<EntityUid, SignalTransmitterComponent?> uidCache = new();
+            foreach (var rport in receiver.Inputs)
+                foreach (var tport in rport.Value)
+                {
+                    if (!uidCache.TryGetValue(tport.Uid, out var transmitter))
+                        uidCache.Add(tport.Uid, transmitter = CompOrNull<SignalTransmitterComponent>(tport.Uid));
+                    if (transmitter == null || !transmitter.Outputs.TryGetValue(tport.Port, out var tpv))
+                        rport.Value.Remove(tport);
+                    else if (!tpv.Contains(new(uid, rport.Key)))
+                        tpv.Add(new(uid, rport.Key));
+                }
         }
 
-        private void OnTransmitterRemoved(EntityUid uid, SignalTransmitterComponent component, ComponentRemove args)
+        private void OnTransmitterRemoved(EntityUid uid, SignalTransmitterComponent transmitter, ComponentRemove args)
         {
-            foreach (var (transmitterPort, receivers) in component.Outputs)
-                foreach (var receiver in receivers)
-                    if (TryComp(receiver.Uid, out SignalReceiverComponent? receiverComponent) &&
-                        receiverComponent.Inputs.TryGetValue(receiver.Port, out var transmitters))
-                        transmitters.Remove(new(uid, transmitterPort));
+            Dictionary<EntityUid, SignalReceiverComponent?> uidCache = new();
+            foreach (var tport in transmitter.Outputs)
+                foreach (var rport in tport.Value)
+                {
+                    if (!uidCache.TryGetValue(rport.Uid, out var receiver))
+                        uidCache.Add(rport.Uid, receiver = CompOrNull<SignalReceiverComponent>(rport.Uid));
+                    if (receiver != null && receiver.Inputs.TryGetValue(rport.Port, out var rpv))
+                        rpv.Remove(new(uid, tport.Key));
+                }
         }
 
         private void OnReceiverRemoved(EntityUid uid, SignalReceiverComponent component, ComponentRemove args)
         {
-            foreach (var (receiverPort, transmitters) in component.Inputs)
-                foreach (var transmitter in transmitters)
-                    if (TryComp(transmitter.Uid, out SignalTransmitterComponent? transmitterComponent) &&
-                        transmitterComponent.Outputs.TryGetValue(transmitter.Port, out var receivers))
-                        receivers.Remove(new(uid, receiverPort));
+            Dictionary<EntityUid, SignalTransmitterComponent?> uidCache = new();
+            foreach (var rport in component.Inputs)
+                foreach (var tport in rport.Value)
+                {
+                    if (!uidCache.TryGetValue(tport.Uid, out var transmitter))
+                        uidCache.Add(tport.Uid, transmitter = CompOrNull<SignalTransmitterComponent>(tport.Uid));
+                    if (transmitter != null && transmitter.Outputs.TryGetValue(tport.Port, out var receivers))
+                        receivers.Remove(new(uid, rport.Key));
+                }
         }
 
         private void OnTransmitterInteractUsing(EntityUid uid, SignalTransmitterComponent transmitter, InteractUsingEvent args)
@@ -159,7 +167,7 @@ namespace Content.Server.MachineLinking.System
         private bool TryGetOrOpenUI(ActorComponent actor, SignalLinkerComponent linker, [NotNullWhen(true)] out BoundUserInterface? bui)
         {
             if (_userInterfaceSystem.TryGetUi(linker.Owner, SignalLinkerUiKey.Key, out bui))
-            {   
+            {
                 bui.Open(actor.PlayerSession);
                 return true;
             }
@@ -173,10 +181,9 @@ namespace Content.Server.MachineLinking.System
 
             var outKeys = transmitter.Outputs.Keys.ToList();
             var inKeys = receiver.Inputs.Keys.ToList();
-            // TODO this could probably be rewritten nicely with linq
             List<(int, int)> links = new();
-            foreach (var (ok, i) in outKeys.Select((s, i) => (s, i)))
-                foreach (var re in transmitter.Outputs[ok])
+            for (int i = 0; i < outKeys.Count; i++)
+                foreach (var re in transmitter.Outputs[outKeys[i]])
                     if (re.Uid == receiver.Owner)
                         links.Add((i, inKeys.IndexOf(re.Port)));
 
