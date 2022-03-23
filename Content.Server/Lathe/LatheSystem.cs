@@ -77,6 +77,10 @@ namespace Content.Server.Lathe
             }
         }
 
+        /// <summary>
+        /// Initialize the UI and appearance.
+        /// Appearance requires initialization or the layers break
+        /// </summary>
         private void OnComponentInit(EntityUid uid, LatheComponent component, ComponentInit args)
         {
             if (component.UserInterface != null)
@@ -90,6 +94,10 @@ namespace Content.Server.Lathe
             appearance.SetData(LatheVisuals.IsRunning, false);
         }
 
+        /// <summary>
+        /// When someone tries to use an item on the lathe,
+        /// insert it if it's a stack and fits inside
+        /// </summary>
         private void OnInteractUsing(EntityUid uid, LatheComponent component, InteractUsingEvent args)
         {
             if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Used, out var material))
@@ -120,7 +128,7 @@ namespace Content.Server.Lathe
                 storage.InsertMaterial(mat, component.VolumePerSheet * multiplier);
                 lastMat = mat;
             }
-
+            /// We need the prototype to get the color
             _prototypeManager.TryIndex(lastMat, out MaterialPrototype? matProto);
 
             EntityManager.QueueDeleteEntity(args.Used);
@@ -134,7 +142,11 @@ namespace Content.Server.Lathe
             UpdateInsertingAppearance(uid, true);
         }
 
-        internal bool Produce(LatheComponent component, LatheRecipePrototype recipe, bool SkipCheck = false)
+        /// <summary>
+        /// This handles the checks to start producing an item, and
+        /// starts up the sound and visuals
+        /// </summary>
+        private bool Produce(LatheComponent component, LatheRecipePrototype recipe, bool SkipCheck = false)
         {
             if (!component.CanProduce(recipe)
                 || !TryComp(component.Owner, out MaterialStorageComponent? storage))
@@ -166,6 +178,10 @@ namespace Content.Server.Lathe
             return true;
         }
 
+        /// <summary>
+        /// After the production timer is up, this spawns the recipe and
+        /// either cleans up or continues to the next item in the queue
+        /// </summary>
         private void FinishProducing(LatheRecipePrototype recipe, LatheComponent component)
         {
             component.ProducingRecipe = null;
@@ -181,6 +197,10 @@ namespace Content.Server.Lathe
             UpdateRunningAppearance(component.Owner, false);
         }
 
+        /// <summary>
+        /// Sets the machine sprite to either play the running animation
+        /// or stop.
+        /// </summary>
         private void UpdateRunningAppearance(EntityUid uid, bool isRunning)
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
@@ -189,6 +209,10 @@ namespace Content.Server.Lathe
             appearance.SetData(LatheVisuals.IsRunning, isRunning);
         }
 
+        /// <summary>
+        /// Sets the machine sprite to play the inserting animation
+        /// and sets the color of the inserted mat if applicable
+        /// </summary>
         private void UpdateInsertingAppearance(EntityUid uid, bool isInserting, Color? color = null)
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
@@ -198,6 +222,10 @@ namespace Content.Server.Lathe
             if (color != null)
                 appearance.SetData(LatheVisuals.InsertingColor, color);
         }
+
+        /// <summary>
+        /// Handles all the button presses in the lathe UI
+        /// </summary>
         private void UserInterfaceOnOnReceiveMessage(EntityUid uid, LatheComponent component, ServerBoundUserInterfaceMessage message)
         {
             if (TryComp<ApcPowerReceiverComponent>(uid, out var receiver) && !receiver.Powered)
@@ -239,6 +267,10 @@ namespace Content.Server.Lathe
                     break;
             }
         }
+
+        /// <summary>
+        /// Gets all the prototypes in the lathe's construction queue
+        /// </summary>
         private Queue<string> GetIdQueue(LatheComponent lathe)
         {
             var queue = new Queue<string>();
