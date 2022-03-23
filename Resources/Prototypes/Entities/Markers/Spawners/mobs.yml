@@ -83,10 +83,6 @@
       - MobFoxRenault
 
 - type: entity
-  name:  McGriff Spawner
-  id: SpawnMobMcGriff
-
-- type: entity
   name: Runtime Spawner
   id: SpawnMobCatRuntime
   parent: MarkerBase
