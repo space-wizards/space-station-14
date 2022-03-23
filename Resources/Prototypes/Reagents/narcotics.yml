@@ -125,11 +125,12 @@
   physicalDesc: syrupy
   color: "#63806e"
 
+# Probably replace this one with sleeping chem when putting someone in a comatose state is easier
 - type: reagent
   id: Nocturine
   name: nocturine
   group: Narcotics
-  desc: Makes you feel very tired and unable to stand up.
+  desc: Makes you feel very tired and unable to stand up. Basically, it's bone hurting juice.
   physicalDesc: powdery
   color: "#128e80"
   boilingPoint: 444.0
@@ -145,9 +146,9 @@
           types:
             Poison: 1
       - !type:Paralyze
-        paralyzeTime: 2
+        paralyzeTime: 1.2
         refresh: false
       - !type:GenericStatusEffect
         key: Stutter
-        time: 5
+        time: 1
         component: StutteringAccent

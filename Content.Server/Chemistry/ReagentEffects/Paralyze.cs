@@ -11,7 +11,7 @@ namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed class Paralyze : ReagentEffect
 {
-    [DataField("paralyzeTime")] public int ParalyzeTime = 2;
+    [DataField("paralyzeTime")] public double ParalyzeTime = 2;
 
     /// <remarks>
     ///     true - refresh paralyze time,  false - accumulate paralyze time
