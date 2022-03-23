@@ -1,6 +1,8 @@
 - type: entity
   parent: Airlock
   id: AirlockFreezer
+  tags:
+    - PaintableAirlock
   suffix: Freezer
   components:
   - type: Sprite
@@ -9,6 +11,8 @@
 - type: entity
   parent: Airlock
   id: AirlockEngineering
+  tags:
+    - PaintableAirlock
   suffix: Engineering
   components:
   - type: Sprite
@@ -17,6 +21,8 @@
 - type: entity
   parent: Airlock
   id: AirlockCargo
+  tags:
+    - PaintableAirlock
   suffix: Cargo
   components:
   - type: Sprite
@@ -25,6 +31,8 @@
 - type: entity
   parent: Airlock
   id: AirlockMedical
+  tags:
+    - PaintableAirlock
   suffix: Medical
   components:
   - type: Sprite
@@ -33,6 +41,8 @@
 - type: entity
   parent: Airlock
   id: AirlockChemistry
+  tags:
+    - PaintableAirlock
   suffix: Chemistry
   components:
   - type: Sprite
@@ -41,6 +51,8 @@
 - type: entity
   parent: Airlock
   id: AirlockScience
+  tags:
+    - PaintableAirlock
   suffix: Science
   components:
   - type: Sprite
@@ -49,6 +61,8 @@
 - type: entity
   parent: Airlock
   id: AirlockCommand
+  tags:
+    - PaintableAirlock
   suffix: Command
   components:
   - type: Sprite
@@ -57,6 +71,8 @@
 - type: entity
   parent: Airlock
   id: AirlockSecurity
+  tags:
+    - PaintableAirlock
   suffix: Security
   components:
   - type: Sprite
@@ -65,6 +81,8 @@
 - type: entity
   parent: Airlock
   id: AirlockMaint
+  tags:
+    - PaintableAirlock
   name: maintenance hatch
   components:
   - type: Sprite
