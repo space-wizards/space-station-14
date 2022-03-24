@@ -11,6 +11,9 @@
       context: "human"
     - type: PlayerMobMover
     - type: PlayerInputMover
+    - type: Vocal
+      maleScream: /Audio/Voice/Reptilian/reptilian_scream.ogg
+      femaleScream: /Audio/Voice/Reptilian/reptilian_scream.ogg
     - type: Alerts
     - type: Eye
     - type: CameraRecoil
