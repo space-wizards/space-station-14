@@ -3,7 +3,6 @@ using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
-using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
@@ -15,22 +14,9 @@ namespace Content.Server.Decals
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private readonly Dictionary<GridId, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<IPlayerSession, Dictionary<GridId, HashSet<Vector2i>>> _previousSentChunks = new();
-
-        // If this ever gets parallelised then you'll want to increase the pooled count.
-        private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
-            new DefaultObjectPool<HashSet<Vector2i>>(
-                new DefaultPooledObjectPolicy<HashSet<Vector2i>>(), 64);
-
-        private ObjectPool<Dictionary<GridId, HashSet<Vector2i>>> _chunkViewerPool =
-            new DefaultObjectPool<Dictionary<GridId, HashSet<Vector2i>>>(
-                new DefaultPooledObjectPolicy<Dictionary<GridId, HashSet<Vector2i>>>(), 64);
-
-        // Pool if we ever parallelise.
-        private HashSet<EntityUid> _viewers = new(64);
 
         public override void Initialize()
         {
@@ -313,15 +299,14 @@ namespace Content.Server.Decals
 
             foreach (var session in Filter.GetAllPlayers(_playerManager))
             {
-                if (session is not IPlayerSession { Status: SessionStatus.InGame } playerSession)
+                if(session is not IPlayerSession playerSession || playerSession.Status != SessionStatus.InGame)
                     continue;
 
                 var chunks = GetChunksForSession(playerSession);
-                var updatedChunks = _chunkViewerPool.Get();
+                var updatedChunks = new Dictionary<GridId, HashSet<Vector2i>>();
                 foreach (var (gridId, gridChunks) in chunks)
                 {
-                    var newChunks = _chunkIndexPool.Get();
-                    newChunks.UnionWith(gridChunks);
+                    var newChunks = new HashSet<Vector2i>(gridChunks);
                     if (_previousSentChunks[playerSession].TryGetValue(gridId, out var previousChunks))
                     {
                         newChunks.ExceptWith(previousChunks);
@@ -339,15 +324,9 @@ namespace Content.Server.Decals
                     updatedChunks[gridId] = newChunks;
                 }
 
-                if (updatedChunks.Count == 0)
-                {
-                    ReturnToPool(chunks);
-                    // Even if updatedChunks is empty we'll still return it to the pool as it may have been allocated higher.
-                    ReturnToPool(updatedChunks);
+                if(updatedChunks.Count == 0)
                     continue;
-                }
 
-                ReturnToPool(_previousSentChunks[playerSession]);
                 _previousSentChunks[playerSession] = chunks;
 
                 //send all gridChunks to client
@@ -355,16 +334,6 @@ namespace Content.Server.Decals
             }
 
             _dirtyChunks.Clear();
-        }
-
-        private void ReturnToPool(Dictionary<GridId, HashSet<Vector2i>> chunks)
-        {
-            foreach (var (_, previous) in chunks)
-            {
-                _chunkIndexPool.Return(previous);
-            }
-
-            _chunkViewerPool.Return(chunks);
         }
 
         private void SendChunkUpdates(IPlayerSession session, Dictionary<GridId, HashSet<Vector2i>> updatedChunks)
@@ -388,7 +357,7 @@ namespace Content.Server.Decals
 
         private HashSet<EntityUid> GetSessionViewers(IPlayerSession session)
         {
-            var viewers = _viewers;
+            var viewers = new HashSet<EntityUid>();
             if (session.Status != SessionStatus.InGame || session.AttachedEntity is null)
                 return viewers;
 
@@ -404,35 +373,7 @@ namespace Content.Server.Decals
 
         private Dictionary<GridId, HashSet<Vector2i>> GetChunksForSession(IPlayerSession session)
         {
-            var viewers = GetSessionViewers(session);
-            var chunks = GetChunksForViewers(viewers);
-            viewers.Clear();
-            return chunks;
-        }
-
-        private Dictionary<GridId, HashSet<Vector2i>> GetChunksForViewers(HashSet<EntityUid> viewers)
-        {
-            var chunks = _chunkViewerPool.Get();
-            var xformQuery = GetEntityQuery<TransformComponent>();
-
-            foreach (var viewerUid in viewers)
-            {
-                var (bounds, mapId) = CalcViewBounds(viewerUid, xformQuery.GetComponent(viewerUid));
-
-                foreach (var grid in MapManager.FindGridsIntersecting(mapId, bounds))
-                {
-                    if (!chunks.ContainsKey(grid.Index))
-                        chunks[grid.Index] = _chunkIndexPool.Get();
-
-                    var enumerator = new ChunkIndicesEnumerator(_transform.GetInvWorldMatrix(grid.GridEntityId, xformQuery).TransformBox(bounds), ChunkSize);
-
-                    while (enumerator.MoveNext(out var indices))
-                    {
-                        chunks[grid.Index].Add(indices.Value);
-                    }
-                }
-            }
-            return chunks;
+            return GetChunksForViewers(GetSessionViewers(session));
         }
     }
 }
