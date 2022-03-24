@@ -306,6 +306,37 @@ namespace Content.Server.Database
         public abstract Task AddServerUnbanAsync(ServerUnbanDef serverUnban);
         #endregion
 
+        #region Role Bans
+        /*
+         * ROLE BANS
+         */
+        /// <summary>
+        ///     Looks up a role ban by id.
+        ///     This will return a pardoned role ban as well.
+        /// </summary>
+        /// <param name="id">The role ban id to look for.</param>
+        /// <returns>The role ban with the given id or null if none exist.</returns>
+        public abstract Task<ServerRoleBanDef?> GetServerRoleBanAsync(int id);
+
+        /// <summary>
+        ///     Looks up an user's role ban history.
+        ///     This will return pardoned role bans based on the <see cref="includeUnbanned"/> bool.
+        ///     Requires one of <see cref="address"/>, <see cref="userId"/>, or <see cref="hwId"/> to not be null.
+        /// </summary>
+        /// <param name="address">The IP address of the user.</param>
+        /// <param name="userId">The NetUserId of the user.</param>
+        /// <param name="hwId">The Hardware Id of the user.</param>
+        /// <param name="includeUnbanned">Whether expired and pardoned bans are included.</param>
+        /// <returns>The user's role ban history.</returns>
+        public abstract Task<List<ServerRoleBanDef>> GetServerRoleBansAsync(IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned);
+
+        public abstract Task AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan);
+        public abstract Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverRoleUnban);
+        #endregion
+
         #region Player Records
         /*
          * PLAYER RECORDS
@@ -469,7 +500,7 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync(cancel);
         }
 
-        public virtual async Task<int> AddNewRound(params Guid[] playerIds)
+        public virtual async Task<int> AddNewRound(Server server, params Guid[] playerIds)
         {
             await using var db = await GetDb();
 
@@ -479,7 +510,8 @@ namespace Content.Server.Database
 
             var round = new Round
             {
-                Players = players
+                Players = players,
+                ServerId = server.Id
             };
 
             db.DbContext.Round.Add(round);
@@ -542,6 +574,27 @@ namespace Content.Server.Database
         #endregion
 
         #region Admin Logs
+
+        public async Task<Server> AddOrGetServer(string serverName)
+        {
+            await using var db = await GetDb();
+            var server = await db.DbContext.Server.Where(server => server.Name.Equals(serverName)).SingleOrDefaultAsync();
+            if (server != default)
+            {
+                return server;
+            }
+
+            server = new Server
+            {
+                Name = serverName
+            };
+
+            db.DbContext.Server.Add(server);
+
+            await db.DbContext.SaveChangesAsync();
+
+            return server;
+        }
 
         public virtual async Task AddAdminLogs(List<QueuedLog> logs)
         {

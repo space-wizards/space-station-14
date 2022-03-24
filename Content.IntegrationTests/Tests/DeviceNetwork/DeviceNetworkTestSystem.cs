@@ -8,7 +8,7 @@ using Robust.Shared.Reflection;
 namespace Content.IntegrationTests.Tests.DeviceNetwork
 {
     [Reflect(false)]
-    public class DeviceNetworkTestSystem : EntitySystem
+    public sealed class DeviceNetworkTestSystem : EntitySystem
     {
         public NetworkPayload LastPayload = default;
 

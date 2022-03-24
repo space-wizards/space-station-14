@@ -19,7 +19,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Cargo.Components
 {
     [RegisterComponent]
-    public class CargoConsoleComponent : SharedCargoConsoleComponent
+    public sealed class CargoConsoleComponent : SharedCargoConsoleComponent
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -60,7 +60,7 @@ namespace Content.Server.Cargo.Components
         private SoundSpecifier _errorSound = new SoundPathSpecifier("/Audio/Effects/error.ogg");
 
         private bool Powered => !_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
-        private CargoConsoleSystem _cargoConsoleSystem = default!;
+        private CargoSystem _cargoConsoleSystem = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CargoConsoleUiKey.Key);
 
@@ -76,7 +76,7 @@ namespace Content.Server.Cargo.Components
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            _cargoConsoleSystem = EntitySystem.Get<CargoConsoleSystem>();
+            _cargoConsoleSystem = EntitySystem.Get<CargoSystem>();
             BankAccount = _cargoConsoleSystem.StationAccount;
         }
 
@@ -167,7 +167,7 @@ namespace Content.Server.Cargo.Components
                     var offsets = new Vector2i[] { new Vector2i(0, 1), new Vector2i(1, 1), new Vector2i(1, 0), new Vector2i(1, -1),
                                                    new Vector2i(0, -1), new Vector2i(-1, -1), new Vector2i(-1, 0), new Vector2i(-1, 1), };
 
-                    var lookup = IoCManager.Resolve<IEntityLookup>();
+                    var lookup = EntitySystem.Get<EntityLookupSystem>();
                     var gridId = _entMan.GetComponent<TransformComponent>(Owner).GridID;
 
                     // TODO: Should use anchoring.
@@ -188,7 +188,7 @@ namespace Content.Server.Cargo.Components
                             orders.Database.ClearOrderCapacity();
                             foreach (var order in approvedOrders)
                             {
-                                telepadComponent.QueueTeleport(order);
+                                _cargoConsoleSystem.QueueTeleport(telepadComponent, order);
                             }
                         }
                     }

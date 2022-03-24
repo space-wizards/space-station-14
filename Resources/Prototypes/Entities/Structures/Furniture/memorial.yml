@@ -1,0 +1,23 @@
+- type: entity
+  id: Memorial
+  parent: BaseStructure
+  name: memorial
+  description: Commemorating something.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/memorial.rsi
+    state: memorial
+    noRot: true
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.20"
+      mass: 50
+      layer:
+      - SmallImpassable
+      mask:
+      - Impassable
+  - type: InteractionOutline

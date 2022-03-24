@@ -5,7 +5,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Administration.UI.CustomControls;
 
-public class HSeparator : Control
+public sealed class HSeparator : Control
 {
     private static readonly Color SeparatorColor = Color.FromHex("#3D4059");
 

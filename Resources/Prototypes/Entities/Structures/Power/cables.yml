@@ -84,9 +84,14 @@
         acts: [ "Destruction" ]
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
     - type: CableVisualizer
       base: hvcable_
+  - type: AmbientSound
+    enabled: true
+    volume: -15
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/emf_buzz.ogg
 
 - type: entity
   parent: CableBase
@@ -131,9 +136,14 @@
         acts: [ "Destruction" ]
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
     - type: CableVisualizer
       base: mvcable_
+  - type: AmbientSound
+    enabled: true
+    volume: -16
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/emf_buzz.ogg
 
 - type: entity
   parent: CableBase
@@ -181,6 +191,11 @@
         acts: [ "Destruction" ]
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
     - type: CableVisualizer
       base: lvcable_
+  - type: AmbientSound
+    enabled: true
+    volume: -17
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/emf_buzz.ogg

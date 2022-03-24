@@ -1,0 +1,35 @@
+﻿- type: entity
+  name: book
+  parent: BaseItem
+  id: BookBase
+  description: 'A hardcover book.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book0
+  - type: Paper
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+
+- type: entity
+  parent: BookBase
+  id: BookRandom
+  suffix: random
+  components:
+  - type: RandomSpriteState
+    spriteLayer: 0
+    spriteStates:
+    - book0
+    - book1
+    - book2
+    - book3
+    - book4
+    - book5
+    - book6
+    - book7
+    - book8

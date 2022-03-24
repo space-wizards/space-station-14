@@ -4,7 +4,7 @@ using Content.Shared.Inventory;
 
 namespace Content.Server.AI.Utility.Considerations.Clothing
 {
-    public class ClothingInSlotCon : Consideration
+    public sealed class ClothingInSlotCon : Consideration
     {
 
         public ClothingInSlotCon Slot(string slot, Blackboard context)

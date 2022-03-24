@@ -51,13 +51,13 @@
         prob: 1
       - id: TaserGun
         prob: 1
-      - id: ClothingShoesColorBlack
-        prob: 0.7
       - id: ClothingHeadHelmetHardsuitCap
         prob: 1
       - id: CommsComputerCircuitboard
         prob: 1
       - id: ClothingHeadsetAltCommand
+        prob: 1
+      - id: SpaceCash1000
         prob: 1
       - id: PlushieNuke
         prob: 0.1
@@ -65,6 +65,9 @@
         prob: 0.25
       - id: ClothingBeltSheathFilled
       - id: DoorRemoteCommand
+      - id: ClothingNeckCloakCapFormal
+      - id: ClothingUniformJumpsuitCapFormal
+      - id: ClothingUniformJumpskirtCapFormalDress
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -127,7 +130,7 @@
   - type: StorageFill
     contents:
       - id: MedkitFilled
-      - id: ClothingHandsGlovesLatex
+      - id: ClothingHandsGlovesNitrile
       #- name: ClothingEyesHudMedical #Removed until working properly
       #  prob: 1
       - id: ClothingHeadsetAltMedical
@@ -137,6 +140,9 @@
       - id: ClothingMaskSterile
       - id: ClothingHeadHelmetHardsuitMedical
       - id: ClothingOuterHardsuitMedical
+      - id: DiagnoserMachineCircuitboard
+      - id: VaccinatorMachineCircuitboard
+        prob: 0.25
       - id: Hypospray
       - id: HandheldCrewMonitor
       - id: DoorRemoteMedical
@@ -207,3 +213,5 @@
       - id: CigarGoldCase
         prob: 0.50
       - id: DoorRemoteSecurity
+      - id: ClothingUniformJumpskirtHosFormal
+      - id: ClothingUniformJumpsuitHosFormal

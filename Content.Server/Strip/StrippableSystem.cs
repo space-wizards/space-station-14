@@ -76,17 +76,15 @@ namespace Content.Server.Strip
 
             if (TryComp(uid, out HandsComponent? handsComp))
             {
-                foreach (var hand in handsComp.HandNames)
+                foreach (var hand in handsComp.Hands.Values)
                 {
-                    var owner = handsComp.GetItem(hand)?.Owner;
-
-                    if (!owner.HasValue || HasComp<HandVirtualItemComponent>(owner.Value))
+                    if (hand.HeldEntity == null || HasComp<HandVirtualItemComponent>(hand.HeldEntity))
                     {
-                        hands[hand] = "None";
+                        hands[hand.Name] = "None";
                         continue;
                     }
 
-                    hands[hand] = Name(owner.Value);
+                    hands[hand.Name] = Name(hand.HeldEntity.Value);
                 }
             }
 

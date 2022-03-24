@@ -1,40 +1,36 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Hands.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Stunnable;
-using Content.Server.Throwing;
 using Content.Server.Tools.Components;
 using Content.Shared.Camera;
 using Content.Shared.CombatMode;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.PneumaticCannon;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
+using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.PneumaticCannon
 {
-    public class PneumaticCannonSystem : EntitySystem
+    public sealed class PneumaticCannonSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
         [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
 
         private HashSet<PneumaticCannonComponent> _currentlyFiring = new();
 
@@ -236,7 +232,7 @@ namespace Content.Server.PneumaticCannon
                 _cameraRecoil.KickCamera(data.User, kick);
             }
 
-            ent.TryThrow(data.Direction, data.Strength, data.User, GetPushbackRatioFromPower(comp.Power));
+            _throwingSystem.TryThrow(ent, data.Direction, data.Strength, data.User, GetPushbackRatioFromPower(comp.Power));
 
             // lasagna, anybody?
             ent.EnsureComponent<ForcefeedOnCollideComponent>();
@@ -320,11 +316,8 @@ namespace Content.Server.PneumaticCannon
 
             if (component.GasTankSlot.Remove(contained))
             {
-                if (EntityManager.TryGetComponent<HandsComponent?>(user, out var hands))
-                {
-                    hands.PutInHand(contained);
-                }
-
+                _handsSystem.TryPickupAnyHand(user, contained);
+                
                 user.PopupMessage(Loc.GetString("pneumatic-cannon-component-gas-tank-remove",
                     ("tank", contained), ("cannon", component.Owner)));
                 UpdateAppearance(component);

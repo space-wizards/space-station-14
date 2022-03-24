@@ -8,7 +8,7 @@ using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Shared.Movement.EntitySystems;
 
-public class SlowContactsSystem : EntitySystem
+public sealed class SlowContactsSystem : EntitySystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;

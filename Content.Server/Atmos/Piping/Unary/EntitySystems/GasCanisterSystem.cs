@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
@@ -8,29 +7,24 @@ using Content.Server.Hands.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Database;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Players;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasCanisterSystem : EntitySystem
+    public sealed class GasCanisterSystem : EntitySystem
     {
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -192,11 +186,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 }
             }
 
-            DirtyUI(uid, canister, nodeContainer, containerManager);
-
             // If last pressure is very close to the current pressure, do nothing.
             if (MathHelper.CloseToPercent(canister.Air.Pressure, canister.LastPressure))
                 return;
+
+            DirtyUI(uid, canister, nodeContainer, containerManager);
 
             canister.LastPressure = canister.Air.Pressure;
 
@@ -249,14 +243,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!EntityManager.TryGetComponent(args.Used, out GasTankComponent? _))
                 return;
 
-            // Check the user has hands.
-            if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
-                return;
-
-            if (!args.User.InRangeUnobstructed(canister, SharedInteractionSystem.InteractionRange, popup: true))
-                return;
-
-            if (!hands.Drop(args.Used, container))
+            if (!_handsSystem.TryDropIntoContainer(args.User, args.Used, container))
                 return;
 
             _adminLogSystem.Add(LogType.CanisterTankInserted, LogImpact.Medium, $"Player {ToPrettyString(args.User):player} inserted tank {ToPrettyString(container.ContainedEntities[0]):tank} into {ToPrettyString(canister):canister}");

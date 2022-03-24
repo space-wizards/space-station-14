@@ -16,21 +16,16 @@ using Content.Shared.Atmos;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement;
-using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -43,6 +38,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         private readonly List<DisposalUnitComponent> _activeDisposals = new();
 
@@ -140,7 +136,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 Category = VerbCategory.Insert,
                 Act = () =>
                 {
-                    args.Hands.Drop(args.Using.Value, component.Container);
+                    _handsSystem.TryDropIntoContainer(args.User, args.Using.Value, component.Container, checkActionBlocker: false, args.Hands);
                     AfterInsert(component, args.Using.Value);
                 }
             };
@@ -180,11 +176,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         private void OnUiButtonPressed(EntityUid uid, DisposalUnitComponent component, SharedDisposalUnitComponent.UiButtonPressedMessage args)
         {
             if (args.Session.AttachedEntity is not {Valid: true} player)
-            {
-                return;
-            }
-
-            if (!_actionBlockerSystem.CanInteract(player) || !_actionBlockerSystem.CanUse(player))
             {
                 return;
             }
@@ -241,11 +232,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             args.Handled = true;
-
-            if (IsValidInteraction(args))
-            {
-                component.Owner.GetUIOrNull(SharedDisposalUnitComponent.DisposalUnitUiKey.Key)?.Open(actor.PlayerSession);
-            }
+            component.Owner.GetUIOrNull(SharedDisposalUnitComponent.DisposalUnitUiKey.Key)?.Open(actor.PlayerSession);
         }
 
         private void HandleAfterInteractUsing(EntityUid uid, DisposalUnitComponent component, AfterInteractUsingEvent args)
@@ -257,8 +244,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 return;
             }
-
-            if (!CanInsert(component, args.Used) || !hands.Drop(args.Used, component.Container))
+            
+            if (!CanInsert(component, args.Used) || !_handsSystem.TryDropIntoContainer(args.User, args.Used, component.Container))
             {
                 return;
             }
@@ -439,30 +426,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             return state == SharedDisposalUnitComponent.PressureState.Ready && component.RecentlyEjected.Count == 0;
         }
 
-        private bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
-        {
-            if (!Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
-            {
-                eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-cannot=interact"));
-                return false;
-            }
-
-            if (eventArgs.User.IsInContainer())
-            {
-                eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-cannot-reach"));
-                return false;
-            }
-            // This popup message doesn't appear on clicks, even when code was seperate. Unsure why.
-
-            if (!EntityManager.HasComponent<HandsComponent>(eventArgs.User))
-            {
-                eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-no-hands"));
-                return false;
-            }
-
-            return true;
-        }
-
         public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid userId, DisposalUnitComponent? unit = null)
         {
             if (!Resolve(unitId, ref unit))
@@ -519,7 +482,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (_atmosSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates, true) is {Temperature: > 0} environment)
             {
-                var transferMoles = 0.1f * (0.05f * Atmospherics.OneAtmosphere * 1.01f - air.Pressure) * air.Volume / (environment.Temperature * Atmospherics.R);
+                var transferMoles = 0.1f * (0.25f * Atmospherics.OneAtmosphere * 1.01f - air.Pressure) * air.Volume / (environment.Temperature * Atmospherics.R);
 
                 component.Air = environment.Remove(transferMoles);
             }

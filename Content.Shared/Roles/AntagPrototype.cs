@@ -8,7 +8,7 @@ namespace Content.Shared.Roles
     ///     Describes information for a single antag.
     /// </summary>
     [Prototype("antag")]
-    public class AntagPrototype : IPrototype
+    public sealed class AntagPrototype : IPrototype
     {
         [ViewVariables]
         [DataField("id", required: true)]

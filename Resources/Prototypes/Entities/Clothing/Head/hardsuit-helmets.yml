@@ -83,6 +83,8 @@
   - type: PressureProtection
     highPressureMultiplier: 0.80
     lowPressureMultiplier: 55
+  - type: DiseaseProtection
+    protection: 0.15
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase

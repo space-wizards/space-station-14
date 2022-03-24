@@ -48,16 +48,18 @@ namespace Content.Server.Fluids.Components
         [DataField("spillSound")]
         public SoundSpecifier SpillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 
-        /// <summary>
-        /// Whether or not this puddle is currently overflowing onto its neighbors
-        /// </summary>
-        public bool Overflown;
-
         [ViewVariables(VVAccess.ReadOnly)]
         public FixedPoint2 CurrentVolume => EntitySystem.Get<PuddleSystem>().CurrentVolume(Owner);
 
         [ViewVariables] [DataField("overflowVolume")]
         public FixedPoint2 OverflowVolume = DefaultOverflowVolume;
+
+        /// <summary>
+        ///     How much should this puddle's opacity be multiplied by?
+        ///     Useful for puddles that have a high overflow volume but still want to be mostly opaque.
+        /// </summary>
+        [DataField("opacityModifier")]
+        public float OpacityModifier = 1.0f;
 
         public FixedPoint2 OverflowLeft => CurrentVolume - OverflowVolume;
 

@@ -13,6 +13,7 @@ namespace Content.Shared.Chemistry.Components
     /// <summary>
     /// Shared class for <c>ChemMasterComponent</c>. Provides a way for entities to split reagents from a beaker and produce pills and bottles via a user interface.
     /// </summary>
+    [Virtual]
     public class SharedChemMasterComponent : Component
     {
         [DataField("beakerSlot")]
@@ -20,7 +21,7 @@ namespace Content.Shared.Chemistry.Components
         public const string SolutionName = "buffer";
 
         [Serializable, NetSerializable]
-        public class ChemMasterBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class ChemMasterBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly bool HasPower;
             public readonly bool HasBeaker;
@@ -66,7 +67,7 @@ namespace Content.Shared.Chemistry.Components
         /// Message data sent from client to server when a ChemMaster ui button is pressed.
         /// </summary>
         [Serializable, NetSerializable]
-        public class UiActionMessage : BoundUserInterfaceMessage
+        public sealed class UiActionMessage : BoundUserInterfaceMessage
         {
             public readonly UiAction Action;
             public readonly FixedPoint2 Amount;

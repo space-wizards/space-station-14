@@ -36,11 +36,11 @@ public sealed partial class GunSystem
     {
         if (!TryComp(gun.Owner, out ServerRangedBarrelComponent? barrel)) return;
 
-        if (!TryComp(user, out HandsComponent? hands) || hands.GetActiveHand()?.HeldEntity != gun.Owner) return;
+        if (!TryComp(user, out HandsComponent? hands) || hands.ActiveHand?.HeldEntity != gun.Owner) return;
 
         if (!TryComp(user, out CombatModeComponent? combat) ||
             !combat.IsInCombatMode ||
-            !_blocker.CanInteract(user)) return;
+            !_blocker.CanInteract(user, gun.Owner)) return;
 
         var fireAttempt = new GunFireAttemptEvent(user, gun);
         EntityManager.EventBus.RaiseLocalEvent(gun.Owner, fireAttempt);
@@ -56,10 +56,10 @@ public sealed partial class GunSystem
         gun.LastFireTime = curTime;
         var coordinates = Transform(gun.Owner).Coordinates;
 
-        if (gun.ClumsyCheck && gun.ClumsyDamage != null && ClumsyComponent.TryRollClumsy(user, gun.ClumsyExplodeChance))
+        if (gun.ClumsyCheck && EntityManager.TryGetComponent<ClumsyComponent>(user, out var clumsyComponent) && ClumsyComponent.TryRollClumsy(user, gun.ClumsyExplodeChance))
         {
             //Wound them
-            _damageable.TryChangeDamage(user, gun.ClumsyDamage);
+            _damageable.TryChangeDamage(user, clumsyComponent.ClumsyDamage);
             _stun.TryParalyze(user, TimeSpan.FromSeconds(3f), true);
 
             // Apply salt to the wound ("Honk!")

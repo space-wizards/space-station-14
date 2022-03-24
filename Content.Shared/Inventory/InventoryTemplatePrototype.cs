@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Inventory;
 
 [Prototype("inventoryTemplate")]
-public class InventoryTemplatePrototype : IPrototype
+public sealed class InventoryTemplatePrototype : IPrototype
 {
     [DataField("id", required: true)]
     public string ID { get; } = string.Empty;
@@ -18,7 +18,7 @@ public class InventoryTemplatePrototype : IPrototype
 }
 
 [DataDefinition]
-public class SlotDefinition
+public sealed class SlotDefinition
 {
     [DataField("name", required: true)] public string Name { get; } = string.Empty;
 
@@ -34,6 +34,11 @@ public class SlotDefinition
     [DataField("dependsOn")] public string? DependsOn { get; }
 
     [DataField("displayName", required: true)] public string DisplayName { get; } = string.Empty;
+
+    /// <summary>
+    ///     Offset for the clothing sprites.
+    /// </summary>
+    [DataField("offset")] public Vector2 Offset { get; } = Vector2.Zero;
 }
 
 public enum SlotUIContainer

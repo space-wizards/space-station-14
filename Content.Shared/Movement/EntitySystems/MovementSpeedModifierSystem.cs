@@ -85,7 +85,7 @@ namespace Content.Shared.Movement.EntitySystems
     ///     should hook into this event and set it then. If you want this event to be raised,
     ///     call <see cref="MovementSpeedModifierSystem.RefreshMovementSpeedModifiers"/>.
     /// </summary>
-    public class RefreshMovementSpeedModifiersEvent : EntityEventArgs, IInventoryRelayEvent
+    public sealed class RefreshMovementSpeedModifiersEvent : EntityEventArgs, IInventoryRelayEvent
     {
         public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
 

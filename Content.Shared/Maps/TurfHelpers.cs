@@ -157,9 +157,9 @@ namespace Content.Shared.Maps
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<EntityUid> GetEntitiesInTile(this TileRef turf, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTile(this TileRef turf, LookupFlags flags = LookupFlags.IncludeAnchored, EntityLookupSystem? lookupSystem = null)
         {
-            lookupSystem ??= IoCManager.Resolve<IEntityLookup>();
+            lookupSystem ??= EntitySystem.Get<EntityLookupSystem>();
 
             if (!GetWorldTileBox(turf, out var worldBox))
                 return Enumerable.Empty<EntityUid>();
@@ -170,7 +170,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<EntityUid> GetEntitiesInTile(this EntityCoordinates coordinates, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTile(this EntityCoordinates coordinates, LookupFlags flags = LookupFlags.IncludeAnchored, EntityLookupSystem? lookupSystem = null)
         {
             var turf = coordinates.GetTileRef();
 
@@ -183,7 +183,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<EntityUid> GetEntitiesInTile(this Vector2i indices, GridId gridId, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTile(this Vector2i indices, GridId gridId, LookupFlags flags = LookupFlags.IncludeAnchored, EntityLookupSystem? lookupSystem = null)
         {
             return GetEntitiesInTile(indices.GetTileRef(gridId), flags, lookupSystem);
         }

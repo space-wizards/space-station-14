@@ -47,6 +47,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 200
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:EmptyAllContainersBehaviour
@@ -66,7 +72,7 @@
   name: light
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
   id: PoweredlightEmpty
-  suffix: Empty, Powered
+  suffix: Powered, Empty
   parent: WallLight
   components:
   - type: Sprite
@@ -78,7 +84,7 @@
     bulb: Tube
     damage:
       types:
-        Heat: 20
+        Heat: 5
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetworkComponent
@@ -102,19 +108,19 @@
     hasLampOnSpawn: LightTube
     damage:
       types:
-        Heat: 20
+        Heat: 5
 
 - type: entity
   id: PoweredlightLED
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix: LED tube, Powered
+  suffix: Powered, LED
   parent: Poweredlight
   components:
   - type: PoweredLight
     hasLampOnSpawn: LedLightTube
     damage:
       types:
-        Heat: 20
+        Heat: 5
      
 - type: entity
   parent: WallLight
@@ -130,18 +136,19 @@
 - type: entity
   id: PoweredlightExterior
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix: Exterior tube, Powered
+  suffix: Powered, Exterior Blue
   parent: Poweredlight
   components:
   - type: PoweredLight
     hasLampOnSpawn: ExteriorLightTube
     damage:
       types:
-        Heat: 20
+        Heat: 5
+        
 - type: entity
   parent: WallLight
   id: UnpoweredLightExterior
-  suffix: Unpowered, Exterior
+  suffix: Unpowered, Exterior Blue
   components:
   - type: PointLight
     radius: 12
@@ -153,19 +160,19 @@
 - type: entity
   id: PoweredlightSodium
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix: Sodium tube, Powered
+  suffix: Powered, Sodium Orange
   parent: Poweredlight
   components:
   - type: PoweredLight
     hasLampOnSpawn: SodiumLightTube
     damage:
       types:
-        Heat: 20
+        Heat: 5
         
 - type: entity
   parent: WallLight
   id: UnpoweredLightSodium
-  suffix: Unpowered, Sodium
+  suffix: Unpowered, Sodium Orange
   components:
   - type: PointLight
     radius: 10
@@ -199,6 +206,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 100
+        behaviors: #excess damage, don't spawn entities.
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 25
         behaviors:
         - !type:EmptyAllContainersBehaviour
@@ -217,7 +230,7 @@
   name: small light
   description: "A light fixture. Draws power and produces light when equipped with a light bulb."
   id: PoweredSmallLightEmpty
-  suffix: Empty, Powered
+  suffix: Powered, Empty
   parent: SmallLight
   components:
   - type: Sprite
@@ -237,7 +250,7 @@
     bulb: Bulb
     damage:
       types:
-        Heat: 20
+        Heat: 5
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetworkComponent
@@ -258,4 +271,4 @@
     hasLampOnSpawn: LightBulb
     damage:
       types:
-        Heat: 20
+        Heat: 5

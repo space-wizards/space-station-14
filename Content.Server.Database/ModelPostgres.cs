@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using NpgsqlTypes;
 
 namespace Content.Server.Database
 {
@@ -41,14 +43,15 @@ namespace Content.Server.Database
         {
             base.OnModelCreating(modelBuilder);
 
-            // ReSharper disable once CommentTypo
-            // ReSharper disable once StringLiteralTypo
+            // ReSharper disable StringLiteralTypo
             // Enforce that an address cannot be IPv6-mapped IPv4.
             // So that IPv4 addresses are consistent between separate-socket and dual-stack socket modes.
             modelBuilder.Entity<ServerBan>()
                 .HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address");
 
-            // ReSharper disable once StringLiteralTypo
+            modelBuilder.Entity<ServerRoleBan>()
+                .HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address");
+
             modelBuilder.Entity<Player>()
                 .HasCheckConstraint("LastSeenAddressNotIPv6MappedIPv4",
                     "NOT inet '::ffff:0.0.0.0/96' >>= last_seen_address");
@@ -56,6 +59,11 @@ namespace Content.Server.Database
             modelBuilder.Entity<ConnectionLog>()
                 .HasCheckConstraint("AddressNotIPv6MappedIPv4",
                     "NOT inet '::ffff:0.0.0.0/96' >>= address");
+            // ReSharper restore StringLiteralTypo
+
+            modelBuilder.Entity<AdminLog>()
+                .HasIndex(l => l.Message)
+                .IsTsVectorExpressionIndex("english");
 
             foreach(var entity in modelBuilder.Model.GetEntityTypes())
             {
@@ -65,6 +73,11 @@ namespace Content.Server.Database
                         property.SetColumnType("timestamp with time zone");
                 }
             }
+        }
+
+        public override IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
+        {
+            return query.Where(log => EF.Functions.ToTsVector("english", log.Message).Matches(searchText));
         }
     }
 }

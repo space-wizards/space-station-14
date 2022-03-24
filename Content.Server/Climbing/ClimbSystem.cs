@@ -5,6 +5,7 @@ using Content.Server.Climbing.Components;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
@@ -33,6 +34,7 @@ namespace Content.Server.Climbing
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbVerb);
+            SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
         }
 
@@ -62,8 +64,16 @@ namespace Content.Server.Climbing
             args.Verbs.Add(verb);
         }
 
+        private void OnBuckleChange(EntityUid uid, ClimbingComponent component, BuckleChangeEvent args)
+        {
+            if (args.Buckling)
+                component.IsClimbing = false;
+        }
+
         private void OnGlassClimbed(EntityUid uid, GlassTableComponent component, ClimbedOnEvent args)
         {
+            if (TryComp<PhysicsComponent>(args.Climber, out var physics) && physics.Mass <= component.MassLimit)
+                return;
             _damageableSystem.TryChangeDamage(args.Climber, component.ClimberDamage);
             _damageableSystem.TryChangeDamage(uid, component.TableDamage);
             _stunSystem.TryParalyze(args.Climber, TimeSpan.FromSeconds(component.StunTime), true);

@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class OOCCommand : IConsoleCommand
+    internal sealed class OOCCommand : IConsoleCommand
     {
         public string Command => "ooc";
         public string Description => "Send Out Of Character chat messages.";

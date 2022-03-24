@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
@@ -18,7 +18,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.MachineLinking.System
 {
-    public class SignalLinkerSystem : EntitySystem
+    public sealed class SignalLinkerSystem : EntitySystem
     {
         private InteractionSystem _interaction = default!;
 
@@ -123,9 +123,8 @@ namespace Content.Server.MachineLinking.System
                 case SignalPortSelected portSelected:
                     if (msg.Session.AttachedEntity == default ||
                         !EntityManager.TryGetComponent(msg.Session.AttachedEntity, out HandsComponent? hands) ||
-                        !hands.TryGetActiveHeldEntity(out var heldEntity) ||
+                        hands.ActiveHandEntity is not EntityUid heldEntity ||
                         !EntityManager.TryGetComponent(heldEntity, out SignalLinkerComponent? signalLinkerComponent) ||
-                        !_interaction.InRangeUnobstructed(attached, component.Owner, ignoreInsideBlocker: true) ||
                         !signalLinkerComponent.Port.HasValue ||
                         !signalLinkerComponent.Port.Value.transmitter.Outputs.ContainsPort(signalLinkerComponent.Port
                             .Value.port) || !component.Inputs.ContainsPort(portSelected.Port))
@@ -166,9 +165,8 @@ namespace Content.Server.MachineLinking.System
                 case SignalPortSelected portSelected:
                     if (msg.Session.AttachedEntity == default ||
                         !EntityManager.TryGetComponent(msg.Session.AttachedEntity, out HandsComponent? hands) ||
-                        !hands.TryGetActiveHeldEntity(out var heldEntity) ||
-                        !EntityManager.TryGetComponent(heldEntity, out SignalLinkerComponent? signalLinkerComponent) ||
-                        !_interaction.InRangeUnobstructed(attached, component.Owner, ignoreInsideBlocker: true))
+                        hands.ActiveHandEntity is not EntityUid heldEntity ||
+                        !EntityManager.TryGetComponent(heldEntity, out SignalLinkerComponent? signalLinkerComponent))
                         return;
                     LinkerSaveInteraction(attached, signalLinkerComponent, component,
                         portSelected.Port);

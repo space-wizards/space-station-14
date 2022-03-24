@@ -6,6 +6,8 @@
   parent: ComputerBase
   components:
   - type: ApcPowerReceiver
+    powerLoad: 350
+    priority: Low
   - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.5
@@ -13,6 +15,7 @@
     color: "#3db83b"
   - type: Sprite
     sprite: Structures/Machines/arcade.rsi
+    noRot: true
     layers:
     - state: arcade
       map: ["enum.ComputerVisualizer+Layers.Body"]
@@ -39,6 +42,9 @@
   - type: SpaceVillainArcade
   - type: Wires
     BoardName: "Arcade"
+  - type: ActivatableUI
+    key: enum.SpaceVillainArcadeUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
       - key: enum.SpaceVillainArcadeUiKey.Key
@@ -55,6 +61,9 @@
   parent: ArcadeBase
   components:
   - type: BlockGameArcade
+  - type: ActivatableUI
+    key: enum.BlockGameUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
       - key: enum.BlockGameUiKey.Key

@@ -46,6 +46,8 @@
   - type: Anchorable
   - type: Pullable
   - type: AMEController
+  - type: ActivatableUI
+    key: enum.AMEControllerUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.AMEControllerUiKey.Key
@@ -62,8 +64,8 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
+#  - type: ApcPowerReceiver
+#  - type: ExtensionCableReceiver
   - type: PowerSupplier
     supplyRate: 0
 

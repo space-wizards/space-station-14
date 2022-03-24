@@ -15,7 +15,7 @@ namespace Content.Server.Storage.Components
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
     [RegisterComponent]
-    public class CursedEntityStorageComponent : EntityStorageComponent
+    public sealed class CursedEntityStorageComponent : EntityStorageComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;

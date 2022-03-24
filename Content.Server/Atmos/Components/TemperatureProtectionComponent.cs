@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Atmos.Components;
 
 [RegisterComponent]
-public class TemperatureProtectionComponent : Component
+public sealed class TemperatureProtectionComponent : Component
 {
     /// <summary>
     ///     How much to multiply temperature deltas by.

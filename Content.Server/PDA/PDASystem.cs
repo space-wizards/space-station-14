@@ -1,3 +1,4 @@
+using Content.Server.Instruments;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
@@ -7,12 +8,9 @@ using Content.Server.Traitor.Uplink.Components;
 using Content.Server.PDA.Ringer;
 using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Interaction;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.PDA
 {
@@ -22,12 +20,12 @@ namespace Content.Server.PDA
         [Dependency] private readonly UplinkAccountsSystem _uplinkAccounts = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
         [Dependency] private readonly RingerSystem _ringerSystem = default!;
+        [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PDAComponent, ActivateInWorldEvent>(OnActivateInWorld);
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
         }
 
@@ -38,20 +36,6 @@ namespace Content.Server.PDA
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             if (ui != null)
                 ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
-        }
-
-        private void OnUse(EntityUid uid, PDAComponent pda, UseInHandEvent args)
-        {
-            if (args.Handled)
-                return;
-            args.Handled = OpenUI(pda, args.User);
-        }
-
-        private void OnActivateInWorld(EntityUid uid, PDAComponent pda, ActivateInWorldEvent args)
-        {
-            if (args.Handled)
-                return;
-            args.Handled = OpenUI(pda, args.User);
         }
 
         protected override void OnItemInserted(EntityUid uid, PDAComponent pda, EntInsertedIntoContainerMessage args)
@@ -119,7 +103,9 @@ namespace Content.Server.PDA
             if (ui == null)
                 return;
 
-            ui.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, ShouldShowUplink(pda.Owner, ui, user)));
+            ui.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo,
+                ShouldShowUplink(pda.Owner, ui, user),
+                HasComp<InstrumentComponent>(pda.Owner)));
         }
 
         /// <summary>
@@ -156,6 +142,7 @@ namespace Content.Server.PDA
             if (msg.Session.AttachedEntity is not {Valid: true} playerUid)
                 return;
 
+            // todo: move this to entity events
             switch (msg.Message)
             {
                 case PDARequestUpdateInterfaceMessage _:
@@ -190,6 +177,12 @@ namespace Content.Server.PDA
                             _ringerSystem.ToggleRingerUI(ringer, msg.Session);
                         break;
                     }
+                case PDAShowMusicMessage _:
+                {
+                    if (TryComp(pda.Owner, out InstrumentComponent? instrument))
+                        _instrumentSystem.ToggleInstrumentUi(pda.Owner, msg.Session, instrument);
+                    break;
+                }
             }
         }
     }

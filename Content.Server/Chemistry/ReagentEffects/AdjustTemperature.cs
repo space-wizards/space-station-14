@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
-    public class AdjustTemperature : ReagentEffect
+    public sealed class AdjustTemperature : ReagentEffect
     {
         [DataField("amount")]
         public float Amount;

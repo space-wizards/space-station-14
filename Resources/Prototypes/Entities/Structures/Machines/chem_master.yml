@@ -45,10 +45,15 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: ActivatableUI
+    key: enum.ChemMasterUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key
       type: ChemMasterBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 250
   # Machine / Construction stuff
   - type: Wires
     BoardName: "chem_master"

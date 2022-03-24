@@ -11,7 +11,7 @@ namespace Content.Tests.Shared.Utility
 {
     [TestFixture]
     [TestOf(typeof(SharedRandomExtensions))]
-    public class RandomExtensionsTests : ContentUnitTest
+    public sealed class RandomExtensionsTests : ContentUnitTest
     {
         private const string TestDatasetId = "TestDataset";
 

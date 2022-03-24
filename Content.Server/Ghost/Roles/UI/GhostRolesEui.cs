@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Ghost.Roles.UI
 {
-    public class GhostRolesEui : BaseEui
+    public sealed class GhostRolesEui : BaseEui
     {
         public override GhostRolesEuiState GetNewState()
         {

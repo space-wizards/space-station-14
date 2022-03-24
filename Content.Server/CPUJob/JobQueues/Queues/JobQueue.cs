@@ -3,6 +3,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.CPUJob.JobQueues.Queues
 {
+    [Virtual]
     public class JobQueue
     {
         private readonly IStopwatch _stopwatch;

@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.DragDrop;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -34,7 +35,7 @@ namespace Content.Shared.Buckle.Components
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged, out SharedBuckleComponent? buckleComponent)) return false;
             bool Ignored(EntityUid entity) => entity == eventArgs.User || entity == eventArgs.Dragged || entity == eventArgs.Target;
 
-            return eventArgs.Target.InRangeUnobstructed(eventArgs.Dragged, buckleComponent.Range, predicate: Ignored);
+            return EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(eventArgs.Target, eventArgs.Dragged, buckleComponent.Range, predicate: Ignored);
         }
 
         public abstract bool DragDropOn(DragDropEvent eventArgs);
@@ -59,66 +60,5 @@ namespace Content.Shared.Buckle.Components
     {
         RotationAngle,
         BuckledState
-    }
-
-    // TODO : Convert this to an Entity Message. Careful, it will Break ShuttleControllerComponent (only place where it's used)
-    [Serializable, NetSerializable]
-#pragma warning disable 618
-    public abstract class StrapChangeMessage : ComponentMessage
-#pragma warning restore 618
-    {
-        /// <summary>
-        ///     Constructs a new instance of <see cref="StrapChangeMessage"/>
-        /// </summary>
-        /// <param name="entity">The entity that had its buckling status changed</param>
-        /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        /// <param name="buckled">True if the entity was buckled, false otherwise</param>
-        protected StrapChangeMessage(EntityUid entity, EntityUid strap, bool buckled)
-        {
-            Entity = entity;
-            Strap = strap;
-            Buckled = buckled;
-        }
-
-        /// <summary>
-        ///     The entity that had its buckling status changed
-        /// </summary>
-        public EntityUid Entity { get; }
-
-        /// <summary>
-        ///     The strap that the entity was buckled to or unbuckled from
-        /// </summary>
-        public EntityUid Strap { get; }
-
-        /// <summary>
-        ///     True if the entity was buckled, false otherwise.
-        /// </summary>
-        public bool Buckled { get; }
-    }
-
-    [Serializable, NetSerializable]
-    public class StrapMessage : StrapChangeMessage
-    {
-        /// <summary>
-        ///     Constructs a new instance of <see cref="StrapMessage"/>
-        /// </summary>
-        /// <param name="entity">The entity that had its buckling status changed</param>
-        /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        public StrapMessage(EntityUid entity, EntityUid strap) : base(entity, strap, true)
-        {
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class UnStrapMessage : StrapChangeMessage
-    {
-        /// <summary>
-        ///     Constructs a new instance of <see cref="UnStrapMessage"/>
-        /// </summary>
-        /// <param name="entity">The entity that had its buckling status changed</param>
-        /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        public UnStrapMessage(EntityUid entity, EntityUid strap) : base(entity, strap, false)
-        {
-        }
     }
 }

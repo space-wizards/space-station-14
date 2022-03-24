@@ -20,8 +20,6 @@
         mass: 150
         layer:
         - SmallImpassable
-        mask:
-        - VaultImpassable
     - type: Nuke
       diskSlot:
         name: Disk
@@ -30,9 +28,11 @@
         ejectSound:
           path: /Audio/Machines/terminal_insert_disc.ogg
         whitelist:
-          tags:
+          components:
           - NukeDisk
     - type: InteractionOutline
+    - type: ActivatableUI
+      key: enum.NukeUiKey.Key
     - type: UserInterface
       interfaces:
         - key: enum.NukeUiKey.Key
