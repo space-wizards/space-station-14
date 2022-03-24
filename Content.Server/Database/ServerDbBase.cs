@@ -788,6 +788,7 @@ namespace Content.Server.Database
                 .Include(note => note.Round)
                 .Include(note => note.CreatedBy)
                 .Include(note => note.LastEditedBy)
+                .Include(note => note.DeletedBy)
                 .Include(note => note.Player)
                 .SingleOrDefaultAsync();
         }
