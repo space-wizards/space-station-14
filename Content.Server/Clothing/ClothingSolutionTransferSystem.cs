@@ -31,22 +31,8 @@ namespace Content.Server.Clothing
 
             SubscribeLocalEvent<ClothingSolutionTransferComponent, GetVerbsEvent<ActivationVerb>>(AddTransferVerb);
             SubscribeLocalEvent<ClothingSolutionTransferComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
-
-            //SubscribeLocalEvent<ClothingSolutionTransferComponent, GetActionsEvent>(OnGetActions);
-            //SubscribeLocalEvent<ClothingSolutionTransferComponent, ToggleActionEvent>(OnToggleAction);
         }
-
-        /* TODO: add sidebar action
-        private void OnToggleAction(EntityUid uid, ClothingSolutionTransferComponent component, ToggleActionEvent args)
-        {
-            //_drinkSystem.TryDrink(args.Performer, args.Performer, EntityManager.GetComponent<DrinkComponent>(uid));
-        }
-        
-        private void OnGetActions(EntityUid uid, ClothingSolutionTransferComponent component, GetActionsEvent args)
-        {
-            args.Actions.Add(component.ToggleEventAction);
-        }
-        */
+        //TODO: add sidebar action
 
         //custom verb to move solution from clothing item to wearer
         private void AddTransferVerb(EntityUid uid, ClothingSolutionTransferComponent component, GetVerbsEvent<ActivationVerb> args)
