@@ -5,6 +5,7 @@ using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.PDA;
@@ -32,6 +33,7 @@ namespace Content.Server.Sandbox
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly ItemSlotsSystem _slots = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         private bool _isSandboxEnabled;
 
@@ -154,7 +156,7 @@ namespace Content.Server.Sandbox
                 var card = CreateFreshId();
                 if (!_inventory.TryEquip(attached, card, "id", true, true))
                 {
-                    hands.PutInHandOrDrop(Comp<SharedItemComponent>(card));
+                    _handsSystem.PickupOrDrop(attached, card, handsComp: hands);
                 }
             }
 

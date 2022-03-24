@@ -4,15 +4,15 @@ using Content.Server.Hands.Systems;
 using Content.Server.Weapon.Melee;
 using Content.Server.Wieldable.Components;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using System.Linq;
 
 namespace Content.Server.Wieldable
 {
@@ -20,6 +20,7 @@ namespace Content.Server.Wieldable
     {
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -75,7 +76,8 @@ namespace Content.Server.Wieldable
                 return false;
             }
 
-            if (hands.GetFreeHands() < component.FreeHandsRequired)
+            if (hands.CountFreeHands()
+                < component.FreeHandsRequired)
             {
                 // TODO FLUENT need function to change 'hands' to 'hand' when there's only 1 required
                 if (!quiet)
@@ -89,7 +91,7 @@ namespace Content.Server.Wieldable
             }
 
             // Is it.. actually in one of their hands?
-            if (!hands.TryGetHandHoldingEntity(uid, out _))
+            if (!_handsSystem.IsHolding(user, uid, out _, hands))
             {
                 if (!quiet)
                 {

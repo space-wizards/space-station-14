@@ -290,35 +290,33 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return solutionsMgr.Solutions[name];
     }
 
-    public string[] RemoveEachReagent(EntityUid uid, Solution solution, FixedPoint2 quantity)
+    /// <summary>
+    ///     Removes an amount from all reagents in a solution, adding it to a new solution.
+    /// </summary>
+    /// <param name="uid">The entity containing the solution.</param>
+    /// <param name="solution">The solution to remove reagents from.</param>
+    /// <param name="quantity">The amount to remove from every reagent in the solution.</param>
+    /// <returns>A new solution containing every removed reagent from the original solution.</returns>
+    public Solution RemoveEachReagent(EntityUid uid, Solution solution, FixedPoint2 quantity)
     {
-        var removedReagent = new string[solution.Contents.Count];
         if (quantity <= 0)
-            return Array.Empty<string>();
+            return new Solution();
 
-        var pos = 0;
-        for (var i = 0; i < solution.Contents.Count; i++)
+        var removedSolution = new Solution();
+
+        // RemoveReagent does a RemoveSwap, meaning we don't have to copy the list if we iterate it backwards.
+        for (var i = solution.Contents.Count-1; i >= 0; i--)
         {
-            var (reagentId, curQuantity) = solution.Contents[i];
-            removedReagent[pos++] = reagentId;
-            if (!_prototypeManager.TryIndex(reagentId, out ReagentPrototype? proto))
-                proto = new ReagentPrototype();
+            var (reagentId, _) = solution.Contents[i];
 
-            var newQuantity = curQuantity - quantity;
-            if (newQuantity <= 0)
-            {
-                solution.Contents.RemoveSwap(i);
-                solution.TotalVolume -= curQuantity;
-            }
-            else
-            {
-                solution.Contents[i] = new Solution.ReagentQuantity(reagentId, newQuantity);
-                solution.TotalVolume -= quantity;
-            }
+            var removedQuantity = solution.RemoveReagent(reagentId, quantity);
+
+            if(removedQuantity > 0)
+                removedSolution.AddReagent(reagentId, removedQuantity);
         }
 
         UpdateChemicals(uid, solution);
-        return removedReagent;
+        return removedSolution;
     }
 
     public FixedPoint2 GetReagentQuantity(EntityUid owner, string reagentId)

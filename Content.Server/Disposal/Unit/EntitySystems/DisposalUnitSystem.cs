@@ -16,21 +16,16 @@ using Content.Shared.Atmos;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement;
-using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -43,6 +38,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         private readonly List<DisposalUnitComponent> _activeDisposals = new();
 
@@ -140,7 +136,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 Category = VerbCategory.Insert,
                 Act = () =>
                 {
-                    args.Hands.Drop(args.Using.Value, component.Container);
+                    _handsSystem.TryDropIntoContainer(args.User, args.Using.Value, component.Container, checkActionBlocker: false, args.Hands);
                     AfterInsert(component, args.Using.Value);
                 }
             };
@@ -248,8 +244,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 return;
             }
-
-            if (!CanInsert(component, args.Used) || !hands.Drop(args.Used, component.Container))
+            
+            if (!CanInsert(component, args.Used) || !_handsSystem.TryDropIntoContainer(args.User, args.Used, component.Container))
             {
                 return;
             }

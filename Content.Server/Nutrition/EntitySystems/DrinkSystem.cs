@@ -232,12 +232,14 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             drink.CancelToken = new CancellationTokenSource();
+            var moveBreak = user != target;
+
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, forceDrink ? drink.ForceFeedDelay : drink.Delay, drink.CancelToken.Token, target)
             {
-                BreakOnUserMove = true,
+                BreakOnUserMove = moveBreak,
                 BreakOnDamage = true,
                 BreakOnStun = true,
-                BreakOnTargetMove = true,
+                BreakOnTargetMove = moveBreak,
                 MovementThreshold = 0.01f,
                 TargetFinishedEvent = new DrinkEvent(user, drink, drinkSolution),
                 BroadcastCancelledEvent = new DrinkCancelledEvent(drink),
