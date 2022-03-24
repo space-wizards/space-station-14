@@ -12,6 +12,7 @@ namespace Content.Shared.Decals
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;
+        [Dependency] protected readonly SharedTransformSystem Transforms = default!;
 
         protected readonly Dictionary<GridId, Dictionary<uint, Vector2i>> ChunkIndex = new();
 
@@ -83,12 +84,39 @@ namespace Content.Shared.Decals
 
         protected virtual bool RemoveDecalHook(GridId gridId, uint uid) => true;
 
-        protected (Box2 view, MapId mapId) CalcViewBounds(in EntityUid euid, TransformComponent xform)
+        private (Box2 view, MapId mapId) CalcViewBounds(in EntityUid euid)
         {
+            var xform = EntityManager.GetComponent<TransformComponent>(euid);
+
             var view = Box2.UnitCentered.Scale(_viewSize).Translated(xform.WorldPosition);
             var map = xform.MapID;
 
             return (view, map);
+        }
+
+        protected Dictionary<GridId, HashSet<Vector2i>> GetChunksForViewers(HashSet<EntityUid> viewers)
+        {
+            var chunks = new Dictionary<GridId, HashSet<Vector2i>>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
+
+            foreach (var viewerUid in viewers)
+            {
+                var (bounds, mapId) = CalcViewBounds(viewerUid);
+
+                foreach (var grid in MapManager.FindGridsIntersecting(mapId, bounds))
+                {
+                    if (!chunks.ContainsKey(grid.Index))
+                        chunks[grid.Index] = new HashSet<Vector2i>();
+
+                    var enumerator = new ChunkIndicesEnumerator(Transforms.GetInvWorldMatrix(grid.GridEntityId, xformQuery).TransformBox(bounds), ChunkSize);
+
+                    while (enumerator.MoveNext(out var indices))
+                    {
+                        chunks[grid.Index].Add(indices.Value);
+                    }
+                }
+            }
+            return chunks;
         }
     }
 
