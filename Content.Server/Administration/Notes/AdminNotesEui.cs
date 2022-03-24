@@ -59,7 +59,7 @@ public sealed class AdminNotesEui : BaseEui
             }
             case CreateNoteRequest {Message: var message}:
             {
-                if (!_notes.CanEdit(Player))
+                if (!_notes.CanCreate(Player))
                 {
                     Close();
                     break;
@@ -75,7 +75,7 @@ public sealed class AdminNotesEui : BaseEui
             }
             case DeleteNoteRequest request:
             {
-                if (!_notes.CanEdit(Player))
+                if (!_notes.CanDelete(Player))
                 {
                     Close();
                     break;
