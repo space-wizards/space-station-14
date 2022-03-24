@@ -1,8 +1,8 @@
 ﻿# UI
 admin-notes-title = Notes for {$player}
 admin-notes-new-note = New note:
-admin-notes-id = Id: #{$id}
-admin-notes-round-id = Round Id: #{$id}
+admin-notes-id = Id: {$id}
+admin-notes-round-id = Round Id: {$id}
 admin-notes-round-id-unknown = Round Id: Unknown
 admin-notes-created-by = Created by: {$author}
 admin-notes-created-at = Created At: {$date}
