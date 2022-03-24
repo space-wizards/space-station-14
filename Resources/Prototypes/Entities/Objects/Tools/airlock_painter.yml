@@ -18,8 +18,6 @@
           type: AirlockPainterBoundUserInterface
     - type: AirlockPainter
       whitelist:
-        components:
-          - Airlock
         tags:
           - PaintableAirlock
       spriteList:

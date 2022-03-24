@@ -30,15 +30,5 @@ namespace Content.Client.AirlockPainter.UI
       SendMessage(new AirlockPainterSpritePickedMessage(index));
       Close();
     }
-
-    protected override void UpdateState(BoundUserInterfaceState state)
-    {
-      Logger.Debug("Updating state");
-      base.UpdateState(state);
-      if (_window == null || state is not AirlockPainterBoundUserInterfaceState cast)
-        return;
-
-      _window.SetSpriteList(cast.SpriteList);
-    }
   }
 }

@@ -22,11 +22,8 @@ namespace Content.Shared.AirlockPainter
   [Serializable, NetSerializable]
   public sealed class AirlockPainterBoundUserInterfaceState : BoundUserInterfaceState
   {
-    public List<string> SpriteList { get; set; } = new();
-
-    public AirlockPainterBoundUserInterfaceState(List<string> spriteList)
+    public AirlockPainterBoundUserInterfaceState()
     {
-      this.SpriteList = spriteList;
     }
   }
 }

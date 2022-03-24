@@ -1,92 +1,92 @@
 - type: entity
   parent: Airlock
   id: AirlockFreezer
-  tags:
-    - PaintableAirlock
   suffix: Freezer
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/freezer.rsi
+  - type: PaintableAirlock
+    group: Standard
 
 - type: entity
   parent: Airlock
   id: AirlockEngineering
-  tags:
-    - PaintableAirlock
   suffix: Engineering
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/engineering.rsi
+  - type: PaintableAirlock
+    group: Standard
 
 - type: entity
   parent: Airlock
   id: AirlockCargo
-  tags:
-    - PaintableAirlock
   suffix: Cargo
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/cargo.rsi
+  - type: PaintableAirlock
+    group: Standard
 
 - type: entity
   parent: Airlock
   id: AirlockMedical
-  tags:
-    - PaintableAirlock
   suffix: Medical
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/medical.rsi
+  - type: PaintableAirlock
+    group: Standard
 
 - type: entity
   parent: Airlock
   id: AirlockChemistry
-  tags:
-    - PaintableAirlock
   suffix: Chemistry
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/medical.rsi
+  - type: PaintableAirlock
+    group: Standard
 
 - type: entity
   parent: Airlock
   id: AirlockScience
-  tags:
-    - PaintableAirlock
   suffix: Science
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/science.rsi
+  - type: PaintableAirlock
+    group: Standard
 
 - type: entity
   parent: Airlock
   id: AirlockCommand
-  tags:
-    - PaintableAirlock
   suffix: Command
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/command.rsi
+  - type: PaintableAirlock
+    group: Standard
 
 - type: entity
   parent: Airlock
   id: AirlockSecurity
-  tags:
-    - PaintableAirlock
   suffix: Security
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/security.rsi
+  - type: PaintableAirlock
+    group: Standard
 
 - type: entity
   parent: Airlock
   id: AirlockMaint
-  tags:
-    - PaintableAirlock
   name: maintenance hatch
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+  - type: PaintableAirlock
+    group: Standard
 
 # Glass
 
@@ -115,6 +115,8 @@
       layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
       - Impassable
       - VaultImpassable
+  - type: PaintableAirlock
+    group: Glass
 
 
 - type: entity

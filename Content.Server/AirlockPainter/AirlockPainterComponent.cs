@@ -1,17 +1,20 @@
-using Content.Shared.Whitelist;
+using Content.Shared.Sound;
 
 namespace Content.Server.AirlockPainter
 {
     [RegisterComponent]
     public sealed class AirlockPainterComponent : Component
     {
-        [DataField("spriteList")]
-        public List<string> SpriteList = new();
+        [DataField("spraySound")]
+        public SoundSpecifier SpraySound = new SoundPathSpecifier("/Audio/Effects/spray2.ogg");
 
-        [DataField("whitelist")]
-        public EntityWhitelist Whitelist = new();
+        [DataField("sprayTime")]
+        public float SprayTime = 3.0f;
 
-        [DataField("index")]
-        public int Index = 0;
+        [DataField("isSpraying")]
+        public bool IsSpraying = false;
+
+        [DataField("style")]
+        public AirlockStyle Style = default!;
     }
 }
