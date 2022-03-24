@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
+﻿using Content.Shared.Database;
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Administration;
+namespace Content.Shared.Administration.Logs;
 
 [Serializable, NetSerializable]
 public sealed class AdminLogsEuiState : EuiStateBase

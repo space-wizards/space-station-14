@@ -33,6 +33,7 @@ namespace Content.Server.Database
         public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
         public DbSet<ServerRoleBan> RoleBan { get; set; } = default!;
         public DbSet<ServerRoleUnban> RoleUnban { get; set; } = default!;
+        public DbSet<AdminNote> AdminNotes { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -139,6 +140,30 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<ConnectionLog>()
                 .HasIndex(p => p.UserId);
+
+            modelBuilder.Entity<AdminNote>()
+                .HasOne(note => note.Player)
+                .WithMany(player => player.AdminNotesReceived)
+                .HasForeignKey(note => note.PlayerUserId)
+                .HasPrincipalKey(player => player.UserId);
+
+            modelBuilder.Entity<AdminNote>()
+                .HasOne(version => version.CreatedBy)
+                .WithMany(author => author.AdminNotesCreated)
+                .HasForeignKey(note => note.CreatedById)
+                .HasPrincipalKey(author => author.UserId);
+
+            modelBuilder.Entity<AdminNote>()
+                .HasOne(version => version.LastEditedBy)
+                .WithMany(author => author.AdminNotesLastEdited)
+                .HasForeignKey(note => note.LastEditedById)
+                .HasPrincipalKey(author => author.UserId);
+
+            modelBuilder.Entity<AdminNote>()
+                .HasOne(version => version.DeletedBy)
+                .WithMany(author => author.AdminNotesDeleted)
+                .HasForeignKey(note => note.DeletedById)
+                .HasPrincipalKey(author => author.UserId);
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -248,6 +273,11 @@ namespace Content.Server.Database
         // Data that changes with each round
         public List<Round> Rounds { get; set; } = null!;
         public List<AdminLogPlayer> AdminLogs { get; set; } = null!;
+
+        public List<AdminNote> AdminNotesReceived { get; set; } = null!;
+        public List<AdminNote> AdminNotesCreated { get; set; } = null!;
+        public List<AdminNote> AdminNotesLastEdited { get; set; } = null!;
+        public List<AdminNote> AdminNotesDeleted { get; set; } = null!;
     }
 
     [Table("whitelist")]
@@ -458,5 +488,34 @@ namespace Content.Server.Database
         public Guid? UnbanningAdmin { get; set; }
 
         public DateTime UnbanTime { get; set; }
+    }
+
+    [Index(nameof(PlayerUserId))]
+    public class AdminNote
+    {
+        [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int Id { get; set; }
+
+        [ForeignKey("Round")] public int? RoundId { get; set; }
+        public Round? Round { get; set; }
+
+        [Required, ForeignKey("Player")] public Guid PlayerUserId { get; set; }
+        public Player Player { get; set; } = default!;
+
+        [Required, MaxLength(4096)] public string Message { get; set; } = string.Empty;
+
+        [Required, ForeignKey("CreatedBy")] public Guid CreatedById { get; set; }
+        [Required] public Player CreatedBy { get; set; } = default!;
+
+        [Required] public DateTime CreatedAt { get; set; }
+
+        [Required, ForeignKey("LastEditedBy")] public Guid LastEditedById { get; set; }
+        [Required] public Player LastEditedBy { get; set; } = default!;
+
+        [Required] public DateTime LastEditedAt { get; set; }
+
+        public bool Deleted { get; set; }
+        [ForeignKey("DeletedBy")] public Guid? DeletedById { get; set; }
+        public Player? DeletedBy { get; set; }
+        public DateTime? DeletedAt { get; set; }
     }
 }

@@ -1,0 +1,6 @@
+﻿<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+              Orientation="Vertical">
+    <RichTextLabel Name="MessageLabel"/>
+    <cc:HSeparator Name="Separator"/>
+</BoxContainer>

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.IO;
 using System.Net;
 using System.Text.Json;
@@ -16,9 +14,6 @@ using Microsoft.Extensions.Logging;
 using Npgsql;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
@@ -183,6 +178,16 @@ namespace Content.Server.Database
         Task AddToWhitelistAsync(NetUserId player);
 
         Task RemoveFromWhitelistAsync(NetUserId player);
+
+        #endregion
+
+        #region Admin Notes
+
+        Task<int> AddAdminNote(int? roundId, Guid player, string message, Guid createdBy, DateTime createdAt);
+        Task<AdminNote?> GetAdminNote(int id);
+        Task<List<AdminNote>> GetAdminNotes(Guid player);
+        Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt);
+        Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt);
 
         #endregion
     }
@@ -453,6 +458,42 @@ namespace Content.Server.Database
         public Task RemoveFromWhitelistAsync(NetUserId player)
         {
             return _db.RemoveFromWhitelistAsync(player);
+        }
+
+        public Task<int> AddAdminNote(int? roundId, Guid player, string message, Guid createdBy, DateTime createdAt)
+        {
+            var note = new AdminNote
+            {
+                RoundId = roundId,
+                CreatedById = createdBy,
+                LastEditedById = createdBy,
+                PlayerUserId = player,
+                Message = message,
+                CreatedAt = createdAt,
+                LastEditedAt = createdAt
+            };
+
+            return _db.AddAdminNote(note);
+        }
+
+        public Task<AdminNote?> GetAdminNote(int id)
+        {
+            return _db.GetAdminNote(id);
+        }
+
+        public Task<List<AdminNote>> GetAdminNotes(Guid player)
+        {
+            return _db.GetAdminNotes(player);
+        }
+
+        public Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt)
+        {
+            return _db.DeleteAdminNote(id, deletedBy, deletedAt);
+        }
+
+        public Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt)
+        {
+            return _db.EditAdminNote(id, message, editedBy, editedAt);
         }
 
         private DbContextOptions<PostgresServerDbContext> CreatePostgresOptions()
