@@ -17,7 +17,7 @@
 - type: species
   id: Reptilian
   name: Reptilian
-  roundStart: true
+  roundStart: false
   prototype: MobReptilian
   dollPrototype: MobReptilianDummy
   skinColoration: Hues
