@@ -66,8 +66,16 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
         {
             base.Dispose(disposing);
 
-            _adminSystem.PlayerListChanged -= RefreshPlayerList;
-            OverlayButton.OnPressed -= OverlayButtonPressed;
+            if (disposing)
+            {
+                _adminSystem.PlayerListChanged -= RefreshPlayerList;
+                _adminSystem.OverlayEnabled -= OverlayEnabled;
+                _adminSystem.OverlayDisabled -= OverlayDisabled;
+
+                OverlayButton.OnPressed -= OverlayButtonPressed;
+
+                ListHeader.OnHeaderClicked -= HeaderClicked;
+            }
         }
 
         private void RefreshPlayerList(IReadOnlyList<PlayerInfo> players)
