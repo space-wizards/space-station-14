@@ -64,7 +64,7 @@
 - type: entity
   id: LeftArmReptilian
   name: "left reptilian arm"
-  parent: PartHuman
+  parent: PartReptilian
   components:
   - type: Sprite
     netsync: false
@@ -84,7 +84,7 @@
 - type: entity
   id: RightArmReptilian
   name: "right reptilian arm"
-  parent: PartHuman
+  parent: PartReptilian
   components:
   - type: Sprite
     netsync: false
@@ -184,7 +184,7 @@
 - type: entity
   id: LeftFootReptilian
   name: "left reptilian foot"
-  parent: PartHuman
+  parent: PartReptilian
   components:
   - type: Sprite
     netsync: false
