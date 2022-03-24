@@ -41,7 +41,7 @@ namespace Content.Server.Clothing
                 return;
 
             ActivationVerb verb = new();
-            verb.Text = Loc.GetString("transfer-solution-verb-get-data-text");
+            verb.Text = Loc.GetString("drink-component-try-use-drink-success-slurp");
             verb.IconEntity = uid;
             verb.Act = () => PerformerDrink(uid, component, args);
 
