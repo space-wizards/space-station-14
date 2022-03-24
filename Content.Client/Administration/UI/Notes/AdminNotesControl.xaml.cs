@@ -16,8 +16,6 @@ public sealed partial class AdminNotesControl : Control
     public event Action<string>? OnNewNoteEntered;
     public event Action<int>? OnNoteDeleted;
 
-    private readonly Dictionary<int, AdminNotesLine> _inputs = new();
-
     private AdminNotesLinePopup? _popup;
 
     public AdminNotesControl()
@@ -27,6 +25,11 @@ public sealed partial class AdminNotesControl : Control
 
         NewNote.OnTextEntered += NewNoteEntered;
     }
+
+    private Dictionary<int, AdminNotesLine> Inputs { get; } = new();
+    private bool CanCreate { get; set; }
+    private bool CanDelete { get; set; }
+    private bool CanEdit { get; set; }
 
     private void NewNoteEntered(LineEditEventArgs args)
     {
@@ -54,10 +57,10 @@ public sealed partial class AdminNotesControl : Control
     {
         ClosePopup();
 
-        _popup = new AdminNotesLinePopup(line.Note);
+        _popup = new AdminNotesLinePopup(line.Note, CanDelete, CanEdit);
         _popup.OnEditPressed += noteId =>
         {
-            if (!_inputs.TryGetValue(noteId, out var input))
+            if (!Inputs.TryGetValue(noteId, out var input))
             {
                 return;
             }
@@ -85,18 +88,18 @@ public sealed partial class AdminNotesControl : Control
 
     public void SetNotes(Dictionary<int, SharedAdminNote> notes)
     {
-        foreach (var (id, input) in _inputs)
+        foreach (var (id, input) in Inputs)
         {
             if (!notes.ContainsKey(id))
             {
                 Notes.RemoveChild(input);
-                _inputs.Remove(id);
+                Inputs.Remove(id);
             }
         }
 
         foreach (var note in notes.Values.OrderBy(note => note.Id))
         {
-            if (_inputs.TryGetValue(note.Id, out var input))
+            if (Inputs.TryGetValue(note.Id, out var input))
             {
                 input.UpdateNote(note);
                 continue;
@@ -106,8 +109,17 @@ public sealed partial class AdminNotesControl : Control
             input.OnSubmitted += NoteSubmitted;
             input.OnRightClicked += NoteRightClicked;
             Notes.AddChild(input);
-            _inputs[note.Id] = input;
+            Inputs[note.Id] = input;
         }
+    }
+
+    public void SetPermissions(bool create, bool delete, bool edit)
+    {
+        CanCreate = create;
+        CanDelete = delete;
+        CanEdit = edit;
+        NewNoteLabel.Visible = create;
+        NewNote.Visible = create;
     }
 
     protected override void Dispose(bool disposing)
@@ -119,12 +131,12 @@ public sealed partial class AdminNotesControl : Control
             return;
         }
 
-        foreach (var input in _inputs.Values)
+        foreach (var input in Inputs.Values)
         {
             input.OnSubmitted -= NoteSubmitted;
         }
 
-        _inputs.Clear();
+        Inputs.Clear();
         NewNote.OnTextEntered -= NewNoteEntered;
 
         if (_popup != null)

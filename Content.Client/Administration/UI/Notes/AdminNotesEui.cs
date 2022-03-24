@@ -32,6 +32,7 @@ public sealed class AdminNotesEui : BaseEui
 
         NoteWindow.SetTitlePlayer(s.NotedPlayerName);
         NoteControl.SetNotes(s.Notes);
+        NoteControl.SetPermissions(s.CanCreate, s.CanDelete, s.CanEdit);
     }
 
     public override void Opened()

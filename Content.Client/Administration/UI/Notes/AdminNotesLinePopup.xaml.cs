@@ -12,14 +12,13 @@ public sealed partial class AdminNotesLinePopup : Popup
     public event Action<int>? OnEditPressed;
     public event Action<int>? OnDeletePressed;
 
-    private readonly int _noteId;
-    private bool _confirmingDelete;
-
-    public AdminNotesLinePopup(SharedAdminNote note)
+    public AdminNotesLinePopup(SharedAdminNote note, bool showDelete, bool showEdit)
     {
         RobustXamlLoader.Load(this);
 
-        _noteId = note.Id;
+        NoteId = note.Id;
+        DeleteButton.Visible = showDelete;
+        EditButton.Visible = showEdit;
 
         UserInterfaceManager.ModalRoot.AddChild(this);
 
@@ -36,25 +35,28 @@ public sealed partial class AdminNotesLinePopup : Popup
         DeleteButton.OnPressed += DeletePressed;
     }
 
+    private int NoteId { get; }
+    private bool ConfirmingDelete { get; set; }
+
     private void EditPressed(ButtonEventArgs args)
     {
-        OnEditPressed?.Invoke(_noteId);
+        OnEditPressed?.Invoke(NoteId);
         Close();
     }
 
     private void DeletePressed(ButtonEventArgs args)
     {
-        if (!_confirmingDelete)
+        if (!ConfirmingDelete)
         {
-            _confirmingDelete = true;
+            ConfirmingDelete = true;
             DeleteButton.Text = Loc.GetString("admin-notes-delete-confirm");
             DeleteButton.ModulateSelfOverride = Color.Red;
             return;
         }
 
-        _confirmingDelete = false;
+        ConfirmingDelete = false;
         DeleteButton.ModulateSelfOverride = null;
-        OnDeletePressed?.Invoke(_noteId);
+        OnDeletePressed?.Invoke(NoteId);
         Close();
     }
 

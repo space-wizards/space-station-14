@@ -6,14 +6,20 @@ namespace Content.Shared.Administration.Notes;
 [Serializable, NetSerializable]
 public sealed class AdminNotesEuiState : EuiStateBase
 {
-    public AdminNotesEuiState(string notedPlayerName, Dictionary<int, SharedAdminNote> notes)
+    public AdminNotesEuiState(string notedPlayerName, Dictionary<int, SharedAdminNote> notes, bool canCreate, bool canDelete, bool canEdit)
     {
         NotedPlayerName = notedPlayerName;
         Notes = notes;
+        CanCreate = canCreate;
+        CanDelete = canDelete;
+        CanEdit = canEdit;
     }
 
     public string NotedPlayerName { get; }
     public Dictionary<int, SharedAdminNote> Notes { get; }
+    public bool CanCreate { get; }
+    public bool CanDelete { get; }
+    public bool CanEdit { get; }
 }
 
 public static class AdminNoteEuiMsg

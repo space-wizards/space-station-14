@@ -10,8 +10,8 @@
             <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
                 <BoxContainer Orientation="Vertical" Name="Notes" Access="Public" VerticalExpand="True"/>
             </ScrollContainer>
-            <Label Text="{Loc admin-notes-new-note}" />
-            <HistoryLineEdit Name="NewNote" Access="Public"/>
+            <Label Name="NewNoteLabel" Text="{Loc admin-notes-new-note}" />
+            <HistoryLineEdit Name="NewNote"/>
         </BoxContainer>
     </PanelContainer>
 </Control>

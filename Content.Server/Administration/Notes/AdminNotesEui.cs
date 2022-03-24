@@ -10,7 +10,7 @@ namespace Content.Server.Administration.Notes;
 public sealed class AdminNotesEui : BaseEui
 {
     [Dependency] private readonly IAdminManager _admins = default!;
-    [Dependency] private readonly IAdminNotesManager _notes = default!;
+    [Dependency] private readonly IAdminNotesManager _notesMan = default!;
 
     public AdminNotesEui()
     {
@@ -26,9 +26,9 @@ public sealed class AdminNotesEui : BaseEui
         base.Opened();
 
         _admins.OnPermsChanged += OnPermsChanged;
-        _notes.NoteAdded += NoteModified;
-        _notes.NoteModified += NoteModified;
-        _notes.NoteDeleted += NoteDeleted;
+        _notesMan.NoteAdded += NoteModified;
+        _notesMan.NoteModified += NoteModified;
+        _notesMan.NoteDeleted += NoteDeleted;
     }
 
     public override void Closed()
@@ -36,14 +36,20 @@ public sealed class AdminNotesEui : BaseEui
         base.Closed();
 
         _admins.OnPermsChanged -= OnPermsChanged;
-        _notes.NoteAdded -= NoteModified;
-        _notes.NoteModified -= NoteModified;
-        _notes.NoteDeleted -= NoteDeleted;
+        _notesMan.NoteAdded -= NoteModified;
+        _notesMan.NoteModified -= NoteModified;
+        _notesMan.NoteDeleted -= NoteDeleted;
     }
 
     public override EuiStateBase GetNewState()
     {
-        return new AdminNotesEuiState(NotedPlayerName, Notes);
+        return new AdminNotesEuiState(
+            NotedPlayerName,
+            Notes,
+            _notesMan.CanCreate(Player),
+            _notesMan.CanDelete(Player),
+            _notesMan.CanEdit(Player)
+        );
     }
 
     public override async void HandleMessage(EuiMessageBase msg)
@@ -59,7 +65,7 @@ public sealed class AdminNotesEui : BaseEui
             }
             case CreateNoteRequest {Message: var message}:
             {
-                if (!_notes.CanCreate(Player))
+                if (!_notesMan.CanCreate(Player))
                 {
                     Close();
                     break;
@@ -70,23 +76,23 @@ public sealed class AdminNotesEui : BaseEui
                     break;
                 }
 
-                await _notes.AddNote(Player, NotedPlayer, message);
+                await _notesMan.AddNote(Player, NotedPlayer, message);
                 break;
             }
             case DeleteNoteRequest request:
             {
-                if (!_notes.CanDelete(Player))
+                if (!_notesMan.CanDelete(Player))
                 {
                     Close();
                     break;
                 }
 
-                await _notes.DeleteNote(request.Id, Player);
+                await _notesMan.DeleteNote(request.Id, Player);
                 break;
             }
             case EditNoteRequest request:
             {
-                if (!_notes.CanEdit(Player))
+                if (!_notesMan.CanEdit(Player))
                 {
                     Close();
                     break;
@@ -97,7 +103,7 @@ public sealed class AdminNotesEui : BaseEui
                     break;
                 }
 
-                await _notes.ModifyNote(request.Id, Player, request.Message);
+                await _notesMan.ModifyNote(request.Id, Player, request.Message);
                 break;
             }
         }
@@ -123,10 +129,10 @@ public sealed class AdminNotesEui : BaseEui
 
     private async Task LoadFromDb()
     {
-        NotedPlayerName = await _notes.GetPlayerName(NotedPlayer);
+        NotedPlayerName = await _notesMan.GetPlayerName(NotedPlayer);
 
         var notes = new Dictionary<int, SharedAdminNote>();
-        foreach (var note in await _notes.GetNotes(NotedPlayer))
+        foreach (var note in await _notesMan.GetNotes(NotedPlayer))
         {
             notes.Add(note.Id, note.ToShared());
         }
@@ -138,9 +144,13 @@ public sealed class AdminNotesEui : BaseEui
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
     {
-        if (args.Player == Player && !_notes.CanView(Player))
+        if (args.Player == Player && !_notesMan.CanView(Player))
         {
             Close();
+        }
+        else
+        {
+            StateDirty();
         }
     }
 }
