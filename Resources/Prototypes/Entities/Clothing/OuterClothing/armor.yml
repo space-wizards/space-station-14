@@ -184,8 +184,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.7
-        Slash: 0.4
+        Blunt: 0.8
+        Slash: 0.6
         Piercing: 0.9
 
 - type: entity
@@ -201,8 +201,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.7
-        Slash: 0.4
+        Blunt: 0.8
+        Slash: 0.6
         Piercing: 0.9
 
 - type: entity
@@ -218,8 +218,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.7
-        Slash: 0.4
+        Blunt: 0.8
+        Slash: 0.6
         Piercing: 0.9
 
 - type: entity
@@ -235,8 +235,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.7
-        Slash: 0.4
+        Blunt: 0.8
+        Slash: 0.6
         Piercing: 0.9
 
 - type: entity
@@ -252,6 +252,6 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6
-        Slash: 0.4
+        Blunt: 0.7
+        Slash: 0.5
         Piercing: 0.9
