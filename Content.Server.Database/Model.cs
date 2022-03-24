@@ -517,5 +517,7 @@ namespace Content.Server.Database
         [ForeignKey("DeletedBy")] public Guid? DeletedById { get; set; }
         public Player? DeletedBy { get; set; }
         public DateTime? DeletedAt { get; set; }
+
+        public bool ShownToPlayer { get; set; }
     }
 }

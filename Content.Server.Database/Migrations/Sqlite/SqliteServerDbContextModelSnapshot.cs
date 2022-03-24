@@ -217,6 +217,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("round_id");
 
+                    b.Property<bool>("ShownToPlayer")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("shown_to_player");
+
                     b.HasKey("Id")
                         .HasName("PK_admin_notes");
 

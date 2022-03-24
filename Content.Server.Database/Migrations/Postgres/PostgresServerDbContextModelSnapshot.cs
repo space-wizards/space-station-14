@@ -235,6 +235,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("round_id");
 
+                    b.Property<bool>("ShownToPlayer")
+                        .HasColumnType("boolean")
+                        .HasColumnName("shown_to_player");
+
                     b.HasKey("Id")
                         .HasName("PK_admin_notes");
 

@@ -2,9 +2,8 @@
 
 using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Content.Server.Database.Migrations.Postgres
+namespace Content.Server.Database.Migrations.Sqlite
 {
     public partial class AdminNotes : Migration
     {
@@ -14,18 +13,19 @@ namespace Content.Server.Database.Migrations.Postgres
                 name: "admin_notes",
                 columns: table => new
                 {
-                    admin_notes_id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    round_id = table.Column<int>(type: "integer", nullable: true),
-                    player_user_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    message = table.Column<string>(type: "character varying(4096)", maxLength: 4096, nullable: false),
-                    created_by_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    last_edited_by_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    last_edited_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    deleted = table.Column<bool>(type: "boolean", nullable: false),
-                    deleted_by_id = table.Column<Guid>(type: "uuid", nullable: true),
-                    deleted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    admin_notes_id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    round_id = table.Column<int>(type: "INTEGER", nullable: true),
+                    player_user_id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    message = table.Column<string>(type: "TEXT", maxLength: 4096, nullable: false),
+                    created_by_id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    created_at = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    last_edited_by_id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    last_edited_at = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    deleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    deleted_by_id = table.Column<Guid>(type: "TEXT", nullable: true),
+                    deleted_at = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    shown_to_player = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
