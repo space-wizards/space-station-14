@@ -28,7 +28,7 @@ public sealed partial class StorageSystem
             {
                 if (!orGroupedSpawns.TryGetValue(entry.GroupId, out OrGroup? orGroup))
                 {
-                    orGroup = new(new List<EntitySpawnEntry>(), 0f);
+                    orGroup = new();
                     orGroupedSpawns.Add(entry.GroupId, orGroup);
                 }
                 orGroup.Entries.Add(entry);
@@ -53,39 +53,32 @@ public sealed partial class StorageSystem
         }
 
         // handle orgroup spawns
-        foreach (var group in orGroupedSpawns)
+        foreach (var spawnValue in orGroupedSpawns.Values)
         {
-            double diceRoll = _random.NextDouble() * group.Value.CumulativeProbability;
-            _random.Shuffle(group.Value.Entries);
-
+            // For each group use the added cumulative probability to roll a double in that range
+            double diceRoll = _random.NextDouble() * spawnValue.CumulativeProbability;
+            // Add the entry's spawn probability to this value, if equals or lower, spawn item, otherwise continue to next item.
             double cumulative = 0.0;
-            for (int i = 0; i < group.Value.Entries.Count; i++)
+            foreach (var entry in spawnValue.Entries)
             {
-                cumulative += group.Value.Entries[i].SpawnProbability;
-                if (diceRoll <= cumulative)
+                cumulative += entry.SpawnProbability;
+                if (diceRoll > cumulative) continue;
+                // Dice roll succeeded, spawn item and break loop
+                for (var index = 0; index < entry.Amount; index++)
                 {
-                    for (var index = 0; index < group.Value.Entries[i].Amount; index++)
-                    {
-                        var ent = EntityManager.SpawnEntity(group.Value.Entries[i].PrototypeId, coordinates);
-
-                        if (storage.Insert(ent)) continue;
-
-                        Logger.ErrorS("storage", $"Tried to StorageFill {group.Value.Entries[i].PrototypeId} inside {uid} but can't.");
-                        EntityManager.DeleteEntity(ent);
-                    }
-                    break;
+                    var ent = EntityManager.SpawnEntity(entry.PrototypeId, coordinates);
+                    if (storage.Insert(ent)) continue;
+                    Logger.ErrorS("storage", $"Tried to StorageFill {entry.PrototypeId} inside {uid} but can't.");
+                    EntityManager.DeleteEntity(ent);
                 }
+                break;
             }
         }
     }
+
     private sealed class OrGroup
     {
         public List<EntitySpawnEntry> Entries { get; set; } = new();
         public float CumulativeProbability { get; set; } = 0f;
-        public OrGroup(List<EntitySpawnEntry> entries, float cumulativeProbability)
-        {
-            Entries = entries;
-            CumulativeProbability = cumulativeProbability;
-        }
     }
 }
