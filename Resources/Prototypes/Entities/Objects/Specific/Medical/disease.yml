@@ -19,7 +19,7 @@
   parent: BaseItem
   id: Vaccine
   name: Vaccine
-  description: There's no way you don't already have an opinion on these.
+  description: Prevents people who DON'T already have a disease from catching it.
   components:
   - type: Item
     size: 3
