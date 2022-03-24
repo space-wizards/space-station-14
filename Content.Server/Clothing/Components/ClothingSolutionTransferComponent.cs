@@ -31,10 +31,7 @@ namespace Content.Server.Clothing.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanChangeTransferAmount { get; set; } = false;
 
-        /* TODO: add sidebar action
-        [DataField("insantAction", required: true)]
-        public InstantAction ToggleEventAction = new();
-        */
+        // TODO: add sidebar action
     }
 }
 
