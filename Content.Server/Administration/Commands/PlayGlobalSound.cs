@@ -13,8 +13,8 @@ namespace Content.Server.Administration.Commands;
 public sealed class PlayGlobalSound : IConsoleCommand
 {
     public string Command => "playglobalsound";
-    public string Description => "Plays a global sound for a specific player or for every connected player if no players are specified.";
-    public string Help => $"playglobalsound <path> [user 1] ... [user n]\n{Description}";
+    public string Description => Loc.GetString("play-global-sound-command-description");
+    public string Help => Loc.GetString("play-global-sound-command-help");
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         Filter filter;
@@ -43,7 +43,7 @@ public sealed class PlayGlobalSound : IConsoleCommand
 
                     if (!playerManager.TryGetSessionByUsername(username, out var session))
                     {
-                        shell.WriteError($"Player \"{username}\" not found.");
+                        shell.WriteError(Loc.GetString("play-global-sound-command-player-not-found", ("username", username)));
                         continue;
                     }
 
