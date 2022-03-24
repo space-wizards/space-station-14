@@ -45,7 +45,11 @@ public sealed partial class AdminNotesLine : BoxContainer
 
         _label = new RichTextLabel();
         _label.SetMessage(Note.Message);
+
         AddChild(_label);
+        _label.SetPositionFirst();
+
+        Separator.Visible = true;
     }
 
     private void AddLineEdit()
@@ -61,8 +65,11 @@ public sealed partial class AdminNotesLine : BoxContainer
         _edit.OnFocusExit += Submitted;
 
         AddChild(_edit);
+        _edit.SetPositionFirst();
         _edit.GrabKeyboardFocus();
         _edit.CursorPosition = _edit.Text.Length;
+
+        Separator.Visible = false;
     }
 
     private void Submitted(LineEditEventArgs args)
