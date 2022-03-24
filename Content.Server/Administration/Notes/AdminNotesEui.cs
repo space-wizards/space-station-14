@@ -10,14 +10,11 @@ namespace Content.Server.Administration.Notes;
 public sealed class AdminNotesEui : BaseEui
 {
     [Dependency] private readonly IAdminManager _admins = default!;
-
-    private readonly AdminNoteSystem _notes;
+    [Dependency] private readonly IAdminNotesManager _notes = default!;
 
     public AdminNotesEui()
     {
         IoCManager.InjectDependencies(this);
-
-        _notes = EntitySystem.Get<AdminNoteSystem>();
     }
 
     private Guid NotedPlayer { get; set; }

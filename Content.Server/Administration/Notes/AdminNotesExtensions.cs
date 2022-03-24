@@ -3,7 +3,7 @@ using Content.Shared.Administration.Notes;
 
 namespace Content.Server.Administration.Notes;
 
-public static class AdminNoteExtensions
+public static class AdminNotesExtensions
 {
     public static SharedAdminNote ToShared(this AdminNote note)
     {

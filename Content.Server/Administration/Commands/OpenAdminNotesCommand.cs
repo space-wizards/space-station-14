@@ -33,6 +33,6 @@ public sealed class OpenAdminNotesCommand : IConsoleCommand
                 return;
         }
 
-        await EntitySystem.Get<AdminNoteSystem>().OpenEui(player, notedPlayer);
+        await IoCManager.Resolve<IAdminNotesManager>().OpenEui(player, notedPlayer);
     }
 }
