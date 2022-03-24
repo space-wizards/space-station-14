@@ -1,5 +1,4 @@
 ﻿using Content.Shared.CharacterAppearance;
-using Robust.Shared.IoC;
 
 namespace Content.Shared.IoC
 {

@@ -1,8 +1,8 @@
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -10,8 +10,6 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -23,7 +21,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
 
         public override void Initialize()
         {
@@ -171,7 +169,7 @@ namespace Content.Server.Body.Systems
 
                         if (effect.ShouldLog)
                         {
-                            _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
+                            _adminLogs.Add(LogType.ReagentEffect, effect.LogImpact,
                                 $"Metabolism effect {effect.GetType().Name:effect} of reagent {args.Reagent.Name:reagent} applied on entity {actualEntity:entity} at {Transform(actualEntity).Coordinates:coordinates}");
                         }
 

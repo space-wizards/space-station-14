@@ -3,7 +3,6 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.Hands.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
@@ -23,7 +22,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     {
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
@@ -57,7 +56,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (environment is not null)
                 _atmosphereSystem.Merge(environment, canister.Air);
 
-            _adminLogSystem.Add(LogType.CanisterPurged, LogImpact.Medium, $"Canister {ToPrettyString(uid):canister} purged its contents of {canister.Air:gas} into the environment.");
+            _adminLogs.Add(LogType.CanisterPurged, LogImpact.Medium, $"Canister {ToPrettyString(uid):canister} purged its contents of {canister.Air:gas} into the environment.");
             canister.Air.Clear();
         }
 
@@ -111,7 +110,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (container.ContainedEntities.Count == 0)
                 return;
 
-            _adminLogSystem.Add(LogType.CanisterTankEjected, LogImpact.Medium, $"Player {ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} ejected tank {ToPrettyString(container.ContainedEntities[0]):tank} from {ToPrettyString(uid):canister}");
+            _adminLogs.Add(LogType.CanisterTankEjected, LogImpact.Medium, $"Player {ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} ejected tank {ToPrettyString(container.ContainedEntities[0]):tank} from {ToPrettyString(uid):canister}");
             container.Remove(container.ContainedEntities[0]);
         }
 
@@ -119,7 +118,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         {
             var pressure = Math.Clamp(args.Pressure, canister.MinReleasePressure, canister.MaxReleasePressure);
 
-            _adminLogSystem.Add(LogType.CanisterPressure, LogImpact.Medium, $"{ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} set the release pressure on {ToPrettyString(uid):canister} to {args.Pressure}");
+            _adminLogs.Add(LogType.CanisterPressure, LogImpact.Medium, $"{ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} set the release pressure on {ToPrettyString(uid):canister} to {args.Pressure}");
 
             canister.ReleasePressure = pressure;
             DirtyUI(uid, canister);
@@ -132,7 +131,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 && containerManager.TryGetContainer(canister.ContainerName, out var container))
                 impact = container.ContainedEntities.Count != 0 ? LogImpact.Medium : LogImpact.High;
 
-            _adminLogSystem.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} set the valve on {ToPrettyString(uid):canister} to {args.Valve:valveState}");
+            _adminLogs.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} set the valve on {ToPrettyString(uid):canister} to {args.Valve:valveState}");
 
             canister.ReleaseValve = args.Valve;
             DirtyUI(uid, canister);
@@ -246,7 +245,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!_handsSystem.TryDropIntoContainer(args.User, args.Used, container))
                 return;
 
-            _adminLogSystem.Add(LogType.CanisterTankInserted, LogImpact.Medium, $"Player {ToPrettyString(args.User):player} inserted tank {ToPrettyString(container.ContainedEntities[0]):tank} into {ToPrettyString(canister):canister}");
+            _adminLogs.Add(LogType.CanisterTankInserted, LogImpact.Medium, $"Player {ToPrettyString(args.User):player} inserted tank {ToPrettyString(container.ContainedEntities[0]):tank} into {ToPrettyString(canister):canister}");
 
             args.Handled = true;
         }

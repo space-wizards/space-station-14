@@ -1,9 +1,9 @@
-using Content.Shared.Emag.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Examine;
-using Content.Shared.Popups;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Emag.Components;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Emag.Systems
@@ -16,7 +16,7 @@ namespace Content.Shared.Emag.Systems
     public sealed class SharedEmagSystem : EntitySystem
     {
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedAdminLogSystem _adminLog = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogs = default!;
 
         public override void Initialize()
         {
@@ -53,7 +53,7 @@ namespace Content.Shared.Emag.Systems
             if (emaggedEvent.Handled)
             {
                 _popupSystem.PopupEntity(Loc.GetString("emag-success",("target", args.Target)), args.User, Filter.Entities(args.User));
-                _adminLog.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(args.User):player} emagged {ToPrettyString(args.Target.Value):target}");
+                _adminLogs.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(args.User):player} emagged {ToPrettyString(args.Target.Value):target}");
                 component.Charges--;
                 return;
             }

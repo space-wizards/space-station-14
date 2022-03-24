@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.EUI;
 using Content.Server.Ghost.Components;
@@ -19,10 +17,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Ghost.Roles
 {
@@ -31,7 +26,7 @@ namespace Content.Server.Ghost.Roles
     {
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
@@ -183,7 +178,7 @@ namespace Content.Server.Ghost.Roles
             if (!role.Take(player)) return;
 
             if (player.AttachedEntity != null)
-                _adminLogSystem.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
+                _adminLogs.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
 
             CloseEui(player);
         }

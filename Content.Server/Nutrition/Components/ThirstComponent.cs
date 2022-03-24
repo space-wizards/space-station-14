@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Administration.Logs;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -9,19 +6,14 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Nutrition.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Players;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
     public sealed class ThirstComponent : SharedThirstComponent
     {
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -202,9 +194,9 @@ namespace Content.Server.Nutrition.Components
             if (calculatedThirstThreshold != _currentThirstThreshold)
             {
                 if (_currentThirstThreshold == ThirstThreshold.Dead)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{_entMan.ToPrettyString(Owner):entity} has stopped taking dehydration damage");
+                    _adminLogs.Add(LogType.Thirst, $"{_entMan.ToPrettyString(Owner):entity} has stopped taking dehydration damage");
                 else if (calculatedThirstThreshold == ThirstThreshold.Dead)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{_entMan.ToPrettyString(Owner):entity} has started taking dehydration damage");
+                    _adminLogs.Add(LogType.Thirst, $"{_entMan.ToPrettyString(Owner):entity} has started taking dehydration damage");
 
                 _currentThirstThreshold = calculatedThirstThreshold;
                 ThirstThresholdEffect();

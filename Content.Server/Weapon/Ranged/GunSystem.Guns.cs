@@ -1,26 +1,15 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Administration.Logs;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction.Components;
 using Content.Server.Projectiles.Components;
-using Content.Server.Stunnable;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Camera;
-using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.Examine;
 using Content.Shared.Popups;
-using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -245,7 +234,7 @@ public sealed partial class GunSystem
             hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
             var dmg = _damageable.TryChangeDamage(result.HitEntity, hitscan.Damage);
             if (dmg != null)
-                _logs.Add(LogType.HitScanHit,
+                _adminLogs.Add(LogType.HitScanHit,
                     $"{EntityManager.ToPrettyString(shooter):user} hit {EntityManager.ToPrettyString(result.HitEntity):target} using {EntityManager.ToPrettyString(hitscan.Owner):used} and dealt {dmg.Total:damage} damage");
         }
         else

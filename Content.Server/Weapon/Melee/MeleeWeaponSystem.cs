@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
@@ -8,20 +6,17 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
-using Content.Shared.Damage;
-using Content.Shared.Sound;
 using Content.Shared.Audio;
+using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
+using Content.Shared.Sound;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -30,10 +25,10 @@ namespace Content.Server.Weapon.Melee
 {
     public sealed class MeleeWeaponSystem : EntitySystem
     {
-        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private SolutionContainerSystem _solutionsSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
 
         public override void Initialize()
@@ -102,10 +97,10 @@ namespace Content.Server.Weapon.Melee
                     if (damageResult != null)
                     {
                         if (args.Used == args.User)
-                            _logSystem.Add(LogType.MeleeHit,
+                            _adminLogs.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using their hands and dealt {damageResult.Total:damage} damage");
                         else
-                            _logSystem.Add(LogType.MeleeHit,
+                            _adminLogs.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:damage} damage");
                     }
 
@@ -194,10 +189,10 @@ namespace Content.Server.Weapon.Melee
                     if (damageResult != null)
                     {
                         if (args.Used == args.User)
-                            _logSystem.Add(LogType.MeleeHit,
+                            _adminLogs.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(entity):target} using their hands and dealt {damageResult.Total:damage} damage");
                         else
-                            _logSystem.Add(LogType.MeleeHit,
+                            _adminLogs.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(entity):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:damage} damage");
                     }
                 }

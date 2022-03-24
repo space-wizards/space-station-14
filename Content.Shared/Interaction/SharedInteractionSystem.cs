@@ -7,24 +7,24 @@ using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
+using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Content.Shared.Wall;
-using Content.Shared.Item;
-using Robust.Shared.Player;
-using Robust.Shared.Input;
 using Robust.Shared.Timing;
-using Content.Shared.Interaction.Events;
 
 #pragma warning disable 618
 
@@ -41,7 +41,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedPhysicsSystem _sharedBroadphaseSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
-        [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogs = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
@@ -268,7 +268,7 @@ namespace Content.Shared.Interaction
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target, message);
-            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
+            _adminLogs.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
             if (message.Handled)
                 return;
 
@@ -741,10 +741,10 @@ namespace Content.Shared.Interaction
             if (activateMsg.Handled)
             {
                 _useDelay.BeginDelay(used, delayComponent);
-                _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
+                _adminLogs.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
                 return true;
             }
-            
+
             var activatable = AllComps<IActivate>(used).FirstOrDefault();
             if (activatable == null)
                 return false;
@@ -753,7 +753,7 @@ namespace Content.Shared.Interaction
 
             // No way to check success.
             _useDelay.BeginDelay(used, delayComponent);
-            _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
+            _adminLogs.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;
         }
         #endregion
@@ -828,11 +828,11 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(thrown, throwMsg);
             if (throwMsg.Handled)
             {
-                _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
+                _adminLogs.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
                 return;
             }
 
-            _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
+            _adminLogs.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
         }
         #endregion
 
@@ -841,7 +841,7 @@ namespace Content.Shared.Interaction
             var dropMsg = new DroppedEvent(user);
             RaiseLocalEvent(item, dropMsg);
             if (dropMsg.Handled)
-                _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
+                _adminLogs.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
             Transform(item).LocalRotation = Angle.Zero;
         }
         #endregion

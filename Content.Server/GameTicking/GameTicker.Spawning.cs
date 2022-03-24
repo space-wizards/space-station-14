@@ -214,9 +214,9 @@ namespace Content.Server.GameTicking
             _stationSystem.TryAssignJobToStation(station, jobPrototype);
 
             if (lateJoin)
-                _adminLogSystem.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
+                _adminLogs.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
             else
-                _adminLogSystem.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name} joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
+                _adminLogs.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name} joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
 
             // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
             var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, station, character);
@@ -226,7 +226,7 @@ namespace Content.Server.GameTicking
         public void Respawn(IPlayerSession player)
         {
             player.ContentData()?.WipeMind();
-            _adminLogSystem.Add(LogType.Respawn, LogImpact.Medium, $"Player {player} was respawned.");
+            _adminLogs.Add(LogType.Respawn, LogImpact.Medium, $"Player {player} was respawned.");
 
             if (LobbyEnabled)
                 PlayerJoinLobby(player);

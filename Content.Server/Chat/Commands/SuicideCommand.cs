@@ -15,9 +15,6 @@ using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat.Commands
@@ -84,8 +81,10 @@ namespace Content.Server.Chat.Commands
             //TODO: needs to check if the mob is actually alive
             //TODO: maybe set a suicided flag to prevent resurrection?
 
-            EntitySystem.Get<AdminLogSystem>().Add(LogType.Suicide,
-                $"{_entities.ToPrettyString(player.AttachedEntity.Value):player} is committing suicide");
+            IoCManager.Resolve<IAdminLogManager>().Add(
+                LogType.Suicide,
+                $"{_entities.ToPrettyString(player.AttachedEntity.Value):player} is committing suicide"
+            );
 
             // Held item suicide
             if (_entities.TryGetComponent(owner, out HandsComponent handsComponent)

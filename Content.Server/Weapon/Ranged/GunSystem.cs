@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Hands.Components;
@@ -21,13 +19,9 @@ using Content.Shared.Weapons.Ranged.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -38,7 +32,7 @@ public sealed partial class GunSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ActionBlockerSystem  _blocker = default!;
-    [Dependency] private readonly AdminLogSystem _logs = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogs = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly CameraRecoilSystem _recoil = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;

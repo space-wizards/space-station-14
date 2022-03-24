@@ -4,7 +4,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -17,7 +16,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var coordinates = Transform(owner).Coordinates;
 
-            _logSystem.Add(LogType.ChemicalReaction, reaction.Impact,
+            AdminLogs.Add(LogType.ChemicalReaction, reaction.Impact,
                 $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(owner):metabolizer} at {coordinates}");
 
             SoundSystem.Play(Filter.Pvs(owner, entityManager:EntityManager), reaction.Sound.GetSound(), owner);

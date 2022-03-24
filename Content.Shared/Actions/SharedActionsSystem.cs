@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Administration.Logs;
@@ -12,13 +13,12 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using System.Linq;
 
 namespace Content.Shared.Actions;
 
 public abstract class SharedActionsSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogs = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -112,7 +112,7 @@ public abstract class SharedActionsSystem : EntitySystem
         // Does the user actually have the requested action?
         if (!component.Actions.TryGetValue(ev.Action, out var act))
         {
-            _logSystem.Add(LogType.Action,
+            _adminLogs.Add(LogType.Action,
                 $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {ev.Action.Name}.");
             return;
         }
@@ -145,10 +145,10 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
 
                 if (act.Provider == null)
-                    _logSystem.Add(LogType.Action,
+                    _adminLogs.Add(LogType.Action,
                     $"{ToPrettyString(user):user} is performing the {name:action} action targeted at {ToPrettyString(entityTarget):target}.");
                 else
-                    _logSystem.Add(LogType.Action,
+                    _adminLogs.Add(LogType.Action,
                     $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(act.Provider.Value):provider}) targeted at {ToPrettyString(entityTarget):target}.");
 
                 if (entityAction.Event != null)
@@ -173,10 +173,10 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
 
                 if (act.Provider == null)
-                    _logSystem.Add(LogType.Action,
+                    _adminLogs.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action targeted at {mapTarget:target}.");
                 else
-                    _logSystem.Add(LogType.Action,
+                    _adminLogs.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(act.Provider.Value):provider}) targeted at {mapTarget:target}.");
 
                 if (worldAction.Event != null)
@@ -193,10 +193,10 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
 
                 if (act.Provider == null)
-                    _logSystem.Add(LogType.Action,
+                    _adminLogs.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action.");
                 else
-                    _logSystem.Add(LogType.Action,
+                    _adminLogs.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action provided by {ToPrettyString(act.Provider.Value):provider}.");
 
                 performEvent = instantAction.Event;

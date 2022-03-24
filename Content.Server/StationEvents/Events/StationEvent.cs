@@ -6,10 +6,7 @@ using Content.Server.Station;
 using Content.Shared.Database;
 using Content.Shared.Station;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -116,7 +113,7 @@ namespace Content.Server.StationEvents.Events
             Started = true;
             Occurrences += 1;
 
-            EntitySystem.Get<AdminLogSystem>()
+            IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventStarted, LogImpact.High, $"Event startup: {Name}");
         }
 
@@ -126,7 +123,7 @@ namespace Content.Server.StationEvents.Events
         /// </summary>
         public virtual void Announce()
         {
-            EntitySystem.Get<AdminLogSystem>()
+            IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventAnnounced, $"Event announce: {Name}");
 
             if (StartAnnouncement != null)
@@ -149,7 +146,7 @@ namespace Content.Server.StationEvents.Events
         /// </summary>
         public virtual void Shutdown()
         {
-            EntitySystem.Get<AdminLogSystem>()
+            IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventStopped, $"Event shutdown: {Name}");
 
             if (EndAnnouncement != null)

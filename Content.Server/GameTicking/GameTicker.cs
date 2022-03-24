@@ -15,15 +15,15 @@ using Robust.Server;
 using Robust.Server.Maps;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
-#if EXCEPTION_TOLERANCE
-using Robust.Shared.Exceptions;
-#endif
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+#if EXCEPTION_TOLERANCE
+using Robust.Shared.Exceptions;
+#endif
 
 namespace Content.Server.GameTicking
 {
@@ -101,7 +101,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 #endif
         [Dependency] private readonly StationSystem _stationSystem = default!;
-        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
         [Dependency] private readonly PDASystem _pdaSystem = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;

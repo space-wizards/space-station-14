@@ -11,7 +11,7 @@ using Robust.Shared.Map;
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
-[TestOf(typeof(AdminLogSystem))]
+[TestOf(typeof(AdminLogManager))]
 public sealed class FilterTests : ContentIntegrationTest
 {
     [Test]
@@ -31,9 +31,7 @@ public sealed class FilterTests : ContentIntegrationTest
 
         var sEntities = server.ResolveDependency<IEntityManager>();
         var sMaps = server.ResolveDependency<IMapManager>();
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
-
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var commonGuid = Guid.NewGuid();
         var firstGuid = Guid.NewGuid();

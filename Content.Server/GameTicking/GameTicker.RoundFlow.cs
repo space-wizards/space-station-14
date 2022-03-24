@@ -201,7 +201,7 @@ namespace Content.Server.GameTicking
                 return await _db.AddNewRound(server, playerIds);
             }).Result;
 
-            var startingEvent = new RoundStartingEvent();
+            var startingEvent = new RoundStartingEvent(RoundId);
             RaiseLocalEvent(startingEvent);
 
             List<IPlayerSession> readyPlayers;

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Explosion.Components;
@@ -7,7 +5,6 @@ using Content.Shared.Acts;
 using Content.Shared.Camera;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Sound;
@@ -15,10 +12,7 @@ using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -50,11 +44,11 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly IMapManager _maps = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ITileDefinitionManager _tiles = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
 
         [Dependency] private readonly ActSystem _acts = default!;
         [Dependency] private readonly EffectSystem _effects = default!;
         [Dependency] private readonly TriggerSystem _triggers = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
         [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
         [Dependency] private readonly TagSystem _tags = default!;
 
@@ -357,16 +351,16 @@ namespace Content.Server.Explosion.EntitySystems
             var range = $"{devastationRange}/{heavyImpactRange}/{lightImpactRange}/{flashRange}";
             if (entity == null || !entity.Value.IsValid())
             {
-                _logSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with range {range}");
+                _adminLogs.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with range {range}");
             }
             else if (user == null || !user.Value.IsValid())
             {
-                _logSystem.Add(LogType.Explosion, LogImpact.High,
+                _adminLogs.Add(LogType.Explosion, LogImpact.High,
                     $"{ToPrettyString(entity.Value):entity} exploded at {epicenter:coordinates} with range {range}");
             }
             else
             {
-                _logSystem.Add(LogType.Explosion, LogImpact.High,
+                _adminLogs.Add(LogType.Explosion, LogImpact.High,
                     $"{ToPrettyString(user.Value):user} caused {ToPrettyString(entity.Value):entity} to explode at {epicenter:coordinates} with range {range}");
             }
 

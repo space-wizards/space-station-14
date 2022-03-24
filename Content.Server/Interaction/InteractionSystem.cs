@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
@@ -12,7 +10,6 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -31,7 +28,7 @@ namespace Content.Server.Interaction
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
-        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
 
         public override void Initialize()
         {
@@ -229,7 +226,7 @@ namespace Content.Server.Interaction
 
                         if (ev.Handled)
                         {
-                            _adminLogSystem.Add(LogType.AttackArmedWide, LogImpact.Low, $"{ToPrettyString(user):user} wide attacked with {ToPrettyString(item.Value):used} at {coordinates}");
+                            _adminLogs.Add(LogType.AttackArmedWide, LogImpact.Low, $"{ToPrettyString(user):user} wide attacked with {ToPrettyString(item.Value):used} at {coordinates}");
                             return;
                         }
                     }
@@ -242,12 +239,12 @@ namespace Content.Server.Interaction
                         {
                             if (target != null)
                             {
-                                _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Low,
+                                _adminLogs.Add(LogType.AttackArmedClick, LogImpact.Low,
                                     $"{ToPrettyString(user):user} attacked {ToPrettyString(target.Value):target} with {ToPrettyString(item.Value):used} at {coordinates}");
                             }
                             else
                             {
-                                _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Low,
+                                _adminLogs.Add(LogType.AttackArmedClick, LogImpact.Low,
                                     $"{ToPrettyString(user):user} attacked with {ToPrettyString(item.Value):used} at {coordinates}");
                             }
 
@@ -270,7 +267,7 @@ namespace Content.Server.Interaction
                 var ev = new WideAttackEvent(user, user, coordinates);
                 RaiseLocalEvent(user, ev, false);
                 if (ev.Handled)
-                    _adminLogSystem.Add(LogType.AttackUnarmedWide, LogImpact.Low, $"{ToPrettyString(user):user} wide attacked at {coordinates}");
+                    _adminLogs.Add(LogType.AttackUnarmedWide, LogImpact.Low, $"{ToPrettyString(user):user} wide attacked at {coordinates}");
             }
             else
             {
@@ -280,12 +277,12 @@ namespace Content.Server.Interaction
                 {
                     if (target != null)
                     {
-                        _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Low,
+                        _adminLogs.Add(LogType.AttackUnarmedClick, LogImpact.Low,
                             $"{ToPrettyString(user):user} attacked {ToPrettyString(target.Value):target} at {coordinates}");
                     }
                     else
                     {
-                        _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Low,
+                        _adminLogs.Add(LogType.AttackUnarmedClick, LogImpact.Low,
                             $"{ToPrettyString(user):user} attacked at {coordinates}");
                     }
                 }

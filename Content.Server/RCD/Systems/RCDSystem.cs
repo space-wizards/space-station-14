@@ -1,24 +1,16 @@
-using System;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.RCD.Components;
-using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
-using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 
 namespace Content.Server.RCD.Systems
@@ -27,8 +19,8 @@ namespace Content.Server.RCD.Systems
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
 
-        [Dependency] private readonly AdminLogSystem _logs = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
@@ -122,20 +114,20 @@ namespace Content.Server.RCD.Systems
                 //Floor mode just needs the tile to be a space tile (subFloor)
                 case RcdMode.Floors:
                     mapGrid.SetTile(snapPos, new Tile(_tileDefinitionManager["floor_steel"].TileId));
-                    _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridIndex} {snapPos} to floor_steel");
+                    _adminLogs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridIndex} {snapPos} to floor_steel");
                     break;
                 //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.
                 case RcdMode.Deconstruct:
                     if (!tile.IsBlockedTurf(true)) //Delete the turf
                     {
                         mapGrid.SetTile(snapPos, Tile.Empty);
-                        _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridIndex} tile: {snapPos} to space");
+                        _adminLogs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridIndex} tile: {snapPos} to space");
                     }
                     else //Delete what the user targeted
                     {
                         if (args.Target is {Valid: true} target)
                         {
-                            _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to delete {ToPrettyString(target):target}");
+                            _adminLogs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to delete {ToPrettyString(target):target}");
                             QueueDel(target);
                         }
                     }
@@ -145,12 +137,12 @@ namespace Content.Server.RCD.Systems
                 case RcdMode.Walls:
                     var ent = EntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
                     Transform(ent).LocalRotation = Angle.Zero; // Walls always need to point south.
-                    _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.Index}");
+                    _adminLogs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.Index}");
                     break;
                 case RcdMode.Airlock:
                     var airlock = EntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));
                     Transform(airlock).LocalRotation = Transform(rcd.Owner).LocalRotation; //Now apply icon smoothing.
-                    _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.Index}");
+                    _adminLogs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.Index}");
                     break;
                 default:
                     args.Handled = true;

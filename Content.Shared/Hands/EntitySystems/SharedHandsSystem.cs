@@ -1,17 +1,17 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogs = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;

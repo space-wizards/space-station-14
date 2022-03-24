@@ -1,19 +1,19 @@
+using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Popups;
 using Content.Shared.Administration;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
 using Robust.Shared.Player;
-using System.Linq;
 
 namespace Content.Server.Verbs
 {
     public sealed class VerbSystem : SharedVerbSystem
     {
-        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IAdminManager _adminMgr = default!;
 
@@ -118,12 +118,12 @@ namespace Content.Server.Verbs
 
             if (holding == null)
             {
-                _logSystem.Add(LogType.Verb, verb.Impact,
+                _adminLogs.Add(LogType.Verb, verb.Impact,
                         $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target}");
             }
             else
             {
-                _logSystem.Add(LogType.Verb, verb.Impact,
+                _adminLogs.Add(LogType.Verb, verb.Impact,
                        $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target} while holding {ToPrettyString(holding.Value):held}");
             }
         }

@@ -7,9 +7,6 @@ using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 
@@ -19,7 +16,7 @@ namespace Content.Server.Projectiles
     internal sealed class ProjectileSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
         [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
 
         public override void Initialize()
@@ -60,7 +57,7 @@ namespace Content.Server.Projectiles
                 component.DamagedEntity = true;
 
                 if (dmg is not null && EntityManager.EntityExists(component.Shooter))
-                    _adminLogSystem.Add(LogType.BulletHit,
+                    _adminLogs.Add(LogType.BulletHit,
                         HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
                         $"Projectile {ToPrettyString(component.Owner):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {dmg.Total:damage} damage");
             }

@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos;
@@ -12,9 +11,6 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -24,7 +20,7 @@ namespace Content.Server.Body.Systems
     public sealed class RespiratorSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSys = default!;
-        [Dependency] private readonly AdminLogSystem _logSys = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly LungSystem _lungSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSys = default!;
@@ -159,7 +155,7 @@ namespace Content.Server.Body.Systems
         private void TakeSuffocationDamage(EntityUid uid, RespiratorComponent respirator)
         {
             if (respirator.SuffocationCycles == 2)
-                _logSys.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} started suffocating");
+                _adminLogs.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} started suffocating");
 
             if (respirator.SuffocationCycles >= respirator.SuffocationCycleThreshold)
             {
@@ -172,7 +168,7 @@ namespace Content.Server.Body.Systems
         private void StopSuffocation(EntityUid uid, RespiratorComponent respirator)
         {
             if (respirator.SuffocationCycles >= 2)
-                _logSys.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} stopped suffocating");
+                _adminLogs.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} stopped suffocating");
 
             _alertsSystem.ClearAlert(uid, AlertType.LowOxygen);
 

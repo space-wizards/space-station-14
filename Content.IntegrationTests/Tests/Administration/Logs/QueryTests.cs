@@ -13,7 +13,7 @@ using Robust.Shared.GameObjects;
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
-[TestOf(typeof(AdminLogSystem))]
+[TestOf(typeof(AdminLogManager))]
 public sealed class QueryTests : ContentIntegrationTest
 {
     [Test]
@@ -32,8 +32,8 @@ public sealed class QueryTests : ContentIntegrationTest
 
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
         var sPlayers = server.ResolveDependency<IPlayerManager>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
         var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
 
         var date = DateTime.UtcNow;

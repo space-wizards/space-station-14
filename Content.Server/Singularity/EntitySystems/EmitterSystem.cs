@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Power.Components;
@@ -12,12 +11,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -30,7 +24,7 @@ namespace Content.Server.Singularity.EntitySystems
     public sealed class EmitterSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly AdminLogSystem _adminLog = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
 
         public override void Initialize()
         {
@@ -62,7 +56,7 @@ namespace Content.Server.Singularity.EntitySystems
                     component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-turned-off", ("target", component.Owner)));
                 }
 
-                _adminLog.Add(LogType.Emitter,
+                _adminLogs.Add(LogType.Emitter,
                     component.IsOn ? LogImpact.Medium : LogImpact.High,
                     $"{ToPrettyString(args.User):player} toggled {ToPrettyString(uid):emitter}");
             }

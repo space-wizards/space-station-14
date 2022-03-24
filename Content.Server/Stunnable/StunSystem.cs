@@ -1,17 +1,12 @@
-using System;
 using Content.Server.Act;
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -20,7 +15,7 @@ namespace Content.Server.Stunnable
     public sealed class StunSystem : SharedStunSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
 
         public override void Initialize()
         {
@@ -47,7 +42,7 @@ namespace Content.Server.Stunnable
             source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", Name(source)), ("target", Name(target))));
             source.PopupMessageCursor(Loc.GetString("stunned-component-disarm-success", ("target", Name(target))));
 
-            _adminLogSystem.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):user} knocked down {ToPrettyString(args.Target):target}");
+            _adminLogs.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):user} knocked down {ToPrettyString(args.Target):target}");
 
             args.Handled = true;
         }

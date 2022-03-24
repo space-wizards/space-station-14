@@ -1,4 +1,5 @@
 using System.Threading;
+using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
@@ -7,8 +8,6 @@ using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
@@ -16,14 +15,10 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -40,7 +35,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly StomachSystem _stomachSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
@@ -228,7 +223,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     user, Filter.Entities(target));
 
                 // logging
-                _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to drink {ToPrettyString(drink.Owner):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
+                _adminLogs.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to drink {ToPrettyString(drink.Owner):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
             }
 
             drink.CancelToken = new CancellationTokenSource();

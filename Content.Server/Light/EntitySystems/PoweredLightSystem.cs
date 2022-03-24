@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
@@ -10,7 +9,6 @@ using Content.Server.Temperature.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
@@ -33,7 +31,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
         [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
@@ -108,7 +106,7 @@ namespace Content.Server.Light.EntitySystems
                     var damage = _damageableSystem.TryChangeDamage(userUid, light.Damage);
 
                     if (damage != null)
-                        _logSystem.Add(LogType.Damaged,
+                        _adminLogs.Add(LogType.Damaged,
                             $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.Total:damage} damage");
 
                     SoundSystem.Play(Filter.Pvs(uid), light.BurnHandSound.GetSound(), uid);

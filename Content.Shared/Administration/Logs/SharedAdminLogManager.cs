@@ -1,10 +1,9 @@
-﻿using System.Globalization;
-using Content.Shared.Database;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Database;
 
 namespace Content.Shared.Administration.Logs;
 
-public abstract class SharedAdminLogSystem : EntitySystem
+[Virtual]
+public class SharedAdminLogManager : ISharedAdminLogManager
 {
     public virtual void Add(LogType type, LogImpact impact, ref LogStringHandler handler)
     {

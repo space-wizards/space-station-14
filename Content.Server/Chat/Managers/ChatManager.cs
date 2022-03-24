@@ -2,20 +2,20 @@ using System.Linq;
 using System.Text;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Disease;
+using Content.Server.Disease.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Headset;
 using Content.Server.MoMMI;
 using Content.Server.Players;
 using Content.Server.Preferences.Managers;
 using Content.Server.Radio.EntitySystems;
-using Content.Server.Disease;
-using Content.Server.Disease.Components;
-using Content.Shared.Disease.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared.Disease.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -45,6 +45,7 @@ namespace Content.Server.Chat.Managers
             { "revolutionary", "#aa00ff" }
         };
 
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
         [Dependency] private readonly IChatSanitizationManager _sanitizer = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
@@ -54,8 +55,6 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-
-        private AdminLogSystem _logs = default!;
 
         /// <summary>
         /// The maximum length a player-sent message can be sent
@@ -74,7 +73,6 @@ namespace Content.Server.Chat.Managers
 
         public void Initialize()
         {
-            _logs = EntitySystem.Get<AdminLogSystem>();
             _netManager.RegisterNetMessage<MsgChatMessage>();
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
@@ -112,7 +110,7 @@ namespace Content.Server.Chat.Managers
             NetMessageToAll(ChatChannel.Server, message, messageWrap, colorOverride);
             Logger.InfoS("SERVER", message);
 
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
+            _adminLogs.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
         }
 
         public void DispatchStationAnnouncement(string message, string sender = "Central Command", bool playDefaultSound = true, Color? colorOverride = null)
@@ -124,7 +122,7 @@ namespace Content.Server.Chat.Managers
                 SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
             }
 
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
+            _adminLogs.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
         }
 
         public void DispatchServerMessage(IPlayerSession player, string message)
@@ -136,7 +134,7 @@ namespace Content.Server.Chat.Managers
             msg.MessageWrap = messageWrap;
             _netManager.ServerSendMessage(msg, player.ConnectedClient);
 
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Server message from {player:Player}: {message}");
+            _adminLogs.Add(LogType.Chat, LogImpact.Low, $"Server message from {player:Player}: {message}");
         }
 
         public void TrySpeak(EntityUid source, string message, bool isWhisper = false, IConsoleShell? shell = null, IPlayerSession? player = null)
@@ -240,7 +238,7 @@ namespace Content.Server.Chat.Managers
                 NetMessageToOne(ChatChannel.Local, message, messageWrap, source, hideChat, session.ConnectedClient);
             }
 
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Say from {_entManager.ToPrettyString(source):user}: {message}");
+            _adminLogs.Add(LogType.Chat, LogImpact.Low, $"Say from {_entManager.ToPrettyString(source):user}: {message}");
         }
 
         public void EntityWhisper(EntityUid source, string message, bool hideChat=false)
@@ -300,7 +298,7 @@ namespace Content.Server.Chat.Managers
                 }
             }
 
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Whisper from {_entManager.ToPrettyString(source):user}: {message}");
+            _adminLogs.Add(LogType.Chat, LogImpact.Low, $"Whisper from {_entManager.ToPrettyString(source):user}: {message}");
         }
 
         public void EntityMe(EntityUid source, string action)
@@ -328,7 +326,7 @@ namespace Content.Server.Chat.Managers
                 NetMessageToOne(ChatChannel.Emotes, action, messageWrap, source, true, session.ConnectedClient);
             }
 
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Emote from {_entManager.ToPrettyString(source):user}: {action}");
+            _adminLogs.Add(LogType.Chat, LogImpact.Low, $"Emote from {_entManager.ToPrettyString(source):user}: {action}");
         }
 
         public void SendLOOC(IPlayerSession player, string message)
@@ -370,7 +368,7 @@ namespace Content.Server.Chat.Managers
 
             _netManager.ServerSendToMany(msg, sessions.Select(o => o.ConnectedClient).ToList());
 
-            _logs.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
+            _adminLogs.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
         }
 
         public void SendOOC(IPlayerSession player, string message)
@@ -415,7 +413,7 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendToAll(msg);
 
             _mommiLink.SendOOCMessage(player.Name, message);
-            _logs.Add(LogType.Chat, LogImpact.Low, $"OOC from {player:Player}: {message}");
+            _adminLogs.Add(LogType.Chat, LogImpact.Low, $"OOC from {player:Player}: {message}");
         }
 
         public void SendDeadChat(IPlayerSession player, string message)
@@ -444,7 +442,7 @@ namespace Content.Server.Chat.Managers
             msg.SenderEntity = player.AttachedEntity.GetValueOrDefault();
             _netManager.ServerSendToMany(msg, clients.ToList());
 
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
+            _adminLogs.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
         }
 
         public void SendAdminDeadChat(IPlayerSession player, string message)
@@ -468,7 +466,7 @@ namespace Content.Server.Chat.Managers
                                             ("userName", player.ConnectedClient.UserName));
             _netManager.ServerSendToMany(msg, clients.ToList());
 
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {player:Player}: {message}");
+            _adminLogs.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {player:Player}: {message}");
         }
 
         private IEnumerable<INetChannel> GetDeadChatClients()
@@ -502,7 +500,7 @@ namespace Content.Server.Chat.Managers
                                             ("playerName", player.Name));
             _netManager.ServerSendToMany(msg, clients.ToList());
 
-            _logs.Add(LogType.Chat, $"Admin chat from {player:Player}: {message}");
+            _adminLogs.Add(LogType.Chat, $"Admin chat from {player:Player}: {message}");
         }
 
         public void SendAdminAnnouncement(string message)
@@ -520,7 +518,7 @@ namespace Content.Server.Chat.Managers
 
             _netManager.ServerSendToMany(msg, clients.ToList());
 
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Admin announcement from {message}: {message}");
+            _adminLogs.Add(LogType.Chat, LogImpact.Low, $"Admin announcement from {message}: {message}");
         }
 
         public void SendHookOOC(string sender, string message)
@@ -528,7 +526,7 @@ namespace Content.Server.Chat.Managers
             message = FormattedMessage.EscapeText(message);
             var messageWrap = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender));
             NetMessageToAll(ChatChannel.OOC, message, messageWrap);
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Hook OOC from {sender}: {message}");
+            _adminLogs.Add(LogType.Chat, LogImpact.Low, $"Hook OOC from {sender}: {message}");
         }
 
         public void RegisterChatTransform(TransformChat handler)

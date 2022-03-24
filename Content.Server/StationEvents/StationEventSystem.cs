@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.StationEvents.Events;
-using Content.Shared;
-using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
@@ -15,13 +11,9 @@ using JetBrains.Annotations;
 using Robust.Server.Console;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Reflection;
-using Robust.Shared.Timing;
 
 namespace Content.Server.StationEvents
 {
@@ -35,8 +27,7 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IConGroupController _conGroupController = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-
-        [Dependency] private readonly AdminLogSystem _adminLog = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
 
         public StationEvent? CurrentEvent { get; private set; }
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
@@ -96,7 +87,7 @@ namespace Content.Server.StationEvents
         /// <returns></returns>
         public string RunEvent(string name)
         {
-            _adminLog.Add(LogType.EventRan, LogImpact.High, $"Event run: {name}");
+            _adminLogs.Add(LogType.EventRan, LogImpact.High, $"Event run: {name}");
 
             // Could use a dictionary but it's such a minor thing, eh.
             // Wasn't sure on whether to localize this given it's a command

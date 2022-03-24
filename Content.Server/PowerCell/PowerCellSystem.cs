@@ -1,6 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -8,12 +10,6 @@ using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rounding;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using Content.Server.Kitchen.Components;
 
 namespace Content.Server.PowerCell;
 
@@ -21,7 +17,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly AdminLogSystem _logSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogs = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
@@ -83,7 +79,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
     private void Explode(EntityUid uid, BatteryComponent? battery = null)
     {
-        _logSystem.Add(LogType.Explosion, LogImpact.High, $"Sabotaged power cell {ToPrettyString(uid)} is exploding");
+        _adminLogs.Add(LogType.Explosion, LogImpact.High, $"Sabotaged power cell {ToPrettyString(uid)} is exploding");
 
         if (!Resolve(uid, ref battery))
             return;
@@ -114,7 +110,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         if (component.IsRigged)
         {
-            _logSystem.Add(LogType.Explosion, LogImpact.Medium, $"Power cell {ToPrettyString(uid)} has been rigged up to explode when used.");
+            _adminLogs.Add(LogType.Explosion, LogImpact.Medium, $"Power cell {ToPrettyString(uid)} has been rigged up to explode when used.");
         }
     }
 

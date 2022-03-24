@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
@@ -8,8 +6,6 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
@@ -18,7 +14,7 @@ namespace Content.Shared.Slippery
     [UsedImplicitly]
     public abstract class SharedSlipperySystem : EntitySystem
     {
-        [Dependency] private readonly SharedAdminLogSystem _adminLog = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogs = default!;
         [Dependency] private readonly SharedStunSystem _stunSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
@@ -110,7 +106,7 @@ namespace Content.Shared.Slippery
                 PlaySound(component);
             }
 
-            _adminLog.Add(LogType.Slip, LogImpact.Low, $"{ToPrettyString(otherBody.Owner):mob} slipped on collision with {ToPrettyString(component.Owner):entity}");
+            _adminLogs.Add(LogType.Slip, LogImpact.Low, $"{ToPrettyString(otherBody.Owner):mob} slipped on collision with {ToPrettyString(component.Owner):entity}");
 
             return true;
         }

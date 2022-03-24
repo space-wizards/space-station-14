@@ -20,7 +20,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
     public sealed class GasMixerSystem : EntitySystem
     {
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private IAdminLogManager _adminLogs = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
@@ -179,7 +179,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnToggleStatusMessage(EntityUid uid, GasMixerComponent mixer, GasMixerToggleStatusMessage args)
         {
             mixer.Enabled = args.Enabled;
-            _adminLogSystem.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
+            _adminLogs.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, mixer);
             UpdateAppearance(uid, mixer);
@@ -188,7 +188,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnOutputPressureChangeMessage(EntityUid uid, GasMixerComponent mixer, GasMixerChangeOutputPressureMessage args)
         {
             mixer.TargetPressure = Math.Clamp(args.Pressure, 0f, mixer.MaxTargetPressure);
-            _adminLogSystem.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
+            _adminLogs.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the pressure on {ToPrettyString(uid):device} to {args.Pressure}kPa");
             DirtyUI(uid, mixer);
         }
@@ -199,7 +199,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             float nodeOne = Math.Clamp(args.NodeOne, 0f, 100.0f) / 100.0f;
             mixer.InletOneConcentration = nodeOne;
             mixer.InletTwoConcentration = 1.0f - mixer.InletOneConcentration;
-            _adminLogSystem.Add(LogType.AtmosRatioChanged, LogImpact.Medium,
+            _adminLogs.Add(LogType.AtmosRatioChanged, LogImpact.Medium,
                 $"{EntityManager.ToPrettyString(args.Session.AttachedEntity!.Value):player} set the ratio on {EntityManager.ToPrettyString(uid):device} to {mixer.InletOneConcentration}:{mixer.InletTwoConcentration}");
             DirtyUI(uid, mixer);
         }

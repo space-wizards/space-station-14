@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Server.Doors.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Database;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -485,7 +479,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             if(tileCount > 10 && (totalMolesRemoved / tileCount) > 20)
-                _adminLog.Add(LogType.ExplosiveDepressurization, LogImpact.High,
+                _adminLogs.Add(LogType.ExplosiveDepressurization, LogImpact.High,
                     $"Explosive depressurization removed {totalMolesRemoved} moles from {tileCount} tiles starting from position {tile.GridIndices:position} on grid ID {tile.GridIndex:grid}");
 
             Array.Clear(_depressurizeTiles, 0, Atmospherics.MonstermosHardTileLimit);
