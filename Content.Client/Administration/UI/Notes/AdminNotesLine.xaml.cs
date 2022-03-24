@@ -79,7 +79,8 @@ public sealed partial class AdminNotesLine : BoxContainer
     {
         base.KeyBindDown(args);
 
-        if (args.Function != EngineKeyFunctions.UIRightClick)
+        if (args.Function != EngineKeyFunctions.UIRightClick &&
+            args.Function != EngineKeyFunctions.UIClick)
         {
             return;
         }
