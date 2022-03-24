@@ -188,3 +188,51 @@
   - type: IngestionBlocker
   - type: TemperatureProtection
     coefficient: 0.005    
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetRedKnight
+  name: red knight helmet
+  description: A royal knight's favorite hat. If you hold it upside down it's actually a bucket.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/redknighthelm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/redknighthelm.rsi
+  - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetBlueKnight
+  name: blue knight helmet
+  description: A royal knight's favorite hat. If you hold it upside down it's actually a bucket.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/blueknighthelm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/blueknighthelm.rsi
+  - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetGreenKnight
+  name: green knight helmet
+  description: A royal knight's favorite hat. If you hold it upside down it's actually a bucket.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/greenknighthelm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/greenknighthelm.rsi
+  - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetYellowKnight
+  name: yellow knight helmet
+  description: A royal knight's favorite hat. If you hold it upside down it's actually a bucket.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/yellowknighthelm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/yellowknighthelm.rsi
+  - type: IngestionBlocker
