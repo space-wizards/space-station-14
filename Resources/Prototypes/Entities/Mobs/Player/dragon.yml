@@ -1,0 +1,71 @@
+- type: entity
+  name: space dragon
+  id: MobDragon
+  description: A flying leviathan, loosely related to space carps. Go ahead, ask it why it can talk.
+  components:
+  - type: Damageable
+    damageContainer: Biological
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Space dragon!
+    description: Crash, roast, flood the station with carps!
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: KinematicController
+  - type: HeatResistance
+  - type: CombatMode
+  - type: Internals
+  - type: Examiner
+  - type: Speech
+  - type: Pullable
+  - type: Actions
+  - type: Input
+  - type: Alerts
+    context: "human"
+  - type: PlayerMobMover
+  - type: PlayerInputMover
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+      sprite: Mobs/Aliens/Carps/dragon.rsi
+    noRot: true
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.40
+      mass: 50
+      mask:
+      - Impassable
+      - MobImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      450: !type:CriticalMobState {}
+      500: !type:DeadMobState {}
+  - type: MovementIgnoreGravity
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: alive
+      crit: crit
+      dead: dead
+  - type: Butcherable
+    spawned: FoodMeat
+    pieces: 2
+  - type: UnarmedCombat
+    range: 0.8
+    arcwidth: 2
+    arc: bite
+    damage:
+      groups:
+        Brute: 50
