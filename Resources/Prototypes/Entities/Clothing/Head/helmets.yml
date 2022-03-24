@@ -133,6 +133,11 @@
     sprite: Clothing/Head/Helmets/templar.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/templar.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.8
   - type: IngestionBlocker
 
 - type: entity
@@ -199,6 +204,11 @@
     sprite: Clothing/Head/Helmets/redknighthelm.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/redknighthelm.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.8
   - type: IngestionBlocker
 
 - type: entity
@@ -211,6 +221,11 @@
     sprite: Clothing/Head/Helmets/blueknighthelm.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/blueknighthelm.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.8
   - type: IngestionBlocker
 
 - type: entity
@@ -223,6 +238,11 @@
     sprite: Clothing/Head/Helmets/greenknighthelm.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/greenknighthelm.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.8
   - type: IngestionBlocker
 
 - type: entity
@@ -235,4 +255,9 @@
     sprite: Clothing/Head/Helmets/yellowknighthelm.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/yellowknighthelm.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.8
   - type: IngestionBlocker
