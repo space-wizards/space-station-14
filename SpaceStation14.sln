@@ -46,14 +46,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Server.Database", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{50404922-9637-4394-BF59-165D0850ADC8}"
 	ProjectSection(SolutionItems) = preProject
-		RobustToolbox\MSBuild\Robust.Analyzers.targets = RobustToolbox\MSBuild\Robust.Analyzers.targets
 		RobustToolbox\MSBuild\Robust.DefineConstants.targets = RobustToolbox\MSBuild\Robust.DefineConstants.targets
-		RobustToolbox\MSBuild\Robust.Engine.props = RobustToolbox\MSBuild\Robust.Engine.props
 		RobustToolbox\MSBuild\Robust.Engine.targets = RobustToolbox\MSBuild\Robust.Engine.targets
-		RobustToolbox\MSBuild\Robust.Engine.Version.props = RobustToolbox\MSBuild\Robust.Engine.Version.props
 		RobustToolbox\MSBuild\Robust.Properties.targets = RobustToolbox\MSBuild\Robust.Properties.targets
-		RobustToolbox\MSBuild\Robust.Trimming.targets = RobustToolbox\MSBuild\Robust.Trimming.targets
 		RobustToolbox\MSBuild\XamlIL.targets = RobustToolbox\MSBuild\XamlIL.targets
+		RobustToolbox\MSBuild\Robust.Analyzers.targets = RobustToolbox\MSBuild\Robust.Analyzers.targets
+		RobustToolbox\MSBuild\Robust.Engine.props = RobustToolbox\MSBuild\Robust.Engine.props
+		RobustToolbox\MSBuild\Robust.Engine.Version.props = RobustToolbox\MSBuild\Robust.Engine.Version.props
+		RobustToolbox\MSBuild\Robust.Trimming.targets = RobustToolbox\MSBuild\Robust.Trimming.targets
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{806ED41A-411B-4B3B-BEB6-DEC6DCA4C205}"
@@ -121,8 +121,8 @@ Global
 		{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -260,15 +260,5 @@ Global
 		{3CFEB7DB-12C6-46F3-89FC-1450F3016FFA} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{8922428F-17C3-47A7-BFE9-570DEB2464DA} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{3429ACDA-F32F-4710-90F5-8C6DF4800304} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
-		{16F7DE32-0186-44B9-9345-0C20D1BF2422} = {AFF53804-115F-4E67-B81F-26265EA27880}
 		{AFF53804-115F-4E67-B81F-26265EA27880} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
-		{23F09C45-950E-4DB7-A465-E937450FF008} = {AFF53804-115F-4E67-B81F-26265EA27880}
-		{440426C1-8DCA-43F6-967F-94439B8DAF47} = {AFF53804-115F-4E67-B81F-26265EA27880}
-		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
-		{A3C5B00A-D232-4A01-B82E-B0E58BFD5C12} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
-		{8A21C7CA-2EB8-40E5-8043-33582C06D139} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {AA37ED9F-F8D6-468E-A101-658AD605B09A}
-	EndGlobalSection
-EndGlobal
+		{16F7DE32-0186-44B9-9345-0C20D1BF2422} = {AFF53804-115F-4E67-B81F-26265EA27880}
