@@ -311,7 +311,7 @@ namespace Content.Server.Decals
             base.Update(frameTime);
 
 
-            foreach (var session in Filter.Broadcast().Recipients)
+            foreach (var session in Filter.GetAllPlayers(_playerManager))
             {
                 if (session is not IPlayerSession { Status: SessionStatus.InGame } playerSession)
                     continue;
