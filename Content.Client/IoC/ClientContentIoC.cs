@@ -28,7 +28,6 @@ namespace Content.Client.IoC
         public static void Register()
         {
             IoCManager.Register<IHudManager, HudManager>();
-            IoCManager.Register<IUIControllerManager, UIControllerManager>();
             IoCManager.Register<IParallaxManager, ParallaxManager>();
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IModuleManager, ClientModuleManager>();

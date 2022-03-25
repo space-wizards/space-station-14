@@ -142,7 +142,6 @@ namespace Content.Client.Entry
             _changelogManager.Initialize();
             _rulesManager.Initialize();
             _viewportManager.Initialize();
-            _uiControllerManager.Initialize();
             _hudManager.Initialize();//TODO: this is going to break shortly
             _baseClient.PlayerJoinedServer += (_, _) => { _hudManager.Startup();}; //TODO: Move this
             _baseClient.PlayerLeaveServer += (_, _) => { _hudManager.Shutdown();};

@@ -62,7 +62,7 @@ namespace Content.Client.UserInterface.Controls
         {
             IoCManager.InjectDependencies(this);
             Theme = HudThemes.DefaultTheme;
-            MinSize = (ClientInventorySystem.ButtonSize, ClientInventorySystem.ButtonSize);
+            MinSize = (64, 64);
             HighlightOverride = false;
             AddChild(Button = new TextureRect
             {
