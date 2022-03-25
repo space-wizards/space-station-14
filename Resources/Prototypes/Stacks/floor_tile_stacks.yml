@@ -72,38 +72,78 @@
   id: FloorTileStackShuttleWhite
   name: white shuttle tile
   spawn: FloorTileItemShuttleWhite
-  
+
 - type: stack
   id: FloorTileStackShuttleBlue
   name: blue shuttle tile
   spawn: FloorTileItemShuttleBlue
-  
+
 - type: stack
   id: FloorTileStackShuttleOrange
   name: orange shuttle tile
   spawn: FloorTileItemShuttleOrange
-  
+
 - type: stack
   id: FloorTileStackShuttlePurple
   name: purple shuttle tile
   spawn: FloorTileItemShuttlePurple
-  
+
 - type: stack
   id: FloorTileStackShuttleRed
   name: red shuttle tile
   spawn: FloorTileItemShuttleRed
-  
+
 - type: stack
   id: FloorTileStackEighties
   name: eighties floor tile
   spawn: FloorTileItemEighties
-  
+
 - type: stack
   id: FloorTileStackArcadeBlue
   name: blue arcade tile
   spawn: FloorTileItemArcadeBlue
-  
+
 - type: stack
   id: FloorTileStackArcadeRed
   name: red arcade tile
   spawn: FloorTileItemArcadeRed
+
+- type: stack
+  id: FloorCarpetRed
+  name: red arcade tile
+  spawn: FloorCarpetItemRed
+
+- type: stack
+  id: FloorCarpetBlack
+  name: red arcade tile
+  spawn: FloorCarpetItemBlack
+
+- type: stack
+  id: FloorCarpetBlue
+  name: red arcade tile
+  spawn: FloorCarpetItemBlue
+
+- type: stack
+  id: FloorCarpetGreen
+  name: red arcade tile
+  spawn: FloorCarpetItemGreen
+
+- type: stack
+  id: FloorCarpetOrange
+  name: red arcade tile
+  spawn: FloorCarpetItemOrange
+
+- type: stack
+  id: FloorCarpetSkyBlue
+  name: red arcade tile
+  spawn: FloorCarpetItemSkyBlue
+
+- type: stack
+  id: FloorCarpetPurple
+  name: red arcade tile
+  spawn: FloorCarpetItemPurple
+
+- type: stack
+  id: FloorCarpetPink
+  name: red arcade tile
+  spawn: FloorCarpetItemPink
