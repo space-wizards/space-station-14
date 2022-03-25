@@ -45,6 +45,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
         [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
 
         public const float InteractionRange = 2;
@@ -444,7 +445,7 @@ namespace Content.Shared.Interaction
             var transform = Transform(other);
             var (position, rotation) = transform.GetWorldPositionRotation();
             var mapPos = new MapCoordinates(position, transform.MapID);
-            var wallPredicate = AddAnchoredPredicate(other, mapPos, rotation, originPosition);
+            var wallPredicate = AddWallmountPredicate(other, mapPos, rotation, originPosition, collisionMask);
 
             Ignored combinedPredicate = e =>
             {
@@ -476,7 +477,7 @@ namespace Content.Shared.Interaction
             var (position, rotation) = transform.GetWorldPositionRotation();
             var mapPos = new MapCoordinates(position, transform.MapID);
 
-            var wallPredicate = AddAnchoredPredicate(target, mapPos, rotation, origin);
+            var wallPredicate = AddWallmountPredicate(target, mapPos, rotation, origin, collisionMask);
             Ignored combinedPredicate = e =>
             {
                 return e == target
@@ -489,40 +490,56 @@ namespace Content.Shared.Interaction
 
         /// <summary>
         ///     If the target entity is either an item or a wall-mounted object, this will add a predicate to ignore any
-        ///     anchored entities on that tile.
+        ///     entities that collide with the target.
         /// </summary>
-        public Ignored? AddAnchoredPredicate(
+        /// <remarks>
+        ///     Items are included because when wall-mounted entities are deconstructed the resulting items often spawn
+        ///     inside of walls. Without this exception you wouldn't be able to pick them up. Ideally you just wouldn't
+        ///     have items in walls in the first place.
+        /// </remarks>
+        public Ignored? AddWallmountPredicate(
             EntityUid target,
             MapCoordinates targetPosition,
             Angle targetRotation,
-            MapCoordinates origin)
+            MapCoordinates origin,
+            CollisionGroup collisionMask)
         {
+            if (!HasComp<SharedItemComponent>(target))
+            {
+                if (!TryComp(target, out WallMountComponent? wallMount))
+                    return null;
+
+                // wall-mount exemptions may be restricted to a specific angle range.
+                if (wallMount.Arc < 360)
+                {
+                    var angle = Angle.FromWorldVec(origin.Position - targetPosition.Position);
+                    var angleDelta = (wallMount.Direction + targetRotation - angle).Reduced().FlipPositive();
+                    var inArc = angleDelta < wallMount.Arc / 2 || Math.Tau - angleDelta < wallMount.Arc / 2;
+
+                    if (!inArc)
+                        return null;
+                }
+            }
+
+            HashSet<EntityUid> ignored;
+
+            if (TryComp(target, out PhysicsComponent? physics) && physics.CanCollide)
+            {
+                // Ignore colliding entities.
+                ignored = _sharedBroadphaseSystem.GetEntitiesIntersectingBody(target, (int) collisionMask, false, physics);
+                return e => ignored.Contains(e);
+            }
+
+            // Some wall mounted entities don't have collision enabled. So currently there is no way to know what
+            // entities are intersecting them. Using a aabb lookup just returns all anchored entities on any
+            // intersecting tiles. So we just cut out the middle man and return all anchored entities on the target
+            // tile. This does mean anything like directional windows that happen to lie on the same tile as the target
+            // will get ignored.
+
             if (!_mapManager.TryFindGridAt(targetPosition, out var grid))
                 return null;
 
-            if (HasComp<SharedItemComponent>(target))
-            {
-                // Ignore anchored entities on that tile.
-                var colliding = new HashSet<EntityUid>(grid.GetAnchoredEntities(targetPosition));
-                return e => colliding.Contains(e);
-            }
-
-            if (!TryComp(target, out WallMountComponent? wallMount))
-                return null;
-
-            // wall-mount exemptions may be restricted to a specific angle range.
-            if (wallMount.Arc < 360)
-            {
-                var angle = Angle.FromWorldVec(origin.Position - targetPosition.Position);
-                var angleDelta = (wallMount.Direction + targetRotation - angle).Reduced().FlipPositive();
-                var inArc = angleDelta < wallMount.Arc / 2 || Math.Tau - angleDelta < wallMount.Arc / 2;
-
-                if (!inArc)
-                    return null;
-            }
-
-            // Ignore anchored entities on that tile.
-            var ignored = new HashSet<EntityUid>(grid.GetAnchoredEntities(targetPosition));
+            ignored = new (grid.GetAnchoredEntities(targetPosition));
             return e => ignored.Contains(e);
         }
 
