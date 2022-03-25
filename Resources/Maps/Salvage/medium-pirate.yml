@@ -759,13 +759,6 @@ entities:
   - pos: -0.5,-0.5
     parent: 52
     type: Transform
-  - gas: Plasma
-    possibleGas:
-    - Oxygen
-    - Plasma
-    - Nitrogen
-    - CarbonDioxide
-    type: ArtifactGasTrigger
 - uid: 80
   type: Stool
   components:
