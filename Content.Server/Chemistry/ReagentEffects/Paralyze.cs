@@ -21,8 +21,6 @@ public sealed class Paralyze : ReagentEffect
     public override void Effect(ReagentEffectArgs args)
     {
         EntitySystem.Get<StunSystem>().TryParalyze(args.SolutionEntity, TimeSpan.FromSeconds(ParalyzeTime), Refresh);
-
-        args.Source?.RemoveReagent(args.Reagent.ID, args.Quantity); // Remove reagent, so that, presumably, it doesn't reapply 317589179857 times(?)
     }
 }
 
