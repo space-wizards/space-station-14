@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
   id: BaseLightbulb
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false

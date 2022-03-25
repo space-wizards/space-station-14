@@ -3,7 +3,7 @@
   parent: BaseStructure
   name: table
   description: A square piece of metal standing on four metal legs.
-  abstract: true
+  noSpawn: true
   components:
   - type: Damageable
     damageContainer: Inorganic

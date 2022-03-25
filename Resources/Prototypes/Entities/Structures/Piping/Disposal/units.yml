@@ -1,5 +1,5 @@
 - type: entity
-  abstract: true
+  noSpawn: true
   id: DisposalUnitBase
   parent: BaseMachinePowered
   description: A pneumatic waste disposal unit.

@@ -2,7 +2,7 @@
   description: "If you want to get cancer, might as well do it in style."
   id: BaseSmokable
   parent: BaseItem
-  abstract: true
+  noSpawn: true
   components:
   - type: Smokable
   - type: Sprite
@@ -20,7 +20,7 @@
 - type: entity
   parent: BaseSmokable
   id: BaseCigar
-  abstract: true
+  noSpawn: true
   components:
   - type: Smokable
     exposeTemperature: 1173.15

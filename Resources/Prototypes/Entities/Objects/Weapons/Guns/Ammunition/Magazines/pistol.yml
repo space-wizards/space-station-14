@@ -3,7 +3,7 @@
   id: MagazinePistolBase
   name: pistol magazine (.35 auto)
   parent: BaseItem
-  abstract: true
+  noSpawn: true
   components:
   - type: RangedMagazine
     caliber: Pistol
@@ -27,7 +27,7 @@
   id: MagazinePistolHCBase
   name: machine pistol magazine (.35 auto)
   parent: BaseItem
-  abstract: true
+  noSpawn: true
   components:
   - type: RangedMagazine
     caliber: Pistol
@@ -52,7 +52,7 @@
   id: MagazinePistolSmgBase  # Yeah it's weird but it's pistol caliber
   name: SMG magazine (.35 auto)
   parent: BaseItem
-  abstract: true
+  noSpawn: true
   components:
   - type: RangedMagazine
     caliber: Pistol

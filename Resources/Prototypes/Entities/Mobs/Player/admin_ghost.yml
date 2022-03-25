@@ -3,7 +3,7 @@
   save: false
   id: AdminObserver
   name: admin observer
-  abstract: true
+  noSpawn: true
   components:
   - type: Input
     context: "aghost"

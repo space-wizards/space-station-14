@@ -1,5 +1,5 @@
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: BaseItem
   id: BoxClRifleBase
   name: ammunition box (.25 caseless)

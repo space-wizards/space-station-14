@@ -3,7 +3,7 @@
   id: MagazineLRifleBase
   name: "magazine (.30 rifle)"
   parent: BaseItem
-  abstract: true
+  noSpawn: true
   components:
   - type: RangedMagazine
     caliber: LRifle

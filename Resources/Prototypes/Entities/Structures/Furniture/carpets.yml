@@ -3,7 +3,7 @@
   id: CarpetBase
   parent: BaseStructure
   description: "Fancy walking surface."
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     drawdepth: FloorTiles

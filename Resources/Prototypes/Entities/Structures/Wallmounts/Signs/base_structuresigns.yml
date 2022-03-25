@@ -1,7 +1,7 @@
 - type: entity
   id: BaseSign
   name: base sign
-  abstract: true
+  noSpawn: true
   placement:
     mode: SnapgridCenter
   components:

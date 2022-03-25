@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  abstract: true
+  noSpawn: true
   id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
   suffix: AI
   components:
@@ -134,7 +134,7 @@
 
 - type: entity
   save: false
-  abstract: true
+  noSpawn: true
   id: SimpleMobBase # for air breathers
   parent: SimpleSpaceMobBase
   suffix: AI

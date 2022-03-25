@@ -3,7 +3,7 @@
   parent: BaseStructureDynamic
   name: storage tank
   description: "A liquids storage tank."
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false

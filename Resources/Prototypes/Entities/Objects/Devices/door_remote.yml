@@ -3,7 +3,7 @@
   id: DoorRemoteDefault
   name: door remote
   description: A gadget which can open and bolt doors remotely
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Objects/Devices/door_remote.rsi
@@ -24,7 +24,7 @@
     - state: door_remotescreencolour
       color: "#9f9f00"
   - type: Access
-    tags: 
+    tags:
     - Captain
     - HeadOfPersonnel
     - Command

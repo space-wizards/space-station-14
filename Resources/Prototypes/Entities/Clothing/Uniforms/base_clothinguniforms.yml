@@ -1,5 +1,5 @@
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: Clothing
   id: ClothingWithSuitSensor
   components:
@@ -10,7 +10,7 @@
     range: 500
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingWithSuitSensor
   id: ClothingUniformBase
   components:
@@ -26,7 +26,7 @@
     pieces: 3
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingWithSuitSensor
   id: ClothingUniformSkirtBase
   components:

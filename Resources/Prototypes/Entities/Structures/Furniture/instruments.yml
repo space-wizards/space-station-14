@@ -2,7 +2,7 @@
   name: baseinstrument
   id: BasePlaceableInstrument
   parent: BaseStructureDynamic
-  abstract: true
+  noSpawn: true
   components:
   - type: Instrument
   - type: ActivatableUI
@@ -34,7 +34,7 @@
   parent: BasePlaceableInstrument
   id: BasePlaceableInstrumentRotatable
   name: baseinstrumentrotatable
-  abstract: true
+  noSpawn: true
   components:
   - type: Rotatable
     rotateWhileAnchored: true

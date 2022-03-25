@@ -4,7 +4,7 @@
   id: PartVox
   parent: BaseItem
   name: "vox body part"
-  abstract: true
+  noSpawn: true
   components:
   - type: Damageable
     damageContainer: Biological

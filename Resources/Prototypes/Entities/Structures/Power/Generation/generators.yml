@@ -1,7 +1,7 @@
 # Base Generator
 
 - type: entity
-  abstract: true
+  noSpawn: true
   id: BaseGenerator
   description: A high efficiency thermoelectric generator.
   name: generator
@@ -70,7 +70,7 @@
 # Base Wallmount Generator
 
 - type: entity
-  abstract: true
+  noSpawn: true
   id: BaseGeneratorWallmount
   parent: BaseGenerator
   name: wallmount generator
@@ -123,7 +123,7 @@
 # Construction Frames
 
 - type: entity
-  abstract: true
+  noSpawn: true
   id: BaseGeneratorWallmountFrame
   name: wallmount generator frame
   description: A construction frame for a wallmount generator.
@@ -160,7 +160,7 @@
   components:
   - type: PowerSupplier
     supplyRate: 3000
-    
+
 - type: entity
   parent: BaseGenerator
   id: GeneratorPlasma
@@ -179,7 +179,7 @@
     LayoutId: GeneratorPlasma
   - type: Machine
     board: GeneratorPlasmaMachineCircuitboard
-    
+
 - type: entity
   parent: BaseGenerator
   id: GeneratorUranium
@@ -222,7 +222,7 @@
     supplyRate: 6000
   - type: Construction
     graph: WallmountGenerator
-    node: APU  
+    node: APU
 
 # RTG - no fuel requirement
 

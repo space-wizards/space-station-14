@@ -3,7 +3,7 @@
 - type: entity
   parent: FoodInjectableBase
   id: FoodDonutBase
-  abstract: true
+  noSpawn: true
   description: Goes great with robust coffee.
   components:
   - type: Food

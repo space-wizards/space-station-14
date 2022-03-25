@@ -2,7 +2,7 @@
   id: BaseMachineCircuitboard
   parent: BaseItem
   name: machine board
-  abstract: true
+  noSpawn: true
   suffix: Machine Board
   components:
     - type: MachineBoard

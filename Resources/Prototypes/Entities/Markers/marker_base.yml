@@ -1,6 +1,6 @@
 - type: entity
   id: MarkerBase
-  abstract: true
+  noSpawn: true
   placement:
     mode: SnapgridCenter
   components:

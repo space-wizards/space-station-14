@@ -1,6 +1,6 @@
 - type: entity
   id: ParticleAcceleratorBase
-  abstract: true
+  noSpawn: true
   placement:
     mode: SnapgridCenter
   components:

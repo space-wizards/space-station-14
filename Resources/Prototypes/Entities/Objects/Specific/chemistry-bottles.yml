@@ -2,7 +2,7 @@
   name: bottle
   parent: BaseItem
   id: BaseChemistryEmptyBottle
-  abstract: true
+  noSpawn: true
   description: A small bottle.
   components:
   - type: Tag

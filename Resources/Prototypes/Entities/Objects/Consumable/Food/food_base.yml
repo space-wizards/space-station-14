@@ -4,7 +4,7 @@
 - type: entity
   parent: BaseItem
   id: FoodBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Food
   - type: Recyclable
@@ -18,7 +18,7 @@
 - type: entity
   parent: FoodBase
   id: FoodInjectableBase
-  abstract: true
+  noSpawn: true
   components:
   - type: InjectableSolution
     solution: food

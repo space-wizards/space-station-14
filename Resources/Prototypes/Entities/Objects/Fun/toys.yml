@@ -3,7 +3,7 @@
 - type: entity
   parent: BaseItem
   id: BasePlushie
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
@@ -429,7 +429,7 @@
 ## Toyweapons
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: BaseItem
   id: FoamWeaponBase
   components:
@@ -472,7 +472,7 @@
   id: ToyGunBase
   name: ToyGunBase
   description: A rooty tooty point and shooty.
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false

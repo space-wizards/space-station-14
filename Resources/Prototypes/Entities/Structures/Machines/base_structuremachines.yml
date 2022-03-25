@@ -1,5 +1,5 @@
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: BaseStructure
   id: BaseMachine
   components:
@@ -35,7 +35,7 @@
           path: /Audio/Effects/metalbreak.ogg
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: BaseMachine
   id: BaseMachinePowered
   components:

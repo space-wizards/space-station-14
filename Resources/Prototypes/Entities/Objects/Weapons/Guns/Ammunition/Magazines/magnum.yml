@@ -3,7 +3,7 @@
   id: MagazineMagnumBase
   name: "Lamia magazine (.40 magnum)"
   parent: BaseItem
-  abstract: true
+  noSpawn: true
   components:
   - type: RangedMagazine
     caliber: Magnum
@@ -28,7 +28,7 @@
   id: MagazineMagnumSmgBase
   name: "Drozd magazine (.40 magnum)"
   parent: BaseItem
-  abstract: true
+  noSpawn: true
   components:
   - type: RangedMagazine
     caliber: Magnum

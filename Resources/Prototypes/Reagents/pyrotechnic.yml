@@ -1,7 +1,7 @@
 ﻿- type: reagent
   id: BasePyrotechnic
   group: Pyrotechnic
-  abstract: true
+  noSpawn: true
   reactiveEffects:
     Flammable:
       methods: [ Touch ]

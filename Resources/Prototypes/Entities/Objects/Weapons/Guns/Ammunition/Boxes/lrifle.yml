@@ -1,5 +1,5 @@
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: BaseItem
   id: BoxLRifleBase
   name: ammunition box (.30 rifle)

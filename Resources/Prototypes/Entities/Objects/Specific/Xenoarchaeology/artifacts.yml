@@ -3,7 +3,7 @@
   id: BaseXenoArtifact
   name: alien artifact
   description: A strange alien device.
-  abstract: true
+  noSpawn: true
   components:
     - type: Sprite
       sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi

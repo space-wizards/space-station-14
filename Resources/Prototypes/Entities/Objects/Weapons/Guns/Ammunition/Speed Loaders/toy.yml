@@ -2,7 +2,7 @@
   id: CapAmmoBase
   name: "cap gun loader"
   parent: BaseItem
-  abstract: true
+  noSpawn: true
   components:
   - type: SpeedLoader
     caliber: Cap

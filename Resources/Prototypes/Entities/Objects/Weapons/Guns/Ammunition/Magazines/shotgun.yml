@@ -2,7 +2,7 @@
   id: MagazineShotgunBase
   name: ammo drum (.50 shells)
   parent: BaseItem
-  abstract: true
+  noSpawn: true
   components:
   - type: RangedMagazine
     caliber: Shotgun

@@ -2,7 +2,7 @@
   id: CartridgeSRifleBase
   name: cartridge (.20 rifle)
   parent: BaseCartridge
-  abstract: true
+  noSpawn: true
   components:
   - type: Ammo
     caliber: SRifle

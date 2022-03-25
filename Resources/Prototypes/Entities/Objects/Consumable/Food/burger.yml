@@ -24,7 +24,7 @@
 - type: entity
   parent: FoodInjectableBase
   id: FoodBurgerBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Food
     transferAmount: 5

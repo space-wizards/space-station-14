@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseItem
-  abstract: true
+  noSpawn: true
   id: BriefcaseBase
   description: Useful for carrying items in your hands.
   components:

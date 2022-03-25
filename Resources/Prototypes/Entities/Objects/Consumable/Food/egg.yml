@@ -4,7 +4,7 @@
   parent: FoodInjectableBase
   id: FoodEggBase
   description: An egg!
-  abstract: true
+  noSpawn: true
   components:
   - type: Tag
     tags:

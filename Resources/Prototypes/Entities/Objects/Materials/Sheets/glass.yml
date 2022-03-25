@@ -1,5 +1,5 @@
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: BaseItem
   id: SheetGlassBase
   description: A sheet of glass, used often on the station in various applications.

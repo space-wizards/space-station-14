@@ -3,7 +3,7 @@
   parent: BaseItem
   id: DrinkBaseCup
   name: base cup
-  abstract: true
+  noSpawn: true
   components:
   - type: SolutionContainerManager
     solutions:

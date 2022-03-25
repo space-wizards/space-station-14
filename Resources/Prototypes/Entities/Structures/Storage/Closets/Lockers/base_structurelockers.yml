@@ -1,7 +1,7 @@
 - type: entity
   id: LockerBase
   parent: ClosetBase
-  abstract: true
+  noSpawn: true
   components:
   - type: AccessReader
   - type: Lock
@@ -39,7 +39,7 @@
 - type: entity
   id: LockerBaseSecure
   parent: LockerBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Damageable
     damageContainer: Inorganic

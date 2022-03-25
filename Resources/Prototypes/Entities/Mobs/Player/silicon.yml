@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  abstract: true
+  noSpawn: true
   id: PlayerSiliconBase #for player controlled silicons
   components:
   - type: Reactive

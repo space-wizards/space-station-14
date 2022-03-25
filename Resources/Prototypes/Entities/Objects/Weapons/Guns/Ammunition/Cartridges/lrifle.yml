@@ -2,7 +2,7 @@
   id: CartridgeLRifleBase
   name: cartridge (.30 rifle)
   parent: BaseCartridge
-  abstract: true
+  noSpawn: true
   components:
   - type: Ammo
     caliber: LRifle

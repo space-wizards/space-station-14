@@ -2,7 +2,7 @@
 
 - type: entity
   id: DisposalPipeBase
-  abstract: true
+  noSpawn: true
   placement:
     mode: SnapgridCenter
     snap:
@@ -43,7 +43,7 @@
 
 - type: entity
   id: DisposalHolder
-  abstract: true
+  noSpawn: true
   name: disposal holder
   components:
   - type: DisposalHolder

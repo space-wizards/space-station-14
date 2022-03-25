@@ -2,7 +2,7 @@
   id: CartridgeCapBase
   name: cartridge (cap)
   parent: BaseCartridge
-  abstract: true
+  noSpawn: true
   components:
   - type: Ammo
     caliber: Cap

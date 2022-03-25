@@ -2,7 +2,7 @@
   name: lantern
   parent: BaseItem
   id: BaseLamp
-  abstract: true
+  noSpawn: true
   components:
   - type: HandheldLight
     toggleAction:
