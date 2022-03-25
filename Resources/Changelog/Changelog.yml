@@ -1,11 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Deconstructing a disposal unit no longer deletes its contents., type: Fix}
-  id: 747
-  time: '2021-12-17T09:47:15.887932+00:00'
-- author: Zumorica
-  changes:
   - {message: Fixes various bugs relating to MIDI and instruments. Others should be
       able to hear them again reliably., type: Fix}
   id: 748
@@ -3021,3 +3016,8 @@ Entries:
     type: Fix}
   id: 1246
   time: '2022-03-25T18:16:30.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Corgis can no longer will doors to open., type: Fix}
+  id: 1247
+  time: '2022-03-25T21:10:50.0000000+00:00'
