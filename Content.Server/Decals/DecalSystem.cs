@@ -334,7 +334,10 @@ namespace Content.Server.Decals
                     }
 
                     if (newChunks.Count == 0)
+                    {
+                        _chunkIndexPool.Return(newChunks);
                         continue;
+                    }
 
                     updatedChunks[gridId] = newChunks;
                 }
