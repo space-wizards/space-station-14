@@ -37,4 +37,8 @@ public sealed class ReactiveReagentEffectEntry
 
     [DataField("effects", required: true)]
     public List<ReagentEffect> Effects = default!;
+
+    [DataField("groups", readOnly: true, serverOnly: true,
+        customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<ReactionMethod>, ReactiveGroupPrototype>))]
+    public Dictionary<string, HashSet<ReactionMethod>> ReactiveGroups { get; } = default!;
 }
