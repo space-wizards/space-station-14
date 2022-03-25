@@ -77,7 +77,7 @@
 # Compact Wall Substation Base
 - type: entity
   id: BaseSubstationWall
-  abstract: true
+  noSpawn: true
   name: wallmount substation
   description: A substation designed for compact shuttles and spaces.
   placement:
@@ -177,7 +177,7 @@
 # Construction Frame
 - type: entity
   id: BaseSubstationWallFrame
-  abstract: true
+  noSpawn: true
   name: wallmount substation frame
   description: A substation frame for construction
   placement:

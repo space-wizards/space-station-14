@@ -123,7 +123,7 @@
 # Construction Frames
 
 - type: entity
-  abstract: true
+  noSpawn: true
   id: BaseGeneratorWallmountFrame
   name: wallmount generator frame
   description: A construction frame for a wallmount generator.
