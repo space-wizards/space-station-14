@@ -17,7 +17,7 @@
         Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterAtmos
   name: atmos winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -26,16 +26,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatatmos.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatatmos.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCap
   name: captain's winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -44,16 +37,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCargo
   name: cargo winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -62,16 +48,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcargo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcargo.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCE
   name: ce's winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -80,16 +59,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatce.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatce.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCentcom
   name: centcom winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -98,16 +70,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterChem
   name: chemistry winter coat 
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -116,16 +81,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatchem.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatchem.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCMO
   name: cmo's winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -134,16 +92,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterEngi
   name: engineering winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -152,16 +103,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatengi.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatengi.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterGen
   name: genetics winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -170,16 +114,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatgen.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatgen.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterHoP
   name: hop's winter coat 
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -188,16 +125,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coathop.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coathop.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterHoS
   name: hos's winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -206,16 +136,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterHydro
   name: hydroponics winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -224,16 +147,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coathydro.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coathydro.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterJani
   name: janitorial winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -242,16 +158,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatjani.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatjani.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterMed
   name: medical winter coat 
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -260,16 +169,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatmed.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatmed.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterMiner
   name: miners winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -278,16 +180,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatminer.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatminer.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterPara
   name: paramedics winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -296,16 +191,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatparamed.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatparamed.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterQM
   name: quartermaster's winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -314,16 +202,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatqm.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatqm.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterRD
   name: rd's winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -332,16 +213,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterRobo
   name: robotics winter coat 
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -350,16 +224,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatrobo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatrobo.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterSci
   name: scientists winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -368,16 +235,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatsci.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatsci.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterSec
   name: securities winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -386,16 +246,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatsec.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatsec.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterViro
   name: virologies winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
@@ -404,10 +257,3 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatviro.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatviro.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
