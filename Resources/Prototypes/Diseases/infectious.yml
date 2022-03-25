@@ -135,4 +135,3 @@
       min: 420 ## Reachable with a flamer
     - !type:DiseaseReagentCure
       reagent: Theobromine
-      amount: 10

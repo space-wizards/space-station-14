@@ -24,6 +24,7 @@ namespace Content.Client.Audio
     public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     {
         [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -33,25 +34,28 @@ namespace Content.Client.Audio
         private float _maxAmbientRange;
         private float _cooldown;
         private float _accumulator;
+        private float _ambienceVolume = 0.0f;
 
         /// <summary>
         /// How many times we can be playing 1 particular sound at once.
         /// </summary>
-        private int _maxSingleSound = 8;
+        private int MaxSingleSound => (int) (_maxAmbientCount / (16.0f / 6.0f));
 
         private Dictionary<AmbientSoundComponent, (IPlayingAudioStream? Stream, string Sound)> _playingSounds = new();
 
         private const float RangeBuffer = 3f;
 
+
+
         public override void Initialize()
         {
             base.Initialize();
             UpdatesOutsidePrediction = true;
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-            configManager.OnValueChanged(CCVars.AmbientCooldown, SetCooldown, true);
-            configManager.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);
-            configManager.OnValueChanged(CCVars.AmbientRange, SetAmbientRange, true);
 
+            _cfg.OnValueChanged(CCVars.AmbientCooldown, SetCooldown, true);
+            _cfg.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);
+            _cfg.OnValueChanged(CCVars.AmbientRange, SetAmbientRange, true);
+            _cfg.OnValueChanged(CCVars.AmbienceVolume, SetAmbienceVolume, true);
             SubscribeLocalEvent<AmbientSoundComponent, ComponentShutdown>(OnShutdown);
         }
 
@@ -61,6 +65,7 @@ namespace Content.Client.Audio
                 sound.Stream?.Stop();
         }
 
+        private void SetAmbienceVolume(float value) => _ambienceVolume = value;
         private void SetCooldown(float value) => _cooldown = value;
         private void SetAmbientCount(int value) => _maxAmbientCount = value;
         private void SetAmbientRange(float value) => _maxAmbientRange = value;
@@ -69,10 +74,11 @@ namespace Content.Client.Audio
         {
             base.Shutdown();
             ClearSounds();
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-            configManager.UnsubValueChanged(CCVars.AmbientCooldown, SetCooldown);
-            configManager.UnsubValueChanged(CCVars.MaxAmbientSources, SetAmbientCount);
-            configManager.UnsubValueChanged(CCVars.AmbientRange, SetAmbientRange);
+
+            _cfg.UnsubValueChanged(CCVars.AmbientCooldown, SetCooldown);
+            _cfg.UnsubValueChanged(CCVars.MaxAmbientSources, SetAmbientCount);
+            _cfg.UnsubValueChanged(CCVars.AmbientRange, SetAmbientRange);
+            _cfg.UnsubValueChanged(CCVars.AmbienceVolume, SetAmbienceVolume);
         }
 
         private int PlayingCount(string countSound)
@@ -143,7 +149,7 @@ namespace Content.Client.Audio
                 var key = ambientComp.Sound.GetSound();
 
                 if (!sourceDict.ContainsKey(key))
-                    sourceDict[key] = new List<AmbientSoundComponent>(_maxSingleSound);
+                    sourceDict[key] = new List<AmbientSoundComponent>(MaxSingleSound);
 
                 sourceDict[key].Add(ambientComp);
             }
@@ -151,7 +157,7 @@ namespace Content.Client.Audio
             foreach (var (key, val) in sourceDict)
             {
                 sourceDict[key] = val.OrderByDescending(x =>
-                    Transform(x.Owner).Coordinates.TryDistance(EntityManager, coordinates, out var dist) ? dist : float.MaxValue).ToList();
+                    Transform(x.Owner).Coordinates.TryDistance(EntityManager, coordinates, out var dist) ? dist * (x.Volume + 32) : float.MaxValue).ToList();
             }
 
             return sourceDict;
@@ -198,7 +204,7 @@ namespace Content.Client.Audio
 
                     var sound = comp.Sound.GetSound();
 
-                    if (PlayingCount(sound) >= _maxSingleSound)
+                    if (PlayingCount(sound) >= MaxSingleSound)
                     {
                         keys.Remove(key);
                         /*foreach (var toRemove in compsInRange[key])
@@ -212,7 +218,7 @@ namespace Content.Client.Audio
 
                     var audioParams = AudioHelpers
                         .WithVariation(0.01f)
-                        .WithVolume(comp.Volume)
+                        .WithVolume(comp.Volume + _ambienceVolume)
                         .WithLoop(true)
                         .WithAttenuation(Attenuation.LinearDistance)
                         // Randomise start so 2 sources don't increase their volume.

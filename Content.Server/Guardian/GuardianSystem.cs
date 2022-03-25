@@ -5,6 +5,7 @@ using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.MobState;
@@ -25,6 +26,7 @@ namespace Content.Server.Guardian
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DamageableSystem _damageSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -180,8 +182,7 @@ namespace Content.Server.Guardian
 
             if (comp.Deleted ||
                 comp.Used ||
-                !TryComp<HandsComponent>(ev.User, out var hands) ||
-                !hands.IsHolding(comp.Owner) ||
+                !_handsSystem.IsHolding(ev.User, comp.Owner, out _) ||
                 HasComp<GuardianHostComponent>(ev.Target))
             {
                 comp.Injecting = false;

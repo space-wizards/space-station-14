@@ -1,6 +1,5 @@
 using Content.Server.Hands.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.AI.Operators.Inventory
 {
@@ -20,9 +19,12 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            foreach (var item in handsComponent.GetAllHeldItems())
+            var sys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedHandsSystem>();
+
+            foreach (var hand in handsComponent.Hands.Values)
             {
-                handsComponent.Drop(item.Owner);
+                if (!hand.IsEmpty)
+                    sys.TryDrop(_owner, hand, handsComp: handsComponent);
             }
 
             return Outcome.Success;
