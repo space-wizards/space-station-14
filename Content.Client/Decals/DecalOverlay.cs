@@ -39,17 +39,7 @@ namespace Content.Client.Decals
         {
             var handle = args.WorldHandle;
 
-            Dictionary<string, SpriteSpecifier> cachedTextures = new();
-
-            SpriteSpecifier GetSpriteSpecifier(string id)
-            {
-                if (cachedTextures.TryGetValue(id, out var spriteSpecifier))
-                    return spriteSpecifier;
-
-                spriteSpecifier = _prototypeManager.Index<DecalPrototype>(id).Sprite;
-                cachedTextures.Add(id, spriteSpecifier);
-                return spriteSpecifier;
-            }
+            Dictionary<string, Texture> cachedTextures = new();
 
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
@@ -58,18 +48,23 @@ namespace Content.Client.Decals
                 var gridUid = _mapManager.GetGridEuid(gridId);
                 var xform = xformQuery.GetComponent(gridUid);
 
-                handle.SetTransform(_transform.GetWorldMatrix(xform));
+                handle.SetTransform(_transform.GetWorldMatrix(xform, xformQuery));
 
                 foreach (var (_, decals) in zIndexDictionary)
                 {
                     foreach (var (_, decal) in decals)
                     {
-                        var spriteSpecifier = GetSpriteSpecifier(decal.Id);
+                        if (!cachedTextures.TryGetValue(decal.Id, out var texture))
+                        {
+                            var sprite = _prototypeManager.Index<DecalPrototype>(decal.Id).Sprite;
+                            texture = _sprites.Frame0(sprite);
+                            cachedTextures[decal.Id] = texture;
+                        }
 
                         if (decal.Angle.Equals(Angle.Zero))
-                            handle.DrawTexture(_sprites.Frame0(spriteSpecifier), decal.Coordinates, decal.Color);
+                            handle.DrawTexture(texture, decal.Coordinates, decal.Color);
                         else
-                            handle.DrawTexture(_sprites.Frame0(spriteSpecifier), decal.Coordinates, decal.Angle, decal.Color);
+                            handle.DrawTexture(texture, decal.Coordinates, decal.Angle, decal.Color);
                     }
                 }
             }

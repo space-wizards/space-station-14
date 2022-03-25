@@ -1,3 +1,4 @@
+using System.Threading;
 using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -5,7 +6,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.RCD.Components
 {
-    public enum RcdMode
+    public enum RcdMode : byte
     {
         Floors,
         Walls,
@@ -16,11 +17,10 @@ namespace Content.Server.RCD.Components
     [RegisterComponent]
     public sealed class RCDComponent : Component
     {
-        [ViewVariables(VVAccess.ReadOnly)]
-        [DataField("maxAmmo")] public int MaxAmmo = 5;
+        private const int DefaultAmmoCount = 5;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        [DataField("startingAmmo")] public int StartingAmmo = 5;
+        [DataField("maxAmmo")] public int MaxAmmo = DefaultAmmoCount;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("delay")]
         public float Delay = 2f;
@@ -34,12 +34,16 @@ namespace Content.Server.RCD.Components
         /// <summary>
         ///     What mode are we on? Can be floors, walls, deconstruct.
         /// </summary>
+        [ViewVariables]
+        [DataField("mode")]
         public RcdMode Mode = RcdMode.Floors;
 
         /// <summary>
         ///     How much "ammo" we have left. You can refill this with RCD ammo.
         /// </summary>
-        public int CurrentAmmo;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("ammo")]
+        public int CurrentAmmo = DefaultAmmoCount;
 
+        public CancellationTokenSource? CancelToken = null;
     }
 }

@@ -1,0 +1,21 @@
+- type: latheRecipe
+  id: TimerTrigger
+  icon:
+    sprite: Objects/Devices/timer.rsi
+    state: timer
+  result: TimerTrigger
+  completetime: 500
+  materials:
+    Steel: 300
+    Plastic: 200
+
+- type: latheRecipe
+  id: ChemicalPayload
+  icon:
+    sprite: Objects/Devices/payload.rsi
+    state: payload-empty
+  result: ChemicalPayload
+  completetime: 500
+  materials:
+    Steel: 200
+    Plastic: 300
