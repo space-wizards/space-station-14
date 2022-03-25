@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Urist McHands The Lizardperson
+  name: Urisst' Mzhand
   parent: MobHumanBase
   id: MobReptilianBase
   abstract: true
@@ -108,7 +108,7 @@
       - map: [ "pocket2" ]
   - type: Body
     template: HumanoidTemplate
-    preset: HumanPreset
+    preset: ReptilianPreset
   - type: LizardAccent
   - type: DiseaseCarrier
     diseaseResist: 0.1
