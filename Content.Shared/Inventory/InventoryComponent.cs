@@ -11,8 +11,7 @@ public abstract class InventoryComponent : Component, IExAct
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    [DataField("templateId", required: true,
-        customTypeSerializer: typeof(PrototypeIdSerializer<InventoryTemplatePrototype>))]
+    [DataField("templateId", customTypeSerializer: typeof(PrototypeIdSerializer<InventoryTemplatePrototype>))]
     public string TemplateId { get; } = "human";
 
     void IExAct.OnExplosion(ExplosionEventArgs eventArgs)

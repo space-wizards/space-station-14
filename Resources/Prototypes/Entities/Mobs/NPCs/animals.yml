@@ -681,9 +681,11 @@
     combatToggleAction:
       enabled: false
       autoPopulate: false
+      name: action-name-combat
     disarmAction:
       enabled: false
       autoPopulate: false
+      name: action-name-disarm
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier #The other class lab animal and disease vector
