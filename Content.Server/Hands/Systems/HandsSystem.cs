@@ -212,7 +212,7 @@ namespace Content.Server.Hands.Systems
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            component.AddHand(args.Slot.Id, location);
+            AddHand(uid, args.Slot.Id, location);
         }
 
         private void OnPartRemoved(EntityUid uid, HandsComponent component, PartRemovedFromBodyEvent args)
@@ -220,9 +220,8 @@ namespace Content.Server.Hands.Systems
             if (args.Part.PartType != BodyPartType.Hand)
                 return;
 
-            component.RemoveHand(args.Slot.Id);
+            RemoveHand(uid, args.Slot.Id);
         }
-
 
         #endregion
 

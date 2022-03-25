@@ -1,3 +1,4 @@
+using Content.Server.Audio;
 using Content.Server.Body.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Recycling.Components;
@@ -21,7 +22,6 @@ namespace Content.Server.Recycling
         [Dependency] private readonly BodySystem _bodySystem = default!;
 
         private const float RecyclerSoundCooldown = 0.8f;
-        [Dependency] private readonly BodySystem _bodySystem = default!;
 
         public override void Initialize()
         {

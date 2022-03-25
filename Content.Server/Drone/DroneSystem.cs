@@ -1,4 +1,7 @@
 using System.Linq;
+using System.Net;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Shared.Drone;
 using Content.Server.Drone.Components;
 using Content.Shared.Actions;
@@ -31,6 +34,7 @@ namespace Content.Server.Drone
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
@@ -89,7 +93,7 @@ namespace Content.Server.Drone
         {
             if (args.Component.IsDead())
             {
-                var body = Comp<SharedBodyComponent>(uid); //There's no way something can have a mobstate but not a body...
+                var body = Comp<BodyComponent>(uid); //There's no way something can have a mobstate but not a body...
 
                 foreach (var item in drone.ToolUids.Select((value, i) => ( value, i )))
                 {
@@ -102,7 +106,7 @@ namespace Content.Server.Drone
                         EntityManager.DeleteEntity(item.value);
                     }
                 }
-                body.Gib();
+                _bodySystem.Gib(uid, false, body);
                 EntityManager.DeleteEntity(uid);
             }
         }

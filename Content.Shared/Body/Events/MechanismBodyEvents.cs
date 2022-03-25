@@ -9,7 +9,7 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is added to a body.
     /// </summary>
-    public class MechanismAddedToBodyEvent : EntityEventArgs
+    public sealed class MechanismAddedToBodyEvent : EntityEventArgs
     {
         public SharedBodyComponent Body;
 
@@ -22,7 +22,7 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is added to a body part.
     /// </summary>
-    public class MechanismAddedToPartEvent : EntityEventArgs
+    public sealed class MechanismAddedToPartEvent : EntityEventArgs
     {
         public SharedBodyPartComponent Part;
 
@@ -35,7 +35,7 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is added to a body part within a body.
     /// </summary>
-    public class MechanismAddedToPartInBodyEvent : EntityEventArgs
+    public sealed class MechanismAddedToPartInBodyEvent : EntityEventArgs
     {
         public SharedBodyComponent Body;
         public SharedBodyPartComponent Part;
@@ -50,7 +50,7 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is removed from a body.
     /// </summary>
-    public class MechanismRemovedFromBodyEvent : EntityEventArgs
+    public sealed class MechanismRemovedFromBodyEvent : EntityEventArgs
     {
         public SharedBodyComponent Old;
 
@@ -63,7 +63,7 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is removed from a body part.
     /// </summary>
-    public class MechanismRemovedFromPartEvent : EntityEventArgs
+    public sealed class MechanismRemovedFromPartEvent : EntityEventArgs
     {
         public SharedBodyPartComponent Old;
 
@@ -76,7 +76,7 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is removed from a body part within a body.
     /// </summary>
-    public class MechanismRemovedFromPartInBodyEvent : EntityEventArgs
+    public sealed class MechanismRemovedFromPartInBodyEvent : EntityEventArgs
     {
         public SharedBodyComponent OldBody;
         public SharedBodyPartComponent OldPart;

@@ -7,7 +7,7 @@ namespace Content.Shared.Body.Events;
 /// <summary>
 ///     Raised on a body part and the body when added to a body.
 /// </summary>
-public class PartAddedToBodyEvent : EntityEventArgs
+public sealed class PartAddedToBodyEvent : EntityEventArgs
 {
     public readonly SharedBodyPartComponent Part;
     public readonly BodyPartSlot Slot;
@@ -27,7 +27,7 @@ public class PartAddedToBodyEvent : EntityEventArgs
 /// <summary>
 ///     Raised on a body part and the body when removed from a body.
 /// </summary>
-public class PartRemovedFromBodyEvent : EntityEventArgs
+public sealed class PartRemovedFromBodyEvent : EntityEventArgs
 {
     public readonly SharedBodyPartComponent Part;
     public readonly BodyPartSlot Slot;
