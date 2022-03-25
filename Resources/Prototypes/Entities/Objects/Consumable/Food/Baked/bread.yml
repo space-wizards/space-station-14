@@ -3,7 +3,7 @@
 - type: entity
   parent: FoodInjectableBase
   id: FoodBreadBase
-  noSpawn: true
+  abstract: true
   components:
   - type: Food
   - type: Sprite
@@ -20,7 +20,7 @@
 - type: entity
   parent: FoodBreadBase
   id: FoodBreadSliceBase
-  noSpawn: true
+  abstract: true
   components:
   - type: SolutionContainerManager
     solutions:

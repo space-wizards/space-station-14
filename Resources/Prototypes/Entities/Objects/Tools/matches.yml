@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: SmallboxItem
   parent: BaseItem
-  noSpawn: true
+  abstract: true
   components:
   - type: Storage
     capacity: 10

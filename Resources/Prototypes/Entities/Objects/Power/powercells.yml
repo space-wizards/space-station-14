@@ -3,7 +3,7 @@
 
 - type: entity
   id: PowerCellSmallBase
-  noSpawn: true
+  abstract: true
   parent: BaseItem
   components:
   - type: Battery
@@ -29,7 +29,7 @@
 
 - type: entity
   id: PowerCellMediumBase
-  noSpawn: true
+  abstract: true
   parent: PowerCellSmallBase
   components:
   - type: PowerCell
@@ -37,7 +37,7 @@
 
 - type: entity
   id: PowerCellLargeBase
-  noSpawn: true
+  abstract: true
   parent: PowerCellSmallBase
   components:
   - type: PowerCell

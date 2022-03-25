@@ -3,7 +3,7 @@
   parent: BaseMachinePowered
   name: vending machine
   description: Just add capitalism!
-  noSpawn: true
+  abstract: true
   components:
   - type: AmbientOnPowered
   - type: AmbientSound

@@ -1,6 +1,6 @@
 - type: entity
   parent: GasPipeBase
-  noSpawn: true
+  abstract: true
   id: GasTrinaryBase
   placement:
     mode: SnapgridCenter

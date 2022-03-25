@@ -17,7 +17,7 @@
 - type: entity
   id: ChessBoardTabletop
   name: chessboard
-  noSpawn: true
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chessboard_tabletop.rsi
@@ -29,7 +29,7 @@
 - type: entity
   id: BaseChessPiece
   parent: BaseItem
-  noSpawn: true
+  abstract: true
   components:
   - type: TabletopDraggable
   - type: Sprite

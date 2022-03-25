@@ -70,7 +70,7 @@
     supplyRate: 0
 
 - type: entity
-  noSpawn: true
+  abstract: true
   parent: AMEController
   id: AMEControllerUnanchored
   suffix: Unanchored

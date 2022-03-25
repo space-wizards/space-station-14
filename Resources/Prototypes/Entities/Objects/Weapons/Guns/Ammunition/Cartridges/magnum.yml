@@ -2,7 +2,7 @@
   id: CartridgeMagnumBase
   name: cartridge (.40 magnum)
   parent: BaseCartridge
-  noSpawn: true
+  abstract: true
   components:
   - type: Ammo
     caliber: Magnum

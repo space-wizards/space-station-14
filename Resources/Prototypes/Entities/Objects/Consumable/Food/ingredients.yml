@@ -30,7 +30,7 @@
 - type: entity
   parent: BaseItem
   id: ReagentContainerBase
-  noSpawn: true
+  abstract: true
   components:
   - type: Sprite
     netsync: false
@@ -302,7 +302,7 @@
 # Baking
 
 - type: entity
-  noSpawn: true
+  abstract: true
   parent: BaseItem
   id: FoodBakingBase
   description: Used in various recipes.

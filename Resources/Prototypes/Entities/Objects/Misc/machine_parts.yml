@@ -3,7 +3,7 @@
   name: stock part
   parent: BaseItem
   description: What?
-  noSpawn: true
+  abstract: true
   components:
     - type: Sprite
       netsync: false

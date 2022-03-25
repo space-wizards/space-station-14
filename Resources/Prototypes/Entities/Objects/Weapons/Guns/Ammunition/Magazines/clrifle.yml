@@ -3,7 +3,7 @@
   id: MagazineClRifleBase
   name: "magazine (.25 caseless)"
   parent: BaseItem
-  noSpawn: true
+  abstract: true
   components:
   - type: RangedMagazine
     caliber: ClRifle

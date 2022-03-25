@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
   id: BaseHealingItem
-  noSpawn: true
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medical.rsi

@@ -2,7 +2,7 @@
   parent: BaseItem
   id: BaseComputerCircuitboard
   name: computer board
-  noSpawn: true
+  abstract: true
   components:
     - type: ComputerBoard
     - type: Sprite

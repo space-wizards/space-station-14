@@ -3,7 +3,7 @@
   parent: BaseItem
   id: HMGBase
   description: Spray and pray
-  noSpawn: true
+  abstract: true
   components:
   - type: Sprite
     netsync: false

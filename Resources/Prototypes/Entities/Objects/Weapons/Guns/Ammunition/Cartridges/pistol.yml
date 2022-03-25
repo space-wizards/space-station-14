@@ -2,7 +2,7 @@
   id: CartridgePistolBase
   name: cartridge (.35 auto)
   parent: BaseCartridge
-  noSpawn: true
+  abstract: true
   components:
   - type: Ammo
     caliber: Pistol

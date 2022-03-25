@@ -1,5 +1,5 @@
 ﻿- type: entity
-  noSpawn: true
+  abstract: true
   parent: BaseItem
   id: ShardBase
   description: It's a shard of some unknown material.

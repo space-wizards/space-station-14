@@ -2,7 +2,7 @@
   id: SLPistolBase
   name: "speed loader (.35 auto)"
   parent: BaseItem
-  noSpawn: true
+  abstract: true
   components:
   - type: SpeedLoader
     caliber: Pistol

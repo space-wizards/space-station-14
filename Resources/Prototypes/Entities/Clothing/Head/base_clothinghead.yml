@@ -1,5 +1,5 @@
 - type: entity
-  noSpawn: true
+  abstract: true
   parent: Clothing
   id: ClothingHeadBase
   components:
@@ -13,7 +13,7 @@
       - DroneUsable
 
 - type: entity
-  noSpawn: true
+  abstract: true
   parent: Clothing
   id: HatBase
   components:
@@ -24,7 +24,7 @@
     state: icon
 
 - type: entity
-  noSpawn: true
+  abstract: true
   parent: ClothingHeadBase
   id: ClothingHeadHardsuitBase
   name: base hardsuit helmet
@@ -52,7 +52,7 @@
     protection: 0.05
 
 - type: entity
-  noSpawn: true
+  abstract: true
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHardsuitWithLightBase
   name: base hardsuit helmet with light

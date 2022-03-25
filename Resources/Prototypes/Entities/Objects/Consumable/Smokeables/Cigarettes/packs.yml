@@ -2,7 +2,7 @@
   id: CigPackBase
   parent: BaseItem
   name: cigarette pack
-  noSpawn: true
+  abstract: true
   components:
   - type: Tag
     tags:

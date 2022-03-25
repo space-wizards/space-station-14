@@ -3,7 +3,7 @@
   description: A handheld tracking device that locks onto certain signals.
   parent: BaseItem
   id: PinpointerBase
-  noSpawn: true
+  abstract: true
   components:
   - type: Transform
     noRot: True

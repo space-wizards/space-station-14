@@ -1,7 +1,7 @@
 ﻿- type: entity
   parent: BaseItem
   id: UtensilBase
-  noSpawn: true
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Misc/utensils.rsi

@@ -3,7 +3,7 @@
   parent: BaseStructureDynamic
   name: thruster
   description: It goes nyooooooom.
-  noSpawn: true
+  abstract: true
   components:
     - type: AmbientSound
       range: 4

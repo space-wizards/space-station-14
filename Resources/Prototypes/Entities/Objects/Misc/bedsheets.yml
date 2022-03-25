@@ -2,7 +2,7 @@
   parent: BaseItem
   id: BedsheetBase
   name: BedsheetBase
-  noSpawn: true
+  abstract: true
   description: A surprisingly soft linen bedsheet.
   placement:
     mode: SnapgridCenter

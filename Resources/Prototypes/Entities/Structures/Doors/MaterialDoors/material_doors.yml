@@ -2,7 +2,7 @@
   id: BaseMaterialDoor
   parent: BaseStructure
   name: door
-  noSpawn: true
+  abstract: true
   description: A door, where will it lead?
   components:
   - type: InteractionOutline

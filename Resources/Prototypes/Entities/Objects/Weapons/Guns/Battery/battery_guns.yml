@@ -1,7 +1,7 @@
 - type: entity
   id: BatteryGunBase
   parent: BaseItem
-  noSpawn: true
+  abstract: true
   components:
   - type: RangedWeapon
   - type: BatteryBarrel

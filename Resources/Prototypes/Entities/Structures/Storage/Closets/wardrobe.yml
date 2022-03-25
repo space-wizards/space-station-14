@@ -2,7 +2,7 @@
 - type: entity
   id: WardrobeBase
   parent: ClosetBase
-  noSpawn: true
+  abstract: true
   description: It's a storage unit for standard-issue Nanotrasen attire.
 
 # Colored

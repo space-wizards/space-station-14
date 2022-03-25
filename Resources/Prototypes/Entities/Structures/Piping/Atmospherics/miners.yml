@@ -1,5 +1,5 @@
 - type: entity
-  noSpawn: true
+  abstract: true
   name: gas miner
   description: Gases mined from the gas giant below (above?) flow out through this massive vent.
   id: GasMinerBase

@@ -2,7 +2,7 @@
   id: ShellShotgunBase
   name: shell (.50)
   parent: BaseCartridge
-  noSpawn: true
+  abstract: true
   components:
   - type: Tag
     tags:

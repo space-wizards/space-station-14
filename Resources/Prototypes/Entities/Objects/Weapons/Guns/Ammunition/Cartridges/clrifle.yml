@@ -2,7 +2,7 @@
   id: CartridgeClRifleBase
   name: cartridge (.25 rifle)
   parent: BaseCartridge
-  noSpawn: true
+  abstract: true
   components:
   - type: Ammo
     caliber: ClRifle

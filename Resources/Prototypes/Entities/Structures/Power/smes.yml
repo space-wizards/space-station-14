@@ -1,6 +1,6 @@
 # Base SMES
 - type: entity
-  noSpawn: true
+  abstract: true
   id: BaseSMES
   parent: BaseMachine
   name: SMES

@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  noSpawn: true
+  abstract: true
   parent: BaseItem
   id: FoodTinBase
   name: tin
@@ -30,7 +30,7 @@
     damageContainer: Inorganic
 
 - type: entity
-  noSpawn: true
+  abstract: true
   parent: BaseItem
   id: FoodTinBaseTrash
   name: empty tin

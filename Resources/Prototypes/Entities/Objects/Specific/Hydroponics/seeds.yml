@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
   id: SeedBase
-  noSpawn: true
+  abstract: true
   components:
     - type: Seed
     - type: SolutionContainerManager

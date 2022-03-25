@@ -2,7 +2,7 @@
   name: radio
   parent: BaseItem
   id: RadioBase
-  noSpawn: true
+  abstract: true
 
 - type: entity
   name: handheld radio

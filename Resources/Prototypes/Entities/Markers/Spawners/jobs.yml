@@ -3,7 +3,7 @@
 - type: entity
   id: SpawnPointJobBase
   parent: MarkerBase
-  noSpawn: true
+  abstract: true
   suffix: Job Spawn
   components:
   - type: SpawnPoint

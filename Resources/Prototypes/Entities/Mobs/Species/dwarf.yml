@@ -3,7 +3,7 @@
   name: Urist McHands The Dwarf
   parent: MobHumanBase
   id: MobDwarfBase
-  noSpawn: true
+  abstract: true
   description: A miserable pile of secrets.
   components:
   - type: Icon
@@ -109,7 +109,7 @@
   name: Urist McHands
   parent: MobHumanDummy
   id: MobDwarfDummy
-  noSpawn: true
+  abstract: true
   description: A dummy human meant to be used in character setup.
   components:
   - type: Sprite

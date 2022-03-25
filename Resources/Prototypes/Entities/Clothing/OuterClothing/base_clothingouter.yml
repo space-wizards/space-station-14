@@ -1,5 +1,5 @@
 - type: entity
-  noSpawn: true
+  abstract: true
   parent: Clothing
   id: ClothingOuterBase
   components:
@@ -10,7 +10,7 @@
     state: icon
 
 - type: entity
-  noSpawn: true
+  abstract: true
   parent: ClothingOuterBase
   id: ClothingOuterHardsuitBase
   name: base hardsuit

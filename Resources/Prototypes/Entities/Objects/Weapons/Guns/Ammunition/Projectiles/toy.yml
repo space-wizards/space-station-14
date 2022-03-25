@@ -2,7 +2,7 @@
   id: BulletDonkSoftBase
   name: foam dart
   parent: BaseItem
-  noSpawn: true
+  abstract: true
   components:
   - type: Projectile
     damage:

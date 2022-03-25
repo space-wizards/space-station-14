@@ -1,7 +1,7 @@
 - type: entity
   id: BaseTabletopPiece
   parent: BaseItem
-  noSpawn: true
+  abstract: true
   components:
   - type: TabletopDraggable
   - type: Sprite

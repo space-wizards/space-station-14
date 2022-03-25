@@ -1,7 +1,7 @@
 - type: entity
   id: MobObserver
   name: observer
-  noSpawn: true
+  abstract: true
   save: false
   description: Boo!
   components:

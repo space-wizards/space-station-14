@@ -17,7 +17,7 @@
   id: ComputerShuttleBase
   name: shuttle console
   description: Used to pilot a shuttle.
-  noSpawn: true
+  abstract: true
   components:
   - type: ShuttleConsole
   - type: ExtensionCableReceiver

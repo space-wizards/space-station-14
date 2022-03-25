@@ -3,7 +3,7 @@
   name: Urisst' Mzhand
   parent: MobHumanBase
   id: MobReptilianBase
-  noSpawn: true
+  abstract: true
   description: A miserable pile of scales.
   components:
   - type: Icon
@@ -135,7 +135,7 @@
   name: Urist McHands
   parent: MobHumanDummy
   id: MobReptilianDummy
-  noSpawn: true
+  abstract: true
   description: A dummy reptilian meant to be used in character setup.
   components:
   - type: Sprite

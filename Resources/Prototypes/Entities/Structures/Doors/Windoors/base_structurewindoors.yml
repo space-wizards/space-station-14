@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: BaseWindoor
   parent: BaseStructure
-  noSpawn: true
+  abstract: true
   placement:
     mode: SnapgridCenter
   components:
@@ -110,7 +110,7 @@
 - type: entity
   id: BaseSecureWindoor
   parent: BaseWindoor
-  noSpawn: true
+  abstract: true
   components:
   - type: Sprite
     netsync: false

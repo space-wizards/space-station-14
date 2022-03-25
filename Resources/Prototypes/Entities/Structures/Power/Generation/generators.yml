@@ -1,7 +1,7 @@
 # Base Generator
 
 - type: entity
-  noSpawn: true
+  abstract: true
   id: BaseGenerator
   description: A high efficiency thermoelectric generator.
   name: generator
@@ -70,7 +70,7 @@
 # Base Wallmount Generator
 
 - type: entity
-  noSpawn: true
+  abstract: true
   id: BaseGeneratorWallmount
   parent: BaseGenerator
   name: wallmount generator
@@ -123,7 +123,7 @@
 # Construction Frames
 
 - type: entity
-  noSpawn: true
+  abstract: true
   id: BaseGeneratorWallmountFrame
   name: wallmount generator frame
   description: A construction frame for a wallmount generator.

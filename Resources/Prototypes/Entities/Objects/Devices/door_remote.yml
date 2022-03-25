@@ -3,7 +3,7 @@
   id: DoorRemoteDefault
   name: door remote
   description: A gadget which can open and bolt doors remotely
-  noSpawn: true
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Devices/door_remote.rsi

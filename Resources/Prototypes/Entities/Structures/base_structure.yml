@@ -1,6 +1,6 @@
 - type: entity
   id: BaseStructure
-  noSpawn: true
+  abstract: true
   placement:
     mode: SnapgridCenter
   components:
@@ -28,7 +28,7 @@
   # This means that it's not anchored on spawn.
   id: BaseStructureDynamic
   parent: BaseStructure
-  noSpawn: true
+  abstract: true
   components:
 # These might/might not be a good idea
 #  - type: MovedByPressure

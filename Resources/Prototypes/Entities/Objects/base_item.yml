@@ -1,7 +1,7 @@
 - type: entity
   name: "item"
   id: BaseItem
-  noSpawn: true
+  abstract: true
   components:
   - type: Item
     size: 5

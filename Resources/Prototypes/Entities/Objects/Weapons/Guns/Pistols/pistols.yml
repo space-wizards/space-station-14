@@ -3,7 +3,7 @@
   parent: BaseItem
   id: PistolBase
   description: A rooty tooty point and shooty.
-  noSpawn: true
+  abstract: true
   components:
   - type: Sprite
     netsync: false

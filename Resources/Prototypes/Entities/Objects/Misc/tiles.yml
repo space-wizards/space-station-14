@@ -2,7 +2,7 @@
   parent: BaseItem
   id: FloorTileItemBase
   description: These could work as a pretty decent throwing weapon.
-  noSpawn: true
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi

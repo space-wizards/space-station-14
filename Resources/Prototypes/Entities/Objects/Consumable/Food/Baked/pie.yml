@@ -3,7 +3,7 @@
 - type: entity
   parent: FoodInjectableBase
   id: FoodPieBase
-  noSpawn: true
+  abstract: true
   components:
   - type: Food
     trash: FoodPlateTin
@@ -28,7 +28,7 @@
 - type: entity
   parent: FoodInjectableBase # Not sliceable
   id: FoodPieSliceBase
-  noSpawn: true
+  abstract: true
   description: A slice of pie. Tasty!
   components:
   - type: Food

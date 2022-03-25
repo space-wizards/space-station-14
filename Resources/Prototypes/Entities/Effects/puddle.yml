@@ -1,7 +1,7 @@
 # TODO: Add the other mess types
 - type: entity
   id: PuddleBase
-  noSpawn: true
+  abstract: true
   components:
   - type: Transform
     anchored: true

@@ -1,5 +1,5 @@
 - type: entity
-  noSpawn: true
+  abstract: true
   parent: BaseItem
   id: BoxSRifleBase
   components:

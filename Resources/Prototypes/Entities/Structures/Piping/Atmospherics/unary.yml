@@ -1,6 +1,6 @@
 - type: entity
   parent: GasPipeBase
-  noSpawn: true
+  abstract: true
   id: GasUnaryBase
   placement:
     mode: SnapgridCenter
@@ -158,7 +158,7 @@
   parent: BaseMachinePowered
   id: BaseGasThermoMachine
   name: thermomachine
-  noSpawn: true
+  abstract: true
   placement:
     mode: SnapgridCenter
   components:

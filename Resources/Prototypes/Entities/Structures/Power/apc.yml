@@ -1,5 +1,5 @@
 - type: entity
-  noSpawn: true
+  abstract: true
   id: BaseAPC
   name: APC
   description: A control terminal for the area's electrical systems.

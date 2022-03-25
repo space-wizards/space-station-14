@@ -1,5 +1,5 @@
 ﻿- type: entity
-  noSpawn: true
+  abstract: true
   id: GasPipeBase
   name: pipe
   description: Holds gas.

@@ -3,7 +3,7 @@
   name: base empty bottle
   id: DrinkBottleBaseEmpty
   parent: BaseItem
-  noSpawn: true
+  abstract: true
   description: That's an empty bottle.
   components:
   - type: Sprite

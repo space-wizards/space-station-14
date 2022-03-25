@@ -2,7 +2,7 @@
   id: SLMagnumBase
   name: "speed loader (.40 magnum)"
   parent: BaseItem
-  noSpawn: true
+  abstract: true
   components:
   - type: SpeedLoader
     caliber: Magnum

@@ -1,5 +1,5 @@
 ﻿- type: entity
-  noSpawn: true
+  abstract: true
   id: CableBase
   placement:
     mode: SnapgridCenter
