@@ -22,6 +22,7 @@ using Content.Client.Singularity;
 using Content.Client.StationEvents;
 using Content.Client.StationEvents.Managers;
 using Content.Client.Stylesheets;
+using Content.Client.UserInterface;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Actions;
@@ -80,6 +81,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
+        [Dependency] private readonly IUIControllerManager _uiControllerManager = default!;
 
         public override void Init()
         {
@@ -140,8 +142,9 @@ namespace Content.Client.Entry
             _changelogManager.Initialize();
             _rulesManager.Initialize();
             _viewportManager.Initialize();
-            _hudManager.Initialize();
-            _baseClient.PlayerJoinedServer += (_, _) => { _hudManager.Startup();};
+            _uiControllerManager.Initialize();
+            _hudManager.Initialize();//TODO: this is going to break shortly
+            _baseClient.PlayerJoinedServer += (_, _) => { _hudManager.Startup();}; //TODO: Move this
             _baseClient.PlayerLeaveServer += (_, _) => { _hudManager.Shutdown();};
             _baseClient.PlayerJoinedServer += (_, _) => { _mapManager.CreateNewMapEntity(MapId.Nullspace);};
         }

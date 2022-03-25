@@ -19,23 +19,14 @@ namespace Content.Client.Inventory
     [Friend(typeof(ClientInventorySystem))]
     public sealed class ClientInventoryComponent : InventoryComponent
     {
-        public Control BottomLeftButtons = default!;
-        public Control BottomRightButtons = default!;
-        public Control TopQuickButtons = default!;
-
-        public DefaultWindow InventoryWindow = default!;
-
-        public readonly Dictionary<string, List<ItemSlotButton>> SlotButtons = new();
-
         [ViewVariables]
         [DataField("speciesId")] public string? SpeciesId { get; set; }
-
+        [ViewVariables]
+        public readonly Dictionary<string, ClientInventorySystem.SlotData> SlotData = new ();
         /// <summary>
         ///     Data about the current layers that have been added to the players sprite due to the items in each equipment slot.
         /// </summary>
         [ViewVariables]
         public readonly Dictionary<string, HashSet<string>> VisualLayerKeys = new();
-
-        public bool AttachedToGameHud;
     }
 }

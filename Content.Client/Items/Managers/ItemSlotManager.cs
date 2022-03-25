@@ -18,6 +18,8 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Items.Managers
 {
+    //TODO: *loads refactor shotgun with malicous intent*
+    //Why is this done out of sim? This should be part of the InventorySystem!
     public sealed class ItemSlotManager : IItemSlotManager
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;

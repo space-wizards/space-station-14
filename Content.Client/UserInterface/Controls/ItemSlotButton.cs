@@ -4,11 +4,13 @@ using Content.Client.Inventory;
 using Content.Client.Items.Managers;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
+using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Containers;
 using Robust.Shared.Input;
 
 namespace Content.Client.UserInterface.Controls
@@ -19,7 +21,6 @@ namespace Content.Client.UserInterface.Controls
         private const string HighlightShader = "SelectionOutlineInrange";
 
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
-
         public EntityUid? Entity { get; set; }
         public TextureRect Button { get; }
         public TextureRect HighlightRect { get; }

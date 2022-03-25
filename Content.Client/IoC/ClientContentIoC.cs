@@ -14,6 +14,7 @@ using Content.Client.Preferences;
 using Content.Client.Screenshot;
 using Content.Client.StationEvents.Managers;
 using Content.Client.Stylesheets;
+using Content.Client.UserInterface;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Actions;
@@ -27,6 +28,7 @@ namespace Content.Client.IoC
         public static void Register()
         {
             IoCManager.Register<IHudManager, HudManager>();
+            IoCManager.Register<IUIControllerManager, UIControllerManager>();
             IoCManager.Register<IParallaxManager, ParallaxManager>();
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IModuleManager, ClientModuleManager>();
