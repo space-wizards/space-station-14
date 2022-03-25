@@ -25,50 +25,40 @@ namespace Content.Tests.Shared.Alert
     - category: Temperature
 
 - type: alert
-  id: AlertLowPressure
+  id: LowPressure
   category: Pressure
-  alertType: LowPressure
 
 - type: alert
-  id: AlertOverfed
+  id: Overfed
   category: Hunger
-  alertType: Overfed
 
 - type: alert
-  id: AlertHighPressure
+  id: HighPressure
   category: Pressure
-  alertType: HighPressure
 
 - type: alert
-  id: AlertPeckish
+  id: Peckish
   category: Hunger
-  alertType: Peckish
 
 - type: alert
-  id: AlertStun
-  alertType: Stun
+  id: Stun
 
 - type: alert
-  id: AlertHandcuffed
-  alertType: Handcuffed
+  id: Handcuffed
 
 - type: alert
-  id: AlertHot
+  id: Hot
   category: Temperature
-  alertType: Hot
 
 - type: alert
-  id: AlertCold
+  id: Cold
   category: Temperature
-  alertType: Cold
 
 - type: alert
-  id: AlertWeightless
-  alertType: Weightless
+  id: Weightless
 
 - type: alert
-  id: AlertPilotingShuttle
-  alertType: PilotingShuttle
+  id: PilotingShuttle
 ";
 
         [Test]

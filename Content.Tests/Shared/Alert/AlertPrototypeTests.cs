@@ -15,7 +15,7 @@ namespace Content.Tests.Shared.Alert
     {
         private const string Prototypes = @"
 - type: alert
-  alertType: HumanHealth
+  id: HumanHealth
   category: Health
   icon: /Textures/Interface/Alerts/Human/human.rsi/human.png
   name: Health
