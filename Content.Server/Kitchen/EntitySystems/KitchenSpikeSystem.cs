@@ -16,7 +16,7 @@ using static Content.Shared.Kitchen.Components.SharedKitchenSpikeComponent;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
-    internal class KitchenSpikeSystem : EntitySystem
+    internal sealed class KitchenSpikeSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -60,11 +60,11 @@ namespace Content.Server.Kitchen.EntitySystems
             if(args.Handled)
                 return;
 
-            if (!Spikeable(uid, args.User, args.Dragged, component))
-                return;
+            args.Handled = true;
 
-            if (TrySpike(uid, args.User, args.Dragged, component))
-                args.Handled = true;
+            if (Spikeable(uid, args.User, args.Dragged, component))
+                TrySpike(uid, args.User, args.Dragged, component);
+                
         }
         private void OnInteractHand(EntityUid uid, KitchenSpikeComponent component, InteractHandEvent args)
         {
@@ -81,7 +81,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (args.Handled)
                 return;
-            
+
             if (TryGetPiece(uid, args.User, args.Used))
                 args.Handled = true;
         }
@@ -92,7 +92,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable))
                 return;
 
-            component.MeatPrototype = butcherable.MeatPrototype;
+            component.MeatPrototype = butcherable.SpawnedPrototype;
             component.MeatParts = butcherable.Pieces;
 
             // This feels not okay, but entity is getting deleted on "Spike", for now...
@@ -148,7 +148,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (!Resolve(uid, ref component, ref appearance, false))
                 return;
-            
+
             appearance.SetData(KitchenSpikeVisuals.Status, (component.MeatParts > 0) ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty);
         }
 
@@ -164,13 +164,23 @@ namespace Content.Server.Kitchen.EntitySystems
                 return false;
             }
 
-            if (!Resolve(victimUid, ref butcherable, false) || butcherable.MeatPrototype == null)
+            if (!Resolve(victimUid, ref butcherable, false) || butcherable.SpawnedPrototype == null)
             {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victimUid), ("this", uid)), victimUid, Filter.Entities(userUid));
                 return false;
             }
 
-            return true;
+            switch (butcherable.Type)
+            {
+                case ButcheringType.Spike:
+                    return true;
+                case ButcheringType.Knife:
+                    _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher-knife", ("victim", victimUid), ("this", uid)), victimUid, Filter.Entities(userUid));
+                    return false;
+                default:
+                    _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victimUid), ("this", uid)), victimUid, Filter.Entities(userUid));
+                    return false;
+            }
         }
 
         public bool TrySpike(EntityUid uid, EntityUid userUid, EntityUid victimUid, KitchenSpikeComponent? component = null,
@@ -201,7 +211,7 @@ namespace Content.Server.Kitchen.EntitySystems
             butcherable.BeingButchered = true;
             component.InUse = true;
 
-            var doAfterArgs = new DoAfterEventArgs(userUid, component.SpikeDelay, default, uid)
+            var doAfterArgs = new DoAfterEventArgs(userUid, component.SpikeDelay + butcherable.ButcherDelay, default, uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -217,7 +227,7 @@ namespace Content.Server.Kitchen.EntitySystems
             return true;
         }
 
-        private class SpikingFinishedEvent : EntityEventArgs
+        private sealed class SpikingFinishedEvent : EntityEventArgs
         {
             public EntityUid VictimUid;
             public EntityUid UserUid;
@@ -229,7 +239,7 @@ namespace Content.Server.Kitchen.EntitySystems
             }
         }
 
-        private class SpikingFailEvent : EntityEventArgs
+        private sealed class SpikingFailEvent : EntityEventArgs
         {
             public EntityUid VictimUid;
 

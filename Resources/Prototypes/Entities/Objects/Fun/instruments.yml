@@ -4,10 +4,13 @@
   id: BaseHandheldInstrument
   description: That's an instrument.
   components:
+  - type: Sprite
+    netsync: false
   - type: Instrument
   - type: ActivatableUI
     inHandsOnly: true
     singleUser: true
+    verbText: verb-instrument-openui
     key: enum.InstrumentUiKey.Key
   - type: UserInterface
     interfaces:
@@ -37,19 +40,22 @@
   parent: BaseHandheldInstrument
   id: AcousticGuitarInstrument
   name: acoustic guitar
+  description: Anyway, here's Wonderwall.
   components:
   - type: Instrument
     program: 25
   - type: Sprite
     sprite: Objects/Fun/Instruments/guitar.rsi
     state: icon
-  - type: Item
-    size: 24
-    sprite: Objects/Fun/Instruments/guitar.rsi
   - type: Tag
     tags:
     - StringInstrument
-
+  - type: Clothing
+    size: 24
+    quickEquip: false
+    Slots:
+    - back
+    sprite: Objects/Fun/Instruments/guitar.rsi
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -267,7 +273,7 @@
     size: 24
     sprite: Objects/Fun/Instruments/bike_horn.rsi
     Slots: [Belt]
-    QuickEquip: false
+    quickEquip: false
 
 - type: entity
   parent: BaseHandheldInstrument

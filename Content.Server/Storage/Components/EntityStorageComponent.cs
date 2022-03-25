@@ -32,6 +32,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Storage.Components
 {
     [RegisterComponent]
+    [Virtual]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
     public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IExAct
@@ -163,7 +164,7 @@ namespace Content.Server.Storage.Components
             Contents.OccludesLight = _occludesLight;
 
             if(_entMan.TryGetComponent(Owner, out ConstructionComponent? construction))
-                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner, Contents.ID, construction);
+                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner, nameof(EntityStorageComponent), construction);
 
             if (_entMan.TryGetComponent<PlaceableSurfaceComponent?>(Owner, out var surface))
             {
@@ -474,7 +475,7 @@ namespace Content.Server.Storage.Components
 
         protected virtual IEnumerable<EntityUid> DetermineCollidingEntities()
         {
-            var entityLookup = IoCManager.Resolve<IEntityLookup>();
+            var entityLookup = EntitySystem.Get<EntityLookupSystem>();
             return entityLookup.GetEntitiesIntersecting(Owner, _enteringRange, LookupFlags.Approximate);
         }
 

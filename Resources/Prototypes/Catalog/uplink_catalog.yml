@@ -47,12 +47,13 @@
 #  itemId: DoubleBladedESword
 #  price: 16
 
-# bug swept to make
-#- type: uplinkListing
-#  id: UplinkEnergyDagger
-#  category: Weapons
-#  itemId: EnergyDagger
-#  price: 2
+- type: uplinkListing
+  id: UplinkEnergyDagger
+  category: Weapons
+  itemId: EnergyDagger
+  listingName: Energy Dagger
+  description: A small energy blade conveniently disguised in the form of a pen.
+  price: 2
 
 # Explosives
 
@@ -118,8 +119,22 @@
   listingName: Holoparasite Kit
   description: The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active. The guardian can punch rapidly and is immune to hazardous environments and bullets, but shares any damage it takes with the user.
   icon: /Textures/Objects/Misc/guardian_info.rsi/icon.png
-  price: 16
+  price: 14
 
+- type: uplinkListing
+  id: UplinkEmag
+  category: Utility
+  itemId: Emag
+  description: The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
+  icon: /Textures/Objects/Tools/emag.rsi/icon.png
+  price: 8
+
+- type: uplinkListing
+  id: UplinkHypopen
+  category: Utility
+  itemId: Hypopen
+  description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
+  price: 4
 
 # Bundles
 
@@ -127,29 +142,29 @@
   id: UplinkC20RBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledSMG
-  price: 14
+  price: 25
   icon: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkBojevicBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledShotgun
-  price: 13
+  price: 25
   icon: /Textures/Objects/Weapons/Guns/Shotguns/bojevic.rsi/icon.png
-
-- type: uplinkListing
-  id: UplinkL6SawBundle
-  category: Bundles
-  itemId: ClothingBackpackDuffelSyndicateFilledLMG
-  price: 18
-  icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkGrenadeLauncherBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
-  price: 25
+  price: 30
   icon: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi/icon.png
+
+- type: uplinkListing
+  id: UplinkL6SawBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledLMG
+  price: 40
+  icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
 
 #- type: uplinkListing
 #  id: UplinkCarbineBundle
@@ -216,6 +231,13 @@
 # Misc
 
 - type: uplinkListing
+  id: UplinkCyberpen
+  category: Misc
+  itemId: CyberPen
+  description: Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
+  price: 4
+
+- type: uplinkListing
   id: UplinkBalloon
   category: Misc
   itemId: BalloonSyn
@@ -236,12 +258,6 @@
   price: 4
 
 - type: uplinkListing
-  id: UplinkPen
-  category: Misc
-  itemId: Pen
-  price: 2
-
-- type: uplinkListing
   id: UplinkCigarettes
   category: Misc
   itemId: CigPackSyndicate
@@ -259,11 +275,11 @@
   itemId: lanternextrabright
   price: 2
 
-- type: uplinkListing
-  id: UplinkCostumeCentcom
-  category: Misc
-  itemId: ClothingBackpackDuffelSyndicateCostumeCentcom
-  price: 4
+#- type: uplinkListing
+#  id: UplinkCostumeCentcom
+#  category: Misc
+#  itemId: ClothingBackpackDuffelSyndicateCostumeCentcom
+#  price: 4
 
 - type: uplinkListing
   id: UplinkCostumeClown
@@ -276,3 +292,11 @@
   category: Misc
   itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
   price: 4
+
+- type: uplinkListing
+  id: UplinkGigacancerScanner
+  category: Misc
+  itemId: HandheldHealthAnalyzerGigacancer
+  listingName: Ultragigacancer Health Analyzer
+  description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
+  price: 5

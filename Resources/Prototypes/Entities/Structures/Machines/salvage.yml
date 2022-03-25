@@ -12,6 +12,8 @@
   - type: Rotatable
   - type: SalvageMagnet
     offset: 0, -32
+  - type: ApcPowerReceiver
+    powerLoad: 2500 # TODO change this to a HV power draw that really hits the grid hard WHEN active
 
 # For Knightship
 - type: entity
@@ -22,4 +24,6 @@
   components:
   - type: SalvageMagnet
     offset: 0, -12
+  - type: ApcPowerReceiver
+    powerLoad: 1000
 

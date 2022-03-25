@@ -276,7 +276,7 @@
 
 - type: reagent
   id: BananaHonk
-  name: banana mama
+  name: banana honk
   parent: BaseAlcohol
   desc: A drink from Clown Heaven.
   physicalDesc: strong-smelling
@@ -381,6 +381,22 @@
   physicalDesc: strong-smelling
   color: "#FF8CFF"
   spritePath: doctorsdelightglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:SatiateHunger
+        factor: -2
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -1
+            Brute: -1
+            Airloss: -1
+            Toxin: -1
 
 - type: reagent
   id: DriestMartini
@@ -507,22 +523,6 @@
   physicalDesc: strong-smelling
   color: "#CCCC99"
   spritePath: kiraspecial.rsi
-
-- type: reagent
-  id: Lean
-  name: lean
-  parent: BaseAlcohol
-  desc: Turn up for days.
-  physicalDesc: bubbly
-  color: "#9400D3"
-
-- type: reagent
-  id: LeanShine
-  name: leanshine
-  parent: BaseAlcohol
-  desc: Lean mixed with moonshine. Turn up for months.
-  physicalDesc: bubbly
-  color: "#9d5fb8"
 
 - type: reagent
   id: LongIslandIcedTea

@@ -68,9 +68,34 @@
   size: 7.5
 
 - type: salvageMap
+  id: mediumLibraryWreck
+  name: "Medium / Abandoned Library"
+  mapPath: /Maps/Salvage/medium-library.yml
+  size: 7.5
+  
+- type: salvageMap
+  id: mediumCargoWreck
+  name: "Medium / Cargo Department Wreck"
+  mapPath: /Maps/Salvage/cargo-1.yml
+  size: 7.5
+  
+- type: salvageMap
+  id: mediumPirateWreck
+  name: "Medium / Pirate Barge Fragment"
+  mapPath: /Maps/Salvage/medium-pirate.yml
+  size: 7.5
+
+- type: salvageMap
   id: mediumShuttleWreck
   name: "Medium / Ruined Emergency Shuttle"
   mapPath: /Maps/Salvage/medium-ruined-emergency-shuttle.yml
   size: 8.5 # Over standard medium wreck size, may need future adjustment.
 
+# """Large""" maps
+
+- type: salvageMap
+  id: stationstation
+  name: "StationStation"
+  mapPath: /Maps/Salvage/stationstation.yml
+  size: 16
 

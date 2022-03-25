@@ -14,7 +14,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent, Friend(typeof(FoodSystem))]
-    public class FoodComponent : Component
+    public sealed class FoodComponent : Component
     {
         [DataField("solution")]
         public string SolutionName { get; set; } = "food";
@@ -43,6 +43,9 @@ namespace Content.Server.Nutrition.Components
         [DataField("utensilRequired")]
         public bool UtensilRequired = false;
 
+        /// <summary>
+        /// The localization identifier for the eat message. Needs a "food" entity argument passed to it.
+        /// </summary>
         [DataField("eatMessage")]
         public string EatMessage = "food-nom";
 

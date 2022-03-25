@@ -1,0 +1,30 @@
+﻿- type: reagent
+  id: Blood
+  name: blood
+  group: Biological
+  desc: I hope this is ketchup.
+  color: "#800000"
+  physicalDesc: ferrous
+  metabolisms:
+    Drink:
+      # Quenching!
+      effects:
+      - !type:SatiateThirst
+        factor: 1.5
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 0.5
+
+- type: reagent
+  id: Slime
+  name: slime
+  group: Biological
+  desc: You thought this was gradient blood at first, but you were mistaken.
+  color: "#2cf274"
+  physicalDesc: viscous
+  metabolisms:
+    Food:
+      # Delicious!
+      effects:
+      - !type:SatiateHunger
+        factor: 1.5

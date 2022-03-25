@@ -9,7 +9,7 @@ using Robust.Shared.Network;
 
 namespace Content.Client.Administration
 {
-    public partial class AdminSystem : EntitySystem
+    public sealed partial class AdminSystem : EntitySystem
     {
         public event Action<List<PlayerInfo>>? PlayerListChanged;
 

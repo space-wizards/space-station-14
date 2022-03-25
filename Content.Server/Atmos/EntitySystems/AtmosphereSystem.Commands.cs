@@ -8,7 +8,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.EntitySystems;
 
-public partial class AtmosphereSystem
+public sealed partial class AtmosphereSystem
 {
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
 

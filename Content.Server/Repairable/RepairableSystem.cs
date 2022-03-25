@@ -13,7 +13,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Repairable
 {
-    public class RepairableSystem : EntitySystem
+    public sealed class RepairableSystem : EntitySystem
     {
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
@@ -34,9 +34,18 @@ namespace Content.Server.Repairable
             if (!await _toolSystem.UseTool(args.Used, args.User, uid, component.FuelCost, component.DoAfterDelay, component.QualityNeeded))
                 return;
 
-            // Repair all damage
-            _damageableSystem.SetAllDamage(damageable, 0);
-            _logSystem.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired ${ToPrettyString(uid):target} back to full health");
+            if (component.Damage != null)
+            {
+                var damageChanged = _damageableSystem.TryChangeDamage(uid, component.Damage, true, false);
+                _logSystem.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} by {damageChanged?.Total}");
+            }
+            else
+            {
+                // Repair all damage
+                _damageableSystem.SetAllDamage(damageable, 0);
+                _logSystem.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} back to full health");
+            }
+
 
             component.Owner.PopupMessage(args.User,
                 Loc.GetString("comp-repairable-repair",

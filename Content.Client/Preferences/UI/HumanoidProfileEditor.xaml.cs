@@ -33,7 +33,7 @@ using Range = Robust.Client.UserInterface.Controls.Range;
 
 namespace Content.Client.Preferences.UI
 {
-    public class HighlightedContainer : PanelContainer
+    public sealed class HighlightedContainer : PanelContainer
     {
         public HighlightedContainer()
         {
@@ -49,7 +49,7 @@ namespace Content.Client.Preferences.UI
     }
 
     [GenerateTypedNameReferences]
-    public partial class HumanoidProfileEditor : Control
+    public sealed partial class HumanoidProfileEditor : Control
     {
         private LineEdit _ageEdit => CAgeEdit;
         private LineEdit _nameEdit => CNameEdit;
@@ -177,7 +177,7 @@ namespace Content.Client.Preferences.UI
 
             #region Species
 
-            _speciesList = prototypeManager.EnumeratePrototypes<SpeciesPrototype>().ToList();
+            _speciesList = prototypeManager.EnumeratePrototypes<SpeciesPrototype>().Where(o => o.RoundStart).ToList();
             for (var i = 0; i < _speciesList.Count; i++)
             {
                 CSpeciesButton.AddItem(_speciesList[i].Name, i);
@@ -782,7 +782,7 @@ namespace Content.Client.Preferences.UI
             }
         }
 
-        private class JobPrioritySelector : Control
+        private sealed class JobPrioritySelector : Control
         {
             public JobPrototype Job { get; }
             private readonly RadioOptions<int> _optionButton;
@@ -855,7 +855,7 @@ namespace Content.Client.Preferences.UI
             }
         }
 
-        private class AntagPreferenceSelector : Control
+        private sealed class AntagPreferenceSelector : Control
         {
             public AntagPrototype Antag { get; }
             private readonly CheckBox _checkBox;

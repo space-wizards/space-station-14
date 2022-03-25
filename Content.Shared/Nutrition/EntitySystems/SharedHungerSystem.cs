@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Nutrition.EntitySystems
 {
-    public class SharedHungerSystem : EntitySystem
+    public sealed class SharedHungerSystem : EntitySystem
     {
         public override void Initialize()
         {

@@ -8,6 +8,7 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
+using Content.Shared.Pointing;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -194,7 +195,7 @@ namespace Content.Server.Pointing.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddPointingVerb);
+            SubscribeNetworkEvent<PointingAttemptEvent>(OnPointAttempt);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
@@ -203,26 +204,9 @@ namespace Content.Server.Pointing.EntitySystems
                 .Register<PointingSystem>();
         }
 
-        private void AddPointingVerb(GetOtherVerbsEvent args)
+        private void OnPointAttempt(PointingAttemptEvent ev, EntitySessionEventArgs args)
         {
-            if (args.Hands == null)
-                return;
-
-            //Check if the object is already being pointed at
-            if (HasComp<PointingArrowComponent>(args.Target))
-                return;
-
-            var transform = Transform(args.Target);
-
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor)  ||
-                !InRange(args.User, transform.Coordinates))
-                return;
-
-            Verb verb = new();
-            verb.Text = Loc.GetString("pointing-verb-get-data-text");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
-            verb.Act = () => TryPoint(actor.PlayerSession, transform.Coordinates, args.Target);
-            args.Verbs.Add(verb);
+            TryPoint(args.SenderSession, Transform(ev.Target).Coordinates, ev.Target);
         }
 
         public override void Shutdown()

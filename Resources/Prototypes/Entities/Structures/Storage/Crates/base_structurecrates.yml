@@ -8,7 +8,6 @@
   - type: Transform
     noRot: true
   - type: Sprite
-    noRot: true
     netsync: false
     sprite: Structures/Storage/Crates/generic.rsi
     layers:
@@ -28,7 +27,6 @@
       mass: 25
       mask:
       - Impassable
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -73,7 +71,6 @@
   - type: Transform
     noRot: true
   - type: Sprite
-    noRot: true
     netsync: false
     sprite: Structures/Storage/Crates/generic.rsi
     layers:
@@ -93,7 +90,6 @@
       mass: 25
       mask:
       - Impassable
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque

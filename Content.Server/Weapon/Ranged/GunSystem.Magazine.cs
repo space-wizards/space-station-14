@@ -5,6 +5,7 @@ using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged;
@@ -22,28 +23,28 @@ namespace Content.Server.Weapon.Ranged;
 
 public sealed partial class GunSystem
 {
-    private void AddEjectMagazineVerb(EntityUid uid, MagazineBarrelComponent component, GetAlternativeVerbsEvent args)
+    private void AddEjectMagazineVerb(EntityUid uid, MagazineBarrelComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (args.Hands == null ||
             !args.CanAccess ||
             !args.CanInteract ||
-            !component.HasMagazine ||
-            !_blocker.CanPickup(args.User))
+            component.MagazineContainer.ContainedEntity is not EntityUid mag ||
+            !_blocker.CanPickup(args.User, mag))
             return;
 
         if (component.MagNeedsOpenBolt && !component.BoltOpen)
             return;
 
-        Verb verb = new()
+        AlternativeVerb verb = new()
         {
-            Text = MetaData(component.MagazineContainer.ContainedEntity!.Value).EntityName,
+            Text = MetaData(mag).EntityName,
             Category = VerbCategory.Eject,
             Act = () => RemoveMagazine(args.User, component)
         };
         args.Verbs.Add(verb);
     }
 
-    private void AddMagazineInteractionVerbs(EntityUid uid, MagazineBarrelComponent component, GetInteractionVerbsEvent args)
+    private void AddMagazineInteractionVerbs(EntityUid uid, MagazineBarrelComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (args.Hands == null ||
             !args.CanAccess ||
@@ -51,7 +52,7 @@ public sealed partial class GunSystem
             return;
 
         // Toggle bolt verb
-        Verb toggleBolt = new()
+        InteractionVerb toggleBolt = new()
         {
             Text = component.BoltOpen
                 ? Loc.GetString("close-bolt-verb-get-data-text")
@@ -67,7 +68,7 @@ public sealed partial class GunSystem
             return;
 
         // Insert mag verb
-        Verb insert = new()
+        InteractionVerb insert = new()
         {
             Text = MetaData(@using).EntityName,
             Category = VerbCategory.Insert,
@@ -324,10 +325,7 @@ public sealed partial class GunSystem
         component.MagazineContainer.Remove(mag.Value);
         SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundMagEject.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2));
 
-        if (TryComp(user, out HandsComponent? handsComponent))
-        {
-            handsComponent.PutInHandOrDrop(EntityManager.GetComponent<SharedItemComponent>(mag.Value));
-        }
+        _handsSystem.PickupOrDrop(user, mag.Value);
 
         component.Dirty(EntityManager);
         UpdateMagazineAppearance(component);

@@ -13,7 +13,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Damage.Systems;
 
-public class ExaminableDamageSystem : EntitySystem
+public sealed class ExaminableDamageSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 

@@ -2,12 +2,12 @@ using System.Linq;
 using Content.Client.Actions.UI;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
-using Content.Client.HUD;
 using Content.Client.HUD.UI;
 using Content.Client.Resources;
 using Content.Client.Targeting;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
+using Content.Shared.Verbs;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -66,6 +66,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
         public const string StyleClassSliderBlue = "Blue";
+        public const string StyleClassSliderWhite = "White";
 
         public const string StyleClassLabelHeadingBigger = "LabelHeadingBigger";
         public const string StyleClassLabelKeyText = "LabelKeyText";
@@ -97,6 +98,12 @@ namespace Content.Client.Stylesheets
         public static readonly Color ButtonColorContextHover = Color.DarkSlateGray;
         public static readonly Color ButtonColorContextPressed = Color.LightSlateGray;
         public static readonly Color ButtonColorContextDisabled = Color.Black;
+
+        // Examine button colors
+        public static readonly Color ExamineButtonColorContext = Color.Transparent;
+        public static readonly Color ExamineButtonColorContextHover = Color.DarkSlateGray;
+        public static readonly Color ExamineButtonColorContextPressed = Color.LightSlateGray;
+        public static readonly Color ExamineButtonColorContextDisabled = Color.FromHex("#5A5A5A");
 
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
@@ -436,6 +443,7 @@ namespace Content.Client.Stylesheets
             var sliderFillGreen = new StyleBoxTexture(sliderFillBox) {Modulate = Color.LimeGreen};
             var sliderFillRed = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Red};
             var sliderFillBlue = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Blue};
+            var sliderFillWhite = new StyleBoxTexture(sliderFillBox) { Modulate = Color.White };
 
             var boxFont13 = resCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
 
@@ -614,16 +622,16 @@ namespace Content.Client.Stylesheets
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorContextDisabled),
 
                 // Context Menu Labels
-                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbInteractionText)
+                Element<RichTextLabel>().Class(InteractionVerb.DefaultTextStyleClass)
                     .Prop(Label.StylePropertyFont, notoSansBoldItalic12),
 
-                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbActivationText)
+                Element<RichTextLabel>().Class(ActivationVerb.DefaultTextStyleClass)
                     .Prop(Label.StylePropertyFont, notoSansBold12),
 
-                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbAlternativeText)
+                Element<RichTextLabel>().Class(AlternativeVerb.DefaultTextStyleClass)
                     .Prop(Label.StylePropertyFont, notoSansItalic12),
 
-                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbOtherText)
+                Element<RichTextLabel>().Class(Verb.DefaultTextStyleClass)
                     .Prop(Label.StylePropertyFont, notoSans12),
 
                 Element<TextureRect>().Class(ContextMenuElement.StyleClassContextMenuExpansionTexture)
@@ -651,6 +659,26 @@ namespace Content.Client.Stylesheets
                 Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
+
+                // Examine buttons
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContext),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextHover),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextPressed),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextDisabled),
 
                 // Thin buttons (No padding nor vertical margin)
                 Element<EntityContainerButton>().Class(StyleClassStorageButton)
@@ -1006,70 +1034,70 @@ namespace Content.Client.Stylesheets
                 // which is NOT the case for the default BaseButton styles (OpenLeft/OpenRight adds extra padding on one of the sides
                 // which makes the TopButton icons appear off-center, which we don't want).
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), new[] {ButtonSquare}, null, null),
+                    new SelectorElement(typeof(TopButton), new[] {ButtonSquare}, null, null),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, topButtonSquare),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), new[] {ButtonOpenLeft}, null, null),
+                    new SelectorElement(typeof(TopButton), new[] {ButtonOpenLeft}, null, null),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, topButtonOpenLeft),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), new[] {ButtonOpenRight}, null, null),
+                    new SelectorElement(typeof(TopButton), new[] {ButtonOpenRight}, null, null),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, topButtonOpenRight),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassNormal}),
+                    new SelectorElement(typeof(TopButton), null, null, new[] {Button.StylePseudoClassNormal}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorDefault),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), new[] {GameHud.TopButton.StyleClassRedTopButton}, null, new[] {Button.StylePseudoClassNormal}),
+                    new SelectorElement(typeof(TopButton), new[] {TopButton.StyleClassRedTopButton}, null, new[] {Button.StylePseudoClassNormal}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorDefaultRed),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassNormal}),
+                    new SelectorElement(typeof(TopButton), null, null, new[] {Button.StylePseudoClassNormal}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorDefault),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassPressed}),
+                    new SelectorElement(typeof(TopButton), null, null, new[] {Button.StylePseudoClassPressed}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorPressed),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassHover}),
+                    new SelectorElement(typeof(TopButton), null, null, new[] {Button.StylePseudoClassHover}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorHovered),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), new[] {GameHud.TopButton.StyleClassRedTopButton}, null, new[] {Button.StylePseudoClassHover}),
+                    new SelectorElement(typeof(TopButton), new[] {TopButton.StyleClassRedTopButton}, null, new[] {Button.StylePseudoClassHover}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorHoveredRed),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(Label), new[] {GameHud.TopButton.StyleClassLabelTopButton}, null, null),
+                    new SelectorElement(typeof(Label), new[] {TopButton.StyleClassLabelTopButton}, null, null),
                     new[]
                     {
                         new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
@@ -1153,6 +1181,11 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(Slider), new []{StyleClassSliderBlue}, null, null), new []
                 {
                     new StyleProperty(Slider.StylePropertyFill, sliderFillBlue),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Slider), new []{StyleClassSliderWhite}, null, null), new []
+                {
+                    new StyleProperty(Slider.StylePropertyFill, sliderFillWhite),
                 }),
 
                 // chat channel option selector

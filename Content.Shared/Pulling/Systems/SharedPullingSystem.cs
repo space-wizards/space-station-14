@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
+using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Rotatable;
@@ -68,14 +69,14 @@ namespace Content.Shared.Pulling
             SubscribeLocalEvent<SharedPullableComponent, PullStartedMessage>(PullableHandlePullStarted);
             SubscribeLocalEvent<SharedPullableComponent, PullStoppedMessage>(PullableHandlePullStopped);
 
-            SubscribeLocalEvent<SharedPullableComponent, GetOtherVerbsEvent>(AddPullVerbs);
+            SubscribeLocalEvent<SharedPullableComponent, GetVerbsEvent<Verb>>(AddPullVerbs);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
                 .Register<SharedPullingSystem>();
         }
 
-        private void AddPullVerbs(EntityUid uid, SharedPullableComponent component, GetOtherVerbsEvent args)
+        private void AddPullVerbs(EntityUid uid, SharedPullableComponent component, GetVerbsEvent<Verb> args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
@@ -106,7 +107,7 @@ namespace Content.Shared.Pulling
         {
             if (args.Pulled.Owner != uid)
                 return;
-            
+
             _alertsSystem.ShowAlert(component.Owner, AlertType.Pulled);
         }
 
@@ -216,6 +217,10 @@ namespace Content.Shared.Pulling
             {
                 return false;
             }
+
+            if (_containerSystem.IsEntityInContainer(player) ||
+                player.IsWeightless(entityManager: EntityManager))
+                return false;
 
             TryMoveTo(pullable, coords);
 

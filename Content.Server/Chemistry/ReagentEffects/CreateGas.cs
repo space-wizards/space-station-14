@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public class CreateGas : ReagentEffect
+public sealed class CreateGas : ReagentEffect
 {
     [DataField("gas", required: true)]
     public Gas Gas = default!;

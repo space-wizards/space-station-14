@@ -61,7 +61,7 @@ namespace Content.Shared.CharacterAppearance.Systems
         }
 
         [Serializable, NetSerializable]
-        public class ChangedHumanoidAppearanceEvent : EntityEventArgs
+        public sealed class ChangedHumanoidAppearanceEvent : EntityEventArgs
         {
             public HumanoidCharacterAppearance Appearance { get; }
             public Sex Sex { get; }

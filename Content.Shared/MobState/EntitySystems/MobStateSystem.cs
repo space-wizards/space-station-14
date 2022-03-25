@@ -15,7 +15,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState.EntitySystems
 {
-    public class MobStateSystem : EntitySystem
+    public sealed class MobStateSystem : EntitySystem
     {
         public override void Initialize()
         {
@@ -29,7 +29,6 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<MobStateComponent, EmoteAttemptEvent>(OnEmoteAttempt);
             SubscribeLocalEvent<MobStateComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
-            SubscribeLocalEvent<MobStateComponent, AttackAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<MobStateComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<MobStateComponent, PickupAttemptEvent>(OnPickupAttempt);
             SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(OnStartPullAttempt);
@@ -94,11 +93,6 @@ namespace Content.Shared.MobState.EntitySystems
             // is this a self-equip, or are they being stripped?
             if (args.Unequipee == uid)
                 CheckAct(uid, component, args);
-        }
-
-        private void OnAttackAttempt(EntityUid uid, MobStateComponent component, AttackAttemptEvent args)
-        {
-            CheckAct(uid, component, args);
         }
 
         private void OnDropAttempt(EntityUid uid, MobStateComponent component, DropAttemptEvent args)

@@ -1,0 +1,14 @@
+- type: bodyPreset
+  name: "reptilian"
+  id: ReptilianPreset
+  partIDs:
+    head: HeadReptilian
+    torso: TorsoReptilian
+    right arm: RightArmReptilian
+    left arm: LeftArmReptilian
+    right hand: RightHandReptilian
+    left hand: LeftHandReptilian
+    right leg: RightLegReptilian
+    left leg: LeftLegReptilian
+    right foot: RightFootReptilian
+    left foot: LeftFootReptilian

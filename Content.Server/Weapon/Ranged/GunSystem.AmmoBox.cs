@@ -6,6 +6,7 @@ using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
@@ -19,7 +20,7 @@ public sealed partial class GunSystem
 {
     // Probably needs combining with magazines in future given the common functionality.
 
-    private void OnAmmoBoxAltVerbs(EntityUid uid, AmmoBoxComponent component, GetAlternativeVerbsEvent args)
+    private void OnAmmoBoxAltVerbs(EntityUid uid, AmmoBoxComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (args.Hands == null || !args.CanAccess || !args.CanInteract)
             return;
@@ -27,7 +28,7 @@ public sealed partial class GunSystem
         if (component.AmmoLeft == 0)
             return;
 
-        Verb verb = new()
+        AlternativeVerb verb = new()
         {
             Text = Loc.GetString("dump-vert-get-data-text"),
             IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",
@@ -151,15 +152,10 @@ public sealed partial class GunSystem
             return false;
         }
 
-        if (TryComp(ammo, out ItemComponent? item))
+        if (!_handsSystem.TryPickup(user, ammo, handsComp: handsComponent))
         {
-            if (!handsComponent.CanPutInHand(item))
-            {
-                TryInsertAmmo(user, ammo, ammoBox);
-                return false;
-            }
-
-            handsComponent.PutInHand(item);
+            TryInsertAmmo(user, ammo, ammoBox);
+            return false;
         }
 
         UpdateAmmoBoxAppearance(ammoBox.Owner, ammoBox);

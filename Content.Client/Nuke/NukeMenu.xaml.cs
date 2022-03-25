@@ -10,7 +10,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.Nuke
 {
     [GenerateTypedNameReferences]
-    public partial class NukeMenu : DefaultWindow
+    public sealed partial class NukeMenu : DefaultWindow
     {
         public event Action<int>? OnKeypadButtonPressed;
         public event Action? OnClearButtonPressed;
@@ -87,6 +87,11 @@ namespace Content.Client.Nuke
                     firstMsg = Loc.GetString("nuke-user-interface-first-status-device-armed");
                     secondMsg = Loc.GetString("nuke-user-interface-second-status-time",
                         ("time", state.RemainingTime));
+                    break;
+                case NukeStatus.COOLDOWN:
+                    firstMsg = Loc.GetString("nuke-user-interface-first-status-device-cooldown");
+                    secondMsg = Loc.GetString("nuke-user-interface-second-status-cooldown-time",
+                        ("time", state.CooldownTime));
                     break;
                 default:
                     // shouldn't normally be here

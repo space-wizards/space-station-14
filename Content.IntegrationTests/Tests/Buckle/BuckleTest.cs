@@ -6,6 +6,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems.Body;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
 using Content.Shared.Standing;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Buckle
     [TestFixture]
     [TestOf(typeof(BuckleComponent))]
     [TestOf(typeof(StrapComponent))]
-    public class BuckleTest : ContentIntegrationTest
+    public sealed class BuckleTest : ContentIntegrationTest
     {
         private const string BuckleDummyId = "BuckleDummy";
         private const string StrapDummyId = "StrapDummy";
@@ -252,9 +253,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 {
                     var akms = entityManager.SpawnEntity(ItemDummyId, coordinates);
 
-                    // Equip items
-                    Assert.True(entityManager.TryGetComponent(akms, out SharedItemComponent item));
-                    Assert.True(hands.PutInHand(item));
+                    Assert.True(EntitySystem.Get<SharedHandsSystem>().TryPickupAnyHand(human, akms));
                 }
             });
 
@@ -266,9 +265,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
 
                 // With items in all hands
-                foreach (var slot in hands.HandNames)
+                foreach (var hand in hands.Hands.Values)
                 {
-                    Assert.NotNull(hands.GetItem(slot));
+                    Assert.NotNull(hands.ActiveHandEntity);
                 }
 
                 var bodySys = EntitySystem.Get<SharedBodySystem>();
@@ -289,9 +288,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
 
                 // Now with no item in any hand
-                foreach (var slot in hands.HandNames)
+                foreach (var hand in hands.Hands.Values)
                 {
-                    Assert.Null(hands.GetItem(slot));
+                    Assert.Null(hands.ActiveHandEntity);
                 }
 
                 buckle.TryUnbuckle(human, true);

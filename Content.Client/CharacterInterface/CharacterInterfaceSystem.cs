@@ -81,7 +81,7 @@ namespace Content.Client.CharacterInterface
                 return;
 
             _gameHud.CharacterButtonVisible = true;
-            _gameHud.CharacterButtonToggled = b =>
+            _gameHud.CharacterButtonToggled += b =>
             {
                 if (b)
                     comp.Window.OpenCentered();

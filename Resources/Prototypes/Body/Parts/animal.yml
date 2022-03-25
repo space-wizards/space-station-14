@@ -82,6 +82,14 @@
     size: 1
     compatibility: Biological
   - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Animal ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
 
 - type: entity
   id: OrganAnimalStomach

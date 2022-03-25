@@ -6,8 +6,10 @@
   components:
   - type: Instrument
   - type: ActivatableUI
+    allowSpectator: false # otherwise they can play client-side music
     inHandsOnly: false
     singleUser: true
+    verbText: verb-instrument-openui
     key: enum.InstrumentUiKey.Key
   - type: InteractionOutline
   - type: Sprite
@@ -50,6 +52,18 @@
   - type: Climbable
 
 - type: entity
+  name: upright piano
+  parent: BasePlaceableInstrumentRotatable
+  id: UprightPianoInstrument
+  description: I said Piannie!
+  components:
+  - type: Instrument
+    program: 3
+  - type: Sprite
+    state: piano-upright
+  - type: Climbable
+
+- type: entity
   name: minimoog
   parent: BasePlaceableInstrumentRotatable
   id: MinimoogInstrument
@@ -67,7 +81,7 @@
   description: This thing really blows!
   components:
   - type: Instrument
-    program: 20
+    program: 19
   - type: Sprite
     state: church-organ
 

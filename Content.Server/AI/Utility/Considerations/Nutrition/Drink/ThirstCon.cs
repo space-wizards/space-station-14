@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Nutrition.Drink
 {
-    public class ThirstCon : Consideration
+    public sealed class ThirstCon : Consideration
     {
         protected override float GetScore(Blackboard context)
         {

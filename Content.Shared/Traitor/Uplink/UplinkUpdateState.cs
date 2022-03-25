@@ -5,7 +5,7 @@ using System;
 namespace Content.Shared.Traitor.Uplink
 {
     [Serializable, NetSerializable]
-    public class UplinkUpdateState : BoundUserInterfaceState
+    public sealed class UplinkUpdateState : BoundUserInterfaceState
     {
         public UplinkAccountData Account;
         public UplinkListingData[] Listings;

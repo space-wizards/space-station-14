@@ -3,7 +3,7 @@
 namespace Content.Shared.Construction
 {
     [RegisterComponent]
-    public class SharedCanBuildWindowOnTopComponent : Component
+    public sealed class SharedCanBuildWindowOnTopComponent : Component
     {
     }
 }

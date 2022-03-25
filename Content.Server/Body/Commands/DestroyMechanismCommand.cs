@@ -11,7 +11,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    class DestroyMechanismCommand : IConsoleCommand
+    sealed class DestroyMechanismCommand : IConsoleCommand
     {
         public string Command => "destroymechanism";
         public string Description => "Destroys a mechanism from your entity";

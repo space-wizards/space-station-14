@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Construction
 {
-    public class AnchorableSystem : EntitySystem
+    public sealed class AnchorableSystem : EntitySystem
     {
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
@@ -30,7 +30,7 @@ namespace Content.Server.Construction
                 return;
 
             // If the used entity doesn't have a tool, return early.
-            if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? usedTool))
+            if (!TryComp(args.Used, out ToolComponent? usedTool) || !usedTool.Qualities.Contains(anchorable.Tool))
                 return;
 
             args.Handled = true;
@@ -61,7 +61,7 @@ namespace Content.Server.Construction
             if (attempt.Cancelled)
                 return false;
 
-            return await _toolSystem.UseTool(usingUid, userUid, uid, 0f, 0.5f + attempt.Delay, anchorable.Tool, toolComponent:usingTool);
+            return await _toolSystem.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay + attempt.Delay, anchorable.Tool, toolComponent:usingTool);
         }
 
         /// <summary>

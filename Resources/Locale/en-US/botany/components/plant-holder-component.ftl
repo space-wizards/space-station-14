@@ -1,6 +1,5 @@
 ## Entity
 
-plant-holder-component-empty-seed-packet-message = The packet seems to be empty. You throw it away.
 plant-holder-component-plant-success-message = You plant the {$seedName} {$seedNoun}.
 plant-holder-component-already-seeded-message = The {$name} already has seeds in it!
 plant-holder-component-remove-weeds-message = You remove the weeds from the {$name}.

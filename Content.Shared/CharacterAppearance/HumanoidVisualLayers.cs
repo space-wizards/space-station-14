@@ -1,15 +1,18 @@
-﻿using System;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.CharacterAppearance
 {
     [Serializable, NetSerializable]
-    public enum HumanoidVisualLayers
+    public enum HumanoidVisualLayers : byte
     {
+        TailBehind,
         Hair,
         FacialHair,
         Chest,
         Head,
+        Snout,
+        Frills,
+        Horns,
         Eyes,
         RArm,
         LArm,
@@ -19,6 +22,7 @@ namespace Content.Shared.CharacterAppearance
         LLeg,
         RFoot,
         LFoot,
+        TailFront,
         Handcuffs,
         StencilMask,
         Fire,

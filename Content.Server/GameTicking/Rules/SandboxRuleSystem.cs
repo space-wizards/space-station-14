@@ -1,20 +1,19 @@
 using Content.Server.Sandbox;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Rules;
 
-public class SandboxRuleSystem : GameRuleSystem
+public sealed class SandboxRuleSystem : GameRuleSystem
 {
-    [Dependency] private readonly ISandboxManager _sandbox = default!;
+    [Dependency] private readonly SandboxSystem _sandbox = default!;
 
     public override string Prototype => "Sandbox";
 
-    public override void Added()
+    public override void Started()
     {
         _sandbox.IsSandboxEnabled = true;
     }
 
-    public override void Removed()
+    public override void Ended()
     {
         _sandbox.IsSandboxEnabled = false;
     }
