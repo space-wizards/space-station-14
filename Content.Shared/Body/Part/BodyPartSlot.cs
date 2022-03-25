@@ -30,7 +30,7 @@ namespace Content.Shared.Body.Part
         ///     The part currently in this slot, if any.
         /// </summary>
         [ViewVariables]
-        public EntityUid? Part { get; set; }
+        public SharedBodyPartComponent? Part { get; set; }
 
         /// <summary>
         ///     List of slots that this slot connects to.

@@ -202,14 +202,10 @@ public abstract partial class SharedBodySystem
         return body.Parts.ContainsKey(part);
     }
 
-    public bool ConnectedToCenter(EntityUid uid, EntityUid part,
-        SharedBodyComponent? body=null,
-        SharedBodyPartComponent? partComp=null,)
+    public bool ConnectedToCenter(EntityUid uid, SharedBodyPartComponent part,
+        SharedBodyComponent? body=null)
     {
         if (!Resolve(uid, ref body))
-            return false;
-
-        if (!Resolve(part, ref partComp))
             return false;
 
         return TryGetSlot(uid, part, out var result, body) &&
