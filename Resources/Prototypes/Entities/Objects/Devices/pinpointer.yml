@@ -28,6 +28,4 @@
   parent: PinpointerBase
   components:
   - type: Pinpointer
-    whitelist:
-      tags:
-        - NukeDisk
+    component: NukeDisk

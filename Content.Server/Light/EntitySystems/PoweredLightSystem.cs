@@ -11,16 +11,13 @@ using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -37,6 +34,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
 
@@ -171,11 +169,7 @@ namespace Content.Server.Light.EntitySystems
                 return null;
 
             // try to place bulb in hands
-            if (userUid != null)
-            {
-                if (EntityManager.TryGetComponent(userUid.Value, out SharedHandsComponent? hands))
-                    hands.PutInHand(bulb);
-            }
+            _handsSystem.PickupOrDrop(userUid, bulb);
 
             UpdateLight(uid, light);
             return bulb;

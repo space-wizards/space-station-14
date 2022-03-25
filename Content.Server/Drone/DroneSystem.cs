@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Drone;
 using Content.Server.Drone.Components;
 using Content.Shared.Actions;
@@ -18,6 +19,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
 using Robust.Shared.Player;
+using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Drone
@@ -27,6 +29,7 @@ namespace Content.Server.Drone
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -88,9 +91,16 @@ namespace Content.Server.Drone
             {
                 var body = Comp<SharedBodyComponent>(uid); //There's no way something can have a mobstate but not a body...
 
-                foreach (var item in drone.ToolUids)
+                foreach (var item in drone.ToolUids.Select((value, i) => ( value, i )))
                 {
-                    EntityManager.DeleteEntity(item);
+                    if (_tagSystem.HasTag(item.value, "Drone"))
+                    {
+                        RemComp<UnremoveableComponent>(item.value);
+                    }
+                    else
+                    {
+                        EntityManager.DeleteEntity(item.value);
+                    }
                 }
                 body.Gib();
                 EntityManager.DeleteEntity(uid);
@@ -110,11 +120,16 @@ namespace Content.Server.Drone
 
                 if (TryComp<HandsComponent>(uid, out var hands) && hands.Count >= drone.Tools.Count)
                 {
-                   foreach (var entry in drone.Tools)
+                    foreach (var entry in drone.Tools)
                     {
                         var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
                         AddComp<UnremoveableComponent>(item);
-                        hands.PutInHand(item);
+                        if (!_handsSystem.TryPickupAnyHand(uid, item, checkActionBlocker: false))
+                        {
+                            QueueDel(item);
+                            Logger.Error($"Drone ({ToPrettyString(uid)}) failed to pick up innate item ({ToPrettyString(item)})");
+                            continue;
+                        }
                         drone.ToolUids.Add(item);
                     }
                 }

@@ -174,3 +174,17 @@
       startingItem: PowerCellSmallHigh
   - type: TemperatureProtection
     coefficient: 0.01
+    
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase # hardsuitlight base for light and protection
+  id: ClothingHeadHelmetAtmosFire
+  name: atmos fire helmet
+  description: An atmos fire helmet, able to keep the user cool in any situation.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
+  - type: IngestionBlocker
+  - type: TemperatureProtection
+    coefficient: 0.005    

@@ -39,6 +39,17 @@
             Quantity: 10
 
 - type: entity
+  parent: PlushieBee
+  id: PlushieRGBee
+  name: RGBee plushie
+  description: A cute toy that resembles a bee plushie while you're on LSD.
+  components:
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+  - type: RgbLightController
+
+- type: entity
   parent: BasePlushie
   id: PlushieNuke
   name: nukie plushie

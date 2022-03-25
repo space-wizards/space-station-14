@@ -33,27 +33,36 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup submodule
+    - name: Checkout Master
+      uses: actions/checkout@v2
+
+    - name: Setup Submodule
       run: |
         git submodule update --init --recursive
+    
     - name: Pull engine updates
       uses: space-wizards/submodule-dependency@v0.1.5
+    
     - name: Update Engine Submodules
       run: |
         cd RobustToolbox/
         git submodule update --init --recursive
+    
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
+    
     - name: Install dependencies
       run: dotnet restore
-    - name: Build
+    
+    - name: Build Project
       run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors=nullable /m
-    - name: Content.Tests
+    
+    - name: Run Content.Tests
       run: dotnet test --no-build Content.Tests/Content.Tests.csproj -v n
-    - name: Content.IntegrationTests
+    
+    - name: Run Content.IntegrationTests
       shell: pwsh
       run: |
         $env:DOTNET_gcServer=1

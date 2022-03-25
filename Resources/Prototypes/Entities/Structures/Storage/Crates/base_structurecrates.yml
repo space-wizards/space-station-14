@@ -8,7 +8,6 @@
   - type: Transform
     noRot: true
   - type: Sprite
-    noRot: true
     netsync: false
     sprite: Structures/Storage/Crates/generic.rsi
     layers:
@@ -72,7 +71,6 @@
   - type: Transform
     noRot: true
   - type: Sprite
-    noRot: true
     netsync: false
     sprite: Structures/Storage/Crates/generic.rsi
     layers:

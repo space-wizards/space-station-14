@@ -21,8 +21,8 @@
   - type: TemperatureProtection
     coefficient: 0.001 # yes it needs to be this low, fires are fucking deadly apparently!!!!
   - type: ClothingSpeedModifier
-    walkModifier: 0.6
-    sprintModifier: 0.4
+    walkModifier: 0.4
+    sprintModifier: 0.6
   - type: Clothing
     size: 50
   - type: Armor
