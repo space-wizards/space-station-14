@@ -90,7 +90,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             ("desc", Loc.GetString(proto.PhysicalDescription))));
     }
 
-    private void UpdateAppearance(EntityUid uid, Solution solution,
+    public void UpdateAppearance(EntityUid uid, Solution solution,
         AppearanceComponent? appearanceComponent = null)
     {
         if (!EntityManager.EntityExists(uid)
@@ -116,7 +116,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return splitSol;
     }
 
-    private void UpdateChemicals(EntityUid uid, Solution solutionHolder, bool needsReactionsProcessing = false)
+    public void UpdateChemicals(EntityUid uid, Solution solutionHolder, bool needsReactionsProcessing = false)
     {
         // Process reactions
         if (needsReactionsProcessing && solutionHolder.CanReact)
