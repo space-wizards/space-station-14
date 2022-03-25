@@ -284,15 +284,3 @@
      amount: 1
   products:
     Ephedrine: 4
-    
-#- type: reaction
-#  id: Nocturine
-#  reactants:
-#    Tricordrazine:
-#      amount: 1
-#    Nitrogen:
-#      amount: 1
-#    Hydrogen:
-#      amount: 1
-#  products:
-#    Nocturine: 1
