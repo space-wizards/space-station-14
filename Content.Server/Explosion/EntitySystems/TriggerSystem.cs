@@ -4,14 +4,14 @@ using Content.Server.Doors.Systems;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
+using Content.Shared.Database;
+using Content.Shared.Sound;
+using Content.Shared.Trigger;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Content.Shared.Sound;
-using Content.Shared.Trigger;
-using Content.Shared.Database;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -38,7 +38,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly FlashSystem _flashSystem = default!;
         [Dependency] private readonly DoorSystem _sharedDoorSystem = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
 
         public override void Initialize()
         {
@@ -126,12 +126,12 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (user != null)
             {
-                _logSystem.Add(LogType.Trigger,
+                _adminLogs.Add(LogType.Trigger,
                     $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}");
             }
             else
             {
-                _logSystem.Add(LogType.Trigger,
+                _adminLogs.Add(LogType.Trigger,
                     $"{delay} second timer trigger started on entity {ToPrettyString(uid):timer}");
             }
 
