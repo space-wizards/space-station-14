@@ -1,9 +1,4 @@
 Entries:
-- author: moonheart08
-  changes:
-  - {message: The singularity is no longer weightless., type: Tweak}
-  id: 746
-  time: '2021-12-17T05:56:38.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Deconstructing a disposal unit no longer deletes its contents., type: Fix}
@@ -3020,3 +3015,9 @@ Entries:
       often., type: Add}
   id: 1245
   time: '2022-03-25T18:00:20.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Popups moving with the viewer instead of the entity it's displayed on.,
+    type: Fix}
+  id: 1246
+  time: '2022-03-25T18:16:30.0000000+00:00'
