@@ -361,9 +361,11 @@ namespace Content.Server.Decals
         {
             foreach (var (_, previous) in chunks)
             {
+                previous.Clear();
                 _chunkIndexPool.Return(previous);
             }
 
+            chunks.Clear();
             _chunkViewerPool.Return(chunks);
         }
 
