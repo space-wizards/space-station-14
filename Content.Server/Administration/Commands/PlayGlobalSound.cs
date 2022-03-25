@@ -12,6 +12,9 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Fun)]
 public sealed class PlayGlobalSound : IConsoleCommand
 {
+    [Dependency] private IPlayerManager _playerManager = default!;
+
+
     public string Command => "playglobalsound";
     public string Description => Loc.GetString("play-global-sound-command-description");
     public string Help => Loc.GetString("play-global-sound-command-help");
@@ -28,12 +31,12 @@ public sealed class PlayGlobalSound : IConsoleCommand
 
             // No users, play sound for everyone.
             case 1:
-                filter = Filter.Broadcast();
+                // Filter.Broadcast does resolves IPlayerManager, so use this instead.
+                filter = Filter.Empty().AddAllPlayers(_playerManager);
                 break;
 
             // One or more users specified.
             default:
-                var playerManager = IoCManager.Resolve<IPlayerManager>();
                 filter = Filter.Empty();
 
                 // Skip the first argument, which is the sound path.
@@ -41,7 +44,7 @@ public sealed class PlayGlobalSound : IConsoleCommand
                 {
                     var username = args[i];
 
-                    if (!playerManager.TryGetSessionByUsername(username, out var session))
+                    if (!_playerManager.TryGetSessionByUsername(username, out var session))
                     {
                         shell.WriteError(Loc.GetString("play-global-sound-command-player-not-found", ("username", username)));
                         continue;
