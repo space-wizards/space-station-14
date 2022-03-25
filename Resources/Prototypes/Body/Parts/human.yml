@@ -4,7 +4,7 @@
   id: PartHuman
   parent: BaseItem
   name: "human body part"
-  noSpawn: true
+  abstract: true
   components:
   - type: Damageable
     damageContainer: Biological

@@ -3,7 +3,7 @@
   id: PartSlime
   parent: BaseItem
   name: "slime body part"
-  noSpawn: true
+  abstract: true
   components:
   - type: Damageable
     damageContainer: Biological

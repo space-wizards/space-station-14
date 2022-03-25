@@ -1,7 +1,7 @@
 - type: entity
   id: BaseHumanOrgan
   parent: BaseItem
-  noSpawn: true
+  abstract: true
   components:
   - type: Sprite
     netsync: false
