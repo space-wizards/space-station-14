@@ -2,28 +2,28 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.AirlockPainter
 {
-  [Serializable, NetSerializable]
-  public enum AirlockPainterUiKey
-  {
-    Key,
-  }
-
-  [Serializable, NetSerializable]
-  public sealed class AirlockPainterSpritePickedMessage : BoundUserInterfaceMessage
-  {
-    public int Index { get; }
-
-    public AirlockPainterSpritePickedMessage(int index)
+    [Serializable, NetSerializable]
+    public enum AirlockPainterUiKey
     {
-      Index = index;
+        Key,
     }
-  }
 
-  [Serializable, NetSerializable]
-  public sealed class AirlockPainterBoundUserInterfaceState : BoundUserInterfaceState
-  {
-    public AirlockPainterBoundUserInterfaceState()
+    [Serializable, NetSerializable]
+    public sealed class AirlockPainterSpritePickedMessage : BoundUserInterfaceMessage
     {
+        public string Style { get; }
+
+        public AirlockPainterSpritePickedMessage(string style)
+        {
+            Style = style;
+        }
     }
-  }
+
+    [Serializable, NetSerializable]
+    public sealed class AirlockPainterBoundUserInterfaceState : BoundUserInterfaceState
+    {
+        public AirlockPainterBoundUserInterfaceState()
+        {
+        }
+    }
 }

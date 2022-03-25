@@ -5,8 +5,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/freezer.rsi
-  - type: PaintableAirlock
-    group: Standard
 
 - type: entity
   parent: Airlock
@@ -15,8 +13,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/engineering.rsi
-  - type: PaintableAirlock
-    group: Standard
 
 - type: entity
   parent: Airlock
@@ -25,8 +21,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/cargo.rsi
-  - type: PaintableAirlock
-    group: Standard
 
 - type: entity
   parent: Airlock
@@ -35,8 +29,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/medical.rsi
-  - type: PaintableAirlock
-    group: Standard
 
 - type: entity
   parent: Airlock
@@ -45,8 +37,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/medical.rsi
-  - type: PaintableAirlock
-    group: Standard
 
 - type: entity
   parent: Airlock
@@ -55,8 +45,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/science.rsi
-  - type: PaintableAirlock
-    group: Standard
 
 - type: entity
   parent: Airlock
@@ -65,8 +53,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/command.rsi
-  - type: PaintableAirlock
-    group: Standard
 
 - type: entity
   parent: Airlock
@@ -75,8 +61,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/security.rsi
-  - type: PaintableAirlock
-    group: Standard
 
 - type: entity
   parent: Airlock
@@ -85,8 +69,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
-  - type: PaintableAirlock
-    group: Standard
 
 # Glass
 
@@ -117,7 +99,6 @@
       - VaultImpassable
   - type: PaintableAirlock
     group: Glass
-
 
 - type: entity
   parent: AirlockGlass

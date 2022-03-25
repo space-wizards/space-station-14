@@ -1,0 +1,29 @@
+- type: AirlockGroup
+  id: Standard
+  stylePaths:
+    basic:       Structures/Doors/Airlocks/Standard/basic.rsi
+    cargo:       Structures/Doors/Airlocks/Standard/cargo.rsi
+    command:     Structures/Doors/Airlocks/Standard/command.rsi
+    engineering: Structures/Doors/Airlocks/Standard/engineering.rsi
+    external:    Structures/Doors/Airlocks/Standard/external.rsi
+    firelock:    Structures/Doors/Airlocks/Standard/firelock.rsi
+    freezer:     Structures/Doors/Airlocks/Standard/freezer.rsi
+    maintenance: Structures/Doors/Airlocks/Standard/maint.rsi
+    medical:     Structures/Doors/Airlocks/Standard/medical.rsi
+    science:     Structures/Doors/Airlocks/Standard/science.rsi
+    security:    Structures/Doors/Airlocks/Standard/security.rsi
+    shuttle:     Structures/Doors/Airlocks/Standard/shuttle.rsi
+
+- type: AirlockGroup
+  id: Glass
+  stylePaths:
+    basic:       Structures/Doors/Airlocks/Glass/basic.rsi
+    command:     Structures/Doors/Airlocks/Glass/command.rsi
+    external:    Structures/Doors/Airlocks/Glass/external.rsi
+    science:     Structures/Doors/Airlocks/Glass/science.rsi
+    shuttle:     Structures/Doors/Airlocks/Glass/shuttle.rsi
+    cargo:       Structures/Doors/Airlocks/Glass/cargo.rsi
+    engineering: Structures/Doors/Airlocks/Glass/engineering.rsi
+    medical:     Structures/Doors/Airlocks/Glass/medical.rsi
+    security:    Structures/Doors/Airlocks/Glass/security.rsi
+

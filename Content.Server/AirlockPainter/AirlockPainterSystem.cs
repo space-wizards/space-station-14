@@ -2,12 +2,14 @@ using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Shared.AirlockPainter;
+using Content.Shared.AirlockPainter.Prototypes;
 using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.AirlockPainter
 {
@@ -21,6 +23,7 @@ namespace Content.Server.AirlockPainter
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -65,7 +68,13 @@ namespace Content.Server.AirlockPainter
             if (!EntityManager.TryGetComponent<PaintableAirlockComponent>(target, out var airlock))
                 return;
 
-            string? sprite = GetAirlockSpritePath(airlock.Group, component.Style);
+            if (!_prototypeManager.TryIndex<AirlockGroupPrototype>(airlock.Group, out var grp))
+            {
+                Logger.Error("Group not defined: %s", airlock.Group);
+                return;
+            }
+
+            string? sprite = grp.StylePaths[component.Style];
             if (sprite == null)
             {
                 string msg = Loc.GetString("airlock-painter-style-not-available");
@@ -114,78 +123,7 @@ namespace Content.Server.AirlockPainter
 
         private void OnSpritePicked(EntityUid uid, AirlockPainterComponent component, AirlockPainterSpritePickedMessage args)
         {
-            component.Style = (AirlockStyle)args.Index;
-        }
-
-        private static string? GetAirlockSpritePath(AirlockGroup grp, AirlockStyle style)
-        {
-            // This should probably be put into a data file
-            switch (grp)
-            {
-                case AirlockGroup.Standard:
-                    switch (style)
-                    {
-                        case AirlockStyle.Basic:
-                            return "Structures/Doors/Airlocks/Standard/basic.rsi";
-                        case AirlockStyle.Cargo:
-                            return "Structures/Doors/Airlocks/Standard/cargo.rsi";
-                        case AirlockStyle.Command:
-                            return "Structures/Doors/Airlocks/Standard/command.rsi";
-                        case AirlockStyle.Engineering:
-                            return "Structures/Doors/Airlocks/Standard/engineering.rsi";
-                        case AirlockStyle.External:
-                            return "Structures/Doors/Airlocks/Standard/external.rsi";
-                        case AirlockStyle.Firelock:
-                            return "Structures/Doors/Airlocks/Standard/firelock.rsi";
-                        case AirlockStyle.Freezer:
-                            return "Structures/Doors/Airlocks/Standard/freezer.rsi";
-                        case AirlockStyle.Maintenance:
-                            return "Structures/Doors/Airlocks/Standard/maint.rsi";
-                        case AirlockStyle.Medical:
-                            return "Structures/Doors/Airlocks/Standard/medical.rsi";
-                        case AirlockStyle.Science:
-                            return "Structures/Doors/Airlocks/Standard/science.rsi";
-                        case AirlockStyle.Security:
-                            return "Structures/Doors/Airlocks/Standard/security.rsi";
-                        case AirlockStyle.Shuttle:
-                            return "Structures/Doors/Airlocks/Standard/shuttle.rsi";
-                        default:
-                            break;
-                    }
-                    break;
-                case AirlockGroup.Glass:
-                    switch (style)
-                    {
-                        case AirlockStyle.Basic:
-                            return "Structures/Doors/Airlocks/Glass/basic.rsi";
-                        case AirlockStyle.Cargo:
-                            return "Structures/Doors/Airlocks/Glass/cargo.rsi";
-                        case AirlockStyle.Command:
-                            return "Structures/Doors/Airlocks/Glass/command.rsi";
-                        case AirlockStyle.Engineering:
-                            return "Structures/Doors/Airlocks/Glass/engineering.rsi";
-                        case AirlockStyle.External:
-                            return "Structures/Doors/Airlocks/Glass/external.rsi";
-                        case AirlockStyle.Firelock:
-                            return "Structures/Doors/Airlocks/Glass/firelock.rsi";
-                        case AirlockStyle.Freezer:
-                            return null;
-                        case AirlockStyle.Maintenance:
-                            return null;
-                        case AirlockStyle.Medical:
-                            return "Structures/Doors/Airlocks/Glass/medical.rsi";
-                        case AirlockStyle.Science:
-                            return "Structures/Doors/Airlocks/Glass/science.rsi";
-                        case AirlockStyle.Security:
-                            return "Structures/Doors/Airlocks/Glass/security.rsi";
-                        case AirlockStyle.Shuttle:
-                            return "Structures/Doors/Airlocks/Glass/shuttle.rsi";
-                        default:
-                            break;
-                    }
-                    break;
-            }
-            return null;
+            component.Style = args.Style;
         }
     }
 }

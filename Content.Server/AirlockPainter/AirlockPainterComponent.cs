@@ -15,6 +15,6 @@ namespace Content.Server.AirlockPainter
         public bool IsSpraying = false;
 
         [DataField("style")]
-        public AirlockStyle Style = default!;
+        public string Style = default!;
     }
 }

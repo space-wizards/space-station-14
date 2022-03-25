@@ -21,8 +21,6 @@
     visuals:
     - type: AirlockVisualizer
     - type: WiresVisualizer
-  - type: PaintableAirlock
-    group: Standard
 
 - type: entity
   parent: AirlockExternal

@@ -78,3 +78,5 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Occluder
     enabled: false
+  - type: PaintableAirlock
+    group: Glass

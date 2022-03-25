@@ -10,8 +10,6 @@
       netsync: false
     - type: Item
       sprite: Objects/Tools/airlock_painter.rsi
-    - type: UseDelay
-      delay: 2.0
     - type: UserInterface
       interfaces:
         - key: enum.AirlockPainterUiKey.Key
