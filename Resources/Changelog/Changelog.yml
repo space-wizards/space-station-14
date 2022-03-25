@@ -1,11 +1,4 @@
 Entries:
-- author: buletsponge
-  changes:
-  - {message: Added DrozdRiot., type: Add}
-  - {message: Changed packedstation armory to spawn with non-lethal magazines and
-      SMGs., type: Tweak}
-  id: 744
-  time: '2021-12-16T12:00:09.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Crate deconstruction no longer deletes all of its contents., type: Fix}
@@ -3019,3 +3012,10 @@ Entries:
       all use the black cat for the lot.', type: Tweak}
   id: 1243
   time: '2022-03-25T04:00:09.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Reptilians no longer have human limbs., type: Tweak}
+  - {message: Reptilians now need to breathe., type: Tweak}
+  - {message: Reptilians now have their own SKREEE!, type: Add}
+  id: 1244
+  time: '2022-03-25T17:29:23.0000000+00:00'
