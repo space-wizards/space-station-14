@@ -67,7 +67,7 @@
     - type: AtmosExposed
     - type: Spreader
       growthResult: Kudzu
-      chance: 0.5
+      chance: 1
     - type: GrowingKudzu
       growthTickSkipChance: 0.1666
     - type: SlowContacts
