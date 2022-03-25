@@ -260,7 +260,7 @@
 - type: entity
   name: Exception
   id: MobCatException
-  parent: MobCat
+  parent: MobCatCalico
   description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
   - type: Grammar
@@ -320,7 +320,7 @@
 - type: entity
   name: Floppa
   id: MobCatFloppa
-  parent: MobCat
+  parent: MobCatCaracal
   description: He out here.
   components:
   - type: Grammar
