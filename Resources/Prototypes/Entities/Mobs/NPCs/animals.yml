@@ -911,6 +911,67 @@
     interactFailureString: petting-failure-generic
 
 - type: entity
+  name: syndicate grenade penguin
+  parent: SimpleMobBase
+  id: MobGrenadePenguin
+  description: Penguins weaponized by the syndicate to carry dangerous explosives. They peck you like awful little bastards.
+  components:
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
+    - UnarmedAttackHostiles
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: penguin
+      sprite: Mobs/Animals/grenadepenguin.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable #Bullets?!
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: penguin
+      crit: dead
+      dead: dead
+  - type: Bloodstream
+    bloodMaxVolume: 400 #meme blood number
+  - type: Butcherable
+    spawned: FoodMeatPenguin
+    pieces: 2
+  - type: Item
+    size: 40
+  - type: OnUseTimerTrigger
+    delay: 7
+  - type: Explosive
+    devastationRange: 1
+    heavyImpactRange: 2
+    lightImpactRange: 6
+    flashRange: 10
+  - type: ExplodeOnTrigger
+  - type: UnarmedCombat
+    range: .5
+    arcwidth: 0
+    arc: bite
+    damage:
+      groups:
+        Brute: 3
+
+- type: entity
   name: snake
   parent: SimpleMobBase
   id: MobSnake
