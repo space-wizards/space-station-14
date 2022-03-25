@@ -13,7 +13,7 @@ public sealed class ReactiveComponent : Component
     /// <summary>
     ///     A dictionary of reactive groups -> methods that work on them.
     /// </summary>
-    [DataField("groups", readOnly: true, serverOnly: true,
+    [DataField("groups", required: true, readOnly: true, serverOnly: true,
         customTypeSerializer:
         typeof(PrototypeIdDictionarySerializer<HashSet<ReactionMethod>, ReactiveGroupPrototype>))]
     public Dictionary<string, HashSet<ReactionMethod>>? ReactiveGroups;
@@ -37,7 +37,4 @@ public sealed class ReactiveReagentEffectEntry
 
     [DataField("effects", required: true)]
     public List<ReagentEffect> Effects = default!;
-    [DataField("groups", required: true, readOnly: true, serverOnly: true,
-        customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<ReactionMethod>, ReactiveGroupPrototype>))]
-    public Dictionary<string, HashSet<ReactionMethod>> ReactiveGroups { get; } = default!;
 }
