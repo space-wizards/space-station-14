@@ -43,6 +43,7 @@ namespace Content.Tests.Shared.Chemistry
   id: H2
   name: Hydrogen
   desc: A light, flammable gas.
+  physicalDesc: A light, flammable gas.
   color: " + "\"#008080\"";
     }
 }
