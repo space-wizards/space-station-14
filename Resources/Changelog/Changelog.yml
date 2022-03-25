@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Crate deconstruction no longer deletes all of its contents., type: Fix}
-  id: 745
-  time: '2021-12-17T00:26:01.716131+00:00'
 - author: moonheart08
   changes:
   - {message: The singularity is no longer weightless., type: Tweak}
@@ -3019,3 +3014,9 @@ Entries:
   - {message: Reptilians now have their own SKREEE!, type: Add}
   id: 1244
   time: '2022-03-25T17:29:23.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: You feel as though you will be respawned and kicked by accident less
+      often., type: Add}
+  id: 1245
+  time: '2022-03-25T18:00:20.0000000+00:00'
