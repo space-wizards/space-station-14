@@ -422,7 +422,7 @@ entities:
       -1,-1:
         0:
           color: '#9FED5896'
-          id: antilizard
+          id: prolizard
           coordinates: -2,-4
     type: DecalGrid
   - tiles:
