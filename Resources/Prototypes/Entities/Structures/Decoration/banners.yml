@@ -8,6 +8,7 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner
+    netsync: false
   - type: Fixtures
     fixtures:
     - shape:
