@@ -793,6 +793,39 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("server_unban", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.UploadedResourceLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("uploaded_resource_log_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<byte[]>("Data")
+                        .IsRequired()
+                        .HasColumnType("bytea")
+                        .HasColumnName("data");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("date");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("path");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("PK_uploaded_resource_log");
+
+                    b.ToTable("uploaded_resource_log", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Whitelist", b =>
                 {
                     b.Property<Guid>("UserId")
