@@ -212,7 +212,7 @@
   - type: IngestionBlocker
 
 - type: entity
-  parent: ClothingHeadBaseRedKnight
+  parent: ClothingHeadHelmetRedKnight
   id: ClothingHeadHelmetBlueKnight
   name: blue knight helmet
   description: A royal knight's favorite hat. If you hold it upside down it's actually a bucket.
@@ -223,7 +223,7 @@
     sprite: Clothing/Head/Helmets/blueknighthelm.rsi
  
 - type: entity
-  parent: ClothingHeadBaseRedKnight
+  parent: ClothingHeadHelmetRedKnight
   id: ClothingHeadHelmetGreenKnight
   name: green knight helmet
   description: A royal knight's favorite hat. If you hold it upside down it's actually a bucket.
@@ -234,7 +234,7 @@
     sprite: Clothing/Head/Helmets/greenknighthelm.rsi
 
 - type: entity
-  parent: ClothingHeadBaseRedKnight
+  parent: ClothingHeadHelmetRedKnight
   id: ClothingHeadHelmetYellowKnight
   name: yellow knight helmet
   description: A royal knight's favorite hat. If you hold it upside down it's actually a bucket.
