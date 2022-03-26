@@ -14,17 +14,17 @@ namespace Content.Client.Inventory;
 
 public sealed class InventoryUIController : UIController
 {
-    [Dependency] private EntityManager _entityManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
     [UISystemDependency] private InventorySystem? _inventorySystem = null;
-    private PlayerInventoryData _playerData = new PlayerInventoryData();
     private Dictionary<string, ItemSlotUIContainer> _slotGroups = new();
 
-    public InventoryUIController()
+    public override void OnGamestateChanged(GameStateAppliedArgs args)
     {
-        IoCManager.InjectDependencies(this);
+        DebugTest();
+        if (_inventorySystem == null) return;
     }
 
-    public override void OnGamestateChanged(GameStateAppliedArgs args)
+    private void DebugTest()
     {
         if (_inventorySystem == null)
         {
@@ -32,42 +32,5 @@ public sealed class InventoryUIController : UIController
             return;
         }
         Logger.Debug("Found");
-    }
-
-
-    public readonly struct PlayerInventoryData
-    {
-        public readonly EntityUid? PlayerEntity;
-        public readonly HandsComponent? HandsComponent;
-        public readonly  ClientInventoryComponent? InventoryComponent;
-
-        //This provides all the required nullchecking for properties, you can ignore any nullable errors if you use this
-        public bool IsValid => (PlayerEntity != null && HandsComponent != null && InventoryComponent != null);
-        public PlayerInventoryData(EntityUid? playerEntity, HandsComponent? handsComponent, ClientInventoryComponent? inventoryComponent)
-        {
-            PlayerEntity = playerEntity;
-            HandsComponent = handsComponent;
-            InventoryComponent = inventoryComponent;
-        }
-
-        public PlayerInventoryData()
-        {
-            PlayerEntity = null;
-            HandsComponent = null;
-            InventoryComponent = null;
-        }
-        public PlayerInventoryData(EntityUid? playerEntity, IEntityManager entityManager)
-        {
-            if (playerEntity == null)
-            {
-                PlayerEntity = null;
-                HandsComponent = null;
-                InventoryComponent = null;
-                return;
-            }
-            PlayerEntity = playerEntity;
-            entityManager.TryGetComponent<HandsComponent>(playerEntity, out HandsComponent);
-            entityManager.TryGetComponent<ClientInventoryComponent>(playerEntity, out InventoryComponent);
-        }
     }
 }
