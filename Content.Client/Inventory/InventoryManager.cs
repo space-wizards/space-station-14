@@ -4,19 +4,23 @@ using Content.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Inventory;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Inventory;
 
-
-public interface IInventoryManager
+public sealed class InventoryManager : UIController
 {
-}
+    [Dependency] private EntityManager _entityManager = default!;
+    [UISystemDependency] private InventorySystem? _inventorySystem = null;
+    private PlayerInventoryData _playerData = new PlayerInventoryData();
+    private Dictionary<string, ItemSlotUIContainer> _slotGroups = new();
 
-
-public sealed class InventoryManager : UIController, IInventoryManager
-{
-      public readonly struct PlayerInventoryData
+    public InventoryManager()
+    {
+        IoCManager.InjectDependencies(this);
+    }
+    public readonly struct PlayerInventoryData
     {
         public readonly EntityUid? PlayerEntity;
         public readonly HandsComponent? HandsComponent;
@@ -52,15 +56,4 @@ public sealed class InventoryManager : UIController, IInventoryManager
         }
 
     }
-
-    [Dependency] private EntityManager _entityManager = default!;
-    [Dependency] private EntitySystemManager _systemManager = default!;
-    private PlayerInventoryData _playerData = new PlayerInventoryData();
-    private Dictionary<string, ItemSlotUIContainer> _slotGroups = new();
-
-    public InventoryManager()
-    {
-        IoCManager.InjectDependencies(this);
-    }
-
 }
