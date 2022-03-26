@@ -203,7 +203,7 @@
   parent: ClothingOuterBase
   id: ClothingOuterPlagueSuit
   name: plague doctor suit
-  description: A sight of bad omen
+  description: A sign of bad omen
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/plaguedoctorsuit.rsi
