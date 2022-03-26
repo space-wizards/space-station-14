@@ -1,4 +1,3 @@
-using System.IO;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -25,6 +24,7 @@ using Robust.Server;
 using Robust.Server.Bql;
 using Robust.Server.Player;
 using Robust.Server.ServerStatus;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Timing;
@@ -36,6 +36,7 @@ namespace Content.Server.Entry
     {
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
+        private ITaskManager _taskManager = default!;
         private IAdminLogManager _adminLogs = default!;
 
         /// <inheritdoc />
@@ -71,7 +72,6 @@ namespace Content.Server.Entry
             {
                 _euiManager = IoCManager.Resolve<EuiManager>();
                 _voteManager = IoCManager.Resolve<IVoteManager>();
-                _adminLogs = IoCManager.Resolve<IAdminLogManager>();
 
                 var playerManager = IoCManager.Resolve<IPlayerManager>();
 
@@ -86,8 +86,11 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
                 IoCManager.Resolve<NetworkResourceManager>().Initialize();
                 _voteManager.Initialize();
-                _adminLogs.Initialize();
             }
+
+            _taskManager = IoCManager.Resolve<ITaskManager>();
+            _adminLogs = IoCManager.Resolve<IAdminLogManager>();
+            _adminLogs.Initialize();
         }
 
         public override void PostInit()
@@ -142,6 +145,16 @@ namespace Content.Server.Entry
 
                     break;
                 }
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                _taskManager.BlockWaitOnTask(_adminLogs.Shutdown());
             }
         }
     }
