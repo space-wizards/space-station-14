@@ -12,8 +12,6 @@ public sealed class RulesManager : SharedRulesManager
 
     private static DateTime LastValidReadTime => DateTime.UtcNow - TimeSpan.FromDays(60);
 
-    private readonly Dictionary<NetUserId, DateTime> _lastReadRulesCache = new();
-
     public void Initialize()
     {
         _netManager.RegisterNetMessage<ShouldShowRulesPopupMessage>();
@@ -42,14 +40,6 @@ public sealed class RulesManager : SharedRulesManager
     private async void OnRulesAccepted(RulesAcceptedMessage message)
     {
         var date = DateTime.UtcNow;
-
-        if (_lastReadRulesCache.TryGetValue(message.MsgChannel.UserId, out var lastRead) &&
-            lastRead > date - TimeSpan.FromMinutes(1))
-        {
-            return;
-        }
-
-        _lastReadRulesCache[message.MsgChannel.UserId] = date;
         await _dbManager.SetLastReadRules(message.MsgChannel.UserId, date);
     }
 }
