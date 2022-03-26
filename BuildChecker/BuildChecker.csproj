@@ -2,13 +2,10 @@
 <!--
 This is a dummy .csproj file to check things like submodules.
 Better this than other errors.
-
 If you want to create this kind of file yourself, you have to create an empty .NET application,
 Then strip it of everything until you have the <Project> tags.
 VS refuses to load the project if you make a bare project file and use Add -> Existing Project... for some reason.
-
 You want to handle the Build, Clean and Rebuild tasks to prevent missing task errors on build.
-
 If you want to learn more about these kinds of things, check out Microsoft's official documentation about MSBuild:
 https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild
 -->
