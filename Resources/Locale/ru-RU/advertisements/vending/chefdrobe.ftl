@@ -1,1 +1,1 @@
-advertisement-chefdrobe-1 = Our clothes are guaranteed to protect you from food splatters!
+advertisement-chefdrobe-1 = Наша одежда гарантированно защитит вас от пятен от еды!

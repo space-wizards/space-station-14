@@ -1,2 +1,2 @@
-action-name-boo = Boo!
-action-description-boo = Scare your crew members because of boredom!
+action-name-boo = Бу!
+action-description-boo = Пугайте членов своей команды от скуки!

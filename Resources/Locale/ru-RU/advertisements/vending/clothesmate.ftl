@@ -1,4 +1,4 @@
-advertisement-clothes-1 = Dress for success!
-advertisement-clothes-2 = Prepare to look swagalicious!
-advertisement-clothes-3 = Look at all this swag!
-advertisement-clothes-4 = Why leave style up to fate? Use the ClothesMate!
+advertisement-clothes-1 = Одевайтесь для успеха!
+advertisement-clothes-2 = Приготовтесь выглядеть мегакруто!
+advertisement-clothes-3 = Взгляните на все эти крутости!
+advertisement-clothes-4 = Наряду ты не рад? Загляни в ОдеждоМат!

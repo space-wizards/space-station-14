@@ -1,2 +1,2 @@
-advertisement-scidrobe-1 = Longing for the smell of plasma burnt flesh? Buy your science clothing now!
-advertisement-scidrobe-2 = Made with 10% Auxetics, so you don't have to worry about losing your arm!
+advertisement-scidrobe-1 = Скучаете по запаху обожженной плазмой плоти? Купите научную одежду прямо сейчас!
+advertisement-scidrobe-2 = Изготовлено на 10% из ауксетики, поэтому можете не беспокоиться о потере руки!

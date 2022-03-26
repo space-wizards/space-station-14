@@ -1,18 +1,19 @@
-ent-SpaceCash = credit
-    .desc = You gotta have money.
+ent-SpaceCash = кредиты
+    .desc = Нужно иметь деньги.
     .suffix = { "" }
-ent-SpaceCash10 = credit
+ent-SpaceCash10 = кредитов
     .suffix = 10
     .desc = { ent-SpaceCash.desc }
-ent-SpaceCash100 = credit
+ent-SpaceCash100 = кредитов
     .suffix = 100
     .desc = { ent-SpaceCash.desc }
-ent-SpaceCash500 = credit
+ent-SpaceCash500 = кредитов
     .suffix = 500
     .desc = { ent-SpaceCash.desc }
-ent-SpaceCash1000 = credit
+ent-SpaceCash1000 = кредитов
     .suffix = 1000
     .desc = { ent-SpaceCash.desc }
-ent-SpaceCash1000000 = credit
+ent-SpaceCash1000000 = кредитов
     .suffix = 1000000
     .desc = { ent-SpaceCash.desc }
+    

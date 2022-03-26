@@ -1,2 +1,2 @@
-action-name-toggle-light = Toggle Light
-action-description-toggle-light = Turn the light on and off.
+action-name-toggle-light = Переключить фонарь
+action-description-toggle-light = Включает или выключает фонарь.
