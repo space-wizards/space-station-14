@@ -24,6 +24,17 @@ public sealed class InventoryUIController : UIController
         if (_inventorySystem == null) return;
     }
 
+    public bool RegisterSlotGroupContainer(ItemSlotUIContainer slotContainer)
+    {
+        return slotContainer.Name != null && _slotGroups.TryAdd(slotContainer.Name!, slotContainer);
+    }
+
+    public void RemoveSlotGroup(string slotGroupName)
+    {
+        _slotGroups.Remove(slotGroupName);
+    }
+
+
     private void DebugTest()
     {
         if (_inventorySystem == null)
