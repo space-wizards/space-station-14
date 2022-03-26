@@ -249,6 +249,8 @@ namespace Content.Server.Database
         // Data that changes with each round
         public List<Round> Rounds { get; set; } = null!;
         public List<AdminLogPlayer> AdminLogs { get; set; } = null!;
+
+        public DateTime? LastReadRules { get; set; }
     }
 
     [Table("whitelist")]
