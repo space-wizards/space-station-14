@@ -409,6 +409,49 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingSpapeHat
+  name: Spape hat
+  description: The peak of hyrdative headwear, able to keep your favorite beverages at the tip of your tongue and the top of your head.
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Clothing/Head/Hats/sprokehat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/sprokehat.rsi
+  - type: ClothingSolutionTransfer
+    minTransferAmount: 5
+    maxTransferAmount: 15
+    canChangeTransferAmount: true
+    #TODO: Sproke hat sidebar action. couldn't do it and was struggling. -Emo
+    #toggleAction:
+    #  icon: Clothing/Shoes/Boots/magboots.rsi/icon.png
+    #  name: transfer-solution-verb-get-data-text
+    #  description: action-decription-magboot-toggle
+    #  event: !type:ToggleActionEvent
+  - type: Drink
+    isOpen: true
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: GrapeSoda
+          Quantity: 25
+        - ReagentId: SpaceMountainWind
+          Quantity: 25
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadPaperSack
   name: papersack hat
   description: A paper sack with crude holes cut out for eyes. Useful for hiding one's identity or ugliness.
