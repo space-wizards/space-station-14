@@ -39,7 +39,7 @@ public sealed class RulesManager : SharedRulesManager
         _netManager.ServerSendMessage(message, e.Channel);
     }
 
-    private void OnRulesAccepted(RulesAcceptedMessage message)
+    private async void OnRulesAccepted(RulesAcceptedMessage message)
     {
         var date = DateTime.UtcNow;
 
@@ -50,6 +50,6 @@ public sealed class RulesManager : SharedRulesManager
         }
 
         _lastReadRulesCache[message.MsgChannel.UserId] = date;
-        _dbManager.SetLastReadRules(message.MsgChannel.UserId, date);
+        await _dbManager.SetLastReadRules(message.MsgChannel.UserId, date);
     }
 }
