@@ -6,6 +6,7 @@ using Content.Shared.Inventory;
 using OpenToolkit.Graphics.OpenGL;
 using Robust.Client.GameStates;
 using Robust.Client.Player;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 using Serilog;
@@ -19,7 +20,7 @@ public sealed class InventoryUIController : UIController
     private Dictionary<string, ItemSlotUIContainer> _slotGroups = new();
     private ClientInventoryComponent? _playerInventoryComponent;
     public ClientInventoryComponent? PlayerInventory => _playerInventoryComponent;
-    public override void OnGamestateChanged(GameStateAppliedArgs args)
+    public override void OnStateChanged(StateChangedEventArgs args)
     {
         DebugTest();
         if (_inventorySystem == null) return;
