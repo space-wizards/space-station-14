@@ -8,6 +8,7 @@ namespace Content.Server.Administration.Logs;
 
 public interface IAdminLogManager : ISharedAdminLogManager
 {
+    void Initialize();
     Task Shutdown();
     void Update();
 

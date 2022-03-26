@@ -1,4 +1,4 @@
-using System.IO;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.AI.Utility;
@@ -15,22 +15,16 @@ using Content.Server.IoC;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Preferences.Managers;
-using Content.Server.Sandbox;
 using Content.Server.Voting.Managers;
-using Content.Shared.Actions;
 using Content.Shared.Administration;
-using Content.Shared.Alert;
 using Content.Shared.CCVar;
 using Content.Shared.Kitchen;
 using Robust.Server;
 using Robust.Server.Bql;
 using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Server.ServerStatus;
+using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -40,6 +34,7 @@ namespace Content.Server.Entry
     {
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
+        private IAdminLogManager _adminLogs = default!;
 
         /// <inheritdoc />
         public override void Init()
@@ -74,6 +69,7 @@ namespace Content.Server.Entry
             {
                 _euiManager = IoCManager.Resolve<EuiManager>();
                 _voteManager = IoCManager.Resolve<IVoteManager>();
+                _adminLogs = IoCManager.Resolve<IAdminLogManager>();
 
                 var playerManager = IoCManager.Resolve<IPlayerManager>();
 
@@ -87,6 +83,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<INodeGroupFactory>().Initialize();
                 IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
                 _voteManager.Initialize();
+                _adminLogs.Initialize();
             }
         }
 
@@ -138,6 +135,8 @@ namespace Content.Server.Entry
                 {
                     _euiManager.SendUpdates();
                     _voteManager.Update();
+                    _adminLogs.Update();
+
                     break;
                 }
             }

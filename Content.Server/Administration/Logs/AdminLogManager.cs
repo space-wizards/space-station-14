@@ -15,7 +15,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Administration.Logs;
 
-public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogManager, IPostInjectInit
+public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogManager
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -75,6 +75,31 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     private int _currentLogId;
     private int NextLogId => Interlocked.Increment(ref _currentLogId);
     private GameRunLevel? _runLevel;
+
+    public void Initialize()
+    {
+        _sawmill = _logManager.GetSawmill(SawmillId);
+
+        InitializeJson();
+
+        _configuration.OnValueChanged(CVars.MetricsEnabled,
+            value => _metricsEnabled = value, true);
+        _configuration.OnValueChanged(CCVars.AdminLogsEnabled,
+            value => _enabled = value, true);
+        _configuration.OnValueChanged(CCVars.AdminLogsQueueSendDelay,
+            value => _queueSendDelay = TimeSpan.FromSeconds(value), true);
+        _configuration.OnValueChanged(CCVars.AdminLogsQueueMax,
+            value => _queueMax = value, true);
+        _configuration.OnValueChanged(CCVars.AdminLogsPreRoundQueueMax,
+            value => _preRoundQueueMax = value, true);
+
+        if (_metricsEnabled)
+        {
+            PreRoundQueueCapReached.Set(0);
+            QueueCapReached.Set(0);
+            LogsSent.Set(0);
+        }
+    }
 
     public async Task Shutdown()
     {
@@ -331,30 +356,5 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     public Task<Round> CurrentRound()
     {
         return Round(_currentRoundId);
-    }
-
-    public void PostInject()
-    {
-        _sawmill = _logManager.GetSawmill(SawmillId);
-
-        InitializeJson();
-
-        _configuration.OnValueChanged(CVars.MetricsEnabled,
-            value => _metricsEnabled = value, true);
-        _configuration.OnValueChanged(CCVars.AdminLogsEnabled,
-            value => _enabled = value, true);
-        _configuration.OnValueChanged(CCVars.AdminLogsQueueSendDelay,
-            value => _queueSendDelay = TimeSpan.FromSeconds(value), true);
-        _configuration.OnValueChanged(CCVars.AdminLogsQueueMax,
-            value => _queueMax = value, true);
-        _configuration.OnValueChanged(CCVars.AdminLogsPreRoundQueueMax,
-            value => _preRoundQueueMax = value, true);
-
-        if (_metricsEnabled)
-        {
-            PreRoundQueueCapReached.Set(0);
-            QueueCapReached.Set(0);
-            LogsSent.Set(0);
-        }
     }
 }
