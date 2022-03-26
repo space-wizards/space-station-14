@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes various bugs relating to MIDI and instruments. Others should be
-      able to hear them again reliably., type: Fix}
-  id: 748
-  time: '2021-12-17T22:45:31.490867+00:00'
 - author: ElectroJr
   changes:
   - {message: You can once again refill botany trays without requiring a plant to
@@ -3021,3 +3015,10 @@ Entries:
   - {message: Corgis can no longer will doors to open., type: Fix}
   id: 1247
   time: '2022-03-25T21:10:50.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station is now fully stocked with pets., type: Add}
+  - {message: Several lighting issues on Delta were fixed. More will likely exist.,
+    type: Tweak}
+  id: 1248
+  time: '2022-03-26T04:16:22.0000000+00:00'
