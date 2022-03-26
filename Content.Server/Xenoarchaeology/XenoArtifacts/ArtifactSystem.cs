@@ -13,10 +13,10 @@ public sealed class ArtifactSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ArtifactComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ArtifactComponent, MapInitEvent>(OnInit);
     }
 
-    private void OnInit(EntityUid uid, ArtifactComponent component, ComponentInit args)
+    private void OnInit(EntityUid uid, ArtifactComponent component, MapInitEvent args)
     {
         if (component.RandomTrigger)
         {
@@ -32,6 +32,12 @@ public sealed class ArtifactSystem : EntitySystem
         var triggerName = _random.Pick(component.PossibleTriggers);
         var trigger = (Component) _componentFactory.GetComponent(triggerName);
         trigger.Owner = uid;
+
+        if (EntityManager.HasComponent(uid, trigger.GetType()))
+        {
+            Logger.Error($"Attempted to add a random artifact trigger ({triggerName}) to an entity ({ToPrettyString(uid)}), but it already has the trigger");
+            return;
+        }
 
         EntityManager.AddComponent(uid, trigger);
         RaiseLocalEvent(uid, new RandomizeTriggerEvent());

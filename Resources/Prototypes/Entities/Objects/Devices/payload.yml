@@ -1,0 +1,76 @@
+- type: entity
+  parent: BaseItem
+  abstract: true
+  id: BasePayload
+  components:
+  - type: Appearance
+  - type: Sprite
+    netsync: false
+  - type: Tag
+    tags:
+    - Payload
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  name: explosive payload
+  parent: BasePayload
+  id: ExplosivePayload
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/payload.rsi
+    state: payload-explosive-armed
+  - type: Explosive
+    devastationRange: 0
+    heavyImpactRange: 2
+    lightImpactRange: 4
+    flashRange: 7
+  - type: ExplodeOnTrigger
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 25
+      behaviors:
+      - !type:ExplodeBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  name: chemical payload
+  parent: BasePayload
+  id: ChemicalPayload
+  description: A chemical payload. Has space to store two beakers. In combination with a trigger and a case, this can be used to initiate chemical reactions.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/payload.rsi
+    state: payload-empty
+  - type: ChemicalPayload
+    beakerSlotA: &slotDef
+      whitelist: 
+        components:
+        - FitsInDispenser
+      swap: false
+    beakerSlotB: *slotDef
+  - type: Appearance
+    visuals:
+    - type: GenericEnumVisualizer
+      key: enum.ChemicalPayloadVisuals.Slots
+      states:
+        enum.ChemicalPayloadFilledSlots.None: payload-empty
+        enum.ChemicalPayloadFilledSlots.Left: payload-chemical-left
+        enum.ChemicalPayloadFilledSlots.Right: payload-chemical-right
+        enum.ChemicalPayloadFilledSlots.Both: payload-chemical-armed
