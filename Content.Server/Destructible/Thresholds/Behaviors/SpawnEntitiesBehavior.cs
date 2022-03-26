@@ -1,5 +1,7 @@
 using Content.Server.Stack;
 using Content.Shared.Prototypes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
@@ -10,7 +12,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// <summary>
         ///     Entities spawned on reaching this threshold, from a min to a max.
         /// </summary>
-        [DataField("spawn")]
+        [DataField("spawn", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<MinMax, EntityPrototype>))]
         public Dictionary<string, MinMax> Spawn { get; set; } = new();
 
         [DataField("offset")]

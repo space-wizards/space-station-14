@@ -32,8 +32,8 @@
   - type: Clothing
     size: 15
   - type: PressureProtection
-    highPressureMultiplier: 0.3
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 10
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor
@@ -48,6 +48,8 @@
   - type: Tag
     tags:
     - HidesHair
+  - type: DiseaseProtection
+    protection: 0.05
 
 - type: entity
   abstract: true

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Content.Server.Administration.Logs;
@@ -10,6 +8,9 @@ using Content.Server.MoMMI;
 using Content.Server.Players;
 using Content.Server.Preferences.Managers;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Disease;
+using Content.Server.Disease.Components;
+using Content.Shared.Disease.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -22,10 +23,6 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
@@ -206,6 +203,11 @@ namespace Content.Server.Chat.Managers
             if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(source))
             {
                 return;
+            }
+
+            if (_entManager.HasComponent<DiseasedComponent>(source) && _entManager.TryGetComponent<DiseaseCarrierComponent>(source,out var carrier))
+            {
+                EntitySystem.Get<DiseaseSystem>().SneezeCough(source, _random.Pick(carrier.Diseases), string.Empty);
             }
 
             if (MessageCharacterLimit(source, message))

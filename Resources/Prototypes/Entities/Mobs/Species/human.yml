@@ -71,6 +71,7 @@
     - SlowedDown
     - Stutter
     - Electrocution
+  - type: DiseaseCarrier
   # Other
   - type: Inventory
   - type: Clickable
@@ -293,6 +294,7 @@
     attributes:
       proper: true
   - type: StandingState
+
 
 - type: entity
   save: false

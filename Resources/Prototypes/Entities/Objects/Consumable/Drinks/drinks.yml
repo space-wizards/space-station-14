@@ -284,8 +284,8 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkBarefootHonkGlass
-  name: bareroot glass
+  id: DrinkBarefootGlass
+  name: barefoot glass
   description: Barefoot and pregnant.
   components:
   - type: SolutionContainerManager

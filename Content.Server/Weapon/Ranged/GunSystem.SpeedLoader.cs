@@ -2,6 +2,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
@@ -74,14 +75,9 @@ public sealed partial class GunSystem
             return;
         }
 
-        var itemComponent = EntityManager.GetComponent<SharedItemComponent>(ammo.Value);
-        if (!handsComponent.CanPutInHand(itemComponent))
+        if (!_handsSystem.TryPickup(args.User, ammo.Value, handsComp: handsComponent))
         {
             EjectCasing(ammo.Value);
-        }
-        else
-        {
-            handsComponent.PutInHand(itemComponent);
         }
 
         UpdateSpeedLoaderAppearance(component);

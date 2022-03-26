@@ -9,7 +9,7 @@
     state: icon
   - type: Clothing
     size: 9999
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - back
     sprite: Clothing/Back/Backpacks/backpack.rsi

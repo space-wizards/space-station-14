@@ -12,6 +12,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -23,6 +24,7 @@ namespace Content.Server.Tiles
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         [DataField("outputs", customTypeSerializer: typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
         private List<string>? _outputTiles;
@@ -50,7 +52,8 @@ namespace Content.Server.Tiles
 
         private void PlaceAt(IMapGrid mapGrid, EntityCoordinates location, ushort tileId, float offset = 0)
         {
-            mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId));
+            var variant = _random.Pick(((ContentTileDefinition) _tileDefinitionManager[tileId]).PlacementVariants);
+            mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
             SoundSystem.Play(Filter.Pvs(location), _placeTileSound.GetSound(), location, AudioHelpers.WithVariation(0.125f));
         }
 

@@ -1,27 +1,17 @@
-using System;
 using Content.Server.Administration.Logs;
-using Content.Server.Doors;
 using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
-using Content.Shared.Audio;
-using Content.Shared.Doors;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
-using System.Threading;
-using Content.Server.Construction.Components;
+using Content.Shared.Sound;
 using Content.Shared.Trigger;
-using Timer = Robust.Shared.Timing.Timer;
-using Content.Shared.Physics;
-using System.Collections.Generic;
+using Content.Shared.Database;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -48,6 +38,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly FlashSystem _flashSystem = default!;
         [Dependency] private readonly DoorSystem _sharedDoorSystem = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -59,7 +50,6 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
-            SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(HandleSoundTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
             SubscribeLocalEvent<ToggleDoorOnTriggerComponent, TriggerEvent>(HandleDoorTrigger);
@@ -100,12 +90,6 @@ namespace Content.Server.Explosion.EntitySystems
         }
         #endregion
 
-        private void HandleSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
-        {
-            if (component.Sound == null) return;
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.Sound.GetSound(), uid);
-        }
-
         private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)
         {
             EntityManager.QueueDeleteEntity(uid);
@@ -128,19 +112,39 @@ namespace Content.Server.Explosion.EntitySystems
             EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent);
         }
 
-        public void HandleTimerTrigger(TimeSpan delay, EntityUid triggered, EntityUid? user = null)
+        public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay , float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound, AudioParams beepParams)
         {
-            if (delay.TotalSeconds <= 0)
+            if (delay <= 0)
             {
-                Trigger(triggered, user);
+                RemComp<ActiveTimerTriggerComponent>(uid);
+                Trigger(uid, user);
                 return;
             }
 
-            Timer.Spawn(delay, () =>
+            if (HasComp<ActiveTimerTriggerComponent>(uid))
+                return;
+
+            if (user != null)
             {
-                if (Deleted(triggered)) return;
-                Trigger(triggered, user);
-            });
+                _logSystem.Add(LogType.Trigger,
+                    $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}");
+            }
+            else
+            {
+                _logSystem.Add(LogType.Trigger,
+                    $"{delay} second timer trigger started on entity {ToPrettyString(uid):timer}");
+            }
+
+            var active = AddComp<ActiveTimerTriggerComponent>(uid);
+            active.TimeRemaining = delay;
+            active.User = user;
+            active.BeepParams = beepParams;
+            active.BeepSound = beepSound;
+            active.BeepInterval = beepInterval;
+            active.TimeUntilBeep = initialBeepDelay == null ? active.BeepInterval : initialBeepDelay.Value;
+
+            if (TryComp<AppearanceComponent>(uid, out var appearance))
+                appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);
         }
 
         public override void Update(float frameTime)
@@ -148,6 +152,40 @@ namespace Content.Server.Explosion.EntitySystems
             base.Update(frameTime);
 
             UpdateProximity(frameTime);
+            UpdateTimer(frameTime);
+        }
+
+        private void UpdateTimer(float frameTime)
+        {
+            HashSet<EntityUid> toRemove = new();
+            foreach (var timer in EntityQuery<ActiveTimerTriggerComponent>())
+            {
+                timer.TimeRemaining -= frameTime;
+                timer.TimeUntilBeep -= frameTime;
+
+                if (timer.TimeRemaining <= 0)
+                {
+                    Trigger(timer.Owner, timer.User);
+                    toRemove.Add(timer.Owner);
+                    continue;
+                }
+
+                if (timer.BeepSound == null || timer.TimeUntilBeep > 0)
+                    continue;
+
+                timer.TimeUntilBeep += timer.BeepInterval;
+                var filter = Filter.Pvs(timer.Owner, entityManager: EntityManager);
+                SoundSystem.Play(filter, timer.BeepSound.GetSound(), timer.Owner, timer.BeepParams);
+            }
+
+            foreach (var uid in toRemove)
+            {
+                RemComp<ActiveTimerTriggerComponent>(uid);
+
+                // In case this is a re-usable grenade, un-prime it.
+                if (TryComp<AppearanceComponent>(uid, out var appearance))
+                    appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Unprimed);
+            }
         }
     }
 }
