@@ -4,6 +4,7 @@ using Content.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Inventory;
 using OpenToolkit.Graphics.OpenGL;
+using Robust.Client.GameStates;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
@@ -21,18 +22,16 @@ public sealed class InventoryUIController : UIController
     public InventoryUIController()
     {
         IoCManager.InjectDependencies(this);
-        Test();
     }
 
-
-    public void Test()
+    public override void OnGamestateChanged(GameStateAppliedArgs args)
     {
         if (_inventorySystem == null)
         {
             Logger.Debug("Null RIP");
             return;
         }
-        Logger.Debug("FOund");
+        Logger.Debug("Found");
     }
 
 
