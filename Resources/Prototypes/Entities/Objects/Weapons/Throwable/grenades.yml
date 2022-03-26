@@ -95,9 +95,11 @@
     delay: 5
   - type: Explosive
     explosionType: Default
-    totalIntensity: 400
-    intensitySlope: 3
-    maxIntensity: 20
+    # About a 3-3.5 tile radius, strong enough to break reinforced walls near centre.
+    # Currently a big spacing hazzard.
+    totalIntensity: 800
+    intensitySlope: 15
+    maxIntensity: 45
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic

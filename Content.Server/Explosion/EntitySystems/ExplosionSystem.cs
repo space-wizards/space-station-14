@@ -7,6 +7,7 @@ using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
+using Content.Shared.Throwing;
 using Robust.Server.Containers;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -36,6 +37,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly CameraRecoilSystem _recoilSystem = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly AdminLogSystem _logsSystem = default!;
+    [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.

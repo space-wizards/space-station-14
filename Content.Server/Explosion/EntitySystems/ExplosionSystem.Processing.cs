@@ -345,7 +345,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             && physics.BodyType == BodyType.Dynamic)
         {
             // TODO purge throw helpers and pass in physics component
-            uid.TryThrow(xform.WorldPosition - epicenter.Position, throwForce);
+            _throwingSystem.TryThrow(uid, xform.WorldPosition - epicenter.Position, throwForce);
         }
 
         // TODO EXPLOSION puddle / flammable ignite?
