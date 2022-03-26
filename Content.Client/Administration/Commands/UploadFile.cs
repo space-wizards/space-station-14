@@ -41,15 +41,15 @@ public sealed class UploadFile : IConsoleCommand
             return;
         }
 
-        var data = file.CopyToArray();
-
         var sizeLimit = cfgMan.GetCVar(CCVars.ResourceUploadingLimitMb);
 
-        if (sizeLimit > 0f && data.Length * SharedNetworkResourceManager.BytesToMegabytes > sizeLimit)
+        if (sizeLimit > 0f && file.Length * SharedNetworkResourceManager.BytesToMegabytes > sizeLimit)
         {
             shell.WriteError($"File above the current size limit! It must be smaller than {sizeLimit} MB.");
             return;
         }
+
+        var data = file.CopyToArray();
 
         var netManager = IoCManager.Resolve<INetManager>();
         var msg = netManager.CreateNetMessage<NetworkResourceUploadMessage>();
