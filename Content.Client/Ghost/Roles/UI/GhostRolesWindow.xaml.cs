@@ -16,10 +16,13 @@ namespace Content.Client.Ghost.Roles.UI
             EntryContainer.DisposeAllChildren();
         }
 
-        public void AddEntry(GhostRoleInfo info)
+        public void AddEntry(string name, string description, IEnumerable<GhostRoleInfo> roles)
         {
             NoRolesMessage.Visible = false;
-            EntryContainer.AddChild(new GhostRolesEntry(info, _ => RoleRequested?.Invoke(info)));
+
+            var entry = new GhostRolesEntry(name, description, roles);
+            entry.OnRoleSelected += RoleRequested;
+            EntryContainer.AddChild(entry);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Eui;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
@@ -61,13 +62,19 @@ namespace Content.Client.Ghost.Roles.UI
 
             _window.ClearEntries();
 
-            foreach (var info in ghostState.GhostRoles)
+            var groupedRoles = ghostState.GhostRoles.GroupBy(
+                role => (role.Name, role.Description));
+
+            foreach (var group in groupedRoles)
             {
-                _window.AddEntry(info);
-                if (info.Identifier == _windowRulesId)
+                var name = group.Key.Name;
+                var description = group.Key.Description;
+
+                _window.AddEntry(name, description, group);
+                /*if (info.Identifier == _windowRulesId)
                 {
                     closeRulesWindow = false;
-                }
+                }*/
             }
 
             if (closeRulesWindow)

@@ -9,13 +9,25 @@ namespace Content.Client.Ghost.Roles.UI
     [GenerateTypedNameReferences]
     public sealed partial class GhostRolesEntry : BoxContainer
     {
-        public GhostRolesEntry(GhostRoleInfo info, Action<BaseButton.ButtonEventArgs> requestAction)
+        public event Action<GhostRoleInfo>? OnRoleSelected;
+
+        public GhostRolesEntry(string name, string description, IEnumerable<GhostRoleInfo> roles)
         {
             RobustXamlLoader.Load(this);
 
-            Title.Text = info.Name;
-            Description.SetMessage(info.Description);
-            RequestButton.OnPressed += requestAction;
+            Title.Text = name;
+            Description.SetMessage(description);
+
+            foreach (var role in roles)
+            {
+                var button = new Button
+                {
+                    Text = Loc.GetString("ghost-roles-window-request-role-button")
+                };
+                button.OnPressed += _ => OnRoleSelected?.Invoke(role);
+
+                Buttons.AddChild(button);
+            }
         }
     }
 }
