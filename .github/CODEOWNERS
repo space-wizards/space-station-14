@@ -1,8 +1,5 @@
 # Last match in file takes precedence.
 
-# Ping for all PRs except ones with specific pings
-* @PJB3005
-
 # Moony's Gargantuan List Of Things She Cares About, or MGLOTSCA for short.
 # You need to add your name to these entries, not make a new one, if you care about them.
 /Content.*/Bql/ @moonheart08
@@ -63,3 +60,8 @@
 
 # Be they Fluent translations or Freemarker templates, I know them both!
 *.ftl @RemieRichards
+
+# SKREEEE
+/Content.*.Database/ @PJB3005
+/Pow3r/ @PJB3005
+/Content.Server/Power/Pow3r/ @PJB3005

@@ -181,6 +181,14 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region Uploaded Resources Logs
+
+        Task AddUploadedResourceLogAsync(NetUserId user, DateTime date, string path, byte[] data);
+
+        Task PurgeUploadedResourceLogAsync(int days);
+
+        #endregion
+
         #region Rules
 
         Task<DateTime?> GetLastReadRules(NetUserId player);
@@ -455,6 +463,16 @@ namespace Content.Server.Database
         public Task RemoveFromWhitelistAsync(NetUserId player)
         {
             return _db.RemoveFromWhitelistAsync(player);
+        }
+
+        public Task AddUploadedResourceLogAsync(NetUserId user, DateTime date, string path, byte[] data)
+        {
+            return _db.AddUploadedResourceLogAsync(user, date, path, data);
+        }
+
+        public Task PurgeUploadedResourceLogAsync(int days)
+        {
+            return _db.PurgeUploadedResourceLogAsync(days);
         }
 
         public Task<DateTime?> GetLastReadRules(NetUserId player)
