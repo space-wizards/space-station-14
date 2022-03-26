@@ -14,5 +14,6 @@ namespace Content.Server.Cloning.Components
         // Used to prevent as many duplicate UI messages as possible
         [ViewVariables]
         public CloningPodStatus Status;
+        public EntityUid? ConnectedConsole;
     }
 }

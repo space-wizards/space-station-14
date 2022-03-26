@@ -9,7 +9,6 @@ cloning-console-window-pod-details-label = Cloning Pod Status
 cloning-console-window-no-scanner-detected-label = No Adjacent Genetic Scanner Detected
 cloning-console-window-no-clone-pod-detected-label = No Adjacent Cloning Pod Detected
 cloning-console-eject-body-button = Eject Body
-cloning-console-refresh-devices-button = Refresh Devices
 cloning-console-neural-interface-label = Neural Interface:
 cloning-console-no-mind-activity-text = Neural Interface: [color=red]No Activity[/color]
 cloning-console-mind-present-text = Neural Interface: [color=green]Consciousness Detected[/color]

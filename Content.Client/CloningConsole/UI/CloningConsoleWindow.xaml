@@ -30,11 +30,6 @@
                 </BoxContainer>
                 <BoxContainer Name="GeneticScannerMissing" Margin="5 5 5 5" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
                     <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'cloning-console-window-no-scanner-detected-label'}" />
-                    <Button Name="GeneticScannerRefreshButton"
-                    Access="Public"
-                    Text="{Loc 'cloning-console-refresh-devices-button'}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center" />
                 </BoxContainer>
             </PanelContainer>
             <Control MinSize="50 5" />
@@ -66,11 +61,6 @@
                 </BoxContainer>
                 <BoxContainer Name="CloningPodMissing" Margin="5 5 5 5" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
                     <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'cloning-console-window-no-clone-pod-detected-label'}" />
-                    <Button Name="CloningPodRefreshButton"
-                    Access="Public"
-                    Text="{Loc 'cloning-console-refresh-devices-button'}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center" />
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>

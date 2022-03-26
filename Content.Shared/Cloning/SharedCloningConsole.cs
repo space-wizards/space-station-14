@@ -58,8 +58,7 @@ namespace Content.Shared.Cloning.CloningConsole
         public enum UiButton
         {
             Clone,
-            Eject,
-            Refresh
+            Eject
         }
 
         [Serializable, NetSerializable]

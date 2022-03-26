@@ -1,9 +1,6 @@
 using Content.Server.Climbing;
-using Content.Server.Cloning;
 using Content.Server.Medical.Components;
-using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Server.Preferences.Managers;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.DragDrop;
@@ -11,17 +8,18 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Movement;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
+using Content.Server.Cloning.CloningConsole;
+
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 
 namespace Content.Server.Medical
 {
     public sealed class MedicalScannerSystem : EntitySystem
     {
-        [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly ClimbSystem _climbSystem = default!;
-        [Dependency] private readonly CloningSystem _cloningSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private const float UpdateRate = 1f;
         private float _updateDif;
@@ -36,13 +34,15 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
             SubscribeLocalEvent<MedicalScannerComponent, DestructionEventArgs>(OnDestroyed);
             SubscribeLocalEvent<MedicalScannerComponent, DragDropEvent>(HandleDragDropOn);
+            SubscribeLocalEvent<MedicalScannerComponent, AnchorStateChangedEvent>(OnAnchorChange);
+            SubscribeLocalEvent<MedicalScannerComponent, ComponentRemove>(OnComponentRemove);
         }
 
         private void OnComponentInit(EntityUid uid, MedicalScannerComponent scannerComponent, ComponentInit args)
         {
             base.Initialize();
-
             scannerComponent.BodyContainer = scannerComponent.Owner.EnsureContainer<ContainerSlot>($"{scannerComponent.Name}-bodyContainer");
+            TryMachineSync(uid, scannerComponent);
         }
 
         private void OnRelayMovement(EntityUid uid, MedicalScannerComponent scannerComponent, RelayMovementEntityEvent args)
@@ -110,6 +110,19 @@ namespace Content.Server.Medical
         private void HandleDragDropOn(EntityUid uid, MedicalScannerComponent scannerComponent, DragDropEvent args)
         {
             InsertBody(uid, args.Dragged, scannerComponent);
+        }
+
+        private void OnAnchorChange(EntityUid uid, MedicalScannerComponent scannerComponent, ref AnchorStateChangedEvent args)
+        {
+            if (args.Anchored)
+                TryMachineSync(uid, scannerComponent);
+            else
+                DisconnectMachineConnections(uid, scannerComponent);
+        }
+
+        private void OnComponentRemove(EntityUid uid, MedicalScannerComponent scannerComponent, ComponentRemove args)
+        {
+            DisconnectMachineConnections(uid, scannerComponent);
         }
 
         private MedicalScannerStatus GetStatus(MedicalScannerComponent scannerComponent)
@@ -207,6 +220,44 @@ namespace Content.Server.Medical
             scannerComponent.BodyContainer.Remove(contained);
             _climbSystem.ForciblySetClimbing(contained);
             UpdateAppearance(scannerComponent.Owner, scannerComponent);
+        }
+
+        public void TryMachineSync(EntityUid uid, MedicalScannerComponent? scannerComponent)
+        {
+            if (!Resolve(uid, ref scannerComponent))
+                return;
+
+            if (TryComp<TransformComponent>(uid, out var transformComp) && transformComp.Anchored)
+            {
+                var grid = _mapManager.GetGrid(transformComp.GridID);
+                var coords = transformComp.Coordinates;
+                foreach (var entity in grid.GetCardinalNeighborCells(coords))
+                {
+                    if (TryComp<CloningConsoleComponent>(entity, out var cloningConsole))
+                    {
+                        if (cloningConsole.GeneticScanner == null)
+                        {
+                            cloningConsole.GeneticScanner = uid;
+                            scannerComponent.ConnectedConsole = entity;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void DisconnectMachineConnections(EntityUid uid, MedicalScannerComponent? scannerComponent)
+        {
+            if (!Resolve(uid, ref scannerComponent))
+                return;
+
+            if (scannerComponent.ConnectedConsole == null)
+                return;
+
+            if (TryComp<CloningConsoleComponent>(scannerComponent.ConnectedConsole, out var cloningConsole) && cloningConsole.GeneticScanner == uid)
+                cloningConsole.GeneticScanner = null;
+
+            scannerComponent.ConnectedConsole = null;
         }
     }
 }

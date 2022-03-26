@@ -12,6 +12,8 @@ using Robust.Shared.Prototypes;
 using Content.Server.EUI;
 using Robust.Shared.Containers;
 using Content.Shared.Cloning;
+using Robust.Shared.Map;
+using Content.Server.Cloning.CloningConsole;
 
 namespace Content.Server.Cloning
 {
@@ -22,6 +24,7 @@ namespace Content.Server.Cloning
         [Dependency] private readonly EuiManager _euiManager = null!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
         [Dependency] private readonly ClimbSystem _climbSystem = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
 
         public override void Initialize()
@@ -29,6 +32,8 @@ namespace Content.Server.Cloning
             base.Initialize();
 
             SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<CloningPodComponent, AnchorStateChangedEvent>(OnAnchorChange);
+            SubscribeLocalEvent<CloningPodComponent, ComponentRemove>(OnComponentRemove);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
         }
@@ -36,12 +41,64 @@ namespace Content.Server.Cloning
         private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)
         {
             clonePod.BodyContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(clonePod.Owner, $"{Name}-bodyContainer");
+            TryMachineSync(uid, clonePod);
         }
 
         private void UpdateAppearance(CloningPodComponent clonePod)
         {
             if (TryComp<AppearanceComponent>(clonePod.Owner, out var appearance))
                 appearance.SetData(CloningPodVisuals.Status, clonePod.Status);
+        }
+
+        private void OnAnchorChange(EntityUid uid, CloningPodComponent clonePod, ref AnchorStateChangedEvent args)
+        {
+            if (args.Anchored)
+                TryMachineSync(uid, clonePod);
+            else
+                DisconnectMachineConnections(uid, clonePod);
+        }
+
+        private void OnComponentRemove(EntityUid uid, CloningPodComponent clonePod, ComponentRemove args)
+        {
+            DisconnectMachineConnections(uid, clonePod);
+        }
+
+        public void TryMachineSync(EntityUid uid, CloningPodComponent? clonePod)
+        {
+            if (!Resolve(uid, ref clonePod))
+                return;
+
+            if (TryComp<TransformComponent>(uid, out var transformComp) && transformComp.Anchored)
+            {
+                var grid = _mapManager.GetGrid(transformComp.GridID);
+                var coords = transformComp.Coordinates;
+                foreach (var entity in grid.GetCardinalNeighborCells(coords))
+                {
+                    if (TryComp<CloningConsoleComponent>(entity, out var cloningConsole))
+                    {
+                        if (cloningConsole.CloningPod == null)
+                        {
+                            cloningConsole.CloningPod = uid;
+                            clonePod.ConnectedConsole = entity;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void DisconnectMachineConnections(EntityUid uid, CloningPodComponent? clonePod)
+        {
+            if (!Resolve(uid, ref clonePod))
+                return;
+
+            if (clonePod.ConnectedConsole == null)
+                return;
+
+            if (TryComp<CloningConsoleComponent>(clonePod.ConnectedConsole, out var cloningConsole) && cloningConsole.CloningPod == uid)
+                cloningConsole.CloningPod = null;
+
+            clonePod.ConnectedConsole = null;
         }
 
         internal void TransferMindToClone(Mind.Mind mind)
