@@ -13,7 +13,7 @@ namespace Content.Server.Construction
 {
     public sealed class AnchorableSystem : EntitySystem
     {
-        [Dependency] private readonly AdminLogSystem _adminLogs = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
 
