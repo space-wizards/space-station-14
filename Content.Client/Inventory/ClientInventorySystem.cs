@@ -31,7 +31,7 @@ using Content.Shared.Interaction.Events;
 namespace Content.Client.Inventory
 {
     [UsedImplicitly] //TODO: unfuck this
-    public sealed class ClientInventorySystem : InventorySystem
+    public sealed class ClientInventorySystem : InventorySystem, IUILink
     {
         //[Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -41,8 +41,8 @@ namespace Content.Client.Inventory
 
         public Action<SlotData>? EntitySlotUpdate = null;
         public Action? OnOpenInventory = null;
-        public Action<ClientInventoryComponent>? OnLinkInventory = null;
-        public Action? OnUnlinkInventory = null;
+        public Action<ClientInventoryComponent?>? OnLinkInventory = null;
+        public Action<ClientInventoryComponent?>? OnUnlinkInventory = null;
 
         /// <summary>
         /// Stores delegates used to create controls for a given <see cref="InventoryTemplatePrototype"/>.
@@ -90,7 +90,7 @@ namespace Content.Client.Inventory
 
         private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent? args = null)
         {
-            OnUnlinkInventory?.Invoke();
+            OnUnlinkInventory?.Invoke(null);
         }
 
         private void OnShutdown(EntityUid uid, ClientInventoryComponent component, ComponentShutdown args)
@@ -170,6 +170,10 @@ namespace Content.Client.Inventory
                 CanEquip(uid, heldEntity, slot, out _, slotDef, inventoryComponent) &&
                 containerSlot.CanInsert(heldEntity, EntityManager));
         }
+        private void HandleOpenInventoryMenu()
+        {
+            OnOpenInventory?.Invoke();
+        }
 
         private void HandleSlotButtonPressed(EntityUid uid, string slot, ItemSlotButton button,
             GUIBoundKeyEventArgs args)
@@ -185,10 +189,6 @@ namespace Content.Client.Inventory
                 EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot));
         }
 
-        private void HandleOpenInventoryMenu()
-        {
-            OnOpenInventory?.Invoke();
-        }
 
         public struct SlotData
         {
@@ -221,6 +221,18 @@ namespace Content.Client.Inventory
                 return s.SlotDef;
             }
 
+        }
+
+        public void OnLink(UIController controller)
+        {
+            OnLinkInventory += ((InventoryUIController) controller).SetPlayerInvComponent;
+            OnUnlinkInventory += ((InventoryUIController) controller).SetPlayerInvComponent;
+        }
+
+        public void OnUnlink(UIController controller)
+        {
+            OnLinkInventory -= ((InventoryUIController) controller).SetPlayerInvComponent;
+            OnUnlinkInventory -= ((InventoryUIController) controller).SetPlayerInvComponent;
         }
     }
 }

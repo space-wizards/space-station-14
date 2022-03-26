@@ -15,14 +15,29 @@ namespace Content.Client.Inventory;
 public sealed class InventoryUIController : UIController
 {
     [Dependency] private IEntityManager _entityManager = default!;
-    [UISystemDependency] private InventorySystem? _inventorySystem = null;
+    [UISystemDependency] private ClientInventorySystem? _inventorySystem = null;
     private Dictionary<string, ItemSlotUIContainer> _slotGroups = new();
-
+    private ClientInventoryComponent? _playerInventoryComponent;
+    public ClientInventoryComponent? PlayerInventory => _playerInventoryComponent;
     public override void OnGamestateChanged(GameStateAppliedArgs args)
     {
         DebugTest();
         if (_inventorySystem == null) return;
     }
+
+    internal void SetPlayerInvComponent(ClientInventoryComponent? clientInv)
+    {
+        _playerInventoryComponent = clientInv;
+    }
+
+    public void HighlightSlot(string slotName, bool highlight)
+    {
+        if (_inventorySystem == null || _playerInventoryComponent == null) return;
+        _inventorySystem.SetSlotHighlight(_playerInventoryComponent, slotName, highlight);
+    }
+
+
+
 
     public bool RegisterSlotGroupContainer(ItemSlotUIContainer slotContainer)
     {
