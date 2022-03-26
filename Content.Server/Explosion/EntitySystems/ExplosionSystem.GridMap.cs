@@ -219,13 +219,13 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <summary>
     ///     When a tile is updated, we might need to update the grid edge maps.
     /// </summary>
-    private void OnTileChanged(object? sender, TileChangedEventArgs e)
+    private void OnTileChanged(TileChangedEvent ev)
     {
         // only need to update the grid-edge map if a tile was added or removed from the grid.
-        if (!e.NewTile.Tile.IsEmpty && !e.OldTile.IsEmpty)
+        if (!ev.NewTile.Tile.IsEmpty && !ev.OldTile.IsEmpty)
             return;
 
-        var tileRef = e.NewTile;
+        var tileRef = ev.NewTile;
 
         if (!_mapManager.TryGetGrid(tileRef.GridIndex, out var grid))
             return;

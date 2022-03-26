@@ -64,7 +64,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
         SubscribeLocalEvent<GridStartupEvent>(OnGridStartup);
         SubscribeLocalEvent<ExplosionResistanceComponent, GetExplosionResistanceEvent>(OnGetResistance);
-        _mapManager.TileChanged += OnTileChanged;
+        SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
         // handled in ExplosionSystemAirtight.cs
         SubscribeLocalEvent<AirtightComponent, DamageChangedEvent>(OnAirtightDamaged);
@@ -75,7 +75,6 @@ public sealed partial class ExplosionSystem : EntitySystem
     public override void Shutdown()
     {
         base.Shutdown();
-        _mapManager.TileChanged -= OnTileChanged;
         UnsubscribeCvars();
     }
 
