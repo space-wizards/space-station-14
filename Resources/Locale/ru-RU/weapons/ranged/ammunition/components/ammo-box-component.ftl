@@ -7,4 +7,4 @@ ammo-box-component-on-examine-remaining-ammo-description = В ней [color=whit
 
 ## DumpVerb
 
-dump-vert-get-data-text = Dump 10
+dump-vert-get-data-text = Достать 10
