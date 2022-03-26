@@ -229,6 +229,9 @@
   description: That's a body scanner.
   components:
   - type: BodyScanner
+  - type: ActivatableUI
+    key: enum.BodyScannerUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.BodyScannerUiKey.Key
