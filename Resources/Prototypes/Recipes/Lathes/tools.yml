@@ -143,3 +143,12 @@
   materials:
     Steel: 800
     Glass: 300
+
+- type: latheRecipe
+  id: Omnitool
+  icon: Objects/Devices/gps.rsi/icon.png
+  result: Omnitool
+  completetime: 2000
+  materials:
+    Steel: 1000
+    Gold: 300

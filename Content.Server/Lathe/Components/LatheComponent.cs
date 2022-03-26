@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Lathe;
 using Content.Shared.Power;
 using Content.Shared.Research.Prototypes;
+using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 
@@ -18,6 +19,8 @@ namespace Content.Server.Lathe.Components
     public sealed class LatheComponent : SharedLatheComponent, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+
+        [DataField("whitelist")] private EntityWhitelist? _whitelist = null;
 
         public const int VolumePerSheet = 100;
 
@@ -135,7 +138,8 @@ namespace Content.Server.Lathe.Components
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!_entMan.TryGetComponent(Owner, out MaterialStorageComponent? storage)
-                ||  !_entMan.TryGetComponent(eventArgs.Using, out MaterialComponent? material)) return false;
+                ||  !_entMan.TryGetComponent(eventArgs.Using, out MaterialComponent? material)
+                || _whitelist != null && !_whitelist.IsValid(eventArgs.Using)) return false;
 
             var multiplier = 1;
 

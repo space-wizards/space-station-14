@@ -43,63 +43,6 @@
 
 - type: entity
   parent: OreBase
-  id: Ammonia
-  name: ammonia
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: Ammonia
-  - type: Sprite
-    state: ammonia
-
-- type: entity
-  parent: Ammonia
-  id: Ammonia1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
-  id: BananiumOre
-  name: bananium ore
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: BananiumOre
-  - type: Sprite
-    state: bananium
-
-- type: entity
-  parent: BananiumOre
-  id: BananiumOre1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
-  id: DiamondRaw
-  name: raw diamond
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: DiamondRaw
-  - type: Sprite
-    state: diamond
-
-- type: entity
-  parent: DiamondRaw
-  id: DiamondRaw1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
   id: GoldOre
   name: gold ore
   suffix: Full
@@ -119,18 +62,21 @@
 
 - type: entity
   parent: OreBase
-  id: IronOre
-  name: iron ore
+  id: SteelOre
+  name: steel ore
   suffix: Full
   components:
   - type: Stack
-    stackType: IronOre
+    stackType: SteelOre
   - type: Sprite
     state: iron
+  - type: Material
+    materials:
+    - Steel
 
 - type: entity
-  id: IronOre1
-  parent: IronOre
+  id: SteelOre1
+  parent: SteelOre
   suffix: Single
   components:
     - type: Stack
@@ -138,41 +84,22 @@
 
 - type: entity
   parent: OreBase
-  id: PhoronOre
-  name: phoron ore
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: PhoronOre
-  - type: Sprite
-    state: phoron
-
-- type: entity
-  parent: PhoronOre
-  id: PhoronOre1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
   id: PlasmaOre
   name: plasma ore
   suffix: Full
   components:
-  - type: Stack
-    stackType: PlasmaOre
-  - type: Sprite
-    state: plasma
+    - type: Stack
+      stackType: PlasmaOre
+    - type: Sprite
+      state: plasma
 
 - type: entity
   parent: PlasmaOre
   id: PlasmaOre1
   suffix: Single
   components:
-  - type: Stack
-    count: 1
+    - type: Stack
+      count: 1
 
 - type: entity
   parent: OreBase
@@ -214,18 +141,18 @@
 
 - type: entity
   parent: OreBase
-  id: SilverOre
-  name: silver ore
+  id: SiliconOre
+  name: silicon ore
   suffix: Full
   components:
   - type: Stack
-    stackType: SilverOre
+    stackType: SiliconOre
   - type: Sprite
-    state: silver
+    state: silicon
 
 - type: entity
-  parent: SilverOre
-  id: SilverOre1
+  parent: SiliconOre
+  id: SiliconOre1
   suffix: Single
   components:
   - type: Stack
@@ -233,18 +160,18 @@
 
 - type: entity
   parent: OreBase
-  id: Slag
-  name: slag
+  id: SpaceCrystal
+  name: space crystal
   suffix: Full
   components:
   - type: Stack
-    stackType: Slag
+    stackType: SpaceCrystal
   - type: Sprite
-    state: slag
+    state: spacecrystal
 
 - type: entity
-  parent: Slag
-  id: Slag1
+  parent: SpaceCrystal
+  id: SpaceCrystal1
   suffix: Single
   components:
   - type: Stack
@@ -252,37 +179,18 @@
 
 - type: entity
   parent: OreBase
-  id: TitaniumOre
-  name: titanium ore
+  id: CopperOre
+  name: copper ore
   suffix: Full
   components:
   - type: Stack
-    stackType: TitaniumOre
+    stackType: CopperOre
   - type: Sprite
-    state: titanium
+    state: copper
 
 - type: entity
-  parent: TitaniumOre
-  id: TitaniumOre1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
-  id: UraniumOre
-  name: uranium ore
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: UraniumOre
-  - type: Sprite
-    state: uranium
-
-- type: entity
-  parent: UraniumOre
-  id: UraniumOre1
+  parent: CopperOre
+  id: CopperOre1
   suffix: Single
   components:
   - type: Stack

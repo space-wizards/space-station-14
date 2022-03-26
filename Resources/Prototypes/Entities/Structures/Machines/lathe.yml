@@ -81,6 +81,9 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+    whitelist:
+      tags:
+        - Sheet
 
 - type: entity
   parent: BaseMachinePowered
@@ -373,3 +376,79 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
     board: UniformPrinterMachineCircuitboard
+
+- type: entity
+  parent: BaseMachinePowered
+  id: Oreprocessor
+  name: Ore processor
+  description: It produces items using ores.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/autolathe.rsi
+    netsync: false
+    layers:
+      - state: icon
+        map: ["enum.AutolatheVisualLayers.Base"]
+      - state: unlit
+        shader: unshaded
+        map: ["enum.AutolatheVisualLayers.BaseUnlit"]
+      - state: building
+        map: ["enum.AutolatheVisualLayers.AnimationLayer"]
+      - state: panel
+        map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        mass: 25
+        mask:
+          - Impassable
+          - VaultImpassable
+          - SmallImpassable
+        layer:
+          - Opaque
+          - MobImpassable
+  - type: Construction
+    graph: Machine
+    node: machine
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:ChangeConstructionNodeBehavior
+            node: machineFrame
+          - !type:DoActsBehavior
+            acts: ["Destruction"]
+  - type: Machine
+    board: AutolatheMachineCircuitboard
+  - type: MaterialStorage
+  - type: Wires
+    BoardName: "Autolathe"
+    LayoutId: Autolathe
+  - type: LatheDatabase
+    static: true
+    recipes:
+    - Omnitool
+  - type: Appearance
+    visuals:
+    - type: AutolatheVisualizer
+    - type: WiresVisualizer
+  - type: ActivatableUI
+    key: enum.LatheUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key
+      type: LatheBoundUserInterface
+  - type: Transform
+    anchored: true
+  - type: Pullable
+  - type: Lathe
+    whitelist:
+      tags:
+        - Ore
