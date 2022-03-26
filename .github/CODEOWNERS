@@ -62,6 +62,6 @@
 *.ftl @RemieRichards
 
 # SKREEEE
-/Content.*.Database/ @PJB3005
+/Content.*.Database/ @PJB3005 @DrSmugleaf
 /Pow3r/ @PJB3005
 /Content.Server/Power/Pow3r/ @PJB3005
