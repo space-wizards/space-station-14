@@ -164,7 +164,7 @@ namespace Content.Server.Storage.Components
             Contents.OccludesLight = _occludesLight;
 
             if(_entMan.TryGetComponent(Owner, out ConstructionComponent? construction))
-                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner, Contents.ID, construction);
+                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner, nameof(EntityStorageComponent), construction);
 
             if (_entMan.TryGetComponent<PlaceableSurfaceComponent?>(Owner, out var surface))
             {

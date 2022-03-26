@@ -120,6 +120,9 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasKey("Id", "RoundId")
                         .HasName("PK_admin_log");
 
+                    b.HasIndex("Message")
+                        .HasAnnotation("Npgsql:TsVectorConfig", "english");
+
                     b.HasIndex("RoundId")
                         .HasDatabaseName("IX_admin_log_round_id");
 
@@ -559,10 +562,37 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ServerId")
+                        .HasColumnType("integer")
+                        .HasColumnName("server_id");
+
                     b.HasKey("Id")
                         .HasName("PK_round");
 
+                    b.HasIndex("ServerId")
+                        .HasDatabaseName("IX_round_server_id");
+
                     b.ToTable("round", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Server", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("server_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("PK_server");
+
+                    b.ToTable("server", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.ServerBan", b =>
@@ -685,10 +715,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("role_id");
 
-                    b.Property<int?>("UnbanId")
-                        .HasColumnType("integer")
-                        .HasColumnName("unban_id");
-
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
@@ -696,12 +722,15 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasKey("Id")
                         .HasName("PK_server_role_ban");
 
-                    b.HasIndex("UnbanId")
-                        .HasDatabaseName("IX_server_role_ban__unban_id");
+                    b.HasIndex("Address");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("server_role_ban", (string)null);
 
                     b.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address");
+
+                    b.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
                 });
 
             modelBuilder.Entity("Content.Server.Database.ServerRoleUnban", b =>
@@ -729,7 +758,7 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasName("PK_server_role_unban");
 
                     b.HasIndex("BanId")
-                        .HasDatabaseName("IX_server_role_unban_ban_id");
+                        .IsUnique();
 
                     b.ToTable("server_role_unban", (string)null);
                 });
@@ -909,6 +938,18 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Preference");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.Round", b =>
+                {
+                    b.HasOne("Content.Server.Database.Server", "Server")
+                        .WithMany("Rounds")
+                        .HasForeignKey("ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_round_server_server_id");
+
+                    b.Navigation("Server");
+                });
+
             modelBuilder.Entity("Content.Server.Database.ServerBanHit", b =>
                 {
                     b.HasOne("Content.Server.Database.ServerBan", "Ban")
@@ -930,24 +971,14 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Connection");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.ServerRoleBan", b =>
-                {
-                    b.HasOne("Content.Server.Database.ServerRoleUnban", "Unban")
-                        .WithMany()
-                        .HasForeignKey("UnbanId")
-                        .HasConstraintName("FK_server_role_ban_server_role_unban__unban_id");
-
-                    b.Navigation("Unban");
-                });
-
             modelBuilder.Entity("Content.Server.Database.ServerRoleUnban", b =>
                 {
-                    b.HasOne("Content.Server.Database.ServerBan", "Ban")
-                        .WithMany()
-                        .HasForeignKey("BanId")
+                    b.HasOne("Content.Server.Database.ServerRoleBan", "Ban")
+                        .WithOne("Unban")
+                        .HasForeignKey("Content.Server.Database.ServerRoleUnban", "BanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_server_role_unban_server_ban_ban_id");
+                        .HasConstraintName("FK_server_role_unban_server_role_ban_ban_id");
 
                     b.Navigation("Ban");
                 });
@@ -1027,10 +1058,20 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("AdminLogs");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.Server", b =>
+                {
+                    b.Navigation("Rounds");
+                });
+
             modelBuilder.Entity("Content.Server.Database.ServerBan", b =>
                 {
                     b.Navigation("BanHits");
 
+                    b.Navigation("Unban");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.ServerRoleBan", b =>
+                {
                     b.Navigation("Unban");
                 });
 #pragma warning restore 612, 618

@@ -93,7 +93,7 @@
     color: "#1f8c28"
   - type: Computer
     board: MedicalRecordsComputerCircuitboard
-    
+
 - type: entity
   parent: ComputerBase
   id: ComputerCriminalRecords
@@ -156,6 +156,9 @@
   - type: ResearchClient
   - type: ResearchConsole
   - type: TechnologyDatabase
+  - type: ActivatableUI
+    key: enum.ResearchConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.ResearchConsoleUiKey.Key
@@ -226,6 +229,9 @@
   description: That's a body scanner.
   components:
   - type: BodyScanner
+  - type: ActivatableUI
+    key: enum.BodyScannerUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.BodyScannerUiKey.Key
@@ -295,6 +301,10 @@
     radius: 1.5
     energy: 1.6
     color: "#e6e227"
+  - type: Tag
+    tags:
+      - DroneUsable
+
 
 - type: entity
   parent: ComputerBase

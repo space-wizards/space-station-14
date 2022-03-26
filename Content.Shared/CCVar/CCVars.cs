@@ -22,23 +22,40 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
-        ///     Whether the basic 'hum' ambience will be enabled.
-        /// </summary>
-        public static readonly CVarDef<bool> AmbienceBasicEnabled =
-            CVarDef.Create("ambience.basic_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
-
-        /// <summary>
-        /// How long we'll wait until re-sampling nearby objects for ambience.
+        /// How long we'll wait until re-sampling nearby objects for ambience. Should be pretty fast, but doesn't have to match the tick rate.
         /// </summary>
         public static readonly CVarDef<float> AmbientCooldown =
-            CVarDef.Create("ambience.cooldown", 0.5f, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.cooldown", 0.1f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        /// <summary>
+        /// How large of a range to sample for ambience.
+        /// </summary>
         public static readonly CVarDef<float> AmbientRange =
             CVarDef.Create("ambience.range", 5f, CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        /// Maximum simultaneous ambient sounds.
+        /// </summary>
         public static readonly CVarDef<int> MaxAmbientSources =
-            CVarDef.Create("ambience.max_sounds", 6, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.max_sounds", 16, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        /// <summary>
+        /// The minimum value the user can set for ambience.max_sounds
+        /// </summary>
+        public static readonly CVarDef<int> MinMaxAmbientSourcesConfigured =
+            CVarDef.Create("ambience.min_max_sounds_configured", 16, CVar.REPLICATED | CVar.SERVER | CVar.CHEAT);
+
+        /// <summary>
+        /// The maximum value the user can set for ambience.max_sounds
+        /// </summary>
+        public static readonly CVarDef<int> MaxMaxAmbientSourcesConfigured =
+            CVarDef.Create("ambience.max_max_sounds_configured", 64, CVar.REPLICATED | CVar.SERVER | CVar.CHEAT);
+
+        /// <summary>
+        /// Ambience volume.
+        /// </summary>
+        public static readonly CVarDef<float> AmbienceVolume =
+            CVarDef.Create("ambience.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
         /*
          * Status
          */
@@ -60,6 +77,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool>
             EventsEnabled = CVarDef.Create("events.enabled", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Disables most functionality in the GameTicker.
+        /// </summary>
         public static readonly CVarDef<bool>
             GameDummyTicker = CVarDef.Create("game.dummyticker", false, CVar.ARCHIVE | CVar.SERVERONLY);
 
@@ -124,6 +144,19 @@ namespace Content.Shared.CCVar
             GameMapForced = CVarDef.Create("game.mapforced", false, CVar.SERVERONLY);
 
         /// <summary>
+        /// The depth of the queue used to calculate which map is next in rotation.
+        /// This is how long the game "remembers" that some map was put in play. Default is 16 rounds.
+        /// </summary>
+        public static readonly CVarDef<int>
+            GameMapMemoryDepth = CVarDef.Create("game.map_memory_depth", 16, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Is map rotation enabled?
+        /// </summary>
+        public static readonly CVarDef<bool>
+            GameMapRotation = CVarDef.Create<bool>("game.map_rotation", true, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationOffset =
@@ -140,7 +173,7 @@ namespace Content.Shared.CCVar
         ///     Whether a random rotation will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationRotation =
-            CVarDef.Create("game.station_rotation", true);
+            CVarDef.Create("game.station_rotation", false);
 
         /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
@@ -153,6 +186,15 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> SoftMaxPlayers =
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
+
+#if EXCEPTION_TOLERANCE
+        /// <summary>
+        ///     Amount of times round start must fail before the server is shut down.
+        ///     Set to 0 or a negative number to disable.
+        /// </summary>
+        public static readonly CVarDef<int> RoundStartFailShutdownCount =
+            CVarDef.Create("game.round_start_fail_shutdown_count", 5, CVar.SERVERONLY | CVar.SERVER);
+#endif
 
         /*
          * Discord
@@ -229,6 +271,24 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<string> DatabaseSqliteDbPath =
             CVarDef.Create("database.sqlite_dbpath", "preferences.db", CVar.SERVERONLY);
+
+        /// <summary>
+        /// Milliseconds to asynchronously delay all SQLite database acquisitions with.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to 1 on DEBUG, 0 on RELEASE.
+        /// This is intended to help catch .Result deadlock bugs that only happen on postgres
+        /// (because SQLite is not actually asynchronous normally)
+        /// </remarks>
+        public static readonly CVarDef<int> DatabaseSqliteDelay =
+            CVarDef.Create("database.sqlite_delay", DefaultSqliteDelay, CVar.SERVERONLY);
+
+#if DEBUG
+        private const int DefaultSqliteDelay = 1;
+#else
+        private const int DefaultSqliteDelay = 0;
+#endif
+
 
         public static readonly CVarDef<string> DatabasePgHost =
             CVarDef.Create("database.pg_host", "localhost", CVar.SERVERONLY);
@@ -471,6 +531,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> AdminLogsClientBatchSize =
             CVarDef.Create("adminlogs.client_batch_size", 1000, CVar.SERVERONLY);
 
+        public static readonly CVarDef<string> AdminLogsServerName =
+            CVarDef.Create("adminlogs.server_name", "unknown", CVar.SERVERONLY);
+
         /*
          * Atmos
          */
@@ -574,7 +637,7 @@ namespace Content.Shared.CCVar
          * OOC
          */
 
-        public static readonly CVarDef<bool> OocEnabled = CVarDef.Create("ooc.enabled", true, CVar.NOTIFY);
+        public static readonly CVarDef<bool> OocEnabled = CVarDef.Create("ooc.enabled", true, CVar.NOTIFY | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> AdminOocEnabled =
             CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
@@ -583,7 +646,7 @@ namespace Content.Shared.CCVar
          * LOOC
          */
 
-        public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY);
+        public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> AdminLoocEnabled =
             CVarDef.Create("looc.enabled_admin", true, CVar.NOTIFY);
@@ -629,7 +692,7 @@ namespace Content.Shared.CCVar
         ///     See vote.enabled, but specific to map votes
         /// </summary>
         public static readonly CVarDef<bool> VoteMapEnabled =
-            CVarDef.Create("vote.map_enabled", true, CVar.SERVERONLY);
+            CVarDef.Create("vote.map_enabled", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     The required ratio of the server that must agree for a restart round vote to go through.
@@ -679,9 +742,24 @@ namespace Content.Shared.CCVar
         /*
          * Shuttles
          */
-        // Once cruising actually gets implemented I'd likely drop this speed to 3 maybe.
-        public static readonly CVarDef<float> ShuttleDockSpeedCap =
-            CVarDef.Create("shuttle.dock_speed_cap", 5f, CVar.SERVERONLY);
+        public static readonly CVarDef<float> ShuttleMaxLinearSpeed =
+            CVarDef.Create("shuttle.max_linear_speed", 13f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularSpeed =
+            CVarDef.Create("shuttle.max_angular_speed", 1.4f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularAcc =
+            CVarDef.Create("shuttle.max_angular_acc", 2f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularMomentum =
+            CVarDef.Create("shuttle.max_angular_momentum", 60000f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleIdleLinearDamping =
+            CVarDef.Create("shuttle.idle_linear_damping", 50f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleIdleAngularDamping =
+            CVarDef.Create("shuttle.idle_angular_damping", 100f, CVar.SERVERONLY);
+
 
         /*
          * VIEWPORT

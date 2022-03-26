@@ -8,6 +8,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Shared.Acts;
 using Content.Shared.Coordinates;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
@@ -46,6 +47,7 @@ namespace Content.Server.Storage.Components
     public sealed class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IActivate, IStorageComponent, IDestroyAct, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         private const string LoggerName = "Storage";
 
@@ -71,9 +73,9 @@ namespace Content.Server.Storage.Components
         private EntityWhitelist? _whitelist = null;
 
         private bool _storageInitialCalculated;
-        private int _storageUsed;
+        public int StorageUsed;
         [DataField("capacity")]
-        private int _storageCapacityMax = 10000;
+        public int StorageCapacityMax = 10000;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
         [DataField("storageSoundCollection")]
@@ -121,7 +123,7 @@ namespace Content.Server.Storage.Components
 
         private void RecalculateStorageUsed()
         {
-            _storageUsed = 0;
+            StorageUsed = 0;
             _sizeCache.Clear();
 
             if (Storage == null)
@@ -132,7 +134,7 @@ namespace Content.Server.Storage.Components
             foreach (var entity in Storage.ContainedEntities)
             {
                 var item = _entityManager.GetComponent<SharedItemComponent>(entity);
-                _storageUsed += item.Size;
+                StorageUsed += item.Size;
                 _sizeCache.Add(entity, item.Size);
             }
         }
@@ -147,13 +149,13 @@ namespace Content.Server.Storage.Components
             EnsureInitialCalculated();
 
             if (_entityManager.TryGetComponent(entity, out ServerStorageComponent? storage) &&
-                storage._storageCapacityMax >= _storageCapacityMax)
+                storage.StorageCapacityMax >= StorageCapacityMax)
             {
                 return false;
             }
 
             if (_entityManager.TryGetComponent(entity, out SharedItemComponent? store) &&
-                store.Size > _storageCapacityMax - _storageUsed)
+                store.Size > StorageCapacityMax - StorageUsed)
             {
                 return false;
             }
@@ -203,7 +205,7 @@ namespace Content.Server.Storage.Components
             if (_entityManager.TryGetComponent(message.Entity, out SharedItemComponent? storable))
                 size = storable.Size;
 
-            _storageUsed += size;
+            StorageUsed += size;
             _sizeCache[message.Entity] = size;
 
             UpdateClientInventories();
@@ -228,7 +230,7 @@ namespace Content.Server.Storage.Components
                 return;
             }
 
-            _storageUsed -= size;
+            StorageUsed -= size;
 
             UpdateClientInventories();
         }
@@ -243,22 +245,24 @@ namespace Content.Server.Storage.Components
             EnsureInitialCalculated();
 
             if (!_entityManager.TryGetComponent(player, out HandsComponent? hands) ||
-                hands.GetActiveHandItem == null)
+                hands.ActiveHandEntity == null)
             {
                 return false;
             }
 
-            var toInsert = hands.GetActiveHandItem;
+            var toInsert = hands.ActiveHandEntity;
 
-            if (!hands.Drop(toInsert.Owner))
+            var handSys = _sysMan.GetEntitySystem<SharedHandsSystem>();
+
+            if (!handSys.TryDrop(player, toInsert.Value, handsComp: hands))
             {
                 Owner.PopupMessage(player, "Can't insert.");
                 return false;
             }
 
-            if (!Insert(toInsert.Owner))
+            if (!Insert(toInsert.Value))
             {
-                hands.PutInHand(toInsert);
+                handSys.PickupOrDrop(player, toInsert.Value, handsComp: hands);
                 Owner.PopupMessage(player, "Can't insert.");
                 return false;
             }
@@ -346,7 +350,7 @@ namespace Content.Server.Storage.Components
             var stored = StoredEntities.Select(e => e).ToArray();
 
 #pragma warning disable 618
-            SendNetworkMessage(new StorageHeldItemsMessage(stored, _storageUsed, _storageCapacityMax), session.ConnectedClient);
+            SendNetworkMessage(new StorageHeldItemsMessage(stored, StorageUsed, StorageCapacityMax), session.ConnectedClient);
 #pragma warning restore 618
         }
 
@@ -475,18 +479,7 @@ namespace Content.Server.Storage.Components
                         break;
                     }
 
-                    if (!_entityManager.TryGetComponent(remove.EntityUid, out SharedItemComponent? item) || !_entityManager.TryGetComponent(player, out HandsComponent? hands))
-                    {
-                        break;
-                    }
-
-                    if (!hands.CanPutInHand(item))
-                    {
-                        break;
-                    }
-
-                    hands.PutInHand(item);
-
+                    _sysMan.GetEntitySystem<SharedHandsSystem>().TryPickupAnyHand(player, remove.EntityUid);
                     break;
                 }
                 case InsertEntityMessage _:

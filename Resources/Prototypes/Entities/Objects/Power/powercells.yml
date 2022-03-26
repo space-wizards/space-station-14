@@ -25,6 +25,9 @@
       reagents:
         - ReagentId: Licoxide
           Quantity: 5
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   id: PowerCellMediumBase

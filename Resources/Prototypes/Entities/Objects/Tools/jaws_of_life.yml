@@ -14,7 +14,7 @@
   - type: Clothing
     sprite: Objects/Tools/jaws_of_life.rsi
     size: 50
-    QuickEquip: false
+    quickEquip: false
     Slots:
       - Belt
   - type: TilePrying

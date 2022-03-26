@@ -26,6 +26,10 @@ namespace Content.Client.Doors
         [DataField("denyAnimationTime")]
         private float _denyDelay = 0.3f;
 
+
+        [DataField("emagAnimationTime")]
+        private float _delayEmag = 1.5f;
+
         /// <summary>
         ///     Whether the maintenance panel is animated or stays static.
         ///     False for windoors.
@@ -55,6 +59,7 @@ namespace Content.Client.Doors
         private Animation CloseAnimation = default!;
         private Animation OpenAnimation = default!;
         private Animation DenyAnimation = default!;
+        private Animation EmaggingAnimation = default!;
 
         void ISerializationHooks.AfterDeserialization()
         {
@@ -106,6 +111,13 @@ namespace Content.Client.Doors
                         flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_opening", 0f));
                     }
                 }
+            }
+            EmaggingAnimation = new Animation {Length = TimeSpan.FromSeconds(_delay)};
+            {
+                var flickUnlit = new AnimationTrackSpriteFlick();
+                EmaggingAnimation.AnimationTracks.Add(flickUnlit);
+                flickUnlit.LayerKey = DoorVisualLayers.BaseUnlit;
+                flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("sparks", 0f));
             }
 
             if (!_simpleVisuals)
@@ -185,6 +197,9 @@ namespace Content.Client.Doors
                     break;
                 case DoorState.Welded:
                     weldedVisible = true;
+                    break;
+                case DoorState.Emagging:
+                    animPlayer.Play(EmaggingAnimation, AnimationKey);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

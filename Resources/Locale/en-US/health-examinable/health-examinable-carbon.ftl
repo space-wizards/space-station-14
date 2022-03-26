@@ -15,4 +15,4 @@ health-examinable-carbon-Heat-25 = [color=orange]{ CAPITALIZE(SUBJECT($target)) 
 health-examinable-carbon-Heat-50 = [color=orange]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } major burns across { POSS-ADJ($target) } body.[/color]
 health-examinable-carbon-Heat-75 = [color=orange]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } severe third-degree burns across { POSS-ADJ($target) } body![/color]
 
-health-examinable-carbon-Shock-50 = [color=lightgoldenrod]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } electrical shock marks across { POSS-ADJ($target) } body![/color]
+health-examinable-carbon-Shock-50 = [color=lightgoldenrodyellow]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } electrical shock marks across { POSS-ADJ($target) } body![/color]

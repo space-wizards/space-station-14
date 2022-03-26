@@ -57,6 +57,11 @@
     sprite: Objects/Consumable/Food/bowl.rsi
     state: bowl-trash
     netsync: false
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash
+  - type: Recyclable
 
 - type: entity
   name: bowl

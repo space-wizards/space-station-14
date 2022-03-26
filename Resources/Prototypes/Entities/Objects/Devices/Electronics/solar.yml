@@ -1,9 +1,0 @@
-- type: entity
-  parent: BaseItem
-  id: SolarTrackerElectronics
-  name: solar tracker electronics
-  description: An electronics board used in solar tracker devices
-  components:
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: generic
