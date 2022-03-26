@@ -26,8 +26,6 @@ namespace Content.Client.Hands
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
-        private HandsDisplay? _handsManager;
-
 
         public override void Initialize()
         {
@@ -197,7 +195,7 @@ namespace Content.Client.Hands
             if (!Resolve(uid, ref handComp, ref sprite, false))
                 return;
 
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.UpdateHandGui(hand);
+            //if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.UpdateHandGui(hand);
 
             if (!handComp.ShowInHands)
                 return;
@@ -273,23 +271,23 @@ namespace Content.Client.Hands
 
         private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
         {
-            if (_handsManager == null) return;
-            _handsManager.LoadHands(component);
-            RegisterUiListeners();
+            //if (_handsManager == null) return;
+            //_handsManager.LoadHands(component);
+            //RegisterUiListeners();
         }
 
         private void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)
         {
-            if (_handsManager == null) return;
-            _handsManager?.UnloadHands();
-            DeregisterUiListeners();
+            //if (_handsManager == null) return;
+            //_handsManager?.UnloadHands();
+            //DeregisterUiListeners();
         }
 
         private void HandleCompRemove(EntityUid uid, HandsComponent component, ComponentRemove args)
         {
-            if (_handsManager == null) return;
-            _handsManager?.UnloadHands();
-            DeregisterUiListeners();
+            //if (_handsManager == null) return;
+            //_handsManager?.UnloadHands();
+            //DeregisterUiListeners();
         }
         #endregion
 
@@ -303,7 +301,7 @@ namespace Content.Client.Hands
         {
             base.AddHand(uid, handName, handLocation, handsComp);
             if (handsComp == null) return;
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.RegisterHand(handsComp.Hands[handName]);
+            //if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.RegisterHand(handsComp.Hands[handName]);
             if (handsComp.ActiveHand == null)
             {
                 SetActiveHand(uid, handsComp.Hands[handName], handsComp);
@@ -316,7 +314,7 @@ namespace Content.Client.Hands
             {
                 if (handsComp.Hands.TryGetValue(handName, out var hand))
                 {
-                    _handsManager?.RemoveHand(hand);
+                    //_handsManager?.RemoveHand(hand);
                 }
             }
             base.RemoveHand(uid, handName, handsComp);
@@ -324,24 +322,24 @@ namespace Content.Client.Hands
 
         private void RegisterUiListeners()
         {
-            if (_handsManager == null) return;
-            OnHandSetActive += _handsManager.SetActiveHand;
+            //if (_handsManager == null) return;
+            //OnHandSetActive += _handsManager.SetActiveHand;
         }
 
         private void DeregisterUiListeners()
         {
-            if (_handsManager == null) return;
-            OnHandSetActive -= _handsManager.SetActiveHand;
+            //if (_handsManager == null) return;
+            //OnHandSetActive -= _handsManager.SetActiveHand;
         }
 
         public void LinkHudElements(IHudManager hudManager, HudPreset preset)
         {
-            _handsManager = preset.GetWidget<HandsGui>().HandsManager;
+            //_handsManager = preset.GetWidget<HandsGui>().HandsManager;
         }
 
         public void UnLinkHudElements(IHudManager hudManager, HudPreset preset)
         {
-            _handsManager = null;
+            //_handsManager = null;
         }
     }
 }

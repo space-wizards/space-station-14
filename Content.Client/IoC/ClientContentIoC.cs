@@ -7,7 +7,6 @@ using Content.Client.Eui;
 using Content.Client.Gameplay;
 using Content.Client.HUD;
 using Content.Client.Info;
-using Content.Client.Items.Managers;
 using Content.Client.Module;
 using Content.Client.Parallax.Managers;
 using Content.Client.Preferences;
@@ -32,7 +31,6 @@ namespace Content.Client.IoC
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IModuleManager, ClientModuleManager>();
             IoCManager.Register<IClientPreferencesManager, ClientPreferencesManager>();
-            IoCManager.Register<IItemSlotManager, ItemSlotManager>();
             IoCManager.Register<IStylesheetManager, StylesheetManager>();
             IoCManager.Register<IScreenshotHook, ScreenshotHook>();
             IoCManager.Register<IClickMapManager, ClickMapManager>();

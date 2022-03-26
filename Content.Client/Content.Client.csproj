@@ -24,15 +24,13 @@
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Hands\UI\LegacyHandsGui.xaml.cs">
-      <DependentUpon>LegacyHandsGui.xaml</DependentUpon>
-    </Compile>
     <Compile Update="HUD\Widgets\MenuBar.xaml.cs">
       <DependentUpon>MenuBar.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CombatMode\UI" />
+    <Folder Include="Items\Managers" />
     <Folder Include="Items\UI" />
   </ItemGroup>
 

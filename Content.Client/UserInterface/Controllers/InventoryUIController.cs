@@ -1,34 +1,29 @@
 ﻿using Content.Client.Hands;
-using Content.Client.Items.Managers;
-using Content.Client.UserInterface;
+using Content.Client.Inventory;
 using Content.Client.UserInterface.Controls;
-using Content.Shared.Inventory;
-using OpenToolkit.Graphics.OpenGL;
-using Robust.Client.GameStates;
-using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
-using Robust.Shared.Prototypes;
-using Serilog;
 
-namespace Content.Client.Inventory;
+namespace Content.Client.UserInterface.Controllers;
 
-public sealed class InventoryUIController : UIController
+public sealed partial class InventoryUIController : UIController
 {
     [Dependency] private IEntityManager _entityManager = default!;
-    [UISystemDependency] private ClientInventorySystem? _inventorySystem = null;
-    private Dictionary<string, ItemSlotUIContainer> _slotGroups = new();
+    [UISystemDependency] private ClientInventorySystem? _inventorySystem = default!;
+    [UISystemDependency] private HandsSystem? _handsSystem = default!;
+    private readonly Dictionary<string, ItemSlotUIContainer> _slotGroups = new();
     private ClientInventoryComponent? _playerInventoryComponent;
     public ClientInventoryComponent? PlayerInventory => _playerInventoryComponent;
-    public override void OnStateChanged(StateChangedEventArgs args)
-    {
-        DebugTest();
-        if (_inventorySystem == null) return;
-    }
 
     internal void SetPlayerInvComponent(ClientInventoryComponent? clientInv)
     {
         _playerInventoryComponent = clientInv;
+    }
+
+    public void BlockSlot(string slotName, bool blocked)
+    {
+        if (_inventorySystem == null || _playerInventoryComponent == null) return;
+
     }
 
     public void HighlightSlot(string slotName, bool highlight)
@@ -36,10 +31,6 @@ public sealed class InventoryUIController : UIController
         if (_inventorySystem == null || _playerInventoryComponent == null) return;
         _inventorySystem.SetSlotHighlight(_playerInventoryComponent, slotName, highlight);
     }
-
-
-
-
     public bool RegisterSlotGroupContainer(ItemSlotUIContainer slotContainer)
     {
         return slotContainer.Name != null && _slotGroups.TryAdd(slotContainer.Name!, slotContainer);

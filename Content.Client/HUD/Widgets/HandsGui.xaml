@@ -10,11 +10,5 @@
     HorizontalAlignment="Center"
     >
    <BoxContainer>
-       <ui:HandsDisplay
-           Name="HandsManager"
-           Columns="6"
-           Access="Public"
-           HorizontalAlignment="Center"
-           ColumnSeparation="5" />
    </BoxContainer>
 </widget:HandsGui>

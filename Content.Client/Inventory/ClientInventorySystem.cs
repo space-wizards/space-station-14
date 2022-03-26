@@ -5,7 +5,7 @@ using Content.Client.Clothing;
 using Content.Client.HUD;
 using Content.Client.HUD.Widgets;
 using Content.Shared.Input;
-using Content.Client.Items.Managers;
+using Content.Client.UserInterface.Controllers;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.CCVar;
 using Content.Shared.Hands.Components;
@@ -36,7 +36,6 @@ namespace Content.Client.Inventory
         //[Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         [Dependency] private readonly ClothingSystem _clothingSystem = default!;
 
         public Action<SlotData>? EntitySlotUpdate = null;
@@ -166,9 +165,9 @@ namespace Content.Client.Inventory
             if(!TryGetSlotContainer(uid, slot, out var containerSlot, out var slotDef, inventoryComponent))
                 return;
 
-            _itemSlotManager.HoverInSlot(button, heldEntity,
-                CanEquip(uid, heldEntity, slot, out _, slotDef, inventoryComponent) &&
-                containerSlot.CanInsert(heldEntity, EntityManager));
+            //HoverInSlot(button, heldEntity,
+             //   CanEquip(uid, heldEntity, slot, out _, slotDef, inventoryComponent) &&
+             //   containerSlot.CanInsert(heldEntity, EntityManager));
         }
         private void HandleOpenInventoryMenu()
         {
@@ -194,22 +193,25 @@ namespace Content.Client.Inventory
         {
             public readonly SlotDefinition SlotDef;
             public EntityUid? HeldEntity = null;
+            public bool Blocked = false;
             public bool Highlighted = false;
             public string SlotName => SlotDef.Name;
             public string SlotDisplayName => SlotDef.DisplayName;
             public string TextureName => SlotDef.TextureName;
-            public SlotData(SlotDefinition slotDef,EntityUid? heldEntity = null, bool highlighted = false)
+            public SlotData(SlotDefinition slotDef,EntityUid? heldEntity = null, bool highlighted = false, bool blocked = false)
             {
                 SlotDef = slotDef;
                 HeldEntity = heldEntity;
                 Highlighted = highlighted;
+                Blocked = blocked;
             }
 
-            public SlotData(SlotData oldData, EntityUid? heldEntity, bool highlighted = false)
+            public SlotData(SlotData oldData, EntityUid? heldEntity, bool highlighted = false,bool blocked = false)
             {
                 SlotDef = oldData.SlotDef;
                 HeldEntity = heldEntity;
                 Highlighted = highlighted;
+                Blocked = blocked;
             }
 
             public static implicit operator SlotData(SlotDefinition s)

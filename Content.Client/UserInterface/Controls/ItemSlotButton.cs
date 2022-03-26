@@ -1,16 +1,9 @@
 ﻿using Content.Client.Cooldown;
 using Content.Client.HUD;
-using Content.Client.Inventory;
-using Content.Client.Items.Managers;
-using Content.Client.Resources;
-using Content.Client.Stylesheets;
-using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Containers;
 using Robust.Shared.Input;
 
 namespace Content.Client.UserInterface.Controls
@@ -19,10 +12,9 @@ namespace Content.Client.UserInterface.Controls
     public class ItemSlotButton : Control, IEntityEventSubscriber, IHasHudTheme
     {
         private const string HighlightShader = "SelectionOutlineInrange";
-
-        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         public EntityUid? Entity { get; set; }
         public TextureRect Button { get; }
+        public TextureRect BlockedRect { get; }
         public TextureRect HighlightRect { get; }
         public SpriteView SpriteView { get; }
         public SpriteView HoverSpriteView { get; }
@@ -30,16 +22,43 @@ namespace Content.Client.UserInterface.Controls
         public CooldownGraphic CooldownDisplay { get; }
         public bool HighlightOverride { get; set; }
 
+        private string _slotName = "";
+        public string SlotName
+        {
+            get => _slotName;
+            set
+            {
+                Name = "SlotButton_" + value;
+                _slotName = value;
+            }
+        }
+
+        public bool Highlight { get => HighlightRect.Visible; set => HighlightRect.Visible = value;}
+        public bool Blocked { get => BlockedRect.Visible; set => BlockedRect.Visible = value;}
+        public Texture BlockedTexture => Theme.ResolveTexture(BlockedTexturePath);
+        private string _blockedTexturePath = "";
+        public string BlockedTexturePath
+        {
+            get => _blockedTexturePath;
+            set
+            {
+                _blockedTexturePath = value;
+                BlockedRect.Texture = Theme.ResolveTexture(_blockedTexturePath);
+            }
+        }
+
         public Texture ButtonTexture => Theme.ResolveTexture(ButtonTexturePath);
         private string _buttonTexturePath = "";
-        public string ButtonTexturePath { get => _buttonTexturePath; set
-        {
-            _buttonTexturePath = value;
-            Button.Texture = Theme.ResolveTexture(_buttonTexturePath);
-        } }
+        public string ButtonTexturePath {
+            get => _buttonTexturePath;
+            set
+            {
+                _buttonTexturePath = value;
+                Button.Texture = Theme.ResolveTexture(_buttonTexturePath);
+            }
+        }
         public Texture StorageTexture => Theme.ResolveTexture(StorageTexturePath);
         private string _storageTexturePath = "";
-
         public string StorageTexturePath
         {
             get => _buttonTexturePath;
@@ -49,8 +68,6 @@ namespace Content.Client.UserInterface.Controls
                 StorageButton.TextureNormal = Theme.ResolveTexture(_storageTexturePath);
             }
         }
-
-
         public Action<GUIBoundKeyEventArgs>? OnPressed { get; set; }
         public Action<GUIBoundKeyEventArgs>? OnStoragePressed { get; set; }
         public Action<GUIMouseHoverEventArgs>? OnHover { get; set; }
@@ -58,9 +75,15 @@ namespace Content.Client.UserInterface.Controls
         public bool EntityHover => HoverSpriteView.Sprite != null;
         public bool MouseIsHovering;
 
+        public void Initialize(string slotName)
+        {
+            SlotName = slotName;
+        }
+
         public ItemSlotButton()
         {
             IoCManager.InjectDependencies(this);
+            Name = "SlotButton_null";
             Theme = HudThemes.DefaultTheme;
             MinSize = (64, 64);
             HighlightOverride = false;
@@ -124,13 +147,13 @@ namespace Content.Client.UserInterface.Controls
             {
                 Visible = false,
             });
-        }
-        protected override void EnteredTree()
-        {
-            base.EnteredTree();
 
-            _itemSlotManager.EntityHighlightedUpdated += HandleEntitySlotHighlighted;
-            UpdateSlotHighlighted();
+            AddChild(BlockedRect = new TextureRect
+            {
+                TextureScale = (2, 2),
+                MouseFilter = MouseFilterMode.Stop,
+                Visible = false
+            });
         }
 
         public void UpdateSprite(SpriteComponent? sprite)
@@ -138,46 +161,15 @@ namespace Content.Client.UserInterface.Controls
             SpriteView.Sprite = sprite;
         }
 
-        protected override void ExitedTree()
-        {
-            base.ExitedTree();
-
-            _itemSlotManager.EntityHighlightedUpdated -= HandleEntitySlotHighlighted;
-        }
-
-        private void HandleEntitySlotHighlighted(EntitySlotHighlightedEventArgs entitySlotHighlightedEventArgs)
-        {
-            UpdateSlotHighlighted();
-        }
-
-        public void UpdateSlotHighlighted()
-        {
-            internal_highlight(_itemSlotManager.IsHighlighted(Entity));
-        }
-
         public void ClearHover()
         {
-            if (EntityHover)
+            if (!EntityHover) return;
+            ISpriteComponent? tempQualifier = HoverSpriteView.Sprite;
+            if (tempQualifier != null)
             {
-                ISpriteComponent? tempQualifier = HoverSpriteView.Sprite;
-                if (tempQualifier != null)
-                {
-                    IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier.Owner);
-                }
-
-                HoverSpriteView.Sprite = null;
+                IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier.Owner);
             }
-        }
-
-        private void internal_highlight(bool highLight)
-        {
-            if (HighlightOverride) return; //do not use internal highlighting if override is enabled
-            HighlightRect.Visible = highLight;
-        }
-
-        public void Highlight(bool highlight)
-        {
-            HighlightRect.Visible = highlight;
+            HoverSpriteView.Sprite = null;
         }
 
         private void OnButtonPressed(GUIBoundKeyEventArgs args)

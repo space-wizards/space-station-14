@@ -3,7 +3,6 @@ using Content.Client.Actions.UI;
 using Content.Client.Construction;
 using Content.Client.DragDrop;
 using Content.Client.Hands;
-using Content.Client.Items.Managers;
 using Content.Client.Outline;
 using Content.Client.Popups;
 using Content.Shared.Actions;
@@ -35,13 +34,12 @@ namespace Content.Client.Actions
     [UsedImplicitly]
     public sealed class ActionsSystem : SharedActionsSystem
     {
-        
+
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         [Dependency] private readonly ISerializationManager _serializationManager = default!;
         [Dependency] private readonly IResourceManager _resourceManager = default!;
-        [Dependency] private readonly IOverlayManager _overlayMan = default!; 
+        [Dependency] private readonly IOverlayManager _overlayMan = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly InteractionOutlineSystem _interactionOutline = default!;
         [Dependency] private readonly TargetOutlineSystem _targetOutline = default!;
@@ -184,7 +182,6 @@ namespace Content.Client.Actions
             StopHighlightingItemSlot();
 
             _highlightedEntity = item;
-            _itemSlotManager.HighlightEntity(item);
         }
 
         /// <summary>
@@ -195,7 +192,6 @@ namespace Content.Client.Actions
             if (_highlightedEntity == null)
                 return;
 
-            _itemSlotManager.UnHighlightEntity(_highlightedEntity.Value);
             _highlightedEntity = null;
         }
 
@@ -427,7 +423,7 @@ namespace Content.Client.Actions
             {
                 // The user is targeting with this action, but it is not valid. Maybe mark this click as
                 // handled and prevent further interactions.
-                return !action.InteractOnMiss; 
+                return !action.InteractOnMiss;
             }
 
             switch (action)
@@ -611,7 +607,7 @@ namespace Content.Client.Actions
 
         /*public void SaveActionAssignments(string path)
         {
-            
+
             // Currently only tested with temporary innate actions (i.e., mapping actions). No guarantee it works with
             // other actions. If its meant to be used for full game state saving/loading, the entity that provides
             // actions needs to keep the same uid.

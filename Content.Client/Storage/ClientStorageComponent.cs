@@ -4,7 +4,6 @@ using System.Linq;
 using Content.Client.Animations;
 using Content.Client.Hands;
 using Content.Client.Items.Components;
-using Content.Client.Items.Managers;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.DragDrop;
 using Content.Shared.Storage;
@@ -33,7 +32,6 @@ namespace Content.Client.Storage
     [RegisterComponent]
     public sealed class ClientStorageComponent : SharedStorageComponent, IDraggable
     {
-        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -173,7 +171,7 @@ namespace Content.Client.Storage
             }
             else if (_entityManager.EntityExists(entity))
             {
-                _itemSlotManager.OnButtonPressed(args.Event, entity);
+                //_itemSlotManager.OnButtonPressed(args.Event, entity); //TODO: Unfuck this
             }
         }
 
