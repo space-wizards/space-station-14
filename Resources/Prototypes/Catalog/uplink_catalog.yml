@@ -79,7 +79,7 @@
   id: UplinkGrenadePenguin
   category: Explosives
   itemId: MobGrenadePenguin
-  price: 8 #honestly probably isn't good enough to warrant this price tag but mirror wanted it lol
+  price: 6
 
 #- type: uplinkListing
 #  id: UplinkExplosiveC4
