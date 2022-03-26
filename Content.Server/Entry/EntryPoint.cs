@@ -1,3 +1,5 @@
+using System.IO;
+using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
@@ -82,6 +84,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IServerPreferencesManager>().Init();
                 IoCManager.Resolve<INodeGroupFactory>().Initialize();
                 IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
+                IoCManager.Resolve<NetworkResourceManager>().Initialize();
                 _voteManager.Initialize();
                 _adminLogs.Initialize();
             }

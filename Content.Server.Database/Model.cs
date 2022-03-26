@@ -33,6 +33,7 @@ namespace Content.Server.Database
         public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
         public DbSet<ServerRoleBan> RoleBan { get; set; } = default!;
         public DbSet<ServerRoleUnban> RoleUnban { get; set; } = default!;
+        public DbSet<UploadedResourceLog> UploadedResourceLog { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -458,5 +459,20 @@ namespace Content.Server.Database
         public Guid? UnbanningAdmin { get; set; }
 
         public DateTime UnbanTime { get; set; }
+    }
+
+    [Table("uploaded_resource_log")]
+    public sealed class UploadedResourceLog
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public Guid UserId { get; set; }
+
+        public string Path { get; set; } = string.Empty;
+
+        public byte[] Data { get; set; } = default!;
     }
 }

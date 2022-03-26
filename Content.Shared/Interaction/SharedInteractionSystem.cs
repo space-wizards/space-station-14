@@ -215,7 +215,6 @@ namespace Content.Shared.Interaction
                 return;
 
             // Does the user have hands?
-            Hand? hand;
             if (!TryComp(user, out SharedHandsComponent? hands) || hands.ActiveHand == null)
                 return;
 
@@ -734,6 +733,10 @@ namespace Content.Shared.Interaction
             // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
             // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)
             if (checkAccess && !ContainerSystem.IsInSameOrParentContainer(user, used) && !CanAccessViaStorage(user, used))
+                return false;
+
+            // Does the user have hands?
+            if (!HasComp<SharedHandsComponent>(user))
                 return false;
 
             var activateMsg = new ActivateInWorldEvent(user, used);

@@ -43,6 +43,7 @@ namespace Content.Client.IoC
             IoCManager.Register<RulesManager, RulesManager>();
             IoCManager.Register<ViewportManager, ViewportManager>();
             IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
+            IoCManager.Register<NetworkResourceManager>();
             IoCManager.Register<ISharedAdminLogManager, SharedAdminLogManager>();
         }
     }
