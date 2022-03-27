@@ -9,7 +9,8 @@
                    Margin="0 4"/>
     <BoxContainer Name="Buttons"
                   HorizontalAlignment="Left"
-                  Orientation="Vertical">
+                  Orientation="Vertical"
+                  SeparationOverride="5">
         <!-- Buttons are added here by code -->
     </BoxContainer>
 </BoxContainer>

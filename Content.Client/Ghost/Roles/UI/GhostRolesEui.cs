@@ -57,26 +57,19 @@ namespace Content.Client.Ghost.Roles.UI
             base.HandleState(state);
 
             if (state is not GhostRolesEuiState ghostState) return;
-
-            var closeRulesWindow = true;
-
             _window.ClearEntries();
 
             var groupedRoles = ghostState.GhostRoles.GroupBy(
                 role => (role.Name, role.Description));
-
             foreach (var group in groupedRoles)
             {
                 var name = group.Key.Name;
                 var description = group.Key.Description;
 
                 _window.AddEntry(name, description, group);
-                /*if (info.Identifier == _windowRulesId)
-                {
-                    closeRulesWindow = false;
-                }*/
             }
 
+            var closeRulesWindow = ghostState.GhostRoles.All(role => role.Identifier != _windowRulesId);
             if (closeRulesWindow)
             {
                 _windowRules?.Close();
