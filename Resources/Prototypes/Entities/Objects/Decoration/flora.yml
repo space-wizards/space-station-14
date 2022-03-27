@@ -4,7 +4,7 @@
   components:
   - type: Clickable
   - type: Sprite
-    sprite: Objects\Decoration\Flora\flora_trees.rsi
+    sprite: Objects/Decoration/Flora/flora_trees.rsi
     netsync: false
     drawdepth: Overdoors
   - type: Physics
@@ -20,16 +20,12 @@
       - Impassable
 
 - type: entity
+  parent: BaseTree
   id: BaseTreeSnow
   abstract: true
   components:
-  - type: Clickable
   - type: Sprite
-    sprite: Objects\Decoration\Flora\flora_treessnow.rsi
-    netsync: false
-    drawdepth: Overdoors
-  - type: Physics
-    bodyType: Static
+    sprite: Objects/Decoration/Flora/flora_treessnow.rsi
   - type: Fixtures
     fixtures:
     - shape:
@@ -41,16 +37,12 @@
       - Impassable
 
 - type: entity
+  parent: BaseTree
   id: BaseTreeLarge
   abstract: true
   components:
-  - type: Clickable
   - type: Sprite
-    sprite: Objects\Decoration\Flora\flora_treeslarge.rsi
-    netsync: false
-    drawdepth: Overdoors
-  - type: Physics
-    bodyType: Static
+    sprite: Objects/Decoration/Flora/flora_treeslarge.rsi
   - type: Fixtures
     fixtures:
     - shape:
@@ -62,16 +54,12 @@
       - Impassable
 
 - type: entity
+  parent: BaseTree
   id: BaseTreeConifer
   abstract: true
   components:
-  - type: Clickable
   - type: Sprite
-    sprite: Objects\Decoration\Flora\flora_treesconifer.rsi
-    netsync: false
-    drawdepth: Overdoors
-  - type: Physics
-    bodyType: Static
+    sprite: Objects/Decoration/Flora/flora_treesconifer.rsi
   - type: Fixtures
     fixtures:
     - shape:
