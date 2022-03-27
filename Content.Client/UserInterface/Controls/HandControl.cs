@@ -6,13 +6,13 @@ namespace Content.Client.UserInterface.Controls;
 public sealed class HandControl : ItemSlotButton
 {
     private HandLocation _location;
-    private readonly string _handName;
     public HandControl(InventoryUIController parentController,string handName, HandLocation handLocation)
     {
         Name = "hand_" + handName;
-        _handName = handName;
+        SlotName = handName;
         SetBackground(_location = handLocation);
     }
+
     private void SetBackground(HandLocation handLoc)
     {
         switch (handLoc)

@@ -14,18 +14,35 @@ public sealed partial class InventoryUIController : UIController
     private ClientInventoryComponent? _playerInventoryComponent;
     public ClientInventoryComponent? PlayerInventory => _playerInventoryComponent;
 
+
+    //Neuron Activation
+    public override void OnSystemLoaded(IEntitySystem system)
+    {
+        Logger.Debug("NEURON ACTIVATED");
+        if (system is HandsSystem)
+        {
+            OnHandsSystemActivate();
+        }
+    }
+    //Neuron Deactivation
+    public override void OnSystemUnloaded(IEntitySystem system)
+    {
+        if (system is HandsSystem)
+        {
+            OnHandsSystemDeactivate();
+        }
+    }
+
+
     public void SetPlayerInvComponent(ClientInventoryComponent? clientInv)
     {
         _playerInventoryComponent = clientInv;
     }
-
-
     public void BlockSlot(string slotName, bool blocked)
     {
         if (_inventorySystem == null || _playerInventoryComponent == null) return;
 
     }
-
     public void HighlightSlot(string slotName, bool highlight)
     {
         if (_inventorySystem == null || _playerInventoryComponent == null) return;
@@ -39,16 +56,5 @@ public sealed partial class InventoryUIController : UIController
     public void RemoveSlotGroup(string slotGroupName)
     {
         _slotGroups.Remove(slotGroupName);
-    }
-
-
-    private void DebugTest()
-    {
-        if (_inventorySystem == null)
-        {
-            Logger.Debug("Null RIP");
-            return;
-        }
-        Logger.Debug("Found");
     }
 }

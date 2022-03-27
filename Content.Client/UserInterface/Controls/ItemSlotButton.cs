@@ -20,7 +20,6 @@ namespace Content.Client.UserInterface.Controls
         public SpriteView HoverSpriteView { get; }
         public TextureButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
-        public bool HighlightOverride { get; set; }
 
         private string _slotName = "";
         public string SlotName
@@ -68,9 +67,9 @@ namespace Content.Client.UserInterface.Controls
                 StorageButton.TextureNormal = Theme.ResolveTexture(_storageTexturePath);
             }
         }
-        public Action<GUIBoundKeyEventArgs>? OnPressed { get; set; }
-        public Action<GUIBoundKeyEventArgs>? OnStoragePressed { get; set; }
-        public Action<GUIMouseHoverEventArgs>? OnHover { get; set; }
+        public Action<GUIBoundKeyEventArgs, ItemSlotButton>? OnPressed { get; set; }
+        public Action<GUIBoundKeyEventArgs, ItemSlotButton>? OnStoragePressed { get; set; }
+        public Action<GUIMouseHoverEventArgs, ItemSlotButton>? OnHover { get; set; }
 
         public bool EntityHover => HoverSpriteView.Sprite != null;
         public bool MouseIsHovering;
@@ -86,7 +85,6 @@ namespace Content.Client.UserInterface.Controls
             Name = "SlotButton_null";
             Theme = HudThemes.DefaultTheme;
             MinSize = (64, 64);
-            HighlightOverride = false;
             AddChild(Button = new TextureRect
             {
                 TextureScale = (2, 2),
@@ -174,24 +172,24 @@ namespace Content.Client.UserInterface.Controls
 
         private void OnButtonPressed(GUIBoundKeyEventArgs args)
         {
-            OnPressed?.Invoke(args);
+            OnPressed?.Invoke(args, this);
         }
 
         private void OnStorageButtonPressed(BaseButton.ButtonEventArgs args)
         {
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
-                OnStoragePressed?.Invoke(args.Event);
+                OnStoragePressed?.Invoke(args.Event, this);
             }
             else
             {
-                OnPressed?.Invoke(args.Event);
+                OnPressed?.Invoke(args.Event, this);
             }
         }
 
         private void OnButtonHover(GUIMouseHoverEventArgs args)
         {
-            OnHover?.Invoke(args);
+            OnHover?.Invoke(args, this);
         }
 
         public HudTheme Theme { get; set; }
