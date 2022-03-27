@@ -1,4 +1,5 @@
 using Content.Client.Clothing;
+using Content.Shared.Input;
 using Content.Client.UserInterface.Controllers;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands.Components;
@@ -14,11 +15,12 @@ using Robust.Shared.Containers;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Client.Inventory
 {
-    [UsedImplicitly] //TODO: unfuck this
-    public sealed class ClientInventorySystem : InventorySystem, IUILink
+    [UsedImplicitly]
+    public sealed class ClientInventorySystem : InventorySystem
     {
         //[Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -120,6 +122,7 @@ namespace Content.Client.Inventory
         }
         public void UpdateSlot(ClientInventoryComponent component,string slotName,bool? blocked = null, bool? highlight = null)
         {
+
             var oldData = component.SlotData[slotName];
             var newHighlight = oldData.Highlighted;
             var newBlocked = oldData.Blocked;
@@ -218,24 +221,6 @@ namespace Content.Client.Inventory
                 return s.SlotDef;
             }
 
-        }
-
-        public void OnLink(UIController controller)
-        {
-            if (controller is InventoryUIController invController)
-            {
-                OnLinkInventory += invController.SetPlayerInvComponent;
-                OnUnlinkInventory += invController.SetPlayerInvComponent;
-            }
-        }
-
-        public void OnUnlink(UIController controller)
-        {
-            if (controller is InventoryUIController invController)
-            {
-                OnLinkInventory -= invController.SetPlayerInvComponent;
-                OnUnlinkInventory -= invController.SetPlayerInvComponent;
-            }
         }
     }
 }
