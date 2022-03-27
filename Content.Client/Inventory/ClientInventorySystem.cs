@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Client.Clothing;
 using Content.Shared.Input;
+using Content.Client.UserInterface.Controllers;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands.Components;
+using Content.Shared.Input;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Item;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -33,9 +32,7 @@ namespace Content.Client.Inventory
         public Action<ClientInventoryComponent?>? OnLinkInventory = null;
         public Action<ClientInventoryComponent?>? OnUnlinkInventory = null;
 
-        /// <summary>
-        /// Stores delegates used to create controls for a given <see cref="InventoryTemplatePrototype"/>.
-        /// </summary>
+        private readonly Queue<(ClientInventoryComponent comp, DidEquipEvent args)> _equipEventsQueue = new();
 
         public override void Initialize()
         {
@@ -52,11 +49,21 @@ namespace Content.Client.Inventory
             SubscribeLocalEvent<ClientInventoryComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ClientInventoryComponent, ComponentShutdown>(OnShutdown);
 
-            SubscribeLocalEvent<ClientInventoryComponent, DidEquipEvent>(OnDidEquip);
+            SubscribeLocalEvent<ClientInventoryComponent, DidEquipEvent>((_, comp, args) => _equipEventsQueue.Enqueue((comp, args)));
             SubscribeLocalEvent<ClientInventoryComponent, DidUnequipEvent>(OnDidUnequip);
 
             SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
+        }
 
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            while (_equipEventsQueue.TryDequeue(out var tuple))
+            {
+                var (component, args) = tuple;
+                OnDidEquip(component, args);
+            }
         }
 
         private void OnUseInHand(EntityUid uid, ClothingComponent component, UseInHandEvent args)
@@ -72,7 +79,7 @@ namespace Content.Client.Inventory
             UpdateSlot(component, args.Slot);
         }
 
-        private void OnDidEquip(EntityUid uid, ClientInventoryComponent component, DidEquipEvent args)
+        private void OnDidEquip(ClientInventoryComponent component, DidEquipEvent args)
         {
             UpdateSlot(component, args.Slot);
         }

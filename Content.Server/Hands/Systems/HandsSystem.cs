@@ -7,10 +7,8 @@ using Content.Server.Stack;
 using Content.Server.Storage.Components;
 using Content.Server.Strip;
 using Content.Server.Stunnable;
-using Content.Server.Throwing;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
-using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Stunnable;
@@ -31,6 +29,7 @@ using Robust.Shared.Utility;
 using Content.Shared.Pulling.Components;
 using Content.Server.Pulling;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Throwing;
 
 namespace Content.Server.Hands.Systems
 {
@@ -47,7 +46,8 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
-        
+        [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -224,7 +224,7 @@ namespace Content.Server.Hands.Systems
             direction = direction.Normalized * Math.Min(direction.Length, hands.ThrowRange);
 
             var throwStrength = hands.ThrowForceMultiplier;
-            throwEnt.TryThrow(direction, throwStrength, player);
+            _throwingSystem.TryThrow(throwEnt, direction, throwStrength, player);
 
             return true;
         }

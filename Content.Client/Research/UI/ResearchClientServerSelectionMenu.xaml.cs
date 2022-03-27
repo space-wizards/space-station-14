@@ -56,7 +56,7 @@ namespace Content.Client.Research.UI
                 Servers.AddItem(Loc.GetString("research-client-server-selection-menu-server-entry-text", ("id", id), ("serverName", _serverNames[i])));
                 if (id == _selectedServerId)
                 {
-                    Servers[id].Selected = true;
+                    Servers[i].Selected = true;
                 }
             }
 

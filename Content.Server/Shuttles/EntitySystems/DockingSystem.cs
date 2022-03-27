@@ -317,7 +317,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             // TODO: I want this to ideally be 2 fixtures to force them to have some level of alignment buuuttt
             // I also need collisionmanager for that yet again so they get dis.
-            _fixtureSystem.CreateFixture(physicsComponent, fixture);
+            _fixtureSystem.TryCreateFixture(physicsComponent, fixture);
         }
 
         /// <summary>
