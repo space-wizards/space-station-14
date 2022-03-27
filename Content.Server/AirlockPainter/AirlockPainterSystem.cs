@@ -56,6 +56,7 @@ namespace Content.Server.AirlockPainter
         {
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
+            DirtyUI(uid, component);
             component.Owner.GetUIOrNull(AirlockPainterUiKey.Key)?.Open(actor.PlayerSession);
             args.Handled = true;
         }
@@ -74,8 +75,8 @@ namespace Content.Server.AirlockPainter
                 return;
             }
 
-            string? sprite = grp.StylePaths[component.Style];
-            if (sprite == null)
+            string style = component.Styles[component.Index];
+            if (!grp.StylePaths.TryGetValue(style, out string? sprite))
             {
                 string msg = Loc.GetString("airlock-painter-style-not-available");
                 _popupSystem.PopupEntity(msg, args.User, Filter.Entities(args.User));
@@ -123,7 +124,14 @@ namespace Content.Server.AirlockPainter
 
         private void OnSpritePicked(EntityUid uid, AirlockPainterComponent component, AirlockPainterSpritePickedMessage args)
         {
-            component.Style = args.Style;
+            component.Index = args.Index;
+            DirtyUI(uid, component);
+        }
+
+        private void DirtyUI(EntityUid uid, AirlockPainterComponent component)
+        {
+            _userInterfaceSystem.TrySetUiState(uid, AirlockPainterUiKey.Key,
+                new AirlockPainterBoundUserInterfaceState(component.Index, component.Styles));
         }
     }
 }

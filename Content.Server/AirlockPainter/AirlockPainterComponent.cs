@@ -1,4 +1,7 @@
+using Content.Server.UserInterface;
+using Content.Shared.AirlockPainter;
 using Content.Shared.Sound;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.AirlockPainter
 {
@@ -14,7 +17,10 @@ namespace Content.Server.AirlockPainter
         [DataField("isSpraying")]
         public bool IsSpraying = false;
 
-        [DataField("style")]
-        public string Style = default!;
+        [DataField("styles")]
+        public List<string> Styles = default!;
+
+        [DataField("index")]
+        public int Index = default!;
     }
 }

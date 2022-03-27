@@ -11,19 +11,24 @@ namespace Content.Shared.AirlockPainter
     [Serializable, NetSerializable]
     public sealed class AirlockPainterSpritePickedMessage : BoundUserInterfaceMessage
     {
-        public string Style { get; }
+        public int Index { get; }
 
-        public AirlockPainterSpritePickedMessage(string style)
+        public AirlockPainterSpritePickedMessage(int index)
         {
-            Style = style;
+            Index = index;
         }
     }
 
     [Serializable, NetSerializable]
     public sealed class AirlockPainterBoundUserInterfaceState : BoundUserInterfaceState
     {
-        public AirlockPainterBoundUserInterfaceState()
+        public int SelectedIndex;
+        public List<string> Styles;
+
+        public AirlockPainterBoundUserInterfaceState(int selectedIndex, List<string> styles)
         {
+            SelectedIndex = selectedIndex;
+            Styles = styles;
         }
     }
 }

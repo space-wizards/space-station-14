@@ -1,14 +1,12 @@
 using Content.Shared.AirlockPainter;
 using Robust.Client.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.AirlockPainter.UI
 {
     public sealed class AirlockPainterBoundUserInterface : BoundUserInterface
     {
-        [Dependency] IPrototypeManager _prototypeManager = default!;
-
         private AirlockPainterWindow? _window;
+        public List<string> Styles = new();
 
         public AirlockPainterBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -18,7 +16,7 @@ namespace Content.Client.AirlockPainter.UI
         {
             base.Open();
 
-            _window = new AirlockPainterWindow(_prototypeManager);
+            _window = new AirlockPainterWindow();
             if (State != null)
                 UpdateState(State);
 
@@ -28,11 +26,20 @@ namespace Content.Client.AirlockPainter.UI
             _window.OnSpritePicked += OnSpritePicked;
         }
 
-        private void OnSpritePicked(string? val)
+        private void OnSpritePicked(int? index)
         {
-            if (val != null)
-                SendMessage(new AirlockPainterSpritePickedMessage(val));
-            Close();
+            if (index == null) return;
+            SendMessage(new AirlockPainterSpritePickedMessage(index.Value));
+        }
+
+        protected override void UpdateState(BoundUserInterfaceState state)
+        {
+            base.UpdateState(state);
+            if (_window == null || state is not AirlockPainterBoundUserInterfaceState cast)
+                return;
+
+            _window.Populate(cast.Styles);
+            _window.SelectedStyle(cast.Styles[cast.SelectedIndex]);
         }
     }
 }

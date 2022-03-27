@@ -2,8 +2,13 @@
             MinSize="300 300"
             SetSize="300 300"
             Title="{Loc 'airlock-painter-window-title'}">
-    <ItemList Name="SpriteList"
-              SizeFlagsStretchRatio="8"
-              VerticalExpand="True">
-    </ItemList>
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
+        <Label Name="SelectedSpriteLabel"
+               Text="{Loc 'airlock-painter-selected-style'}">
+        </Label>
+        <ItemList Name="SpriteList"
+                  SizeFlagsStretchRatio="8"
+                  VerticalExpand="True">
+        </ItemList>
+    </BoxContainer>
 </DefaultWindow>
