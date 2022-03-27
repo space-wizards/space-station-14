@@ -3,12 +3,12 @@
 
 ## Title
 
-ui-transfer-amount-title = Change Transfer Amount
+ui-transfer-amount-title = Изменить перемещаемое количество
 
 ## Text for the button to apply changes
 
-ui-transfer-amount-apply = Set Amount
+ui-transfer-amount-apply = Установить значение
 
 ## Placeholder text for the amount line edit
 
-ui-transfer-amount-line-edit-placeholder = Amount
+ui-transfer-amount-line-edit-placeholder = Значение
