@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
@@ -10,13 +8,9 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Preferences;
-using Content.Shared.Species;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Database
@@ -771,6 +765,58 @@ namespace Content.Server.Database
             await using var db = await GetDb();
             var entry = await db.DbContext.Whitelist.SingleAsync(w => w.UserId == player);
             db.DbContext.Whitelist.Remove(entry);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<DateTime?> GetLastReadRules(NetUserId player)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.Player
+                .Where(dbPlayer => dbPlayer.UserId == player)
+                .Select(dbPlayer => dbPlayer.LastReadRules)
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task SetLastReadRules(NetUserId player, DateTime date)
+        {
+            await using var db = await GetDb();
+
+            var dbPlayer = await db.DbContext.Player.Where(dbPlayer => dbPlayer.UserId == player).SingleOrDefaultAsync();
+            if (dbPlayer == null)
+            {
+                return;
+            }
+
+            dbPlayer.LastReadRules = date;
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        #endregion
+
+        #region Uploaded Resources Logs
+
+        public async Task AddUploadedResourceLogAsync(NetUserId user, DateTime date, string path, byte[] data)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.UploadedResourceLog.Add(new UploadedResourceLog() { UserId = user, Date = date, Path = path, Data = data });
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task PurgeUploadedResourceLogAsync(int days)
+        {
+            await using var db = await GetDb();
+
+            var date = DateTime.Now.Subtract(TimeSpan.FromDays(days));
+
+            await foreach (var log in db.DbContext.UploadedResourceLog
+                               .Where(l => date > l.Date)
+                               .AsAsyncEnumerable())
+            {
+                db.DbContext.UploadedResourceLog.Remove(log);
+            }
+
             await db.DbContext.SaveChangesAsync();
         }
 

@@ -7,24 +7,24 @@ using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
+using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Content.Shared.Wall;
-using Content.Shared.Item;
-using Robust.Shared.Player;
-using Robust.Shared.Input;
 using Robust.Shared.Timing;
-using Content.Shared.Interaction.Events;
 
 #pragma warning disable 618
 
@@ -215,7 +215,6 @@ namespace Content.Shared.Interaction
                 return;
 
             // Does the user have hands?
-            Hand? hand;
             if (!TryComp(user, out SharedHandsComponent? hands) || hands.ActiveHand == null)
                 return;
 
@@ -736,6 +735,10 @@ namespace Content.Shared.Interaction
             if (checkAccess && !ContainerSystem.IsInSameOrParentContainer(user, used) && !CanAccessViaStorage(user, used))
                 return false;
 
+            // Does the user have hands?
+            if (!HasComp<SharedHandsComponent>(user))
+                return false;
+
             var activateMsg = new ActivateInWorldEvent(user, used);
             RaiseLocalEvent(used, activateMsg);
             if (activateMsg.Handled)
@@ -744,7 +747,7 @@ namespace Content.Shared.Interaction
                 _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
                 return true;
             }
-            
+
             var activatable = AllComps<IActivate>(used).FirstOrDefault();
             if (activatable == null)
                 return false;
