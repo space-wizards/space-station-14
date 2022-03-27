@@ -12,7 +12,7 @@ namespace Content.Server.Light.Components
     [Friend(typeof(HandheldLightSystem))]
     public sealed class HandheldLightComponent : SharedHandheldLightComponent
     {
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("wattage")] public float Wattage { get; set; } = .7f;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("wattage")] public float Wattage { get; set; } = .8f;
 
         /// <summary>
         ///     Status of light, whether or not it is emitting light.
