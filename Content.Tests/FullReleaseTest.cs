@@ -13,5 +13,6 @@ public class FullReleaseTest
 #else
         Assert.Pass();
 #endif
+
     }
 }
