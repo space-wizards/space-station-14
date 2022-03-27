@@ -15,10 +15,9 @@ public sealed class DefaultHud : HudPreset
 
     protected override void DefinePreset()
     {
-        RegisterAllowedState<GameplayState>();
-        RegisterLinkedEntitySystem<SandboxSystem>();
-        RegisterLinkedEntitySystem<CombatModeSystem>();
-        RegisterLinkedEntitySystem<HandsSystem>();
+        RegisterAllowedState<GameplayState>(); //only allow this hud to initialize during gameplay state (Ie: Ingame not lobby)
+        RegisterLinkedEntitySystem<SandboxSystem>(); //TODO: This is depreciated, use a UIController now
+        RegisterLinkedEntitySystem<CombatModeSystem>(); //TODO: this is depreciated, use a UIController now
 
         RegisterWidget<MenuBar>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.TopLeft,margin: 10);
         RegisterWidget<HandsGui>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.CenterBottom, margin: 10);

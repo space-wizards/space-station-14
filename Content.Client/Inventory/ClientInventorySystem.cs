@@ -27,6 +27,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Content.Shared.Interaction.Events;
+using Container = Robust.Shared.Containers.Container;
 
 namespace Content.Client.Inventory
 {
@@ -79,12 +80,12 @@ namespace Content.Client.Inventory
 
         private void OnDidUnequip(EntityUid uid, ClientInventoryComponent component, DidUnequipEvent args)
         {
-            UpdateSlot(component, args.Slot, null);
+            UpdateSlot(component, args.Slot);
         }
 
         private void OnDidEquip(EntityUid uid, ClientInventoryComponent component, DidEquipEvent args)
         {
-            UpdateSlot(component, args.Slot, args.Equipment);
+            UpdateSlot(component, args.Slot);
         }
 
         private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent? args = null)
@@ -120,18 +121,17 @@ namespace Content.Client.Inventory
         public void SetSlotHighlight(ClientInventoryComponent component, string slotName, bool state)
         {
             var oldData = component.SlotData[slotName];
-            var newData = component.SlotData[slotName] = new SlotData(oldData, oldData.HeldEntity, state);
+            var newData = component.SlotData[slotName] = new SlotData(oldData, state);
             EntitySlotUpdate?.Invoke(newData);
         }
-        public void SetHeldEntity(ClientInventoryComponent component, string slotName, EntityUid heldEntity)
+        public void UpdateSlot(ClientInventoryComponent component,string slotName,bool? blocked = null, bool? highlight = null)
         {
             var oldData = component.SlotData[slotName];
-            var newData = component.SlotData[slotName] = new SlotData(oldData, heldEntity, oldData.Highlighted);
-            EntitySlotUpdate?.Invoke(newData);
-        }
-        public void UpdateSlot(ClientInventoryComponent component,string slotName ,EntityUid? heldEntity = null, bool highlight = false)
-        {
-            var newData = component.SlotData[slotName] = new SlotData(component.SlotData[slotName], heldEntity, highlight);
+            var newHighlight = oldData.Highlighted;
+            var newBlocked = oldData.Blocked;
+            if (blocked != null) newBlocked = blocked.Value;
+            if (highlight != null) newHighlight = highlight.Value;
+            var newData = component.SlotData[slotName] = new SlotData(component.SlotData[slotName], newHighlight, newBlocked);
             EntitySlotUpdate?.Invoke(newData);
         }
 
@@ -192,25 +192,26 @@ namespace Content.Client.Inventory
         public struct SlotData
         {
             public readonly SlotDefinition SlotDef;
-            public EntityUid? HeldEntity = null;
+            public EntityUid? HeldEntity => Container?.ContainedEntity;
             public bool Blocked = false;
             public bool Highlighted = false;
+            public ContainerSlot? Container= null;
             public string SlotName => SlotDef.Name;
             public string SlotDisplayName => SlotDef.DisplayName;
             public string TextureName => SlotDef.TextureName;
-            public SlotData(SlotDefinition slotDef,EntityUid? heldEntity = null, bool highlighted = false, bool blocked = false)
+            public SlotData(SlotDefinition slotDef,ContainerSlot? container = null, bool highlighted = false, bool blocked = false)
             {
                 SlotDef = slotDef;
-                HeldEntity = heldEntity;
                 Highlighted = highlighted;
                 Blocked = blocked;
+                Container = container;
             }
 
-            public SlotData(SlotData oldData, EntityUid? heldEntity, bool highlighted = false,bool blocked = false)
+            public SlotData(SlotData oldData,bool highlighted = false,bool blocked = false)
             {
                 SlotDef = oldData.SlotDef;
-                HeldEntity = heldEntity;
                 Highlighted = highlighted;
+                Container = oldData.Container;
                 Blocked = blocked;
             }
 
@@ -227,14 +228,20 @@ namespace Content.Client.Inventory
 
         public void OnLink(UIController controller)
         {
-            OnLinkInventory += ((InventoryUIController) controller).SetPlayerInvComponent;
-            OnUnlinkInventory += ((InventoryUIController) controller).SetPlayerInvComponent;
+            if (controller is InventoryUIController invController)
+            {
+                OnLinkInventory += invController.SetPlayerInvComponent;
+                OnUnlinkInventory += invController.SetPlayerInvComponent;
+            }
         }
 
         public void OnUnlink(UIController controller)
         {
-            OnLinkInventory -= ((InventoryUIController) controller).SetPlayerInvComponent;
-            OnUnlinkInventory -= ((InventoryUIController) controller).SetPlayerInvComponent;
+            if (controller is InventoryUIController invController)
+            {
+                OnLinkInventory -= invController.SetPlayerInvComponent;
+                OnUnlinkInventory -= invController.SetPlayerInvComponent;
+            }
         }
     }
 }

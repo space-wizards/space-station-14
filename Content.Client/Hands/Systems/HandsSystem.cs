@@ -4,6 +4,7 @@ using Content.Client.Animations;
 using Content.Client.Hands.UI;
 using Content.Client.HUD;
 using Content.Client.HUD.Widgets;
+using Content.Client.UserInterface.Controllers;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -12,6 +13,7 @@ using Content.Shared.Item;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -20,12 +22,12 @@ using Robust.Shared.Timing;
 namespace Content.Client.Hands
 {
     [UsedImplicitly]
-    public sealed class HandsSystem : SharedHandsSystem, IHasHudConnection
+    public sealed class HandsSystem : SharedHandsSystem, IUILink
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-
+        private InventoryUIController? _inventoryUIController = null;
 
         public override void Initialize()
         {
@@ -67,12 +69,10 @@ namespace Content.Client.Hands
                     if (!state.HandNames.Contains(name))
                     {
                         RemoveHand(uid, name, component);
-                        //component.Hands.Remove(name);
                     }
                 }
                 foreach (var hand in addedHands)
                 {
-                    //component.Hands.Add(hand.Name,hand);
                     AddHand(uid, hand, component);
                 }
                 component.SortedHands = new(state.HandNames);
@@ -285,9 +285,7 @@ namespace Content.Client.Hands
 
         private void HandleCompRemove(EntityUid uid, HandsComponent component, ComponentRemove args)
         {
-            //if (_handsManager == null) return;
-            //_handsManager?.UnloadHands();
-            //DeregisterUiListeners();
+
         }
         #endregion
 
@@ -319,27 +317,26 @@ namespace Content.Client.Hands
             }
             base.RemoveHand(uid, handName, handsComp);
         }
-
-        private void RegisterUiListeners()
+        public void OnLink(UIController controller)
         {
-            //if (_handsManager == null) return;
-            //OnHandSetActive += _handsManager.SetActiveHand;
+            //So clean *chef's kiss*
+            if (controller is InventoryUIController invController)
+            {
+                _inventoryUIController = invController;
+                TryGetPlayerHands(out var hands);
+                invController.SetPlayerHandsComponent(hands);
+                invController.AttachDelegates(this);
+            }
         }
 
-        private void DeregisterUiListeners()
+        public void OnUnlink(UIController controller)
         {
-            //if (_handsManager == null) return;
-            //OnHandSetActive -= _handsManager.SetActiveHand;
-        }
+            if (controller is InventoryUIController invController)
+            {
+                invController.SetPlayerHandsComponent(null);
+                invController.DetachDelegates(this);
+            }
 
-        public void LinkHudElements(IHudManager hudManager, HudPreset preset)
-        {
-            //_handsManager = preset.GetWidget<HandsGui>().HandsManager;
-        }
-
-        public void UnLinkHudElements(IHudManager hudManager, HudPreset preset)
-        {
-            //_handsManager = null;
         }
     }
 }

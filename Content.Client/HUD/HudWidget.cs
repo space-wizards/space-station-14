@@ -11,6 +11,8 @@ namespace Content.Client.HUD;
 public abstract class HudWidget : BoxContainer
 {
     [Dependency] protected readonly IHudManager HudManager = default!;
+
+    protected IUIControllerManager UIControllerManager => HudManager.UIControllerManager;
     protected LayoutContainer? Layout => HudManager.StateRoot;
     protected HudWidget()
     {

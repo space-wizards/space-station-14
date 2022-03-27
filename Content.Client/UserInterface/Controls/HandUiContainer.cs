@@ -8,12 +8,20 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandControl>
 {
     private readonly GridContainer _grid;
     public int ColumnLimit { get => _grid.Columns; set => _grid.Columns = value; }
+    public int MaxButtonCount { get; set; } = 0;
     public HandsContainer()
     {
         AddChild(_grid = new GridContainer());
     }
+
     public override HandControl? AddButton(HandControl newButton)
     {
+        if (MaxButtonCount > 0)
+        {
+            if (ButtonCount >= MaxButtonCount) return null;
+            _grid.AddChild(newButton);
+            return base.AddButton(newButton);
+        }
         _grid.AddChild(newButton);
         return base.AddButton(newButton);
     }
@@ -24,12 +32,7 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandControl>
         base.RemoveButton(button);
         _grid.RemoveChild(button);
     }
-    public void RemoveHandControl(HandControl hand)
-    {
-        base.RemoveButton(hand);
-        _grid.RemoveChild(hand);
-    }
-    public bool TryGetLastHand(out HandControl? control)
+    public bool TryGetLastButton(out HandControl? control)
     {
         if (_buttons.Count == 0)
         {
@@ -41,11 +44,13 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandControl>
     }
     public bool TryRemoveLastHand(out HandControl? control)
     {
-        var success = TryGetLastHand(out control);
-        if (control != null) RemoveHandControl(control);
+        var success = TryGetLastButton(out control);
+        if (control != null) RemoveButton(control);
         return success;
     }
 
-    public int HandCount => _grid.ChildCount;
+    public bool IsFull => ButtonCount >= MaxButtonCount;
+
+    public int ButtonCount => _grid.ChildCount;
 
 }

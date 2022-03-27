@@ -10,15 +10,15 @@ public sealed partial class InventoryUIController : UIController
 {
     [Dependency] private IEntityManager _entityManager = default!;
     [UISystemDependency] private ClientInventorySystem? _inventorySystem = default!;
-    [UISystemDependency] private HandsSystem? _handsSystem = default!;
     private readonly Dictionary<string, ItemSlotUIContainer> _slotGroups = new();
     private ClientInventoryComponent? _playerInventoryComponent;
     public ClientInventoryComponent? PlayerInventory => _playerInventoryComponent;
 
-    internal void SetPlayerInvComponent(ClientInventoryComponent? clientInv)
+    public void SetPlayerInvComponent(ClientInventoryComponent? clientInv)
     {
         _playerInventoryComponent = clientInv;
     }
+
 
     public void BlockSlot(string slotName, bool blocked)
     {

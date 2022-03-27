@@ -46,6 +46,7 @@ public interface IHudManager
     public bool HasWidget<T>() where T : HudWidget;
     public bool EscapeMenuVisible { get; set; }
     public Options.UI.EscapeMenu? EscapeMenu { get; }
+    public IUIControllerManager UIControllerManager { get; }
 
     //Do Not abuse these or I will eat you
     public void AddNewControl(Control control);
@@ -64,7 +65,8 @@ public sealed class HudManager  : IHudManager
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
-
+    [Dependency] private readonly IUIControllerManager _uiControllerManager = default!;
+    public IUIControllerManager UIControllerManager => _uiControllerManager;
     private HudPreset? _activeHudPreset;
 
     public HudPreset? ActivePreset => _activeHudPreset;

@@ -9,9 +9,21 @@ namespace Content.Client.UserInterface.Controls;
 public sealed class ItemSlotUIContainer : ItemSlotUIContainer<ItemSlotButton> {}
 
 [Virtual]
-public abstract class ItemSlotUIContainer<T> : BoxContainer where T : ItemSlotButton, new()
+public abstract class ItemSlotUIContainer<T> : BoxContainer where T : ItemSlotButton
 {
     protected readonly Dictionary<string, T> _buttons = new();
+
+    public virtual bool TryAddButton(T newButton, out T button)
+    {
+        var tempButton = AddButton(newButton);
+        if (tempButton == null)
+        {
+            button = newButton;
+            return false;
+        }
+        button = newButton;
+        return true;
+    }
 
     public virtual T? AddButton(T newButton)
     {

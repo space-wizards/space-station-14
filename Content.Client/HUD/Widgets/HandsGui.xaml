@@ -10,5 +10,10 @@
     HorizontalAlignment="Center"
     >
    <BoxContainer>
+       <ui:HandsContainer
+           Name="HandContainer"
+           Access= "Protected"
+           ColumnLimit="6"
+           />
    </BoxContainer>
 </widget:HandsGui>
