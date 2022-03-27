@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using Content.Client.Hands;
+﻿using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
+using Robust.Shared.Input;
 
 namespace Content.Client.UserInterface.Controllers;
 
@@ -24,8 +24,8 @@ public sealed partial class InventoryUIController
         _handsSystem.OnAddHand += AddHand;
         _handsSystem.OnSetActiveHand += SetActiveHand;
         _handsSystem.OnRemoveHand += RemoveHand;
-        //_handsSystem.OnComponentConnected += LoadPlayerHands;
-        //_handsSystem.OnComponentDisconnected += UnloadPlayerHands;
+        _handsSystem.OnComponentConnected += LoadPlayerHands;
+        _handsSystem.OnComponentDisconnected += UnloadPlayerHands;
     }
     private void OnHandsSystemDeactivate()
     {
@@ -33,13 +33,13 @@ public sealed partial class InventoryUIController
         _handsSystem.OnAddHand -= AddHand;
         _handsSystem.OnSetActiveHand -= SetActiveHand;
         _handsSystem.OnRemoveHand -= RemoveHand;
-        //_handsSystem.OnComponentConnected -= LoadPlayerHands;
-        //_handsSystem.OnComponentDisconnected -= UnloadPlayerHands;
+        _handsSystem.OnComponentConnected -= LoadPlayerHands;
+        _handsSystem.OnComponentDisconnected -= UnloadPlayerHands;
     }
 
-    private void OnHandClick(GUIBoundKeyEventArgs args, ItemSlotButton hand)
+    private void OnHandPressed(GUIBoundKeyEventArgs args, ItemSlotButton hand)
     {
-        if (_playerHandsComponent == null) return;
+        if (args.Function != EngineKeyFunctions.UIClick || _playerHandsComponent == null) return;
         _handsSystem.UIHandClick(_playerHandsComponent, hand.SlotName);
     }
 
@@ -151,7 +151,7 @@ public sealed partial class InventoryUIController
     {
         var newHandButton = new HandControl(this, handName, location);
         newHandButton.OnStoragePressed += StorageActivate;
-        newHandButton.OnPressed += OnHandClick;
+        newHandButton.OnPressed += OnHandPressed;
         if (!_handLookup.TryAdd(handName, newHandButton))
             throw new Exception("Tried to add hand with duplicate name to UI. Name:" + handName);
         GetFirstAvailableContainer().AddButton(newHandButton);
