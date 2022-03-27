@@ -1,11 +1,9 @@
-using System;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.CharacterInterface;
 using Content.Client.Chat.Managers;
 using Content.Client.Eui;
 using Content.Client.Flash;
-using Content.Client.Gameplay;
 using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.Input;
@@ -16,18 +14,14 @@ using Content.Client.MobState.Overlays;
 using Content.Client.Parallax;
 using Content.Client.Parallax.Managers;
 using Content.Client.Preferences;
-using Content.Client.Sandbox;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
 using Content.Client.StationEvents;
 using Content.Client.StationEvents.Managers;
 using Content.Client.Stylesheets;
-using Content.Client.UserInterface;
 using Content.Client.Viewport;
 using Content.Client.Voting;
-using Content.Shared.Actions;
 using Content.Shared.Administration;
-using Content.Shared.Alert;
 using Content.Shared.AME;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Chemistry.Components;
@@ -44,10 +38,7 @@ using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.ContentPack;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -87,6 +78,13 @@ namespace Content.Client.Entry
         public override void Init()
         {
             ClientContentIoC.Register();
+
+            foreach (var callback in TestingCallbacks)
+            {
+                var cast = (ClientModuleTestingCallbacks) callback;
+                cast.ClientBeforeIoC?.Invoke();
+            }
+
             IoCManager.BuildGraph();
             IoCManager.InjectDependencies(this);
 
@@ -129,11 +127,6 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("entitySpell");
             _prototypeManager.RegisterIgnore("instantSpell");
 
-            foreach (var callback in TestingCallbacks)
-            {
-                var cast = (ClientModuleTestingCallbacks) callback;
-                cast.ClientBeforeIoC?.Invoke();
-            }
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();
             _parallaxManager.LoadParallax();
