@@ -17,7 +17,7 @@ namespace Content.Client.Ghost.Roles.UI
         {
             _window = new GhostRolesWindow();
 
-            _window.RoleRequested += info =>
+            _window.OnRoleRequested += info =>
             {
                 if (_windowRules != null)
                     _windowRules.Close();
@@ -31,6 +31,11 @@ namespace Content.Client.Ghost.Roles.UI
                     _windowRules = null;
                 };
                 _windowRules.OpenCentered();
+            };
+
+            _window.OnRoleJumped += info =>
+            {
+                SendMessage(new GhostRoleJumpRequestMessage(info.Identifier));
             };
 
             _window.OnClose += () =>

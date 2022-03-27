@@ -36,6 +36,17 @@ namespace Content.Shared.Ghost.Roles
     }
 
     [NetSerializable, Serializable]
+    public sealed class GhostRoleJumpRequestMessage : EuiMessageBase
+    {
+        public uint Identifier { get; }
+
+        public GhostRoleJumpRequestMessage(uint identifier)
+        {
+            Identifier = identifier;
+        }
+    }
+
+    [NetSerializable, Serializable]
     public sealed class GhostRoleWindowCloseMessage : EuiMessageBase
     {
     }

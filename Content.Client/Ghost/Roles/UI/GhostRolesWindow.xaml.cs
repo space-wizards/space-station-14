@@ -8,7 +8,8 @@ namespace Content.Client.Ghost.Roles.UI
     [GenerateTypedNameReferences]
     public sealed partial class GhostRolesWindow : DefaultWindow
     {
-        public event Action<GhostRoleInfo>? RoleRequested;
+        public event Action<GhostRoleInfo>? OnRoleRequested;
+        public event Action<GhostRoleInfo>? OnRoleJumped;
 
         public void ClearEntries()
         {
@@ -21,7 +22,8 @@ namespace Content.Client.Ghost.Roles.UI
             NoRolesMessage.Visible = false;
 
             var entry = new GhostRolesEntry(name, description, roles);
-            entry.OnRoleSelected += RoleRequested;
+            entry.OnRoleSelected += OnRoleRequested;
+            entry.OnRoleJumped += OnRoleJumped;
             EntryContainer.AddChild(entry);
         }
     }

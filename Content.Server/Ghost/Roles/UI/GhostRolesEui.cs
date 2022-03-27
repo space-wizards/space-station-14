@@ -21,7 +21,9 @@ namespace Content.Server.Ghost.Roles.UI
                 case GhostRoleTakeoverRequestMessage req:
                     EntitySystem.Get<GhostRoleSystem>().Takeover(Player, req.Identifier);
                     break;
-
+                case GhostRoleJumpRequestMessage req:
+                    EntitySystem.Get<GhostRoleSystem>().Jump(Player, req.Identifier);
+                    break;
                 case GhostRoleWindowCloseMessage _:
                     Closed();
                     break;
