@@ -10,3 +10,6 @@ ent-SyndieMiniBomb = Syndicate minibomb
 ent-NuclearGrenade = the nuclear option
     .desc = Please don't throw it, think of the children.
     .suffix = { "" }
+ent-ModularGrenade = modular grenade
+    .desc = A grenade casing. Requires a trigger and a payload.
+    .suffix = { "" }

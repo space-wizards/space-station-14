@@ -1,3 +1,6 @@
+ent-BaseBeaker = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+    .suffix = { "" }
 ent-Beaker = мензурка
     .desc = Используется для хранения среднего количества химикатов и растворов.
     .suffix = { "" }
