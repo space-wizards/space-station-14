@@ -64,7 +64,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             if (Spikeable(uid, args.User, args.Dragged, component))
                 TrySpike(uid, args.User, args.Dragged, component);
-                
+
         }
         private void OnInteractHand(EntityUid uid, KitchenSpikeComponent component, InteractHandEvent args)
         {
@@ -92,8 +92,9 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable))
                 return;
 
-            component.MeatPrototype = butcherable.SpawnedPrototype;
-            component.MeatParts = butcherable.Pieces;
+            // TODO VERY SUS
+            component.MeatPrototype = butcherable.SpawnedEntities[0].PrototypeId;
+            component.MeatParts = butcherable.SpawnedEntities[0].Amount;
 
             // This feels not okay, but entity is getting deleted on "Spike", for now...
             component.MeatSource1p = Loc.GetString("comp-kitchen-spike-remove-meat", ("victim", victimUid));
@@ -164,7 +165,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return false;
             }
 
-            if (!Resolve(victimUid, ref butcherable, false) || butcherable.SpawnedPrototype == null)
+            if (!Resolve(victimUid, ref butcherable, false))
             {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victimUid), ("this", uid)), victimUid, Filter.Entities(userUid));
                 return false;
