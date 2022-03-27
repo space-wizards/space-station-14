@@ -1,9 +1,4 @@
 Entries:
-- author: wrexbe
-  changes:
-  - {message: Cloner now tells you why it can't eject., type: Add}
-  id: 753
-  time: '2021-12-20T06:28:50.0000000+00:00'
 - author: Mirino97
   changes:
   - {message: Increased CharacterWindow size to accomodate objectives!, type: Fix}
@@ -3024,3 +3019,8 @@ Entries:
   - {message: You may no longer eat infinite slices of cake., type: Remove}
   id: 1252
   time: '2022-03-27T06:23:33.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Flashlights and flares now last a decent bit longer., type: Tweak}
+  id: 1253
+  time: '2022-03-27T06:29:00.0000000+00:00'
