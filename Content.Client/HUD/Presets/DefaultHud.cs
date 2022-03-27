@@ -13,12 +13,11 @@ public sealed class DefaultHud : HudPreset
 {
     protected override Thickness Margins => new Thickness(10);
 
+
+    //TODO: refactor to support HudPresetZones (Main gamescreen) and sidebar or more!
     protected override void DefinePreset()
     {
         RegisterAllowedState<GameplayState>(); //only allow this hud to initialize during gameplay state (Ie: Ingame not lobby)
-        RegisterLinkedEntitySystem<SandboxSystem>(); //TODO: This is depreciated, use a UIController now
-        RegisterLinkedEntitySystem<CombatModeSystem>(); //TODO: this is depreciated, use a UIController now
-
         RegisterWidget<MenuBar>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.TopLeft,margin: 10);
         RegisterWidget<HandsGui>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.CenterBottom, margin: 10);
         //RegisterWidget<CombatPanelWidget>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.BottomRight);

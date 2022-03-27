@@ -236,9 +236,9 @@ namespace Content.Client.Actions.UI
             _lockButton.OnPressed -= OnLockPressed;
             _settingsButton.OnPressed -= OnToggleActionsMenu;
             _loadoutContainer.OnKeyBindDown -= OnHotbarPaginate;
-            _hudManager.GetUIWidget<MenuBar>().ActionsButtonToggled -= OnToggleActionsMenuTopButton;
-            _hudManager.GetUIWidget<MenuBar>().ActionsButtonDown = false;
-            _hudManager.GetUIWidget<MenuBar>().ActionsButtonVisible = false;
+            //_hudManager.GetUIWidget<MenuBar>().ActionsButtonToggled -= OnToggleActionsMenuTopButton;
+            //_hudManager.GetUIWidget<MenuBar>().ActionsButtonDown = false;
+            //_hudManager.GetUIWidget<MenuBar>().ActionsButtonVisible = false;
         }
 
         protected override void Resized()

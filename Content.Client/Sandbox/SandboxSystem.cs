@@ -1,7 +1,5 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Decals.UI;
-using Content.Client.HUD;
-using Content.Client.HUD.Widgets;
 using Content.Client.Markers;
 using Content.Client.SubFloor;
 using Content.Shared.Administration;
@@ -44,14 +42,13 @@ namespace Content.Client.Sandbox
         public readonly Button ShowMarkersButton; //Shows spawn points
         public readonly Button ShowBbButton; //Shows bounding boxes
         public readonly Button MachineLinkingButton; // Enables/disables machine linking mode.
-        private readonly IHudManager _hudManager;
+
         public delegate void TreeInteract(bool state);
         private readonly TreeInteract? _onMenuInteract;
         public SandboxWindow(TreeInteract? onTreeInteract)
         {
 
             Resizable = false;
-            _hudManager = IoCManager.Resolve<IHudManager>();
             _onMenuInteract = onTreeInteract;
 
             Title = Loc.GetString("sandbox-window-title");
@@ -121,7 +118,7 @@ namespace Content.Client.Sandbox
 
     }
 
-    public sealed class SandboxSystem : SharedSandboxSystem, IHasHudConnection
+    public sealed class SandboxSystem : SharedSandboxSystem
     {
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
@@ -444,23 +441,23 @@ namespace Content.Client.Sandbox
             _consoleHost.ExecuteCommand("signallink");
         }
 
-        public void LinkHudElements(IHudManager hudManager, HudPreset preset)
-        {
-            var buttonBar = preset.GetWidget<MenuBar>();
-            buttonBar.SandboxButtonToggled += SandboxButtonPressed;
-            _onSandboxEnabled += () => { buttonBar.SandboxButtonVisible = true; };
-            _onSandboxDisabled += () => { buttonBar.SandboxButtonVisible = false; };
-            _onMenuInteract += (buttonDown) => { buttonBar.SandboxButtonDown = buttonDown; };
-            CheckStatus();
-
-        }
-        public void UnLinkHudElements(IHudManager hudManager, HudPreset preset)
-        {
-            preset.GetWidget<MenuBar>().SandboxButtonToggled -= SandboxButtonPressed;
-            CheckStatus();
-            _onSandboxEnabled = null;
-            _onSandboxDisabled = null;
-            _onMenuInteract = null;
-        }
+        // public void LinkHudElements(IHudManager hudManager, HudPreset preset)
+        // {
+        //     var buttonBar = preset.GetWidget<MenuBar>();
+        //     buttonBar.SandboxButtonToggled += SandboxButtonPressed;
+        //     _onSandboxEnabled += () => { buttonBar.SandboxButtonVisible = true; };
+        //     _onSandboxDisabled += () => { buttonBar.SandboxButtonVisible = false; };
+        //     _onMenuInteract += (buttonDown) => { buttonBar.SandboxButtonDown = buttonDown; };
+        //     CheckStatus();
+        //
+        // }
+        // public void UnLinkHudElements(IHudManager hudManager, HudPreset preset)
+        // {
+        //     preset.GetWidget<MenuBar>().SandboxButtonToggled -= SandboxButtonPressed;
+        //     CheckStatus();
+        //     _onSandboxEnabled = null;
+        //     _onSandboxDisabled = null;
+        //     _onMenuInteract = null;
+        // }
     }
 }

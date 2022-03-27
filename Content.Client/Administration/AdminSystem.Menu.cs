@@ -21,7 +21,7 @@ using MenuBar = Content.Client.HUD.Widgets.MenuBar;
 
 namespace Content.Client.Administration
 {
-    public sealed partial class AdminSystem: IHasHudConnection
+    public sealed partial class AdminSystem
     {
         [Dependency] private readonly INetManager _netManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
@@ -158,29 +158,6 @@ namespace Content.Client.Administration
             {
                 Close();
             }
-        }
-
-        public void LinkHudElements(IHudManager hudManager, HudPreset preset)
-        {
-            var buttonBar = preset.GetWidget<MenuBar>();
-            buttonBar.AdminButtonToggled += SetupAdminButton;
-            buttonBar.AdminButtonVisible = CanOpen();
-            buttonBar.AdminButtonDown = false;
-            _adminStatusUpdated = () => //I fucking love lambdas
-            {
-                buttonBar.AdminButtonVisible = CanOpen();
-                if (!buttonBar.AdminButtonVisible)
-                {
-                    Close();
-                }
-            };
-        }
-
-        public void UnLinkHudElements(IHudManager hudManager, HudPreset preset)
-        {
-            var buttonBar = preset.GetWidget<MenuBar>();
-            buttonBar.AdminButtonToggled -= SetupAdminButton;
-            _adminStatusUpdated = null;
         }
     }
 }
