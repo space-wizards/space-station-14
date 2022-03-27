@@ -1,11 +1,4 @@
 Entries:
-- author: Fishfish458
-  changes:
-  - {message: Mobs in crit state now gasp., type: Add}
-  - {message: Examined humans will now tell if they are dead or not regardless if
-      the body is still being occupied by a ghost., type: Add}
-  id: 750
-  time: '2021-12-19T22:45:47.0000000+00:00'
 - author: pointer-to-null
   changes:
   - {message: Fixed accumulation of stuttering time., type: Fix}
@@ -3021,3 +3014,9 @@ Entries:
   - {message: The rule popup doesn't show up in local servers anymore., type: Tweak}
   id: 1249
   time: '2022-03-26T19:16:58.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: Nanotrasen has rewritten the laws themselves to allow security officers
+      to brig for up to 10 minutes instead of five., type: Tweak}
+  id: 1250
+  time: '2022-03-27T01:15:21.0000000+00:00'
