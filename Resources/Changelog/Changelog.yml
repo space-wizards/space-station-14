@@ -1,9 +1,4 @@
 Entries:
-- author: ZorenZal
-  changes:
-  - {message: Add checkbox in controls for US QWERTY keys., type: Add}
-  id: 755
-  time: '2021-12-21T09:35:34.0000000+00:00'
 - author: pointer-to-null
   changes:
   - {message: Server info in the game lobby now shows the currently selected map.,
@@ -3025,3 +3020,8 @@ Entries:
       crates, type: Fix}
   id: 1254
   time: '2022-03-27T21:04:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Eating using the verb has been fixed., type: Fix}
+  id: 1255
+  time: '2022-03-27T22:50:49.0000000+00:00'
