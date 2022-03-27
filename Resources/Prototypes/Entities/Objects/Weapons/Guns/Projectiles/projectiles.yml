@@ -64,7 +64,7 @@
       path: /Audio/Weapons/Guns/Hits/snap.ogg
   - type: FlashOnTrigger
     range: 1
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
 

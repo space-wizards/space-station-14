@@ -72,6 +72,18 @@
   name: "Medium / Abandoned Library"
   mapPath: /Maps/Salvage/medium-library.yml
   size: 7.5
+  
+- type: salvageMap
+  id: mediumCargoWreck
+  name: "Medium / Cargo Department Wreck"
+  mapPath: /Maps/Salvage/cargo-1.yml
+  size: 7.5
+  
+- type: salvageMap
+  id: mediumPirateWreck
+  name: "Medium / Pirate Barge Fragment"
+  mapPath: /Maps/Salvage/medium-pirate.yml
+  size: 7.5
 
 - type: salvageMap
   id: mediumShuttleWreck

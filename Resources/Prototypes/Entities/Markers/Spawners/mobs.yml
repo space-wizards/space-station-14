@@ -17,21 +17,6 @@
       - MobMouse2
 
 - type: entity
-  name: Cat Spawner
-  id: SpawnMobCat
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: green
-      - state: ai
-  - type: ConditionalSpawner
-    prototypes:
-      - MobCat
-      - MobCatCalico
-      - MobCatCaracal
-
-- type: entity
   name: Corgi Spawner
   id: SpawnMobCorgi
   parent: MarkerBase
@@ -71,8 +56,6 @@
     prototypes:
       - MobRaccoonMorticia
 
-## Player-controlled
-
 - type: entity
   name: Drone Spawner
   id: SpawnMobDrone
@@ -100,6 +83,88 @@
       - MobFoxRenault
 
 - type: entity
+  name: Runtime Spawner
+  id: SpawnMobCatRuntime
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatRuntime
+      
+- type: entity
+  name: Exception Spawner
+  id: SpawnMobCatException
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatException
+
+- type: entity
+  name: Floppa Spawner
+  id: SpawnMobCatFloppa
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatFloppa
+
+- type: entity
+  name: Cat Spawner
+  id: SpawnMobCat
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatRuntime
+      - MobCatException
+      - MobCatFloppa
+
+- type: entity
+  name: Generic Cat Spawner
+  id: SpawnMobCatGeneric
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCat
+      - MobCatCalico
+      - MobCatCaracal
+
+- type: entity
+  name: Bandito Spawner
+  id: SpawnMobBandito
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobBandito
+  
+- type: entity
   name:  McGriff Spawner
   id: SpawnMobMcGriff
   parent: MarkerBase
@@ -111,7 +176,7 @@
   - type: ConditionalSpawner
     prototypes:
       - MobMcGriff
-      
+
 - type: entity
   name: Sloth Paperwork Spawner
   id: SpawnMobSlothPaperwork
@@ -124,7 +189,7 @@
   - type: ConditionalSpawner
     prototypes:
       - MobPaperwork
-      
+
 - type: entity
   name: Walter Spawner
   id: SpawnMobWalter
