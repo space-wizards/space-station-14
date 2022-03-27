@@ -198,18 +198,3 @@
     sprite: Clothing/OuterClothing/Misc/skubbody.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/skubbody.rsi
-
-- type: entity
-  parent: ClothingOuterBase
-  id: ClothingOuterWehKigu
-  name: lizard kigu
-  description: A delightful piece of japanese nightwear in the design of a loveable lizard.
-  components:
-  - type: Tag
-    tags:
-    - HidesHair
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/wehkigu.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/wehkigu.rsi
-  
