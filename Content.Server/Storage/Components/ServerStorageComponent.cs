@@ -256,14 +256,14 @@ namespace Content.Server.Storage.Components
 
             if (!handSys.TryDrop(player, toInsert.Value, handsComp: hands))
             {
-                Owner.PopupMessage(player, "Can't insert.");
+                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
                 return false;
             }
 
             if (!Insert(toInsert.Value))
             {
                 handSys.PickupOrDrop(player, toInsert.Value, handsComp: hands);
-                Owner.PopupMessage(player, "Can't insert.");
+                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
                 return false;
             }
 
@@ -282,7 +282,7 @@ namespace Content.Server.Storage.Components
 
             if (!Insert(toInsert))
             {
-                Owner.PopupMessage(player, "Can't insert.");
+                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
                 return false;
             }
             return true;
