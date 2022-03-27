@@ -82,6 +82,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
         [Dependency] private readonly IUIControllerManager _uiControllerManager = default!;
+        [Dependency] private readonly NetworkResourceManager _networkResources = default!;
 
         public override void Init()
         {
@@ -201,6 +202,8 @@ namespace Content.Client.Entry
             _euiManager.Initialize();
             _voteManager.Initialize();
             _gamePrototypeLoadManager.Initialize();
+            _networkResources.Initialize();
+
             _baseClient.RunLevelChanged += (_, args) =>
             {
                 if (args.NewLevel == ClientRunLevel.Initialize)

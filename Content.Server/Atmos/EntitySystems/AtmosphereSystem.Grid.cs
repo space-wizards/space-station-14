@@ -195,11 +195,23 @@ namespace Content.Server.Atmos.EntitySystems
         /// <returns></returns>
         public IEnumerable<AirtightComponent> GetObstructingComponents(IMapGrid mapGrid, Vector2i tile)
         {
-            foreach (var uid in mapGrid.GetAnchoredEntities(tile))
+            var airQuery = GetEntityQuery<AirtightComponent>();
+            var enumerator = mapGrid.GetAnchoredEntitiesEnumerator(tile);
+
+            while (enumerator.MoveNext(out var uid))
             {
-                if (TryComp<AirtightComponent>(uid, out var ac))
-                    yield return ac;
+                if (!airQuery.TryGetComponent(uid.Value, out var airtight)) continue;
+                yield return airtight;
             }
+        }
+
+        public AtmosObstructionEnumerator GetObstructingComponentsEnumerator(IMapGrid mapGrid, Vector2i tile)
+        {
+            var ancEnumerator = mapGrid.GetAnchoredEntitiesEnumerator(tile);
+            var airQuery = GetEntityQuery<AirtightComponent>();
+
+            var enumerator = new AtmosObstructionEnumerator(ancEnumerator, airQuery);
+            return enumerator;
         }
 
         private AtmosDirection GetBlockedDirections(IMapGrid mapGrid, Vector2i indices)
@@ -717,7 +729,9 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var directions = AtmosDirection.Invalid;
 
-            foreach (var obstructingComponent in GetObstructingComponents(mapGrid, tile))
+            var enumerator = GetObstructingComponentsEnumerator(mapGrid, tile);
+
+            while (enumerator.MoveNext(out var obstructingComponent))
             {
                 if (!obstructingComponent.AirBlocked)
                     continue;
