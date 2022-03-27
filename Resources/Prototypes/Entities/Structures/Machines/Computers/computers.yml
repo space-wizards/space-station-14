@@ -104,7 +104,7 @@
     visuals:
     - type: ComputerVisualizer
       key: security_key
-      screen: security
+      screen: explosive
   - type: PointLight
     radius: 1.5
     energy: 1.6
