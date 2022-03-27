@@ -49,7 +49,7 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandControl>
         return success;
     }
 
-    public bool IsFull => ButtonCount >= MaxButtonCount;
+    public bool IsFull => (MaxButtonCount != 0 && ButtonCount >= MaxButtonCount);
 
     public int ButtonCount => _grid.ChildCount;
 

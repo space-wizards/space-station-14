@@ -19,24 +19,21 @@ public sealed partial class InventoryUIController
 
     private void OnHandsSystemActivate()
     {
-        Logger.Debug("HandsActive");
-        if (_handsSystem.TryGetPlayerHands(out _playerHandsComponent)) LoadPlayerHands(_playerHandsComponent);
         _onStorageActivate += _handsSystem.UIHandActivate;
         _handsSystem.OnAddHand += AddHand;
         _handsSystem.OnSetActiveHand += SetActiveHand;
         _handsSystem.OnRemoveHand += RemoveHand;
-        _handsSystem.OnComponentConnected += LoadPlayerHands;
-        _handsSystem.OnComponentDisconnected += UnloadPlayerHands;
+        //_handsSystem.OnComponentConnected += LoadPlayerHands;
+        //_handsSystem.OnComponentDisconnected += UnloadPlayerHands;
     }
     private void OnHandsSystemDeactivate()
     {
-        Logger.Debug("HandsInactive");
         _onStorageActivate -= _handsSystem.UIHandActivate;
         _handsSystem.OnAddHand -= AddHand;
         _handsSystem.OnSetActiveHand -= SetActiveHand;
         _handsSystem.OnRemoveHand -= RemoveHand;
-        _handsSystem.OnComponentConnected -= LoadPlayerHands;
-        _handsSystem.OnComponentDisconnected -= UnloadPlayerHands;
+        //_handsSystem.OnComponentConnected -= LoadPlayerHands;
+        //_handsSystem.OnComponentDisconnected -= UnloadPlayerHands;
     }
 
     private void UnloadPlayerHands()
