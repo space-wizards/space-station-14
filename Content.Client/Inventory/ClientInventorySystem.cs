@@ -2,12 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Client.Clothing;
-using Content.Client.HUD;
-using Content.Client.HUD.Widgets;
 using Content.Shared.Input;
-using Content.Client.UserInterface.Controllers;
 using Content.Client.UserInterface.Controls;
-using Content.Shared.CCVar;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -15,23 +11,16 @@ using Content.Shared.Item;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Content.Shared.Interaction.Events;
-using Container = Robust.Shared.Containers.Container;
 
 namespace Content.Client.Inventory
 {
-    [UsedImplicitly] //TODO: unfuck this
+    [UsedImplicitly]
     public sealed class ClientInventorySystem : InventorySystem
     {
         //[Dependency] private readonly IHudManager _hudManager = default!;
@@ -126,6 +115,7 @@ namespace Content.Client.Inventory
         }
         public void UpdateSlot(ClientInventoryComponent component,string slotName,bool? blocked = null, bool? highlight = null)
         {
+
             var oldData = component.SlotData[slotName];
             var newHighlight = oldData.Highlighted;
             var newBlocked = oldData.Blocked;

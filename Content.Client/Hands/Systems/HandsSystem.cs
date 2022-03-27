@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Client.Animations;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;

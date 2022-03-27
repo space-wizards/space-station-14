@@ -1,7 +1,6 @@
 ﻿using Content.Client.Hands;
 using Content.Client.Inventory;
 using Content.Client.UserInterface.Controls;
-using Robust.Client.State;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Controllers;
