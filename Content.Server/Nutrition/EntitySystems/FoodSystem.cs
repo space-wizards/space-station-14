@@ -254,7 +254,7 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 Act = () =>
                 {
-                    TryFeed(uid, ev.User, component);
+                    TryFeed(ev.User, ev.User, component);
                 },
                 IconTexture = "/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png",
                 Text = Loc.GetString("food-system-verb-eat"),
