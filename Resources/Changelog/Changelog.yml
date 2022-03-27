@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Added kangaroos., type: Add}
-  id: 752
-  time: '2021-12-20T06:16:25.0000000+00:00'
 - author: wrexbe
   changes:
   - {message: Cloner now tells you why it can't eject., type: Add}
@@ -3024,3 +3019,8 @@ Entries:
       it with cola. They are now dead and the cola is irradiated., type: Add}
   id: 1251
   time: '2022-03-27T06:15:19.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: You may no longer eat infinite slices of cake., type: Remove}
+  id: 1252
+  time: '2022-03-27T06:23:33.0000000+00:00'
