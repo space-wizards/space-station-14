@@ -67,6 +67,18 @@ namespace Content.Client.UserInterface.Controls
                 StorageButton.TextureNormal = Theme.ResolveTexture(_storageTexturePath);
             }
         }
+
+        private string _highlightTexturePath = "";
+        public string HighlightTexturePath
+        {
+            get => _highlightTexturePath;
+            set
+            {
+                _highlightTexturePath = value;
+                HighlightRect.Texture = Theme.ResolveTexture(_highlightTexturePath);
+            }
+        }
+
         public Action<GUIBoundKeyEventArgs, ItemSlotButton>? OnPressed { get; set; }
         public Action<GUIBoundKeyEventArgs, ItemSlotButton>? OnStoragePressed { get; set; }
         public Action<GUIMouseHoverEventArgs, ItemSlotButton>? OnHover { get; set; }
@@ -152,6 +164,8 @@ namespace Content.Client.UserInterface.Controls
                 MouseFilter = MouseFilterMode.Stop,
                 Visible = false
             });
+
+            HighlightTexturePath = "slot_highlight.png";
         }
 
         public void UpdateSprite(SpriteComponent? sprite)
@@ -197,6 +211,7 @@ namespace Content.Client.UserInterface.Controls
         {
             StorageButton.TextureNormal = Theme.ResolveTexture(_storageTexturePath);
             Button.Texture = Theme.ResolveTexture(_buttonTexturePath);
+            HighlightRect.Texture = Theme.ResolveTexture(_highlightTexturePath);
         }
     }
 }
