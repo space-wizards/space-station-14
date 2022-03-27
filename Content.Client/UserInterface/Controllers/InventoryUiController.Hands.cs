@@ -2,6 +2,7 @@
 using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands.Components;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Controllers;
@@ -36,6 +37,12 @@ public sealed partial class InventoryUIController
         //_handsSystem.OnComponentDisconnected -= UnloadPlayerHands;
     }
 
+    private void OnHandClick(GUIBoundKeyEventArgs args, ItemSlotButton hand)
+    {
+        if (_playerHandsComponent == null) return;
+        _handsSystem.UIHandClick(_playerHandsComponent, hand.SlotName);
+    }
+
     private void UnloadPlayerHands()
     {
         foreach (var container in _handsContainers)
@@ -64,6 +71,13 @@ public sealed partial class InventoryUIController
     {
         if (!_handContainerIndices.TryGetValue(containerName, out var result)) return -1;
         return result;
+    }
+
+    private void UpdateButtonSprite(string name, ISpriteComponent? spriteComp)
+    {
+        var hand = GetHand(name);
+        if (hand == null|| spriteComp == null) return;
+        hand.SpriteView.Sprite = spriteComp;
     }
 
     private HandsContainer GetFirstAvailableContainer()
@@ -137,6 +151,7 @@ public sealed partial class InventoryUIController
     {
         var newHandButton = new HandControl(this, handName, location);
         newHandButton.OnStoragePressed += StorageActivate;
+        newHandButton.OnPressed += OnHandClick;
         if (!_handLookup.TryAdd(handName, newHandButton))
             throw new Exception("Tried to add hand with duplicate name to UI. Name:" + handName);
         GetFirstAvailableContainer().AddButton(newHandButton);

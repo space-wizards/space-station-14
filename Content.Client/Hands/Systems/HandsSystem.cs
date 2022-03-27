@@ -26,6 +26,7 @@ namespace Content.Client.Hands
         public Action<string?>? OnSetActiveHand = null;
         public Action<HandsComponent>? OnComponentConnected = null;
         public Action? OnComponentDisconnected = null;
+        public Action<ISpriteComponent?>? OnSpriteUpdate = null;
 
         public override void Initialize()
         {
@@ -50,7 +51,6 @@ namespace Content.Client.Hands
         {
             if (args.Current is not HandsComponentState state)
                 return;
-
             var handsModified = component.Hands.Count != state.Hands.Count;
             var manager = EnsureComp<ContainerManagerComponent>(uid);
             if (handsModified)
@@ -195,7 +195,7 @@ namespace Content.Client.Hands
             if (!Resolve(uid, ref handComp, ref sprite, false))
                 return;
 
-            //if (uid == _playerManager.LocalPlayer?.ControlledEntity) _handsManager?.UpdateHandGui(hand);
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity) OnSpriteUpdate?.Invoke(sprite);
 
             if (!handComp.ShowInHands)
                 return;
@@ -293,7 +293,7 @@ namespace Content.Client.Hands
         public override void AddHand(EntityUid uid, string handName, HandLocation handLocation, SharedHandsComponent? handsComp = null)
         {
             base.AddHand(uid, handName, handLocation, handsComp);
-            OnAddHand?.Invoke(handName, handLocation);
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity) OnAddHand?.Invoke(handName, handLocation);
             if (handsComp == null) return;
             if (handsComp.ActiveHand == null)
             {
@@ -306,7 +306,7 @@ namespace Content.Client.Hands
             {
                 if (handsComp.Hands.TryGetValue(handName, out var hand))
                 {
-                    OnRemoveHand?.Invoke(handName);
+                    if (uid == _playerManager.LocalPlayer?.ControlledEntity) OnRemoveHand?.Invoke(handName);
                 }
             }
             base.RemoveHand(uid, handName, handsComp);
