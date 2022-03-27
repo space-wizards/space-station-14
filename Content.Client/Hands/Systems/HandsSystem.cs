@@ -26,14 +26,14 @@ namespace Content.Client.Hands
         public Action<string?>? OnSetActiveHand = null;
         public Action<HandsComponent>? OnComponentConnected = null;
         public Action? OnComponentDisconnected = null;
-        public Action<ISpriteComponent?>? OnSpriteUpdate = null;
+        public Action<string,ISpriteComponent?>? OnSpriteUpdate = null;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleContainerModified);
-            SubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleContainerModified);
+            SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleItemRemoved);
+            SubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleItemAdded);
 
             SubscribeLocalEvent<HandsComponent, PlayerAttachedEvent>(HandlePlayerAttached);
             SubscribeLocalEvent<HandsComponent, PlayerDetachedEvent>(HandlePlayerDetached);
@@ -179,12 +179,22 @@ namespace Content.Client.Hands
         }
 
         #region visuals
-        private void HandleContainerModified(EntityUid uid, SharedHandsComponent handComp, ContainerModifiedMessage args)
+
+        private void HandleItemAdded(EntityUid uid, SharedHandsComponent handComp, ContainerModifiedMessage args)
         {
-            if (handComp.Hands.TryGetValue(args.Container.ID, out var hand))
-            {
-                UpdateHandVisuals(uid, args.Entity, hand);
-            }
+            if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand)) return;
+            UpdateHandVisuals(uid, args.Entity, hand);
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity) return;
+            EntityManager.TryGetComponent(args.Entity, out ISpriteComponent? sprite);
+            OnSpriteUpdate?.Invoke(hand.Name,sprite);
+        }
+
+        private void HandleItemRemoved(EntityUid uid, SharedHandsComponent handComp, ContainerModifiedMessage args)
+        {
+            if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand)) return;
+            UpdateHandVisuals(uid, args.Entity, hand);
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity) return;
+            OnSpriteUpdate?.Invoke(hand.Name,null);
         }
 
         /// <summary>
@@ -194,8 +204,6 @@ namespace Content.Client.Hands
         {
             if (!Resolve(uid, ref handComp, ref sprite, false))
                 return;
-
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity) OnSpriteUpdate?.Invoke(sprite);
 
             if (!handComp.ShowInHands)
                 return;

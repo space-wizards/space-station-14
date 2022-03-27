@@ -32,7 +32,7 @@ using Container = Robust.Shared.Containers.Container;
 namespace Content.Client.Inventory
 {
     [UsedImplicitly] //TODO: unfuck this
-    public sealed class ClientInventorySystem : InventorySystem, IUILink
+    public sealed class ClientInventorySystem : InventorySystem
     {
         //[Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -224,24 +224,6 @@ namespace Content.Client.Inventory
                 return s.SlotDef;
             }
 
-        }
-
-        public void OnLink(UIController controller)
-        {
-            if (controller is InventoryUIController invController)
-            {
-                OnLinkInventory += invController.SetPlayerInvComponent;
-                OnUnlinkInventory += invController.SetPlayerInvComponent;
-            }
-        }
-
-        public void OnUnlink(UIController controller)
-        {
-            if (controller is InventoryUIController invController)
-            {
-                OnLinkInventory -= invController.SetPlayerInvComponent;
-                OnUnlinkInventory -= invController.SetPlayerInvComponent;
-            }
         }
     }
 }

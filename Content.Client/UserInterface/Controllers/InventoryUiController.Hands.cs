@@ -1,6 +1,7 @@
 ﻿using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands.Components;
+using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
@@ -22,6 +23,7 @@ public sealed partial class InventoryUIController
     {
         _onStorageActivate += _handsSystem.UIHandActivate;
         _handsSystem.OnAddHand += AddHand;
+        _handsSystem.OnSpriteUpdate += UpdateButtonSprite;
         _handsSystem.OnSetActiveHand += SetActiveHand;
         _handsSystem.OnRemoveHand += RemoveHand;
         _handsSystem.OnComponentConnected += LoadPlayerHands;
@@ -31,6 +33,7 @@ public sealed partial class InventoryUIController
     {
         _onStorageActivate -= _handsSystem.UIHandActivate;
         _handsSystem.OnAddHand -= AddHand;
+        _handsSystem.OnSpriteUpdate -= UpdateButtonSprite;
         _handsSystem.OnSetActiveHand -= SetActiveHand;
         _handsSystem.OnRemoveHand -= RemoveHand;
         _handsSystem.OnComponentConnected -= LoadPlayerHands;
@@ -76,7 +79,7 @@ public sealed partial class InventoryUIController
     private void UpdateButtonSprite(string name, ISpriteComponent? spriteComp)
     {
         var hand = GetHand(name);
-        if (hand == null|| spriteComp == null) return;
+        if (hand == null) return;
         hand.SpriteView.Sprite = spriteComp;
     }
 
