@@ -70,146 +70,366 @@ grids:
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAsAAAALAAAACwAAAAxAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAALAAAADEAAAAsAAAALAAAACwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAACwAAAAsAAAALAAAACwAAAAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAsAAAALAAAACwAAAAsAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAMQAAADEAAAAsAAAALAAAACwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAMAAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAMAAAAAAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
-  type: Grille
+  type: WallReinforced
   components:
-  - pos: -0.5,3.5
-    parent: 20
+  - pos: 2.5,-1.5
+    parent: 53
     type: Transform
 - uid: 1
-  type: RandomArtifactSpawner
+  type: WallReinforced
   components:
-  - pos: -2.5,0.5
-    parent: 20
+  - pos: 1.5,0.5
+    parent: 53
     type: Transform
 - uid: 2
-  type: ShardGlassReinforced
+  type: SalvageMaterialCrateSpawner
   components:
-  - pos: 0.53125,2.21875
-    parent: 20
+  - pos: -4.5,-1.5
+    parent: 53
     type: Transform
 - uid: 3
-  type: ShardGlassReinforced
+  type: SalvageCanisterSpawner
   components:
-  - pos: 0.96875,2.421875
-    parent: 20
+  - pos: -4.5,0.5
+    parent: 53
     type: Transform
 - uid: 4
-  type: FlareGun
+  type: ReinforcedWindow
   components:
-  - pos: -3.609375,2.629901
-    parent: 20
+  - pos: -4.5,3.5
+    parent: 53
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 5
-  type: BoxBeanbag
+  type: ConveyorBeltAssembly
   components:
-  - pos: -4.421875,2.645526
-    parent: 20
+  - pos: 0.57671773,0.40495777
+    parent: 53
     type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6
-  type: TableReinforced
+  type: ConveyorBelt
   components:
-  - pos: -3.5,2.5
-    parent: 20
+  - rot: 3.141592653589793 rad
+    pos: -2.5,-0.5
+    parent: 53
     type: Transform
 - uid: 7
-  type: TableReinforced
+  type: ConveyorBelt
   components:
-  - pos: -4.5,2.5
-    parent: 20
+  - rot: 3.141592653589793 rad
+    pos: -2.5,0.5
+    parent: 53
     type: Transform
 - uid: 8
   type: ConveyorBelt
   components:
-  - pos: -2.5,-1.5
-    parent: 20
+  - rot: 3.141592653589793 rad
+    pos: -2.5,1.5
+    parent: 53
     type: Transform
 - uid: 9
-  type: MaintenanceToolSpawner
+  type: WardrobeCargoFilled
   components:
-  - pos: -4.5,4.5
-    parent: 20
+  - pos: 0.5,-0.5
+    parent: 53
     type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 10
-  type: CrateFilledSpawner
+  type: Grille
   components:
-  - pos: 1.5,4.5
-    parent: 20
+  - pos: 1.5,3.5
+    parent: 53
     type: Transform
 - uid: 11
-  type: MaintenanceWeaponSpawner
+  type: SalternAPC
   components:
-  - pos: -0.5,0.5
-    parent: 20
+  - pos: 1.5,0.5
+    parent: 53
     type: Transform
 - uid: 12
-  type: SalvageMobSpawner75
+  type: CableApcExtension
   components:
-  - pos: -0.5,5.5
-    parent: 20
+  - pos: 1.5,0.5
+    parent: 53
     type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
 - uid: 13
-  type: SalvageMobSpawner
+  type: CableApcExtension
   components:
-  - pos: -2.5,-2.5
-    parent: 20
+  - pos: 1.5,1.5
+    parent: 53
     type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
 - uid: 14
-  type: SalvageMobSpawner75
+  type: CableApcExtension
   components:
-  - pos: -0.5,-1.5
-    parent: 20
+  - pos: -1.5,-0.5
+    parent: 53
     type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
 - uid: 15
-  type: TableReinforced
+  type: CableApcExtension
   components:
-  - pos: -1.5,3.5
-    parent: 20
+  - pos: 0.5,-0.5
+    parent: 53
     type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
 - uid: 16
-  type: SmallLight
+  type: CableApcExtension
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 4.5,1.5
-    parent: 20
+  - pos: 1.5,0.5
+    parent: 53
     type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
 - uid: 17
-  type: Poweredlight
+  type: AirlockEngineeringLocked
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -4.5,1.5
-    parent: 20
+  - pos: 2.5,0.5
+    parent: 53
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 18
-  type: Poweredlight
+  type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 2.5,1.5
-    parent: 20
+  - pos: 1.5,-0.5
+    parent: 53
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 19
-  type: SalvageCanisterSpawner
+  type: WallReinforced
   components:
-  - pos: -4.5,1.5
-    parent: 20
+  - pos: 1.5,-1.5
+    parent: 53
     type: Transform
 - uid: 20
+  type: CrateSalvageEquipment
+  components:
+  - pos: -2.5,2.5
+    parent: 53
+    type: Transform
+  - containers:
+    - {}
+    type: Construction
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+      PaperLabel: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 21
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: -4.5,-0.5
+    parent: 53
+    type: Transform
+- uid: 22
+  type: Windoor
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -1.5,3.5
+    parent: 53
+    type: Transform
+- uid: 23
+  type: WindoorSecureCargoLocked
+  components:
+  - pos: -1.5,3.5
+    parent: 53
+    type: Transform
+- uid: 24
+  type: AirlockMaintCargoLocked
+  components:
+  - pos: 3.5,2.5
+    parent: 53
+    type: Transform
+- uid: 25
+  type: SignCargo
+  components:
+  - pos: 3.5,4.5
+    parent: 53
+    type: Transform
+- uid: 26
+  type: SignCargo
+  components:
+  - pos: -5.5,4.5
+    parent: 53
+    type: Transform
+- uid: 27
+  type: ComputerBroken
+  components:
+  - pos: -0.5,2.5
+    parent: 53
+    type: Transform
+- uid: 28
+  type: ReinforcedWindow
+  components:
+  - pos: 2.5,3.5
+    parent: 53
+    type: Transform
+- uid: 29
+  type: ReinforcedWindow
+  components:
+  - pos: 1.5,3.5
+    parent: 53
+    type: Transform
+- uid: 30
+  type: GrilleBroken
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 0.5,3.5
+    parent: 53
+    type: Transform
+- uid: 31
+  type: ReinforcedWindow
+  components:
+  - pos: -0.5,3.5
+    parent: 53
+    type: Transform
+- uid: 32
+  type: ReinforcedWindow
+  components:
+  - pos: -2.5,3.5
+    parent: 53
+    type: Transform
+- uid: 33
+  type: ReinforcedWindow
+  components:
+  - pos: -3.5,3.5
+    parent: 53
+    type: Transform
+- uid: 34
+  type: Grille
+  components:
+  - pos: -2.5,3.5
+    parent: 53
+    type: Transform
+- uid: 35
+  type: Grille
+  components:
+  - pos: -3.5,3.5
+    parent: 53
+    type: Transform
+- uid: 36
+  type: GrilleBroken
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,3.5
+    parent: 53
+    type: Transform
+- uid: 37
+  type: WallSolid
+  components:
+  - pos: -5.5,-0.5
+    parent: 53
+    type: Transform
+- uid: 38
+  type: WallSolid
+  components:
+  - pos: -5.5,4.5
+    parent: 53
+    type: Transform
+- uid: 39
+  type: WallSolid
+  components:
+  - pos: -5.5,2.5
+    parent: 53
+    type: Transform
+- uid: 40
+  type: WallSolid
+  components:
+  - pos: -5.5,0.5
+    parent: 53
+    type: Transform
+- uid: 41
+  type: WallSolid
+  components:
+  - pos: -5.5,1.5
+    parent: 53
+    type: Transform
+- uid: 42
+  type: WallSolid
+  components:
+  - pos: 3.5,4.5
+    parent: 53
+    type: Transform
+- uid: 43
+  type: WallSolid
+  components:
+  - pos: 3.5,1.5
+    parent: 53
+    type: Transform
+- uid: 44
+  type: WallSolid
+  components:
+  - pos: 3.5,3.5
+    parent: 53
+    type: Transform
+- uid: 45
+  type: WallSolid
+  components:
+  - pos: 3.5,-2.5
+    parent: 53
+    type: Transform
+- uid: 46
+  type: WallReinforced
+  components:
+  - pos: 3.5,0.5
+    parent: 53
+    type: Transform
+- uid: 47
+  type: WallReinforced
+  components:
+  - pos: 3.5,-0.5
+    parent: 53
+    type: Transform
+- uid: 48
+  type: Grille
+  components:
+  - pos: 2.5,3.5
+    parent: 53
+    type: Transform
+- uid: 49
+  type: WallSolid
+  components:
+  - pos: -5.5,3.5
+    parent: 53
+    type: Transform
+- uid: 50
+  type: WallSolid
+  components:
+  - pos: -5.5,2.5
+    parent: 53
+    type: Transform
+- uid: 51
+  type: WallSolid
+  components:
+  - pos: -5.5,-1.5
+    parent: 53
+    type: Transform
+- uid: 52
+  type: WallReinforced
+  components:
+  - pos: 3.5,-1.5
+    parent: 53
+    type: Transform
+- uid: 53
   components:
   - pos: 0.5,0.5
     parent: null
@@ -469,359 +689,156 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-- uid: 21
-  type: WallReinforced
-  components:
-  - pos: 3.5,-1.5
-    parent: 20
-    type: Transform
-- uid: 22
-  type: WallSolid
-  components:
-  - pos: -5.5,-1.5
-    parent: 20
-    type: Transform
-- uid: 23
-  type: WallSolid
-  components:
-  - pos: -5.5,2.5
-    parent: 20
-    type: Transform
-- uid: 24
-  type: WallSolid
-  components:
-  - pos: -5.5,3.5
-    parent: 20
-    type: Transform
-- uid: 25
-  type: Grille
-  components:
-  - pos: 2.5,3.5
-    parent: 20
-    type: Transform
-- uid: 26
-  type: WallReinforced
-  components:
-  - pos: 3.5,-0.5
-    parent: 20
-    type: Transform
-- uid: 27
-  type: WallReinforced
-  components:
-  - pos: 3.5,0.5
-    parent: 20
-    type: Transform
-- uid: 28
-  type: WallSolid
-  components:
-  - pos: 3.5,-2.5
-    parent: 20
-    type: Transform
-- uid: 29
-  type: WallSolid
-  components:
-  - pos: 3.5,3.5
-    parent: 20
-    type: Transform
-- uid: 30
-  type: WallSolid
-  components:
-  - pos: 3.5,1.5
-    parent: 20
-    type: Transform
-- uid: 31
-  type: WallSolid
-  components:
-  - pos: 3.5,4.5
-    parent: 20
-    type: Transform
-- uid: 32
-  type: WallSolid
-  components:
-  - pos: -5.5,1.5
-    parent: 20
-    type: Transform
-- uid: 33
-  type: WallSolid
-  components:
-  - pos: -5.5,0.5
-    parent: 20
-    type: Transform
-- uid: 34
-  type: WallSolid
-  components:
-  - pos: -5.5,2.5
-    parent: 20
-    type: Transform
-- uid: 35
-  type: WallSolid
-  components:
-  - pos: -5.5,4.5
-    parent: 20
-    type: Transform
-- uid: 36
-  type: WallSolid
-  components:
-  - pos: -5.5,-0.5
-    parent: 20
-    type: Transform
-- uid: 37
-  type: GrilleBroken
+- uid: 54
+  type: Poweredlight
   components:
   - rot: -1.5707963267948966 rad
-    pos: 0.5,3.5
-    parent: 20
+    pos: 2.5,1.5
+    parent: 53
     type: Transform
-- uid: 38
-  type: Grille
-  components:
-  - pos: -3.5,3.5
-    parent: 20
-    type: Transform
-- uid: 39
-  type: Grille
-  components:
-  - pos: -2.5,3.5
-    parent: 20
-    type: Transform
-- uid: 40
-  type: ReinforcedWindow
-  components:
-  - pos: -3.5,3.5
-    parent: 20
-    type: Transform
-- uid: 41
-  type: ReinforcedWindow
-  components:
-  - pos: -2.5,3.5
-    parent: 20
-    type: Transform
-- uid: 42
-  type: ReinforcedWindow
-  components:
-  - pos: -0.5,3.5
-    parent: 20
-    type: Transform
-- uid: 43
-  type: GrilleBroken
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 55
+  type: Poweredlight
   components:
   - rot: 1.5707963267948966 rad
-    pos: 0.5,3.5
-    parent: 20
+    pos: -4.5,1.5
+    parent: 53
     type: Transform
-- uid: 44
-  type: ReinforcedWindow
-  components:
-  - pos: 1.5,3.5
-    parent: 20
-    type: Transform
-- uid: 45
-  type: ReinforcedWindow
-  components:
-  - pos: 2.5,3.5
-    parent: 20
-    type: Transform
-- uid: 46
-  type: ComputerBroken
-  components:
-  - pos: -0.5,2.5
-    parent: 20
-    type: Transform
-- uid: 47
-  type: SignCargo
-  components:
-  - pos: -5.5,4.5
-    parent: 20
-    type: Transform
-- uid: 48
-  type: SignCargo
-  components:
-  - pos: 3.5,4.5
-    parent: 20
-    type: Transform
-- uid: 49
-  type: AirlockMaintCargoLocked
-  components:
-  - pos: 3.5,2.5
-    parent: 20
-    type: Transform
-- uid: 50
-  type: WindoorSecureCargoLocked
-  components:
-  - pos: -1.5,3.5
-    parent: 20
-    type: Transform
-- uid: 51
-  type: Windoor
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -1.5,3.5
-    parent: 20
-    type: Transform
-- uid: 52
-  type: SalvageMaterialCrateSpawner
-  components:
-  - pos: -4.5,-0.5
-    parent: 20
-    type: Transform
-- uid: 53
-  type: CrateSalvageEquipment
-  components:
-  - pos: -2.5,2.5
-    parent: 20
-    type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      PaperLabel: !type:ContainerSlot {}
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 54
-  type: WallReinforced
-  components:
-  - pos: 1.5,-1.5
-    parent: 20
-    type: Transform
-- uid: 55
-  type: WallReinforced
-  components:
-  - pos: 1.5,-0.5
-    parent: 20
-    type: Transform
 - uid: 56
-  type: AirlockEngineeringLocked
+  type: SmallLight
   components:
-  - pos: 2.5,0.5
-    parent: 20
+  - rot: 1.5707963267948966 rad
+    pos: 4.5,1.5
+    parent: 53
     type: Transform
 - uid: 57
-  type: CableApcExtension
+  type: TableReinforced
   components:
-  - pos: 1.5,0.5
-    parent: 20
+  - pos: -1.5,3.5
+    parent: 53
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 58
-  type: CableApcExtension
+  type: SalvageMobSpawner75
   components:
-  - pos: 0.5,-0.5
-    parent: 20
+  - pos: -0.5,-1.5
+    parent: 53
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 59
-  type: CableApcExtension
+  type: SalvageMobSpawner
   components:
-  - pos: -1.5,-0.5
-    parent: 20
+  - pos: -2.5,-2.5
+    parent: 53
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 60
-  type: CableApcExtension
+  type: SalvageMobSpawner75
   components:
-  - pos: 1.5,1.5
-    parent: 20
+  - pos: -0.5,5.5
+    parent: 53
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 61
-  type: CableApcExtension
+  type: MaintenanceWeaponSpawner
   components:
-  - pos: 1.5,0.5
-    parent: 20
+  - pos: -0.5,0.5
+    parent: 53
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 62
-  type: SalternAPC
+  type: CrateFilledSpawner
   components:
-  - pos: 1.5,0.5
-    parent: 20
+  - pos: 1.5,4.5
+    parent: 53
     type: Transform
 - uid: 63
-  type: Grille
+  type: MaintenanceToolSpawner
   components:
-  - pos: 1.5,3.5
-    parent: 20
+  - pos: -4.5,4.5
+    parent: 53
     type: Transform
 - uid: 64
-  type: WardrobeCargoFilled
-  components:
-  - pos: 0.5,-0.5
-    parent: 20
-    type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 65
   type: ConveyorBelt
   components:
-  - rot: 3.141592653589793 rad
-    pos: -2.5,1.5
-    parent: 20
+  - pos: -2.5,-1.5
+    parent: 53
+    type: Transform
+- uid: 65
+  type: TableReinforced
+  components:
+  - pos: -4.5,2.5
+    parent: 53
     type: Transform
 - uid: 66
-  type: ConveyorBelt
+  type: TableReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: -2.5,0.5
-    parent: 20
+  - pos: -3.5,2.5
+    parent: 53
     type: Transform
 - uid: 67
-  type: ConveyorBelt
+  type: BoxBeanbag
   components:
-  - rot: 3.141592653589793 rad
-    pos: -2.5,-0.5
-    parent: 20
+  - pos: -4.421875,2.645526
+    parent: 53
     type: Transform
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 68
-  type: ConveyorBeltAssembly
+  type: FlareGun
   components:
-  - pos: 0.57671773,0.40495777
-    parent: 20
+  - pos: -3.609375,2.629901
+    parent: 53
     type: Transform
+  - containers:
+      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 69
-  type: ReinforcedWindow
+  type: ShardGlassReinforced
   components:
-  - pos: -4.5,3.5
-    parent: 20
+  - pos: 0.96875,2.421875
+    parent: 53
     type: Transform
 - uid: 70
-  type: SalvageCanisterSpawner
+  type: ShardGlassReinforced
   components:
-  - pos: -4.5,0.5
-    parent: 20
+  - pos: 0.53125,2.21875
+    parent: 53
     type: Transform
 - uid: 71
-  type: SalvageMaterialCrateSpawner
+  type: RandomArtifactSpawner
   components:
-  - pos: -4.5,-1.5
-    parent: 20
+  - pos: -2.5,0.5
+    parent: 53
     type: Transform
 - uid: 72
-  type: WallReinforced
+  type: Grille
   components:
-  - pos: 1.5,0.5
-    parent: 20
+  - pos: -0.5,3.5
+    parent: 53
     type: Transform
 - uid: 73
-  type: WallReinforced
+  type: SalvageCanisterSpawner
   components:
-  - pos: 2.5,-1.5
-    parent: 20
+  - pos: -4.5,1.5
+    parent: 53
     type: Transform
 - uid: 74
   type: SalternSubstation
   components:
   - pos: 2.5,-0.5
-    parent: 20
+    parent: 53
     type: Transform
+  - containers:
+    - machine_parts
+    - machine_board
+    type: Construction
   - containers:
       machine_board: !type:Container
         ents: []
@@ -832,60 +849,84 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,-0.5
-    parent: 20
+    parent: 53
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - canCollide: False
     type: Physics
 - uid: 76
   type: CableApcExtension
   components:
   - pos: -0.5,-0.5
-    parent: 20
+    parent: 53
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - canCollide: False
     type: Physics
 - uid: 77
   type: CableApcExtension
   components:
   - pos: 2.5,1.5
-    parent: 20
+    parent: 53
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - canCollide: False
     type: Physics
 - uid: 78
   type: ConveyorBeltAssembly
   components:
   - pos: 0.46734273,0.6393328
-    parent: 20
+    parent: 53
     type: Transform
 - uid: 79
   type: Grille
   components:
   - pos: -4.5,3.5
-    parent: 20
+    parent: 53
     type: Transform
 - uid: 80
   type: CableMV
   components:
   - pos: 2.5,-0.5
-    parent: 20
+    parent: 53
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - canCollide: False
     type: Physics
 - uid: 81
   type: CableMV
   components:
   - pos: 2.5,0.5
-    parent: 20
+    parent: 53
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - canCollide: False
     type: Physics
 - uid: 82
   type: CableMV
   components:
   - pos: 1.5,0.5
-    parent: 20
+    parent: 53
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - canCollide: False
     type: Physics
+- uid: 83
+  type: ShellShotgunIncendiary
+  components:
+  - pos: -3.5386543,2.402934
+    parent: 53
+    type: Transform
+- uid: 84
+  type: ShellShotgunIncendiary
+  components:
+  - pos: -3.3511543,2.402934
+    parent: 53
+    type: Transform
 ...
