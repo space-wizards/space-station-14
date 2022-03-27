@@ -617,7 +617,7 @@
     name: mouse
     description: A hungry and mischievous mouse.
   - type: Sprite
-    drawdepth: Mobs
+    drawdepth: FloorObjects
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-0
