@@ -41,3 +41,4 @@ RULES FOR SECURITY
     - If you still manage to kill someone as security, get them cloned immediately, and make sure their stuff is returned.
 
 [color=#a4885c]13.[/color] Prisoners should not be given sentences longer than 10 minutes. Certain extreme exceptions like bombers, assassins or employees of a hostile corporation (i.e. traitor status) of a may warrant permabrigging, or [color=#ff0000]in the very worst cases[/color], execution.
+    - Note that employment at a hostile corporation (i.e. traitor status) alone [color=#ff0000]does not[/color] qualify someone for perma or execution.
