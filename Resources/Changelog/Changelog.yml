@@ -1,25 +1,4 @@
 Entries:
-- author: Fishfish458
-  changes:
-  - {message: Hypospray to CMO lockers and also traitor goals., type: Add}
-  id: 761
-  time: '2021-12-23T08:51:49.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Wizards now have something to ponder., type: Add}
-  id: 762
-  time: '2021-12-23T10:33:55.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: The Salvage department now partially exists., type: Add}
-  id: 763
-  time: '2021-12-23T12:14:01.0000000+00:00'
-- author: moony and TimrodDX
-  changes:
-  - {message: Added a winter holiday version of Packed Station! It will enter the
-      rotation on christmas eve and exit the minute christmas ends., type: Add}
-  id: 764
-  time: '2021-12-24T00:30:30.0000000+00:00'
 - author: moony
   changes:
   - {message: Accidentally broke christmas, type: Fix}
@@ -3027,3 +3006,27 @@ Entries:
     type: Tweak}
   id: 1260
   time: '2022-03-28T08:33:07.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added a new Traitor objective: stealing corgi meat.', type: Add}
+  id: 1261
+  time: '2022-03-28T20:52:46.0000000+00:00'
+- author: Delete
+  changes:
+  - {message: Added trees and flora for mappers., type: Add}
+  id: 1262
+  time: '2022-03-28T20:53:13.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Eating can now be done by alt+clicking a food item., type: Tweak}
+  - {message: Mice can now squeak using an action., type: Tweak}
+  - {message: 'Mice can now go under doors, and they get hungry much faster. Use these
+      two pieces of information in tandem.', type: Tweak}
+  - {message: Mice are now rendered under tables and what not., type: Tweak}
+  id: 1263
+  time: '2022-03-28T20:53:21.0000000+00:00'
+- author: areit
+  changes:
+  - {message: Added a stun chemical that you can get from the uplink., type: Add}
+  id: 1264
+  time: '2022-03-28T20:53:27.0000000+00:00'
