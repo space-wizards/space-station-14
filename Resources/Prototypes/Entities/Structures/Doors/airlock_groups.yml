@@ -36,3 +36,13 @@
   id: ExternalGlass
   stylePaths:
     external:    Structures/Doors/Airlocks/Glass/external.rsi
+
+- type: AirlockGroup
+  id: Shuttle
+  stylePaths:
+    shuttle:     Structures/Doors/Airlocks/Standard/shuttle.rsi
+
+- type: AirlockGroup
+  id: ShuttleGlass
+  stylePaths:
+    shuttle:     Structures/Doors/Airlocks/Glass/shuttle.rsi
