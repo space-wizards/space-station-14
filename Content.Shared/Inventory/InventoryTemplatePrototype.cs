@@ -21,30 +21,16 @@ public sealed class InventoryTemplatePrototype : IPrototype
 public sealed class SlotDefinition
 {
     [DataField("name", required: true)] public string Name { get; } = string.Empty;
-
     [DataField("slotTexture")] public string TextureName { get; } = "pocket";
-
     [DataField("slotFlags")] public SlotFlags SlotFlags { get; } = SlotFlags.PREVENTEQUIP;
 
-    [DataField("uiContainer")] public SlotUIContainer UIContainer { get; } = SlotUIContainer.None;
-
+    [DataField("slotGroup")] public string SlotGroup { get; } ="";
     [DataField("uiWindowPos", required: true)] public Vector2i UIWindowPosition { get; }
-
-    //todo this is supreme shit and ideally slots should be stored in a given equipmentslotscomponent on each equipment
     [DataField("dependsOn")] public string? DependsOn { get; }
-
     [DataField("displayName", required: true)] public string DisplayName { get; } = string.Empty;
 
     /// <summary>
     ///     Offset for the clothing sprites.
     /// </summary>
     [DataField("offset")] public Vector2 Offset { get; } = Vector2.Zero;
-}
-
-public enum SlotUIContainer
-{
-    None,
-    BottomLeft,
-    BottomRight,
-    Top
 }

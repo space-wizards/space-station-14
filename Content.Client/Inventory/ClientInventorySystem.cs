@@ -28,6 +28,8 @@ namespace Content.Client.Inventory
         [Dependency] private readonly ClothingSystem _clothingSystem = default!;
 
         public Action<SlotData>? EntitySlotUpdate = null;
+        public Action<SlotData>? OnSlotAdded = null;
+        public Action<SlotData>? OnSlotRemoved = null;
         public Action? OnOpenInventory = null;
         public Action<ClientInventoryComponent?>? OnLinkInventory = null;
         public Action<ClientInventoryComponent?>? OnUnlinkInventory = null;
@@ -132,23 +134,30 @@ namespace Content.Client.Inventory
             EntitySlotUpdate?.Invoke(newData);
         }
 
-        public static bool TryAddSlotDef(ClientInventoryComponent component,SlotDefinition newSlotDef)
+        public bool TryAddSlotDef(ClientInventoryComponent component,SlotDefinition newSlotDef)
         {
-            var success = component.SlotData.TryAdd(newSlotDef.Name, newSlotDef);
-            //TODO: Call update Delegate
-            return success;
+            SlotData newSlotData = newSlotDef; //convert to slotData
+            if (!component.SlotData.TryAdd(newSlotDef.Name, newSlotData)) return false;
+            OnSlotAdded?.Invoke(newSlotData);
+            return true;
         }
-        public static void RemoveSlotDef(ClientInventoryComponent component, SlotData slotData)
+        public void RemoveSlotDef(ClientInventoryComponent component, SlotData slotData)
         {
-            component.SlotData.Remove(slotData.SlotName);
-            //TODO: call update delegate
+            if (component.SlotData.Remove(slotData.SlotName))
+            {
+                OnSlotRemoved?.Invoke(slotData);
+            }
         }
-        public static void RemoveSlotDef(ClientInventoryComponent component, string slotName)
+        public void RemoveSlotDef(ClientInventoryComponent component, string slotName)
         {
-            component.SlotData.Remove(slotName);
-            //TODO: call update delegate
+            if (!component.SlotData.TryGetValue(slotName, out var slotData)) return;
+                component.SlotData.Remove(slotName);
+                OnSlotRemoved?.Invoke(slotData);
+
         }
-        private void HoverInSlotButton(EntityUid uid, string slot, ItemSlotButton button, InventoryComponent? inventoryComponent = null, SharedHandsComponent? hands = null)
+
+        //This should also live in a UI Controller
+        private void HoverInSlotButton(EntityUid uid, string slot, ItemSlotControl control, InventoryComponent? inventoryComponent = null, SharedHandsComponent? hands = null)
         {
             if (!Resolve(uid, ref inventoryComponent))
                 return;
@@ -171,7 +180,9 @@ namespace Content.Client.Inventory
             OnOpenInventory?.Invoke();
         }
 
-        private void HandleSlotButtonPressed(EntityUid uid, string slot, ItemSlotButton button,
+
+        //TODO: This should live in a UI controller
+        private void HandleSlotButtonPressed(EntityUid uid, string slot, ItemSlotControl control,
             GUIBoundKeyEventArgs args)
         {
             if (TryGetSlotEntity(uid, slot, out var itemUid))
@@ -190,12 +201,14 @@ namespace Content.Client.Inventory
         {
             public readonly SlotDefinition SlotDef;
             public EntityUid? HeldEntity => Container?.ContainedEntity;
-            public bool Blocked = false;
-            public bool Highlighted = false;
-            public ContainerSlot? Container= null;
+            public bool Blocked ;
+            public bool Highlighted;
+            public ContainerSlot? Container;
+            public bool HasSlotGroup => SlotDef.SlotGroup != "";
             public string SlotName => SlotDef.Name;
+            public string SlotGroup => SlotDef.SlotGroup;
             public string SlotDisplayName => SlotDef.DisplayName;
-            public string TextureName => SlotDef.TextureName;
+            public string TextureName => "slots/"+SlotDef.TextureName;
             public SlotData(SlotDefinition slotDef,ContainerSlot? container = null, bool highlighted = false, bool blocked = false)
             {
                 SlotDef = slotDef;

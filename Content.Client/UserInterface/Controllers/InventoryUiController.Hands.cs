@@ -13,9 +13,9 @@ public sealed partial class InventoryUIController
     [UISystemDependency] private HandsSystem _handsSystem = default!;
     private List<HandsContainer> _handsContainers = new();
     private readonly Dictionary<string,int> _handContainerIndices = new();
-    private readonly Dictionary<string, HandControl> _handLookup = new();
+    private readonly Dictionary<string, HandButton> _handLookup = new();
     private HandsComponent? _playerHandsComponent;
-    private HandControl? _activeHand = null;
+    private HandButton? _activeHand = null;
     private int _backupSuffix = 0;//this is used when autogenerating container names if they don't have names
     private Action<string>? _onStorageActivate = null; //called when the user clicks the little activation button in the slot
 
@@ -31,16 +31,10 @@ public sealed partial class InventoryUIController
     }
     private void OnHandsSystemDeactivate()
     {
-        _onStorageActivate -= _handsSystem.UIHandActivate;
-        _handsSystem.OnAddHand -= AddHand;
-        _handsSystem.OnSpriteUpdate -= UpdateButtonSprite;
-        _handsSystem.OnSetActiveHand -= SetActiveHand;
-        _handsSystem.OnRemoveHand -= RemoveHand;
-        _handsSystem.OnComponentConnected -= LoadPlayerHands;
-        _handsSystem.OnComponentDisconnected -= UnloadPlayerHands;
+        _onStorageActivate = null;
     }
 
-    private void OnHandPressed(GUIBoundKeyEventArgs args, ItemSlotButton hand)
+    private void OnHandPressed(GUIBoundKeyEventArgs args, ItemSlotControl hand)
     {
         if (args.Function != EngineKeyFunctions.UIClick || _playerHandsComponent == null) return;
         _handsSystem.UIHandClick(_playerHandsComponent, hand.SlotName);
@@ -103,13 +97,13 @@ public sealed partial class InventoryUIController
         return true;
     }
 
-    private HandControl? GetLastHand()//useful for sorting
+    private HandButton? GetLastHand()//useful for sorting
     {
         TryGetLastHand(out var handButton);
         return handButton;
     }
 
-    private bool TryGetLastHand(out HandControl? handButton)
+    private bool TryGetLastHand(out HandButton? handButton)
     {
         handButton = null;
         for (var i = _handsContainers.Count-1; i >= 0; i--)
@@ -121,9 +115,9 @@ public sealed partial class InventoryUIController
         return false;
     }
     //propagate hand activation to the hand system.
-    private void StorageActivate(GUIBoundKeyEventArgs args, ItemSlotButton handButton)
+    private void StorageActivate(GUIBoundKeyEventArgs args, ItemSlotControl handControl)
     {
-        _onStorageActivate?.Invoke(handButton.SlotName);
+        _onStorageActivate?.Invoke(handControl.SlotName);
     }
 
     private void SetActiveHand(string? handName)
@@ -144,7 +138,7 @@ public sealed partial class InventoryUIController
         handControl.Highlight = true;
         _activeHand = handControl;
     }
-    private HandControl? GetHand(string handName)
+    private HandButton? GetHand(string handName)
     {
         _handLookup.TryGetValue(handName, out var handControl);
         return handControl;
@@ -152,7 +146,7 @@ public sealed partial class InventoryUIController
 
     private void AddHand(string handName, HandLocation location)
     {
-        var newHandButton = new HandControl(this, handName, location);
+        var newHandButton = new HandButton(this, handName, location);
         newHandButton.OnStoragePressed += StorageActivate;
         newHandButton.OnPressed += OnHandPressed;
         if (!_handLookup.TryAdd(handName, newHandButton))
@@ -172,7 +166,7 @@ public sealed partial class InventoryUIController
         RemoveHand(handName, out var _);
     }
 
-    private bool RemoveHand(string handName, out HandControl? handButton)
+    private bool RemoveHand(string handName, out HandButton? handButton)
     {
         handButton = null;
         if (!_handLookup.TryGetValue(handName, out handButton)) return false;

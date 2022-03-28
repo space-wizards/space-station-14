@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Controls;
 
-public sealed class HandsContainer : ItemSlotUIContainer<HandControl>
+public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
 {
     private readonly GridContainer _grid;
     public int ColumnLimit { get => _grid.Columns; set => _grid.Columns = value; }
@@ -14,7 +14,7 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandControl>
         AddChild(_grid = new GridContainer());
     }
 
-    public override HandControl? AddButton(HandControl newButton)
+    public override HandButton? AddButton(HandButton newButton)
     {
         if (MaxButtonCount > 0)
         {
@@ -32,7 +32,7 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandControl>
         base.RemoveButton(button);
         _grid.RemoveChild(button);
     }
-    public bool TryGetLastButton(out HandControl? control)
+    public bool TryGetLastButton(out HandButton? control)
     {
         if (_buttons.Count == 0)
         {
@@ -42,7 +42,7 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandControl>
         control = _buttons.Values.Last();
         return true;
     }
-    public bool TryRemoveLastHand(out HandControl? control)
+    public bool TryRemoveLastHand(out HandButton? control)
     {
         var success = TryGetLastButton(out control);
         if (control != null) RemoveButton(control);

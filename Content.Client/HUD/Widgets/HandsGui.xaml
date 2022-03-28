@@ -10,10 +10,12 @@
     HorizontalAlignment="Center"
     >
    <BoxContainer>
+       <ui:ItemSlotButtonContainer SlotGroup="SecondHotbar"/>
        <ui:HandsContainer
            Name="HandContainer"
            Access= "Protected"
            ColumnLimit="6"
            />
+       <ui:ItemSlotButtonContainer SlotGroup="MainHotbar"/>
    </BoxContainer>
 </widget:HandsGui>

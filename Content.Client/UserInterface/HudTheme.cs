@@ -26,7 +26,7 @@ public sealed class HudTheme
     }
     public Texture ResolveTexture(IResourceCache cache, IHudManager hudManager, string texturePath)
     {
-        return cache.TryGetResource<TextureResource>( new ResourcePath(ResourcePath + texturePath), out var texture) ? texture :
+        return cache.TryGetResource<TextureResource>( new ResourcePath(ResourcePath + texturePath+".png"), out var texture) ? texture :
             cache.GetTexture(HudAssetPath + "/"+"Default"+"/" + texturePath);
     }
 }

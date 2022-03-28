@@ -1,4 +1,5 @@
-﻿using Content.Client.Hands;
+﻿using System.Linq;
+using Content.Client.Hands;
 using Content.Client.Inventory;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.UserInterface;
@@ -7,9 +8,8 @@ namespace Content.Client.UserInterface.Controllers;
 
 public sealed partial class InventoryUIController : UIController
 {
-    [Dependency] private IEntityManager _entityManager = default!;
-    [UISystemDependency] private ClientInventorySystem? _inventorySystem = default!;
-    private readonly Dictionary<string, ItemSlotUIContainer> _slotGroups = new();
+    [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
+    private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
     private ClientInventoryComponent? _playerInventoryComponent;
     public ClientInventoryComponent? PlayerInventory => _playerInventoryComponent;
 
@@ -18,18 +18,51 @@ public sealed partial class InventoryUIController : UIController
     public override void OnSystemLoaded(IEntitySystem system)
     {
         Logger.Debug("NEURON ACTIVATED");
-        if (system is HandsSystem)
+        switch (system)
         {
-            OnHandsSystemActivate();
+            case HandsSystem:
+                OnHandsSystemActivate();
+                return;
+            case ClientInventorySystem:
+                OnInventorySystemActivate();
+                return;
         }
     }
     //Neuron Deactivation
     public override void OnSystemUnloaded(IEntitySystem system)
     {
-        if (system is HandsSystem)
+        switch (system)
         {
-            OnHandsSystemDeactivate();
+            case HandsSystem:
+                OnHandsSystemDeactivate();
+                return;
+            case ClientInventorySystem:
+                OnInventorySystemDeactivate();
+                return;
         }
+    }
+
+    private void OnInventorySystemActivate()
+    {
+        _inventorySystem.OnSlotAdded += OnSlotAdded;
+        _inventorySystem.OnSlotRemoved += OnSlotRemoved;
+    }
+    private void OnInventorySystemDeactivate()
+    {
+    }
+
+
+    private void OnSlotAdded(ClientInventorySystem.SlotData data)
+    {
+        if(!_slotGroups.TryGetValue(data.SlotGroup, out var slotGroup)) return;
+        var button = new ItemSlotButton(data);
+        slotGroup.AddChild(button);
+        button.SlotName = data.SlotName;
+    }
+    private void OnSlotRemoved(ClientInventorySystem.SlotData data)
+    {
+        if (!_slotGroups.TryGetValue(data.SlotGroup, out var slotGroup)) return;
+        slotGroup.RemoveButton(data.SlotName);
     }
 
 
@@ -39,17 +72,17 @@ public sealed partial class InventoryUIController : UIController
     }
     public void BlockSlot(string slotName, bool blocked)
     {
-        if (_inventorySystem == null || _playerInventoryComponent == null) return;
+        if (_playerInventoryComponent == null) return;
 
     }
     public void HighlightSlot(string slotName, bool highlight)
     {
-        if (_inventorySystem == null || _playerInventoryComponent == null) return;
+        if (_playerInventoryComponent == null) return;
         _inventorySystem.SetSlotHighlight(_playerInventoryComponent, slotName, highlight);
     }
-    public bool RegisterSlotGroupContainer(ItemSlotUIContainer slotContainer)
+    public bool RegisterSlotGroupContainer(ItemSlotButtonContainer slotContainer)
     {
-        return slotContainer.Name != null && _slotGroups.TryAdd(slotContainer.Name!, slotContainer);
+        return _slotGroups.TryAdd(slotContainer.SlotGroup, slotContainer);
     }
 
     public void RemoveSlotGroup(string slotGroupName)

@@ -3,14 +3,13 @@ using Content.Shared.Hands.Components;
 
 namespace Content.Client.UserInterface.Controls;
 
-public sealed class HandControl : ItemSlotButton
+public sealed class HandButton : ItemSlotControl
 {
-    private HandLocation _location;
-    public HandControl(InventoryUIController parentController,string handName, HandLocation handLocation)
+    public HandButton(InventoryUIController parentController,string handName, HandLocation handLocation)
     {
         Name = "hand_" + handName;
         SlotName = handName;
-        SetBackground(_location = handLocation);
+        SetBackground(handLocation);
     }
 
     private void SetBackground(HandLocation handLoc)
@@ -19,17 +18,17 @@ public sealed class HandControl : ItemSlotButton
         {
             case HandLocation.Left:
             {
-                ButtonTexturePath = "hand_l.png";
+                ButtonTexturePath = "slots/hand_l";
                 break;
             }
             case HandLocation.Middle:
             {
-                ButtonTexturePath = "hand_m.png";
+                ButtonTexturePath = "slots/hand_m";
                 break;
             }
             case HandLocation.Right:
             {
-                ButtonTexturePath = "hand_r.png";
+                ButtonTexturePath = "slots/hand_r";
                 break;
             }
         }
