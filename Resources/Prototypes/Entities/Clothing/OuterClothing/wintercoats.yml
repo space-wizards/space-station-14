@@ -53,7 +53,8 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCE
-  name: ce's winter coat
+  name: chief engineer's winter coat
+
   description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
