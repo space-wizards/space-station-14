@@ -175,7 +175,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Bicardine
+        - ReagentId: Bicaridine
           Quantity: 20
 
 - type: entity
