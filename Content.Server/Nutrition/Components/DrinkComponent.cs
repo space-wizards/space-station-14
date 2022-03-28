@@ -27,7 +27,7 @@ namespace Content.Server.Nutrition.Components
         internal bool DefaultToOpened;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 TransferAmount { get; [UsedImplicitly] private set; } = FixedPoint2.New(5);
+        public FixedPoint2 TransferAmount { get; [UsedImplicitly] set; } = FixedPoint2.New(5);
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Opened;

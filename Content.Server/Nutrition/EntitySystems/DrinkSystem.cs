@@ -183,7 +183,7 @@ namespace Content.Server.Nutrition.EntitySystems
             appearance.SetData(DrinkCanStateVisual.Opened, component.Opened);
         }
 
-        private bool TryDrink(EntityUid user, EntityUid target, DrinkComponent drink)
+        public bool TryDrink(EntityUid user, EntityUid target, DrinkComponent drink)
         {
             // cannot stack do-afters
             if (drink.CancelToken != null)

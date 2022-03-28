@@ -257,6 +257,7 @@ namespace Content.Client.Entry
             "ClusterGrenade",
             "Repairable",
             "SolutionTransfer",
+            "ClothingSolutionTransfer",
             "Evaporation",
             "ReagentTank",
             "UtilityAI",
