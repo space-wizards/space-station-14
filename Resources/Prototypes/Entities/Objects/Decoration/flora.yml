@@ -1,0 +1,280 @@
+- type: entity
+  id: BaseTree
+  abstract: true
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_trees.rsi
+    netsync: false
+    drawdepth: Overdoors
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.35,-1.3,0.35,-0.5"
+      mass: 500
+      layer:
+      - Opaque
+      - Impassable
+
+- type: entity
+  parent: BaseTree
+  id: BaseTreeSnow
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treessnow.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-1.0,0.1,-0.4"
+      mass: 500
+      layer:
+      - Opaque
+      - Impassable
+
+- type: entity
+  parent: BaseTree
+  id: BaseTreeLarge
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treeslarge.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.18,-1.9,0.18,-1.2"
+      mass: 500
+      layer:
+      - Opaque
+      - Impassable
+
+- type: entity
+  parent: BaseTree
+  id: BaseTreeConifer
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treesconifer.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-1.5,0.1,-0.8"
+      mass: 500
+      layer:
+      - Opaque
+      - Impassable
+
+- type: entity
+  parent: BaseTree
+  id: FloraTree01
+  name: tree
+  components:
+  - type: Sprite
+    state: tree01
+
+- type: entity
+  parent: BaseTree
+  id: FloraTree02
+  name: tree
+  components:
+  - type: Sprite
+    state: tree02
+
+- type: entity
+  parent: BaseTree
+  id: FloraTree03
+  name: tree
+  components:
+  - type: Sprite
+    state: tree03
+
+- type: entity
+  parent: BaseTree
+  id: FloraTree04
+  name: tree
+  components:
+  - type: Sprite
+    state: tree04
+
+- type: entity
+  parent: BaseTree
+  id: FloraTree05
+  name: tree
+  components:
+  - type: Sprite
+    state: tree05
+
+- type: entity
+  parent: BaseTree
+  id: FloraTree06
+  name: tree
+  components:
+  - type: Sprite
+    state: tree06
+
+- type: entity
+  parent: BaseTreeSnow
+  id: FloraTreeSnow01
+  name: snowy tree
+  components:
+  - type: Sprite
+    state: treesnow01
+
+- type: entity
+  parent: BaseTreeSnow
+  id: FloraTreeSnow02
+  name: snowy tree
+  components:
+  - type: Sprite
+    state: treesnow02
+
+- type: entity
+  parent: BaseTreeSnow
+  id: FloraTreeSnow03
+  name: snowy tree
+  components:
+  - type: Sprite
+    state: treesnow03
+
+- type: entity
+  parent: BaseTreeSnow
+  id: FloraTreeSnow04
+  name: snowy tree
+  components:
+  - type: Sprite
+    state: treesnow04
+
+- type: entity
+  parent: BaseTreeSnow
+  id: FloraTreeSnow05
+  name: snowy tree
+  components:
+  - type: Sprite
+    state: treesnow05
+
+- type: entity
+  parent: BaseTreeSnow
+  id: FloraTreeSnow06
+  name: snowy tree
+  components:
+  - type: Sprite
+    state: treesnow06
+
+- type: entity
+  parent: BaseTreeSnow
+  id: FloraTreeStump
+  name: tree stump
+  components:
+  - type: Sprite
+    state: treestump
+
+- type: entity
+  parent: BaseTreeLarge
+  id: FloraTreeLarge01
+  name: large tree
+  components:
+  - type: Sprite
+    state: treelarge01
+
+- type: entity
+  parent: BaseTreeLarge
+  id: FloraTreeLarge02
+  name: large tree
+  components:
+  - type: Sprite
+    state: treelarge02
+
+- type: entity
+  parent: BaseTreeLarge
+  id: FloraTreeLarge03
+  name: large tree
+  components:
+  - type: Sprite
+    state: treelarge03
+
+- type: entity
+  parent: BaseTreeLarge
+  id: FloraTreeLarge04
+  name: large tree
+  components:
+  - type: Sprite
+    state: treelarge04
+
+- type: entity
+  parent: BaseTreeLarge
+  id: FloraTreeLarge05
+  name: large tree
+  components:
+  - type: Sprite
+    state: treelarge05
+
+- type: entity
+  parent: BaseTreeLarge
+  id: FloraTreeLarge06
+  name: large tree
+  components:
+  - type: Sprite
+    state: treelarge06
+
+- type: entity
+  parent: BaseTreeConifer
+  id: FloraTreeConifer01
+  name: snowy conifer
+  components:
+  - type: Sprite
+    state: treeconifer01
+
+- type: entity
+  parent: BaseTreeConifer
+  id: FloraTreeConifer02
+  name: snowy conifer
+  components:
+  - type: Sprite
+    state: treeconifer02
+
+- type: entity
+  parent: BaseTreeConifer
+  id: FloraTreeConifer03
+  name: snowy conifer
+  components:
+  - type: Sprite
+    state: treeconifer03
+
+- type: entity
+  parent: BaseTreeConifer
+  id: FloraTreeChristmas01
+  name: christmas tree
+  components:
+  - type: Sprite
+    state: treechristmas01
+
+- type: entity
+  parent: BaseTreeConifer
+  id: FloraTreeChristmas02
+  name: christmas tree
+  components:
+  - type: Sprite
+    state: treechristmas02
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.8,-1.5,0.8,-0.8"
+      mass: 500
+      layer:
+      - Opaque
+      - Impassable
+
+- type: entity
+  parent: BaseTreeConifer
+  id: FloraTreeStumpConifer
+  name: tree stump
+  components:
+  - type: Sprite
+    state: treestumpconifer

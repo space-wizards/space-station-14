@@ -10,5 +10,6 @@
     state: icon
   - type: Butcherable
     butcheringType: Knife
-    spawned: MaterialCloth1
-    pieces: 1
+    spawned:
+    - id: MaterialCloth1
+      amount: 1

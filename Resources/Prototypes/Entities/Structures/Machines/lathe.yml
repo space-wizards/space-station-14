@@ -361,6 +361,14 @@
       - ClothingUniformJumpskirtSec
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
+      - ClothingOuterWinterCap 
+      - ClothingOuterWinterCE
+      - ClothingOuterWinterCMO
+      - ClothingOuterWinterHoP
+      - ClothingOuterWinterHoS
+      - ClothingOuterWinterQM
+      - ClothingOuterWinterRD
+      
   - type: Sprite
     sprite: Structures/Machines/uniform_printer.rsi
     netsync: false
