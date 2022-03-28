@@ -85,7 +85,7 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCMO
-  name: cmo's winter coat
+  name: chief medical officer's winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
