@@ -39,7 +39,7 @@ public sealed class DiseaseOutbreak : StationEvent
     /// and gives them a randomly selected disease.
     /// They all get the same disease.
     /// </summary>
-    public override async void Startup()
+    public override void Startup()
     {
         base.Startup();
         List<DiseaseCarrierComponent> aliveList = new();
