@@ -312,7 +312,7 @@ namespace Content.Server.Construction
                     // we split the stack in two and insert the split stack.
                     if (insertStep is MaterialConstructionGraphStep materialInsertStep)
                     {
-                        if (_stackSystem.Split(insert, materialInsertStep.Amount, EntityManager.GetComponent<TransformComponent>(interactUsing.User).Coordinates) is not {} stack)
+                        if (_stackSystem.Split(insert, materialInsertStep.Amount, Transform(interactUsing.User).Coordinates) is not {} stack)
                             return HandleResult.False;
 
                         insert = stack;
@@ -334,7 +334,7 @@ namespace Content.Server.Construction
                     else
                     {
                         // If we don't store the item in a container on the entity, we just delete it right away.
-                        EntityManager.DeleteEntity(insert);
+                        Del(insert);
                     }
 
                     // Step has been handled correctly, so we signal this.
@@ -387,6 +387,13 @@ namespace Content.Server.Construction
             return HandleResult.False;
         }
 
+        /// <summary>
+        ///     Checks whether a number of <see cref="IGraphCondition"/>s are true for a given entity.
+        /// </summary>
+        /// <param name="uid">The entity to pass to the conditions.</param>
+        /// <param name="conditions">The conditions to evaluate.</param>
+        /// <remarks>This method is short-circuiting; if a condition evaluates to false, we stop checking the rest of conditions.</remarks>
+        /// <returns>Whether all conditions evaluate to true for the given entity.</returns>
         public bool CheckConditions(EntityUid uid, IEnumerable<IGraphCondition> conditions)
         {
             foreach (var condition in conditions)
@@ -398,11 +405,19 @@ namespace Content.Server.Construction
             return true;
         }
 
+        /// <summary>
+        ///     Performs a number of <see cref="IGraphAction"/>s for a given entity, with an optional user entity.
+        /// </summary>
+        /// <param name="uid">The entity to perform the actions on.</param>
+        /// <param name="userUid">An optional user entity to pass into the actions.</param>
+        /// <param name="actions">The actions to perform.</param>
+        /// <remarks>This method checks whether the given target entity exists before performing any actions.
+        ///          If the entity is deleted by an action, it will short-circuit and stop performing the rest of actions.</remarks>
         public void PerformActions(EntityUid uid, EntityUid? userUid, IEnumerable<IGraphAction> actions)
         {
             foreach (var action in actions)
             {
-                // If an action deletes the entity, we stop performing actions.
+                // If an action deletes the entity, we stop performing the rest of actions.
                 if (!Exists(uid))
                     break;
 
@@ -410,6 +425,12 @@ namespace Content.Server.Construction
             }
         }
 
+        /// <summary>
+        ///     Resets the current construction edge status on an entity.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="construction">The construction component. If null, it will be resolved on the entity.</param>
+        /// <remarks>This method updates the construction pathfinding on the entity automatically.</remarks>
         public void ResetEdge(EntityUid uid, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
@@ -419,6 +440,7 @@ namespace Content.Server.Construction
             construction.EdgeIndex = null;
             construction.StepIndex = 0;
 
+            // Update pathfinding to keep it in sync with the current construction status.
             UpdatePathfinding(uid, construction);
         }
 
@@ -430,7 +452,7 @@ namespace Content.Server.Construction
             foreach (var uid in _constructionUpdateQueue)
             {
                 // Ensure the entity exists and has a Construction component.
-                if (!EntityManager.EntityExists(uid) || !EntityManager.TryGetComponent(uid, out ConstructionComponent? construction))
+                if (!Exists(uid) || !TryComp(uid, out ConstructionComponent? construction))
                     continue;
 
                 // Handle all queued interactions!
@@ -446,6 +468,16 @@ namespace Content.Server.Construction
 
         #region Event Handlers
 
+        /// <summary>
+        ///     Queues a directed event to be handled by construction on the next update tick.
+        ///     Used as a handler for any events that construction can listen to. <seealso cref="InitializeInteractions"/>
+        /// </summary>
+        /// <param name="uid">The entity the event is directed to.</param>
+        /// <param name="construction">The construction component to queue the event on.</param>
+        /// <param name="args">The directed event to be queued.</param>
+        /// <remarks>Events inheriting <see cref="HandledEntityEventArgs"/> are treated specially by this method.
+        ///          They will only be queued if they can be validated against the current construction state,
+        ///          in which case they will also be set as handled.</remarks>
         private void EnqueueEvent(EntityUid uid, ConstructionComponent construction, object args)
         {
             // Handled events get treated specially.
@@ -473,7 +505,7 @@ namespace Content.Server.Construction
         private void OnDoAfterComplete(ConstructionDoAfterComplete ev)
         {
             // Make extra sure the target entity exists...
-            if (!EntityManager.EntityExists(ev.TargetUid))
+            if (!Exists(ev.TargetUid))
                 return;
 
             // Re-raise this event, but directed on the target UID.
@@ -483,7 +515,7 @@ namespace Content.Server.Construction
         private void OnDoAfterCancelled(ConstructionDoAfterCancelled ev)
         {
             // Make extra sure the target entity exists...
-            if (!EntityManager.EntityExists(ev.TargetUid))
+            if (!Exists(ev.TargetUid))
                 return;
 
             // Re-raise this event, but directed on the target UID.

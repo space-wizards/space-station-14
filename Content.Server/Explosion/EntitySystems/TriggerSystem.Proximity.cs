@@ -19,7 +19,7 @@ public sealed partial class TriggerSystem
     {
         SubscribeLocalEvent<TriggerOnProximityComponent, StartCollideEvent>(OnProximityStartCollide);
         SubscribeLocalEvent<TriggerOnProximityComponent, EndCollideEvent>(OnProximityEndCollide);
-        SubscribeLocalEvent<TriggerOnProximityComponent, ComponentStartup>(OnProximityStartup);
+        SubscribeLocalEvent<TriggerOnProximityComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TriggerOnProximityComponent, ComponentShutdown>(OnProximityShutdown);
         SubscribeLocalEvent<TriggerOnProximityComponent, AnchorStateChangedEvent>(OnProximityAnchor);
     }
@@ -49,7 +49,7 @@ public sealed partial class TriggerSystem
         component.Colliding.Clear();
     }
 
-    private void OnProximityStartup(EntityUid uid, TriggerOnProximityComponent component, ComponentStartup args)
+    private void OnMapInit(EntityUid uid, TriggerOnProximityComponent component, MapInitEvent args)
     {
         component.Enabled = !component.RequiresAnchored ||
                             EntityManager.GetComponent<TransformComponent>(uid).Anchored;
@@ -58,7 +58,7 @@ public sealed partial class TriggerSystem
 
         if (!TryComp<PhysicsComponent>(uid, out var body)) return;
 
-        _fixtures.CreateFixture(body, new Fixture(body, component.Shape)
+        _fixtures.TryCreateFixture(body, new Fixture(body, component.Shape)
         {
             // TODO: Should probably have these settable via datafield but I'm lazy and it's a pain
             CollisionLayer = (int) (CollisionGroup.MobImpassable | CollisionGroup.SmallImpassable | CollisionGroup.VaultImpassable), Hard = false, ID = TriggerOnProximityComponent.FixtureID

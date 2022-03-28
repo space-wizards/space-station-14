@@ -1,18 +1,8 @@
 name: Build & Publish Docfx
 
 on:
-  push:
-    branches: [ master ]
-    paths:
-      - '**.cs'
-      - '**.csproj'
-      - '**.sln'
-      - '**.git**'
-      - '**.yml'
-      # no docs on which one of these is supposed to work, so
-      # why not just do both
-      - 'RobustToolbox'
-      - 'RobustToolbox/**'
+  schedule:
+    - cron: "0 0 * * 0"
 
 jobs:    
   docfx:
