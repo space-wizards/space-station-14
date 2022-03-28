@@ -36,8 +36,9 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 1
+    spawned:
+    - id: FoodMeat
+      amount: 1
   - type: InteractionPopup
     successChance: 0.2
     interactSuccessString: petting-success-soft-floofy
@@ -139,8 +140,9 @@
       crit: dead-0
       dead: dead-0
   - type: Butcherable
-    spawned: FoodMeatChicken
-    pieces: 1
+    spawned:
+    - id: FoodMeatChicken
+      amount: 1
   - type: InteractionPopup
     successChance: 0.8
     interactSuccessString: petting-success-bird
@@ -169,8 +171,9 @@
       crit: dead-0
       dead: dead-0
   - type: Butcherable
-    spawned: FoodMeatDuck
-    pieces: 1
+    spawned:
+    - id: FoodMeatDuck
+      amount: 1
   - type: InteractionPopup
     successChance: 0.9
     interactSuccessString: petting-success-bird
@@ -199,8 +202,9 @@
       crit: dead-1
       dead: dead-1
   - type: Butcherable
-    spawned: FoodMeatDuck
-    pieces: 1
+    spawned:
+    - id: FoodMeatDuck
+      amount: 1
   - type: InteractionPopup
     successChance: 0.9
     interactSuccessString: petting-success-bird
@@ -229,8 +233,9 @@
       crit: dead-2
       dead: dead-2
   - type: Butcherable
-    spawned: FoodMeatDuck
-    pieces: 1
+    spawned:
+    - id: FoodMeatDuck
+      amount: 1
   - type: InteractionPopup
     successChance: 0.9
     interactSuccessString: petting-success-bird
@@ -336,8 +341,9 @@
     quantity: 25
     updateRate: 30
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 5
+    spawned:
+    - id: FoodMeat
+      amount: 5
   - type: Grammar
     attributes:
       gender: female # Here because of UdderComponent
@@ -380,8 +386,9 @@
       dead: dead
     - type: AsteroidRockVisualizer
   - type: Butcherable
-    spawned: FoodMeatCrab
-    pieces: 2
+    spawned:
+    - id: FoodMeatCrab
+      amount: 2
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-crab
@@ -420,8 +427,9 @@
     quantity: 25
     updateRate: 20
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 4
+    spawned:
+    - id: FoodMeat
+      amount: 4
   - type: Grammar
     attributes:
       gender: female # Here because of UdderComponent
@@ -450,8 +458,9 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    spawned: FoodMeatChicken
-    pieces: 2
+    spawned:
+    - id: FoodMeatChicken
+      amount: 2
   - type: InteractionPopup # TODO: Make it so there's a separate chance to make certain animals outright hostile towards you.
     successChance: 0.1 # Yeah, good luck with that.
     interactSuccessString: petting-success-goose
@@ -491,8 +500,9 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 4
+    spawned:
+    - id: FoodMeat
+      amount: 4
   - type: Bloodstream
     bloodMaxVolume: 300
 
@@ -602,8 +612,9 @@
       normalState: Monkey_burning
   - type: Butcherable
     butcheringType: Spike
-    spawned: FoodMeat
-    pieces: 3
+    spawned:
+    - id: FoodMeat
+      amount: 3
   - type: MonkeyAccent
 
 - type: entity
@@ -667,8 +678,9 @@
         - ReagentId: Blood
           Quantity: 50
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 1
+    spawned:
+    - id: FoodMeat
+      amount: 1
   - type: ReplacementAccent
     accent: mouse
   - type: Tag
@@ -770,8 +782,9 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 1
+    spawned:
+    - id: FoodMeat
+      amount: 1
   - type: InteractionPopup
     successChance: 0.3
     interactSuccessString: petting-success-reptile
@@ -817,8 +830,9 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 1
+    spawned:
+    - id: FoodMeat
+      amount: 1
   - type: InteractionPopup
     successChance: 0.6
     interactSuccessString: petting-success-frog
@@ -862,8 +876,9 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 1
+    spawned:
+    - id: FoodMeat
+      amount: 1
   - type: InteractionPopup
     successChance: 0.6
     interactSuccessString: petting-success-bird
@@ -903,8 +918,9 @@
       crit: penguin_dead
       dead: penguin_dead
   - type: Butcherable
-    spawned: FoodMeatPenguin
-    pieces: 3
+    spawned:
+    - id: FoodMeatPenguin
+      amount: 3
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-bird
@@ -951,8 +967,9 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    spawned: FoodMeatPenguin
-    pieces: 3
+    spawned:
+    - id: FoodMeatPenguin
+      amount: 3
   - type: UnarmedCombat
     range: 0.5
     arcwidth: 0
@@ -965,7 +982,7 @@
   - type: OnUseTimerTrigger
     delay: 10
     beepSound:
-      path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use 
+      path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use
     beepInterval: 1
   - type: Explosive
     devastationRange: 1
@@ -1009,8 +1026,9 @@
      # dead: dead
      # crit: dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 1
+    spawned:
+    - id: FoodMeat
+      amount: 1
   - type: InteractionPopup
     successChance: 0.6
     interactSuccessString: petting-success-reptile
@@ -1055,8 +1073,9 @@
       crit: tarantula_dead
       dead: tarantula_dead
   - type: Butcherable
-    spawned: FoodMeatSpider
-    pieces: 2
+    spawned:
+    - id: FoodMeatSpider
+      amount: 2
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
@@ -1108,8 +1127,9 @@
       crit: possum_dead # TODO: Make it so possums can "play dead." Probably need AI changes
       dead: possum_dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 3
+    spawned:
+    - id: FoodMeat
+      amount: 3
   - type: InteractionPopup
     successChance: 0.2 # Low when undomesticated.
     interactSuccessString: petting-success-possum # Possums don't really make much noise when they're happy. They make clicking noises as a mating call, but that is NOT the same thing!
@@ -1166,8 +1186,9 @@
       crit: raccoon_dead
       dead: raccoon_dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 3
+    spawned:
+    - id: FoodMeat
+      amount: 3
   - type: InteractionPopup
     successChance: 0.2 # Low when undomesticated.
     interactSuccessString: petting-success-soft-floofy
@@ -1222,8 +1243,9 @@
       crit: fox_dead
       dead: fox_dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 3
+    spawned:
+    - id: FoodMeat
+      amount: 3
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-soft-floofy
