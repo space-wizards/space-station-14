@@ -51,13 +51,14 @@ namespace Content.Server.Body.Systems
             SharedBodyComponent? body=null) where T : Component
         {
             if (!Resolve(uid, ref body))
-                return new();
+                return new(3);
 
+            var query = EntityManager.GetEntityQuery<T>();
             var list = new List<(T Comp, MechanismComponent Mech)>();
             foreach (var (part, _) in body.Parts)
             foreach (var mechanism in part.Mechanisms)
             {
-                if (EntityManager.TryGetComponent<T>((mechanism).Owner, out var comp))
+                if (query.TryGetComponent(mechanism.Owner, out var comp))
                     list.Add((comp, mechanism));
             }
 
