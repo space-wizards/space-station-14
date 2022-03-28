@@ -3,13 +3,15 @@
 - type: stack
   id: Pancake
   name: stack-name-pancake
+  icon: /Textures/Objects/Consumable/Food/Baked/misc.rsi/pancakes1.png
+  spawn: FoodBakedPancake
 
 # Food Containers
 
 - type: stack
   id: PizzaBox
   name: stack-name-pizza-box
-  icon: Objects/Consumable/Food/Baked/pizza.rsi/box.png
+  icon: /Textures/Objects/Consumable/Food/Baked/pizza.rsi/box.png
   spawn: FoodBoxPizza
 
 # Smokeables
@@ -17,23 +19,35 @@
 - type: stack
   id: PaperRolling
   name: stack-name-paper-rolling
+  icon: /Textures/Objects/Consumable/Smokeables/Cigarettes/paper.rsi/cigpaper.png
+  spawn: PaperRolling
 
 - type: stack
   id: CigaretteFilter
   name: stack-name-cigarette-filter
+  icon: /Textures/Objects/Consumable/Smokeables/Cigarettes/paper.rsi/cigfilter.png
+  spawn: CigaretteFilter
 
 - type: stack
   id: GroundTobacco
   name: stack-name-ground-tobacco
+  icon: /Textures/Objects/Misc/reageant_fillings.rsi/powderpile.png
+  spawn: GroundTobacco
 
 - type: stack
   id: GroundCannabis
   name: stack-name-ground-cannabis
+  icon: /Textures/Objects/Misc/reageant_fillings.rsi/powderpile.png
+  spawn: GroundCannabis
 
 - type: stack
   id: LeavesTobaccoDried
   name: stack-name-dried-tobacco-leaves
+  icon: /Textures/Objects/Specific/Hydroponics/tobacco.rsi/dried.png
+  spawn: LeavesTobaccoDried
 
 - type: stack
   id: LeavesCannabisDried
   name: stack-name-dried-cannabis-leaves
+  icon: /Textures/Objects/Specific/Hydroponics/tobacco.rsi/dried.png
+  spawn: LeavesCannabisDried

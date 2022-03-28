@@ -1,9 +1,11 @@
 - type: stack
   id: InflatableWall
   name: stack-name-inflatable-wall
+  icon: /Textures/Objects/Misc/inflatable_wall.rsi/item_wall.png
   spawn: InflatableWallStack1
 
 - type: stack
   id: InflatableDoor
   name: stack-name-inflatable-door
+  icon: /Textures/Objects/Misc/inflatable_door.rsi/item_door.png
   spawn: InflatableDoorStack1

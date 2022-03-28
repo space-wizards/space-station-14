@@ -1,109 +1,131 @@
 ﻿- type: stack
   id: FloorTileSteel
   name: stack-name-steel-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/steel.png
   spawn: FloorTileItemSteel
 
 - type: stack
   id: FloorTileWood
   name: stack-name-wood-floor
+  icon: /Textures/Objects/Tiles/tile.rsi/wood.png
   spawn: FloorTileItemWood
 
 - type: stack
   id: FloorTileWhite
   name: stack-name-white-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/white.png
   spawn: FloorTileItemWhite
 
 - type: stack
   id: FloorTileDark
   name: stack-name-dark-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/dark.png
   spawn: FloorTileItemDark
 
 - type: stack
   id: FloorTileTechmaint
   name: stack-name-techmaint-floor
+  icon: /Textures/Objects/Tiles/tile.rsi/techfloor.png
   spawn: FloorTileItemTechmaint
 
 - type: stack
   id: FloorTileFreezer
   name: stack-name-freezer-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/showroom.png
   spawn: FloorTileItemFreezer
 
 - type: stack
   id: FloorTileShowroom
   name: stack-name-showroom-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/showroom.png
   spawn: FloorTileItemShowroom
 
 - type: stack
   id: FloorTileGCircuit
   name: stack-name-green-circuit-floor
+  icon: /Textures/Objects/Tiles/tile.rsi/gcircuit.png
   spawn: FloorTileItemGCircuit
 
 - type: stack
   id: FloorTileGold
   name: stack-name-gold-floor
+  icon: /Textures/Objects/Tiles/tile.rsi/gold.png
   spawn: FloorTileItemGold
 
 - type: stack
   id: FloorTileReinforced
   name: stack-name-reinforced-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/reinforced.png
   spawn: FloorTileItemReinforced
 
 - type: stack
   id: FloorTileMono
   name: stack-name-mono-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/monofloor.png
   spawn: FloorTileItemMono
 
 - type: stack
   id: FloorTileLino
   name: stack-name-linoleum-floor
+  icon: /Textures/Objects/Tiles/tile.rsi/lino.png
   spawn: FloorTileItemLino
 
 - type: stack
   id: FloorTileHydro
   name: stack-name-hydro-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/hydro.png
   spawn: FloorTileItemHydro
 
 - type: stack
   id: FloorTileDirty
   name: stack-name-dirty-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/dirty.png
   spawn: FloorTileItemDirty
 
 - type: stack
   id: FloorTileStackShuttleWhite
   name: stack-name-white-shuttle-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/shuttlewhite.png
   spawn: FloorTileItemShuttleWhite
-  
+
 - type: stack
   id: FloorTileStackShuttleBlue
   name: stack-name-blue-shuttle-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/shuttleblue.png
   spawn: FloorTileItemShuttleBlue
-  
+
 - type: stack
   id: FloorTileStackShuttleOrange
   name: stack-name-orange-shuttle-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/shuttleorange.png
   spawn: FloorTileItemShuttleOrange
-  
+
 - type: stack
   id: FloorTileStackShuttlePurple
   name: stack-name-purple-shuttle-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/shuttlepurple.png
   spawn: FloorTileItemShuttlePurple
-  
+
 - type: stack
   id: FloorTileStackShuttleRed
   name: stack-name-red-shuttle-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/shuttlered.png
   spawn: FloorTileItemShuttleRed
-  
+
 - type: stack
   id: FloorTileStackEighties
   name: stack-name-eighties-floor-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/eighties.png
   spawn: FloorTileItemEighties
-  
+
 - type: stack
   id: FloorTileStackArcadeBlue
   name: stack-name-blue-arcade-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/arcadeblue.png
   spawn: FloorTileItemArcadeBlue
-  
+
 - type: stack
   id: FloorTileStackArcadeRed
   name: stack-name-red-arcade-tile
+  icon: /Textures/Objects/Tiles/tile.rsi/arcadered.png
   spawn: FloorTileItemArcadeRed
