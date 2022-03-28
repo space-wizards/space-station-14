@@ -170,7 +170,7 @@
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitLing
   name: organic space helmet
-  description: Inflates the changeling's flesh into a huge, bulky, spaceworthy mass of pressure and temperature-resistant organic tissue to facilitate space travel. A source of oxygen is still required for spacewalking, and because the suit is made up of the changeling's flesh, it provides no damage resistance and can be injected directly into with syringes. Slows chemical regeneration while active.
+  description: A spaceworthy biomass of pressure and temperature resistant tissue.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
