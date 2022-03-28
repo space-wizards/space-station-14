@@ -120,7 +120,7 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterHoP
-  name: hop's winter coat 
+  name: head of personnel's winter coat
   description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
