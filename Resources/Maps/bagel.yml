@@ -248,113 +248,68 @@ grids:
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAA==
 entities:
 - uid: 0
-  type: CableMV
+  type: CableHV
   components:
-  - pos: 5.5,-2.5
+  - pos: -17.5,44.5
     parent: 60
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 1
-  type: WallReinforced
+  type: CableTerminal
   components:
-  - pos: 2.5,-9.5
+  - rot: 1.5707963267948966 rad
+    pos: -20.5,59.5
     parent: 60
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2
-  type: ReinforcedWindow
+  type: AirlockMaintLocked
   components:
-  - pos: -0.5,2.5
+  - pos: 18.5,21.5
     parent: 60
     type: Transform
 - uid: 3
-  type: WallSolid
+  type: Poweredlight
   components:
-  - pos: -11.5,-25.5
+  - rot: 3.141592653589793 rad
+    pos: 41.5,23.5
     parent: 60
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 4
-  type: CableApcExtension
+  type: FoodPieBananaCream
   components:
-  - pos: 1.5,-7.5
+  - pos: 33.443047,21.672781
     parent: 60
     type: Transform
-  - visible: False
-    type: Sprite
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 5
-  type: WallReinforced
+  type: FloorTileItemArcadeBlue
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -7.5,-9.5
+  - pos: -35.503693,-35.511295
     parent: 60
     type: Transform
 - uid: 6
-  type: WallReinforced
+  type: Grille
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -1.5,-5.5
+  - pos: -1.5,2.5
     parent: 60
     type: Transform
 - uid: 7
-  type: WallReinforced
+  type: ReinforcedWindow
   components:
-  - pos: -4.5,-1.5
+  - pos: -17.5,11.5
     parent: 60
     type: Transform
 - uid: 8
-  type: WallReinforced
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -1.5,-2.5
-    parent: 60
-    type: Transform
-- uid: 9
-  type: CableHV
-  components:
-  - pos: 8.5,-3.5
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 10
-  type: Grille
-  components:
-  - pos: 3.5,2.5
-    parent: 60
-    type: Transform
-- uid: 11
-  type: WindowReinforcedDirectional
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -9.5,-7.5
-    parent: 60
-    type: Transform
-- uid: 12
-  type: AirlockMedicalGlassLocked
-  components:
-  - pos: 31.5,-19.5
-    parent: 60
-    type: Transform
-- uid: 13
-  type: ClothingNeckScarfStripedRed
-  components:
-  - pos: -17.449331,-29.623018
-    parent: 60
-    type: Transform
-- uid: 14
-  type: DogBed
-  components:
-  - pos: -25.5,-19.5
-    parent: 60
-    type: Transform
-- uid: 15
   type: CableMV
   components:
-  - pos: 1.5,-6.5
+  - pos: 1.5,-2.5
     parent: 60
     type: Transform
   - visible: False
@@ -363,107 +318,13 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
-- uid: 16
+- uid: 9
   type: WallReinforced
   components:
-  - pos: 8.5,-10.5
+  - pos: -4.5,0.5
     parent: 60
     type: Transform
-- uid: 17
-  type: WallReinforced
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -1.5,-7.5
-    parent: 60
-    type: Transform
-- uid: 18
-  type: SalternAPC
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -2.5,-2.5
-    parent: 60
-    type: Transform
-- uid: 19
-  type: CableApcExtension
-  components:
-  - pos: 4.5,-10.5
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 20
-  type: WallReinforced
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -5.5,-9.5
-    parent: 60
-    type: Transform
-- uid: 21
-  type: GasPipeHalf
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 2.5,-0.5
-    parent: 60
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-  - color: '#0335FCFF'
-    type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-- uid: 22
-  type: CableApcExtension
-  components:
-  - pos: -5.5,-3.5
-    parent: 60
-    type: Transform
-  - visible: False
-    type: Sprite
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-- uid: 23
-  type: WallReinforced
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -1.5,-4.5
-    parent: 60
-    type: Transform
-- uid: 24
-  type: WallReinforced
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -1.5,-9.5
-    parent: 60
-    type: Transform
-- uid: 25
-  type: ReinforcedWindow
-  components:
-  - pos: -4.5,-0.5
-    parent: 60
-    type: Transform
-- uid: 26
-  type: CableApcExtension
-  components:
-  - pos: -3.5,-9.5
-    parent: 60
-    type: Transform
-  - visible: False
-    type: Sprite
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-- uid: 27
-  type: WallReinforced
-  components:
-  - pos: -5.5,-11.5
-    parent: 60
-    type: Transform
-- uid: 28
+- uid: 10
   type: GasPipeStraight
   components:
   - rot: 3.141592653589793 rad
@@ -478,16 +339,16 @@ entities:
     type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
-- uid: 29
+- uid: 11
   type: WallReinforced
   components:
-  - pos: -4.5,0.5
+  - pos: -5.5,-11.5
     parent: 60
     type: Transform
-- uid: 30
-  type: CableMV
+- uid: 12
+  type: CableApcExtension
   components:
-  - pos: 1.5,-2.5
+  - pos: -3.5,-9.5
     parent: 60
     type: Transform
   - visible: False
@@ -496,61 +357,200 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
-- uid: 31
+- uid: 13
   type: ReinforcedWindow
   components:
-  - pos: -17.5,11.5
+  - pos: -4.5,-0.5
     parent: 60
     type: Transform
-- uid: 32
-  type: Grille
+- uid: 14
+  type: WallReinforced
   components:
-  - pos: -1.5,2.5
+  - rot: -1.5707963267948966 rad
+    pos: -1.5,-9.5
     parent: 60
     type: Transform
-- uid: 33
-  type: FloorTileItemArcadeBlue
+- uid: 15
+  type: WallReinforced
   components:
-  - pos: -35.503693,-35.511295
+  - rot: -1.5707963267948966 rad
+    pos: -1.5,-4.5
     parent: 60
     type: Transform
-- uid: 34
-  type: FoodPieBananaCream
+- uid: 16
+  type: CableApcExtension
   components:
-  - pos: 33.443047,21.672781
+  - pos: -5.5,-3.5
     parent: 60
     type: Transform
-- uid: 35
-  type: Poweredlight
+  - visible: False
+    type: Sprite
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 17
+  type: GasPipeHalf
   components:
-  - rot: 3.141592653589793 rad
-    pos: 41.5,23.5
+  - rot: -1.5707963267948966 rad
+    pos: 2.5,-0.5
     parent: 60
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-- uid: 36
-  type: AirlockMaintLocked
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+  - color: '#0335FCFF'
+    type: AtmosPipeColor
+  - enabled: False
+    type: AmbientSound
+- uid: 18
+  type: WallReinforced
   components:
-  - pos: 18.5,21.5
+  - rot: -1.5707963267948966 rad
+    pos: -5.5,-9.5
     parent: 60
     type: Transform
-- uid: 37
-  type: CableTerminal
+- uid: 19
+  type: CableApcExtension
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -20.5,59.5
+  - pos: 4.5,-10.5
     parent: 60
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 38
+- uid: 20
+  type: SalternAPC
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,-2.5
+    parent: 60
+    type: Transform
+- uid: 21
+  type: WallReinforced
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -1.5,-7.5
+    parent: 60
+    type: Transform
+- uid: 22
+  type: WallReinforced
+  components:
+  - pos: 8.5,-10.5
+    parent: 60
+    type: Transform
+- uid: 23
+  type: CableMV
+  components:
+  - pos: 1.5,-6.5
+    parent: 60
+    type: Transform
+  - visible: False
+    type: Sprite
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 24
+  type: DogBed
+  components:
+  - pos: -25.5,-19.5
+    parent: 60
+    type: Transform
+- uid: 25
+  type: ClothingNeckScarfStripedRed
+  components:
+  - pos: -17.449331,-29.623018
+    parent: 60
+    type: Transform
+- uid: 26
+  type: AirlockMedicalGlassLocked
+  components:
+  - pos: 31.5,-19.5
+    parent: 60
+    type: Transform
+- uid: 27
+  type: WindowReinforcedDirectional
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -9.5,-7.5
+    parent: 60
+    type: Transform
+- uid: 28
+  type: Grille
+  components:
+  - pos: 3.5,2.5
+    parent: 60
+    type: Transform
+- uid: 29
   type: CableHV
   components:
-  - pos: -17.5,44.5
+  - pos: 8.5,-3.5
+    parent: 60
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 30
+  type: WallReinforced
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -1.5,-2.5
+    parent: 60
+    type: Transform
+- uid: 31
+  type: WallReinforced
+  components:
+  - pos: -4.5,-1.5
+    parent: 60
+    type: Transform
+- uid: 32
+  type: WallReinforced
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -1.5,-5.5
+    parent: 60
+    type: Transform
+- uid: 33
+  type: WallReinforced
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -7.5,-9.5
+    parent: 60
+    type: Transform
+- uid: 34
+  type: CableApcExtension
+  components:
+  - pos: 1.5,-7.5
+    parent: 60
+    type: Transform
+  - visible: False
+    type: Sprite
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 35
+  type: WallSolid
+  components:
+  - pos: -11.5,-25.5
+    parent: 60
+    type: Transform
+- uid: 36
+  type: ReinforcedWindow
+  components:
+  - pos: -0.5,2.5
+    parent: 60
+    type: Transform
+- uid: 37
+  type: WallReinforced
+  components:
+  - pos: 2.5,-9.5
+    parent: 60
+    type: Transform
+- uid: 38
+  type: CableMV
+  components:
+  - pos: 5.5,-2.5
     parent: 60
     type: Transform
   - canCollide: False
@@ -162044,21 +162044,11 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 15419
-  type: DawInstrument
+  type: DawInstrumentMachineCircuitboard
   components:
-  - pos: -33.5,13.5
+  - pos: -33.515907,13.490992
     parent: 60
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 15420
   type: PowerCellLargeSuper
   components:
