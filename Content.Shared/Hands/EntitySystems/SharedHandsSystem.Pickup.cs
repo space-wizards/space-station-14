@@ -104,7 +104,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Puts an item any hand, preferring the active hand, or puts it on the floor.
+    ///     Puts an item into any hand, preferring the active hand, or puts it on the floor.
     /// </summary>
     public void PickupOrDrop(EntityUid? uid, EntityUid entity, bool checkActionBlocker = true, bool animateUser = false, SharedHandsComponent? handsComp = null, SharedItemComponent? item = null)
     {

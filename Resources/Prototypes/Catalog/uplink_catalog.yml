@@ -75,6 +75,12 @@
   itemId: SyndieMiniBomb
   price: 6
 
+- type: uplinkListing
+  id: UplinkGrenadePenguin
+  category: Explosives
+  itemId: MobGrenadePenguin
+  price: 6
+
 #- type: uplinkListing
 #  id: UplinkExplosiveC4
 #  category: Weapons

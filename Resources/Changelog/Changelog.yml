@@ -1,63 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: You can once again refill botany trays without requiring a plant to
-      be present., type: Fix}
-  id: 749
-  time: '2021-12-19T06:52:14.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Mobs in crit state now gasp., type: Add}
-  - {message: Examined humans will now tell if they are dead or not regardless if
-      the body is still being occupied by a ghost., type: Add}
-  id: 750
-  time: '2021-12-19T22:45:47.0000000+00:00'
-- author: pointer-to-null
-  changes:
-  - {message: Fixed accumulation of stuttering time., type: Fix}
-  id: 751
-  time: '2021-12-19T23:27:07.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added kangaroos., type: Add}
-  id: 752
-  time: '2021-12-20T06:16:25.0000000+00:00'
-- author: wrexbe
-  changes:
-  - {message: Cloner now tells you why it can't eject., type: Add}
-  id: 753
-  time: '2021-12-20T06:28:50.0000000+00:00'
-- author: Mirino97
-  changes:
-  - {message: Increased CharacterWindow size to accomodate objectives!, type: Fix}
-  id: 754
-  time: '2021-12-21T01:30:12.0000000+00:00'
-- author: ZorenZal
-  changes:
-  - {message: Add checkbox in controls for US QWERTY keys., type: Add}
-  id: 755
-  time: '2021-12-21T09:35:34.0000000+00:00'
-- author: pointer-to-null
-  changes:
-  - {message: Server info in the game lobby now shows the currently selected map.,
-    type: Add}
-  id: 756
-  time: '2021-12-21T17:18:08.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: The cigarette vendors are now full of lighters. Go nuts., type: Add}
-  id: 757
-  time: '2021-12-21T17:20:32.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Added accents for overly talkative animals., type: Add}
-  id: 758
-  time: '2021-12-21T20:31:20.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Added EVA suits to the EVA room., type: Add}
-  id: 759
-  time: '2021-12-22T22:47:34.0000000+00:00'
 - author: wrexbe
   changes:
   - {message: It is now possible to tell when airlock power wires are partially cut,
@@ -3022,3 +2963,70 @@ Entries:
     type: Tweak}
   id: 1248
   time: '2022-03-26T04:16:22.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: The rule popup doesn't show up in local servers anymore., type: Tweak}
+  id: 1249
+  time: '2022-03-26T19:16:58.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: Nanotrasen has rewritten the laws themselves to allow security officers
+      to brig for up to 10 minutes instead of five., type: Tweak}
+  id: 1250
+  time: '2022-03-27T01:15:21.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Nanotrasen has purchased more decoration for the stations, banners,
+      and some old robots they found somewhere deep in space-maint.', type: Add}
+  - {message: The records computer no longer has a green puke color., type: Tweak}
+  - {message: Someone found an empty nuclear bomb and decided to be funny and fill
+      it with cola. They are now dead and the cola is irradiated., type: Add}
+  id: 1251
+  time: '2022-03-27T06:15:19.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: You may no longer eat infinite slices of cake., type: Remove}
+  id: 1252
+  time: '2022-03-27T06:23:33.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Flashlights and flares now last a decent bit longer., type: Tweak}
+  id: 1253
+  time: '2022-03-27T06:29:00.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Fired delivery boy who has been skimming pizza from the emergency pizza
+      crates, type: Fix}
+  id: 1254
+  time: '2022-03-27T21:04:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Eating using the verb has been fixed., type: Fix}
+  id: 1255
+  time: '2022-03-27T22:50:49.0000000+00:00'
+- author: EmoGarbage
+  changes:
+  - {message: 'Added the Grenade Penguin, a living bomb from the Syndicate. Available
+      for only 8TC at your local uplink.', type: Add}
+  id: 1256
+  time: '2022-03-28T04:03:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Crafting stackable-entities will now try to merge them into your hands,
+      instead of just dropping them.', type: Tweak}
+  - {message: 'Stack merging should now be predicted, so picking up lots of individual
+      floor tiles should be a bit easier.', type: Tweak}
+  id: 1257
+  time: '2022-03-28T04:03:14.0000000+00:00'
+- author: emisse
+  changes:
+  - {message: Winter coats are now in all applicable auto drobes. Command staffs are
+      in uniform printer., type: Add}
+  id: 1258
+  time: '2022-03-28T04:16:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The sec door remote now properly opens brig doors, and the medical
+      door remote now properly opens chem doors.', type: Fix}
+  id: 1259
+  time: '2022-03-28T04:25:23.0000000+00:00'
