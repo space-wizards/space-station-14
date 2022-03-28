@@ -33,8 +33,9 @@
       crit: corgi_dead
       dead: corgi_dead
   - type: Butcherable
-    spawned: FoodMeatCorgi
-    pieces: 1
+    spawned: 
+    - id: FoodMeatCorgi
+      amount: 2
   - type: ReplacementAccent
     accent: dog
   - type: InteractionPopup
