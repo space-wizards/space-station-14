@@ -1,0 +1,28 @@
+- type: entity
+  id: VehiclePussyWagon
+  name: Janicart
+  description: The janitor's trusty steed.
+  components:
+  - type: Vehicle
+  - type: Strap
+  - type: PlayerInputMover
+  - type: Sprite
+    sprite: Objects/Vehicles/pussywagon.rsi
+    state: vehicle
+    netsync: false
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 70
+      restitution: 0.0
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
