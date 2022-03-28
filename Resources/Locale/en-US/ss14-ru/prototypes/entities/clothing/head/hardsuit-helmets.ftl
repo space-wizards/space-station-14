@@ -37,3 +37,6 @@ ent-ClothingHeadHelmetHardsuitSyndie = blood red hardsuit helmet
 ent-ClothingHeadHelmetHardsuitWizard = wizard hardsuit helmet
     .desc = A bizarre gem-encrusted helmet that radiates magical energies.
     .suffix = { "" }
+ent-ClothingHeadHelmetHardsuitLing = organic space helmet
+    .desc = A spaceworthy biomass of pressure and temperature resistant tissue.
+    .suffix = { "" }

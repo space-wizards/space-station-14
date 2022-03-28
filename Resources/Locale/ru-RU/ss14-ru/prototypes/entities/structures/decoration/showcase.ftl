@@ -1,0 +1,12 @@
+ent-ShowcaseRobot = security robot showcase
+    .desc = It is an unfunctional replica of an old security robot.
+    .suffix = { "" }
+ent-ShowcaseRobotWhite = white robot showcase
+    .desc = It is an unfunctional replica of an old robot.
+    .suffix = { "" }
+ent-ShowcaseRobotAntique = cargo robot showcase
+    .desc = It is an unfunctional replica of an old cargo robot.
+    .suffix = { "" }
+ent-ShowcaseRobotMarauder = marauder showcase
+    .desc = It is an unfunctional replica of a marauder, painted green.
+    .suffix = { "" }

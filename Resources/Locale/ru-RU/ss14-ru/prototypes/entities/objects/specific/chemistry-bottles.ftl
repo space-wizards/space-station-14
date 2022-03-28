@@ -19,3 +19,6 @@ ent-EpinephrineChemistryBottle = бутылочка epinephrine
 ent-RobustHarvestChemistryBottle = бутылочка robust harvest
     .desc = Это повысит потенцию ваших растений.
     .suffix = { "" }
+ent-NocturineChemistryBottle = nocturine bottle
+    .desc = This will make someone fall down almost immediately. Hard to overdose on.
+    .suffix = { "" }

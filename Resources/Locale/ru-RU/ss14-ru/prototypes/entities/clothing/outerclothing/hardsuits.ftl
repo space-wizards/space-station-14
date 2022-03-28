@@ -46,3 +46,6 @@ ent-ClothingOuterHardsuitSyndie = blood-red hardsuit
 ent-ClothingOuterHardsuitWizard = wizard hardsuit
     .desc = A bizarre gem-encrusted suit that radiates magical energies.
     .suffix = { "" }
+ent-ClothingOuterHardsuitLing = organic space suit
+    .desc = A spaceworthy biomass of pressure and temperature resistant tissue.
+    .suffix = { "" }
