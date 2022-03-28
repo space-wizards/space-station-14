@@ -43,3 +43,6 @@ ent-ClothingHeadHelmetFire = fire helmet
 ent-ClothingHeadHelmetAtmosFire = atmos fire helmet
     .desc = An atmos fire helmet, able to keep the user cool in any situation.
     .suffix = { "" }
+ent-ClothingHeadHelmetLing = chitinous helmet
+    .desc = Inflates the changeling's body into an all-consuming chitinous mass of armor. Provides extensive protection against physical damage, but less against other types. Its mass slows the changeling's movement, and maintaining its shape slows chemical generation.
+    .suffix = { "" }

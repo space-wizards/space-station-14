@@ -10,7 +10,3 @@ grinder-menu-chamber-content-box-button = Извлечь содержимое
 grinder-menu-beaker-content-box-label = Стакан
 grinder-menu-beaker-content-box-button = Извлечь стакан
 grinder-menu-beaker-content-box-is-empty = Пусто
-
-## Entity
-
-reagent-grinder-component-interact-using-no-hands = У вас нет рук.

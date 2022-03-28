@@ -16,4 +16,3 @@ ent-SpaceCash1000 = кредитов
 ent-SpaceCash1000000 = кредитов
     .suffix = 1000000
     .desc = { ent-SpaceCash.desc }
-    

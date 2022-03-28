@@ -37,3 +37,6 @@ ent-ClothingHeadHelmetHardsuitSyndie = кроваво-красный шлем с
 ent-ClothingHeadHelmetHardsuitWizard = шлем скафандра волшебника
     .desc = Причудливый шлем, инкрустированный драгоценными камнями, излучающий магическую энергию.
     .suffix = { "" }
+ent-ClothingHeadHelmetHardsuitLing = organic space helmet
+    .desc = A spaceworthy biomass of pressure and temperature resistant tissue.
+    .suffix = { "" }

@@ -155,16 +155,6 @@ namespace Content.Server.PDA
                         break;
                     }
 
-                case PDAEjectIDMessage _:
-                    {
-                        ItemSlotsSystem.TryEjectToHands(pda.Owner, pda.IdSlot, playerUid);
-                        break;
-                    }
-                case PDAEjectPenMessage _:
-                    {
-                        ItemSlotsSystem.TryEjectToHands(pda.Owner, pda.PenSlot, playerUid);
-                        break;
-                    }
                 case PDAShowUplinkMessage _:
                     {
                         if (EntityManager.TryGetComponent(pda.Owner, out UplinkComponent? uplink))

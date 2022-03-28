@@ -25,7 +25,6 @@
   - type: Sprite
     drawdepth: Overdoors
     offset: "0.0,0.3"
-    noRot: true
     sprite: Structures/Furniture/potted_plants.rsi
   - type: PottedPlantHide
   - type: SecretStash

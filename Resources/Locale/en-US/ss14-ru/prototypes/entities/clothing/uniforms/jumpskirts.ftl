@@ -136,3 +136,6 @@ ent-ClothingUniformJumpskirtCentcomFormalDress = central command formal dress
 ent-ClothingUniformJumpskirtHosFormal = hos's formal dress
     .desc = A dress for special occasions.
     .suffix = { "" }
+ent-ClothingUniformJumpskirtOperative = operative jumpskirt
+    .desc = Uniform for elite syndicate operatives performing tactical operations in deep space.
+    .suffix = { "" }

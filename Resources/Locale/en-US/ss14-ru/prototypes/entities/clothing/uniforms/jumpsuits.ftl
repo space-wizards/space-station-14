@@ -205,3 +205,6 @@ ent-ClothingUniformJumpsuitCentcomFormal = central command formal suit
 ent-ClothingUniformJumpsuitHosFormal = hos's formal suit
     .desc = A suit for special occasions.
     .suffix = { "" }
+ent-ClothingUniformJumpsuitOperative = operative jumpsuit
+    .desc = Uniform for elite syndicate operatives performing tactical operations in deep space.
+    .suffix = { "" }

@@ -1,0 +1,237 @@
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterWinterCoat
+  name: winter coat
+  description: A heavy jacket made from 'synthetic' animal furs. 
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.75
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterAtmos
+  name: atmospherics winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatatmos.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatatmos.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterCap
+  name: captain's winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterCargo
+  name: cargo winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatcargo.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatcargo.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterCE
+  name: chief engineer's winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatce.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatce.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterCentcom
+  name: centcom winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterChem
+  name: chemistry winter coat 
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatchem.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatchem.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterCMO
+  name: chief medical officer's winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterEngi
+  name: engineering winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatengi.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatengi.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterGen
+  name: genetics winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatgen.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatgen.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterHoP
+  name: head of personnel's winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coathop.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coathop.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterHoS
+  name: head of security's winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterHydro
+  name: hydroponics winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coathydro.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coathydro.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterJani
+  name: janitorial winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatjani.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatjani.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterMed
+  name: medical winter coat 
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatmed.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatmed.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterMiner
+  name: mining winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatminer.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatminer.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterPara
+  name: paramedic winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatparamed.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatparamed.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterQM
+  name: quartermaster's winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatqm.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatqm.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterRD
+  name: research director's winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterRobo
+  name: robotics winter coat 
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatrobo.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatrobo.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterSci
+  name: science winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatsci.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatsci.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterSec
+  name: security winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatsec.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatsec.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterViro
+  name: virology winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatviro.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatviro.rsi

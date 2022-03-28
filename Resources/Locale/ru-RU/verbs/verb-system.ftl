@@ -17,6 +17,7 @@ verb-categories-rotate = Повернуть
 verb-categories-transfer = Установить значение перемещения
 verb-categories-split = Разделить
 verb-categories-set-sensor = Сенсоры
+verb-categories-timer = Set Delay
 verb-common-toggle-light = Переключить свет
 verb-common-close = Закрыть
 verb-common-open = Открыть

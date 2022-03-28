@@ -170,3 +170,26 @@
         Slash: 0.5
         Piercing: 0.6
         Heat: 0.5
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterArmorChangeling
+  name: chitinous armor
+  description: Inflates the changeling's body into an all-consuming chitinous mass of armor. Provides extensive protection against physical damage, but less against other types. Its mass slows the changeling's movement, and maintaining its shape slows chemical generation.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/lingarmor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/lingarmor.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.9
+        Radiation: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.65 
+    

@@ -1,4 +1,4 @@
-ent-MobReptilianBase = Urist McHands The Lizardperson
+ent-MobReptilianBase = Urisst' Mzhand
     .desc = A miserable pile of scales.
     .suffix = { "" }
 ent-MobReptilianDummy = Urist McHands
