@@ -129,7 +129,8 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterHoS
-  name: hos's winter coat
+  name: head of security's winter coat
+
   description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
