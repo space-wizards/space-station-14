@@ -1,39 +1,4 @@
 Entries:
-- author: ZorenZal
-  changes:
-  - {message: Add checkbox in controls for US QWERTY keys., type: Add}
-  id: 755
-  time: '2021-12-21T09:35:34.0000000+00:00'
-- author: pointer-to-null
-  changes:
-  - {message: Server info in the game lobby now shows the currently selected map.,
-    type: Add}
-  id: 756
-  time: '2021-12-21T17:18:08.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: The cigarette vendors are now full of lighters. Go nuts., type: Add}
-  id: 757
-  time: '2021-12-21T17:20:32.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Added accents for overly talkative animals., type: Add}
-  id: 758
-  time: '2021-12-21T20:31:20.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Added EVA suits to the EVA room., type: Add}
-  id: 759
-  time: '2021-12-22T22:47:34.0000000+00:00'
-- author: wrexbe
-  changes:
-  - {message: It is now possible to tell when airlock power wires are partially cut,
-    type: Add}
-  - {message: Airlock text is a little bit clearer, type: Tweak}
-  - {message: 'Airlock now only loses power when both backup, and main power wires
-      are cut', type: Fix}
-  id: 760
-  time: '2021-12-23T04:02:27.0000000+00:00'
 - author: Fishfish458
   changes:
   - {message: Hypospray to CMO lockers and also traitor goals., type: Add}
@@ -3025,3 +2990,40 @@ Entries:
       crates, type: Fix}
   id: 1254
   time: '2022-03-27T21:04:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Eating using the verb has been fixed., type: Fix}
+  id: 1255
+  time: '2022-03-27T22:50:49.0000000+00:00'
+- author: EmoGarbage
+  changes:
+  - {message: 'Added the Grenade Penguin, a living bomb from the Syndicate. Available
+      for only 8TC at your local uplink.', type: Add}
+  id: 1256
+  time: '2022-03-28T04:03:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Crafting stackable-entities will now try to merge them into your hands,
+      instead of just dropping them.', type: Tweak}
+  - {message: 'Stack merging should now be predicted, so picking up lots of individual
+      floor tiles should be a bit easier.', type: Tweak}
+  id: 1257
+  time: '2022-03-28T04:03:14.0000000+00:00'
+- author: emisse
+  changes:
+  - {message: Winter coats are now in all applicable auto drobes. Command staffs are
+      in uniform printer., type: Add}
+  id: 1258
+  time: '2022-03-28T04:16:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The sec door remote now properly opens brig doors, and the medical
+      door remote now properly opens chem doors.', type: Fix}
+  id: 1259
+  time: '2022-03-28T04:25:23.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Mercury and Uranium are no longer mistakenly metabolized as medicines.,
+    type: Tweak}
+  id: 1260
+  time: '2022-03-28T08:33:07.0000000+00:00'
