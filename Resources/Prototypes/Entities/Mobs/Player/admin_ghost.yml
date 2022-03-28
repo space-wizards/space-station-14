@@ -18,6 +18,7 @@
     baseSprintSpeed: 12
     baseWalkSpeed: 8
   - type: Physics
+    ignorePaused: true
     bodyType: Kinematic
     status: InAir
     # TODO: Even need these? Don't think so but CBF checking right now.
