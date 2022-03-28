@@ -94,6 +94,17 @@
     damage:
       types:
         Piercing: 5
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 15
+    arcCooldownTime: 2 
+  - type: Tool
+    qualities:
+      - Screwing
+    useSound:
+      collection: Screwdriver
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
     HeldPrefix: overpriced_pen
