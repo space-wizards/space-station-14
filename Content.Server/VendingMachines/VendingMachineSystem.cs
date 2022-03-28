@@ -9,10 +9,10 @@ using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Server.Throwing;
 using Content.Shared.Acts;
 using Content.Shared.Emag.Systems;
 using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
+using Content.Shared.Throwing;
 
 namespace Content.Server.VendingMachines.systems
 {
@@ -21,7 +21,8 @@ namespace Content.Server.VendingMachines.systems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!; 
+        [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
 
         public override void Initialize()
         {
@@ -230,7 +231,7 @@ namespace Content.Server.VendingMachines.systems
                 {
                     float range = vendComponent.NonLimitedEjectRange;
                     Vector2 direction = new Vector2(_random.NextFloat(-range, range), _random.NextFloat(-range, range));
-                    ent.TryThrow(direction, vendComponent.NonLimitedEjectForce);
+                    _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce);
                 }
             });
             SoundSystem.Play(Filter.Pvs(vendComponent.Owner), vendComponent.SoundVend.GetSound(), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));

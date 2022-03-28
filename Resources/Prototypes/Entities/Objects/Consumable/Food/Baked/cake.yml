@@ -17,7 +17,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
-        - Vitamin:
+        - ReagentId: Vitamin
           Quantity: 5
 
 - type: entity

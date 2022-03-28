@@ -97,21 +97,14 @@ namespace Content.Server.Chemistry.Components
             if (obj.Session.AttachedEntity is not {Valid: true} player)
                 return;
 
-            var msg = (UiActionMessage) obj.Message;
-            var needsPower = msg.Action switch
-            {
-                UiAction.Eject => false,
-                _ => true,
-            };
+            if (obj.Message is not UiActionMessage msg)
+                return;
 
-            if (!PlayerCanUseChemMaster(player, needsPower))
+            if (!PlayerCanUseChemMaster(player, true))
                 return;
 
             switch (msg.Action)
             {
-                case UiAction.Eject:
-                    EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(Owner, BeakerSlot, player);
-                    break;
                 case UiAction.ChemButton:
                     TransferReagent(msg.Id, msg.Amount, msg.IsBuffer);
                     break;

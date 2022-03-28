@@ -165,3 +165,17 @@
     sprite: Clothing/Head/Hardsuits/wizard.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/wizard.rsi
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitLing
+  name: organic space helmet
+  description: A spaceworthy biomass of pressure and temperature resistant tissue.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 100
