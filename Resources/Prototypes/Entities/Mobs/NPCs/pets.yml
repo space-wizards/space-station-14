@@ -34,8 +34,8 @@
       dead: corgi_dead
   - type: Butcherable
     spawned:
-    - id: FoodMeat
-      amount: 3
+    - id: FoodMeatCorgi
+      amount: 2
   - type: ReplacementAccent
     accent: dog
   - type: InteractionPopup
