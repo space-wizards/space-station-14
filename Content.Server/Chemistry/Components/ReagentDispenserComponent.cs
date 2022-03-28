@@ -4,7 +4,6 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Dispenser;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
@@ -145,21 +144,14 @@ namespace Content.Server.Chemistry.Components
                 return;
             }
 
-            var msg = (UiButtonPressedMessage) obj.Message;
-            var needsPower = msg.Button switch
-            {
-                UiButton.Eject => false,
-                _ => true,
-            };
+            if (obj.Message is not UiButtonPressedMessage msg )
+                return;
 
-            if (!PlayerCanUseDispenser(obj.Session.AttachedEntity, needsPower))
+            if (!PlayerCanUseDispenser(obj.Session.AttachedEntity, true))
                 return;
 
             switch (msg.Button)
             {
-                case UiButton.Eject:
-                    EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(Owner, BeakerSlot, obj.Session.AttachedEntity);
-                    break;
                 case UiButton.Clear:
                     TryClear();
                     break;

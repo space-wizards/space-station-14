@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Cloning;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -16,6 +12,8 @@ namespace Content.Shared.Chemistry.Components
     [Virtual]
     public class SharedChemMasterComponent : Component
     {
+        public static string BeakerSlotId = "ChemMaster-beaker";
+
         [DataField("beakerSlot")]
         public ItemSlot BeakerSlot = new();
         public const string SolutionName = "buffer";
@@ -124,7 +122,6 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         public enum UiAction
         {
-            Eject,
             Transfer,
             Discard,
             ChemButton,

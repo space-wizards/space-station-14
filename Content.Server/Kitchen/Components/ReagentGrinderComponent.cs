@@ -1,10 +1,8 @@
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Sound;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Kitchen.Components
 {
@@ -17,12 +15,10 @@ namespace Content.Server.Kitchen.Components
     [RegisterComponent]
     public sealed class ReagentGrinderComponent : SharedReagentGrinderComponent
     {
-        [ViewVariables] public ContainerSlot BeakerContainer = default!;
-
         /// <summary>
         /// Can be null since we won't always have a beaker in the grinder.
         /// </summary>
-        [ViewVariables] public Solution? HeldBeaker = default!;
+        [ViewVariables] public Solution? BeakerSolution;
 
         /// <summary>
         /// Contains the things that are going to be ground or juiced.
@@ -40,5 +36,8 @@ namespace Content.Server.Kitchen.Components
         [DataField("clickSound")] public SoundSpecifier ClickSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
         [DataField("grindSound")] public SoundSpecifier GrindSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/blender.ogg");
         [DataField("juiceSound")] public SoundSpecifier JuiceSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/juicer.ogg");
+
+        [DataField("beakerSlot")]
+        public ItemSlot BeakerSlot = new();
     }
 }
