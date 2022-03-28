@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Added EVA suits to the EVA room., type: Add}
-  id: 759
-  time: '2021-12-22T22:47:34.0000000+00:00'
 - author: wrexbe
   changes:
   - {message: It is now possible to tell when airlock power wires are partially cut,
@@ -3029,3 +3024,9 @@ Entries:
       in uniform printer., type: Add}
   id: 1258
   time: '2022-03-28T04:16:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The sec door remote now properly opens brig doors, and the medical
+      door remote now properly opens chem doors.', type: Fix}
+  id: 1259
+  time: '2022-03-28T04:25:23.0000000+00:00'
