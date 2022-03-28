@@ -463,6 +463,97 @@
     base: silver
 
 - type: entity
+  id: WallShuttleDiagonal
+  name: shuttle wall
+  suffix: diagonal
+  description: Keeps the air in and the greytide out.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Tag
+    tags:
+    - Wall
+  - type: Sprite
+    netsync: false
+    drawdepth: Walls
+    # TODO: Icon smoothing support
+    sprite: Structures/Walls/shuttle_diagonal.rsi
+    state: state0
+  - type: Icon
+    sprite: Structures/Walls/shuttle_diagonal.rsi
+    state: state0
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Physics
+    bodyType: Static
+  - type: Pullable
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PolygonShape
+          vertices:
+          - "-0.5,-0.5"
+          - "0.5,0.5"
+          - "0.5,-0.5"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      mask:
+      - Impassable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    destroySound:
+      path: /Audio/Effects/metalbreak.ogg
+
+- type: entity
+  parent: WallBase
+  id: WallShuttle
+  name: shuttle wall
+  components:
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/shuttle.rsi
+  - type: Icon
+    sprite: Structures/Walls/shuttle.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    destroySound:
+      path: /Audio/Effects/metalbreak.ogg
+  - type: IconSmooth
+    key: walls
+    base: state
+
+- type: entity
   parent: WallBase
   id: WallSolid
   name: solid wall
