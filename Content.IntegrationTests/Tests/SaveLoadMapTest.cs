@@ -33,8 +33,7 @@ namespace Content.IntegrationTests.Tests
                 var dir = new ResourcePath(mapPath).Directory;
                 resManager.UserData.CreateDir(dir);
 
-                var nextMapId = mapManager.NextMapId();
-                var mapId = mapManager.CreateMap(nextMapId);
+                var mapId = mapManager.CreateMap();
 
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
@@ -51,7 +50,7 @@ namespace Content.IntegrationTests.Tests
 
                 mapLoader.SaveMap(mapId, mapPath);
 
-                mapManager.DeleteMap(nextMapId);
+                mapManager.DeleteMap(mapId);
             });
             await server.WaitIdleAsync();
 
