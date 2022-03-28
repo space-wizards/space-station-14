@@ -6,6 +6,7 @@ using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Server.Station;
+using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
@@ -70,7 +71,7 @@ namespace Content.Server.GameTicking
             DefaultMap = _mapManager.CreateMap();
             _mapManager.AddUninitializedMap(DefaultMap);
             var startTime = _gameTiming.RealTime;
-            var maps = new List<GameMapPrototype>() { _gameMapManager.GetSelectedMapChecked(true) };
+            var maps = new List<GameMapPrototype>() { _gameMapManager.GetSelectedMapChecked(true, true) };
 
             // Let game rules dictate what maps we should load.
             RaiseLocalEvent(new LoadingMapsEvent(maps));
@@ -139,13 +140,13 @@ namespace Content.Server.GameTicking
                     }
                     else
                     {
-                        Logger.Error($"Grid {grid.Index} ({grid.GridEntityId}) specified that it was part of station {partOfStation.Id} which does not exist");
+                        _sawmill.Error($"Grid {grid.Index} ({grid.GridEntityId}) specified that it was part of station {partOfStation.Id} which does not exist");
                     }
                 }
             }
 
             var timeSpan = _gameTiming.RealTime - startTime;
-            Logger.InfoS("ticker", $"Loaded maps in {timeSpan.TotalMilliseconds:N2}ms.");
+            _sawmill.Info($"Loaded maps in {timeSpan.TotalMilliseconds:N2}ms.");
         }
 
         private void SetupGridStation(IMapGrid grid)
@@ -179,7 +180,7 @@ namespace Content.Server.GameTicking
             _startingRound = true;
 
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
-            Logger.InfoS("ticker", "Starting round!");
+            _sawmill.Info("Starting round!");
 
             SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
@@ -190,10 +191,15 @@ namespace Content.Server.GameTicking
             RoundLengthMetric.Set(0);
 
             var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
+            var serverName = _configurationManager.GetCVar(CCVars.AdminLogsServerName);
             // TODO FIXME AAAAAAAAAAAAAAAAAAAH THIS IS BROKEN
             // Task.Run as a terrible dirty workaround to avoid synchronization context deadlock from .Result here.
             // This whole setup logic should be made asynchronous so we can properly wait on the DB AAAAAAAAAAAAAH
-            RoundId = Task.Run(async () => await _db.AddNewRound(playerIds)).Result;
+            RoundId = Task.Run(async () =>
+            {
+                var server = await _db.AddOrGetServer(serverName);
+                return await _db.AddNewRound(server, playerIds);
+            }).Result;
 
             var startingEvent = new RoundStartingEvent();
             RaiseLocalEvent(startingEvent);
@@ -258,14 +264,13 @@ namespace Content.Server.GameTicking
 
                 if (RoundStartFailShutdownCount > 0 && _roundStartFailCount >= RoundStartFailShutdownCount)
                 {
-                    Logger.FatalS("ticker",
-                        $"Failed to start a round {_roundStartFailCount} time(s) in a row... Shutting down!");
+                    _sawmill.Fatal($"Failed to start a round {_roundStartFailCount} time(s) in a row... Shutting down!");
                     _runtimeLog.LogException(e, nameof(GameTicker));
                     _baseServer.Shutdown("Restarting server");
                     return;
                 }
 
-                Logger.WarningS("ticker", $"Exception caught while trying to start the round! Restarting round...");
+                _sawmill.Warning($"Exception caught while trying to start the round! Restarting round...");
                 _runtimeLog.LogException(e, nameof(GameTicker));
                 _startingRound = false;
                 RestartRound();
@@ -292,7 +297,7 @@ namespace Content.Server.GameTicking
                 return;
 
             DebugTools.Assert(RunLevel == GameRunLevel.InRound);
-            Logger.InfoS("ticker", "Ending round!");
+            _sawmill.Info("Ending round!");
 
             RunLevel = GameRunLevel.PostRound;
 
@@ -334,12 +339,12 @@ namespace Content.Server.GameTicking
                     // Finish
                     var antag = mind.AllRoles.Any(role => role.Antagonist);
 
-                    var playerIcName = string.Empty;
+                    var playerIcName = "Unknown";
 
                     if (mind.CharacterName != null)
                         playerIcName = mind.CharacterName;
-                    else if (mind.CurrentEntity != null)
-                        playerIcName = EntityManager.GetComponent<MetaDataComponent>(mind.CurrentEntity.Value).EntityName;
+                    else if (mind.CurrentEntity != null && TryName(mind.CurrentEntity.Value, out var icName))
+                        playerIcName = icName;
 
                     var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                     {
@@ -376,7 +381,7 @@ namespace Content.Server.GameTicking
                 return;
             }
 
-            Logger.InfoS("ticker", "Restarting round!");
+            _sawmill.Info("Restarting round!");
 
             SendServerMessage(Loc.GetString("game-ticker-restart-round"));
 
@@ -425,9 +430,22 @@ namespace Content.Server.GameTicking
             // Delete all entities.
             foreach (var entity in EntityManager.GetEntities().ToArray())
             {
+#if EXCEPTION_TOLERANCE
+                try
+                {
+#endif
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
                 EntityManager.DeleteEntity(entity);
+#if EXCEPTION_TOLERANCE
+                }
+                catch (Exception e)
+                {
+                    _sawmill.Error($"Caught exception while trying to delete entity {ToPrettyString(entity)}, this might corrupt the game state...");
+                    _runtimeLog.LogException(e, nameof(GameTicker));
+                    continue;
+                }
+#endif
             }
 
             _mapManager.Restart();

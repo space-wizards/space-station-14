@@ -29,6 +29,7 @@
   name: universal enzyme
   group: Foods
   desc: Used in cooking various dishes.
+  physicalDesc: chalky
   color: "#009900"
   metabolisms:
     Food:
@@ -54,7 +55,7 @@
   name: sugar
   group: Foods
   desc: Tasty spacey sugar!
-  physicalDesc:
+  physicalDesc: sweet
   color: white
   metabolisms:
     Food:
@@ -67,7 +68,7 @@
   name: black pepper
   group: Foods
   desc: Often used to flavor food or make people sneeze.
-  physicalDesc: Grainy.
+  physicalDesc: grainy
   color: black
   metabolisms:
     Food:
@@ -80,6 +81,7 @@
   name: vinegar
   group: Foods
   desc: Often used to flavor food.
+  physicalDesc: sour
   color: tan
   metabolisms:
     Food:
@@ -92,6 +94,7 @@
   name: rice
   group: Foods
   desc: Hard, small white grains.
+  physicalDesc: chewy
   color: white
   metabolisms:
     Food:
@@ -103,6 +106,7 @@
   name: olive oil
   group: Foods
   desc: Viscous and fragrant.
+  physicalDesc: oily
   color: olive
   metabolisms:
     Food:

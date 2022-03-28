@@ -64,7 +64,7 @@
       path: /Audio/Weapons/Guns/Hits/snap.ogg
   - type: FlashOnTrigger
     range: 1
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
 
@@ -187,14 +187,36 @@
     state: frag
   - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Default
-    maxIntensity: 50
-    intensitySlope: 7.5
-    totalIntensity: 300
+    devastationRange: 1
+    heavyImpactRange: 2
+    lightImpactRange: 4
+    flashRange: 10
   - type: PointLight
     radius: 3.5
     color: orange
     energy: 0.5
+
+- type: entity
+  id: WeakBulletRocket
+  name: weak rocket
+  parent: TriggerBulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Projectiles/rocket.rsi
+    state: frag
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    devastationRange: 0
+    heavyImpactRange: 0
+    lightImpactRange: 1
+    flashRange: 10
+  - type: PointLight
+    radius: 3.5
+    color: orange
+    energy: 0.5
+
 
 - type: entity
   id: BulletGrenadeBaton
@@ -229,9 +251,10 @@
     state: grenade
   - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Default
-    totalIntensity: 500 # a ~7 tile radius. This is pretty big.
-    maxIntensity: 10 # caps at 150 damage
+    devastationRange: 1
+    heavyImpactRange: 2
+    lightImpactRange: 7
+    flashRange: 10
 
 - type: entity
   id: BulletGrenadeFlash
@@ -259,8 +282,10 @@
     state: grenade
   - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Default
-    totalIntensity: 64 # about a ~4 tile radius
+    devastationRange: 0
+    heavyImpactRange: 1
+    lightImpactRange: 4
+    flashRange: 10
 
 - type: entity
   id: BulletFoam

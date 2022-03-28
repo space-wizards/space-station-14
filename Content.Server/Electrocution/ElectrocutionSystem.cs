@@ -47,6 +47,7 @@ namespace Content.Server.Electrocution
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         private const string StatusEffectKey = "Electrocution";
         private const string DamageType = "Shock";
@@ -166,14 +167,12 @@ namespace Content.Server.Electrocution
             if (!electrified.Enabled)
                 return false;
 
-            var tagSystem = EntitySystem.Get<TagSystem>();
-
             if (electrified.NoWindowInTile)
             {
                 foreach (var entity in transform.Coordinates.GetEntitiesInTile(
                     LookupFlags.Approximate | LookupFlags.IncludeAnchored, _entityLookup))
                 {
-                    if (tagSystem.HasTag(entity, "Window"))
+                    if (_tagSystem.HasTag(entity, "Window"))
                         return false;
                 }
             }

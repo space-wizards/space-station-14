@@ -13,13 +13,15 @@ namespace Content.Shared.PDA
         public bool HasPen;
         public PDAIdInfoText PDAOwnerInfo;
         public bool HasUplink;
+        public bool CanPlayMusic;
 
-        public PDAUpdateState(bool flashlightEnabled, bool hasPen, PDAIdInfoText pDAOwnerInfo, bool hasUplink = false)
+        public PDAUpdateState(bool flashlightEnabled, bool hasPen, PDAIdInfoText pDAOwnerInfo, bool hasUplink = false, bool canPlayMusic = false)
         {
             FlashlightEnabled = flashlightEnabled;
             HasPen = hasPen;
             PDAOwnerInfo = pDAOwnerInfo;
             HasUplink = hasUplink;
+            CanPlayMusic = canPlayMusic;
         }
     }
 

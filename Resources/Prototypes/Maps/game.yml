@@ -88,6 +88,7 @@
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
   mapPath: /Maps/knightship.yml
+  votable: false
   minPlayers: 0
   maxPlayers: 8
   overflowJobs: []
@@ -103,7 +104,7 @@
 
 - type: gameMap
   id: NSSPillar
-  mapName: 'NSS Pillar v5.1'
+  mapName: 'NSS Pillar v5.2'
   mapNameTemplate: '{0} NSSPillar {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator

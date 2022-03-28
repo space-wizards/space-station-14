@@ -422,7 +422,7 @@
     sprite: Clothing/Belt/champion.rsi
   - type: Clothing
     sprite: Clothing/Belt/champion.rsi
-    QuickEquip: true
+    quickEquip: true
 
 - type: entity
   parent: ClothingBeltBase
@@ -474,4 +474,4 @@
     state: icon
   - type: Clothing
     sprite: Clothing/Belt/suspenders.rsi
-    QuickEquip: true
+    quickEquip: true

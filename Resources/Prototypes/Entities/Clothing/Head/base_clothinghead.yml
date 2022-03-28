@@ -8,6 +8,9 @@
     - HEAD
   - type: Sprite
     state: icon
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   abstract: true
@@ -29,8 +32,8 @@
   - type: Clothing
     size: 15
   - type: PressureProtection
-    highPressureMultiplier: 0.3
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 10
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor
@@ -42,6 +45,11 @@
         Heat: 0.90
         Radiation: 0.25
   - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - HidesHair
+  - type: DiseaseProtection
+    protection: 0.05
 
 - type: entity
   abstract: true

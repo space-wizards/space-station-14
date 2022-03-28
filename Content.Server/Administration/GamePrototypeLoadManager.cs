@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Robust.Server.Player;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -57,7 +52,7 @@ public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
         var msg = _netManager.CreateNetMessage<GamePrototypeLoadMessage>();
         msg.PrototypeData = prototypeData;
         _netManager.ServerSendToAll(msg); // everyone load it up!
-        _prototypeManager.LoadString(prototypeData); // server needs it too.
+        _prototypeManager.LoadString(prototypeData, true); // server needs it too.
         _prototypeManager.Resync();
         _localizationManager.ReloadLocalizations();
         GamePrototypeLoaded?.Invoke();

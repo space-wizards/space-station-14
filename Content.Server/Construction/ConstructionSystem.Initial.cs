@@ -10,9 +10,11 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
+using Content.Shared.Stacks;
 using Robust.Shared.Containers;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
@@ -25,6 +27,8 @@ namespace Content.Server.Construction
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -43,20 +47,17 @@ namespace Content.Server.Construction
         // LEGACY CODE. See warning at the top of the file!
         private IEnumerable<EntityUid> EnumerateNearby(EntityUid user)
         {
-            if (EntityManager.TryGetComponent(user, out HandsComponent? hands))
+            foreach (var item in _handsSystem.EnumerateHeld(user))
             {
-                foreach (var itemComponent in hands?.GetAllHeldItems()!)
+                if (TryComp(item, out ServerStorageComponent? storage))
                 {
-                    if (EntityManager.TryGetComponent(itemComponent.Owner, out ServerStorageComponent? storage))
+                    foreach (var storedEntity in storage.StoredEntities!)
                     {
-                        foreach (var storedEntity in storage.StoredEntities!)
-                        {
-                            yield return storedEntity;
-                        }
+                        yield return storedEntity;
                     }
-
-                    yield return itemComponent.Owner;
                 }
+
+                yield return item;
             }
 
             if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
@@ -76,9 +77,12 @@ namespace Content.Server.Construction
                 }
             }
 
-            foreach (var near in EntitySystem.Get<EntityLookupSystem>().GetEntitiesInRange(user!, 2f, LookupFlags.Approximate))
+            var pos = Transform(user).MapPosition;
+
+            foreach (var near in _lookupSystem.GetEntitiesInRange(user!, 2f, LookupFlags.Approximate))
             {
-                yield return near;
+                if (_interactionSystem.InRangeUnobstructed(pos, near, 2f) && _containerSystem.IsInSameOrParentContainer(user, near)) 
+                    yield return near;
             }
         }
 
@@ -333,8 +337,12 @@ namespace Content.Server.Construction
                 }
             }
 
-            if (await Construct(user, "item_construction", constructionGraph, edge, targetNode) is {Valid: true} item)
-                hands.PutInHandOrDrop(item);
+            if (await Construct(user, "item_construction", constructionGraph, edge, targetNode) is not { Valid: true } item)
+                return;
+
+            // Just in case this is a stack, attempt to merge it. If it isn't a stack, this will just normally pick up
+            // or drop the item as normal.
+            _stackSystem.TryMergeToHands(item, user);
         }
 
         // LEGACY CODE. See warning at the top of the file!
@@ -401,7 +409,7 @@ namespace Content.Server.Construction
             }
 
             if (!_actionBlocker.CanInteract(user, null)
-                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHandItem == null)
+                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.ActiveHandEntity == null)
             {
                 Cleanup();
                 return;
@@ -426,7 +434,7 @@ namespace Content.Server.Construction
 
             var valid = false;
 
-            if (hands.GetActiveHandItem?.Owner is not {Valid: true} holding)
+            if (hands.ActiveHandEntity is not {Valid: true} holding)
             {
                 Cleanup();
                 return;

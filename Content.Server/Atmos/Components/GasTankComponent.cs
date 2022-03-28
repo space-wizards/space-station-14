@@ -20,9 +20,8 @@ using Robust.Shared.Utility;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public sealed class GasTankComponent : Component, IExamine, IGasMixtureHolder, IDropped, IActivate
+    public sealed class GasTankComponent : Component, IExamine, IGasMixtureHolder
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -31,8 +30,6 @@ namespace Content.Server.Atmos.Components
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
         private int _integrity = 3;
-
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         [ViewVariables] private BoundUserInterface? _userInterface;
 
@@ -94,12 +91,6 @@ namespace Content.Server.Atmos.Components
             }
         }
 
-        public void OpenInterface(IPlayerSession session)
-        {
-            _userInterface?.Open(session);
-            UpdateUserInterface(true);
-        }
-
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             message.AddMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(Air?.Pressure ?? 0))));
@@ -145,12 +136,6 @@ namespace Content.Server.Atmos.Components
                 return new GasMixture(volume);
 
             return air;
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor)) return;
-            OpenInterface(actor.PlayerSession);
         }
 
         public void ConnectToInternals()
@@ -245,14 +230,14 @@ namespace Content.Server.Atmos.Components
                 var range = (pressure - TankFragmentPressure) / TankFragmentScale;
 
                 // Let's cap the explosion, yeah?
-                // !1984
                 if (range > MaxExplosionRange)
                 {
                     range = MaxExplosionRange;
                 }
 
-                EntitySystem.Get<ExplosionSystem>().TriggerExplosive(Owner, radius: range);
+                EntitySystem.Get<ExplosionSystem>().SpawnExplosion(Owner, (int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
+                _entMan.QueueDeleteEntity(Owner);
                 return;
             }
 
@@ -295,11 +280,6 @@ namespace Content.Server.Atmos.Components
 
             if (_integrity < 3)
                 _integrity++;
-        }
-
-        void IDropped.Dropped(DroppedEventArgs eventArgs)
-        {
-            DisconnectFromInternals(eventArgs.User);
         }
     }
 }

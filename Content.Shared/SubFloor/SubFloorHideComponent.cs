@@ -30,6 +30,15 @@ namespace Content.Shared.SubFloor
         public bool BlockInteractions { get; set; } = true;
 
         /// <summary>
+        /// Whether this entity's ambience should be disabled when underneath the floor.
+        /// </summary>
+        /// <remarks>
+        /// Useful for cables and piping, gives maint it's distinct noise.
+        /// </remarks>
+        [DataField("blockAmbience")]
+        public bool BlockAmbience { get; set; } = true;
+
+        /// <summary>
         ///     When revealed using some scanning tool, what transparency should be used to draw this item?
         /// </summary>
         [DataField("scannerTransparency")]

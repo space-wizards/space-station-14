@@ -51,8 +51,6 @@
         prob: 1
       - id: TaserGun
         prob: 1
-      - id: ClothingShoesColorBlack
-        prob: 0.7
       - id: ClothingHeadHelmetHardsuitCap
         prob: 1
       - id: CommsComputerCircuitboard
@@ -67,6 +65,11 @@
         prob: 0.25
       - id: ClothingBeltSheathFilled
       - id: DoorRemoteCommand
+      - id: ClothingNeckCloakCapFormal
+      - id: ClothingUniformJumpsuitCapFormal
+      - id: ClothingUniformJumpskirtCapFormalDress
+      - id: ClothingNeckBronzeheart
+      - id: ClothingNeckGoldmedal
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -99,6 +102,7 @@
         prob: 0.10
         # Fuck the HoP they don't deserve fucking cigars.
       - id: DoorRemoteService
+      - id: ClothingNeckGoldmedal
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -129,7 +133,7 @@
   - type: StorageFill
     contents:
       - id: MedkitFilled
-      - id: ClothingHandsGlovesLatex
+      - id: ClothingHandsGlovesNitrile
       #- name: ClothingEyesHudMedical #Removed until working properly
       #  prob: 1
       - id: ClothingHeadsetAltMedical
@@ -139,6 +143,9 @@
       - id: ClothingMaskSterile
       - id: ClothingHeadHelmetHardsuitMedical
       - id: ClothingOuterHardsuitMedical
+      - id: DiagnoserMachineCircuitboard
+      - id: VaccinatorMachineCircuitboard
+        prob: 0.25
       - id: Hypospray
       - id: HandheldCrewMonitor
       - id: DoorRemoteMedical
@@ -209,3 +216,5 @@
       - id: CigarGoldCase
         prob: 0.50
       - id: DoorRemoteSecurity
+      - id: ClothingUniformJumpskirtHosFormal
+      - id: ClothingUniformJumpsuitHosFormal

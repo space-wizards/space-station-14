@@ -97,3 +97,36 @@
     sprite: Clothing/Neck/Cloaks/nanotrasen.rsi
   - type: Clothing
     sprite: Clothing/Neck/Cloaks/nanotrasen.rsi
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakCapFormal
+  name: captain's formal cloak
+  description: A lavish and decorated cloak for special occasions.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/capcloakformal.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Cloaks/capcloakformal.rsi
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakAdmin
+  name: Admin Cloak
+  description: Weh!
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/admin.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Cloaks/admin.rsi
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakMiner
+  name: Miner's Cloak
+  description: Worn by the most skilled miners, for one who has moved mountains and filled valleys.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/miner.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Cloaks/miner.rsi    

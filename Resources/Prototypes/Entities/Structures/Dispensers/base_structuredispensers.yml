@@ -26,6 +26,9 @@
         - SmallImpassable
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
+  - type: ActivatableUI
+    key: enum.ReagentDispenserUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.ReagentDispenserUiKey.Key

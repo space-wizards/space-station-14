@@ -623,7 +623,7 @@
       state: mouse-0
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    QuickEquip: false
+    quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
     HeldPrefix: 0
     Slots:
@@ -675,7 +675,7 @@
     tags:
     - Trash
   - type: Recyclable
-  - type: Actions 
+  - type: Actions
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
     combatToggleAction:
@@ -686,6 +686,7 @@
       autoPopulate: false
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: DiseaseCarrier #The other class lab animal and disease vector
 
 
 - type: entity
@@ -707,7 +708,8 @@
       crit: dead-1
       dead: splat-1
   - type: Bloodstream
-    bloodMaxVolume: 50  
+    bloodMaxVolume: 50
+  - type: DiseaseCarrier #Why doesn't this save if it's only on the parent wtf
 
 
 - type: entity
@@ -730,6 +732,7 @@
       dead: splat-2
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: DiseaseCarrier
 
 
 - type: entity
@@ -775,6 +778,9 @@
     interactFailureString: petting-failure-generic
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
 
 - type: entity
   name: frog
@@ -905,6 +911,70 @@
     interactFailureString: petting-failure-generic
 
 - type: entity
+  name: grenade penguin
+  parent: SimpleMobBase
+  id: MobGrenadePenguin
+  description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 7
+    baseSprintSpeed : 7
+  - type: UtilityAI
+    behaviorSets:
+    - UnarmedAttackHostiles
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: penguin
+      sprite: Mobs/Animals/grenadepenguin.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable #Bullets?!
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: penguin
+      crit: dead
+      dead: dead
+  - type: Butcherable
+    spawned: FoodMeatPenguin
+    pieces: 3
+  - type: UnarmedCombat
+    range: 0.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      groups:
+        Brute: 5
+  - type: Item
+    size: 80
+  - type: OnUseTimerTrigger
+    delay: 10
+    beepSound:
+      path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use 
+    beepInterval: 1
+  - type: Explosive
+    devastationRange: 1
+    heavyImpactRange: 2
+    lightImpactRange: 3
+    flashRange: 6
+  - type: ExplodeOnTrigger
+
+- type: entity
   name: snake
   parent: SimpleMobBase
   id: MobSnake
@@ -947,6 +1017,9 @@
     interactFailureString: petting-failure-generic
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -1011,7 +1084,6 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/possum.rsi
-    scale: 0.7, 0.7 # Possums are pretty huge on Goonstation, let's scale them down a little.
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: possum
@@ -1070,7 +1142,6 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/raccoon.rsi
-    scale: 0.7, 0.7
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: raccoon
@@ -1113,6 +1184,64 @@
   components:
   - type: InteractionPopup
     successChance: 0.7
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+
+- type: entity
+  name: fox
+  parent: SimpleMobBase
+  id: MobFox
+  description: They're a fox.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/fox.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: fox
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: fox
+      crit: fox_dead
+      dead: fox_dead
+  - type: Butcherable
+    spawned: FoodMeat
+    pieces: 3
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: Bloodstream
+    bloodMaxVolume: 100
+
+- type: entity
+  name: Renault
+  parent: MobFox
+  id: MobFoxRenault
+  description: The captain's trustworthy fox.
+  components:
+  - type: InteractionPopup
+    successChance: 1
   - type: Grammar
     attributes:
       proper: true

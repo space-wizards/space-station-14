@@ -7,6 +7,7 @@ using Content.Shared.Clothing;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.Tag;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -42,6 +43,7 @@ public sealed class ClothingSystem : EntitySystem
 
     [Dependency] private IResourceCache _cache = default!;
     [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -82,7 +84,8 @@ public sealed class ClothingSystem : EntitySystem
             var key = layer.MapKeys?.FirstOrDefault();
             if (key == null)
             {
-                key = i == 0 ? args.Slot : $"{args.Slot}-{i}";
+                // using the $"{args.Slot}" layer key as the "bookmark" for layer ordering until layer draw depths get added
+                key = $"{args.Slot}-{i}";
                 i++;
             }
 
@@ -146,6 +149,17 @@ public sealed class ClothingSystem : EntitySystem
 
     private void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
     {
+        if (component.InSlot == "head"
+            && _tagSystem.HasTag(uid, "HidesHair")
+            && TryComp(args.Equipee, out SpriteComponent? sprite))
+        {
+            if (sprite.LayerMapTryGet(HumanoidVisualLayers.FacialHair, out var facial))
+                sprite[facial].Visible = true;
+
+            if (sprite.LayerMapTryGet(HumanoidVisualLayers.Hair, out var hair))
+                sprite[hair].Visible = true;
+        }
+
         component.InSlot = null;
     }
 
@@ -182,6 +196,17 @@ public sealed class ClothingSystem : EntitySystem
     private void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
     {
         component.InSlot = args.Slot;
+
+        if (args.Slot == "head"
+            && _tagSystem.HasTag(uid, "HidesHair")
+            && TryComp(args.Equipee, out SpriteComponent? sprite))
+        {
+            if (sprite.LayerMapTryGet(HumanoidVisualLayers.FacialHair, out var facial))
+                sprite[facial].Visible = false;
+
+            if (sprite.LayerMapTryGet(HumanoidVisualLayers.Hair, out var hair))
+                sprite[hair].Visible = false;
+        }
 
         RenderEquipment(args.Equipee, uid, args.Slot, clothingComponent: component);
     }
@@ -230,6 +255,10 @@ public sealed class ClothingSystem : EntitySystem
             return;
         }
 
+        // temporary, until layer draw depths get added. Basically: a layer with the key "slot" is being used as a
+        // bookmark to determine where in the list of layers we should insert the clothing layers.
+        bool slotLayerExists = sprite.LayerMapTryGet(slot, out var index);
+        
         // add the new layers
         foreach (var (key, layerData) in ev.Layers)
         {
@@ -239,7 +268,16 @@ public sealed class ClothingSystem : EntitySystem
                 continue;
             }
 
-            var index = sprite.LayerMapReserveBlank(key);
+            if (slotLayerExists)
+            {
+                index++;
+                // note that every insertion requires reshuffling & remapping all the existing layers.
+                sprite.AddBlankLayer(index);
+                sprite.LayerMapSet(key, index);
+            }
+            else
+                index = sprite.LayerMapReserveBlank(key);
+
             if (sprite[index] is not Layer layer)
                 return;
 
