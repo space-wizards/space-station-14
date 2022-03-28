@@ -9,6 +9,8 @@ namespace Content.Server.AME
     {
         private float _accumulatedFrameTime;
 
+        private const float UpdateCooldown = 10f;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -18,16 +20,17 @@ namespace Content.Server.AME
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
+            // TODO: Won't exactly work with replays I guess?
             _accumulatedFrameTime += frameTime;
-            if (_accumulatedFrameTime >= 10)
+            if (_accumulatedFrameTime >= UpdateCooldown)
             {
                 foreach (var comp in EntityManager.EntityQuery<AMEControllerComponent>())
                 {
                     comp.OnUpdate(frameTime);
                 }
-                _accumulatedFrameTime -= 10;
+                _accumulatedFrameTime -= UpdateCooldown;
             }
-
         }
 
         private static void OnAMEPowerChange(EntityUid uid, AMEControllerComponent component, ref PowerChangedEvent args)
