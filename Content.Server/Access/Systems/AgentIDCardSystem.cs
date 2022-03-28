@@ -52,7 +52,7 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            _cardSystem.TryChangeJobTitle(uid, args.Job);
+            _cardSystem.TryChangeJobTitle(uid, args.Job, idCard);
         }
 
         private void OnNameChanged(EntityUid uid, AgentIDCardComponent comp, AgentIDCardNameChangedMessage args)
@@ -60,7 +60,7 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            _cardSystem.TryChangeFullName(uid, args.Name);
+            _cardSystem.TryChangeFullName(uid, args.Name, idCard);
         }
     }
 }
