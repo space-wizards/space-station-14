@@ -1,7 +1,6 @@
 ﻿using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands.Components;
-using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
@@ -17,11 +16,11 @@ public sealed partial class InventoryUIController
     private HandsComponent? _playerHandsComponent;
     private HandButton? _activeHand = null;
     private int _backupSuffix = 0;//this is used when autogenerating container names if they don't have names
-    private Action<string>? _onStorageActivate = null; //called when the user clicks the little activation button in the slot
+    private Action<string>? _onHandStorageActivate = null; //called when the user clicks the little activation button in the slot
 
     private void OnHandsSystemActivate()
     {
-        _onStorageActivate += _handsSystem.UIHandActivate;
+        _onHandStorageActivate += _handsSystem.UIHandActivate;
         _handsSystem.OnAddHand += AddHand;
         _handsSystem.OnSpriteUpdate += UpdateButtonSprite;
         _handsSystem.OnSetActiveHand += SetActiveHand;
@@ -31,7 +30,7 @@ public sealed partial class InventoryUIController
     }
     private void OnHandsSystemDeactivate()
     {
-        _onStorageActivate = null;
+        _onHandStorageActivate = null;
     }
 
     private void OnHandPressed(GUIBoundKeyEventArgs args, ItemSlotControl hand)
@@ -117,7 +116,7 @@ public sealed partial class InventoryUIController
     //propagate hand activation to the hand system.
     private void StorageActivate(GUIBoundKeyEventArgs args, ItemSlotControl handControl)
     {
-        _onStorageActivate?.Invoke(handControl.SlotName);
+        _onHandStorageActivate?.Invoke(handControl.SlotName);
     }
 
     private void SetActiveHand(string? handName)

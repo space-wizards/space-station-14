@@ -1,9 +1,5 @@
-﻿using Content.Client.Hands;
-using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Inventory;
-using Robust.Client.UserInterface;
+﻿using System.Diagnostics.CodeAnalysis;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface.Controls;
 
@@ -90,5 +86,10 @@ public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContaine
     public virtual T? GetButton(string slotName)
     {
         return !_buttons.TryGetValue(slotName, out var button) ? null : button;
+    }
+
+    public virtual bool TryGetButton(string slotName, [NotNullWhen(true)] out T? button)
+    {
+        return (button = GetButton(slotName)) != null;
     }
 }

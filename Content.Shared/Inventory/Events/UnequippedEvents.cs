@@ -1,6 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Shared.Inventory.Events;
+﻿namespace Content.Shared.Inventory.Events;
 
 public abstract class UnequippedEventBase : EntityEventArgs
 {
@@ -19,11 +17,17 @@ public abstract class UnequippedEventBase : EntityEventArgs
     /// </summary>
     public readonly string Slot;
 
+    /// <summary>
+    /// The slot group the entity got unequipped from.
+    /// </summary>
+    public readonly string SlotGroup;
+
     public UnequippedEventBase(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition)
     {
         Equipee = equipee;
         Equipment = equipment;
         Slot = slotDefinition.Name;
+        SlotGroup = slotDefinition.SlotGroup;
     }
 }
 

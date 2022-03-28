@@ -1,6 +1,4 @@
 using Content.Client.Clothing;
-using Content.Shared.Input;
-using Content.Client.UserInterface.Controllers;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
@@ -9,14 +7,13 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
-using Content.Shared.Interaction.Events;
-using Robust.Client.Player;
 
 namespace Content.Client.Inventory
 {
@@ -35,8 +32,9 @@ namespace Content.Client.Inventory
         public Action? OnOpenInventory = null;
         public Action<ClientInventoryComponent?>? OnLinkInventory = null;
         public Action<ClientInventoryComponent?>? OnUnlinkInventory = null;
+        public Action<string, string, ISpriteComponent?>? OnSpriteUpdate = null;
 
-        private readonly Queue<(ClientInventoryComponent comp, DidEquipEvent args)> _equipEventsQueue = new();
+        private readonly Queue<(ClientInventoryComponent comp, EntityEventArgs args)> _equipEventsQueue = new();
 
         public override void Initialize()
         {
@@ -54,7 +52,7 @@ namespace Content.Client.Inventory
             SubscribeLocalEvent<ClientInventoryComponent, ComponentShutdown>(OnShutdown);
 
             SubscribeLocalEvent<ClientInventoryComponent, DidEquipEvent>((_, comp, args) => _equipEventsQueue.Enqueue((comp, args)));
-            SubscribeLocalEvent<ClientInventoryComponent, DidUnequipEvent>(OnDidUnequip);
+            SubscribeLocalEvent<ClientInventoryComponent, DidUnequipEvent>((_, comp, args) => _equipEventsQueue.Enqueue((comp, args)));
 
             SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
         }
@@ -66,7 +64,18 @@ namespace Content.Client.Inventory
             while (_equipEventsQueue.TryDequeue(out var tuple))
             {
                 var (component, args) = tuple;
-                OnDidEquip(component, args);
+
+                switch (args)
+                {
+                    case DidEquipEvent equipped:
+                        OnDidEquip(component, equipped);
+                        break;
+                    case DidUnequipEvent unequipped:
+                        OnDidUnequip(component, unequipped);
+                        break;
+                    default:
+                        throw new InvalidOperationException($"Received queued event of unknown type: {args.GetType()}");
+                }
             }
         }
 
@@ -78,14 +87,19 @@ namespace Content.Client.Inventory
             QuickEquip(uid, component, args);
         }
 
-        private void OnDidUnequip(EntityUid uid, ClientInventoryComponent component, DidUnequipEvent args)
+        private void OnDidUnequip(ClientInventoryComponent component, DidUnequipEvent args)
         {
             UpdateSlot(args.Equipee, component, args.Slot);
+            if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity) return;
+            OnSpriteUpdate?.Invoke(args.SlotGroup, args.Slot, null);
         }
 
         private void OnDidEquip(ClientInventoryComponent component, DidEquipEvent args)
         {
             UpdateSlot(args.Equipee, component, args.Slot);
+            if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity) return;
+            var sprite = EntityManager.GetComponentOrNull<ISpriteComponent>(args.Equipment);
+            OnSpriteUpdate?.Invoke(args.SlotGroup, args.Slot, sprite);
         }
 
         private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent? args = null)
@@ -126,7 +140,6 @@ namespace Content.Client.Inventory
         }
         public void UpdateSlot(EntityUid owner,ClientInventoryComponent component,string slotName,bool? blocked = null, bool? highlight = null)
         {
-
             var oldData = component.SlotData[slotName];
             var newHighlight = oldData.Highlighted;
             var newBlocked = oldData.Blocked;
@@ -200,6 +213,15 @@ namespace Content.Client.Inventory
                 EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot));
         }
 
+        public void UIInventoryActivate(string slot)
+        {
+            EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot));
+        }
+
+        public void UIInventoryStorageActivate(string slot)
+        {
+            EntityManager.RaisePredictiveEvent(new OpenSlotStorageNetworkMessage(slot));
+        }
 
         public struct SlotData
         {
