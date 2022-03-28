@@ -17,12 +17,6 @@ namespace Content.Server.Research
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ResearchConsoleComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpen);
-        }
-
-        private void OnAfterUIOpen(EntityUid uid, ResearchConsoleComponent component, AfterActivatableUIOpenEvent args)
-        {
-            component.PlayKeyboardSound();
         }
 
         public bool RegisterServer(ResearchServerComponent server)
