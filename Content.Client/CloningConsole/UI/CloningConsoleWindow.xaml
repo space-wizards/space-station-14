@@ -23,7 +23,7 @@
                                 VerticalAlignment="Center" />
                     </BoxContainer>
                     <Label Name="CloningActivity"
-                            Text = "{Loc 'cloning-console-component-msg-empty'}"
+                            Text="{Loc 'cloning-console-component-msg-empty'}"
                             Access="Public"
                             HorizontalAlignment="Center"
                             HorizontalExpand="True" />

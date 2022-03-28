@@ -112,9 +112,8 @@ namespace Content.Server.Cloning.CloningConsole
                 consoleComponent.UserInterface?.CloseAll();
                 return;
             }
+
             var newState = GetUserInterfaceState(consoleComponent);
-            if (newState == null)
-                return;
 
             consoleComponent.UserInterface?.SetState(newState);
         }
@@ -275,9 +274,6 @@ namespace Content.Server.Cloning.CloningConsole
         public void DisconnectMachineConnections(EntityUid uid, CloningConsoleComponent? consoleComponent)
         {
             if (!Resolve(uid, ref consoleComponent))
-                return;
-
-            if (consoleComponent.CloningPod == null && consoleComponent.GeneticScanner == null)
                 return;
 
             if (consoleComponent.CloningPod != null && TryComp<CloningPodComponent>(consoleComponent.CloningPod, out var cloningPod) && cloningPod.ConnectedConsole == uid)

@@ -327,7 +327,7 @@ namespace Content.Client.Entry
             "DoorRemote",
             "InteractionPopup",
             "HealthAnalyzer",
-            "CloningConsole"
+            "CloningConsole",
         };
     }
 }

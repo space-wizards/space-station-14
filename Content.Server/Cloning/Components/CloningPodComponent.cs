@@ -11,9 +11,7 @@ namespace Content.Server.Cloning.Components
         [ViewVariables] public float CloningProgress = 0;
         [DataField("cloningTime")]
         [ViewVariables] public float CloningTime = 30f;
-        // Used to prevent as many duplicate UI messages as possible
-        [ViewVariables]
-        public CloningPodStatus Status;
+        [ViewVariables] public CloningPodStatus Status;
         public EntityUid? ConnectedConsole;
     }
 }

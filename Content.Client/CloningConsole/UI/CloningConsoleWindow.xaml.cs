@@ -5,7 +5,6 @@ using Content.Client.Message;
 using Robust.Shared.Timing;
 using Content.Shared.Cloning.CloningConsole;
 
-
 namespace Content.Client.CloningConsole.UI
 {
     [GenerateTypedNameReferences]
@@ -15,7 +14,9 @@ namespace Content.Client.CloningConsole.UI
         {
             RobustXamlLoader.Load(this);
         }
+
         private CloningConsoleBoundUserInterfaceState? _lastUpdate;
+
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
@@ -75,20 +76,14 @@ namespace Content.Client.CloningConsole.UI
                             CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-no-mind"));
                             break;
                     }
-                if (state.ScannerBodyInfo != null)
-                {
-                    // is occupied
-                    ScannerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-scanner-id",
-                    ("scannerOccupantName", state.ScannerBodyInfo)));
-                }
-                else
-                {
-                    // is not occupied
-                    ScannerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-id-blank"));
-                }
+                // Set label depending on if scanner is occupied or not.
+                ScannerInfoLabel.SetMarkup(state.ScannerBodyInfo != null ?
+                    Loc.GetString("cloning-console-window-scanner-id", ("scannerOccupantName", state.ScannerBodyInfo)) :
+                    Loc.GetString("cloning-console-window-id-blank"));
             }
             else
             {
+                // Scanner is missing, set error message visible
                 GeneticScannerContents.Visible = false;
                 GeneticScannerMissing.Visible = true;
             }
@@ -102,16 +97,14 @@ namespace Content.Client.CloningConsole.UI
                 UpdateProgress();
 
                 ClonerBrainActivity.SetMarkup(Loc.GetString(state.MindPresent ? "cloning-console-mind-present-text" : "cloning-console-no-mind-activity-text"));
-                if (state.ClonerBodyInfo != null)
-                {
-                    ClonerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-pod-id",
-                    ("podOccupantName", state.ClonerBodyInfo)));
-                } else
-                {
-                    ClonerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-id-blank"));
-                }
-            } else
+                // Set label depending if clonepod is occupied or not
+                ClonerInfoLabel.SetMarkup(state.ClonerBodyInfo != null ?
+                    Loc.GetString("cloning-console-window-pod-id", ("podOccupantName", state.ClonerBodyInfo)) :
+                    Loc.GetString("cloning-console-window-id-blank"));
+            }
+            else
             {
+                // Clone pod is missing, set error message visible
                 CloningPodContents.Visible = false;
                 CloningPodMissing.Visible = true;
             }
