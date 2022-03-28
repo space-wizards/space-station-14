@@ -1,13 +1,4 @@
 Entries:
-- author: wrexbe
-  changes:
-  - {message: It is now possible to tell when airlock power wires are partially cut,
-    type: Add}
-  - {message: Airlock text is a little bit clearer, type: Tweak}
-  - {message: 'Airlock now only loses power when both backup, and main power wires
-      are cut', type: Fix}
-  id: 760
-  time: '2021-12-23T04:02:27.0000000+00:00'
 - author: Fishfish458
   changes:
   - {message: Hypospray to CMO lockers and also traitor goals., type: Add}
@@ -3030,3 +3021,9 @@ Entries:
       door remote now properly opens chem doors.', type: Fix}
   id: 1259
   time: '2022-03-28T04:25:23.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Mercury and Uranium are no longer mistakenly metabolized as medicines.,
+    type: Tweak}
+  id: 1260
+  time: '2022-03-28T08:33:07.0000000+00:00'
