@@ -1,3 +1,5 @@
+### consumable_stacks.yml
+
 stack-name-pancake = pancake
 stack-name-pizza-box = pizza box
 stack-name-paper-rolling = paper rolling
@@ -7,8 +9,12 @@ stack-name-ground-cannabis = ground cannabis
 stack-name-dried-tobacco-leaves = dried tobacco leaves
 stack-name-dried-cannabis-leaves = dried cannabis leaves
 
+### engineering_stacks.yml
+
 stack-name-inflatable-wall = inflatable wall
 stack-name-inflatable-door = inflatable door
+
+### floor_tile_stacks.yml
 
 stack-name-steel-tile = steel tile
 stack-name-wood-floor = wood floor
@@ -33,19 +39,27 @@ stack-name-eighties-floor-tile = eighties floor tile
 stack-name-blue-arcade-tile = blue arcade tile
 stack-name-red-arcade-tile = red arcade tile
 
+### medical_stacks.yml
+
 stack-name-ointment = ointment
 stack-name-gauze = gauze
 stack-name-brutepack = brutepack
 
+### power_stacks.yml
+
 stack-name-lv-cable = lv cable
 stack-name-mv-cable = mv cable
 stack-name-hv-cable = hv cable
+
+### Materials/Sheets/glass.yml
 
 stack-name-steel = steel
 stack-name-plasteel = plasteel
 stack-name-titanium = titanium
 stack-name-plastitanium = plastitanium
 stack-name-brass = brass
+
+### Materials/Sheets/metal.yml
 
 stack-name-glass = glass
 stack-name-reinforced-glass = reinforced glass
@@ -54,13 +68,19 @@ stack-name-reinforced-plasma-glass = reinforced plasma glass
 stack-name-titanium-glass = titanium glass
 stack-name-plastitanium-glass = plastitanium glass
 
+### Materials/Sheets/other.yml
+
 stack-name-paper = paper
 stack-name-phoron = phoron
 stack-name-plasma = plasma
 stack-name-plastic = plastic
 stack-name-uranium = uranium
 
+### Materials/crystals.yml
+
 stack-name-telecrystal = telecrystal
+
+### Materials/ingots.yml
 
 stack-name-adamantine = adamantine
 stack-name-copper = copper
@@ -68,6 +88,8 @@ stack-name-gold = gold
 stack-name-hydrogen = hydrogen
 stack-name-iron = iron
 stack-name-silver = silver
+
+### Materials/materials.yml
 
 stack-name-bananium = bananium
 stack-name-diamond = diamond
@@ -78,6 +100,8 @@ stack-name-durathread = durathread
 stack-name-raw-durathread = raw durathread
 stack-name-hide = hide
 stack-name-leather = leather
+
+### Materials/ore.yml
 
 stack-name-adamantine-ore = adamantine ore
 stack-name-ammonia = ammonia
@@ -93,6 +117,8 @@ stack-name-silver-ore = silver ore
 stack-name-slag = slag
 stack-name-titanium-ore = titanium ore
 stack-name-uranium-ore = uranium ore
+
+### Materials/parts.yml
 
 stack-name-rods = rods
 
