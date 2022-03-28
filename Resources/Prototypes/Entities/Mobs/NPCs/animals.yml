@@ -967,8 +967,9 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    spawned: FoodMeatPenguin
-    pieces: 3
+    spawned:
+    - id: FoodMeatPenguin
+      amount: 3
   - type: UnarmedCombat
     range: 0.5
     arcwidth: 0
@@ -981,7 +982,7 @@
   - type: OnUseTimerTrigger
     delay: 10
     beepSound:
-      path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use 
+      path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use
     beepInterval: 1
   - type: Explosive
     devastationRange: 1
