@@ -20,8 +20,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterAtmos
   name: atmospherics winter coat
-
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatatmos.rsi
@@ -32,7 +30,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCap
   name: captain's winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
@@ -43,7 +40,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCargo
   name: cargo winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatcargo.rsi
@@ -54,8 +50,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCE
   name: chief engineer's winter coat
-
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatce.rsi
@@ -66,7 +60,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCentcom
   name: centcom winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
@@ -77,7 +70,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterChem
   name: chemistry winter coat 
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatchem.rsi
@@ -88,7 +80,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCMO
   name: chief medical officer's winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
@@ -99,7 +90,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterEngi
   name: engineering winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatengi.rsi
@@ -110,7 +100,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterGen
   name: genetics winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatgen.rsi
@@ -121,7 +110,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterHoP
   name: head of personnel's winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coathop.rsi
@@ -132,8 +120,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterHoS
   name: head of security's winter coat
-
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
@@ -144,7 +130,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterHydro
   name: hydroponics winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coathydro.rsi
@@ -155,7 +140,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterJani
   name: janitorial winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatjani.rsi
@@ -166,7 +150,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterMed
   name: medical winter coat 
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatmed.rsi
@@ -177,7 +160,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterMiner
   name: miners winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatminer.rsi
@@ -188,7 +170,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterPara
   name: paramedics winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatparamed.rsi
@@ -199,7 +180,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterQM
   name: quartermaster's winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatqm.rsi
@@ -210,8 +190,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterRD
   name: research director's winter coat
-
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
@@ -222,7 +200,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterRobo
   name: robotics winter coat 
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatrobo.rsi
@@ -233,7 +210,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterSci
   name: scientists winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatsci.rsi
@@ -244,7 +220,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterSec
   name: securities winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatsec.rsi
@@ -255,7 +230,6 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterViro
   name: virologies winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatviro.rsi
