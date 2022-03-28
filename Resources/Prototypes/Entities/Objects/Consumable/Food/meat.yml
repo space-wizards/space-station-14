@@ -175,8 +175,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Omnizine
-          Quantity: 25
+        - ReagentId: Bicardine
+          Quantity: 20
 
 - type: entity
   name: raw crab meat
