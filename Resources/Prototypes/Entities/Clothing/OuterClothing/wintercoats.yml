@@ -19,7 +19,8 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterAtmos
-  name: atmos winter coat
+  name: atmospherics winter coat
+
   description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
