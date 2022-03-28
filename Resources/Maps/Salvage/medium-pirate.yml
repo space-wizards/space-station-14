@@ -422,7 +422,7 @@ entities:
       -1,-1:
         0:
           color: '#9FED5896'
-          id: antilizard
+          id: prolizard
           coordinates: -2,-4
     type: DecalGrid
   - tiles:
@@ -759,13 +759,6 @@ entities:
   - pos: -0.5,-0.5
     parent: 52
     type: Transform
-  - gas: Plasma
-    possibleGas:
-    - Oxygen
-    - Plasma
-    - Nitrogen
-    - CarbonDioxide
-    type: ArtifactGasTrigger
 - uid: 80
   type: Stool
   components:

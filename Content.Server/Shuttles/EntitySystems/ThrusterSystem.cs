@@ -266,7 +266,7 @@ namespace Content.Server.Shuttles.EntitySystems
                             CollisionLayer = (int) CollisionGroup.MobImpassable
                         };
 
-                        _fixtureSystem.CreateFixture(physicsComponent, fixture);
+                        _fixtureSystem.TryCreateFixture(physicsComponent, fixture);
                     }
 
                     break;

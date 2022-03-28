@@ -40,5 +40,5 @@ RULES FOR SECURITY
 [color=#a4885c]12.[/color] Security is expected to use non-lethal measures unless faced with lethal force or a situation where non-lethal measures aren't possible. Ideally, do not enter combat mode, as security stun batons do not deal damage, but still stun, when outside of combat mode.
     - If you still manage to kill someone as security, get them cloned immediately, and make sure their stuff is returned.
 
-[color=#a4885c]13.[/color] Prisoners should not be given sentences longer than 5 minutes. Certain extreme exceptions like bombers or assassins may warrant permabrigging, or [color=#ff0000]in the very worst cases[/color], execution.
+[color=#a4885c]13.[/color] Prisoners should not be given sentences longer than 10 minutes. Certain extreme exceptions like bombers and assassins may warrant permabrigging, or [color=#ff0000]in the very worst cases[/color], execution.
     - Note that employment at a hostile corporation (i.e. traitor status) alone [color=#ff0000]does not[/color] qualify someone for perma or execution.

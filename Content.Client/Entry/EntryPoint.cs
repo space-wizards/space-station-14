@@ -194,6 +194,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<EuiManager>().Initialize();
             IoCManager.Resolve<IVoteManager>().Initialize();
             IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
+            IoCManager.Resolve<NetworkResourceManager>().Initialize();
 
             _baseClient.RunLevelChanged += (_, args) =>
             {
