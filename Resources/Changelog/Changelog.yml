@@ -1,9 +1,4 @@
 Entries:
-- author: Pancake
-  changes:
-  - {message: Added accents for overly talkative animals., type: Add}
-  id: 758
-  time: '2021-12-21T20:31:20.0000000+00:00'
 - author: Rane
   changes:
   - {message: Added EVA suits to the EVA room., type: Add}
@@ -3028,3 +3023,9 @@ Entries:
       floor tiles should be a bit easier.', type: Tweak}
   id: 1257
   time: '2022-03-28T04:03:14.0000000+00:00'
+- author: emisse
+  changes:
+  - {message: Winter coats are now in all applicable auto drobes. Command staffs are
+      in uniform printer., type: Add}
+  id: 1258
+  time: '2022-03-28T04:16:24.0000000+00:00'
