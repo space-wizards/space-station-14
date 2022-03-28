@@ -1,15 +1,4 @@
 Entries:
-- author: pointer-to-null
-  changes:
-  - {message: Server info in the game lobby now shows the currently selected map.,
-    type: Add}
-  id: 756
-  time: '2021-12-21T17:18:08.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: The cigarette vendors are now full of lighters. Go nuts., type: Add}
-  id: 757
-  time: '2021-12-21T17:20:32.0000000+00:00'
 - author: Pancake
   changes:
   - {message: Added accents for overly talkative animals., type: Add}
@@ -3025,3 +3014,17 @@ Entries:
   - {message: Eating using the verb has been fixed., type: Fix}
   id: 1255
   time: '2022-03-27T22:50:49.0000000+00:00'
+- author: EmoGarbage
+  changes:
+  - {message: 'Added the Grenade Penguin, a living bomb from the Syndicate. Available
+      for only 8TC at your local uplink.', type: Add}
+  id: 1256
+  time: '2022-03-28T04:03:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Crafting stackable-entities will now try to merge them into your hands,
+      instead of just dropping them.', type: Tweak}
+  - {message: 'Stack merging should now be predicted, so picking up lots of individual
+      floor tiles should be a bit easier.', type: Tweak}
+  id: 1257
+  time: '2022-03-28T04:03:14.0000000+00:00'
