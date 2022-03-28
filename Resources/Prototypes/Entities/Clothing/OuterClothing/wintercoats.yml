@@ -159,7 +159,7 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterMiner
-  name: miners winter coat
+  name: mining winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatminer.rsi
@@ -169,7 +169,7 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterPara
-  name: paramedics winter coat
+  name: paramedic winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatparamed.rsi
@@ -209,7 +209,7 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterSci
-  name: scientists winter coat
+  name: science winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatsci.rsi
@@ -219,7 +219,7 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterSec
-  name: securities winter coat
+  name: security winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatsec.rsi
@@ -229,7 +229,7 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterViro
-  name: virologies winter coat
+  name: virology winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatviro.rsi
