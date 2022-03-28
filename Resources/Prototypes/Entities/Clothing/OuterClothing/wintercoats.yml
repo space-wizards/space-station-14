@@ -206,7 +206,8 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterRD
-  name: rd's winter coat
+  name: research director's winter coat
+
   description: A heavy jacket made from 'synthetic' animal furs. 
   components:
   - type: Sprite
