@@ -28,9 +28,6 @@ namespace Content.Client.Access.UI
 
             _owner = owner;
 
-            PrivilegedIdButton.OnPressed += _ => _owner.ButtonPressed(UiButton.PrivilegedId);
-            TargetIdButton.OnPressed += _ => _owner.ButtonPressed(UiButton.TargetId);
-
             FullNameLineEdit.OnTextEntered += _ => SubmitData();
             FullNameLineEdit.OnTextChanged += _ =>
             {
