@@ -10,7 +10,7 @@ public sealed partial class ChemistrySystem
         SubscribeLocalEvent<ReagentDispenserComponent, PowerChangedEvent>(OnReagentDispenserPower);
     }
 
-    private static void OnReagentDispenserPower(EntityUid uid, ReagentDispenserComponent component, ref PowerChangedEvent args)
+    private static void OnReagentDispenserPower(EntityUid uid, ReagentDispenserComponent component, PowerChangedEvent args)
     {
         component.OnPowerChanged();
     }

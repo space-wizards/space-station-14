@@ -10,7 +10,7 @@ public sealed partial class ChemistrySystem
         SubscribeLocalEvent<ChemMasterComponent, PowerChangedEvent>(OnChemMasterPowerChange);
     }
 
-    private static void OnChemMasterPowerChange(EntityUid uid, ChemMasterComponent component, ref PowerChangedEvent args)
+    private static void OnChemMasterPowerChange(EntityUid uid, ChemMasterComponent component, PowerChangedEvent args)
     {
         component.UpdateUserInterface();
     }

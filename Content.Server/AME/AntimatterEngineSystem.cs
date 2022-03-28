@@ -33,7 +33,7 @@ namespace Content.Server.AME
             }
         }
 
-        private static void OnAMEPowerChange(EntityUid uid, AMEControllerComponent component, ref PowerChangedEvent args)
+        private static void OnAMEPowerChange(EntityUid uid, AMEControllerComponent component, PowerChangedEvent args)
         {
             component.UpdateUserInterface();
         }
