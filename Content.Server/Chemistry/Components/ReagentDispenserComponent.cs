@@ -74,20 +74,6 @@ namespace Content.Server.Chemistry.Components
             InitializeFromPrototype();
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage powerChanged:
-                    OnPowerChanged(powerChanged);
-                    break;
-            }
-        }
-
         /// <summary>
         /// Checks to see if the <c>pack</c> defined in this components yaml prototype
         /// exists. If so, it fills the reagent inventory list.
@@ -127,7 +113,7 @@ namespace Content.Server.Chemistry.Components
         }
 
 
-        private void OnPowerChanged(PowerChangedMessage e)
+        public void OnPowerChanged()
         {
             UpdateUserInterface();
         }
