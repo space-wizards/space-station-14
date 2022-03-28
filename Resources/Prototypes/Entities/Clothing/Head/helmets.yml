@@ -188,3 +188,22 @@
   - type: IngestionBlocker
   - type: TemperatureProtection
     coefficient: 0.005    
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetLing
+  name: chitinous helmet
+  description: Inflates the changeling's body into an all-consuming chitinous mass of armor. Provides extensive protection against physical damage, but less against other types. Its mass slows the changeling's movement, and maintaining its shape slows chemical generation.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/linghelmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/linghelmet.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.9
+        

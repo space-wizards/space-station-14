@@ -5,15 +5,11 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems
 {
-    [UsedImplicitly]
-    public sealed class ParticleAcceleratorPowerBoxSystem : EntitySystem
+    public sealed partial class ParticleAcceleratorSystem
     {
-        public override void Initialize()
+        private void InitializePowerBoxSystem()
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<ParticleAcceleratorPowerBoxComponent, PowerConsumerReceivedChanged>(
-                PowerBoxReceivedChanged);
+            SubscribeLocalEvent<ParticleAcceleratorPowerBoxComponent, PowerConsumerReceivedChanged>(PowerBoxReceivedChanged);
         }
 
         private static void PowerBoxReceivedChanged(
@@ -21,8 +17,7 @@ namespace Content.Server.ParticleAccelerator.EntitySystems
             ParticleAcceleratorPowerBoxComponent component,
             PowerConsumerReceivedChanged args)
         {
-            if (component.Master != null)
-                component.Master.PowerBoxReceivedChanged(args);
+            component.Master?.PowerBoxReceivedChanged(args);
         }
     }
 }

@@ -8,6 +8,16 @@
   - type: Transform
     anchored: true
   - type: ReagentGrinder
+    beakerSlot:
+      insertSound: /Audio/Machines/machine_switch.ogg
+      ejectSound: /Audio/Machines/machine_switch.ogg
+      soundOptions:
+        volume: -2
+      whitelist:
+        components:
+        - FitsInDispenser
+  - type: ActivatableUI
+    key: enum.ReagentGrinderUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.ReagentGrinderUiKey.Key

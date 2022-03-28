@@ -78,7 +78,6 @@ namespace Content.Server.Salvage
                     {
                         magnet.AttachedEntity = null;
                         magnet.MagnetState = MagnetState.Inactive;
-                        Report("salvage-system-announcement-lost");
                         return;
                     }
                 }
