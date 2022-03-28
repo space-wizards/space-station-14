@@ -79,9 +79,15 @@ namespace Content.Client.Preferences.UI
         private readonly List<SpeciesPrototype> _speciesList;
         private readonly List<AntagPreferenceSelector> _antagPreferences;
 
-        private EntityUid _previewDummy;
         private Control _previewSpriteControl => CSpriteViewFront;
         private Control _previewSpriteSideControl => CSpriteViewSide;
+
+        private EntityUid? _previewDummy;
+
+        /// <summary>
+        /// Used to avoid unnecessarily re-creating the entity.
+        /// </summary>
+        private string? _lastSpecies;
         private SpriteView? _previewSprite;
         private SpriteView? _previewSpriteSide;
 
@@ -487,16 +493,28 @@ namespace Content.Client.Preferences.UI
             if (!disposing)
                 return;
 
-            _entMan.DeleteEntity(_previewDummy);
+            if (_previewDummy != null)
+                _entMan.DeleteEntity(_previewDummy.Value);
+
             _preferencesManager.OnServerDataLoaded -= LoadServerData;
         }
 
         private void RebuildSpriteView()
         {
-            var dollProto = _prototypeManager.Index<SpeciesPrototype>(Profile?.Species ?? SpeciesManager.DefaultSpecies).DollPrototype;
-            _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
+            var species = Profile?.Species ?? SpeciesManager.DefaultSpecies;
 
-            var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy);
+            if (_lastSpecies != species)
+            {
+                var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
+
+                if (_previewDummy != null)
+                    _entMan.DeleteEntity(_previewDummy!.Value);
+
+                _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
+                _lastSpecies = species;
+            }
+
+            var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy!.Value);
 
             if (_previewSprite == null)
             {
@@ -741,8 +759,8 @@ namespace Content.Client.Preferences.UI
                 return;
             RebuildSpriteView();
 
-            EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy, Profile);
-            LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy, Profile);
+            EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy!.Value, Profile);
+            LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
         }
 
         public void UpdateControls()
