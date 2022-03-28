@@ -62,7 +62,6 @@ namespace Content.Shared.Movement.EntitySystems
                 {
                     if (TryComp<IMoverComponent>(rider.Vehicle.Owner, out var vehicleMover))
                     {
-                        Logger.Error("Setting movement for the vehicle");
                         vehicleMover.SetVelocityDirection(dir, subTick, state);
                     }
                 }

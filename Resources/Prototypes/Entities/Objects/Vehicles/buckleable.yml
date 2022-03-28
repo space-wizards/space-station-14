@@ -5,11 +5,21 @@
   components:
   - type: Vehicle
   - type: Strap
+    buckleOffset: "0.10, 0.36"
+    maxBuckleDistance: 1
   - type: PlayerInputMover
   - type: Sprite
     sprite: Objects/Vehicles/pussywagon.rsi
     state: vehicle
     netsync: false
+    noRot: true
+    drawdepth: Walls
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 7
+    baseSprintSpeed : 7
+  - type: Tag
+    tags:
+    - DoorBumpOpener
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -26,3 +36,7 @@
       - SmallImpassable
       layer:
       - Opaque
+  - type: Access
+    tags:
+    - Maintenance
+    - Janitor
