@@ -5,10 +5,8 @@
         <BoxContainer Orientation="Horizontal">
             <Label Name="PlayerCount" HorizontalExpand="True" SizeFlagsStretchRatio="0.50"
                    Text="{Loc Player Count}" />
-            <Button Name="OverlayButtonOn" HorizontalExpand="True" SizeFlagsStretchRatio="0.25"
-                    Text="{Loc Overlay On}"/>
-            <Button Name="OverlayButtonOff" HorizontalExpand="True" SizeFlagsStretchRatio="0.25"
-                    Text="{Loc Overlay Off}"/>
+            <Button Name="OverlayButton" HorizontalExpand="True" SizeFlagsStretchRatio="0.25"
+                    Text="{Loc player-tab-overlay}" ToggleMode="True"/>
         </BoxContainer>
         <Control MinSize="0 5" />
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True">

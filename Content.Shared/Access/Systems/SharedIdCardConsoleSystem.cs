@@ -1,8 +1,6 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Shared.Access.Systems
 {
@@ -21,8 +19,8 @@ namespace Content.Shared.Access.Systems
 
         private void OnComponentInit(EntityUid uid, SharedIdCardConsoleComponent component, ComponentInit args)
         {
-            _itemSlotsSystem.AddItemSlot(uid, $"{component.Name}-privilegedId", component.PrivilegedIdSlot);
-            _itemSlotsSystem.AddItemSlot(uid, $"{component.Name}-targetId", component.TargetIdSlot);
+            _itemSlotsSystem.AddItemSlot(uid, SharedIdCardConsoleComponent.PrivilegedIdCardSlotId, component.PrivilegedIdSlot);
+            _itemSlotsSystem.AddItemSlot(uid, SharedIdCardConsoleComponent.TargetIdCardSlotId, component.TargetIdSlot);
         }
 
         private void OnComponentRemove(EntityUid uid, SharedIdCardConsoleComponent component, ComponentRemove args)

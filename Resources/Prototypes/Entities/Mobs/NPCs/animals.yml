@@ -911,6 +911,70 @@
     interactFailureString: petting-failure-generic
 
 - type: entity
+  name: grenade penguin
+  parent: SimpleMobBase
+  id: MobGrenadePenguin
+  description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 7
+    baseSprintSpeed : 7
+  - type: UtilityAI
+    behaviorSets:
+    - UnarmedAttackHostiles
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: penguin
+      sprite: Mobs/Animals/grenadepenguin.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable #Bullets?!
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: penguin
+      crit: dead
+      dead: dead
+  - type: Butcherable
+    spawned: FoodMeatPenguin
+    pieces: 3
+  - type: UnarmedCombat
+    range: 0.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      groups:
+        Brute: 5
+  - type: Item
+    size: 80
+  - type: OnUseTimerTrigger
+    delay: 10
+    beepSound:
+      path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use 
+    beepInterval: 1
+  - type: Explosive
+    devastationRange: 1
+    heavyImpactRange: 2
+    lightImpactRange: 3
+    flashRange: 6
+  - type: ExplodeOnTrigger
+
+- type: entity
   name: snake
   parent: SimpleMobBase
   id: MobSnake

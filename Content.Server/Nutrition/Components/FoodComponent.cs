@@ -43,6 +43,9 @@ namespace Content.Server.Nutrition.Components
         [DataField("utensilRequired")]
         public bool UtensilRequired = false;
 
+        /// <summary>
+        /// The localization identifier for the eat message. Needs a "food" entity argument passed to it.
+        /// </summary>
         [DataField("eatMessage")]
         public string EatMessage = "food-nom";
 

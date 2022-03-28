@@ -1,19 +1,19 @@
-using System;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Construction.Components;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Pulling;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Pulling.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Construction
 {
     public sealed class AnchorableSystem : EntitySystem
     {
+        [Dependency] private readonly AdminLogSystem _adminLogs = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
 
@@ -106,6 +106,12 @@ namespace Content.Server.Construction
 
             RaiseLocalEvent(uid, new UserAnchoredEvent(userUid, usingUid), false);
 
+            _adminLogs.Add(
+                LogType.Action,
+                LogImpact.Low,
+                $"{EntityManager.ToPrettyString(userUid):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(usingUid):using}"
+            );
+
             return true;
         }
 
@@ -134,6 +140,12 @@ namespace Content.Server.Construction
             transform.Anchored = false;
 
             RaiseLocalEvent(uid, new UserUnanchoredEvent(userUid, usingUid), false);
+
+            _adminLogs.Add(
+                LogType.Action,
+                LogImpact.Low,
+                $"{EntityManager.ToPrettyString(userUid):user} unanchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(usingUid):using}"
+            );
 
             return true;
         }
