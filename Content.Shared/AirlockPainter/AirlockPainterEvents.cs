@@ -22,13 +22,11 @@ namespace Content.Shared.AirlockPainter
     [Serializable, NetSerializable]
     public sealed class AirlockPainterBoundUserInterfaceState : BoundUserInterfaceState
     {
-        public int SelectedIndex;
-        public List<string> Styles;
+        public int SelectedStyle { get; }
 
-        public AirlockPainterBoundUserInterfaceState(int selectedIndex, List<string> styles)
+        public AirlockPainterBoundUserInterfaceState(int selectedStyle)
         {
-            SelectedIndex = selectedIndex;
-            Styles = styles;
+            SelectedStyle = selectedStyle;
         }
     }
 }

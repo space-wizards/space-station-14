@@ -17,10 +17,6 @@ namespace Content.Server.AirlockPainter
         [DataField("isSpraying")]
         public bool IsSpraying = false;
 
-        [DataField("styles")]
-        public List<string> Styles = default!;
-
-        [DataField("index")]
         public int Index = default!;
     }
 }

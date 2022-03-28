@@ -9,7 +9,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.AirlockPainter
 {
@@ -17,13 +16,12 @@ namespace Content.Server.AirlockPainter
     /// A system for painting airlocks using airlock painter
     /// </summary>
     [UsedImplicitly]
-    public sealed class AirlockPainterSystem : EntitySystem
+    public sealed class AirlockPainterSystem : SharedAirlockPainterSystem
     {
 
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -75,8 +73,8 @@ namespace Content.Server.AirlockPainter
                 return;
             }
 
-            string style = component.Styles[component.Index];
-            if (!grp.StylePaths.TryGetValue(style, out string? sprite))
+            string style = Styles[component.Index];
+            if (!grp.StylePaths.TryGetValue(style, out var sprite))
             {
                 string msg = Loc.GetString("airlock-painter-style-not-available");
                 _popupSystem.PopupEntity(msg, args.User, Filter.Entities(args.User));
@@ -128,10 +126,14 @@ namespace Content.Server.AirlockPainter
             DirtyUI(uid, component);
         }
 
-        private void DirtyUI(EntityUid uid, AirlockPainterComponent component)
+        private void DirtyUI(EntityUid uid,
+            AirlockPainterComponent? component = null)
         {
+            if (!Resolve(uid, ref component))
+                return;
+
             _userInterfaceSystem.TrySetUiState(uid, AirlockPainterUiKey.Key,
-                new AirlockPainterBoundUserInterfaceState(component.Index, component.Styles));
+                new AirlockPainterBoundUserInterfaceState(component.Index));
         }
     }
 }

@@ -18,16 +18,3 @@
       whitelist:
         tags:
           - PaintableAirlock
-      styles:
-        - basic
-        - cargo
-        - command
-        - engineering
-        - external
-        - firelock
-        - freezer
-        - maintenance
-        - medical
-        - science
-        - security
-        - shuttle

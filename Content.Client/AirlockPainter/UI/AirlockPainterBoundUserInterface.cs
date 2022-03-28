@@ -20,26 +20,19 @@ namespace Content.Client.AirlockPainter.UI
             if (State != null)
                 UpdateState(State);
 
+            // Add styles
+            var painterSystem = EntitySystem.Get<AirlockPainterSystem>();
+            _window.Populate(painterSystem.Styles);
+
             _window.OpenCentered();
 
             _window.OnClose += Close;
             _window.OnSpritePicked += OnSpritePicked;
         }
 
-        private void OnSpritePicked(int? index)
+        private void OnSpritePicked(int index)
         {
-            if (index == null) return;
-            SendMessage(new AirlockPainterSpritePickedMessage(index.Value));
-        }
-
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-            if (_window == null || state is not AirlockPainterBoundUserInterfaceState cast)
-                return;
-
-            _window.Populate(cast.Styles);
-            _window.SelectedStyle(cast.Styles[cast.SelectedIndex]);
+            SendMessage(new AirlockPainterSpritePickedMessage(index));
         }
     }
 }

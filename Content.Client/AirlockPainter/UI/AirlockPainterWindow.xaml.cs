@@ -7,7 +7,7 @@ namespace Content.Client.AirlockPainter.UI
     [GenerateTypedNameReferences]
     public sealed partial class AirlockPainterWindow : DefaultWindow
     {
-        public event Action<int?>? OnSpritePicked;
+        public event Action<int>? OnSpritePicked;
 
         public AirlockPainterWindow()
         {
@@ -23,11 +23,6 @@ namespace Content.Client.AirlockPainter.UI
             {
                 SpriteList.AddItem(style);
             }
-        }
-
-        public void SelectedStyle(string style)
-        {
-          SelectedSpriteLabel.Text = Loc.GetString("airlock-painter-selected-style") + ": " + style;
         }
     }
 }

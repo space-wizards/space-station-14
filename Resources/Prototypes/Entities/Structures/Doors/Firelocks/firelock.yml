@@ -92,8 +92,6 @@
     - type: Construction
       graph: Firelock
       node: Firelock
-    - type: PaintableAirlock
-      group: Standard
 
 - type: entity
   id: FirelockGlass
@@ -102,8 +100,6 @@
   components:
     - type: Sprite
       sprite: Structures/Doors/Airlocks/Glass/firelock.rsi
-    - type: PaintableAirlock
-      group: Glass
 
 - type: entity
   id: FirelockEdge
@@ -130,5 +126,3 @@
           - MobImpassable
           - VaultImpassable
           - SmallImpassable
-    - type: PaintableAirlock
-      enabled: false
