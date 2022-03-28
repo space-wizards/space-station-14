@@ -11,6 +11,5 @@ namespace Content.Shared.AirlockPainter.Prototypes
 
         [DataField("stylePaths")]
         public Dictionary<string, string> StylePaths = default!;
-
     }
 }

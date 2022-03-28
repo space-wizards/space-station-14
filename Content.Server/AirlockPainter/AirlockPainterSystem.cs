@@ -18,7 +18,6 @@ namespace Content.Server.AirlockPainter
     [UsedImplicitly]
     public sealed class AirlockPainterSystem : SharedAirlockPainterSystem
     {
-
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
