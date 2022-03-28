@@ -1,7 +1,5 @@
-using Content.Server.UserInterface;
 using Content.Server.Research.Components;
 using JetBrains.Annotations;
-
 
 namespace Content.Server.Research
 {
