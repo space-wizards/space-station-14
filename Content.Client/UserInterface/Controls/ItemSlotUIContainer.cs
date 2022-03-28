@@ -30,6 +30,16 @@ public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContaine
         return true;
     }
 
+    public void ClearButtons()
+    {
+        foreach (var button in _buttons.Values)
+        {
+            button.Dispose();
+        }
+        _buttons.Clear();
+    }
+
+
     public bool TryRegisterButton(ItemSlotControl control, string newSlotName)
     {
         if (newSlotName == "") return false;
