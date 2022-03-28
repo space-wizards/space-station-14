@@ -2,13 +2,13 @@
 
 - type: stack
   id: Pancake
-  name: pancake
+  name: stack-name-pancake
 
 # Food Containers
 
 - type: stack
   id: PizzaBox
-  name: pizza box
+  name: stack-name-pizza-box
   icon: Objects/Consumable/Food/Baked/pizza.rsi/box.png
   spawn: FoodBoxPizza
 
@@ -16,24 +16,24 @@
 
 - type: stack
   id: PaperRolling
-  name: paper rolling
+  name: stack-name-paper-rolling
 
 - type: stack
   id: CigaretteFilter
-  name: cigarette filter
+  name: stack-name-cigarette-filter
 
 - type: stack
   id: GroundTobacco
-  name: ground tobacco
+  name: stack-name-ground-tobacco
 
 - type: stack
   id: GroundCannabis
-  name: ground cannabis
+  name: stack-name-ground-cannabis
 
 - type: stack
   id: LeavesTobaccoDried
-  name: dried tobacco leaves
+  name: stack-name-dried-tobacco-leaves
 
 - type: stack
   id: LeavesCannabisDried
-  name: dried cannabis leaves
+  name: stack-name-dried-cannabis-leaves

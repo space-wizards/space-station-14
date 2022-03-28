@@ -1,9 +1,9 @@
 - type: stack
   id: InflatableWall
-  name: inflatable wall
+  name: stack-name-inflatable-wall
   spawn: InflatableWallStack1
 
 - type: stack
   id: InflatableDoor
-  name: inflatable door
+  name: stack-name-inflatable-door
   spawn: InflatableDoorStack1

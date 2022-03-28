@@ -1,29 +1,29 @@
 - type: stack
   id: Paper
-  name: paper
+  name: stack-name-paper
   icon: /Textures/Objects/Materials/Sheets/other.rsi/paper.png
   spawn: SheetPaper1
 
 - type: stack
   id: Phoron
-  name: phoron
+  name: stack-name-phoron
   icon: /Textures/Objects/Materials/Sheets/other.rsi/phoron.png
   spawn: SheetPhoron1
 
 - type: stack
   id: Plasma
-  name: plasma
+  name: stack-name-plasma
   icon: /Textures/Objects/Materials/Sheets/other.rsi/plasma.png
   spawn: SheetPlasma1
 
 - type: stack
   id: Plastic
-  name: plastic
+  name: stack-name-plastic
   icon: /Textures/Objects/Materials/Sheets/other.rsi/plastic.png
   spawn: SheetPlastic1
 
 - type: stack
   id: Uranium
-  name: uranium
+  name: stack-name-uranium
   icon: /Textures/Objects/Materials/Sheets/other.rsi/uranium.png
   spawn: SheetUranium1

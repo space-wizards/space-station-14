@@ -1,5 +1,5 @@
 - type: stack
   id: MetalRod
-  name: rods
+  name: stack-name-rods
   icon: /Textures/Objects/Materials/parts.rsi/rods.png
   spawn: PartRodMetal1
