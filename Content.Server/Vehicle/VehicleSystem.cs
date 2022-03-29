@@ -1,9 +1,9 @@
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Vehicle;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Movement.Components;
 using Content.Server.Buckle.Components;
 using Content.Server.Storage.EntitySystems;
-using Content.Shared.Movement.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Shared.MobState;
@@ -11,6 +11,7 @@ using Content.Shared.Stunnable;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Shared.Hands.EntitySystems;
+using Robust.Shared.Random;
 
 namespace Content.Server.Vehicle
 {
@@ -18,6 +19,7 @@ namespace Content.Server.Vehicle
     {
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -63,6 +65,7 @@ namespace Content.Server.Vehicle
         {
             if (args.Buckling)
             {
+                EnsureComp<SharedPlayerInputMoverComponent>(uid);
                 var rider = EnsureComp<RiderComponent>(args.BuckledEntity);
                 rider.Vehicle = component;
                 component.HasRider = true;
@@ -122,8 +125,11 @@ namespace Content.Server.Vehicle
 
         private void OnMove(EntityUid uid, VehicleComponent component, ref MoveEvent args)
         {
-            if (!component.HasRider)
-                return;
+            if (!component.HasRider && _random.Prob(0.015f))
+            {
+                RemComp<SharedPlayerInputMoverComponent>(uid);
+                UpdateAutoAnimate(uid, false);
+            }
 
             UpdateBuckleOffset(args.Component, component);
             UpdateAppearance(uid, GetDrawDepth(args.Component));
