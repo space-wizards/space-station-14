@@ -6,6 +6,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Server.Hands.Components;
+using Content.Server.Hands.Systems;
 using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.Vehicle
@@ -13,6 +14,7 @@ namespace Content.Server.Vehicle
     public sealed class VehicleSystem : EntitySystem
     {
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -57,10 +59,12 @@ namespace Content.Server.Vehicle
                 var rider = EnsureComp<RiderComponent>(args.BuckledEntity);
                 rider.Vehicle = component;
                 component.HasRider = true;
+                _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.BuckledEntity);
                 UpdateBuckleOffset(Transform(uid), component);
                 UpdateAppearance(uid, GetDrawDepth(Transform(uid)));
                 return;
             }
+            _virtualItemSystem.DeleteInHandsMatching(args.BuckledEntity, uid);
             RemComp<RiderComponent>(args.BuckledEntity);
             component.HasRider = false;
         }
@@ -163,6 +167,5 @@ namespace Content.Server.Vehicle
                 return;
             appearance.SetData(VehicleVisuals.AutoAnimate, autoAnimate);
         }
-
     }
 }
