@@ -41,7 +41,7 @@ namespace Content.Server.Buckle.Components
         /// If this offset it too big, it will be clamped to <see cref="MaxBuckleDistance"/>
         /// </summary>
         [DataField("buckleOffset", required: false)]
-        private Vector2 _buckleOffset = Vector2.Zero;
+        public Vector2 BuckleOffsetUnclamped = Vector2.Zero;
 
         private bool _enabled = true;
 
@@ -76,7 +76,7 @@ namespace Content.Server.Buckle.Components
         /// Gets and clamps the buckle offset to MaxBuckleDistance
         /// </summary>
         public Vector2 BuckleOffset => Vector2.Clamp(
-            _buckleOffset,
+            BuckleOffsetUnclamped,
             Vector2.One * -MaxBuckleDistance,
             Vector2.One * MaxBuckleDistance);
 

@@ -20,6 +20,11 @@ namespace Content.Shared.Vehicle.Components
         public bool HasRider = false;
 
         /// <summary>
+        /// The base offset for the vehicle (when facing east)
+        /// </summary>
+        public Vector2 BaseBuckleOffset = Vector2.Zero;
+
+        /// <summary>
         /// The prototype for the key
         /// </summary>
         [DataField("key", required: true)]

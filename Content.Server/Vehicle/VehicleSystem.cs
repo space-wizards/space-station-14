@@ -1,9 +1,12 @@
 using Content.Shared.Vehicle.Components;
+using Content.Shared.Vehicle;
 using Content.Shared.Buckle.Components;
+using Content.Server.Buckle.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Server.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Vehicle
 {
@@ -14,8 +17,19 @@ namespace Content.Server.Vehicle
         {
             base.Initialize();
             SubscribeLocalEvent<VehicleComponent, BuckleChangeEvent>(OnBuckleChange);
+            SubscribeLocalEvent<VehicleComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<VehicleComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
             SubscribeLocalEvent<VehicleComponent, GetVerbsEvent<AlternativeVerb>>(AddKeysVerb);
+            SubscribeLocalEvent<VehicleComponent, MoveEvent>(OnMove);
+        }
+
+        public void OnComponentInit(EntityUid uid, VehicleComponent component, ComponentInit args)
+        {
+            var strap = Comp<StrapComponent>(uid);
+
+            component.BaseBuckleOffset = strap.BuckleOffset;
+            strap.BuckleOffsetUnclamped = Vector2.Zero; //You're going to align these facing east, so...
+            UpdateAppearance(uid, -10);
         }
         /// <summary>
         /// Give the user the rider component if they're buckling to the vehicle,
@@ -28,6 +42,8 @@ namespace Content.Server.Vehicle
                 var rider = EnsureComp<RiderComponent>(args.BuckledEntity);
                 rider.Vehicle = component;
                 component.HasRider = true;
+                UpdateBuckleOffset(Transform(uid), component);
+                UpdateAppearance(uid, GetDrawDepth(Transform(uid)));
                 return;
             }
             RemComp<RiderComponent>(args.BuckledEntity);
@@ -76,6 +92,55 @@ namespace Content.Server.Vehicle
                 Priority = 2
             };
             args.Verbs.Add(verb);
+        }
+
+        private void OnMove(EntityUid uid, VehicleComponent component, ref MoveEvent args)
+        {
+            if (!component.HasRider)
+                return;
+
+            UpdateBuckleOffset(args.Component, component);
+            UpdateAppearance(uid, GetDrawDepth(args.Component));
+        }
+
+        private int GetDrawDepth(TransformComponent xform)
+        {
+            int drawDepth = xform.LocalRotation.Degrees switch
+            {
+              < 45f => 10,
+              <= 315f => -4,
+              _ => 10
+            };
+
+            return drawDepth;
+        }
+
+        private void UpdateBuckleOffset(TransformComponent xform, VehicleComponent component)
+        {
+            var strap = Comp<StrapComponent>(component.Owner);
+            strap.BuckleOffsetUnclamped = xform.LocalRotation.Degrees switch
+            {
+              < 45f => (0, component.BaseBuckleOffset.Y),
+              <= 135f => component.BaseBuckleOffset,
+              < 225f  => (Vector2.Zero),
+              <= 315f => (component.BaseBuckleOffset.X * -1, component.BaseBuckleOffset.Y),
+              _ => (0, component.BaseBuckleOffset.Y)
+            };
+
+            foreach (var buckledEntity in strap.BuckledEntities)
+            {
+                var buckleXform = Transform(buckledEntity);
+                buckleXform.LocalPosition = strap.BuckleOffset;
+            }
+
+        }
+
+        private void UpdateAppearance(EntityUid uid, int drawDepth)
+        {
+            if (!TryComp<AppearanceComponent>(uid, out var appearance))
+                return;
+
+            appearance.SetData(VehicleVisuals.DrawDepth, drawDepth);
         }
     }
 }

@@ -42,3 +42,5 @@
     tags:
     - Maintenance
     - Janitor
+  - type: VehicleVisuals
+  - type: Appearance
