@@ -4,6 +4,7 @@
   description: The janitor's trusty steed.
   components:
   - type: Vehicle
+    key: VehicleKeyPussyWagon
   - type: Strap
     buckleOffset: "0.10, 0.36"
     maxBuckleDistance: 1

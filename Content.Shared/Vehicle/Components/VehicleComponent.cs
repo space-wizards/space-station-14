@@ -8,5 +8,21 @@ namespace Content.Shared.Vehicle.Components
     /// </summary>
     [RegisterComponent]
     public sealed class VehicleComponent : Component
-    {}
+    {
+        /// <summary>
+        /// Whether the vehicle currently has a key inside it
+        /// </summary>
+        public bool HasKey = false;
+
+        /// <summary>
+        /// Whether someone is currently riding the vehicle
+        /// </summary
+        public bool HasRider = false;
+
+        /// <summary>
+        /// The prototype for the key
+        /// </summary>
+        [DataField("key", required: true)]
+        public string Key = string.Empty;
+    }
 }

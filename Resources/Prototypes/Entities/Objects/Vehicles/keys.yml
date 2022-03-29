@@ -1,0 +1,11 @@
+- type: entity
+  parent: BaseItem
+  id: VehicleKeyPussyWagon
+  name: Janicart Keys
+  description: Interesting design.
+  components:
+  - type: VehicleKey
+  - type: Sprite
+    sprite: Objects/Vehicles/pussywagon.rsi
+    state: keys
+    netsync: false
