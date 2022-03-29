@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
+
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Acts;
-using Content.Shared.Coordinates;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
@@ -24,16 +22,11 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Storage.Components
 {
@@ -207,7 +200,8 @@ namespace Content.Server.Storage.Components
 
             StorageUsed += size;
             _sizeCache[message.Entity] = size;
-
+            var ev = new StorageChangedEvent(this, true);
+            _entityManager.EventBus.RaiseLocalEvent(this.Owner, ev, false);
             UpdateClientInventories();
         }
 
@@ -232,6 +226,8 @@ namespace Content.Server.Storage.Components
 
             StorageUsed -= size;
 
+            var ev = new StorageChangedEvent(this, false);
+            _entityManager.EventBus.RaiseLocalEvent(this.Owner, ev, false);
             UpdateClientInventories();
         }
 
@@ -683,7 +679,6 @@ namespace Content.Server.Storage.Components
                 }
             }
         }
-
         private void PlaySoundCollection()
         {
             SoundSystem.Play(Filter.Pvs(Owner), StorageSoundCollection.GetSound(), Owner, AudioParams.Default);

@@ -20,11 +20,16 @@ namespace Content.Client.Vehicle
             {
                 sprite?.LayerSetAutoAnimated(VehicleVisualLayers.AutoAnimate, autoAnimate);
             }
+            if (args.Component.TryGetData(VehicleVisuals.StorageUsed, out bool storageUsed))
+            {
+                sprite?.LayerSetVisible(VehicleVisualLayers.StorageUsed, storageUsed);
+            }
         }
     }
 }
 public enum VehicleVisualLayers : byte
 {
-    DrawDepth,
-    AutoAnimate
+    AutoAnimate,
+
+    StorageUsed
 }

@@ -261,4 +261,20 @@ namespace Content.Server.Storage.EntitySystems
             }
         }
     }
+
+    public sealed class StorageChangedEvent : EntityEventArgs
+    {
+        public ServerStorageComponent Storage { get; }
+        /// <summary>
+        /// True if an entity was inserted,
+        /// false otherwise.
+        /// </summary>
+        public bool Added { get; }
+
+        public StorageChangedEvent(ServerStorageComponent storage, bool added)
+        {
+            Storage = storage;
+            Added = added;
+        }
+    }
 }

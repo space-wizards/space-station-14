@@ -2,12 +2,15 @@ using Content.Shared.Vehicle.Components;
 using Content.Shared.Vehicle;
 using Content.Shared.Buckle.Components;
 using Content.Server.Buckle.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
+using Content.Server.Storage.Components;
 using Content.Shared.Hands.EntitySystems;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Vehicle
 {
@@ -23,6 +26,7 @@ namespace Content.Server.Vehicle
             SubscribeLocalEvent<VehicleComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
             SubscribeLocalEvent<VehicleComponent, GetVerbsEvent<AlternativeVerb>>(AddKeysVerb);
             SubscribeLocalEvent<VehicleComponent, MoveEvent>(OnMove);
+            SubscribeLocalEvent<VehicleComponent, StorageChangedEvent>(OnStorageChanged);
         }
         /// <summary>
         /// This just controls whether the wheels are turning.
@@ -47,6 +51,7 @@ namespace Content.Server.Vehicle
             component.BaseBuckleOffset = strap.BuckleOffset;
             strap.BuckleOffsetUnclamped = Vector2.Zero; //You're going to align these facing east, so...
             UpdateAppearance(uid, 2);
+            UpdateStorageUsed(uid, false);
         }
         /// <summary>
         /// Give the user the rider component if they're buckling to the vehicle,
@@ -122,6 +127,10 @@ namespace Content.Server.Vehicle
             UpdateAppearance(uid, GetDrawDepth(args.Component));
         }
 
+        private void OnStorageChanged(EntityUid uid, VehicleComponent component, StorageChangedEvent args)
+        {
+            UpdateStorageUsed(uid, args.Added);
+        }
         private int GetDrawDepth(TransformComponent xform)
         {
             int drawDepth = xform.LocalRotation.Degrees switch
@@ -166,6 +175,13 @@ namespace Content.Server.Vehicle
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
                 return;
             appearance.SetData(VehicleVisuals.AutoAnimate, autoAnimate);
+        }
+
+        private void UpdateStorageUsed(EntityUid uid, bool storageUsed)
+        {
+            if (!TryComp<AppearanceComponent>(uid, out var appearance))
+                return;
+            appearance.SetData(VehicleVisuals.StorageUsed, storageUsed);
         }
     }
 }

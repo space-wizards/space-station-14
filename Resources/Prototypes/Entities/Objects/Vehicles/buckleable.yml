@@ -1,22 +1,14 @@
 - type: entity
-  id: VehiclePussyWagon
-  name: janicart
-  description: The janitor's trusty steed.
+  id: VehicleBase
+  save: false
+  abstract: true
+  name: Vehicle
   components:
-  - type: Vehicle
-    key: VehicleKeyPussyWagon
   - type: Strap
     buckleOffset: "0.10, 0.36"
     maxBuckleDistance: 1
   - type: PlayerInputMover
-  - type: Sprite
-    sprite: Objects/Vehicles/pussywagon.rsi
-    layers:
-    - state: vehicle
-      map: ["enum.VehicleVisualLayers.AutoAnimate"]
-    netsync: false
-    noRot: true
-    drawdepth: Walls
+  - type: Vehicle
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
@@ -36,9 +28,33 @@
       mask:
       - Impassable
       - VaultImpassable
+  - type: VehicleVisuals
+  - type: Appearance
+
+- type: entity
+  id: VehiclePussyWagon
+  parent: VehicleBase
+  name: janicart
+  description: The janitor's trusty steed.
+  components:
+  - type: Vehicle
+    key: VehicleKeyPussyWagon
+  - type: Sprite
+    sprite: Objects/Vehicles/pussywagon.rsi
+    layers:
+    - state: vehicle
+      map: ["enum.VehicleVisualLayers.AutoAnimate"]
+    - state: storage
+      map: ["enum.VehicleVisualLayers.StorageUsed"]
+    netsync: false
+    noRot: true
   - type: Access
     tags:
     - Maintenance
     - Janitor
-  - type: VehicleVisuals
-  - type: Appearance
+  - type: Storage
+    capacity: 126 ## See ServerStorageComponent.cs Line 152
+    quickInsert: true
+    whitelist:
+      tags:
+        - TrashBag
