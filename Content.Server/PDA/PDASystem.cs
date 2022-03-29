@@ -146,7 +146,6 @@ namespace Content.Server.PDA
             }
         }
 
-
         private void AfterUIOpen(EntityUid uid, PDAComponent pda, AfterActivatableUIOpenEvent args)
         {
             // A new user opened the UI --> Check if they are a traitor and should get a user specific UI state override.
@@ -167,6 +166,5 @@ namespace Content.Server.PDA
 
             ui.SetState(state, args.Session);
         }
-
     }
 }
