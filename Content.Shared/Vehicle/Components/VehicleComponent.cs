@@ -33,7 +33,15 @@ namespace Content.Shared.Vehicle.Components
         /// The sound that the horn makes
         /// </summary>
         [DataField("hornSound")]
-        public SoundSpecifier? HornSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
+        public SoundSpecifier HornSound = new SoundPathSpecifier("/Audio/Effects/Vehicle/carhorn.ogg");
+
+        /// <summary>
+        /// The sound that the vehicle makes with a key inserted
+        /// </summary>
+        [DataField("startupSound")]
+        public SoundSpecifier StartupSound = new SoundPathSpecifier("/Audio/Effects/Vehicle/vehiclestartup.ogg");
+
+        /// Use ambient sound component for the idle sound.
 
         /// <summary>
         /// The action for the horn (if any)
@@ -47,11 +55,6 @@ namespace Content.Shared.Vehicle.Components
         Description = "action-desc-honk",
         Event = new HonkActionEvent(),
         };
-        /// <summary>
-        /// Whether the horn loops or not
-        /// </summary>
-        [DataField("hornLoop")]
-        public bool HornLoop = false;
 
         /// <summary>
         /// The prototype for the key

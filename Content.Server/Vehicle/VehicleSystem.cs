@@ -3,6 +3,7 @@ using Content.Shared.Vehicle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Actions;
+using Content.Shared.Audio;
 using Content.Server.Light.Components;
 using Content.Server.Buckle.Components;
 using Content.Server.Storage.EntitySystems;
@@ -25,6 +26,7 @@ namespace Content.Server.Vehicle
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -62,6 +64,7 @@ namespace Content.Server.Vehicle
             strap.BuckleOffsetUnclamped = Vector2.Zero; //You're going to align these facing east, so...
             UpdateAppearance(uid, 2);
             UpdateStorageUsed(uid, false);
+            _ambientSound.SetAmbience(uid, false);
         }
         /// <summary>
         /// Give the user the rider component if they're buckling to the vehicle,
@@ -114,6 +117,9 @@ namespace Content.Server.Vehicle
                 return;
 
             component.HasKey = true;
+            EnsureComp<SharedPlayerInputMoverComponent>(uid);
+            SoundSystem.Play(Filter.Pvs(uid), component.StartupSound.GetSound(), uid, AudioParams.Default.WithVolume(6f));
+            _ambientSound.SetAmbience(uid, true);
             EntityManager.DeleteEntity(args.Used);
         }
         private void AddKeysVerb(EntityUid uid, VehicleComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -131,6 +137,7 @@ namespace Content.Server.Vehicle
                     var key = EntityManager.SpawnEntity(component.Key, Transform(args.User).Coordinates);
                     _handsSystem.PickupOrDrop(args.User, key);
                     component.HasKey = false;
+                    _ambientSound.SetAmbience(uid, false);
                 },
                 Text = Loc.GetString("vehicle-remove-keys-verb"),
                 Priority = 2
@@ -140,7 +147,7 @@ namespace Content.Server.Vehicle
 
         private void OnMove(EntityUid uid, VehicleComponent component, ref MoveEvent args)
         {
-            if (!component.HasRider && _random.Prob(0.015f))
+            if (!component.HasRider || !component.HasKey && _random.Prob(0.015f))
             {
                 RemComp<SharedPlayerInputMoverComponent>(uid);
                 UpdateAutoAnimate(uid, false);
@@ -177,7 +184,7 @@ namespace Content.Server.Vehicle
         private void OnHonk(EntityUid uid, VehicleComponent vehicle, HonkActionEvent args)
         {
             if (vehicle.HornSound != null)
-                SoundSystem.Play(Filter.Pvs(uid), vehicle.HornSound.GetSound(), uid);
+                SoundSystem.Play(Filter.Pvs(uid), vehicle.HornSound.GetSound(), uid, AudioHelpers.WithVariation(0.1f).WithVolume(8f));
         }
         private int GetDrawDepth(TransformComponent xform)
         {

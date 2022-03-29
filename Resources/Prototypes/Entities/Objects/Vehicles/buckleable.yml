@@ -7,6 +7,10 @@
   - type: Strap
     buckleOffset: "0.10, 0.36"
     maxBuckleDistance: 1
+  - type: AmbientSound
+    sound: "/Audio/Effects/Vehicle/vehicleengineidle.ogg"
+    range: 10
+    volume: 1
   - type: PlayerInputMover
   - type: Vehicle
   - type: MovementSpeedModifier
