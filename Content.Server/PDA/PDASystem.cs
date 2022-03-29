@@ -28,6 +28,8 @@ namespace Content.Server.PDA
 
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
             SubscribeLocalEvent<PDAComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
+            SubscribeLocalEvent<PDAComponent, UplinkInitEvent>(OnUplinkInit);
+            SubscribeLocalEvent<PDAComponent, UplinkRemovedEvent>(OnUplinkRemoved);
         }
 
         protected override void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
@@ -59,6 +61,16 @@ namespace Content.Server.PDA
         public void SetOwner(PDAComponent pda, string ownerName)
         {
             pda.OwnerName = ownerName;
+            UpdatePDAUserInterface(pda);
+        }
+
+        private void OnUplinkInit(EntityUid uid, PDAComponent pda, UplinkInitEvent args)
+        {
+            UpdatePDAUserInterface(pda);
+        }
+
+        private void OnUplinkRemoved(EntityUid uid, PDAComponent pda, UplinkRemovedEvent args)
+        {
             UpdatePDAUserInterface(pda);
         }
 
