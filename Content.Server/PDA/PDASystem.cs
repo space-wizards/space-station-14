@@ -36,7 +36,10 @@ namespace Content.Server.PDA
         {
             base.OnComponentInit(uid, pda, args);
 
-            if (_uiSystem.TryGetUi(uid, PDAUiKey.Key, out var ui))
+            if (!TryComp(uid, out ServerUserInterfaceComponent? uiComponent))
+                return;
+
+            if (_uiSystem.TryGetUi(uid, PDAUiKey.Key, out var ui, uiComponent))
                 ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
         }
 
