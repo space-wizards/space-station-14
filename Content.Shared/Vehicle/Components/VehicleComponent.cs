@@ -25,6 +25,24 @@ namespace Content.Shared.Vehicle.Components
         public bool HasRider = false;
 
         /// <summary>
+        /// Whether the vehicle should treat north as it's unique direction in its visualizer
+        /// </summary>
+        [DataField("northOnly")]
+        public bool NorthOnly = false;
+
+        /// <summary>
+        /// What the y buckle offset should be in north / south
+        /// </summary>
+        [DataField("northOverride")]
+        public float NorthOverride = 0f;
+
+        /// <summary>
+        /// What the y buckle offset should be in north / south
+        /// </summary>
+        [DataField("southOverride")]
+        public float SouthOverride = 0f;
+
+        /// <summary>
         /// The base offset for the vehicle (when facing east)
         /// </summary>
         public Vector2 BaseBuckleOffset = Vector2.Zero;

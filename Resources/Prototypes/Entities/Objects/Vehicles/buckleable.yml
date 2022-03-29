@@ -10,7 +10,7 @@
   - type: AmbientSound
     sound: "/Audio/Effects/Vehicle/vehicleengineidle.ogg"
     range: 10
-    volume: 1
+    volume: -3
   - type: PlayerInputMover
   - type: Vehicle
   - type: MovementSpeedModifier
@@ -43,6 +43,8 @@
   components:
   - type: Vehicle
     key: VehicleKeyPussyWagon
+    northOverride: -0.15
+    southOverride: 0.22
   - type: Sprite
     sprite: Objects/Vehicles/pussywagon.rsi
     layers:
@@ -75,3 +77,34 @@
     softness: 2
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
+
+- type: entity
+  id: VehicleSecway
+  parent: VehicleBase
+  name: secway
+  description: The future of transportation. Popularized by St. James, the patron saint of security officers and internet forum moderators.
+  components:
+  - type: Vehicle
+    key: VehicleKeySecway
+    northOnly: true
+    northOverride: -0.1
+    southOverride: 0.1
+  - type: Sprite
+    sprite: Objects/Vehicles/secway.rsi
+    layers:
+    - state: vehicle
+      map: ["enum.VehicleVisualLayers.AutoAnimate"]
+    netsync: false
+    noRot: true
+  - type: Access
+    tags:
+    - Security
+    - Brig
+    - Maintenance
+    - Service
+  - type: Strap
+    buckleOffset: "0.15, -0.05"
+    maxBuckleDistance: 1
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 8
+    baseSprintSpeed : 8

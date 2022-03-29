@@ -4,8 +4,21 @@
   name: janicart keys
   description: Interesting design.
   components:
+  - type: Item
+    size: 2
   - type: VehicleKey
   - type: Sprite
     sprite: Objects/Vehicles/pussywagon.rsi
+    state: keys
+    netsync: false
+
+- type: entity
+  parent: VehicleKeyPussyWagon
+  id: VehicleKeySecway
+  name: secway keys
+  description: The keys to the future.
+  components:
+  - type: Sprite
+    sprite: Objects/Vehicles/secway.rsi
     state: keys
     netsync: false

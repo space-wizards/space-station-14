@@ -82,7 +82,7 @@ namespace Content.Server.Vehicle
                 component.HasRider = true;
                 _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.BuckledEntity);
                 UpdateBuckleOffset(Transform(uid), component);
-                UpdateAppearance(uid, GetDrawDepth(Transform(uid)));
+                UpdateAppearance(uid, GetDrawDepth(Transform(uid), component.NorthOnly));
                 if (TryComp<ActionsComponent>(args.BuckledEntity, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
                 {
                     _actionsSystem.AddAction(args.BuckledEntity, flashlight.ToggleAction, uid, actions);
@@ -156,9 +156,8 @@ namespace Content.Server.Vehicle
                 RemComp<SharedPlayerInputMoverComponent>(uid);
                 UpdateAutoAnimate(uid, false);
             }
-
             UpdateBuckleOffset(args.Component, component);
-            UpdateAppearance(uid, GetDrawDepth(args.Component));
+            UpdateAppearance(uid, GetDrawDepth(args.Component, component.NorthOnly));
         }
 
         private void OnStorageChanged(EntityUid uid, VehicleComponent component, StorageChangedEvent args)
@@ -201,8 +200,19 @@ namespace Content.Server.Vehicle
             if (vehicle.HornSound != null)
                 SoundSystem.Play(Filter.Pvs(uid), vehicle.HornSound.GetSound(), uid, AudioHelpers.WithVariation(0.1f).WithVolume(8f));
         }
-        private int GetDrawDepth(TransformComponent xform)
+        private int GetDrawDepth(TransformComponent xform, bool northOnly)
         {
+            if (northOnly)
+            {
+                int norfDrawDepth = xform.LocalRotation.Degrees switch
+                {
+                < 135f => 10,
+                <= 225f => 2,
+                _ => 10
+                };
+
+            return norfDrawDepth;
+            }
             int drawDepth = xform.LocalRotation.Degrees switch
             {
               < 45f => 10,
@@ -218,11 +228,11 @@ namespace Content.Server.Vehicle
             var strap = Comp<StrapComponent>(component.Owner);
             strap.BuckleOffsetUnclamped = xform.LocalRotation.Degrees switch
             {
-              < 45f => (0, component.BaseBuckleOffset.Y),
+              < 45f => (0, component.SouthOverride),
               <= 135f => component.BaseBuckleOffset,
-              < 225f  => (Vector2.Zero),
+              < 225f  => (0, component.NorthOverride),
               <= 315f => (component.BaseBuckleOffset.X * -1, component.BaseBuckleOffset.Y),
-              _ => (0, component.BaseBuckleOffset.Y)
+              _ => (0, component.SouthOverride)
             };
 
             foreach (var buckledEntity in strap.BuckledEntities)
