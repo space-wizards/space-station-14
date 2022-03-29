@@ -69,9 +69,10 @@
       dead: dead
   - type: Puller
   - type: Butcherable
-    spawned: FoodMeatXeno
     butcheringType: Spike
-    pieces: 5
+    spawned:
+    - id: FoodMeatXeno
+      amount: 5
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: xeno

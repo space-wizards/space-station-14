@@ -37,21 +37,6 @@ namespace Content.Shared.Pulling
         private readonly HashSet<SharedPullableComponent> _moving = new();
         private readonly HashSet<SharedPullableComponent> _stoppedMoving = new();
 
-        /// <summary>
-        ///     If distance between puller and pulled entity lower that this threshold,
-        ///     pulled entity will not change its rotation.
-        ///     Helps with small distance jittering
-        /// </summary>
-        private const float ThresholdRotDistance = 1;
-
-        /// <summary>
-        ///     If difference between puller and pulled angle  lower that this threshold,
-        ///     pulled entity will not change its rotation.
-        ///     Helps with diagonal movement jittering
-        ///     As of further adjustments, should divide cleanly into 90 degrees
-        /// </summary>
-        private const float ThresholdRotAngle = 22.5f;
-
         public IReadOnlySet<SharedPullableComponent> Moving => _moving;
 
         public override void Initialize()
@@ -63,7 +48,6 @@ namespace Content.Shared.Pulling
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PullStartedMessage>(OnPullStarted);
             SubscribeLocalEvent<PullStoppedMessage>(OnPullStopped);
-            SubscribeLocalEvent<MoveEvent>(PullerMoved);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerInsert);
 
             SubscribeLocalEvent<SharedPullableComponent, PullStartedMessage>(PullableHandlePullStarted);
@@ -154,33 +138,6 @@ namespace Content.Shared.Pulling
             _stoppedMoving.Add(component);
         }
 
-        private void PullerMoved(ref MoveEvent ev)
-        {
-            var puller = ev.Sender;
-
-            if (!TryGetPulled(ev.Sender, out var pulled))
-            {
-                return;
-            }
-
-            // The pulled object may have already been deleted.
-            // TODO: Work out why. Monkey + meat spike is a good test for this,
-            //  assuming you're still pulling the monkey when it gets gibbed.
-            if (Deleted(pulled.Value))
-            {
-                return;
-            }
-
-            if (!EntityManager.TryGetComponent(pulled.Value, out IPhysBody? physics))
-            {
-                return;
-            }
-
-            UpdatePulledRotation(puller, pulled.Value);
-
-            physics.WakeBody();
-        }
-
         // TODO: When Joint networking is less shitcodey fix this to use a dedicated joints message.
         private void HandleContainerInsert(EntInsertedIntoContainerMessage message)
         {
@@ -250,38 +207,6 @@ namespace Content.Shared.Pulling
         public bool IsPulling(EntityUid puller)
         {
             return _pullers.ContainsKey(puller);
-        }
-
-        private void UpdatePulledRotation(EntityUid puller, EntityUid pulled)
-        {
-            // TODO: update once ComponentReference works with directed event bus.
-            if (!EntityManager.TryGetComponent(pulled, out RotatableComponent? rotatable))
-                return;
-
-            if (!rotatable.RotateWhilePulling)
-                return;
-
-            var pulledXform = EntityManager.GetComponent<TransformComponent>(pulled);
-
-            var dir = EntityManager.GetComponent<TransformComponent>(puller).WorldPosition - pulledXform.WorldPosition;
-            if (dir.LengthSquared > ThresholdRotDistance * ThresholdRotDistance)
-            {
-                var oldAngle = pulledXform.WorldRotation;
-                var newAngle = Angle.FromWorldVec(dir);
-
-                var diff = newAngle - oldAngle;
-                if (Math.Abs(diff.Degrees) > (ThresholdRotAngle / 2f))
-                {
-                    // Ok, so this bit is difficult because ideally it would look like it's snapping to sane angles.
-                    // Otherwise PIANO DOOR STUCK! happens.
-                    // But it also needs to work with station rotation / align to the local parent.
-                    // So...
-                    var baseRotation = pulledXform.Parent?.WorldRotation ?? 0f;
-                    var localRotation = newAngle - baseRotation;
-                    var localRotationSnapped = Angle.FromDegrees(Math.Floor((localRotation.Degrees / ThresholdRotAngle) + 0.5f) * ThresholdRotAngle);
-                    pulledXform.LocalRotation = localRotationSnapped;
-                }
-            }
         }
     }
 }

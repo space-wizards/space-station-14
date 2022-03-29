@@ -67,6 +67,8 @@ public enum LogType
     RCD = 63,
     Construction = 64,
     Trigger = 65,
+    Anchor = 66,
+    Unanchor = 67,
     // haha so funny
     Emag = 69,
 }

@@ -1,3 +1,4 @@
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Kitchen.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
@@ -57,7 +58,7 @@ namespace Content.Client.Kitchen.UI
         public void StartGrinding(BaseButton.ButtonEventArgs? args = null) => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderGrindStartMessage());
         public void StartJuicing(BaseButton.ButtonEventArgs? args = null) => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderJuiceStartMessage());
         public void EjectAll(BaseButton.ButtonEventArgs? args = null) => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectChamberAllMessage());
-        public void EjectBeaker(BaseButton.ButtonEventArgs? args = null) => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectBeakerMessage());
+        public void EjectBeaker(BaseButton.ButtonEventArgs? args = null) => SendMessage(new ItemSlotButtonPressedEvent(SharedReagentGrinderComponent.BeakerSlotId));
         public void EjectChamberContent(EntityUid uid) => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectChamberContentMessage(uid));
     }
 }

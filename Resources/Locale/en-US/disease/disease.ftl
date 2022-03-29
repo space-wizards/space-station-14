@@ -4,6 +4,7 @@ disease-sneeze = {CAPITALIZE($person)} sneezes.
 disease-cough = {CAPITALIZE($person)} coughs.
 disease-screech = {CAPITALIZE($person)} screeches.
 disease-meow = {CAPITALIZE($person)} meows.
+disease-hiss = {CAPITALIZE($person)} hisses.
 disease-beep= {CAPITALIZE($person)} beeps.
 disease-eaten-inside = You feel like you're being eaten from the inside.
 disease-steal-compulsion = You want to steal things.

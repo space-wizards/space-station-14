@@ -161,6 +161,24 @@
     slice: FoodMeatDuckCutlet
 
 - type: entity
+  name: prime-cut corgi meat
+  parent: FoodMeatBase
+  id: FoodMeatCorgi
+  description: The tainted gift of an evil crime. The meat may be delicous, but at what cost?
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: corgi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 20
+
+- type: entity
   name: raw crab meat
   parent: FoodMeatBase
   id: FoodMeatCrab
