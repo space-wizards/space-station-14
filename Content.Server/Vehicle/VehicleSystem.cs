@@ -37,6 +37,7 @@ namespace Content.Server.Vehicle
         /// </summary>
         public void OnBuckleChange(EntityUid uid, VehicleComponent component, BuckleChangeEvent args)
         {
+            TryComp<EyeComponent>(args.BuckledEntity, out var eye);
             if (args.Buckling)
             {
                 var rider = EnsureComp<RiderComponent>(args.BuckledEntity);
@@ -44,10 +45,14 @@ namespace Content.Server.Vehicle
                 component.HasRider = true;
                 UpdateBuckleOffset(Transform(uid), component);
                 UpdateAppearance(uid, GetDrawDepth(Transform(uid)));
+                if (eye != null)
+                    eye.Offset = component.BaseBuckleOffset;
                 return;
             }
             RemComp<RiderComponent>(args.BuckledEntity);
             component.HasRider = false;
+            if (eye != null)
+                eye.Offset = Vector2.Zero;
         }
 
         /// <summary>
@@ -108,7 +113,7 @@ namespace Content.Server.Vehicle
             int drawDepth = xform.LocalRotation.Degrees switch
             {
               < 45f => 10,
-              <= 315f => -4,
+              <= 315f => 2,
               _ => 10
             };
 
