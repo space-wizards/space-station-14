@@ -22,7 +22,7 @@ namespace Content.Client.AirlockPainter.UI
 
             // Add styles
             var painterSystem = EntitySystem.Get<AirlockPainterSystem>();
-            _window.Populate(painterSystem.Styles);
+            _window.Populate(painterSystem.Entries);
 
             _window.OpenCentered();
 

@@ -16,12 +16,12 @@ namespace Content.Client.AirlockPainter.UI
             SpriteList.OnItemSelected += e => OnSpritePicked?.Invoke(e.ItemIndex);
         }
 
-        public void Populate(List<string> styles)
+        public void Populate(List<AirlockPainterEntry> entries)
         {
             SpriteList.Clear();
-            foreach (string style in styles)
+            foreach (var entry in entries)
             {
-                SpriteList.AddItem(style);
+                SpriteList.AddItem(entry.Name, entry.Icon);
             }
         }
     }

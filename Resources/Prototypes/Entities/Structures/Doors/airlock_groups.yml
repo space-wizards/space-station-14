@@ -1,5 +1,6 @@
 - type: AirlockGroup
   id: Standard
+  iconPriority: 100
   stylePaths:
     basic:       Structures/Doors/Airlocks/Standard/basic.rsi
     cargo:       Structures/Doors/Airlocks/Standard/cargo.rsi
@@ -13,6 +14,7 @@
 
 - type: AirlockGroup
   id: Glass
+  iconPriority: 90
   stylePaths:
     basic:       Structures/Doors/Airlocks/Glass/basic.rsi
     command:     Structures/Doors/Airlocks/Glass/command.rsi
@@ -24,25 +26,30 @@
 
 - type: AirlockGroup
   id: Windoor
+  iconPriority: 80
   stylePaths:
     basic:       Structures/Doors/Airlocks/Glass/glass.rsi
 
 - type: AirlockGroup
   id: External
+  iconPriority: 70
   stylePaths:
     external:    Structures/Doors/Airlocks/Standard/external.rsi
 
 - type: AirlockGroup
   id: ExternalGlass
+  iconPriority: 60
   stylePaths:
     external:    Structures/Doors/Airlocks/Glass/external.rsi
 
 - type: AirlockGroup
   id: Shuttle
+  iconPriority: 50
   stylePaths:
     shuttle:     Structures/Doors/Airlocks/Standard/shuttle.rsi
 
 - type: AirlockGroup
   id: ShuttleGlass
+  iconPriority: 40
   stylePaths:
     shuttle:     Structures/Doors/Airlocks/Glass/shuttle.rsi
