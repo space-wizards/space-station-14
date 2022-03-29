@@ -1,7 +1,6 @@
 using Content.Shared.Buckle.Components;
+using Content.Shared.Vehicle.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Buckle
 {
@@ -31,6 +30,11 @@ namespace Content.Client.Buckle
             LastEntityBuckledTo = buckle.LastEntityBuckledTo;
             DontCollide = buckle.DontCollide;
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? ownerSprite))
+            {
+                return;
+            }
+
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out RiderComponent? rider))
             {
                 return;
             }

@@ -1,6 +1,6 @@
 - type: entity
   id: VehiclePussyWagon
-  name: Janicart
+  name: janicart
   description: The janitor's trusty steed.
   components:
   - type: Vehicle

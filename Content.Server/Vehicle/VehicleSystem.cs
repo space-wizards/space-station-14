@@ -6,7 +6,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Server.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Vehicle
 {
@@ -29,7 +28,7 @@ namespace Content.Server.Vehicle
 
             component.BaseBuckleOffset = strap.BuckleOffset;
             strap.BuckleOffsetUnclamped = Vector2.Zero; //You're going to align these facing east, so...
-            UpdateAppearance(uid, -10);
+            UpdateAppearance(uid, 2);
         }
         /// <summary>
         /// Give the user the rider component if they're buckling to the vehicle,
@@ -37,7 +36,6 @@ namespace Content.Server.Vehicle
         /// </summary>
         public void OnBuckleChange(EntityUid uid, VehicleComponent component, BuckleChangeEvent args)
         {
-            TryComp<EyeComponent>(args.BuckledEntity, out var eye);
             if (args.Buckling)
             {
                 var rider = EnsureComp<RiderComponent>(args.BuckledEntity);
@@ -45,14 +43,11 @@ namespace Content.Server.Vehicle
                 component.HasRider = true;
                 UpdateBuckleOffset(Transform(uid), component);
                 UpdateAppearance(uid, GetDrawDepth(Transform(uid)));
-                if (eye != null)
-                    eye.Offset = component.BaseBuckleOffset;
                 return;
             }
             RemComp<RiderComponent>(args.BuckledEntity);
             component.HasRider = false;
-            if (eye != null)
-                eye.Offset = Vector2.Zero;
+
         }
 
         /// <summary>
