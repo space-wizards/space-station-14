@@ -24,25 +24,6 @@
 
 - type: entity
   parent: OreBase
-  id: AdamantineOre
-  name: adamantine ore
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: AdamantineOre
-  - type: Sprite
-    state: adamantine
-
-- type: entity
-  parent: AdamantineOre
-  id: AdamantineOre1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
   id: GoldOre
   name: gold ore
   suffix: Full
@@ -51,6 +32,9 @@
     stackType: GoldOre
   - type: Sprite
     state: gold
+  - type: Material
+    materials:
+    - Gold
 
 - type: entity
   parent: GoldOre
@@ -88,10 +72,13 @@
   name: plasma ore
   suffix: Full
   components:
-    - type: Stack
-      stackType: PlasmaOre
-    - type: Sprite
-      state: plasma
+  - type: Stack
+    stackType: PlasmaOre
+  - type: Sprite
+    state: plasma
+  - type: Material
+    materials:
+    - Plasma
 
 - type: entity
   parent: PlasmaOre
@@ -103,56 +90,21 @@
 
 - type: entity
   parent: OreBase
-  id: Sand
-  name: sand
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: Sand
-  - type: Sprite
-    state: sand
-
-- type: entity
-  parent: Sand
-  id: Sand1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
-  id: SandBlack
-  name: black sand
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: BlackSand
-  - type: Sprite
-    state: sand_black
-
-- type: entity
-  parent: SandBlack
-  id: SandBlack1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
-  id: SiliconOre
-  name: silicon ore
+  id: SilverOre
+  name: silver ore
   suffix: Full
   components:
   - type: Stack
     stackType: SiliconOre
   - type: Sprite
     state: silicon
+  - type: Material
+    materials:
+    - Silver
 
 - type: entity
-  parent: SiliconOre
-  id: SiliconOre1
+  parent: SilverOre
+  id: SilverOre1
   suffix: Single
   components:
   - type: Stack
@@ -168,29 +120,13 @@
     stackType: SpaceCrystal
   - type: Sprite
     state: spacecrystal
+  - type: Material
+    materials:
+    - Glass
 
 - type: entity
   parent: SpaceCrystal
   id: SpaceCrystal1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
-  id: CopperOre
-  name: copper ore
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: CopperOre
-  - type: Sprite
-    state: copper
-
-- type: entity
-  parent: CopperOre
-  id: CopperOre1
   suffix: Single
   components:
   - type: Stack

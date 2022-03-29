@@ -12,6 +12,7 @@
   - type: ItemStatus
   - type: Tag
     tags:
+      - RawMaterial
       - DroneUsable
   - type: Destructible
     thresholds:

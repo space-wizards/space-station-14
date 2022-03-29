@@ -218,7 +218,7 @@
 
 - type: Tag
   id: Payload # for grenade/bomb crafting
-  
+
 - type: Tag
   id: PercussionInstrument
 
@@ -248,6 +248,9 @@
 
 - type: Tag
   id: Powerdrill
+
+- type: Tag
+  id: RawMaterial
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
