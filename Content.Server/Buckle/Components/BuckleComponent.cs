@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Vehicle.Components;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction;
@@ -286,6 +287,9 @@ namespace Content.Server.Buckle.Components
                 {
                     return false;
                 }
+
+                if (!_entMan.TryGetComponent<RiderComponent>(user, out var rider) || rider?.Vehicle?.Owner != oldBuckledTo.Owner)
+                    return false;
             }
 
             BuckledTo = null;
