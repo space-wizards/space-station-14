@@ -204,7 +204,7 @@
       - MobWalter
 
 - type: entity
-  name: Bear Spawner
+  name: Space Bear Spawner
   id: SpawnMobBear
   parent: MarkerBase
   components:
