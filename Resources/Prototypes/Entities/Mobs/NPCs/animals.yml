@@ -626,9 +626,9 @@
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: mouse
-    description: A mouse in maint.
+    description: A hungry and mischievous mouse.
   - type: Sprite
-    drawdepth: Mobs
+    drawdepth: FloorObjects
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-0
@@ -647,9 +647,8 @@
         radius: 0.2
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
       - SmallImpassable
+      - MobImpassable
       layer:
       - Opaque
   - type: MobState
@@ -667,6 +666,8 @@
       crit: dead-0
       dead: splat-0
   - type: Food
+  - type: Hunger
+    baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -687,7 +688,22 @@
     tags:
     - Trash
   - type: Recyclable
-  - type: Actions
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.25
+    damageRecovery:
+      types:
+        Asphyxiation: -0.25
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.1
+  - type: HumanoidAppearance # no this doesnt make sense but its needed for vocal
+  - type: Vocal
+    # mice are gender neutral who cares
+    maleScream: /Audio/Animals/mouse_squeak.ogg
+    femaleScream: /Audio/Animals/mouse_squeak.ogg
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
     combatToggleAction:

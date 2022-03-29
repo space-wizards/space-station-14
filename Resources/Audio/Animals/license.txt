@@ -11,3 +11,5 @@ duck_quack_happy.ogg: modified from "Duck Quack - Sound Effect (HD).mp3" by free
 chicken_cluck_happy.ogg: modified from "Chicken Single Alarm Call" by freesound user "Rudmer_Rotteveel" (https://freesound.org/people/Rudmer_Rotteveel/sounds/316920/) licensed under CC0 1.0 (public domain). The original audio was trimmed and converted from WAV to OGG format.
 
 ferret_happy.ogg: modified from "Ferret" by freesound user "J.Zazvurek" (https://freesound.org/people/J.Zazvurek/sounds/155115/) licensed under CC BY 3.0. The original audio was trimmed and converted from WAV to OGG format.
+
+mouse_squeak.ogg: modified from "Cartoon - Bat / Mouse Squeak" by freesound user "Breviceps" (https://freesound.org/people/Breviceps/sounds/445958/) licensed under CC0 1.0 (public domain). The original audio was converted from WAV to OGG format.

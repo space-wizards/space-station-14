@@ -1,48 +1,4 @@
 Entries:
-- author: Fishfish458
-  changes:
-  - {message: Hypospray to CMO lockers and also traitor goals., type: Add}
-  id: 761
-  time: '2021-12-23T08:51:49.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Wizards now have something to ponder., type: Add}
-  id: 762
-  time: '2021-12-23T10:33:55.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: The Salvage department now partially exists., type: Add}
-  id: 763
-  time: '2021-12-23T12:14:01.0000000+00:00'
-- author: moony and TimrodDX
-  changes:
-  - {message: Added a winter holiday version of Packed Station! It will enter the
-      rotation on christmas eve and exit the minute christmas ends., type: Add}
-  id: 764
-  time: '2021-12-24T00:30:30.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Accidentally broke christmas, type: Fix}
-  id: 765
-  time: '2021-12-24T06:06:05.0000000+00:00'
-- author: TemporalOroboros
-  changes:
-  - {message: 'Added temperature handling to solutions. Nothing actually uses it yet,
-      but it exists.', type: Add}
-  id: 766
-  time: '2021-12-24T09:22:34.0000000+00:00'
-- author: JustinTime
-  changes:
-  - {message: You can now light ciggies by interacting with hot things, type: Tweak}
-  - {message: Thrusters are now hot, type: Tweak}
-  id: 767
-  time: '2021-12-24T11:59:14.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: added a Backgammon board for those who know how to play, type: Add}
-  - {message: added a board game crate to cargo to play games on any station, type: Add}
-  id: 768
-  time: '2021-12-24T12:20:20.0000000+00:00'
 - author: TaralGit
   changes:
   - {message: Deleted the old laser gun., type: Remove}
@@ -3027,3 +2983,49 @@ Entries:
     type: Tweak}
   id: 1260
   time: '2022-03-28T08:33:07.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added a new Traitor objective: stealing corgi meat.', type: Add}
+  id: 1261
+  time: '2022-03-28T20:52:46.0000000+00:00'
+- author: Delete
+  changes:
+  - {message: Added trees and flora for mappers., type: Add}
+  id: 1262
+  time: '2022-03-28T20:53:13.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Eating can now be done by alt+clicking a food item., type: Tweak}
+  - {message: Mice can now squeak using an action., type: Tweak}
+  - {message: 'Mice can now go under doors, and they get hungry much faster. Use these
+      two pieces of information in tandem.', type: Tweak}
+  - {message: Mice are now rendered under tables and what not., type: Tweak}
+  id: 1263
+  time: '2022-03-28T20:53:21.0000000+00:00'
+- author: areit
+  changes:
+  - {message: Added a stun chemical that you can get from the uplink., type: Add}
+  id: 1264
+  time: '2022-03-28T20:53:27.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: NSS_Pillar Update 5.3 - Now with basic virology and a bunch of other
+      changes. See Github PR 7310 for details., type: Add}
+  id: 1265
+  time: '2022-03-28T23:11:33.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added new sounds related to diseases., type: Add}
+  id: 1266
+  time: '2022-03-28T23:11:45.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Nothing to see here, just moving televisions, some dressers, and a
+      fireplace to the storage room for later usage.', type: Add}
+  id: 1267
+  time: '2022-03-29T02:17:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix physics dying and rubberbanding the game., type: Fix}
+  id: 1268
+  time: '2022-03-29T08:02:18.0000000+00:00'
