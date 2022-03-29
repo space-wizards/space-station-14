@@ -1,10 +1,4 @@
 Entries:
-- author: Fishfish458
-  changes:
-  - {message: added a Backgammon board for those who know how to play, type: Add}
-  - {message: added a board game crate to cargo to play games on any station, type: Add}
-  id: 768
-  time: '2021-12-24T12:20:20.0000000+00:00'
 - author: TaralGit
   changes:
   - {message: Deleted the old laser gun., type: Remove}
@@ -3030,3 +3024,8 @@ Entries:
       fireplace to the storage room for later usage.', type: Add}
   id: 1267
   time: '2022-03-29T02:17:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix physics dying and rubberbanding the game., type: Fix}
+  id: 1268
+  time: '2022-03-29T08:02:18.0000000+00:00'
