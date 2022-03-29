@@ -14,6 +14,7 @@ using Content.Shared.Stunnable;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Hands;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -37,6 +38,7 @@ namespace Content.Server.Vehicle
             SubscribeLocalEvent<VehicleComponent, GetVerbsEvent<AlternativeVerb>>(AddKeysVerb);
             SubscribeLocalEvent<VehicleComponent, MoveEvent>(OnMove);
             SubscribeLocalEvent<VehicleComponent, StorageChangedEvent>(OnStorageChanged);
+            SubscribeLocalEvent<RiderComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
             SubscribeLocalEvent<RiderComponent, GotParalyzedEvent>(OnParalyzed);
             SubscribeLocalEvent<RiderComponent, MobStateChangedEvent>(OnMobStateChanged);
         }
@@ -147,7 +149,9 @@ namespace Content.Server.Vehicle
 
         private void OnMove(EntityUid uid, VehicleComponent component, ref MoveEvent args)
         {
-            if (!component.HasRider || !component.HasKey && _random.Prob(0.015f))
+            if (!HasComp<SharedPlayerInputMoverComponent>(uid))
+                return;
+            if ((!component.HasRider || !component.HasKey) && _random.Prob(0.015f))
             {
                 RemComp<SharedPlayerInputMoverComponent>(uid);
                 UpdateAutoAnimate(uid, false);
@@ -160,6 +164,17 @@ namespace Content.Server.Vehicle
         private void OnStorageChanged(EntityUid uid, VehicleComponent component, StorageChangedEvent args)
         {
             UpdateStorageUsed(uid, args.Added);
+        }
+
+        private void OnVirtualItemDeleted(EntityUid uid, RiderComponent component, VirtualItemDeletedEvent args)
+        {
+            if (args.BlockingEntity == component.Vehicle?.Owner)
+            {
+                if (!TryComp<BuckleComponent>(uid, out var buckle))
+                    return;
+
+                buckle.TryUnbuckle(uid, true);
+            }
         }
 
         private void OnParalyzed(EntityUid uid, RiderComponent rider, GotParalyzedEvent args)
