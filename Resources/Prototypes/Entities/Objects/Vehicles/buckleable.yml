@@ -28,16 +28,12 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.35
+        radius: 0.4
       mass: 180
       restitution: 0.0
       mask:
       - Impassable
-      - MobImpassable
       - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
   - type: Access
     tags:
     - Maintenance
