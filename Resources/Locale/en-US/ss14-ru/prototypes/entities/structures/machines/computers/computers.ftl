@@ -46,3 +46,6 @@ ent-ComputerSupplyOrdering = Cargo ordering computer
 ent-ComputerSupplyRequest = cargo request computer
     .desc = Used to request supplies from cargo.
     .suffix = { "" }
+ent-ComputerTelevision = wooden television
+    .desc = It is an old television displaying the station's cameras, if they worked.
+    .suffix = { "" }
