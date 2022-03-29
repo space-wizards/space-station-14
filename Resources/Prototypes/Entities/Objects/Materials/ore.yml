@@ -35,6 +35,7 @@
   - type: Material
     materials:
     - Gold
+    volume: 500
 
 - type: entity
   parent: GoldOre

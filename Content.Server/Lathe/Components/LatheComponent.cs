@@ -22,8 +22,6 @@ namespace Content.Server.Lathe.Components
 
         [DataField("whitelist")] private EntityWhitelist? _whitelist = null;
 
-        public const int VolumePerSheet = 100;
-
         [ViewVariables]
         public Queue<LatheRecipePrototype> Queue { get; } = new();
 
@@ -150,9 +148,8 @@ namespace Content.Server.Lathe.Components
             // Check if it can insert all materials.
             foreach (var mat in material.MaterialIds)
             {
-                // TODO: Change how MaterialComponent works so this is not hard-coded.
-                if (!storage.CanInsertMaterial(mat, VolumePerSheet * multiplier)) return false;
-                totalAmount += VolumePerSheet * multiplier;
+                if (!storage.CanInsertMaterial(mat, material.volume * multiplier)) return false;
+                totalAmount += material.volume * multiplier;
             }
 
             // Check if it can take ALL of the material's volume.
@@ -160,7 +157,7 @@ namespace Content.Server.Lathe.Components
 
             foreach (var mat in material.MaterialIds)
             {
-                storage.InsertMaterial(mat, VolumePerSheet * multiplier);
+                storage.InsertMaterial(mat, material.volume * multiplier);
             }
 
             State = LatheState.Inserting;

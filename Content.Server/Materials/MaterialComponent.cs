@@ -22,6 +22,9 @@ namespace Content.Server.Materials
         // ReSharper disable once CollectionNeverUpdated.Local
         private readonly List<string> _materials = new();
         public IEnumerable<string> MaterialIds => _materials;
+        
+        [DataField("volume")]
+        public int volume = 100;
 
         /// <summary>
         ///     Returns all materials which make up this entity.
