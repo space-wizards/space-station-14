@@ -12,6 +12,7 @@
     range: 10
     volume: -5
   - type: PlayerInputMover
+  - type: InteractionOutline
   - type: Vehicle
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
@@ -34,6 +35,24 @@
       - VaultImpassable
   - type: VehicleVisuals
   - type: Appearance
+  - type: Repairable
+    fuelcost: 20
+    doAfterDelay: 20
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ExplodeBehavior
 
 - type: entity
   id: VehiclePussyWagon
@@ -60,7 +79,7 @@
     - Janitor
   - type: Storage
     capacity: 126 ## See ServerStorageComponent.cs Line 152
-    quickInsert: true
+    suppressFailMsg: true
     whitelist:
       tags:
         - TrashBag
@@ -77,6 +96,34 @@
     softness: 2
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 250
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ExplodeBehavior
+      - !type:SpawnEntitiesBehavior # in future should also emit a cloud of hot gas
+        spawn:
+          VehiclePussyWagonDestroyed:
+            min: 1
+            max: 1
+
+- type: entity
+  id: VehiclePussyWagonDestroyed
+  parent: MachineFrameDestroyed
+  name: destroyed janicart
+  description: R.I.P. (Rest in Pussy)
+  components:
+  - type: Sprite
+    sprite: Objects/Vehicles/pussywagon.rsi
+    state: destroyed
+    netsync: false
 
 - type: entity
   id: VehicleSecway
@@ -108,3 +155,10 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 8
     baseSprintSpeed : 8
+  - type: Armor
+    modifiers:
+      coeffecients:
+        Blunt: 0.8
+        Slash: 0.6
+        Piercing: 0.85
+

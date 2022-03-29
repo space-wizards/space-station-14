@@ -62,6 +62,14 @@ namespace Content.Server.Storage.Components
         [DataField("areaInsertRadius")]
         private int _areaInsertRadius = 1;
 
+        /// <summary>
+        /// Whether to play the "You can't insert this!" message.
+        /// Useful for things using storage to hold one item that can't be
+        /// created/destroyed for whatever reason
+        /// </summary>
+        [DataField("suppressFailMsg")]
+        private bool _suppressFailMsg = false;
+
         [DataField("whitelist")]
         private EntityWhitelist? _whitelist = null;
 
@@ -252,14 +260,16 @@ namespace Content.Server.Storage.Components
 
             if (!handSys.TryDrop(player, toInsert.Value, handsComp: hands))
             {
-                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                if (!this._suppressFailMsg)
+                    Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
                 return false;
             }
 
             if (!Insert(toInsert.Value))
             {
                 handSys.PickupOrDrop(player, toInsert.Value, handsComp: hands);
-                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                if (!this._suppressFailMsg)
+                    Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
                 return false;
             }
 
@@ -278,7 +288,8 @@ namespace Content.Server.Storage.Components
 
             if (!Insert(toInsert))
             {
-                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                if (!this._suppressFailMsg)
+                    Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
                 return false;
             }
             return true;
