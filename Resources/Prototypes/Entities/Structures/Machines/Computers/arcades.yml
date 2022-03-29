@@ -15,7 +15,6 @@
     color: "#3db83b"
   - type: Sprite
     sprite: Structures/Machines/arcade.rsi
-    noRot: true
     layers:
     - state: arcade
       map: ["enum.ComputerVisualizer+Layers.Body"]

@@ -68,6 +68,8 @@
       - id: ClothingNeckCloakCapFormal
       - id: ClothingUniformJumpsuitCapFormal
       - id: ClothingUniformJumpskirtCapFormalDress
+      - id: ClothingNeckBronzeheart
+      - id: ClothingNeckGoldmedal
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -100,6 +102,7 @@
         prob: 0.10
         # Fuck the HoP they don't deserve fucking cigars.
       - id: DoorRemoteService
+      - id: ClothingNeckGoldmedal
 
 - type: entity
   id: LockerChiefEngineerFilled

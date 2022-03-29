@@ -188,6 +188,8 @@
       - KitchenKnife
       - ButchCleaver
       - FlashlightLantern
+      - TimerTrigger
+      - ChemicalPayload
   - type: ActivatableUI
     key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
   - type: ActivatableUIRequiresPower
@@ -297,6 +299,7 @@
       - CableStack
       - CableMVStack
       - CableHVStack
+      - TimerTrigger
 
 - type: entity
   parent: Autolathe
@@ -361,6 +364,14 @@
       - ClothingUniformJumpskirtSec
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
+      - ClothingOuterWinterCap 
+      - ClothingOuterWinterCE
+      - ClothingOuterWinterCMO
+      - ClothingOuterWinterHoP
+      - ClothingOuterWinterHoS
+      - ClothingOuterWinterQM
+      - ClothingOuterWinterRD
+      
   - type: Sprite
     sprite: Structures/Machines/uniform_printer.rsi
     netsync: false
