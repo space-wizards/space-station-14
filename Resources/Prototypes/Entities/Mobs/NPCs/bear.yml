@@ -48,6 +48,9 @@
       prob: 0.3
   - type: Bloodstream
     bloodMaxVolume: 500
+  - type: Temperature
+    heatDamageThreshold: 500
+    coldDamageThreshold: 0
   - type: UnarmedCombat
     range: 0.5
     arcwidth: 0
