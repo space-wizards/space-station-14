@@ -7,6 +7,7 @@ using Content.Shared.Audio;
 using Content.Server.Light.Components;
 using Content.Server.Buckle.Components;
 using Content.Server.Storage.EntitySystems;
+using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Shared.MobState;
@@ -28,6 +29,8 @@ namespace Content.Server.Vehicle
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -113,15 +116,25 @@ namespace Content.Server.Vehicle
             if (!TryComp<VehicleKeyComponent>(args.Used, out var key))
                 return;
 
+            if (component.HasKey)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("vehicle-has-key", ("vehicle", uid)), uid, Filter.Pvs(args.User));
+                return;
+            }
+
             var keyProto = MetaData(key.Owner);
 
             if (keyProto.EntityPrototype?.ID != component.Key)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("vehicle-wrong-key", ("vehicle", uid), ("keys", args.Used)), uid, Filter.Pvs(args.User));
                 return;
+            }
 
             component.HasKey = true;
             EnsureComp<SharedPlayerInputMoverComponent>(uid);
             SoundSystem.Play(Filter.Pvs(uid), component.StartupSound.GetSound(), uid, AudioParams.Default.WithVolume(1f));
             _ambientSound.SetAmbience(uid, true);
+            _popupSystem.PopupEntity(Loc.GetString("vehicle-use-key", ("vehicle", uid), ("keys", args.Used)), uid, Filter.Pvs(args.User));
             EntityManager.DeleteEntity(args.Used);
         }
         private void AddKeysVerb(EntityUid uid, VehicleComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -197,8 +210,14 @@ namespace Content.Server.Vehicle
 
         private void OnHonk(EntityUid uid, VehicleComponent vehicle, HonkActionEvent args)
         {
+            if (args.Handled)
+                return;
             if (vehicle.HornSound != null)
+            {
                 SoundSystem.Play(Filter.Pvs(uid), vehicle.HornSound.GetSound(), uid, AudioHelpers.WithVariation(0.1f).WithVolume(8f));
+                args.Handled = true;
+            }
+
         }
         private int GetDrawDepth(TransformComponent xform, bool northOnly)
         {

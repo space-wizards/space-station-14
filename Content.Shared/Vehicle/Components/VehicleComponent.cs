@@ -51,7 +51,7 @@ namespace Content.Shared.Vehicle.Components
         /// The sound that the horn makes
         /// </summary>
         [DataField("hornSound")]
-        public SoundSpecifier HornSound = new SoundPathSpecifier("/Audio/Effects/Vehicle/carhorn.ogg");
+        public SoundSpecifier? HornSound = new SoundPathSpecifier("/Audio/Effects/Vehicle/carhorn.ogg");
 
         /// <summary>
         /// The sound that the vehicle makes with a key inserted
@@ -67,7 +67,7 @@ namespace Content.Shared.Vehicle.Components
         [DataField("hornAction")]
         public InstantAction HornAction = new()
         {
-        UseDelay = TimeSpan.FromSeconds(10),
+        UseDelay = TimeSpan.FromSeconds(3),
         Icon = new SpriteSpecifier.Texture(new ResourcePath("Objects/Fun/bikehorn.rsi/icon.png")),
         Name = "action-name-honk",
         Description = "action-desc-honk",
