@@ -1,10 +1,4 @@
 Entries:
-- author: JustinTime
-  changes:
-  - {message: You can now light ciggies by interacting with hot things, type: Tweak}
-  - {message: Thrusters are now hot, type: Tweak}
-  id: 767
-  time: '2021-12-24T11:59:14.0000000+00:00'
 - author: Fishfish458
   changes:
   - {message: added a Backgammon board for those who know how to play, type: Add}
@@ -3030,3 +3024,9 @@ Entries:
   - {message: Added new sounds related to diseases., type: Add}
   id: 1266
   time: '2022-03-28T23:11:45.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Nothing to see here, just moving televisions, some dressers, and a
+      fireplace to the storage room for later usage.', type: Add}
+  id: 1267
+  time: '2022-03-29T02:17:34.0000000+00:00'
