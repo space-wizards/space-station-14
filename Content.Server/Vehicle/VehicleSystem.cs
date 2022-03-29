@@ -120,7 +120,7 @@ namespace Content.Server.Vehicle
 
             component.HasKey = true;
             EnsureComp<SharedPlayerInputMoverComponent>(uid);
-            SoundSystem.Play(Filter.Pvs(uid), component.StartupSound.GetSound(), uid, AudioParams.Default.WithVolume(6f));
+            SoundSystem.Play(Filter.Pvs(uid), component.StartupSound.GetSound(), uid, AudioParams.Default.WithVolume(1f));
             _ambientSound.SetAmbience(uid, true);
             EntityManager.DeleteEntity(args.Used);
         }
