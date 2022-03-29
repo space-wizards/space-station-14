@@ -152,7 +152,15 @@ namespace Content.Shared.Stunnable
             if (!Resolve(uid, ref status, false))
                 return false;
 
-            return TryKnockdown(uid, time, refresh, status) && TryStun(uid, time, refresh, status);
+            bool paralyzed = (TryKnockdown(uid, time, refresh, status) && TryStun(uid, time, refresh, status));
+
+            if (paralyzed)
+            {
+                var ev = new GotParalyzedEvent(uid);
+                RaiseLocalEvent(uid, ev, false);
+            }
+
+            return paralyzed;
         }
 
         /// <summary>
@@ -251,5 +259,17 @@ namespace Content.Shared.Stunnable
 
         #endregion
 
+    }
+
+    /// <summary>
+    /// Raised after an entity gets paralyzed.
+    /// <summary>
+    public sealed class GotParalyzedEvent : EntityEventArgs
+    {
+        public EntityUid Uid { get; }
+        public GotParalyzedEvent(EntityUid uid)
+        {
+            Uid = uid;
+        }
     }
 }

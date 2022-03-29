@@ -6,11 +6,11 @@ using Content.Server.Storage.EntitySystems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
+using Content.Shared.MobState;
+using Content.Shared.Stunnable;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
-using Content.Server.Storage.Components;
 using Content.Shared.Hands.EntitySystems;
-using Robust.Shared.Containers;
 
 namespace Content.Server.Vehicle
 {
@@ -27,6 +27,8 @@ namespace Content.Server.Vehicle
             SubscribeLocalEvent<VehicleComponent, GetVerbsEvent<AlternativeVerb>>(AddKeysVerb);
             SubscribeLocalEvent<VehicleComponent, MoveEvent>(OnMove);
             SubscribeLocalEvent<VehicleComponent, StorageChangedEvent>(OnStorageChanged);
+            SubscribeLocalEvent<RiderComponent, GotParalyzedEvent>(OnParalyzed);
+            SubscribeLocalEvent<RiderComponent, MobStateChangedEvent>(OnMobStateChanged);
         }
         /// <summary>
         /// This just controls whether the wheels are turning.
@@ -130,6 +132,25 @@ namespace Content.Server.Vehicle
         private void OnStorageChanged(EntityUid uid, VehicleComponent component, StorageChangedEvent args)
         {
             UpdateStorageUsed(uid, args.Added);
+        }
+
+        private void OnParalyzed(EntityUid uid, RiderComponent rider, GotParalyzedEvent args)
+        {
+            if (!TryComp<BuckleComponent>(uid, out var buckle))
+                return;
+
+            buckle.TryUnbuckle(uid, true);
+        }
+
+        private void OnMobStateChanged(EntityUid uid, RiderComponent rider, MobStateChangedEvent args)
+        {
+            if (!TryComp<BuckleComponent>(uid, out var buckle))
+                return;
+
+            if (args.Component.IsCritical() || args.Component.IsDead())
+            {
+                buckle.TryUnbuckle(uid, true);
+            }
         }
         private int GetDrawDepth(TransformComponent xform)
         {
