@@ -8,6 +8,7 @@ namespace Content.Shared.Vehicle
     /// </summary>
     public enum VehicleVisuals : byte
     {
-        DrawDepth
+        DrawDepth,
+        AutoAnimate
     }
 }

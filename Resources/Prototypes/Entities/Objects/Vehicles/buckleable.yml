@@ -11,7 +11,9 @@
   - type: PlayerInputMover
   - type: Sprite
     sprite: Objects/Vehicles/pussywagon.rsi
-    state: vehicle
+    layers:
+    - state: vehicle
+      map: ["enum.VehicleVisualLayers.AutoAnimate"]
     netsync: false
     noRot: true
     drawdepth: Walls

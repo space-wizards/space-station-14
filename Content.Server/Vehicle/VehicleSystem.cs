@@ -2,6 +2,7 @@ using Content.Shared.Vehicle.Components;
 using Content.Shared.Vehicle;
 using Content.Shared.Buckle.Components;
 using Content.Server.Buckle.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Server.Hands.Components;
@@ -20,6 +21,21 @@ namespace Content.Server.Vehicle
             SubscribeLocalEvent<VehicleComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
             SubscribeLocalEvent<VehicleComponent, GetVerbsEvent<AlternativeVerb>>(AddKeysVerb);
             SubscribeLocalEvent<VehicleComponent, MoveEvent>(OnMove);
+        }
+        /// <summary>
+        /// This just controls whether the wheels are turning.
+        /// </summary>
+        public override void Update(float frameTime)
+        {
+            foreach (var (vehicle, mover) in EntityQuery<VehicleComponent, SharedPlayerInputMoverComponent>())
+            {
+                if (mover.VelocityDir.sprinting == Vector2.Zero)
+                {
+                    UpdateAutoAnimate(vehicle.Owner, false);
+                    continue;
+                }
+                UpdateAutoAnimate(vehicle.Owner, true);
+            }
         }
 
         public void OnComponentInit(EntityUid uid, VehicleComponent component, ComponentInit args)
@@ -47,7 +63,6 @@ namespace Content.Server.Vehicle
             }
             RemComp<RiderComponent>(args.BuckledEntity);
             component.HasRider = false;
-
         }
 
         /// <summary>
@@ -142,5 +157,12 @@ namespace Content.Server.Vehicle
 
             appearance.SetData(VehicleVisuals.DrawDepth, drawDepth);
         }
+        private void UpdateAutoAnimate(EntityUid uid, bool autoAnimate)
+        {
+            if (!TryComp<AppearanceComponent>(uid, out var appearance))
+                return;
+            appearance.SetData(VehicleVisuals.AutoAnimate, autoAnimate);
+        }
+
     }
 }

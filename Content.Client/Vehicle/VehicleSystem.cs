@@ -14,12 +14,17 @@ namespace Content.Client.Vehicle
             if (TryComp(uid, out SpriteComponent? sprite)
                 && args.Component.TryGetData(VehicleVisuals.DrawDepth, out int drawDepth) && sprite != null)
             {
-               sprite.DrawDepth = drawDepth;
+                sprite.DrawDepth = drawDepth;
+            }
+            if (args.Component.TryGetData(VehicleVisuals.AutoAnimate, out bool autoAnimate))
+            {
+                sprite?.LayerSetAutoAnimated(VehicleVisualLayers.AutoAnimate, autoAnimate);
             }
         }
     }
 }
 public enum VehicleVisualLayers : byte
 {
-    DrawDepth
+    DrawDepth,
+    AutoAnimate
 }
