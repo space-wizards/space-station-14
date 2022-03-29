@@ -18,6 +18,7 @@ namespace Content.Client.UserInterface.Controls
             ButtonTexturePath = slotData.TextureName;
             Blocked = slotData.Blocked;
             Highlight = slotData.Highlighted;
+            StorageTexturePath = "slots/back";
         }
     }
 }

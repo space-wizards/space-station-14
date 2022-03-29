@@ -77,11 +77,17 @@ public sealed partial class InventoryUIController : UIController
         }
     }
 
+    private void OnStoragePressed(GUIBoundKeyEventArgs args, ItemSlotControl control)
+    {
+        _onInventoryStorageActivate?.Invoke(control.SlotName);
+    }
+
     private void AddSlot(ClientInventorySystem.SlotData data)
     {
         if(!_slotGroups.TryGetValue(data.SlotGroup, out var slotGroup)) return;
         var button = new ItemSlotButton(data);
         button.OnPressed += OnItemPressed;
+        button.OnStoragePressed += OnStoragePressed;
         slotGroup.AddChild(button);
         button.SlotName = data.SlotName;
     }
@@ -109,7 +115,7 @@ public sealed partial class InventoryUIController : UIController
         }
     }
 
-    private void SpriteUpdated(string slotGroup, string slotName, ISpriteComponent? sprite)
+    private void SpriteUpdated(string slotGroup, string slotName, ISpriteComponent? sprite, bool showStorageButton)
     {
         if (!_slotGroups.TryGetValue(slotGroup, out var group) ||
             !group.TryGetButton(slotName, out var button))
@@ -118,6 +124,7 @@ public sealed partial class InventoryUIController : UIController
         }
 
         button.SpriteView.Sprite = sprite;
+        button.StorageButton.Visible = showStorageButton;
     }
 
     public void BlockSlot(string slotName, bool blocked)

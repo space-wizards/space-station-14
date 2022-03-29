@@ -1,4 +1,5 @@
 using Content.Client.Clothing;
+using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
@@ -32,7 +33,7 @@ namespace Content.Client.Inventory
         public Action? OnOpenInventory = null;
         public Action<ClientInventoryComponent?>? OnLinkInventory = null;
         public Action<ClientInventoryComponent?>? OnUnlinkInventory = null;
-        public Action<string, string, ISpriteComponent?>? OnSpriteUpdate = null;
+        public Action<string, string, ISpriteComponent?, bool>? OnSpriteUpdate = null;
 
         private readonly Queue<(ClientInventoryComponent comp, EntityEventArgs args)> _equipEventsQueue = new();
 
@@ -91,7 +92,7 @@ namespace Content.Client.Inventory
         {
             UpdateSlot(args.Equipee, component, args.Slot);
             if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity) return;
-            OnSpriteUpdate?.Invoke(args.SlotGroup, args.Slot, null);
+            OnSpriteUpdate?.Invoke(args.SlotGroup, args.Slot, null, false);
         }
 
         private void OnDidEquip(ClientInventoryComponent component, DidEquipEvent args)
@@ -99,7 +100,7 @@ namespace Content.Client.Inventory
             UpdateSlot(args.Equipee, component, args.Slot);
             if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity) return;
             var sprite = EntityManager.GetComponentOrNull<ISpriteComponent>(args.Equipment);
-            OnSpriteUpdate?.Invoke(args.SlotGroup, args.Slot, sprite);
+            OnSpriteUpdate?.Invoke(args.SlotGroup, args.Slot, sprite, HasComp<ClientStorageComponent>(args.Equipment));
         }
 
         private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent? args = null)
