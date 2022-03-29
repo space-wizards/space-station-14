@@ -1,3 +1,8 @@
+using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Sound;
+using Content.Shared.Vehicle;
+using Robust.Shared.Utility;
+
 namespace Content.Shared.Vehicle.Components
 {
     /// <summary>
@@ -23,6 +28,30 @@ namespace Content.Shared.Vehicle.Components
         /// The base offset for the vehicle (when facing east)
         /// </summary>
         public Vector2 BaseBuckleOffset = Vector2.Zero;
+
+        /// <summary>
+        /// The sound that the horn makes
+        /// </summary>
+        [DataField("hornSound")]
+        public SoundSpecifier? HornSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
+
+        /// <summary>
+        /// The action for the horn (if any)
+        /// </summary>
+        [DataField("hornAction")]
+        public InstantAction HornAction = new()
+        {
+        UseDelay = TimeSpan.FromSeconds(10),
+        Icon = new SpriteSpecifier.Texture(new ResourcePath("Objects/Fun/bikehorn.rsi/icon.png")),
+        Name = "action-name-honk",
+        Description = "action-desc-honk",
+        Event = new HonkActionEvent(),
+        };
+        /// <summary>
+        /// Whether the horn loops or not
+        /// </summary>
+        [DataField("hornLoop")]
+        public bool HornLoop = false;
 
         /// <summary>
         /// The prototype for the key

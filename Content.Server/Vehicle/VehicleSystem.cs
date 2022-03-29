@@ -2,6 +2,8 @@ using Content.Shared.Vehicle.Components;
 using Content.Shared.Vehicle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Components;
+using Content.Shared.Actions;
+using Content.Server.Light.Components;
 using Content.Server.Buckle.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Interaction;
@@ -12,6 +14,8 @@ using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Random;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.Vehicle
 {
@@ -20,9 +24,11 @@ namespace Content.Server.Vehicle
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<VehicleComponent, HonkActionEvent>(OnHonk);
             SubscribeLocalEvent<VehicleComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<VehicleComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<VehicleComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
@@ -48,7 +54,7 @@ namespace Content.Server.Vehicle
             }
         }
 
-        public void OnComponentInit(EntityUid uid, VehicleComponent component, ComponentInit args)
+        private void OnComponentInit(EntityUid uid, VehicleComponent component, ComponentInit args)
         {
             var strap = Comp<StrapComponent>(uid);
 
@@ -61,7 +67,7 @@ namespace Content.Server.Vehicle
         /// Give the user the rider component if they're buckling to the vehicle,
         /// otherwise remove it.
         /// </summary>
-        public void OnBuckleChange(EntityUid uid, VehicleComponent component, BuckleChangeEvent args)
+        private void OnBuckleChange(EntityUid uid, VehicleComponent component, BuckleChangeEvent args)
         {
             if (args.Buckling)
             {
@@ -72,8 +78,17 @@ namespace Content.Server.Vehicle
                 _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.BuckledEntity);
                 UpdateBuckleOffset(Transform(uid), component);
                 UpdateAppearance(uid, GetDrawDepth(Transform(uid)));
+                if (TryComp<ActionsComponent>(args.BuckledEntity, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
+                {
+                    _actionsSystem.AddAction(args.BuckledEntity, flashlight.ToggleAction, uid, actions);
+                }
+                if (component.HornSound != null)
+                {
+                    _actionsSystem.AddAction(args.BuckledEntity, component.HornAction, uid, actions);
+                }
                 return;
             }
+            _actionsSystem.RemoveProvidedActions(args.BuckledEntity, uid);
             _virtualItemSystem.DeleteInHandsMatching(args.BuckledEntity, uid);
             RemComp<RiderComponent>(args.BuckledEntity);
             component.HasRider = false;
@@ -82,7 +97,7 @@ namespace Content.Server.Vehicle
         /// <summary>
         /// Handle adding keys to the ignition
         /// </summary>
-        public void OnAfterInteractUsing(EntityUid uid, VehicleComponent component, AfterInteractUsingEvent args)
+        private void OnAfterInteractUsing(EntityUid uid, VehicleComponent component, AfterInteractUsingEvent args)
         {
             if (!args.CanReach)
                 return;
@@ -157,6 +172,12 @@ namespace Content.Server.Vehicle
             {
                 buckle.TryUnbuckle(uid, true);
             }
+        }
+
+        private void OnHonk(EntityUid uid, VehicleComponent vehicle, HonkActionEvent args)
+        {
+            if (vehicle.HornSound != null)
+                SoundSystem.Play(Filter.Pvs(uid), vehicle.HornSound.GetSound(), uid);
         }
         private int GetDrawDepth(TransformComponent xform)
         {

@@ -1,4 +1,5 @@
 using Robust.Shared.Serialization;
+using Content.Shared.Actions;
 
 namespace Content.Shared.Vehicle
 {
@@ -12,4 +13,6 @@ namespace Content.Shared.Vehicle
         AutoAnimate,
         StorageUsed
     }
+
+    public sealed class HonkActionEvent : PerformActionEvent { }
 }
