@@ -2,12 +2,14 @@ using Content.Shared.Vehicle.Components;
 using Content.Shared.Vehicle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Components;
+using Content.Shared.Toggleable;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.Pulling.Components;
 using Content.Server.Light.Components;
 using Content.Server.Buckle.Components;
 using Content.Server.Storage.EntitySystems;
+using Content.Server.Storage.Components;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
@@ -38,6 +40,7 @@ namespace Content.Server.Vehicle
         {
             base.Initialize();
             SubscribeLocalEvent<VehicleComponent, HonkActionEvent>(OnHonk);
+            SubscribeLocalEvent<VehicleComponent, ToggleActionEvent>(OnSirenToggle);
             SubscribeLocalEvent<VehicleComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<VehicleComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<VehicleComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
@@ -67,7 +70,8 @@ namespace Content.Server.Vehicle
         private void OnComponentInit(EntityUid uid, VehicleComponent component, ComponentInit args)
         {
             UpdateAppearance(uid, 2);
-            UpdateStorageUsed(uid, false);
+            if (HasComp<ServerStorageComponent>(uid))
+                UpdateStorageUsed(uid, false);
             _ambientSound.SetAmbience(uid, false);
             if (!TryComp<StrapComponent>(uid, out var strap))
                 return;
@@ -253,7 +257,23 @@ namespace Content.Server.Vehicle
                 SoundSystem.Play(Filter.Pvs(uid), vehicle.HornSound.GetSound(), uid, AudioHelpers.WithVariation(0.1f).WithVolume(8f));
                 args.Handled = true;
             }
+        }
 
+        private void OnSirenToggle(EntityUid uid, VehicleComponent vehicle, ToggleActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (!vehicle.SirenPlaying)
+            {
+                vehicle.SirenPlayingStream?.Stop();
+                vehicle.SirenPlaying = true;
+                if (vehicle.HornSound != null)
+                    vehicle.SirenPlayingStream = SoundSystem.Play(Filter.Pvs(uid), vehicle.HornSound.GetSound(), uid, AudioParams.Default.WithLoop(true).WithVolume(4f));
+                return;
+            }
+            vehicle.SirenPlayingStream?.Stop();
+            vehicle.SirenPlaying = false;
         }
         private int GetDrawDepth(TransformComponent xform, bool northOnly)
         {

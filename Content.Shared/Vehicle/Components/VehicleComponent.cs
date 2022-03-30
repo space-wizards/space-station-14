@@ -1,6 +1,6 @@
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Sound;
-using Content.Shared.Vehicle;
+using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Vehicle.Components
@@ -59,6 +59,12 @@ namespace Content.Shared.Vehicle.Components
         [DataField("hornSound")]
         public SoundSpecifier? HornSound = new SoundPathSpecifier("/Audio/Effects/Vehicle/carhorn.ogg");
 
+        /// <summary>
+        /// If this vehicle has a siren currently playing.
+        /// </summary>
+        public bool SirenPlaying = false;
+
+        public IPlayingAudioStream? SirenPlayingStream;
         /// <summary>
         /// The sound that the vehicle makes with a key inserted
         /// </summary>
