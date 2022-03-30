@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Research.Prototypes;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Lathe
 {
@@ -24,7 +19,7 @@ namespace Content.Shared.Lathe
 
             foreach (var (material, amount) in recipe.RequiredMaterials)
             {
-                if (storage[material] <= (amount * quantity)) return false;
+                if (storage[material] < (amount * quantity)) return false;
             }
 
             return true;
