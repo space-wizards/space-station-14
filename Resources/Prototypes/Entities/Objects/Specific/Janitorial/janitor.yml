@@ -74,3 +74,79 @@
     state: caution
   - type: Item
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
+  - type: Tag
+    tags:
+      - WetFloorSign
+
+- type: entity
+  name: janitorial cart
+  id: JanitorialCart
+  parent: BaseStructureDynamic
+  description: This is the alpha and omega of sanitation.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
+      layers:
+        - state: cart
+    - type: Storage
+      capacity: 60
+    - type: InteractionOutline
+    - type: SolutionContainerManager
+      solutions:
+        bucket:
+          maxVol: 500
+          reagents:
+            - ReagentId: Water
+              Quantity: 250 # half-full at roundstart to leave room for puddles
+    - type: DrainableSolution
+      solution: bucket
+    - type: RefillableSolution
+      solution: bucket
+    - type: Tag
+      tags:
+        - Wringer
+    - type: ItemMapper
+      mapLayers:
+        cart_mop:
+          whitelist:
+            tags:
+              - Mop
+        cart_garbage: # doesn't work
+          whitelist:
+            tags:
+              - TrashBag
+        cart_replacer:
+          whitelist:
+            components:
+              - LightReplacer
+        cart_spray:
+          whitelist:
+            tags:
+              - Spray
+        cart_sign1:
+          minCount: 1
+          maxCount: 1
+          whitelist:
+            tags:
+              - WetFloorSign
+        cart_sign2:
+          minCount: 2
+          maxCount: 2
+          whitelist:
+            tags:
+              - WetFloorSign
+        cart_sign3:
+          minCount: 3
+          maxCount: 3
+          whitelist:
+            tags:
+              - WetFloorSign
+        cart_sign4:
+          minCount: 4
+          whitelist:
+            tags:
+              - WetFloorSign
+    - type: Appearance
+      visuals:
+        - type: MappedItemVisualizer
+          sprite: Objects/Specific/Janitorial/janitorial_cart.rsi

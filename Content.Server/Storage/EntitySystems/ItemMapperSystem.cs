@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Storage.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
@@ -22,13 +23,10 @@ namespace Content.Server.Storage.EntitySystems
                 var list = new List<string>();
                 foreach (var mapLayerData in itemMapper.MapLayers.Values)
                 {
-                    foreach (var entity in containedLayers)
+                    var count = containedLayers.Count(uid => mapLayerData.Whitelist.IsValid(uid));
+                    if (count >= mapLayerData.MinCount && count <= mapLayerData.MaxCount)
                     {
-                        if (mapLayerData.Whitelist.IsValid(entity))
-                        {
-                            list.Add(mapLayerData.Layer);
-                            break;
-                        }
+                        list.Add(mapLayerData.Layer);
                     }
                 }
 
