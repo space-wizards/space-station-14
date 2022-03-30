@@ -60,6 +60,12 @@ namespace Content.Shared.Vehicle.Components
         public SoundSpecifier? HornSound = new SoundPathSpecifier("/Audio/Effects/Vehicle/carhorn.ogg");
 
         /// <summary>
+        /// Whether the horn is a siren or not.
+        /// </summary>
+        [DataField("hornIsSiren")]
+        public bool HornIsSiren = false;
+
+        /// <summary>
         /// If this vehicle has a siren currently playing.
         /// </summary>
         public bool SirenPlaying = false;
