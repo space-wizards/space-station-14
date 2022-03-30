@@ -99,7 +99,6 @@
     damage:
       types:
         Piercing: 15
-    arcCooldownTime: 2 
   - type: Tool
     qualities:
       - Screwing
