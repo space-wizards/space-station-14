@@ -7,6 +7,7 @@
     contents:
       - id: FlashlightSeclite
       - id: TaserGun
+        prob: 0.3
       - id: ClothingHeadHatWarden
       - id: ClothingHeadHatBeretWarden
       - id: ClothingBeltSecurityFilled
