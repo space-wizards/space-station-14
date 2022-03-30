@@ -1,9 +1,4 @@
 Entries:
-- author: Phantom-Lily
-  changes:
-  - {message: Added a new small drone wreck to salvage., type: Add}
-  id: 771
-  time: '2021-12-24T22:16:23.0000000+00:00'
 - author: moony
   changes:
   - {message: Added three salvage maps, type: Add}
@@ -3027,3 +3022,9 @@ Entries:
   - {message: Fix the PDA UI briefly showing the uplink button to non-traitors., type: Fix}
   id: 1270
   time: '2022-03-30T02:56:58.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Reptillian, or Lizard, is now enabled by default as a playable species.',
+    type: Add}
+  id: 1271
+  time: '2022-03-30T04:56:31.0000000+00:00'
