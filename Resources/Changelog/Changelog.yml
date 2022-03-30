@@ -1,11 +1,4 @@
 Entries:
-- author: TaralGit
-  changes:
-  - {message: Deleted the old laser gun., type: Remove}
-  - {message: Replaced laser guns on packedstation with COG laser carbines., type: Tweak}
-  - {message: Reduced ammo capacity for the Svalinn and the COG., type: Tweak}
-  id: 769
-  time: '2021-12-24T12:32:03.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Reduced flare flicker, type: Fix}
@@ -3029,3 +3022,8 @@ Entries:
   - {message: Fix physics dying and rubberbanding the game., type: Fix}
   id: 1268
   time: '2022-03-29T08:02:18.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to extract/juice fiber from some cloth stacks., type: Fix}
+  id: 1269
+  time: '2022-03-30T02:55:14.0000000+00:00'
