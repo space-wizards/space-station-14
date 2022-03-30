@@ -30,8 +30,7 @@ namespace Content.Server.Chat.Managers
 
         void DispatchServerMessage(IPlayerSession player, string message);
 
-        void SendOOC(IPlayerSession player, string message);
-        void SendAdminChat(IPlayerSession player, string message);
+        void TrySendOOCMessage(IPlayerSession player, string message, OOCChatType type);
 
         void SendHookOOC(string sender, string message);
         void SendAdminAnnouncement(string message);

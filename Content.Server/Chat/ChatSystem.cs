@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Text;
-using System.Xml;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
@@ -65,6 +64,7 @@ public sealed class ChatSystem : EntitySystem
             Loc.GetString(val ? "chat-manager-looc-chat-enabled-message" : "chat-manager-looc-chat-disabled-message"));
     }
 
+    // ReSharper disable once InconsistentNaming
     public void TrySendInGameICMessage(EntityUid source, string message, InGameICChatType desiredType, bool hideChat,
         IConsoleShell? shell = null, IPlayerSession? player = null)
     {
@@ -137,12 +137,14 @@ public sealed class ChatSystem : EntitySystem
     private void SendEntitySpeak(EntityUid source, string message, bool hideChat = false)
     {
         if (!_actionBlocker.CanSpeak(source)) return;
+        message = TransformSpeech(source, message);
 
         // TODO wtf make this an event.
         if (HasComp<DiseasedComponent>(source) &&
             TryComp<DiseaseCarrierComponent>(source, out var carrier))
             EntitySystem.Get<DiseaseSystem>().SneezeCough(source, _random.Pick(carrier.Diseases), string.Empty);
 
+        _listener.PingListeners(source, message);
         var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
             ("entityName", Name(source)));
 
@@ -155,6 +157,7 @@ public sealed class ChatSystem : EntitySystem
     {
         if (!_actionBlocker.CanSpeak(source)) return;
 
+        message = TransformSpeech(source, message);
         _listener.PingListeners(source, message);
         var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
 
@@ -203,6 +206,7 @@ public sealed class ChatSystem : EntitySystem
         _logs.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
     }
 
+    // ReSharper disable once InconsistentNaming
     private void SendLOOC(EntityUid source, IPlayerSession player, string message, bool hideChat)
     {
         if (_adminManager.IsAdmin(player))
@@ -259,7 +263,11 @@ public sealed class ChatSystem : EntitySystem
     /// </summary>
     private bool CanSendInGame(string message, IConsoleShell? shell = null, IPlayerSession? player = null)
     {
-        var mindComponent = player?.ContentData()?.Mind;
+        // Non-players don't have to worry about these restrictions.
+        if (player == null)
+            return true;
+
+        var mindComponent = player.ContentData()?.Mind;
 
         if (mindComponent == null)
         {
@@ -267,18 +275,16 @@ public sealed class ChatSystem : EntitySystem
             return false;
         }
 
-        if (player?.AttachedEntity is not { Valid: true } _)
+        if (player.AttachedEntity is not { Valid: true } _)
         {
             shell?.WriteError("You don't have an entity!");
             return false;
         }
 
-        if (_chatManager.MessageCharacterLimit(player, message))
-            return false;
-
-        return true;
+        return !_chatManager.MessageCharacterLimit(player, message);
     }
 
+    // ReSharper disable once InconsistentNaming
     private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr)
     {
         var newMessage = message.Trim();
@@ -296,6 +302,14 @@ public sealed class ChatSystem : EntitySystem
         newMessage = FormattedMessage.EscapeText(newMessage);
 
         return newMessage;
+    }
+
+    private string TransformSpeech(EntityUid sender, string message)
+    {
+        var ev = new TransformSpeechEvent(sender, message);
+        RaiseLocalEvent(ev);
+
+        return ev.Message;
     }
 
     private IEnumerable<INetChannel> GetDeadChatClients()
@@ -388,9 +402,22 @@ public sealed class ChatSystem : EntitySystem
     #endregion
 }
 
+public sealed class TransformSpeechEvent : EntityEventArgs
+{
+    public EntityUid Sender;
+    public string Message;
+
+    public TransformSpeechEvent(EntityUid sender, string message)
+    {
+        Sender = sender;
+        Message = message;
+    }
+}
+
 /// <summary>
 ///     InGame IC chat is for chat that is specifically ingame (not lobby) but is also in character, i.e. speaking.
 /// </summary>
+// ReSharper disable once InconsistentNaming
 public enum InGameICChatType
 {
     Speak,

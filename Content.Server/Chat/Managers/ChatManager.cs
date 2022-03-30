@@ -173,7 +173,7 @@ namespace Content.Server.Chat.Managers
 
         #region Private API
 
-        public void SendOOC(IPlayerSession player, string message)
+        private void SendOOC(IPlayerSession player, string message)
         {
             if (_adminManager.IsAdmin(player))
             {
@@ -206,7 +206,7 @@ namespace Content.Server.Chat.Managers
             _logs.Add(LogType.Chat, LogImpact.Low, $"OOC from {player:Player}: {message}");
         }
 
-        public void SendAdminChat(IPlayerSession player, string message)
+        private void SendAdminChat(IPlayerSession player, string message)
         {
             if (!_adminManager.IsAdmin(player))
             {
