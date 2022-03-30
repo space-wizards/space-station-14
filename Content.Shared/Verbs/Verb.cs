@@ -190,6 +190,17 @@ namespace Content.Shared.Verbs
                 return string.Compare(Text, otherVerb.Text, StringComparison.CurrentCulture);
             }
 
+            if (IconEntity != otherVerb.IconEntity)
+            {
+                if (IconEntity == null)
+                    return -1;
+
+                if (otherVerb.IconEntity == null)
+                    return 1;
+
+                return IconEntity.Value.CompareTo(otherVerb.IconEntity.Value);
+            }
+
             // Finally, compare icon texture paths. Note that this matters for verbs that don't have any text (e.g., the rotate-verbs)
             return string.Compare(IconTexture, otherVerb.IconTexture, StringComparison.CurrentCulture);
         }
