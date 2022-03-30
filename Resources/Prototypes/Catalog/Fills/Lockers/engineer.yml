@@ -81,6 +81,9 @@
       - id: ClothingOuterHardsuitAtmos
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
+      - id: ClothingOuterSuitAtmosFire
+      - id: ClothingHeadHelmetAtmosFire
+      - id: GasAnalyzer
 
 - type: entity
   id: LockerEngineerFilled

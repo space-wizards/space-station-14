@@ -58,7 +58,7 @@
     delay: 3.5
   - type: FlashOnTrigger
     range: 7
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
   - type: DeleteOnTrigger
@@ -148,3 +148,36 @@
     - type: TimerTriggerVisualizer
       countdown_sound:
         path: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: modular grenade
+  description: A grenade casing. Requires a trigger and a payload.
+  parent: BaseItem
+  id: ModularGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/modular.rsi
+    state: empty
+  - type: Item
+    size: 8
+  - type: PayloadCase
+  - type: Construction
+    graph: ModularGrenadeGraph
+    node: emptyCase
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Appearance
+    visuals:
+    - type: GenericEnumVisualizer
+      key: enum.Trigger.TriggerVisuals.VisualState
+      states:
+        enum.Trigger.TriggerVisualState.Primed: primed
+        enum.Trigger.TriggerVisualState.Unprimed: complete

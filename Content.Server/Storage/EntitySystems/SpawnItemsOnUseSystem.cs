@@ -1,6 +1,7 @@
 using Content.Server.Storage.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Storage;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -24,25 +25,13 @@ namespace Content.Server.Storage.EntitySystems
             if (args.Handled)
                 return;
 
-            var alreadySpawnedGroups = new List<string>();
+            var coords = Transform(args.User).Coordinates;
+            var spawnEntities = EntitySpawnCollection.GetSpawns(component.Items, _random);
             EntityUid? entityToPlaceInHands = null;
-            foreach (var storageItem in component.Items)
+
+            foreach (var proto in spawnEntities)
             {
-                if (!string.IsNullOrEmpty(storageItem.GroupId) &&
-                    alreadySpawnedGroups.Contains(storageItem.GroupId)) continue;
-
-                if (storageItem.SpawnProbability != 1f &&
-                    !_random.Prob(storageItem.SpawnProbability))
-                {
-                    continue;
-                }
-
-                for (var i = 0; i < storageItem.Amount; i++)
-                {
-                    entityToPlaceInHands = EntityManager.SpawnEntity(storageItem.PrototypeId, EntityManager.GetComponent<TransformComponent>(args.User).Coordinates);
-                }
-
-                if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
+                entityToPlaceInHands = Spawn(proto, coords);
             }
 
             if (component.Sound != null)

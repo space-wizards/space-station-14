@@ -6,10 +6,10 @@ diagnoser-disease-report-none-contents = [color=green]No diseases were found in 
 diagnoser-disease-report-name = Disease Name: {CAPITALIZE($disease)}
 diagnoser-disease-report-infectious = Infectious: [color=red]Yes[/color]
 diagnoser-disease-report-not-infectious = Infectious: [color=green]No[/color]
-diagnoser-disease-report-cureresist-none = Medication Resistance: [color=green]None[/color]
-diagnoser-disease-report-cureresist-low = Medication Resistance: [color=yellow]Low[/color]
-diagnoser-disease-report-cureresist-medium = Medication Resistance: [color=orange]Medium[/color]
-diagnoser-disease-report-cureresist-high = Medication Resistance: [color=red]High[/color]
+diagnoser-disease-report-cureresist-none = Spaceacillin Resistance: [color=green]None[/color]
+diagnoser-disease-report-cureresist-low = Spaceacillin Resistance: [color=yellow]Low[/color]
+diagnoser-disease-report-cureresist-medium = Spaceacillin Resistance: [color=orange]Medium[/color]
+diagnoser-disease-report-cureresist-high = Spaceacillin Resistance: [color=red]High[/color]
 diagnoser-cure-none = The disease has no specific cures.
 diagnoser-cure-has = The disease has the following cures:
 diagnoser-cure-bedrest = Rest in bed for {$time} seconds.
