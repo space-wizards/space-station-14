@@ -85,11 +85,15 @@
   description: This is the alpha and omega of sanitation.
   components:
     - type: Sprite
+      netSync: false
       sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
       layers:
         - state: cart
+        - state: cart_water_1
+          map: ["enum.SolutionContainerLayers.Fill"]
     - type: Storage
       capacity: 60
+    - type: Rotatable
     - type: InteractionOutline
     - type: SolutionContainerManager
       solutions:
@@ -150,3 +154,7 @@
       visuals:
         - type: MappedItemVisualizer
           sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
+        - type: SolutionContainerVisualizer
+          maxFillLevels: 3
+          fillBaseName: cart_water_
+          changeColor: false
