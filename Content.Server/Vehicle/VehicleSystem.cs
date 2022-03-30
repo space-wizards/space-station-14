@@ -17,6 +17,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Hands;
+using Content.Shared.Tag;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -31,6 +32,7 @@ namespace Content.Server.Vehicle
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         public override void Initialize()
         {
@@ -81,13 +83,24 @@ namespace Content.Server.Vehicle
         {
             if (args.Buckling)
             {
+                /// Set up the rider and vehicle with each other
                 EnsureComp<SharedPlayerInputMoverComponent>(uid);
                 var rider = EnsureComp<RiderComponent>(args.BuckledEntity);
                 component.Rider = args.BuckledEntity;
                 rider.Vehicle = component;
-                RemComp<SharedPullableComponent>(args.BuckledEntity);
                 component.HasRider = true;
+
+                /// Handle pulling
+                RemComp<SharedPullableComponent>(args.BuckledEntity);
+                RemComp<SharedPullableComponent>(uid);
+                /// Add a virtual item to rider's hand
                 _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.BuckledEntity);
+                /// Let this open doors if it has the key in it
+                if (component.HasKey)
+                {
+                    _tagSystem.AddTag(uid, "DoorBumpOpener");
+                }
+                /// Update appearance stuff, add actions
                 UpdateBuckleOffset(Transform(uid), component);
                 UpdateAppearance(uid, GetDrawDepth(Transform(uid), component.NorthOnly));
                 if (TryComp<ActionsComponent>(args.BuckledEntity, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
@@ -100,10 +113,16 @@ namespace Content.Server.Vehicle
                 }
                 return;
             }
+            // Clean up actions and virtual items
             _actionsSystem.RemoveProvidedActions(args.BuckledEntity, uid);
             _virtualItemSystem.DeleteInHandsMatching(args.BuckledEntity, uid);
+            // Go back to old pullable behavior
+            _tagSystem.RemoveTag(uid, "DoorBumpOpener");
             EnsureComp<SharedPullableComponent>(args.BuckledEntity);
+            EnsureComp<SharedPullableComponent>(uid);
+            /// Entity is no longer riding
             RemComp<RiderComponent>(args.BuckledEntity);
+            /// Reset component
             component.HasRider = false;
             component.Rider = null;
         }
@@ -138,9 +157,16 @@ namespace Content.Server.Vehicle
 
             component.HasKey = true;
             EnsureComp<SharedPlayerInputMoverComponent>(uid);
+
+            if (component.HasRider)
+                _tagSystem.AddTag(uid, "DoorBumpOpener");
+
+
+            // Audiovisual feedback
             SoundSystem.Play(Filter.Pvs(uid), component.StartupSound.GetSound(), uid, AudioParams.Default.WithVolume(1f));
             _ambientSound.SetAmbience(uid, true);
             _popupSystem.PopupEntity(Loc.GetString("vehicle-use-key", ("vehicle", uid), ("keys", args.Used)), uid, Filter.Pvs(args.User));
+
             EntityManager.DeleteEntity(args.Used);
         }
         private void AddKeysVerb(EntityUid uid, VehicleComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -158,6 +184,7 @@ namespace Content.Server.Vehicle
                     var key = EntityManager.SpawnEntity(component.Key, Transform(args.User).Coordinates);
                     _handsSystem.PickupOrDrop(args.User, key);
                     component.HasKey = false;
+                    /// Turn off ambience, remove door opener
                     _ambientSound.SetAmbience(uid, false);
                 },
                 Text = Loc.GetString("vehicle-remove-keys-verb"),
@@ -169,7 +196,10 @@ namespace Content.Server.Vehicle
         private void OnMove(EntityUid uid, VehicleComponent component, ref MoveEvent args)
         {
             if (!HasComp<SharedPlayerInputMoverComponent>(uid))
+            {
+                UpdateAutoAnimate(uid, false);
                 return;
+            }
             if ((!component.HasRider || !component.HasKey) && _random.Prob(0.015f))
             {
                 RemComp<SharedPlayerInputMoverComponent>(uid);

@@ -18,8 +18,7 @@
     baseWalkSpeed : 7
     baseSprintSpeed : 7
   - type: Tag
-    tags:
-    - DoorBumpOpener
+  - type: Pullable
   - type: Physics
     bodyType: KinematicController
   - type: Clickable
@@ -136,6 +135,8 @@
     northOnly: true
     northOverride: -0.1
     southOverride: 0.1
+    hornSound:
+      path: /Audio/Effects/Vehicle/policesiren.ogg
   - type: Sprite
     sprite: Objects/Vehicles/secway.rsi
     layers:

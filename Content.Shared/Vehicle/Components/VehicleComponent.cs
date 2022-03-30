@@ -73,7 +73,7 @@ namespace Content.Shared.Vehicle.Components
         [DataField("hornAction")]
         public InstantAction HornAction = new()
         {
-        UseDelay = TimeSpan.FromSeconds(3),
+        UseDelay = TimeSpan.FromSeconds(3.4),
         Icon = new SpriteSpecifier.Texture(new ResourcePath("Objects/Fun/bikehorn.rsi/icon.png")),
         Name = "action-name-honk",
         Description = "action-desc-honk",
