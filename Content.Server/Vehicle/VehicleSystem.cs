@@ -261,7 +261,7 @@ namespace Content.Server.Vehicle
 
         private void OnSirenToggle(EntityUid uid, VehicleComponent vehicle, ToggleActionEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !vehicle.HornIsSiren)
                 return;
 
             if (!vehicle.SirenPlaying)
