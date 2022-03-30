@@ -4,6 +4,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
+using Content.Shared.Pulling.Components;
 using Content.Server.Light.Components;
 using Content.Server.Buckle.Components;
 using Content.Server.Storage.EntitySystems;
@@ -84,6 +85,7 @@ namespace Content.Server.Vehicle
                 var rider = EnsureComp<RiderComponent>(args.BuckledEntity);
                 component.Rider = args.BuckledEntity;
                 rider.Vehicle = component;
+                RemComp<SharedPullableComponent>(args.BuckledEntity);
                 component.HasRider = true;
                 _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.BuckledEntity);
                 UpdateBuckleOffset(Transform(uid), component);
@@ -100,6 +102,7 @@ namespace Content.Server.Vehicle
             }
             _actionsSystem.RemoveProvidedActions(args.BuckledEntity, uid);
             _virtualItemSystem.DeleteInHandsMatching(args.BuckledEntity, uid);
+            EnsureComp<SharedPullableComponent>(args.BuckledEntity);
             RemComp<RiderComponent>(args.BuckledEntity);
             component.HasRider = false;
             component.Rider = null;
