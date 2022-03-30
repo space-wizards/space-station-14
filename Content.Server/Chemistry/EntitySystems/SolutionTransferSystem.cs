@@ -124,7 +124,7 @@ namespace Content.Server.Chemistry.EntitySystems
     /// <summary>
     /// Raised when attempting to transfer from one solution to another.
     /// </summary>
-    public sealed class SolutionTransferAttemptEvent : EntityEventArgs
+    public sealed class SolutionTransferAttemptEvent : CancellableEntityEventArgs
     {
         public SolutionTransferAttemptEvent(EntityUid from, EntityUid to)
         {
@@ -136,11 +136,6 @@ namespace Content.Server.Chemistry.EntitySystems
         public EntityUid To { get; }
 
         /// <summary>
-        /// Whether this transfer has been cancelled.
-        /// </summary>
-        public bool Cancelled { get; private set; }
-
-        /// <summary>
         /// Why the transfer has been cancelled.
         /// </summary>
         public string? CancelReason { get; private set; }
@@ -150,7 +145,7 @@ namespace Content.Server.Chemistry.EntitySystems
         /// </summary>
         public void Cancel(string reason)
         {
-            Cancelled = true;
+            base.Cancel();
             CancelReason = reason;
         }
     }
