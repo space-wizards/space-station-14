@@ -14,7 +14,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
-
 namespace Content.Server.Morgue.Components
 {
     [RegisterComponent]
