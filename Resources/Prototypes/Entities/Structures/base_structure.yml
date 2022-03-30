@@ -23,6 +23,7 @@
   - type: Tag
     tags:
       - Structure
+  - type: Forensics
 
 - type: entity
   # This means that it's not anchored on spawn.

@@ -1,0 +1,21 @@
+{
+   "copyright" : "Taken from https://github.com/tgstation/tgstation",
+   "license" : "CC-BY-SA-3.0",
+   "size" : {
+      "x" : 32,
+      "y" : 32
+   },
+   "states" : [
+      {
+         "delays" : [
+            [
+               0.8,
+               0.2
+            ]
+         ],
+         "directions" : 1,
+         "name" : "forensicnew"
+      }
+   ],
+   "version" : 1
+}
