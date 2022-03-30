@@ -75,7 +75,7 @@ public sealed class ChatSystem : EntitySystem
             return;
         }
 
-        if (!CanSessionInGameChat(shell, player))
+        if (!CanSendInGame(message, shell, player))
             return;
 
         message = SanitizeInGameICMessage(source, message, out var emoteStr);
@@ -111,7 +111,7 @@ public sealed class ChatSystem : EntitySystem
     public void TrySendInGameOOCMessage(EntityUid source, string message, InGameOOCChatType type, bool hideChat,
         IConsoleShell? shell = null, IPlayerSession? player = null)
     {
-        if (!CanSessionInGameChat(shell, player))
+        if (!CanSendInGame(message, shell, player))
             return;
 
         // It doesn't make any sense for a non-player to send in-game OOC messages, whereas non-players may be sending
@@ -244,18 +244,20 @@ public sealed class ChatSystem : EntitySystem
 
     #region Utility
 
+    /// <summary>
+    ///     Sends a chat message to the given players in range of the source entity.
+    /// </summary>
     private void SendInVoiceRange(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat)
     {
         var sessions = new List<ICommonSession>();
         ClientDistanceToList(source, VoiceRange, sessions);
-
-        foreach (var session in sessions)
-        {
-            _chatManager.ChatMessageToOne(channel, message, messageWrap, source, hideChat, session.ConnectedClient);
-        }
+        _chatManager.ChatMessageToMany(channel, message, messageWrap, source, hideChat, sessions.Select(s => s.ConnectedClient).ToList());
     }
 
-    private bool CanSessionInGameChat(IConsoleShell? shell = null, IPlayerSession? player = null)
+    /// <summary>
+    ///     Returns true if the given player is 'allowed' to send the given message, false otherwise.
+    /// </summary>
+    private bool CanSendInGame(string message, IConsoleShell? shell = null, IPlayerSession? player = null)
     {
         var mindComponent = player?.ContentData()?.Mind;
 
@@ -270,6 +272,9 @@ public sealed class ChatSystem : EntitySystem
             shell?.WriteError("You don't have an entity!");
             return false;
         }
+
+        if (_chatManager.MessageCharacterLimit(player, message))
+            return false;
 
         return true;
     }

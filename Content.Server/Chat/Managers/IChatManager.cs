@@ -42,6 +42,6 @@ namespace Content.Server.Chat.Managers
             List<INetChannel> clients);
         void ChatMessageToAll(ChatChannel channel, string message, string messageWrap, Color? colorOverride = null);
 
-        bool MessageCharacterLimit(EntityUid source, string message);
+        bool MessageCharacterLimit(IPlayerSession player, string message);
     }
 }
