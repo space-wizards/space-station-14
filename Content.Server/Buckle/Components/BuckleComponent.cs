@@ -288,7 +288,7 @@ namespace Content.Server.Buckle.Components
                     return false;
                 }
 
-                if (!_entMan.TryGetComponent<RiderComponent>(user, out var rider) || rider?.Vehicle?.Owner != oldBuckledTo.Owner)
+                if (_entMan.TryGetComponent<RiderComponent>(user, out var rider) && rider?.Vehicle?.Owner != oldBuckledTo.Owner)
                     return false;
             }
 
