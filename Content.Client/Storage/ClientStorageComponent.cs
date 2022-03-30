@@ -14,13 +14,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using Robust.Shared.Network;
-using Robust.Shared.Players;
 using static Robust.Client.UserInterface.Control;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
@@ -86,35 +80,11 @@ namespace Content.Client.Storage
             _storedEntities = state.StoredEntities.ToList();
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
-        {
-            base.HandleNetworkMessage(message, channel, session);
-
-            switch (message)
-            {
-                //Updates what we are storing for the UI
-                case StorageHeldItemsMessage msg:
-                    HandleStorageMessage(msg);
-                    break;
-                //Opens the UI
-                case OpenStorageUIMessage _:
-                    ToggleUI();
-                    break;
-                case CloseStorageUIMessage _:
-                    CloseUI();
-                    break;
-                case AnimateInsertingEntitiesMessage msg:
-                    HandleAnimatingInsertingEntities(msg);
-                    break;
-            }
-        }
-
         /// <summary>
         /// Copies received values from server about contents of storage container
         /// </summary>
         /// <param name="storageState"></param>
-        private void HandleStorageMessage(StorageHeldItemsMessage storageState)
+        public void HandleStorageMessage(StorageHeldItemsEvent storageState)
         {
             _storedEntities = storageState.StoredEntities.ToList();
             StorageSizeUsed = storageState.StorageSizeUsed;
@@ -126,7 +96,7 @@ namespace Content.Client.Storage
         /// Animate the newly stored entities in <paramref name="msg"/> flying towards this storage's position
         /// </summary>
         /// <param name="msg"></param>
-        private void HandleAnimatingInsertingEntities(AnimateInsertingEntitiesMessage msg)
+        public void HandleAnimatingInsertingEntities(AnimateInsertingEntitiesEvent msg)
         {
             for (var i = 0; msg.StoredEntities.Count > i; i++)
             {
@@ -143,7 +113,7 @@ namespace Content.Client.Storage
         /// <summary>
         /// Opens the storage UI if closed. Closes it if opened.
         /// </summary>
-        private void ToggleUI()
+        public void ToggleUI()
         {
             var window = GetOrCreateWindow();
 
@@ -153,7 +123,7 @@ namespace Content.Client.Storage
                 window.OpenCentered();
         }
 
-        private void CloseUI()
+        public void CloseUI()
         {
             _window?.Close();
         }
@@ -162,13 +132,11 @@ namespace Content.Client.Storage
         /// Function for clicking one of the stored entity buttons in the UI, tells server to remove that entity
         /// </summary>
         /// <param name="entity"></param>
-        private void Interact(ButtonEventArgs args, EntityUid entity)
+        public void Interact(ButtonEventArgs args, EntityUid entity)
         {
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
-#pragma warning disable 618
-                SendNetworkMessage(new RemoveEntityMessage(entity));
-#pragma warning restore 618
+                _entityManager.EntityNetManager?.SendSystemNetworkMessage(new RemoveEntityEvent(Owner, entity));
                 args.Event.Handle();
             }
             else if (_entityManager.EntityExists(entity))
@@ -191,7 +159,7 @@ namespace Content.Client.Storage
         /// <summary>
         /// Button created for each entity that represents that item in the storage UI, with a texture, and name and size label
         /// </summary>
-        private void GenerateButton(EntityUid entity, EntityContainerButton button)
+        public void GenerateButton(EntityUid entity, EntityContainerButton button)
         {
             if (!_entityManager.EntityExists(entity))
                 return;
@@ -269,9 +237,7 @@ namespace Content.Client.Storage
 
                     if (entities.HasComponent<HandsComponent>(controlledEntity))
                     {
-#pragma warning disable 618
-                        StorageEntity.SendNetworkMessage(new InsertEntityMessage());
-#pragma warning restore 618
+                        entities.EntityNetManager?.SendSystemNetworkMessage(new InsertEntityEvent(storageEntity.Owner));
                     }
                 };
 
@@ -306,9 +272,7 @@ namespace Content.Client.Storage
 
             public override void Close()
             {
-#pragma warning disable 618
-                StorageEntity.SendNetworkMessage(new CloseStorageUIMessage());
-#pragma warning restore 618
+                IoCManager.Resolve<IEntityManager>().EntityNetManager?.SendSystemNetworkMessage(new CloseStorageUIEvent(StorageEntity.Owner));
                 base.Close();
             }
 

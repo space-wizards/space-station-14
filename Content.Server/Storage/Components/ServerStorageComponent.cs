@@ -302,9 +302,7 @@ namespace Content.Server.Storage.Components
             Logger.DebugS(LoggerName, $"Storage (UID {Owner}) \"used\" by player session (UID {userSession.AttachedEntity}).");
 
             SubscribeSession(userSession);
-#pragma warning disable 618
-            SendNetworkMessage(new OpenStorageUIMessage(), userSession.ConnectedClient);
-#pragma warning restore 618
+            _entityManager.EntityNetManager?.SendSystemNetworkMessage(new OpenStorageUIEvent(Owner), userSession.ConnectedClient);
             UpdateClientInventory(userSession);
         }
 
@@ -349,9 +347,7 @@ namespace Content.Server.Storage.Components
 
             var stored = StoredEntities.Select(e => e).ToArray();
 
-#pragma warning disable 618
-            SendNetworkMessage(new StorageHeldItemsMessage(stored, StorageUsed, StorageCapacityMax), session.ConnectedClient);
-#pragma warning restore 618
+            _entityManager.EntityNetManager?.SendSystemNetworkMessage(new StorageHeldItemsEvent(Owner, StorageCapacityMax,StorageUsed, stored), session.ConnectedClient);
         }
 
         /// <summary>
@@ -385,9 +381,8 @@ namespace Content.Server.Storage.Components
                 Logger.DebugS(LoggerName, $"Storage (UID {Owner}) unsubscribed player session (UID {session.AttachedEntity}).");
 
                 SubscribedSessions.Remove(session);
-#pragma warning disable 618
-                SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
-#pragma warning restore 618
+                _entityManager.EntityNetManager?.SendSystemNetworkMessage(new CloseStorageUIEvent(Owner),
+                    session.ConnectedClient);
             }
 
             CloseNestedInterfaces(session);
@@ -444,73 +439,57 @@ namespace Content.Server.Storage.Components
             EnsureInitialCalculated();
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
+        public void HandleRemoveEntity(RemoveEntityEvent remove, ICommonSession session)
         {
-            base.HandleNetworkMessage(message, channel, session);
+            EnsureInitialCalculated();
 
-            if (session == null)
+            if (session.AttachedEntity is not {Valid: true} player)
             {
-                throw new ArgumentException(nameof(session));
+                return;
             }
 
-            switch (message)
+            var ownerTransform = _entityManager.GetComponent<TransformComponent>(Owner);
+            var playerTransform = _entityManager.GetComponent<TransformComponent>(player);
+
+            if (!playerTransform.Coordinates.InRange(_entityManager, ownerTransform.Coordinates, 2) ||
+                Owner.IsInContainer() && !playerTransform.ContainsEntity(ownerTransform))
             {
-                case RemoveEntityMessage remove:
-                {
-                    EnsureInitialCalculated();
-
-                    if (session.AttachedEntity is not {Valid: true} player)
-                    {
-                        break;
-                    }
-
-                    var ownerTransform = _entityManager.GetComponent<TransformComponent>(Owner);
-                    var playerTransform = _entityManager.GetComponent<TransformComponent>(player);
-
-                    if (!playerTransform.Coordinates.InRange(_entityManager, ownerTransform.Coordinates, 2) ||
-                        Owner.IsInContainer() && !playerTransform.ContainsEntity(ownerTransform))
-                    {
-                        break;
-                    }
-
-                    if (!remove.EntityUid.Valid || Storage?.Contains(remove.EntityUid) == false)
-                    {
-                        break;
-                    }
-
-                    _sysMan.GetEntitySystem<SharedHandsSystem>().TryPickupAnyHand(player, remove.EntityUid);
-                    break;
-                }
-                case InsertEntityMessage _:
-                {
-                    EnsureInitialCalculated();
-
-                    if (session.AttachedEntity is not {Valid: true} player)
-                    {
-                        break;
-                    }
-
-                    if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player, Owner, popup: true))
-                    {
-                        break;
-                    }
-
-                    PlayerInsertHeldEntity(player);
-
-                    break;
-                }
-                case CloseStorageUIMessage _:
-                {
-                    if (session is not IPlayerSession playerSession)
-                    {
-                        break;
-                    }
-
-                    UnsubscribeSession(playerSession);
-                    break;
-                }
+                return;
             }
+
+            if (!remove.EntityUid.Valid || Storage?.Contains(remove.EntityUid) == false)
+            {
+                return;
+            }
+
+            _sysMan.GetEntitySystem<SharedHandsSystem>().TryPickupAnyHand(player, remove.EntityUid);
+        }
+
+        public void HandleInsertEntity(ICommonSession session)
+        {
+            EnsureInitialCalculated();
+
+            if (session.AttachedEntity is not {Valid: true} player)
+            {
+                return;
+            }
+
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player, Owner, popup: true))
+            {
+                return;
+            }
+
+            PlayerInsertHeldEntity(player);
+        }
+
+        public void HandleCloseUI(ICommonSession session)
+        {
+            if (session is not IPlayerSession playerSession)
+            {
+                return;
+            }
+
+            UnsubscribeSession(playerSession);
         }
 
         /// <summary>
@@ -604,14 +583,8 @@ namespace Content.Server.Storage.Components
                 if (successfullyInserted.Count > 0)
                 {
                     PlaySoundCollection();
-#pragma warning disable 618
-                    SendNetworkMessage(
-#pragma warning restore 618
-                        new AnimateInsertingEntitiesMessage(
-                            successfullyInserted,
-                            successfullyInsertedPositions
-                        )
-                    );
+                    _entityManager.EntityNetManager?.SendSystemNetworkMessage(
+                        new AnimateInsertingEntitiesEvent(Owner, successfullyInserted, successfullyInsertedPositions));
                 }
                 return true;
             }
@@ -632,12 +605,9 @@ namespace Content.Server.Storage.Components
                     _entityManager.GetComponent<TransformComponent>(target).MapPosition);
                 if (PlayerInsertEntityInWorld(eventArgs.User, target))
                 {
-#pragma warning disable 618
-                    SendNetworkMessage(new AnimateInsertingEntitiesMessage(
-#pragma warning restore 618
-                        new List<EntityUid> {target},
-                        new List<EntityCoordinates> {position}
-                    ));
+                    _entityManager.EntityNetManager?.SendSystemNetworkMessage(new AnimateInsertingEntitiesEvent(Owner,
+                        new List<EntityUid> { target },
+                        new List<EntityCoordinates> { position }));
                     return true;
                 }
                 return true;
