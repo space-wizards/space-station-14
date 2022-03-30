@@ -406,3 +406,25 @@
     sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPaperSack
+  name: papersack hat
+  description: A paper sack with crude holes cut out for eyes. Useful for hiding one's identity or ugliness.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/papersack.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/papersack.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPaperSackSmile
+  name: smiling papersack hat
+  description: A paper sack with crude holes cut out for eyes and a sketchy smile drawn on the front. Not creepy at all.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/papersacksmile.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/papersacksmile.rsi

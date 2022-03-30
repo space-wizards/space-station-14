@@ -51,7 +51,11 @@ public sealed class CrayonSystem : EntitySystem
 
         if (component.Charges <= 0)
         {
-            _popup.PopupEntity(Loc.GetString("crayon-interact-not-enough-left-text"), uid, Filter.Entities(args.User));
+            if (component.DeleteEmpty)
+                UseUpCrayon(uid, args.User);
+            else
+                _popup.PopupEntity(Loc.GetString("crayon-interact-not-enough-left-text"), uid, Filter.Entities(args.User));
+
             args.Handled = true;
             return;
         }
@@ -74,6 +78,9 @@ public sealed class CrayonSystem : EntitySystem
         Dirty(component);
         _logs.Add(LogType.CrayonDraw, LogImpact.Low, $"{EntityManager.ToPrettyString(args.User):user} drew a {component._color:color} {component.SelectedState}");
         args.Handled = true;
+
+        if (component.DeleteEmpty && component.Charges <= 0)
+            UseUpCrayon(uid, args.User);
     }
 
     private void OnCrayonUse(EntityUid uid, CrayonComponent component, UseInHandEvent args)
@@ -118,5 +125,11 @@ public sealed class CrayonSystem : EntitySystem
     {
         if (TryComp<ActorComponent>(args.User, out var actor))
             component.UserInterface?.Close(actor.PlayerSession);
+    }
+
+    private void UseUpCrayon(EntityUid uid, EntityUid user)
+    {
+        _popup.PopupEntity(Loc.GetString("crayon-interact-used-up-text", ("owner", uid)), user, Filter.Entities(user));
+        EntityManager.QueueDeleteEntity(uid);
     }
 }

@@ -1,6 +1,8 @@
 using Content.Shared.Disease;
 using Content.Shared.FixedPoint;
+using Content.Shared.Chemistry.Reagent;
 using Content.Server.Body.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Disease.Cures
 {
@@ -30,9 +32,10 @@ namespace Content.Server.Disease.Cures
 
         public override string CureText()
         {
-            if (Reagent == null)
+            var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
+            if (Reagent == null || !prototypeMan.TryIndex<ReagentPrototype>(Reagent, out var reagentProt))
                 return string.Empty;
-            return (Loc.GetString("diagnoser-cure-reagent", ("units", Min), ("reagent", Reagent)));
+            return (Loc.GetString("diagnoser-cure-reagent", ("units", Min), ("reagent", reagentProt.Name)));
         }
     }
 }

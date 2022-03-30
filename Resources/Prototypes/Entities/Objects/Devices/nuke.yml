@@ -37,3 +37,33 @@
       interfaces:
         - key: enum.NukeUiKey.Key
           type: NukeBoundUserInterface
+
+- type: entity
+  parent: StorageTank
+  id: NuclearBombKeg
+  name: nuclear fission explosive
+  suffix: keg
+  description: You probably shouldn't stick around to see if this is armed. It has a tap on the side.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/nuke.rsi
+      netsync: false
+      state: nuclearbomb_base
+    - type: Physics
+      bodyType: Dynamic
+    - type: Fixtures
+      fixtures:
+      - shape:
+          !type:PhysShapeCircle
+            radius: 0.45
+        mass: 150
+        layer:
+        - SmallImpassable
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+          - ReagentId: NuclearCola
+            Quantity: 3000
+    - type: ReagentTank
+      transferAmount: 100

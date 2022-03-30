@@ -5,8 +5,11 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.Components
 {
+    
     public abstract class SharedReagentGrinderComponent : Component
     {
+        public static string BeakerSlotId = "ReagentGrinder-reagentContainerContainer";
+
         [Serializable, NetSerializable]
         public sealed class ReagentGrinderGrindStartMessage : BoundUserInterfaceMessage
         {
@@ -27,14 +30,6 @@ namespace Content.Shared.Kitchen.Components
         public sealed class ReagentGrinderEjectChamberAllMessage : BoundUserInterfaceMessage
         {
             public ReagentGrinderEjectChamberAllMessage()
-            {
-            }
-        }
-
-        [Serializable, NetSerializable]
-        public sealed class ReagentGrinderEjectBeakerMessage : BoundUserInterfaceMessage
-        {
-            public ReagentGrinderEjectBeakerMessage()
             {
             }
         }
