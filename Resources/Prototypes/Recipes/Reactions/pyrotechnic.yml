@@ -30,7 +30,7 @@
 
 - type: reaction
   id: ChlorineTrifluoride
-  priority: 2
+  priority: 20
   reactants:
     Chlorine:
       amount: 1
