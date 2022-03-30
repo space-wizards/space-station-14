@@ -17,6 +17,8 @@ namespace Content.Server.Construction
 
         private void OnMachineBoardExamined(EntityUid uid, MachineBoardComponent component, ExaminedEvent args)
         {
+            if (!args.IsInDetailsRange)
+                return;
             args.PushMarkup(Loc.GetString("machine-board-component-on-examine-label"));
             foreach (var (part, amount) in component.Requirements)
             {
@@ -49,6 +51,8 @@ namespace Content.Server.Construction
 
         private void OnMachinePartExamined(EntityUid uid, MachinePartComponent component, ExaminedEvent args)
         {
+            if (!args.IsInDetailsRange)
+                return;
             args.PushMarkup(Loc.GetString("machine-part-component-on-examine-rating-text", ("rating", component.Rating)));
             args.PushMarkup(Loc.GetString("machine-part-component-on-examine-type-text", ("type", component.PartType)));
         }
