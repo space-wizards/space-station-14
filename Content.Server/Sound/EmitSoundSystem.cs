@@ -41,10 +41,13 @@ namespace Content.Server.Sound
             TryEmitSound(component);
         }
 
-        private void HandleEmitSoundOnUseInHand(EntityUid eUI, BaseEmitSoundComponent component, UseInHandEvent arg)
+        private void HandleEmitSoundOnUseInHand(EntityUid eUI, EmitSoundOnUseComponent component, UseInHandEvent arg)
         {
-            // Intentionally not handling interaction. This component is an easy way to add sounds in addition to other behavior.
+            // Intentionally not checking whether the interaction has already been handled.
             TryEmitSound(component);
+
+            if (component.Handle)
+                arg.Handled = true;
         }
 
         private void HandleEmitSoundOnThrown(EntityUid eUI, BaseEmitSoundComponent component, ThrownEvent arg)
@@ -52,10 +55,13 @@ namespace Content.Server.Sound
             TryEmitSound(component);
         }
 
-        private void HandleEmitSoundOnActivateInWorld(EntityUid eUI, BaseEmitSoundComponent component, ActivateInWorldEvent arg)
+        private void HandleEmitSoundOnActivateInWorld(EntityUid eUI, EmitSoundOnActivateComponent component, ActivateInWorldEvent arg)
         {
-            // Intentionally not handling interaction. This component is an easy way to add sounds in addition to other behavior.
+            // Intentionally not checking whether the interaction has already been handled.
             TryEmitSound(component);
+
+            if (component.Handle)
+                arg.Handled = true;
         }
 
         private void TryEmitSound(BaseEmitSoundComponent component)
