@@ -8,6 +8,9 @@
     sprite: Clothing/Hands/Gloves/Color/purple.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/purple.rsi
+  - type: Fiber
+    fiberDescription: "purple synthetic fibers"
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -19,6 +22,9 @@
     sprite: Clothing/Hands/Gloves/Color/red.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/red.rsi
+  - type: Fiber
+    fiberDescription: "red synthetic fibers"
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -31,6 +37,9 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/black.rsi
     HeatResistance: 1400
+  - type: Fiber
+    fiberDescription: "black synthetic fibers"
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -42,6 +51,9 @@
     sprite: Clothing/Hands/Gloves/Color/blue.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/blue.rsi
+  - type: Fiber
+    fiberDescription: "blue synthetic fibers"
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -53,6 +65,9 @@
     sprite: Clothing/Hands/Gloves/Color/brown.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/brown.rsi
+  - type: Fiber
+    fiberDescription: "brown synthetic fibers"
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -64,6 +79,9 @@
     sprite: Clothing/Hands/Gloves/Color/gray.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/gray.rsi
+  - type: Fiber
+    fiberDescription: "grey synthetic fibers"
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -75,6 +93,9 @@
     sprite: Clothing/Hands/Gloves/Color/green.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/green.rsi
+  - type: Fiber
+    fiberDescription: "green synthetic fibers"
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -86,6 +107,9 @@
     sprite: Clothing/Hands/Gloves/Color/lightbrown.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/lightbrown.rsi
+  - type: Fiber
+    fiberDescription: "brown synthetic fibers"
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -97,6 +121,9 @@
     sprite: Clothing/Hands/Gloves/Color/orange.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/orange.rsi
+  - type: Fiber
+    fiberDescription: "orange synthetic fibers"
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -108,6 +135,9 @@
     sprite: Clothing/Hands/Gloves/Color/white.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/white.rsi
+  - type: Fiber
+    fiberDescription: "white synthetic fibers"
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -121,6 +151,9 @@
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
     HeatResistance: 1400
   - type: Insulated
+  - type: Fiber
+    fiberDescription: "yellow insulative fibers"
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsGlovesColorYellow
@@ -147,3 +180,6 @@
         - 1.5
         - 1.5
         - 1.5
+  - type: Fiber
+    fiberDescription: "yellow low-quality insulative fibers"
+  - type: FingerprintMask
