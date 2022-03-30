@@ -32,6 +32,8 @@
       mask:
       - Impassable
       - VaultImpassable
+      layer:
+      - VaultImpassable
   - type: VehicleVisuals
   - type: Appearance
   - type: Repairable
@@ -169,3 +171,30 @@
         Slash: 0.6
         Piercing: 0.85
 
+- type: entity
+  parent: VehicleBase
+  id: VehicleATV
+  name: ATV
+  description: All-Tile Vehicle.
+  components:
+  - type: Vehicle
+    key: VehicleKeyATV
+    northOverride: -0.1
+    southOverride: 0.1
+  - type: Sprite
+    sprite: Objects/Vehicles/atv.rsi
+    layers:
+    - state: vehicle
+      map: ["enum.VehicleVisualLayers.AutoAnimate"]
+    netsync: false
+    noRot: true
+  - type: Access
+    tags:
+    - Cargo
+    - Maintenance
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 8
+    baseSprintSpeed : 8
+  - type: Strap
+    buckleOffset: "0.1, -0.05"
+    maxBuckleDistance: 1
