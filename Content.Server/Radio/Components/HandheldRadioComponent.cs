@@ -1,16 +1,7 @@
-using System.Collections.Generic;
 using Content.Server.Chat.Managers;
 using Content.Server.Radio.EntitySystems;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Radio.Components
 {
@@ -20,7 +11,7 @@ namespace Content.Server.Radio.Components
     [ComponentReference(typeof(IListen))]
     [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public sealed class HandheldRadioComponent : Component, IListen, IRadio, IActivate, IExamine
+    public sealed class HandheldRadioComponent : Component, IListen, IRadio, IActivate
 #pragma warning restore 618
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
@@ -32,7 +23,7 @@ namespace Content.Server.Radio.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("broadcastChannel")]
-        private int BroadcastFrequency { get; set; } = 1459;
+        public int BroadcastFrequency { get; set; } = 1459;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("listenRange")] public int ListenRange { get; private set; } = 7;
 
@@ -101,11 +92,6 @@ namespace Content.Server.Radio.Components
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             Use(eventArgs.User);
-        }
-
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            message.AddText(Loc.GetString("handheld-radio-component-on-examine",("frequency", BroadcastFrequency)));
         }
     }
 }
