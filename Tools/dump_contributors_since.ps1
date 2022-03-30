@@ -11,7 +11,8 @@ param(
 $replacements = @{
     "moonheart08" = "moony",
     "Elijahrane" = "Rane",
-    "ZeroDayDaemon" = "Daemon"
+    "ZeroDayDaemon" = "Daemon",
+    "ElectroJr" = "ElectroSR"
 }
 
 $ignore = @{
