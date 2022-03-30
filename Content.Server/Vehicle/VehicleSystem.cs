@@ -82,6 +82,7 @@ namespace Content.Server.Vehicle
             {
                 EnsureComp<SharedPlayerInputMoverComponent>(uid);
                 var rider = EnsureComp<RiderComponent>(args.BuckledEntity);
+                component.Rider = args.BuckledEntity;
                 rider.Vehicle = component;
                 component.HasRider = true;
                 _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.BuckledEntity);
@@ -101,6 +102,7 @@ namespace Content.Server.Vehicle
             _virtualItemSystem.DeleteInHandsMatching(args.BuckledEntity, uid);
             RemComp<RiderComponent>(args.BuckledEntity);
             component.HasRider = false;
+            component.Rider = null;
         }
 
         /// <summary>

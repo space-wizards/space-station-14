@@ -25,6 +25,12 @@ namespace Content.Shared.Vehicle.Components
         public bool HasRider = false;
 
         /// <summary>
+        /// The entity currently riding the vehicle.
+        /// </summary>
+        [ViewVariables]
+        public EntityUid? Rider;
+
+        /// <summary>
         /// Whether the vehicle should treat north as it's unique direction in its visualizer
         /// </summary>
         [DataField("northOnly")]

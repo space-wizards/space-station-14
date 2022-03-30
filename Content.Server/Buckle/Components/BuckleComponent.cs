@@ -287,10 +287,9 @@ namespace Content.Server.Buckle.Components
                 {
                     return false;
                 }
-                /// If the user is not riding a vehicle, and the buckle is on a vehicle, return false.
-                /// Or, if the user is riding a vehicle, and the vehicle is not the same one they are trying to unbuckle from, return false.
-                if ((!_entMan.TryGetComponent<RiderComponent>(user, out var rider) && _entMan.HasComponent<VehicleComponent>(oldBuckledTo.Owner)) ||
-                        (rider != null && rider?.Vehicle?.Owner != oldBuckledTo.Owner))
+                // If the strap is a vehicle and the rider is not the person unbuckling, return.
+                if (_entMan.TryGetComponent<VehicleComponent>(oldBuckledTo.Owner, out var vehicle) &&
+                        vehicle.Rider != user)
                     return false;
             }
 
