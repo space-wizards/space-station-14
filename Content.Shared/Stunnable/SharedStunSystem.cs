@@ -145,6 +145,7 @@ namespace Content.Shared.Stunnable
 
         /// <summary>
         ///     Applies knockdown and stun to the entity temporarily.
+        ///     Raises GotParalyzedEvent if successful.
         /// </summary>
         public bool TryParalyze(EntityUid uid, TimeSpan time, bool refresh,
             StatusEffectsComponent? status = null)

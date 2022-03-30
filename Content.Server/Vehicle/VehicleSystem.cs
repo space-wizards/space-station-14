@@ -66,7 +66,9 @@ namespace Content.Server.Vehicle
                 UpdateAutoAnimate(vehicle.Owner, true);
             }
         }
-
+        /// <summary>
+        /// Sets the initial appearance / sound, then stores the initial buckle offset and resets it.
+        /// </summary>
         private void OnComponentInit(EntityUid uid, VehicleComponent component, ComponentInit args)
         {
             UpdateAppearance(uid, 2);
@@ -152,7 +154,7 @@ namespace Content.Server.Vehicle
             }
 
             var keyProto = MetaData(key.Owner);
-
+            /// Each vehicle takes one kind of key, so this will stop e.g. atv keys from unlocking a secway
             if (keyProto.EntityPrototype?.ID != component.Key)
             {
                 _popupSystem.PopupEntity(Loc.GetString("vehicle-wrong-key", ("vehicle", uid), ("keys", args.Used)), uid, Filter.Pvs(args.User));
@@ -160,19 +162,23 @@ namespace Content.Server.Vehicle
             }
 
             component.HasKey = true;
+            /// This lets the vehicle move
             EnsureComp<SharedPlayerInputMoverComponent>(uid);
-
+            /// This lets the vehicle open doors
             if (component.HasRider)
                 _tagSystem.AddTag(uid, "DoorBumpOpener");
-
 
             // Audiovisual feedback
             SoundSystem.Play(Filter.Pvs(uid), component.StartupSound.GetSound(), uid, AudioParams.Default.WithVolume(1f));
             _ambientSound.SetAmbience(uid, true);
             _popupSystem.PopupEntity(Loc.GetString("vehicle-use-key", ("vehicle", uid), ("keys", args.Used)), uid, Filter.Pvs(args.User));
-
+            // Instead of storing the key, we delete it and spawn the same prototype again when it's taken out
             EntityManager.DeleteEntity(args.Used);
         }
+
+        /// <summary>
+        /// This adds the verb for the keys to the right-click menu.
+        /// </summary>
         private void AddKeysVerb(EntityUid uid, VehicleComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanInteract || !args.CanAccess || !HasComp<HandsComponent>(args.User) || !component.HasKey || component.Key == string.Empty)
@@ -185,6 +191,7 @@ namespace Content.Server.Vehicle
             {
                 Act = () =>
                 {
+                    /// Take the key out and put it in the doer's hands
                     var key = EntityManager.SpawnEntity(component.Key, Transform(args.User).Coordinates);
                     _handsSystem.PickupOrDrop(args.User, key);
                     component.HasKey = false;
@@ -196,14 +203,19 @@ namespace Content.Server.Vehicle
             };
             args.Verbs.Add(verb);
         }
-
+        /// <summary>
+        /// Every time the vehicle moves we update its visual and buckle positions.
+        /// Not the most beautiful thing but it works.
+        /// </summary>
         private void OnMove(EntityUid uid, VehicleComponent component, ref MoveEvent args)
         {
+            /// This first check is just for safety
             if (!HasComp<SharedPlayerInputMoverComponent>(uid))
             {
                 UpdateAutoAnimate(uid, false);
                 return;
             }
+            /// The random check means the vehicle will stop after a few tiles without a key or without a rider
             if ((!component.HasRider || !component.HasKey) && _random.Prob(0.015f))
             {
                 RemComp<SharedPlayerInputMoverComponent>(uid);
@@ -213,11 +225,17 @@ namespace Content.Server.Vehicle
             UpdateAppearance(uid, GetDrawDepth(args.Component, component.NorthOnly));
         }
 
+        /// <summary>
+        /// This is used for the janicart having its bag inserted / removed
+        /// </summary>
         private void OnStorageChanged(EntityUid uid, VehicleComponent component, StorageChangedEvent args)
         {
             UpdateStorageUsed(uid, args.Added);
         }
 
+        /// <summary>
+        /// Kick the rider off the vehicle if they press q / drop the virtual item
+        /// </summary>
         private void OnVirtualItemDeleted(EntityUid uid, RiderComponent component, VirtualItemDeletedEvent args)
         {
             if (args.BlockingEntity == component.Vehicle?.Owner)
@@ -229,6 +247,9 @@ namespace Content.Server.Vehicle
             }
         }
 
+        /// <summary>
+        /// Kick the rider off the vehicle if they get stunned
+        /// </summary>
         private void OnParalyzed(EntityUid uid, RiderComponent rider, GotParalyzedEvent args)
         {
             if (!TryComp<BuckleComponent>(uid, out var buckle))
@@ -237,6 +258,9 @@ namespace Content.Server.Vehicle
             buckle.TryUnbuckle(uid, true);
         }
 
+        /// <summary>
+        /// Kick the rider off the vehicle if they go into crit or die.
+        /// </summary>
         private void OnMobStateChanged(EntityUid uid, RiderComponent rider, MobStateChangedEvent args)
         {
             if (!TryComp<BuckleComponent>(uid, out var buckle))
@@ -248,6 +272,9 @@ namespace Content.Server.Vehicle
             }
         }
 
+        /// <summary>
+        /// This fires when the rider presses the honk action
+        /// </summary>
         private void OnHonk(EntityUid uid, VehicleComponent vehicle, HonkActionEvent args)
         {
             if (args.Handled)
@@ -259,6 +286,10 @@ namespace Content.Server.Vehicle
             }
         }
 
+        /// <summary>
+        /// For vehicles with horn sirens (like the secway) this uses different logic that makes the siren
+        /// loop instead of using a normal honk.
+        /// </summary>
         private void OnSirenToggle(EntityUid uid, VehicleComponent vehicle, ToggleActionEvent args)
         {
             if (args.Handled || !vehicle.HornIsSiren)
@@ -275,6 +306,12 @@ namespace Content.Server.Vehicle
             vehicle.SirenPlayingStream?.Stop();
             vehicle.SirenPlaying = false;
         }
+
+        /// <summary>
+        /// Depending on which direction the vehicle is facing,
+        /// change its draw depth. Vehicles can choose between special drawdetph
+        /// when facing north or south. East and west are easy.
+        /// </summary>
         private int GetDrawDepth(TransformComponent xform, bool northOnly)
         {
             if (northOnly)
@@ -298,6 +335,11 @@ namespace Content.Server.Vehicle
             return drawDepth;
         }
 
+        /// <summary>
+        /// Change the buckle offset based on what direction the vehicle is facing and
+        /// teleport any buckled entities to it. This is the most crucial part of making
+        /// buckled vehicles work.
+        /// </summary>
         private void UpdateBuckleOffset(TransformComponent xform, VehicleComponent component)
         {
             if (!TryComp<StrapComponent>(component.Owner, out var strap))
@@ -318,7 +360,9 @@ namespace Content.Server.Vehicle
             }
 
         }
-
+        /// <summary>
+        /// Set the draw depth for the sprite.
+        /// </summary>
         private void UpdateAppearance(EntityUid uid, int drawDepth)
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
@@ -326,6 +370,10 @@ namespace Content.Server.Vehicle
 
             appearance.SetData(VehicleVisuals.DrawDepth, drawDepth);
         }
+
+        /// <summary>
+        /// Set whether the vehicle's base layer is animating or not.
+        /// </summmary>
         private void UpdateAutoAnimate(EntityUid uid, bool autoAnimate)
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
@@ -333,6 +381,9 @@ namespace Content.Server.Vehicle
             appearance.SetData(VehicleVisuals.AutoAnimate, autoAnimate);
         }
 
+        /// <summary>
+        /// Toggle visibility of e.g. the trash bag on the janicart
+        /// </summary>
         private void UpdateStorageUsed(EntityUid uid, bool storageUsed)
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))

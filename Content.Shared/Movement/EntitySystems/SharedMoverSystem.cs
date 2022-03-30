@@ -58,6 +58,7 @@ namespace Content.Shared.Movement.EntitySystems
                     var relayMoveEvent = new RelayMovementEntityEvent(owner.Value);
                     EntityManager.EventBus.RaiseLocalEvent(EntityManager.GetComponent<TransformComponent>(owner.Value).ParentUid, relayMoveEvent);
                 }
+                // Pass the rider's inputs to the vehicle (the rider itself is on the ignored list in C.S/MoverController.cs)
                 if (TryComp<RiderComponent>(owner.Value, out var rider) && rider.Vehicle != null && rider.Vehicle.HasKey)
                 {
                     if (TryComp<IMoverComponent>(rider.Vehicle.Owner, out var vehicleMover))

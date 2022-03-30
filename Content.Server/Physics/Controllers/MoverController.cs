@@ -259,10 +259,12 @@ namespace Content.Server.Physics.Controllers
                 }
             }
         }
-
+        /// <summary>
+        /// Add mobs riding vehicles to the list of mobs whose input
+        /// should be ignored.
+        /// </summary>
         private void HandleVehicleMovement(float frameTime)
         {
-            // We just mark off their movement and the shuttle itself does its own movement
             foreach (var (rider, mover, xform) in EntityManager.EntityQuery<RiderComponent, SharedPlayerInputMoverComponent, TransformComponent>())
             {
                 if (rider.Vehicle == null) continue;
