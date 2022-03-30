@@ -269,7 +269,7 @@ namespace Content.Server.Vehicle
                 vehicle.SirenPlayingStream?.Stop();
                 vehicle.SirenPlaying = true;
                 if (vehicle.HornSound != null)
-                    vehicle.SirenPlayingStream = SoundSystem.Play(Filter.Pvs(uid), vehicle.HornSound.GetSound(), uid, AudioParams.Default.WithLoop(true).WithVolume(4f));
+                    vehicle.SirenPlayingStream = SoundSystem.Play(Filter.Pvs(uid), vehicle.HornSound.GetSound(), uid, AudioParams.Default.WithLoop(true).WithVolume(1.8f));
                 return;
             }
             vehicle.SirenPlayingStream?.Stop();
