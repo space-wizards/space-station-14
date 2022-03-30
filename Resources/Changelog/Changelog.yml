@@ -1,27 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Accidentally broke christmas, type: Fix}
-  id: 765
-  time: '2021-12-24T06:06:05.0000000+00:00'
-- author: TemporalOroboros
-  changes:
-  - {message: 'Added temperature handling to solutions. Nothing actually uses it yet,
-      but it exists.', type: Add}
-  id: 766
-  time: '2021-12-24T09:22:34.0000000+00:00'
-- author: JustinTime
-  changes:
-  - {message: You can now light ciggies by interacting with hot things, type: Tweak}
-  - {message: Thrusters are now hot, type: Tweak}
-  id: 767
-  time: '2021-12-24T11:59:14.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: added a Backgammon board for those who know how to play, type: Add}
-  - {message: added a board game crate to cargo to play games on any station, type: Add}
-  id: 768
-  time: '2021-12-24T12:20:20.0000000+00:00'
 - author: TaralGit
   changes:
   - {message: Deleted the old laser gun., type: Remove}
@@ -3030,3 +3007,25 @@ Entries:
   - {message: Added a stun chemical that you can get from the uplink., type: Add}
   id: 1264
   time: '2022-03-28T20:53:27.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: NSS_Pillar Update 5.3 - Now with basic virology and a bunch of other
+      changes. See Github PR 7310 for details., type: Add}
+  id: 1265
+  time: '2022-03-28T23:11:33.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added new sounds related to diseases., type: Add}
+  id: 1266
+  time: '2022-03-28T23:11:45.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Nothing to see here, just moving televisions, some dressers, and a
+      fireplace to the storage room for later usage.', type: Add}
+  id: 1267
+  time: '2022-03-29T02:17:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix physics dying and rubberbanding the game., type: Fix}
+  id: 1268
+  time: '2022-03-29T08:02:18.0000000+00:00'
