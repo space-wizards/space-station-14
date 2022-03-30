@@ -63,13 +63,14 @@ namespace Content.Server.Vehicle
 
         private void OnComponentInit(EntityUid uid, VehicleComponent component, ComponentInit args)
         {
-            var strap = Comp<StrapComponent>(uid);
-
-            component.BaseBuckleOffset = strap.BuckleOffset;
-            strap.BuckleOffsetUnclamped = Vector2.Zero; //You're going to align these facing east, so...
             UpdateAppearance(uid, 2);
             UpdateStorageUsed(uid, false);
             _ambientSound.SetAmbience(uid, false);
+            if (!TryComp<StrapComponent>(uid, out var strap))
+                return;
+
+            component.BaseBuckleOffset = strap.BuckleOffset;
+            strap.BuckleOffsetUnclamped = Vector2.Zero; //You're going to align these facing east, so...
         }
         /// <summary>
         /// Give the user the rider component if they're buckling to the vehicle,
@@ -244,7 +245,8 @@ namespace Content.Server.Vehicle
 
         private void UpdateBuckleOffset(TransformComponent xform, VehicleComponent component)
         {
-            var strap = Comp<StrapComponent>(component.Owner);
+            if (!TryComp<StrapComponent>(component.Owner, out var strap))
+                return;
             strap.BuckleOffsetUnclamped = xform.LocalRotation.Degrees switch
             {
               < 45f => (0, component.SouthOverride),
