@@ -1,32 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.OpaqueId;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Reagent
 {
     [Prototype("reagent")]
     [DataDefinition]
-    public sealed class ReagentPrototype : IPrototype, IInheritingPrototype
+    public sealed class ReagentPrototype : IPrototype, IInheritingPrototype, IOpaquelyIded<ReagentId>
     {
         [ViewVariables]
         [DataField("id", required: true)]
         public string ID { get; } = default!;
+
+        [ViewVariables]
+        public ReagentId? OpaqueId { get; set; }
 
         [DataField("name", required: true)]
         public string Name { get; } = default!;
