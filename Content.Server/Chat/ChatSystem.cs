@@ -139,17 +139,14 @@ public sealed class ChatSystem : EntitySystem
         if (!_actionBlocker.CanSpeak(source)) return;
         message = TransformSpeech(source, message);
 
-        // TODO wtf make this an event.
-        if (HasComp<DiseasedComponent>(source) &&
-            TryComp<DiseaseCarrierComponent>(source, out var carrier))
-            EntitySystem.Get<DiseaseSystem>().SneezeCough(source, _random.Pick(carrier.Diseases), string.Empty);
-
         _listener.PingListeners(source, message);
         var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
             ("entityName", Name(source)));
 
         SendInVoiceRange(ChatChannel.Local, message, messageWrap, source, hideChat);
 
+        var ev = new EntitySpokeEvent(message);
+        RaiseLocalEvent(source, ev, false);
         _logs.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {message}");
     }
 
@@ -192,6 +189,8 @@ public sealed class ChatSystem : EntitySystem
             }
         }
 
+        var ev = new EntitySpokeEvent(message);
+        RaiseLocalEvent(source, ev, false);
         _logs.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}: {message}");
     }
 
@@ -402,6 +401,9 @@ public sealed class ChatSystem : EntitySystem
     #endregion
 }
 
+/// <summary>
+///     Raised broadcast in order to transform speech.
+/// </summary>
 public sealed class TransformSpeechEvent : EntityEventArgs
 {
     public EntityUid Sender;
@@ -410,6 +412,19 @@ public sealed class TransformSpeechEvent : EntityEventArgs
     public TransformSpeechEvent(EntityUid sender, string message)
     {
         Sender = sender;
+        Message = message;
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it speaks, either through 'say' or 'whisper'.
+/// </summary>
+public sealed class EntitySpokeEvent : EntityEventArgs
+{
+    public string Message;
+
+    public EntitySpokeEvent(string message)
+    {
         Message = message;
     }
 }
