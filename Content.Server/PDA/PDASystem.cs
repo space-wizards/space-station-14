@@ -7,7 +7,6 @@ using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.PDA.Ringer;
 using Content.Server.UserInterface;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -21,20 +20,26 @@ namespace Content.Server.PDA
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
         [Dependency] private readonly RingerSystem _ringerSystem = default!;
         [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
+            SubscribeLocalEvent<PDAComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
+            SubscribeLocalEvent<PDAComponent, UplinkInitEvent>(OnUplinkInit);
+            SubscribeLocalEvent<PDAComponent, UplinkRemovedEvent>(OnUplinkRemoved);
         }
 
         protected override void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
         {
             base.OnComponentInit(uid, pda, args);
 
-            var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
-            if (ui != null)
+            if (!TryComp(uid, out ServerUserInterfaceComponent? uiComponent))
+                return;
+
+            if (_uiSystem.TryGetUi(uid, PDAUiKey.Key, out var ui, uiComponent))
                 ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
         }
 
@@ -72,25 +77,7 @@ namespace Content.Server.PDA
             UpdatePDAUserInterface(pda);
         }
 
-        private bool OpenUI(PDAComponent pda, EntityUid user)
-        {
-            if (!EntityManager.TryGetComponent(user, out ActorComponent? actor))
-                return false;
-
-            UpdatePDAUserInterface(pda, user);
-            var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
-            ui?.Toggle(actor.PlayerSession);
-
-            return true;
-        }
-
-        private void UpdatePDAAppearance(PDAComponent pda)
-        {
-            if (EntityManager.TryGetComponent(pda.Owner, out AppearanceComponent? appearance))
-                appearance.SetData(PDAVisuals.IDCardInserted, pda.ContainedID != null);
-        }
-
-        private void UpdatePDAUserInterface(PDAComponent pda, EntityUid? user = null)
+        private void UpdatePDAUserInterface(PDAComponent pda)
         {
             var ownerInfo = new PDAIdInfoText
             {
@@ -99,54 +86,40 @@ namespace Content.Server.PDA
                 JobTitle = pda.ContainedID?.JobTitle
             };
 
-            var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
-            if (ui == null)
+            if (!_uiSystem.TryGetUi(pda.Owner, PDAUiKey.Key, out var ui))
                 return;
 
-            ui.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo,
-                ShouldShowUplink(pda.Owner, ui, user),
-                HasComp<InstrumentComponent>(pda.Owner)));
-        }
+            var hasInstrument = HasComp<InstrumentComponent>(pda.Owner);
+            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, false, hasInstrument);
 
-        /// <summary>
-        ///     Check whether the PDA has an uplink, and ensure that the only person that can see the PDA UI has an
-        ///     uplink account.
-        /// </summary>
-        public bool ShouldShowUplink(EntityUid uid, BoundUserInterface ui, EntityUid? user = null)
-        {
+            ui.SetState(state);
+
             // TODO UPLINK RINGTONES/SECRETS This is just a janky placeholder way of hiding uplinks from non syndicate
             // players. This should really use a sort of key-code entry system that selects an account which is not directly tied to
             // a player entity.
 
-            if (!HasComp<UplinkComponent>(uid))
-                return false;
+            if (!HasComp<UplinkComponent>(pda.Owner))
+                return;
 
-            // If a user is trying to open the UI, make sure that they have an uplink account before showing the UI.
-            if (user != null && !_uplinkAccounts.HasAccount(user.Value))
-                return false;
+            var uplinkState = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, true, hasInstrument);
 
-            // If other users currently have the UI open, check that they too should be allowed to see the button..
             foreach (var session in ui.SubscribedSessions)
             {
-                if (session.AttachedEntity != null && !_uplinkAccounts.HasAccount(session.AttachedEntity.Value))
-                    return false;
-            }
+                if (session.AttachedEntity is not EntityUid { Valid: true } user)
+                    continue;
 
-            // everyone has an uplink account, show the button.
-            return true;
+                if (_uplinkAccounts.HasAccount(user))
+                    ui.SetState(uplinkState, session);
+            }
         }
 
         private void OnUIMessage(PDAComponent pda, ServerBoundUserInterfaceMessage msg)
         {
-            // cast EntityUid? to EntityUid
-            if (msg.Session.AttachedEntity is not {Valid: true} playerUid)
-                return;
-
             // todo: move this to entity events
             switch (msg.Message)
             {
                 case PDARequestUpdateInterfaceMessage _:
-                    UpdatePDAUserInterface(pda, playerUid);
+                    UpdatePDAUserInterface(pda);
                     break;
                 case PDAToggleFlashlightMessage _:
                     {
@@ -174,6 +147,27 @@ namespace Content.Server.PDA
                     break;
                 }
             }
+        }
+
+        private void AfterUIOpen(EntityUid uid, PDAComponent pda, AfterActivatableUIOpenEvent args)
+        {
+            // A new user opened the UI --> Check if they are a traitor and should get a user specific UI state override.
+            if (!HasComp<UplinkComponent>(pda.Owner) || !_uplinkAccounts.HasAccount(args.User))
+                return;
+
+            if (!_uiSystem.TryGetUi(pda.Owner, PDAUiKey.Key, out var ui))
+                return;
+
+            var ownerInfo = new PDAIdInfoText
+            {
+                ActualOwnerName = pda.OwnerName,
+                IdOwner = pda.ContainedID?.FullName,
+                JobTitle = pda.ContainedID?.JobTitle
+            };
+
+            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, true, HasComp<InstrumentComponent>(pda.Owner));
+
+            ui.SetState(state, args.Session);
         }
     }
 }
