@@ -3,9 +3,8 @@ using Content.Server.UserInterface;
 using Content.Shared.Actions;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Toggleable;
-using Content.Shared.Verbs;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -22,6 +21,7 @@ namespace Content.Server.Atmos.EntitySystems
             base.Initialize();
             SubscribeLocalEvent<GasTankComponent, BeforeActivatableUIOpenEvent>(BeforeUiOpen);
             SubscribeLocalEvent<GasTankComponent, GetActionsEvent>(OnGetActions);
+            SubscribeLocalEvent<GasTankComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<GasTankComponent, ToggleActionEvent>(OnActionToggle);
             SubscribeLocalEvent<GasTankComponent, DroppedEvent>(OnDropped);
         }
@@ -40,6 +40,14 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnGetActions(EntityUid uid, GasTankComponent component, GetActionsEvent args)
         {
             args.Actions.Add(component.ToggleAction);
+        }
+
+        private void OnExamined(EntityUid uid, GasTankComponent component, ExaminedEvent args)
+        {
+            if (args.IsInDetailsRange)
+                args.PushMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(component.Air?.Pressure ?? 0))));
+            if (component.IsConnected)
+                args.PushMarkup(Loc.GetString("comp-gas-tank-connected"));
         }
 
         private void OnActionToggle(EntityUid uid, GasTankComponent component, ToggleActionEvent args)
