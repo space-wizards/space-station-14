@@ -22,9 +22,7 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
     [Virtual]
-#pragma warning disable 618
     public class MorgueEntityStorageComponent : EntityStorageComponent
-#pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

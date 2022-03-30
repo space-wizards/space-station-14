@@ -9,9 +9,7 @@ namespace Content.Server.Power.Components
     ///     so that it can receive power from a <see cref="IApcNet"/>.
     /// </summary>
     [RegisterComponent]
-#pragma warning disable 618
     public sealed class ApcPowerReceiverComponent : Component
-#pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

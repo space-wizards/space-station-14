@@ -7,9 +7,7 @@ namespace Content.Server.NodeContainer
     ///     Creates and maintains a set of <see cref="Node"/>s.
     /// </summary>
     [RegisterComponent]
-#pragma warning disable 618
     public sealed class NodeContainerComponent : Component
-#pragma warning restore 618
     {
         //HACK: THIS BEING readOnly IS A FILTHY HACK AND I HATE IT --moony
         [DataField("nodes", readOnly: true)] [ViewVariables] public Dictionary<string, Node> Nodes { get; } = new();

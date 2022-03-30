@@ -75,7 +75,6 @@ namespace Content.Server.Drone
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)
         {
-
             if (TryComp<MindComponent>(uid, out var mind) && mind.HasMind)
             {
                 args.PushMarkup(Loc.GetString("drone-active"));

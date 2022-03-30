@@ -9,9 +9,7 @@ using Content.Shared.Suspicion;
 namespace Content.Server.Suspicion
 {
     [RegisterComponent]
-#pragma warning disable 618
     public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent
-#pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

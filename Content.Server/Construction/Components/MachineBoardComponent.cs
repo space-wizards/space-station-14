@@ -4,9 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
-#pragma warning disable 618
     public sealed class MachineBoardComponent : Component
-#pragma warning restore 618
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
