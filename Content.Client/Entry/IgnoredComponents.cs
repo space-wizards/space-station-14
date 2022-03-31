@@ -268,7 +268,6 @@ namespace Content.Client.Entry
             "RandomSpawner",
             "SpawnAfterInteract",
             "DisassembleOnAltVerb",
-            "ExplosionLaunched",
             "BeingCloned",
             "Advertise",
             "Bible",
