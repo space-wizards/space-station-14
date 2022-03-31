@@ -7,6 +7,7 @@
     prefixCreator: '14'
   mapPath: /Maps/marathon.yml
   minPlayers: 35
+  maxPlayers: 60
   overflowJobs:
     - Assistant
   availableJobs:
