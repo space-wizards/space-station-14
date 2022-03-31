@@ -236,333 +236,21 @@ grids:
     tiles: MQAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAACQAAAA0AAAAJAAAACQAAAA0AAAAJAAAAMQAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAAAkAAAANAAAADQAAAA0AAAANAAAACQAAADEAAAAxAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAJAAAADQAAAAkAAAAJAAAADQAAAA0AAAANAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAACQAAAA0AAAAJAAAACQAAAA0AAAAJAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAAAkAAAANAAAACQAAAAkAAAANAAAACQAAADEAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAJAAAADQAAAAkAAAAJAAAADQAAAAkAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAACQAAAA0AAAANAAAADQAAAA0AAAAJAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADEAAAAxAAAALQAAADEAAAAxAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAxAAAALQAAAC0AAAAtAAAALQAAADEAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADEAAAAtAAAALQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
-  type: WallReinforced
+  type: AirlockMaint
   components:
-  - pos: 20.5,11.5
+  - pos: -0.5,-8.5
     parent: 111
     type: Transform
 - uid: 1
-  type: ShuttersWindowOpen
+  type: AirlockMaint
   components:
-  - pos: -3.5,-3.5
+  - pos: -60.5,-32.5
     parent: 111
     type: Transform
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2
-  type: WallSolid
+  type: ClosetFireFilled
   components:
-  - rot: 3.141592653589793 rad
-    pos: 17.5,8.5
-    parent: 111
-    type: Transform
-- uid: 3
-  type: AirlockChiefEngineerLocked
-  components:
-  - pos: -15.5,-7.5
-    parent: 111
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 4
-  type: WallSolid
-  components:
-  - pos: 11.5,-13.5
-    parent: 111
-    type: Transform
-- uid: 5
-  type: WallReinforced
-  components:
-  - pos: -4.5,-10.5
-    parent: 111
-    type: Transform
-- uid: 6
-  type: WallReinforced
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -14.5,0.5
-    parent: 111
-    type: Transform
-- uid: 7
-  type: BannerMedical
-  components:
-  - pos: -34.5,-2.5
-    parent: 111
-    type: Transform
-- uid: 8
-  type: WallReinforced
-  components:
-  - pos: -48.5,-125.5
-    parent: 111
-    type: Transform
-- uid: 9
-  type: WallReinforced
-  components:
-  - pos: -13.5,-3.5
-    parent: 111
-    type: Transform
-- uid: 10
-  type: CableHV
-  components:
-  - pos: -22.5,-38.5
-    parent: 111
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-- uid: 11
-  type: CableApcExtension
-  components:
-  - pos: 15.5,-2.5
-    parent: 111
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-- uid: 12
-  type: WallReinforced
-  components:
-  - pos: -4.5,-12.5
-    parent: 111
-    type: Transform
-- uid: 13
-  type: WallReinforced
-  components:
-  - pos: 2.5,-3.5
-    parent: 111
-    type: Transform
-- uid: 14
-  type: BedsheetSpawner
-  components:
-  - pos: 10.5,-11.5
-    parent: 111
-    type: Transform
-- uid: 15
-  type: ReinforcedWindow
-  components:
-  - pos: 4.5,-18.5
-    parent: 111
-    type: Transform
-- uid: 16
-  type: WallReinforced
-  components:
-  - pos: 9.5,12.5
-    parent: 111
-    type: Transform
-- uid: 17
-  type: Chair
-  components:
-  - pos: 6.5,7.5
-    parent: 111
-    type: Transform
-- uid: 18
-  type: Airlock
-  components:
-  - pos: 18.5,-8.5
-    parent: 111
-    type: Transform
-- uid: 19
-  type: ReinforcedWindow
-  components:
-  - pos: -0.5,-22.5
-    parent: 111
-    type: Transform
-- uid: 20
-  type: WallReinforced
-  components:
-  - pos: -24.5,-14.5
-    parent: 111
-    type: Transform
-- uid: 21
-  type: WallSolid
-  components:
-  - pos: 9.5,-0.5
-    parent: 111
-    type: Transform
-- uid: 22
-  type: ReinforcedWindow
-  components:
-  - pos: -3.5,0.5
-    parent: 111
-    type: Transform
-- uid: 23
-  type: WallSolid
-  components:
-  - pos: 23.5,-9.5
-    parent: 111
-    type: Transform
-- uid: 24
-  type: WallSolid
-  components:
-  - pos: 23.5,-23.5
-    parent: 111
-    type: Transform
-- uid: 25
-  type: WallSolid
-  components:
-  - pos: 13.5,2.5
-    parent: 111
-    type: Transform
-- uid: 26
-  type: WallSolid
-  components:
-  - pos: 26.5,-20.5
-    parent: 111
-    type: Transform
-- uid: 27
-  type: WallReinforced
-  components:
-  - pos: -17.5,-6.5
-    parent: 111
-    type: Transform
-- uid: 28
-  type: WallSolid
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 10.5,8.5
-    parent: 111
-    type: Transform
-- uid: 29
-  type: WallSolid
-  components:
-  - pos: 19.5,-25.5
-    parent: 111
-    type: Transform
-- uid: 30
-  type: Grille
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -19.5,4.5
-    parent: 111
-    type: Transform
-- uid: 31
-  type: CableHV
-  components:
-  - pos: -23.5,-38.5
-    parent: 111
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-- uid: 32
-  type: WallReinforced
-  components:
-  - pos: -0.5,-4.5
-    parent: 111
-    type: Transform
-- uid: 33
-  type: CableApcExtension
-  components:
-  - pos: 15.5,-9.5
-    parent: 111
-    type: Transform
-  - visible: False
-    type: Sprite
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-- uid: 34
-  type: WallSolid
-  components:
-  - pos: 26.5,-19.5
-    parent: 111
-    type: Transform
-- uid: 35
-  type: ReinforcedWindow
-  components:
-  - pos: 3.5,6.5
-    parent: 111
-    type: Transform
-- uid: 36
-  type: WallSolid
-  components:
-  - pos: 26.5,-22.5
-    parent: 111
-    type: Transform
-- uid: 37
-  type: VendingMachineVendomat
-  components:
-  - pos: 7.5,7.5
-    parent: 111
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-- uid: 38
-  type: WallReinforced
-  components:
-  - pos: -16.5,-7.5
-    parent: 111
-    type: Transform
-- uid: 39
-  type: Chair
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 4.5,3.5
-    parent: 111
-    type: Transform
-- uid: 40
-  type: ShuttersWindowOpen
-  components:
-  - pos: -1.5,-3.5
-    parent: 111
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 41
-  type: WallSolid
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 8.5,8.5
-    parent: 111
-    type: Transform
-- uid: 42
-  type: ShuttersWindowOpen
-  components:
-  - pos: -11.5,-3.5
-    parent: 111
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - airBlocked: False
-    type: Airtight
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 43
-  type: WallSolid
-  components:
-  - pos: 23.5,-21.5
-    parent: 111
-    type: Transform
-- uid: 44
-  type: WallSolid
-  components:
-  - pos: 10.5,-20.5
-    parent: 111
-    type: Transform
-- uid: 45
-  type: ClosetEmergencyFilledRandom
-  components:
-  - pos: 1.4999968,-9.499975
+  - pos: 2.5,10.5
     parent: 111
     type: Transform
   - isPlaceable: False
@@ -571,19 +259,36 @@ entities:
       EntityStorageComponent: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 46
+- uid: 3
+  type: Airlock
+  components:
+  - pos: -0.5,-27.5
+    parent: 111
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 4
   type: WallReinforced
   components:
-  - pos: -6.5,-12.5
+  - pos: -14.5,-7.5
     parent: 111
     type: Transform
-- uid: 47
+- uid: 5
   type: WallSolid
   components:
-  - pos: 23.5,-10.5
+  - rot: 3.141592653589793 rad
+    pos: 4.5,8.5
     parent: 111
     type: Transform
-- uid: 48
+- uid: 6
+  type: WallSolid
+  components:
+  - pos: 11.5,-14.5
+    parent: 111
+    type: Transform
+- uid: 7
   type: ShuttersWindowOpen
   components:
   - pos: -10.5,-3.5
@@ -597,39 +302,22 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 49
+- uid: 8
   type: WallSolid
   components:
-  - pos: 11.5,-14.5
+  - pos: 23.5,-10.5
     parent: 111
     type: Transform
-- uid: 50
-  type: WallSolid
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 4.5,8.5
-    parent: 111
-    type: Transform
-- uid: 51
+- uid: 9
   type: WallReinforced
   components:
-  - pos: -14.5,-7.5
+  - pos: -6.5,-12.5
     parent: 111
     type: Transform
-- uid: 52
-  type: Airlock
+- uid: 10
+  type: ClosetEmergencyFilledRandom
   components:
-  - pos: -0.5,-27.5
-    parent: 111
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 53
-  type: ClosetFireFilled
-  components:
-  - pos: 2.5,10.5
+  - pos: 1.4999968,-9.499975
     parent: 111
     type: Transform
   - isPlaceable: False
@@ -638,16 +326,328 @@ entities:
       EntityStorageComponent: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 54
-  type: AirlockMaint
+- uid: 11
+  type: WallSolid
   components:
-  - pos: -60.5,-32.5
+  - pos: 10.5,-20.5
+    parent: 111
+    type: Transform
+- uid: 12
+  type: WallSolid
+  components:
+  - pos: 23.5,-21.5
+    parent: 111
+    type: Transform
+- uid: 13
+  type: ShuttersWindowOpen
+  components:
+  - pos: -11.5,-3.5
+    parent: 111
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - airBlocked: False
+    type: Airtight
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 14
+  type: WallSolid
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 8.5,8.5
+    parent: 111
+    type: Transform
+- uid: 15
+  type: ShuttersWindowOpen
+  components:
+  - pos: -1.5,-3.5
+    parent: 111
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - airBlocked: False
+    type: Airtight
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 16
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 4.5,3.5
+    parent: 111
+    type: Transform
+- uid: 17
+  type: WallReinforced
+  components:
+  - pos: -16.5,-7.5
+    parent: 111
+    type: Transform
+- uid: 18
+  type: VendingMachineVendomat
+  components:
+  - pos: 7.5,7.5
+    parent: 111
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 19
+  type: WallSolid
+  components:
+  - pos: 26.5,-22.5
+    parent: 111
+    type: Transform
+- uid: 20
+  type: ReinforcedWindow
+  components:
+  - pos: 3.5,6.5
+    parent: 111
+    type: Transform
+- uid: 21
+  type: WallSolid
+  components:
+  - pos: 26.5,-19.5
+    parent: 111
+    type: Transform
+- uid: 22
+  type: CableApcExtension
+  components:
+  - pos: 15.5,-9.5
+    parent: 111
+    type: Transform
+  - visible: False
+    type: Sprite
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 23
+  type: WallReinforced
+  components:
+  - pos: -0.5,-4.5
+    parent: 111
+    type: Transform
+- uid: 24
+  type: CableHV
+  components:
+  - pos: -23.5,-38.5
+    parent: 111
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 25
+  type: WallSolid
+  components:
+  - pos: 19.5,-25.5
+    parent: 111
+    type: Transform
+- uid: 26
+  type: WallSolid
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 10.5,8.5
+    parent: 111
+    type: Transform
+- uid: 27
+  type: WallReinforced
+  components:
+  - pos: -17.5,-6.5
+    parent: 111
+    type: Transform
+- uid: 28
+  type: WallSolid
+  components:
+  - pos: 26.5,-20.5
+    parent: 111
+    type: Transform
+- uid: 29
+  type: WallSolid
+  components:
+  - pos: 13.5,2.5
+    parent: 111
+    type: Transform
+- uid: 30
+  type: WallSolid
+  components:
+  - pos: 23.5,-23.5
+    parent: 111
+    type: Transform
+- uid: 31
+  type: WallSolid
+  components:
+  - pos: 23.5,-9.5
+    parent: 111
+    type: Transform
+- uid: 32
+  type: ReinforcedWindow
+  components:
+  - pos: -3.5,0.5
+    parent: 111
+    type: Transform
+- uid: 33
+  type: WallSolid
+  components:
+  - pos: 9.5,-0.5
+    parent: 111
+    type: Transform
+- uid: 34
+  type: WallReinforced
+  components:
+  - pos: -24.5,-14.5
+    parent: 111
+    type: Transform
+- uid: 35
+  type: ReinforcedWindow
+  components:
+  - pos: -0.5,-22.5
+    parent: 111
+    type: Transform
+- uid: 36
+  type: Airlock
+  components:
+  - pos: 18.5,-8.5
+    parent: 111
+    type: Transform
+- uid: 37
+  type: Chair
+  components:
+  - pos: 6.5,7.5
+    parent: 111
+    type: Transform
+- uid: 38
+  type: WallReinforced
+  components:
+  - pos: 9.5,12.5
+    parent: 111
+    type: Transform
+- uid: 39
+  type: ReinforcedWindow
+  components:
+  - pos: 4.5,-18.5
+    parent: 111
+    type: Transform
+- uid: 40
+  type: BedsheetSpawner
+  components:
+  - pos: 10.5,-11.5
+    parent: 111
+    type: Transform
+- uid: 41
+  type: WallReinforced
+  components:
+  - pos: 2.5,-3.5
+    parent: 111
+    type: Transform
+- uid: 42
+  type: WallReinforced
+  components:
+  - pos: -4.5,-12.5
+    parent: 111
+    type: Transform
+- uid: 43
+  type: CableApcExtension
+  components:
+  - pos: 15.5,-2.5
+    parent: 111
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 44
+  type: CableHV
+  components:
+  - pos: -22.5,-38.5
+    parent: 111
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 45
+  type: WallReinforced
+  components:
+  - pos: -13.5,-3.5
+    parent: 111
+    type: Transform
+- uid: 46
+  type: WallReinforced
+  components:
+  - pos: -48.5,-125.5
+    parent: 111
+    type: Transform
+- uid: 47
+  type: BannerMedical
+  components:
+  - pos: -34.5,-2.5
+    parent: 111
+    type: Transform
+- uid: 48
+  type: WallReinforced
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -14.5,0.5
+    parent: 111
+    type: Transform
+- uid: 49
+  type: WallReinforced
+  components:
+  - pos: -4.5,-10.5
+    parent: 111
+    type: Transform
+- uid: 50
+  type: WallSolid
+  components:
+  - pos: 11.5,-13.5
+    parent: 111
+    type: Transform
+- uid: 51
+  type: AirlockChiefEngineerLocked
+  components:
+  - pos: -15.5,-7.5
+    parent: 111
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 52
+  type: WallSolid
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 17.5,8.5
+    parent: 111
+    type: Transform
+- uid: 53
+  type: ShuttersWindowOpen
+  components:
+  - pos: -3.5,-3.5
+    parent: 111
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - airBlocked: False
+    type: Airtight
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 54
+  type: WallReinforced
+  components:
+  - pos: 20.5,11.5
     parent: 111
     type: Transform
 - uid: 55
-  type: AirlockMaint
+  type: Grille
   components:
-  - pos: -0.5,-8.5
+  - rot: -1.5707963267948966 rad
+    pos: -19.5,4.5
     parent: 111
     type: Transform
 - uid: 56
@@ -20513,6 +20513,728 @@ entities:
       -58,-82: 0
       -65,-90: 0
       -65,-89: 0
+      -80,-80: 3
+      -79,-80: 3
+      -78,-80: 3
+      -77,-80: 3
+      -76,-80: 3
+      -75,-80: 3
+      -74,-80: 3
+      -73,-80: 3
+      -72,-80: 3
+      -71,-80: 3
+      -70,-80: 3
+      -69,-80: 3
+      -64,-112: 3
+      -64,-111: 3
+      -64,-110: 3
+      -64,-109: 3
+      -64,-108: 3
+      -64,-107: 3
+      -64,-106: 3
+      -64,-105: 3
+      -64,-104: 3
+      -64,-103: 3
+      -64,-102: 3
+      -64,-101: 3
+      -64,-97: 3
+      -63,-112: 3
+      -63,-111: 3
+      -63,-110: 3
+      -63,-109: 3
+      -63,-108: 3
+      -63,-107: 3
+      -63,-106: 3
+      -63,-105: 3
+      -63,-104: 3
+      -63,-103: 3
+      -63,-102: 3
+      -63,-101: 3
+      -63,-100: 3
+      -63,-99: 3
+      -62,-112: 3
+      -62,-111: 3
+      -62,-110: 3
+      -62,-109: 3
+      -62,-108: 3
+      -62,-107: 3
+      -62,-106: 3
+      -62,-105: 3
+      -62,-104: 3
+      -62,-103: 3
+      -62,-102: 3
+      -62,-101: 3
+      -62,-100: 3
+      -61,-112: 3
+      -61,-111: 3
+      -61,-110: 3
+      -61,-109: 3
+      -61,-108: 3
+      -61,-107: 3
+      -61,-106: 3
+      -61,-105: 3
+      -61,-104: 3
+      -61,-103: 3
+      -61,-102: 3
+      -61,-101: 3
+      -61,-100: 3
+      -60,-112: 3
+      -60,-111: 3
+      -60,-110: 3
+      -60,-109: 3
+      -60,-108: 3
+      -60,-107: 3
+      -60,-106: 3
+      -60,-105: 3
+      -60,-104: 3
+      -60,-103: 3
+      -60,-102: 3
+      -60,-101: 3
+      -59,-112: 3
+      -59,-111: 3
+      -59,-110: 3
+      -59,-108: 3
+      -59,-107: 3
+      -59,-106: 3
+      -59,-105: 3
+      -59,-104: 3
+      -59,-103: 3
+      -59,-102: 3
+      -59,-101: 3
+      -58,-112: 3
+      -58,-111: 3
+      -58,-110: 3
+      -58,-108: 3
+      -58,-107: 3
+      -58,-106: 3
+      -58,-105: 3
+      -58,-104: 3
+      -58,-103: 3
+      -58,-102: 3
+      -58,-101: 3
+      -57,-106: 3
+      -57,-105: 3
+      -57,-104: 3
+      -57,-103: 3
+      -57,-102: 3
+      -57,-101: 3
+      -56,-112: 3
+      -56,-111: 3
+      -56,-110: 3
+      -56,-108: 3
+      -56,-107: 3
+      -56,-106: 3
+      -56,-105: 3
+      -56,-104: 3
+      -56,-103: 3
+      -56,-102: 3
+      -55,-108: 3
+      -55,-107: 3
+      -55,-106: 3
+      -55,-105: 3
+      -55,-104: 3
+      -55,-103: 3
+      -55,-102: 3
+      -54,-112: 3
+      -54,-111: 3
+      -54,-110: 3
+      -54,-108: 3
+      -54,-107: 3
+      -54,-106: 3
+      -54,-105: 3
+      -54,-104: 3
+      -54,-103: 3
+      -53,-108: 3
+      -53,-107: 3
+      -53,-106: 3
+      -53,-105: 3
+      -53,-104: 3
+      -53,-103: 3
+      -52,-112: 3
+      -52,-111: 3
+      -52,-110: 3
+      -52,-108: 3
+      -52,-107: 3
+      -52,-106: 3
+      -52,-105: 3
+      -52,-104: 3
+      -52,-103: 3
+      -50,-112: 3
+      -50,-111: 3
+      -50,-110: 3
+      -49,-112: 3
+      -49,-111: 3
+      -49,-110: 3
+      -64,-96: 3
+      -64,-95: 3
+      -64,-94: 3
+      -64,-85: 3
+      -64,-84: 3
+      -64,-121: 3
+      -64,-120: 3
+      -64,-119: 3
+      -64,-118: 3
+      -64,-117: 3
+      -64,-116: 3
+      -64,-115: 3
+      -64,-114: 3
+      -64,-113: 3
+      -63,-122: 3
+      -63,-121: 3
+      -63,-120: 3
+      -63,-119: 3
+      -63,-118: 3
+      -63,-117: 3
+      -63,-116: 3
+      -63,-115: 3
+      -63,-114: 3
+      -63,-113: 3
+      -62,-122: 3
+      -62,-121: 3
+      -62,-120: 3
+      -62,-119: 3
+      -62,-118: 3
+      -62,-117: 3
+      -62,-116: 3
+      -62,-115: 3
+      -62,-114: 3
+      -62,-113: 3
+      -61,-123: 3
+      -61,-122: 3
+      -61,-121: 3
+      -61,-120: 3
+      -61,-119: 3
+      -61,-118: 3
+      -61,-117: 3
+      -61,-116: 3
+      -61,-115: 3
+      -61,-114: 3
+      -61,-113: 3
+      -60,-124: 3
+      -60,-123: 3
+      -60,-122: 3
+      -60,-121: 3
+      -60,-120: 3
+      -60,-119: 3
+      -60,-118: 3
+      -60,-117: 3
+      -60,-116: 3
+      -60,-115: 3
+      -60,-114: 3
+      -60,-113: 3
+      -59,-126: 3
+      -59,-125: 3
+      -59,-124: 3
+      -59,-123: 3
+      -59,-122: 3
+      -59,-121: 3
+      -59,-120: 3
+      -59,-119: 3
+      -59,-118: 3
+      -59,-117: 3
+      -59,-116: 3
+      -59,-115: 3
+      -59,-114: 3
+      -59,-113: 3
+      -58,-126: 3
+      -58,-125: 3
+      -58,-124: 3
+      -58,-123: 3
+      -58,-122: 3
+      -58,-121: 3
+      -58,-120: 3
+      -58,-119: 3
+      -58,-118: 3
+      -58,-117: 3
+      -58,-116: 3
+      -58,-115: 3
+      -58,-114: 3
+      -58,-113: 3
+      -57,-126: 3
+      -57,-125: 3
+      -57,-124: 3
+      -57,-123: 3
+      -57,-122: 3
+      -57,-121: 3
+      -56,-126: 3
+      -56,-125: 3
+      -56,-124: 3
+      -56,-123: 3
+      -56,-122: 3
+      -56,-121: 3
+      -56,-120: 3
+      -56,-119: 3
+      -56,-118: 3
+      -56,-117: 3
+      -56,-116: 3
+      -56,-115: 3
+      -56,-114: 3
+      -56,-113: 3
+      -55,-126: 3
+      -55,-125: 3
+      -55,-124: 3
+      -55,-123: 3
+      -55,-122: 3
+      -55,-121: 3
+      -54,-126: 3
+      -54,-125: 3
+      -54,-124: 3
+      -54,-123: 3
+      -54,-122: 3
+      -54,-121: 3
+      -54,-120: 3
+      -54,-119: 3
+      -54,-118: 3
+      -54,-117: 3
+      -54,-116: 3
+      -54,-115: 3
+      -54,-114: 3
+      -54,-113: 3
+      -53,-126: 3
+      -53,-125: 3
+      -53,-124: 3
+      -53,-123: 3
+      -53,-122: 3
+      -53,-121: 3
+      -52,-126: 3
+      -52,-125: 3
+      -52,-124: 3
+      -52,-123: 3
+      -52,-122: 3
+      -52,-121: 3
+      -52,-120: 3
+      -52,-119: 3
+      -52,-118: 3
+      -52,-117: 3
+      -52,-116: 3
+      -52,-115: 3
+      -52,-114: 3
+      -52,-113: 3
+      -51,-126: 3
+      -51,-125: 3
+      -51,-124: 3
+      -51,-123: 3
+      -51,-122: 3
+      -51,-121: 3
+      -50,-126: 3
+      -50,-125: 3
+      -50,-124: 3
+      -50,-123: 3
+      -50,-122: 3
+      -50,-121: 3
+      -50,-120: 3
+      -50,-118: 3
+      -50,-117: 3
+      -50,-116: 3
+      -50,-115: 3
+      -50,-114: 3
+      -50,-113: 3
+      -49,-118: 3
+      -49,-117: 3
+      -49,-116: 3
+      -49,-115: 3
+      -49,-114: 3
+      -49,-113: 3
+      -80,-96: 3
+      -80,-95: 3
+      -80,-94: 3
+      -80,-93: 3
+      -80,-89: 3
+      -80,-85: 3
+      -80,-84: 3
+      -80,-83: 3
+      -80,-82: 3
+      -79,-96: 3
+      -79,-95: 3
+      -79,-94: 3
+      -79,-93: 3
+      -79,-89: 3
+      -79,-85: 3
+      -79,-84: 3
+      -79,-83: 3
+      -79,-82: 3
+      -78,-96: 3
+      -78,-95: 3
+      -78,-94: 3
+      -78,-93: 3
+      -78,-89: 3
+      -78,-85: 3
+      -78,-84: 3
+      -78,-83: 3
+      -78,-82: 3
+      -77,-96: 3
+      -77,-95: 3
+      -77,-94: 3
+      -77,-93: 3
+      -77,-92: 3
+      -77,-91: 3
+      -77,-90: 3
+      -77,-89: 3
+      -77,-88: 3
+      -77,-87: 3
+      -77,-86: 3
+      -77,-85: 3
+      -77,-84: 3
+      -77,-83: 3
+      -77,-82: 3
+      -76,-96: 3
+      -76,-95: 3
+      -76,-94: 3
+      -76,-93: 3
+      -76,-89: 3
+      -76,-85: 3
+      -76,-84: 3
+      -76,-83: 3
+      -76,-82: 3
+      -75,-96: 3
+      -75,-95: 3
+      -75,-94: 3
+      -75,-93: 3
+      -75,-89: 3
+      -75,-85: 3
+      -75,-84: 3
+      -75,-83: 3
+      -75,-82: 3
+      -74,-96: 3
+      -74,-95: 3
+      -74,-94: 3
+      -74,-93: 3
+      -74,-89: 3
+      -74,-85: 3
+      -74,-84: 3
+      -74,-83: 3
+      -74,-82: 3
+      -73,-96: 3
+      -73,-95: 3
+      -73,-94: 3
+      -73,-93: 3
+      -73,-92: 3
+      -73,-91: 3
+      -73,-90: 3
+      -73,-89: 3
+      -73,-88: 3
+      -73,-87: 3
+      -73,-86: 3
+      -73,-85: 3
+      -73,-84: 3
+      -73,-83: 3
+      -73,-82: 3
+      -72,-96: 3
+      -72,-95: 3
+      -72,-94: 3
+      -72,-93: 3
+      -72,-92: 3
+      -72,-91: 3
+      -72,-90: 3
+      -72,-89: 3
+      -72,-88: 3
+      -72,-87: 3
+      -72,-86: 3
+      -72,-85: 3
+      -72,-84: 3
+      -72,-83: 3
+      -72,-82: 3
+      -71,-96: 3
+      -71,-95: 3
+      -71,-94: 3
+      -71,-93: 3
+      -71,-92: 3
+      -71,-91: 3
+      -71,-90: 3
+      -71,-89: 3
+      -71,-88: 3
+      -71,-87: 3
+      -71,-86: 3
+      -71,-85: 3
+      -71,-84: 3
+      -71,-83: 3
+      -71,-82: 3
+      -70,-96: 3
+      -70,-95: 3
+      -70,-94: 3
+      -70,-93: 3
+      -70,-92: 3
+      -70,-91: 3
+      -70,-90: 3
+      -70,-89: 3
+      -70,-88: 3
+      -70,-87: 3
+      -70,-86: 3
+      -70,-85: 3
+      -70,-84: 3
+      -70,-83: 3
+      -70,-82: 3
+      -70,-81: 3
+      -69,-96: 3
+      -69,-95: 3
+      -69,-89: 3
+      -69,-85: 3
+      -69,-84: 3
+      -69,-83: 3
+      -68,-96: 3
+      -68,-95: 3
+      -68,-94: 3
+      -68,-93: 3
+      -68,-92: 3
+      -68,-91: 4
+      -68,-90: 5
+      -68,-89: 6
+      -68,-88: 7
+      -68,-87: 8
+      -68,-86: 3
+      -68,-85: 3
+      -68,-84: 3
+      -68,-83: 3
+      -67,-96: 3
+      -67,-95: 3
+      -67,-94: 3
+      -67,-93: 3
+      -67,-92: 3
+      -67,-91: 3
+      -67,-90: 3
+      -67,-89: 3
+      -67,-88: 3
+      -67,-87: 3
+      -67,-86: 3
+      -67,-85: 3
+      -67,-84: 3
+      -66,-96: 3
+      -66,-95: 3
+      -66,-94: 3
+      -66,-93: 3
+      -66,-92: 3
+      -66,-91: 3
+      -66,-90: 3
+      -66,-89: 3
+      -66,-88: 3
+      -66,-87: 3
+      -66,-86: 3
+      -66,-85: 3
+      -66,-84: 3
+      -65,-96: 3
+      -65,-95: 3
+      -65,-94: 3
+      -65,-93: 3
+      -65,-92: 3
+      -65,-91: 3
+      -65,-88: 3
+      -65,-87: 3
+      -65,-86: 3
+      -65,-85: 3
+      -65,-84: 3
+      -80,-98: 3
+      -79,-98: 3
+      -78,-98: 3
+      -77,-98: 3
+      -76,-98: 3
+      -75,-98: 3
+      -74,-98: 3
+      -73,-98: 3
+      -72,-98: 3
+      -71,-98: 3
+      -70,-112: 3
+      -70,-98: 3
+      -70,-97: 3
+      -69,-112: 3
+      -69,-111: 3
+      -69,-98: 3
+      -68,-112: 3
+      -68,-111: 3
+      -68,-107: 3
+      -68,-98: 3
+      -68,-97: 3
+      -67,-112: 3
+      -67,-111: 3
+      -67,-110: 3
+      -67,-109: 3
+      -67,-108: 3
+      -67,-107: 3
+      -67,-106: 3
+      -67,-105: 3
+      -67,-104: 3
+      -67,-97: 3
+      -66,-112: 3
+      -66,-111: 3
+      -66,-110: 3
+      -66,-109: 3
+      -66,-108: 3
+      -66,-107: 3
+      -66,-106: 3
+      -66,-105: 3
+      -66,-104: 3
+      -66,-103: 3
+      -66,-97: 3
+      -65,-112: 3
+      -65,-111: 3
+      -65,-110: 3
+      -65,-109: 3
+      -65,-108: 3
+      -65,-107: 3
+      -65,-106: 3
+      -65,-105: 3
+      -65,-104: 3
+      -65,-103: 3
+      -65,-102: 3
+      -65,-97: 3
+      -86,-96: 3
+      -86,-95: 3
+      -86,-94: 3
+      -86,-93: 3
+      -86,-92: 3
+      -86,-91: 3
+      -86,-90: 3
+      -86,-89: 3
+      -86,-88: 3
+      -86,-87: 3
+      -86,-86: 3
+      -86,-85: 3
+      -86,-84: 3
+      -86,-83: 3
+      -86,-82: 3
+      -86,-81: 3
+      -85,-96: 3
+      -85,-89: 3
+      -85,-82: 3
+      -84,-96: 3
+      -84,-95: 3
+      -84,-94: 3
+      -84,-93: 3
+      -84,-92: 3
+      -84,-91: 3
+      -84,-90: 3
+      -84,-89: 3
+      -84,-88: 3
+      -84,-87: 3
+      -84,-86: 3
+      -84,-85: 3
+      -84,-84: 3
+      -84,-83: 3
+      -84,-82: 3
+      -84,-81: 3
+      -83,-96: 3
+      -83,-95: 3
+      -83,-94: 3
+      -83,-93: 3
+      -83,-92: 3
+      -83,-91: 3
+      -83,-90: 3
+      -83,-89: 3
+      -83,-88: 3
+      -83,-87: 3
+      -83,-86: 3
+      -83,-85: 3
+      -83,-84: 3
+      -83,-83: 3
+      -83,-82: 3
+      -82,-96: 3
+      -82,-95: 3
+      -82,-94: 3
+      -82,-93: 3
+      -82,-92: 3
+      -82,-91: 3
+      -82,-90: 3
+      -82,-89: 3
+      -82,-88: 3
+      -82,-87: 3
+      -82,-86: 3
+      -82,-85: 3
+      -82,-84: 3
+      -82,-83: 3
+      -82,-82: 3
+      -81,-96: 3
+      -81,-95: 3
+      -81,-94: 3
+      -81,-93: 3
+      -81,-92: 3
+      -81,-91: 3
+      -81,-90: 3
+      -81,-89: 3
+      -81,-88: 3
+      -81,-87: 3
+      -81,-86: 3
+      -81,-85: 3
+      -81,-84: 3
+      -81,-83: 3
+      -81,-82: 3
+      -86,-98: 3
+      -86,-97: 3
+      -85,-98: 3
+      -84,-98: 3
+      -84,-97: 3
+      -83,-98: 3
+      -82,-98: 3
+      -81,-98: 3
+      -86,-80: 3
+      -85,-80: 3
+      -84,-80: 3
+      -83,-80: 3
+      -82,-80: 3
+      -81,-80: 3
+      -72,-118: 3
+      -72,-117: 3
+      -72,-116: 3
+      -72,-115: 3
+      -72,-114: 3
+      -71,-119: 3
+      -71,-118: 3
+      -71,-117: 3
+      -71,-116: 3
+      -71,-115: 3
+      -71,-114: 3
+      -71,-113: 3
+      -70,-120: 3
+      -70,-119: 3
+      -70,-118: 3
+      -70,-117: 3
+      -70,-116: 3
+      -70,-115: 3
+      -70,-114: 3
+      -70,-113: 3
+      -69,-120: 3
+      -69,-119: 3
+      -69,-118: 3
+      -69,-117: 3
+      -69,-116: 3
+      -69,-115: 3
+      -69,-114: 3
+      -69,-113: 3
+      -68,-121: 3
+      -68,-120: 3
+      -68,-119: 3
+      -68,-118: 3
+      -68,-117: 3
+      -68,-116: 3
+      -68,-115: 3
+      -68,-114: 3
+      -68,-113: 3
+      -67,-121: 3
+      -67,-120: 3
+      -67,-119: 3
+      -67,-118: 3
+      -67,-117: 3
+      -67,-116: 3
+      -67,-115: 3
+      -67,-114: 3
+      -67,-113: 3
+      -66,-121: 3
+      -66,-120: 3
+      -66,-119: 3
+      -66,-118: 3
+      -66,-117: 3
+      -66,-116: 3
+      -66,-115: 3
+      -66,-114: 3
+      -66,-113: 3
+      -65,-122: 3
+      -65,-121: 3
+      -65,-120: 3
+      -65,-119: 3
+      -65,-118: 3
+      -65,-117: 3
+      -65,-116: 3
+      -65,-115: 3
+      -65,-114: 3
+      -65,-113: 3
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -20549,6 +21271,61 @@ entities:
       - 0
     - volume: 2500
       temperature: 293.15
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 200.96617
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 214.86464
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 270.4586
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 202.38438
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 220.53749
       moles:
       - 0
       - 0
@@ -20650,6 +21427,24 @@ entities:
         referenceAngle: 0.00033087155
         damping: 961859.75
         stiffness: 8633634
+      docking12452: !type:WeldJoint
+        bodyB: 111
+        bodyA: 2700
+        id: docking12452
+        localAnchorB: -3,6.5
+        localAnchorA: 10,4.5
+        referenceAngle: -0.00033087155
+        damping: 1015795.06
+        stiffness: 9117755
+      docking13503: !type:WeldJoint
+        bodyB: 2700
+        bodyA: 111
+        id: docking13503
+        localAnchorB: 10,4.5
+        localAnchorA: -3,6.5
+        referenceAngle: 0.00033087155
+        damping: 1015795.06
+        stiffness: 9117755
     type: Joint
 - uid: 112
   type: PoweredSmallLight
@@ -28346,7 +29141,7 @@ entities:
     type: Transform
   - dockedWith: 2269
     type: Docking
-  - SecondsUntilStateChange: -6725.1523
+  - SecondsUntilStateChange: -74.56507
     changeAirtight: False
     state: Opening
     type: Door
@@ -37331,7 +38126,7 @@ entities:
     type: Transform
   - dockedWith: 1218
     type: Docking
-  - SecondsUntilStateChange: -6725.1523
+  - SecondsUntilStateChange: -74.56507
     changeAirtight: False
     state: Opening
     type: Door
@@ -40330,6 +41125,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 2656
   type: AsteroidRock
   components:
@@ -40421,6 +41218,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 2666
   type: WallReinforced
   components:
@@ -41054,6 +41853,24 @@ entities:
         referenceAngle: 0.00033087155
         damping: 961859.75
         stiffness: 8633634
+      docking12452: !type:WeldJoint
+        bodyB: 111
+        bodyA: 2700
+        id: docking12452
+        localAnchorB: -3,6.5
+        localAnchorA: 10,4.5
+        referenceAngle: -0.00033087155
+        damping: 1015795.06
+        stiffness: 9117755
+      docking13503: !type:WeldJoint
+        bodyB: 2700
+        bodyA: 111
+        id: docking13503
+        localAnchorB: 10,4.5
+        localAnchorA: -3,6.5
+        referenceAngle: 0.00033087155
+        damping: 1015795.06
+        stiffness: 9117755
     type: Joint
 - uid: 2701
   type: WallRiveted
@@ -42405,6 +43222,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 2885
   type: GasPipeStraight
   components:
@@ -42422,6 +43241,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 2887
   type: GasPipeStraight
   components:
@@ -42430,6 +43251,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 2888
@@ -42440,6 +43263,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 2889
@@ -42451,6 +43276,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 2890
   type: ChairOfficeLight
   components:
@@ -43501,6 +44328,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 2988
@@ -50942,6 +51771,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 4001
@@ -92110,6 +92941,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8594
@@ -92120,6 +92953,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8595
@@ -92131,6 +92966,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8596
@@ -92142,6 +92979,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8597
@@ -92153,6 +92992,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8598
@@ -92164,6 +93005,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8599
@@ -92175,6 +93018,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8600
@@ -92186,6 +93031,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8601
@@ -92197,6 +93044,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8602
@@ -92208,6 +93057,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8603
@@ -92219,6 +93070,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8604
@@ -92230,6 +93083,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8605
@@ -92241,6 +93096,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8606
@@ -92252,6 +93109,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8607
@@ -92263,6 +93122,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8608
@@ -92274,6 +93135,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8609
@@ -92382,6 +93245,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8626
@@ -92393,6 +93258,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8627
@@ -92404,6 +93271,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8628
@@ -92414,6 +93283,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 8629
   type: ParticleAcceleratorEndCapUnfinished
   components:
@@ -92547,6 +93418,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8646
@@ -92558,6 +93431,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8647
@@ -92569,6 +93444,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 8648
   type: WallReinforced
   components:
@@ -92584,6 +93461,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8650
@@ -92595,6 +93474,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8651
@@ -92606,6 +93487,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8652
@@ -92617,6 +93500,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8653
@@ -92628,6 +93513,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8654
@@ -92639,6 +93526,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8655
@@ -92650,6 +93539,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8656
@@ -92660,6 +93551,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8657
@@ -92671,6 +93564,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8658
@@ -92682,6 +93577,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8659
@@ -92693,6 +93590,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8660
@@ -92704,6 +93603,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8661
@@ -92715,6 +93616,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8662
@@ -92726,6 +93629,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 8663
@@ -92736,6 +93641,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 8664
   type: GasVentPump
   components:
@@ -92745,6 +93652,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 8665
   type: CableApcExtension
   components:
@@ -96521,6 +97430,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 9166
@@ -96532,6 +97443,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 9167
@@ -96543,6 +97456,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 9168
@@ -96656,6 +97571,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 9184
   type: Bed
   components:
@@ -96952,6 +97869,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 9225
   type: BedsheetOrange
   components:
@@ -107764,6 +108683,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10435
@@ -107775,6 +108696,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10436
@@ -107786,6 +108709,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10437
@@ -107808,6 +108733,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 10439
   type: GasVentPump
   components:
@@ -107816,6 +108743,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 10440
   type: GasVentScrubber
   components:
@@ -107825,6 +108754,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 10441
   type: GasPipeBend
   components:
@@ -107834,6 +108765,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10442
@@ -107845,6 +108778,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10443
@@ -107856,6 +108791,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10444
@@ -107867,6 +108804,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10445
@@ -107878,6 +108817,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10446
@@ -107889,6 +108830,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 10447
   type: GasPipeStraight
   components:
@@ -107898,6 +108841,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10448
@@ -107909,6 +108854,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10449
@@ -107919,6 +108866,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10450
@@ -109195,6 +110144,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10578
@@ -109215,6 +110166,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10580
@@ -109226,6 +110179,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10581
@@ -109237,6 +110192,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10582
@@ -109304,6 +110261,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10590
@@ -109329,6 +110288,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10593
@@ -109340,6 +110301,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10594
@@ -109351,6 +110314,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10595
@@ -109512,6 +110477,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10611
@@ -109523,6 +110490,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10612
@@ -109534,6 +110503,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10613
@@ -109544,6 +110515,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10614
@@ -109555,6 +110528,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10615
@@ -109566,6 +110541,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10616
@@ -109577,6 +110554,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10617
@@ -109587,6 +110566,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10618
@@ -109597,6 +110578,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10619
@@ -109608,6 +110591,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 10620
   type: GasPipeStraight
   components:
@@ -109617,6 +110602,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10621
@@ -109628,6 +110615,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10622
@@ -109639,6 +110628,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10623
@@ -109650,6 +110641,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10624
@@ -109660,6 +110653,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 10625
   type: Grille
   components:
@@ -109760,6 +110755,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10637
@@ -109771,6 +110768,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10638
@@ -109782,6 +110781,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10639
@@ -109793,6 +110794,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 10640
@@ -110924,6 +111927,8 @@ entities:
     pos: -54.5,-90.5
     parent: 111
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -112209,6 +113214,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 10985
   type: FirelockEdge
   components:
@@ -120406,6 +121413,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 12125
@@ -136591,6 +137600,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 13878
   type: GasPipeStraight
   components:
@@ -136756,6 +137767,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 13891
@@ -136767,6 +137780,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 13892
@@ -136778,6 +137793,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 13893
@@ -136796,6 +137813,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 13895
@@ -143977,6 +144996,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 14506
@@ -143988,6 +145009,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 14507
@@ -143998,6 +145021,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 14508
@@ -144009,6 +145034,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 14509
@@ -144064,6 +145091,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 14515
@@ -144105,6 +145134,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 14519
   type: GasPipeStraight
   components:
@@ -144114,6 +145145,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 14520
@@ -144125,6 +145158,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 14521
@@ -145273,6 +146308,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 14615
   type: GasPipeStraight
   components:
@@ -145281,6 +146318,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 14616
@@ -145304,6 +146343,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 14618
@@ -145473,6 +146514,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 14632
@@ -147556,6 +148599,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 14875
   type: EmergencyLight
   components:
@@ -148001,6 +149046,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 14939
@@ -148389,6 +149436,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 14993
@@ -149222,6 +150271,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15083
@@ -152172,6 +153223,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 15325
   type: GasPipeStraight
   components:
@@ -152272,6 +153325,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15333
@@ -152293,6 +153348,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15335
@@ -152304,6 +153361,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15336
@@ -154134,6 +155193,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15482
@@ -158284,6 +159345,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15820
@@ -158295,6 +159358,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15821
@@ -158345,6 +159410,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15825
@@ -158356,6 +159423,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15826
@@ -158367,6 +159436,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15827
@@ -158378,6 +159449,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15828
@@ -158389,6 +159462,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15829
@@ -158400,6 +159475,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15830
@@ -158411,6 +159488,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15831
@@ -158422,6 +159501,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15832
@@ -158433,6 +159514,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15833
@@ -158444,6 +159527,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15834
@@ -158454,6 +159539,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15835
@@ -158465,6 +159552,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15836
@@ -158476,6 +159565,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15837
@@ -158879,6 +159970,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 15870
@@ -162551,6 +163644,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 16169
   type: GasPipeStraight
   components:
@@ -163305,6 +164400,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 16231
   type: GasVentScrubber
   components:
@@ -163324,6 +164421,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 16233
@@ -163335,6 +164434,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 16234
@@ -163346,6 +164447,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 16235
@@ -166029,6 +167132,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 16460
@@ -168072,6 +169177,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 16700
@@ -176357,6 +177464,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 17375
   type: GasVentPump
   components:
@@ -176365,6 +177474,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 17376
   type: GasVentScrubber
   components:
@@ -176373,6 +177484,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 17377
   type: GasVentScrubber
   components:
@@ -176382,6 +177495,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 17378
   type: GasVentScrubber
   components:
@@ -176391,6 +177506,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 17379
   type: Catwalk
   components:
@@ -177635,6 +178752,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 17550
@@ -178753,6 +179872,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 17689
@@ -178763,6 +179884,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 17690
   type: GasPipeStraight
   components:
@@ -181918,6 +183041,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 18028
@@ -181929,6 +183054,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 18029
   type: MedkitFilled
   components:
@@ -183738,6 +184865,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 18277
@@ -186369,6 +187498,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0055CCFF'
+    type: AtmosPipeColor
 - uid: 18605
   type: Catwalk
   components:
@@ -189503,6 +190634,8 @@ entities:
     pos: -54.5,-85.5
     parent: 111
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -194767,6 +195900,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
 - uid: 19732
   type: GasPipeStraight
   components:
@@ -194775,6 +195910,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 19733
@@ -194785,6 +195922,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 19734
@@ -194795,6 +195934,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 19735
@@ -194805,6 +195946,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 19736
@@ -194816,6 +195959,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#990000FF'
+    type: AtmosPipeColor
   - enabled: False
     type: AmbientSound
 - uid: 19737
