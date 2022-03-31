@@ -34,6 +34,10 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
   - type: Magboots
+      toggleAction:
+        icon: Clothing/Shoes/Boots/magboots-advanced.rsi/icon.png
+        iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png  
+  - type: Magboots
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
