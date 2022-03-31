@@ -1,10 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Rules popup on first connection now has a timer to make sure that they
-      get read., type: Tweak}
-  id: 773
-  time: '2021-12-25T01:32:33.0000000+00:00'
 - author: FoLoKe
   changes:
   - {message: Fixed butchering without a knife., type: Fix}
@@ -3029,3 +3023,9 @@ Entries:
     type: Fix}
   id: 1272
   time: '2022-03-30T13:29:01.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed some double-audio issues for some machines (chemistry, id card
+      console, etc). Also fixed some double pop-ups for emags.', type: Fix}
+  id: 1273
+  time: '2022-03-31T07:08:30.0000000+00:00'
