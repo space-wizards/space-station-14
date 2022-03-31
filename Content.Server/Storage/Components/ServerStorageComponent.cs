@@ -266,14 +266,14 @@ namespace Content.Server.Storage.Components
 
             if (!handSys.TryDrop(player, toInsert.Value, handsComp: hands))
             {
-                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                Popup(player, "comp-storage-cant-insert");
                 return false;
             }
 
             if (!Insert(toInsert.Value))
             {
                 handSys.PickupOrDrop(player, toInsert.Value, handsComp: hands);
-                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                Popup(player, "comp-storage-cant-insert");
                 return false;
             }
 
@@ -292,7 +292,7 @@ namespace Content.Server.Storage.Components
 
             if (!Insert(toInsert))
             {
-                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                Popup(player, "comp-storage-cant-insert");
                 return false;
             }
             return true;
@@ -484,7 +484,7 @@ namespace Content.Server.Storage.Components
                 return;
             }
 
-            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player, Owner, popup: true))
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player, Owner, popup: ShowPopup))
             {
                 return;
             }
