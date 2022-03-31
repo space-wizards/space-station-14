@@ -1,9 +1,4 @@
 Entries:
-- author: FoLoKe
-  changes:
-  - {message: Fixed butchering without a knife., type: Fix}
-  id: 774
-  time: '2021-12-26T02:32:02.0000000+00:00'
 - author: Morb0
   changes:
   - {message: Changed antag names in preferences, type: Add}
@@ -3029,3 +3024,9 @@ Entries:
       console, etc). Also fixed some double pop-ups for emags.', type: Fix}
   id: 1273
   time: '2022-03-31T07:08:30.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Split Station map! A new medium to large map that's split in half!,
+    type: Add}
+  id: 1274
+  time: '2022-03-31T19:08:55.0000000+00:00'
