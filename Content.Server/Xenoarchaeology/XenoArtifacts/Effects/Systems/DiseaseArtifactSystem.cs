@@ -74,7 +74,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
                 if (!_interactionSystem.InRangeUnobstructed(uid, entity, component.Range))
                     continue;
 
-                _disease.TryAddDisease(entity, component.SpawnDisease, carrier);
+                _disease.TryInfect(carrier, component.SpawnDisease, forced: true);
             }
         }
     }
