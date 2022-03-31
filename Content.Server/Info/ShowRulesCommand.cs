@@ -15,7 +15,7 @@ public sealed class ShowRulesCommand : IConsoleCommand
 {
     public string Command => "showrules";
     public string Description => "Opens the rules popup for the specified player.";
-    public string Help => "showrules <username> [time]";
+    public string Help => "showrules <username> [seconds]";
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         string target;
@@ -32,11 +32,13 @@ public sealed class ShowRulesCommand : IConsoleCommand
             }
             case 2:
             {
-                if (float.TryParse(args[1], out seconds))
+                if (!float.TryParse(args[1], out seconds))
+                {
+                    shell.WriteError($"{args[1]} is not a valid amount of seconds.\n{Help}");
                     return;
+                }
 
                 target = args[0];
-                shell.WriteLine($"{args[1]} is not a valid amount of minutes.\n{Help}");
                 break;
             }
             default:
@@ -54,14 +56,12 @@ public sealed class ShowRulesCommand : IConsoleCommand
             return;
         }
 
-        var message = new SharedRulesManager.ShowRulesPopupMessage
-        {
-            PopupTime = seconds
-        };
+        var netManager = IoCManager.Resolve<INetManager>();
 
-        var player = IoCManager.Resolve<IPlayerManager>()
-            .GetSessionByUserId(located.UserId);
-        IoCManager.Resolve<INetManager>()
-            .ServerSendMessage(message, player.ConnectedClient);
+        var message = netManager.CreateNetMessage<SharedRulesManager.ShowRulesPopupMessage>();
+        message.PopupTime = seconds;
+
+        var player = IoCManager.Resolve<IPlayerManager>().GetSessionByUserId(located.UserId);
+        netManager.ServerSendMessage(message, player.ConnectedClient);
     }
 }

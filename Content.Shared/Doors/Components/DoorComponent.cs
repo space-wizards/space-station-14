@@ -59,6 +59,9 @@ public sealed class DoorComponent : Component, ISerializationHooks
     [DataField("denyDuration")]
     public readonly TimeSpan DenyDuration = TimeSpan.FromSeconds(0.45f);
 
+    [DataField("emagDuration")]
+    public readonly TimeSpan EmagDuration = TimeSpan.FromSeconds(0.8f);
+
     /// <summary>
     ///     When the door is active, this is the time when the state will next update.
     /// </summary>
@@ -116,6 +119,12 @@ public sealed class DoorComponent : Component, ISerializationHooks
     /// </summary>
     [DataField("tryOpenDoorSound")]
     public SoundSpecifier TryOpenDoorSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
+
+    /// <summary>
+    /// Sound to play when door has been emagged or possibly electrically tampered
+    /// </summary>
+    [DataField("sparkSound")]
+    public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks");
     #endregion
 
     #region Crushing
@@ -164,7 +173,7 @@ public sealed class DoorComponent : Component, ISerializationHooks
             _secondsUntilStateChange = null;
             return;
         };
-        
+
         var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
         _secondsUntilStateChange = (float) (NextStateChange.Value - curTime).TotalSeconds;
     }
@@ -230,6 +239,7 @@ public enum DoorState
     Opening,
     Welded,
     Denying,
+    Emagging
 }
 
 [Serializable, NetSerializable]

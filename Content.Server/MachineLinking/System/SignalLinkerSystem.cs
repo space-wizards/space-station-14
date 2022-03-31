@@ -123,7 +123,7 @@ namespace Content.Server.MachineLinking.System
                 case SignalPortSelected portSelected:
                     if (msg.Session.AttachedEntity == default ||
                         !EntityManager.TryGetComponent(msg.Session.AttachedEntity, out HandsComponent? hands) ||
-                        !hands.TryGetActiveHeldEntity(out var heldEntity) ||
+                        hands.ActiveHandEntity is not EntityUid heldEntity ||
                         !EntityManager.TryGetComponent(heldEntity, out SignalLinkerComponent? signalLinkerComponent) ||
                         !signalLinkerComponent.Port.HasValue ||
                         !signalLinkerComponent.Port.Value.transmitter.Outputs.ContainsPort(signalLinkerComponent.Port
@@ -165,7 +165,7 @@ namespace Content.Server.MachineLinking.System
                 case SignalPortSelected portSelected:
                     if (msg.Session.AttachedEntity == default ||
                         !EntityManager.TryGetComponent(msg.Session.AttachedEntity, out HandsComponent? hands) ||
-                        !hands.TryGetActiveHeldEntity(out var heldEntity) ||
+                        hands.ActiveHandEntity is not EntityUid heldEntity ||
                         !EntityManager.TryGetComponent(heldEntity, out SignalLinkerComponent? signalLinkerComponent))
                         return;
                     LinkerSaveInteraction(attached, signalLinkerComponent, component,

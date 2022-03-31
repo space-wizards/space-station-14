@@ -139,6 +139,7 @@
   yield: 4
   potency: 10
   idealLight: 8
+  growthStages: 3
   chemicals:
     Nutriment:
       Min: 1

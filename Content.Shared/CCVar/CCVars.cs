@@ -22,23 +22,40 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
-        ///     Whether the basic 'hum' ambience will be enabled.
-        /// </summary>
-        public static readonly CVarDef<bool> AmbienceBasicEnabled =
-            CVarDef.Create("ambience.basic_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
-
-        /// <summary>
-        /// How long we'll wait until re-sampling nearby objects for ambience.
+        /// How long we'll wait until re-sampling nearby objects for ambience. Should be pretty fast, but doesn't have to match the tick rate.
         /// </summary>
         public static readonly CVarDef<float> AmbientCooldown =
-            CVarDef.Create("ambience.cooldown", 0.1f, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.cooldown", 0.1f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        /// <summary>
+        /// How large of a range to sample for ambience.
+        /// </summary>
         public static readonly CVarDef<float> AmbientRange =
             CVarDef.Create("ambience.range", 5f, CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        /// Maximum simultaneous ambient sounds.
+        /// </summary>
         public static readonly CVarDef<int> MaxAmbientSources =
-            CVarDef.Create("ambience.max_sounds", 64, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.max_sounds", 16, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        /// <summary>
+        /// The minimum value the user can set for ambience.max_sounds
+        /// </summary>
+        public static readonly CVarDef<int> MinMaxAmbientSourcesConfigured =
+            CVarDef.Create("ambience.min_max_sounds_configured", 16, CVar.REPLICATED | CVar.SERVER | CVar.CHEAT);
+
+        /// <summary>
+        /// The maximum value the user can set for ambience.max_sounds
+        /// </summary>
+        public static readonly CVarDef<int> MaxMaxAmbientSourcesConfigured =
+            CVarDef.Create("ambience.max_max_sounds_configured", 64, CVar.REPLICATED | CVar.SERVER | CVar.CHEAT);
+
+        /// <summary>
+        /// Ambience volume.
+        /// </summary>
+        public static readonly CVarDef<float> AmbienceVolume =
+            CVarDef.Create("ambience.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
         /*
          * Status
          */
@@ -127,6 +144,19 @@ namespace Content.Shared.CCVar
             GameMapForced = CVarDef.Create("game.mapforced", false, CVar.SERVERONLY);
 
         /// <summary>
+        /// The depth of the queue used to calculate which map is next in rotation.
+        /// This is how long the game "remembers" that some map was put in play. Default is 16 rounds.
+        /// </summary>
+        public static readonly CVarDef<int>
+            GameMapMemoryDepth = CVarDef.Create("game.map_memory_depth", 16, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Is map rotation enabled?
+        /// </summary>
+        public static readonly CVarDef<bool>
+            GameMapRotation = CVarDef.Create<bool>("game.map_rotation", true, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationOffset =
@@ -143,7 +173,7 @@ namespace Content.Shared.CCVar
         ///     Whether a random rotation will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationRotation =
-            CVarDef.Create("game.station_rotation", true);
+            CVarDef.Create("game.station_rotation", false);
 
         /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
@@ -507,7 +537,7 @@ namespace Content.Shared.CCVar
          * OOC
          */
 
-        public static readonly CVarDef<bool> OocEnabled = CVarDef.Create("ooc.enabled", true, CVar.NOTIFY);
+        public static readonly CVarDef<bool> OocEnabled = CVarDef.Create("ooc.enabled", true, CVar.NOTIFY | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> AdminOocEnabled =
             CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
@@ -516,7 +546,7 @@ namespace Content.Shared.CCVar
          * LOOC
          */
 
-        public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY);
+        public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> AdminLoocEnabled =
             CVarDef.Create("looc.enabled_admin", true, CVar.NOTIFY);
@@ -562,7 +592,7 @@ namespace Content.Shared.CCVar
         ///     See vote.enabled, but specific to map votes
         /// </summary>
         public static readonly CVarDef<bool> VoteMapEnabled =
-            CVarDef.Create("vote.map_enabled", true, CVar.SERVERONLY);
+            CVarDef.Create("vote.map_enabled", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     The required ratio of the server that must agree for a restart round vote to go through.
@@ -707,5 +737,37 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<string> DestinationFile =
             CVarDef.Create("autogen.destination_file", "", CVar.SERVER | CVar.SERVERONLY);
+
+        /*
+         * Network Resource Manager
+         */
+
+        /// <summary>
+        /// Controls whether new resources can be uploaded by admins.
+        /// Does not prevent already uploaded resources from being sent.
+        /// </summary>
+        public static readonly CVarDef<bool> ResourceUploadingEnabled =
+            CVarDef.Create("netres.enabled", true, CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// Controls the data size limit in megabytes for uploaded resources. If they're too big, they will be dropped.
+        /// Set to zero or a negative value to disable limit.
+        /// </summary>
+        public static readonly CVarDef<float> ResourceUploadingLimitMb =
+            CVarDef.Create("netres.limit", 3f, CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// Whether uploaded files will be stored in the server's database.
+        /// This is useful to keep "logs" on what files admins have uploaded in the past.
+        /// </summary>
+        public static readonly CVarDef<bool> ResourceUploadingStoreEnabled =
+            CVarDef.Create("netres.store_enabled", true, CVar.SERVER | CVar.SERVERONLY);
+
+        /// <summary>
+        /// Numbers of days before stored uploaded files are deleted. Set to zero or negative to disable auto-delete.
+        /// This is useful to free some space automatically. Auto-deletion runs only on server boot.
+        /// </summary>
+        public static readonly CVarDef<int> ResourceUploadingStoreDeletionDays =
+            CVarDef.Create("netres.store_deletion_days", 30, CVar.SERVER | CVar.SERVERONLY);
     }
 }
