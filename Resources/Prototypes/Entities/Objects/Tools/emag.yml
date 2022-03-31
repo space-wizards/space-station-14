@@ -2,7 +2,7 @@
   parent: BaseItem
   id: Emag
   name: cryptographic sequencer
-  description: The iconic card of ill omen.
+  description: The all-in-one hacking solution. The thinking man's lockpick. The iconic EMAG.
   components:
   - type: Emag
   - type: Sprite

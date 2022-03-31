@@ -217,6 +217,9 @@
   id: Ore
 
 - type: Tag
+  id: Payload # for grenade/bomb crafting
+  
+- type: Tag
   id: PercussionInstrument
 
 - type: Tag

@@ -1,5 +1,6 @@
 using Content.Server.Throwing;
 using Content.Shared.Acts;
+using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -10,6 +11,8 @@ namespace Content.Server.Explosion.Components
     public sealed class ExplosionLaunchedComponent : Component, IExAct
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {
             if (_entMan.Deleted(Owner))
@@ -34,7 +37,7 @@ namespace Content.Server.Explosion.Components
                 _ => 0,
             };
 
-            Owner.TryThrow(direction, throwForce);
+            _sysMan.GetEntitySystem<ThrowingSystem>().TryThrow(Owner, direction, throwForce);
         }
     }
 }

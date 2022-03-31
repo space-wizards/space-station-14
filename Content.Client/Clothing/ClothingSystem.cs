@@ -84,7 +84,8 @@ public sealed class ClothingSystem : EntitySystem
             var key = layer.MapKeys?.FirstOrDefault();
             if (key == null)
             {
-                key = i == 0 ? args.Slot : $"{args.Slot}-{i}";
+                // using the $"{args.Slot}" layer key as the "bookmark" for layer ordering until layer draw depths get added
+                key = $"{args.Slot}-{i}";
                 i++;
             }
 
@@ -254,6 +255,10 @@ public sealed class ClothingSystem : EntitySystem
             return;
         }
 
+        // temporary, until layer draw depths get added. Basically: a layer with the key "slot" is being used as a
+        // bookmark to determine where in the list of layers we should insert the clothing layers.
+        bool slotLayerExists = sprite.LayerMapTryGet(slot, out var index);
+        
         // add the new layers
         foreach (var (key, layerData) in ev.Layers)
         {
@@ -263,7 +268,16 @@ public sealed class ClothingSystem : EntitySystem
                 continue;
             }
 
-            var index = sprite.LayerMapReserveBlank(key);
+            if (slotLayerExists)
+            {
+                index++;
+                // note that every insertion requires reshuffling & remapping all the existing layers.
+                sprite.AddBlankLayer(index);
+                sprite.LayerMapSet(key, index);
+            }
+            else
+                index = sprite.LayerMapReserveBlank(key);
+
             if (sprite[index] is not Layer layer)
                 return;
 

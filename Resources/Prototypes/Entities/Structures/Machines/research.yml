@@ -34,6 +34,7 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/server_fans.ogg
+      
 - type: entity
   id: BaseResearchAndDevelopmentPointSource
   parent: BaseMachinePowered
@@ -54,6 +55,9 @@
     radius: 1.5
     energy: 1.6
     color: "#3db83b"
+  - type: ActivatableUI
+    key: enum.ResearchClientUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.ResearchClientUiKey.Key

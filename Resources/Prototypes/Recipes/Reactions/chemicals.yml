@@ -81,6 +81,7 @@
 - type: reaction
   id: PotassiumExplosion
   impact: High
+  priority: 20
   reactants:
     Water:
       amount: 1
@@ -98,6 +99,7 @@
 
 - type: reaction
   id: Smoke
+  priority: 10
   impact: High
   reactants:
     Phosphorus:
@@ -121,6 +123,7 @@
 
 - type: reaction
   id: Foam
+  priority: 10
   impact: High
   reactants:
     Fluorosurfactant:
@@ -146,6 +149,7 @@
 - type: reaction
   id: IronMetalFoam
   impact: High
+  priority: 10
   reactants:
     Iron:
       amount: 3
@@ -172,6 +176,7 @@
 - type: reaction
   id: AluminiumMetalFoam
   impact: High
+  priority: 10
   reactants:
     Aluminium:
       amount: 3
