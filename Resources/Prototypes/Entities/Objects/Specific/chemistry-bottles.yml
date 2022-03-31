@@ -139,4 +139,18 @@
         reagents:
         - ReagentId: RobustHarvest
           Quantity: 30
+          
+- type: entity
+  id: NocturineChemistryBottle
+  name: nocturine bottle
+  description: This will make someone fall down almost immediately. Hard to overdose on.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nocturine
+          Quantity: 30
 

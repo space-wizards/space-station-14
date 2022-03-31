@@ -2,25 +2,17 @@ using Content.Server.CharacterAppearance.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.CharacterAppearance.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public sealed class MagicMirrorComponent : SharedMagicMirrorComponent, IActivate
+    public sealed class MagicMirrorComponent : SharedMagicMirrorComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly SpriteAccessoryManager _spriteAccessoryManager = default!;
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MagicMirrorUiKey.Key);
+        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(MagicMirrorUiKey.Key);
 
         protected override void Initialize()
         {
@@ -93,37 +85,6 @@ namespace Content.Server.CharacterAppearance.Components
             }
 
             EntitySystem.Get<HumanoidAppearanceSystem>().ForceAppearanceUpdate(player);
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-            {
-                return;
-            }
-
-            if (!_entities.TryGetComponent(eventArgs.User, out HumanoidAppearanceComponent? looks))
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("magic-mirror-component-activate-user-has-no-hair"));
-                return;
-            }
-
-            UserInterface?.Toggle(actor.PlayerSession);
-
-            var appearance = looks.Appearance;
-
-            var msg = new MagicMirrorInitialDataMessage(
-                appearance.HairColor,
-                appearance.FacialHairColor,
-                appearance.HairStyleId,
-                appearance.FacialHairStyleId,
-                appearance.EyeColor,
-                looks.CategoriesHair,
-                looks.CategoriesFacialHair,
-                looks.CanColorHair,
-                looks.CanColorFacialHair);
-
-            UserInterface?.SendMessage(msg, actor.PlayerSession);
         }
     }
 }

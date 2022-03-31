@@ -27,6 +27,9 @@
     whitelist:
       components:
       - LightBulb
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: lighttube box
@@ -47,6 +50,9 @@
     whitelist:
       components:
       - LightBulb
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: mixed lights box
@@ -180,6 +186,9 @@
     layers:
       - state: box
       - state: writing
+  - type: Tag
+    tags:
+      - DroneUsable
 
 
 - type: entity
@@ -229,3 +238,6 @@
     layers:
       - state: box
       - state: writing
+  - type: Tag
+    tags:
+      - DroneUsable

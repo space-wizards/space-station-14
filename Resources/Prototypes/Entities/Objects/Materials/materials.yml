@@ -13,6 +13,14 @@
   - type: Tag
     tags:
       - DroneUsable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: MaterialBase
@@ -44,6 +52,11 @@
   - type: Material
     materials:
     - Cloth
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
   - type: Sprite
     state: cloth_3
   - type: Appearance
@@ -63,11 +76,6 @@
     state: cloth
   - type: Stack
     count: 1
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Fiber
-        Quantity: 3
 
 - type: entity
   parent: MaterialBase

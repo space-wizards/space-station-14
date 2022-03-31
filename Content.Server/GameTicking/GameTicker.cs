@@ -50,6 +50,7 @@ namespace Content.Server.GameTicking
             InitializeCVars();
             InitializePlayer();
             InitializeLobbyMusic();
+            InitializeLobbyBackground();
             InitializeGamePreset();
             InitializeJobController();
             InitializeUpdates();

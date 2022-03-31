@@ -16,7 +16,7 @@ namespace Content.Shared.Audio
         [DataField("enabled")]
         public bool Enabled { get; set; } = true;
 
-        [DataField("sound")]
+        [DataField("sound", required: true)]
         public SoundSpecifier Sound = default!;
 
         /// <summary>

@@ -23,7 +23,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public string OutletName { get; set; } = "pipe";
 
         [ViewVariables]
-        public readonly HashSet<Gas> FilterGases = GasVentScrubberData.DefaultFilterGases;
+        public readonly HashSet<Gas> FilterGases = new(GasVentScrubberData.DefaultFilterGases);
 
         [ViewVariables(VVAccess.ReadWrite)]
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;

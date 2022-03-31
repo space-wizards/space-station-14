@@ -167,3 +167,10 @@
   suffix: Gas
   components:
     - type: GasArtifact
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: DiseaseArtifact
+  suffix: Disease
+  components:
+    - type: DiseaseArtifact

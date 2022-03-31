@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Urist McHands The Lizardperson
+  name: Urisst' Mzhand
   parent: MobHumanBase
   id: MobReptilianBase
   abstract: true
@@ -108,7 +108,27 @@
       - map: [ "pocket2" ]
   - type: Body
     template: HumanoidTemplate
-    preset: HumanPreset
+    preset: ReptilianPreset
+  - type: LizardAccent
+  - type: DiseaseCarrier
+    diseaseResist: 0.1
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
+  - type: Temperature
+    heatDamageThreshold: 400
+    coldDamageThreshold: 285
+    currentTemperature: 310.15
+    specificHeat: 46
+    coldDamage:
+      types:
+        Cold : 1.1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 0.9 #per second, scales with temperature & other constants
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.7
+    baseSprintSpeed : 4.5
 
 - type: entity
   save: false

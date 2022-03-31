@@ -1,14 +1,9 @@
 using Content.Server.Power.Components;
 using Content.Shared.Interaction;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Research.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
     public sealed class ResearchPointSourceComponent : ResearchClientComponent
     {
         [DataField("pointspersecond")]
