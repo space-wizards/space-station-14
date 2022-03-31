@@ -1,16 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: Changed antag names in preferences, type: Add}
-  - {message: Does not choose a random traitor if there are available candidates,
-    type: Fix}
-  id: 775
-  time: '2021-12-26T03:13:38.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Beanbag rounds now stun people., type: Fix}
-  id: 776
-  time: '2021-12-26T22:22:20.0000000+00:00'
 - author: Pancake
   changes:
   - {message: Salvage Equipment crates can be purchased from the cargo computer.,
@@ -3032,7 +3020,12 @@ Entries:
   time: '2022-03-31T19:08:55.0000000+00:00'
 - author: Emisse
   changes:
-  - {message: 'Marathonstation, a remaster of Pubbystation from SS13',
-    type: Add}
+  - {message: 'Marathonstation, a remaster of Pubbystation from SS13', type: Add}
   id: 1275
   time: '2022-03-31T19:08:55.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: Added fun!, type: Add}
+  - {message: Removed fun!, type: Remove}
+  id: 1276
+  time: '2022-03-31T19:13:17.0000000+00:00'
