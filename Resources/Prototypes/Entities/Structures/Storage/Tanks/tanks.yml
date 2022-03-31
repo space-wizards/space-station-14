@@ -47,7 +47,7 @@
   parent: StorageTank
   name: water tank
   suffix: Empty
-  description: "A water tank. It is used to store high amounts of water."
+  description: "A water tank. It's used to store high amounts of water."
   components:
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
