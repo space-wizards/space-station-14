@@ -9,7 +9,7 @@
     sprite: Objects/Specific/Janitorial/mop.rsi
     state: mop
   - type: Item
-    size: 10
+    size: 15
     sprite: Objects/Specific/Janitorial/mop.rsi
   - type: Absorbent
   - type: SolutionContainerManager
@@ -74,6 +74,7 @@
     state: caution
   - type: Item
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
+    size: 15
   - type: Tag
     tags:
       - WetFloorSign
@@ -96,7 +97,7 @@
     - type: InteractionOutline
     - type: Storage
       popup: false
-      capacity: 60
+      capacity: 80
       blacklist: # there is exclusive item slots for that
         tags:
           - Mop
@@ -114,6 +115,16 @@
           whitelist:
             tags:
               - TrashBag
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeCircle
+            radius: 0.3
+          layer:
+            - SmallImpassable
+          mask:
+            - VaultImpassable
+          mass: 100
     - type: SolutionContainerManager
       solutions:
         bucket:
