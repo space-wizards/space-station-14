@@ -92,10 +92,11 @@
         - state: cart
         - state: cart_water_1
           map: ["enum.SolutionContainerLayers.Fill"]
-    - type: Storage
-      capacity: 60
     - type: Rotatable
     - type: InteractionOutline
+    - type: Storage
+      popup: false
+      capacity: 60
     - type: SolutionContainerManager
       solutions:
         bucket:

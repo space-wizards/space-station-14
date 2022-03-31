@@ -71,6 +71,11 @@ namespace Content.Server.Storage.Components
 
         [DataField("whitelist")]
         private EntityWhitelist? _whitelist = null;
+        [DataField("blacklist")]
+        public EntityWhitelist? Blacklist = null;
+
+        [DataField("popup")]
+        public bool ShowPopup = true;
 
         private bool _storageInitialCalculated;
         private int _storageUsed;
@@ -161,6 +166,11 @@ namespace Content.Server.Storage.Components
             }
 
             if (_whitelist != null && !_whitelist.IsValid(entity))
+            {
+                return false;
+            }
+
+            if (Blacklist != null && Blacklist.IsValid(entity))
             {
                 return false;
             }
@@ -256,14 +266,14 @@ namespace Content.Server.Storage.Components
 
             if (!handSys.TryDrop(player, toInsert.Value, handsComp: hands))
             {
-                Owner.PopupMessage(player, "Can't insert.");
+                Popup(player, "comp-storage-cant-insert");
                 return false;
             }
 
             if (!Insert(toInsert.Value))
             {
                 handSys.PickupOrDrop(player, toInsert.Value, handsComp: hands);
-                Owner.PopupMessage(player, "Can't insert.");
+                Popup(player, "comp-storage-cant-insert");
                 return false;
             }
 
@@ -682,6 +692,13 @@ namespace Content.Server.Storage.Components
                     exAct.OnExplosion(eventArgs);
                 }
             }
+        }
+
+        private void Popup(EntityUid player, string message)
+        {
+            if (!ShowPopup) return;
+
+            Owner.PopupMessage(player, Loc.GetString(message));
         }
 
         private void PlaySoundCollection()
