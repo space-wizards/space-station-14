@@ -312,10 +312,11 @@ namespace Content.Shared.Damage
         ///     total of each group. If no members of a group are present in this <see cref="DamageSpecifier"/>, the
         ///     group is not included in the resulting dictionary.
         /// </remarks>
-        public Dictionary<string, FixedPoint2> GetDamagePerGroup()
+        public Dictionary<string, FixedPoint2> GetDamagePerGroup(IPrototypeManager? protoManager = null)
         {
+            IoCManager.Resolve(ref protoManager);
             var damageGroupDict = new Dictionary<string, FixedPoint2>();
-            foreach (var group in IoCManager.Resolve<IPrototypeManager>().EnumeratePrototypes<DamageGroupPrototype>())
+            foreach (var group in protoManager.EnumeratePrototypes<DamageGroupPrototype>())
             {
                 if (TryGetDamageInGroup(group, out var value))
                 {

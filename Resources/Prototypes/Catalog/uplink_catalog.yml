@@ -75,6 +75,12 @@
   itemId: SyndieMiniBomb
   price: 6
 
+- type: uplinkListing
+  id: UplinkGrenadePenguin
+  category: Explosives
+  itemId: MobGrenadePenguin
+  price: 6
+
 #- type: uplinkListing
 #  id: UplinkExplosiveC4
 #  category: Weapons
@@ -299,4 +305,11 @@
   itemId: HandheldHealthAnalyzerGigacancer
   listingName: Ultragigacancer Health Analyzer
   description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
+  price: 5
+  
+- type: uplinkListing
+  id: UplinkNocturineChemistryBottle
+  category: Misc
+  itemId: NocturineChemistryBottle
+  description: A chemical that makes it very hard for your target to stand up.
   price: 5

@@ -4,7 +4,6 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Dispenser;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
@@ -75,20 +74,6 @@ namespace Content.Server.Chemistry.Components
             InitializeFromPrototype();
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage powerChanged:
-                    OnPowerChanged(powerChanged);
-                    break;
-            }
-        }
-
         /// <summary>
         /// Checks to see if the <c>pack</c> defined in this components yaml prototype
         /// exists. If so, it fills the reagent inventory list.
@@ -128,7 +113,7 @@ namespace Content.Server.Chemistry.Components
         }
 
 
-        private void OnPowerChanged(PowerChangedMessage e)
+        public void OnPowerChanged()
         {
             UpdateUserInterface();
         }
@@ -145,21 +130,14 @@ namespace Content.Server.Chemistry.Components
                 return;
             }
 
-            var msg = (UiButtonPressedMessage) obj.Message;
-            var needsPower = msg.Button switch
-            {
-                UiButton.Eject => false,
-                _ => true,
-            };
+            if (obj.Message is not UiButtonPressedMessage msg )
+                return;
 
-            if (!PlayerCanUseDispenser(obj.Session.AttachedEntity, needsPower))
+            if (!PlayerCanUseDispenser(obj.Session.AttachedEntity, true))
                 return;
 
             switch (msg.Button)
             {
-                case UiButton.Eject:
-                    EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(Owner, BeakerSlot, obj.Session.AttachedEntity);
-                    break;
                 case UiButton.Clear:
                     TryClear();
                     break;

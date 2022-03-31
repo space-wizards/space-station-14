@@ -132,7 +132,7 @@
   meltingPoint: -38.83
   boilingPoint: 356.73
   metabolisms:
-    Medicine:
+    Poison:
       effects:
       - !type:HealthChange
         damage:
@@ -237,7 +237,7 @@
     prob: 0.2
     amount: 0.1
   metabolisms:
-    Medicine:
+    Poison:
       effects:
       - !type:HealthChange
         damage:

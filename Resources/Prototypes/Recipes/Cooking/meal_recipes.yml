@@ -46,6 +46,25 @@
     FoodBreadBun: 1
     FoodMeatXeno: 1
 
+- type: microwaveMealRecipe
+  id: RecipeBearger
+  name: bearger recipe
+  result: FoodBurgerBear
+  time: 5
+  solids:
+    FoodBreadBun: 1
+    FoodMeatBear: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFiletMigrawr
+  name: filet migrawr recipe
+  result: FoodMealBearsteak
+  time: 10
+  solids:
+    FoodMeatBear: 1
+  reagents:
+    Beer: 15
+
 #- type: microwaveMealRecipe
 #  id: RecipeSuperBiteBurger
 #  name: super bite burger recipe

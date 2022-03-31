@@ -45,6 +45,8 @@ namespace Content.Shared.Containers.ItemSlots
 
             SubscribeLocalEvent<ItemSlotsComponent, ComponentGetState>(GetItemSlotsState);
             SubscribeLocalEvent<ItemSlotsComponent, ComponentHandleState>(HandleItemSlotsState);
+
+            SubscribeLocalEvent<ItemSlotsComponent, ItemSlotButtonPressedEvent>(HandleButtonPressed);
         }
 
         #region ComponentManagement
@@ -291,7 +293,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
 
             // hands.Drop(item) checks CanDrop action blocker
-            if (_handsSystem.TryDrop(user, hands.ActiveHand))
+            if (!_handsSystem.TryDrop(user, hands.ActiveHand))
                 return false;
 
             Insert(uid, slot, held, user);
@@ -487,6 +489,19 @@ namespace Content.Shared.Containers.ItemSlots
 
                 args.Verbs.Add(insertVerb);
             }
+        }
+        #endregion
+
+        #region BUIs
+        private void HandleButtonPressed(EntityUid uid, ItemSlotsComponent component, ItemSlotButtonPressedEvent args)
+        {
+            if (!component.Slots.TryGetValue(args.SlotId, out var slot))
+                return;
+
+            if (args.TryEject && slot.HasItem)
+                TryEjectToHands(uid, slot, args.Session.AttachedEntity);
+            else if (args.TryInsert && !slot.HasItem && args.Session.AttachedEntity is EntityUid user)
+                TryInsertFromHand(uid, slot, user);
         }
         #endregion
 

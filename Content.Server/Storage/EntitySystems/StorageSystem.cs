@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
@@ -6,6 +5,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Movement;
+using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -40,6 +40,34 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<UtilityVerb>>(AddTransferVerbs);
 
             SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
+
+            SubscribeNetworkEvent<RemoveEntityEvent>(OnRemoveEntity);
+            SubscribeNetworkEvent<InsertEntityEvent>(OnInsertEntity);
+            SubscribeNetworkEvent<CloseStorageUIEvent>(OnCloseStorageUI);
+        }
+
+        private void OnRemoveEntity(RemoveEntityEvent ev, EntitySessionEventArgs args)
+        {
+            if (TryComp<ServerStorageComponent>(ev.Storage, out var storage))
+            {
+                storage.HandleRemoveEntity(ev, args.SenderSession);
+            }
+        }
+
+        private void OnInsertEntity(InsertEntityEvent ev, EntitySessionEventArgs args)
+        {
+            if (TryComp<ServerStorageComponent>(ev.Storage, out var storage))
+            {
+                storage.HandleInsertEntity(args.SenderSession);
+            }
+        }
+
+        private void OnCloseStorageUI(CloseStorageUIEvent ev, EntitySessionEventArgs args)
+        {
+            if (TryComp<ServerStorageComponent>(ev.Storage, out var storage))
+            {
+                storage.HandleCloseUI(args.SenderSession);
+            }
         }
 
         private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, RelayMovementEntityEvent args)
