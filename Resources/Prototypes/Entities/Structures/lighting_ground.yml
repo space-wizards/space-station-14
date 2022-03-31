@@ -85,8 +85,9 @@
         Heat: 20
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
-  - type: DeviceNetworkComponent
+  - type: DeviceNetwork
     deviceNetId: Apc
+    receiveFrequencyId: SmartLight
   - type: ApcNetworkConnection
   - type: Construction
     graph: LightFixture
