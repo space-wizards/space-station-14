@@ -8,6 +8,7 @@ using Content.Server.Disease.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Headset;
 using Content.Server.Players;
+using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
@@ -43,6 +44,7 @@ public sealed class ChatSystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly ListeningSystem _listener = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     private const int VoiceRange = 7; // how far voice goes in world units
     private const int WhisperRange = 2; // how far whisper goes in world units
@@ -53,6 +55,11 @@ public sealed class ChatSystem : EntitySystem
     public override void Initialize()
     {
         _configurationManager.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
+    }
+
+    public override void Shutdown()
+    {
+        _configurationManager.UnsubValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged);
     }
 
     private void OnLoocEnabledChanged(bool val)
@@ -337,7 +344,7 @@ public sealed class ChatSystem : EntitySystem
             }
             else
             {
-                source.PopupMessage(Loc.GetString("chat-manager-no-headset-on-message"));
+                _popup.PopupEntity(Loc.GetString("chat-manager-no-headset-on-message"), source, Filter.Entities(source));
             }
         }
         else
@@ -385,11 +392,7 @@ public sealed class ChatSystem : EntitySystem
                 continue;
             }
 
-            if (_random.Prob(chance))
-            {
-                modifiedMessage[i] = modifiedMessage[i];
-            }
-            else
+            if (_random.Prob(1 - chance))
             {
                 modifiedMessage[i] = '~';
             }
@@ -433,7 +436,7 @@ public sealed class EntitySpokeEvent : EntityEventArgs
 ///     InGame IC chat is for chat that is specifically ingame (not lobby) but is also in character, i.e. speaking.
 /// </summary>
 // ReSharper disable once InconsistentNaming
-public enum InGameICChatType
+public enum InGameICChatType : byte
 {
     Speak,
     Emote,
@@ -443,7 +446,7 @@ public enum InGameICChatType
 /// <summary>
 ///     InGame OOC chat is for chat that is specifically ingame (not lobby) but is OOC, like deadchat or LOOC.
 /// </summary>
-public enum InGameOOCChatType
+public enum InGameOOCChatType : byte
 {
     Looc,
     Dead

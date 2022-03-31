@@ -286,7 +286,7 @@ namespace Content.Server.Chat.Managers
         #endregion
     }
 
-    public enum OOCChatType
+    public enum OOCChatType : byte
     {
         OOC,
         Admin
