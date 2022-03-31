@@ -126,7 +126,7 @@ namespace Content.Server.Explosion.EntitySystems
             float maxRange,
             MapId mapId)
         {
-            var entitiesInRange = _entityLookup.GetEntitiesInRange(mapId, boundingBox, 0).ToList();
+            var entitiesInRange = _entityLookup.GetEntitiesIntersecting(mapId, boundingBox).ToList();
 
             var impassableEntities = new List<(EntityUid, float)>();
             var nonImpassableEntities = new List<(EntityUid, float)>();
