@@ -86,8 +86,8 @@
   components:
     - type: Sprite
       netSync: false
-      sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
       noRot: true
+      sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
       layers:
         - state: cart
         - state: cart_water_1
@@ -97,9 +97,10 @@
     - type: Storage
       popup: false
       capacity: 60
-      blacklist:
+      blacklist: # there is exclusive item slots for that
         tags:
           - Mop
+          - TrashBag
     - type: ItemSlots
       slots:
         mop_slot:
@@ -107,7 +108,12 @@
           whitelist:
             tags:
               - Mop
-          insertOnInteract: false
+          insertOnInteract: false # or it conflicts with bucket logic
+        trashbag_slot:
+          name: Bag
+          whitelist:
+            tags:
+              - TrashBag
     - type: SolutionContainerManager
       solutions:
         bucket:
@@ -140,7 +146,7 @@
           whitelist:
             tags:
               - Spray
-        cart_sign1:
+        cart_sign1: # this is like stack of floor signs
           minCount: 1
           whitelist:
             tags:
