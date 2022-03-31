@@ -11,6 +11,7 @@ using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
 using Content.Shared.Sound;
 using Content.Shared.Audio;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -30,6 +31,7 @@ namespace Content.Server.Weapon.Melee
 {
     public sealed class MeleeWeaponSystem : EntitySystem
     {
+        [Dependency] private readonly SharedReagentIdManager _sharedReagentIdManager = default!;
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private SolutionContainerSystem _solutionsSystem = default!;
@@ -287,14 +289,14 @@ namespace Content.Server.Weapon.Melee
             if (hitBloodstreams.Count < 1)
                 return;
 
-            var removedSolution = solutionContainer.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
+            var removedSolution = solutionContainer.SplitSolution(comp.TransferAmount * hitBloodstreams.Count, _sharedReagentIdManager);
             var removedVol = removedSolution.TotalVolume;
-            var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency);
+            var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency, _sharedReagentIdManager);
             var volPerBloodstream = solutionToInject.TotalVolume * (1 / hitBloodstreams.Count);
 
             foreach (var bloodstream in hitBloodstreams)
             {
-                var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
+                var individualInjection = solutionToInject.SplitSolution(volPerBloodstream, _sharedReagentIdManager);
                 _bloodstreamSystem.TryAddToChemicals((bloodstream).Owner, individualInjection, bloodstream);
             }
         }

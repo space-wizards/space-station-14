@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Content.Shared.OpaqueId;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -47,9 +48,9 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
     /// </summary>
     /// <param name="reagentId">The prototype ID of the reagent to add.</param>
     /// <param name="quantity">The quantity in milli-units.</param>
-    public Solution(string reagentId, FixedPoint2 quantity)
+    public Solution(ReagentId reagentId, FixedPoint2 quantity, SharedReagentIdManager sharedReagentIdManager)
     {
-        AddReagent(reagentId, quantity);
+        AddReagent(reagentId, quantity, sharedReagentIdManager);
     }
 
     void ISerializationHooks.AfterDeserialization()
@@ -58,12 +59,12 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
         Contents.ForEach(reagent => TotalVolume += reagent.Quantity);
     }
 
-    public bool ContainsReagent(string reagentId)
+    public bool ContainsReagent(ReagentId reagentId)
     {
         return ContainsReagent(reagentId, out _);
     }
 
-    public bool ContainsReagent(string reagentId, out FixedPoint2 quantity)
+    public bool ContainsReagent(ReagentId reagentId, out FixedPoint2 quantity)
     {
         foreach (var reagent in Contents)
         {
@@ -78,11 +79,11 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
         return false;
     }
 
-    public string GetPrimaryReagentId()
+    public ReagentId? GetPrimaryReagentId()
     {
         if (Contents.Count == 0)
         {
-            return "";
+            return null;
         }
 
         var majorReagent = Contents.OrderByDescending(reagent => reagent.Quantity).First();
@@ -94,15 +95,14 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
     /// </summary>
     /// <param name="reagentId">The prototype ID of the reagent to add.</param>
     /// <param name="quantity">The quantity in milli-units.</param>
-    public void AddReagent(string reagentId, FixedPoint2 quantity, float? temperature = null)
+    public void AddReagent(ReagentId reagentId, FixedPoint2 quantity, SharedReagentIdManager sharedReagentIdManager, float? temperature = null)
     {
         if (quantity <= 0)
             return;
-        if (!IoCManager.Resolve<IPrototypeManager>().TryIndex(reagentId, out ReagentPrototype? proto))
-            proto = new ReagentPrototype();
-
+        IoCManager.Resolve(ref sharedReagentIdManager);
+        var proto = sharedReagentIdManager.GetObjectById(reagentId);
         var actualTemp = temperature ?? Temperature;
-        var oldThermalEnergy = Temperature * GetHeatCapacity();
+        var oldThermalEnergy = Temperature * GetHeatCapacity(sharedReagentIdManager);
         var addedThermalEnergy = (float) quantity * proto.SpecificHeat * actualTemp;
         for (var i = 0; i < Contents.Count; i++)
         {
@@ -127,7 +127,7 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
     ///     Scales the amount of solution.
     /// </summary>
     /// <param name="scale">The scalar to modify the solution by.</param>
-    public void ScaleSolution(float scale)
+    public void ScaleSolution(float scale, SharedReagentIdManager sharedReagentIdManager)
     {
         if (scale == 1) return;
         var tempContents = new List<ReagentQuantity>(Contents);
@@ -135,11 +135,11 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
         {
             if(scale > 1)
             {
-                AddReagent(current.ReagentId, current.Quantity * scale - current.Quantity);
+                AddReagent(current.ReagentId, current.Quantity * scale - current.Quantity, sharedReagentIdManager, null);
             }
             else
             {
-                RemoveReagent(current.ReagentId, current.Quantity - current.Quantity * scale);
+                RemoveReagent(current.ReagentId, current.Quantity - current.Quantity * scale, sharedReagentIdManager);
             }
         }
     }
@@ -149,7 +149,7 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
     /// </summary>
     /// <param name="reagentId">The prototype ID of the reagent to add.</param>
     /// <returns>The quantity in milli-units.</returns>
-    public FixedPoint2 GetReagentQuantity(string reagentId)
+    public FixedPoint2 GetReagentQuantity(ReagentId reagentId)
     {
         for (var i = 0; i < Contents.Count; i++)
         {
@@ -166,8 +166,11 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
     /// <param name="reagentId">The reagent to be removed.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
     /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
-    public FixedPoint2 RemoveReagent(string reagentId, FixedPoint2 quantity)
+    public FixedPoint2 RemoveReagent(ReagentId reagentId, FixedPoint2 quantity, SharedReagentIdManager sharedReagentIdManager)
     {
+        var proto = sharedReagentIdManager.GetObjectById(reagentId);
+        var oldThermalEnergy = Temperature * GetHeatCapacity(sharedReagentIdManager);
+        var removedThermalEnergy = (float) quantity * proto.SpecificHeat * Temperature;
         if(quantity <= 0)
             return FixedPoint2.Zero;
 
@@ -235,7 +238,7 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
         TotalVolume = FixedPoint2.New(0);
     }
 
-    public Solution SplitSolution(FixedPoint2 quantity)
+    public Solution SplitSolution(FixedPoint2 quantity, SharedReagentIdManager sharedReagentIdManager)
     {
         if (quantity <= 0)
             return new Solution();
@@ -253,7 +256,7 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
         var newTotalVolume = FixedPoint2.New(0);
         var newHeatCapacity = 0.0d;
         var remainingVolume = TotalVolume;
-        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+        IoCManager.Resolve(ref sharedReagentIdManager);
 
         for (var i = Contents.Count - 1; i >= 0; i--)
         {
@@ -263,8 +266,7 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
 
             var reagent = Contents[i];
             var ratio = (remainingVolume - quantity).Double() / remainingVolume.Double();
-            if(!prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
-                proto = new ReagentPrototype();
+            var proto = sharedReagentIdManager.GetObjectById(reagent.ReagentId);
 
             remainingVolume -= reagent.Quantity;
 
@@ -291,10 +293,10 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
         return newSolution;
     }
 
-    public void AddSolution(Solution otherSolution)
+    public void AddSolution(Solution otherSolution, SharedReagentIdManager sharedReagentIdManager)
     {
-        var oldThermalEnergy = Temperature * GetHeatCapacity();
-        var addedThermalEnergy = otherSolution.Temperature * otherSolution.GetHeatCapacity();
+        var oldThermalEnergy = Temperature * GetHeatCapacity(sharedReagentIdManager);
+        var addedThermalEnergy = otherSolution.Temperature * otherSolution.GetHeatCapacity(sharedReagentIdManager);
         for (var i = 0; i < otherSolution.Contents.Count; i++)
         {
             var otherReagent = otherSolution.Contents[i];
@@ -321,7 +323,7 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
         ThermalEnergy = oldThermalEnergy + addedThermalEnergy;
     }
 
-    private Color GetColor()
+    private Color GetColor(IOpaqueIdManager<ReagentId, ReagentPrototype>? reagentIdManager = null)
     {
         if (TotalVolume == 0)
         {
@@ -330,16 +332,13 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
 
         Color mixColor = default;
         var runningTotalQuantity = FixedPoint2.New(0);
-        var protoManager = IoCManager.Resolve<IPrototypeManager>();
+        IoCManager.Resolve(ref reagentIdManager);
 
         foreach (var reagent in Contents)
         {
             runningTotalQuantity += reagent.Quantity;
 
-            if (!protoManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
-            {
-                continue;
-            }
+            var proto = reagentIdManager.GetObjectById(reagent.ReagentId);
 
             if (mixColor == default)
             {
@@ -353,22 +352,19 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
         return mixColor;
     }
 
-    public Solution Clone()
+    public Solution Clone(IOpaqueIdManager<ReagentId, ReagentPrototype>? reagentIdManager = null)
     {
         var volume = FixedPoint2.New(0);
         var heatCapacity = 0.0d;
         var newSolution = new Solution();
-        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+        IoCManager.Resolve(ref reagentIdManager);
 
         for (var i = 0; i < Contents.Count; i++)
         {
             var reagent = Contents[i];
-            if (!prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
-                proto = new ReagentPrototype();
-
             newSolution.Contents.Add(reagent);
             volume += reagent.Quantity;
-            heatCapacity += (float) reagent.Quantity * proto.SpecificHeat;
+            heatCapacity += (float) reagent.Quantity * reagentIdManager.GetObjectById(reagent.ReagentId).SpecificHeat;
         }
 
         newSolution.TotalVolume = volume;
@@ -391,11 +387,11 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
     public readonly struct ReagentQuantity: IComparable<ReagentQuantity>
     {
         [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
-        public readonly string ReagentId;
+        public readonly ReagentId ReagentId;
         [DataField("Quantity")]
         public readonly FixedPoint2 Quantity;
 
-        public ReagentQuantity(string reagentId, FixedPoint2 quantity)
+        public ReagentQuantity(ReagentId reagentId, FixedPoint2 quantity)
         {
             ReagentId = reagentId;
             Quantity = quantity;
@@ -409,7 +405,7 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
 
         public int CompareTo(ReagentQuantity other) { return Quantity.Float().CompareTo(other.Quantity.Float()); }
 
-        public void Deconstruct(out string reagentId, out FixedPoint2 quantity)
+        public void Deconstruct(out ReagentId reagentId, out FixedPoint2 quantity)
         {
             reagentId = ReagentId;
             quantity = Quantity;

@@ -25,11 +25,9 @@ public sealed class SolutionChangedEvent : EntityEventArgs
 [UsedImplicitly]
 public sealed partial class SolutionContainerSystem : EntitySystem
 {
-    [Dependency]
-    private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
-
-    [Dependency]
-    private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
+    [Dependency] private readonly SharedReagentIdManager _sharedReagentIdManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -71,12 +69,14 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         var primaryReagent = solutionHolder.GetPrimaryReagentId();
 
-        if (!_prototypeManager.TryIndex(primaryReagent, out ReagentPrototype? proto))
+        if (primaryReagent is null)
         {
             Logger.Error(
-                $"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
+                $"{nameof(Solution)} could not find the prototype associated with a null reagent!");
             return;
         }
+
+        var proto = _sharedReagentIdManager.GetObjectById(primaryReagent.Value);
 
         var colorHex = solutionHolder.Color
             .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
@@ -111,7 +111,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <returns>The solution that was removed.</returns>
     public Solution SplitSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity)
     {
-        var splitSol = solutionHolder.SplitSolution(quantity);
+        var splitSol = solutionHolder.SplitSolution(quantity, _sharedReagentIdManager);
         UpdateChemicals(targetUid, solutionHolder);
         return splitSol;
     }
@@ -175,11 +175,11 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="quantity">The amount of reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
-    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string reagentId, FixedPoint2 quantity,
+    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, ReagentId reagentId, FixedPoint2 quantity,
         out FixedPoint2 acceptedQuantity, float? temperature = null)
     {
         acceptedQuantity = targetSolution.AvailableVolume > quantity ? quantity : targetSolution.AvailableVolume;
-        targetSolution.AddReagent(reagentId, acceptedQuantity, temperature);
+        targetSolution.AddReagent(reagentId, acceptedQuantity, _sharedReagentIdManager, temperature);
 
         if (acceptedQuantity > 0)
             UpdateChemicals(targetUid, targetSolution, true);
@@ -195,12 +195,12 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="reagentId">The Id of the reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
     /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool TryRemoveReagent(EntityUid targetUid, Solution? container, string reagentId, FixedPoint2 quantity)
+    public bool TryRemoveReagent(EntityUid targetUid, Solution? container, ReagentId reagentId, FixedPoint2 quantity)
     {
         if (container == null || !container.ContainsReagent(reagentId))
             return false;
 
-        container.RemoveReagent(reagentId, quantity);
+        container.RemoveReagent(reagentId, quantity, _sharedReagentIdManager);
         UpdateChemicals(targetUid, container);
         return true;
     }
@@ -218,7 +218,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             || !targetSolution.CanAddSolution(addedSolution) || addedSolution.TotalVolume == 0)
             return false;
 
-        targetSolution.AddSolution(addedSolution);
+        targetSolution.AddSolution(addedSolution, _sharedReagentIdManager);
         UpdateChemicals(targetUid, targetSolution, true);
         return true;
     }
@@ -246,10 +246,10 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             return false;
         }
 
-        targetSolution.AddSolution(addedSolution);
+        targetSolution.AddSolution(addedSolution, _sharedReagentIdManager);
         UpdateChemicals(targetUid, targetSolution, true);
         overflowingSolution = targetSolution.SplitSolution(FixedPoint2.Max(FixedPoint2.Zero,
-            targetSolution.CurrentVolume - overflowThreshold));
+            targetSolution.CurrentVolume - overflowThreshold), _sharedReagentIdManager);
         return true;
     }
 
@@ -309,17 +309,17 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         {
             var (reagentId, _) = solution.Contents[i];
 
-            var removedQuantity = solution.RemoveReagent(reagentId, quantity);
+            var removedQuantity = solution.RemoveReagent(reagentId, quantity, _sharedReagentIdManager);
 
             if(removedQuantity > 0)
-                removedSolution.AddReagent(reagentId, removedQuantity);
+                removedSolution.AddReagent(reagentId, removedQuantity, _sharedReagentIdManager);
         }
 
         UpdateChemicals(uid, solution);
         return removedSolution;
     }
 
-    public FixedPoint2 GetReagentQuantity(EntityUid owner, string reagentId)
+    public FixedPoint2 GetReagentQuantity(EntityUid owner, ReagentId reagentId)
     {
         var reagentQuantity = FixedPoint2.New(0);
         if (EntityManager.EntityExists(owner)

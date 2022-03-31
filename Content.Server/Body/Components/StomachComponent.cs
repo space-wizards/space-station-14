@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -50,11 +51,11 @@ namespace Content.Server.Body.Components
         /// </summary>
         public sealed class ReagentDelta
         {
-            public readonly string ReagentId;
+            public readonly ReagentId ReagentId;
             public readonly FixedPoint2 Quantity;
             public float Lifetime { get; private set; }
 
-            public ReagentDelta(string reagentId, FixedPoint2 quantity)
+            public ReagentDelta(ReagentId reagentId, FixedPoint2 quantity)
             {
                 ReagentId = reagentId;
                 Quantity = quantity;

@@ -20,6 +20,7 @@ namespace Content.Server.Body.Systems
     [UsedImplicitly]
     public sealed class MetabolizerSystem : EntitySystem
     {
+        [Dependency] private readonly SharedReagentIdManager _sharedReagentIdManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -115,8 +116,7 @@ namespace Content.Server.Body.Systems
             int reagents = 0;
             foreach (var reagent in list)
             {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var proto))
-                    continue;
+                var proto = _sharedReagentIdManager.GetObjectById(reagent.ReagentId);
 
                 FixedPoint2 mostToRemove = FixedPoint2.Zero;
                 if (proto.Metabolisms == null)

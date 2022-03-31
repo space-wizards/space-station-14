@@ -1,6 +1,4 @@
-﻿using Content.Shared.Chemistry.Managers;
-using Content.Shared.OpaqueId;
-using Lidgren.Network;
+﻿using Content.Shared.OpaqueId;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.Reagent;

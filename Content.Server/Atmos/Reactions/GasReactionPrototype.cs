@@ -22,7 +22,7 @@ namespace Content.Server.Atmos.Reactions
         Fire = 0,
     }
 
-    [Prototype("gasReaction")]
+    [Prototype("gasReaction", 10)]
     public sealed class GasReactionPrototype : IPrototype
     {
         [ViewVariables]

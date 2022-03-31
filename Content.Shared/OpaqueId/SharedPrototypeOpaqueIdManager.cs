@@ -1,5 +1,4 @@
-﻿using Content.Shared.Chemistry.Managers;
-using Lidgren.Network;
+﻿using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -10,6 +9,8 @@ public abstract class SharedPrototypeOpaqueIdManager<TId, TPrototype> : IOpaqueI
     where TId: unmanaged, IOpaqueId, IEquatable<TId>
     where TPrototype: class, IOpaquelyIded<TId>, IPrototype
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
     protected readonly Dictionary<TId, TPrototype> PrototypesById = new();
 
     private uint _idCounter = 1;
@@ -48,9 +49,19 @@ public abstract class SharedPrototypeOpaqueIdManager<TId, TPrototype> : IOpaqueI
     /// Thrown if the given ID is invalid.
     /// This can only happen if the client is not yet fully connected, or if the server has not yet initialized this manager.
     /// </exception>
-    TPrototype IOpaqueIdManager<TId, TPrototype>.GetObjectById(TId id)
+    public TPrototype GetObjectById(TId id)
     {
         return PrototypesById[id];
+    }
+
+    public string GetPrototypeIdById(TId id)
+    {
+        return GetObjectById(id).ID;
+    }
+
+    public TId GetIdByPrototypeId(string id)
+    {
+        return _prototypeManager.Index<TPrototype>(id).OpaqueId!.Value;
     }
 
     public sealed class PrototypeOpaqueIdManagerUpdateMessage : NetMessage

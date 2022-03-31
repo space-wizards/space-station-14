@@ -14,11 +14,13 @@ using Robust.Shared.Localization;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Kitchen.Components;
+using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.PowerCell;
 
 public sealed class PowerCellSystem : SharedPowerCellSystem
 {
+    [Dependency] private readonly SharedReagentIdManager _sharedReagentIdManager = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly AdminLogSystem _logSystem = default!;
@@ -108,9 +110,11 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
     private void OnSolutionChange(EntityUid uid, PowerCellComponent component, SolutionChangedEvent args)
     {
+        //TODO: Don't hardcode plasma here!
         component.IsRigged = _solutionsSystem.TryGetSolution(uid, PowerCellComponent.SolutionName, out var solution)
-                               && solution.ContainsReagent("Plasma", out var plasma)
-                               && plasma >= 5;
+                             && solution.ContainsReagent(_sharedReagentIdManager.GetIdByPrototypeId("Plasma"),
+                                 out var plasma)
+                             && plasma >= 5;
 
         if (component.IsRigged)
         {

@@ -53,7 +53,7 @@ namespace Content.Server.Tools
                 || !_solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var fuelSolution, solutionContainer))
                 return (FixedPoint2.Zero, FixedPoint2.Zero);
 
-            return (_solutionContainerSystem.GetReagentQuantity(uid, welder.FuelReagent), fuelSolution.MaxVolume);
+            return (_solutionContainerSystem.GetReagentQuantity(uid, _sharedReagentIdManager.GetIdByPrototypeId(welder.FuelReagent)), fuelSolution.MaxVolume);
         }
 
         public bool TryToggleWelder(EntityUid uid, EntityUid? user,
@@ -89,7 +89,8 @@ namespace Content.Server.Tools
             if (!_solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var solution, solutionContainer))
                 return false;
 
-            var fuel = solution.GetReagentQuantity(welder.FuelReagent);
+            var fuelReagent = _sharedReagentIdManager.GetIdByPrototypeId(welder.FuelReagent);
+            var fuel = solution.GetReagentQuantity(fuelReagent);
 
             // Not enough fuel to lit welder.
             if (fuel == FixedPoint2.Zero || fuel < welder.FuelLitCost)
@@ -99,7 +100,7 @@ namespace Content.Server.Tools
                 return false;
             }
 
-            solution.RemoveReagent(welder.FuelReagent, welder.FuelLitCost);
+            solution.RemoveReagent(fuelReagent, welder.FuelLitCost, _sharedReagentIdManager);
 
             welder.Lit = true;
 
@@ -277,7 +278,8 @@ namespace Content.Server.Tools
                 return;
             }
 
-            solution.RemoveReagent(welder.FuelReagent, neededFuel);
+            solution.RemoveReagent(_sharedReagentIdManager.GetIdByPrototypeId(welder.FuelReagent), neededFuel,
+                _sharedReagentIdManager);
             welder.Dirty();
         }
 
@@ -311,9 +313,11 @@ namespace Content.Server.Tools
                 // TODO: Use TransformComponent directly.
                 _atmosphereSystem.HotspotExpose(EntityManager.GetComponent<TransformComponent>(welder.Owner).Coordinates, 700, 50, true);
 
-                solution.RemoveReagent(welder.FuelReagent, welder.FuelConsumption * _welderTimer);
+                var fuelReagent = _sharedReagentIdManager.GetIdByPrototypeId(welder.FuelReagent);
 
-                if (solution.GetReagentQuantity(welder.FuelReagent) <= FixedPoint2.Zero)
+                solution.RemoveReagent(fuelReagent, welder.FuelConsumption * _welderTimer, _sharedReagentIdManager);
+
+                if (solution.GetReagentQuantity(fuelReagent) <= FixedPoint2.Zero)
                     TryTurnWelderOff(tool, null, welder);
 
                 welder.Dirty();

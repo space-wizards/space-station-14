@@ -20,6 +20,7 @@ namespace Content.Server.Fluids.EntitySystems;
 [UsedImplicitly]
 public sealed class SpillableSystem : EntitySystem
 {
+    [Dependency] private readonly SharedReagentIdManager _sharedReagentIdManager = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -171,10 +172,10 @@ public sealed class SpillableSystem : EntitySystem
             for (var i = 0; i < solution.Contents.Count; i++)
             {
                 var (reagentId, quantity) = solution.Contents[i];
-                var proto = _prototypeManager.Index<ReagentPrototype>(reagentId);
+                var proto = _sharedReagentIdManager.GetObjectById(reagentId);
                 var removed = proto.ReactionTile(tileRef, quantity);
                 if (removed <= FixedPoint2.Zero) continue;
-                solution.RemoveReagent(reagentId, removed);
+                solution.RemoveReagent(reagentId, removed, _sharedReagentIdManager);
             }
         }
 

@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.OpaqueId;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -15,6 +16,7 @@ namespace Content.Shared.Chemistry
     [UsedImplicitly]
     public sealed class ReactiveSystem : EntitySystem
     {
+        [Dependency] private readonly SharedReagentIdManager _sharedReagentIdManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
@@ -27,10 +29,10 @@ namespace Content.Shared.Chemistry
             }
         }
 
-        public void ReactionEntity(EntityUid uid, ReactionMethod method, string reagentId, FixedPoint2 reactVolume, Solution? source)
+        public void ReactionEntity(EntityUid uid, ReactionMethod method, ReagentId reagentId, FixedPoint2 reactVolume, Solution? source)
         {
             // We throw if the reagent specified doesn't exist.
-            ReactionEntity(uid, method, _prototypeManager.Index<ReagentPrototype>(reagentId), reactVolume, source);
+            ReactionEntity(uid, method, _sharedReagentIdManager.GetObjectById(reagentId), reactVolume, source);
         }
 
         public void ReactionEntity(EntityUid uid, ReactionMethod method, ReagentPrototype reagent,
@@ -41,7 +43,7 @@ namespace Content.Shared.Chemistry
 
             // If we have a source solution, use the reagent quantity we have left. Otherwise, use the reaction volume specified.
             var args = new ReagentEffectArgs(uid, null, source, reagent,
-                source?.GetReagentQuantity(reagent.ID) ?? reactVolume, EntityManager, method);
+                source?.GetReagentQuantity(reagent.OpaqueId!.Value) ?? reactVolume, EntityManager, method);
 
             // First, check if the reagent wants to apply any effects.
             if (reagent.ReactiveEffects != null && reactive.ReactiveGroups != null)

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
@@ -27,6 +27,7 @@ namespace Content.Server.Kitchen.EntitySystems
     [UsedImplicitly]
     internal sealed class ReagentGrinderSystem : EntitySystem
     {
+        [Dependency] private readonly SharedReagentIdManager _sharedReagentIdManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
@@ -129,7 +130,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             _itemSlotsSystem.RemoveItemSlot(uid, component.BeakerSlot);
         }
-        
+
         private void OnUIMessageReceived(EntityUid uid, ReagentGrinderComponent component,
             ServerBoundUserInterfaceMessage message)
         {
@@ -261,7 +262,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             RaiseLocalEvent(item, juiceEvent, false);
                             if (component.BeakerSolution.CurrentVolume + solution.CurrentVolume * juiceEvent.Scalar >
                                 component.BeakerSolution.MaxVolume) continue;
-                            solution.ScaleSolution(juiceEvent.Scalar);
+                            solution.ScaleSolution(juiceEvent.Scalar, _sharedReagentIdManager);
                             _solutionsSystem.TryAddSolution(beakerEntity, component.BeakerSolution, solution);
                             EntityManager.DeleteEntity(item);
                         }
@@ -292,7 +293,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                             if (component.BeakerSolution.CurrentVolume + juiceMe.JuiceSolution.TotalVolume * juiceEvent.Scalar > component.BeakerSolution.MaxVolume)
                                 continue;
-                            juiceMe.JuiceSolution.ScaleSolution(juiceEvent.Scalar);
+                            juiceMe.JuiceSolution.ScaleSolution(juiceEvent.Scalar, _sharedReagentIdManager);
                             _solutionsSystem.TryAddSolution(beakerEntity, component.BeakerSolution, juiceMe.JuiceSolution);
                             EntityManager.DeleteEntity(item);
                         }

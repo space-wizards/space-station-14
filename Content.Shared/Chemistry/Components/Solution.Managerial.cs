@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Content.Shared.OpaqueId;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -55,7 +56,7 @@ namespace Content.Shared.Chemistry.Components
         ///     The total heat capacity of all reagents in the solution.
         /// </summary>
         [ViewVariables]
-        public float HeatCapacity => GetHeatCapacity();
+        public float HeatCapacity => GetHeatCapacity(IoCManager.Resolve<SharedReagentIdManager>());
 
         /// <summary>
         ///     The average specific heat of all reagents in the solution.
@@ -76,14 +77,13 @@ namespace Content.Shared.Chemistry.Components
         ///     Returns the total heat capacity of the reagents in this solution.
         /// </summary>
         /// <returns>The total heat capacity of the reagents in this solution.</returns>
-        private float GetHeatCapacity()
+        private float GetHeatCapacity(SharedReagentIdManager sharedReagentIdManager)
         {
             var heatCapacity = 0.0f;
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            IoCManager.Resolve(ref sharedReagentIdManager);
             foreach(var reagent in Contents)
             {
-                if (!prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
-                    proto = new ReagentPrototype();
+                var proto = sharedReagentIdManager.GetObjectById(reagent.ReagentId);
 
                 heatCapacity += (float) reagent.Quantity * proto.SpecificHeat;
             }

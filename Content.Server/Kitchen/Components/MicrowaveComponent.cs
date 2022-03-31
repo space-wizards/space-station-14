@@ -13,6 +13,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -32,8 +33,8 @@ namespace Content.Server.Kitchen.Components
     [RegisterComponent]
     public sealed class MicrowaveComponent : SharedMicrowaveComponent, IInteractUsing, ISuicideAct, IBreakAct
     {
+        [Dependency] private readonly SharedReagentIdManager _sharedReagentIdManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
-
         [Dependency] private readonly RecipeManager _recipeManager = default!;
 
         #region YAMLSERIALIZE
@@ -407,14 +408,15 @@ namespace Content.Server.Kitchen.Components
                 {
                     foreach (var (reagent, _) in recipe.IngredientsReagents)
                     {
+                        var reagentId = _sharedReagentIdManager.GetIdByPrototypeId(reagent);
                         // removed everything
                         if (!totalReagentsToRemove.ContainsKey(reagent))
                             continue;
 
-                        if (!solution.ContainsReagent(reagent))
+                        if (!solution.ContainsReagent(reagentId))
                             continue;
 
-                        var quant = solution.GetReagentQuantity(reagent);
+                        var quant = solution.GetReagentQuantity(reagentId);
 
                         if (quant >= totalReagentsToRemove[reagent])
                         {
@@ -426,7 +428,7 @@ namespace Content.Server.Kitchen.Components
                             totalReagentsToRemove[reagent] -= quant;
                         }
 
-                        solutionContainerSystem.TryRemoveReagent(item, solution, reagent, quant);
+                        solutionContainerSystem.TryRemoveReagent(item, solution, reagentId, quant);
                     }
                 }
             }

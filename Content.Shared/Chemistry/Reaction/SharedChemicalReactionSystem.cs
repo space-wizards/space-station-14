@@ -22,6 +22,7 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private const int MaxReactionIterations = 20;
 
+        [Dependency] private readonly SharedReagentIdManager _sharedReagentIdManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] protected readonly SharedAdminLogSystem _logSystem = default!;
@@ -106,7 +107,7 @@ namespace Content.Shared.Chemistry.Reaction
         /// <param name="reaction">The reaction to check.</param>
         /// <param name="lowestUnitReactions">How many times this reaction can occur.</param>
         /// <returns></returns>
-        private static bool CanReact(Solution solution, ReactionPrototype reaction, out FixedPoint2 lowestUnitReactions)
+        private bool CanReact(Solution solution, ReactionPrototype reaction, out FixedPoint2 lowestUnitReactions)
         {
             lowestUnitReactions = FixedPoint2.MaxValue;
             if (solution.Temperature < reaction.MinimumTemperature)
@@ -123,8 +124,9 @@ namespace Content.Shared.Chemistry.Reaction
             {
                 var reactantName = reactantData.Key;
                 var reactantCoefficient = reactantData.Value.Amount;
+                var reagentId = _sharedReagentIdManager.GetIdByPrototypeId(reactantName);
 
-                if (!solution.ContainsReagent(reactantName, out var reactantQuantity))
+                if (!solution.ContainsReagent(reagentId, out var reactantQuantity))
                     return false;
 
                 if (reactantData.Value.Catalyst)
@@ -167,7 +169,7 @@ namespace Content.Shared.Chemistry.Reaction
                 if (!reactant.Value.Catalyst)
                 {
                     var amountToRemove = unitReactions * reactant.Value.Amount;
-                    solution.RemoveReagent(reactant.Key, amountToRemove);
+                    solution.RemoveReagent(_sharedReagentIdManager.GetIdByPrototypeId(reactant.Key), amountToRemove, _sharedReagentIdManager);
                 }
             }
 
@@ -175,7 +177,7 @@ namespace Content.Shared.Chemistry.Reaction
             var products = new Solution();
             foreach (var product in reaction.Products)
             {
-                products.AddReagent(product.Key, product.Value * unitReactions);
+                products.AddReagent(_sharedReagentIdManager.GetIdByPrototypeId(product.Key), product.Value * unitReactions, _sharedReagentIdManager);
             }
 
             // Trigger reaction effects
@@ -215,7 +217,7 @@ namespace Content.Shared.Chemistry.Reaction
         {
             foreach(var reactant in solution.Contents)
             {
-                if (!_reactions.TryGetValue(reactant.ReagentId, out var reactions))
+                if (!_reactions.TryGetValue(_sharedReagentIdManager.GetPrototypeIdById(reactant.ReagentId), out var reactions))
                     continue;
 
                 foreach(var reaction in reactions)
@@ -245,7 +247,7 @@ namespace Content.Shared.Chemistry.Reaction
                 if (products.TotalVolume <= 0)
                     return;
 
-                solution.AddSolution(products);
+                solution.AddSolution(products, _sharedReagentIdManager);
             }
             Logger.Error($"{nameof(Solution)} {owner} could not finish reacting in under {MaxReactionIterations} loops.");
         }
@@ -272,7 +274,7 @@ namespace Content.Shared.Chemistry.Reaction
                     products.RemoveSolution(excessVolume); //excess product is deleted to fit under volume limit
                 }
 
-                solution.AddSolution(products);
+                solution.AddSolution(products, _sharedReagentIdManager);
             }
             Logger.Error($"{nameof(Solution)} {owner} could not finish reacting in under {MaxReactionIterations} loops.");
         }

@@ -19,6 +19,7 @@ namespace Content.Server.Body.Systems;
 
 public sealed class BloodstreamSystem : EntitySystem
 {
+    [Dependency] private readonly SharedReagentIdManager _sharedReagentIdManager = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SpillableSystem _spillableSystem = default!;
@@ -97,7 +98,7 @@ public sealed class BloodstreamSystem : EntitySystem
         component.BloodTemporarySolution.MaxVolume = component.BleedPuddleThreshold * 4; // give some leeway, for chemstream as well
 
         // Fill blood solution with BLOOD
-        _solutionContainerSystem.TryAddReagent(uid, component.BloodSolution, component.BloodReagent,
+        _solutionContainerSystem.TryAddReagent(uid, component.BloodSolution, _sharedReagentIdManager.GetIdByPrototypeId(component.BloodReagent),
             component.BloodMaxVolume, out _);
     }
 
@@ -192,19 +193,22 @@ public sealed class BloodstreamSystem : EntitySystem
             return false;
 
         if (amount >= 0)
-            return _solutionContainerSystem.TryAddReagent(uid, component.BloodSolution, component.BloodReagent, amount, out _);
+        {
+            return _solutionContainerSystem.TryAddReagent(uid, component.BloodSolution,
+                _sharedReagentIdManager.GetIdByPrototypeId(component.BloodReagent), amount, out _);
+        }
 
         // Removal is more involved,
         // since we also wanna handle moving it to the temporary solution
         // and then spilling it if necessary.
-        var newSol = component.BloodSolution.SplitSolution(-amount);
-        component.BloodTemporarySolution.AddSolution(newSol);
+        var newSol = component.BloodSolution.SplitSolution(-amount, _sharedReagentIdManager);
+        component.BloodTemporarySolution.AddSolution(newSol, _sharedReagentIdManager);
 
         if (component.BloodTemporarySolution.CurrentVolume > component.BleedPuddleThreshold)
         {
             // Pass some of the chemstream into the spilled blood.
-            var temp = component.ChemicalSolution.SplitSolution(component.BloodTemporarySolution.CurrentVolume / 10);
-            component.BloodTemporarySolution.AddSolution(temp);
+            var temp = component.ChemicalSolution.SplitSolution(component.BloodTemporarySolution.CurrentVolume / 10, _sharedReagentIdManager);
+            component.BloodTemporarySolution.AddSolution(temp, _sharedReagentIdManager);
             _spillableSystem.SpillAt(uid, component.BloodTemporarySolution, "PuddleBlood", false);
             component.BloodTemporarySolution.RemoveAllSolution();
         }
@@ -238,9 +242,9 @@ public sealed class BloodstreamSystem : EntitySystem
                   component.ChemicalSolution.MaxVolume;
         var tempSol = new Solution() { MaxVolume = max };
 
-        tempSol.AddSolution(component.BloodSolution);
-        tempSol.AddSolution(component.BloodTemporarySolution);
-        tempSol.AddSolution(component.ChemicalSolution);
+        tempSol.AddSolution(component.BloodSolution, _sharedReagentIdManager);
+        tempSol.AddSolution(component.BloodTemporarySolution, _sharedReagentIdManager);
+        tempSol.AddSolution(component.ChemicalSolution, _sharedReagentIdManager);
         _spillableSystem.SpillAt(uid, tempSol, "PuddleBlood", true);
     }
 }

@@ -22,6 +22,9 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("id", required: true)]
         public string ID { get; } = default!;
 
+        /// <summary>
+        /// This is non-null when postinit on server, and after connecting on client.
+        /// </summary>
         [ViewVariables]
         public ReagentId? OpaqueId { get; set; }
 

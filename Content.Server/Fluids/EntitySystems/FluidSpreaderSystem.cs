@@ -19,6 +19,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedReagentIdManager _sharedReagentIdManager = default!;
 
 
     private float _accumulatedTimeFrame;
@@ -133,7 +134,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
                 var split = FixedPoint2.Min(divided, -puddle.OverflowLeft);
                 _puddleSystem.TryAddSolution(
                     puddle.Owner,
-                    spreader.OverflownSolution.SplitSolution(split),
+                    spreader.OverflownSolution.SplitSolution(split, _sharedReagentIdManager),
                     false, false, puddle);
 
                 // if solution is spent do not explore

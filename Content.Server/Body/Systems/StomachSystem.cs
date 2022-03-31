@@ -11,6 +11,7 @@ namespace Content.Server.Body.Systems
 {
     public sealed class StomachSystem : EntitySystem
     {
+        [Dependency] private readonly SharedReagentIdManager _sharedReagentIdManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         public const string DefaultSolutionName = "stomach";
@@ -59,7 +60,7 @@ namespace Content.Server.Body.Systems
 
                             _solutionContainerSystem.TryRemoveReagent((stomach).Owner, stomachSolution,
                                 delta.ReagentId, quant);
-                            transferSolution.AddReagent(delta.ReagentId, quant);
+                            transferSolution.AddReagent(delta.ReagentId, quant, _sharedReagentIdManager);
                         }
 
                         queue.Add(delta);

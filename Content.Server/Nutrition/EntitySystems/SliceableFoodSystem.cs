@@ -16,6 +16,7 @@ namespace Content.Server.Nutrition.EntitySystems
 {
     internal sealed class SliceableFoodSystem : EntitySystem
     {
+        [Dependency] private readonly SharedReagentIdManager _sharedReagentIdManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -105,7 +106,7 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 _solutionContainerSystem.RemoveAllSolution(sliceUid, itsSolution);
 
-                var lostSolutionPart = solution.SplitSolution(itsSolution.AvailableVolume);
+                var lostSolutionPart = solution.SplitSolution(itsSolution.AvailableVolume, _sharedReagentIdManager);
                 _solutionContainerSystem.TryAddSolution(sliceUid, itsSolution, lostSolutionPart);
             }
         }

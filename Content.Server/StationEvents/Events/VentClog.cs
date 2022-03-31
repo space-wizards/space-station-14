@@ -15,6 +15,7 @@ namespace Content.Server.StationEvents.Events;
 [UsedImplicitly]
 public sealed class VentClog : StationEvent
 {
+    [Dependency] private readonly SharedReagentIdManager _sharedReagentIdManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -63,11 +64,13 @@ public sealed class VentClog : StationEvent
 
             if (_random.Prob(0.05f))
             {
-                solution.AddReagent(_random.Pick(allReagents), 100);
+                var reagent = _sharedReagentIdManager.GetIdByPrototypeId(_random.Pick(allReagents));
+                solution.AddReagent(reagent, 100, _sharedReagentIdManager);
             }
             else
             {
-                solution.AddReagent(_random.Pick(SafeishVentChemicals), 100);
+                var reagent = _sharedReagentIdManager.GetIdByPrototypeId(_random.Pick(SafeishVentChemicals));
+                solution.AddReagent(reagent, 100, _sharedReagentIdManager);
             }
 
             FoamAreaReactionEffect.SpawnFoam("Foam", transform.Coordinates, solution, _random.Next(2, 6), 20, 1,
