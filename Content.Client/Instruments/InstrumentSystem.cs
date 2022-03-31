@@ -27,8 +27,8 @@ namespace Content.Client.Instruments
 
         public readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
 
-        public readonly Comparer<MidiEvent> SortMidiEventTick
-            = Comparer<MidiEvent>.Create((x, y)
+        public readonly Comparer<RobustMidiEvent> SortMidiEventTick
+            = Comparer<RobustMidiEvent>.Create((x, y)
                 => x.Tick.CompareTo(y.Tick));
 
         public int MaxMidiEventsPerBatch { get; private set; }
@@ -98,10 +98,13 @@ namespace Content.Client.Instruments
                 return;
 
             instrument.Renderer.MidiBank = instrument.InstrumentBank;
-            instrument.Renderer.MidiProgram = instrument.InstrumentProgram;
             instrument.Renderer.TrackingEntity = instrument.Owner;
             instrument.Renderer.DisablePercussionChannel = !instrument.AllowPercussion;
             instrument.Renderer.DisableProgramChangeEvent = !instrument.AllowProgramChange;
+
+            if(!instrument.AllowProgramChange)
+                instrument.Renderer.MidiProgram = instrument.InstrumentProgram;
+
             instrument.Renderer.LoopMidi = instrument.LoopMidi;
             instrument.DirtyRenderer = false;
         }
@@ -158,19 +161,11 @@ namespace Content.Client.Instruments
             // We add a "all notes off" message.
             for (byte i = 0; i < 16; i++)
             {
-                instrument.MidiEventBuffer.Add(new MidiEvent()
-                {
-                    Tick = tick, Type = 176,
-                    Control = 123, Velocity = 0, Channel = i,
-                });
+                instrument.MidiEventBuffer.Add(RobustMidiEvent.AllNotesOff(i, tick));
             }
 
             // Now we add a Reset All Controllers message.
-            instrument.MidiEventBuffer.Add(new MidiEvent()
-            {
-                Tick = tick, Type = 176,
-                Control = 121, Value = 0,
-            });
+            instrument.MidiEventBuffer.Add(RobustMidiEvent.ResetAllControllers(tick));
         }
 
         public bool OpenInput(EntityUid uid, InstrumentComponent? instrument = null)

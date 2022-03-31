@@ -73,9 +73,9 @@ public sealed class InstrumentStartMidiEvent : EntityEventArgs
 public sealed class InstrumentMidiEventEvent : EntityEventArgs
 {
     public EntityUid Uid { get; }
-    public MidiEvent[] MidiEvent { get; }
+    public RobustMidiEvent[] MidiEvent { get; }
 
-    public InstrumentMidiEventEvent(EntityUid uid, MidiEvent[] midiEvent)
+    public InstrumentMidiEventEvent(EntityUid uid, RobustMidiEvent[] midiEvent)
     {
         Uid = uid;
         MidiEvent = midiEvent;
