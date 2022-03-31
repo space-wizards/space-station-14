@@ -87,6 +87,7 @@
     - type: Sprite
       netSync: false
       sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
+      noRot: true
       layers:
         - state: cart
         - state: cart_water_1
@@ -115,7 +116,7 @@
           whitelist:
             tags:
               - Mop
-        cart_garbage: # doesn't work
+        cart_garbage:
           whitelist:
             tags:
               - TrashBag
@@ -129,19 +130,16 @@
               - Spray
         cart_sign1:
           minCount: 1
-          maxCount: 1
           whitelist:
             tags:
               - WetFloorSign
         cart_sign2:
           minCount: 2
-          maxCount: 2
           whitelist:
             tags:
               - WetFloorSign
         cart_sign3:
           minCount: 3
-          maxCount: 3
           whitelist:
             tags:
               - WetFloorSign
