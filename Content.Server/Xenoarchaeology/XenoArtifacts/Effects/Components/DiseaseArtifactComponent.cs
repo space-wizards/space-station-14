@@ -12,9 +12,9 @@ public sealed class DiseaseArtifactComponent : Component
     /// Disease the artifact will spawn
     /// If empty, picks a random one from its list
     /// </summary>
-    [DataField("disease", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
+    [DataField("disease")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public string? SpawnDisease;
+    public DiseasePrototype? SpawnDisease;
 
     /// <summary>
     /// How far away it will check for people
@@ -23,15 +23,4 @@ public sealed class DiseaseArtifactComponent : Component
     [DataField("range")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float Range = 5f;
-
-    // TODO: YAML Serializer won't catch this.
-    [ViewVariables(VVAccess.ReadWrite)]
-    public readonly IReadOnlyList<string> ArtifactDiseases = new[]
-    {
-        "VanAusdallsRobovirus",
-        "OwOnavirus",
-        "BleedersBite",
-        "Ultragigacancer",
-        "AMIV"
-    };
 }
