@@ -222,11 +222,12 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             var bodies = EntityManager.GetEntityQuery<PhysicsComponent>();
             var xforms = EntityManager.GetEntityQuery<TransformComponent>();
+            var metas = EntityManager.GetEntityQuery<MetaDataComponent>();
             var pressureQuery = EntityManager.GetEntityQuery<MovedByPressureComponent>();
 
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                HighPressureMovements(atmosphere, tile, bodies, xforms, pressureQuery);
+                HighPressureMovements(atmosphere, tile, bodies, xforms, pressureQuery, metas);
                 tile.PressureDifference = 0f;
                 tile.PressureSpecificTarget = null;
                 atmosphere.HighPressureDelta.Remove(tile);

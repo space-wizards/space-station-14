@@ -15,7 +15,6 @@ using Content.Client.StationEvents.Managers;
 using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
-using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Module;
 
@@ -43,6 +42,7 @@ namespace Content.Client.IoC
             IoCManager.Register<RulesManager, RulesManager>();
             IoCManager.Register<ViewportManager, ViewportManager>();
             IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
+            IoCManager.Register<NetworkResourceManager>();
         }
     }
 }

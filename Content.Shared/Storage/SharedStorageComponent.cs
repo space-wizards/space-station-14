@@ -74,98 +74,96 @@ namespace Content.Shared.Storage
     /// Updates the client component about what entities this storage is holding
     /// </summary>
     [Serializable, NetSerializable]
-#pragma warning disable 618
-    public sealed class StorageHeldItemsMessage : ComponentMessage
-#pragma warning restore 618
+    public sealed class StorageHeldItemsEvent : EntityEventArgs
     {
+        public readonly EntityUid Storage;
         public readonly int StorageSizeMax;
         public readonly int StorageSizeUsed;
         public readonly EntityUid[] StoredEntities;
 
-        public StorageHeldItemsMessage(EntityUid[] storedEntities, int storageUsed, int storageMaxSize)
+        public StorageHeldItemsEvent(EntityUid storage, int storageSizeMax, int storageSizeUsed, EntityUid[] storedEntities)
         {
-            Directed = true;
-            StorageSizeMax = storageMaxSize;
-            StorageSizeUsed = storageUsed;
+            Storage = storage;
+            StorageSizeMax = storageSizeMax;
+            StorageSizeUsed = storageSizeUsed;
             StoredEntities = storedEntities;
         }
     }
 
     /// <summary>
-    /// Component message for adding an entity to the storage entity.
+    /// Network event for adding an entity to the storage entity.
     /// </summary>
     [Serializable, NetSerializable]
-#pragma warning disable 618
-    public sealed class InsertEntityMessage : ComponentMessage
-#pragma warning restore 618
+    public sealed class InsertEntityEvent : EntityEventArgs
     {
-        public InsertEntityMessage()
+        public readonly EntityUid Storage;
+
+        public InsertEntityEvent(EntityUid storage)
         {
-            Directed = true;
+            Storage = storage;
         }
     }
 
     /// <summary>
-    /// Component message for displaying an animation of entities flying into a storage entity
+    /// Network event for displaying an animation of entities flying into a storage entity
     /// </summary>
     [Serializable, NetSerializable]
-#pragma warning disable 618
-    public sealed class AnimateInsertingEntitiesMessage : ComponentMessage
-#pragma warning restore 618
+    public sealed class AnimateInsertingEntitiesEvent : EntityEventArgs
     {
+        public readonly EntityUid Storage;
         public readonly List<EntityUid> StoredEntities;
         public readonly List<EntityCoordinates> EntityPositions;
-        public AnimateInsertingEntitiesMessage(List<EntityUid> storedEntities, List<EntityCoordinates> entityPositions)
+
+        public AnimateInsertingEntitiesEvent(EntityUid storage, List<EntityUid> storedEntities, List<EntityCoordinates> entityPositions)
         {
-            Directed = true;
+            Storage = storage;
             StoredEntities = storedEntities;
             EntityPositions = entityPositions;
         }
     }
 
     /// <summary>
-    /// Component message for removing a contained entity from the storage entity
+    /// Network event for removing a contained entity from the storage entity
     /// </summary>
     [Serializable, NetSerializable]
-#pragma warning disable 618
-    public sealed class RemoveEntityMessage : ComponentMessage
-#pragma warning restore 618
+    public sealed class RemoveEntityEvent : EntityEventArgs
     {
+        public EntityUid Storage;
         public EntityUid EntityUid;
 
-        public RemoveEntityMessage(EntityUid entityuid)
+        public RemoveEntityEvent(EntityUid storage, EntityUid entityUid)
         {
-            Directed = true;
-            EntityUid = entityuid;
+            Storage = storage;
+            EntityUid = entityUid;
         }
     }
 
     /// <summary>
-    /// Component message for opening the storage UI
+    /// Network event for opening the storage UI
     /// </summary>
     [Serializable, NetSerializable]
-#pragma warning disable 618
-    public sealed class OpenStorageUIMessage : ComponentMessage
-#pragma warning restore 618
+    public sealed class OpenStorageUIEvent : EntityEventArgs
     {
-        public OpenStorageUIMessage()
+        public readonly EntityUid Storage;
+
+        public OpenStorageUIEvent(EntityUid storage)
         {
-            Directed = true;
+            Storage = storage;
         }
     }
 
     /// <summary>
-    /// Component message for closing the storage UI.
+    /// Network event for closing the storage UI.
     /// E.g when the player moves too far away from the container.
     /// </summary>
     [Serializable, NetSerializable]
-#pragma warning disable 618
-    public sealed class CloseStorageUIMessage : ComponentMessage
-#pragma warning restore 618
+    public sealed class CloseStorageUIEvent : EntityEventArgs
     {
-        public CloseStorageUIMessage()
+        public readonly EntityUid Storage;
+
+        public CloseStorageUIEvent(EntityUid storage)
         {
-            Directed = true;
+            Storage = storage;
         }
     }
 

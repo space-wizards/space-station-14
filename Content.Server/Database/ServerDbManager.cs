@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.IO;
 using System.Net;
 using System.Text.Json;
@@ -16,9 +14,6 @@ using Microsoft.Extensions.Logging;
 using Npgsql;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
@@ -183,6 +178,21 @@ namespace Content.Server.Database
         Task AddToWhitelistAsync(NetUserId player);
 
         Task RemoveFromWhitelistAsync(NetUserId player);
+
+        #endregion
+
+        #region Uploaded Resources Logs
+
+        Task AddUploadedResourceLogAsync(NetUserId user, DateTime date, string path, byte[] data);
+
+        Task PurgeUploadedResourceLogAsync(int days);
+
+        #endregion
+
+        #region Rules
+
+        Task<DateTime?> GetLastReadRules(NetUserId player);
+        Task SetLastReadRules(NetUserId player, DateTime time);
 
         #endregion
     }
@@ -453,6 +463,26 @@ namespace Content.Server.Database
         public Task RemoveFromWhitelistAsync(NetUserId player)
         {
             return _db.RemoveFromWhitelistAsync(player);
+        }
+
+        public Task AddUploadedResourceLogAsync(NetUserId user, DateTime date, string path, byte[] data)
+        {
+            return _db.AddUploadedResourceLogAsync(user, date, path, data);
+        }
+
+        public Task PurgeUploadedResourceLogAsync(int days)
+        {
+            return _db.PurgeUploadedResourceLogAsync(days);
+        }
+
+        public Task<DateTime?> GetLastReadRules(NetUserId player)
+        {
+            return _db.GetLastReadRules(player);
+        }
+
+        public Task SetLastReadRules(NetUserId player, DateTime time)
+        {
+            return _db.SetLastReadRules(player, time);
         }
 
         private DbContextOptions<PostgresServerDbContext> CreatePostgresOptions()

@@ -89,7 +89,7 @@ namespace Content.Server.Atmos.EntitySystems
             _activePressures.Add(component);
         }
 
-        private void HighPressureMovements(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, EntityQuery<PhysicsComponent> bodies, EntityQuery<TransformComponent> xforms, EntityQuery<MovedByPressureComponent> pressureQuery)
+        private void HighPressureMovements(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, EntityQuery<PhysicsComponent> bodies, EntityQuery<TransformComponent> xforms, EntityQuery<MovedByPressureComponent> pressureQuery, EntityQuery<MetaDataComponent> metas)
         {
             // TODO ATMOS finish this
 
@@ -113,9 +113,7 @@ namespace Content.Server.Atmos.EntitySystems
                     !pressure.Enabled)
                     continue;
 
-                var xform = xforms.GetComponent(entity);
-
-                if (_containers.IsEntityInContainer(entity, xform)) continue;
+                if (_containers.IsEntityInContainer(entity, metas.GetComponent(entity))) continue;
 
                 var pressureMovements = EnsureComp<MovedByPressureComponent>(entity);
                 if (pressure.LastHighPressureMovementAirCycle < gridAtmosphere.UpdateCounter)
@@ -127,7 +125,7 @@ namespace Content.Server.Atmos.EntitySystems
                         tile.PressureDifference,
                         tile.PressureDirection, 0,
                         tile.PressureSpecificTarget?.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager) ?? EntityCoordinates.Invalid,
-                        xform,
+                        xforms.GetComponent(entity),
                         body);
                 }
 

@@ -36,7 +36,6 @@ namespace Content.Server.Nuke
             SubscribeLocalEvent<NukeComponent, AnchorStateChangedEvent>(OnAnchorChanged);
 
             // ui events
-            SubscribeLocalEvent<NukeComponent, NukeEjectMessage>(OnEjectButtonPressed);
             SubscribeLocalEvent<NukeComponent, NukeAnchorMessage>(OnAnchorButtonPressed);
             SubscribeLocalEvent<NukeComponent, NukeArmedMessage>(OnArmButtonPressed);
             SubscribeLocalEvent<NukeComponent, NukeKeypadMessage>(OnKeypadButtonPressed);
@@ -47,7 +46,7 @@ namespace Content.Server.Nuke
         private void OnInit(EntityUid uid, NukeComponent component, ComponentInit args)
         {
             component.RemainingTime = component.Timer;
-            _itemSlots.AddItemSlot(uid, component.Name, component.DiskSlot);
+            _itemSlots.AddItemSlot(uid, SharedNukeComponent.NukeDiskSlotId, component.DiskSlot);
 
             UpdateStatus(uid, component);
             UpdateUserInterface(uid, component);
@@ -118,14 +117,6 @@ namespace Content.Server.Nuke
         #endregion
 
         #region UI Events
-        private void OnEjectButtonPressed(EntityUid uid, NukeComponent component, NukeEjectMessage args)
-        {
-            if (!component.DiskSlot.HasItem)
-                return;
-
-            _itemSlots.TryEjectToHands(uid, component.DiskSlot, args.Session.AttachedEntity);
-        }
-
         private async void OnAnchorButtonPressed(EntityUid uid, NukeComponent component, NukeAnchorMessage args)
         {
             if (!component.DiskSlot.HasItem)

@@ -199,7 +199,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatPlaguedoctor
-  name: plague doctor mask
+  name: plague doctor hat
   description: These were once used by plague doctors.
   components:
   - type: Sprite
