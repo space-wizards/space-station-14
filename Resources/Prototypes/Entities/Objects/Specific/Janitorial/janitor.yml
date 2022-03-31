@@ -97,6 +97,17 @@
     - type: Storage
       popup: false
       capacity: 60
+      blacklist:
+        tags:
+          - Mop
+    - type: ItemSlots
+      slots:
+        mop_slot:
+          name: Mop
+          whitelist:
+            tags:
+              - Mop
+          insertOnInteract: false
     - type: SolutionContainerManager
       solutions:
         bucket:
