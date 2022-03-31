@@ -159,7 +159,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Find entities on a grid tile using the EntityLookupComponent and apply explosion effects. 
+    ///     Find entities on a grid tile using the EntityLookupComponent and apply explosion effects.
     /// </summary>
     /// <returns>True if the underlying tile can be uprooted, false if the tile is blocked by a dense entity</returns>
     internal bool ExplodeTile(EntityLookupComponent lookup,
@@ -172,7 +172,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         string id,
         EntityQuery<TransformComponent> xformQuery,
         EntityQuery<DamageableComponent> damageQuery,
-        EntityQuery<PhysicsComponent> physicsQuery)
+        EntityQuery<PhysicsComponent> physicsQuery,
+        EntityQuery<MetaDataComponent> metaQuery)
     {
         var gridBox = new Box2(tile * grid.TileSize, (tile + 1) * grid.TileSize);
 
@@ -190,8 +191,10 @@ public sealed partial class ExplosionSystem : EntitySystem
 
             if (xform.ParentUid != grid.GridEntityId)
             {
+                if (!metaQuery.TryGetComponent(uid, out var meta))
+                    return;
                 // Not parented to grid. Likely in a container.
-                if (_containerSystem.IsEntityInContainer(uid, xform))
+                if (_containerSystem.IsEntityInContainer(uid, meta))
                     return;
             }
 
@@ -254,7 +257,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         string id,
         EntityQuery<TransformComponent> xformQuery,
         EntityQuery<DamageableComponent> damageQuery,
-        EntityQuery<PhysicsComponent> physicsQuery)
+        EntityQuery<PhysicsComponent> physicsQuery,
+        EntityQuery<MetaDataComponent> metaQuery)
     {
         var gridBox = new Box2(tile * DefaultTileSize, (DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
@@ -276,8 +280,11 @@ public sealed partial class ExplosionSystem : EntitySystem
                 return;
             }
 
+            if (!metaQuery.TryGetComponent(uid, out var meta))
+                return;
+
             // Not parented to map. Likely in a container.
-            if (_containerSystem.IsEntityInContainer(uid, xform))
+            if (_containerSystem.IsEntityInContainer(uid, meta))
                 return;
 
             // finally check if it intersects our tile
@@ -338,7 +345,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         // throw
         if (xform != null
-            && !xform.Anchored 
+            && !xform.Anchored
             && throwForce > 0
             && !EntityManager.IsQueuedForDeletion(uid)
             && physicsQuery.TryGetComponent(uid, out var physics)
@@ -437,6 +444,7 @@ sealed class Explosion
     private EntityQuery<TransformComponent> _xformQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<DamageableComponent> _damageQuery;
+    private EntityQuery<MetaDataComponent> _metaQuery;
 
     public int Area;
 
@@ -462,6 +470,7 @@ sealed class Explosion
         _xformQuery = entMan.GetEntityQuery<TransformComponent>();
         _physicsQuery = entMan.GetEntityQuery<PhysicsComponent>();
         _damageQuery = entMan.GetEntityQuery<DamageableComponent>();
+        _metaQuery = entMan.GetEntityQuery<MetaDataComponent>();
 
         if (spaceData != null)
         {
@@ -583,7 +592,8 @@ sealed class Explosion
                     ExplosionType.ID,
                     _xformQuery,
                     _damageQuery,
-                    _physicsQuery);
+                    _physicsQuery,
+                    _metaQuery);
 
                 // was there a blocking entity on the tile that was not destroyed by the explosion?
                 if (canDamageFloor)
@@ -602,7 +612,8 @@ sealed class Explosion
                     ExplosionType.ID,
                     _xformQuery,
                     _damageQuery,
-                    _physicsQuery);
+                    _physicsQuery,
+                    _metaQuery);
             }
 
             if (!MoveNext())
