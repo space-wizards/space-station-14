@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.OpaqueId;
 
-namespace Content.Shared.Chemistry.Components;
+namespace Content.Shared.Chemistry;
 
 /// <summary>
 /// Alias for the larger type to save on typing.

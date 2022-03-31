@@ -2,6 +2,7 @@
 using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Directions;
 using Content.Shared.FixedPoint;

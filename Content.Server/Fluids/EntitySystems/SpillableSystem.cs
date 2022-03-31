@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Clothing.Components;
 using Content.Server.Fluids.Components;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;

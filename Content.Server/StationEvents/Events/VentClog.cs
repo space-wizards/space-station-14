@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Chemistry.ReactionEffects;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Sound;

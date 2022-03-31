@@ -13,6 +13,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;

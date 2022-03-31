@@ -7,6 +7,7 @@ using Content.Server.Kitchen.Events;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.EntitySystems;

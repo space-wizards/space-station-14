@@ -11,6 +11,7 @@ using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
 using Content.Shared.Sound;
 using Content.Shared.Audio;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands;

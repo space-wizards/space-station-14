@@ -14,6 +14,7 @@ using Robust.Shared.Localization;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Kitchen.Components;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.PowerCell;

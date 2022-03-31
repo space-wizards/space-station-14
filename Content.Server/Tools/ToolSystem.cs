@@ -9,6 +9,7 @@ using Content.Server.Popups;
 using Content.Server.Tools.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;

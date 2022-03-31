@@ -2,6 +2,7 @@
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
