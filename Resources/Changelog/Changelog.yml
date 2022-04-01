@@ -3023,3 +3023,8 @@ Entries:
   - {message: 'Marathonstation, a remaster of Pubbystation from SS13', type: Add}
   id: 1275
   time: '2022-03-31T19:08:55.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station now has emergency lights., type: Tweak}
+  id: 1276
+  time: '2022-04-01T02:06:09.0000000+00:00'
