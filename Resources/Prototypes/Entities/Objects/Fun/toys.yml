@@ -278,7 +278,7 @@
 - type: entity
   parent: BaseItem
   id: ToyHonk
-  name: h.o.n.k. toy
+  name: H.O.N.K. toy
   description: Mini-Mecha action figure! 'Mecha No. 6/12' is written on the back.
   components:
   - type: Sprite
