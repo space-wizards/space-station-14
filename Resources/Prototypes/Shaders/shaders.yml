@@ -41,7 +41,6 @@
   path: "/Textures/Shaders/drunk.swsl"
   params:
     boozePower: 0.0
-    time: 0.0
 
 - type: shader
   id: Texture

@@ -1,8 +1,6 @@
 
 # Base Alcohol
 
-# TODO MIRROR: drunkenness
-
 - type: reagent
   id: Absinthe
   name: absinthe
@@ -73,6 +71,10 @@
         damage:
           groups:
             Caustic: 1
+    Alcohol:
+      effects:
+      - !type: Drunk
+        boozePower: 5 # 2.5x regular alcohol
 
 - type: reagent
   id: Gin
@@ -129,6 +131,9 @@
         damage:
           types:
             Poison: 1
+    Alcohol:
+      effects:
+      - !type: Drunk
 
 - type: reagent
   id: Rum
@@ -172,6 +177,15 @@
   physicalDesc: strong-smelling
   color: "#d1d1d155"
   spritePath: ginvodkaglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Alcohol:
+      effects:
+      - !type:Drunk
+        boozePower: 3
 
 - type: reagent
   id: Whiskey
@@ -190,6 +204,15 @@
   physicalDesc: translucent
   color: "#7E4043"
   spritePath: wineglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Alcohol:
+      effects:
+      - !type:Drunk
+        boozePower: 3
 
 # Mixed Alcohol
 
@@ -304,7 +327,7 @@
 - type: reagent
   id: Bilk
   name: bilk
-  parent: BaseAlcohol
+  parent: BaseDrink
   desc: This appears to be beer mixed with milk. Disgusting.
   physicalDesc: bilky...
   color: "#895C4C"
@@ -376,7 +399,7 @@
 - type: reagent
   id: DoctorsDelight
   name: the doctor's delight
-  parent: BaseAlcohol
+  parent: BaseDrink
   desc: A gulp a day keeps the MediBot away. That's probably for the best.
   physicalDesc: strong-smelling
   color: "#FF8CFF"
@@ -424,6 +447,15 @@
   physicalDesc: volatile
   color: "#9cc8b4"
   spritePath: gargleblasterglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Alcohol:
+      effects:
+      - !type:Drunk
+        boozePower: 5
 
 - type: reagent
   id: GinFizz
@@ -478,6 +510,15 @@
   physicalDesc: strong-smelling
   color: "#664e00"
   spritePath: glass_brown2.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Alcohol:
+      effects:
+      - !type:Drunk
+        boozePower: 6 # Oh lord.
 
 - type: reagent
   id: IcedBeer
@@ -559,6 +600,15 @@
   physicalDesc: bubbly
   color: "#664300"
   spritePath: manlydorfglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Alcohol:
+      effects:
+      - !type:Drunk
+        boozePower: 4
 
 - type: reagent
   id: Margarita
@@ -586,6 +636,15 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: meadglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Alcohol:
+      effects:
+      - !type:Drunk
+        boozePower: 4
 
 - type: reagent
   id: Mojito
@@ -603,6 +662,15 @@
   desc: Artisanal homemade liquor. What could go wrong?
   physicalDesc: strong-smelling
   color: "#d1d7d155"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Alcohol:
+      effects:
+      - !type:Drunk
+        boozePower: 6
 
 - type: reagent
   id: Neurotoxin

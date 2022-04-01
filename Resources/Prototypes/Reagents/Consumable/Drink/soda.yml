@@ -13,10 +13,6 @@
   desc: You take a tiny sip and feel a burning sensation...
   physicalDesc: fizzy
   color: "#2E6671"
-  metabolisms:
-    Alcohol:
-      effects:
-      - !type:Drunk
 
 - type: reagent
   id: DrGibb
