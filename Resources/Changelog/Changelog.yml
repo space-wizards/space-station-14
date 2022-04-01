@@ -1,10 +1,4 @@
 Entries:
-- author: Pancake
-  changes:
-  - {message: Salvage Equipment crates can be purchased from the cargo computer.,
-    type: Tweak}
-  id: 777
-  time: '2021-12-27T11:29:39.0000000+00:00'
 - author: AJCM-git
   changes:
   - {message: Now you need to be closer to a closet/locker/crate to actually enter
@@ -3028,3 +3022,11 @@ Entries:
   - {message: Delta Station now has emergency lights., type: Tweak}
   id: 1276
   time: '2022-04-01T02:06:09.0000000+00:00'
+- author: ElectroSr
+  changes:
+  - {message: Explosions have been entirely redesigned to be graphically and technically
+      better. They should be a bit more interesting to look at now., type: Add}
+  - {message: Nuke has an actual explosion., type: Add}
+  - {message: Meteor explosion works again., type: Fix}
+  id: 1277
+  time: '2022-04-01T02:39:26.0000000+00:00'
