@@ -17293,7 +17293,7 @@ entities:
 - uid: 962
   type: GasVolumePump
   components:
-  - desc: pumps clean air into the station
+  - desc: Pumps clean air into the station
     name: distro volume pump
     type: MetaData
   - pos: 34.5,11.5
@@ -75465,7 +75465,7 @@ entities:
 - uid: 7106
   type: GasVolumePump
   components:
-  - desc: sucks out waste air from the station
+  - desc: Sucks out waste air from the station
     name: waste volume pump
     type: MetaData
   - rot: 3.141592653589793 rad
