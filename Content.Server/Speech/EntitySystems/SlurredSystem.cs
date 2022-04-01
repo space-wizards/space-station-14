@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Content.Server.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
@@ -11,6 +12,7 @@ namespace Content.Server.Speech.EntitySystems
     public sealed class SlurredSystem : SharedSlurredSystem
     {
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         private const string SlurKey = "SlurredSpeech";
 
@@ -35,9 +37,55 @@ namespace Content.Server.Speech.EntitySystems
             args.Message = Accentuate(args.Message);
         }
 
-        public string Accentuate(string message)
+        private string Accentuate(string message)
         {
-            return message + " slur test lol";
+            var sb = new StringBuilder();
+
+            // This is pretty much ported from TG.
+            foreach (var character in message)
+            {
+                if (_random.Prob(1f / 3f))
+                {
+                    var lower = Char.ToLowerInvariant(character);
+                    var newString = lower switch
+                    {
+                        'o' => "u",
+                        's' => "ch",
+                        'a' => "ah",
+                        'u' => "oo",
+                        'c' => "k",
+                        _ => $"{character}",
+                    };
+
+                    sb.Append(newString);
+                }
+
+                if (_random.Prob(1f / 20f))
+                {
+                    if (character == ' ')
+                    {
+                        sb.Append(Loc.GetString("slur-accent-confused"));
+                    }
+                    else if (character == '.')
+                    {
+                        sb.Append(' ');
+                        sb.Append(Loc.GetString("slur-accent-burp"));
+                    }
+                }
+
+                var randInt = _random.Next(1, 20);
+                var next = randInt switch
+                {
+                    1 => "'",
+                    10 => $"{character}{character}",
+                    20 => $"{character}{character}{character}",
+                    _ => $"{character}",
+                };
+
+                sb.Append(next);
+            }
+
+            return sb.ToString();
         }
     }
 }

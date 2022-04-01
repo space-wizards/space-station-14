@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
-    public class Drunk : ReagentEffect
+    public sealed class Drunk : ReagentEffect
     {
         /// <summary>
         ///     BoozePower is how long each metabolism cycle will make the drunk effect last for.

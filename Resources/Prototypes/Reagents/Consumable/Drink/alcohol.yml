@@ -73,7 +73,7 @@
             Caustic: 1
     Alcohol:
       effects:
-      - !type: Drunk
+      - !type:Drunk
         boozePower: 5 # 2.5x regular alcohol
 
 - type: reagent
@@ -133,7 +133,7 @@
             Poison: 1
     Alcohol:
       effects:
-      - !type: Drunk
+      - !type:Drunk
 
 - type: reagent
   id: Rum
