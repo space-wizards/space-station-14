@@ -196,7 +196,7 @@
   id: BedsheetMedical
   parent: BedsheetBase
   name: medical bedsheet
-  description: It's a sterilized* blanket commonly used in the Medbay.  *Sterilization is voided if a virologist is present onboard the station.
+  description: It's a sterilized blanket commonly used in the Medbay. Sterilization is voided if a virologist is present onboard the station.
   components:
   - type: Sprite
     state: sheetmedical
