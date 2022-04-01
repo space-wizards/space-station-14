@@ -33,6 +33,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
         SubscribeNetworkEvent<ExplosionEvent>(OnExplosion);
         SubscribeNetworkEvent<ExplosionOverlayUpdateEvent>(HandleExplosionUpdate);
+        SubscribeLocalEvent<MapChangedEvent>(OnMapChanged);
 
         _cfg.OnValueChanged(CCVars.ExplosionPersistence, SetExplosionPersistence, true);
 
@@ -40,6 +41,17 @@ public sealed class ExplosionOverlaySystem : EntitySystem
         _overlay = new ExplosionOverlay();
         if (!overlayManager.HasOverlay<ExplosionOverlay>())
             overlayManager.AddOverlay(_overlay);
+    }
+
+    private void OnMapChanged(MapChangedEvent ev)
+    {
+        if (ev.Created)
+            return;
+
+        if (_overlay.ActiveExplosion?.Map == ev.Map)
+            _overlay.ActiveExplosion = null;
+
+        _overlay.CompletedExplosions.RemoveAll(exp => exp.Map == ev.Map);
     }
 
     private void SetExplosionPersistence(float value) => ExplosionPersistence = value;

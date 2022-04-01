@@ -1,6 +1,4 @@
 using System.Linq;
-using Content.Server.Explosion.Components;
-using Content.Server.Throwing;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;
 using Content.Shared.Maps;
@@ -9,7 +7,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -53,6 +50,19 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     This integer keeps track of the last value sent to clients.
     /// </summary>
     private int _previousTileIteration;
+
+    private void OnMapChanged(MapChangedEvent ev)
+    {
+        // If a map was deleted, check the explosion currently being processed belongs to that map.
+        if (ev.Created)
+            return;
+
+        if (_activeExplosion?.Epicenter.MapId != ev.Map)
+            return;
+
+        _activeExplosion = null;
+        _nodeGroupSystem.Snoozing = false;
+    }
 
     /// <summary>
     ///     Process the explosion queue.
@@ -484,29 +494,30 @@ sealed class Explosion
     ///     The set of tiles that need to be updated when the explosion has finished processing. Used to avoid having
     ///     the explosion trigger chunk regeneration & shuttle-system processing every tick.
     /// </summary>
-    private Dictionary<IMapGrid, List<(Vector2i, Tile)>> _tileUpdateDict = new();
+    private readonly Dictionary<IMapGrid, List<(Vector2i, Tile)>> _tileUpdateDict = new();
 
     // Entity Queries
-    private EntityQuery<TransformComponent> _xformQuery;
-    private EntityQuery<PhysicsComponent> _physicsQuery;
-    private EntityQuery<DamageableComponent> _damageQuery;
-    private EntityQuery<MetaDataComponent> _metaQuery;
+    private readonly EntityQuery<TransformComponent> _xformQuery;
+    private readonly EntityQuery<PhysicsComponent> _physicsQuery;
+    private readonly EntityQuery<DamageableComponent> _damageQuery;
+    private readonly EntityQuery<MetaDataComponent> _metaQuery;
 
     /// <summary>
     ///     Total area that the explosion covers.
     /// </summary>
-    public int Area;
+    public readonly int Area;
 
     /// <summary>
     ///     factor used to scale the tile break chances.
     /// </summary>
-    private float _tileBreakScale;
+    private readonly float _tileBreakScale;
 
     /// <summary>
     ///     Maximum number of times that an explosion will break a single tile.
     /// </summary>
-    private int _maxTileBreak;
+    private readonly int _maxTileBreak;
 
+    private readonly IEntityManager _entMan;
     private readonly ExplosionSystem _system;
 
     /// <summary>
@@ -533,6 +544,7 @@ sealed class Explosion
 
         _tileBreakScale = tileBreakScale;
         _maxTileBreak = maxTileBreak;
+        _entMan = entMan;
 
         _xformQuery = entMan.GetEntityQuery<TransformComponent>();
         _physicsQuery = entMan.GetEntityQuery<PhysicsComponent>();
@@ -597,12 +609,17 @@ sealed class Explosion
                 _currentEnumerator = tileList.GetEnumerator();
                 _currentLookup = _explosionData[_currentDataIndex].Lookup;
                 _currentGrid = _explosionData[_currentDataIndex].MapGrid;
-
                 _currentDataIndex++;
+
+                // sanity checks, in case something changed while the explosion was being processed over several ticks.
+                if (_currentLookup.Deleted || _currentGrid != null && !_entMan.EntityExists(_currentGrid.GridEntityId))
+                    continue;
+
                 return true;
             }
 
-            // this explosion intensity has been fully processed, move to the next one
+            // All the tiles belonging to this explosion iteration have been processed. Move onto the next iteration and
+            // reset the grid counter.
             CurrentIteration++;
             _currentDataIndex = 0;
         }
