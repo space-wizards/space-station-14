@@ -139,7 +139,7 @@
   name: survival box
   parent: BoxCardboard
   id: BoxSurvival
-  description: It's box with basic internals inside.
+  description: It's a box with basic internals inside.
   components:
   - type: StorageFill
     contents:
