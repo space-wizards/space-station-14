@@ -365,15 +365,18 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     grid tile.
     /// </summary>
     public void DamageFloorTile(TileRef tileRef,
-        float intensity,
+        float effectiveIntensity,
+        int maxTileBreak,
         List<(Vector2i GridIndices, Tile Tile)> damagedTiles,
         ExplosionPrototype type)
     {
         var tileDef = _tileDefinitionManager[tileRef.Tile.TypeId];
 
-        while (_robustRandom.Prob(type.TileBreakChance(intensity)))
+        int tileBreakages = 0;
+        while (maxTileBreak > tileBreakages && _robustRandom.Prob(type.TileBreakChance(effectiveIntensity)))
         {
-            intensity -= type.TileBreakRerollReduction;
+            tileBreakages++;
+            effectiveIntensity -= type.TileBreakRerollReduction;
 
             if (tileDef is not ContentTileDefinition contentTileDef)
                 break;
@@ -494,6 +497,16 @@ sealed class Explosion
     /// </summary>
     public int Area;
 
+    /// <summary>
+    ///     factor used to scale the tile break chances.
+    /// </summary>
+    private float _tileBreakScale;
+
+    /// <summary>
+    ///     Maximum number of times that an explosion will break a single tile.
+    /// </summary>
+    private int _maxTileBreak;
+
     private readonly ExplosionSystem _system;
 
     /// <summary>
@@ -501,12 +514,14 @@ sealed class Explosion
     /// </summary>
     public Explosion(ExplosionSystem system,
         ExplosionPrototype explosionType,
-        SpaceExplosionTileFlood? spaceData,
-        List<GridExplosionTileFlood> gridData,
+        ExplosionSpaceTileFlood? spaceData,
+        List<ExplosionGridTileFlood> gridData,
         List<float> tileSetIntensity,
         MapCoordinates epicenter,
         Matrix3 spaceMatrix,
         int area,
+        float tileBreakScale,
+        int maxTileBreak,
         IEntityManager entMan,
         IMapManager mapMan)
     {
@@ -515,6 +530,9 @@ sealed class Explosion
         _tileSetIntensity = tileSetIntensity;
         Epicenter = epicenter;
         Area = area;
+
+        _tileBreakScale = tileBreakScale;
+        _maxTileBreak = maxTileBreak;
 
         _xformQuery = entMan.GetEntityQuery<TransformComponent>();
         _physicsQuery = entMan.GetEntityQuery<PhysicsComponent>();
@@ -659,7 +677,7 @@ sealed class Explosion
 
                 // If the floor is not blocked by some dense object, damage the floor tiles.
                 if (canDamageFloor)
-                    _system.DamageFloorTile(tileRef, _currentIntensity, tileUpdateList, ExplosionType);
+                    _system.DamageFloorTile(tileRef, _currentIntensity * _tileBreakScale, _maxTileBreak, tileUpdateList, ExplosionType);
             }
             else
             {

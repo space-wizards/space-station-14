@@ -118,6 +118,8 @@ public sealed partial class ExplosionSystem : EntitySystem
             (float) totalIntensity,
             explosive.IntensitySlope,
             explosive.MaxIntensity,
+            explosive.TileBreakScale,
+            explosive.MaxTileBreak,
             user);
 
         if (delete)
@@ -184,13 +186,15 @@ public sealed partial class ExplosionSystem : EntitySystem
         float totalIntensity,
         float slope,
         float maxTileIntensity,
+        float tileBreakScale = 1f,
+        int maxTileBreak = int.MaxValue,
         EntityUid? user = null,
         bool addLog = false)
     {
         var pos = Transform(uid).MapPosition;
 
 
-        QueueExplosion(pos, typeId, totalIntensity, slope, maxTileIntensity, addLog: false);
+        QueueExplosion(pos, typeId, totalIntensity, slope, maxTileIntensity, tileBreakScale, maxTileBreak, addLog: false);
 
         if (!addLog)
             return;
@@ -211,6 +215,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         float totalIntensity,
         float slope,
         float maxTileIntensity,
+        float tileBreakScale = 1f,
+        int maxTileBreak = int.MaxValue,
         bool addLog = false)
     {
         if (totalIntensity <= 0 || slope <= 0)
@@ -226,7 +232,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             _logsSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
         
         _explosionQueue.Enqueue(() => SpawnExplosion(epicenter, type, totalIntensity,
-            slope, maxTileIntensity));
+            slope, maxTileIntensity, tileBreakScale, maxTileBreak));
     }
 
     /// <summary>
@@ -238,7 +244,9 @@ public sealed partial class ExplosionSystem : EntitySystem
         ExplosionPrototype type,
         float totalIntensity,
         float slope,
-        float maxTileIntensity)
+        float maxTileIntensity,
+        float tileBreakScale,
+        int maxTileBreak)
     {
         var results = GetExplosionTiles(epicenter, type.ID, totalIntensity, slope, maxTileIntensity);
 
@@ -268,6 +276,8 @@ public sealed partial class ExplosionSystem : EntitySystem
             epicenter,
             spaceMatrix,
             area,
+            tileBreakScale,
+            maxTileBreak
             EntityManager,
             _mapManager);
     }
