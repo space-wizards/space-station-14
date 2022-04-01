@@ -397,18 +397,40 @@ public sealed partial class ExplosionSystem : EntitySystem
 ///     cref="ExplosionSystem"/>.
 /// </summary>
 /// <remarks>
-///     This is basically the output of <see cref="ExplosionSystem.GetExplosionTiles()"/>, but wrapped in an enumerator
-///     to iterate over the tiles, along with the ability to keep track of what entities have already been damaged by
+///     This is basically the output of <see cref="ExplosionSystem.GetExplosionTiles()"/>, but with some utility functions for
+///     iterating over the tiles, along with the ability to keep track of what entities have already been damaged by
 ///     this explosion.
 /// </remarks>
 sealed class Explosion
 {
+    /// <summary>
+    ///     For every grid (+ space) that the explosion reached, this data struct stores information about the tiles and
+    ///     caches the entity-lookup component so that it doesn't have to be re-fetched for every tile.
+    /// </summary>
     struct ExplosionData
     {
-        public EntityLookupComponent Lookup;
+        /// <summary>
+        ///     The tiles that the explosion damaged, grouped by the iteration (can be thought of as the distance from the epicenter)
+        /// </summary>
         public Dictionary<int, List<Vector2i>> TileLists;
+
+        /// <summary>
+        ///     Lookup component for this grid (or space/map).
+        /// </summary>
+        public EntityLookupComponent Lookup;
+
+        /// <summary>
+        ///     The actual grid that this corresponds to. If null, this implies space.
+        /// </summary>
         public IMapGrid? MapGrid;
     }
+
+    private readonly List<ExplosionData> _explosionData = new();
+
+    /// <summary>
+    ///     The explosion intensity associated with each tile iteration.
+    /// </summary>
+    private readonly List<float> _tileSetIntensity;
 
     /// <summary>
     ///     Used to avoid applying explosion effects repeatedly to the same entity. Particularly important if the
@@ -417,21 +439,36 @@ sealed class Explosion
     public readonly HashSet<EntityUid> ProcessedEntities = new();
 
     /// <summary>
-    ///     This integer tracks how much of this explosion has been processed.
+    ///     This integer tracks how much of this explosion has been processed. 
     /// </summary>
     public int CurrentIteration { get; private set; } = 0;
 
+    /// <summary>
+    ///     The prototype for this explosion. Determines tile break chance, damage, etc.
+    /// </summary>
     public readonly ExplosionPrototype ExplosionType;
+
+    /// <summary>
+    ///     The center of the explosion. Used for physics throwing. Also used to identify the map on which the explosion is happening.
+    /// </summary>
     public readonly MapCoordinates Epicenter;
+
+    /// <summary>
+    ///     The matrix that defines the referance frame for the explosion in space.
+    /// </summary>
     private readonly Matrix3 _spaceMatrix;
+
+    /// <summary>
+    ///     Inverse of <see cref="_spaceMatrix"/>
+    /// </summary>
     private readonly Matrix3 _invSpaceMatrix;
 
-    private readonly List<ExplosionData> _explosionData = new();
-    private readonly List<float> _tileSetIntensity;
-
+    /// <summary>
+    ///     Have all the tiles on all the grids been processed?
+    /// </summary>
     public bool FinishedProcessing;
 
-    // shitty enumerator implementation
+    // Variables used for enumerating over tiles, grids, etc
     private DamageSpecifier _currentDamage = default!;
     private EntityLookupComponent _currentLookup = default!;
     private IMapGrid? _currentGrid;
@@ -439,21 +476,33 @@ sealed class Explosion
     private float _currentThrowForce;
     private List<Vector2i>.Enumerator _currentEnumerator;
     private int _currentDataIndex;
+
+    /// <summary>
+    ///     The set of tiles that need to be updated when the explosion has finished processing. Used to avoid having
+    ///     the explosion trigger chunk regeneration & shuttle-system processing every tick.
+    /// </summary>
     private Dictionary<IMapGrid, List<(Vector2i, Tile)>> _tileUpdateDict = new();
 
+    // Entity Queries
     private EntityQuery<TransformComponent> _xformQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<DamageableComponent> _damageQuery;
     private EntityQuery<MetaDataComponent> _metaQuery;
 
+    /// <summary>
+    ///     Total area that the explosion covers.
+    /// </summary>
     public int Area;
 
     private readonly ExplosionSystem _system;
 
+    /// <summary>
+    ///     Initialize a new instance for processing
+    /// </summary>
     public Explosion(ExplosionSystem system,
         ExplosionPrototype explosionType,
-        SpaceExplosion? spaceData,
-        List<GridExplosion> gridData,
+        SpaceExplosionTileFlood? spaceData,
+        List<GridExplosionTileFlood> gridData,
         List<float> tileSetIntensity,
         MapCoordinates epicenter,
         Matrix3 spaceMatrix,
@@ -501,6 +550,10 @@ sealed class Explosion
             MoveNext();
     }
 
+    /// <summary>
+    ///     Find the next tile-enumerator. This either means retrieving a set of tiles on the next grid, or incrementing
+    ///     the tile iteration by one and moving back to the first grid. This will also update the current damage, current entity-lookup, etc.
+    /// </summary>
     private bool TryGetNextTileEnumerator()
     {
         while (CurrentIteration < _tileSetIntensity.Count)
@@ -536,11 +589,14 @@ sealed class Explosion
             _currentDataIndex = 0;
         }
 
-        // no more explosion data to process
+        // No more explosion tiles to process
         FinishedProcessing = true;
         return false;
     }
 
+    /// <summary>
+    ///     Get the next tile that needs processing
+    /// </summary>
     private bool MoveNext()
     {
         if (FinishedProcessing)
@@ -557,6 +613,9 @@ sealed class Explosion
         return false;
     }
 
+    /// <summary>
+    ///     Attempt to process (i.e., damage entities) some number of grid tiles. 
+    /// </summary>
     public int Process(int processingTarget)
     {
         // In case the explosion terminated early last tick due to exceeding the allocated processing time, use this
@@ -572,6 +631,7 @@ sealed class Explosion
                 break;
             }
 
+            // Is the current tile on a grid (instead of in space)?
             if (_currentGrid != null &&
                 _currentGrid.TryGetTileRef(_currentEnumerator.Current, out var tileRef) &&
                 !tileRef.Tile.IsEmpty)
@@ -582,6 +642,8 @@ sealed class Explosion
                     _tileUpdateDict[_currentGrid] = tileUpdateList;
                 }
 
+                // damage entities on the tile. Also figures out whether there are any solid entities blocking the floor
+                // from being destroyed.
                 var canDamageFloor = _system.ExplodeTile(_currentLookup,
                     _currentGrid,
                     _currentEnumerator.Current,
@@ -595,12 +657,13 @@ sealed class Explosion
                     _physicsQuery,
                     _metaQuery);
 
-                // was there a blocking entity on the tile that was not destroyed by the explosion?
+                // If the floor is not blocked by some dense object, damage the floor tiles.
                 if (canDamageFloor)
                     _system.DamageFloorTile(tileRef, _currentIntensity, tileUpdateList, ExplosionType);
             }
             else
             {
+                // The current "tile" is in space. Damage any entities in that region
                 _system.ExplodeSpace(_currentLookup,
                     _spaceMatrix,
                     _invSpaceMatrix,
@@ -620,12 +683,16 @@ sealed class Explosion
                 break;
         }
 
+        // Update damaged/broken tiles on the grid.
         SetTiles();
         return processed;
     }
 
     private void SetTiles()
     {
+        // Updating the grid can result in chunk collision regeneration & slow processing by the shuttle system.
+        // Therefore, tile breaking may be configure to only happen at the end of an explosion, rather than during every
+        // tick.
         if (!_system.IncrementalTileBreaking && !FinishedProcessing)
             return;
 
