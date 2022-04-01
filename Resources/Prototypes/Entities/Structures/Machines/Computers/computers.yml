@@ -104,7 +104,7 @@
     visuals:
     - type: ComputerVisualizer
       key: security_key
-      screen: security
+      screen: explosive
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -444,3 +444,31 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+
+- type: entity
+  parent: BaseStructure
+  id: ComputerTelevision
+  name: wooden television
+  description: It is an old television displaying the station's cameras, if they worked.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    layers:
+    - state: television
+    - state: detective_television
+      shader: unshaded
+    visuals:
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 50
+      layer:
+      - SmallImpassable
+      mask:
+      - Impassable

@@ -62,20 +62,6 @@ namespace Content.Server.AME.Components
             _jarSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-fuelJarContainer");
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage powerChanged:
-                    OnPowerChanged(powerChanged);
-                    break;
-            }
-        }
-
         internal void OnUpdate(float frameTime)
         {
             if (!_injecting)
@@ -109,11 +95,6 @@ namespace Content.Server.AME.Components
 
             if (_stability <= 0) { group.ExplodeCores(); }
 
-        }
-
-        private void OnPowerChanged(PowerChangedMessage e)
-        {
-            UpdateUserInterface();
         }
 
         // Used to update core count
@@ -151,7 +132,7 @@ namespace Content.Server.AME.Components
             return true;
         }
 
-        private void UpdateUserInterface()
+        public void UpdateUserInterface()
         {
             var state = GetUserInterfaceState();
             UserInterface?.SetState(state);

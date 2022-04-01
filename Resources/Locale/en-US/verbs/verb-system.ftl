@@ -20,6 +20,7 @@ verb-categories-rotate = Rotate
 verb-categories-transfer = Set Transfer Amount
 verb-categories-split = Split
 verb-categories-set-sensor = Sensor
+verb-categories-timer = Set Delay
 
 verb-common-toggle-light = Toggle light
 verb-common-close = Close

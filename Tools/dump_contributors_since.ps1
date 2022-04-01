@@ -9,7 +9,10 @@ param(
     [Nullable[DateTime]]$until);
 
 $replacements = @{
-    "moonheart08" = "moony"
+    "moonheart08" = "moony",
+    "Elijahrane" = "Rane",
+    "ZeroDayDaemon" = "Daemon",
+    "ElectroJr" = "ElectroSR"
 }
 
 $ignore = @{

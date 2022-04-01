@@ -75,6 +75,12 @@
   itemId: SyndieMiniBomb
   price: 6
 
+- type: uplinkListing
+  id: UplinkGrenadePenguin
+  category: Explosives
+  itemId: MobGrenadePenguin
+  price: 6
+
 #- type: uplinkListing
 #  id: UplinkExplosiveC4
 #  category: Weapons
@@ -125,7 +131,7 @@
   id: UplinkEmag
   category: Utility
   itemId: Emag
-  description: This sequencer, or "emag", can be used to open or hack a huge variety of items around the station.
+  description: The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
   icon: /Textures/Objects/Tools/emag.rsi/icon.png
   price: 8
 
@@ -299,4 +305,11 @@
   itemId: HandheldHealthAnalyzerGigacancer
   listingName: Ultragigacancer Health Analyzer
   description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
+  price: 5
+  
+- type: uplinkListing
+  id: UplinkNocturineChemistryBottle
+  category: Misc
+  itemId: NocturineChemistryBottle
+  description: A chemical that makes it very hard for your target to stand up.
   price: 5
