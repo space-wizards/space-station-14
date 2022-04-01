@@ -62,10 +62,11 @@
           path: /Audio/Effects/metalbreak.ogg
       - !type:ExplodeBehavior
   - type: Explosive
-    devastationRange: 1
-    heavyImpactRange: 3
-    lightImpactRange: 5
-    flashRange: 6
+    explosionType: Default
+    # Same as AME, but numbers still picked from a hat.
+    maxIntensity: 100
+    intensitySlope: 2
+    totalIntensity: 200
 
 # Base Wallmount Generator
 
