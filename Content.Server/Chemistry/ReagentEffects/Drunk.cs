@@ -12,12 +12,12 @@ namespace Content.Server.Chemistry.ReagentEffects
         ///     BoozePower is how long each metabolism cycle will make the drunk effect last for.
         /// </summary>
         [DataField("boozePower")]
-        public float BoozePower = 5f;
+        public float BoozePower = 2f;
 
-        public override void Metabolize(IEntity solutionEntity, IEntity organEntity, Solution.ReagentQuantity amount)
+        public override void Effect(ReagentEffectArgs args)
         {
-            var drunkSys = EntitySystem.Get<DrunkSystem>();
-            drunkSys.TryApplyDrunkenness(solutionEntity.Uid, BoozePower);
+            var drunkSys = EntitySystem.Get<SharedDrunkSystem>();
+            drunkSys.TryApplyDrunkenness(args.SolutionEntity, BoozePower);
         }
     }
 }

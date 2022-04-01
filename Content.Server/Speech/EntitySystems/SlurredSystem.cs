@@ -8,7 +8,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems
 {
-    public class SlurredSystem : SharedSlurredSystem
+    public sealed class SlurredSystem : SharedSlurredSystem
     {
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
@@ -25,7 +25,7 @@ namespace Content.Server.Speech.EntitySystems
                 return;
 
             if (!_statusEffectsSystem.HasStatusEffect(uid, SlurKey, status))
-                _statusEffectsSystem.TryAddStatusEffect<SlurredAccentComponent>(uid, SlurKey, time, status);
+                _statusEffectsSystem.TryAddStatusEffect<SlurredAccentComponent>(uid, SlurKey, time, true, status);
             else
                 _statusEffectsSystem.TryAddTime(uid, SlurKey, time, status);
         }

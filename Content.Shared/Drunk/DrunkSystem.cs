@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Shared.Drunk
 {
-    public class DrunkSystem : EntitySystem
+    public abstract class SharedDrunkSystem : EntitySystem
     {
         public const string DrunkKey = "Drunk";
 
@@ -22,7 +22,7 @@ namespace Content.Shared.Drunk
             _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
             if (!_statusEffectsSystem.HasStatusEffect(uid, DrunkKey, status))
             {
-                _statusEffectsSystem.TryAddStatusEffect<DrunkComponent>(uid, DrunkKey, TimeSpan.FromSeconds(boozePower), status);
+                _statusEffectsSystem.TryAddStatusEffect<DrunkComponent>(uid, DrunkKey, TimeSpan.FromSeconds(boozePower), true, status);
             }
             else
             {

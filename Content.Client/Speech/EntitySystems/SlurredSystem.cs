@@ -2,8 +2,7 @@
 
 namespace Content.Client.Speech.EntitySystems
 {
-    public class SlurredSystem : SharedSlurredSystem
+    public sealed class SlurredSystem : SharedSlurredSystem
     {
-
     }
 }

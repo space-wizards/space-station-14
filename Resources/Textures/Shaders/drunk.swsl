@@ -2,20 +2,9 @@
 uniform highp float boozePower;
 
 void fragment() {
-    highp vec2 uv = FRAGCOORD.xy;
+    highp float mod = mix(0.001, 0.015, boozePower);
 
-    uv.x += sin(uv.y * 10.0 + TIME) / 10.0;
-    COLOR = zTextureSpec(SCREEN_TEXTURE, uv * SCREEN_PIXEL_SIZE);
-}
-
-void fart() {
-    highp vec2 uv;
-    uv.x+=cos(uv.y * 2.0 + TIME) * boozePower / 20;
-    uv.y+=sin(uv.x * 2.0 + TIME) * boozePower / 20;
-    float offset = sin(TIME *0.5) * boozePower / 10;
-    vec4 a = zTextureSpec(SCREEN_TEXTURE,uv);
-    vec4 b = zTextureSpec(SCREEN_TEXTURE,uv-vec2(sin(offset)));
-    vec4 c = zTextureSpec(SCREEN_TEXTURE,uv+vec2(sin(offset)));
-    vec4 d = zTextureSpec(SCREEN_TEXTURE,uv-vec2(0.0,sin(offset)));
-    vec4 e = zTextureSpec(SCREEN_TEXTURE,uv+vec2(0.0,sin(offset)));
+    highp vec4 tex1 = zTextureSpec(SCREEN_TEXTURE, vec2(FRAGCOORD.x * SCREEN_PIXEL_SIZE.x + (mod * 2) * sin(TIME * mod * 300), FRAGCOORD.y * SCREEN_PIXEL_SIZE.y + (mod * 2) * cos(TIME * mod * 300)));
+    highp vec4 tex2 = zTextureSpec(SCREEN_TEXTURE, vec2(FRAGCOORD.x * SCREEN_PIXEL_SIZE.x + (mod) * sin(TIME * mod * 200), FRAGCOORD.y * SCREEN_PIXEL_SIZE.y + (mod) * cos(TIME * mod * 200)));
+    COLOR = mix(tex1, tex2, mix(0.0, 0.5, boozePower));
 }
