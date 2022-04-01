@@ -531,7 +531,7 @@
   name: paperwork
   parent: MobSloth
   id: MobPaperwork
-  description: Took up a new job sorting books in the library after he got transferred from space station 13. He seems to be just as slow at this.
+  description: Took up a new job sorting books in the library after he got transferred from Space Station 13. He seems to be just as slow at this.
   components:
   - type: Sprite
     drawdepth: Mobs
