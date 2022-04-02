@@ -1000,7 +1000,7 @@ entities:
 - uid: 111
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: -2.5,1.5
     parent: 857
@@ -5336,7 +5336,7 @@ entities:
 - uid: 476
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: 14.5,21.5
     parent: 857
@@ -17786,7 +17786,7 @@ entities:
 - uid: 1020
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: -7.5,19.5
     parent: 857
@@ -87861,7 +87861,7 @@ entities:
 - uid: 8746
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: -32.5,-29.5
     parent: 857
