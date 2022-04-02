@@ -256,6 +256,9 @@ namespace Content.Server.GameTicking
             UpdateLateJoinStatus();
             UpdateJobsAvailable();
 
+            var startedEvent = new RoundStartedEvent();
+            RaiseLocalEvent(startedEvent);
+
 #if EXCEPTION_TOLERANCE
             }
             catch (Exception e)
@@ -570,6 +573,13 @@ namespace Content.Server.GameTicking
             Players = players;
             Forced = forced;
         }
+    }
+
+    /// <summary>
+    ///     Raised at the end of <see cref="GameTicker.StartRound"/>
+    /// </summary>
+    public sealed class RoundStartedEvent : EntityEventArgs
+    {
     }
 
     /// <summary>

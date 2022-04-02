@@ -61,6 +61,13 @@
         Nuclear device activation code:
 
 - type: entity
+  parent: PaperWritten
+  id: StationGoalPaper
+  name: station goal
+  components:
+    - type: StationGoalPaper
+
+- type: entity
   name: pen
   parent: BaseItem
   id: Pen
@@ -141,8 +148,8 @@
     visuals:
     - type: MappedItemVisualizer
 
-    
-    
+
+
 - type: entity
   id: BoxFolderRed
   parent: BoxFolderBase

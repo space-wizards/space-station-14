@@ -1,0 +1,7 @@
+﻿- type: stationGoal
+  id: Shuttle
+  text: station-goal-shuttle-text
+
+- type: stationGoal
+  id: Singularity
+  text: station-goal-singularity-text
