@@ -10,7 +10,7 @@ namespace Content.Client.Ghost.Roles.UI
     public sealed partial class GhostRolesEntry : BoxContainer
     {
         public event Action<GhostRoleInfo>? OnRoleSelected;
-        public event Action<GhostRoleInfo>? OnRoleJumped;
+        public event Action<GhostRoleInfo>? OnRoleFollow;
 
         public GhostRolesEntry(string name, string description, IEnumerable<GhostRoleInfo> roles)
         {
@@ -23,7 +23,7 @@ namespace Content.Client.Ghost.Roles.UI
             {
                 var button = new GhostRoleEntryButtons();
                 button.RequestButton.OnPressed += _ => OnRoleSelected?.Invoke(role);
-                button.JumpButton.OnPressed += _ => OnRoleJumped?.Invoke(role);
+                button.FollowButton.OnPressed += _ => OnRoleFollow?.Invoke(role);
 
                 Buttons.AddChild(button);
             }

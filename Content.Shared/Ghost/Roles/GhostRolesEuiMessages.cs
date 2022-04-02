@@ -36,11 +36,11 @@ namespace Content.Shared.Ghost.Roles
     }
 
     [NetSerializable, Serializable]
-    public sealed class GhostRoleJumpRequestMessage : EuiMessageBase
+    public sealed class GhostRoleFollowRequestMessage : EuiMessageBase
     {
         public uint Identifier { get; }
 
-        public GhostRoleJumpRequestMessage(uint identifier)
+        public GhostRoleFollowRequestMessage(uint identifier)
         {
             Identifier = identifier;
         }

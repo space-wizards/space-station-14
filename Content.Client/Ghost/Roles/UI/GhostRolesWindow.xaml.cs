@@ -9,7 +9,7 @@ namespace Content.Client.Ghost.Roles.UI
     public sealed partial class GhostRolesWindow : DefaultWindow
     {
         public event Action<GhostRoleInfo>? OnRoleRequested;
-        public event Action<GhostRoleInfo>? OnRoleJumped;
+        public event Action<GhostRoleInfo>? OnRoleFollow;
 
         public void ClearEntries()
         {
@@ -23,7 +23,7 @@ namespace Content.Client.Ghost.Roles.UI
 
             var entry = new GhostRolesEntry(name, description, roles);
             entry.OnRoleSelected += OnRoleRequested;
-            entry.OnRoleJumped += OnRoleJumped;
+            entry.OnRoleFollow += OnRoleFollow;
             EntryContainer.AddChild(entry);
         }
     }

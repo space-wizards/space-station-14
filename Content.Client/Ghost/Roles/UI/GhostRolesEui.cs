@@ -33,9 +33,9 @@ namespace Content.Client.Ghost.Roles.UI
                 _windowRules.OpenCentered();
             };
 
-            _window.OnRoleJumped += info =>
+            _window.OnRoleFollow += info =>
             {
-                SendMessage(new GhostRoleJumpRequestMessage(info.Identifier));
+                SendMessage(new GhostRoleFollowRequestMessage(info.Identifier));
             };
 
             _window.OnClose += () =>

@@ -190,7 +190,7 @@ namespace Content.Server.Ghost.Roles
             CloseEui(player);
         }
 
-        public void Jump(IPlayerSession player, uint identifier)
+        public void Follow(IPlayerSession player, uint identifier)
         {
             if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
             if (player.AttachedEntity == null) return;
