@@ -29,6 +29,14 @@
   desc: A dose of energy! Nanotrasen is not responsible if you grow avian appendages.
   physicalDesc: fizzy
   color: "#ffffbf"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
 
 - type: reagent
   id: GrapeSoda
@@ -118,6 +126,9 @@
       effects:
       - !type:SatiateThirst
         factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.1
     Poison:
       effects:
       - !type:HealthChange
