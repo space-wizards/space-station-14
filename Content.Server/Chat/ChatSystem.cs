@@ -99,6 +99,10 @@ public sealed class ChatSystem : EntitySystem
             SendEntityEmote(source, emoteStr, hideChat);
         }
 
+        // This can happen if the entire string is sanitized out.
+        if (string.IsNullOrEmpty(message))
+            return;
+
         // Otherwise, send whatever type.
         switch (desiredType)
         {
