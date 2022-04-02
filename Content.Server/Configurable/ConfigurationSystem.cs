@@ -1,5 +1,5 @@
-using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
 using static Content.Shared.Configurable.SharedConfigurationComponent;
 
