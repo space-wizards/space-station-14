@@ -52,3 +52,6 @@ ent-ClothingOuterWizardRed = red wizard robes
 ent-ClothingOuterSkub = skub suit
     .desc = Skub is crudely written on the outside of this cylindrical suit.
     .suffix = { "" }
+ent-ClothingOuterPlagueSuit = plague doctor suit
+    .desc = A bad omen
+    .suffix = { "" }
