@@ -8,6 +8,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 
 namespace Content.Client.UserInterface.Controllers;
 
@@ -18,13 +19,15 @@ public sealed partial class InventoryUIController : UIController
     private ClientInventoryComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
     private InventoryWindow? _inventoryWindow;
-    private bool _isInventoryWindowOpen;
 
     public override void OnStateChanged(StateChangedEventArgs args)
     {
         if (args.NewState is GameplayState)
         {
             //bind open inventory key to OpenInventoryMenu;
+            CommandBinds.Builder
+                .Bind(ContentKeyFunctions.OpenInventoryMenu, InputCmdHandler.FromDelegate(_ => ToggleInventoryMenu()))
+                .Register<ClientInventorySystem>();
         }
     }
 
@@ -39,17 +42,15 @@ public sealed partial class InventoryUIController : UIController
                 _inventoryWindow!.InventoryButtons.AddButton(new ItemSlotButton(data), data.ButtonOffset);
             }
         }
-        _isInventoryWindowOpen = true;
-        _inventoryWindow!.OnClose += SetWindowClosed;
     }
-
-    private void SetWindowClosed()
+    public void ToggleInventoryMenu()
     {
-        _isInventoryWindowOpen = false;
-    }
-    public void OpenInventoryMenu()
-    {
-        if (_isInventoryWindowOpen) return; //prevent multiple windows being opened
+        if (_inventoryWindow != null)
+        {
+            _inventoryWindow.Dispose();
+            _inventoryWindow = null;
+            return;
+        }
         CreateInventoryWindow(_playerInventory);
     }
 

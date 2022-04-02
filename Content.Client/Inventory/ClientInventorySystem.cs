@@ -34,7 +34,6 @@ namespace Content.Client.Inventory
         public Action<SlotData>? EntitySlotUpdate = null;
         public Action<SlotData>? OnSlotAdded = null;
         public Action<SlotData>? OnSlotRemoved = null;
-        public Action? OnOpenInventory = null;
         public Action<ClientInventoryComponent>? OnLinkInventory = null;
         public Action? OnUnlinkInventory = null;
         public Action<string, string, ISpriteComponent?, bool>? OnSpriteUpdate = null;
@@ -44,12 +43,6 @@ namespace Content.Client.Inventory
         public override void Initialize()
         {
             base.Initialize();
-
-            CommandBinds.Builder
-                .Bind(ContentKeyFunctions.OpenInventoryMenu,
-                    InputCmdHandler.FromDelegate(_ => HandleOpenInventoryMenu()))
-                .Register<ClientInventorySystem>();
-
             SubscribeLocalEvent<ClientInventoryComponent, PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<ClientInventoryComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
@@ -194,13 +187,6 @@ namespace Content.Client.Inventory
             if(!TryGetSlotContainer(uid, slot, out var containerSlot, out var slotDef, inventoryComponent))
                 return;
 
-            //HoverInSlot(button, heldEntity,
-             //   CanEquip(uid, heldEntity, slot, out _, slotDef, inventoryComponent) &&
-             //   containerSlot.CanInsert(heldEntity, EntityManager));
-        }
-        private void HandleOpenInventoryMenu()
-        {
-            OnOpenInventory?.Invoke();
         }
 
         public void UIInventoryActivate(string slot)
