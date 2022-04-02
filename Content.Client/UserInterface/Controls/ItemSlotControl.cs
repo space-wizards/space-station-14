@@ -168,7 +168,9 @@ namespace Content.Client.UserInterface.Controls
                 MouseFilter = MouseFilterMode.Stop,
                 Visible = false
             });
+
             HighlightTexturePath = "slot_highlight.png";
+            BlockedTexturePath = "blocked.png";
         }
 
         public void ClearHover()

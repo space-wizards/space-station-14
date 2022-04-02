@@ -26,6 +26,20 @@ public sealed partial class InventoryUIController
         _handsSystem.OnRemoveHand += RemoveHand;
         _handsSystem.OnComponentConnected += LoadPlayerHands;
         _handsSystem.OnComponentDisconnected += UnloadPlayerHands;
+        _handsSystem.OnHandBlocked += HandBlocked;
+        _handsSystem.OnHandUnblocked += HandUnblocked;
+    }
+
+    private void OnHandsSystemDeactivate()
+    {
+        _handsSystem.OnAddHand -= AddHand;
+        _handsSystem.OnSpriteUpdate -= UpdateButtonSprite;
+        _handsSystem.OnSetActiveHand -= SetActiveHand;
+        _handsSystem.OnRemoveHand -= RemoveHand;
+        _handsSystem.OnComponentConnected -= LoadPlayerHands;
+        _handsSystem.OnComponentDisconnected -= UnloadPlayerHands;
+        _handsSystem.OnHandBlocked -= HandBlocked;
+        _handsSystem.OnHandUnblocked -= HandUnblocked;
     }
 
     private void OnHandPressed(GUIBoundKeyEventArgs args, ItemSlotControl hand)
@@ -71,6 +85,26 @@ public sealed partial class InventoryUIController
         var activeHand = handsComp.ActiveHand;
         if (activeHand == null) return;
         SetActiveHand(activeHand.Name);
+    }
+
+    private void HandBlocked(string handName)
+    {
+        if (!_handLookup.TryGetValue(handName, out var hand))
+        {
+            return;
+        }
+
+        hand.Blocked = true;
+    }
+
+    private void HandUnblocked(string handName)
+    {
+        if (!_handLookup.TryGetValue(handName, out var hand))
+        {
+            return;
+        }
+
+        hand.Blocked = false;
     }
 
     private int GetHandContainerIndex(string containerName)
@@ -220,5 +254,4 @@ public sealed partial class InventoryUIController
         _handsContainers.RemoveAt(index);
         return success;
     }
-
 }

@@ -60,11 +60,11 @@ public sealed partial class InventoryUIController : UIController
         Logger.Debug("NEURON ACTIVATED");
         switch (system)
         {
-            case HandsSystem:
-                OnHandsSystemActivate();
-                return;
             case ClientInventorySystem:
                 OnInventorySystemActivate();
+                return;
+            case HandsSystem:
+                OnHandsSystemActivate();
                 return;
         }
     }
@@ -75,6 +75,9 @@ public sealed partial class InventoryUIController : UIController
         {
             case ClientInventorySystem:
                 OnInventorySystemDeactivate();
+                return;
+            case HandsSystem:
+                OnHandsSystemDeactivate();
                 return;
         }
     }
