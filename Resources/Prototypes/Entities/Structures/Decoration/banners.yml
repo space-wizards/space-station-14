@@ -23,6 +23,7 @@
         - MobImpassable
         - SmallImpassable
         - VaultImpassable
+  - type: InteractionOutline
 
 - type: entity
   id: BannerNanotrasen
