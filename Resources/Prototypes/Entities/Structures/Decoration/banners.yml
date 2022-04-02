@@ -2,7 +2,7 @@
   id: BannerBase
   parent: BaseStructureDynamic
   name: base banner
-  description: It is the concept of a banner, you shouldn't be seeing this.
+  description: It's the concept of a banner, you shouldn't be seeing this.
   abstract: true
   components:
   - type: Sprite
