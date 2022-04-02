@@ -1,10 +1,10 @@
 ﻿<uiWindow:InventoryWindow
     xmlns="https://spacestation14.io"
     xmlns:uiWindow="clr-namespace:Content.Client.UserInterface.UIWindows"
-    Name="HandsInterface"
-    VerticalExpand="False"
-    VerticalAlignment="Bottom"
-    Orientation="Horizontal"
-    HorizontalAlignment="Center"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Name="InventoryDisplay"
+    HorizontalExpand="True"
+    VerticalExpand="True"
 >
+    <controls:InventoryDisplay Name="InventoryButtons" Access="Public"/>
 </uiWindow:InventoryWindow>

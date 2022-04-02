@@ -1,8 +1,11 @@
-﻿using Content.Client.Hands;
+﻿using Content.Client.Gameplay;
+using Content.Client.Hands;
 using Content.Client.Inventory;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.UIWindows;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 
@@ -11,9 +14,45 @@ namespace Content.Client.UserInterface.Controllers;
 public sealed partial class InventoryUIController : UIController
 {
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
-
+    [Dependency] private readonly IUIWindowManager _uiWindowManager = default!;
     private ClientInventoryComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
+    private InventoryWindow? _inventoryWindow;
+    private bool _isInventoryWindowOpen;
+
+    public override void OnStateChanged(StateChangedEventArgs args)
+    {
+        if (args.NewState is GameplayState)
+        {
+            //bind open inventory key to OpenInventoryMenu;
+        }
+    }
+
+    private void CreateInventoryWindow(ClientInventoryComponent? clientInv)
+    {
+        if (clientInv == null) return;
+        _inventoryWindow = _uiWindowManager.CreateNamedWindow<InventoryWindow>("Inventory");
+        foreach (var (_,data) in clientInv.SlotData)
+        {
+            if (data.ShowInWindow)
+            {
+                _inventoryWindow!.InventoryButtons.AddButton(new ItemSlotButton(data), data.ButtonOffset);
+            }
+        }
+        _isInventoryWindowOpen = true;
+        _inventoryWindow!.OnClose += SetWindowClosed;
+    }
+
+    private void SetWindowClosed()
+    {
+        _isInventoryWindowOpen = false;
+    }
+    public void OpenInventoryMenu()
+    {
+        if (_isInventoryWindowOpen) return; //prevent multiple windows being opened
+        CreateInventoryWindow(_playerInventory);
+    }
+
 
     //Neuron Activation
     public override void OnSystemLoaded(IEntitySystem system)

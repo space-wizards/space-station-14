@@ -253,7 +253,9 @@ namespace Content.Client.Inventory
             public bool Highlighted;
             public ContainerSlot? Container;
             public bool HasSlotGroup => SlotDef.SlotGroup != "";
+            public Vector2i ButtonOffset => SlotDef.UIWindowPosition;
             public string SlotName => SlotDef.Name;
+            public bool ShowInWindow => SlotDef.ShowInWindow;
             public string SlotGroup => SlotDef.SlotGroup;
             public string SlotDisplayName => SlotDef.DisplayName;
             public string TextureName => "slots/"+SlotDef.TextureName;

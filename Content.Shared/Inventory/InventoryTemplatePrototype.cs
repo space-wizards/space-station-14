@@ -23,8 +23,9 @@ public sealed class SlotDefinition
     [DataField("name", required: true)] public string Name { get; } = string.Empty;
     [DataField("slotTexture")] public string TextureName { get; } = "pocket";
     [DataField("slotFlags")] public SlotFlags SlotFlags { get; } = SlotFlags.PREVENTEQUIP;
-
+    [DataField("showInWindow")] public bool ShowInWindow { get; } =true;
     [DataField("slotGroup")] public string SlotGroup { get; } ="";
+
     [DataField("uiWindowPos", required: true)] public Vector2i UIWindowPosition { get; }
     [DataField("dependsOn")] public string? DependsOn { get; }
     [DataField("displayName", required: true)] public string DisplayName { get; } = string.Empty;
