@@ -5,7 +5,6 @@ namespace Content.Client.Entry
     {
         public static string[] List => new[]
         {
-            "Anchorable",
             "AmmoBox",
             "Pickaxe",
             "IngestionBlocker",
@@ -90,7 +89,6 @@ namespace Content.Client.Entry
             "SolarPanel",
             "BodyScanner",
             "Stunbaton",
-            "Tool",
             "TilePrying",
             "RandomSpriteColor",
             "ConditionalSpawner",

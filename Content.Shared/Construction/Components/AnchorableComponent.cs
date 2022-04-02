@@ -1,16 +1,13 @@
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Tools;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Construction.Components
+namespace Content.Shared.Construction.Components
 {
-    [RegisterComponent, Friend(typeof(AnchorableSystem))]
+    [RegisterComponent, Friend(typeof(SharedAnchorableSystem))]
     public sealed class AnchorableComponent : Component
     {
-        [DataField("tool", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        [DataField("tool", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string Tool { get; private set; } = "Anchoring";
 
         [DataField("snap")]
