@@ -15,12 +15,13 @@ namespace Content.Server.Paper
     {
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<PaperComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<PaperComponent, BeforeActivatableUIOpenEvent>(AfterUIOpen);
+            SubscribeLocalEvent<PaperComponent, BeforeActivatableUIOpenEvent>(BeforeUIOpen);
             SubscribeLocalEvent<PaperComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
@@ -32,9 +33,9 @@ namespace Content.Server.Paper
             UpdateUserInterface(uid, paperComp);
         }
 
-        private void AfterUIOpen(EntityUid uid, PaperComponent paperComp, BeforeActivatableUIOpenEvent args)
+        private void BeforeUIOpen(EntityUid uid, PaperComponent paperComp, BeforeActivatableUIOpenEvent args)
         {
-            paperComp.Mode = SharedPaperComponent.PaperAction.Read;
+            paperComp.Mode = PaperAction.Read;
             UpdateUserInterface(uid, paperComp);
         }
 
@@ -70,26 +71,18 @@ namespace Content.Server.Paper
 
                 paperComp.Mode = PaperAction.Write;
                 UpdateUserInterface(uid, paperComp);
-                paperComp.UserInterface?.Open(actor.PlayerSession);
+                _uiSystem.GetUiOrNull(uid, PaperUiKey.Key)?.Open(actor.PlayerSession);
                 return;
             }
 
-            if (TryComp<StampComponent>(args.Used, out var stampComp))
+            // If a stamp, attempt to stamp paper
+            if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(uid, stampComp.StampedName, paperComp))
             {
-                if (!paperComp.StampedBy.Contains(stampComp.StampedName))
-                {
-                    paperComp.StampedBy.Add(stampComp.StampedName);
-
-                    // If this is the first stamp, set appearance
-                    if (paperComp.StampedBy.Count == 1 && TryComp<AppearanceComponent>(uid, out var appearance))
-                        appearance.SetData(PaperVisuals.Stamped, true);
-                }
-
+                // successfully stamped, play popup
                 var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other", ("user", args.User),("target", args.Target),("stamp", args.Used));
                     _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
                 var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self", ("target", args.Target),("stamp", args.Used));
                     _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, Filter.Entities(args.User));
-                return;
             }
         }
 
@@ -108,6 +101,25 @@ namespace Content.Server.Paper
                 meta.EntityDescription = "";
 
             UpdateUserInterface(uid, paperComp);
+        }
+
+        /// <summary>
+        ///     Accepts the name to be stamped onto the paper, returns true if successful.
+        /// </summary>
+        public bool TryStamp(EntityUid uid, string stampName, PaperComponent? paperComp = null)
+        {
+            if (!Resolve(uid, ref paperComp))
+                return false;
+
+            if (!paperComp.StampedBy.Contains(stampName))
+            {
+                paperComp.StampedBy.Add(stampName);
+                // If this is the first stamp, set appearance
+                if (paperComp.StampedBy.Count == 1 && TryComp<AppearanceComponent>(uid, out var appearance))
+                    appearance.SetData(PaperVisuals.Stamped, true);
+            }
+
+            return true;
         }
 
         public void SetContent(EntityUid uid, string content, PaperComponent? paperComp = null)
@@ -133,7 +145,7 @@ namespace Content.Server.Paper
             if (!Resolve(uid, ref paperComp))
                 return;
 
-            paperComp.UserInterface?.SetState(new PaperBoundUserInterfaceState(paperComp.Content, paperComp.Mode));
+            _uiSystem.GetUiOrNull(uid, PaperUiKey.Key)?.SetState(new PaperBoundUserInterfaceState(paperComp.Content, paperComp.Mode));
         }
     }
 }

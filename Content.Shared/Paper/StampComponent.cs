@@ -8,6 +8,6 @@ namespace Content.Shared.Paper
         /// </summary>
         [ViewVariables]
         [DataField("stampedName")]
-        public string StampedName { get; set; } = "A very important person";
+        public string StampedName { get; set; } = "";
     }
 }

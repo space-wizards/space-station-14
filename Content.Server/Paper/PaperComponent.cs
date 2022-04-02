@@ -16,6 +16,5 @@ namespace Content.Server.Paper
 
         [DataField("stampedBy")]
         public List<string> StampedBy { get; set; } = new();
-        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(PaperUiKey.Key);
     }
 }
