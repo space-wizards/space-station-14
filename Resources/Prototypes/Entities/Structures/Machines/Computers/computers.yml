@@ -226,7 +226,7 @@
   parent: ComputerBase
   id: computerBodyScanner
   name: body scanner computer
-  description: That's a body scanner.
+  description: A body scanner.
   components:
   - type: BodyScanner
   - type: ActivatableUI
