@@ -1,6 +1,4 @@
-using Content.Server.UserInterface;
 using Content.Shared.Paper;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Paper
 {
