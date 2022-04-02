@@ -15,7 +15,7 @@ namespace Content.Shared.Chemistry.Reaction
     /// Prototype for chemical reaction definitions
     /// </summary>
     [Prototype("reaction")]
-    public sealed class ReactionPrototype : IPrototype
+    public sealed class ReactionPrototype : IPrototype, IComparable<ReactionPrototype>
     {
         [ViewVariables]
         [DataField("id", required: true)]
@@ -67,6 +67,33 @@ namespace Content.Shared.Chemistry.Reaction
         /// enough reactants, the reaction does not occur. Useful for spawn-entity reactions (e.g. creating cheese).
         /// </summary>
         [DataField("quantized")] public bool Quantized = false;
+
+        /// <summary>
+        /// Determines the order in which reactions occur. This should used to ensure that (in general) descriptive /
+        /// pop-up generating and explosive reactions occur before things like foam/area effects.
+        /// </summary>
+        [DataField("priority")]
+        public int Priority;
+
+        /// <summary>
+        ///     Comparison for creating a sorted set of reactions. Determines the order in which reactions occur.
+        /// </summary>
+        public int CompareTo(ReactionPrototype? other)
+        {
+            if (other == null)
+                return -1;
+
+            if (Priority != other.Priority)
+                return other.Priority - Priority;
+
+            // Prioritize reagents that don't generate products. This should reduce instances where a solution
+            // temporarily overflows and discards products simply due to the order in which the reactions occurred.
+            // Basically: Make space in the beaker before adding new products.
+            if (Products.Count != other.Products.Count)
+                return Products.Count - other.Products.Count;
+
+            return ID.CompareTo(other.ID);
+        }
     }
 
     /// <summary>

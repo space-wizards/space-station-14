@@ -25,9 +25,6 @@
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
     state: wall_girder
-  - type: Tag
-    tags:
-    - ExplosivePassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

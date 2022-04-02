@@ -120,7 +120,18 @@ namespace Content.Shared.Examine
             return ExamineRange;
         }
 
-        public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
+        {
+            // No, rider. This is better.
+            // ReSharper disable once ConvertToLocalFunction
+            var wrapped = (EntityUid uid, Ignored? wrapped)
+                => wrapped != null && wrapped(uid);
+
+            return InRangeUnOccluded(origin, other, range, predicate, wrapped, ignoreInsideBlocker, entMan);
+        }
+
+        public static bool InRangeUnOccluded<TState>(MapCoordinates origin, MapCoordinates other, float range,
+            TState state, Func<EntityUid, TState, bool> predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
         {
             if (other.MapId != origin.MapId ||
                 other.MapId == MapId.Nullspace) return false;
@@ -140,13 +151,11 @@ namespace Content.Shared.Examine
             }
 
             var occluderSystem = Get<OccluderSystem>();
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            predicate ??= _ => false;
+            IoCManager.Resolve(ref entMan);
 
             var ray = new Ray(origin.Position, dir.Normalized);
             var rayResults = occluderSystem
-                .IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
+                .IntersectRayWithPredicate(origin.MapId, ray, length, state, predicate, false).ToList();
 
             if (rayResults.Count == 0) return true;
 
