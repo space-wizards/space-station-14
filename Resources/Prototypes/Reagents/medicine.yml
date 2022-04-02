@@ -46,6 +46,21 @@
         type: Remove
 
 - type: reagent
+  id: Ethylredoxrazine
+  name: ethylredoxrazine
+  group: Medicine
+  desc: Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.
+  physicalDesc: opaque
+  color: "#2d5708"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:GenericStatusEffect
+        key: Drunk
+        time: 2.0
+        type: Remove
+
+- type: reagent
   id: Arithrazine
   name: arithrazine
   group: Medicine
