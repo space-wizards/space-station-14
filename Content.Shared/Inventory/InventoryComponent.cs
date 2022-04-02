@@ -4,7 +4,6 @@ namespace Content.Shared.Inventory;
 
 public abstract class InventoryComponent : Component
 {
-    [DataField("templateId", required: true,
-        customTypeSerializer: typeof(PrototypeIdSerializer<InventoryTemplatePrototype>))]
+    [DataField("templateId", customTypeSerializer: typeof(PrototypeIdSerializer<InventoryTemplatePrototype>))]
     public string TemplateId { get; } = "human";
 }

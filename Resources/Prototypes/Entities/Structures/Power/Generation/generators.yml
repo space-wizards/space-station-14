@@ -62,6 +62,7 @@
           path: /Audio/Effects/metalbreak.ogg
       - !type:ExplodeBehavior
   - type: Explosive
+    explosionType: Default
     devastationRange: 1
     heavyImpactRange: 3
     lightImpactRange: 5

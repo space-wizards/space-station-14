@@ -208,6 +208,7 @@
     state: frag
   - type: ExplodeOnTrigger
   - type: Explosive
+    explosionType: Default
     devastationRange: 0
     heavyImpactRange: 0
     lightImpactRange: 1
