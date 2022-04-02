@@ -80,10 +80,9 @@ namespace Content.Server.Paper
                 {
                     paperComp.StampedBy.Add(stampComp.StampedName);
 
-                    // this is the first stamp, set appearance
-                    if (paperComp.StampedBy.Count == 1)
-                        if (TryComp<AppearanceComponent>(uid, out var appearance))
-                            appearance.SetData(PaperVisuals.Stamped, true);
+                    // If this is the first stamp, set appearance
+                    if (paperComp.StampedBy.Count == 1 && TryComp<AppearanceComponent>(uid, out var appearance))
+                        appearance.SetData(PaperVisuals.Stamped, true);
                 }
 
                 var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other", ("user", args.User),("target", args.Target),("stamp", args.Used));
@@ -111,7 +110,7 @@ namespace Content.Server.Paper
             UpdateUserInterface(uid, paperComp);
         }
 
-        public void SetContent(EntityUid uid, string content, PaperComponent? paperComp)
+        public void SetContent(EntityUid uid, string content, PaperComponent? paperComp = null)
         {
             if (!Resolve(uid, ref paperComp))
                 return;
@@ -129,7 +128,7 @@ namespace Content.Server.Paper
             appearance.SetData(PaperVisuals.Status, status);
         }
 
-        public void UpdateUserInterface(EntityUid uid, PaperComponent? paperComp)
+        public void UpdateUserInterface(EntityUid uid, PaperComponent? paperComp = null)
         {
             if (!Resolve(uid, ref paperComp))
                 return;
