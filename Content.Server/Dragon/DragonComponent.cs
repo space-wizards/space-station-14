@@ -1,21 +1,31 @@
-using System.Collections.Generic;
-using Content.Server.AI.Components;
+using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Damage;
-using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Player;
 
 namespace Content.Server.Dragon
 {
-    public abstract class DragonComponent : Component
+    [RegisterComponent]
+    public sealed class DragonComponent : Component
     {
         /// <summary>
         /// Defines the devour action
         /// </summary>
         [DataField("devourAction", required: true)]
         public EntityTargetAction DevourAction = default!;
+
+        // The amount of time per health point it takes to devour something.
+        // For walls, it takes the damage tirgger value.
+        [DataField("devourEffectiveness")]
+        public float DevourMultiplier = default!;
+
+        //The amount of eggs the dragon is ready to hatch
+        public int EggsLeft = default!;
     }
-    
+
+    public sealed class DevourActionEvent : PerformEntityTargetActionEvent
+    {
+        [DataField("devourAction")]
+        public EntityTargetAction DevourAction = new();  
+    }
+
+
 }

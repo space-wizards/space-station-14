@@ -68,4 +68,11 @@
     arc: bite
     damage:
       groups:
-        Brute: 50
+        Brute: 45
+  - type: Dragon
+    devourAction:
+     event: !type:DevourActionEvent
+     icon: Interface/Actions/devour.png
+     name: action-name-devour
+     description: action-description-devour
+  
