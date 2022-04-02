@@ -17,8 +17,11 @@ namespace Content.Shared.Light.Component
         {
             public byte? Charge { get; }
 
-            public HandheldLightComponentState(byte? charge)
+            public bool Activated { get; }
+
+            public HandheldLightComponentState(bool activated, byte? charge)
             {
+                Activated = activated;
                 Charge = charge;
             }
         }

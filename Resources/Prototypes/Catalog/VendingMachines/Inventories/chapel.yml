@@ -13,6 +13,8 @@
     ClothingHeadHatPlaguedoctor: 1
     ClothingHeadHatWitch: 1
     ClothingHeadHatWitch1: 1
+    ClothingOuterPlagueSuit: 1
+    ClothingMaskPlague: 1
     ClothingHeadsetService: 2
 
 - type: vendingMachineInventory
@@ -26,3 +28,4 @@
     ClothingShoesCult: 4
     BedsheetCult: 4
     BibleNecronomicon: 1
+

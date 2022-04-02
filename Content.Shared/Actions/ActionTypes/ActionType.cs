@@ -5,7 +5,6 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Actions.ActionTypes;
 
-[DataDefinition]
 [ImplicitDataDefinitionForInheritors]
 [Serializable, NetSerializable]
 public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneable

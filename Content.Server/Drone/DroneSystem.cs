@@ -20,6 +20,8 @@ using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
 using Robust.Shared.Player;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Storage;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Drone
@@ -32,6 +34,7 @@ namespace Content.Server.Drone
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override void Initialize()
         {
@@ -120,9 +123,10 @@ namespace Content.Server.Drone
 
                 if (TryComp<HandsComponent>(uid, out var hands) && hands.Count >= drone.Tools.Count)
                 {
-                    foreach (var entry in drone.Tools)
+                    var items = EntitySpawnCollection.GetSpawns(drone.Tools, _robustRandom);
+                    foreach (var entry in items)
                     {
-                        var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
+                        var item = EntityManager.SpawnEntity(entry, spawnCoord);
                         AddComp<UnremoveableComponent>(item);
                         if (!_handsSystem.TryPickupAnyHand(uid, item, checkActionBlocker: false))
                         {

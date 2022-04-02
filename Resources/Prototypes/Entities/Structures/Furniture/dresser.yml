@@ -1,0 +1,9 @@
+- type: entity
+  id: Dresser
+  parent: BaseStructure
+  name: dresser
+  description: It is filled with underwear and shorts, finding an unused one is a gamble.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/furniture.rsi
+    state: dresser
