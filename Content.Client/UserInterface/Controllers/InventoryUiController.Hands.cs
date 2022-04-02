@@ -1,6 +1,7 @@
 ﻿using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands.Components;
+using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
@@ -16,11 +17,9 @@ public sealed partial class InventoryUIController
     private HandsComponent? _playerHandsComponent;
     private HandButton? _activeHand = null;
     private int _backupSuffix = 0;//this is used when autogenerating container names if they don't have names
-    private Action<string>? _onHandStorageActivate = null; //called when the user clicks the little activation button in the slot
 
     private void OnHandsSystemActivate()
     {
-        _onHandStorageActivate += _handsSystem.UIHandActivate;
         _handsSystem.OnAddHand += AddHand;
         _handsSystem.OnSpriteUpdate += UpdateButtonSprite;
         _handsSystem.OnSetActiveHand += SetActiveHand;
@@ -28,15 +27,26 @@ public sealed partial class InventoryUIController
         _handsSystem.OnComponentConnected += LoadPlayerHands;
         _handsSystem.OnComponentDisconnected += UnloadPlayerHands;
     }
-    private void OnHandsSystemDeactivate()
-    {
-        _onHandStorageActivate = null;
-    }
 
     private void OnHandPressed(GUIBoundKeyEventArgs args, ItemSlotControl hand)
     {
-        if (args.Function != EngineKeyFunctions.UIClick || _playerHandsComponent == null) return;
-        _handsSystem.UIHandClick(_playerHandsComponent, hand.SlotName);
+        if (_playerHandsComponent == null)
+        {
+            return;
+        }
+
+        if (args.Function == ContentKeyFunctions.ExamineEntity)
+        {
+            _handsSystem.UIInventoryExamine(hand.SlotName);
+        }
+        else if (args.Function == ContentKeyFunctions.OpenContextMenu)
+        {
+            _handsSystem.UIHandOpenContextMenu(hand.SlotName);
+        }
+        else if (args.Function == EngineKeyFunctions.UIClick)
+        {
+            _handsSystem.UIHandClick(_playerHandsComponent, hand.SlotName);
+        }
     }
 
     private void UnloadPlayerHands()
@@ -116,7 +126,7 @@ public sealed partial class InventoryUIController
     //propagate hand activation to the hand system.
     private void StorageActivate(GUIBoundKeyEventArgs args, ItemSlotControl handControl)
     {
-        _onHandStorageActivate?.Invoke(handControl.SlotName);
+        _handsSystem.UIHandActivate(handControl.SlotName);
     }
 
     private void SetActiveHand(string? handName)

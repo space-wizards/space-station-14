@@ -12,7 +12,7 @@ namespace Content.Client.UserInterface.Controls
     public abstract class ItemSlotControl : Control, IEntityEventSubscriber, IHasHudTheme
     {
         private const string HighlightShader = "SelectionOutlineInrange";
-        public EntityUid? Entity { get; set; }
+
         public TextureRect Button { get; }
         public TextureRect BlockedRect { get; }
         public TextureRect HighlightRect { get; }

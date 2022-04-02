@@ -11,9 +11,9 @@ namespace Content.Client.UserInterface.Controllers;
 public sealed partial class InventoryUIController : UIController
 {
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
+
+    private ClientInventoryComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
-    private Action<string>? _onInventoryActivate = null;
-    private Action<string>? _onInventoryStorageActivate = null;
 
     //Neuron Activation
     public override void OnSystemLoaded(IEntitySystem system)
@@ -34,9 +34,6 @@ public sealed partial class InventoryUIController : UIController
     {
         switch (system)
         {
-            case HandsSystem:
-                OnHandsSystemDeactivate();
-                return;
             case ClientInventorySystem:
                 OnInventorySystemDeactivate();
                 return;
@@ -45,8 +42,6 @@ public sealed partial class InventoryUIController : UIController
 
     private void OnInventorySystemActivate()
     {
-        _onInventoryActivate += _inventorySystem.UIInventoryActivate;
-        _onInventoryStorageActivate += _inventorySystem.UIInventoryStorageActivate;
         _inventorySystem.OnSlotAdded += AddSlot;
         _inventorySystem.OnSlotRemoved += RemoveSlot;
         _inventorySystem.OnLinkInventory += LoadSlots;
@@ -56,8 +51,6 @@ public sealed partial class InventoryUIController : UIController
 
     private void OnInventorySystemDeactivate()
     {
-        _onInventoryActivate -= _inventorySystem.UIInventoryActivate;
-        _onInventoryStorageActivate -= _inventorySystem.UIInventoryStorageActivate;
         _inventorySystem.OnSlotAdded -= AddSlot;
         _inventorySystem.OnSlotRemoved -= RemoveSlot;
         _inventorySystem.OnLinkInventory -= LoadSlots;
@@ -67,19 +60,46 @@ public sealed partial class InventoryUIController : UIController
 
     private void OnItemPressed(GUIBoundKeyEventArgs args, ItemSlotControl control)
     {
+        var slot = control.SlotName;
+
         if (args.Function == EngineKeyFunctions.UIClick)
         {
-            _onInventoryActivate?.Invoke(control.SlotName);
+            _inventorySystem.UIInventoryActivate(control.SlotName);
+            return;
+        }
+
+        if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
+        {
+            _inventorySystem.UIInventoryStorageActivate(control.SlotName);
+            return;
+        }
+
+        if (_playerInventory == null)
+        {
+            return;
+        }
+
+        if (args.Function == ContentKeyFunctions.ExamineEntity)
+        {
+            _inventorySystem.UIInventoryExamine(slot, _playerInventory.Owner);
+        }
+        else if (args.Function == ContentKeyFunctions.OpenContextMenu)
+        {
+            _inventorySystem.UIInventoryOpenContextMenu(slot, _playerInventory.Owner);
         }
         else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
         {
-            _onInventoryStorageActivate?.Invoke(control.SlotName);
+            _inventorySystem.UIInventoryActivateItem(slot, _playerInventory.Owner);
+        }
+        else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
+        {
+            _inventorySystem.UIInventoryAltActivateItem(slot, _playerInventory.Owner);
         }
     }
 
     private void OnStoragePressed(GUIBoundKeyEventArgs args, ItemSlotControl control)
     {
-        _onInventoryStorageActivate?.Invoke(control.SlotName);
+        _inventorySystem.UIInventoryStorageActivate(control.SlotName);
     }
 
     private void AddSlot(ClientInventorySystem.SlotData data)
@@ -98,17 +118,18 @@ public sealed partial class InventoryUIController : UIController
         slotGroup.RemoveButton(data.SlotName);
     }
 
-    private void LoadSlots(ClientInventoryComponent? clientInv)
+    private void LoadSlots(ClientInventoryComponent clientInv)
     {
-        if (clientInv == null) return;
+        _playerInventory = clientInv;
         foreach (var slotData in clientInv.SlotData.Values)
         {
             AddSlot(slotData);
         }
     }
 
-    private void UnloadSlots(ClientInventoryComponent? clientInv)
+    private void UnloadSlots()
     {
+        _playerInventory = null;
         foreach (var slotGroup in _slotGroups.Values)
         {
             slotGroup.ClearButtons();

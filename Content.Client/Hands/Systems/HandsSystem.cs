@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Client.Animations;
+using Content.Client.Examine;
+using Content.Client.Verbs;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -19,7 +21,11 @@ namespace Content.Client.Hands
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly ExamineSystem _examine = default!;
+        [Dependency] private readonly VerbSystem _verbs = default!;
+
         public Action<string,HandLocation>? OnAddHand = null;
         public Action<string>? OnRemoveHand = null;
         public Action<string?>? OnSetActiveHand = null;
@@ -175,6 +181,34 @@ namespace Content.Client.Hands
         public void UIHandActivate(string handName)
         {
             EntityManager.RaisePredictiveEvent(new RequestActivateInHandEvent(handName));
+        }
+
+        public void UIInventoryExamine(string handName)
+        {
+            if (!TryGetPlayerHands(out var hands) ||
+                !hands.Hands.TryGetValue(handName, out var hand) ||
+                hand.HeldEntity is not { Valid: true } entity)
+            {
+                return;
+            }
+
+            _examine.DoExamine(entity);
+        }
+
+        /// <summary>
+        ///     Called when a user clicks on the little "activation" icon in the hands GUI. This is currently only used
+        ///     by storage (backpacks, etc).
+        /// </summary>
+        public void UIHandOpenContextMenu(string handName)
+        {
+            if (!TryGetPlayerHands(out var hands) ||
+                !hands.Hands.TryGetValue(handName, out var hand) ||
+                hand.HeldEntity is not { Valid: true } entity)
+            {
+                return;
+            }
+
+            _verbs.VerbMenu.OpenVerbMenu(entity);
         }
 
         #region visuals

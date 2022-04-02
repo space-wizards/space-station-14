@@ -1,18 +1,19 @@
 using Content.Client.Clothing;
+using Content.Client.Examine;
 using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
+using Content.Client.Verbs;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
-using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
 
@@ -24,15 +25,18 @@ namespace Content.Client.Inventory
         //[Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
-        [Dependency] private readonly ClothingSystem _clothingSystem = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+
+        [Dependency] private readonly ClothingSystem _clothingSystem = default!;
+        [Dependency] private readonly ExamineSystem _examine = default!;
+        [Dependency] private readonly VerbSystem _verbs = default!;
 
         public Action<SlotData>? EntitySlotUpdate = null;
         public Action<SlotData>? OnSlotAdded = null;
         public Action<SlotData>? OnSlotRemoved = null;
         public Action? OnOpenInventory = null;
-        public Action<ClientInventoryComponent?>? OnLinkInventory = null;
-        public Action<ClientInventoryComponent?>? OnUnlinkInventory = null;
+        public Action<ClientInventoryComponent>? OnLinkInventory = null;
+        public Action? OnUnlinkInventory = null;
         public Action<string, string, ISpriteComponent?, bool>? OnSpriteUpdate = null;
 
         private readonly Queue<(ClientInventoryComponent comp, EntityEventArgs args)> _equipEventsQueue = new();
@@ -105,7 +109,8 @@ namespace Content.Client.Inventory
 
         private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent? args = null)
         {
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity) OnUnlinkInventory?.Invoke(null);
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
+                OnUnlinkInventory?.Invoke();
         }
 
         private void OnShutdown(EntityUid uid, ClientInventoryComponent component, ComponentShutdown args)
@@ -198,22 +203,6 @@ namespace Content.Client.Inventory
             OnOpenInventory?.Invoke();
         }
 
-
-        //TODO: This should live in a UI controller
-        private void HandleSlotButtonPressed(EntityUid uid, string slot, ItemSlotControl control,
-            GUIBoundKeyEventArgs args)
-        {
-            if (TryGetSlotEntity(uid, slot, out var itemUid))
-                return;
-
-            if (args.Function != EngineKeyFunctions.UIClick)
-                return;
-
-            // only raise event if either itemUid is not null, or the user is holding something
-            if (itemUid != null || TryComp(uid, out SharedHandsComponent? hands) && hands.ActiveHandEntity != null)
-                EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot));
-        }
-
         public void UIInventoryActivate(string slot)
         {
             EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot));
@@ -222,6 +211,38 @@ namespace Content.Client.Inventory
         public void UIInventoryStorageActivate(string slot)
         {
             EntityManager.RaisePredictiveEvent(new OpenSlotStorageNetworkMessage(slot));
+        }
+
+        public void UIInventoryExamine(string slot, EntityUid uid)
+        {
+            if (!TryGetSlotEntity(uid, slot, out var item))
+                return;
+
+            _examine.DoExamine(item.Value);
+        }
+
+        public void UIInventoryOpenContextMenu(string slot, EntityUid uid)
+        {
+            if (!TryGetSlotEntity(uid, slot, out var item))
+                return;
+
+            _verbs.VerbMenu.OpenVerbMenu(item.Value);
+        }
+
+        public void UIInventoryActivateItem(string slot, EntityUid uid)
+        {
+            if (!TryGetSlotEntity(uid, slot, out var item))
+                return;
+
+            EntityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item.Value, altInteract: false));
+        }
+
+        public void UIInventoryAltActivateItem(string slot, EntityUid uid)
+        {
+            if (!TryGetSlotEntity(uid, slot, out var item))
+                return;
+
+            EntityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(item.Value, altInteract: true));
         }
 
         public struct SlotData
