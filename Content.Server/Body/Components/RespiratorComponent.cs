@@ -32,13 +32,13 @@ namespace Content.Server.Body.Components
 
         // TODO HYPEROXIA?
 
-        [DataField("damage")]
+        [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier Damage = new ();
+        public DamageSpecifier Damage = default!;
 
-        [DataField("damageRecovery")]
+        [DataField("damageRecovery", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier DamageRecovery = new ();
+        public DamageSpecifier DamageRecovery = default!;
 
         [DataField("gaspPopupCooldown")]
         public TimeSpan GaspPopupCooldown { get; private set; } = TimeSpan.FromSeconds(8);
