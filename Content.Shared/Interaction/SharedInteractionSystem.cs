@@ -627,7 +627,6 @@ namespace Content.Shared.Interaction
             EntityUid used,
             EntityUid target,
             EntityCoordinates clickLocation,
-            bool predicted = false,
             bool checkCanInteract = true,
             bool checkCanUse = true)
         {
@@ -641,7 +640,7 @@ namespace Content.Shared.Interaction
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
-            var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation, predicted);
+            var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation);
             RaiseLocalEvent(target, interactUsingEvent);
             if (interactUsingEvent.Handled)
                 return;

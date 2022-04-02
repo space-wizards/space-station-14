@@ -1,61 +1,4 @@
 Entries:
-- author: TaralGit
-  changes:
-  - {message: Deleted the old laser gun., type: Remove}
-  - {message: Replaced laser guns on packedstation with COG laser carbines., type: Tweak}
-  - {message: Reduced ammo capacity for the Svalinn and the COG., type: Tweak}
-  id: 769
-  time: '2021-12-24T12:32:03.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Reduced flare flicker, type: Fix}
-  id: 770
-  time: '2021-12-24T14:30:36.0000000+00:00'
-- author: Phantom-Lily
-  changes:
-  - {message: Added a new small drone wreck to salvage., type: Add}
-  id: 771
-  time: '2021-12-24T22:16:23.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Added three salvage maps, type: Add}
-  id: 772
-  time: '2021-12-24T22:56:46.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Rules popup on first connection now has a timer to make sure that they
-      get read., type: Tweak}
-  id: 773
-  time: '2021-12-25T01:32:33.0000000+00:00'
-- author: FoLoKe
-  changes:
-  - {message: Fixed butchering without a knife., type: Fix}
-  id: 774
-  time: '2021-12-26T02:32:02.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Changed antag names in preferences, type: Add}
-  - {message: Does not choose a random traitor if there are available candidates,
-    type: Fix}
-  id: 775
-  time: '2021-12-26T03:13:38.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Beanbag rounds now stun people., type: Fix}
-  id: 776
-  time: '2021-12-26T22:22:20.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Salvage Equipment crates can be purchased from the cargo computer.,
-    type: Tweak}
-  id: 777
-  time: '2021-12-27T11:29:39.0000000+00:00'
-- author: AJCM-git
-  changes:
-  - {message: Now you need to be closer to a closet/locker/crate to actually enter
-      it, type: Fix}
-  id: 778
-  time: '2021-12-27T12:04:18.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'It has been discovered that plasma and histamine react to create Ultravasculine
@@ -3029,3 +2972,61 @@ Entries:
   - {message: Fix physics dying and rubberbanding the game., type: Fix}
   id: 1268
   time: '2022-03-29T08:02:18.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to extract/juice fiber from some cloth stacks., type: Fix}
+  id: 1269
+  time: '2022-03-30T02:55:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix the PDA UI briefly showing the uplink button to non-traitors., type: Fix}
+  id: 1270
+  time: '2022-03-30T02:56:58.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Reptillian, or Lizard, is now enabled by default as a playable species.',
+    type: Add}
+  id: 1271
+  time: '2022-03-30T04:56:31.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Some bombs can no longer cause a large quantity of smaller explosions,
+    type: Fix}
+  id: 1272
+  time: '2022-03-30T13:29:01.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed some double-audio issues for some machines (chemistry, id card
+      console, etc). Also fixed some double pop-ups for emags.', type: Fix}
+  id: 1273
+  time: '2022-03-31T07:08:30.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Split Station map! A new medium to large map that's split in half!,
+    type: Add}
+  id: 1274
+  time: '2022-03-31T19:08:55.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: 'Marathonstation, a remaster of Pubbystation from SS13', type: Add}
+  id: 1275
+  time: '2022-03-31T19:08:55.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station now has emergency lights., type: Tweak}
+  id: 1276
+  time: '2022-04-01T02:06:09.0000000+00:00'
+- author: ElectroSr
+  changes:
+  - {message: Explosions have been entirely redesigned to be graphically and technically
+      better. They should be a bit more interesting to look at now., type: Add}
+  - {message: Nuke has an actual explosion., type: Add}
+  - {message: Meteor explosion works again., type: Fix}
+  id: 1277
+  time: '2022-04-01T02:39:26.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixes a bug that was causing some overlays (e.g. gasses) to be unshaded.,
+    type: Fix}
+  id: 1278
+  time: '2022-04-01T12:16:11.0000000+00:00'

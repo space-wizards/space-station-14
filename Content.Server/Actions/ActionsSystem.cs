@@ -1,3 +1,4 @@
+using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
@@ -9,7 +10,7 @@ namespace Content.Server.Actions
     [UsedImplicitly]
     public sealed class ActionsSystem : SharedActionsSystem
     {
-        [Dependency] private readonly IChatManager _chatMan = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
         public override void Initialize()
@@ -25,7 +26,7 @@ namespace Content.Server.Actions
         private void OnMetaFlagRemoval(EntityUid uid, ActionsComponent component, ref MetaFlagRemoveAttemptEvent args)
         {
             if (component.LifeStage == ComponentLifeStage.Running)
-                args.Cancelled = true;
+                args.ToRemove &= ~MetaDataFlags.EntitySpecific;
         }
 
         private void OnStartup(EntityUid uid, ActionsComponent component, ComponentStartup args)
@@ -50,7 +51,7 @@ namespace Content.Server.Actions
 
             if (!string.IsNullOrWhiteSpace(action.Speech))
             {
-                _chatMan.EntitySay(user, Loc.GetString(action.Speech));
+                _chat.TrySendInGameICMessage(user, Loc.GetString(action.Speech), InGameICChatType.Speak, false);
                 result = true;
             }
 

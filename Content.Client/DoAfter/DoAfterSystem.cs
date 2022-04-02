@@ -203,6 +203,10 @@ namespace Content.Client.DoAfter
             if (_attachedEntity is not {Valid: true} entity || Deleted(entity))
                 return;
 
+            // ReSharper disable once ConvertToLocalFunction
+            var predicate = (EntityUid uid, (EntityUid compOwner, EntityUid? attachedEntity) data)
+                => uid == data.compOwner || uid == data.attachedEntity;
+
             var viewbox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
             var entXform = Transform(entity);
             var playerPos = entXform.MapPosition;
@@ -226,7 +230,7 @@ namespace Content.Client.DoAfter
                     !ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
                         compPos, range,
-                        ent => ent == comp.Owner || ent == _attachedEntity))
+                        (comp.Owner, _attachedEntity), predicate))
                 {
                     Disable(comp);
                     continue;

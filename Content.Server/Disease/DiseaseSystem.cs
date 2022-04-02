@@ -1,4 +1,5 @@
 using System.Threading;
+using Content.Server.Chat;
 using Content.Shared.Disease;
 using Content.Shared.Disease.Components;
 using Content.Server.Disease.Components;
@@ -40,6 +41,7 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
             SubscribeLocalEvent<DiseasedComponent, InteractHandEvent>(OnInteractDiseasedHand);
             SubscribeLocalEvent<DiseasedComponent, InteractUsingEvent>(OnInteractDiseasedUsing);
+            SubscribeLocalEvent<DiseasedComponent, EntitySpokeEvent>(OnEntitySpeak);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<DiseaseVaccineComponent, AfterInteractEvent>(OnAfterInteract);
@@ -202,6 +204,14 @@ namespace Content.Server.Disease
         private void OnInteractDiseasedUsing(EntityUid uid, DiseasedComponent component, InteractUsingEvent args)
         {
             InteractWithDiseased(args.Target, args.User);
+        }
+
+        private void OnEntitySpeak(EntityUid uid, DiseasedComponent component, EntitySpokeEvent args)
+        {
+            if (TryComp<DiseaseCarrierComponent>(uid, out var carrier))
+            {
+                SneezeCough(uid, _random.Pick(carrier.Diseases), string.Empty);
+            }
         }
 
         /// <summary>
