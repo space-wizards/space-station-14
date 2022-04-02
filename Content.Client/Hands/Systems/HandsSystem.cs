@@ -32,6 +32,8 @@ namespace Content.Client.Hands
         public Action<HandsComponent>? OnComponentConnected = null;
         public Action? OnComponentDisconnected = null;
         public Action<string,ISpriteComponent?>? OnSpriteUpdate = null;
+        public event Action<string>? OnHandBlocked;
+        public event Action<string>? OnHandUnblocked;
 
         public override void Initialize()
         {
@@ -217,17 +219,27 @@ namespace Content.Client.Hands
         {
             if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand)) return;
             UpdateHandVisuals(uid, args.Entity, hand);
+
             if (uid != _playerManager.LocalPlayer?.ControlledEntity) return;
+
             EntityManager.TryGetComponent(args.Entity, out ISpriteComponent? sprite);
             OnSpriteUpdate?.Invoke(hand.Name,sprite);
+
+            if (HasComp<HandVirtualItemComponent>(args.Entity))
+                OnHandBlocked?.Invoke(hand.Name);
         }
 
         private void HandleItemRemoved(EntityUid uid, SharedHandsComponent handComp, ContainerModifiedMessage args)
         {
             if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand)) return;
             UpdateHandVisuals(uid, args.Entity, hand);
+
             if (uid != _playerManager.LocalPlayer?.ControlledEntity) return;
+
             OnSpriteUpdate?.Invoke(hand.Name,null);
+
+            if (HasComp<HandVirtualItemComponent>(args.Entity))
+                OnHandUnblocked?.Invoke(hand.Name);
         }
 
         /// <summary>
