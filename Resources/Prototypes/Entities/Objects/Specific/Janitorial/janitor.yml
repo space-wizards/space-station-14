@@ -80,8 +80,8 @@
       - WetFloorSign
 
 - type: entity
-  name: janitorial cart
-  id: JanitorialCart
+  name: janitorial trolley
+  id: JanitorialTrolley
   parent: BaseStructureDynamic
   description: This is the alpha and omega of sanitation.
   components:
@@ -139,6 +139,20 @@
     - type: Tag
       tags:
         - Wringer
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
     - type: ItemMapper
       mapLayers:
         cart_mop:
