@@ -111,4 +111,6 @@
     speciesId: vox
   - type: Butcherable
     butcheringType: Spike
-    spawned: FoodMeatChicken
+    spawned:
+    - id: FoodMeatChicken
+      amount: 5

@@ -55,32 +55,10 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<ToggleDoorOnTriggerComponent, TriggerEvent>(HandleDoorTrigger);
         }
 
-        #region Explosions
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
-
-            Explode(uid, explosiveComponent, args.User);
+            _explosions.TriggerExplosive(uid, user: args.User);
         }
-
-        // You really shouldn't call this directly (TODO Change that when ExplosionHelper gets changed).
-        public void Explode(EntityUid uid, ExplosiveComponent component, EntityUid? user = null)
-        {
-            if (component.Exploding)
-            {
-                return;
-            }
-
-            component.Exploding = true;
-            _explosions.SpawnExplosion(uid,
-                component.DevastationRange,
-                component.HeavyImpactRange,
-                component.LightImpactRange,
-                component.FlashRange,
-                user);
-            EntityManager.QueueDeleteEntity(uid);
-        }
-        #endregion
 
         #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)

@@ -18,10 +18,10 @@
   - type: OnUseTimerTrigger
     delay: 3.5
   - type: Explosive
-    devastationRange: 0
-    heavyImpactRange: 2
-    lightImpactRange: 4
-    flashRange: 7
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 120 # about a ~4 tile radius
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic
@@ -94,10 +94,12 @@
   - type: OnUseTimerTrigger
     delay: 5
   - type: Explosive
-    devastationRange: 1
-    heavyImpactRange: 3
-    lightImpactRange: 5
-    flashRange: 10
+    explosionType: Default
+    # About a 3-3.5 tile radius, strong enough to break reinforced walls near centre.
+    # Currently a big spacing hazzard.
+    totalIntensity: 800
+    intensitySlope: 15
+    maxIntensity: 45
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic
@@ -129,9 +131,10 @@
   - type: OnUseTimerTrigger
     delay: 5
   - type: Explosive
-    devastationRange: 25
-    heavyImpactRange: 25
-    flashRange: 50
+    explosionType: Default
+    totalIntensity: 20000 # ~15 tile radius.
+    intensitySlope: 5
+    maxIntensity: 50
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic

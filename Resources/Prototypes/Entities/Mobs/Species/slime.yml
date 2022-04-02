@@ -136,7 +136,9 @@
           probability: 0.25
     - type: Butcherable
       butcheringType: Spike
-      spawned: FoodMeatSlime
+      spawned:
+      - id: FoodMeatSlime
+        amount: 5
 
 - type: entity
   save: false
