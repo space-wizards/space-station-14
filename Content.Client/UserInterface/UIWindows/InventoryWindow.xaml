@@ -1,0 +1,10 @@
+﻿<uiWindow:InventoryWindow
+    xmlns="https://spacestation14.io"
+    xmlns:uiWindow="clr-namespace:Content.Client.UserInterface.UIWindows"
+    Name="HandsInterface"
+    VerticalExpand="False"
+    VerticalAlignment="Bottom"
+    Orientation="Horizontal"
+    HorizontalAlignment="Center"
+>
+</uiWindow:InventoryWindow>
