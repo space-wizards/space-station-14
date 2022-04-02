@@ -9,6 +9,7 @@ using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using static Content.Client.Inventory.ClientInventorySystem;
 
 namespace Content.Client.UserInterface.Controllers;
 
@@ -19,6 +20,7 @@ public sealed partial class InventoryUIController : UIController
     private ClientInventoryComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
     private InventoryWindow? _inventoryWindow;
+    private readonly Dictionary<(string group, string slot), (ISpriteComponent sprite, bool showStorage)> _sprites = new();
 
     public override void OnStateChanged(StateChangedEventArgs args)
     {
@@ -37,10 +39,20 @@ public sealed partial class InventoryUIController : UIController
         _inventoryWindow = _uiWindowManager.CreateNamedWindow<InventoryWindow>("Inventory");
         foreach (var (_,data) in clientInv.SlotData)
         {
-            if (data.ShowInWindow)
-            {
-                _inventoryWindow!.InventoryButtons.AddButton(new ItemSlotButton(data), data.ButtonOffset);
-            }
+            if (!data.ShowInWindow)
+                continue;
+
+            var button = new ItemSlotButton(data);
+            button.OnPressed += OnItemPressed;
+            button.OnStoragePressed += OnStoragePressed;
+
+            _inventoryWindow!.InventoryButtons.AddButton(button, data.ButtonOffset);
+
+            if (!_sprites.TryGetValue((data.SlotGroup, data.SlotName), out var tuple))
+                continue;
+
+            var update = new SlotSpriteUpdate(data.SlotGroup, data.SlotName, tuple.sprite, tuple.showStorage);
+            SpriteUpdated(update);
         }
     }
     public void ToggleInventoryMenu()
@@ -145,17 +157,17 @@ public sealed partial class InventoryUIController : UIController
         _inventorySystem.UIInventoryStorageActivate(control.SlotName);
     }
 
-    private void AddSlot(ClientInventorySystem.SlotData data)
+    private void AddSlot(SlotData data)
     {
         if(!_slotGroups.TryGetValue(data.SlotGroup, out var slotGroup)) return;
         var button = new ItemSlotButton(data);
         button.OnPressed += OnItemPressed;
         button.OnStoragePressed += OnStoragePressed;
-        slotGroup.AddChild(button);
+        slotGroup.AddButton(button);
         button.SlotName = data.SlotName;
     }
 
-    private void RemoveSlot(ClientInventorySystem.SlotData data)
+    private void RemoveSlot(SlotData data)
     {
         if (!_slotGroups.TryGetValue(data.SlotGroup, out var slotGroup)) return;
         slotGroup.RemoveButton(data.SlotName);
@@ -179,16 +191,30 @@ public sealed partial class InventoryUIController : UIController
         }
     }
 
-    private void SpriteUpdated(string slotGroup, string slotName, ISpriteComponent? sprite, bool showStorageButton)
+    private void SpriteUpdated(SlotSpriteUpdate update)
     {
-        if (!_slotGroups.TryGetValue(slotGroup, out var group) ||
-            !group.TryGetButton(slotName, out var button))
+        var (group, name, sprite, showStorage) = update;
+
+        if (sprite == null)
         {
-            return;
+            _sprites.Remove((group, name));
+        }
+        else
+        {
+            _sprites[(group, name)] = (sprite, showStorage);
         }
 
+        if (_inventoryWindow?.InventoryButtons.GetButton(update.Name) is { } inventoryButton)
+        {
+            inventoryButton.SpriteView.Sprite = sprite;
+            inventoryButton.StorageButton.Visible = showStorage;
+        }
+
+        if (_slotGroups.GetValueOrDefault(group)?.GetButton(name) is not { } button)
+            return;
+
         button.SpriteView.Sprite = sprite;
-        button.StorageButton.Visible = showStorageButton;
+        button.StorageButton.Visible = showStorage;
     }
 
     public void BlockSlot(string slotName, bool blocked)

@@ -1,11 +1,4 @@
-﻿using Content.Client.Cooldown;
-using Content.Client.HUD;
-using Content.Client.Inventory;
-using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Input;
+﻿using Content.Client.Inventory;
 
 namespace Content.Client.UserInterface.Controls
 {
@@ -19,6 +12,7 @@ namespace Content.Client.UserInterface.Controls
             Blocked = slotData.Blocked;
             Highlight = slotData.Highlighted;
             StorageTexturePath = "slots/back";
+            SlotName = slotData.SlotName;
         }
     }
 }

@@ -4,7 +4,6 @@ using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs;
 using Content.Shared.Hands.Components;
-using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
@@ -36,7 +35,7 @@ namespace Content.Client.Inventory
         public Action<SlotData>? OnSlotRemoved = null;
         public Action<ClientInventoryComponent>? OnLinkInventory = null;
         public Action? OnUnlinkInventory = null;
-        public Action<string, string, ISpriteComponent?, bool>? OnSpriteUpdate = null;
+        public Action<SlotSpriteUpdate>? OnSpriteUpdate = null;
 
         private readonly Queue<(ClientInventoryComponent comp, EntityEventArgs args)> _equipEventsQueue = new();
 
@@ -89,7 +88,8 @@ namespace Content.Client.Inventory
         {
             UpdateSlot(args.Equipee, component, args.Slot);
             if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity) return;
-            OnSpriteUpdate?.Invoke(args.SlotGroup, args.Slot, null, false);
+            var update = new SlotSpriteUpdate(args.SlotGroup, args.Slot, null, false);
+            OnSpriteUpdate?.Invoke(update);
         }
 
         private void OnDidEquip(ClientInventoryComponent component, DidEquipEvent args)
@@ -97,7 +97,8 @@ namespace Content.Client.Inventory
             UpdateSlot(args.Equipee, component, args.Slot);
             if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity) return;
             var sprite = EntityManager.GetComponentOrNull<ISpriteComponent>(args.Equipment);
-            OnSpriteUpdate?.Invoke(args.SlotGroup, args.Slot, sprite, HasComp<ClientStorageComponent>(args.Equipment));
+            var update = new SlotSpriteUpdate(args.SlotGroup, args.Slot, sprite, HasComp<ClientStorageComponent>(args.Equipment));
+            OnSpriteUpdate?.Invoke(update);
         }
 
         private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent? args = null)
@@ -269,7 +270,13 @@ namespace Content.Client.Inventory
             {
                 return s.SlotDef;
             }
-
         }
+
+        public readonly record struct SlotSpriteUpdate(
+            string Group,
+            string Name,
+            ISpriteComponent? Sprite,
+            bool ShowStorage
+        );
     }
 }
