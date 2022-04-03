@@ -1,5 +1,4 @@
 - type: entity
-  abstract: true
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelFilled
   components:
@@ -8,7 +7,6 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
   parent: ClothingBackpackDuffelClown
   id: ClothingBackpackDuffelClownFilled
   components:
@@ -17,7 +15,6 @@
       - id: BoxHug
 
 - type: entity
-  abstract: true
   parent: ClothingBackpackDuffelSecurity
   id: ClothingBackpackDuffelSecurityFilled
   components:
@@ -27,7 +24,6 @@
       - id: Flash
 
 - type: entity
-  abstract: true
   parent: ClothingBackpackDuffelMedical
   id: ClothingBackpackDuffelMedicalFilled
   components:
@@ -36,7 +32,6 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
   parent: ClothingBackpackDuffelCaptain
   id: ClothingBackpackDuffelCaptainFilled
   components:
@@ -47,7 +42,6 @@
       #- name: TelescopicBaton
 
 - type: entity
-  abstract: true
   parent: ClothingBackpackDuffelEngineering
   id: ClothingBackpackDuffelEngineeringFilled
   components:
@@ -56,7 +50,6 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
   parent: ClothingBackpackDuffelScience
   id: ClothingBackpackDuffelScienceFilled
   components:
@@ -65,7 +58,6 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
   parent: ClothingBackpackDuffelMime
   id: ClothingBackpackDuffelMimeFilled
   components:
@@ -74,7 +66,6 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
   parent: ClothingBackpackDuffelChemistry
   id: ClothingBackpackDuffelChemistryFilled
   components:
@@ -83,7 +74,6 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelChaplainFilled
   components:
@@ -93,7 +83,6 @@
       - id: Bible
 
 - type: entity
-  abstract: true
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelMusicianFilled
   components:
