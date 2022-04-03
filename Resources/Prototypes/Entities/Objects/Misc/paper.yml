@@ -141,8 +141,8 @@
     visuals:
     - type: MappedItemVisualizer
 
-    
-    
+
+
 - type: entity
   id: BoxFolderRed
   parent: BoxFolderBase

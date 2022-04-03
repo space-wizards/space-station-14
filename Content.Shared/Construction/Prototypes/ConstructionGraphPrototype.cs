@@ -18,7 +18,7 @@ namespace Content.Shared.Construction.Prototypes
         private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode?>> _pathfinding = new();
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables]

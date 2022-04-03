@@ -109,7 +109,7 @@
   name: Urist McHands
   parent: MobHumanDummy
   id: MobDwarfDummy
-  abstract: true
+  noSpawn: true
   description: A dummy human meant to be used in character setup.
   components:
   - type: Sprite

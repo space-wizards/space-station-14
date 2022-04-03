@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'It has been discovered that plasma and histamine react to create Ultravasculine
-      (patent pending), a new advanced antitoxin.', type: Add}
-  id: 779
-  time: '2021-12-27T12:45:16.0000000+00:00'
 - author: Charlese2
   changes:
   - {message: Flashing through walls., type: Fix}
@@ -3030,3 +3024,9 @@ Entries:
     type: Fix}
   id: 1278
   time: '2022-04-01T12:16:11.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Ghost roles window now better organized. You can follow ghost role targets
+      before possessing them., type: Tweak}
+  id: 1279
+  time: '2022-04-02T22:06:30.0000000+00:00'

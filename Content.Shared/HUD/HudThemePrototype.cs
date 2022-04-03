@@ -9,7 +9,7 @@ namespace Content.Shared.HUD
         [DataField("name", required: true)]
         public string Name { get; } = string.Empty;
 
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = string.Empty;
 
         [DataField("path", required: true)]
