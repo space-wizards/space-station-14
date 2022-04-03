@@ -1,5 +1,5 @@
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: Clothing
   id: ClothingHeadset
   name: headset

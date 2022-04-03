@@ -95,7 +95,6 @@
   parent: FoodSnackBase
   id: FoodSnackChocolateBar
   description: Tastes like cardboard.
-  abstract: true
   components:
   - type: Sprite
     state: chocolatebar-open
@@ -133,7 +132,6 @@
   parent: FoodSnackBase
   id: FoodSnackEnergyBar
   description: An energy bar with a lot of punch.
-  abstract: true
   components:
   - type: Sprite
     state: energybar-open

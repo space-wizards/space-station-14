@@ -34,7 +34,7 @@
 - type: entity
   parent: Paper
   id: PaperWritten
-  abstract: true
+  noSpawn: true
   components:
   - type: Paper
   - type: Sprite

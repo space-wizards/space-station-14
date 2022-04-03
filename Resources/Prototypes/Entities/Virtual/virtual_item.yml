@@ -2,7 +2,7 @@
 - type: entity
   id: HandVirtualItem
   name: VIRTUAL ITEM YOU SHOULD NOT SEE THIS
-  abstract: true
+  noSpawn: true
   components:
   - type: Item
   - type: HandVirtualItem

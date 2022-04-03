@@ -35,7 +35,7 @@
 - type: entity
   id: TriggerBulletBase # Trigger-on-collide bullets
   parent: BulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: TriggerOnCollide
   - type: Projectile
@@ -57,7 +57,7 @@
   id: BulletBaseFlash
   name: base bullet flash
   parent: TriggerBulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     soundHit:
@@ -72,7 +72,7 @@
   id: BulletBaseHV
   name: base bullet high-velocity
   parent: BulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -83,7 +83,7 @@
   id: BulletBasePractice
   name: base bullet practice
   parent: BulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -94,7 +94,7 @@
   id: BulletBaseRubber
   name: base bullet rubber
   parent: BulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -111,7 +111,7 @@
   name : taser bolt
   id: BulletTaser
   parent: BulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     noRot: true
@@ -149,7 +149,7 @@
   name: emitter bolt
   id: EmitterBolt
   parent: BulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     color: "#ffff33"
@@ -179,7 +179,7 @@
   id: BulletRocket
   name: rocket
   parent: TriggerBulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
@@ -200,7 +200,7 @@
   id: WeakBulletRocket
   name: weak rocket
   parent: TriggerBulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
@@ -223,7 +223,7 @@
   id: BulletGrenadeBaton
   name: baton grenade
   parent: BulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
@@ -244,7 +244,7 @@
   id: BulletGrenadeBlast
   name: blast grenade
   parent: TriggerBulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
@@ -260,7 +260,7 @@
   id: BulletGrenadeFlash
   name: flash grenade
   parent: BulletBaseFlash
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
@@ -274,7 +274,7 @@
   id: BulletGrenadeFrag
   name: frag grenade
   parent: TriggerBulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
@@ -289,7 +289,7 @@
   id: BulletFoam
   name: foam dart
   parent: BulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
@@ -307,7 +307,7 @@
   id: BulletCap
   name: cap bullet
   parent: BulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
