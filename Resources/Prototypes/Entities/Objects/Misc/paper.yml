@@ -219,6 +219,7 @@
   components:
   - type: Stamp
     stampedName: "Mime"
+    stampState: "paper_stamp-mime"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-mime
@@ -233,6 +234,7 @@
   components:
   - type: Stamp
     stampedName: "Captain"
+    stampState: "paper_stamp-cap"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-cap
@@ -245,6 +247,7 @@
   components:
   - type: Stamp
     stampedName: "Centcom"
+    stampState: "paper_stamp-cent"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-cent
@@ -257,6 +260,7 @@
   components:
   - type: Stamp
     stampedName: "Chaplain"
+    stampState: "paper_stamp-chaplain"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-chaplain
@@ -269,6 +273,7 @@
   components:
   - type: Stamp
     stampedName: "Clown"
+    stampState: "paper_stamp-clown"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-clown
@@ -281,6 +286,7 @@
   components:
   - type: Stamp
     stampedName: "Chief Medical Officer"
+    stampState: "paper_stamp-cmo"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-cmo
@@ -293,6 +299,7 @@
   components:
   - type: Stamp
     stampedName: "DENIED"
+    stampState: "paper_stamp-deny"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-deny
@@ -305,6 +312,7 @@
   components:
   - type: Stamp
     stampedName: "APPROVED"
+    stampState: "paper_stamp-iaa"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-iaa
@@ -317,6 +325,7 @@
   components:
   - type: Stamp
     stampedName: "Head of Personnel"
+    stampState: "paper_stamp-hop"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-hop
@@ -329,6 +338,7 @@
   components:
   - type: Stamp
     stampedName: "Head of Security"
+    stampState: "paper_stamp-hos"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-hos
@@ -341,6 +351,7 @@
   components:
   - type: Stamp
     stampedName: "Quartermaster"
+    stampState: "paper_stamp-qm"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-qm
@@ -353,6 +364,7 @@
   components:
   - type: Stamp
     stampedName: "Research Director"
+    stampState: "paper_stamp-rd"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-rd
@@ -365,6 +377,7 @@
   components:
   - type: Stamp
     stampedName: "Warden"
+    stampState: "paper_stamp-warden"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-warden
@@ -377,6 +390,7 @@
   components:
   - type: Stamp
     stampedName: "Trader"
+    stampState: "paper_stamp-trader"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-trader

@@ -14,8 +14,11 @@ public sealed class PaperSystem : VisualizerSystem<PaperVisualsComponent>
         if (args.Component.TryGetData(PaperVisuals.Status , out PaperStatus writingStatus))
             sprite.LayerSetVisible(PaperVisualLayers.Writing, writingStatus == PaperStatus.Written);
 
-        if (args.Component.TryGetData(PaperVisuals.Stamped, out bool isStamped))
-            sprite.LayerSetVisible(PaperVisualLayers.Stamp, isStamped);
+        if (args.Component.TryGetData(PaperVisuals.Stamp, out string stampState))
+        {
+            sprite.LayerSetState(PaperVisualLayers.Stamp, stampState);
+            sprite.LayerSetVisible(PaperVisualLayers.Stamp, true);
+        }
     }
 }
 

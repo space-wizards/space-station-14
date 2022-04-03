@@ -37,8 +37,8 @@ namespace Content.Server.Paper
                 if (paperComp.Content != "")
                     appearance.SetData(PaperVisuals.Status, PaperStatus.Written);
 
-                if (paperComp.StampedBy.Count > 0)
-                    appearance.SetData(PaperVisuals.Stamped, true);
+                if (paperComp.StampState != null)
+                    appearance.SetData(PaperVisuals.Stamp, paperComp.StampState);
             }
 
         }
@@ -86,7 +86,7 @@ namespace Content.Server.Paper
             }
 
             // If a stamp, attempt to stamp paper
-            if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(uid, stampComp.StampedName, paperComp))
+            if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(uid, stampComp.StampedName, stampComp.StampState, paperComp))
             {
                 // successfully stamped, play popup
                 var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other", ("user", args.User),("target", args.Target),("stamp", args.Used));
@@ -116,7 +116,7 @@ namespace Content.Server.Paper
         /// <summary>
         ///     Accepts the name to be stamped onto the paper, returns true if successful.
         /// </summary>
-        public bool TryStamp(EntityUid uid, string stampName, PaperComponent? paperComp = null)
+        public bool TryStamp(EntityUid uid, string stampName, string stampState, PaperComponent? paperComp = null)
         {
             if (!Resolve(uid, ref paperComp))
                 return false;
@@ -124,11 +124,12 @@ namespace Content.Server.Paper
             if (!paperComp.StampedBy.Contains(stampName))
             {
                 paperComp.StampedBy.Add(stampName);
-                // If this is the first stamp, set appearance
-                if (paperComp.StampedBy.Count == 1 && TryComp<AppearanceComponent>(uid, out var appearance))
-                    appearance.SetData(PaperVisuals.Stamped, true);
+                if (paperComp.StampState == null && TryComp<AppearanceComponent>(uid, out var appearance))
+                {
+                    paperComp.StampState = stampState;
+                    appearance.SetData(PaperVisuals.Stamp, paperComp.StampState);
+                }
             }
-
             return true;
         }
 

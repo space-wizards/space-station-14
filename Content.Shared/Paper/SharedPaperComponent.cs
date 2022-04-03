@@ -45,7 +45,7 @@ namespace Content.Shared.Paper
         public enum PaperVisuals : byte
         {
             Status,
-            Stamped
+            Stamp
         }
 
         [Serializable, NetSerializable]
