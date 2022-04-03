@@ -45,11 +45,13 @@ namespace Content.Server.GameTicking
                 return string.Empty;
             }
 
+            var playerManager = IoCManager.Resolve<IPlayerManager>(); ///Can this be in playerCount?
+            var playerCount = $"{playerManager.PlayerCount}";
             var map = _gameMapManager.GetSelectedMap();
             var mapName = map?.MapName ?? Loc.GetString("game-ticker-no-map-selected");
             var gmTitle = Loc.GetString(_preset.ModeTitle);
             var desc = Loc.GetString(_preset.Description);
-            return Loc.GetString("game-ticker-get-info-text",("mapName", mapName),("gmTitle", gmTitle),("desc", desc));
+            return Loc.GetString("game-ticker-get-info-text",("playerCount", playerCount),("mapName", mapName),("gmTitle", gmTitle),("desc", desc));
         }
 
         private TickerLobbyReadyEvent GetStatusSingle(ICommonSession player, LobbyPlayerStatus status)
