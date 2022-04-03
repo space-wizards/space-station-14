@@ -9,7 +9,7 @@
 #This should be temporary, at least until briefcases can spawn in hands.
 
 - type: entity
-  abstract: true
+  abstract: noSpawn
   parent: ClothingBackpack
   id: ClothingBackpackBriefcaseFilled
   components:
@@ -19,7 +19,7 @@
       - id: BriefcaseBrownFilled
 
 - type: entity
-  abstract: true
+  abstract: noSpawn
   parent: ClothingBackpackClown
   id: ClothingBackpackClownFilled
   components:
@@ -28,7 +28,7 @@
       - id: BoxHug
 
 - type: entity
-  abstract: true
+  abstract: noSpawn
   parent: ClothingBackpackSecurity
   id: ClothingBackpackSecurityFilled
   components:
@@ -38,7 +38,7 @@
       - id: Flash
 
 - type: entity
-  abstract: true
+  abstract: noSpawn
   parent: ClothingBackpackMedical
   id: ClothingBackpackMedicalFilled
   components:
@@ -47,7 +47,7 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  abstract: noSpawn
   parent: ClothingBackpackCaptain
   id: ClothingBackpackCaptainFilled
   components:
@@ -58,7 +58,7 @@
       #- name: TelescopicBaton
 
 - type: entity
-  abstract: true
+  abstract: noSpawn
   parent: ClothingBackpackEngineering
   id: ClothingBackpackEngineeringFilled
   components:
@@ -67,7 +67,7 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  abstract: noSpawn
   parent: ClothingBackpackScience
   id: ClothingBackpackScienceFilled
   components:
@@ -76,7 +76,7 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  abstract: noSpawn
   parent: ClothingBackpackHydroponics
   id: ClothingBackpackHydroponicsFilled
   components:
@@ -85,7 +85,7 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  abstract: noSpawn
   parent: ClothingBackpackMime
   id: ClothingBackpackMimeFilled
   components:
@@ -94,7 +94,7 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  abstract: noSpawn
   parent: ClothingBackpackChemistry
   id: ClothingBackpackChemistryFilled
   components:
@@ -103,7 +103,7 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  abstract: noSpawn
   parent: ClothingBackpack
   id: ClothingBackpackChaplainFilled
   components:
@@ -113,7 +113,7 @@
       - id: Bible
 
 - type: entity
-  abstract: true
+  abstract: noSpawn
   parent: ClothingBackpack
   id: ClothingBackpackMusicianFilled
   components:
