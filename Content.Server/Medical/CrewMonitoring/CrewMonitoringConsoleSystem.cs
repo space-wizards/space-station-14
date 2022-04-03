@@ -1,10 +1,9 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.SuitSensors;
 using Content.Server.UserInterface;
 using Content.Shared.Medical.CrewMonitoring;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Medical.CrewMonitoring
@@ -13,6 +12,7 @@ namespace Content.Server.Medical.CrewMonitoring
     {
         [Dependency] private readonly SuitSensorSystem _sensors = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private const float UpdateRate = 3f;
         private float _updateDif;
@@ -66,9 +66,17 @@ namespace Content.Server.Medical.CrewMonitoring
             if (ui == null)
                 return;
 
+            // For directional arrows, we need to fetch the monitor's transform data
+            var xform = Transform(uid);
+            var (worldPos, worldRot) = xform.GetWorldPositionRotation();
+
+            // if the entity is on a grid, use the grid rotation rather than the monitor's rotation.
+            if (_mapManager.TryGetGrid(xform.GridID, out var grid))
+                worldRot = grid.WorldRotation;
+
             // update all sensors info
             var allSensors = component.ConnectedSensors.Values.ToList();
-            var uiState = new CrewMonitoringState(allSensors);
+            var uiState = new CrewMonitoringState(allSensors, worldPos, worldRot, component.Snap, component.Precision);
             ui.SetState(uiState);
         }
 
