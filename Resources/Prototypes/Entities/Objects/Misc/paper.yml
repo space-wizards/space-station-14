@@ -58,8 +58,6 @@
       content: |
         [color=red]TOP SECRET![/color]
         Nuclear device activation code:
-      stampedBy:
-        - "Centcom"
 
 - type: entity
   name: pen
