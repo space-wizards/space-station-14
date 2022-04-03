@@ -82,23 +82,26 @@ public sealed class ChatSystem : EntitySystem
             return;
         }
 
-        if (!CanSendInGame(message, shell, player))
-            return;
-
-        message = SanitizeInGameICMessage(source, message, out var emoteStr);
-
-        // Is this -actually- an emote, and is a player sending it?
-        if (player != null && emoteStr != message && emoteStr != null)
-        {
-            SendEntityEmote(source, emoteStr, hideChat);
-            return;
-        }
-
         // Sus
         if (player?.AttachedEntity is { Valid: true } entity && source != entity)
         {
             return;
         }
+
+        if (!CanSendInGame(message, shell, player))
+            return;
+
+        message = SanitizeInGameICMessage(source, message, out var emoteStr);
+
+        // Was there an emote in the message? If so, send it.
+        if (player != null && emoteStr != message && emoteStr != null)
+        {
+            SendEntityEmote(source, emoteStr, hideChat);
+        }
+
+        // This can happen if the entire string is sanitized out.
+        if (string.IsNullOrEmpty(message))
+            return;
 
         // Otherwise, send whatever type.
         switch (desiredType)

@@ -5,7 +5,6 @@ namespace Content.Client.Entry
     {
         public static string[] List => new[]
         {
-            "Anchorable",
             "AmmoBox",
             "Pickaxe",
             "IngestionBlocker",
@@ -16,6 +15,7 @@ namespace Content.Client.Entry
             "Temperature",
             "AtmosExposed",
             "Explosive",
+            "ExplosionResistance",
             "Vocal",
             "OnUseTimerTrigger",
             "WarpPoint",
@@ -89,7 +89,6 @@ namespace Content.Client.Entry
             "SolarPanel",
             "BodyScanner",
             "Stunbaton",
-            "Tool",
             "TilePrying",
             "RandomSpriteColor",
             "ConditionalSpawner",
@@ -267,7 +266,6 @@ namespace Content.Client.Entry
             "RandomSpawner",
             "SpawnAfterInteract",
             "DisassembleOnAltVerb",
-            "ExplosionLaunched",
             "BeingCloned",
             "Advertise",
             "Bible",
