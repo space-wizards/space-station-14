@@ -75,14 +75,21 @@ namespace Content.Server.Construction.Commands
                 }
 
                 var prototype = entityManager.GetComponent<MetaDataComponent>(child).EntityPrototype;
-                while (true)
+                if(prototype == null) continue;
+
+                var parentQueue = new Queue<EntityPrototype>();
+                parentQueue.Enqueue(prototype);
+                while (parentQueue.TryDequeue(out prototype))
                 {
-                    if (prototype?.Parents == null)
+                    if (prototype.Parents == null)
                     {
                         break;
                     }
 
-                    prototype = prototypeManager.Index<EntityPrototype>(prototype.Parents);
+                    foreach (var parent in prototype.Parents)
+                    {
+                        parentQueue.Enqueue(prototypeManager.Index<EntityPrototype>(parent));
+                    }
                 }
 
                 if (prototype?.ID != "base_wall")
