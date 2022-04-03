@@ -181,6 +181,42 @@
       startingItem: PowerCellSmallHigh
 
 - type: entity
+  name: Destroyer pulse rifle
+  parent: BatteryGunBase
+  id: PulseRifleDeathSquad
+  description: A weapon that fully lives up to its name. Can switch to a more devastating heavy pulse firing mode.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/death_squad_rifle.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/death_squad_rifle.rsi
+  - type: BatteryBarrel
+    fireCost: 6
+    ammoPrototype: Pulse
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: PowerCellSlot
+    cellSlot:
+      ejectOnUse: true
+      soundOptions: 
+        volume: -2
+      startingItem: PowerCellSmallHigh
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: true
+
+- type: entity
   name: laser cannon
   parent: BatteryGunBase
   id: LaserCannon
