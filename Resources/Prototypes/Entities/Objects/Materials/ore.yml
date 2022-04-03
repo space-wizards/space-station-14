@@ -58,6 +58,7 @@
   - type: Material
     materials:
     - Steel
+    volume: 500
 
 - type: entity
   id: SteelOre1
@@ -80,6 +81,7 @@
   - type: Material
     materials:
     - Plasma
+    volume: 500
 
 - type: entity
   parent: PlasmaOre
@@ -102,6 +104,7 @@
   - type: Material
     materials:
     - Silver
+    volume: 500
 
 - type: entity
   parent: SilverOre
@@ -124,6 +127,7 @@
   - type: Material
     materials:
     - Glass
+    volume: 500
 
 - type: entity
   parent: SpaceCrystal

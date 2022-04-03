@@ -61,6 +61,18 @@
   - type: Stack
     stackType: Steel
     count: 1
+    
+- type: entity
+  parent: SheetSteel
+  id: SheetSteel5
+  name: steel
+  suffix: Five
+  components:
+    - type: Sprite
+      state: steel
+    - type: Stack
+      stackType: Steel
+      count: 5
 
 - type: entity
   parent: SheetMetalBase

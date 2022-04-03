@@ -7,6 +7,16 @@
   completetime: 500
   materials:
     Steel: 100
+    
+- type: latheRecipe
+  id: SheetSteel5
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: steel
+  result: SheetSteel5
+  completetime: 500
+  materials:
+    Steel: 500
 
 - type: latheRecipe
   id: SheetGlass1
@@ -17,6 +27,16 @@
   completetime: 500
   materials:
     Glass: 100
+    
+- type: latheRecipe
+  id: SheetGlass5
+  icon:
+    sprite: Objects/Materials/Sheets/glass.rsi
+    state: glass
+  result: SheetGlass5
+  completetime: 500
+  materials:
+    Glass: 500
 
 - type: latheRecipe
   id: SheetRGlass
@@ -28,6 +48,50 @@
   materials:
     Glass: 100
     Steel: 50
+    
+- type: latheRecipe
+  id: SheetRGlass5
+  icon:
+    sprite: Objects/Materials/Sheets/glass.rsi
+    state: rglass
+  result: SheetRGlass5
+  completetime: 500
+  materials:
+    Glass: 500
+    Steel: 250
+
+- type: latheRecipe
+  id: SheetPGlass5
+  icon:
+    sprite: Objects/Materials/Sheets/glass.rsi
+    state: pglass
+  result: SheetPGlass5
+  completetime: 500
+  materials:
+    Glass: 500
+    Plasma: 500
+    
+- type: latheRecipe
+  id: SheetRPGlass5
+  icon:
+    sprite: Objects/Materials/Sheets/glass.rsi
+    state: rpglass
+  result: SheetRPGlass5
+  completetime: 500
+  materials:
+    Glass: 500
+    Plasma: 500
+    Steel: 250
+    
+- type: latheRecipe
+  id: SheetPlasma5
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: plasma
+  result: SheetPlasma5
+  completetime: 500
+  materials:
+    Plasma: 500
 
 - type: latheRecipe
   id: SheetPlastic

@@ -403,7 +403,12 @@
   - type: LatheDatabase
     static: true
     recipes:
-      - ClothingUniformJumpsuitColorGrey
+      - SheetSteel5
+      - SheetGlass5
+      - SheetRGlass5
+      - SheetPlasma5
+      - SheetPGlass5
+      - SheetRPGlass5
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
     netsync: false

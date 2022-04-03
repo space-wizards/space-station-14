@@ -8,14 +8,16 @@
     key: enum.AsteroidRockVisuals.State
   - type: Mineable
     ores:
-      - id: SteelOre
+      - id: SteelOre1
+        prob: 0.35
+      - id: GoldOre1
+        prob: 0.10
+      - id: SpaceCrystal1
         prob: 0.20
-      - id: GoldOre
-        prob: 0.20
-      - id: SpaceCrystal
-        prob: 0.20
-      - id: PlasmaOre
-        prob: 0.20
+      - id: PlasmaOre1
+        prob: 0.10
+      - id: SilverOre1
+        prob: 0.05
       
   - type: Sprite
     sprite: Structures/Walls/asteroid_rock.rsi

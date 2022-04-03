@@ -77,6 +77,18 @@
   - type: Stack
     stackType: Glass
     count: 1
+    
+- type: entity
+  parent: SheetGlass
+  id: SheetGlass5
+  name: glass
+  suffix: Five
+  components:
+    - type: Sprite
+      state: glass
+    - type: Stack
+      stackType: Glass
+      count: 5
 
 - type: entity
   parent: SheetGlassBase
@@ -118,6 +130,18 @@
   - type: Stack
     stackType: ReinforcedGlass
     count: 1
+    
+- type: entity
+  parent: SheetRGlass
+  id: SheetRGlass5
+  name: reinforced glass
+  suffix: Five
+  components:
+    - type: Sprite
+      state: rglass
+    - type: Stack
+      stackType: ReinforcedGlass
+      count: 5
 
 - type: entity
   parent: SheetGlassBase
@@ -158,6 +182,18 @@
     count: 1
 
 - type: entity
+  parent: SheetPGlass
+  id: SheetPGlass5
+  name: plasma glass
+  suffix: Five
+  components:
+    - type: Sprite
+      state: pglass
+    - type: Stack
+      stackType: PlasmaGlass
+      count: 5
+
+- type: entity
   parent: SheetGlassBase
   id: SheetRPGlass
   name: reinforced plasma glass
@@ -194,3 +230,15 @@
   - type: Stack
     stackType: ReinforcedPlasmaGlass
     count: 1
+
+- type: entity
+  parent: SheetPGlass
+  id: SheetRPGlass5
+  name: reinforced plasma glass
+  suffix: Five
+  components:
+    - type: Sprite
+      state: rpglass
+    - type: Stack
+      stackType: ReinforcedPlasmaGlass
+      count: 5
