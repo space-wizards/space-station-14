@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Disease
 {
@@ -18,8 +19,8 @@ namespace Content.Shared.Disease
         [DataField("name")]
         public string Name { get; } = string.Empty;
 
-        [ParentDataFieldAttribute(typeof(PrototypeIdSerializer<DiseasePrototype>))]
-        public string? Parent { get; private set; }
+        [ParentDataFieldAttribute(typeof(PrototypeIdArraySerializer<DiseasePrototype>))]
+        public string[]? Parents { get; private set; }
 
         [NeverPushInheritance]
         [AbstractDataFieldAttribute]

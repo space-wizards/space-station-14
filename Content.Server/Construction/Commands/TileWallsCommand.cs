@@ -77,12 +77,12 @@ namespace Content.Server.Construction.Commands
                 var prototype = entityManager.GetComponent<MetaDataComponent>(child).EntityPrototype;
                 while (true)
                 {
-                    if (prototype?.Parent == null)
+                    if (prototype?.Parents == null)
                     {
                         break;
                     }
 
-                    prototype = prototypeManager.Index<EntityPrototype>(prototype.Parent);
+                    prototype = prototypeManager.Index<EntityPrototype>(prototype.Parents);
                 }
 
                 if (prototype?.ID != "base_wall")
