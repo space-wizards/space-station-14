@@ -92,7 +92,7 @@ namespace Content.Server.Dragon
             else if (EntityManager.TryGetComponent(target, out TagComponent tags))
             {
                 // If it can be built- it can be destoryed
-                if (tags.Tags.Contains("Wall"))
+                if (tags.Tags.Contains("RCDDeconstructWhitelist"))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), uid, Filter.Entities(uid));
                     dragoncomp.CancelToken = new CancellationTokenSource();
