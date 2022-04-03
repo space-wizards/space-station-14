@@ -1,6 +1,6 @@
 ﻿- type: entity
   parent: MobHuman
-  abstract: True
+  abstract: true
   id: BaseVox
   components:
   - type: Icon
