@@ -32,9 +32,10 @@ namespace Content.Shared.CombatMode
         [DataField("disarmAction")]
         public readonly EntityTargetAction DisarmAction = new()
         {
+            ID = "disarmAction",
             Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/disarmOff.png")),
             IconOn = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/disarm.png")),
-            Name = "action-name-disarm",
+            DisplayName = "action-name-disarm",
             Description = "action-description-disarm",
             Repeat = true,
             UseDelay = TimeSpan.FromSeconds(1.5f),
@@ -50,11 +51,12 @@ namespace Content.Shared.CombatMode
         [DataField("combatToggleAction")]
         public readonly InstantAction CombatToggleAction = new()
         {
+            ID = "combatAction",
             Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/harmOff.png")),
             IconOn = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/harm.png")),
             UserPopup = "action-popup-combat",
             PopupToggleSuffix = "-disabling",
-            Name = "action-name-combat",
+            DisplayName = "action-name-combat",
             Description = "action-description-combat",
             Event = new ToggleCombatActionEvent(),
         };

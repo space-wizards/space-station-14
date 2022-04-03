@@ -33,7 +33,8 @@ public sealed class VocalComponent : Component
     {
         UseDelay = TimeSpan.FromSeconds(10),
         Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/scream.png")),
-        Name = "action-name-scream",
+        ID = "screamAction",
+        DisplayName = "action-name-scream",
         Description = "AAAAAAAAAAAAAAAAAAAAAAAAA",
         Event = new ScreamActionEvent(),
     };
