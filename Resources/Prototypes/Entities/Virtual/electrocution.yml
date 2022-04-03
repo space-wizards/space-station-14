@@ -2,7 +2,7 @@
 - type: entity
   id: VirtualElectrocutionLoadHVPower
   name: ELECTROCUTION ENTITY YOU SHOULD NOT SEE THIS
-  abstract: true
+  noSpawn: true
   components:
   - type: NodeContainer
     nodes:
@@ -17,7 +17,7 @@
 - type: entity
   id: VirtualElectrocutionLoadMVPower
   name: ELECTROCUTION ENTITY YOU SHOULD NOT SEE THIS
-  abstract: true
+  noSpawn: true
   components:
   - type: NodeContainer
     nodes:
@@ -32,7 +32,7 @@
 - type: entity
   id: VirtualElectrocutionLoadApc
   name: ELECTROCUTION ENTITY YOU SHOULD NOT SEE THIS
-  abstract: true
+  noSpawn: true
   components:
   - type: NodeContainer
     nodes:
