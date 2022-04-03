@@ -31,6 +31,16 @@ namespace Content.Server.Paper
         {
             paperComp.Mode = PaperAction.Read;
             UpdateUserInterface(uid, paperComp);
+
+            if (TryComp<AppearanceComponent>(uid, out var appearance))
+            {
+                if (paperComp.Content != "")
+                    appearance.SetData(PaperVisuals.Status, PaperStatus.Written);
+
+                if (paperComp.StampedBy.Count > 0)
+                    appearance.SetData(PaperVisuals.Stamped, true);
+            }
+
         }
 
         private void BeforeUIOpen(EntityUid uid, PaperComponent paperComp, BeforeActivatableUIOpenEvent args)

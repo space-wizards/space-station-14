@@ -4,7 +4,7 @@
   id: PaperWrittenSalvageLoreMedium1PlasmaTrap
   noSpawn: true # keep this from spamming spawn sheet
   suffix: "Salvage: Lore: Medium 1: Plasma Trap"
-  parent: PaperWritten
+  parent: Paper
   components:
   - type: Paper
     content: |
@@ -36,7 +36,7 @@
   id: PaperWrittenSalvageLoreGaming1
   noSpawn: true # keep this from spamming spawn sheet
   suffix: "Salvage: Lore: Gaming 1"
-  parent: PaperWritten
+  parent: Paper
   components:
   - type: Paper
     content: |
@@ -50,7 +50,7 @@
   id: PaperWrittenSalvageLoreGaming2
   noSpawn: true # keep this from spamming spawn sheet
   suffix: "Salvage: Lore: Gaming 2"
-  parent: PaperWritten
+  parent: Paper
   components:
   - type: Paper
     content: |
@@ -72,7 +72,7 @@
   id: PaperWrittenSalvageLoreGaming3
   noSpawn: true # keep this from spamming spawn sheet
   suffix: "Salvage: Lore: Gaming 3"
-  parent: PaperWritten
+  parent: Paper
   components:
   - type: Paper
     content: |
@@ -87,7 +87,7 @@
   id: PaperWrittenSalvageLoreGaming4
   noSpawn: true # keep this from spamming spawn sheet
   suffix: "Salvage: Lore: Gaming 4"
-  parent: PaperWritten
+  parent: Paper
   components:
   - type: Paper
     content: |
