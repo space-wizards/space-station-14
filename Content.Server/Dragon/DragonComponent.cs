@@ -17,7 +17,7 @@ namespace Content.Server.Dragon
         // NOTE: original inteded design was to increase this proportionaly with damage thresholds, but those proved quite difficult to get consistently.
         // right now it devours the structure at a fixed timer.
         [DataField("devourTime")]
-        public float DevourTimer = 20f;
+        public float DevourTimer = 15f;
 
         //The amount of eggs the dragon is ready to hatch
         public int EggsLeft = 2;

@@ -18,7 +18,7 @@
   - type: Internals
   - type: Examiner
   - type: Speech
-  - type: MovementIgnoreGravity
+  - type: DoAfter
   # You can't pull a huge fuckoff dragon right? Butcher him on the spot!
   #- type: Pullable
   - type: Actions
@@ -90,5 +90,5 @@
      whitelist:
        components:
        - HumanoidAppearance
-       - Destructible
+       - Tag
   

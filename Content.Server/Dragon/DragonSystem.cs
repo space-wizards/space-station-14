@@ -33,7 +33,7 @@ namespace Content.Server.Dragon
         /// </summary>
         private void OnDevourCancelled(TargetDevourCancelledEvent args)
         {
-
+            args.DragonComponent.CancelToken = null;
         }
 
         /// <summary>
@@ -92,20 +92,18 @@ namespace Content.Server.Dragon
             else if (EntityManager.TryGetComponent(target, out TagComponent tags))
             {
                 // If it can be built- it can be destoryed
-                if (tags.Tags.Contains("RCDDeconstructWhitelist"))
+                if (tags.Tags.Contains("Wall"))
                 {
-                    if (dragoncomp.CancelToken != null)
+                    _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), uid, Filter.Entities(uid));
+                    dragoncomp.CancelToken = new CancellationTokenSource();
+                    _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, dragoncomp.DevourTimer, dragoncomp.CancelToken.Token, target)
                     {
-                        _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), uid, Filter.Entities(uid));
-                        _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, dragoncomp.DevourTimer, dragoncomp.CancelToken.Token, target)
-                        {
-                            BroadcastFinishedEvent = new TargetDevourSuccessfulEvent(uid, target),
-                            BroadcastCancelledEvent = new TargetDevourCancelledEvent(dragoncomp),
-                            BreakOnTargetMove = true,
-                            BreakOnUserMove = true,
-                            BreakOnStun = true,
-                        });
-                    }
+                        BroadcastFinishedEvent = new TargetDevourSuccessfulEvent(uid, target),
+                        BroadcastCancelledEvent = new TargetDevourCancelledEvent(dragoncomp),
+                        BreakOnTargetMove = true,
+                        BreakOnUserMove = true,
+                        BreakOnStun = true,
+                    });
                 }
                 else return;
             }
