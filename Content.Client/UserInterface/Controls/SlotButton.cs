@@ -2,11 +2,11 @@
 
 namespace Content.Client.UserInterface.Controls
 {
-    public sealed class ItemSlotButton : ItemSlotControl
+    public sealed class SlotButton : SlotControl
     {
-        public ItemSlotButton(){}
+        public SlotButton(){}
 
-        public ItemSlotButton(ClientInventorySystem.SlotData slotData)
+        public SlotButton(ClientInventorySystem.SlotData slotData)
         {
             ButtonTexturePath = slotData.TextureName;
             Blocked = slotData.Blocked;

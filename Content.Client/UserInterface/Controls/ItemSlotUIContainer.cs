@@ -5,13 +5,13 @@ namespace Content.Client.UserInterface.Controls;
 
 public interface IItemslotUIContainer
 {
-    public bool TryRegisterButton(ItemSlotControl control, string newSlotName);
+    public bool TryRegisterButton(SlotControl control, string newSlotName);
 
-    public bool TryAddButton(ItemSlotControl control);
+    public bool TryAddButton(SlotControl control);
 }
 
 [Virtual]
-public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContainer where T : ItemSlotControl
+public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContainer where T : SlotControl
 {
     protected readonly Dictionary<string, T> _buttons = new();
     public virtual bool TryAddButton(T newButton, out T button)
@@ -36,7 +36,7 @@ public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContaine
     }
 
 
-    public bool TryRegisterButton(ItemSlotControl control, string newSlotName)
+    public bool TryRegisterButton(SlotControl control, string newSlotName)
     {
         if (newSlotName == "") return false;
         if (!(control is T slotButton)) return false;
@@ -46,12 +46,11 @@ public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContaine
             throw new Exception("Could not update button to slot:" + newSlotName + " slot already assigned!");
         }
         _buttons.Remove(slotButton.SlotName);
-        _buttons.Add(newSlotName, slotButton);
-        if (!Children.Contains(control)&& slotButton.Parent == null)  AddChild(control);
+        AddButton(slotButton);
         return true;
     }
 
-    public bool TryAddButton(ItemSlotControl control)
+    public bool TryAddButton(SlotControl control)
     {
         if (control is not T newButton) return false;
         return AddButton(newButton) != null;
@@ -59,27 +58,50 @@ public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContaine
 
     public virtual T? AddButton(T newButton)
     {
+        if (!Children.Contains(newButton) && newButton.Parent == null && newButton.SlotName != "") AddChild(newButton);
+        return AddButtonToDict(newButton);
+    }
+
+    protected virtual T? AddButtonToDict(T newButton)
+    {
         if (newButton.SlotName == "")
         {
             Logger.Warning("Could not add button "+newButton.Name+"No slotname");
         }
-
-        if (!Children.Contains(newButton) && newButton.Parent == null) AddChild(newButton);
         return !_buttons.TryAdd(newButton.SlotName, newButton) ? null : newButton;
     }
 
     public virtual void RemoveButton(string slotName)
     {
-        _buttons.Remove(slotName);
         if (!_buttons.TryGetValue(slotName, out var button)) return;
-        Children.Remove(button);
-        button.Dispose();
+        RemoveButton(button);
+    }
+
+    public virtual void RemoveButtons(params string[] slotNames)
+    {
+        foreach (var slotName in slotNames)
+        {
+            RemoveButton(slotName);
+        }
+    }
+
+    public virtual void RemoveButtons(params T?[] buttons)
+    {
+        foreach (var button in buttons)
+        {
+            if (button!= null) RemoveButton(button);
+        }
+    }
+
+    protected virtual void RemoveButtonFromDict(T button)
+    {
+        _buttons.Remove(button.SlotName);
     }
 
     public virtual void RemoveButton(T button)
     {
+        RemoveButtonFromDict(button);
         Children.Remove(button);
-        _buttons.Remove(button.SlotName);
         button.Dispose();
     }
 

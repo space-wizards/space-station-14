@@ -3,7 +3,7 @@ using Content.Shared.Hands.Components;
 
 namespace Content.Client.UserInterface.Controls;
 
-public sealed class HandButton : ItemSlotControl
+public sealed class HandButton : SlotControl
 {
     public HandButton(InventoryUIController parentController,string handName, HandLocation handLocation)
     {

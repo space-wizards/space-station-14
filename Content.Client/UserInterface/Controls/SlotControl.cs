@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Controls
 {
     [Virtual]
-    public abstract class ItemSlotControl : Control, IEntityEventSubscriber, IHasHudTheme
+    public abstract class SlotControl : Control, IThemeableUI
     {
         private const string HighlightShader = "SelectionOutlineInrange";
 
@@ -89,18 +89,18 @@ namespace Content.Client.UserInterface.Controls
                 HighlightRect.Texture = Theme.ResolveTexture(_highlightTexturePath);
             }
         }
-        public Action<GUIBoundKeyEventArgs, ItemSlotControl>? OnPressed { get; set; }
-        public Action<GUIBoundKeyEventArgs, ItemSlotControl>? OnStoragePressed { get; set; }
-        public Action<GUIMouseHoverEventArgs, ItemSlotControl>? OnHover { get; set; }
+        public Action<GUIBoundKeyEventArgs, SlotControl>? OnPressed { get; set; }
+        public Action<GUIBoundKeyEventArgs, SlotControl>? OnStoragePressed { get; set; }
+        public Action<GUIMouseHoverEventArgs, SlotControl>? OnHover { get; set; }
 
         public bool EntityHover => HoverSpriteView.Sprite != null;
         public bool MouseIsHovering;
 
-        public ItemSlotControl()
+        public SlotControl()
         {
             IoCManager.InjectDependencies(this);
             Name = "SlotButton_null";
-            Theme = HudThemes.DefaultTheme;
+            Theme = UITheme.Default;
             MinSize = (64, 64);
             AddChild(Button = new TextureRect
             {
@@ -207,8 +207,8 @@ namespace Content.Client.UserInterface.Controls
             OnHover?.Invoke(args, this);
         }
 
-        public HudTheme Theme { get; set; }
-        public virtual void UpdateTheme(HudTheme newTheme)
+        public UITheme Theme { get; set; }
+        public virtual void UpdateTheme(UITheme newTheme)
         {
             StorageButton.TextureNormal = Theme.ResolveTexture(_storageTexturePath);
             Button.Texture = Theme.ResolveTexture(_buttonTexturePath);

@@ -13,14 +13,14 @@ public sealed class InventoryDisplay :  LayoutContainer
     private const int ButtonSize = 75;
     private readonly Control resizer;
 
-    private readonly Dictionary<string, (ItemSlotControl,Vector2i)> _buttons = new();
+    private readonly Dictionary<string, (SlotControl,Vector2i)> _buttons = new();
     public InventoryDisplay()
     {
         resizer = new Control()
         {};
         AddChild(resizer);
     }
-    public ItemSlotControl? AddButton(ItemSlotControl newButton, Vector2i buttonOffset)
+    public SlotControl? AddButton(SlotControl newButton, Vector2i buttonOffset)
     {
         AddChild(newButton);
         HorizontalExpand = true;
@@ -32,7 +32,7 @@ public sealed class InventoryDisplay :  LayoutContainer
         return newButton;
     }
 
-    public ItemSlotControl? GetButton(string slotName)
+    public SlotControl? GetButton(string slotName)
     {
         return !_buttons.TryGetValue(slotName, out var foundButton) ? null : foundButton.Item1;
     }

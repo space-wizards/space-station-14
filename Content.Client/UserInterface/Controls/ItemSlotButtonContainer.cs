@@ -3,7 +3,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Controls;
 
-public sealed class ItemSlotButtonContainer : ItemSlotUIContainer<ItemSlotControl>
+public sealed class ItemSlotButtonContainer : ItemSlotUIContainer<SlotControl>
 {
     private readonly InventoryUIController _inventoryController;
     private string _slotGroup = "";

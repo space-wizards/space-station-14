@@ -11,7 +11,7 @@ public sealed class ActionUIController : UIController
     [UISystemDependency] private readonly InteractionOutlineSystem _interactionOutlineSystem = default!;
     [UISystemDependency] private readonly TargetOutlineSystem _targetOutlineSystem = default!;
     private ActionButtonContainer? _actionbar;
-    private List<ActionsTab> _tabs = new();
+
 
 
     public void RegisterActionBar(ActionButtonContainer actionBar)
@@ -42,12 +42,4 @@ public sealed class ActionUIController : UIController
     private void ActionSystemShutdown()
     {
     }
-
-
-
-    private struct ActionsTab
-    {
-        public readonly Dictionary<string, ActionButton> Buttons = new();
-    }
-
 }
