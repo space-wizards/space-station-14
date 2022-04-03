@@ -45,8 +45,7 @@ namespace Content.Server.GameTicking
                 return string.Empty;
             }
 
-            var playerManager = IoCManager.Resolve<IPlayerManager>(); ///Can this be in playerCount?
-            var playerCount = $"{playerManager.PlayerCount}";
+            var playerCount = $"{_playerManager.PlayerCount}";
             var map = _gameMapManager.GetSelectedMap();
             var mapName = map?.MapName ?? Loc.GetString("game-ticker-no-map-selected");
             var gmTitle = Loc.GetString(_preset.ModeTitle);
