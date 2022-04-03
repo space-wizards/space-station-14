@@ -39,7 +39,7 @@ public sealed class DirectionIcon : TextureRect
     }
 
     /// <summary>
-    ///     Draw an arrow pointing in some direction.
+    ///     Creates an icon with an arrow pointing in some direction.
     /// </summary>
     /// <param name="direction">The direction</param>
     /// <param name="relativeAngle">The relative angle. This may be the players eye rotation, the grid rotation, or

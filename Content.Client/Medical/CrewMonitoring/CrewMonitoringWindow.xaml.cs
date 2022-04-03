@@ -26,6 +26,10 @@ namespace Content.Client.Medical.CrewMonitoring
         {
             ClearAllSensors();
 
+            // TODO scroll container
+            // TODO filter by name & occupation
+            // TODO make each row a xaml-control. Get rid of some of this c# control creation.
+
             // add a row for each sensor
             foreach (var sensor in stSensors)
             {

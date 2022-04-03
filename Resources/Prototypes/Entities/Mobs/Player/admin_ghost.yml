@@ -161,6 +161,8 @@
       - AtmosphericsNitrogen
       - AtmosphericsCarbonDioxide
   - type: CrewMonitoringConsole
+    snap: false
+    precision: 3
   - type: DeviceNetworkComponent
     deviceNetId: Wireless
   - type: WirelessNetworkConnection

@@ -3,6 +3,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.SuitSensors;
 using Content.Server.UserInterface;
 using Content.Shared.Medical.CrewMonitoring;
+using Content.Shared.Movement.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -70,8 +71,13 @@ namespace Content.Server.Medical.CrewMonitoring
             var xform = Transform(uid);
             var (worldPos, worldRot) = xform.GetWorldPositionRotation();
 
-            // if the entity is on a grid, use the grid rotation rather than the monitor's rotation.
-            if (_mapManager.TryGetGrid(xform.GridID, out var grid))
+            // In general, the directions displayed depend on either the orientation of the grid, or the orientation of
+            // the monitor. But in the special case where the monitor IS a player (i.e., admin ghost), we base it off
+            // the players eye rotation. We don't know what that is for sure, but we know their last grid angle, which
+            // should work well enough?
+            if (TryComp(uid, out IMoverComponent? mover))
+                worldRot = mover.LastGridAngle;
+            else if (_mapManager.TryGetGrid(xform.GridID, out var grid))
                 worldRot = grid.WorldRotation;
 
             // update all sensors info
