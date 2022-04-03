@@ -36,7 +36,7 @@ public sealed partial class MappingSystem : EntitySystem
 
     public void LoadMappingActions()
     {
-        _actionsSystem.LoadActionAssignments(DefaultMappingActions, false);
+        //_actionsSystem.LoadActionAssignments(DefaultMappingActions, false);
     }
 
     /// <summary>

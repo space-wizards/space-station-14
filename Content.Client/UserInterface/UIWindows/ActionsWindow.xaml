@@ -1,0 +1,10 @@
+﻿<uiWindow:ActionsWindow
+    xmlns="https://spacestation14.io"
+    xmlns:uiWindow="clr-namespace:Content.Client.UserInterface.UIWindows"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Name="ActionsList"
+    HorizontalExpand="True"
+    Title="Actions"
+    VerticalExpand="True"
+>
+</uiWindow:ActionsWindow>

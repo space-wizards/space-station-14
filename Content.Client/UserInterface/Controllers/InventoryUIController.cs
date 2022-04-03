@@ -70,7 +70,6 @@ public sealed partial class InventoryUIController : UIController
     //Neuron Activation
     public override void OnSystemLoaded(IEntitySystem system)
     {
-        Logger.Debug("NEURON ACTIVATED");
         switch (system)
         {
             case ClientInventorySystem:
