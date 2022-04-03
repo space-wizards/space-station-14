@@ -20,7 +20,7 @@ namespace Content.Server.Ghost.Components
         [DataField("action")]
         public InstantAction Action = new()
         {
-            ID = "booAction"
+            ID = "booAction",
             UseDelay = TimeSpan.FromSeconds(120),
             Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/scream.png")),
             DisplayName = "action-name-boo",

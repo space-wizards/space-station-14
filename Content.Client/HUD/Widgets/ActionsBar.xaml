@@ -1,0 +1,14 @@
+﻿<widget:ActionsBar
+    xmlns="https://spacestation14.io"
+    xmlns:widget="clr-namespace:Content.Client.HUD.Widgets"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Name="ActionsGUI"
+    VerticalExpand="False"
+    VerticalAlignment="Bottom"
+    HorizontalAlignment="Center"
+    Orientation="Vertical"
+>
+    <controls:ActionButtonContainer
+        Name = "ActionsContainer"
+        />
+</widget:ActionsBar>

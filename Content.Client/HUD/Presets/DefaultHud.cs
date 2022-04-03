@@ -1,8 +1,5 @@
-﻿using Content.Client.CombatMode;
-using Content.Client.Gameplay;
-using Content.Client.Hands;
+﻿using Content.Client.Gameplay;
 using Content.Client.HUD.Widgets;
-using Content.Client.Sandbox;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controls;
 using MenuBar = Content.Client.HUD.Widgets.MenuBar;
@@ -20,6 +17,6 @@ public sealed class DefaultHud : HudPreset
         RegisterAllowedState<GameplayState>(); //only allow this hud to initialize during gameplay state (Ie: Ingame not lobby)
         RegisterWidget<MenuBar>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.TopLeft,margin: 10);
         RegisterWidget<HandsGui>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.CenterBottom, margin: 10);
-        //RegisterWidget<CombatPanelWidget>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.BottomRight);
+        RegisterWidget<ActionsBar>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.CenterLeft, margin: 10);
     }
 }
