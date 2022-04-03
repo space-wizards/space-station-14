@@ -195,7 +195,7 @@
 # Trash
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: BaseItem
   id: FoodPacketTrash
   description: This is rubbish.
@@ -213,7 +213,7 @@
   - type: Recyclable
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketBoritosTrash
   name: boritos bag
@@ -224,7 +224,7 @@
     color: blue
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketCheesieTrash
   name: cheesie honkers
@@ -235,7 +235,7 @@
     color: orange
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketChipsTrash
   name: chips
@@ -246,7 +246,7 @@
     color: green
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketChocolateTrash
   name: chocolate wrapper
@@ -257,7 +257,7 @@
     color: red
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketEnergyTrash
   name: energybar wrapper
@@ -268,7 +268,7 @@
     color: green
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketPistachioTrash
   name: pistachios packet
@@ -279,7 +279,7 @@
     color: green
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketPopcornTrash
   name: popcorn box
@@ -290,7 +290,7 @@
     state: blue
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketRaisinsTrash
   name: 4no raisins
@@ -301,7 +301,7 @@
     color: red
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketSemkiTrash
   name: semki packet
@@ -312,7 +312,7 @@
     color: orange
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketSusTrash
   name: sus jerky
@@ -323,7 +323,7 @@
     color: red
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketSyndiTrash
   name: syndi-cakes box

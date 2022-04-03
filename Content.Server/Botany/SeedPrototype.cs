@@ -70,7 +70,7 @@ public sealed class SeedPrototype : IPrototype
 {
     public const string Prototype = "SeedBase";
 
-    [DataField("id", required: true)] public string ID { get; private init; } = default!;
+    [IdDataFieldAttribute] public string ID { get; private init; } = default!;
 
     /// <summary>
     ///     Unique identifier of this seed. Do NOT set this.

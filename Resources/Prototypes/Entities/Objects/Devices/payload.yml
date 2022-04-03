@@ -29,6 +29,7 @@
     sprite: Objects/Devices/payload.rsi
     state: payload-explosive-armed
   - type: Explosive
+    explosionType: Default
     devastationRange: 0
     heavyImpactRange: 2
     lightImpactRange: 4
@@ -60,7 +61,7 @@
     state: payload-empty
   - type: ChemicalPayload
     beakerSlotA: &slotDef
-      whitelist: 
+      whitelist:
         components:
         - FitsInDispenser
       swap: false
