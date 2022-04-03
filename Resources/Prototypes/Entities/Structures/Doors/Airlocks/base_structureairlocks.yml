@@ -48,6 +48,9 @@
       path: /Audio/Machines/airlock_close.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
+  - type: Tag
+    tags:
+      - RCDDeconstructWhitelist
   - type: Airlock
   - type: Appearance
     visuals:

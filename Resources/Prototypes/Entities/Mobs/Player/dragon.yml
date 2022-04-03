@@ -18,7 +18,9 @@
   - type: Internals
   - type: Examiner
   - type: Speech
-  - type: Pullable
+  - type: MovementIgnoreGravity
+  # You can't pull a huge fuckoff dragon right? Butcher him on the spot!
+  #- type: Pullable
   - type: Actions
   - type: Input
   - type: Alerts
@@ -52,6 +54,16 @@
       0: !type:NormalMobState {}
       450: !type:CriticalMobState {}
       500: !type:DeadMobState {}
+  - type: SolutionContainerManager
+  - type: Bloodstream
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
   - type: MovementIgnoreGravity
   - type: Appearance
     visuals:
@@ -60,7 +72,7 @@
       crit: crit
       dead: dead
   - type: Butcherable
-    spawned: FoodMeat
+    spawned: FoodMeatDragon
     pieces: 2
   - type: UnarmedCombat
     range: 0.8
@@ -75,4 +87,8 @@
      icon: Interface/Actions/devour.png
      name: action-name-devour
      description: action-description-devour
+     whitelist:
+       components:
+       - HumanoidAppearance
+       - Destructible
   

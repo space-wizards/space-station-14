@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using System.Threading;
 
 namespace Content.Server.Dragon
 {
@@ -10,21 +11,24 @@ namespace Content.Server.Dragon
         /// Defines the devour action
         /// </summary>
         [DataField("devourAction", required: true)]
-        public EntityTargetAction DevourAction = default!;
+        public EntityTargetAction DevourAction = new();
 
-        // The amount of time per health point it takes to devour something.
-        // For walls, it takes the damage tirgger value.
-        [DataField("devourEffectiveness")]
-        public float DevourMultiplier = default!;
+        // The amount of time it takes to devour something
+        // NOTE: original inteded design was to increase this proportionaly with damage thresholds, but those proved quite difficult to get consistently.
+        // right now it devours the structure at a fixed timer.
+        [DataField("devourTime")]
+        public float DevourTimer = 20f;
 
         //The amount of eggs the dragon is ready to hatch
-        public int EggsLeft = default!;
+        public int EggsLeft = 2;
+
+        //Token for interrupting the action
+        public CancellationTokenSource? CancelToken;
     }
 
     public sealed class DevourActionEvent : PerformEntityTargetActionEvent
     {
-        [DataField("devourAction")]
-        public EntityTargetAction DevourAction = new();  
+        
     }
 
 

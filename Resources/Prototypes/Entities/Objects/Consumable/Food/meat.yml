@@ -197,6 +197,24 @@
           Quantity: 5
 
 - type: entity
+  name: dragon flesh
+  parent: FoodMeatBase
+  id: FoodMeatDragon
+  description: The dense meat of the space-era apex predator is oozing with it's mythical blood. Ironically, best eaten raw.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: dragon
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 5
+
+- type: entity
   name: raw lizard meat
   parent: FoodMeatBase
   id: FoodMeatLizard
