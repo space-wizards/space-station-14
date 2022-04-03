@@ -1,5 +1,7 @@
 ﻿using Content.Client.Gameplay;
 using Content.Client.Hands;
+using Content.Client.HUD;
+using Content.Client.HUD.Widgets;
 using Content.Client.Inventory;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.UIWindows;
@@ -10,6 +12,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using static Content.Client.Inventory.ClientInventorySystem;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Controllers;
 
@@ -17,6 +20,8 @@ public sealed partial class InventoryUIController : UIController
 {
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
     [Dependency] private readonly IUIWindowManager _uiWindowManager = default!;
+    [Dependency] private readonly IHudManager _hud = default!;
+
     private ClientInventoryComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
     private InventoryWindow? _inventoryWindow;
@@ -30,7 +35,14 @@ public sealed partial class InventoryUIController : UIController
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.OpenInventoryMenu, InputCmdHandler.FromDelegate(_ => ToggleInventoryMenu()))
                 .Register<ClientInventorySystem>();
+
+            _hud.GetUIWidget<MenuBar>().InventoryButton.OnPressed += InventoryButtonPressed;
         }
+    }
+
+    private void InventoryButtonPressed(ButtonEventArgs args)
+    {
+        ToggleInventoryMenu();
     }
 
     private void CreateInventoryWindow(ClientInventoryComponent? clientInv)
