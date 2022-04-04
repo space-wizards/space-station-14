@@ -12,7 +12,7 @@
               xmlns:targeting="clr-namespace:Content.Client.Targeting.UI"
               Orientation="Vertical"
 >
-    <ui:TexturedButton Name = "ButtonHigh" TexturePath="/Textures/Interface/target-doll-high.svg.96dpi.png" HorizontalAlignment="Center" StyleIdentifier="target-doll-zone"/>
-    <ui:TexturedButton Name = "ButtonMedium" TexturePath="/Textures/Interface/target-doll-middle.svg.96dpi.png" HorizontalAlignment="Center" StyleIdentifier="target-doll-zone"/>
-    <ui:TexturedButton Name = "ButtonLow" TexturePath="/Textures/Interface/target-doll-low.svg.96dpi.png" HorizontalAlignment="Center" StyleIdentifier="target-doll-zone"/>
+    <TextureButton Name = "ButtonHigh" TexturePath="/Textures/Interface/target-doll-high.svg.96dpi.png" HorizontalAlignment="Center" StyleIdentifier="target-doll-zone"/>
+    <TextureButton Name = "ButtonMedium" TexturePath="/Textures/Interface/target-doll-middle.svg.96dpi.png" HorizontalAlignment="Center" StyleIdentifier="target-doll-zone"/>
+    <TextureButton Name = "ButtonLow" TexturePath="/Textures/Interface/target-doll-low.svg.96dpi.png" HorizontalAlignment="Center" StyleIdentifier="target-doll-zone"/>
 </targeting:TargetingDoll>
