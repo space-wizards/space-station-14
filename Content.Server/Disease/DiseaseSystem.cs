@@ -332,9 +332,13 @@ namespace Content.Server.Disease
         /// rolls the dice to see if they get
         /// the disease.
         /// </summary>
-        public void TryInfect(DiseaseCarrierComponent carrier, DiseasePrototype? disease, float chance = 0.7f)
+        /// <param name="carrier">The target of the disease</param>
+        /// <param name="disease">The disease to apply</param>
+        /// <param name="chance">% chance of the disease being applied, before considering resistance</param>
+        /// <param name="forced">Bypass the disease's infectious trait.</param>
+        public void TryInfect(DiseaseCarrierComponent carrier, DiseasePrototype? disease, float chance = 0.7f, bool forced = false)
         {
-            if(disease is not { Infectious: true })
+            if(disease == null || !forced && !disease.Infectious)
                 return;
             var infectionChance = chance - carrier.DiseaseResist;
             if (infectionChance <= 0)

@@ -3,7 +3,7 @@
   save: false
   id: AdminObserver
   name: admin observer
-  abstract: true
+  noSpawn: true
   components:
   - type: Input
     context: "aghost"
@@ -12,12 +12,27 @@
   - type: Hands
   - type: DoAfter
   - type: CombatMode
+    disarmAction:
+      name: action-name-disarm
+      description: action-description-disarm
+      icon: Interface/Actions/disarmOff.png
+      iconOn: Interface/Actions/disarm.png
+      repeat: true
+      useDelay: 1.5
+      interactOnMiss: true
+      event: !type:DisarmActionEvent
+      canTargetSelf: false
+      whitelist:
+        components:
+        - Hands
+        - StatusEffects
   - type: Actions
   - type: PlayerInputMover
   - type: MovementSpeedModifier
     baseSprintSpeed: 12
     baseWalkSpeed: 8
   - type: Physics
+    ignorePaused: true
     bodyType: Kinematic
     status: InAir
     # TODO: Even need these? Don't think so but CBF checking right now.

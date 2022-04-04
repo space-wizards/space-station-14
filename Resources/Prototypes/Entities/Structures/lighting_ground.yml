@@ -33,14 +33,6 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
-  - type: SignalReceiver
-    inputs:
-      - name: state
-        type: bool
-  - type: UserInterface
-    interfaces:
-      - key: enum.SignalReceiverUiKey.Key
-        type: SignalPortSelectorBoundUserInterface
 
 
 - type: entity
