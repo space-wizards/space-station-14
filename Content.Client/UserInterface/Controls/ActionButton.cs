@@ -6,17 +6,8 @@ namespace Content.Client.UserInterface.Controls;
 
 
 
-public sealed class DummyButton : Control, IThemeableUI
+public sealed class DummyButton : Control
 {
-    public DummyButton()
-    {
-        Theme = UITheme.Default;
-    }
-    public UITheme Theme { get; set; }
-    public void UpdateTheme(UITheme newTheme)
-    {
-
-    }
 }
 
 

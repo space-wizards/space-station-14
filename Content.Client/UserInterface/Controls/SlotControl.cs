@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Controls
 {
     [Virtual]
-    public abstract class SlotControl : Control, IThemeableUI
+    public abstract class SlotControl : Control
     {
         private const string HighlightShader = "SelectionOutlineInrange";
 
@@ -100,7 +100,6 @@ namespace Content.Client.UserInterface.Controls
         {
             IoCManager.InjectDependencies(this);
             Name = "SlotButton_null";
-            Theme = UITheme.Default;
             MinSize = (64, 64);
             AddChild(Button = new TextureRect
             {
@@ -170,8 +169,8 @@ namespace Content.Client.UserInterface.Controls
                 Visible = false
             });
 
-            HighlightTexturePath = "slot_highlight.png";
-            BlockedTexturePath = "blocked.png";
+            HighlightTexturePath = "slot_highlight";
+            BlockedTexturePath = "blocked";
         }
 
         public void ClearHover()
@@ -207,8 +206,7 @@ namespace Content.Client.UserInterface.Controls
             OnHover?.Invoke(args, this);
         }
 
-        public UITheme Theme { get; set; }
-        public virtual void UpdateTheme(UITheme newTheme)
+        protected override void OnThemeUpdated()
         {
             StorageButton.TextureNormal = Theme.ResolveTexture(_storageTexturePath);
             Button.Texture = Theme.ResolveTexture(_buttonTexturePath);

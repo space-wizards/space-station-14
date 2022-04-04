@@ -4,7 +4,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Controls;
 
-public sealed class ActionButtonContainer : ItemSlotUIContainer<ActionButton>, IThemeableUI
+public sealed class ActionButtonContainer : ItemSlotUIContainer<ActionButton>
 {
     private int _selectedTab;
     public int ActiveTab
@@ -21,7 +21,6 @@ public sealed class ActionButtonContainer : ItemSlotUIContainer<ActionButton>, I
 
     public ActionButtonContainer()
     {
-        Theme = UITheme.Default;
         Orientation = LayoutOrientation.Vertical;
         IoCManager.Resolve<IUIControllerManager>().GetController<ActionUIController>().RegisterActionBar(this);
     }
@@ -128,8 +127,7 @@ public sealed class ActionButtonContainer : ItemSlotUIContainer<ActionButton>, I
         }
     }
 
-    public UITheme Theme { get; set; }
-    public void UpdateTheme(UITheme newTheme)
+    protected override void OnThemeUpdated()
     {
 
     }
