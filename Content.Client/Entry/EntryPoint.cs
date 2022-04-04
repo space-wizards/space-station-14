@@ -1,6 +1,5 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
-using Content.Client.CharacterInterface;
 using Content.Client.Chat.Managers;
 using Content.Client.Eui;
 using Content.Client.Flash;
@@ -130,7 +129,6 @@ namespace Content.Client.Entry
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();
             _parallaxManager.LoadParallax();
-            _baseClient.PlayerJoinedServer += SubscribePlayerAttachmentEvents;
             _stylesheetManager.Initialize();
             _screenshotHook.Initialize();
             _changelogManager.Initialize();
@@ -140,41 +138,6 @@ namespace Content.Client.Entry
             _baseClient.PlayerJoinedServer += (_, _) => { _hudManager.Startup();}; //TODO: Move this
             _baseClient.PlayerLeaveServer += (_, _) => { _hudManager.Shutdown();};
             _baseClient.PlayerJoinedServer += (_, _) => { _mapManager.CreateNewMapEntity(MapId.Nullspace);};
-        }
-
-        /// <summary>
-        /// Subscribe events to the player manager after the player manager is set up
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        public void SubscribePlayerAttachmentEvents(object? sender, EventArgs args)
-        {
-            if (_playerManager.LocalPlayer != null)
-            {
-                _playerManager.LocalPlayer.EntityAttached += AttachPlayerToEntity;
-                _playerManager.LocalPlayer.EntityDetached += DetachPlayerFromEntity;
-            }
-        }
-
-        /// <summary>
-        /// Add the character interface master which combines all character interfaces into one window
-        /// </summary>
-        public void AttachPlayerToEntity(EntityAttachedEventArgs eventArgs)
-        {
-            // TODO This is shitcode. Move this to an entity system, FOR FUCK'S SAKE
-            _entityManager.AddComponent<CharacterInterfaceComponent>(eventArgs.NewEntity);
-        }
-
-        /// <summary>
-        /// Remove the character interface master from this entity now that we have detached ourselves from it
-        /// </summary>
-        public void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
-        {
-            // TODO This is shitcode. Move this to an entity system, FOR FUCK'S SAKE
-            if (!_entityManager.Deleted(eventArgs.OldEntity))
-            {
-                _entityManager.RemoveComponent<CharacterInterfaceComponent>(eventArgs.OldEntity);
-            }
         }
 
         public override void PostInit()

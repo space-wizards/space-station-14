@@ -1,10 +1,8 @@
-﻿using System;
-using Content.Client.DoAfter.UI;
+﻿using Content.Client.DoAfter.UI;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Maths;
 
-namespace Content.Client.CharacterInfo
+namespace Content.Client.UserInterface.Controls
 {
     public sealed class ProgressTextureRect : TextureRect
     {

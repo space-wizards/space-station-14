@@ -1,0 +1,6 @@
+<cc:ObjectiveBriefingControl
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
+    Orientation="Horizontal">
+    <Label Name="Label" Access="Public" Modulate="#FFFF00"/>
+</cc:ObjectiveBriefingControl>

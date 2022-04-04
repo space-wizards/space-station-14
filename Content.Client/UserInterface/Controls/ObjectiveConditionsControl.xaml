@@ -1,0 +1,11 @@
+﻿<cc:ObjectiveConditionsControl
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
+    Orientation="Horizontal">
+    <cc:ProgressTextureRect Name="ProgressTexture" VerticalAlignment="Center" Access="Public"/>
+    <Control MinSize="10 0"/>
+    <BoxContainer Orientation="Vertical">
+        <Label Name="Title" Access="Public"/>
+        <Label Name="Description" Access="Public"/>
+    </BoxContainer>
+</cc:ObjectiveConditionsControl>
