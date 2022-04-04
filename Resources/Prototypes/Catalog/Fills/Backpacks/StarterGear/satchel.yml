@@ -1,5 +1,5 @@
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelFilled
   components:
@@ -8,7 +8,7 @@
       - id: BoxSurvival
 
 #- type: entity
-#  abstract: true
+#  noSpawn: true
 #  parent: ClothingBackpackSatchelClown
 #  id: ClothingBackpackSatchelClownFilled
 #  components:
@@ -17,7 +17,7 @@
 #      - id: BoxHug
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackSatchelSecurity
   id: ClothingBackpackSatchelSecurityFilled
   components:
@@ -27,7 +27,7 @@
       - id: Flash
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackSatchelMedical
   id: ClothingBackpackSatchelMedicalFilled
   components:
@@ -36,7 +36,7 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackSatchelCaptain
   id: ClothingBackpackSatchelCaptainFilled
   components:
@@ -47,7 +47,7 @@
       #- name: TelescopicBaton
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackSatchelEngineering
   id: ClothingBackpackSatchelEngineeringFilled
   components:
@@ -56,7 +56,7 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackSatchelScience
   id: ClothingBackpackSatchelScienceFilled
   components:
@@ -65,7 +65,7 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackSatchelHydroponics
   id: ClothingBackpackSatchelHydroponicsFilled
   components:
@@ -74,7 +74,7 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackSatchelChemistry
   id: ClothingBackpackSatchelChemistryFilled
   components:
@@ -83,7 +83,7 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelChaplainFilled
   components:
@@ -93,7 +93,7 @@
       - id: Bible
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelMusicianFilled
   components:
@@ -104,7 +104,7 @@
         - id: SaxophoneInstrument
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelDrone
   components:

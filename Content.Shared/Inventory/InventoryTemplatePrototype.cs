@@ -10,7 +10,7 @@ namespace Content.Shared.Inventory;
 [Prototype("inventoryTemplate")]
 public sealed class InventoryTemplatePrototype : IPrototype
 {
-    [DataField("id", required: true)]
+    [IdDataFieldAttribute]
     public string ID { get; } = string.Empty;
 
     [DataField("slots")]

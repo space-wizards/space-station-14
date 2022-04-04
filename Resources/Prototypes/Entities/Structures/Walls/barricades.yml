@@ -43,6 +43,9 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+    damage:
+      types:
+        Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Appearance
     visuals:
     - type: FireVisualizer

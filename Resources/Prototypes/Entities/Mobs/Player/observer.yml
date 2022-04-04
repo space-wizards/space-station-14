@@ -1,7 +1,7 @@
 - type: entity
   id: MobObserver
   name: observer
-  abstract: true
+  noSpawn: true
   save: false
   description: Boo!
   components:
@@ -28,7 +28,6 @@
     context: "ghost"
   - type: Examiner
     DoRangeCheck: false
-  - type: IgnorePause
   - type: Ghost
   - type: GhostRadio
   - type: Sprite

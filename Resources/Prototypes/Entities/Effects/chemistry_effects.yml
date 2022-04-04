@@ -1,7 +1,7 @@
 - type: entity
   id: Smoke
   name: smoke
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     drawdepth: Effects
@@ -23,7 +23,7 @@
 - type: entity
   id: Foam
   name: foam
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
@@ -62,7 +62,7 @@
 - type: entity
   id: IronMetalFoam
   name: iron metal foam
-  abstract: true
+  noSpawn: true
   parent: Foam
   components:
   - type: Sprite
@@ -90,7 +90,7 @@
 - type: entity
   id: AluminiumMetalFoam
   name: aluminium metal foam
-  abstract: true
+  noSpawn: true
   parent: Foam
   components:
   - type: Sprite
