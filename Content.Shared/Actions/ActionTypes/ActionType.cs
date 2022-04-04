@@ -11,6 +11,12 @@ namespace Content.Shared.Actions.ActionTypes;
 public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneable
 {
     /// <summary>
+    ///     Name to show in UI.
+    /// </summary>
+    [DataField("id", required: true)]
+    public string ID = string.Empty;
+
+    /// <summary>
     ///     Icon representing this action in the UI.
     /// </summary>
     [DataField("icon")]
@@ -37,7 +43,7 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     ///     Name to show in UI.
     /// </summary>
     [DataField("name", required: true)]
-    public string Name = string.Empty;
+    public string DisplayName = string.Empty;
 
     /// <summary>
     ///     Description to show in UI. Accepts formatting.
@@ -198,8 +204,8 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
         if (Priority != otherAction.Priority)
             return otherAction.Priority - Priority;
 
-        var name = FormattedMessage.RemoveMarkup(Loc.GetString(Name));
-        var otherName = FormattedMessage.RemoveMarkup(Loc.GetString(otherAction.Name));
+        var name = FormattedMessage.RemoveMarkup(Loc.GetString(DisplayName));
+        var otherName = FormattedMessage.RemoveMarkup(Loc.GetString(otherAction.DisplayName));
         if (name != otherName)
             return string.Compare(name, otherName, StringComparison.CurrentCulture);
 
@@ -235,7 +241,7 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
         Priority = toClone.Priority;
         Icon = toClone.Icon;
         IconOn = toClone.IconOn;
-        Name = toClone.Name;
+        DisplayName = toClone.DisplayName;
         Description = toClone.Description;
         Provider = toClone.Provider;
         AttachedEntity = toClone.AttachedEntity;
@@ -268,7 +274,7 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
         unchecked
         {
             var hashCode = Priority.GetHashCode();
-            hashCode = (hashCode * 397) ^ Name.GetHashCode();
+            hashCode = (hashCode * 397) ^ DisplayName.GetHashCode();
             hashCode = (hashCode * 397) ^ Provider.GetHashCode();
             return hashCode;
         }

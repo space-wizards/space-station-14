@@ -5,11 +5,12 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Controls
 {
     [Virtual]
-    public abstract class ItemSlotControl : Control, IEntityEventSubscriber, IHasHudTheme
+    public abstract class SlotControl : Control
     {
         private const string HighlightShader = "SelectionOutlineInrange";
 
@@ -88,18 +89,17 @@ namespace Content.Client.UserInterface.Controls
                 HighlightRect.Texture = Theme.ResolveTexture(_highlightTexturePath);
             }
         }
-        public Action<GUIBoundKeyEventArgs, ItemSlotControl>? OnPressed { get; set; }
-        public Action<GUIBoundKeyEventArgs, ItemSlotControl>? OnStoragePressed { get; set; }
-        public Action<GUIMouseHoverEventArgs, ItemSlotControl>? OnHover { get; set; }
+        public Action<GUIBoundKeyEventArgs, SlotControl>? OnPressed { get; set; }
+        public Action<GUIBoundKeyEventArgs, SlotControl>? OnStoragePressed { get; set; }
+        public Action<GUIMouseHoverEventArgs, SlotControl>? OnHover { get; set; }
 
         public bool EntityHover => HoverSpriteView.Sprite != null;
         public bool MouseIsHovering;
 
-        public ItemSlotControl()
+        public SlotControl()
         {
             IoCManager.InjectDependencies(this);
             Name = "SlotButton_null";
-            Theme = HudThemes.DefaultTheme;
             MinSize = (64, 64);
             AddChild(Button = new TextureRect
             {
@@ -169,8 +169,8 @@ namespace Content.Client.UserInterface.Controls
                 Visible = false
             });
 
-            HighlightTexturePath = "slot_highlight.png";
-            BlockedTexturePath = "blocked.png";
+            HighlightTexturePath = "slot_highlight";
+            BlockedTexturePath = "blocked";
         }
 
         public void ClearHover()
@@ -206,8 +206,7 @@ namespace Content.Client.UserInterface.Controls
             OnHover?.Invoke(args, this);
         }
 
-        public HudTheme Theme { get; set; }
-        public virtual void UpdateTheme(HudTheme newTheme)
+        protected override void OnThemeUpdated()
         {
             StorageButton.TextureNormal = Theme.ResolveTexture(_storageTexturePath);
             Button.Texture = Theme.ResolveTexture(_buttonTexturePath);

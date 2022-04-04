@@ -42,7 +42,7 @@ public sealed partial class InventoryUIController
         _handsSystem.OnHandUnblocked -= HandUnblocked;
     }
 
-    private void OnHandPressed(GUIBoundKeyEventArgs args, ItemSlotControl hand)
+    private void OnHandPressed(GUIBoundKeyEventArgs args, SlotControl hand)
     {
         if (_playerHandsComponent == null)
         {
@@ -158,7 +158,7 @@ public sealed partial class InventoryUIController
         return false;
     }
     //propagate hand activation to the hand system.
-    private void StorageActivate(GUIBoundKeyEventArgs args, ItemSlotControl handControl)
+    private void StorageActivate(GUIBoundKeyEventArgs args, SlotControl handControl)
     {
         _handsSystem.UIHandActivate(handControl.SlotName);
     }

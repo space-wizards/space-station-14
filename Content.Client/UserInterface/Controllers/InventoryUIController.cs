@@ -54,7 +54,7 @@ public sealed partial class InventoryUIController : UIController
             if (!data.ShowInWindow)
                 continue;
 
-            var button = new ItemSlotButton(data);
+            var button = new SlotButton(data);
             button.OnPressed += OnItemPressed;
             button.OnStoragePressed += OnStoragePressed;
 
@@ -82,7 +82,6 @@ public sealed partial class InventoryUIController : UIController
     //Neuron Activation
     public override void OnSystemLoaded(IEntitySystem system)
     {
-        Logger.Debug("NEURON ACTIVATED");
         switch (system)
         {
             case ClientInventorySystem:
@@ -125,7 +124,7 @@ public sealed partial class InventoryUIController : UIController
         _inventorySystem.OnSpriteUpdate -= SpriteUpdated;
     }
 
-    private void OnItemPressed(GUIBoundKeyEventArgs args, ItemSlotControl control)
+    private void OnItemPressed(GUIBoundKeyEventArgs args, SlotControl control)
     {
         var slot = control.SlotName;
 
@@ -164,7 +163,7 @@ public sealed partial class InventoryUIController : UIController
         }
     }
 
-    private void OnStoragePressed(GUIBoundKeyEventArgs args, ItemSlotControl control)
+    private void OnStoragePressed(GUIBoundKeyEventArgs args, SlotControl control)
     {
         _inventorySystem.UIInventoryStorageActivate(control.SlotName);
     }
@@ -172,7 +171,7 @@ public sealed partial class InventoryUIController : UIController
     private void AddSlot(SlotData data)
     {
         if(!_slotGroups.TryGetValue(data.SlotGroup, out var slotGroup)) return;
-        var button = new ItemSlotButton(data);
+        var button = new SlotButton(data);
         button.OnPressed += OnItemPressed;
         button.OnStoragePressed += OnStoragePressed;
         slotGroup.AddButton(button);

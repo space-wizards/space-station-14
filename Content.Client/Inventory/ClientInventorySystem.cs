@@ -103,8 +103,7 @@ namespace Content.Client.Inventory
 
         private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent? args = null)
         {
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
-                OnUnlinkInventory?.Invoke();
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity) OnUnlinkInventory?.Invoke();
         }
 
         private void OnShutdown(EntityUid uid, ClientInventoryComponent component, ComponentShutdown args)
@@ -174,7 +173,7 @@ namespace Content.Client.Inventory
         }
 
         //This should also live in a UI Controller
-        private void HoverInSlotButton(EntityUid uid, string slot, ItemSlotControl control, InventoryComponent? inventoryComponent = null, SharedHandsComponent? hands = null)
+        private void HoverInSlotButton(EntityUid uid, string slot, SlotControl control, InventoryComponent? inventoryComponent = null, SharedHandsComponent? hands = null)
         {
             if (!Resolve(uid, ref inventoryComponent))
                 return;

@@ -113,7 +113,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!component.Actions.TryGetValue(ev.Action, out var act))
         {
             _logSystem.Add(LogType.Action,
-                $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {ev.Action.Name}.");
+                $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {ev.Action.DisplayName}.");
             return;
         }
 
@@ -127,7 +127,7 @@ public abstract class SharedActionsSystem : EntitySystem
         PerformActionEvent? performEvent = null;
 
         // Validate request by checking action blockers and the like:
-        var name = Loc.GetString(act.Name);
+        var name = Loc.GetString(act.DisplayName);
 
         switch (act)
         {
@@ -135,7 +135,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
                 if (ev.EntityTarget is not EntityUid { Valid: true } entityTarget)
                 {
-                    Logger.Error($"Attempted to perform an entity-targeted action without a target! Action: {entityAction.Name}");
+                    Logger.Error($"Attempted to perform an entity-targeted action without a target! Action: {entityAction.DisplayName}");
                     return;
                 }
 
@@ -163,7 +163,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
                 if (ev.MapTarget is not MapCoordinates mapTarget)
                 {
-                    Logger.Error($"Attempted to perform a map-targeted action without a target! Action: {worldAction.Name}");
+                    Logger.Error($"Attempted to perform a map-targeted action without a target! Action: {worldAction.DisplayName}");
                     return;
                 }
 
