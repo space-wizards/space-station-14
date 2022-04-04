@@ -574,40 +574,6 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: diamond door
-  id: DiamondDoor
-  graph: DoorGraph
-  startNode: start
-  targetNode: diamondDoor
-  category: Structures
-  description: A primitive door with manual operation like the cavemen used.
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  icon:
-    sprite: Structures/Doors/MineralDoors/diamond_door.rsi
-    state: closed
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: uranium door
-  id: UraniumDoor
-  graph: DoorGraph
-  startNode: start
-  targetNode: uraniumDoor
-  category: Structures
-  description: A primitive door with manual operation like the cavemen used.
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  icon:
-    sprite: Structures/Doors/MineralDoors/uranium_door.rsi
-    state: closed
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
   name: gold door
   id: GoldDoor
   graph: DoorGraph
@@ -637,23 +603,6 @@
   canBuildInImpassable: false
   icon:
     sprite: Structures/Doors/MineralDoors/silver_door.rsi
-    state: closed
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: sandstone door
-  id: SandstoneDoor
-  graph: DoorGraph
-  startNode: start
-  targetNode: sandstoneDoor
-  category: Structures
-  description: A primitive door with manual operation like the cavemen used.
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  icon:
-    sprite: Structures/Doors/MineralDoors/sandstone_door.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked
