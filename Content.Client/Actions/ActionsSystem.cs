@@ -4,11 +4,8 @@ using Content.Shared.Actions.ActionTypes;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Client.UserInterface;
-using Robust.Shared.ContentPack;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Serialization.Manager;
 
 namespace Content.Client.Actions
 {
@@ -35,7 +32,34 @@ namespace Content.Client.Actions
 
         private void HandleComponentState(EntityUid uid, ActionsComponent component, ref ComponentHandleState args)
         {
-
+            //Check if player is local
+            if (args.Current is not ActionsComponentState currentState) return;
+            List<ActionType> _addedTypes = new();
+            List<ActionType> _removedTypes = new();
+            foreach (var actionType in component.Actions)
+            {
+                if (!currentState.Actions.Contains(actionType))
+                {
+                    _removedTypes.Add(actionType);
+                }
+            }
+            foreach (var actionType in currentState.Actions)
+            {
+                if (!component.Actions.Contains(actionType))
+                {
+                    _addedTypes.Add(actionType);
+                }
+            }
+            foreach (var actionType in _addedTypes)
+            {
+                component.Actions.Add(actionType);
+                OnActionAdded?.Invoke(actionType);
+            }
+            foreach (var actionType in _removedTypes)
+            {
+                component.Actions.Remove(actionType);
+                OnActionRemoved?.Invoke(actionType);
+            }
         }
         private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)
         {
