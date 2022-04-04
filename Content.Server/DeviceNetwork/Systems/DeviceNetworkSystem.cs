@@ -163,7 +163,7 @@ namespace Content.Server.DeviceNetwork.Systems
         }
 
         /// <summary>
-        ///     Try to get a device from a a network using it a device address.
+        ///     Try to find a device on a network using its address.
         /// </summary>
         private bool TryGetDevice(ConnectionType netId, string address, [NotNullWhen(true)] out DeviceNetworkComponent? device)
         {
