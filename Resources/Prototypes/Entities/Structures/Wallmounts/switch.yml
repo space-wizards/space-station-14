@@ -13,6 +13,9 @@
     state: on
   - type: SignalSwitch
   - type: Rotatable
+    - type: Construction
+      graph: SignalSwitch
+      node: SignalSwitch
   placement:
     mode: SnapgridCenter
     snap:
@@ -33,6 +36,9 @@
     state: dead
   - type: SignalButton
   - type: Rotatable
+    - type: Construction
+      graph: SignalButton
+      node: SignalButton
   placement:
     mode: SnapgridCenter
     snap:
