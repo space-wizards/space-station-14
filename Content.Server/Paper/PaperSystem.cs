@@ -90,7 +90,7 @@ namespace Content.Server.Paper
             {
                 // successfully stamped, play popup
                 var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other", ("user", args.User),("target", args.Target),("stamp", args.Used));
-                    _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
+                    _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.Pvs(args.User, entityManager: EntityManager).RemoveWhereAttachedEntity(puid => puid == args.User));
                 var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self", ("target", args.Target),("stamp", args.Used));
                     _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, Filter.Entities(args.User));
             }
@@ -114,7 +114,7 @@ namespace Content.Server.Paper
         }
 
         /// <summary>
-        ///     Accepts the name to be stamped onto the paper, returns true if successful.
+        ///     Accepts the name and state to be stamped onto the paper, returns true if successful.
         /// </summary>
         public bool TryStamp(EntityUid uid, string stampName, string stampState, PaperComponent? paperComp = null)
         {
