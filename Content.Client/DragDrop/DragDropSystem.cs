@@ -1,6 +1,7 @@
 using Content.Client.Outline;
 using Content.Client.Viewport;
 using Content.Shared.ActionBlocker;
+using Content.Shared.CCVar;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -11,6 +12,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
@@ -30,12 +32,11 @@ namespace Content.Client.DragDrop
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfgMan = default!;
         [Dependency] private readonly InteractionOutlineSystem _outline = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly InputSystem _inputSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-
-        public static float DragDeadZone = 12f;
 
         // how often to recheck possible targets (prevents calling expensive
         // check logic each update)
@@ -76,7 +77,8 @@ namespace Content.Client.DragDrop
         {
             UpdatesOutsidePrediction = true;
 
-            _dragDropHelper = new DragDropHelper<EntityUid>(OnBeginDrag, OnContinueDrag, OnEndDrag, DragDeadZone);
+            _dragDropHelper = new DragDropHelper<EntityUid>(OnBeginDrag, OnContinueDrag, OnEndDrag);
+            _cfgMan.OnValueChanged(CCVars.DragDropDeadZone, SetDeadZone, true);
 
             _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
             _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
@@ -86,8 +88,14 @@ namespace Content.Client.DragDrop
                 .Register<DragDropSystem>();
         }
 
+        private void SetDeadZone(float deadZone)
+        {
+            _dragDropHelper.Deadzone = deadZone;
+        }
+
         public override void Shutdown()
         {
+            _cfgMan.UnsubValueChanged(CCVars.DragDropDeadZone, SetDeadZone);
             _dragDropHelper.EndDrag();
             CommandBinds.Unregister<DragDropSystem>();
             base.Shutdown();
