@@ -1,7 +1,7 @@
 # Base Generator
 
 - type: entity
-  abstract: true
+  noSpawn: true
   id: BaseGenerator
   description: A high efficiency thermoelectric generator.
   name: generator
@@ -71,7 +71,7 @@
 # Base Wallmount Generator
 
 - type: entity
-  abstract: true
+  noSpawn: true
   id: BaseGeneratorWallmount
   parent: BaseGenerator
   name: wallmount generator
@@ -166,6 +166,7 @@
   parent: BaseGenerator
   id: GeneratorPlasma
   suffix: Plasma, 5kW
+  description: A high efficiency thermoelectric generator that runs on plasma. 5kW.
   components:
   - type: PowerSupplier
     supplyRate: 5000 # 260 sec / sheet
@@ -185,6 +186,7 @@
   parent: BaseGenerator
   id: GeneratorUranium
   suffix: Uranium, 15kW
+  description: A high efficiency thermoelectric generator that runs on uranium. 15kW.
   components:
   - type: PowerSupplier
     supplyRate: 15000 # 85 sec / sheet
