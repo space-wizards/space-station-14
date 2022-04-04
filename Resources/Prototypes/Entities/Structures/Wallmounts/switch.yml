@@ -1,7 +1,7 @@
 - type: entity
   id: SignalSwitch
   name: "signal switch"
-  description: "Its a switch for toggling power to things."
+  description: "It's a switch for toggling power to things."
   components:
   - type: WallMount
     arc: 360

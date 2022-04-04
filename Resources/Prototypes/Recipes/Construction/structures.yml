@@ -469,25 +469,6 @@
   conditions:
     - !type:TileNotBlocked
 
-- type: construction
-  name: light switch
-  id: LightSwitchRecipe
-  graph: LightSwitch
-  startNode: start
-  targetNode: lightSwitch
-  category: Structures
-  description: A switch for toggling lights that are connected to the same apc.
-  icon:
-    sprite: Structures/Wallmounts/switch.rsi
-    state: on
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: true
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-
 #conveyor
 - type: construction
   name: conveyor belt
@@ -503,22 +484,6 @@
   icon:
     sprite: Structures/conveyor.rsi
     state: conveyor_stopped_cw
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: two-way lever
-  id: TwoWayLever
-  graph: LeverGraph
-  startNode: start
-  targetNode: lever
-  category: Structures
-  description: A lever to control machines. It has 3 modes.
-  objectType: Structure
-  canBuildInImpassable: false
-  icon:
-    sprite: Structures/conveyor.rsi
-    state: switch-off
   conditions:
     - !type:TileNotBlocked
 
