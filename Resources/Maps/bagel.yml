@@ -180453,7 +180453,7 @@ entities:
 - uid: 17693
   type: ClothingUniformJumpsuitLawyerBlue
   components:
-  - desc: a cool blue suit worn by those higher up the food chain than you
+  - desc: A cool blue suit worn by those higher up the food chain than you.
     name: nanotrasen representative jumpsuit
     type: MetaData
   - parent: 16668
