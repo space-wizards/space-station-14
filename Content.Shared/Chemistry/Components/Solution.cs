@@ -45,6 +45,11 @@ namespace Content.Shared.Chemistry.Components
         public Color Color => GetColor();
 
         /// <summary>
+        ///     The name of this solution, if it is contained in some <see cref="SolutionContainerManagerComponent"/>
+        /// </summary>
+        public string? Name;
+
+        /// <summary>
         ///     Constructs an empty solution (ex. an empty beaker).
         /// </summary>
         public Solution() { }

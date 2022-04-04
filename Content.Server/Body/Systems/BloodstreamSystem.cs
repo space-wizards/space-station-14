@@ -1,13 +1,14 @@
 using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.HealthExaminable;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Audio;
@@ -38,6 +39,34 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BloodstreamComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined);
         SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
+        SubscribeLocalEvent<BloodstreamComponent, ReactionAttemptEvent>(OnReactionAttempt);
+    }
+
+    private void OnReactionAttempt(EntityUid uid, BloodstreamComponent component, ReactionAttemptEvent args)
+    {
+        if (args.Solution.Name != BloodstreamComponent.DefaultBloodSolutionName
+            && args.Solution.Name != BloodstreamComponent.DefaultChemicalsSolutionName
+            && args.Solution.Name != BloodstreamComponent.DefaultBloodTemporarySolutionName)
+            return;
+
+        foreach (var effect in args.Reaction.Effects)
+        {
+            switch (effect)
+            {
+                case CreateEntityReactionEffect: // Prevent entities from spawning in the bloodstream
+                case AreaReactionEffect: // No spontaneous smoke or foam leaking out of blood vessels.
+                    args.Cancel();
+                    return;
+            }
+        }
+
+        // The area-reaction effect canceling is part of avoiding smoke-fork-bombs (create two smoke bombs, that when
+        // ingested by mobs create more smoke). This also used to act as a rapid chemical-purge, because all the
+        // reagents would get carried away by the smoke/foam. This does still work for the stomach (I guess people vomit
+        // up the smoke or spawned entities?).
+
+        // TODO apply organ damage instead of just blocking the reaction?
+        // Having cheese-clots form in your veins can't be good for you.
     }
 
     public override void Update(float frameTime)
