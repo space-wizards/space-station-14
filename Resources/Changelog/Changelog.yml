@@ -1,9 +1,4 @@
 Entries:
-- author: Phantom-Lily
-  changes:
-  - {message: 'Added a new wreck to salvage with many, many instruments.', type: Add}
-  id: 782
-  time: '2021-12-27T18:41:14.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes movement in space., type: Fix}
@@ -3031,3 +3026,8 @@ Entries:
   - {message: Nothing, type: Remove}
   id: 1281
   time: '2022-04-04T05:39:43.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed the disarm action not working., type: Fix}
+  id: 1282
+  time: '2022-04-04T05:45:27.0000000+00:00'
