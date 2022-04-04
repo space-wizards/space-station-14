@@ -12,7 +12,8 @@
     sound:
       path: /Audio/Ambience/Objects/vending_machine_hum.ogg
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/empty.rsi
+    sprite: Structures/Machines/VendingMachines/snack.rsi
+    state: off
     netsync: false
   - type: Physics
     bodyType: Static
