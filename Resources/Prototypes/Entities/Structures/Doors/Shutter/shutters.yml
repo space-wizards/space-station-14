@@ -2,7 +2,7 @@
   id: BaseShutter
   parent: BaseStructure
   name: shutter
-  abstract: true
+  noSpawn: true
   description: One shudders to think about what might be behind this shutter.
   components:
   - type: Sprite
