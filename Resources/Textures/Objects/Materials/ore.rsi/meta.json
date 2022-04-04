@@ -26,16 +26,16 @@
       "name": "plasma"
     },
     {
-      "name": "silver"
-    },
-    {
       "name": "spacecrystal"
     },
     {
-      "name": "silicon"
+      "name": "silver"
     },
     {
       "name": "copper"
+    },
+    {
+      "name": "coal"
     }
   ]
 }

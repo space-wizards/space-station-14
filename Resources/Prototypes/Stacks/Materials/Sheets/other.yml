@@ -5,12 +5,6 @@
   spawn: SheetPaper1
 
 - type: stack
-  id: Phoron
-  name: phoron
-  icon: /Textures/Objects/Materials/Sheets/other.rsi/phoron.png
-  spawn: SheetPhoron1
-
-- type: stack
   id: Plasma
   name: plasma
   icon: /Textures/Objects/Materials/Sheets/other.rsi/plasma.png
@@ -22,8 +16,3 @@
   icon: /Textures/Objects/Materials/Sheets/other.rsi/plastic.png
   spawn: SheetPlastic1
 
-- type: stack
-  id: Uranium
-  name: uranium
-  icon: /Textures/Objects/Materials/Sheets/other.rsi/uranium.png
-  spawn: SheetUranium1
