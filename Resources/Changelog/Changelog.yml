@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes movement in space., type: Fix}
-  id: 783
-  time: '2021-12-27T20:12:35.788624+00:00'
 - author: Rane
   changes:
   - {message: Chaplain no longer spawns with an empty backpack., type: Fix}
@@ -3031,3 +3026,8 @@ Entries:
   - {message: Fixed the disarm action not working., type: Fix}
   id: 1282
   time: '2022-04-04T05:45:27.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: Overhauled machine linking, type: Tweak}
+  id: 1283
+  time: '2022-04-04T06:13:03.0000000+00:00'
