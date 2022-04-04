@@ -4,7 +4,7 @@
   name: Urist McHands
   id: MobHumanBase
   description: A miserable pile of secrets.
-  abstract: true
+  noSpawn: true
   components:
   - type: Tag
     tags:
@@ -258,6 +258,20 @@
         Burn:
           sprite: Mobs/Effects/burn_damage.rsi
   - type: CombatMode
+    disarmAction:
+      name: action-name-disarm
+      description: action-description-disarm
+      icon: Interface/Actions/disarmOff.png
+      iconOn: Interface/Actions/disarm.png
+      repeat: true
+      useDelay: 1.5
+      interactOnMiss: true
+      event: !type:DisarmActionEvent
+      canTargetSelf: false
+      whitelist:
+        components:
+        - Hands
+        - StatusEffects
   - type: Climbing
   - type: Cuffable
   - type: CharacterInfo
@@ -302,7 +316,7 @@
   save: false
   name: Urist McHands
   id: MobHumanDummy
-  abstract: true
+  noSpawn: true
   description: A dummy human meant to be used in character setup.
   components:
     - type: Hands

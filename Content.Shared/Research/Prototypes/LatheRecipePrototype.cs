@@ -16,7 +16,7 @@ namespace Content.Shared.Research.Prototypes
     public sealed class LatheRecipePrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("name")]

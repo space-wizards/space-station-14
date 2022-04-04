@@ -21,6 +21,17 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
+        // TODO: YAML Serializer won't catch this.
+        [ViewVariables(VVAccess.ReadWrite)]
+        public readonly IReadOnlyList<string> ArtifactDiseases = new[]
+        {
+            "VanAusdallsRobovirus",
+            "OwOnavirus",
+            "BleedersBite",
+            "Ultragigacancer",
+            "AMIV"
+        };
+
         public override void Initialize()
         {
             base.Initialize();
@@ -33,16 +44,16 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
         /// </summary>
         private void OnMapInit(EntityUid uid, DiseaseArtifactComponent component, MapInitEvent args)
         {
-            if (!string.IsNullOrEmpty(component.SpawnDisease) || component.ArtifactDiseases.Count == 0) return;
-            var diseaseName = _random.Pick(component.ArtifactDiseases);
+            if (component.SpawnDisease != null || ArtifactDiseases.Count == 0) return;
+            var diseaseName = _random.Pick(ArtifactDiseases);
 
-            if (!_prototypeManager.HasIndex<DiseasePrototype>(diseaseName))
+            if (!_prototypeManager.TryIndex<DiseasePrototype>(diseaseName, out var disease))
             {
                 Logger.ErrorS("disease", $"Invalid disease {diseaseName} selected from random diseases.");
                 return;
             }
 
-            component.SpawnDisease = diseaseName;
+            component.SpawnDisease = disease;
         }
 
         /// <summary>
@@ -55,16 +66,15 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
 
             var xform = Transform(uid);
             var carrierQuery = GetEntityQuery<DiseaseCarrierComponent>();
-            var disease = _prototypeManager.Index<DiseasePrototype>(component.SpawnDisease);
 
-            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, component.Range))
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.Coordinates, component.Range))
             {
                 if (!carrierQuery.TryGetComponent(entity, out var carrier)) continue;
 
                 if (!_interactionSystem.InRangeUnobstructed(uid, entity, component.Range))
                     continue;
 
-                _disease.TryInfect(carrier, disease);
+                _disease.TryInfect(carrier, component.SpawnDisease, forced: true);
             }
         }
     }
