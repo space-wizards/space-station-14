@@ -1,6 +1,6 @@
 - type: entity
   id: BaseRock
-  description: Heavy as a real heavy thing.
+  description: Heavy as a really heavy thing.
   abstract: true
   components:
   - type: Clickable
