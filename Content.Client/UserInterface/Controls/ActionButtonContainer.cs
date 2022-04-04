@@ -1,11 +1,14 @@
-﻿using Content.Client.HUD;
+﻿using System.Linq;
+using Content.Client.HUD;
 using Content.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Controls;
 
 public sealed class ActionButtonContainer : ItemSlotUIContainer<ActionButton>
 {
+    private GridContainer _grid;
     private int _selectedTab;
     public int ActiveTab
     {
@@ -23,16 +26,28 @@ public sealed class ActionButtonContainer : ItemSlotUIContainer<ActionButton>
     {
         Orientation = LayoutOrientation.Vertical;
         IoCManager.Resolve<IUIControllerManager>().GetController<ActionUIController>().RegisterActionBar(this);
+        _grid = new GridContainer
+        {
+            Columns   = 1
+        };
+        AddChild(_grid);
+
     }
-    public Page CreateNewTab(params ActionButton?[] buttons)
+    public Page CreateNewPage(params ActionButton[] buttons)
     {
         Page newPage = new(buttons);
         _tabs.Add(newPage);
         return newPage;
     }
 
-    private void Internal_LoadTab(int page)
-    {//internally called only, no need for error checking
+    public void RemovePage(int index = -1)
+    {
+        if (index >= _tabs.Count) return;
+        if (index < 0) index = _tabs.Count - 1;
+
+        UnloadPage(index);
+        _tabs[index].ClearButtons();
+        _tabs.RemoveAt(index);
 
     }
 
@@ -43,27 +58,18 @@ public sealed class ActionButtonContainer : ItemSlotUIContainer<ActionButton>
     }
 
     private void UnloadPage(int page)
-    {//internally called only, no need for error checking
-        foreach (var button in (List<ActionButton?>)_tabs[page])
+    {
+        foreach (var button in (List<ActionButton>)_tabs[page])
         {
-            if (button != null) RemoveChild(button);
-            //TODO: add dummy buttons
+            if (button != null) _grid.RemoveChild(button);
         }
     }
 
     private void LoadPage(int page)
-    {//internally called only, no need for error checking
-        foreach (var button in (List<ActionButton?>)_tabs[page])
+    {
+        foreach (var button in (List<ActionButton>)_tabs[page])
         {
-            if (button != null)
-            {
-                AddChild(button);
-
-            }
-            else
-            {
-                //TODO: Implemenent dummy buttons
-            }
+            _grid.AddChild(button);
         }
     }
 
@@ -96,39 +102,40 @@ public sealed class ActionButtonContainer : ItemSlotUIContainer<ActionButton>
 
     public sealed class Page
     {
-        public List<ActionButton?> actionSlots;
-        //TODO: dummy buttons
-
+        public List<ActionButton> actionSlots;
         public Page()
         {
             actionSlots = new();
         }
 
-        public Page(params ActionButton?[] buttons)
+        public Page(params ActionButton[] buttons)
         {
             actionSlots = new(buttons);
         }
 
-        public ActionButton?[] ToArray()
+        public ActionButton[] ToArray()
         {
             return actionSlots.ToArray();
         }
 
         public int Count => actionSlots.Count;
 
-        public ActionButton? this[int key]
+        public void ClearButtons()
+        {
+            foreach (var button in actionSlots)
+            {
+                button.Dispose();
+            }
+        }
+
+        public ActionButton this[int key]
         {
             get => actionSlots[key];
             set => actionSlots[key] = value;
         }
-        public static explicit operator List<ActionButton?>(Page a)
+        public static explicit operator List<ActionButton>(Page a)
         {
             return a.actionSlots;
         }
-    }
-
-    protected override void OnThemeUpdated()
-    {
-
     }
 }
