@@ -16,11 +16,6 @@
     sprite: Structures/conveyor.rsi
     state: conveyor_started_cw
     drawdepth: FloorObjects
-  - type: SignalReceiver
-    inputs:
-      - name: state
-        type: Content.Shared.MachineLinking.TwoWayLeverSignal
-        maxConnections: 1
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Conveyor
@@ -61,38 +56,3 @@
     graph: ConveyorGraph
     node: item
 
-- type: entity
-  id: TwoWayLever
-  name: two way lever
-  description: A two way lever.
-  placement:
-    mode: SnapgridCenter
-  components:
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Sprite
-      netsync: false
-      sprite: Structures/conveyor.rsi
-      state: switch-off
-    - type: TwoWayLever
-    - type: SignalTransmitter
-      outputs:
-        - name: state
-          type: Content.Shared.MachineLinking.TwoWayLeverSignal
-    - type: Appearance
-      visuals:
-        - type: TwoWayLeverVisualizer
-          state_forward: switch-fwd
-          state_off: switch-off
-          state_reversed: switch-rev
-    - type: Construction
-      graph: LeverGraph
-      node: lever
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]

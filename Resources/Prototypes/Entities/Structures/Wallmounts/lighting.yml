@@ -32,14 +32,6 @@
     energy: 0.8
     softness: 1
     offset: "0, -0.5"
-  - type: SignalReceiver
-    inputs:
-      - name: state
-        type: bool
-  - type: UserInterface
-    interfaces:
-      - key: enum.SignalReceiverUiKey.Key
-        type: SignalPortSelectorBoundUserInterface
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -132,7 +124,7 @@
     energy: 2.5
     softness: 0.9
     color: "#EEEEFF"
-        
+
 - type: entity
   id: PoweredlightExterior
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
@@ -155,7 +147,7 @@
     energy: 4.5
     softness: 0.5
     color: "#B4FCF0"
-        
+
 
 - type: entity
   id: PoweredlightSodium
