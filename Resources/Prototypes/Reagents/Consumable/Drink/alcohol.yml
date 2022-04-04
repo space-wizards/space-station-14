@@ -276,7 +276,7 @@
 
 - type: reagent
   id: BananaHonk
-  name: banana mama
+  name: banana honk
   parent: BaseAlcohol
   desc: A drink from Clown Heaven.
   physicalDesc: strong-smelling

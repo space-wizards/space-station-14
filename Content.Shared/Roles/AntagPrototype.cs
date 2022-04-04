@@ -11,7 +11,7 @@ namespace Content.Shared.Roles
     public sealed class AntagPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

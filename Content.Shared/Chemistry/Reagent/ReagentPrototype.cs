@@ -25,7 +25,7 @@ namespace Content.Shared.Chemistry.Reagent
     public sealed class ReagentPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("name", required: true)]
@@ -34,11 +34,11 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("group")]
         public string Group { get; } = "Unknown";
 
-        [DataField("parent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
+        [ParentDataFieldAttribute(typeof(PrototypeIdSerializer<ReagentPrototype>))]
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
-        [DataField("abstract")]
+        [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
         [DataField("desc", required: true)]

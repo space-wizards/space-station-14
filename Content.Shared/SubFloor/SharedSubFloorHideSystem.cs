@@ -1,5 +1,4 @@
 using Content.Shared.Audio;
-using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
@@ -23,21 +22,12 @@ namespace Content.Shared.SubFloor
         {
             base.Initialize();
 
-            MapManager.GridChanged += MapManagerOnGridChanged;
-            MapManager.TileChanged += MapManagerOnTileChanged;
-
+            SubscribeLocalEvent<GridModifiedEvent>(OnGridChanged);
+            SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentStartup>(OnSubFloorStarted);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentShutdown>(OnSubFloorTerminating);
             SubscribeLocalEvent<SubFloorHideComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
             SubscribeLocalEvent<SubFloorHideComponent, GettingInteractedWithAttemptEvent>(OnInteractionAttempt);
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            MapManager.GridChanged -= MapManagerOnGridChanged;
-            MapManager.TileChanged -= MapManagerOnTileChanged;
         }
 
         private void OnInteractionAttempt(EntityUid uid, SubFloorHideComponent component, GettingInteractedWithAttemptEvent args)
@@ -83,22 +73,22 @@ namespace Content.Shared.SubFloor
             }
         }
 
-        private void MapManagerOnTileChanged(object? sender, TileChangedEventArgs e)
+        private void OnTileChanged(TileChangedEvent args)
         {
-            if (e.OldTile.IsEmpty)
+            if (args.OldTile.IsEmpty)
                 return; // Nothing is anchored here anyways.
 
-            if (e.NewTile.Tile.IsEmpty)
+            if (args.NewTile.Tile.IsEmpty)
                 return; // Anything that was here will be unanchored anyways.
 
-            UpdateTile(MapManager.GetGrid(e.NewTile.GridIndex), e.NewTile.GridIndices);
+            UpdateTile(MapManager.GetGrid(args.NewTile.GridIndex), args.NewTile.GridIndices);
         }
 
-        private void MapManagerOnGridChanged(object? sender, GridChangedEventArgs e)
+        private void OnGridChanged(GridModifiedEvent args)
         {
-            foreach (var modified in e.Modified)
+            foreach (var modified in args.Modified)
             {
-                UpdateTile(e.Grid, modified.position);
+                UpdateTile(args.Grid, modified.position);
             }
         }
 

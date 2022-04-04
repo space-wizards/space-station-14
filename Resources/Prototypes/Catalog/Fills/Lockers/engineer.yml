@@ -64,7 +64,6 @@
   - type: StorageFill
     contents:
       - id: WelderMini
-        prob: 1
       - id: Welder
         prob: 0.1
       - id: ClothingHeadHatWelding
@@ -81,6 +80,9 @@
       - id: ClothingOuterHardsuitAtmos
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
+      - id: ClothingOuterSuitAtmosFire
+      - id: ClothingHeadHelmetAtmosFire
+      - id: GasAnalyzer
 
 - type: entity
   id: LockerEngineerFilled

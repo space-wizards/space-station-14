@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Containers.ItemSlots;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Access.Components
 {
@@ -12,28 +8,14 @@ namespace Content.Shared.Access.Components
         public const int MaxFullNameLength = 256;
         public const int MaxJobTitleLength = 256;
 
+        public static string PrivilegedIdCardSlotId = "IdCardConsole-privilegedId";
+        public static string TargetIdCardSlotId = "IdCardConsole-targetId";
+
         [DataField("privilegedIdSlot")]
         public ItemSlot PrivilegedIdSlot = new();
 
         [DataField("targetIdSlot")]
         public ItemSlot TargetIdSlot = new();
-
-        public enum UiButton
-        {
-            PrivilegedId,
-            TargetId,
-        }
-
-        [Serializable, NetSerializable]
-        public sealed class IdButtonPressedMessage : BoundUserInterfaceMessage
-        {
-            public readonly UiButton Button;
-
-            public IdButtonPressedMessage(UiButton button)
-            {
-                Button = button;
-            }
-        }
 
         [Serializable, NetSerializable]
         public sealed class WriteToTargetIdMessage : BoundUserInterfaceMessage

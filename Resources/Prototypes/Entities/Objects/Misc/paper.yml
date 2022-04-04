@@ -34,7 +34,7 @@
 - type: entity
   parent: Paper
   id: PaperWritten
-  abstract: true
+  noSpawn: true
   components:
   - type: Paper
   - type: Sprite
@@ -42,6 +42,12 @@
     # Changing it here is fine - if the PaperStatus key is actually added,
     #  something happened, so that ought to override this either way.
     - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
 
 - type: entity
   parent: PaperWritten
@@ -135,8 +141,8 @@
     visuals:
     - type: MappedItemVisualizer
 
-    
-    
+
+
 - type: entity
   id: BoxFolderRed
   parent: BoxFolderBase

@@ -6,6 +6,6 @@ namespace Content.Server.GameTicking.Rules;
 [Prototype("gameRule")]
 public sealed class GameRulePrototype : IPrototype
 {
-    [DataField("id", required:true)]
+    [IdDataFieldAttribute]
     public string ID { get; } = default!;
 }

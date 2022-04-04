@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
-using Content.Server.Construction.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Shared.Acts;
+using Content.Shared.Construction.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
