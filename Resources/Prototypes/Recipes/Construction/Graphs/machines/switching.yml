@@ -1,0 +1,99 @@
+# Levers
+- type: constructionGraph
+  id: LeverGraph
+  start: start
+  graph:
+  - node: start
+    actions:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity {}
+    edges:
+      - to: lever
+        completed:
+          - !type:SnapToGrid {}
+        steps:
+          - material: Steel
+            amount: 2
+            doAfter: 1
+  - node: lever
+    entity: TwoWayLever
+    edges:
+      - to: start
+        steps:
+          - tool: Anchoring
+            doAfter: 1
+
+# Switches
+- type: constructionGraph
+  id: LightSwitch
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: LightSwitch
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+    - node: LightSwitch
+      entity: ApcNetSwitch
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:DeleteEntity {}
+
+- type: constructionGraph
+  id: SignalSwitch
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: SignalSwitch
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+    - node: SignalSwitch
+      entity: SignalSwitch
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:DeleteEntity {}
+            
+- type: constructionGraph
+  id: SignalButton
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: SignalButton
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+    - node: SignalButton
+      entity: SignalButton
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:DeleteEntity {}
