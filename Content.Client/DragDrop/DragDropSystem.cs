@@ -35,6 +35,8 @@ namespace Content.Client.DragDrop
         [Dependency] private readonly InputSystem _inputSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
+        public static float DragDeadZone = 12f;
+
         // how often to recheck possible targets (prevents calling expensive
         // check logic each update)
         private const float TargetRecheckInterval = 0.25f;
@@ -74,7 +76,7 @@ namespace Content.Client.DragDrop
         {
             UpdatesOutsidePrediction = true;
 
-            _dragDropHelper = new DragDropHelper<EntityUid>(OnBeginDrag, OnContinueDrag, OnEndDrag);
+            _dragDropHelper = new DragDropHelper<EntityUid>(OnBeginDrag, OnContinueDrag, OnEndDrag, DragDeadZone);
 
             _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
             _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
