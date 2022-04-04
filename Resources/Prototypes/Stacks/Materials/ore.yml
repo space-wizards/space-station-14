@@ -8,7 +8,7 @@
   id: SteelOre
   name: steel ore
   icon: /Textures/Objects/Materials/ore.rsi/iron.png
-  spawn: IronOre1
+  spawn: SteelOre1
 
 - type: stack
   id: PlasmaOre
