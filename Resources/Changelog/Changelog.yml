@@ -1,9 +1,4 @@
 Entries:
-- author: Charlese2
-  changes:
-  - {message: Flashing through walls., type: Fix}
-  id: 780
-  time: '2021-12-27T16:51:12.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixed camera rotation when going across grids., type: Fix}
@@ -3030,3 +3025,8 @@ Entries:
       before possessing them., type: Tweak}
   id: 1279
   time: '2022-04-02T22:06:30.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Seeds properly spawn from extractors and clippers again., type: Fix}
+  id: 1280
+  time: '2022-04-04T01:02:38.0000000+00:00'
