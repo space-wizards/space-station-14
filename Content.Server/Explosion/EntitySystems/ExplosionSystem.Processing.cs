@@ -297,8 +297,11 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (_containerSystem.IsEntityInContainer(uid, meta))
                 return;
 
+            // "worldPos" should be the space/map local position.
+            var worldPos = _transformSystem.GetWorldPosition(xform, xformQuery);
+
             // finally check if it intersects our tile
-            if (gridBox.Contains(invSpaceMatrix.Transform(xform.LocalPosition)))
+            if (gridBox.Contains(invSpaceMatrix.Transform(worldPos)))
                 list.Add((uid, xform));
         };
 

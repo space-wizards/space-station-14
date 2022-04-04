@@ -36,6 +36,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly AdminLogSystem _logsSystem = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
