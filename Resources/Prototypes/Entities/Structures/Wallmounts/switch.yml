@@ -62,7 +62,7 @@
     - type: Rotatable
     - type: Construction
       graph: LightSwitch
-      node: lightSwitch
+      node: LightSwitch
     - type: ExtensionCableReceiver
     - type: DeviceNetworkComponent
       deviceNetId: Apc
