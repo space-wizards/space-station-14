@@ -1,6 +1,6 @@
 # Base substation
 - type: entity
-  abstract: true
+  noSpawn: true
   id: BaseSubstation
   parent: BaseMachine
   name: substation
