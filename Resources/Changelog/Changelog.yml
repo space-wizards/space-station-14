@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixed camera rotation when going across grids., type: Fix}
-  id: 781
-  time: '2021-12-27T17:50:00.0000000+00:00'
 - author: Phantom-Lily
   changes:
   - {message: 'Added a new wreck to salvage with many, many instruments.', type: Add}
@@ -3030,3 +3025,9 @@ Entries:
   - {message: Seeds properly spawn from extractors and clippers again., type: Fix}
   id: 1280
   time: '2022-04-04T01:02:38.0000000+00:00'
+- author: Radosvik
+  changes:
+  - {message: Current Player Count to the Lobby, type: Add}
+  - {message: Nothing, type: Remove}
+  id: 1281
+  time: '2022-04-04T05:39:43.0000000+00:00'
