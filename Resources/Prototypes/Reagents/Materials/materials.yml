@@ -28,3 +28,9 @@
   stack: WoodPlank
   name: wood
   icon: Objects/Materials/materials.rsi/wood.png
+
+- type: material
+  id: Uranium
+  stack: Uranium
+  name: uranium
+  icon: /Textures/Objects/Materials/Sheets/other.rsi/uranium.png

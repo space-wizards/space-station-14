@@ -16,3 +16,8 @@
   icon: /Textures/Objects/Materials/Sheets/other.rsi/plastic.png
   spawn: SheetPlastic1
 
+- type: stack
+  id: Uranium
+  name: uranium
+  icon: /Textures/Objects/Materials/Sheets/other.rsi/uranium.png
+  spawn: SheetUranium1

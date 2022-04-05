@@ -94,6 +94,36 @@
     Plasma: 500
 
 - type: latheRecipe
+  id: SheetUranium5
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: uranium
+  result: SheetUranium5
+  completetime: 500
+  materials:
+    Uranium: 500
+    
+- type: latheRecipe
+  id: IngotGold1
+  icon:
+    sprite: Objects/Materials/ingots.rsi
+    state: gold
+  result: IngotGold1
+  completetime: 500
+  materials:
+    Gold: 500
+
+- type: latheRecipe
+  id: IngotSilver1
+  icon:
+    sprite: Objects/Materials/ingots.rsi
+    state: silver
+  result: IngotSilver1
+  completetime: 500
+  materials:
+    Silver: 500
+
+- type: latheRecipe
   id: SheetPlastic
   icon:
     sprite: Objects/Materials/Sheets/other.rsi

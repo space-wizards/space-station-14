@@ -398,7 +398,7 @@
   parent: Autolathe
   id: Oreprocessor
   name: Ore processor
-  description: It produces items using ores.
+  description: It smelts ores into sheets and ingots.
   components:
   - type: LatheDatabase
     static: true
@@ -409,6 +409,9 @@
       - SheetPlasma5
       - SheetPGlass5
       - SheetRPGlass5
+      - SheetUranium5
+      - IngotGold1
+      - IngotSilver1
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
     netsync: false

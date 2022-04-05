@@ -35938,12 +35938,6 @@ entities:
   - pos: 47.440273,-7.496333
     parent: 126
     type: Transform
-- uid: 2761
-  type: SheetUranium1
-  components:
-  - pos: 40.48715,-5.871333
-    parent: 126
-    type: Transform
 - uid: 2762
   type: SheetRGlass
   components:

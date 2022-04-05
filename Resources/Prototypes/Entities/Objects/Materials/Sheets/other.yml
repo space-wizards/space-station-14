@@ -157,3 +157,34 @@
       state: plastic
     - type: Stack
       count: 5
+
+- type: entity
+  parent: SheetOtherBase
+  id: SheetUranium
+  name: uranium
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Uranium
+  - type: Sprite
+    state: uranium
+  - type: Item
+    HeldPrefix: uranium
+
+- type: entity
+  parent: SheetUranium
+  id: SheetUranium1
+  name: uranium
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: SheetUranium
+  id: SheetUranium5
+  name: uranium
+  suffix: Five
+  components:
+    - type: Stack
+      count: 5

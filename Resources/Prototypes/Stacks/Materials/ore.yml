@@ -27,3 +27,9 @@
   name: space crystal
   icon: /Textures/Objects/Materials/ore.rsi/spacecrystal.png
   spawn: SpaceCrystal1
+
+- type: stack
+  id: UraniumOre
+  name: uranium ore
+  icon: /Textures/Objects/Materials/ore.rsi/titanium.png
+  spawn: UraniumOre1

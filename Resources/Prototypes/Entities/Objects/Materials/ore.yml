@@ -136,3 +136,26 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  parent: OreBase
+  id: UraniumOre
+  name: uranium ore
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: UraniumOre
+  - type: Sprite
+    state: uranium
+  - type: Material
+    materials:
+      - Uranium
+    volume: 500
+
+- type: entity
+  parent: UraniumOre
+  id: UraniumOre1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
