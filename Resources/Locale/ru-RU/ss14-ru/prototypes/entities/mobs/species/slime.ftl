@@ -1,6 +1,6 @@
-ent-MobSlimePersonBase = Urist McSlime
-    .desc = A miserable pile of slime.
+ent-MobSlimePersonBase = Урист МакСлайм
+    .desc = Жалкая кучка слизи.
     .suffix = { "" }
-ent-MobSlimePersonDummy = Urist McHands
-    .desc = A dummy slime meant to be used in character setup.
+ent-MobSlimePersonDummy = Урист МакХэндс
+    .desc = Манекен-слайм, используемый при создании персонажа.
     .suffix = { "" }

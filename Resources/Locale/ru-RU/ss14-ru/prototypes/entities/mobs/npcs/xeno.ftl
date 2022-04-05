@@ -1,9 +1,9 @@
-ent-MobXeno = Xeno
-    .desc = They mostly come at night. Mostly.
+ent-MobXeno = Ксенос
+    .desc = Обычно они приходят ночью. Обычно.
     .suffix = { "" }
-ent-MobPurpleSnake = purple snake
-    .desc = A menacing purple snake from Kepler-283c.
+ent-MobPurpleSnake = пурпурная змея
+    .desc = Грозная пурпурная змея с Kepler-283c.
     .suffix = { "" }
-ent-MobSmallPurpleSnake = purple snake
-    .desc = A smaller version of the menacing purple snake from Kepler-283c.
-    .suffix = small
+ent-MobSmallPurpleSnake = пурпурная змея
+    .desc = Уменьшенная версия грозной пурпурной змеи из Kepler-283c.
+    .suffix = маленькая

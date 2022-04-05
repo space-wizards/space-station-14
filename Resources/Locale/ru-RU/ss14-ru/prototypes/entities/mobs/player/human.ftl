@@ -1,6 +1,6 @@
-ent-MobHuman = Urist McHands
-    .desc = A miserable pile of secrets.
+ent-MobHuman = Урист МакХэндс
+    .desc = Жалкая кучка секретов.
     .suffix = { "" }
-ent-MobHumanCentcomOfficial = centcom official
+ent-MobHumanCentcomOfficial = представитель ЦентКом
     .desc = { ent-MobHuman.desc }
     .suffix = { "" }

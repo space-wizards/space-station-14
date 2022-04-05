@@ -1,9 +1,9 @@
-ent-MobCarp = space carp
-    .desc = It's a space carp.
+ent-MobCarp = космический карп
+    .desc = Это космический карп.
     .suffix = { "" }
-ent-MobCarpMagic = magicarp
-    .desc = Looks like some kind of fish. Might be magical.
+ent-MobCarpMagic = мэджикарп
+    .desc = Похож на какую-то рыбу. Может быть волшебным.
     .suffix = { "" }
-ent-MobCarpHolo = holocarp
-    .desc = Carp made out of holographic energies.
+ent-MobCarpHolo = голокарп
+    .desc = Карп из голографической энергии.
     .suffix = { "" }

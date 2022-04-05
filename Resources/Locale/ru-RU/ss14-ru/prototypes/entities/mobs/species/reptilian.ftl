@@ -1,6 +1,6 @@
-ent-MobReptilianBase = Urist McHands The Lizardperson
-    .desc = A miserable pile of scales.
+ent-MobReptilianBase = Урист МакХэндс Ящеролюд
+    .desc = Жалкая кучка тайн.
     .suffix = { "" }
-ent-MobReptilianDummy = Urist McHands
-    .desc = A dummy reptilian meant to be used in character setup.
+ent-MobReptilianDummy = Урист МакХэндс
+    .desc = Манекен-рептилоид, используемый при создании персонажа.
     .suffix = { "" }

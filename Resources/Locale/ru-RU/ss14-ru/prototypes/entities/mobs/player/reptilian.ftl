@@ -1,3 +1,3 @@
-ent-MobReptilian = Urist McHands The Lizardperson
-    .desc = A miserable pile of scales.
+ent-MobReptilian = Урист МакХэндс Ящеролюд
+    .desc = Жалкая кучка чешуи.
     .suffix = { "" }
