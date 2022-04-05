@@ -1004,10 +1004,9 @@
     beepInterval: 1
   - type: Explosive
     explosionType: Default
-    devastationRange: 1
-    heavyImpactRange: 2
-    lightImpactRange: 3
-    flashRange: 6
+    maxIntensity: 15
+    intensitySlope: 5
+    totalIntensity: 120
   - type: ExplodeOnTrigger
 
 - type: entity

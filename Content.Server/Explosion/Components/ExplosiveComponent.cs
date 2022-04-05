@@ -52,6 +52,22 @@ public sealed class ExplosiveComponent : Component
     public float TotalIntensity = 10;
 
     /// <summary>
+    ///     Factor used to scale the explosion intensity when calculating tile break chances. Allows for stronger
+    ///     explosives that don't space tiles, without having to create a new explosion-type prototype.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("tileBreakScale")]
+    public float TileBreakScale = 1f;
+
+    /// <summary>
+    ///     Maximum number of times that an explosive can break a tile. Currently, for normal space ships breaking a
+    ///     tile twice will result in a vacuum.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("maxTileBreak")]
+    public int MaxTileBreak = int.MaxValue;
+
+    /// <summary>
     ///     Avoid somehow double-triggering this explosion (e.g. by damaging this entity from its own explosion.
     /// </summary>
     public bool Exploded;
