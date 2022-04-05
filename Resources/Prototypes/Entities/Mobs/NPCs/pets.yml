@@ -528,7 +528,7 @@
       gender: male
 
 - type: entity
-  name: paperwork
+  name: Paperwork
   parent: MobSloth
   id: MobPaperwork
   description: Took up a new job sorting books in the library after he got transferred from Space Station 13. He seems to be just as slow at this.
