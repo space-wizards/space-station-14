@@ -43,6 +43,9 @@
     spawned:
     - id: FoodMeatBear
       amount: 3
+    - id: MaterialHideBear
+      amount: 1
+      prob: 0.3
   - type: Bloodstream
     bloodMaxVolume: 500
   - type: UnarmedCombat

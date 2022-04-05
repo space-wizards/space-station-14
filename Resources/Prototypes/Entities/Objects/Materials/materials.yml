@@ -113,3 +113,17 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialHideBear
+  name: bear hide
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: bearpelt
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hides.rsi
+    HeldPrefix: bear
+    Slots:
+      - HEAD
