@@ -13,6 +13,7 @@ namespace Content.Server.Atmos.EntitySystems
     public sealed class GasTankSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
         private const float TimerDelay = 0.5f;
         private float _timer = 0f;
@@ -64,8 +65,12 @@ namespace Content.Server.Atmos.EntitySystems
             foreach (var gasTank in EntityManager.EntityQuery<GasTankComponent>())
             {
                 _atmosphereSystem.React(gasTank.Air, gasTank);
-                gasTank.CheckStatus();
-                gasTank.UpdateUserInterface();
+                gasTank.CheckStatus(_atmosphereSystem);
+
+                if (gasTank.UserInterface != null && gasTank.UserInterface.SubscribedSessions.Count > 0)
+                {
+                    gasTank.UpdateUserInterface();
+                }
             }
         }
     }
