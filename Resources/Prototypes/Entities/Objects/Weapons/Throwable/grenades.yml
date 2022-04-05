@@ -114,7 +114,8 @@
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
-
+      countdown_sound:
+        path: /Audio/Effects/countdown.ogg
 - type: entity
   name: the nuclear option
   description: Please don't throw it, think of the children.
