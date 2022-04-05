@@ -67,6 +67,9 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
     private void OnBoundUIClosed(EntityUid uid, InstrumentComponent component, BoundUIClosedEvent args)
     {
+        if (args.UiKey is not InstrumentUiKey)
+            return;
+
         if (HasComp<ActiveInstrumentComponent>(uid)
             && _userInterfaceSystem.TryGetUi(uid, args.UiKey, out var bui)
             && bui.SubscribedSessions.Count == 0)
@@ -79,6 +82,9 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
     private void OnBoundUIOpened(EntityUid uid, InstrumentComponent component, BoundUIOpenedEvent args)
     {
+        if (args.UiKey is not InstrumentUiKey)
+            return;
+        
         EnsureComp<ActiveInstrumentComponent>(uid);
         Clean(uid, component);
     }
