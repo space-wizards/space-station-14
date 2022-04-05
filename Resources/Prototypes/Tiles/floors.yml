@@ -16,6 +16,22 @@
   heatCapacity: 10000
 
 - type: tile
+  id: floor_steel_bl
+  name: steel floor
+  texture: "steel_bl"
+  collision: BottomLeft
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemSteel
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
   id: floor_wood
   name: wood
   texture: "wood"

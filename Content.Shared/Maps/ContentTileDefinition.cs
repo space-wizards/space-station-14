@@ -42,6 +42,8 @@ namespace Content.Shared.Maps
 
         [DataField("variants")] public byte Variants { get; set; } = 1;
 
+        [DataField("collision")] public TileCollision Collision { get; } = TileCollision.Full;
+
         /// <summary>
         /// This controls what variants the `variantize` command is allowed to use.
         /// </summary>
