@@ -191,7 +191,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // enumerator-changed-while-enumerating errors.
         List<(EntityUid, TransformComponent?) > list = new();
 
-        void AddIntersecting(List<(EntityUid, TransformComponent?)> list)
+        void AddIntersecting(List<(EntityUid, TransformComponent?)> listy)
         {
             foreach (var uid in _entityLookup.GetLocalEntitiesIntersecting(lookup, ref gridBox, LookupFlags.None))
             {
@@ -201,13 +201,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 if (!xformQuery.TryGetComponent(uid, out var xform))
                     continue;
 
-                if (xform.ParentUid != grid.GridEntityId)
-                {
-                    if (!metaQuery.TryGetComponent(uid, out var meta))
-                        continue;
-                }
-
-                list.Add((uid, xform));
+                listy.Add((uid, xform));
             }
         }
 
@@ -274,7 +268,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         var worldBox = spaceMatrix.TransformBox(gridBox);
         List<(EntityUid, TransformComponent)> list = new();
 
-        void AddIntersecting(List<(EntityUid, TransformComponent)> list)
+        void AddIntersecting(List<(EntityUid, TransformComponent)> listy)
         {
             foreach (var uid in _entityLookup.GetEntitiesIntersecting(lookup, ref worldBox, LookupFlags.None))
             {
@@ -287,7 +281,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 {
                     // parented directly to the map, use local position
                     if (gridBox.Contains(invSpaceMatrix.Transform(xform.LocalPosition)))
-                        list.Add((uid, xform));
+                        listy.Add((uid, xform));
 
                     return;
                 }
@@ -297,7 +291,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
                 // finally check if it intersects our tile
                 if (gridBox.Contains(invSpaceMatrix.Transform(worldPos)))
-                    list.Add((uid, xform));
+                    listy.Add((uid, xform));
             }
         }
 
