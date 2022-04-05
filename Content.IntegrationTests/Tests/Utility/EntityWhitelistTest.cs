@@ -81,8 +81,8 @@ namespace Content.IntegrationTests.Tests.Utility
                 // Test instantiated on its own
                 var whitelistInst = new EntityWhitelist
                 {
-                    Components = new[] {$"{ValidComponent}"},
-                    Tags = new[] {"ValidTag"}
+                    Components = new[] { $"{ValidComponent}"},
+                    Tags = new() {"ValidTag"}
                 };
                 whitelistInst.UpdateRegistrations();
                 Assert.That(whitelistInst, Is.Not.Null);
