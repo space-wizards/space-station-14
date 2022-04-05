@@ -31,5 +31,5 @@
 - type: stack
   id: UraniumOre
   name: uranium ore
-  icon: /Textures/Objects/Materials/ore.rsi/titanium.png
+  icon: /Textures/Objects/Materials/ore.rsi/uranium.png
   spawn: UraniumOre1
