@@ -4,7 +4,10 @@ using static Content.Server.Explosion.EntitySystems.ExplosionSystem;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-public sealed class GridExplosion : TileExplosion
+/// <summary>
+///     See <see cref="ExplosionTileFlood"/>. Each instance of this class corresponds to a seperate grid.
+/// </summary>
+public sealed class ExplosionGridTileFlood : ExplosionTileFlood
 {
     public IMapGrid Grid;
     private bool _needToTransform = false;
@@ -31,7 +34,7 @@ public sealed class GridExplosion : TileExplosion
 
     private Dictionary<Vector2i, NeighborFlag> _edgeTiles;
 
-    public GridExplosion(
+    public ExplosionGridTileFlood(
         IMapGrid grid,
         Dictionary<Vector2i, TileData> airtightMap,
         float maxIntensity,
