@@ -413,7 +413,7 @@
       - IngotGold1
       - IngotSilver1
   - type: Sprite
-    sprite: Structures/Machines/autolathe.rsi
+    sprite: Structures/Machines/ore_processor.rsi
     netsync: false
     layers:
     - state: icon
