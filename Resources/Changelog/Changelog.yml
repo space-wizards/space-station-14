@@ -1,11 +1,4 @@
 Entries:
-- author: CrudeWax
-  changes:
-  - {message: Syndiecorp Cybersun invites you to try out their magnum opus- holoparasites!
-      Look for the "Utility" section in your uplink. And ghosts - be on the lookout
-      for a role prompt!, type: Add}
-  id: 785
-  time: '2021-12-29T03:58:49.0000000+00:00'
 - author: Topy
   changes:
   - {message: Add rollerbeds to roll people around!, type: Add}
@@ -3032,3 +3025,8 @@ Entries:
       enabled mass smoke/foam production.', type: Fix}
   id: 1284
   time: '2022-04-04T16:02:33.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Minibombs beep again., type: Tweak}
+  id: 1285
+  time: '2022-04-05T00:27:36.0000000+00:00'
