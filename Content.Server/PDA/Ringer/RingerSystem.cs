@@ -104,7 +104,7 @@ namespace Content.Server.PDA.Ringer
         {
             var remove = new RemQueue<EntityUid>();
 
-            foreach(var (ringer, _) in EntityManager.EntityQuery<RingerComponent, ActiveRingerComponent>())
+            foreach(var (_, ringer) in EntityManager.EntityQuery<ActiveRingerComponent, RingerComponent>())
             {
                 ringer.TimeElapsed += frameTime;
 
