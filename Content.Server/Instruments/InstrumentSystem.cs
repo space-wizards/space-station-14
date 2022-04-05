@@ -79,11 +79,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
     private void OnBoundUIOpened(EntityUid uid, InstrumentComponent component, BoundUIOpenedEvent args)
     {
-        if (!HasComp<ActiveInstrumentComponent>(uid))
-        {
-            EnsureComp<ActiveInstrumentComponent>(uid);
-        }
-
+        EnsureComp<ActiveInstrumentComponent>(uid);
         Clean(uid, component);
     }
 
