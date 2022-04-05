@@ -3,7 +3,10 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-public sealed class SpaceExplosion : TileExplosion
+/// <summary>
+///     See <see cref="ExplosionTileFlood"/>.
+/// </summary>
+public sealed class ExplosionSpaceTileFlood : ExplosionTileFlood
 {
     /// <summary>
     ///     The keys of this dictionary correspond to space tiles that intersect a grid. The values have information
@@ -20,7 +23,7 @@ public sealed class SpaceExplosion : TileExplosion
 
     public ushort TileSize = ExplosionSystem.DefaultTileSize;
 
-    public SpaceExplosion(ExplosionSystem system, MapCoordinates epicentre, GridId? referenceGrid, List<GridId> localGrids, float maxDistance)
+    public ExplosionSpaceTileFlood(ExplosionSystem system, MapCoordinates epicentre, GridId? referenceGrid, List<GridId> localGrids, float maxDistance)
     {
         (_gridBlockMap, TileSize) = system.TransformGridEdges(epicentre, referenceGrid, localGrids, maxDistance);
         system.GetUnblockedDirections(_gridBlockMap, TileSize);
