@@ -285,7 +285,7 @@ namespace Content.Server.Storage.EntitySystems
 
             foreach (var session in remove)
             {
-                storageComp.SubscribedSessions.Remove(session);
+                storageComp.UnsubscribeSession(session);
             }
         }
     }
