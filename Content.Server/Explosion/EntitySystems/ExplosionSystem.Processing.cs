@@ -281,7 +281,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 if (processed.Contains(uid))
                     return;
 
-                var xform  = xformQuery.GetComponent(uid);
+                var xform = xformQuery.GetComponent(uid);
 
                 if (xform.ParentUid == lookup.Owner)
                 {
@@ -292,13 +292,14 @@ public sealed partial class ExplosionSystem : EntitySystem
                     return;
                 }
 
-            // "worldPos" should be the space/map local position.
-            var worldPos = _transformSystem.GetWorldPosition(xform, xformQuery);
+                // "worldPos" should be the space/map local position.
+                var worldPos = _transformSystem.GetWorldPosition(xform, xformQuery);
 
-            // finally check if it intersects our tile
-            if (gridBox.Contains(invSpaceMatrix.Transform(worldPos)))
-                list.Add((uid, xform));
-        };
+                // finally check if it intersects our tile
+                if (gridBox.Contains(invSpaceMatrix.Transform(worldPos)))
+                    list.Add((uid, xform));
+            }
+        }
 
         AddIntersecting(list);
 
@@ -450,7 +451,7 @@ sealed class Explosion
     public readonly HashSet<EntityUid> ProcessedEntities = new();
 
     /// <summary>
-    ///     This integer tracks how much of this explosion has been processed. 
+    ///     This integer tracks how much of this explosion has been processed.
     /// </summary>
     public int CurrentIteration { get; private set; } = 0;
 
@@ -647,7 +648,7 @@ sealed class Explosion
     }
 
     /// <summary>
-    ///     Attempt to process (i.e., damage entities) some number of grid tiles. 
+    ///     Attempt to process (i.e., damage entities) some number of grid tiles.
     /// </summary>
     public int Process(int processingTarget)
     {
