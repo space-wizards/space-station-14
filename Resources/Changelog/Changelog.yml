@@ -1,12 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: 'Added suit sensors and crew monitoring console in code. They are not
-      mapped, but you can print circuit board.', type: Add}
-  - {message: Prisoners suit has locked suit sensor that always broadcasting their
-      position., type: Add}
-  id: 787
-  time: '2021-12-29T05:19:01.0000000+00:00'
 - author: Rane
   changes:
   - {message: Pill canisters are now available in the protolathe after researching
@@ -3032,3 +3024,10 @@ Entries:
     type: Fix}
   id: 1286
   time: '2022-04-06T19:41:47.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Split Station V2 is out now! Check out the new medbay and cosy additions
+      to perma and the canteen among other things. See github pull request 7451 for
+      details., type: Add}
+  id: 1287
+  time: '2022-04-06T23:31:28.0000000+00:00'
