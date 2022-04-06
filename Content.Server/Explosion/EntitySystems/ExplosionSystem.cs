@@ -16,7 +16,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -29,7 +28,6 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
@@ -38,6 +36,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly AdminLogSystem _logsSystem = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -62,11 +61,14 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         DebugTools.Assert(_prototypeManager.HasIndex<ExplosionPrototype>(DefaultExplosionPrototypeId));
 
-        // handled in ExplosionSystemGridMap.cs
+        // handled in ExplosionSystem.GridMap.cs
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
         SubscribeLocalEvent<GridStartupEvent>(OnGridStartup);
         SubscribeLocalEvent<ExplosionResistanceComponent, GetExplosionResistanceEvent>(OnGetResistance);
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
+
+        // Handled by ExplosionSystem.Processing.cs
+        SubscribeLocalEvent<MapChangedEvent>(OnMapChanged);
 
         // handled in ExplosionSystemAirtight.cs
         SubscribeLocalEvent<AirtightComponent, DamageChangedEvent>(OnAirtightDamaged);
@@ -118,6 +120,8 @@ public sealed partial class ExplosionSystem : EntitySystem
             (float) totalIntensity,
             explosive.IntensitySlope,
             explosive.MaxIntensity,
+            explosive.TileBreakScale,
+            explosive.MaxTileBreak,
             user);
 
         if (delete)
@@ -184,13 +188,15 @@ public sealed partial class ExplosionSystem : EntitySystem
         float totalIntensity,
         float slope,
         float maxTileIntensity,
+        float tileBreakScale = 1f,
+        int maxTileBreak = int.MaxValue,
         EntityUid? user = null,
         bool addLog = false)
     {
         var pos = Transform(uid).MapPosition;
 
 
-        QueueExplosion(pos, typeId, totalIntensity, slope, maxTileIntensity, addLog: false);
+        QueueExplosion(pos, typeId, totalIntensity, slope, maxTileIntensity, tileBreakScale, maxTileBreak, addLog: false);
 
         if (!addLog)
             return;
@@ -211,6 +217,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         float totalIntensity,
         float slope,
         float maxTileIntensity,
+        float tileBreakScale = 1f,
+        int maxTileBreak = int.MaxValue,
         bool addLog = false)
     {
         if (totalIntensity <= 0 || slope <= 0)
@@ -226,7 +234,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             _logsSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
         
         _explosionQueue.Enqueue(() => SpawnExplosion(epicenter, type, totalIntensity,
-            slope, maxTileIntensity));
+            slope, maxTileIntensity, tileBreakScale, maxTileBreak));
     }
 
     /// <summary>
@@ -238,8 +246,13 @@ public sealed partial class ExplosionSystem : EntitySystem
         ExplosionPrototype type,
         float totalIntensity,
         float slope,
-        float maxTileIntensity)
+        float maxTileIntensity,
+        float tileBreakScale,
+        int maxTileBreak)
     {
+        if (!_mapManager.MapExists(epicenter.MapId))
+            return null;
+
         var results = GetExplosionTiles(epicenter, type.ID, totalIntensity, slope, maxTileIntensity);
 
         if (results == null)
@@ -268,6 +281,8 @@ public sealed partial class ExplosionSystem : EntitySystem
             epicenter,
             spaceMatrix,
             area,
+            tileBreakScale,
+            maxTileBreak,
             EntityManager,
             _mapManager);
     }
@@ -275,7 +290,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <summary>
     ///     Constructor for the shared <see cref="ExplosionEvent"/> using the server-exclusive explosion classes.
     /// </summary>
-    internal ExplosionEvent GetExplosionEvent(MapCoordinates epicenter, string id, Matrix3 spaceMatrix, SpaceExplosion? spaceData, IEnumerable<GridExplosion> gridData, List<float> iterationIntensity)
+    internal ExplosionEvent GetExplosionEvent(MapCoordinates epicenter, string id, Matrix3 spaceMatrix, ExplosionSpaceTileFlood? spaceData, IEnumerable<ExplosionGridTileFlood> gridData, List<float> iterationIntensity)
     {
         var spaceTiles = spaceData?.TileLists;
 
