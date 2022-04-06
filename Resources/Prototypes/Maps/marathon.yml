@@ -7,7 +7,7 @@
     prefixCreator: '14'
   mapPath: /Maps/marathon.yml
   minPlayers: 35
-  maxPlayers: 60
+  maxPlayers: 70
   overflowJobs:
     - Assistant
   availableJobs:
@@ -25,7 +25,7 @@
     StationEngineer: [ 4, 6 ]
     ChiefMedicalOfficer: [ 1, 1 ]
     MedicalDoctor: [ 3, 4 ]
-    Chemist: [ 2, 2 ]
+    Chemist: [ 2, 3 ]
     ResearchDirector: [ 1, 1 ]
     Scientist: [ 3, 4 ]
     HeadOfSecurity: [ 1, 1 ]

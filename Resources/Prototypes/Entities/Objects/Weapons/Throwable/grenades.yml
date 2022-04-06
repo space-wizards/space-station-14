@@ -96,10 +96,9 @@
   - type: Explosive
     explosionType: Default
     # About a 3-3.5 tile radius, strong enough to break reinforced walls near centre.
-    # Currently a big spacing hazzard.
     totalIntensity: 800
     intensitySlope: 15
-    maxIntensity: 45
+    maxTileBreak: 1 # for destroying walls, not spacing the hallway
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic
@@ -114,7 +113,8 @@
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
-
+      countdown_sound:
+        path: /Audio/Effects/countdown.ogg
 - type: entity
   name: the nuclear option
   description: Please don't throw it, think of the children.

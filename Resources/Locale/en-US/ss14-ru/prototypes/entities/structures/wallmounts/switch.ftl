@@ -7,3 +7,6 @@ ent-SignalButton = signal button
 ent-ApcNetSwitch = apc net switch
     .desc = Its a switch for toggling lights that are connected to the same apc.
     .suffix = { "" }
+ent-TwoWayLever = two way lever
+    .desc = A two way lever.
+    .suffix = { "" }

@@ -10,12 +10,12 @@ using Content.Server.Popups;
 using Content.Server.Hands.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Paper;
-using Content.Server.Tools.Components;
 using Content.Server.Power.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
+using Content.Shared.Tools.Components;
 
 namespace Content.Server.Disease
 {

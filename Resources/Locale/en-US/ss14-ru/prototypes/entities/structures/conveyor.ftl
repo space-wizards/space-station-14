@@ -4,6 +4,3 @@ ent-ConveyorBelt = conveyor belt
 ent-ConveyorBeltAssembly = conveyor belt
     .desc = A conveyor belt assembly. Used to construct a conveyor belt.
     .suffix = assembly
-ent-TwoWayLever = two way lever
-    .desc = A two way lever.
-    .suffix = { "" }

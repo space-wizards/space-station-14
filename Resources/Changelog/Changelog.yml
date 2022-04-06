@@ -1,47 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'It has been discovered that plasma and histamine react to create Ultravasculine
-      (patent pending), a new advanced antitoxin.', type: Add}
-  id: 779
-  time: '2021-12-27T12:45:16.0000000+00:00'
-- author: Charlese2
-  changes:
-  - {message: Flashing through walls., type: Fix}
-  id: 780
-  time: '2021-12-27T16:51:12.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixed camera rotation when going across grids., type: Fix}
-  id: 781
-  time: '2021-12-27T17:50:00.0000000+00:00'
-- author: Phantom-Lily
-  changes:
-  - {message: 'Added a new wreck to salvage with many, many instruments.', type: Add}
-  id: 782
-  time: '2021-12-27T18:41:14.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes movement in space., type: Fix}
-  id: 783
-  time: '2021-12-27T20:12:35.788624+00:00'
-- author: Rane
-  changes:
-  - {message: Chaplain no longer spawns with an empty backpack., type: Fix}
-  id: 784
-  time: '2021-12-29T02:48:58.0000000+00:00'
-- author: CrudeWax
-  changes:
-  - {message: Syndiecorp Cybersun invites you to try out their magnum opus- holoparasites!
-      Look for the "Utility" section in your uplink. And ghosts - be on the lookout
-      for a role prompt!, type: Add}
-  id: 785
-  time: '2021-12-29T03:58:49.0000000+00:00'
-- author: Topy
-  changes:
-  - {message: Add rollerbeds to roll people around!, type: Add}
-  id: 786
-  time: '2021-12-29T04:57:21.0000000+00:00'
 - author: Macoron
   changes:
   - {message: 'Added suit sensors and crew monitoring console in code. They are not
@@ -3030,3 +2987,48 @@ Entries:
     type: Fix}
   id: 1278
   time: '2022-04-01T12:16:11.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Ghost roles window now better organized. You can follow ghost role targets
+      before possessing them., type: Tweak}
+  id: 1279
+  time: '2022-04-02T22:06:30.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Seeds properly spawn from extractors and clippers again., type: Fix}
+  id: 1280
+  time: '2022-04-04T01:02:38.0000000+00:00'
+- author: Radosvik
+  changes:
+  - {message: Current Player Count to the Lobby, type: Add}
+  - {message: Nothing, type: Remove}
+  id: 1281
+  time: '2022-04-04T05:39:43.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed the disarm action not working., type: Fix}
+  id: 1282
+  time: '2022-04-04T05:45:27.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: Overhauled machine linking, type: Tweak}
+  id: 1283
+  time: '2022-04-04T06:13:03.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed some interactions with smoke, foam, and the bloodstream that
+      enabled mass smoke/foam production.', type: Fix}
+  id: 1284
+  time: '2022-04-04T16:02:33.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Minibombs beep again., type: Tweak}
+  id: 1285
+  time: '2022-04-05T00:27:36.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'The wide attack (bound to space) now hits people and not just mobs,
+      so you can use it when you don''t think you''ll hit your target with a click.',
+    type: Fix}
+  id: 1286
+  time: '2022-04-06T19:41:47.0000000+00:00'

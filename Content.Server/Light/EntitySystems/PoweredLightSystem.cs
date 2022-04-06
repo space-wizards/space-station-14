@@ -5,6 +5,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.MachineLinking.Events;
+using Content.Server.MachineLinking.Components;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Audio;
@@ -58,6 +59,11 @@ namespace Content.Server.Light.EntitySystems
         private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
         {
             light.LightBulbContainer = light.Owner.EnsureContainer<ContainerSlot>("light_bulb");
+
+            var receiver = EnsureComp<SignalReceiverComponent>(uid);
+            foreach (string port in new[] { "On", "Off", "Toggle" })
+                if (!receiver.Inputs.ContainsKey(port))
+                    receiver.AddPort(port);
         }
 
         private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)
@@ -161,7 +167,7 @@ namespace Content.Server.Light.EntitySystems
                 return null;
 
             // check if light has bulb
-            if (GetBulb(uid, light) is not {Valid: true} bulb)
+            if (GetBulb(uid, light) is not { Valid: true } bulb)
                 return null;
 
             // try to remove bulb from container
@@ -330,16 +336,16 @@ namespace Content.Server.Light.EntitySystems
         {
             switch (args.Port)
             {
-                case "state":
-                    ToggleLight(uid, component);
-                    break;
+                case "On": SetState(uid, true, component); break;
+                case "Off": SetState(uid, false, component); break;
+                case "Toggle": ToggleLight(uid, component); break;
             }
         }
 
         /// <summary>
         /// Turns the light on or of when receiving a <see cref="DeviceNetworkConstants.CmdSetState"/> command.
         /// The light is turned on or of according to the <see cref="DeviceNetworkConstants.StateEnabled"/> value
-         /// </summary>
+        /// </summary>
         private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, PacketSentEvent args)
         {
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
@@ -348,7 +354,7 @@ namespace Content.Server.Light.EntitySystems
             SetState(uid, enabled, component);
         }
 
-        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness=null)
+        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness = null)
         {
             if (!Resolve(uid, ref light))
                 return;

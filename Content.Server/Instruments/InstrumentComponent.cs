@@ -32,3 +32,6 @@ public sealed class InstrumentComponent : SharedInstrumentComponent
 
     [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(InstrumentUiKey.Key);
 }
+
+[RegisterComponent]
+public sealed class ActiveInstrumentComponent : Component {}

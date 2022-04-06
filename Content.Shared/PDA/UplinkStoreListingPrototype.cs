@@ -10,7 +10,7 @@ namespace Content.Shared.PDA
     public sealed class UplinkStoreListingPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("itemId", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
