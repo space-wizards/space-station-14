@@ -35,6 +35,8 @@
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
   - type: Ringer
+  - type: ActivatableUI
+    key: enum.PDAUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
@@ -45,6 +47,8 @@
       type: RingerBoundUserInterface
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
+    - key: enum.HealthAnalyzerUiKey.Key
+      type: HealthAnalyzerBoundUserInterface
   - type: PDA
     penSlot:
       startingItem: Pen
@@ -355,7 +359,7 @@
   parent: BasePDA
   id: CMOPDA
   name: chief medical officer PDA
-  description: Extraordinarily shiny and sterile.
+  description: Extraordinarily shiny and sterile. Has a built-in health analyzer.
   components:
   - type: PDA
     id: CMOIDCard
@@ -365,12 +369,14 @@
         state: pda-cmo
   - type: Icon
     state: pda-cmo
+  - type: HealthAnalyzer
+    scanDelay: 1
 
 - type: entity
   parent: BasePDA
   id: MedicalPDA
   name: medical PDA
-  description: Shiny and sterile.
+  description: Shiny and sterile. Has a built-in health analyzer.
   components:
   - type: PDA
     id: MedicalIDCard
@@ -380,6 +386,8 @@
         state: pda-medical
   - type: Icon
     state: pda-medical
+  - type: HealthAnalyzer
+    scanDelay: 1.2
 
 - type: entity
   parent: BasePDA

@@ -24,9 +24,7 @@
     - state: door_remotescreencolour
       color: "#9f9f00"
   - type: Access
-    tags: 
-    - Captain
-    - HeadOfPersonnel
+    groups:
     - Command
 
 - type: entity
@@ -42,10 +40,8 @@
     - state: door_remotescreencolour
       color: "#830000"
   - type: Access
-    tags:
-    - HeadOfSecurity
+    groups:
     - Security
-    - Armory
 
 - type: entity
   parent: DoorRemoteDefault
@@ -60,14 +56,8 @@
     - state: door_remotescreencolour
       color: "#3a7231"
   - type: Access
-    tags:
-    - HeadOfPersonnel
+    groups:
     - Service
-    - Bar
-    - Janitor
-    - Theatre
-    - Kitchen
-    - Hydroponics
 
 - type: entity
   parent: DoorRemoteDefault
@@ -82,8 +72,7 @@
     - state: door_remotescreencolour
       color: "#652368"
   - type: Access
-    tags:
-    - ResearchDirector
+    groups:
     - Research
 
 - type: entity
@@ -99,10 +88,8 @@
     - state: door_remotescreencolour
       color: "#5b4523"
   - type: Access
-    tags:
+    groups:
     - Cargo
-    - Quartermaster
-    - Salvage
 
 - type: entity
   parent: DoorRemoteDefault
@@ -117,9 +104,8 @@
     - state: door_remotescreencolour
       color: "#325f7a"
   - type: Access
-    tags:
+    groups:
     - Medical
-    - ChiefMedicalOfficer
 
 - type: entity
   parent: DoorRemoteDefault
@@ -134,6 +120,5 @@
     - state: door_remotescreencolour
       color: "#bc5b00"
   - type: Access
-    tags:
-    - ChiefEngineer
+    groups:
     - Engineering

@@ -12,30 +12,29 @@ namespace Content.Shared.Decals
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;
-        [Dependency] protected readonly SharedTransformSystem Transforms = default!;
 
         protected readonly Dictionary<GridId, Dictionary<uint, Vector2i>> ChunkIndex = new();
 
         public const int ChunkSize = 32;
         public static Vector2i GetChunkIndices(Vector2 coordinates) => new ((int) Math.Floor(coordinates.X / ChunkSize), (int) Math.Floor(coordinates.Y / ChunkSize));
 
-        private float _viewSize;
+        private Vector2 _viewSize;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
-            _configurationManager.OnValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged, true);
+            _configurationManager.OnValueChanged(CVars.NetDefaultUpdateRange, OnPvsRangeChanged, true);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
-            _configurationManager.UnsubValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged);
+            _configurationManager.UnsubValueChanged(CVars.NetDefaultUpdateRange, OnPvsRangeChanged);
         }
 
-        private void OnPvsRangeChanged(float obj)
+        private void OnPvsRangeChanged(Vector2 obj)
         {
             _viewSize = obj * 2f;
         }
@@ -84,39 +83,12 @@ namespace Content.Shared.Decals
 
         protected virtual bool RemoveDecalHook(GridId gridId, uint uid) => true;
 
-        private (Box2 view, MapId mapId) CalcViewBounds(in EntityUid euid)
+        protected (Box2 view, MapId mapId) CalcViewBounds(in EntityUid euid, TransformComponent xform)
         {
-            var xform = EntityManager.GetComponent<TransformComponent>(euid);
-
             var view = Box2.UnitCentered.Scale(_viewSize).Translated(xform.WorldPosition);
             var map = xform.MapID;
 
             return (view, map);
-        }
-
-        protected Dictionary<GridId, HashSet<Vector2i>> GetChunksForViewers(HashSet<EntityUid> viewers)
-        {
-            var chunks = new Dictionary<GridId, HashSet<Vector2i>>();
-            var xformQuery = GetEntityQuery<TransformComponent>();
-
-            foreach (var viewerUid in viewers)
-            {
-                var (bounds, mapId) = CalcViewBounds(viewerUid);
-
-                foreach (var grid in MapManager.FindGridsIntersecting(mapId, bounds))
-                {
-                    if (!chunks.ContainsKey(grid.Index))
-                        chunks[grid.Index] = new HashSet<Vector2i>();
-
-                    var enumerator = new ChunkIndicesEnumerator(Transforms.GetInvWorldMatrix(grid.GridEntityId, xformQuery).TransformBox(bounds), ChunkSize);
-
-                    while (enumerator.MoveNext(out var indices))
-                    {
-                        chunks[grid.Index].Add(indices.Value);
-                    }
-                }
-            }
-            return chunks;
         }
     }
 

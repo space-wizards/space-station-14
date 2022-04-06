@@ -98,6 +98,8 @@
     - Syringe
     - ReagentGrinderMachineCircuitboard
     - PillCanister
+    - TimerTrigger
+    - ChemicalPayload
 
 - type: technology
   name: "medical machinery"

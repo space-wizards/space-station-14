@@ -99,7 +99,7 @@ namespace Content.Server.Body.Systems
             if (!Resolve(uid, ref body, false))
                 return;
 
-            var organs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body).ToArray();
+            var organs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body);
 
             // Inhale gas
             var ev = new InhaleLocationEvent();
@@ -114,8 +114,8 @@ namespace Content.Server.Body.Systems
             var ratio = (Atmospherics.BreathVolume / ev.Gas.Volume);
             var actualGas = ev.Gas.RemoveRatio(ratio);
 
-            var lungRatio = 1.0f / organs.Length;
-            var gas = organs.Length == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
+            var lungRatio = 1.0f / organs.Count;
+            var gas = organs.Count == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
             foreach (var (lung, _) in organs)
             {
                 // Merge doesn't remove gas from the giver.

@@ -1,15 +1,12 @@
-using System;
 using System.Linq;
 using Content.Server.Stunnable;
 using Content.Server.UserInterface;
 using Content.Shared.Instruments;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Instruments;
 
@@ -18,6 +15,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
     public override void Initialize()
     {
@@ -29,7 +27,8 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         SubscribeNetworkEvent<InstrumentStartMidiEvent>(OnMidiStart);
         SubscribeNetworkEvent<InstrumentStopMidiEvent>(OnMidiStop);
 
-        SubscribeLocalEvent<InstrumentComponent, ActivatableUIPlayerChangedEvent>(InstrumentNeedsClean);
+        SubscribeLocalEvent<InstrumentComponent, BoundUIClosedEvent>(OnBoundUIClosed);
+        SubscribeLocalEvent<InstrumentComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
     }
 
     private void OnMidiStart(InstrumentStartMidiEvent msg, EntitySessionEventArgs args)
@@ -66,6 +65,30 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         ShutdownCVars();
     }
 
+    private void OnBoundUIClosed(EntityUid uid, InstrumentComponent component, BoundUIClosedEvent args)
+    {
+        if (args.UiKey is not InstrumentUiKey)
+            return;
+
+        if (HasComp<ActiveInstrumentComponent>(uid)
+            && _userInterfaceSystem.TryGetUi(uid, args.UiKey, out var bui)
+            && bui.SubscribedSessions.Count == 0)
+        {
+            RemComp<ActiveInstrumentComponent>(uid);
+        }
+
+        Clean(uid, component);
+    }
+
+    private void OnBoundUIOpened(EntityUid uid, InstrumentComponent component, BoundUIOpenedEvent args)
+    {
+        if (args.UiKey is not InstrumentUiKey)
+            return;
+        
+        EnsureComp<ActiveInstrumentComponent>(uid);
+        Clean(uid, component);
+    }
+
     public void Clean(EntityUid uid, InstrumentComponent? instrument = null)
     {
         if (!Resolve(uid, ref instrument))
@@ -81,11 +104,6 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         instrument.BatchesDropped = 0;
         instrument.LaggedBatches = 0;
         instrument.Dirty();
-    }
-
-    private void InstrumentNeedsClean(EntityUid uid, InstrumentComponent component, ActivatableUIPlayerChangedEvent ev)
-    {
-        Clean(uid, component);
     }
 
     private void OnMidiEventRx(InstrumentMidiEventEvent msg, EntitySessionEventArgs args)
@@ -148,15 +166,15 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     {
         base.Update(frameTime);
 
-        foreach (var instrument in EntityManager.EntityQuery<InstrumentComponent>(true))
+        foreach (var (_, instrument) in EntityManager.EntityQuery<ActiveInstrumentComponent, InstrumentComponent>(true))
         {
             if (instrument.DirtyRenderer)
             {
-                instrument.Dirty();
+                Dirty(instrument);
                 instrument.DirtyRenderer = false;
             }
 
-            if (instrument.RespectMidiLimits && instrument.InstrumentPlayer != null &&
+            if (instrument.RespectMidiLimits &&
                 (instrument.BatchesDropped >= MaxMidiBatchesDropped
                  || instrument.LaggedBatches >= MaxMidiLaggedBatches))
             {

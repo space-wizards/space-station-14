@@ -18,10 +18,10 @@
   - type: OnUseTimerTrigger
     delay: 3.5
   - type: Explosive
-    devastationRange: 0
-    heavyImpactRange: 2
-    lightImpactRange: 4
-    flashRange: 7
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 120 # about a ~4 tile radius
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic
@@ -58,7 +58,7 @@
     delay: 3.5
   - type: FlashOnTrigger
     range: 7
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
   - type: DeleteOnTrigger
@@ -94,10 +94,11 @@
   - type: OnUseTimerTrigger
     delay: 5
   - type: Explosive
-    devastationRange: 1
-    heavyImpactRange: 3
-    lightImpactRange: 5
-    flashRange: 10
+    explosionType: Default
+    # About a 3-3.5 tile radius, strong enough to break reinforced walls near centre.
+    totalIntensity: 800
+    intensitySlope: 15
+    maxTileBreak: 1 # for destroying walls, not spacing the hallway
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic
@@ -112,7 +113,8 @@
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
-
+      countdown_sound:
+        path: /Audio/Effects/countdown.ogg
 - type: entity
   name: the nuclear option
   description: Please don't throw it, think of the children.
@@ -129,9 +131,10 @@
   - type: OnUseTimerTrigger
     delay: 5
   - type: Explosive
-    devastationRange: 25
-    heavyImpactRange: 25
-    flashRange: 50
+    explosionType: Default
+    totalIntensity: 20000 # ~15 tile radius.
+    intensitySlope: 5
+    maxIntensity: 50
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic
@@ -148,3 +151,36 @@
     - type: TimerTriggerVisualizer
       countdown_sound:
         path: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: modular grenade
+  description: A grenade casing. Requires a trigger and a payload.
+  parent: BaseItem
+  id: ModularGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/modular.rsi
+    state: empty
+  - type: Item
+    size: 8
+  - type: PayloadCase
+  - type: Construction
+    graph: ModularGrenadeGraph
+    node: emptyCase
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Appearance
+    visuals:
+    - type: GenericEnumVisualizer
+      key: enum.Trigger.TriggerVisuals.VisualState
+      states:
+        enum.Trigger.TriggerVisualState.Primed: primed
+        enum.Trigger.TriggerVisualState.Unprimed: complete

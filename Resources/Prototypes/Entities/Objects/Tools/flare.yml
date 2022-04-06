@@ -13,7 +13,7 @@
   - type: ExpendableLight
     spentName: spent flare
     spentDesc: It looks like this flare has burnt out. What a bummer.
-    glowDuration: 45
+    glowDuration: 165
     fadeOutDuration: 15
     iconStateOn: flare_unlit
     iconStateSpent: flare_spent

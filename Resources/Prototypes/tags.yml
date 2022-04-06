@@ -167,7 +167,7 @@
 
 - type: Tag
   id: HidesHair # for headwear.
-  
+
 - type: Tag
   id: Hoe
 
@@ -211,14 +211,14 @@
   id: NoSpinOnThrow
 
 - type: Tag
-  id: NukeDisk
-
-- type: Tag
   id: Ointment
 
 - type: Tag
   id: Ore
 
+- type: Tag
+  id: Payload # for grenade/bomb crafting
+  
 - type: Tag
   id: PercussionInstrument
 

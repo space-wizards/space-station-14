@@ -1,9 +1,8 @@
 - type: entity
   parent: BaseItem
   id: SeedBase
-  abstract: true
+  noSpawn: true
   components:
-    - type: Seed
     - type: SolutionContainerManager
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/seeds.rsi

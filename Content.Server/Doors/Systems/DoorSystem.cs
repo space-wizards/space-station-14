@@ -4,7 +4,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Tools;
-using Content.Server.Tools.Components;
 using Content.Server.Doors.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -18,7 +17,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
+using Content.Shared.Hands.Components;
 using System.Linq;
+using Content.Shared.Tools.Components;
 
 namespace Content.Server.Doors.Systems;
 
@@ -288,17 +289,34 @@ public sealed class DoorSystem : SharedDoorSystem
         if(!container.Insert(board))
             Logger.Warning($"Couldn't insert board {ToPrettyString(board)} into door {ToPrettyString(uid)}!");
     }
+
     private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
     {
         if(TryComp<AirlockComponent>(uid, out var airlockComponent))
         {
             if (door.State == DoorState.Closed)
             {
-                StartOpening(uid);
-                airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
+                SetState(uid, DoorState.Emagging, door);
+                PlaySound(uid, door.SparkSound.GetSound(), AudioParams.Default.WithVolume(8), args.UserUid, false);
                 args.Handled = true;
             }
         }
+    }
+
+    public override void StartOpening(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
+    {
+        if (!Resolve(uid, ref door))
+            return;
+
+        DoorState lastState = door.State;
+
+        SetState(uid, DoorState.Opening, door);
+
+        if (door.OpenSound != null)
+            PlaySound(uid, door.OpenSound.GetSound(), AudioParams.Default.WithVolume(-5), user, predicted);
+
+        if(lastState == DoorState.Emagging && TryComp<AirlockComponent>(door.Owner, out var airlockComponent))
+            airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
     }
 }
 

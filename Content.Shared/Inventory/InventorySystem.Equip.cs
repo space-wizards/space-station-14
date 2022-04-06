@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
@@ -21,6 +22,7 @@ public abstract partial class InventorySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private void InitializeEquip()
@@ -52,7 +54,7 @@ public abstract partial class InventorySystem
                 if (!TryEquip(args.User, uid, slotDef.Name, true, inventory: inv))
                     continue;
 
-                hands.PutInHandOrDrop(slotEntity.Value);
+                _handsSystem.PickupOrDrop(args.User, slotEntity.Value);
             }
             else
             {
@@ -82,9 +84,6 @@ public abstract partial class InventorySystem
         if(!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
            return;
 
-        // un-rotate entities. needed for things like directional flashlights on hardsuit helmets
-        Transform(args.Entity).LocalRotation = 0;
-
         var equippedEvent = new DidEquipEvent(uid, args.Entity, slotDef);
         RaiseLocalEvent(uid, equippedEvent);
 
@@ -104,22 +103,22 @@ public abstract partial class InventorySystem
         if (!TryComp(actor, out InventoryComponent? inventory) || !TryComp<SharedHandsComponent>(actor, out var hands))
             return;
 
-        hands.TryGetActiveHeldEntity(out var held);
+        var held = hands.ActiveHandEntity;
         TryGetSlotEntity(actor, ev.Slot, out var itemUid, inventory);
 
         // attempt to perform some interaction
         if (held != null && itemUid != null)
         {
             _interactionSystem.InteractUsing(actor, held.Value, itemUid.Value,
-                new EntityCoordinates(), predicted: true);
+                new EntityCoordinates());
             return;
         }
 
         // un-equip to hands
         if (itemUid != null)
         {
-            if (hands.CanPickupEntityToActiveHand(itemUid.Value) && TryUnequip(actor, ev.Slot, inventory: inventory))
-                hands.PutInHand(itemUid.Value, false);
+            if (_handsSystem.CanPickupAnyHand(actor, itemUid.Value, handsComp: hands) && TryUnequip(actor, ev.Slot, inventory: inventory))
+                _handsSystem.TryPickup(actor, itemUid.Value, checkActionBlocker: false, handsComp: hands);
             return;
         }
 
@@ -135,7 +134,7 @@ public abstract partial class InventorySystem
             return;
         }
 
-        if (hands.TryDropNoInteraction())
+        if (_handsSystem.TryDrop(actor, hands.ActiveHand!, doDropInteraction: false, handsComp: hands))
             TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory);
         }
 
