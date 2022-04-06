@@ -35,7 +35,7 @@ namespace Content.Server.Singularity.Components
 
                 int level = _energy switch
                 {
-                    >= 1500 when Scrung => 6,
+                    >= 1500 when CanLevelSix => 6,
                     >= 1000 => 5,
                     >= 600 => 4,
                     >= 300 => 3,
@@ -62,7 +62,11 @@ namespace Content.Server.Singularity.Components
             };
 
         public float MoveAccumulator;
-        public bool Scrung = false;
+
+        /// <summary>
+        ///     whether or not the singularity has eaten a supermatter
+        /// </summary>
+        public bool CanLevelSix = false;
 
         // This is an interesting little workaround.
         // See, two singularities queuing deletion of each other at the same time will annihilate.

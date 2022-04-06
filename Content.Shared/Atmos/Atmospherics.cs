@@ -308,28 +308,29 @@ namespace Content.Shared.Atmos
 
 
 
+        // Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
         /// <summary>
-        ///     Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
+        ///     if you pump the rock full of plasma its gonna melt, simple as
         /// </summary>
         public const float PlasmaHeatPenalty = 15f;
 
         /// <summary>
-        ///
+        ///     Oxy just makes it a little hot
         /// </summary>
         public const float OxygenHeatPenalty = 1f;
 
         /// <summary>
-        ///
+        ///     spice gas for the spice rock
         /// </summary>
         public const float TritiumHeatPenalty = 10f;
 
         /// <summary>
-        ///
+        ///     honestly have no idea why its 0.1 and not 0
         /// </summary>
         public const float CO2HeatPenalty = 0.1f;
 
         /// <summary>
-        ///
+        ///     keeps the spice rock cool
         /// </summary>
         public const float NitrogenHeatPenalty = -1.5f;
 
@@ -343,7 +344,6 @@ namespace Content.Shared.Atmos
         //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
         //Keep the negative values here above -10 and we won't get negative rads
         //Higher == Bigger bonus to power generation.
-
         /// <summary>
         ///
         /// </summary>
@@ -370,9 +370,10 @@ namespace Content.Shared.Atmos
         public const float WaterTransmitModifier = 2f;
 
         /// <summary>
-        ///     The SpiceGas makes the Spicerock spicy
+        ///     The Spice Gas makes the Spice rock spicy
         /// </summary>
         public const float TritiumTransmitModifier = 30f;
+
 
 
         /// <summary>

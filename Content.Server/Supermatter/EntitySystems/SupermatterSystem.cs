@@ -5,14 +5,8 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Content.Server.Supermatter.Components;
-using Content.Shared.Body.Components;
-using Content.Server.Ghost.Components;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Content.Shared.SubFloor;
 using Content.Shared.Damage;
-using Content.Shared.Item;
 using Content.Shared.Tag;
 using Content.Server.Projectiles.Components;
 using Content.Server.Explosion.EntitySystems;
@@ -44,22 +38,23 @@ namespace Content.Server.Supermatter.EntitySystems
 
             SubscribeLocalEvent<SupermatterComponent, StartCollideEvent>(OnCollideEvent);
         }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
             foreach (var (Supermatter, damageable, Xform) in EntityManager.EntityQuery<SupermatterComponent, DamageableComponent, TransformComponent>())
             {
-                HandleBehavior(Supermatter.Owner, frameTime, Supermatter, damageable, Xform);
+                HandleBehavior(Supermatter.OwnerUid, frameTime, Supermatter);
             }
         }
 
         /// <summary>
         /// Handle outputting radiation based off enery, damage, and gas mix
         /// </summary>
-        public void HandleRads(EntityUid Uid, float frameTime, SupermatterComponent? SMcomponent = null, TransformComponent? Xform = null)
+        public void HandleRads(EntityUid Uid, float frameTime, SupermatterComponent? SMcomponent = null, TransformComponent? Xform = null, RadiationPulseComponent? rad = null)
         {
-            if (!Resolve(Uid, ref SMcomponent, ref Xform))
+            if(!Resolve(Uid, ref SMcomponent, ref Xform, ref rad))
             {
                 return;
             }
@@ -146,10 +141,11 @@ namespace Content.Server.Supermatter.EntitySystems
                     }
 
                     //power is set for radiation
-                    SMcomponent.Power = Math.Max(((temp * TempFactor / Atmospherics.T0C) * SMcomponent.GasmixPowerRatio) + SMcomponent.Power, 0);
+                    SMcomponent.Power = Math.Max((((temp * TempFactor) / Atmospherics.T0C) * SMcomponent.GasmixPowerRatio) + SMcomponent.Power, 0);
 
                     //more math to actually calculate radiation output
-                    _radiationSystem.Radiate(SMcomponent.Power * Math.Max(0f, (1f + (SMcomponent.PowerTransmissionBonus/10f))), 10f, SMcomponent, frameTime);
+                    rad.RadsPerSecond = SMcomponent.Power * Math.Max(0f, (1f + (SMcomponent.PowerTransmissionBonus/10f)));
+                    //_radiationSystem.Radiate(SMcomponent.Power * Math.Max(0f, (1f + (SMcomponent.PowerTransmissionBonus/10f))), 10f, SMcomponent, frameTime);
 
                     //TODO: PsyCoeff should change from 0-1 based on psycologist distance
                     float energy = SMcomponent.Power * SupermatterComponent.ReactionPowerModefier * (1f - (SMcomponent.PsyCoeff * 0.2f));
@@ -198,41 +194,41 @@ namespace Content.Server.Supermatter.EntitySystems
 
             SMcomponent.DamageUpdateAccumulator += frameTime;
 
-            float damage = 0;
-
-            SMcomponent.DamageArchived = damageable.TotalDamage.Float();
-
-            //gets the integrity to two decimal places
-            var integrity = (100 - (100 * (damageable.TotalDamage.Float() / SupermatterComponent.ExplosionPoint)));
-
-            if (SMcomponent.DamageArchived >= SupermatterComponent.ExplosionPoint)
-            {
-                Delamination(Uid, frameTime, SMcomponent, Xform);
-                return;
-            }
-
-            if (SMcomponent.DamageArchived <= SupermatterComponent.ExplosionPoint)
-            {
-                SMcomponent.YellAccumulator += frameTime;
-                if (SMcomponent.YellAccumulator >= SupermatterComponent.YellTimer)
-                {
-                    if (SMcomponent.DamageArchived >= SupermatterComponent.EmergencyPoint && SMcomponent.DamageArchived <= SupermatterComponent.ExplosionPoint)
-                    {
-                        _chatManager.DispatchStationAnnouncement(Loc.GetString("supermatter-warning-message", ("integrity", integrity.ToString("0.00"))), "Supermatter", false);
-                        SMcomponent.YellAccumulator = 0;
-                    }
-                    if (SMcomponent.DamageArchived >= SupermatterComponent.WarningPoint && SMcomponent.DamageArchived <= SupermatterComponent.EmergencyPoint)
-                    {
-                        _chatManager.EntitySay(SMcomponent.Owner, Loc.GetString("supermatter-danger-message", ("integrity", integrity.ToString("0.00"))));
-                        SMcomponent.YellAccumulator = 0;
-                    }
-
-                }
-            }
-
             if (SMcomponent.DamageUpdateAccumulator > SupermatterComponent.DamageUpdateTimer)
             {
                 SMcomponent.DamageUpdateAccumulator -= SupermatterComponent.DamageUpdateTimer;
+
+                float damage = 0;
+
+                SMcomponent.DamageArchived = damageable.TotalDamage.Float();
+
+                //gets the integrity as a percentage
+                var integrity = (100 - (100 * (damageable.TotalDamage.Float() / SupermatterComponent.ExplosionPoint)));
+
+                if (SMcomponent.DamageArchived >= SupermatterComponent.ExplosionPoint)
+                {
+                    Delamination(Uid, frameTime, SMcomponent, Xform);
+                    return;
+                }
+                else
+                {
+                    SMcomponent.YellAccumulator += frameTime;
+                    if (SMcomponent.YellAccumulator >= SupermatterComponent.YellTimer)
+                    {
+                        if (SMcomponent.DamageArchived >= SupermatterComponent.EmergencyPoint && SMcomponent.DamageArchived <= SupermatterComponent.ExplosionPoint)
+                        {
+                            _chatManager.DispatchStationAnnouncement(Loc.GetString("supermatter-warning-message", ("integrity", integrity.ToString("0.00"))), "Supermatter", false);
+                            SMcomponent.YellAccumulator = 0;
+                        }
+                        if (SMcomponent.DamageArchived >= SupermatterComponent.WarningPoint && SMcomponent.DamageArchived <= SupermatterComponent.EmergencyPoint)
+                        {
+                            _chatManager.EntitySay(SMcomponent.Owner, Loc.GetString("supermatter-danger-message", ("integrity", integrity.ToString("0.00"))));
+                            SMcomponent.YellAccumulator = 0;
+                        }
+
+                    }
+                }
+
                 //if in space
                 if (!Xform.GridID.IsValid())
                 {
@@ -265,20 +261,23 @@ namespace Content.Server.Supermatter.EntitySystems
                     }
 
                     //if there are space tiles next to SM
+                    //TODO: change moles out for checking if adjacent tiles exist
                     foreach(var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(Xform.Coordinates))
                     {
                         if (adjacent.TotalMoles == 0)
                         {
-                            if (integrity < 90)
-                                damage = Math.Clamp((SMcomponent.Power * 0.0005f) * SupermatterComponent.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
-                            else if (integrity < 75)
-                                damage = Math.Clamp((SMcomponent.Power * 0.0009f) * SupermatterComponent.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
-                            else if (integrity < 55)
-                                damage = Math.Clamp((SMcomponent.Power * 0.005f) * SupermatterComponent.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
-                            else if (integrity < 25)
-                                damage = Math.Clamp((SMcomponent.Power * 0.002f) * SupermatterComponent.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
-                            else
-                                break;
+                            float factor;
+
+                            factor = integrity switch
+                            {
+                                (<= 25) => 0.002f,
+                                (<= 55) and (> 25) => 0.005f,
+                                (<= 75) and (> 55) => 0.0009f,
+                                (<= 90) and (> 75) => 0.0005f,
+                                _ => 0,
+                            };
+
+                            damage = Math.Clamp((SMcomponent.Power * factor) * SupermatterComponent.DamageIncreaseMultiplier, 0f, SupermatterComponent.MaxSpaceExposureDamage);
                         }
                     }
                 }
@@ -411,7 +410,7 @@ namespace Content.Server.Supermatter.EntitySystems
         /// <summary>
         /// Handle getting entities in range and calling behavior
         /// </summary>
-        public void HandleBehavior(EntityUid SMUid, float FrameTime, SupermatterComponent? SMcomponent = null, DamageableComponent? damageable = null, TransformComponent? Xform = null)
+        public void HandleBehavior(EntityUid SMUid, float FrameTime, SupermatterComponent? SMcomponent = null)
         {
             if (!Resolve(SMUid, ref SMcomponent, ref damageable, ref Xform))
             {

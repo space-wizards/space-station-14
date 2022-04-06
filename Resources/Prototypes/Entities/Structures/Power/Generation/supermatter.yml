@@ -10,6 +10,10 @@
         components:
           - Body
           - Item
+    - type: RadiationPulse
+      range: 15
+      decay: false
+      dps: 0
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Glass

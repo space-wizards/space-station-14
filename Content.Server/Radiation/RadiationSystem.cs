@@ -23,7 +23,6 @@ namespace Content.Server.Radiation
         [Dependency] private readonly IEntityLookup _lookup = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [ComponentDependency] private readonly BatteryComponent? _batteryComponent = default!;
 
         private const float RadiationCooldown = 0.5f;
         private float _accumulator;

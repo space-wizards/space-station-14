@@ -15,10 +15,6 @@ namespace Content.Server.Supermatter.Components
     {
         public override string Name => "Supermatter";
 
-        //TODO: clean all this up more
-        //i've yet to see another component need so many variables and im not even using most of them
-        //the gas constants like HeatPenalty are supermatter specific and shouldnt be used elsewhere
-
         [DataField("whitelist")]
         public EntityWhitelist Whitelist = new();
 
@@ -27,6 +23,8 @@ namespace Content.Server.Supermatter.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public Atmos.GasMixture? Mix {get; set;}
+
+        //---------------------------------------------------------------------------------------\\
 
         [ViewVariables(VVAccess.ReadOnly)]
         public float GasmixPowerRatio {get; set;} = 0;
@@ -41,23 +39,16 @@ namespace Content.Server.Supermatter.Components
 
         public float PowerlossInhibitor {get; set;} = 0;
 
-        //The damage we had before this cycle. Used to limit the damage we can take each cycle, and for safealert
-        public float DamageArchived {get; set;} = 0;
-
         //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled
         public float  MoleHeatPenalty {get; set;} = 0f;
 
-        //we yell if over 50 damage every YellTimer Seconds
-        public const float YellTimer = 60f;
-
-        //set to YellTimer at first so it doesnt yell a minute after being hit
-        public float YellAccumulator {get; set;} = YellTimer;
+        //---------------------------------------------------------------------------------------\\
 
         //TODO: PsyCoeff should change from 0-1 based on psycologist distance
         public float PsyCoeff = 0;
 
-        //Are we exploding?
-        private bool finalcountdown = false;
+        //The damage we had before this cycle. Used to limit the damage we can take each cycle, and for safealert
+        public float DamageArchived {get; set;} = 0;
 
         //The point at which we should start sending messeges about the damage to the engi channels.
         public const float WarningPoint = 50;
@@ -76,6 +67,13 @@ namespace Content.Server.Supermatter.Components
 
         //---------------------------------------------------------------------------------------\\
 
+        //we yell if over 50 damage every YellTimer Seconds
+        public const float YellTimer = 60f;
+
+        //set to YellTimer at first so it doesnt yell a minute after being hit
+        public float YellAccumulator {get; set;} = YellTimer;
+
+        //it's the final countdown
         public bool FinalCountdown {get; set;} = false;
 
         public float DamageUpdateAccumulator {get; set;}
@@ -86,6 +84,8 @@ namespace Content.Server.Supermatter.Components
         public const int DelamTimerTimer = 30;
         public float SpeakAccumulator {get; set;} = 5f;
         public bool AlarmPlaying = false;
+        public float AtmosUpdateAccumulator {get; set;} = 0;
+        public const float AtmosUpdateTimer = 0.5f;
 
         public float AtmosUpdateAccumulator {get; set;}
         //update atmos every half second
