@@ -8,13 +8,15 @@
     sprite: Clothing/OuterClothing/Suits/bombsuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/bombsuit.rsi
-  - type: Armor
+  - type: Armor #explosion damage ignores "normal" armor, see ExplosionResistance.
     modifiers:
       coefficients:
-        Blunt: 0.2 #big blast protection, a little protection from heat, negligable cushioning from other damage cos its thick
+        Blunt: 0.5
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.75
+  - type: ExplosionResistance
+    resistance: 0.65 # +0.25 from helmet -> 90%
 
 - type: entity
   parent: ClothingOuterBase

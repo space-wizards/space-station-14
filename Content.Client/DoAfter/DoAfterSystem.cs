@@ -175,9 +175,7 @@ namespace Content.Client.DoAfter
         ///     Mark a DoAfter as cancelled and show a cancellation graphic.
         /// </summary>
         ///     Actual removal is handled by DoAfterEntitySystem.
-        /// <param name="id"></param>
-        /// <param name="currentTime"></param>
-        public void Cancel(DoAfterComponent component, byte id, TimeSpan? currentTime = null)
+        public void Cancel(DoAfterComponent component, byte id)
         {
             foreach (var (_, cancelled) in component.CancelledDoAfters)
             {
@@ -204,7 +202,7 @@ namespace Content.Client.DoAfter
                 return;
 
             // ReSharper disable once ConvertToLocalFunction
-            var predicate = (EntityUid uid, (EntityUid compOwner, EntityUid? attachedEntity) data)
+            var predicate = static (EntityUid uid, (EntityUid compOwner, EntityUid? attachedEntity) data)
                 => uid == data.compOwner || uid == data.attachedEntity;
 
             var viewbox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
@@ -213,7 +211,7 @@ namespace Content.Client.DoAfter
 
             foreach (var (comp, xform) in EntityManager.EntityQuery<DoAfterComponent, TransformComponent>(true))
             {
-                var doAfters = comp.DoAfters.ToList();
+                var doAfters = comp.DoAfters;
                 var compPos = xform.MapPosition;
 
                 if (doAfters.Count == 0 ||
@@ -239,6 +237,7 @@ namespace Content.Client.DoAfter
                 Enable(comp);
 
                 var userGrid = xform.Coordinates;
+                var toRemove = new RemQueue<ClientDoAfter>();
 
                 // Check cancellations / finishes
                 foreach (var (id, doAfter) in doAfters)
@@ -248,7 +247,7 @@ namespace Content.Client.DoAfter
                     // If we've passed the final time (after the excess to show completion graphic) then remove.
                     if (elapsedTime > doAfter.Delay + ExcessTime)
                     {
-                        Remove(comp, doAfter);
+                        toRemove.Add(doAfter);
                         continue;
                     }
 
@@ -261,7 +260,7 @@ namespace Content.Client.DoAfter
                     {
                         if (!userGrid.InRange(EntityManager, doAfter.UserGrid, doAfter.MovementThreshold))
                         {
-                            Cancel(comp, id, currentTime);
+                            Cancel(comp, id);
                             continue;
                         }
                     }
@@ -272,10 +271,15 @@ namespace Content.Client.DoAfter
                             !Transform(doAfter.Target.Value).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
                                 doAfter.MovementThreshold))
                         {
-                            Cancel(comp, id, currentTime);
+                            Cancel(comp, id);
                             continue;
                         }
                     }
+                }
+
+                foreach (var doAfter in toRemove)
+                {
+                    Remove(comp, doAfter);
                 }
 
                 var count = comp.CancelledDoAfters.Count;

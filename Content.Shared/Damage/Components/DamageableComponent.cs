@@ -25,7 +25,7 @@ namespace Content.Shared.Damage
     [RegisterComponent]
     [NetworkedComponent()]
     [Friend(typeof(DamageableSystem))]
-    public sealed class DamageableComponent : Component, IRadiationAct, IExAct
+    public sealed class DamageableComponent : Component, IRadiationAct
     {
         /// <summary>
         ///     This <see cref="DamageContainerPrototype"/> specifies what damage types are supported by this component.
@@ -86,27 +86,6 @@ namespace Content.Shared.Damage
             // Radiation should really just be a damage group instead of a list of types.
             DamageSpecifier damage = new();
             foreach (var typeID in RadiationDamageTypeIDs)
-            {
-                damage.DamageDict.Add(typeID, damageValue);
-            }
-
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, damage);
-        }
-
-        // TODO EXPLOSION Remove this.
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
-        {
-            var damageValue = eventArgs.Severity switch
-            {
-                ExplosionSeverity.Light => FixedPoint2.New(20),
-                ExplosionSeverity.Heavy => FixedPoint2.New(60),
-                ExplosionSeverity.Destruction => FixedPoint2.New(250),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-
-            // Explosion should really just be a damage group instead of a list of types.
-            DamageSpecifier damage = new();
-            foreach (var typeID in ExplosionDamageTypeIDs)
             {
                 damage.DamageDict.Add(typeID, damageValue);
             }

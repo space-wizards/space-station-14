@@ -44,7 +44,7 @@ namespace Content.Tests.Shared
             _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             _prototypeManager.Initialize();
             _prototypeManager.LoadString(_damagePrototypes);
-            _prototypeManager.Resync();
+            _prototypeManager.ResolveResults();
 
             // Create a damage data set
             _damageSpec = new(_prototypeManager.Index<DamageGroupPrototype>("Brute"), 6);

@@ -1,7 +1,7 @@
 - type: entity
   name: red laser
   id: RedLaser
-  abstract: true
+  noSpawn: true
   components:
   - type: Hitscan
     damage:
@@ -14,7 +14,7 @@
 - type: entity
   name: pulse
   id: Pulse
-  abstract: true
+  noSpawn: true
   components:
   - type: Hitscan
     damage:
@@ -27,7 +27,7 @@
 - type: entity
   name: red heavy laser
   id: RedHeavyLaser
-  abstract: true
+  noSpawn: true
   components:
   - type: Hitscan
     spriteName: Objects/Weapons/Guns/Projectiles/heavy_laser.png
@@ -40,7 +40,7 @@
 - type: entity
   name: x-ray laser
   id: XrayLaser
-  abstract: true
+  noSpawn: true
   components:
   - type: Hitscan
     spriteName: Objects/Weapons/Guns/Projectiles/xray.png
