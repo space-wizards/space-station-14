@@ -4,7 +4,6 @@ using Content.Server.MachineLinking.Events;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.MachineLinking.System
 {
@@ -13,28 +12,29 @@ namespace Content.Server.MachineLinking.System
         public override void Initialize()
         {
             base.Initialize();
-
+            SubscribeLocalEvent<TwoWayLeverComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<TwoWayLeverComponent, InteractHandEvent>(OnInteractHand);
-            SubscribeLocalEvent<TwoWayLeverComponent, SignalValueRequestedEvent>(OnSignalValueRequested);
         }
 
-        private void OnSignalValueRequested(EntityUid uid, TwoWayLeverComponent component, SignalValueRequestedEvent args)
+        private void OnInit(EntityUid uid, TwoWayLeverComponent component, ComponentInit args)
         {
-            args.Signal = component.State;
-            args.Handled = true;
+            var transmitter = EnsureComp<SignalTransmitterComponent>(uid);
+            foreach (string state in Enum.GetNames<TwoWayLeverState>())
+                if (!transmitter.Outputs.ContainsKey(state))
+                    transmitter.AddPort(state);
         }
 
         private void OnInteractHand(EntityUid uid, TwoWayLeverComponent component, InteractHandEvent args)
         {
             component.State = component.State switch
             {
-                TwoWayLeverSignal.Middle => component.NextSignalLeft ? TwoWayLeverSignal.Left : TwoWayLeverSignal.Right,
-                TwoWayLeverSignal.Right => TwoWayLeverSignal.Middle,
-                TwoWayLeverSignal.Left => TwoWayLeverSignal.Middle,
+                TwoWayLeverState.Middle => component.NextSignalLeft ? TwoWayLeverState.Left : TwoWayLeverState.Right,
+                TwoWayLeverState.Right => TwoWayLeverState.Middle,
+                TwoWayLeverState.Left => TwoWayLeverState.Middle,
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            if (component.State == TwoWayLeverSignal.Middle)
+            if (component.State == TwoWayLeverState.Middle)
             {
                 component.NextSignalLeft = !component.NextSignalLeft;
             }
@@ -44,7 +44,7 @@ namespace Content.Server.MachineLinking.System
                 appearanceComponent.SetData(TwoWayLeverVisuals.State, component.State);
             }
 
-            RaiseLocalEvent(uid, new InvokePortEvent("state", component.State));
+            RaiseLocalEvent(uid, new InvokePortEvent(component.State.ToString()));
             args.Handled = true;
         }
     }

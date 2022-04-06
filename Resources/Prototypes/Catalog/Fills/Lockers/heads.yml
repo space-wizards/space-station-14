@@ -6,13 +6,10 @@
   - type: StorageFill
     contents:
       - id: ClothingNeckCloakQm
-        prob: 1
       - id: ClothingHeadsetCargo
-        prob: 1
       - id: PlushieLizard
         prob: 0.1
       - id: ClothingHandsGlovesColorBrown
-        prob: 1
       - id: ClothingOuterSuitFire
         prob: 0.5
       - id: ClothingShoesColorBrown
@@ -20,9 +17,7 @@
       - id: ClothingHeadHatCargosoft
         prob: 0.8
       - id: SupplyRequestComputerCircuitboard
-        prob: 1
       - id: SupplyComputerCircuitboard
-        prob: 1
       - id: CigPackGreen
         prob: 0.50
       - id: DoorRemoteCargo
@@ -36,29 +31,17 @@
     contents:
       - id: ClothingOuterArmorCaptainCarapace
       - id: NukeDisk
-        prob: 1
       - id: PinpointerNuclear
-        prob: 1
       - id: CaptainIDCard
-        prob: 1
       - id: ClothingHeadHatCaptain
-        prob: 1
       - id: ClothingNeckCloakCap
-        prob: 1
       - id: ClothingHandsGlovesCaptain
-        prob: 1
       - id: ClothingOuterHardsuitCap
-        prob: 1
       - id: TaserGun
-        prob: 1
       - id: ClothingHeadHelmetHardsuitCap
-        prob: 1
       - id: CommsComputerCircuitboard
-        prob: 1
       - id: ClothingHeadsetAltCommand
-        prob: 1
       - id: SpaceCash1000
-        prob: 1
       - id: PlushieNuke
         prob: 0.1
       - id: CigarGoldCase
@@ -79,21 +62,14 @@
   - type: StorageFill
     contents:
       - id: ClothingNeckCloakHop
-        prob: 1
       - id: ClothingHeadHatHopcap
-        prob: 1
       - id: HoPIDCard
         prob: 0.9
       - id: ClothingHeadsetCommand
-        prob: 1
       - id: BoxPDA
-        prob: 1
       - id: BoxID
-        prob: 1
       - id: IDComputerCircuitboard
-        prob: 1
       - id: TaserGun
-        prob: 1
       - id: ClothingShoesColorBlack
         prob: 0.7
       - id: PlushieLizard
@@ -135,7 +111,6 @@
       - id: MedkitFilled
       - id: ClothingHandsGlovesNitrile
       #- name: ClothingEyesHudMedical #Removed until working properly
-      #  prob: 1
       - id: ClothingHeadsetAltMedical
       - id: ClothingCloakCmo
       - id: ClothingBackpackDuffelSurgeryFilled
@@ -176,19 +151,12 @@
   - type: StorageFill
     contents:
       - id: TaserGun
-        prob: 1
       - id: ClothingHeadHatBeretHoS
-        prob: 1
       - id: ClothingHeadHatHoshat
-        prob: 1
       - id: ClothingNeckCloakHos
-        prob: 1
       - id: ClothingOuterCoatHoSTrench
-        prob: 1
       - id: ClothingUniformJumpskirtHoSAlt
-        prob: 1
       - id: ClothingUniformJumpsuitHoSAlt
-        prob: 1
       - id: ClothingUniformJumpsuitHoSBlue
         prob: 0.5
       - id: ClothingUniformJumpsuitHoSGrey
@@ -198,21 +166,15 @@
       - id: ClothingUniformJumpskirtHoSParadeMale
         prob: 0.1
       - id: ClothingHeadHelmetHardsuitSecurityRed
-        prob: 1
       - id: ClothingOuterHardsuitSecurityRed
-        prob: 1
       - id: ClothingShoeSlippersDuck
         prob: 0.2
       - id: DrinkVacuumFlask
         prob: 0.8
       - id: ClothingBeltSecurityFilled
-        prob: 1
       - id: ClothingHeadsetAltSecurity
-        prob: 1
       - id: ClothingEyesGlassesSecurity
-        prob: 1
       - id: ClothingShoesBootsJack
-        prob: 1
       - id: CigarGoldCase
         prob: 0.50
       - id: DoorRemoteSecurity

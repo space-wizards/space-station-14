@@ -119,7 +119,7 @@
   id: VehiclePussyWagonDestroyed
   parent: MachineFrameDestroyed
   name: destroyed janicart
-  description: R.I.P. (Rest in Pussy)
+  description: R.I.P. (Rest In Pussy)
   components:
   - type: Sprite
     sprite: Objects/Vehicles/pussywagon.rsi

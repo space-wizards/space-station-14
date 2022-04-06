@@ -170,7 +170,7 @@ public abstract class AlertsSystem : EntitySystem
     private void OnMetaFlagRemoval(EntityUid uid, AlertsComponent component, ref MetaFlagRemoveAttemptEvent args)
     {
         if (component.LifeStage == ComponentLifeStage.Running)
-            args.Cancelled = true;
+            args.ToRemove &= ~MetaDataFlags.EntitySpecific;
     }
 
     private void OnCanGetState(EntityUid uid, AlertsComponent component, ref ComponentGetStateAttemptEvent args)

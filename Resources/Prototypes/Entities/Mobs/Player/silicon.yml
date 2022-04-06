@@ -225,3 +225,17 @@
       normal: onestar_boss
       dead: onestar_boss_wrecked
   - type: CombatMode
+    disarmAction:
+      name: action-name-disarm
+      description: action-description-disarm
+      icon: Interface/Actions/disarmOff.png
+      iconOn: Interface/Actions/disarm.png
+      repeat: true
+      useDelay: 1.5
+      interactOnMiss: true
+      event: !type:DisarmActionEvent
+      canTargetSelf: false
+      whitelist:
+        components:
+        - Hands
+        - StatusEffects

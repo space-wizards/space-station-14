@@ -10,6 +10,7 @@ using Content.Server.MobState.States;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Database;
+using Content.Shared.Follower;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
@@ -32,6 +33,7 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly FollowerSystem _followerSystem = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
@@ -186,6 +188,14 @@ namespace Content.Server.Ghost.Roles
                 _adminLogSystem.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
 
             CloseEui(player);
+        }
+
+        public void Follow(IPlayerSession player, uint identifier)
+        {
+            if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
+            if (player.AttachedEntity == null) return;
+
+            _followerSystem.StartFollowingEntity(player.AttachedEntity.Value, role.Owner);
         }
 
         public void GhostRoleInternalCreateMindAndTransfer(IPlayerSession player, EntityUid roleUid, EntityUid mob, GhostRoleComponent? role = null)

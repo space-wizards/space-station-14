@@ -119,12 +119,13 @@ namespace Content.Server.PAI
         private void PAITurningOff(EntityUid uid)
         {
             UpdatePAIAppearance(uid, PAIStatus.Off);
+
             //  Close the instrument interface if it was open
             //  before closing
-            if (EntityManager.TryGetComponent<ServerUserInterfaceComponent>(uid, out var serverUi))
-                if (EntityManager.TryGetComponent<ActorComponent>(uid, out var actor))
-                    if (serverUi.TryGetBoundUserInterface(InstrumentUiKey.Key,out var bui))
-                        bui.Close(actor.PlayerSession);
+            if (HasComp<ActiveInstrumentComponent>(uid) && TryComp<ActorComponent>(uid, out var actor))
+            {
+                _instrumentSystem.ToggleInstrumentUi(uid, actor.PlayerSession);
+            }
 
             //  Stop instrument
             if (EntityManager.TryGetComponent<InstrumentComponent>(uid, out var instrument)) _instrumentSystem.Clean(uid, instrument);

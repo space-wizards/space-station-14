@@ -31,8 +31,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            var chat = IoCManager.Resolve<IChatManager>();
-            chat.SendAdminChat(player, message);
+            IoCManager.Resolve<IChatManager>().TrySendOOCMessage(player, message, OOCChatType.Admin);
         }
     }
 }

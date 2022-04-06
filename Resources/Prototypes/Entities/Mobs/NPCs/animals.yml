@@ -709,9 +709,11 @@
     combatToggleAction:
       enabled: false
       autoPopulate: false
+      name: action-name-combat
     disarmAction:
       enabled: false
       autoPopulate: false
+      name: action-name-disarm
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier #The other class lab animal and disease vector
@@ -1001,10 +1003,10 @@
       path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use
     beepInterval: 1
   - type: Explosive
-    devastationRange: 1
-    heavyImpactRange: 2
-    lightImpactRange: 3
-    flashRange: 6
+    explosionType: Default
+    maxIntensity: 15
+    intensitySlope: 5
+    totalIntensity: 120
   - type: ExplodeOnTrigger
 
 - type: entity

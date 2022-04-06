@@ -69,7 +69,7 @@ namespace Content.IntegrationTests.Tests
                 //Generate list of non-abstract prototypes to test
                 foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (prototype.Abstract)
+                    if (prototype.NoSpawn || prototype.Abstract)
                     {
                         continue;
                     }
