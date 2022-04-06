@@ -191,27 +191,21 @@ public sealed partial class ExplosionSystem : EntitySystem
         // enumerator-changed-while-enumerating errors.
         List<(EntityUid, TransformComponent?) > list = new();
 
-        EntityUidQueryCallback callback = uid =>
+        void AddIntersecting(List<(EntityUid, TransformComponent?)> listy)
         {
-            if (processed.Contains(uid))
-                return;
-
-            if (!xformQuery.TryGetComponent(uid, out var xform))
-                return;
-
-            if (xform.ParentUid != grid.GridEntityId)
+            foreach (var uid in _entityLookup.GetLocalEntitiesIntersecting(lookup, ref gridBox, LookupFlags.None))
             {
-                if (!metaQuery.TryGetComponent(uid, out var meta))
-                    return;
-                // Not parented to grid. Likely in a container.
-                if (_containerSystem.IsEntityInContainer(uid, meta))
-                    return;
+                if (processed.Contains(uid))
+                    continue;
+
+                if (!xformQuery.TryGetComponent(uid, out var xform))
+                    continue;
+
+                listy.Add((uid, xform));
             }
+        }
 
-            list.Add((uid, xform));
-        };
-
-        _entityLookup.FastEntitiesIntersecting(lookup, ref gridBox, callback);
+        AddIntersecting(list);
 
         // process those entities
         foreach (var (entity, xform) in list)
@@ -241,7 +235,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             return !tileBlocked;
 
         list.Clear();
-        _entityLookup.FastEntitiesIntersecting(lookup, ref gridBox, callback);
+        AddIntersecting(list);
 
         foreach (var (entity, xform) in list)
         {
@@ -274,38 +268,34 @@ public sealed partial class ExplosionSystem : EntitySystem
         var worldBox = spaceMatrix.TransformBox(gridBox);
         List<(EntityUid, TransformComponent)> list = new();
 
-        EntityUidQueryCallback callback = uid =>
+        void AddIntersecting(List<(EntityUid, TransformComponent)> listy)
         {
-            if (processed.Contains(uid))
-                return;
-
-            var xform  = xformQuery.GetComponent(uid);
-
-            if (xform.ParentUid == lookup.Owner)
+            foreach (var uid in _entityLookup.GetEntitiesIntersecting(lookup, ref worldBox, LookupFlags.None))
             {
-                // parented directly to the map, use local position
-                if (gridBox.Contains(invSpaceMatrix.Transform(xform.LocalPosition)))
-                    list.Add((uid, xform));
+                if (processed.Contains(uid))
+                    return;
 
-                return;
+                var xform = xformQuery.GetComponent(uid);
+
+                if (xform.ParentUid == lookup.Owner)
+                {
+                    // parented directly to the map, use local position
+                    if (gridBox.Contains(invSpaceMatrix.Transform(xform.LocalPosition)))
+                        listy.Add((uid, xform));
+
+                    return;
+                }
+
+                // "worldPos" should be the space/map local position.
+                var worldPos = _transformSystem.GetWorldPosition(xform, xformQuery);
+
+                // finally check if it intersects our tile
+                if (gridBox.Contains(invSpaceMatrix.Transform(worldPos)))
+                    listy.Add((uid, xform));
             }
+        }
 
-            if (!metaQuery.TryGetComponent(uid, out var meta))
-                return;
-
-            // Not parented to map. Likely in a container.
-            if (_containerSystem.IsEntityInContainer(uid, meta))
-                return;
-
-            // "worldPos" should be the space/map local position.
-            var worldPos = _transformSystem.GetWorldPosition(xform, xformQuery);
-
-            // finally check if it intersects our tile
-            if (gridBox.Contains(invSpaceMatrix.Transform(worldPos)))
-                list.Add((uid, xform));
-        };
-
-        _entityLookup.FastEntitiesIntersecting(lookup, ref worldBox, callback);
+        AddIntersecting(list);
 
         foreach (var (entity, xform) in list)
         {
@@ -319,7 +309,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // Also, throw any entities that were spawned as shrapnel. Compared to entity spawning & destruction, this extra
         // lookup is relatively minor computational cost, and throwing is disabled for nukes anyways.
         list.Clear();
-        _entityLookup.FastEntitiesIntersecting(lookup, ref worldBox, callback);
+        AddIntersecting(list);
         foreach (var (entity, xform) in list)
         {
             ProcessEntity(entity, epicenter, null, throwForce, id, damageQuery, physicsQuery, xform);
@@ -455,7 +445,7 @@ sealed class Explosion
     public readonly HashSet<EntityUid> ProcessedEntities = new();
 
     /// <summary>
-    ///     This integer tracks how much of this explosion has been processed. 
+    ///     This integer tracks how much of this explosion has been processed.
     /// </summary>
     public int CurrentIteration { get; private set; } = 0;
 
@@ -652,7 +642,7 @@ sealed class Explosion
     }
 
     /// <summary>
-    ///     Attempt to process (i.e., damage entities) some number of grid tiles. 
+    ///     Attempt to process (i.e., damage entities) some number of grid tiles.
     /// </summary>
     public int Process(int processingTarget)
     {
