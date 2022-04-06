@@ -15,9 +15,6 @@ public abstract class SharedInstrumentComponent : Component
     [ViewVariables]
     public bool Playing { get; set; }
 
-    [ViewVariables]
-    public uint LastSequencerTick { get; set; }
-
     [DataField("program"), ViewVariables(VVAccess.ReadWrite)]
     public byte InstrumentProgram { get; set; }
 
@@ -92,7 +89,7 @@ public sealed class InstrumentState : ComponentState
     public bool AllowProgramChange { get; }
     public bool RespectMidiLimits { get; }
 
-    public InstrumentState(bool playing, byte instrumentProgram, byte instrumentBank, bool allowPercussion, bool allowProgramChange, bool respectMidiLimits, uint sequencerTick = 0)
+    public InstrumentState(bool playing, byte instrumentProgram, byte instrumentBank, bool allowPercussion, bool allowProgramChange, bool respectMidiLimits)
     {
         Playing = playing;
         InstrumentProgram = instrumentProgram;
