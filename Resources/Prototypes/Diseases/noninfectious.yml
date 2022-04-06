@@ -15,4 +15,23 @@
     - !type:DiseaseReagentCure
       reagent: Phalanximine
       min: 15
+
 ### Once radiation is refactored I want it to have a small chance of giving you regular cancer
+
+- type: disease
+  id: ZombieInfection
+  name: Zombie Infection #This is the incubation period of the zombie disease.
+  infectious: false
+  cureResist: 0
+  effects:
+    - !type:DiseaseHealthChange
+      probability: 0.05
+      damage:
+        types:
+          Brute: 5
+    - !type:DiseaseProgression
+      probability: 0.5
+  cures:
+    - !type:DiseaseReagentCure
+      reagent: Zombidozone
+      min: 25
