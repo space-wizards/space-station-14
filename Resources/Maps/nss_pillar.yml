@@ -167077,12 +167077,6 @@ entities:
     pos: -46.5,33.5
     parent: 126
     type: Transform
-- uid: 16347
-  type: MaterialCotton
-  components:
-  - pos: -14.304829,-14.602388
-    parent: 126
-    type: Transform
 - uid: 16348
   type: MaterialDurathread
   components:
