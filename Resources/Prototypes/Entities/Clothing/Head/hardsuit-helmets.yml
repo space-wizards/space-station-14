@@ -263,6 +263,6 @@
       - state: inhand-right
       - state: inhand-right-unshaded
         shader: unshaded   
-      - type: PressureProtection
-        highPressureMultiplier: 0.8
-        lowPressureMultiplier: 100
+  - type: PressureProtection
+    highPressureMultiplier: 0.8
+    lowPressureMultiplier: 100
