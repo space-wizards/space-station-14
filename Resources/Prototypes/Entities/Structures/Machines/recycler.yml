@@ -49,8 +49,3 @@
       state_off: grinder-o0
   - type: Recycler
   - type: Conveyor
-  - type: SignalReceiver
-    inputs:
-      - name: state
-        type: Content.Shared.MachineLinking.TwoWayLeverSignal
-        maxConnections: 1

@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
         public void DeserializeNullTest()
         {
             var node = new ValueDataNode("null");
-            var unit = Serialization.ReadValue<FixedPoint2?>(node);
+            var unit = Serialization.Read<FixedPoint2?>(node);
 
             Assert.That(unit, Is.Null);
         }
@@ -30,7 +30,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
         public void DeserializeNullDefinitionTest()
         {
             var node = new MappingDataNode().Add("unit", "null");
-            var definition = Serialization.ReadValueOrThrow<FixedPoint2TestDefinition>(node);
+            var definition = Serialization.Read<FixedPoint2TestDefinition>(node);
 
             Assert.That(definition.Unit, Is.Null);
         }

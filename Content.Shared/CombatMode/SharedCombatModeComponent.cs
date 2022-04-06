@@ -30,22 +30,7 @@ namespace Content.Shared.CombatMode
         // These are chonky default definitions for combat actions. But its a pain to add a yaml version of this for
         // every entity that wants combat mode, especially given that they're currently all identical... so ummm.. yeah.
         [DataField("disarmAction")]
-        public readonly EntityTargetAction DisarmAction = new()
-        {
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/disarmOff.png")),
-            IconOn = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/disarm.png")),
-            Name = "action-name-disarm",
-            Description = "action-description-disarm",
-            Repeat = true,
-            UseDelay = TimeSpan.FromSeconds(1.5f),
-            InteractOnMiss = true,
-            Event = new DisarmActionEvent(),
-            CanTargetSelf = false,
-            Whitelist = new()
-            {
-                Components = new[] { "Hands", "StatusEffects" },
-            },
-        };
+        public readonly EntityTargetAction DisarmAction = new();
 
         [DataField("combatToggleAction")]
         public readonly InstantAction CombatToggleAction = new()

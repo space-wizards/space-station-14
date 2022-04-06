@@ -107,9 +107,9 @@ namespace Content.Shared.Damage
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
         public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, bool ignoreResistances = false,
-            bool interruptsDoAfters = true)
+            bool interruptsDoAfters = true, DamageableComponent? damageable = null)
         {
-            if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
+            if (!uid.HasValue || !Resolve(uid.Value, ref damageable, false))
             {
                 // TODO BODY SYSTEM pass damage onto body system
                 return null;

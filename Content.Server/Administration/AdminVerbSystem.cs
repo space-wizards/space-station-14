@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Managers;
@@ -10,7 +9,6 @@ using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Ghost.Roles;
-using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
@@ -22,17 +20,14 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
-using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Timing;
+using static Content.Shared.Configurable.SharedConfigurationComponent;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Administration
@@ -47,9 +42,10 @@ namespace Content.Server.Administration
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
-        [Dependency] private readonly ExplosionSystem _explosions = default!;
+        [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
         [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
 
@@ -155,8 +151,11 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Admin;
                 verb.Act = () =>
                 {
-                    var coords = Transform(args.Target).Coordinates;
-                    Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
+                    var coords = Transform(args.Target).MapPosition;
+                    Timer.Spawn(_gameTiming.TickPeriod,
+                        () => _explosionSystem.QueueExplosion(coords, ExplosionSystem.DefaultExplosionPrototypeId, 4, 1, 2, maxTileBreak: 0), // it gibs, damage doesn't need to be high.
+                        CancellationToken.None);
+
                     if (TryComp(args.Target, out SharedBodyComponent? body))
                     {
                         body.Gib();
@@ -289,7 +288,6 @@ namespace Content.Server.Administration
                 args.Verbs.Add(verb);
             }
 
-            // Configuration verb. Is this even used for anything!?
             if (_groupController.CanAdminMenu(player) &&
                 EntityManager.TryGetComponent<ConfigurationComponent?>(args.Target, out var config))
             {
@@ -297,7 +295,7 @@ namespace Content.Server.Administration
                 verb.Text = Loc.GetString("configure-verb-get-data-text");
                 verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
                 verb.Category = VerbCategory.Debug;
-                verb.Act = () => config.OpenUserInterface(actor);
+                verb.Act = () => _uiSystem.TryOpen(args.Target, ConfigurationUiKey.Key, actor.PlayerSession);
                 args.Verbs.Add(verb);
             }
 

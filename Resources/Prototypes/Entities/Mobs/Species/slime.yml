@@ -145,7 +145,7 @@
   name: Urist McHands
   parent: MobHumanDummy
   id: MobSlimePersonDummy
-  abstract: true
+  noSpawn: true
   description: A dummy slime meant to be used in character setup.
   components:
     - type: Sprite

@@ -35,13 +35,13 @@ namespace Content.Client.Actions
     [UsedImplicitly]
     public sealed class ActionsSystem : SharedActionsSystem
     {
-        
+
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         [Dependency] private readonly ISerializationManager _serializationManager = default!;
         [Dependency] private readonly IResourceManager _resourceManager = default!;
-        [Dependency] private readonly IOverlayManager _overlayMan = default!; 
+        [Dependency] private readonly IOverlayManager _overlayMan = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly InteractionOutlineSystem _interactionOutline = default!;
         [Dependency] private readonly TargetOutlineSystem _targetOutline = default!;
@@ -155,19 +155,11 @@ namespace Content.Client.Actions
 
                 act.CopyFrom(serverAct);
                 serverActions.Remove(serverAct);
-
-                if (act is EntityTargetAction entAct)
-                {
-                    entAct.Whitelist?.UpdateRegistrations();
-                }
             }
 
             // Anything that remains is a new action
             foreach (var newAct in serverActions)
             {
-                if (newAct is EntityTargetAction entAct)
-                    entAct.Whitelist?.UpdateRegistrations();
-
                 // We create a new action, not just sorting a reference to the state's action.
                 component.Actions.Add((ActionType) newAct.Clone());
             }
@@ -427,7 +419,7 @@ namespace Content.Client.Actions
             {
                 // The user is targeting with this action, but it is not valid. Maybe mark this click as
                 // handled and prevent further interactions.
-                return !action.InteractOnMiss; 
+                return !action.InteractOnMiss;
             }
 
             switch (action)
@@ -611,7 +603,7 @@ namespace Content.Client.Actions
 
         /*public void SaveActionAssignments(string path)
         {
-            
+
             // Currently only tested with temporary innate actions (i.e., mapping actions). No guarantee it works with
             // other actions. If its meant to be used for full game state saving/loading, the entity that provides
             // actions needs to keep the same uid.
@@ -666,9 +658,7 @@ namespace Content.Client.Actions
                 if (!map.TryGet("action", out var actionNode))
                     continue;
 
-                var action = _serializationManager.ReadValueCast<ActionType>(typeof(ActionType), actionNode);
-                if (action == null)
-                    continue;
+                var action = _serializationManager.Read<ActionType>(actionNode);
 
                 if (Ui.Component.Actions.TryGetValue(action, out var existingAction))
                 {
@@ -681,9 +671,7 @@ namespace Content.Client.Actions
                 if (!map.TryGet("assignments", out var assignmentNode))
                     continue;
 
-                var assignments = _serializationManager.ReadValueCast<List<(byte Hotbar, byte Slot)>>(typeof(List<(byte Hotbar, byte Slot)>), assignmentNode);
-                if (assignments == null)
-                    continue;
+                var assignments = _serializationManager.Read<List<(byte Hotbar, byte Slot)>>(assignmentNode);
 
                 foreach (var index in assignments)
                 {

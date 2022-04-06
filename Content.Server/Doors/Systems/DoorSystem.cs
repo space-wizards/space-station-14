@@ -4,7 +4,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Tools;
-using Content.Server.Tools.Components;
 using Content.Server.Doors.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -20,6 +19,7 @@ using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Content.Shared.Hands.Components;
 using System.Linq;
+using Content.Shared.Tools.Components;
 
 namespace Content.Server.Doors.Systems;
 
