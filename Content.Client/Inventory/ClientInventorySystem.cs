@@ -25,6 +25,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Client.Inventory
 {
@@ -67,7 +68,17 @@ namespace Content.Client.Inventory
             SubscribeLocalEvent<ClientInventoryComponent, DidEquipEvent>(OnDidEquip);
             SubscribeLocalEvent<ClientInventoryComponent, DidUnequipEvent>(OnDidUnequip);
 
+            SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
+
             _config.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
+        }
+
+        private void OnUseInHand(EntityUid uid, ClothingComponent component, UseInHandEvent args)
+        {
+            if (args.Handled || !component.QuickEquip)
+                return;
+
+            QuickEquip(uid, component, args);
         }
 
         private void OnDidUnequip(EntityUid uid, ClientInventoryComponent component, DidUnequipEvent args)
@@ -185,15 +196,15 @@ namespace Content.Client.Inventory
             if (!Resolve(uid, ref hands, false))
                 return;
 
-            if (!hands.TryGetActiveHeldEntity(out var heldEntity))
+            if (hands.ActiveHandEntity is not EntityUid heldEntity)
                 return;
 
             if(!TryGetSlotContainer(uid, slot, out var containerSlot, out var slotDef, inventoryComponent))
                 return;
 
-            _itemSlotManager.HoverInSlot(button, heldEntity.Value,
-                CanEquip(uid, heldEntity.Value, slot, out _, slotDef, inventoryComponent) &&
-                containerSlot.CanInsert(heldEntity.Value, EntityManager));
+            _itemSlotManager.HoverInSlot(button, heldEntity,
+                CanEquip(uid, heldEntity, slot, out _, slotDef, inventoryComponent) &&
+                containerSlot.CanInsert(heldEntity, EntityManager));
         }
 
         private void HandleSlotButtonPressed(EntityUid uid, string slot, ItemSlotButton button,
@@ -206,7 +217,7 @@ namespace Content.Client.Inventory
                 return;
 
             // only raise event if either itemUid is not null, or the user is holding something
-            if (itemUid != null || TryComp(uid, out SharedHandsComponent? hands) && hands.TryGetActiveHeldEntity(out _))
+            if (itemUid != null || TryComp(uid, out SharedHandsComponent? hands) && hands.ActiveHandEntity != null)
                 EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot)); 
         }
 
@@ -256,7 +267,7 @@ namespace Content.Client.Inventory
                                 if (e.Function != EngineKeyFunctions.UIClick &&
                                     e.Function != ContentKeyFunctions.ActivateItemInWorld)
                                     return;
-                                RaiseNetworkEvent(new OpenSlotStorageNetworkMessage(entityUid, definition.Name));
+                                RaiseNetworkEvent(new OpenSlotStorageNetworkMessage(definition.Name));
                             }
                         };
                         btn.OnHover = (_) =>

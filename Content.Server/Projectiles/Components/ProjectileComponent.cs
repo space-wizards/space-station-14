@@ -9,7 +9,7 @@ namespace Content.Server.Projectiles.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedProjectileComponent))]
-    public class ProjectileComponent : SharedProjectileComponent
+    public sealed class ProjectileComponent : SharedProjectileComponent
     {
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
@@ -19,8 +19,8 @@ namespace Content.Server.Projectiles.Components
         public bool DeleteOnCollide { get; } = true;
 
         // Get that juicy FPS hit sound
-        [DataField("soundHit", required: true)] public SoundSpecifier? SoundHit = default!;
-        [DataField("soundHitSpecies")] public SoundSpecifier? SoundHitSpecies = null;
+        [DataField("soundHit")] public SoundSpecifier? SoundHit;
+        [DataField("soundHitSpecies")] public SoundSpecifier? SoundHitSpecies;
 
         public bool DamagedEntity;
 

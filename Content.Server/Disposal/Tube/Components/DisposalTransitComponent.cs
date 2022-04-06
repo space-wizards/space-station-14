@@ -9,6 +9,7 @@ namespace Content.Server.Disposal.Tube.Components
     // TODO: Different types of tubes eject in random direction with no exit point
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
+    [Virtual]
     public class DisposalTransitComponent : DisposalTubeComponent
     {
         protected override Direction[] ConnectableDirections()

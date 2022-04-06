@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Examine;
@@ -20,10 +21,10 @@ namespace Content.Server.Radio.Components
     [ComponentReference(typeof(IListen))]
     [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public class HandheldRadioComponent : Component, IListen, IRadio, IActivate, IExamine
+    public sealed class HandheldRadioComponent : Component, IListen, IRadio, IActivate, IExamine
 #pragma warning restore 618
     {
-        [Dependency] private readonly IChatManager _chatManager = default!;
+        private ChatSystem _chatSystem = default!;
         private RadioSystem _radioSystem = default!;
 
         private bool _radioOn;
@@ -54,13 +55,14 @@ namespace Content.Server.Radio.Components
             base.Initialize();
 
             _radioSystem = EntitySystem.Get<RadioSystem>();
+            _chatSystem = EntitySystem.Get<ChatSystem>();
 
             RadioOn = false;
         }
 
         public void Speak(string message)
         {
-            _chatManager.EntitySay(Owner, message);
+            _chatSystem.TrySendInGameICMessage(Owner, message, InGameICChatType.Speak, false);
         }
 
         public bool Use(EntityUid user)
@@ -77,7 +79,7 @@ namespace Content.Server.Radio.Components
         public bool CanListen(string message, EntityUid source)
         {
             return RadioOn &&
-                   Owner.InRangeUnobstructed(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(source).Coordinates, range: ListenRange);
+                   EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
         }
 
         public void Receive(string message, int channel, EntityUid speaker)

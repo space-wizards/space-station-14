@@ -11,7 +11,7 @@ namespace Content.Server.Climbing.Components;
 ///     not very generalized with regards to naming.
 /// </summary>
 [RegisterComponent, Friend(typeof(ClimbSystem))]
-public class GlassTableComponent : Component
+public sealed class GlassTableComponent : Component
 {
     /// <summary>
     ///     How much damage should be given to the climber?
@@ -24,6 +24,12 @@ public class GlassTableComponent : Component
     /// </summary>
     [DataField("tableDamage")]
     public DamageSpecifier TableDamage = default!;
+
+    /// <summary>
+    ///     How much mass should be needed to break the table?
+    /// </summary>
+    [DataField("tableMassLimit")]
+    public float MassLimit;
 
     /// <summary>
     ///     How long should someone who climbs on this table be stunned for?

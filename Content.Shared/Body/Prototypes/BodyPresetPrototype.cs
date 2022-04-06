@@ -12,10 +12,10 @@ namespace Content.Shared.Body.Prototypes
     /// </summary>
     [Prototype("bodyPreset")]
     [Serializable, NetSerializable]
-    public class BodyPresetPrototype : IPrototype
+    public sealed class BodyPresetPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("partIDs")]

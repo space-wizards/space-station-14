@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests.Utility
 {
     [TestFixture]
     [TestOf(typeof(EntityWhitelist))]
-    public class EntityWhitelistTest : ContentIntegrationTest
+    public sealed class EntityWhitelistTest : ContentIntegrationTest
     {
         private const string InvalidComponent = "Sprite";
         private const string ValidComponent = "Physics";
@@ -81,8 +81,8 @@ namespace Content.IntegrationTests.Tests.Utility
                 // Test instantiated on its own
                 var whitelistInst = new EntityWhitelist
                 {
-                    Components = new[] {$"{ValidComponent}"},
-                    Tags = new[] {"ValidTag"}
+                    Components = new[] { $"{ValidComponent}"},
+                    Tags = new() {"ValidTag"}
                 };
                 whitelistInst.UpdateRegistrations();
                 Assert.That(whitelistInst, Is.Not.Null);

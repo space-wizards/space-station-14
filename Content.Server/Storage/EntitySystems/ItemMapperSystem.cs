@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Storage.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Storage.EntitySystems
 {
     [UsedImplicitly]
-    public class ItemMapperSystem : SharedItemMapperSystem
+    public sealed class ItemMapperSystem : SharedItemMapperSystem
     {
         protected override bool TryGetLayers(ContainerModifiedMessage msg,
             ItemMapperComponent itemMapper,
@@ -24,7 +24,7 @@ namespace Content.Server.Storage.EntitySystems
                 {
                     foreach (var entity in containedLayers)
                     {
-                        if (mapLayerData.Whitelist.IsValid(entity))
+                        if (mapLayerData.ServerWhitelist.IsValid(entity))
                         {
                             list.Add(mapLayerData.Layer);
                             break;

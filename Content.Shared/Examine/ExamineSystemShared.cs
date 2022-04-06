@@ -54,13 +54,18 @@ namespace Content.Shared.Examine
         public const float ExamineRange = 16f;
         protected const float ExamineDetailsRange = 3f;
 
-        private bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
+        /// <summary>
+        ///     Creates a new examine tooltip with arbitrary info.
+        /// </summary>
+        public abstract void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor);
+
+        public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
             // check if the mob is in ciritcal or dead
             if (EntityManager.TryGetComponent(examiner, out MobStateComponent mobState) && mobState.IsIncapacitated())
                 return false;
 
-            if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange, ignoreInsideBlocker: true))
+            if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange))
                 return false;
 
             // Is the target hidden in a opaque locker or something? Currently this check allows players to examine
@@ -115,7 +120,18 @@ namespace Content.Shared.Examine
             return ExamineRange;
         }
 
-        public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
+        {
+            // No, rider. This is better.
+            // ReSharper disable once ConvertToLocalFunction
+            var wrapped = (EntityUid uid, Ignored? wrapped)
+                => wrapped != null && wrapped(uid);
+
+            return InRangeUnOccluded(origin, other, range, predicate, wrapped, ignoreInsideBlocker, entMan);
+        }
+
+        public static bool InRangeUnOccluded<TState>(MapCoordinates origin, MapCoordinates other, float range,
+            TState state, Func<EntityUid, TState, bool> predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
         {
             if (other.MapId != origin.MapId ||
                 other.MapId == MapId.Nullspace) return false;
@@ -135,13 +151,11 @@ namespace Content.Shared.Examine
             }
 
             var occluderSystem = Get<OccluderSystem>();
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            predicate ??= _ => false;
+            IoCManager.Resolve(ref entMan);
 
             var ray = new Ray(origin.Position, dir.Normalized);
             var rayResults = occluderSystem
-                .IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
+                .IntersectRayWithPredicate(origin.MapId, ray, length, state, predicate, false).ToList();
 
             if (rayResults.Count == 0) return true;
 
@@ -279,7 +293,7 @@ namespace Content.Shared.Examine
     /// <summary>
     ///     Raised when an entity is examined.
     /// </summary>
-    public class ExaminedEvent : EntityEventArgs
+    public sealed class ExaminedEvent : EntityEventArgs
     {
         /// <summary>
         ///     The message that will be displayed as the examine text.

@@ -11,14 +11,14 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Cargo
 {
     [NetSerializable, Serializable, Prototype("cargoProduct")]
-    public class CargoProductPrototype : IPrototype
+    public sealed class CargoProductPrototype : IPrototype
     {
         [DataField("name")] private string _name = string.Empty;
 
         [DataField("description")] private string _description = string.Empty;
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

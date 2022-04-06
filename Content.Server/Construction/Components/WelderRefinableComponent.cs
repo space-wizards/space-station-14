@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Server.Tools;
-using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -17,7 +17,7 @@ namespace Content.Server.Construction.Components
     /// For example, glass shard can be refined to glass sheet.
     /// </summary>
     [RegisterComponent]
-    public class WelderRefinableComponent : Component, IInteractUsing
+    public sealed class WelderRefinableComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Emoting
 {
-    public class EmoteSystem : EntitySystem
+    public sealed class EmoteSystem : EntitySystem
     {
         public override void Initialize()
         {

@@ -1,12 +1,10 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
-public class ArtifactSystem : EntitySystem
+public sealed class ArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -15,10 +13,10 @@ public class ArtifactSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ArtifactComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ArtifactComponent, MapInitEvent>(OnInit);
     }
 
-    private void OnInit(EntityUid uid, ArtifactComponent component, ComponentInit args)
+    private void OnInit(EntityUid uid, ArtifactComponent component, MapInitEvent args)
     {
         if (component.RandomTrigger)
         {
@@ -26,7 +24,7 @@ public class ArtifactSystem : EntitySystem
         }
     }
 
-    public void AddRandomTrigger(EntityUid uid, ArtifactComponent? component = null)
+    private void AddRandomTrigger(EntityUid uid, ArtifactComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -34,6 +32,12 @@ public class ArtifactSystem : EntitySystem
         var triggerName = _random.Pick(component.PossibleTriggers);
         var trigger = (Component) _componentFactory.GetComponent(triggerName);
         trigger.Owner = uid;
+
+        if (EntityManager.HasComponent(uid, trigger.GetType()))
+        {
+            Logger.Error($"Attempted to add a random artifact trigger ({triggerName}) to an entity ({ToPrettyString(uid)}), but it already has the trigger");
+            return;
+        }
 
         EntityManager.AddComponent(uid, trigger);
         RaiseLocalEvent(uid, new RandomizeTriggerEvent());

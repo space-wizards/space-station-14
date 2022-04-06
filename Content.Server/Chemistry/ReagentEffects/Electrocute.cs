@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public class Electrocute : ReagentEffect
+public sealed class Electrocute : ReagentEffect
 {
     [DataField("electrocuteTime")] public int ElectrocuteTime = 2;
 

@@ -4,6 +4,7 @@ ui-options-title = Game Options
 ui-options-tab-graphics = Graphics
 ui-options-tab-controls = Controls
 ui-options-tab-audio = Audio
+ui-options-tab-network = Network
 
 ui-options-apply = Apply
 ui-options-reset-all = Reset All
@@ -12,7 +13,8 @@ ui-options-reset-all = Reset All
 
 ui-options-master-volume = Master Volume:
 ui-options-midi-volume = MIDI (Instrument) Volume:
-ui-options-ambient-hum = Ambient Hum
+ui-options-ambience-volume = Ambience volume:
+ui-options-ambience-max-sounds = Ambience simultaneous sounds:
 ui-options-lobby-music = Lobby Music
 ui-options-volume-label = Volume
 ui-options-volume-percent = { TOSTRING($volume, "P0") }
@@ -148,3 +150,7 @@ ui-options-function-loadout6 = Hotbar Loadout 6
 ui-options-function-loadout7 = Hotbar Loadout 7
 ui-options-function-loadout8 = Hotbar Loadout 8
 ui-options-function-loadout9 = Hotbar Loadout 9
+
+## Network menu
+
+ui-options-net-interp-ratio = Network Smoothing

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Tools;
-using Content.Server.Tools.Components;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
 using Content.Shared.Interaction;
@@ -14,6 +13,7 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -30,7 +30,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.WireHacking
 {
     [RegisterComponent]
-    public class WiresComponent : SharedWiresComponent, IInteractUsing
+    public sealed class WiresComponent : SharedWiresComponent, IInteractUsing
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
@@ -202,7 +202,7 @@ namespace Content.Server.WireHacking
             return wire.IsCut;
         }
 
-        public class Wire
+        public sealed class Wire
         {
             /// <summary>
             /// The component that registered the wire.
@@ -251,7 +251,7 @@ namespace Content.Server.WireHacking
         /// <summary>
         /// Used by <see cref="IWires.RegisterWires"/>.
         /// </summary>
-        public class WiresBuilder
+        public sealed class WiresBuilder
         {
             private readonly WiresComponent _wires;
             private readonly IWires _owner;
@@ -332,13 +332,13 @@ namespace Content.Server.WireHacking
                 return false;
             }
 
-            if (!user.InRangeUnobstructed(Owner))
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, Owner))
             {
                 Owner.PopupMessage(user, Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"));
                 return false;
             }
 
-            if (handsComponent.GetActiveHand()?.HeldEntity is not { Valid: true } activeHandEntity ||
+            if (handsComponent.ActiveHand?.HeldEntity is not { Valid: true } activeHandEntity ||
                 !_entities.TryGetComponent(activeHandEntity, out tool))
             {
                 return false;

@@ -20,11 +20,11 @@
     Slots: [innerclothing]
     EquipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Fiber
-        Quantity: 10
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 3
 
 - type: entity
   abstract: true
@@ -38,8 +38,8 @@
     femaleMask: UniformTop
     EquipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Fiber
-        Quantity: 5
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 3

@@ -9,7 +9,7 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Singularity.Components
 {
-    public class ContainmentFieldConnection : IDisposable
+    public sealed class ContainmentFieldConnection : IDisposable
     {
         public readonly ContainmentFieldGeneratorComponent Generator1;
         public readonly ContainmentFieldGeneratorComponent Generator2;

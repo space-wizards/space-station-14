@@ -12,7 +12,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Shared.Research.Components
 {
     [NetworkedComponent()]
-    public class SharedTechnologyDatabaseComponent : Component, IEnumerable<TechnologyPrototype>, ISerializationHooks
+    public abstract class SharedTechnologyDatabaseComponent : Component, IEnumerable<TechnologyPrototype>, ISerializationHooks
     {
         [DataField("technologies")] private List<string> _technologyIds = new();
 
@@ -108,7 +108,7 @@ namespace Content.Shared.Research.Components
     }
 
     [Serializable, NetSerializable]
-    public class TechnologyDatabaseState : ComponentState
+    public sealed class TechnologyDatabaseState : ComponentState
     {
         public List<string> Technologies;
         public TechnologyDatabaseState(List<string> technologies)

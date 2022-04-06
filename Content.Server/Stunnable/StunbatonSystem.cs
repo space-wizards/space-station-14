@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Content.Server.Power.Events;
 using Content.Server.PowerCell;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
@@ -7,7 +8,7 @@ using Content.Server.Weapon.Melee;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Jittering;
 using Content.Shared.Popups;
@@ -25,7 +26,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Stunnable
 {
-    public class StunbatonSystem : EntitySystem
+    public sealed class StunbatonSystem : EntitySystem
     {
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly StutteringSystem _stutteringSystem = default!;
@@ -56,6 +57,7 @@ namespace Content.Server.Stunnable
             foreach (EntityUid entity in args.HitEntities)
             {
                 StunEntity(entity, comp);
+                SendPowerPulse(entity, args.User, uid);
             }
         }
 
@@ -69,13 +71,11 @@ namespace Content.Server.Stunnable
 
             args.CanInteract = true;
             StunEntity(args.Entity, comp);
+            SendPowerPulse(args.Entity, args.User, uid);
         }
 
         private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)
         {
-            if (!Get<ActionBlockerSystem>().CanUse(args.User))
-                return;
-
             if (comp.Activated)
             {
                 TurnOff(comp);
@@ -91,10 +91,14 @@ namespace Content.Server.Stunnable
             if (!comp.Activated)
                 return;
 
-            if (!_cellSystem.TryGetBatteryFromSlot(uid, out var battery) || !battery.TryUseCharge(comp.EnergyPerUse))
+            if (!_cellSystem.TryGetBatteryFromSlot(uid, out var battery))
                 return;
 
-            StunEntity(args.Target, comp);
+            if (_robustRandom.Prob(comp.OnThrowStunChance) && battery.TryUseCharge(comp.EnergyPerUse))
+            {
+                SendPowerPulse(args.Target, args.User, uid);
+                StunEntity(args.Target, comp);
+            }
         }
 
         private void OnPowerCellChanged(EntityUid uid, StunbatonComponent comp, PowerCellChangedEvent args)
@@ -199,6 +203,15 @@ namespace Content.Server.Stunnable
             item.EquippedPrefix = "on";
             sprite.LayerSetState(0, "stunbaton_on");
             comp.Activated = true;
+        }
+
+        private void SendPowerPulse(EntityUid target, EntityUid? user, EntityUid used)
+        {
+            RaiseLocalEvent(target, new PowerPulseEvent()
+            {
+                Used = used,
+                User = user
+            }, false);
         }
     }
 }

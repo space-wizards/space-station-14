@@ -4,7 +4,7 @@
   name: Urist McHands
   id: MobHumanBase
   description: A miserable pile of secrets.
-  abstract: true
+  noSpawn: true
   components:
   - type: Tag
     tags:
@@ -44,16 +44,26 @@
       types:
         Blunt: 2
   # Organs
-  - type: SolutionContainerManager
-    solutions:
-      bloodstream:
-        maxVol: 250
   - type: InjectableSolution
-    solution: bloodstream
+    solution: chemicals
   - type: DrawableSolution
     solution: bloodstream
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
   - type: Bloodstream
-    max_volume: 100
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
   - type: StatusEffects
     allowed:
     - Stun
@@ -61,6 +71,7 @@
     - SlowedDown
     - Stutter
     - Electrocution
+  - type: DiseaseCarrier
   # Other
   - type: Inventory
   - type: Clickable
@@ -231,7 +242,6 @@
       fireStackAlternateState: 3
     - type: CreamPiedVisualizer
       state: creampie_human
-    - type: HandsVisualizer
     - type: DamageVisualizer
       thresholds: [20, 40, 100]
       targetLayers:
@@ -248,6 +258,20 @@
         Burn:
           sprite: Mobs/Effects/burn_damage.rsi
   - type: CombatMode
+    disarmAction:
+      name: action-name-disarm
+      description: action-description-disarm
+      icon: Interface/Actions/disarmOff.png
+      iconOn: Interface/Actions/disarm.png
+      repeat: true
+      useDelay: 1.5
+      interactOnMiss: true
+      event: !type:DisarmActionEvent
+      canTargetSelf: false
+      whitelist:
+        components:
+        - Hands
+        - StatusEffects
   - type: Climbing
   - type: Cuffable
   - type: CharacterInfo
@@ -273,20 +297,26 @@
       type: StrippableBoundUserInterface
   - type: Puller
   - type: Butcherable
-    meat: FoodMeat
-  - type: Recyclable
-    safe: false
+    butcheringType: Spike # TODO human.
+    spawned:
+    - id: FoodMeat
+      amount: 5
+#  - type: Recyclable Turns out turning off recycler safeties without considering the instagib is a bad idea
+#    safe: false
   - type: Speech
+  - type: Vocal
   - type: Emoting
   - type: Grammar
     attributes:
       proper: true
   - type: StandingState
+
+
 - type: entity
   save: false
   name: Urist McHands
   id: MobHumanDummy
-  abstract: true
+  noSpawn: true
   description: A dummy human meant to be used in character setup.
   components:
     - type: Hands

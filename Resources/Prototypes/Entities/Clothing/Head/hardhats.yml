@@ -10,6 +10,7 @@
     - state: light-icon
       shader: unshaded
       visible: false
+      map: [ "light" ]
   - type: Clothing
     HeldPrefix: off
   - type: PointLight
@@ -19,9 +20,13 @@
     visuals:
       - type: FlashLightVisualizer
   - type: HandheldLight
-  - type: ItemActions
-    actions:
-      - actionType: ToggleLight
+    addPrefix: true
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellSmallHigh

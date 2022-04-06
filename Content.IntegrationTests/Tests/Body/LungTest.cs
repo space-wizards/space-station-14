@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests.Body
 {
     [TestFixture]
     [TestOf(typeof(LungSystem))]
-    public class LungTest : ContentIntegrationTest
+    public sealed class LungTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity
@@ -40,6 +40,12 @@ namespace Content.IntegrationTests.Tests.Body
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
   - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 1.5
+    damageRecovery:
+      types:
+        Asphyxiation: -1.5
 ";
 
         [Test]

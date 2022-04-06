@@ -19,7 +19,7 @@
     - alertType: Magboots
 
 - type: alert
-  alertType: LowOxygen
+  id: LowOxygen
   category: Breathing
   icon:
     sprite: /Textures/Interface/Alerts/breathing.rsi
@@ -28,7 +28,7 @@
   description: "There is [color=red]not enough oxygen[/color] in the air you are breathing. Put on [color=green]internals[/color]."
 
 - type: alert
-  alertType: Toxins
+  id: Toxins
   category: Toxins
   icon:
     sprite: /Textures/Interface/Alerts/breathing.rsi
@@ -37,7 +37,7 @@
   description: "There are [color=red]too many toxins[/color] in the air you are breathing. Put on [color=green]internals[/color] or get away."
 
 - type: alert
-  alertType: LowPressure
+  id: LowPressure
   category: Pressure
   icon:
     sprite: /Textures/Interface/Alerts/pressure.rsi
@@ -47,7 +47,7 @@
   description: "The air around you is [color=red]hazardously thin[/color]. A [color=green]space suit[/color] would protect you."
 
 - type: alert
-  alertType: HighPressure
+  id: HighPressure
   category: Pressure
   icon:
     sprite: /Textures/Interface/Alerts/pressure.rsi
@@ -57,14 +57,14 @@
   description: "The air around you is [color=red]hazardously thick[/color]. A [color=green]pressurized suit[/color] would be enough protect you"
 
 - type: alert
-  alertType: Fire
+  id: Fire
   icon: /Textures/Interface/Alerts/Fire/fire.png
   onClick: !type:ResistFire  { }
   name: "[color=red]On Fire[/color]"
   description: "You're [color=red]on fire[/color]. Click the alert to stop, drop and roll to put the fire out or move to a vacuum area."
 
 - type: alert
-  alertType: Cold
+  id: Cold
   category: Temperature
   icon:
     sprite: /Textures/Interface/Alerts/temperature.rsi
@@ -74,7 +74,7 @@
   description: "You're [color=cyan]freezing cold![/color] Get somewhere warmer and take off any insulating clothing like a space suit."
 
 - type: alert
-  alertType: Hot
+  id: Hot
   category: Temperature
   icon:
     sprite: /Textures/Interface/Alerts/temperature.rsi
@@ -84,7 +84,7 @@
   description: "It's [color=red]too hot![/color] Get somewhere colder, take off any insulating clothing like a space suit, or at least get away from the flames."
 
 - type: alert
-  alertType: Weightless
+  id: Weightless
   icon: /Textures/Interface/Alerts/Weightless/weightless.png
   name: Weightless
   description: >
@@ -92,20 +92,20 @@
     Mag-boots or jetpacks would help you move with more control
 
 - type: alert
-  alertType: Stun
+  id: Stun
   icon: /Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png #Should probably draw a proper icon
   name: "[color=yellow]Stunned[/color]"
   description: "You're [color=yellow]stunned[/color]! Something is impairing your ability to move or interact with objects"
 
 - type: alert
-  alertType: Handcuffed
+  id: Handcuffed
   onClick: !type:RemoveCuffs  { }
   icon: /Textures/Interface/Alerts/Handcuffed/Handcuffed.png
   name: "[color=yellow]Handcuffed[/color]"
   description: "You're [color=yellow]handcuffed[/color] and can't use your hands. If anyone drags you, you won't be able to resist."
 
 - type: alert
-  alertType: Buckled
+  id: Buckled
   category: Buckled
   onClick: !type:Unbuckle  { }
   icon: /Textures/Interface/Alerts/Buckle/buckled.png
@@ -113,7 +113,7 @@
   description: "You've been [color=yellow]buckled[/color] to something. Click the alert to unbuckle unless you're [color=yellow]handcuffed.[/color]"
 
 - type: alert
-  alertType: HumanCrit
+  id: HumanCrit
   category: Health
   icon:
     sprite: /Textures/Interface/Alerts/human_health.rsi
@@ -122,7 +122,7 @@
   description: "You're severely injured and unconscious."
 
 - type: alert
-  alertType: HumanDead
+  id: HumanDead
   category: Health
   icon:
     sprite: /Textures/Interface/Alerts/human_health.rsi
@@ -131,7 +131,7 @@
   description: You're dead, note that you can still be revived!
 
 - type: alert
-  alertType: HumanHealth
+  id: HumanHealth
   category: Health
   icon:
     sprite: /Textures/Interface/Alerts/human_health.rsi
@@ -142,7 +142,7 @@
   maxSeverity: 6
 
 - type: alert
-  alertType: PilotingShuttle
+  id: PilotingShuttle
   category: Piloting
   onClick: !type:StopPiloting { }
   icon: /Textures/Interface/Alerts/piloting.png
@@ -150,93 +150,93 @@
   description: You are piloting a shuttle. Click the alert to stop.
 
 - type: alert
-  alertType: Overfed
+  id: Overfed
   category: Hunger
   icon: /Textures/Interface/Alerts/Hunger/Overfed.png
   name: "[color=yellow]Overfed[/color]"
   description: You ate too much food, lardass. Run around the station and lose some weight.
 
 - type: alert
-  alertType: Peckish
+  id: Peckish
   category: Hunger
   icon: /Textures/Interface/Alerts/Hunger/Peckish.png
   name: "[color=yellow]Peckish[/color]"
   description: Some food would be good right about now.
 
 - type: alert
-  alertType: Starving
+  id: Starving
   category: Hunger
   icon: /Textures/Interface/Alerts/Hunger/Starving.png
   name: "[color=red]Starving[/color]"
   description: You're severely malnourished. The hunger pains make moving around a chore.
 
 - type: alert
-  alertType: Overhydrated
+  id: Overhydrated
   category: Thirst
   icon: /Textures/Interface/Alerts/Thirst/OverHydrated.png
   name: "[color=yellow]Overhydrated[/color]"
   description: You drank too much.
 
 - type: alert
-  alertType: Thirsty
+  id: Thirsty
   category: Thirst
   icon: /Textures/Interface/Alerts/Thirst/Thirsty.png
   name: "[color=yellow]Thirsty[/color]"
   description: Something to drink would be good right about now.
 
 - type: alert
-  alertType: Parched
+  id: Parched
   category: Thirst
   icon: /Textures/Interface/Alerts/Thirst/Parched.png
   name: "[color=red]Parched[/color]"
   description: You're severely thirsty. The thirst makes moving around a chore.
 
 - type: alert
-  alertType: Pulled
+  id: Pulled
   icon: /Textures/Interface/Alerts/Pull/pulled.png
   onClick: !type:StopBeingPulled  { }
   name: Pulled
   description: You're being pulled. Move to break free.
 
 - type: alert
-  alertType: Pulling
+  id: Pulling
   icon: /Textures/Interface/Alerts/Pull/pulling.png
   onClick: !type:StopPulling  { }
   name: Pulling
   description: You're pulling something. Click the alert to stop.
 
 - type: alert
-  alertType: Debug1
+  id: Debug1
   icon: /Textures/Interface/Alerts/human_health.rsi/health1.png
   name: Debug1
   description: Debug
 
 - type: alert
-  alertType: Debug2
+  id: Debug2
   icon: /Textures/Interface/Alerts/human_health.rsi/health2.png
   name: Debug2
   description: Debug
 
 - type: alert
-  alertType: Debug3
+  id: Debug3
   icon: /Textures/Interface/Alerts/human_health.rsi/health3.png
   name: Debug3
   description: Debug
 
 - type: alert
-  alertType: Debug4
+  id: Debug4
   icon: /Textures/Interface/Alerts/human_health.rsi/health4.png
   name: Debug4
   description: Debug
 
 - type: alert
-  alertType: Debug5
+  id: Debug5
   icon: /Textures/Interface/Alerts/human_health.rsi/health5.png
   name: Debug5
   description: Debug
 
 - type: alert
-  alertType: Debug6
+  id: Debug6
   icon: /Textures/Interface/Alerts/human_health.rsi/health6.png
   name: Debug6
   description: Debug

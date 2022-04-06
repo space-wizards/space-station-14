@@ -18,12 +18,13 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class SuicideCommand : IConsoleCommand
+    internal sealed class SuicideCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -88,11 +89,10 @@ namespace Content.Server.Chat.Commands
                 $"{_entities.ToPrettyString(player.AttachedEntity.Value):player} is committing suicide");
 
             // Held item suicide
-            var handsComponent = _entities.GetComponent<HandsComponent>(owner);
-            var itemComponent = handsComponent.GetActiveHandItem;
-            if (itemComponent != null)
+            if (_entities.TryGetComponent(owner, out HandsComponent handsComponent)
+                && handsComponent.ActiveHandEntity is EntityUid item)
             {
-                var suicide = _entities.GetComponents<ISuicideAct>(itemComponent.Owner).FirstOrDefault();
+                var suicide = _entities.GetComponents<ISuicideAct>(item).FirstOrDefault();
 
                 if (suicide != null)
                 {
@@ -100,8 +100,9 @@ namespace Content.Server.Chat.Commands
                     return;
                 }
             }
+
             // Get all entities in range of the suicider
-            var entities = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(owner, 1, LookupFlags.Approximate | LookupFlags.IncludeAnchored).ToArray();
+            var entities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesInRange(owner, 1, LookupFlags.Approximate | LookupFlags.Anchored).ToArray();
 
             if (entities.Length > 0)
             {

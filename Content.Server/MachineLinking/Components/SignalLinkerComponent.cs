@@ -4,9 +4,12 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.MachineLinking.Components
 {
     [RegisterComponent]
-    public class SignalLinkerComponent : Component
+    public sealed class SignalLinkerComponent : Component
     {
         [ViewVariables]
-        public (SignalTransmitterComponent transmitter, string port)? Port;
+        public EntityUid? savedTransmitter;
+
+        [ViewVariables]
+        public EntityUid? savedReceiver;
     }
 }

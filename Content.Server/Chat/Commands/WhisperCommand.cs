@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class WhisperCommand : IConsoleCommand
+    internal sealed class WhisperCommand : IConsoleCommand
     {
         public string Command => "whisper";
         public string Description => "Send chat messages to the local channel as a whisper";
@@ -38,7 +38,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IChatManager>().TrySpeak(playerEntity, message, true, shell, player);
+            EntitySystem.Get<ChatSystem>().TrySendInGameICMessage(playerEntity, message, InGameICChatType.Whisper, false, shell, player);
         }
     }
 }

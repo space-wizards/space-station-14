@@ -1,5 +1,6 @@
 using System;
 using Content.Server.Advertisements;
+using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Power.Components;
 using Content.Server.VendingMachines;
@@ -12,12 +13,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Advertise
 {
-    public class AdvertiseSystem : EntitySystem
+    public sealed class AdvertiseSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
 
         private const float UpdateTimer = 5f;
 
@@ -60,7 +61,7 @@ namespace Content.Server.Advertise
                 return;
 
             if (_prototypeManager.TryIndex(advertise.PackPrototypeId, out AdvertisementsPackPrototype? advertisements))
-                _chatManager.EntitySay(advertise.Owner, Loc.GetString(_random.Pick(advertisements.Advertisements)), hideChat: true);
+                _chat.TrySendInGameICMessage(advertise.Owner, Loc.GetString(_random.Pick(advertisements.Advertisements)), InGameICChatType.Speak, true);
 
             if(refresh)
                 RefreshTimer(uid, true, advertise);
@@ -121,7 +122,7 @@ namespace Content.Server.Advertise
         }
     }
 
-    public class AdvertiseEnableChangeAttemptEvent : CancellableEntityEventArgs
+    public sealed class AdvertiseEnableChangeAttemptEvent : CancellableEntityEventArgs
     {
         public bool NewState { get; }
         public bool OldState { get; }

@@ -11,7 +11,7 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(EntityStorageComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class BodyBagEntityStorageComponent : EntityStorageComponent
+    public sealed class BodyBagEntityStorageComponent : EntityStorageComponent
     {
         protected override bool AddToContents(EntityUid entity)
         {

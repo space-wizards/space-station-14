@@ -7,7 +7,7 @@ namespace Content.Shared.DragDrop;
 /// Mark this event as handled to specify that the entity can be dropped on
 /// and set CanDrop to true or false, depending on whether dropping the entity onto the target is actually possible.
 /// </summary>
-public class CanDragDropOnEvent : HandledEntityEventArgs
+public sealed class CanDragDropOnEvent : HandledEntityEventArgs
 {
     /// <summary>
     ///     Entity doing the drag and drop.

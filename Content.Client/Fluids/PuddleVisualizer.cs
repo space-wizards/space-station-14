@@ -13,7 +13,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Fluids
 {
     [UsedImplicitly]
-    public class PuddleVisualizer : AppearanceVisualizer
+    public sealed class PuddleVisualizer : AppearanceVisualizer
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -72,14 +72,12 @@ namespace Content.Client.Fluids
             if (forceWetFloorSprite)
             {
                 //Change the puddle's sprite to the wet floor sprite
-                spriteComponent.LayerSetRSI(0, "Fluids/wet_floor_sparkles.rsi");
-                spriteComponent.LayerSetState(0, "sparkles");
+                spriteComponent.LayerSetState(0, "sparkles", "Fluids/wet_floor_sparkles.rsi");
                 spriteComponent.Color = spriteComponent.Color.WithAlpha(0.25f); //should be mostly transparent.
             }
             else
             {
-                spriteComponent.LayerSetRSI(0, "Fluids/smear.rsi");
-                spriteComponent.LayerSetState(0, "smear-0"); // TODO: need a way to implement the random smears again when the mop creates new puddles.
+                spriteComponent.LayerSetState(0, "smear-0", "Fluids/smear.rsi"); // TODO: need a way to implement the random smears again when the mop creates new puddles.
             }
 
         }

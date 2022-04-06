@@ -17,15 +17,6 @@
      Plastic: 50
 
 - type: latheRecipe
-  id: APCElectronics
-  icon: Objects/Misc/module.rsi/charger_APC.png
-  result: APCElectronics
-  completetime: 500
-  materials:
-     Steel: 50
-     Plastic: 50
-     
-- type: latheRecipe
   id: AirAlarmElectronics
   icon: Objects/Misc/module.rsi/airalarm_electronics.png
   result: AirAlarmElectronics
@@ -44,31 +35,24 @@
      Plastic: 50
 
 - type: latheRecipe
-  id: SubstationMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
-  result: SubstationMachineCircuitboard
-  completetime: 1000
-  materials:
-     Steel: 100
-     Glass: 100
-
-- type: latheRecipe
-  id: SMESMachineCircuitboard
-  icon: Objects/Misc/module.rsi/power_mod.png
-  result: SMESMachineCircuitboard
-  completetime: 1000
-  materials:
-     Steel: 100
-     Glass: 100
-
-- type: latheRecipe
   id: CloningPodMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: CloningPodMachineCircuitboard
   completetime: 1000
   materials:
      Steel: 100
-     Plastic: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
+  id: ThermomachineFreezerMachineCircuitBoard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ThermomachineFreezerMachineCircuitBoard
+  completetime: 1000
+  materials:
+    Steel: 150
+    Glass: 900
+    Gold: 50
 
 - type: latheRecipe
   id: MedicalScannerMachineCircuitboard
@@ -77,7 +61,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Plastic: 100
+     Glass: 900
 
 - type: latheRecipe
   id: ChemMasterMachineCircuitboard
@@ -86,7 +70,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Plastic: 100
+     Glass: 900
 
 - type: latheRecipe
   id: ChemDispenserMachineCircuitboard
@@ -95,16 +79,8 @@
   completetime: 1000
   materials:
      Steel: 100
-     Plastic: 100
-
-- type: latheRecipe
-  id: SolarControlComputerCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
-  result: SolarControlComputerCircuitboard
-  completetime: 1000
-  materials:
-     Steel: 100
-     Plastic: 100
+     Glass: 900
+     Gold: 100
 
 - type: latheRecipe
   id: HydroponicsTrayMachineCircuitboard
@@ -113,7 +89,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Plastic: 100
+     Glass: 900
 
 - type: latheRecipe
   id: AutolatheMachineCircuitboard
@@ -122,7 +98,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Plastic: 100
+     Glass: 900
 
 - type: latheRecipe
   id: ProtolatheMachineCircuitboard
@@ -131,16 +107,55 @@
   completetime: 1000
   materials:
      Steel: 100
-     Plastic: 100
+     Glass: 900
 
 - type: latheRecipe
-  id: KitchenReagentGrinderMachineCircuitboard
+  id: CircuitImprinterMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
-  result: KitchenReagentGrinderMachineCircuitboard
+  result: CircuitImprinterMachineCircuitboard
   completetime: 1000
   materials:
      Steel: 100
-     Plastic: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: UniformPrinterMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: UniformPrinterMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: VaccinatorMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: VaccinatorMachineCircuitboard
+  completetime: 100
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
+  id: DiagnoserMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: DiagnoserMachineCircuitboard
+  completetime: 100
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+
+- type: latheRecipe
+  id: ReagentGrinderMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ReagentGrinderMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 900
 
 - type: latheRecipe
   id: CrewMonitoringComputerCircuitboard
@@ -149,7 +164,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Plastic: 100
+     Glass: 900
 
 - type: latheRecipe
   id: ShuttleConsoleCircuitboard
@@ -158,7 +173,8 @@
   completetime: 1000
   materials:
      Steel: 100
-     Plastic: 100
+     Glass: 900
+     Gold: 100
 
 - type: latheRecipe
   id: DawInstrumentMachineCircuitboard
@@ -166,5 +182,87 @@
   result: DawInstrumentMachineCircuitboard
   completetime: 1000
   materials:
+    Steel: 100
+    Glass: 900
+
+# Power
+- type: latheRecipe
+  id: APCElectronics
+  icon: Objects/Misc/module.rsi/charger_APC.png
+  result: APCElectronics
+  completetime: 500
+  materials:
+     Steel: 50
+     Glass: 100
+
+- type: latheRecipe
+  id: SubstationMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SubstationMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 50
+     Glass: 450
+     
+- type: latheRecipe
+  id: WallmountSubstationElectronics
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: WallmountSubstationElectronics
+  completetime: 1000
+  materials:
+     Steel: 50
+     Glass: 350
+
+- type: latheRecipe
+  id: SMESMachineCircuitboard
+  icon: Objects/Misc/module.rsi/power_mod.png
+  result: SMESMachineCircuitboard
+  completetime: 1000
+  materials:
      Steel: 100
-     Plastic: 100
+     Glass: 900
+     
+- type: latheRecipe
+  id: GeneratorPlasmaMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: GeneratorPlasmaMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 50
+     Glass: 350
+     
+- type: latheRecipe
+  id: GeneratorUraniumMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: GeneratorUraniumMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 50
+     Glass: 350
+     
+- type: latheRecipe
+  id: WallmountGeneratorElectronics
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: WallmountGeneratorElectronics
+  completetime: 1000
+  materials:
+     Steel: 50
+     Glass: 350
+     
+- type: latheRecipe
+  id: WallmountGeneratorAPUElectronics
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: WallmountGeneratorAPUElectronics
+  completetime: 1000
+  materials:
+     Steel: 50
+     Glass: 350
+     
+- type: latheRecipe
+  id: SolarControlComputerCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SolarControlComputerCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 900

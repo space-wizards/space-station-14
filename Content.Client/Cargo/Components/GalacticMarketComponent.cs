@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Cargo.Components
 {
     [RegisterComponent]
-    public class GalacticMarketComponent : SharedGalacticMarketComponent
+    public sealed class GalacticMarketComponent : SharedGalacticMarketComponent
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

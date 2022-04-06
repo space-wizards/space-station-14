@@ -1,36 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
-using Content.Server.MachineLinking.Models;
 using Content.Server.Power.Components;
-using Content.Server.Stunnable;
+using Content.Server.Recycling;
+using Content.Server.Recycling.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.Item;
-using Content.Shared.MachineLinking;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Conveyor
 {
-    public class ConveyorSystem : EntitySystem
+    public sealed class ConveyorSystem : EntitySystem
     {
-        [Dependency] private StunSystem _stunSystem = default!;
-
+        [Dependency] private RecyclerSystem _recycler = default!;
         public override void Initialize()
         {
             base.Initialize();
 
+            SubscribeLocalEvent<ConveyorComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ConveyorComponent, SignalReceivedEvent>(OnSignalReceived);
-            SubscribeLocalEvent<ConveyorComponent, PortDisconnectedEvent>(OnPortDisconnected);
-            SubscribeLocalEvent<ConveyorComponent, LinkAttemptEvent>(OnLinkAttempt);
             SubscribeLocalEvent<ConveyorComponent, PowerChangedEvent>(OnPowerChanged);
         }
+
+        private void OnInit(EntityUid uid, ConveyorComponent component, ComponentInit args)
+        {
+            var receiver = EnsureComp<SignalReceiverComponent>(uid);
+            foreach (string port in Enum.GetNames<ConveyorState>())
+                if (!receiver.Inputs.ContainsKey(port))
+                    receiver.AddPort(port);
+        }
+
 
         private void OnPowerChanged(EntityUid uid, ConveyorComponent component, PowerChangedEvent args)
         {
@@ -52,41 +58,24 @@ namespace Content.Server.Conveyor
             }
         }
 
-        private void OnLinkAttempt(EntityUid uid, ConveyorComponent component, LinkAttemptEvent args)
-        {
-            if (args.TransmitterComponent.Outputs.GetPort(args.TransmitterPort).Signal is TwoWayLeverSignal signal &&
-                signal != TwoWayLeverSignal.Middle)
-            {
-                args.Cancel();
-                _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true);
-                component.Owner.PopupMessage(args.Attemptee, Loc.GetString("conveyor-component-failed-link"));
-            }
-        }
-
-        private void OnPortDisconnected(EntityUid uid, ConveyorComponent component, PortDisconnectedEvent args)
-        {
-            SetState(component, TwoWayLeverSignal.Middle);
-        }
-
         private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)
         {
-            switch (args.Port)
-            {
-                case "state":
-                    SetState(component, (TwoWayLeverSignal) args.Value!);
-                    break;
-            }
+            if (Enum.TryParse(args.Port, out ConveyorState state))
+                SetState(component, state);
         }
 
-        private void SetState(ConveyorComponent component, TwoWayLeverSignal signal)
+        private void SetState(ConveyorComponent component, ConveyorState state)
         {
-            component.State = signal switch
+            component.State = state;
+
+            if (TryComp<RecyclerComponent>(component.Owner, out var recycler))
             {
-                TwoWayLeverSignal.Left => ConveyorState.Reversed,
-                TwoWayLeverSignal.Middle => ConveyorState.Off,
-                TwoWayLeverSignal.Right => ConveyorState.Forward,
-                _ => ConveyorState.Off
-            };
+                if (component.State != ConveyorState.Off)
+                    _recycler.EnableRecycler(recycler);
+                else
+                    _recycler.DisableRecycler(recycler);
+            }
+
             UpdateAppearance(component);
         }
 

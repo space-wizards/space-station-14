@@ -3,6 +3,7 @@ using Content.Client.Interactable;
 using Content.Client.Interactable.Components;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
+using Content.Shared.Interaction;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -10,8 +11,6 @@ using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Outline;
 
@@ -23,14 +22,75 @@ public sealed class InteractionOutlineSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
-    public bool Enabled = true;
+    /// <summary>
+    ///     Whether to currently draw the outline. The outline may be temporarily disabled by other systems
+    /// </summary>
+    private bool _enabled = true;
+
+    /// <summary>
+    ///     Whether to draw the outline at all. Overrides <see cref="_enabled"/>.
+    /// </summary>
+    private bool _cvarEnabled = true;
 
     private EntityUid? _lastHoveredEntity;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _configManager.OnValueChanged(CCVars.OutlineEnabled, SetCvarEnabled);
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        _configManager.UnsubValueChanged(CCVars.OutlineEnabled, SetCvarEnabled);
+    }
+
+    public void SetCvarEnabled(bool cvarEnabled)
+    {
+        _cvarEnabled = cvarEnabled;
+
+        // clear last hover if required:
+
+        if (_cvarEnabled)
+            return;
+
+        if (_lastHoveredEntity == null || Deleted(_lastHoveredEntity))
+            return;
+
+        if (TryComp(_lastHoveredEntity, out InteractionOutlineComponent? outline))
+            outline.OnMouseLeave();
+    }
+
+    public void SetEnabled(bool enabled)
+    {
+        if (enabled == _enabled)
+            return;
+
+        _enabled = enabled;
+
+        // clear last hover if required:
+
+        if (enabled)
+            return;
+
+        if (_lastHoveredEntity == null || Deleted(_lastHoveredEntity))
+            return;
+
+        if (TryComp(_lastHoveredEntity, out InteractionOutlineComponent? outline))
+            outline.OnMouseLeave();
+    }
 
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
+
+        if (!_enabled || !_cvarEnabled)
+            return;
 
         // If there is no local player, there is no session, and therefore nothing to do here.
         var localPlayer = _playerManager.LocalPlayer;
@@ -76,20 +136,10 @@ public sealed class InteractionOutlineSystem : EntitySystem
         var inRange = false;
         if (localPlayer.ControlledEntity != null && entityToClick != null)
         {
-            inRange = localPlayer.InRangeUnobstructed(entityToClick.Value, ignoreInsideBlocker: true);
+            inRange = _interactionSystem.InRangeUnobstructed(localPlayer.ControlledEntity.Value, entityToClick.Value);
         }
 
         InteractionOutlineComponent? outline;
-
-        if (!Enabled || !_configManager.GetCVar(CCVars.OutlineEnabled))
-        {
-            if (entityToClick != null && TryComp(entityToClick, out outline))
-            {
-                outline.OnMouseLeave(); //Prevent outline remains from persisting post command.
-            }
-
-            return;
-        }
 
         if (entityToClick == _lastHoveredEntity)
         {

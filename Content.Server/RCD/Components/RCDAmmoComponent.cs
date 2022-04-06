@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.RCD.Components
 {
     [RegisterComponent]
-    public class RCDAmmoComponent : Component
+    public sealed class RCDAmmoComponent : Component
     {
         //How much ammo we refill
         [ViewVariables(VVAccess.ReadWrite)] [DataField("refillAmmo")] public int RefillAmmo = 5;

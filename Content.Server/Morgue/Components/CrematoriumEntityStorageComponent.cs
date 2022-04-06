@@ -29,7 +29,7 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
 #pragma warning disable 618
-    public class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent, IExamine, ISuicideAct
+    public sealed class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent, IExamine, ISuicideAct
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entities = default!;

@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public class DummyIconTest : ContentIntegrationTest
+    public sealed class DummyIconTest : ContentIntegrationTest
     {
         [Test]
         public async Task Test()
@@ -24,7 +24,7 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (proto.Abstract || !proto.Components.ContainsKey("Sprite")) continue;
+                    if (proto.NoSpawn || proto.Abstract || !proto.Components.ContainsKey("Sprite")) continue;
 
                     Assert.DoesNotThrow(() =>
                     {

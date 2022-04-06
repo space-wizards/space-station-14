@@ -11,7 +11,7 @@ namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class TileType : IConstructionCondition
+    public sealed class TileType : IConstructionCondition
     {
         [DataField("targets")]
         public List<string> TargetTiles { get; } = new();

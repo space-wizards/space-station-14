@@ -41,8 +41,8 @@
       - PosterContrabandHackingGuide
       - PosterContrabandRIPBadger
       - PosterContrabandAmbrosiaVulgaris
-      - PosterContrabandDonutCorp.
-      - PosterContrabandEAT.
+      - PosterContrabandDonutCorp
+      - PosterContrabandEAT
       - PosterContrabandTools
       - PosterContrabandPower
       - PosterContrabandSpaceCube
@@ -77,6 +77,8 @@
       - PosterContrabandBountyHunters
       - PosterContrabandTheBigGasTruth
       - PosterContrabandGotWood
+      - PosterContrabandWehWatches
+      - PosterContrabandVoteWeh
     chance: 1
 
 - type: entity
