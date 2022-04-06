@@ -151,6 +151,33 @@
     fireCost: 12
 
 - type: entity
+  name: nightfall laser rifle
+  parent: BatteryGunBase
+  id: LaserRifleSniper
+  description: A scoped high capacity laser rifle.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/nightfall.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/nightfall.rsi
+  - type: BatteryBarrel
+    fireCost: 6
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: true
+
+- type: entity
   name: DEAC-12 pulse carbine
   parent: BatteryGunBase
   id: PulseCarbineDeac
@@ -170,6 +197,36 @@
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
   - type: BatteryBarrel
     fireCost: 12
+    ammoPrototype: Pulse
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: PowerCellSlot
+    cellSlot:
+      ejectOnUse: true
+      soundOptions:
+        volume: -2
+      startingItem: PowerCellSmallHigh
+
+- type: entity
+  name: destroyer pulse rifle
+  parent: BatteryGunBase
+  id: PulseRifleDeathSquad
+  description: A weapon that fully lives up to its name. 
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
+  - type: BatteryBarrel
+    fireCost: 6
     ammoPrototype: Pulse
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
