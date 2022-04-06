@@ -31,7 +31,7 @@ namespace Content.Server.Atmos.Components
 
         private int _integrity = 3;
 
-        [ViewVariables] private BoundUserInterface? _userInterface;
+        [ViewVariables] public BoundUserInterface? UserInterface;
 
         [DataField("ruptureSound")] private SoundSpecifier _ruptureSound = new SoundPathSpecifier("Audio/Effects/spray.ogg");
 
@@ -84,10 +84,10 @@ namespace Content.Server.Atmos.Components
         protected override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetUIOrNull(SharedGasTankUiKey.Key);
-            if (_userInterface != null)
+            UserInterface = Owner.GetUIOrNull(SharedGasTankUiKey.Key);
+            if (UserInterface != null)
             {
-                _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
         }
 
@@ -160,7 +160,7 @@ namespace Content.Server.Atmos.Components
         public void UpdateUserInterface(bool initialUpdate = false)
         {
             var internals = GetInternalsComponent();
-            _userInterface?.SetState(
+            UserInterface?.SetState(
                 new GasTankBoundUserInterfaceState
                 {
                     TankPressure = Air?.Pressure ?? 0,
@@ -205,16 +205,17 @@ namespace Content.Server.Atmos.Components
 
         public void AssumeAir(GasMixture giver)
         {
-            EntitySystem.Get<AtmosphereSystem>().Merge(Air, giver);
-            CheckStatus();
+            var atmos = EntitySystem.Get<AtmosphereSystem>();
+            atmos.Merge(Air, giver);
+            CheckStatus(atmos);
         }
 
-        public void CheckStatus()
+        public void CheckStatus(AtmosphereSystem? atmosphereSystem=null)
         {
             if (Air == null)
                 return;
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            atmosphereSystem ??= EntitySystem.Get<AtmosphereSystem>();
 
             var pressure = Air.Pressure;
 

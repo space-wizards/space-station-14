@@ -24,7 +24,7 @@
 - type: entity
   id: CrateSalvageAssortedGoodies
   suffix: Filled, Salvage Random
-  abstract: true # You should use SalvageMaterialCrateSpawner instead
+  noSpawn: true # You should use SalvageMaterialCrateSpawner instead
   parent: CrateGenericSteel
   components:
   - type: StorageFill

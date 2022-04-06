@@ -62,10 +62,11 @@
           path: /Audio/Effects/metalbreak.ogg
       - !type:ExplodeBehavior
   - type: Explosive
-    devastationRange: 1
-    heavyImpactRange: 3
-    lightImpactRange: 5
-    flashRange: 6
+    explosionType: Default
+    # Same as AME, but numbers still picked from a hat.
+    maxIntensity: 100
+    intensitySlope: 2
+    totalIntensity: 200
 
 # Base Wallmount Generator
 
@@ -123,7 +124,7 @@
 # Construction Frames
 
 - type: entity
-  abstract: true
+  noSpawn: true
   id: BaseGeneratorWallmountFrame
   name: wallmount generator frame
   description: A construction frame for a wallmount generator.
@@ -160,7 +161,7 @@
   components:
   - type: PowerSupplier
     supplyRate: 3000
-    
+
 - type: entity
   parent: BaseGenerator
   id: GeneratorPlasma
@@ -179,7 +180,7 @@
     LayoutId: GeneratorPlasma
   - type: Machine
     board: GeneratorPlasmaMachineCircuitboard
-    
+
 - type: entity
   parent: BaseGenerator
   id: GeneratorUranium
@@ -222,7 +223,7 @@
     supplyRate: 6000
   - type: Construction
     graph: WallmountGenerator
-    node: APU  
+    node: APU
 
 # RTG - no fuel requirement
 

@@ -77,7 +77,7 @@
 # Compact Wall Substation Base
 - type: entity
   id: BaseSubstationWall
-  abstract: true
+  noSpawn: true
   name: wallmount substation
   description: A substation designed for compact shuttles and spaces.
   placement:
@@ -150,7 +150,7 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
-          
+
 # Substations in use
 
 - type: entity
@@ -161,7 +161,7 @@
   - type: Battery
     maxCharge: 4000000
     startingCharge: 4000000
-    
+
 - type: entity
   parent: BaseSubstationWall
   id: SubstationWallBasic
@@ -173,11 +173,11 @@
   - type: Construction
     graph: WallmountSubstation
     node: substation
-    
+
 # Construction Frame
 - type: entity
   id: BaseSubstationWallFrame
-  abstract: true
+  noSpawn: true
   name: wallmount substation frame
   description: A substation frame for construction
   placement:
