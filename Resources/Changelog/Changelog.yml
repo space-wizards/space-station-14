@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Pill canisters are now available in the protolathe after researching
-      chemistry technology., type: Add}
-  - {message: Pill canisters now fit inside medical belts., type: Tweak}
-  id: 788
-  time: '2021-12-29T06:21:17.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Ammo produced by a lathe now works properly., type: Fix}
@@ -3031,3 +3024,9 @@ Entries:
       details., type: Add}
   id: 1287
   time: '2022-04-06T23:31:28.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Most of the shutters and blast doors on Delta Station are now linked
+      to buttons., type: Tweak}
+  id: 1288
+  time: '2022-04-06T23:32:46.0000000+00:00'
