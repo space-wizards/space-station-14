@@ -13,16 +13,16 @@ namespace Content.Shared.Maps
     [Prototype("tile")]
     public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
-        [DataField("parent", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
+        [ParentDataFieldAttribute(typeof(PrototypeIdSerializer<ContentTileDefinition>))]
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
-        [DataField("abstract")]
+        [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
         public string Path => "/Textures/Tiles/";
 
-        [DataField("id", required: true)] public string ID { get; } = string.Empty;
+        [IdDataFieldAttribute] public string ID { get; } = string.Empty;
 
         public ushort TileId { get; private set; }
 
@@ -39,6 +39,13 @@ namespace Content.Shared.Maps
         [DataField("footstep_sounds")] public SoundSpecifier? FootstepSounds { get; }
 
         [DataField("friction")] public float Friction { get; set; }
+
+        [DataField("variants")] public byte Variants { get; set; } = 1;
+
+        /// <summary>
+        /// This controls what variants the `variantize` command is allowed to use.
+        /// </summary>
+        [DataField("placementVariants")] public byte[] PlacementVariants { get; set; } = new byte[1] { 0 };
 
         [DataField("thermalConductivity")] public float ThermalConductivity { get; set; } = 0.05f;
 

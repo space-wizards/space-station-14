@@ -8,7 +8,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Tabletop.UI
 {
     [GenerateTypedNameReferences]
-    public partial class TabletopWindow : DefaultWindow
+    public sealed partial class TabletopWindow : DefaultWindow
     {
         public TabletopWindow(IEye? eye, Vector2i size)
         {

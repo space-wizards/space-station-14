@@ -4,13 +4,13 @@ using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tools;
-using Content.Server.Tools.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Toilet;
+using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -20,7 +20,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Toilet
 {
-    public class ToiletSystem : EntitySystem
+    public sealed class ToiletSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SecretStashSystem _secretStash = default!;
@@ -197,7 +197,7 @@ namespace Content.Server.Toilet
         }
     }
 
-    public class ToiletPryFinished : EntityEventArgs
+    public sealed class ToiletPryFinished : EntityEventArgs
     {
         public EntityUid Uid;
 
@@ -207,7 +207,7 @@ namespace Content.Server.Toilet
         }
     }
 
-    public class ToiletPryInterrupted : EntityEventArgs
+    public sealed class ToiletPryInterrupted : EntityEventArgs
     {
         public EntityUid Uid;
 

@@ -2,6 +2,7 @@ using System;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
@@ -175,7 +176,7 @@ public sealed partial class GunSystem
         appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
     }
 
-    private void AddSpinVerb(EntityUid uid, RevolverBarrelComponent component, GetAlternativeVerbsEvent args)
+    private void AddSpinVerb(EntityUid uid, RevolverBarrelComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (args.Hands == null || !args.CanAccess || !args.CanInteract)
             return;
@@ -183,7 +184,7 @@ public sealed partial class GunSystem
         if (component.Capacity <= 1 || component.ShotsLeft == 0)
             return;
 
-        Verb verb = new()
+        AlternativeVerb verb = new()
         {
             Text = Loc.GetString("spin-revolver-verb-get-data-text"),
             IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png",

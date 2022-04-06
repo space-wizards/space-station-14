@@ -13,6 +13,15 @@
   - type: Tag
     tags:
     - Sheet
+    - DroneUsable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: SheetOtherBase
@@ -121,6 +130,9 @@
   name: plastic
   suffix: Full
   components:
+  - type: Tag
+    tags:
+    - Plastic
   - type: Material
     materials:
     - Plastic

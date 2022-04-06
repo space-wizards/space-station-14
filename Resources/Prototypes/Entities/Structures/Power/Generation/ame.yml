@@ -46,6 +46,12 @@
   - type: Anchorable
   - type: Pullable
   - type: AMEController
+  - type: Explosive
+    explosionType: Default
+    intensitySlope: 5
+    maxIntensity: 60
+  - type: ActivatableUI
+    key: enum.AMEControllerUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.AMEControllerUiKey.Key
@@ -62,13 +68,13 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
+#  - type: ApcPowerReceiver
+#  - type: ExtensionCableReceiver
   - type: PowerSupplier
     supplyRate: 0
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: AMEController
   id: AMEControllerUnanchored
   suffix: Unanchored

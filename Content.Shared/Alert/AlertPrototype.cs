@@ -13,7 +13,7 @@ namespace Content.Shared.Alert
     /// An alert popup with associated icon, tooltip, and other data.
     /// </summary>
     [Prototype("alert")]
-    public class AlertPrototype : IPrototype, ISerializationHooks
+    public sealed class AlertPrototype : IPrototype, ISerializationHooks
     {
         [ViewVariables]
         string IPrototype.ID => AlertType.ToString();
@@ -21,7 +21,7 @@ namespace Content.Shared.Alert
         /// <summary>
         /// Type of alert, no 2 alert prototypes should have the same one.
         /// </summary>
-        [DataField("alertType")]
+        [IdDataFieldAttribute]
         public AlertType AlertType { get; private set; }
 
         /// <summary>

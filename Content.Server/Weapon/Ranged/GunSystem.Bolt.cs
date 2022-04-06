@@ -3,6 +3,7 @@ using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Audio;
@@ -17,14 +18,14 @@ namespace Content.Server.Weapon.Ranged;
 
 public sealed partial class GunSystem
 {
-    private void AddToggleBoltVerb(EntityUid uid, BoltActionBarrelComponent component, GetInteractionVerbsEvent args)
+    private void AddToggleBoltVerb(EntityUid uid, BoltActionBarrelComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (args.Hands == null ||
             !args.CanAccess ||
             !args.CanInteract)
             return;
 
-        Verb verb = new()
+        InteractionVerb verb = new()
         {
             Text = component.BoltOpen
                 ? Loc.GetString("close-bolt-verb-get-data-text")

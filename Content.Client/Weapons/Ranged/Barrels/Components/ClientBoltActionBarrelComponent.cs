@@ -17,7 +17,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
     [NetworkedComponent()]
-    public class ClientBoltActionBarrelComponent : Component, IItemStatus
+    public sealed class ClientBoltActionBarrelComponent : Component, IItemStatus
     {
         private StatusControl? _statusControl;
 

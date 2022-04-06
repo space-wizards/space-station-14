@@ -194,6 +194,12 @@
   name: cargo wardrobe
 
 - type: entity
+  id: WardrobeSalvage
+  parent: WardrobeMixed
+  name: salvage wardrobe
+  description: Notably not salvaged.
+
+- type: entity
   id: WardrobeEngineering
   parent: WardrobeYellow
   name: engineering wardrobe

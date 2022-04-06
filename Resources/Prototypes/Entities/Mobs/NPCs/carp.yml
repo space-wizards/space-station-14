@@ -43,8 +43,17 @@
       crit: crit
       dead: dead
   - type: Butcherable
-    meat: FoodMeat # TODO: CrapMeat or FishMeat
-    pieces: 2
+    # TODO: CrapMeat or FishMeat # - 2022-02-17 LMAO crap meat
+    spawned:
+    - id: FoodMeat
+      amount: 2
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      groups:
+        Brute: 20
 
 - type: entity
   name: magicarp

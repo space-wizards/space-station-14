@@ -10,7 +10,7 @@ using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Flash
 {
-    public class FlashOverlay : Overlay
+    public sealed class FlashOverlay : Overlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClyde _displayManager = default!;

@@ -18,10 +18,10 @@ namespace Content.IntegrationTests.Tests.Disposal
     [TestOf(typeof(DisposalHolderComponent))]
     [TestOf(typeof(DisposalEntryComponent))]
     [TestOf(typeof(DisposalUnitComponent))]
-    public class DisposalUnitTest : ContentIntegrationTest
+    public sealed class DisposalUnitTest : ContentIntegrationTest
     {
         [Reflect(false)]
-        private class DisposalUnitTestSystem : EntitySystem
+        private sealed class DisposalUnitTestSystem : EntitySystem
         {
             public override void Initialize()
             {
@@ -78,6 +78,9 @@ namespace Content.IntegrationTests.Tests.Disposal
   id: HumanDummy
   components:
   - type: Body
+    template: HumanoidTemplate
+    preset: HumanPreset
+    centerSlot: torso
   - type: MobState
   - type: Damageable
     damageContainer: Biological

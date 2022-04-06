@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
-    public class TransformableContainerSystem : EntitySystem
+    public sealed class TransformableContainerSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;

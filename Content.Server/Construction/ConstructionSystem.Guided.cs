@@ -11,14 +11,14 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Construction
 {
-    public partial class ConstructionSystem
+    public sealed partial class ConstructionSystem
     {
         private readonly Dictionary<ConstructionPrototype, ConstructionGuide> _guideCache = new();
 
         private void InitializeGuided()
         {
             SubscribeNetworkEvent<RequestConstructionGuide>(OnGuideRequested);
-            SubscribeLocalEvent<ConstructionComponent, GetOtherVerbsEvent>(AddDeconstructVerb);
+            SubscribeLocalEvent<ConstructionComponent, GetVerbsEvent<Verb>>(AddDeconstructVerb);
             SubscribeLocalEvent<ConstructionComponent, ExaminedEvent>(HandleConstructionExamined);
         }
 
@@ -31,7 +31,7 @@ namespace Content.Server.Construction
                 RaiseNetworkEvent(new ResponseConstructionGuide(msg.ConstructionId, guide), args.SenderSession.ConnectedClient);
         }
 
-        private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetOtherVerbsEvent args)
+        private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetVerbsEvent<Verb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -102,6 +102,14 @@ namespace Content.Server.Construction
         }
 
 
+        /// <summary>
+        ///     Returns a <see cref="ConstructionGuide"/> for a given <see cref="ConstructionPrototype"/>,
+        ///     generating and caching it as needed.
+        /// </summary>
+        /// <param name="construction">The construction prototype to generate the guide for. We must be able to pathfind
+        ///                            from its starting node to its ending node to be able to generate a guide for it.</param>
+        /// <returns>The guide for the given construction, or null if we can't pathfind from the start node to the
+        ///          end node on that construction.</returns>
         private ConstructionGuide? GetGuide(ConstructionPrototype construction)
         {
             // NOTE: This method might be allocate a fair bit, but do not worry!

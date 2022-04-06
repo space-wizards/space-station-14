@@ -7,7 +7,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [Serializable]
     [DataDefinition]
-    public class DoActsBehavior : IThresholdBehavior
+    public sealed class DoActsBehavior : IThresholdBehavior
     {
         /// <summary>
         ///     What acts should be triggered upon activation.

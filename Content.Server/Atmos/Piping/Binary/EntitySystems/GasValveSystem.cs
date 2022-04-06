@@ -18,9 +18,9 @@ using Robust.Shared.Player;
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasValveSystem : EntitySystem
+    public sealed class GasValveSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
         public override void Initialize()
         {
@@ -51,11 +51,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnActivate(EntityUid uid, GasValveComponent component, ActivateInWorldEvent args)
         {
-            if (args.User.InRangeUnobstructed(args.Target) && _actionBlockerSystem.CanInteract(args.User))
-            {
-                Toggle(uid, component);
-                SoundSystem.Play(Filter.Pvs(component.Owner), component.ValveSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.25f));
-            }
+            Toggle(uid, component);
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.ValveSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.25f));
         }
 
         public void Set(EntityUid uid, GasValveComponent component, bool value)
@@ -73,11 +70,13 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 {
                     inlet.AddAlwaysReachable(outlet);
                     outlet.AddAlwaysReachable(inlet);
+                    _ambientSoundSystem.SetAmbience(component.Owner, true);
                 }
                 else
                 {
                     inlet.RemoveAlwaysReachable(outlet);
                     outlet.RemoveAlwaysReachable(inlet);
+                    _ambientSoundSystem.SetAmbience(component.Owner, false);
                 }
             }
         }

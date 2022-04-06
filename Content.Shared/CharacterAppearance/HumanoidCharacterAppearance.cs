@@ -1,13 +1,10 @@
-﻿using System;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Random;
+﻿using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CharacterAppearance
 {
     [Serializable, NetSerializable]
-    public class HumanoidCharacterAppearance : ICharacterAppearance
+    public sealed class HumanoidCharacterAppearance : ICharacterAppearance
     {
         public HumanoidCharacterAppearance(string hairStyleId,
             Color hairColor,

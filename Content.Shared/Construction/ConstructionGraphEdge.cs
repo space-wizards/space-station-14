@@ -8,7 +8,7 @@ namespace Content.Shared.Construction
 {
     [Serializable]
     [DataDefinition]
-    public class ConstructionGraphEdge
+    public sealed class ConstructionGraphEdge
     {
         [DataField("steps")]
         private ConstructionGraphStep[] _steps = Array.Empty<ConstructionGraphStep>();

@@ -11,7 +11,7 @@ namespace Content.Shared.Suspicion
     }
 
     [Serializable, NetSerializable]
-    public class SuspicionRoleComponentState : ComponentState
+    public sealed class SuspicionRoleComponentState : ComponentState
     {
         public readonly string? Role;
         public readonly bool? Antagonist;

@@ -161,7 +161,7 @@ namespace Content.Shared.Slippery
     }
 
     [Serializable, NetSerializable]
-    public class SlipperyComponentState : ComponentState
+    public sealed class SlipperyComponentState : ComponentState
     {
         public float ParalyzeTime { get; }
         public float IntersectPercentage { get; }

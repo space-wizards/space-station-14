@@ -10,7 +10,7 @@ using Robust.Shared.Network;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Ban)]
-    public class BanListCommand : IConsoleCommand
+    public sealed class BanListCommand : IConsoleCommand
     {
         public string Command => "banlist";
         public string Description => "Lists somebody's bans";

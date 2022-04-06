@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class SetSolutionTemperature : IConsoleCommand
+    public sealed class SetSolutionTemperature : IConsoleCommand
     {
         public string Command => "setsolutiontemperature";
         public string Description => "Set the temperature of some solution.";

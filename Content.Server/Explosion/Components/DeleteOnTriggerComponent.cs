@@ -7,7 +7,7 @@ namespace Content.Server.Explosion.Components
     /// Will delete the attached entity upon a <see cref="TriggerEvent"/>.
     /// </summary>
     [RegisterComponent]
-    public class DeleteOnTriggerComponent : Component
+    public sealed class DeleteOnTriggerComponent : Component
     {
     }
 }

@@ -1,6 +1,6 @@
 ﻿- type: entity
   parent: MobHuman
-  abstract: True
+  abstract: true
   id: BaseVox
   components:
   - type: Icon
@@ -83,18 +83,14 @@
   - type: Body
     template: HumanoidTemplate
     preset: VoxPreset
+  # TODO Vox nitrogen
   - type: Respirator
-    needsGases:
-      Nitrogen: 0.00060763888
-    producesGases:
-      Nitrogen: 0.00045572916
-      CarbonDioxide: 0.00015190972
     damage:
       types:
-        Asphyxiation: 1
+        Asphyxiation: 3
     damageRecovery:
       types:
-        Asphyxiation: -1
+        Asphyxiation: -1.5
 #  - type: Appearance
 #    visuals:
 #      - type: RotationVisualizer
@@ -114,4 +110,7 @@
   - type: Inventory
     speciesId: vox
   - type: Butcherable
-    meat: FoodMeatChicken
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatChicken
+      amount: 5

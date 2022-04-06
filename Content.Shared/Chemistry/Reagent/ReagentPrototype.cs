@@ -22,30 +22,30 @@ namespace Content.Shared.Chemistry.Reagent
 {
     [Prototype("reagent")]
     [DataDefinition]
-    public class ReagentPrototype : IPrototype, IInheritingPrototype
+    public sealed class ReagentPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [DataField("name")]
-        public string Name { get; } = string.Empty;
+        [DataField("name", required: true)]
+        public string Name { get; } = default!;
 
         [DataField("group")]
         public string Group { get; } = "Unknown";
 
-        [DataField("parent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
+        [ParentDataFieldAttribute(typeof(PrototypeIdSerializer<ReagentPrototype>))]
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
-        [DataField("abstract")]
+        [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
-        [DataField("desc")]
-        public string Description { get; } = string.Empty;
+        [DataField("desc", required: true)]
+        public string Description { get; } = default!;
 
-        [DataField("physicalDesc")]
-        public string PhysicalDescription { get; } = string.Empty;
+        [DataField("physicalDesc", required: true)]
+        public string PhysicalDescription { get; } = default!;
 
         [DataField("color")]
         public Color SubstanceColor { get; } = Color.White;
@@ -143,7 +143,7 @@ namespace Content.Shared.Chemistry.Reagent
     }
 
     [DataDefinition]
-    public class ReagentEffectsEntry
+    public sealed class ReagentEffectsEntry
     {
         /// <summary>
         ///     Amount of reagent to metabolize, per metabolism cycle.
@@ -161,7 +161,7 @@ namespace Content.Shared.Chemistry.Reagent
     }
 
     [DataDefinition]
-    public class ReactiveReagentEffectEntry
+    public sealed class ReactiveReagentEffectEntry
     {
         [DataField("methods", required: true)]
         public HashSet<ReactionMethod> Methods = default!;

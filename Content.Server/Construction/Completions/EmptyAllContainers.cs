@@ -9,7 +9,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class EmptyAllContainers : IGraphAction
+    public sealed class EmptyAllContainers : IGraphAction
     {
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {

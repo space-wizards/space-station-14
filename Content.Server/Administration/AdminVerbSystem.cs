@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Managers;
@@ -10,10 +9,11 @@ using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Ghost.Roles;
-using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
+using Content.Server.Xenoarchaeology.XenoArtifacts;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Database;
@@ -26,10 +26,8 @@ using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Timing;
+using static Content.Shared.Configurable.SharedConfigurationComponent;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Administration
@@ -37,27 +35,29 @@ namespace Content.Server.Administration
     /// <summary>
     ///     System to provide various global admin/debug verbs
     /// </summary>
-    public class AdminVerbSystem : EntitySystem
+    public sealed class AdminVerbSystem : EntitySystem
     {
         [Dependency] private readonly IConGroupController _groupController = default!;
         [Dependency] private readonly IConsoleHost _console = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
-        [Dependency] private readonly ExplosionSystem _explosions = default!;
+        [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
+        [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddAdminVerbs);
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddAdminVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddDebugVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
         }
 
-        private void AddAdminVerbs(GetOtherVerbsEvent args)
+        private void AddAdminVerbs(GetVerbsEvent<Verb> args)
         {
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
@@ -77,6 +77,49 @@ namespace Content.Server.Administration
                         _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");
                     verb.Impact = LogImpact.Low;
                     args.Verbs.Add(verb);
+
+                    // Freeze
+                    var frozen = HasComp<AdminFrozenComponent>(args.Target);
+                    args.Verbs.Add(new Verb
+                    {
+                        Priority = -1, // This is just so it doesn't change position in the menu between freeze/unfreeze.
+                        Text = frozen
+                            ? Loc.GetString("admin-verbs-unfreeze")
+                            : Loc.GetString("admin-verbs-freeze"),
+                        Category = VerbCategory.Admin,
+                        IconTexture = "/Textures/Interface/VerbIcons/snow.svg.192dpi.png",
+                        Act = () =>
+                        {
+                            if (frozen)
+                                RemComp<AdminFrozenComponent>(args.Target);
+                            else
+                                EnsureComp<AdminFrozenComponent>(args.Target);
+                        },
+                        Impact = LogImpact.Medium,
+                    });
+                }
+
+                // XenoArcheology
+                if (TryComp<ArtifactComponent>(args.Target, out var artifact))
+                {
+                    // make artifact always active (by adding timer trigger)
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("artifact-verb-make-always-active"),
+                        Category = VerbCategory.Admin,
+                        Act = () => EntityManager.AddComponent<ArtifactTimerTriggerComponent>(args.Target),
+                        Disabled = EntityManager.HasComponent<ArtifactTimerTriggerComponent>(args.Target),
+                        Impact = LogImpact.High
+                    });
+
+                    // force to activate artifact ignoring timeout
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("artifact-verb-activate"),
+                        Category = VerbCategory.Admin,
+                        Act = () => _artifactSystem.ForceActivateArtifact(args.Target, component: artifact),
+                        Impact = LogImpact.High
+                    });
                 }
 
                 // TeleportTo
@@ -108,8 +151,11 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Admin;
                 verb.Act = () =>
                 {
-                    var coords = Transform(args.Target).Coordinates;
-                    Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
+                    var coords = Transform(args.Target).MapPosition;
+                    Timer.Spawn(_gameTiming.TickPeriod,
+                        () => _explosionSystem.QueueExplosion(coords, ExplosionSystem.DefaultExplosionPrototypeId, 4, 1, 2, maxTileBreak: 0), // it gibs, damage doesn't need to be high.
+                        CancellationToken.None);
+
                     if (TryComp(args.Target, out SharedBodyComponent? body))
                     {
                         body.Gib();
@@ -121,7 +167,7 @@ namespace Content.Server.Administration
             }
         }
 
-        private void AddDebugVerbs(GetOtherVerbsEvent args)
+        private void AddDebugVerbs(GetVerbsEvent<Verb> args)
         {
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
@@ -242,7 +288,6 @@ namespace Content.Server.Administration
                 args.Verbs.Add(verb);
             }
 
-            // Configuration verb. Is this even used for anything!?
             if (_groupController.CanAdminMenu(player) &&
                 EntityManager.TryGetComponent<ConfigurationComponent?>(args.Target, out var config))
             {
@@ -250,7 +295,7 @@ namespace Content.Server.Administration
                 verb.Text = Loc.GetString("configure-verb-get-data-text");
                 verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
                 verb.Category = VerbCategory.Debug;
-                verb.Act = () => config.OpenUserInterface(actor);
+                verb.Act = () => _uiSystem.TryOpen(args.Target, ConfigurationUiKey.Key, actor.PlayerSession);
                 args.Verbs.Add(verb);
             }
 

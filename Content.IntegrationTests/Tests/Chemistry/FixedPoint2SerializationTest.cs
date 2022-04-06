@@ -10,7 +10,7 @@ using Robust.UnitTesting.Shared.Serialization;
 
 namespace Content.IntegrationTests.Tests.Chemistry
 {
-    public class FixedPoint2SerializationTest : SerializationTest
+    public sealed class FixedPoint2SerializationTest : SerializationTest
     {
         protected override Assembly[] Assemblies => new[]
         {
@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
         public void DeserializeNullTest()
         {
             var node = new ValueDataNode("null");
-            var unit = Serialization.ReadValue<FixedPoint2?>(node);
+            var unit = Serialization.Read<FixedPoint2?>(node);
 
             Assert.That(unit, Is.Null);
         }
@@ -30,14 +30,14 @@ namespace Content.IntegrationTests.Tests.Chemistry
         public void DeserializeNullDefinitionTest()
         {
             var node = new MappingDataNode().Add("unit", "null");
-            var definition = Serialization.ReadValueOrThrow<FixedPoint2TestDefinition>(node);
+            var definition = Serialization.Read<FixedPoint2TestDefinition>(node);
 
             Assert.That(definition.Unit, Is.Null);
         }
     }
 
     [DataDefinition]
-    public class FixedPoint2TestDefinition
+    public sealed class FixedPoint2TestDefinition
     {
         [DataField("unit")] public FixedPoint2? Unit { get; set; } = FixedPoint2.New(5);
     }

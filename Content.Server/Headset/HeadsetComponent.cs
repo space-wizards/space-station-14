@@ -19,7 +19,7 @@ namespace Content.Server.Headset
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
 #pragma warning disable 618
-    public class HeadsetComponent : Component, IListen, IRadio, IExamine
+    public sealed class HeadsetComponent : Component, IListen, IRadio, IExamine
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;

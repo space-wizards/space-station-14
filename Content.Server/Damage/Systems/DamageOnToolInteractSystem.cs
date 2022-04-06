@@ -5,12 +5,13 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
+using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Damage.Systems
 {
-    public class DamageOnToolInteractSystem : EntitySystem
+    public sealed class DamageOnToolInteractSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;

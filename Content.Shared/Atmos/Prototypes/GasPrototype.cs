@@ -1,11 +1,13 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Atmos.Prototypes
 {
     [Prototype("gas")]
-    public class GasPrototype : IPrototype
+    public sealed class GasPrototype : IPrototype
     {
         [DataField("name")] public string Name { get; } = string.Empty;
 
@@ -13,7 +15,7 @@ namespace Content.Shared.Atmos.Prototypes
         // TODO: Add interfaces for gas behaviours e.g. breathing, burning
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>
@@ -69,6 +71,12 @@ namespace Content.Shared.Atmos.Prototypes
         /// </summary>
         [DataField("overlayPath")]
         public string OverlayPath { get; } = string.Empty;
+
+        /// <summary>
+        /// The reagent that this gas will turn into when inhaled.
+        /// </summary>
+        [DataField("reagent", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
+        public string? Reagent { get; } = default!;
 
         [DataField("color")] public string Color { get; } = string.Empty;
     }

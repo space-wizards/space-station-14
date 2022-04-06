@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Chat.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    internal class AdminChatCommand : IConsoleCommand
+    internal sealed class AdminChatCommand : IConsoleCommand
     {
         public string Command => "asay";
         public string Description => "Send chat messages to the private admin chat channel.";
@@ -31,8 +31,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            var chat = IoCManager.Resolve<IChatManager>();
-            chat.SendAdminChat(player, message);
+            IoCManager.Resolve<IChatManager>().TrySendOOCMessage(player, message, OOCChatType.Admin);
         }
     }
 }

@@ -11,7 +11,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Logs;
 
-public partial class AdminLogSystem
+public sealed partial class AdminLogSystem
 {
     private static readonly JsonNamingPolicy NamingPolicy = JsonNamingPolicy.CamelCase;
 

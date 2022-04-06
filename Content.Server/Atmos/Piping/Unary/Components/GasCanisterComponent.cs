@@ -6,7 +6,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
-    public class GasCanisterComponent : Component
+    public sealed class GasCanisterComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("port")]

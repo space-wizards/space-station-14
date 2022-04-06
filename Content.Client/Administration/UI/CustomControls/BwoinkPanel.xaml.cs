@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Administration.UI.CustomControls
 {
     [GenerateTypedNameReferences]
-    public partial class BwoinkPanel : BoxContainer
+    public sealed partial class BwoinkPanel : BoxContainer
     {
         private readonly BwoinkSystem _bwoinkSystem;
         public readonly NetUserId ChannelId;

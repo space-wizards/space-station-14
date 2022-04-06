@@ -3,6 +3,7 @@
   name: air alarm
   description: An air alarm. Alarms... air?
   components:
+  - type: WallMount
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetworkComponent
@@ -76,6 +77,7 @@
   name: air alarm assembly
   description: An air alarm. Doesn't look like it'll be alarming air any time soon.
   components:
+  - type: WallMount
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite

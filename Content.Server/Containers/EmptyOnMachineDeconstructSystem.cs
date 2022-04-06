@@ -11,7 +11,7 @@ namespace Content.Server.Containers
     /// Implements functionality of EmptyOnMachineDeconstructComponent.
     /// </summary>
     [UsedImplicitly]
-    public class EmptyOnMachineDeconstructSystem : EntitySystem
+    public sealed class EmptyOnMachineDeconstructSystem : EntitySystem
     {
         public override void Initialize()
         {

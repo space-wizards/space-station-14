@@ -12,10 +12,10 @@ namespace Content.Shared.Alert
     /// </summary>
     [Prototype("alertOrder")]
     [DataDefinition]
-    public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>, ISerializationHooks
+    public sealed class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>, ISerializationHooks
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("order")] private readonly List<(string type, string alert)> _order = new();

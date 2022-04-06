@@ -1,5 +1,5 @@
 ﻿using Content.Shared.Maps;
-using Content.Shared.Window;
+using Content.Shared.Tag;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -11,13 +11,14 @@ namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class NoWindowsInTile : IConstructionCondition
+    public sealed class NoWindowsInTile : IConstructionCondition
     {
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
+            var tagSystem = EntitySystem.Get<TagSystem>();
             foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {
-                if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedWindowComponent>(entity))
+                if (tagSystem.HasTag(entity, "Window"))
                     return false;
             }
 

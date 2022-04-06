@@ -26,21 +26,25 @@ public sealed partial class ConstructionSystem
         RefreshParts(component);
     }
 
-    public IEnumerable<MachinePartComponent> GetAllParts(MachineComponent component)
+    public List<MachinePartComponent> GetAllParts(MachineComponent component)
     {
+        var parts = new List<MachinePartComponent>();
+
         foreach (var entity in component.PartContainer.ContainedEntities)
         {
             if (TryComp<MachinePartComponent?>(entity, out var machinePart))
-                yield return machinePart;
+                parts.Add(machinePart);
         }
+
+        return parts;
     }
 
     public void RefreshParts(MachineComponent component)
     {
-        foreach (var refreshable in EntityManager.GetComponents<IRefreshParts>(component.Owner))
+        EntityManager.EventBus.RaiseLocalEvent(component.Owner, new RefreshPartsEvent()
         {
-            refreshable.RefreshParts(GetAllParts(component));
-        }
+            Parts = GetAllParts(component),
+        });
     }
 
     public void CreateBoardAndStockParts(MachineComponent component)
@@ -109,4 +113,9 @@ public sealed partial class ConstructionSystem
             }
         }
     }
+}
+
+public sealed class RefreshPartsEvent : EntityEventArgs
+{
+    public IReadOnlyList<MachinePartComponent> Parts = new List<MachinePartComponent>();
 }

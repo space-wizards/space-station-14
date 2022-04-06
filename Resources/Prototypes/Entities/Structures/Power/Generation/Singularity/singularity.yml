@@ -5,7 +5,7 @@
   components:
   - type: Clickable
   - type: AmbientSound
-    volume: -10
+    volume: -4
     range: 14
     sound:
       path: /Audio/Effects/singularity.ogg

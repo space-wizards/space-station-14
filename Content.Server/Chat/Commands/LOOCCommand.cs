@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class LOOCCommand : IConsoleCommand
+    internal sealed class LOOCCommand : IConsoleCommand
     {
         public string Command => "looc";
         public string Description => "Send Local Out Of Character chat messages.";
@@ -24,6 +24,9 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
+            if (player.AttachedEntity is not { Valid: true } entity)
+                return;
+
             if (player.Status != SessionStatus.InGame)
                 return;
 
@@ -34,7 +37,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IChatManager>().SendLOOC(player, message);
+            EntitySystem.Get<ChatSystem>().TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Looc, false, shell, player);
         }
     }
 }

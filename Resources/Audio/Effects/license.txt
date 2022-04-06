@@ -1,20 +1,23 @@
-﻿hit_kick.ogg is made by Taira Komori
-(https://taira-komori.jpn.org/freesounden.html)
-
-smoke.ogg taken from https://github.com/tgstation/tgstation/blob/a5d362ce84e4f0c61026236d5ec84d3c81553664/sound/effects/smoke.ogg
-
-adminhelp.ogg taken from https://github.com/tgstation/tgstation/blob/d775e1ac804eb9d0259573f5f29a18d320c97ef3/sound/effects/adminhelp.ogg
+﻿adminhelp.ogg taken from https://github.com/tgstation/tgstation/blob/d775e1ac804eb9d0259573f5f29a18d320c97ef3/sound/effects/adminhelp.ogg
  (available in master, therefore see master license: "All assets including icons and sound are under a Creative Commons 3.0 BY-SA license unless otherwise indicated.")
  "Changed the adminhelpsound to some creative commons sound I pinched. Until somebody can get a better one. I'm sick of MAAAAAAAAOOOOOOW."
  Actual source is https://freesound.org/people/martian/sounds/19261/ (CC0)
  The sound had been reversed and the volume altered.
 
-voteding.ogg taken from "Bike, Bell Ding, Single, 01-01.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org at https://freesound.org/people/InspectorJ/sounds/484344/ under CC BY 3.0. The volume has been reduced.
+hit_kick.ogg is made by Taira Komori
+(https://taira-komori.jpn.org/freesounden.html)
+
+fire.ogg taken and edited from https://freesound.org/people/raremess/sounds/222557/
+
+holy.ogg taken from https://freesound.org/people/random_intruder/sounds/392172/ and edited
 
 poster_broken.ogg taken from https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_ripped.ogg
 
 poster_being_set.ogg taken from https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_ripped.ogg
 
-fire.ogg taken and edited from https://freesound.org/people/raremess/sounds/222557/
+saw.ogg taken from https://freesound.org/people/domiscz/sounds/461728/ and clipped - CC0-1.0
+*It's actually an angle grinder
 
-holy.ogg taken from https://freesound.org/people/random_intruder/sounds/392172/ and edited
+smoke.ogg taken from https://github.com/tgstation/tgstation/blob/a5d362ce84e4f0c61026236d5ec84d3c81553664/sound/effects/smoke.ogg
+
+voteding.ogg taken from "Bike, Bell Ding, Single, 01-01.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org at https://freesound.org/people/InspectorJ/sounds/484344/ under CC BY 3.0. The volume has been reduced.

@@ -4,9 +4,9 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.MachineLinking.Components
 {
     [RegisterComponent]
-    public class TwoWayLeverComponent : Component
+    public sealed class TwoWayLeverComponent : Component
     {
-        public TwoWayLeverSignal State;
+        public TwoWayLeverState State;
 
         public bool NextSignalLeft;
     }

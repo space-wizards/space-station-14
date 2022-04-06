@@ -6,9 +6,9 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
-using Content.Server.Tools.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
+using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -18,12 +18,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tools
 {
-    public partial class ToolSystem : EntitySystem
+    // TODO move tool system to shared, and make it a friend of Tool Component.
+    public sealed partial class ToolSystem : EntitySystem
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -147,7 +147,7 @@ namespace Content.Server.Tools
         }
 
         // This is hilariously long.
-        /// <inheritdoc cref="UseTool(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,System.Nullable{Robust.Shared.GameObjects.EntityUid},float,float,System.Collections.Generic.IEnumerable{string},Robust.Shared.GameObjects.EntityUid,object,object,System.Func{bool}?,Content.Server.Tools.Components.ToolComponent?)"/>
+        /// <inheritdoc cref="UseTool(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,System.Nullable{Robust.Shared.GameObjects.EntityUid},float,float,System.Collections.Generic.IEnumerable{string},Robust.Shared.GameObjects.EntityUid,object,object,System.Func{bool}?,Content.Shared.Tools.Components.ToolComponent?)"/>
         public bool UseTool(EntityUid tool, EntityUid user, EntityUid? target, float fuel,
             float doAfterDelay, string toolQualityNeeded, object doAfterCompleteEvent, object doAfterCancelledEvent, EntityUid? doAfterEventTarget = null,
             Func<bool>? doAfterCheck = null, ToolComponent? toolComponent = null)
@@ -201,7 +201,7 @@ namespace Content.Server.Tools
         }
 
         // This is hilariously long.
-        /// <inheritdoc cref="UseTool(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,System.Nullable{Robust.Shared.GameObjects.EntityUid},float,float,System.Collections.Generic.IEnumerable{string},Robust.Shared.GameObjects.EntityUid,object,object,System.Func{bool}?,Content.Server.Tools.Components.ToolComponent?)"/>
+        /// <inheritdoc cref="UseTool(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,System.Nullable{Robust.Shared.GameObjects.EntityUid},float,float,System.Collections.Generic.IEnumerable{string},Robust.Shared.GameObjects.EntityUid,object,object,System.Func{bool}?,Content.Shared.Tools.Components.ToolComponent?)"/>
         public Task<bool> UseTool(EntityUid tool, EntityUid user, EntityUid? target, float fuel,
             float doAfterDelay, string toolQualityNeeded, Func<bool>? doAfterCheck = null,
             ToolComponent? toolComponent = null)
@@ -214,7 +214,7 @@ namespace Content.Server.Tools
             if (!Resolve(tool, ref toolComponent))
                 return false;
 
-            if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded) || !_actionBlockerSystem.CanInteract(user))
+            if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded))
                 return false;
 
             var beforeAttempt = new ToolUseAttemptEvent(fuel, user);
@@ -260,7 +260,7 @@ namespace Content.Server.Tools
             UpdateWelders(frameTime);
         }
 
-        private class ToolDoAfterComplete : EntityEventArgs
+        private sealed class ToolDoAfterComplete : EntityEventArgs
         {
             public readonly object CompletedEvent;
             public readonly object? CancelledEvent;
@@ -280,7 +280,7 @@ namespace Content.Server.Tools
             }
         }
 
-        private class ToolDoAfterCancelled : EntityEventArgs
+        private sealed class ToolDoAfterCancelled : EntityEventArgs
         {
             public readonly object Event;
             public readonly EntityUid? EventTarget;
@@ -297,7 +297,7 @@ namespace Content.Server.Tools
     ///     Attempt event called *before* any do afters to see if the tool usage should succeed or not.
     ///     You can change the fuel consumption by changing the Fuel property.
     /// </summary>
-    public class ToolUseAttemptEvent : CancellableEntityEventArgs
+    public sealed class ToolUseAttemptEvent : CancellableEntityEventArgs
     {
         public float Fuel { get; set; }
         public EntityUid User { get; }
@@ -313,7 +313,7 @@ namespace Content.Server.Tools
     ///     Attempt event called *after* any do afters to see if the tool usage should succeed or not.
     ///     You can use this event to consume any fuel needed.
     /// </summary>
-    public class ToolUseFinishAttemptEvent : CancellableEntityEventArgs
+    public sealed class ToolUseFinishAttemptEvent : CancellableEntityEventArgs
     {
         public float Fuel { get; }
         public EntityUid User { get; }

@@ -10,8 +10,11 @@
   id: Bee
 
 - type: Tag
+  id: BrassInstrument
+
+- type: Tag
   id: Brutepack
-  
+
 - type: Tag
   id: BodyBag
 
@@ -20,9 +23,6 @@
 
 - type: Tag
   id: BotanyHoe
-
-- type: Tag
-  id: BotanySharp
 
 - type: Tag
   id: BotanyShovel
@@ -44,7 +44,7 @@
 
 - type: Tag
   id: CaptainSabre
-  
+
 - type: Tag
   id: Cartridge
 
@@ -100,6 +100,9 @@
   id: Debug
 
 - type: Tag
+  id: Dice
+
+- type: Tag
   id: Document
 
 - type: Tag
@@ -113,6 +116,9 @@
 
 - type: Tag
   id: Donut
+
+- type: Tag
+  id: DroneUsable
 
 - type: Tag
   id: Egg
@@ -160,6 +166,9 @@
   id: HideContextMenu
 
 - type: Tag
+  id: HidesHair # for headwear.
+
+- type: Tag
   id: Hoe
 
 - type: Tag
@@ -172,6 +181,9 @@
   id: Katana
 
 - type: Tag
+  id: KeyedInstrument
+
+- type: Tag
   id: Knife
 
 - type: Tag
@@ -181,19 +193,37 @@
   id: Matchstick
 
 - type: Tag
+  id: Metal
+
+- type: Tag
+  id: MicrowaveMachineUnsafe
+
+- type: Tag
+  id: MicrowaveSelfUnsafe
+
+- type: Tag
   id: MonkeyCube
 
 - type: Tag
-  id: NoSpinOnThrow
+  id: Mop
 
 - type: Tag
-  id: NukeDisk
+  id: NoSpinOnThrow
 
 - type: Tag
   id: Ointment
 
 - type: Tag
   id: Ore
+
+- type: Tag
+  id: Payload # for grenade/bomb crafting
+  
+- type: Tag
+  id: PercussionInstrument
+
+- type: Tag
+  id: Plastic
 
 - type: Tag
   id: Pill
@@ -218,6 +248,10 @@
 
 - type: Tag
   id: Powerdrill
+
+# Give this to something that doesn't need any special recycler behavior and just needs deleting.
+- type: Tag
+  id: Recyclable
 
 - type: Tag
   id: RCDDeconstructWhitelist
@@ -253,13 +287,22 @@
   id: Spear
 
 - type: Tag
+  id: StringInstrument
+
+- type: Tag
   id: Taser
-  
+
 - type: Tag
   id: Trash
 
 - type: Tag
+  id: TrashBag
+
+- type: Tag
   id: Wall
+
+- type: Tag
+  id: Window
 
 - type: Tag
   id: Wirecutter
@@ -268,7 +311,16 @@
   id: Wooden # just like our atmos
 
 - type: Tag
+  id: WoodwindInstrument # even more like our atmos
+
+- type: Tag
   id: Wrench
 
 - type: Tag
+  id: Wringer
+
+- type: Tag
   id: Write
+
+- type: Tag
+  id: Drone

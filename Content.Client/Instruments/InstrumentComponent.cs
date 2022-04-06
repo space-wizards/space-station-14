@@ -10,7 +10,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Instruments;
 
 [RegisterComponent, ComponentReference(typeof(SharedInstrumentComponent))]
-public class InstrumentComponent : SharedInstrumentComponent
+public sealed class InstrumentComponent : SharedInstrumentComponent
 {
     public event Action? OnMidiPlaybackEnded;
 

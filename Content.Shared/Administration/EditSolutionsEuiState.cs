@@ -8,7 +8,7 @@ using Content.Shared.Chemistry.Components;
 namespace Content.Shared.Administration
 {
     [Serializable, NetSerializable]
-    public class EditSolutionsEuiState : EuiStateBase
+    public sealed class EditSolutionsEuiState : EuiStateBase
     {
         public readonly EntityUid Target;
         public readonly Dictionary<string, Solution>? Solutions;

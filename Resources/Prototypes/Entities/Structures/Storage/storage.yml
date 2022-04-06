@@ -1,20 +1,19 @@
 - type: entity
+  parent: BaseStructure
   id: Rack
   name: rack
   description: A rack for storing things on.
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Transform
-    anchored: true
-  - type: Clickable
+  - type: Construction
+    graph: Rack
+    node: Rack
+  - type: Anchorable
   - type: InteractionOutline
   - type: PlaceableSurface
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
     state: rack
-  - type: Physics
-    bodyType: Static
+    netsync: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -22,11 +21,10 @@
           bounds: "-0.3,-0.3,0.3,0.3"
       mass: 50
       layer:
-      - MobImpassable
-      mask:
       - VaultImpassable
-  - type: Pullable
-  - type: Anchorable
+      mask:
+      - Impassable
+      - SmallImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -46,3 +44,4 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Climbable

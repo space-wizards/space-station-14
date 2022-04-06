@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d388dee8b7b6d854f6f0d844988552acf5962b1f",
+    "size": {
+        "x": 128,
+        "y": 160
+    },
+    "states": [
+        {
+            "name": "treelarge01"
+        },
+        {
+            "name": "treelarge02"
+        },
+        {
+            "name": "treelarge03"
+        },
+        {
+            "name": "treelarge04"
+        },
+        {
+            "name": "treelarge05"
+        },
+        {
+            "name": "treelarge06"
+        }
+    ]
+}

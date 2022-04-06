@@ -11,14 +11,14 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Construction.Prototypes
 {
     [Prototype("constructionGraph")]
-    public class ConstructionGraphPrototype : IPrototype, ISerializationHooks
+    public sealed class ConstructionGraphPrototype : IPrototype, ISerializationHooks
     {
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
         private readonly Dictionary<(string, string), ConstructionGraphNode[]?> _paths = new();
         private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode?>> _pathfinding = new();
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables]

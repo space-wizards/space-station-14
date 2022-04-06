@@ -7,7 +7,7 @@
     prefixCreator: '14'
   mapPath: /Maps/saltern.yml
   minPlayers: 0
-  maxPlayers: 20
+  maxPlayers: 29
   fallback: true
   overflowJobs:
     - Assistant
@@ -33,6 +33,10 @@
     SecurityOfficer: [ 2, 3 ]
     Chaplain: [ 1, 1 ]
     Librarian: [ 1, 1 ]
+    Musician: [ 1, 1 ]
+    Lawyer: [ 1, 1 ]
+    SalvageSpecialist: [ 1, 2 ]
+    Quartermaster: [ 1, 1 ]
 
 - type: gameMap
   id: packedstation
@@ -43,6 +47,7 @@
     prefixCreator: 'VG'
   mapPath: /Maps/packedstation.yml
   minPlayers: 15
+  maxPlayers: 55
   conditions:
     - !type:HolidayMapCondition
       inverted: true
@@ -73,6 +78,7 @@
     Warden: [ 1, 1 ]
     Librarian: [ 1, 1 ]
     Lawyer: [ 1, 2 ]
+    Musician: [1, 1]
 
 - type: gameMap
   id: knightship
@@ -82,6 +88,7 @@
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
   mapPath: /Maps/knightship.yml
+  votable: false
   minPlayers: 0
   maxPlayers: 8
   overflowJobs: []
@@ -96,6 +103,45 @@
     Botanist: [ 1, 1 ]
 
 - type: gameMap
+  id: NSSPillar
+  mapName: 'NSS Pillar v5.3'
+  mapNameTemplate: '{0} NSSPillar {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: /Maps/nss_pillar.yml
+  minPlayers: 40
+  overflowJobs:
+    - Assistant
+  availableJobs:
+    Assistant: [ -1, -1 ]
+    CargoTechnician: [ 4, 6 ]
+    Bartender: [ 2, 2 ]
+    Botanist: [ 2, 4 ]
+    Chef: [ 2, 4 ]
+    Clown: [ 1, 2 ]
+    Janitor: [ 2, 4 ]
+    Mime: [ 1, 2 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 6, 10 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 6, 10 ]
+    Chemist: [ 2, 3 ]
+    ResearchDirector: [ 1, 1 ]
+    Scientist: [ 3, 8 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 6, 10 ]
+    Chaplain: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
+    Lawyer: [ 1, 2 ]
+    Warden: [ 1, 1 ]
+    Quartermaster: [ 1, 1 ]
+    SalvageSpecialist: [ 4, 6 ]
+    Musician: [1, 1]
+
+- type: gameMap
   id: ssreach
   mapName: 'Reach'
   mapNameTemplate: '{0} Reach {1}'
@@ -103,8 +149,9 @@
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
   mapPath: /Maps/ssreach.yml
-  minPlayers: 8
-  maxPlayers: 25
+  minPlayers: 0
+  maxPlayers: 15
+  votable: false
   overflowJobs:
     - Assistant
   availableJobs:
@@ -122,6 +169,7 @@
     HeadOfSecurity: [ 1, 1 ]
     SecurityOfficer: [ 2, 4 ]
     Janitor: [ 1, 1 ]
+    Musician: [1, 1]
 
 - type: gameMap
   id: dart

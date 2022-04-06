@@ -12,7 +12,7 @@ namespace Content.Server.Destructible.Thresholds.Triggers
     /// </summary>
     [Serializable]
     [DataDefinition]
-    public class DamageTypeTrigger : IThresholdTrigger
+    public sealed class DamageTypeTrigger : IThresholdTrigger
     {
         [DataField("damageType", required:true, customTypeSerializer: typeof(PrototypeIdSerializer<DamageTypePrototype>))]
         public string DamageType { get; set; } = default!;
