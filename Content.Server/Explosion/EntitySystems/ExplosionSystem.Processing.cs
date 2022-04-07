@@ -272,8 +272,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         string id,
         EntityQuery<TransformComponent> xformQuery,
         EntityQuery<DamageableComponent> damageQuery,
-        EntityQuery<PhysicsComponent> physicsQuery,
-        EntityQuery<MetaDataComponent> metaQuery)
+        EntityQuery<PhysicsComponent> physicsQuery)
     {
         var gridBox = new Box2(tile * DefaultTileSize, (DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
@@ -381,10 +380,15 @@ public sealed partial class ExplosionSystem : EntitySystem
     public void DamageFloorTile(TileRef tileRef,
         float effectiveIntensity,
         int maxTileBreak,
+        bool canCreateVacuum,
         List<(Vector2i GridIndices, Tile Tile)> damagedTiles,
         ExplosionPrototype type)
     {
-        var tileDef = _tileDefinitionManager[tileRef.Tile.TypeId];
+        if (_tileDefinitionManager[tileRef.Tile.TypeId] is not ContentTileDefinition tileDef)
+            return;
+
+        if (tileDef.IsSpace)
+            canCreateVacuum = true; // is already a vacuum.
 
         int tileBreakages = 0;
         while (maxTileBreak > tileBreakages && _robustRandom.Prob(type.TileBreakChance(effectiveIntensity)))
@@ -392,14 +396,17 @@ public sealed partial class ExplosionSystem : EntitySystem
             tileBreakages++;
             effectiveIntensity -= type.TileBreakRerollReduction;
 
-            if (tileDef is not ContentTileDefinition contentTileDef)
-                break;
-
             // does this have a base-turf that we can break it down to?
-            if (contentTileDef.BaseTurfs.Count == 0)
+            if (tileDef.BaseTurfs.Count == 0)
                 break;
 
-            tileDef = _tileDefinitionManager[contentTileDef.BaseTurfs[^1]];
+            if (_tileDefinitionManager[tileDef.BaseTurfs[^1]] is not ContentTileDefinition newDef)
+                break;
+
+            if (newDef.IsSpace && !canCreateVacuum)
+                break;
+
+            tileDef = newDef;
         }
 
         if (tileDef.TileId == tileRef.Tile.TypeId)
@@ -504,7 +511,6 @@ sealed class Explosion
     private readonly EntityQuery<TransformComponent> _xformQuery;
     private readonly EntityQuery<PhysicsComponent> _physicsQuery;
     private readonly EntityQuery<DamageableComponent> _damageQuery;
-    private readonly EntityQuery<MetaDataComponent> _metaQuery;
 
     /// <summary>
     ///     Total area that the explosion covers.
@@ -520,6 +526,11 @@ sealed class Explosion
     ///     Maximum number of times that an explosion will break a single tile.
     /// </summary>
     private readonly int _maxTileBreak;
+
+    /// <summary>
+    ///     Whether this explosion can turn non-vacuum tiles into vacuum-tiles.
+    /// </summary>
+    private readonly bool _canCreateVacuum;
 
     private readonly IEntityManager _entMan;
     private readonly ExplosionSystem _system;
@@ -537,6 +548,7 @@ sealed class Explosion
         int area,
         float tileBreakScale,
         int maxTileBreak,
+        bool canCreateVacuum,
         IEntityManager entMan,
         IMapManager mapMan)
     {
@@ -548,12 +560,12 @@ sealed class Explosion
 
         _tileBreakScale = tileBreakScale;
         _maxTileBreak = maxTileBreak;
+        _canCreateVacuum = canCreateVacuum;
         _entMan = entMan;
 
         _xformQuery = entMan.GetEntityQuery<TransformComponent>();
         _physicsQuery = entMan.GetEntityQuery<PhysicsComponent>();
         _damageQuery = entMan.GetEntityQuery<DamageableComponent>();
-        _metaQuery = entMan.GetEntityQuery<MetaDataComponent>();
 
         if (spaceData != null)
         {
@@ -693,12 +705,11 @@ sealed class Explosion
                     ExplosionType.ID,
                     _xformQuery,
                     _damageQuery,
-                    _physicsQuery,
-                    _metaQuery);
+                    _physicsQuery);
 
                 // If the floor is not blocked by some dense object, damage the floor tiles.
                 if (canDamageFloor)
-                    _system.DamageFloorTile(tileRef, _currentIntensity * _tileBreakScale, _maxTileBreak, tileUpdateList, ExplosionType);
+                    _system.DamageFloorTile(tileRef, _currentIntensity * _tileBreakScale, _maxTileBreak, _canCreateVacuum, tileUpdateList, ExplosionType);
             }
             else
             {
@@ -714,8 +725,7 @@ sealed class Explosion
                     ExplosionType.ID,
                     _xformQuery,
                     _damageQuery,
-                    _physicsQuery,
-                    _metaQuery);
+                    _physicsQuery);
             }
 
             if (!MoveNext())

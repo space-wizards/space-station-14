@@ -80,7 +80,7 @@
 
 - type: entity
   name: Syndicate minibomb
-  description: Creates a small but powerful explosion that is strong enough to break through reinforced walls.
+  description: Creates a small but powerful explosion that is strong enough to break through walls.
   parent: BaseItem
   id: SyndieMiniBomb
   components:
@@ -100,7 +100,7 @@
     totalIntensity: 492
     intensitySlope: 20.5
     maxIntensity: 41
-    maxTileBreak: 1 # for destroying walls, not spacing the hallway
+    canCreateVacuum: false # for destroying walls, not spacing the hallway
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic
