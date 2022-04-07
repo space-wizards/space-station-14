@@ -182,8 +182,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         string id,
         EntityQuery<TransformComponent> xformQuery,
         EntityQuery<DamageableComponent> damageQuery,
-        EntityQuery<PhysicsComponent> physicsQuery,
-        EntityQuery<MetaDataComponent> metaQuery)
+        EntityQuery<PhysicsComponent> physicsQuery)
     {
         var gridBox = new Box2(tile * grid.TileSize, (tile + 1) * grid.TileSize);
 
@@ -216,11 +215,23 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         // process anchored entities
         var tileBlocked = false;
-        foreach (var entity in grid.GetAnchoredEntities(tile).ToList())
+        var anchoredList = grid.GetAnchoredEntities(tile).ToList();
+        foreach (var entity in anchoredList)
         {
             processed.Add(entity);
             ProcessEntity(entity, epicenter, damage, throwForce, id, damageQuery, physicsQuery);
-            tileBlocked |= IsBlockingTurf(entity, physicsQuery);
+        }
+
+        // Walls and reinforced walls will break into girders. These girders will also be considered turf-blocking for
+        // the purposes of destroying floors. Again, ideally the process of damaging an entity should somehow return
+        // information about the entities that were spawned as a result, but without that information we just have to
+        // re-check for new anchored entities. Compared to entity spawning & deleting, this should still be relatively minor.
+        if (anchoredList.Count > 0)
+        {
+            foreach (var entity in grid.GetAnchoredEntities(tile))
+            {
+                tileBlocked |= IsBlockingTurf(entity, physicsQuery);
+            }
         }
 
         // Next, we get the intersecting entities AGAIN, but purely for throwing. This way, glass shards spawned from
