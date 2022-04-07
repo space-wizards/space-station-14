@@ -30,7 +30,6 @@ namespace Content.Server.Vehicle
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
@@ -119,6 +118,7 @@ namespace Content.Server.Vehicle
                 {
                     _actionsSystem.AddAction(args.BuckledEntity, component.HornAction, uid, actions);
                 }
+                _itemSlotsSystem.SetLock(uid, component.Name, true);
                 return;
             }
             // Clean up actions and virtual items
@@ -133,6 +133,8 @@ namespace Content.Server.Vehicle
             /// Reset component
             component.HasRider = false;
             component.Rider = null;
+            _itemSlotsSystem.SetLock(uid, component.Name, false);
+
         }
 
         /// <summary>
