@@ -149,7 +149,7 @@
     state: uranium
   - type: Material
     materials:
-      - Uranium
+    - Uranium
     volume: 500
 
 - type: entity

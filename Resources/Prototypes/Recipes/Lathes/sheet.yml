@@ -94,11 +94,11 @@
     Plasma: 500
 
 - type: latheRecipe
-  id: SheetUranium5
+  id: SheetUranium1
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
     state: uranium
-  result: SheetUranium5
+  result: SheetUranium1
   completetime: 500
   materials:
     Uranium: 500
