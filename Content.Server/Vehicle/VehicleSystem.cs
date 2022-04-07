@@ -172,7 +172,7 @@ namespace Content.Server.Vehicle
         /// </summary>
         private void OnEntInserted(EntityUid uid, VehicleComponent component, EntInsertedIntoContainerMessage args)
         {
-            if (!HasComp<VehicleKeyComponent>(args.Entity))
+            if (!_tagSystem.HasTag(args.Entity, "VehicleKey"))
                 return;
 
             /// This lets the vehicle move
@@ -192,7 +192,7 @@ namespace Content.Server.Vehicle
         private void OnEntRemoved(EntityUid uid, VehicleComponent component, EntRemovedFromContainerMessage args)
         {
             /// We have 3 containers or maybe even more so
-            if (!HasComp<VehicleKeyComponent>(args.Entity))
+            if (!_tagSystem.HasTag(args.Entity, "VehicleKey"))
                 return;
 
             _ambientSound.SetAmbience(uid, false);

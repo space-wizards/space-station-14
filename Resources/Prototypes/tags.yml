@@ -121,6 +121,9 @@
   id: Donut
 
 - type: Tag
+  id: Drone
+
+- type: Tag
   id: DroneUsable
 
 - type: Tag
@@ -305,6 +308,9 @@
   id: TrashBag
 
 - type: Tag
+  id: VehicleKey
+
+- type: Tag
   id: Wall
 
 - type: Tag
@@ -327,6 +333,3 @@
 
 - type: Tag
   id: Write
-
-- type: Tag
-  id: Drone
