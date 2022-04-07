@@ -95,8 +95,7 @@
     delay: 5
   - type: Explosive
     explosionType: Default
-    # About a 2.5 tile radius
-    # If placed next to a reinforced wall, can open a 3-wide hole.
+    # About a 2.5 tile radius. If placed next to walls, will destroy a line of 3-normal walls and turn 3 reinforced walls into girders.
     totalIntensity: 492
     intensitySlope: 20.5
     maxIntensity: 41
