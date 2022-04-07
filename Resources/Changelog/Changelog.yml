@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Ammo produced by a lathe now works properly., type: Fix}
-  id: 789
-  time: '2021-12-29T14:19:49.0000000+00:00'
 - author: wrexbe
   changes:
   - {message: Cloning is now less likely to fail!, type: Fix}
@@ -3030,3 +3025,8 @@ Entries:
       to buttons., type: Tweak}
   id: 1288
   time: '2022-04-06T23:32:46.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Packed Station has been updated to the latest standards., type: Tweak}
+  id: 1289
+  time: '2022-04-07T16:08:02.0000000+00:00'
