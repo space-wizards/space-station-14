@@ -43,8 +43,9 @@ namespace Content.MapRenderer.Painters
             {
                 var x = (int) (tile.X + xOffset);
                 var y = (int) (tile.Y + yOffset);
-                var sprite = _sTileDefinitionManager[tile.Tile.TypeId].SpriteName;
-                var image = images[sprite][tile.Tile.Variant];
+                var def = _sTileDefinitionManager[tile.Tile.TypeId];
+                var sprite = def.SpriteName;
+                var image = images[sprite][GetOffset(tile.Tile, def.Flags)];
 
                 gridCanvas.Mutate(o => o.DrawImage(image, new Point(x * tileSize, y * tileSize), 1));
 
@@ -86,12 +87,45 @@ namespace Content.MapRenderer.Painters
                 {
                     var tileImage = tileSheet.Clone(o => o.Crop(new Rectangle(tileSize * i, 0, 32, 32)));
                     images[sprite].Add(tileImage);
+
+                    if ((definition.Flags & TileDefFlag.Diagonals) != 0x0)
+                    {
+                        for (var j = 0; j < 4; j++)
+                        {
+                            var dirTileImage = tileSheet.Clone(o => o.Crop(new Rectangle(tileSize * i, tileSize * j, 32, 32)));
+                            images[sprite].Add(dirTileImage);
+                        }
+                    }
                 }
             }
 
             Console.WriteLine($"Indexed all tile images in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
 
             return images;
+        }
+
+        private static int GetOffset(Tile tile, TileDefFlag defFlag)
+        {
+            if ((defFlag & TileDefFlag.Diagonals) == 0x0)
+            {
+                return tile.Variant;
+            }
+
+            var offset = tile.Variant * 4;
+            return offset + GetDirectionalOffset(tile.Flags);
+        }
+
+        private static int GetDirectionalOffset(TileFlag flag)
+        {
+            return flag switch
+            {
+                TileFlag.Full => 0,
+                TileFlag.BottomLeft => 1,
+                TileFlag.BottomRight => 2,
+                TileFlag.TopRight => 3,
+                TileFlag.TopLeft => 4,
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
     }
 }
