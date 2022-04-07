@@ -7,9 +7,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Worldgen.Prototypes;
 
 [Prototype("biome")]
-public class BiomePrototype : IPrototype
+public sealed class BiomePrototype : IPrototype
 {
-    [DataField("id")]
+    [IdDataField]
     public string ID { get; } = default!;
 
     /// <summary>

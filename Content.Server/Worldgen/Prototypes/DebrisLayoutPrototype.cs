@@ -8,9 +8,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Worldgen.Prototypes;
 
 [Prototype("debrisLayout")]
-public class DebrisLayoutPrototype : IPrototype
+public sealed class DebrisLayoutPrototype : IPrototype
 {
-    [DataField("id")]
+    [IdDataField]
     public string ID { get; } = default!;
 
     [DataField("layout")]

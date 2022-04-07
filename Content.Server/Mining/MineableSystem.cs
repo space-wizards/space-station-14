@@ -4,6 +4,7 @@ using Content.Server.Mining.Components;
 using Content.Shared.Acts;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
+using Content.Shared.Storage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -78,22 +79,11 @@ public sealed class MineableSystem : EntitySystem
         if (!_random.Prob(component.OreChance))
             return; // Nothing to do.
 
-        HashSet<string> spawnedGroups = new();
-        foreach (var entry in component.OreTable)
+        var coords = Transform(uid).Coordinates;
+
+        foreach (var spawn in EntitySpawnCollection.GetSpawns(component.OreTable))
         {
-            if (entry.GroupId is not null && spawnedGroups.Contains(entry.GroupId))
-                continue;
-
-            if (!_random.Prob(entry.SpawnProbability))
-                continue;
-
-            for (var i = 0; i < entry.Amount; i++)
-            {
-                Spawn(entry.PrototypeId, Transform(uid).Coordinates);
-            }
-
-            if (entry.GroupId != null)
-                spawnedGroups.Add(entry.GroupId);
+            Spawn(spawn, coords);
         }
     }
 }

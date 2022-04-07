@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Storage;
 using Content.Server.Worldgen.Systems;
 using Content.Shared.Maps;
+using Content.Shared.Storage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -11,7 +12,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Worldgen.Populators.Debris;
 
-public class ScrapyardPopulator : DebrisPopulator
+public sealed class ScrapyardPopulator : DebrisPopulator
 {
     [DataField("entityTable", required: true,
         customTypeSerializer: typeof(PrototypeIdDictionarySerializer<List<EntitySpawnEntry>, ContentTileDefinition>))]
@@ -29,21 +30,10 @@ public class ScrapyardPopulator : DebrisPopulator
             if (!EntityTable.ContainsKey(name)) continue;
 
             var coords = grid.GridTileToLocal(tile.GridIndices);
-            var alreadySpawnedGroups = new List<string>();
-            foreach (var entry in EntityTable[name])
+
+            foreach (var spawn in EntitySpawnCollection.GetSpawns(EntityTable[name]))
             {
-                if (!string.IsNullOrEmpty(entry.GroupId) &&
-                    alreadySpawnedGroups.Contains(entry.GroupId)) continue;
-
-                if (!random.Prob(entry.SpawnProbability))
-                    continue;
-
-                for (var i = 0; i < entry.Amount; i++)
-                {
-                    deferred.SpawnEntityDeferred(entry.PrototypeId, coords);
-                }
-
-                if (!string.IsNullOrEmpty(entry.GroupId)) alreadySpawnedGroups.Add(entry.GroupId);
+                deferred.SpawnEntityDeferred(spawn, coords);
             }
         }
     }
