@@ -4,6 +4,9 @@
   id: AirAlarmElectronics
 
 - type: Tag
+  id: ATVKeys
+
+- type: Tag
   id: Baguette
 
 - type: Tag
@@ -218,7 +221,7 @@
 
 - type: Tag
   id: Payload # for grenade/bomb crafting
-  
+
 - type: Tag
   id: PercussionInstrument
 
@@ -249,6 +252,9 @@
 - type: Tag
   id: Powerdrill
 
+- type: Tag
+  id: PussyWagonKeys
+
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
   id: Recyclable
@@ -264,6 +270,9 @@
 
 - type: Tag
   id: Screwdriver
+
+- type: Tag
+  id: SecwayKeys
 
 - type: Tag
   id: Sheet

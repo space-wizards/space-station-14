@@ -7,8 +7,9 @@
   - type: Item
     size: 2
   - type: VehicleKey
-    keys:
-      - PussyWagon
+  - type: Tag
+    tags:
+    - PussyWagonKeys
   - type: Sprite
     sprite: Objects/Vehicles/pussywagon.rsi
     state: keys
@@ -21,8 +22,9 @@
   description: The keys to the future.
   components:
   - type: VehicleKey
-    keys:
-      - Secway
+  - type: Tag
+    tags:
+    - SecwayKeys
   - type: Sprite
     sprite: Objects/Vehicles/secway.rsi
     state: keys
@@ -35,8 +37,9 @@
   description: Think this looks like just one key? ATV keys means "actually two vehicle keys."
   components:
   - type: VehicleKey
-    keys:
-      - ATV
+  - type: Tag
+    tags:
+    - ATVKeys
   - type: Sprite
     sprite: Objects/Vehicles/atv.rsi
     state: keys
@@ -49,7 +52,8 @@
   description: Unlock any vehicle.
   components:
   - type: VehicleKey
-    keys:
-      - ATV
-      - Secway
-      - PussyWagon
+  - type: Tag
+    tags:
+    - PussyWagonKeys
+    - SecwayKeys
+    - ATVKeys

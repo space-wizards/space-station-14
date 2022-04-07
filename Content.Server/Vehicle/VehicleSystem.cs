@@ -2,6 +2,7 @@ using Content.Shared.Vehicle.Components;
 using Content.Shared.Vehicle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Toggleable;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
@@ -11,30 +12,27 @@ using Content.Server.Buckle.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Storage.Components;
 using Content.Server.Popups;
-using Content.Shared.Interaction;
-using Content.Shared.Verbs;
 using Content.Shared.MobState;
 using Content.Shared.Stunnable;
-using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Hands;
 using Content.Shared.Tag;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Vehicle
 {
     public sealed class VehicleSystem : EntitySystem
     {
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
         public override void Initialize()
         {
@@ -43,10 +41,10 @@ namespace Content.Server.Vehicle
             SubscribeLocalEvent<VehicleComponent, ToggleActionEvent>(OnSirenToggle);
             SubscribeLocalEvent<VehicleComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<VehicleComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<VehicleComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
-            SubscribeLocalEvent<VehicleComponent, GetVerbsEvent<AlternativeVerb>>(AddKeysVerb);
             SubscribeLocalEvent<VehicleComponent, MoveEvent>(OnMove);
             SubscribeLocalEvent<VehicleComponent, StorageChangedEvent>(OnStorageChanged);
+            SubscribeLocalEvent<VehicleComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
+            SubscribeLocalEvent<VehicleComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
             SubscribeLocalEvent<RiderComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
             SubscribeLocalEvent<RiderComponent, GotParalyzedEvent>(OnParalyzed);
             SubscribeLocalEvent<RiderComponent, MobStateChangedEvent>(OnMobStateChanged);
@@ -80,6 +78,10 @@ namespace Content.Server.Vehicle
 
             component.BaseBuckleOffset = strap.BuckleOffset;
             strap.BuckleOffsetUnclamped = Vector2.Zero; //You're going to align these facing east, so...
+
+            // Add key slot
+            component.KeySlot.Whitelist = component.KeyWhitelist;
+            _itemSlotsSystem.AddItemSlot(uid, component.Name, component.KeySlot);
         }
         /// <summary>
         /// Give the user the rider component if they're buckling to the vehicle,
@@ -134,83 +136,6 @@ namespace Content.Server.Vehicle
         }
 
         /// <summary>
-        /// Handle adding keys to the ignition
-        /// </summary>
-        private void OnAfterInteractUsing(EntityUid uid, VehicleComponent component, AfterInteractUsingEvent args)
-        {
-            if (!args.CanReach)
-                return;
-
-            if (!HasComp<HandsComponent>(args.User))
-                return;
-
-            if (!TryComp<VehicleKeyComponent>(args.Used, out var key))
-                return;
-
-            if (component.HasKey)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("vehicle-has-key", ("vehicle", uid)), uid, Filter.Pvs(args.User));
-                return;
-            }
-
-            component.KeyID = MetaData(key.Owner).EntityPrototype?.ID;
-            bool unlocks = false;
-            /// Each vehicle takes one kind of key, so this will stop e.g. atv keys from unlocking a secway
-            foreach (var keyType in key.Keys)
-            {
-                if (keyType == component.Key)
-                    unlocks = true;
-            }
-
-            if (!unlocks)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("vehicle-wrong-key", ("vehicle", uid), ("keys", args.Used)), uid, Filter.Pvs(args.User));
-                return;
-            }
-
-            component.HasKey = true;
-            /// This lets the vehicle move
-            EnsureComp<SharedPlayerInputMoverComponent>(uid);
-            /// This lets the vehicle open doors
-            if (component.HasRider)
-                _tagSystem.AddTag(uid, "DoorBumpOpener");
-
-            // Audiovisual feedback
-            SoundSystem.Play(Filter.Pvs(uid), component.StartupSound.GetSound(), uid, AudioParams.Default.WithVolume(1f));
-            _ambientSound.SetAmbience(uid, true);
-            _popupSystem.PopupEntity(Loc.GetString("vehicle-use-key", ("vehicle", uid), ("keys", args.Used)), uid, Filter.Pvs(args.User));
-            // Instead of storing the key, we delete it and spawn the same prototype again when it's taken out
-            EntityManager.DeleteEntity(args.Used);
-        }
-
-        /// <summary>
-        /// This adds the verb for the keys to the right-click menu.
-        /// </summary>
-        private void AddKeysVerb(EntityUid uid, VehicleComponent component, GetVerbsEvent<AlternativeVerb> args)
-        {
-            if (!args.CanInteract || !args.CanAccess || !HasComp<HandsComponent>(args.User) || !component.HasKey || component.Key == string.Empty)
-                return;
-            // If someone is riding, let only that person take out the keys.
-            if (component.HasRider && !TryComp<RiderComponent>(args.User, out var rider) && rider?.Vehicle?.Owner != component.Owner)
-                return;
-
-            AlternativeVerb verb = new()
-            {
-                Act = () =>
-                {
-                    /// Take the key out and put it in the doer's hands
-                    var key = EntityManager.SpawnEntity(component.KeyID, Transform(args.User).Coordinates);
-                    _handsSystem.PickupOrDrop(args.User, key);
-                    component.HasKey = false;
-                    /// Turn off ambience, remove door opener
-                    _ambientSound.SetAmbience(uid, false);
-                },
-                Text = Loc.GetString("vehicle-remove-keys-verb"),
-                Priority = 2
-            };
-            args.Verbs.Add(verb);
-        }
-        /// <summary>
         /// Every time the vehicle moves we update its visual and buckle positions.
         /// Not the most beautiful thing but it works.
         /// </summary>
@@ -238,6 +163,39 @@ namespace Content.Server.Vehicle
         private void OnStorageChanged(EntityUid uid, VehicleComponent component, StorageChangedEvent args)
         {
             UpdateStorageUsed(uid, args.Added);
+        }
+
+        /// <summary>
+        /// Handle adding keys to the ignition
+        /// </summary>
+        private void OnEntInserted(EntityUid uid, VehicleComponent component, EntInsertedIntoContainerMessage args)
+        {
+            if (!HasComp<VehicleKeyComponent>(args.Entity))
+                return;
+
+            component.HasKey = true;
+            /// This lets the vehicle move
+            EnsureComp<SharedPlayerInputMoverComponent>(uid);
+            /// This lets the vehicle open doors
+            if (component.HasRider)
+                _tagSystem.AddTag(uid, "DoorBumpOpener");
+
+            // Audiovisual feedback
+            SoundSystem.Play(Filter.Pvs(uid), component.StartupSound.GetSound(), uid, AudioParams.Default.WithVolume(1f));
+            _ambientSound.SetAmbience(uid, true);
+        }
+
+        /// <summary>
+        /// Set HasKey to false when the key is taken out.
+        /// </summary>
+        private void OnEntRemoved(EntityUid uid, VehicleComponent component, EntRemovedFromContainerMessage args)
+        {
+            /// We have 3 containers or maybe even more so
+            if (!HasComp<VehicleKeyComponent>(args.Entity))
+                return;
+
+            component.HasKey = false;
+            _ambientSound.SetAmbience(uid, false);
         }
 
         /// <summary>

@@ -1,7 +1,9 @@
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Sound;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
+using Content.Shared.Whitelist;
 
 namespace Content.Shared.Vehicle.Components
 {
@@ -93,15 +95,15 @@ namespace Content.Shared.Vehicle.Components
         };
 
         /// <summary>
-        /// The type of key this uses.
-        /// </summary>
-        [DataField("key", required: true)]
-        public string Key = string.Empty;
-
-        /// <summary>
         /// The prototype ID of the key that was inserted so it can be
         /// spawned when the key is removed.
         /// </summary>
-        public string? KeyID;
+        public ItemSlot KeySlot = new();
+
+        /// <summary>
+        /// What entities can be inserted into the KeySlot
+        /// </summary>
+        [DataField("keyWhitelist")]
+        public EntityWhitelist? KeyWhitelist = null;
     }
 }

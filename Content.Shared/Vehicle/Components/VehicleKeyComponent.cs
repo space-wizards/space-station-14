@@ -6,11 +6,5 @@ namespace Content.Shared.Vehicle.Components
     /// </summary>
     [RegisterComponent]
     public sealed class VehicleKeyComponent : Component
-    {
-        /// <summary>
-        /// The key types this key can unlock
-        /// </summary>
-        [DataField("keys")]
-        public string[] Keys = {};
-    }
+    {}
 }
