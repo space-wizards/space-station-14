@@ -52,6 +52,7 @@ namespace Content.Server.IoC
             IoCManager.Register<PoissonDiskSampler>();
             IoCManager.Register<RulesManager, RulesManager>();
             IoCManager.Register<RoleBanManager, RoleBanManager>();
+            IoCManager.Register<NetworkResourceManager>();
         }
     }
 }

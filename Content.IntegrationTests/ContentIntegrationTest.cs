@@ -262,7 +262,7 @@ namespace Content.IntegrationTests
                 if (client.Options?.ExtraPrototypes is { } extra)
                 {
                     prototypes.LoadString(extra, true);
-                    prototypes.Resync();
+                    prototypes.ResolveResults();
                 }
             });
 
@@ -309,7 +309,7 @@ namespace Content.IntegrationTests
                 if (server.Options?.ExtraPrototypes is { } extra)
                 {
                     prototypes.LoadString(extra, true);
-                    prototypes.Resync();
+                    prototypes.ResolveResults();
                 }
             });
 

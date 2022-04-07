@@ -18,6 +18,11 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         public bool DisallowLateJoin { get; private set; } = false;
 
+#if EXCEPTION_TOLERANCE
+        [ViewVariables]
+        public int RoundStartFailShutdownCount { get; private set; } = 0;
+#endif
+
         private void InitializeCVars()
         {
             _configurationManager.OnValueChanged(CCVars.GameLobbyEnabled, value => LobbyEnabled = value, true);
@@ -25,6 +30,9 @@ namespace Content.Server.GameTicking
             _configurationManager.OnValueChanged(CCVars.GameLobbyDuration, value => LobbyDuration = TimeSpan.FromSeconds(value), true);
             _configurationManager.OnValueChanged(CCVars.GameDisallowLateJoins,
                 value => { DisallowLateJoin = value; UpdateLateJoinStatus(); UpdateJobsAvailable(); }, true);
+#if EXCEPTION_TOLERANCE
+            _configurationManager.OnValueChanged(CCVars.RoundStartFailShutdownCount, value => RoundStartFailShutdownCount = value, true);
+#endif
         }
     }
 }

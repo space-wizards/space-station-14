@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Storage.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
@@ -24,7 +24,7 @@ namespace Content.Server.Storage.EntitySystems
                 {
                     foreach (var entity in containedLayers)
                     {
-                        if (mapLayerData.Whitelist.IsValid(entity))
+                        if (mapLayerData.ServerWhitelist.IsValid(entity))
                         {
                             list.Add(mapLayerData.Layer);
                             break;

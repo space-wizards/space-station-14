@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -47,7 +47,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     How far away do we update gas overlays (minimum; due to chunking further away tiles may also be updated).
         /// </summary>
-        private float _updateRange;
+        private Vector2 _updateRange;
 
         // Because the gas overlay updates aren't run every tick we need to avoid the pop-in that might occur with
         // the regular PVS range.
@@ -65,12 +65,12 @@ namespace Content.Server.Atmos.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-            _mapManager.OnGridRemoved += OnGridRemoved;
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.NetGasOverlayTickRate, value => _updateCooldown = value > 0.0f ? 1 / value : float.MaxValue, true);
-            configManager.OnValueChanged(CVars.NetMaxUpdateRange, value => _updateRange = value + RangeOffset, true);
+            configManager.OnValueChanged(CVars.NetDefaultUpdateRange, value => _updateRange = value + RangeOffset, true);
             configManager.OnValueChanged(CCVars.GasOverlayThresholds, value => _thresholds = value, true);
         }
 
@@ -78,7 +78,6 @@ namespace Content.Server.Atmos.EntitySystems
         {
             base.Shutdown();
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
-            _mapManager.OnGridRemoved -= OnGridRemoved;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -112,11 +111,11 @@ namespace Content.Server.Atmos.EntitySystems
             return chunk;
         }
 
-        private void OnGridRemoved(MapId mapId, GridId gridId)
+        private void OnGridRemoved(GridRemovalEvent ev)
         {
-            if (_overlay.ContainsKey(gridId))
+            if (_overlay.ContainsKey(ev.GridId))
             {
-                _overlay.Remove(gridId);
+                _overlay.Remove(ev.GridId);
             }
         }
 
@@ -194,10 +193,10 @@ namespace Content.Server.Atmos.EntitySystems
             var inRange = new List<GasOverlayChunk>();
 
             // This is the max in any direction that we can get a chunk (e.g. max 2 chunks away of data).
-            var (maxXDiff, maxYDiff) = ((int) (_updateRange / ChunkSize) + 1, (int) (_updateRange / ChunkSize) + 1);
+            var (maxXDiff, maxYDiff) = ((int) (_updateRange.X / ChunkSize) + 1, (int) (_updateRange.Y / ChunkSize) + 1);
 
             var worldBounds = Box2.CenteredAround(EntityManager.GetComponent<TransformComponent>(entity).WorldPosition,
-                new Vector2(_updateRange, _updateRange));
+                _updateRange);
 
             foreach (var grid in _mapManager.FindGridsIntersecting(EntityManager.GetComponent<TransformComponent>(entity).MapID, worldBounds))
             {
@@ -220,10 +219,10 @@ namespace Content.Server.Atmos.EntitySystems
                         // (e.g. if we're on the very edge of a chunk we may need more chunks).
 
                         var (xDiff, yDiff) = (chunkIndices.X - entityTile.X, chunkIndices.Y - entityTile.Y);
-                        if (xDiff > 0 && xDiff > _updateRange ||
-                            yDiff > 0 && yDiff > _updateRange ||
-                            xDiff < 0 && Math.Abs(xDiff + ChunkSize) > _updateRange ||
-                            yDiff < 0 && Math.Abs(yDiff + ChunkSize) > _updateRange) continue;
+                        if (xDiff > 0 && xDiff > _updateRange.X ||
+                            yDiff > 0 && yDiff > _updateRange.Y ||
+                            xDiff < 0 && Math.Abs(xDiff + ChunkSize) > _updateRange.X ||
+                            yDiff < 0 && Math.Abs(yDiff + ChunkSize) > _updateRange.Y) continue;
 
                         inRange.Add(chunk);
                     }

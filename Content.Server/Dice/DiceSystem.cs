@@ -2,7 +2,7 @@ using System;
 using Content.Server.Popups;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -25,7 +25,7 @@ namespace Content.Server.Dice
             base.Initialize();
 
             SubscribeLocalEvent<DiceComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<DiceComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<DiceComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<DiceComponent, LandEvent>(OnLand);
             SubscribeLocalEvent<DiceComponent, ExaminedEvent>(OnExamined);
         }
@@ -36,8 +36,11 @@ namespace Content.Server.Dice
                 component.CurrentSide = component.Sides;
         }
 
-        private void OnActivate(EntityUid uid, DiceComponent component, ActivateInWorldEvent args)
+        private void OnUseInHand(EntityUid uid, DiceComponent component, UseInHandEvent args)
         {
+            if (args.Handled) return;
+
+            args.Handled = true;
             Roll(uid, component);
         }
 

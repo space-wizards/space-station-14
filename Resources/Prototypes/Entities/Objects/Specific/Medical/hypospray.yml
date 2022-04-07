@@ -87,3 +87,27 @@
           Quantity: 10
         - ReagentId: Epinephrine
           Quantity: 5
+
+- type: entity
+  name: pen
+  suffix: Hypopen
+  parent: BaseItem
+  description: A dark ink pen.
+  id: Hypopen
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen
+    netsync: false
+  - type: Item
+    sprite: Objects/Misc/bureaucracy.rsi
+    HeldPrefix: pen
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 15
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray

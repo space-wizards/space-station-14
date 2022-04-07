@@ -20,9 +20,8 @@ using Robust.Shared.Utility;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public sealed class GasTankComponent : Component, IExamine, IGasMixtureHolder, IDropped, IActivate
+    public sealed class GasTankComponent : Component, IExamine, IGasMixtureHolder
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -32,9 +31,7 @@ namespace Content.Server.Atmos.Components
 
         private int _integrity = 3;
 
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
-        [ViewVariables] private BoundUserInterface? _userInterface;
+        [ViewVariables] public BoundUserInterface? UserInterface;
 
         [DataField("ruptureSound")] private SoundSpecifier _ruptureSound = new SoundPathSpecifier("Audio/Effects/spray.ogg");
 
@@ -87,17 +84,11 @@ namespace Content.Server.Atmos.Components
         protected override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetUIOrNull(SharedGasTankUiKey.Key);
-            if (_userInterface != null)
+            UserInterface = Owner.GetUIOrNull(SharedGasTankUiKey.Key);
+            if (UserInterface != null)
             {
-                _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
-        }
-
-        public void OpenInterface(IPlayerSession session)
-        {
-            _userInterface?.Open(session);
-            UpdateUserInterface(true);
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
@@ -147,12 +138,6 @@ namespace Content.Server.Atmos.Components
             return air;
         }
 
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor)) return;
-            OpenInterface(actor.PlayerSession);
-        }
-
         public void ConnectToInternals()
         {
             if (IsConnected || !IsFunctional) return;
@@ -175,7 +160,7 @@ namespace Content.Server.Atmos.Components
         public void UpdateUserInterface(bool initialUpdate = false)
         {
             var internals = GetInternalsComponent();
-            _userInterface?.SetState(
+            UserInterface?.SetState(
                 new GasTankBoundUserInterfaceState
                 {
                     TankPressure = Air?.Pressure ?? 0,
@@ -220,16 +205,17 @@ namespace Content.Server.Atmos.Components
 
         public void AssumeAir(GasMixture giver)
         {
-            EntitySystem.Get<AtmosphereSystem>().Merge(Air, giver);
-            CheckStatus();
+            var atmos = EntitySystem.Get<AtmosphereSystem>();
+            atmos.Merge(Air, giver);
+            CheckStatus(atmos);
         }
 
-        public void CheckStatus()
+        public void CheckStatus(AtmosphereSystem? atmosphereSystem=null)
         {
             if (Air == null)
                 return;
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            atmosphereSystem ??= EntitySystem.Get<AtmosphereSystem>();
 
             var pressure = Air.Pressure;
 
@@ -245,14 +231,14 @@ namespace Content.Server.Atmos.Components
                 var range = (pressure - TankFragmentPressure) / TankFragmentScale;
 
                 // Let's cap the explosion, yeah?
+                // !1984
                 if (range > MaxExplosionRange)
                 {
                     range = MaxExplosionRange;
                 }
 
-                EntitySystem.Get<ExplosionSystem>().SpawnExplosion(Owner, (int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
+                EntitySystem.Get<ExplosionSystem>().TriggerExplosive(Owner, radius: range);
 
-                _entMan.QueueDeleteEntity(Owner);
                 return;
             }
 
@@ -295,11 +281,6 @@ namespace Content.Server.Atmos.Components
 
             if (_integrity < 3)
                 _integrity++;
-        }
-
-        void IDropped.Dropped(DroppedEventArgs eventArgs)
-        {
-            DisconnectFromInternals(eventArgs.User);
         }
     }
 }

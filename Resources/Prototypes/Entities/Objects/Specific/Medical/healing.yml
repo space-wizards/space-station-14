@@ -71,6 +71,9 @@
     - Gauze
   - type: Sprite
     state: gauze
+  - type: Construction
+    graph: Gauze
+    node: gauze
   - type: Healing
     damageContainer: Biological
     damage:
@@ -86,6 +89,13 @@
     stackType: Gauze
 
 - type: entity
+  id: Gauze1
+  parent: Gauze
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
   name: aloe cream
   description: A topical cream for burns.
   parent: Ointment ##Yes it's a direct reskin
@@ -96,7 +106,7 @@
     sprite: Objects/Specific/Hydroponics/aloe.rsi
     state: cream
 
-# Pills     
+# Pills
 - type: entity
   name: dexalin pill
   parent: Pill
@@ -109,7 +119,7 @@
         reagents:
         - ReagentId: Dexalin
           Quantity: 15
-          
+
 - type: entity
   name: dylovene pill
   parent: Pill
@@ -135,7 +145,7 @@
         reagents:
         - ReagentId: Hyronalin
           Quantity: 15
-          
+
 - type: entity
   name: iron pill
   parent: Pill
@@ -161,7 +171,7 @@
         reagents:
         - ReagentId: Kelotane
           Quantity: 15
-       
+
 - type: entity
   name: space drugs
   parent: Pill
@@ -174,7 +184,7 @@
         reagents:
         - ReagentId: SpaceDrugs
           Quantity: 15
-          
+
 - type: entity
   name: tricordrazine pill
   parent: Pill
@@ -187,7 +197,7 @@
         reagents:
         - ReagentId: Tricordrazine
           Quantity: 15
-          
+
 # Syringes
 - type: entity
   name: ephedrine syringe
@@ -216,19 +226,6 @@
           Quantity: 15
 
 - type: entity
-  name: spaceacillin syringe
-  parent: Syringe
-  id: SyringeSpaceacillin
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-        - ReagentId: Spaceacillin
-          Quantity: 15
-
-- type: entity
   name: tranexamic acid syringe
   parent: Syringe
   id: SyringeTranexamicAcid
@@ -240,4 +237,16 @@
         reagents:
         - ReagentId: TranexamicAcid
           Quantity: 15
-        
+
+- type: entity
+  name: spaceacillin syringe
+  parent: Syringe
+  id: SyringeSpaceacillin
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Spaceacillin
+          Quantity: 15

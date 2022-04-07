@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Botany.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Popups;
@@ -44,7 +44,8 @@ namespace Content.Server.Botany.Systems
 
             foreach (var seed in _prototypeManager.EnumeratePrototypes<SeedPrototype>())
             {
-                AddSeedToDatabase(seed);
+                seed.Uid = GetNextSeedUid();
+                Seeds[seed.Uid] = seed;
             }
         }
 
@@ -72,7 +73,7 @@ namespace Content.Server.Botany.Systems
             if (_timer < 3f)
                 return;
 
-            _timer = 0f;
+            _timer -= 3f;
 
             foreach (var plantHolder in EntityManager.EntityQuery<PlantHolderComponent>())
             {

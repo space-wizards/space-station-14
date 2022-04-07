@@ -674,7 +674,7 @@
     state: closed
 
 - type: construction
-  name: airtight plastic flaps
+  name: plastic flaps
   id: PlasticFlapsClear
   graph: PlasticFlapsGraph
   startNode: start

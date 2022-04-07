@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Tools;
-using Content.Server.Tools.Components;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
 using Content.Shared.Interaction;
@@ -14,6 +13,7 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -338,7 +338,7 @@ namespace Content.Server.WireHacking
                 return false;
             }
 
-            if (handsComponent.GetActiveHand()?.HeldEntity is not { Valid: true } activeHandEntity ||
+            if (handsComponent.ActiveHand?.HeldEntity is not { Valid: true } activeHandEntity ||
                 !_entities.TryGetComponent(activeHandEntity, out tool))
             {
                 return false;

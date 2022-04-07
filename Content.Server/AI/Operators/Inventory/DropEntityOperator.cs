@@ -1,6 +1,5 @@
 using Content.Server.Hands.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.AI.Operators.Inventory
 {
@@ -21,12 +20,7 @@ namespace Content.Server.AI.Operators.Inventory
         /// <returns></returns>
         public override Outcome Execute(float frameTime)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out HandsComponent? handsComponent))
-            {
-                return Outcome.Failed;
-            }
-
-            return handsComponent.Drop(_entity) ? Outcome.Success : Outcome.Failed;
+            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedHandsSystem>().TryDrop(_owner, _entity) ? Outcome.Success : Outcome.Failed;
         }
     }
 }

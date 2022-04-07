@@ -1,7 +1,7 @@
 - type: entity
   id: MobObserver
   name: observer
-  abstract: true
+  noSpawn: true
   save: false
   description: Boo!
   components:
@@ -28,7 +28,6 @@
     context: "ghost"
   - type: Examiner
     DoRangeCheck: false
-  - type: IgnorePause
   - type: Ghost
   - type: GhostRadio
   - type: Sprite
@@ -42,6 +41,6 @@
       - state: animated
         shader: unshaded
   - type: MovementSpeedModifier
-    baseSprintSpeed: 14
-    baseWalkSpeed: 7
+    baseSprintSpeed: 8
+    baseWalkSpeed: 5
   - type: MovementIgnoreGravity

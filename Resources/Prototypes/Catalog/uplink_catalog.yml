@@ -75,6 +75,12 @@
   itemId: SyndieMiniBomb
   price: 6
 
+- type: uplinkListing
+  id: UplinkGrenadePenguin
+  category: Explosives
+  itemId: MobGrenadePenguin
+  price: 6
+
 #- type: uplinkListing
 #  id: UplinkExplosiveC4
 #  category: Weapons
@@ -125,9 +131,16 @@
   id: UplinkEmag
   category: Utility
   itemId: Emag
-  description: This sequencer, or "emag", can be used to open or hack a huge variety of items around the station.
+  description: The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
   icon: /Textures/Objects/Tools/emag.rsi/icon.png
   price: 8
+
+- type: uplinkListing
+  id: UplinkHypopen
+  category: Utility
+  itemId: Hypopen
+  description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
+  price: 4
 
 # Bundles
 
@@ -224,6 +237,13 @@
 # Misc
 
 - type: uplinkListing
+  id: UplinkCyberpen
+  category: Misc
+  itemId: CyberPen
+  description: Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
+  price: 4
+
+- type: uplinkListing
   id: UplinkBalloon
   category: Misc
   itemId: BalloonSyn
@@ -244,12 +264,6 @@
   price: 4
 
 - type: uplinkListing
-  id: UplinkPen
-  category: Misc
-  itemId: Pen
-  price: 2
-
-- type: uplinkListing
   id: UplinkCigarettes
   category: Misc
   itemId: CigPackSyndicate
@@ -267,11 +281,11 @@
   itemId: lanternextrabright
   price: 2
 
-- type: uplinkListing
-  id: UplinkCostumeCentcom
-  category: Misc
-  itemId: ClothingBackpackDuffelSyndicateCostumeCentcom
-  price: 4
+#- type: uplinkListing
+#  id: UplinkCostumeCentcom
+#  category: Misc
+#  itemId: ClothingBackpackDuffelSyndicateCostumeCentcom
+#  price: 4
 
 - type: uplinkListing
   id: UplinkCostumeClown
@@ -284,3 +298,18 @@
   category: Misc
   itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
   price: 4
+
+- type: uplinkListing
+  id: UplinkGigacancerScanner
+  category: Misc
+  itemId: HandheldHealthAnalyzerGigacancer
+  listingName: Ultragigacancer Health Analyzer
+  description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
+  price: 5
+  
+- type: uplinkListing
+  id: UplinkNocturineChemistryBottle
+  category: Misc
+  itemId: NocturineChemistryBottle
+  description: A chemical that makes it very hard for your target to stand up.
+  price: 5

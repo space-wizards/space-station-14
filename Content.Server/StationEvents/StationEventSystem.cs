@@ -43,13 +43,13 @@ namespace Content.Server.StationEvents
 
         private readonly List<StationEvent> _stationEvents = new();
 
-        private const float MinimumTimeUntilFirstEvent = 300;
+        private float MinimumTimeUntilFirstEvent = 300;
 
         /// <summary>
         /// How long until the next check for an event runs
         /// </summary>
         /// Default value is how long until first event is allowed
-        private float _timeUntilNextEvent = MinimumTimeUntilFirstEvent;
+        private float _timeUntilNextEvent = float.MaxValue;
 
         /// <summary>
         /// Whether random events can run

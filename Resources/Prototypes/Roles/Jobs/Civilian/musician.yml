@@ -8,6 +8,10 @@
   supervisors: "whoever hires you"
   accessGroups:
     - AllAccess
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: MikuDay
+    prototype: BoxPerformer
 
 - type: startingGear
   id: MusicianGear

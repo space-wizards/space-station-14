@@ -18,7 +18,7 @@ namespace Content.Shared.Roles
         private string _name = string.Empty;
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("supervisors")]

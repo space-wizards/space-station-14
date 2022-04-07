@@ -22,23 +22,40 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
-        ///     Whether the basic 'hum' ambience will be enabled.
-        /// </summary>
-        public static readonly CVarDef<bool> AmbienceBasicEnabled =
-            CVarDef.Create("ambience.basic_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
-
-        /// <summary>
-        /// How long we'll wait until re-sampling nearby objects for ambience.
+        /// How long we'll wait until re-sampling nearby objects for ambience. Should be pretty fast, but doesn't have to match the tick rate.
         /// </summary>
         public static readonly CVarDef<float> AmbientCooldown =
-            CVarDef.Create("ambience.cooldown", 0.5f, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.cooldown", 0.1f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        /// <summary>
+        /// How large of a range to sample for ambience.
+        /// </summary>
         public static readonly CVarDef<float> AmbientRange =
             CVarDef.Create("ambience.range", 5f, CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        /// Maximum simultaneous ambient sounds.
+        /// </summary>
         public static readonly CVarDef<int> MaxAmbientSources =
-            CVarDef.Create("ambience.max_sounds", 6, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.max_sounds", 16, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        /// <summary>
+        /// The minimum value the user can set for ambience.max_sounds
+        /// </summary>
+        public static readonly CVarDef<int> MinMaxAmbientSourcesConfigured =
+            CVarDef.Create("ambience.min_max_sounds_configured", 16, CVar.REPLICATED | CVar.SERVER | CVar.CHEAT);
+
+        /// <summary>
+        /// The maximum value the user can set for ambience.max_sounds
+        /// </summary>
+        public static readonly CVarDef<int> MaxMaxAmbientSourcesConfigured =
+            CVarDef.Create("ambience.max_max_sounds_configured", 64, CVar.REPLICATED | CVar.SERVER | CVar.CHEAT);
+
+        /// <summary>
+        /// Ambience volume.
+        /// </summary>
+        public static readonly CVarDef<float> AmbienceVolume =
+            CVarDef.Create("ambience.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
         /*
          * Status
          */
@@ -60,6 +77,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool>
             EventsEnabled = CVarDef.Create("events.enabled", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Disables most functionality in the GameTicker.
+        /// </summary>
         public static readonly CVarDef<bool>
             GameDummyTicker = CVarDef.Create("game.dummyticker", false, CVar.ARCHIVE | CVar.SERVERONLY);
 
@@ -73,7 +93,7 @@ namespace Content.Shared.CCVar
         ///     Controls the duration of the lobby timer in seconds. Defaults to 2 minutes and 30 seconds.
         /// </summary>
         public static readonly CVarDef<int>
-            GameLobbyDuration = CVarDef.Create("game.lobbyduration", 0, CVar.ARCHIVE);
+            GameLobbyDuration = CVarDef.Create("game.lobbyduration", 150, CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if players can latejoin at all.
@@ -124,6 +144,38 @@ namespace Content.Shared.CCVar
             GameMapForced = CVarDef.Create("game.mapforced", false, CVar.SERVERONLY);
 
         /// <summary>
+        /// The depth of the queue used to calculate which map is next in rotation.
+        /// This is how long the game "remembers" that some map was put in play. Default is 16 rounds.
+        /// </summary>
+        public static readonly CVarDef<int>
+            GameMapMemoryDepth = CVarDef.Create("game.map_memory_depth", 16, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Is map rotation enabled?
+        /// </summary>
+        public static readonly CVarDef<bool>
+            GameMapRotation = CVarDef.Create<bool>("game.map_rotation", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether a random position offset will be applied to the station on roundstart.
+        /// </summary>
+        public static readonly CVarDef<bool> StationOffset =
+            CVarDef.Create("game.station_offset", true);
+
+        /// <summary>
+        /// When the default blueprint is loaded what is the maximum amount it can be offset from 0,0.
+        /// Does nothing without <see cref="StationOffset"/> as true.
+        /// </summary>
+        public static readonly CVarDef<float> MaxStationOffset =
+            CVarDef.Create("game.maxstationoffset", 1000.0f);
+
+        /// <summary>
+        ///     Whether a random rotation will be applied to the station on roundstart.
+        /// </summary>
+        public static readonly CVarDef<bool> StationRotation =
+            CVarDef.Create("game.station_rotation", false);
+
+        /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
         /// </summary>
         public static readonly CVarDef<bool> GamePersistGuests =
@@ -134,6 +186,15 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> SoftMaxPlayers =
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
+
+#if EXCEPTION_TOLERANCE
+        /// <summary>
+        ///     Amount of times round start must fail before the server is shut down.
+        ///     Set to 0 or a negative number to disable.
+        /// </summary>
+        public static readonly CVarDef<int> RoundStartFailShutdownCount =
+            CVarDef.Create("game.round_start_fail_shutdown_count", 5, CVar.SERVERONLY | CVar.SERVER);
+#endif
 
         /*
          * Discord
@@ -211,6 +272,24 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DatabaseSqliteDbPath =
             CVarDef.Create("database.sqlite_dbpath", "preferences.db", CVar.SERVERONLY);
 
+        /// <summary>
+        /// Milliseconds to asynchronously delay all SQLite database acquisitions with.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to 1 on DEBUG, 0 on RELEASE.
+        /// This is intended to help catch .Result deadlock bugs that only happen on postgres
+        /// (because SQLite is not actually asynchronous normally)
+        /// </remarks>
+        public static readonly CVarDef<int> DatabaseSqliteDelay =
+            CVarDef.Create("database.sqlite_delay", DefaultSqliteDelay, CVar.SERVERONLY);
+
+#if DEBUG
+        private const int DefaultSqliteDelay = 1;
+#else
+        private const int DefaultSqliteDelay = 0;
+#endif
+
+
         public static readonly CVarDef<string> DatabasePgHost =
             CVarDef.Create("database.pg_host", "localhost", CVar.SERVERONLY);
 
@@ -218,7 +297,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("database.pg_port", 5432, CVar.SERVERONLY);
 
         public static readonly CVarDef<string> DatabasePgDatabase =
-            CVarDef.Create("database.pg_database", "or14", CVar.SERVERONLY);
+            CVarDef.Create("database.pg_database", "ss14", CVar.SERVERONLY);
 
         public static readonly CVarDef<string> DatabasePgUsername =
             CVarDef.Create("database.pg_username", "", CVar.SERVERONLY);
@@ -272,7 +351,7 @@ namespace Content.Shared.CCVar
         /// Technically client doesn't need to know about it but this may prevent a bug in the distant future so it stays.
         /// </remarks>
         public static readonly CVarDef<bool> MobPushing =
-            CVarDef.Create("physics.mob_pushing", true, CVar.REPLICATED);
+            CVarDef.Create("physics.mob_pushing", false, CVar.REPLICATED);
 
         /*
          * Lobby music
@@ -330,6 +409,106 @@ namespace Content.Shared.CCVar
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
 
         /*
+         * Explosions
+         */
+
+        /// <summary>
+        ///     How many tiles the explosion system will process per tick
+        /// </summary>
+        /// <remarks>
+        ///     Setting this too high will put a large load on a single tick. Setting this too low will lead to
+        ///     unnaturally "slow" explosions.
+        /// </remarks>
+        public static readonly CVarDef<int> ExplosionTilesPerTick =
+            CVarDef.Create("explosion.tiles_per_tick", 100, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Upper limit on the size of an explosion before physics-throwing is disabled.
+        /// </summary>
+        /// <remarks>
+        ///     Large nukes tend to generate a lot of shrapnel that flies through space. This can functionally cripple
+        ///     the server TPS for a while after an explosion (or even during, if the explosion is processed
+        ///     incrementally.
+        /// </remarks>
+        public static readonly CVarDef<int> ExplosionThrowLimit =
+            CVarDef.Create("explosion.throw_limit", 400, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     If this is true, explosion processing will pause the NodeGroupSystem to pause updating.
+        /// </summary>
+        /// <remarks>
+        ///     This only takes effect if an explosion needs more than one tick to process (i.e., covers more than <see
+        ///     cref="ExplosionTilesPerTick"/> tiles). If this is not enabled, the node-system will rebuild its graph
+        ///     every tick as the explosion shreds the station, causing significant slowdown.
+        /// </remarks>
+        public static readonly CVarDef<bool> ExplosionSleepNodeSys =
+            CVarDef.Create("explosion.node_sleep", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Upper limit on the total area that an explosion can affect before the neighbor-finding algorithm just
+        ///     stops. Defaults to a 60-rile radius explosion.
+        /// </summary>
+        /// <remarks>
+        ///     Actual area may be larger, as it currently doesn't terminate mid neighbor finding. I.e., area may be that of a ~51 tile radius circle instead.
+        /// </remarks>
+        public static readonly CVarDef<int> ExplosionMaxArea =
+            CVarDef.Create("explosion.max_area", (int) 3.14f * 50 * 50, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Upper limit on the number of neighbor finding steps for the explosion system neighbor-finding algorithm.
+        /// </summary>
+        /// <remarks>
+        ///     Effectively places an upper limit on the range that any explosion can have. In the vast majority of
+        ///     instances, <see cref="ExplosionMaxArea"/> will likely be hit before this becomes a limiting factor.
+        /// </remarks>
+        public static readonly CVarDef<int> ExplosionMaxIterations =
+            CVarDef.Create("explosion.max_iterations", 150, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Max Time in milliseconds to spend processing explosions every tick.
+        /// </summary>
+        /// <remarks>
+        ///     This time limiting is not perfectly implemented. Firstly, a significant chunk of processing time happens
+        ///     due to queued entity deletions, which happen outside of the system update code. Secondly, explosion
+        ///     spawning cannot currently be interrupted & resumed, and may lead to exceeding this time limit.
+        /// </remarks>
+        public static readonly CVarDef<float> ExplosionMaxProcessingTime =
+            CVarDef.Create("explosion.max_tick_time", 7f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     If the explosion is being processed incrementally over several ticks, this variable determines whether
+        ///     updating the grid tiles should be done incrementally at the end of every tick, or only once the explosion has finished processing.
+        /// </summary>
+        /// <remarks>
+        ///     The most notable consequence of this change is that explosions will only punch a hole in the station &
+        ///     create a vacumm once they have finished exploding. So airlocks will no longer slam shut as the explosion
+        ///     expands, just suddenly at the end.
+        /// </remarks>
+        public static readonly CVarDef<bool> ExplosionIncrementalTileBreaking =
+            CVarDef.Create("explosion.incremental_tile", false, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Client-side explosion visuals: for how many seconds should an explosion stay on-screen once it has
+        ///     finished expanding?
+        /// </summary>
+        public static readonly CVarDef<float> ExplosionPersistence =
+            CVarDef.Create("explosion.persistence", 0.3f, CVar.REPLICATED);
+
+        /// <summary>
+        ///     If an explosion covers a larger area than this number, the damaging/processing will always start during
+        ///     the next tick, instead of during the same tick that the explosion was generated in.
+        /// </summary>
+        /// <remarks>
+        ///     This value can be used to ensure that for large explosions the area/tile calculation and the explosion
+        ///     processing/damaging occurs in separate ticks. This helps reduce the single-tick lag if both <see
+        ///     cref="ExplosionMaxProcessingTime"/> and <see cref="ExplosionTilesPerTick"/> are large. I.e., instead of
+        ///     a single tick explosion, this cvar allows for a configuration that results in a two-tick explosion,
+        ///     though most of the computational cost is still in the second tick.
+        /// </remarks>
+        public static readonly CVarDef<int> ExplosionSingleTickAreaLimit =
+            CVarDef.Create("explosion.single_tick_area_limit", 400, CVar.SERVERONLY);
+
+        /*
          * Admin logs
          */
 
@@ -351,6 +530,9 @@ namespace Content.Shared.CCVar
         // How many logs to send to the client at once
         public static readonly CVarDef<int> AdminLogsClientBatchSize =
             CVarDef.Create("adminlogs.client_batch_size", 1000, CVar.SERVERONLY);
+
+        public static readonly CVarDef<string> AdminLogsServerName =
+            CVarDef.Create("adminlogs.server_name", "unknown", CVar.SERVERONLY);
 
         /*
          * Atmos
@@ -455,7 +637,7 @@ namespace Content.Shared.CCVar
          * OOC
          */
 
-        public static readonly CVarDef<bool> OocEnabled = CVarDef.Create("ooc.enabled", true, CVar.NOTIFY);
+        public static readonly CVarDef<bool> OocEnabled = CVarDef.Create("ooc.enabled", true, CVar.NOTIFY | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> AdminOocEnabled =
             CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
@@ -464,7 +646,7 @@ namespace Content.Shared.CCVar
          * LOOC
          */
 
-        public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY);
+        public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> AdminLoocEnabled =
             CVarDef.Create("looc.enabled_admin", true, CVar.NOTIFY);
@@ -560,9 +742,24 @@ namespace Content.Shared.CCVar
         /*
          * Shuttles
          */
-        // Once cruising actually gets implemented I'd likely drop this speed to 3 maybe.
-        public static readonly CVarDef<float> ShuttleDockSpeedCap =
-            CVarDef.Create("shuttle.dock_speed_cap", 5f, CVar.SERVERONLY);
+        public static readonly CVarDef<float> ShuttleMaxLinearSpeed =
+            CVarDef.Create("shuttle.max_linear_speed", 13f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularSpeed =
+            CVarDef.Create("shuttle.max_angular_speed", 1.4f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularAcc =
+            CVarDef.Create("shuttle.max_angular_acc", 2f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleMaxAngularMomentum =
+            CVarDef.Create("shuttle.max_angular_momentum", 60000f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleIdleLinearDamping =
+            CVarDef.Create("shuttle.idle_linear_damping", 50f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> ShuttleIdleAngularDamping =
+            CVarDef.Create("shuttle.idle_angular_damping", 100f, CVar.SERVERONLY);
+
 
         /*
          * VIEWPORT
@@ -640,6 +837,38 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<string> DestinationFile =
             CVarDef.Create("autogen.destination_file", "", CVar.SERVER | CVar.SERVERONLY);
+
+        /*
+         * Network Resource Manager
+         */
+
+        /// <summary>
+        /// Controls whether new resources can be uploaded by admins.
+        /// Does not prevent already uploaded resources from being sent.
+        /// </summary>
+        public static readonly CVarDef<bool> ResourceUploadingEnabled =
+            CVarDef.Create("netres.enabled", true, CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// Controls the data size limit in megabytes for uploaded resources. If they're too big, they will be dropped.
+        /// Set to zero or a negative value to disable limit.
+        /// </summary>
+        public static readonly CVarDef<float> ResourceUploadingLimitMb =
+            CVarDef.Create("netres.limit", 3f, CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// Whether uploaded files will be stored in the server's database.
+        /// This is useful to keep "logs" on what files admins have uploaded in the past.
+        /// </summary>
+        public static readonly CVarDef<bool> ResourceUploadingStoreEnabled =
+            CVarDef.Create("netres.store_enabled", true, CVar.SERVER | CVar.SERVERONLY);
+
+        /// <summary>
+        /// Numbers of days before stored uploaded files are deleted. Set to zero or negative to disable auto-delete.
+        /// This is useful to free some space automatically. Auto-deletion runs only on server boot.
+        /// </summary>
+        public static readonly CVarDef<int> ResourceUploadingStoreDeletionDays =
+            CVarDef.Create("netres.store_deletion_days", 30, CVar.SERVER | CVar.SERVERONLY);
 
         /*
          * World Generation

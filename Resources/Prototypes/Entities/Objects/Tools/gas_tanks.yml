@@ -6,6 +6,8 @@
   - type: Sprite
     sprite: Objects/Tanks/generic.rsi
     state: icon
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.SharedGasTankUiKey.Key
@@ -13,7 +15,7 @@
   - type: Clothing
     size: 15
     sprite: Objects/Tanks/generic.rsi
-    QuickEquip: false
+    quickEquip: false
   - type: GasTank
     toggleAction:
       name: action-name-internals-toggle
@@ -21,6 +23,9 @@
       icon: Interface/Actions/internal0.png
       iconOn: Interface/Actions/internal1.png
       event: !type:ToggleActionEvent
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
 
 - type: entity
   parent: GasTankBase

@@ -12,7 +12,7 @@ namespace Content.Shared.Access
     public sealed class AccessLevelPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

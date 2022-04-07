@@ -167,7 +167,7 @@ namespace Content.Server.Cargo.Components
                     var offsets = new Vector2i[] { new Vector2i(0, 1), new Vector2i(1, 1), new Vector2i(1, 0), new Vector2i(1, -1),
                                                    new Vector2i(0, -1), new Vector2i(-1, -1), new Vector2i(-1, 0), new Vector2i(-1, 1), };
 
-                    var lookup = IoCManager.Resolve<IEntityLookup>();
+                    var lookup = EntitySystem.Get<EntityLookupSystem>();
                     var gridId = _entMan.GetComponent<TransformComponent>(Owner).GridID;
 
                     // TODO: Should use anchoring.
