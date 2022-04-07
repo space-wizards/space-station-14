@@ -104,7 +104,7 @@ namespace Content.Server.Vehicle
                 /// Add a virtual item to rider's hand
                 _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.BuckledEntity);
                 /// Let this open doors if it has the key in it
-                if (component.HasKey)
+                if (component.KeySlot.HasItem)
                 {
                     _tagSystem.AddTag(uid, "DoorBumpOpener");
                 }
@@ -148,7 +148,7 @@ namespace Content.Server.Vehicle
                 return;
             }
             /// The random check means the vehicle will stop after a few tiles without a key or without a rider
-            if ((!component.HasRider || !component.HasKey) && _random.Prob(0.015f))
+            if ((!component.HasRider || !component.KeySlot.HasItem) && _random.Prob(0.015f))
             {
                 RemComp<SharedPlayerInputMoverComponent>(uid);
                 UpdateAutoAnimate(uid, false);
@@ -173,7 +173,6 @@ namespace Content.Server.Vehicle
             if (!HasComp<VehicleKeyComponent>(args.Entity))
                 return;
 
-            component.HasKey = true;
             /// This lets the vehicle move
             EnsureComp<SharedPlayerInputMoverComponent>(uid);
             /// This lets the vehicle open doors
@@ -186,7 +185,7 @@ namespace Content.Server.Vehicle
         }
 
         /// <summary>
-        /// Set HasKey to false when the key is taken out.
+        /// Turn off the engine when key is removed.
         /// </summary>
         private void OnEntRemoved(EntityUid uid, VehicleComponent component, EntRemovedFromContainerMessage args)
         {
@@ -194,7 +193,6 @@ namespace Content.Server.Vehicle
             if (!HasComp<VehicleKeyComponent>(args.Entity))
                 return;
 
-            component.HasKey = false;
             _ambientSound.SetAmbience(uid, false);
         }
 

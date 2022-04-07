@@ -17,11 +17,6 @@ namespace Content.Shared.Vehicle.Components
     public sealed class VehicleComponent : Component
     {
         /// <summary>
-        /// Whether the vehicle currently has a key inside it
-        /// </summary>
-        public bool HasKey = false;
-
-        /// <summary>
         /// Whether someone is currently riding the vehicle
         /// </summary
         public bool HasRider = false;
