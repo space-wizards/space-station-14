@@ -153,9 +153,16 @@ namespace Content.Server.Vehicle
                 return;
             }
 
-            var keyProto = MetaData(key.Owner);
+            component.KeyID = MetaData(key.Owner).EntityPrototype?.ID;
+            bool unlocks = false;
             /// Each vehicle takes one kind of key, so this will stop e.g. atv keys from unlocking a secway
-            if (keyProto.EntityPrototype?.ID != component.Key)
+            foreach (var keyType in key.Keys)
+            {
+                if (keyType == component.Key)
+                    unlocks = true;
+            }
+
+            if (!unlocks)
             {
                 _popupSystem.PopupEntity(Loc.GetString("vehicle-wrong-key", ("vehicle", uid), ("keys", args.Used)), uid, Filter.Pvs(args.User));
                 return;
@@ -192,7 +199,7 @@ namespace Content.Server.Vehicle
                 Act = () =>
                 {
                     /// Take the key out and put it in the doer's hands
-                    var key = EntityManager.SpawnEntity(component.Key, Transform(args.User).Coordinates);
+                    var key = EntityManager.SpawnEntity(component.KeyID, Transform(args.User).Coordinates);
                     _handsSystem.PickupOrDrop(args.User, key);
                     component.HasKey = false;
                     /// Turn off ambience, remove door opener

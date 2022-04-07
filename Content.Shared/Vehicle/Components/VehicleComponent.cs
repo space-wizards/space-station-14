@@ -93,9 +93,15 @@ namespace Content.Shared.Vehicle.Components
         };
 
         /// <summary>
-        /// The prototype for the key
+        /// The type of key this uses.
         /// </summary>
         [DataField("key", required: true)]
         public string Key = string.Empty;
+
+        /// <summary>
+        /// The prototype ID of the key that was inserted so it can be
+        /// spawned when the key is removed.
+        /// </summary>
+        public string? KeyID;
     }
 }

@@ -62,7 +62,7 @@
   description: The janitor's trusty steed.
   components:
   - type: Vehicle
-    key: VehicleKeyPussyWagon
+    key: PussyWagon
     northOverride: -0.15
     southOverride: 0.22
   - type: Sprite
@@ -133,7 +133,7 @@
   description: The future of transportation. Popularized by St. James, the patron saint of security officers and internet forum moderators.
   components:
   - type: Vehicle
-    key: VehicleKeySecway
+    key: Secway
     northOnly: true
     northOverride: -0.1
     southOverride: 0.1
@@ -179,7 +179,7 @@
   description: All-Tile Vehicle.
   components:
   - type: Vehicle
-    key: VehicleKeyATV
+    key: ATV
     northOverride: -0.1
     southOverride: 0.1
   - type: Sprite
