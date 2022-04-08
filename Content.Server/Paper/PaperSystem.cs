@@ -1,7 +1,6 @@
 using Content.Server.UserInterface;
 using Content.Shared.Examine;
 using Content.Shared.Paper;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
