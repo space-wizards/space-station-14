@@ -1,5 +1,5 @@
-verb-trigger-timer-set = { $time } Seconds
-verb-trigger-timer-set-current = { $time } Seconds (current)
-verb-trigger-timer-cycle = Cycle Time Delay
-examine-trigger-timer = The timer is set to { $time } seconds.
-popup-trigger-timer-set = Timer set to { $time } seconds.
+verb-trigger-timer-set = { $time } Секунд
+verb-trigger-timer-set-current = { $time } Секунд (сейчас)
+verb-trigger-timer-cycle = Циклическое переключение задержки
+examine-trigger-timer = Таймер установлен на { $time } секунд.
+popup-trigger-timer-set = Таймер установлен на { $time } секунд.

@@ -1,9 +1,9 @@
 ent-BasePayload = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }
-ent-ExplosivePayload = explosive payload
+ent-ExplosivePayload = разрывной заряд
     .desc = { ent-BasePayload.desc }
     .suffix = { "" }
-ent-ChemicalPayload = chemical payload
-    .desc = A chemical payload. Has space to store two beakers. In combination with a trigger and a case, this can be used to initiate chemical reactions.
+ent-ChemicalPayload = химический заряд
+    .desc = Химический заряд. Имеется место для двух мензурок. В сочетании с запалом и корпусом может использоваться для запуска химических реакций.
     .suffix = { "" }
