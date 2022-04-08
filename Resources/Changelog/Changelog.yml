@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Fixed lights not working while in inventory., type: Fix}
-  id: 798
-  time: '2021-12-31T23:51:13.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Packed Station is now significantly brighter., type: Tweak}
@@ -3032,3 +3027,9 @@ Entries:
   - {message: Adjusted the sprites for the Trumpet and Trombone., type: Tweak}
   id: 1297
   time: '2022-04-08T21:12:44.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'All computers now play a keyboard sound on use, not just R&D computers.',
+    type: Tweak}
+  id: 1298
+  time: '2022-04-08T21:17:05.0000000+00:00'
