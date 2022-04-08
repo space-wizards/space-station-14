@@ -1,10 +1,4 @@
 Entries:
-- author: Your_Name_Here
-  changes:
-  - {message: Fixes guardian injector being usable on anything. Now only humans can
-      use it., type: Fix}
-  id: 791
-  time: '2021-12-30T10:56:30.788752+00:00'
 - author: Rane
   changes:
   - {message: Reagent grinders can now be constructed like other machines., type: Add}
@@ -3030,3 +3024,13 @@ Entries:
   - {message: Holoparasites no longer kill their hosts when suiciding., type: Add}
   id: 1290
   time: '2022-04-08T04:37:40.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed a bug where the DAW/super synthesizer had wrong instruments when
+      playing a MIDI file., type: Fix}
+  - {message: 'Fixed a bug where sometimes MIDI playback would never stop, despite
+      having clearly ended.', type: Fix}
+  - {message: Fixed several bugs which caused instruments to sound different/worse
+      to other people., type: Fix}
+  id: 1291
+  time: '2022-04-08T14:22:06.0000000+00:00'
