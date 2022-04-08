@@ -1009,7 +1009,7 @@ entities:
 - uid: 111
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: -2.5,1.5
     parent: 857
@@ -5365,7 +5365,7 @@ entities:
 - uid: 476
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: 14.5,21.5
     parent: 857
@@ -17859,7 +17859,7 @@ entities:
 - uid: 962
   type: GasVolumePump
   components:
-  - desc: pumps clean air into the station
+  - desc: Pumps clean air into the station
     name: distro volume pump
     type: MetaData
   - pos: 34.5,11.5
@@ -18352,7 +18352,7 @@ entities:
 - uid: 1020
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: -7.5,19.5
     parent: 857
@@ -77295,7 +77295,7 @@ entities:
 - uid: 7106
   type: GasVolumePump
   components:
-  - desc: sucks out waste air from the station
+  - desc: Sucks out waste air from the station
     name: waste volume pump
     type: MetaData
   - rot: 3.141592653589793 rad
@@ -90003,7 +90003,7 @@ entities:
 - uid: 8744
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: -32.5,-29.5
     parent: 857

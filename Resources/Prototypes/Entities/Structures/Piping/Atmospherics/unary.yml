@@ -65,7 +65,7 @@
   parent: GasUnaryBase
   id: GasPassiveVent
   name: passive vent
-  description: It is an open vent.
+  description: It's an open vent.
   placement:
     mode: SnapgridCenter
   components:
