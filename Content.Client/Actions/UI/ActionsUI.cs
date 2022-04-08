@@ -210,7 +210,8 @@ namespace Content.Client.Actions.UI
                 _slots[i] = slot;
             }
 
-            DragDropHelper = new DragDropHelper<ActionSlot>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag, DragDeadZone);
+            DragDropHelper = new DragDropHelper<ActionSlot>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
+            DragDropHelper.Deadzone = DragDeadZone;
 
             MinSize = (10, 400);
         }
