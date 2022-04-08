@@ -1,12 +1,7 @@
-using System;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Physics;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Climbing
 {
@@ -104,6 +99,7 @@ namespace Content.Shared.Climbing
                 if (fixturesComponent.Fixtures.TryGetValue(key, out var fixture))
                     fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
             }
+            VaultImpassableFixtures.Clear();
         }
 
         [Serializable, NetSerializable]
