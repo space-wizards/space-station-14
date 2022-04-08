@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed alt-click interactions not working properly., type: Fix}
-  id: 800
-  time: '2022-01-01T03:16:45.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'The singularity properly generates radiation, meaning it should now
@@ -3030,3 +3025,9 @@ Entries:
       to the uplink., type: Add}
   id: 1299
   time: '2022-04-08T21:19:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: '5 new salvage maps have been added. Suffer at my hand, salvage players.',
+    type: Add}
+  id: 1300
+  time: '2022-04-08T22:07:42.0000000+00:00'
