@@ -21,7 +21,7 @@ namespace Content.Server.Medical.CrewMonitoring
         {
             base.Initialize();
             SubscribeLocalEvent<CrewMonitoringConsoleComponent, ComponentRemove>(OnRemove);
-            SubscribeLocalEvent<CrewMonitoringConsoleComponent, PacketSentEvent>(OnPacketReceived);
+            SubscribeLocalEvent<CrewMonitoringConsoleComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         }
 
         public override void Update(float frameTime)
@@ -47,7 +47,7 @@ namespace Content.Server.Medical.CrewMonitoring
             component.ConnectedSensors.Clear();
         }
 
-        private void OnPacketReceived(EntityUid uid, CrewMonitoringConsoleComponent component, PacketSentEvent args)
+        private void OnPacketReceived(EntityUid uid, CrewMonitoringConsoleComponent component, DeviceNetworkPacketEvent args)
         {
             var suitSensor = _sensors.PacketToSuitSensor(args.Data);
             if (suitSensor == null)
