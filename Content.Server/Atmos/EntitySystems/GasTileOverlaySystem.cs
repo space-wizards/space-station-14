@@ -13,10 +13,7 @@ using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 // ReSharper disable once RedundantUsingDirective
 
@@ -145,9 +142,9 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="indices"></param>
         /// <param name="overlayData"></param>
         /// <returns>true if updated</returns>
-        private bool TryRefreshTile(GridId grid, GasOverlayData oldTile, Vector2i indices, out GasOverlayData overlayData)
+        private bool TryRefreshTile(GridAtmosphereComponent gridAtmosphere, GasOverlayData oldTile, Vector2i indices, out GasOverlayData overlayData)
         {
-            var tile = _atmosphereSystem.GetTileAtmosphereOrCreateSpace(grid, indices);
+            var tile = _atmosphereSystem.GetTileAtmosphere(gridAtmosphere, indices);
 
             if (tile == null)
             {
@@ -195,17 +192,20 @@ namespace Content.Server.Atmos.EntitySystems
             // This is the max in any direction that we can get a chunk (e.g. max 2 chunks away of data).
             var (maxXDiff, maxYDiff) = ((int) (_updateRange.X / ChunkSize) + 1, (int) (_updateRange.Y / ChunkSize) + 1);
 
-            var worldBounds = Box2.CenteredAround(EntityManager.GetComponent<TransformComponent>(entity).WorldPosition,
+            var xform = Transform(entity);
+            var worldPos = xform.MapPosition;
+
+            var worldBounds = Box2.CenteredAround(worldPos.Position,
                 _updateRange);
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(EntityManager.GetComponent<TransformComponent>(entity).MapID, worldBounds))
+            foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, worldBounds))
             {
                 if (!_overlay.TryGetValue(grid.Index, out var chunks))
                 {
                     continue;
                 }
 
-                var entityTile = grid.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates).GridIndices;
+                var entityTile = grid.GetTileRef(worldPos).GridIndices;
 
                 for (var x = -maxXDiff; x <= maxXDiff; x++)
                 {
@@ -283,7 +283,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var chunk = GetOrCreateChunk(gridId, invalid);
 
-                    if (!TryRefreshTile(grid.Index, chunk.GetData(invalid), invalid, out var data)) continue;
+                    if (!TryRefreshTile(gam, chunk.GetData(invalid), invalid, out var data)) continue;
 
                     if (!updatedTiles.TryGetValue(chunk, out var tiles))
                     {
@@ -291,7 +291,7 @@ namespace Content.Server.Atmos.EntitySystems
                         updatedTiles[chunk] = tiles;
                     }
 
-                    updatedTiles[chunk].Add(invalid);
+                    tiles.Add(invalid);
                     chunk.Update(data, invalid);
                 }
             }
