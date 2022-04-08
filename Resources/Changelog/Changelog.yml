@@ -1,10 +1,4 @@
 Entries:
-- author: MeltedPixel
-  changes:
-  - {message: Fixed issue where beaker contents visually did not show after being
-      ground in the grinder., type: Fix}
-  id: 793
-  time: '2021-12-31T02:12:37.0000000+00:00'
 - author: Melted Pixel
   changes:
   - {message: Adjusted gain on Windoor to make it more audible., type: Tweak}
@@ -3034,3 +3028,8 @@ Entries:
   - {message: Ghost roles will ghost now instead of suicide., type: Add}
   id: 1292
   time: '2022-04-08T19:47:06.0000000+00:00'
+- author: Radosvik
+  changes:
+  - {message: Fixed spelling of "delicious" in Corgi Meat, type: Fix}
+  id: 1293
+  time: '2022-04-08T21:03:43.0000000+00:00'
