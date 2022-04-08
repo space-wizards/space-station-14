@@ -15,6 +15,13 @@ namespace Content.Shared.Climbing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
+        /// <summary>
+        ///     List of fixtures that had vault-impassable prior to an entity being downed. Required when re-adding the
+        ///     collision mask.
+        /// </summary>
+        [DataField("vaultImpassableFixtures")]
+        public List<string> VaultImpassableFixtures = new();
+
         protected bool IsOnClimbableThisFrame
         {
             get
@@ -79,16 +86,23 @@ namespace Content.Shared.Climbing
             // Hope the mob has one fixture
             if (!_entMan.TryGetComponent<FixturesComponent>(Owner, out var fixturesComponent) || fixturesComponent.Deleted) return;
 
-            foreach (var fixture in fixturesComponent.Fixtures.Values)
+            if (value)
             {
-                if (value)
+                foreach (var (key, fixture) in fixturesComponent.Fixtures)
                 {
+                    if ((fixture.CollisionMask & (int) CollisionGroup.VaultImpassable) == 0)
+                        continue;
+
+                    VaultImpassableFixtures.Add(key);
                     fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
                 }
-                else
-                {
+                return;
+            }
+
+            foreach (var key in VaultImpassableFixtures)
+            {
+                if (fixturesComponent.Fixtures.TryGetValue(key, out var fixture))
                     fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
-                }
             }
         }
 
