@@ -37,7 +37,7 @@ public struct DebrisLayoutEntry
     public string DebrisPrototype = default!;
 
     [DataField("prob")]
-    public float Probability = 0;
+    public float Probability = 1.0f;
 
     public DebrisLayoutEntry() { }
 }
