@@ -70,242 +70,8 @@ grids:
     tiles: HQAAAB0AAAAdAAAAHQAAAB0AAAAdAAAAHQAAAB0AAAAdAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
-  type: WallSolid
   components:
-  - pos: 3.5,-3.5
-    parent: 39
-    type: Transform
-- uid: 1
-  type: WallSolid
-  components:
-  - pos: 4.5,-3.5
-    parent: 39
-    type: Transform
-- uid: 2
-  type: WallSolid
-  components:
-  - pos: 7.5,-3.5
-    parent: 39
-    type: Transform
-- uid: 3
-  type: WallSolid
-  components:
-  - pos: 6.5,-3.5
-    parent: 39
-    type: Transform
-- uid: 4
-  type: WallReinforced
-  components:
-  - pos: 8.5,-1.5
-    parent: 39
-    type: Transform
-- uid: 5
-  type: ReinforcedWindow
-  components:
-  - pos: 13.5,-6.5
-    parent: 39
-    type: Transform
-- uid: 6
-  type: ReinforcedWindow
-  components:
-  - pos: 13.5,-4.5
-    parent: 39
-    type: Transform
-- uid: 7
-  type: WallReinforced
-  components:
-  - pos: 9.5,-3.5
-    parent: 39
-    type: Transform
-- uid: 8
-  type: WallReinforced
-  components:
-  - pos: 12.5,-3.5
-    parent: 39
-    type: Transform
-- uid: 9
-  type: Grille
-  components:
-  - pos: 10.5,-7.5
-    parent: 39
-    type: Transform
-- uid: 10
-  type: WallSolid
-  components:
-  - pos: 9.5,-10.5
-    parent: 39
-    type: Transform
-- uid: 11
-  type: WallSolid
-  components:
-  - pos: 9.5,-9.5
-    parent: 39
-    type: Transform
-- uid: 12
-  type: WallSolid
-  components:
-  - pos: 9.5,-8.5
-    parent: 39
-    type: Transform
-- uid: 13
-  type: WallSolid
-  components:
-  - pos: 9.5,-7.5
-    parent: 39
-    type: Transform
-- uid: 14
-  type: WallSolid
-  components:
-  - pos: 8.5,-7.5
-    parent: 39
-    type: Transform
-- uid: 15
-  type: WallSolid
-  components:
-  - pos: 7.5,-7.5
-    parent: 39
-    type: Transform
-- uid: 16
-  type: Grille
-  components:
-  - pos: 6.5,-0.5
-    parent: 39
-    type: Transform
-- uid: 17
-  type: ReinforcedWindow
-  components:
-  - pos: 5.5,-0.5
-    parent: 39
-    type: Transform
-- uid: 18
-  type: WallSolid
-  components:
-  - pos: 8.5,-11.5
-    parent: 39
-    type: Transform
-- uid: 19
-  type: WallSolid
-  components:
-  - pos: 7.5,-11.5
-    parent: 39
-    type: Transform
-- uid: 20
-  type: WallSolid
-  components:
-  - pos: 6.5,-11.5
-    parent: 39
-    type: Transform
-- uid: 21
-  type: WallSolid
-  components:
-  - pos: 3.5,-11.5
-    parent: 39
-    type: Transform
-- uid: 22
-  type: WallSolid
-  components:
-  - pos: 0.5,-11.5
-    parent: 39
-    type: Transform
-- uid: 23
-  type: WallSolid
-  components:
-  - pos: 3.5,-7.5
-    parent: 39
-    type: Transform
-- uid: 24
-  type: Grille
-  components:
-  - pos: 5.5,-0.5
-    parent: 39
-    type: Transform
-- uid: 25
-  type: WallSolid
-  components:
-  - pos: 2.5,-7.5
-    parent: 39
-    type: Transform
-- uid: 26
-  type: WallSolid
-  components:
-  - pos: 1.5,-7.5
-    parent: 39
-    type: Transform
-- uid: 27
-  type: WallSolid
-  components:
-  - pos: 0.5,-10.5
-    parent: 39
-    type: Transform
-- uid: 28
-  type: WallSolid
-  components:
-  - pos: 0.5,-9.5
-    parent: 39
-    type: Transform
-- uid: 29
-  type: WallSolid
-  components:
-  - pos: 0.5,-8.5
-    parent: 39
-    type: Transform
-- uid: 30
-  type: WallSolid
-  components:
-  - pos: 0.5,-7.5
-    parent: 39
-    type: Transform
-- uid: 31
-  type: WallSolid
-  components:
-  - pos: -0.5,-7.5
-    parent: 39
-    type: Transform
-- uid: 32
-  type: WallSolid
-  components:
-  - pos: -0.5,-6.5
-    parent: 39
-    type: Transform
-- uid: 33
-  type: WallSolid
-  components:
-  - pos: -0.5,-5.5
-    parent: 39
-    type: Transform
-- uid: 34
-  type: WallSolid
-  components:
-  - pos: -0.5,-4.5
-    parent: 39
-    type: Transform
-- uid: 35
-  type: WallSolid
-  components:
-  - pos: 0.5,-4.5
-    parent: 39
-    type: Transform
-- uid: 36
-  type: WallSolid
-  components:
-  - pos: 0.5,-3.5
-    parent: 39
-    type: Transform
-- uid: 37
-  type: WallSolid
-  components:
-  - pos: 5.5,-7.5
-    parent: 39
-    type: Transform
-- uid: 38
-  type: WallSolid
-  components:
-  - pos: 0.5,-1.5
-    parent: 39
-    type: Transform
-- uid: 39
-  components:
-  - pos: -0.078125,3.5899882
+  - pos: -7,5.5
     parent: null
     type: Transform
   - index: 0
@@ -982,288 +748,522 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
+- uid: 1
+  type: WallSolid
+  components:
+  - pos: 0.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 2
+  type: WallSolid
+  components:
+  - pos: 5.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 3
+  type: WallSolid
+  components:
+  - pos: 0.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 4
+  type: WallSolid
+  components:
+  - pos: 0.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 5
+  type: WallSolid
+  components:
+  - pos: -0.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 6
+  type: WallSolid
+  components:
+  - pos: -0.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 7
+  type: WallSolid
+  components:
+  - pos: -0.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 8
+  type: WallSolid
+  components:
+  - pos: -0.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 9
+  type: WallSolid
+  components:
+  - pos: 0.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 10
+  type: WallSolid
+  components:
+  - pos: 0.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 11
+  type: WallSolid
+  components:
+  - pos: 0.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 12
+  type: WallSolid
+  components:
+  - pos: 0.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 13
+  type: WallSolid
+  components:
+  - pos: 1.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 14
+  type: WallSolid
+  components:
+  - pos: 2.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 15
+  type: Grille
+  components:
+  - pos: 5.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 16
+  type: WallSolid
+  components:
+  - pos: 3.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 17
+  type: WallSolid
+  components:
+  - pos: 0.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 18
+  type: WallSolid
+  components:
+  - pos: 3.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 19
+  type: WallSolid
+  components:
+  - pos: 6.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 20
+  type: WallSolid
+  components:
+  - pos: 7.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 21
+  type: WallSolid
+  components:
+  - pos: 8.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 22
+  type: ReinforcedWindow
+  components:
+  - pos: 5.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 23
+  type: Grille
+  components:
+  - pos: 6.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 24
+  type: WallSolid
+  components:
+  - pos: 7.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 25
+  type: WallSolid
+  components:
+  - pos: 8.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 26
+  type: WallSolid
+  components:
+  - pos: 9.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 27
+  type: WallSolid
+  components:
+  - pos: 9.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 28
+  type: WallSolid
+  components:
+  - pos: 9.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 29
+  type: WallSolid
+  components:
+  - pos: 9.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 30
+  type: Grille
+  components:
+  - pos: 10.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 31
+  type: WallReinforced
+  components:
+  - pos: 12.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 32
+  type: WallReinforced
+  components:
+  - pos: 9.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 33
+  type: ReinforcedWindow
+  components:
+  - pos: 13.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 34
+  type: ReinforcedWindow
+  components:
+  - pos: 13.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 35
+  type: WallReinforced
+  components:
+  - pos: 8.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 36
+  type: WallSolid
+  components:
+  - pos: 6.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 37
+  type: WallSolid
+  components:
+  - pos: 7.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 38
+  type: WallSolid
+  components:
+  - pos: 4.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 39
+  type: WallSolid
+  components:
+  - pos: 3.5,-3.5
+    parent: 0
+    type: Transform
 - uid: 40
   type: ReinforcedWindow
   components:
   - pos: 2.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 41
   type: ReinforcedWindow
   components:
   - pos: 1.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 42
   type: Grille
   components:
   - pos: 2.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 43
   type: Grille
   components:
   - pos: 1.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 44
   type: WallSolid
   components:
   - pos: 9.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 45
   type: WallReinforced
   components:
   - pos: 9.5,-12.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 46
   type: WallReinforced
   components:
   - pos: 10.5,-12.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 47
   type: WallReinforced
   components:
   - pos: 11.5,-12.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 48
   type: WallReinforced
   components:
   - pos: 12.5,-12.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 49
   type: WallReinforced
   components:
   - pos: 13.5,-12.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 50
   type: WallReinforced
   components:
   - pos: 13.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 51
   type: WallReinforced
   components:
   - pos: 13.5,-10.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 52
   type: WallReinforced
   components:
   - pos: 13.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 53
   type: WallReinforced
   components:
   - pos: 13.5,-8.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 54
   type: Grille
   components:
   - pos: 13.5,-6.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 55
   type: Grille
   components:
   - pos: 13.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 56
   type: Grille
   components:
   - pos: 13.5,-4.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 57
   type: WallReinforced
   components:
   - pos: 13.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 58
   type: WallReinforced
   components:
   - pos: 9.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 59
   type: WallReinforced
   components:
   - pos: 10.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 60
   type: WallReinforced
   components:
   - pos: 11.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 61
   type: WallReinforced
   components:
   - pos: 12.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 62
   type: WallReinforced
   components:
   - pos: 13.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 63
   type: WallReinforced
   components:
   - pos: 13.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 64
   type: WallReinforced
   components:
   - pos: 13.5,-2.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 65
   type: WallReinforced
   components:
   - pos: 8.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 66
   type: WallSolid
   components:
   - pos: 7.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 67
   type: WallSolid
   components:
   - pos: 4.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 68
   type: ReinforcedWindow
   components:
   - pos: 13.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 69
   type: ReinforcedWindow
   components:
   - pos: 6.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 70
   type: WallSolid
   components:
   - pos: 3.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 71
   type: WallSolid
   components:
   - pos: 2.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 72
   type: WallSolid
   components:
   - pos: 1.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 73
   type: WallSolid
   components:
   - pos: 0.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 74
   type: WallReinforced
   components:
   - pos: 13.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 75
   type: WallSolid
   components:
   - pos: 2.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 76
   type: WallSolid
   components:
   - pos: 3.5,-2.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 77
   type: WallSolid
   components:
   - pos: 3.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 78
   type: WallReinforced
   components:
   - pos: 8.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 79
   type: WallReinforced
   components:
   - pos: 8.5,-2.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 80
   type: BlastDoor
   components:
   - pos: 10.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 81
   type: BlastDoor
   components:
   - pos: 11.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 82
   type: TableReinforced
   components:
   - pos: 1.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 83
   type: TableReinforced
   components:
   - pos: 2.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 84
   type: TableReinforced
   components:
   - pos: 3.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 85
   type: WindoorMedicalLocked
   components:
   - rot: 1.5707963267948966 rad
     pos: 3.5,-8.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 86
   type: Lamp
   components:
   - pos: 2.643423,-9.525697
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
@@ -1272,43 +1272,43 @@ entities:
   type: Paper
   components:
   - pos: 3.2538629,-9.353822
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 88
   type: Paper
   components:
   - pos: 3.4101129,-9.416322
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 89
   type: Paper
   components:
   - pos: 3.3476129,-9.588197
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 90
   type: Paper
   components:
   - pos: 3.6601129,-9.447572
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 91
   type: Pen
   components:
   - pos: 2.0819879,-9.478822
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 92
   type: PhoneInstrument
   components:
   - pos: 1.5194879,-9.447572
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 93
   type: ExtinguisherCabinetFilled
   components:
   - pos: 5.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       ItemCabinet: !type:ContainerSlot {}
@@ -1317,7 +1317,7 @@ entities:
   type: ExtinguisherCabinetFilled
   components:
   - pos: 3.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       ItemCabinet: !type:ContainerSlot {}
@@ -1326,7 +1326,7 @@ entities:
   type: ExtinguisherCabinetFilled
   components:
   - pos: 9.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       ItemCabinet: !type:ContainerSlot {}
@@ -1335,105 +1335,105 @@ entities:
   type: AirlockGlass
   components:
   - pos: 4.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 97
   type: AirlockGlass
   components:
   - pos: 5.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 98
   type: AirlockMedicalGlassLocked
   components:
   - pos: 4.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 99
   type: AirlockMedicalGlassLocked
   components:
   - pos: 6.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 100
   type: AirlockMedicalGlassLocked
   components:
   - pos: 5.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 101
   type: AirlockMedicalGlassLocked
   components:
   - pos: 1.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 102
   type: AirlockMaintMedLocked
   components:
   - pos: 0.5,-2.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 103
   type: Windoor
   components:
   - rot: 3.141592653589793 rad
     pos: 11.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 104
   type: Windoor
   components:
   - rot: 3.141592653589793 rad
     pos: 12.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 105
   type: TableReinforced
   components:
   - pos: 10.5,-8.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 106
   type: TableReinforced
   components:
   - pos: 10.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 107
   type: TableReinforced
   components:
   - pos: 10.5,-10.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 108
   type: TableReinforced
   components:
   - pos: 10.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 109
   type: TableReinforced
   components:
   - pos: 11.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 110
   type: ReinforcedWindow
   components:
   - pos: 10.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 111
   type: TableReinforced
   components:
   - pos: 12.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 112
   type: MedkitRadiationFilled
   components:
   - pos: 10.493689,-8.544937
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       storagebase: !type:Container
@@ -1443,7 +1443,7 @@ entities:
   type: MedkitOxygenFilled
   components:
   - pos: 10.509314,-8.982437
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       storagebase: !type:Container
@@ -1453,7 +1453,7 @@ entities:
   type: MedkitToxinFilled
   components:
   - pos: 10.556189,-9.373062
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       storagebase: !type:Container
@@ -1463,7 +1463,7 @@ entities:
   type: MedkitFilled
   components:
   - pos: 10.587439,-9.794937
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       storagebase: !type:Container
@@ -1473,7 +1473,7 @@ entities:
   type: MedkitBurnFilled
   components:
   - pos: 10.540564,-10.248062
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       storagebase: !type:Container
@@ -1483,7 +1483,7 @@ entities:
   type: MedkitBruteFilled
   components:
   - pos: 10.603064,-10.716812
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       storagebase: !type:Container
@@ -1494,13 +1494,13 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: 6.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 119
   type: VendingMachineMedical
   components:
   - pos: 0.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1508,14 +1508,14 @@ entities:
   type: SinkWide
   components:
   - pos: 1.5093136,-1.1307354
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 121
   type: ToiletDirtyWater
   components:
   - rot: -1.5707963267948966 rad
     pos: 2.5,-2.5
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       stash: !type:ContainerSlot {}
@@ -1524,19 +1524,19 @@ entities:
   type: WeldingFuelTankFull
   components:
   - pos: 2.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 123
   type: TableGlass
   components:
   - pos: 0.5,-6.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 124
   type: BoxMouthSwab
   components:
   - pos: 11.634314,-11.536985
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       storagebase: !type:Container
@@ -1546,67 +1546,67 @@ entities:
   type: SpawnMobMouse
   components:
   - pos: 9.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 126
   type: SpawnMobCorgi
   components:
   - pos: 12.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 127
   type: SpawnMobCatGeneric
   components:
   - pos: 9.5,-2.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 128
   type: SpawnMobMouse
   components:
   - pos: 10.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 129
   type: SpawnMobWalter
   components:
   - pos: 12.5,-2.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 130
   type: RandomSpawner
   components:
   - pos: 7.5,-8.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 131
   type: RandomSpawner
   components:
   - pos: 2.5,-10.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 132
   type: RandomSpawner
   components:
   - pos: 2.5,-4.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 133
   type: RandomSpawner
   components:
   - pos: 11.5,-8.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 134
   type: RandomSpawner
   components:
   - pos: 10.5,-4.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 135
   type: VendingMachineSnack
   components:
   - pos: 7.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1614,13 +1614,13 @@ entities:
   type: TableWood
   components:
   - pos: 5.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 137
   type: TableWood
   components:
   - pos: 6.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 138
   type: VendingMachineCoffee
@@ -1628,7 +1628,7 @@ entities:
   - name: Hot drinks machine
     type: MetaData
   - pos: 4.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1636,19 +1636,19 @@ entities:
   type: PlushieSlime
   components:
   - pos: 5.3686886,-1.3963604
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 140
   type: PlushieSpaceLizard
   components:
   - pos: 6.4780636,-1.4744854
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 141
   type: FoodBoxDonkpocketTeriyaki
   components:
   - pos: 5.8999386,-1.3963604
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       storagebase: !type:Container
@@ -1658,13 +1658,13 @@ entities:
   type: GeneratorRTG
   components:
   - pos: 1.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 143
   type: CableApcExtension
   components:
   - pos: 0.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1674,7 +1674,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1686,13 +1686,13 @@ entities:
   - name: bear outpost APC
     type: MetaData
   - pos: 2.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 146
   type: CableApcExtension
   components:
   - pos: 1.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1702,7 +1702,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,-4.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1712,7 +1712,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1722,7 +1722,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1732,7 +1732,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 3.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1742,7 +1742,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 4.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1752,7 +1752,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 5.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1762,7 +1762,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 5.5,-4.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1772,7 +1772,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 5.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1782,7 +1782,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 5.5,-2.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1792,7 +1792,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 6.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1802,7 +1802,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 7.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1812,7 +1812,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 8.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1822,7 +1822,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 9.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1832,7 +1832,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 10.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1842,7 +1842,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 10.5,-4.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1852,7 +1852,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 10.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1862,7 +1862,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 10.5,-2.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1872,7 +1872,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 10.5,-6.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1882,7 +1882,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 11.5,-6.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1892,7 +1892,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 5.5,-6.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1902,7 +1902,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 5.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1912,7 +1912,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 5.5,-8.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1922,7 +1922,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 5.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1932,7 +1932,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 4.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1942,7 +1942,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1952,7 +1952,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 3.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1962,7 +1962,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 5.5,-10.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1972,133 +1972,133 @@ entities:
   type: IngotGold1
   components:
   - pos: 11.462439,-1.3963604
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 175
   type: IngotGold1
   components:
   - pos: 11.446814,-1.5213604
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 176
   type: IngotGold1
   components:
   - pos: 11.603064,-1.6151104
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 177
   type: IngotGold1
   components:
   - pos: 11.712439,-1.4588604
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 178
   type: IngotGold1
   components:
   - pos: 11.524939,-2.3963604
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 179
   type: IngotGold1
   components:
   - pos: 11.634314,-2.5838604
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 180
   type: IngotGold1
   components:
   - pos: 10.290564,-2.2088604
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 181
   type: IngotGold1
   components:
   - pos: 10.103064,-1.9432354
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 182
   type: MaterialDiamond1
   components:
   - pos: 10.884314,-1.8807354
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 183
   type: MaterialDiamond1
   components:
   - pos: 10.790564,-2.1619854
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 184
   type: MaterialDiamond1
   components:
   - pos: 11.040564,-2.3807354
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 185
   type: WallReinforced
   components:
   - pos: 9.5,0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 186
   type: WallReinforced
   components:
   - pos: 11.5,0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 187
   type: WallReinforced
   components:
   - pos: 10.5,0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 188
   type: WallReinforced
   components:
   - pos: 8.5,0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 189
   type: WallReinforced
   components:
   - pos: 14.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 190
   type: WallReinforced
   components:
   - pos: 14.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 191
   type: WallReinforced
   components:
   - pos: 14.5,0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 192
   type: WallReinforced
   components:
   - pos: 13.5,0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 193
   type: WallReinforced
   components:
   - pos: 12.5,0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 194
   type: WallReinforced
   components:
   - pos: 14.5,-2.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 195
   type: Vaccinator
   components:
   - pos: 3.5,-4.5
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       machine_board: !type:Container
@@ -2110,25 +2110,25 @@ entities:
   type: SyringeTranexamicAcid
   components:
   - pos: 0.3166356,-6.2482204
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 197
   type: SyringeEphedrine
   components:
   - pos: 0.6916356,-6.6075954
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 198
   type: SyringeSpaceacillin
   components:
   - pos: 0.4885106,-6.4200954
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 199
   type: WardrobeMedicalDoctorFilled
   components:
   - pos: 12.5,-10.5
-    parent: 39
+    parent: 0
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -2140,7 +2140,7 @@ entities:
   type: WardrobeMedicalDoctorFilled
   components:
   - pos: 12.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -2152,25 +2152,25 @@ entities:
   type: ClothingOuterWinterMed
   components:
   - pos: 12.30101,-11.295095
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 202
   type: ClothingOuterWinterMed
   components:
   - pos: 12.48851,-11.40447
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 203
   type: ClothingOuterWinterMed
   components:
   - pos: 12.67601,-11.52947
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 204
   type: ClothingBackpackDuffelSurgeryFilled
   components:
   - pos: 10.55101,-11.37322
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       storagebase: !type:Container
@@ -2180,7 +2180,7 @@ entities:
   type: BoxSyringe
   components:
   - pos: 11.097885,-11.513845
-    parent: 39
+    parent: 0
     type: Transform
   - containers:
       storagebase: !type:Container
@@ -2190,7 +2190,7 @@ entities:
   type: Firelock
   components:
   - pos: 4.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -2200,7 +2200,7 @@ entities:
   type: Firelock
   components:
   - pos: 6.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -2210,7 +2210,7 @@ entities:
   type: Firelock
   components:
   - pos: 5.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -2220,7 +2220,7 @@ entities:
   type: Firelock
   components:
   - pos: 1.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -2230,7 +2230,7 @@ entities:
   type: Firelock
   components:
   - pos: 11.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -2240,7 +2240,7 @@ entities:
   type: Firelock
   components:
   - pos: 12.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -2250,55 +2250,55 @@ entities:
   type: SpawnMobBear
   components:
   - pos: 6.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 213
   type: SpawnMobBear
   components:
   - pos: 3.5,-6.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 214
   type: SpawnMobBear
   components:
   - pos: 4.5,-4.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 215
   type: SpawnMobBear
   components:
   - pos: 8.5,-4.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 216
   type: SpawnMobBear
   components:
   - pos: 8.5,-6.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 217
   type: SpawnMobBear
   components:
   - pos: 1.5,-2.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 218
   type: SpawnMobBear
   components:
   - pos: 5.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 219
   type: SubstationWallBasic
   components:
   - pos: 2.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 220
   type: CableMV
   components:
   - pos: 2.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -2308,7 +2308,7 @@ entities:
   type: CableMV
   components:
   - pos: 2.5,-2.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -2318,7 +2318,7 @@ entities:
   type: CableMV
   components:
   - pos: 2.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -2328,7 +2328,7 @@ entities:
   type: CableMV
   components:
   - pos: 2.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -2338,7 +2338,7 @@ entities:
   type: CableHV
   components:
   - pos: 1.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -2348,7 +2348,7 @@ entities:
   type: CableHV
   components:
   - pos: 1.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -2358,7 +2358,7 @@ entities:
   type: CableHV
   components:
   - pos: 2.5,-0.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -2368,7 +2368,7 @@ entities:
   type: Poweredlight
   components:
   - pos: 4.5,-4.5
-    parent: 39
+    parent: 0
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -2379,7 +2379,7 @@ entities:
   type: Poweredlight
   components:
   - pos: 7.5,-4.5
-    parent: 39
+    parent: 0
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -2391,7 +2391,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 0.5,-6.5
-    parent: 39
+    parent: 0
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -2403,7 +2403,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 12.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -2415,7 +2415,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 12.5,-10.5
-    parent: 39
+    parent: 0
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -2426,7 +2426,7 @@ entities:
   type: PoweredlightSodium
   components:
   - pos: 10.5,-1.5
-    parent: 39
+    parent: 0
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -2437,20 +2437,20 @@ entities:
   type: SignElectricalMed
   components:
   - pos: 3.5,-3.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 234
   type: SignMedical
   components:
   - pos: 3.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 235
   type: PoweredlightExterior
   components:
   - rot: 1.5707963267948966 rad
     pos: 14.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -2461,13 +2461,13 @@ entities:
   type: SignDangerMed
   components:
   - pos: 7.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 237
   type: PoweredlightExterior
   components:
   - pos: 3.5,-12.5
-    parent: 39
+    parent: 0
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -2478,7 +2478,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 0.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -2488,7 +2488,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,-5.5
-    parent: 39
+    parent: 0
     type: Transform
   - canCollide: False
     type: Physics
@@ -2496,7 +2496,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,-6.5
-    parent: 39
+    parent: 0
     type: Transform
   - canCollide: False
     type: Physics
@@ -2504,7 +2504,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
   - canCollide: False
     type: Physics
@@ -2512,7 +2512,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 5.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
   - canCollide: False
     type: Physics
@@ -2520,7 +2520,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 4.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
   - canCollide: False
     type: Physics
@@ -2528,7 +2528,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 3.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
   - canCollide: False
     type: Physics
@@ -2536,7 +2536,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
   - canCollide: False
     type: Physics
@@ -2544,7 +2544,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,-11.5
-    parent: 39
+    parent: 0
     type: Transform
   - canCollide: False
     type: Physics
@@ -2552,7 +2552,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 12.5,-6.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -2562,7 +2562,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 13.5,-6.5
-    parent: 39
+    parent: 0
     type: Transform
   - canCollide: False
     type: Physics
@@ -2570,7 +2570,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 13.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
   - canCollide: False
     type: Physics
@@ -2579,7 +2579,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 4.5,-2.5
-    parent: 39
+    parent: 0
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -2590,7 +2590,7 @@ entities:
   type: Poweredlight
   components:
   - pos: 5.5,-8.5
-    parent: 39
+    parent: 0
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -2602,7 +2602,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 8.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -2614,7 +2614,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 1.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -2625,19 +2625,19 @@ entities:
   type: SpawnMobBear
   components:
   - pos: 11.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 255
   type: SignNosmoking
   components:
   - pos: 13.5,-8.5
-    parent: 39
+    parent: 0
     type: Transform
 - uid: 256
   type: CableApcExtension
   components:
   - pos: 11.5,-7.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -2647,7 +2647,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 11.5,-8.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -2657,7 +2657,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 11.5,-9.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -2667,7 +2667,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 11.5,-10.5
-    parent: 39
+    parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
