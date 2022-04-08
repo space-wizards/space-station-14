@@ -1,10 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Removed the ability to stuff the held part of a pulled entity in your
-      pocket., type: Remove}
-  id: 802
-  time: '2022-01-01T13:20:32.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Substations now explode when damaged enough and produce debris. Watch
@@ -3030,3 +3024,9 @@ Entries:
   - {message: A new medium salvage you won't be able to bear has been added., type: Add}
   id: 1301
   time: '2022-04-08T22:26:40.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added bureaucracy! Some VIP's now get a stamp either in their backpack
+      or lockers to stamp papers., type: Add}
+  id: 1302
+  time: '2022-04-08T23:37:22.0000000+00:00'
