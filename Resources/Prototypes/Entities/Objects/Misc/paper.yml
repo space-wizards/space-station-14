@@ -218,7 +218,7 @@
   description: A rubber stamp for stamping important documents.
   components:
   - type: Stamp
-    stampedName: "Mime"
+    stampedName: stamp-component-stamped-name-mime
     stampState: "paper_stamp-mime"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -233,7 +233,7 @@
   id: RubberStampCaptain
   components:
   - type: Stamp
-    stampedName: "Captain"
+    stampedName: stamp-component-stamped-name-captain
     stampState: "paper_stamp-cap"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -246,7 +246,7 @@
   id: RubberStampCentcom
   components:
   - type: Stamp
-    stampedName: "Centcom"
+    stampedName: stamp-component-stamped-name-centcom
     stampState: "paper_stamp-cent"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -259,7 +259,7 @@
   id: RubberStampChaplain
   components:
   - type: Stamp
-    stampedName: "Chaplain"
+    stampedName: stamp-component-stamped-name-chaplain
     stampState: "paper_stamp-chaplain"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -272,7 +272,7 @@
   id: RubberStampClown
   components:
   - type: Stamp
-    stampedName: "Clown"
+    stampedName: stamp-component-stamped-name-clown
     stampState: "paper_stamp-clown"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -285,7 +285,7 @@
   id: RubberStampCMO
   components:
   - type: Stamp
-    stampedName: "Chief Medical Officer"
+    stampedName: stamp-component-stamped-name-cmo
     stampState: "paper_stamp-cmo"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -298,7 +298,7 @@
   id: RubberStampDenied
   components:
   - type: Stamp
-    stampedName: "DENIED"
+    stampedName: stamp-component-stamped-name-denied
     stampState: "paper_stamp-deny"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -311,7 +311,7 @@
   id: RubberStampApproved
   components:
   - type: Stamp
-    stampedName: "APPROVED"
+    stampedName: stamp-component-stamped-name-approved
     stampState: "paper_stamp-iaa"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -324,7 +324,7 @@
   id: RubberStampHop
   components:
   - type: Stamp
-    stampedName: "Head of Personnel"
+    stampedName: stamp-component-stamped-name-hop
     stampState: "paper_stamp-hop"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -337,7 +337,7 @@
   id: RubberStampHos
   components:
   - type: Stamp
-    stampedName: "Head of Security"
+    stampedName: stamp-component-stamped-name-hos
     stampState: "paper_stamp-hos"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -350,7 +350,7 @@
   id: RubberStampQm
   components:
   - type: Stamp
-    stampedName: "Quartermaster"
+    stampedName: stamp-component-stamped-name-qm
     stampState: "paper_stamp-qm"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -363,7 +363,7 @@
   id: RubberStampRd
   components:
   - type: Stamp
-    stampedName: "Research Director"
+    stampedName: stamp-component-stamped-name-rd
     stampState: "paper_stamp-rd"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -376,7 +376,7 @@
   id: RubberStampWarden
   components:
   - type: Stamp
-    stampedName: "Warden"
+    stampedName: stamp-component-stamped-name-warden
     stampState: "paper_stamp-warden"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -389,7 +389,7 @@
   id: RubberStampTrader
   components:
   - type: Stamp
-    stampedName: "Trader"
+    stampedName: stamp-component-stamped-name-trader
     stampState: "paper_stamp-trader"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi

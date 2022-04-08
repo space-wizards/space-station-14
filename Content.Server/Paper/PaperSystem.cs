@@ -57,7 +57,7 @@ namespace Content.Server.Paper
             if (paperComp.Content != "")
                 args.Message.AddMarkup(
                     Loc.GetString(
-                        "paper-component-examine-detail-has-words"
+                        "paper-component-examine-detail-has-words", ("paper", uid)
                     )
                 );
 
@@ -67,7 +67,7 @@ namespace Content.Server.Paper
                 string commaSeparated = string.Join(", ", paperComp.StampedBy);
                 args.Message.AddMarkup(
                     Loc.GetString(
-                        "paper-component-examine-detail-stamped-by", ("stamps", commaSeparated))
+                        "paper-component-examine-detail-stamped-by", ("paper", uid), ("stamps", commaSeparated))
                 );
             }
         }
@@ -121,9 +121,9 @@ namespace Content.Server.Paper
             if (!Resolve(uid, ref paperComp))
                 return false;
 
-            if (!paperComp.StampedBy.Contains(stampName))
+            if (!paperComp.StampedBy.Contains(Loc.GetString(stampName)))
             {
-                paperComp.StampedBy.Add(stampName);
+                paperComp.StampedBy.Add(Loc.GetString(stampName));
                 if (paperComp.StampState == null && TryComp<AppearanceComponent>(uid, out var appearance))
                 {
                     paperComp.StampState = stampState;
