@@ -1,9 +1,4 @@
 Entries:
-- author: Melted Pixel
-  changes:
-  - {message: Adjusted gain on Windoor to make it more audible., type: Tweak}
-  id: 794
-  time: '2021-12-31T02:21:00.0000000+00:00'
 - author: Rane
   changes:
   - {message: Containers with access readers have been reconfigured to ensure they
@@ -3033,3 +3028,8 @@ Entries:
   - {message: Fixed spelling of "delicious" in Corgi Meat, type: Fix}
   id: 1293
   time: '2022-04-08T21:03:43.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Fixed various misspellings and grammatical errors, type: Fix}
+  id: 1294
+  time: '2022-04-08T21:05:54.0000000+00:00'
