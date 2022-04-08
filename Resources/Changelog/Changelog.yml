@@ -1,12 +1,4 @@
 Entries:
-- author: MeltedPixel
-  changes:
-  - {message: Fixed issue where bodybags and folded variants couldn't be placed on
-      tables., type: Tweak}
-  - {message: Adjusts bounds of bodybags to better fit through single doors without
-      sniper precision., type: Tweak}
-  id: 797
-  time: '2021-12-31T08:19:42.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Fixed lights not working while in inventory., type: Fix}
@@ -3031,3 +3023,12 @@ Entries:
       often.', type: Tweak}
   id: 1296
   time: '2022-04-08T21:07:30.0000000+00:00'
+- author: EmoGarbage
+  changes:
+  - {message: 'Added 3 new brass instruments: the French Horn, the Euphonium, and
+      the Tuba', type: Add}
+  - {message: 'Added the Brass Instrument Ensemble Crate, a crate containing an assortment
+      of brass instruments for your band to play.', type: Add}
+  - {message: Adjusted the sprites for the Trumpet and Trombone., type: Tweak}
+  id: 1297
+  time: '2022-04-08T21:12:44.0000000+00:00'
