@@ -687,6 +687,7 @@
   - type: Tag
     tags:
     - Trash
+    - CannotSuicide
   - type: Recyclable
   - type: Respirator
     damage:
