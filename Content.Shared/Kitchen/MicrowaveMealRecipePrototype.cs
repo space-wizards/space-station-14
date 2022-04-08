@@ -17,7 +17,7 @@ namespace Content.Shared.Kitchen
     public sealed class FoodRecipePrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("name")]

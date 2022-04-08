@@ -23,7 +23,7 @@ public abstract class SharedInstrumentSystem : EntitySystem
     {
         args.State =
             new InstrumentState(instrument.Playing, instrument.InstrumentProgram, instrument.InstrumentBank,
-                instrument.AllowPercussion, instrument.AllowProgramChange, instrument.RespectMidiLimits, instrument.LastSequencerTick);
+                instrument.AllowPercussion, instrument.AllowProgramChange, instrument.RespectMidiLimits);
     }
 
     private void OnHandleState(EntityUid uid, SharedInstrumentComponent instrument, ref ComponentHandleState args)

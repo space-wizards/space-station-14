@@ -11,6 +11,8 @@
       probability: 0.025
     - !type:DiseaseSnough
       probability: 0.025
+      snoughSound:
+        collection: Sneezes
   cures:
     - !type:DiseaseBedrestCure
       maxLength: 20
@@ -31,6 +33,8 @@
     - !type:DiseaseSnough
       probability: 0.025
       snoughMessage: disease-cough
+      snoughSound:
+        collection: Coughs
     - !type:DiseaseHealthChange
       probability: 0.015
       damage:
@@ -56,6 +60,8 @@
     - !type:DiseaseSnough
       probability: 0.02
       snoughMessage: disease-beep
+      snoughSound:
+        collection: RobotBeeps
   cures:
     - !type:DiseaseJustWaitCure
       maxLength: 900
@@ -77,6 +83,8 @@
     - !type:DiseaseSnough
       probability: 0.02
       snoughMessage: disease-screech
+      snoughSound:
+        collection: MonkeyScreeches
     - !type:DiseaseGenericStatusEffect
       probability: 0.3
       key: Stutter
@@ -128,8 +136,15 @@
       reagent: Ephedrine
       amount: 1
     - !type:DiseaseSnough
-      probability: 0.02
+      probability: 0.01
       snoughMessage: disease-meow
+      snoughSound:
+        collection: CatMeows
+    - !type:DiseaseSnough
+      probability: 0.01
+      snoughMessage: disease-hiss
+      snoughSound:
+        collection: CatHisses
   cures:
     - !type:DiseaseBodyTemperatureCure
       min: 420 ## Reachable with a flamer

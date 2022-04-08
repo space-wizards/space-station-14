@@ -28,7 +28,7 @@ namespace Content.Shared.Body.Prototypes
         private Dictionary<string, string> _mechanismLayers = new();
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables]

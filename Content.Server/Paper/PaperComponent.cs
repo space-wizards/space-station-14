@@ -1,19 +1,16 @@
 using System.Threading.Tasks;
 using Content.Server.UserInterface;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-
-using Robust.Shared.Utility;
 
 namespace Content.Server.Paper
 {
     [RegisterComponent]
 #pragma warning disable 618
     [ComponentReference(typeof(SharedPaperComponent))]
-    public sealed class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing
+    public sealed class PaperComponent : SharedPaperComponent, IInteractUsing
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -61,21 +58,6 @@ namespace Content.Server.Paper
         {
             UserInterface?.SetState(new PaperBoundUserInterfaceState(Content, Mode));
         }
-
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            if (!inDetailsRange)
-                return;
-            if (Content == "")
-                return;
-
-            message.AddMarkup(
-                Loc.GetString(
-                    "paper-component-examine-detail-has-words"
-                )
-            );
-        }
-
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
             var msg = (PaperInputText) obj.Message;

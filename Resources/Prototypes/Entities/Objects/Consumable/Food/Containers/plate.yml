@@ -132,7 +132,7 @@
   name: pie tin
   parent: BaseItem
   id: FoodPlateTin
-  description: A cheap, foil tin for pies.
+  description: A cheap foil tin for pies.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
