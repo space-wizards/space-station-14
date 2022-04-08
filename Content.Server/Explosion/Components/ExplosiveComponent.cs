@@ -60,12 +60,19 @@ public sealed class ExplosiveComponent : Component
     public float TileBreakScale = 1f;
 
     /// <summary>
-    ///     Maximum number of times that an explosive can break a tile. Currently, for normal space ships breaking a
-    ///     tile twice will result in a vacuum.
+    ///     Maximum number of times that an explosive can break a tile. Currently, for normal space stations breaking a
+    ///     tile twice will generally result in a vacuum.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maxTileBreak")]
     public int MaxTileBreak = int.MaxValue;
+
+    /// <summary>
+    ///     Whether this explosive should be able to create a vacuum by breaking tiles.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("canCreateVacuum")]
+    public bool CanCreateVacuum = true;
 
     /// <summary>
     ///     Avoid somehow double-triggering this explosion (e.g. by damaging this entity from its own explosion.
