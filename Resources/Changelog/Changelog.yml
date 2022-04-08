@@ -1,18 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Containers with access readers have been reconfigured to ensure they
-      have the proper restrictions. Botanists are the major winners here., type: Tweak}
-  id: 795
-  time: '2021-12-31T02:27:28.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: added a bureaucracy crate for when the mime reaches the end of his pages,
-    type: Add}
-  - {message: bruise packs to the clown's box of hugs, type: Add}
-  - {message: 3 more PDAs to the Head of Personal's spare PDA box, type: Add}
-  id: 796
-  time: '2021-12-31T02:28:38.0000000+00:00'
 - author: MeltedPixel
   changes:
   - {message: Fixed issue where bodybags and folded variants couldn't be placed on
@@ -3033,3 +3019,15 @@ Entries:
   - {message: Fixed various misspellings and grammatical errors, type: Fix}
   id: 1294
   time: '2022-04-08T21:05:54.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed an issue causing minibombs to have a large but weak explosion.
+      They are now the opposite., type: Fix}
+  id: 1295
+  time: '2022-04-08T21:07:02.0000000+00:00'
+- author: Leander
+  changes:
+  - {message: 'Nerfed stun batons, they now hold 8 charges and have to recharge more
+      often.', type: Tweak}
+  id: 1296
+  time: '2022-04-08T21:07:30.0000000+00:00'
