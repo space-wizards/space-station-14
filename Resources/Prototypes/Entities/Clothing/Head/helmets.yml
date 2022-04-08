@@ -13,7 +13,7 @@
     resistance: 0.25 # +0.65 from body -> 90%
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetCosmonaut
   name: cosmonaut helmet
   description: A deceptively well armored space helmet. Ancient design, but advanced manufacturing.
@@ -23,7 +23,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/cosmonaut.rsi
   - type: IngestionBlocker
-  
+
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetCult
@@ -37,7 +37,7 @@
   - type: IngestionBlocker
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetEVA
   name: EVA helmet
   description: A basic helmet designed for extravehicular activies.
@@ -114,7 +114,7 @@
   - type: IngestionBlocker
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetSyndicate
   name: syndicate EVA helmet
   description: A stylish, robust syndicate helmet
@@ -159,7 +159,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/wizardhelm.rsi
   - type: IngestionBlocker
-  
+
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase # hardsuitlight base for light and protection
   id: ClothingHeadHelmetFire
@@ -176,7 +176,7 @@
       startingItem: PowerCellSmallHigh
   - type: TemperatureProtection
     coefficient: 0.01
-    
+
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase # hardsuitlight base for light and protection
   id: ClothingHeadHelmetAtmosFire
@@ -189,7 +189,7 @@
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
   - type: IngestionBlocker
   - type: TemperatureProtection
-    coefficient: 0.005    
+    coefficient: 0.005
 
 - type: entity
   parent: ClothingHeadBase
@@ -208,4 +208,4 @@
         Slash: 0.5
         Piercing: 0.5
         Heat: 0.9
-        
+
