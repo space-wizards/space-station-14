@@ -5,21 +5,17 @@ using Content.Client.Chat.UI;
 using Content.Client.Construction.UI;
 using Content.Client.Hands;
 using Content.Client.HUD;
-using Content.Client.HUD.Presets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
-using Robust.Client.Console;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
-using Robust.Shared.Reflection;
-using Robust.Shared.Sandboxing;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Gameplay
@@ -114,9 +110,6 @@ namespace Content.Client.Gameplay
         {
             // HUD
             //_alertsFramePresenter = new AlertsFramePresenter();
-
-            // Windows
-            //_constructionMenu = new ConstructionMenuPresenter(_gameHud);
         }
 
         /// <summary>

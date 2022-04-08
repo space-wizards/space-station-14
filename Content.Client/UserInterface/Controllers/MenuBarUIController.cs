@@ -23,16 +23,10 @@ public sealed class MenuBarUIController : UIController
     {
         var bar = _hud.GetUIWidget<MenuBar>();
 
-        bar.CraftingButton.OnPressed += CraftingButtonPressed;
         bar.ActionButton.OnPressed += ActionButtonPressed;
         bar.AdminButton.OnPressed += AdminButtonPressed;
         bar.SandboxButton.OnPressed += SandboxButtonPressed;
         bar.InfoButton.OnPressed += InfoButtonPressed;
-    }
-
-    private void CraftingButtonPressed(ButtonEventArgs args)
-    {
-        throw new NotImplementedException();
     }
 
     private void ActionButtonPressed(ButtonEventArgs args)

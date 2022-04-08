@@ -1,23 +1,12 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Client.HUD;
-using Content.Client.HUD.Widgets;
-using Content.Client.Resources;
 using Content.Shared.Construction.Prototypes;
-using Content.Shared.Construction.Steps;
-using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
-using Robust.Client.Graphics;
 using Robust.Client.Placement;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 using MenuBar = Content.Client.HUD.Widgets.MenuBar;
 
 namespace Content.Client.Construction.UI
@@ -32,6 +21,7 @@ namespace Content.Client.Construction.UI
         [Dependency] private readonly IEntitySystemManager _systemManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
+        [Dependency] private readonly IHudManager _hud = default!;
 
         private readonly IConstructionMenuView _constructionView;
 
@@ -40,10 +30,10 @@ namespace Content.Client.Construction.UI
 
         private bool CraftingAvailable
         {
-            get => true;//_hudManager.GetUIWidget<MenuBar>().CraftingButtonVisible;
+            get => _hud.GetUIWidget<MenuBar>().CraftingButton.Visible;
             set
             {
-                //_hudManager.GetUIWidget<MenuBar>().CraftingButtonVisible = value;
+                _hud.GetUIWidget<MenuBar>().CraftingButton.Visible = value;
                 if (!value)
                     _constructionView.Close();
             }
@@ -93,7 +83,7 @@ namespace Content.Client.Construction.UI
 
             _placementManager.PlacementChanged += OnPlacementChanged;
 
-            //_constructionView.OnClose += () => _hudManager.GetUIWidget<MenuBar>().CraftingButtonDown = false;
+            _constructionView.OnClose += () => _hud.GetUIWidget<MenuBar>().CraftingButton.Pressed = false;
             _constructionView.ClearAllGhosts += (_, _) => _constructionSystem?.ClearAllGhosts();
             _constructionView.PopulateRecipes += OnViewPopulateRecipes;
             _constructionView.RecipeSelected += OnViewRecipeSelected;
@@ -109,12 +99,11 @@ namespace Content.Client.Construction.UI
             PopulateCategories();
             OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
 
-            //_hudManager.GetUIWidget<MenuBar>().CraftingButtonToggled += OnHudCraftingButtonToggled;
         }
 
-        private void OnHudCraftingButtonToggled(bool b)
+        public void OnHudCraftingButtonToggled(ButtonToggledEventArgs args)
         {
-            WindowOpen = b;
+            WindowOpen = args.Pressed;
         }
 
         /// <inheritdoc />
@@ -127,8 +116,6 @@ namespace Content.Client.Construction.UI
             _systemManager.SystemUnloaded -= OnSystemUnloaded;
 
             _placementManager.PlacementChanged -= OnPlacementChanged;
-
-            //_hudManager.GetUIWidget<MenuBar>().CraftingButtonToggled -= OnHudCraftingButtonToggled;
         }
 
         private void OnPlacementChanged(object? sender, EventArgs e)
@@ -374,7 +361,7 @@ namespace Content.Client.Construction.UI
                 if (IsAtFront)
                 {
                     WindowOpen = false;
-                    //_hudManager.GetUIWidget<MenuBar>().CraftingButtonDown = false; // This does not call CraftingButtonToggled
+                    _hud.GetUIWidget<MenuBar>().CraftingButton.Pressed = false; // This does not call CraftingButtonToggled
                 }
                 else
                     _constructionView.MoveToFront();
@@ -382,7 +369,7 @@ namespace Content.Client.Construction.UI
             else
             {
                 WindowOpen = true;
-                //_hudManager.GetUIWidget<MenuBar>().CraftingButtonDown = true; // This does not call CraftingButtonToggled
+                _hud.GetUIWidget<MenuBar>().CraftingButton.Pressed = true; // This does not call CraftingButtonToggled
             }
         }
 
