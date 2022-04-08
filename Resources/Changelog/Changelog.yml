@@ -1,15 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Packed Station is now significantly brighter., type: Tweak}
-  - {message: Cargo on Packed Station now has two starting hardsuit crates., type: Tweak}
-  - {message: 'In response to rampant gun violence, Security on Packed Station now
-      has some new non-lethal gear.', type: Tweak}
-  - {message: Some of the secret areas on Packed Station have been re-stocked., type: Add}
-  - {message: Packed Station's plasma canisters have been replaced with Nanotrasen-brand
-      Safety Plasma., type: Remove}
-  id: 799
-  time: '2022-01-01T01:17:09.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed alt-click interactions not working properly., type: Fix}
@@ -3033,3 +3022,11 @@ Entries:
     type: Tweak}
   id: 1298
   time: '2022-04-08T21:17:05.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added a basic Syndie EVA suit to uplink and hardsuit is now bundled
+      by default., type: Add}
+  - {message: Syndicate found a bunch of old surplus Mosins which have been added
+      to the uplink., type: Add}
+  id: 1299
+  time: '2022-04-08T21:19:38.0000000+00:00'
