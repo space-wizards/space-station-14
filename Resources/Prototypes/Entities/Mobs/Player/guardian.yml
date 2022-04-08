@@ -106,6 +106,9 @@
     - state: tech_flare
       color: "#40a7d7"
       shader: unshaded
+  - type: Tag
+    tags:
+      - CannotSuicide
 
 # From Wizard deck of cards
 - type: entity
