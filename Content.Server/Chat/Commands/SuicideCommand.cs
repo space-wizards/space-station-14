@@ -91,11 +91,7 @@ namespace Content.Server.Chat.Commands
                     shell?.WriteLine("You can't ghost right now.");
                     return;
                 }
-                else
-                {
-                    EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
-                    return;
-                }
+                return;
             }
 
             //TODO: needs to check if the mob is actually alive
