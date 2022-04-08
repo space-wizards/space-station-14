@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.Instruments;
@@ -9,11 +6,8 @@ using JetBrains.Annotations;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
-using SharpFont;
 
 namespace Content.Client.Instruments
 {
@@ -26,11 +20,6 @@ namespace Content.Client.Instruments
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         public readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
-
-        public readonly Comparer<RobustMidiEvent> SortMidiEventTick
-            = Comparer<RobustMidiEvent>.Create((x, y)
-                => x.Tick.CompareTo(y.Tick));
-
         public int MaxMidiEventsPerBatch { get; private set; }
         public int MaxMidiEventsPerSecond { get; private set; }
 
@@ -78,6 +67,7 @@ namespace Content.Client.Instruments
 
             if (instrument.Renderer != null)
             {
+                instrument.Renderer.SendMidiEvent(RobustMidiEvent.SystemReset(instrument.Renderer.SequencerTick));
                 UpdateRenderer(uid, instrument);
                 instrument.Renderer.OnMidiPlayerFinished += () =>
                 {
@@ -97,13 +87,15 @@ namespace Content.Client.Instruments
             if (!Resolve(uid, ref instrument) || instrument.Renderer == null)
                 return;
 
-            instrument.Renderer.MidiBank = instrument.InstrumentBank;
             instrument.Renderer.TrackingEntity = instrument.Owner;
             instrument.Renderer.DisablePercussionChannel = !instrument.AllowPercussion;
             instrument.Renderer.DisableProgramChangeEvent = !instrument.AllowProgramChange;
 
-            if(!instrument.AllowProgramChange)
+            if (!instrument.AllowProgramChange)
+            {
                 instrument.Renderer.MidiProgram = instrument.InstrumentProgram;
+                instrument.Renderer.MidiBank = instrument.InstrumentBank;
+            }
 
             instrument.Renderer.LoopMidi = instrument.LoopMidi;
             instrument.DirtyRenderer = false;
@@ -150,22 +142,22 @@ namespace Content.Client.Instruments
             if (!Resolve(uid, ref instrument))
                 return;
 
-            if (instrument.Renderer == null || instrument.Renderer.Status != MidiRendererStatus.File)
+            if (instrument.Renderer is not { Status: MidiRendererStatus.File })
                 return;
 
             instrument.MidiEventBuffer.Clear();
 
-            instrument.Renderer.PlayerTick = playerTick;
-            var tick = instrument.Renderer.SequencerTick;
+            var tick = instrument.Renderer.SequencerTick-1;
+
+            instrument.MidiEventBuffer.Add(RobustMidiEvent.SystemReset(tick));
 
             // We add a "all notes off" message.
             for (byte i = 0; i < 16; i++)
             {
-                instrument.MidiEventBuffer.Add(RobustMidiEvent.AllNotesOff(i, tick));
+                //instrument.MidiEventBuffer.Add(RobustMidiEvent.AllNotesOff(i, tick));
             }
 
-            // Now we add a Reset All Controllers message.
-            instrument.MidiEventBuffer.Add(RobustMidiEvent.ResetAllControllers(tick));
+            instrument.Renderer.PlayerTick = playerTick;
         }
 
         public bool OpenInput(EntityUid uid, InstrumentComponent? instrument = null)
@@ -195,6 +187,8 @@ namespace Content.Client.Instruments
             {
                 return false;
             }
+
+            instrument.MidiEventBuffer.Clear();
 
             instrument.Renderer.OnMidiEvent += instrument.MidiEventBuffer.Add;
             return true;
@@ -242,7 +236,7 @@ namespace Content.Client.Instruments
         {
             var uid = midiEv.Uid;
 
-            if (!EntityManager.TryGetComponent(uid, out InstrumentComponent? instrument))
+            if (!TryComp(uid, out InstrumentComponent? instrument))
                 return;
 
             var renderer = instrument.Renderer;
@@ -280,18 +274,21 @@ namespace Content.Client.Instruments
             var currentTick = renderer.SequencerTick;
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < midiEv.MidiEvent.Length; i++)
+            for (uint i = 0; i < midiEv.MidiEvent.Length; i++)
             {
                 var ev = midiEv.MidiEvent[i];
+
                 var scheduled = ev.Tick + instrument.SequenceDelay;
 
-                if (scheduled <= currentTick)
+                if (scheduled < currentTick)
                 {
                     instrument.SequenceDelay += currentTick - ev.Tick;
                     scheduled = ev.Tick + instrument.SequenceDelay;
                 }
 
-                instrument.Renderer?.ScheduleMidiEvent(ev, scheduled, true);
+                // The order of events with the same timestamp is undefined in Fluidsynth's sequencer...
+                // Therefore we add the event index to the scheduled time to ensure every event has an unique timestamp.
+                instrument.Renderer?.ScheduleMidiEvent(ev, scheduled+i, true);
             }
         }
 
@@ -346,14 +343,15 @@ namespace Content.Client.Instruments
                 // fix cross-fade events generating retroactive events
                 // also handle any significant backlog of events after midi finished
 
-                instrument.MidiEventBuffer.Sort(SortMidiEventTick);
                 var bufferTicks = instrument.IsRendererAlive && instrument.Renderer!.Status != MidiRendererStatus.None
                     ? instrument.Renderer.SequencerTimeScale * .2f
                     : 0;
+
                 var bufferedTick = instrument.IsRendererAlive
                     ? instrument.Renderer!.SequencerTick - bufferTicks
                     : int.MaxValue;
 
+                // TODO: Remove LINQ brain-rot.
                 var events = instrument.MidiEventBuffer
                     .TakeWhile(x => x.Tick < bufferedTick)
                     .Take(max)
