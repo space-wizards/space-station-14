@@ -13,10 +13,7 @@ using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 // ReSharper disable once RedundantUsingDirective
 
@@ -47,7 +44,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     How far away do we update gas overlays (minimum; due to chunking further away tiles may also be updated).
         /// </summary>
-        private float _updateRange;
+        private Vector2 _updateRange;
 
         // Because the gas overlay updates aren't run every tick we need to avoid the pop-in that might occur with
         // the regular PVS range.
@@ -70,7 +67,7 @@ namespace Content.Server.Atmos.EntitySystems
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.NetGasOverlayTickRate, value => _updateCooldown = value > 0.0f ? 1 / value : float.MaxValue, true);
-            configManager.OnValueChanged(CVars.NetMaxUpdateRange, value => _updateRange = value + RangeOffset, true);
+            configManager.OnValueChanged(CVars.NetDefaultUpdateRange, value => _updateRange = value + RangeOffset, true);
             configManager.OnValueChanged(CCVars.GasOverlayThresholds, value => _thresholds = value, true);
         }
 
@@ -145,9 +142,9 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="indices"></param>
         /// <param name="overlayData"></param>
         /// <returns>true if updated</returns>
-        private bool TryRefreshTile(GridId grid, GasOverlayData oldTile, Vector2i indices, out GasOverlayData overlayData)
+        private bool TryRefreshTile(GridAtmosphereComponent gridAtmosphere, GasOverlayData oldTile, Vector2i indices, out GasOverlayData overlayData)
         {
-            var tile = _atmosphereSystem.GetTileAtmosphereOrCreateSpace(grid, indices);
+            var tile = _atmosphereSystem.GetTileAtmosphere(gridAtmosphere, indices);
 
             if (tile == null)
             {
@@ -193,19 +190,22 @@ namespace Content.Server.Atmos.EntitySystems
             var inRange = new List<GasOverlayChunk>();
 
             // This is the max in any direction that we can get a chunk (e.g. max 2 chunks away of data).
-            var (maxXDiff, maxYDiff) = ((int) (_updateRange / ChunkSize) + 1, (int) (_updateRange / ChunkSize) + 1);
+            var (maxXDiff, maxYDiff) = ((int) (_updateRange.X / ChunkSize) + 1, (int) (_updateRange.Y / ChunkSize) + 1);
 
-            var worldBounds = Box2.CenteredAround(EntityManager.GetComponent<TransformComponent>(entity).WorldPosition,
-                new Vector2(_updateRange, _updateRange));
+            var xform = Transform(entity);
+            var worldPos = xform.MapPosition;
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(EntityManager.GetComponent<TransformComponent>(entity).MapID, worldBounds))
+            var worldBounds = Box2.CenteredAround(worldPos.Position,
+                _updateRange);
+
+            foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, worldBounds))
             {
                 if (!_overlay.TryGetValue(grid.Index, out var chunks))
                 {
                     continue;
                 }
 
-                var entityTile = grid.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates).GridIndices;
+                var entityTile = grid.GetTileRef(worldPos).GridIndices;
 
                 for (var x = -maxXDiff; x <= maxXDiff; x++)
                 {
@@ -219,10 +219,10 @@ namespace Content.Server.Atmos.EntitySystems
                         // (e.g. if we're on the very edge of a chunk we may need more chunks).
 
                         var (xDiff, yDiff) = (chunkIndices.X - entityTile.X, chunkIndices.Y - entityTile.Y);
-                        if (xDiff > 0 && xDiff > _updateRange ||
-                            yDiff > 0 && yDiff > _updateRange ||
-                            xDiff < 0 && Math.Abs(xDiff + ChunkSize) > _updateRange ||
-                            yDiff < 0 && Math.Abs(yDiff + ChunkSize) > _updateRange) continue;
+                        if (xDiff > 0 && xDiff > _updateRange.X ||
+                            yDiff > 0 && yDiff > _updateRange.Y ||
+                            xDiff < 0 && Math.Abs(xDiff + ChunkSize) > _updateRange.X ||
+                            yDiff < 0 && Math.Abs(yDiff + ChunkSize) > _updateRange.Y) continue;
 
                         inRange.Add(chunk);
                     }
@@ -283,7 +283,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var chunk = GetOrCreateChunk(gridId, invalid);
 
-                    if (!TryRefreshTile(grid.Index, chunk.GetData(invalid), invalid, out var data)) continue;
+                    if (!TryRefreshTile(gam, chunk.GetData(invalid), invalid, out var data)) continue;
 
                     if (!updatedTiles.TryGetValue(chunk, out var tiles))
                     {
@@ -291,7 +291,7 @@ namespace Content.Server.Atmos.EntitySystems
                         updatedTiles[chunk] = tiles;
                     }
 
-                    updatedTiles[chunk].Add(invalid);
+                    tiles.Add(invalid);
                     chunk.Update(data, invalid);
                 }
             }

@@ -84,6 +84,9 @@
     heatDamageThreshold: 360
     coldDamageThreshold: -150
     currentTemperature: 310.15
+  - type: Tag
+    tags:
+      - CannotSuicide
 
 - type: entity
   name: purple snake

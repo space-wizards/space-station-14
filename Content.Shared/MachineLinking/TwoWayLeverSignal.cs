@@ -10,7 +10,7 @@ namespace Content.Shared.MachineLinking
     }
 
     [Serializable, NetSerializable]
-    public enum TwoWayLeverSignal : byte
+    public enum TwoWayLeverState : byte
     {
         Middle,
         Right,

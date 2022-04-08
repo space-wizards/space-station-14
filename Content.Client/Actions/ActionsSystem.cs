@@ -155,19 +155,11 @@ namespace Content.Client.Actions
 
                 act.CopyFrom(serverAct);
                 serverActions.Remove(serverAct);
-
-                if (act is EntityTargetAction entAct)
-                {
-                    entAct.Whitelist?.UpdateRegistrations();
-                }
             }
 
             // Anything that remains is a new action
             foreach (var newAct in serverActions)
             {
-                if (newAct is EntityTargetAction entAct)
-                    entAct.Whitelist?.UpdateRegistrations();
-
                 // We create a new action, not just sorting a reference to the state's action.
                 component.Actions.Add((ActionType) newAct.Clone());
             }

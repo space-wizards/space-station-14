@@ -1,4 +1,5 @@
 using Content.Server.UserInterface;
+using Content.Shared.Examine;
 using Content.Shared.Paper;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;

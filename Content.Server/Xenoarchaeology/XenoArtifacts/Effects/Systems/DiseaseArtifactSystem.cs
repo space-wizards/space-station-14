@@ -6,6 +6,7 @@ using Content.Server.Disease.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
 using Content.Shared.Interaction;
+using Robust.Shared.Map;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
 {
@@ -14,10 +15,22 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
     /// </summary>
     public sealed class DiseaseArtifactSystem : EntitySystem
     {
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly DiseaseSystem _disease = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+
+        // TODO: YAML Serializer won't catch this.
+        [ViewVariables(VVAccess.ReadWrite)]
+        public readonly IReadOnlyList<string> ArtifactDiseases = new[]
+        {
+            "VanAusdallsRobovirus",
+            "OwOnavirus",
+            "BleedersBite",
+            "Ultragigacancer",
+            "AMIV"
+        };
 
         public override void Initialize()
         {
@@ -31,31 +44,37 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
         /// </summary>
         private void OnMapInit(EntityUid uid, DiseaseArtifactComponent component, MapInitEvent args)
         {
-            if (component.SpawnDisease == string.Empty && component.ArtifactDiseases.Count != 0)
-            {
-                var diseaseName = _random.Pick(component.ArtifactDiseases);
+            if (component.SpawnDisease != null || ArtifactDiseases.Count == 0) return;
+            var diseaseName = _random.Pick(ArtifactDiseases);
 
-                component.SpawnDisease = diseaseName;
+            if (!_prototypeManager.TryIndex<DiseasePrototype>(diseaseName, out var disease))
+            {
+                Logger.ErrorS("disease", $"Invalid disease {diseaseName} selected from random diseases.");
+                return;
             }
 
-            if (_prototypeManager.TryIndex(component.SpawnDisease, out DiseasePrototype? disease) && disease != null)
-                component.ResolveDisease = disease;
+            component.SpawnDisease = disease;
         }
 
         /// <summary>
-        /// When activated, blasts everyone in LOS within 3 tiles
+        /// When activated, blasts everyone in LOS within n tiles
         /// with a high-probability disease infection attempt
         /// </summary>
         private void OnActivate(EntityUid uid, DiseaseArtifactComponent component, ArtifactActivatedEvent args)
         {
+            if (component.SpawnDisease == null) return;
+
             var xform = Transform(uid);
-            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, 3f))
+            var carrierQuery = GetEntityQuery<DiseaseCarrierComponent>();
+
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.Coordinates, component.Range))
             {
-                if (!_interactionSystem.InRangeUnobstructed(uid, entity, 3f))
+                if (!carrierQuery.TryGetComponent(entity, out var carrier)) continue;
+
+                if (!_interactionSystem.InRangeUnobstructed(uid, entity, component.Range))
                     continue;
 
-                if (TryComp<DiseaseCarrierComponent>(entity, out var carrier))
-                    EntitySystem.Get<DiseaseSystem>().TryInfect(carrier, component.ResolveDisease);
+                _disease.TryInfect(carrier, component.SpawnDisease, forced: true);
             }
         }
     }
