@@ -281,7 +281,7 @@ namespace Content.Client.Entry
             "TabletopGame",
             "LitOnPowered",
             "TriggerOnSignalReceived",
-            "DeviceNetworkComponent",
+            "DeviceNetwork",
             "WiredNetworkConnection",
             "WirelessNetworkConnection",
             "ExtensionCableReceiver",
