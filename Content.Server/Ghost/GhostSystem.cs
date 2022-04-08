@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
@@ -8,6 +7,8 @@ using Content.Server.Players;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Actions;
+using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
@@ -16,6 +17,8 @@ using Content.Shared.Movement.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
@@ -23,6 +26,8 @@ namespace Content.Server.Ghost
     [UsedImplicitly]
     public sealed class GhostSystem : SharedGhostSystem
     {
+        [Dependency] private readonly IConsoleHost _consoleHost = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
@@ -31,6 +36,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
+
 
         public override void Initialize()
         {
@@ -52,7 +58,45 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
+
+            _consoleHost.RegisterCommand("ghostrespawn", Loc.GetString("ghost-respawn-command-desc"), "",
+                GhostRespawnCommand);
         }
+
+        [AnyCommand]
+        private void GhostRespawnCommand(IConsoleShell shell, string str, string[] args)
+        {
+            if (shell.Player is IPlayerSession { AttachedEntity: { Valid: true } entity } session)
+            {
+                if (EntityManager.TryGetComponent<GhostComponent>(entity, out var ghostComponent))
+                {
+                    var time = (_gameTiming.RealTime - ghostComponent.TimeOfDeath);
+                    var respawnTime = _configurationManager.GetCVar(CCVars.RespawnTime);
+
+                    Logger.Debug($"{time}, {respawnTime}");
+                    if (respawnTime > time.TotalSeconds)
+                    {
+                        shell.WriteError(Loc.GetString("ghost-respawn-ineligible"));
+                        return;
+                    }
+
+                    session.ContentData()?.WipeMind();
+
+                    _ticker.Respawn(session);
+                }
+                else
+                {
+                    shell.WriteError(Loc.GetString("ghost-respawn-not-a-ghost"));
+                    return;
+                }
+            }
+            else
+            {
+                shell.WriteError(Loc.GetString("shell-server-cannot"));
+                return;
+            }
+        }
+
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
         {
             if (args.Handled)

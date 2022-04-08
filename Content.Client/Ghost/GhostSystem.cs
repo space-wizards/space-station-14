@@ -57,6 +57,14 @@ namespace Content.Client.Ghost
             SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
         }
 
+        public override void Update(float frameTime)
+        {
+            foreach (var ghost in EntityManager.EntityQuery<GhostComponent>(true))
+            {
+                ghost.Gui?.UpdateRespawn();
+            }
+        }
+
         private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
         {
             if (EntityManager.TryGetComponent(component.Owner, out SpriteComponent? sprite))

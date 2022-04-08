@@ -9,8 +9,6 @@ namespace Content.Server.Ghost.Components
     [ComponentReference(typeof(SharedGhostComponent))]
     public sealed class GhostComponent : SharedGhostComponent
     {
-        public TimeSpan TimeOfDeath { get; set; } = TimeSpan.Zero;
-
         [DataField("booRadius")]
         public float BooRadius = 3;
 

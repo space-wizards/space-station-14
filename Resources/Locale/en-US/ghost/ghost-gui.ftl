@@ -1,4 +1,6 @@
 ghost-gui-return-to-body-button = Return to body
+ghost-gui-respawn-button-denied = Respawn ({$time})
+ghost-gui-respawn-button-allowed = Respawn
 ghost-gui-ghost-warp-button = Ghost Warp
 ghost-gui-ghost-roles-button = Ghost Roles ({$count})
 
