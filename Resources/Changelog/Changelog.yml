@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'The singularity properly generates radiation, meaning it should now
-      generate power. Wear a hardsuit and mesons!', type: Fix}
-  id: 801
-  time: '2022-01-01T03:28:13.477890+00:00'
 - author: ShadowCommander
   changes:
   - {message: Removed the ability to stuff the held part of a pulled entity in your
@@ -3031,3 +3025,8 @@ Entries:
     type: Add}
   id: 1300
   time: '2022-04-08T22:07:42.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: A new medium salvage you won't be able to bear has been added., type: Add}
+  id: 1301
+  time: '2022-04-08T22:26:40.0000000+00:00'
