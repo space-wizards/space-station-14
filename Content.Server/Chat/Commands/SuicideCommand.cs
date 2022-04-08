@@ -86,8 +86,16 @@ namespace Content.Server.Chat.Commands
             //Checks to see if the CannotSuicide tag exits, ghosts instead.
             if(EntitySystem.Get<TagSystem>().HasTag(owner, "CannotSuicide"))
             {
-                EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
-                return;
+                if (!EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, true))
+                {
+                    shell?.WriteLine("You can't ghost right now.");
+                    return;
+                }
+                else
+                {
+                    EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
+                    return;
+                }
             }
 
             //TODO: needs to check if the mob is actually alive
