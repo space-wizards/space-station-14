@@ -107,7 +107,7 @@ namespace Content.Shared.Chemistry.Reaction
         /// <param name="reaction">The reaction to check.</param>
         /// <param name="lowestUnitReactions">How many times this reaction can occur.</param>
         /// <returns></returns>
-        private static bool CanReact(Solution solution, ReactionPrototype reaction, out FixedPoint2 lowestUnitReactions)
+        private bool CanReact(Solution solution, ReactionPrototype reaction, EntityUid owner, out FixedPoint2 lowestUnitReactions)
         {
             lowestUnitReactions = FixedPoint2.MaxValue;
             if (solution.Temperature < reaction.MinimumTemperature)
@@ -115,6 +115,14 @@ namespace Content.Shared.Chemistry.Reaction
                 lowestUnitReactions = FixedPoint2.Zero;
                 return false;
             } else if(solution.Temperature > reaction.MaximumTemperature)
+            {
+                lowestUnitReactions = FixedPoint2.Zero;
+                return false;
+            }
+
+            var attempt = new ReactionAttemptEvent(reaction, solution);
+            RaiseLocalEvent(owner, attempt, false);
+            if (attempt.Cancelled)
             {
                 lowestUnitReactions = FixedPoint2.Zero;
                 return false;
@@ -220,7 +228,7 @@ namespace Content.Shared.Chemistry.Reaction
             // attempt to perform any applicable reaction
             foreach (var reaction in reactions)
             {
-                if (!CanReact(solution, reaction, out var unitReactions))
+                if (!CanReact(solution, reaction, owner, out var unitReactions))
                 {
                     toRemove.Add(reaction);
                     continue;
@@ -286,6 +294,24 @@ namespace Content.Shared.Chemistry.Reaction
             }
 
             Logger.Error($"{nameof(Solution)} {owner} could not finish reacting in under {MaxReactionIterations} loops.");
+        }
+    }
+
+    /// <summary>
+    ///     Raised directed at the owner of a solution to determine whether the reaction should be allowed to occur.
+    /// </summary>
+    /// <reamrks>
+    ///     Some solution containers (e.g., bloodstream, smoke, foam) use this to block certain reactions from occurring.
+    /// </reamrks>
+    public sealed class ReactionAttemptEvent : CancellableEntityEventArgs
+    {
+        public readonly ReactionPrototype Reaction;
+        public readonly Solution Solution;
+
+        public ReactionAttemptEvent(ReactionPrototype reaction, Solution solution)
+        {
+            Reaction = reaction;
+            Solution = solution;
         }
     }
 }

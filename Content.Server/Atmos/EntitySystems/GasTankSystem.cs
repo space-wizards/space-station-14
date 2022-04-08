@@ -64,8 +64,12 @@ namespace Content.Server.Atmos.EntitySystems
             foreach (var gasTank in EntityManager.EntityQuery<GasTankComponent>())
             {
                 _atmosphereSystem.React(gasTank.Air, gasTank);
-                gasTank.CheckStatus();
-                gasTank.UpdateUserInterface();
+                gasTank.CheckStatus(_atmosphereSystem);
+
+                if (gasTank.UserInterface != null && gasTank.UserInterface.SubscribedSessions.Count > 0)
+                {
+                    gasTank.UpdateUserInterface();
+                }
             }
         }
     }

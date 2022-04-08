@@ -191,6 +191,7 @@
     maxIntensity: 40
     intensitySlope: 6
     totalIntensity: 200
+    maxTileBreak: 1
   - type: PointLight
     radius: 3.5
     color: orange
@@ -209,10 +210,10 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    devastationRange: 0
-    heavyImpactRange: 0
-    lightImpactRange: 1
-    flashRange: 10
+    maxIntensity: 2 # max 30 per tile
+    intensitySlope: 1
+    totalIntensity: 4 # 60 total damage to distribute over tiles
+    maxTileBreak: 1
   - type: PointLight
     radius: 3.5
     color: orange
