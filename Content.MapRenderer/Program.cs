@@ -18,7 +18,7 @@ namespace Content.MapRenderer
         private static readonly MapPainter MapPainter = new();
 
 #pragma warning disable CA1825
-        private static readonly string[] ForceRender = {"packedstation"};
+        private static readonly string[] ForceRender = {"Test"};
 #pragma warning restore CA1825
 
         internal static async Task Main()

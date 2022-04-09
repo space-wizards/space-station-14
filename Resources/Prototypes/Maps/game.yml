@@ -15,7 +15,6 @@
     StationEngineer: [ 2, 2 ]
     Chemist: [ 1, 1 ]
     MedicalDoctor: [ 1, 1 ]
-    Assistant: [ 4, 4 ]
     SalvageEngineer: [ 2, 2 ]
     Botanist: [ 1, 1 ]
 
@@ -36,7 +35,6 @@
     StationEngineer: [ 2, 2 ]
     Chemist: [ 1, 1 ]
     MedicalDoctor: [ 1, 1 ]
-    Assistant: [ 4, 4 ]
     SalvageEngineer: [ 2, 2 ]
     Botanist: [ 1, 1 ]
 
