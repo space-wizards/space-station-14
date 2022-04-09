@@ -42,7 +42,7 @@ jobs:
     - name: Upload files to centcomm
       uses: appleboy/scp-action@master
       with:
-        host: ipv6.hellomouse.net
+        host: hellomouse.net
         username: or14-builds
         key: ${{ secrets.OUTER_RIM_BUILDS_PUSH_KEY }}
         source: "release/${{ github.sha }}"
@@ -54,7 +54,7 @@ jobs:
       uses: appleboy/ssh-action@master
       continue-on-error: true
       with:
-        host: ipv6.hellomouse.net
+        host: hellomouse.net
         username: or14-builds
         key: ${{ secrets.OUTER_RIM_BUILDS_PUSH_KEY }}
         script: /home/or14-builds/push.ps1 ${{ github.sha }}
