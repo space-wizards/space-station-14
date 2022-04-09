@@ -200,7 +200,7 @@ namespace Content.Server.Atmos.EntitySystems
             var xform = Transform(entity);
             var worldPos = xform.MapPosition;
 
-            var worldBounds = Box2.CenteredAround(worldPos.Position, _updateRange);
+            var worldBounds = Box2.CenteredAround(worldPos.Position, new Vector2(_updateRange, _updateRange));
 
             foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, worldBounds))
             {
