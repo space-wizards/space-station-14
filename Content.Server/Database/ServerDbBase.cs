@@ -195,6 +195,7 @@ namespace Content.Server.Database
                     }
                 }
             }
+            var markingsSet = new MarkingsSet(markings);
 
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
@@ -210,7 +211,7 @@ namespace Content.Server.Database
                     Color.FromHex(profile.FacialHairColor),
                     Color.FromHex(profile.EyeColor),
                     Color.FromHex(profile.SkinColor),
-                    markings
+                    markingsSet
                 ),
                 clothing,
                 backpack,

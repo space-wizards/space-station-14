@@ -54,7 +54,7 @@ namespace Content.Tests.Server.Preferences
                     Color.Aquamarine,
                     Color.Azure,
                     Color.Beige,
-                    new List<Marking>()
+                    new MarkingsSet()
                 ),
                 ClothingPreference.Jumpskirt,
                 BackpackPreference.Backpack,

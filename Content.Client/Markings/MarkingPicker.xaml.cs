@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.CharacterAppearance;
@@ -26,12 +27,12 @@ namespace Content.Client.Markings
     {
         [Dependency] private readonly MarkingManager _markingManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        
-        public Action<List<Marking>>? OnMarkingAdded;
-        public Action<List<Marking>>? OnMarkingRemoved;
-        public Action<List<Marking>>? OnMarkingColorChange;
-        public Action<List<Marking>>? OnMarkingRankChange;
-        
+
+        public Action<MarkingsSet>? OnMarkingAdded;
+        public Action<MarkingsSet>? OnMarkingRemoved;
+        public Action<MarkingsSet>? OnMarkingColorChange;
+        public Action<MarkingsSet>? OnMarkingRankChange;
+
         private List<Color> _currentMarkingColors = new();
 
         private Dictionary<MarkingCategories, MarkingPoints> PointLimits = new();
@@ -40,17 +41,26 @@ namespace Content.Client.Markings
         private ItemList.Item? _selectedMarking;
         private ItemList.Item? _selectedUnusedMarking;
         private MarkingCategories _selectedMarkingCategory = MarkingCategories.Chest;
-        private List<Marking> _usedMarkingList = new();
+        // private List<Marking> _usedMarkingList = new();
+
+        private MarkingsSet _currentMarkings = new();
 
         private List<MarkingCategories> _markingCategories = Enum.GetValues<MarkingCategories>().ToList();
 
         private string _currentSpecies = SpeciesManager.DefaultSpecies; // mmmmm
 
-        public void SetData(List<Marking> newMarkings, string species)
+        public void SetData(MarkingsSet newMarkings, string species)
         {
-            _usedMarkingList = newMarkings;
+            _currentMarkings = newMarkings;
             _currentSpecies = species;
 
+            // Should marking limits be dependent on species prototypes,
+            // or should it be dependent on the entity the
+            // species contains? Having marking points as a part of
+            // the component allows for any arbitrary thing to have
+            // a marking (at this point, it's practically a sprite decoration),
+            // but having it as a part of a species makes markings instead
+            // be dependent on humanoid variants for constraints
             SpeciesPrototype speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(species);
             EntityPrototype body = _prototypeManager.Index<EntityPrototype>(speciesPrototype.Prototype);
 
@@ -64,7 +74,7 @@ namespace Content.Client.Markings
                 {
                     Points = points.Points,
                     Required = points.Required,
-                    DefaultMarkings = points.DefaultMarkings 
+                    DefaultMarkings = points.DefaultMarkings
                 };
             }
 
@@ -101,7 +111,7 @@ namespace Content.Client.Markings
         private string GetMarkingName(MarkingPrototype marking) => Loc.GetString($"marking-{marking.ID}");
         private List<string> GetMarkingStateNames(MarkingPrototype marking)
         {
-            List<string> result = new(); 
+            List<string> result = new();
             foreach (var markingState in marking.Sprites)
             {
                 switch (markingState)
@@ -126,7 +136,8 @@ namespace Content.Client.Markings
             var markings = _markingManager.CategorizedMarkings();
             foreach (var marking in markings[_selectedMarkingCategory])
             {
-                if (_usedMarkingList.Contains(marking.AsMarking())) continue;
+                if (_currentMarkings.Contains(marking.AsMarking())) continue;
+                // if (_usedMarkingList.Contains(marking.AsMarking())) continue;
                 if (marking.SpeciesRestrictions != null && !marking.SpeciesRestrictions.Contains(_currentSpecies)) continue;
                 var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", marking.Sprites[0].Frame0());
                 item.Metadata = marking;
@@ -149,6 +160,72 @@ namespace Content.Client.Markings
             CMarkingsUsed.Clear();
             CMarkingColors.Visible = false;
             _selectedMarking = null;
+
+            // a little slower than the original process
+            // (the original method here had the logic
+            // tied with the presentation, which did it all
+            // in one go including display)
+            //
+            // BUT
+            //
+            // it's all client side
+            // so does it really matter???
+            //
+            // actual validation/filtering occurs server side, but
+            // it might be better to just have a Process function
+            // that just iterates through all the markings with
+            // a species and points dict to ensure that all markings
+            // that were given are valid?
+            //
+            // one of the larger issues is that this doesn't
+            // necessarily use the existing backing list, but rather it
+            // allocates entirely new lists instead to perform
+            // their functions, making a 'Process' function
+            // more desirable imo, since this isn't *really* used
+            // outside of this specific niche
+
+            var markings = new MarkingsSet(_currentMarkings);
+
+            // ensures all markings are valid
+            markings = MarkingsSet.EnsureValid(_currentMarkings, _markingManager);
+
+            // filters out all non-valid species markings
+            markings = MarkingsSet.FilterSpecies(_currentMarkings, _currentSpecies);
+
+            // processes all the points currently available
+            markings = MarkingsSet.ProcessPoints(_currentMarkings, PointsUsed);
+
+            // if the marking set has changed, invoke the event that involves changed marking sets
+            if (markings != _currentMarkings)
+            {
+                Logger.DebugS("Markings", "Marking set is different, resetting markings on dummy now");
+                _currentMarkings = markings;
+                OnMarkingRemoved?.Invoke(_currentMarkings);
+            }
+
+            IEnumerator markingEnumerator = _currentMarkings.GetReverseEnumerator();
+
+            // walk backwards through the list for visual purposes
+            while (markingEnumerator.MoveNext())
+            {
+                Marking marking = (Marking) markingEnumerator.Current;
+                var newMarking = _markingManager.Markings()[marking.MarkingId];
+                var _item = new ItemList.Item(CMarkingsUsed)
+                {
+                    Text = Loc.GetString("marking-used", ("marking-name", $"{GetMarkingName(newMarking)}"), ("marking-category", Loc.GetString($"markings-category-{newMarking.MarkingCategory}"))),
+                    Icon = newMarking.Sprites[0].Frame0(),
+                    Selectable = true,
+                    Metadata = newMarking,
+                    IconModulate = marking.MarkingColors[0]
+                };
+                CMarkingsUsed.Add(_item);
+            }
+
+            // since all the points have been processed, update the points visually
+            UpdatePoints();
+
+            /*
+            // MarkingSet.EnsureValid_currentMarkings.
 
             bool isDirty = false;
             for (var i = 0; i < _usedMarkingList.Count; i++)
@@ -177,7 +254,7 @@ namespace Content.Client.Markings
 
                     var _item = new ItemList.Item(CMarkingsUsed)
                     {
-                        Text = Loc.GetString("marking-used", ("marking-name", $"{GetMarkingName(newMarking)}"), ("marking-category", Loc.GetString($"markings-category-{newMarking.MarkingCategory}"))), 
+                        Text = Loc.GetString("marking-used", ("marking-name", $"{GetMarkingName(newMarking)}"), ("marking-category", Loc.GetString($"markings-category-{newMarking.MarkingCategory}"))),
                         Icon = newMarking.Sprites[0].Frame0(),
                         Selectable = true,
                         Metadata = newMarking,
@@ -214,6 +291,7 @@ namespace Content.Client.Markings
             }
 
             UpdatePoints();
+            */
         }
 
         private void SwapMarkingUp()
@@ -226,7 +304,7 @@ namespace Content.Client.Markings
             var i = CMarkingsUsed.IndexOf(_selectedMarking);
             if (ShiftMarkingRank(i, -1))
             {
-                OnMarkingRankChange?.Invoke(_usedMarkingList);
+                OnMarkingRankChange?.Invoke(_currentMarkings);
             }
         }
 
@@ -240,7 +318,7 @@ namespace Content.Client.Markings
             var i = CMarkingsUsed.IndexOf(_selectedMarking);
             if (ShiftMarkingRank(i, 1))
             {
-                OnMarkingRankChange?.Invoke(_usedMarkingList);
+                OnMarkingRankChange?.Invoke(_currentMarkings);
             }
         }
 
@@ -256,12 +334,29 @@ namespace Content.Client.Markings
             CMarkingsUsed[visualDest] = CMarkingsUsed[src];
             CMarkingsUsed[src] = visualTemp;
 
+            switch (places)
+            {
+                // i.e., we're going down in rank
+                case < 0:
+                    _currentMarkings.ShiftRankDownFromEnd(src);
+                    break;
+                // i.e., we're going up in rank
+                case > 0:
+                    _currentMarkings.ShiftRankUpFromEnd(src);
+                    break;
+                // do nothing?
+                default:
+                    break;
+            }
+
+            /*
             var backingSrc = _usedMarkingList.Count - 1 - src; // what it actually needs to be
-            var backingDest = backingSrc - places;             
+            var backingDest = backingSrc - places;
             var backingTemp = _usedMarkingList[backingDest];
             _usedMarkingList[backingDest] = _usedMarkingList[backingSrc];
             _usedMarkingList[backingSrc] = backingTemp;
-            
+            */
+
             return true;
         }
 
@@ -273,11 +368,11 @@ namespace Content.Client.Markings
         public void SetSpecies(string species)
         {
             _currentSpecies = species;
-            var markingCount = _usedMarkingList.Count;
+            var markingCount = _currentMarkings.Count;
 
             SpeciesPrototype speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(species);
             EntityPrototype body = _prototypeManager.Index<EntityPrototype>(speciesPrototype.Prototype);
-            
+
             body.TryGetComponent("Markings", out MarkingsComponent? markingsComponent);
 
             PointLimits = markingsComponent!.LayerPoints;
@@ -288,10 +383,10 @@ namespace Content.Client.Markings
                 {
                     Points = points.Points,
                     Required = points.Required,
-                    DefaultMarkings = points.DefaultMarkings 
+                    DefaultMarkings = points.DefaultMarkings
                 };
             }
-            
+
             Populate();
             PopulateUsed();
         }
@@ -312,6 +407,7 @@ namespace Content.Client.Markings
             UpdatePoints();
         }
 
+        // TODO: This should be using ColorSelectorSliders once that's merged, so
         private void OnUsedMarkingSelected(ItemList.ItemListSelectedEventArgs item)
         {
             _selectedMarking = CMarkingsUsed[item.ItemIndex];
@@ -348,9 +444,9 @@ namespace Content.Client.Markings
                 colorContainer.AddChild(colorSliderB);
 
                 var currentColor = new Color(
-                    _usedMarkingList[_usedMarkingList.Count - 1 - item.ItemIndex].MarkingColors[i].RByte,
-                    _usedMarkingList[_usedMarkingList.Count - 1 - item.ItemIndex].MarkingColors[i].GByte,
-                    _usedMarkingList[_usedMarkingList.Count - 1 - item.ItemIndex].MarkingColors[i].BByte
+                    _currentMarkings[_currentMarkings.Count - 1 - item.ItemIndex].MarkingColors[i].RByte,
+                    _currentMarkings[_currentMarkings.Count - 1 - item.ItemIndex].MarkingColors[i].GByte,
+                    _currentMarkings[_currentMarkings.Count - 1 - item.ItemIndex].MarkingColors[i].BByte
                 );
                 _currentMarkingColors.Add(currentColor);
                 int colorIndex = _currentMarkingColors.IndexOf(currentColor);
@@ -381,18 +477,18 @@ namespace Content.Client.Markings
         {
             if (_selectedMarking is null) return;
             var markingPrototype = (MarkingPrototype) _selectedMarking.Metadata!;
-            int markingIndex = _usedMarkingList.FindIndex(m => m.MarkingId == markingPrototype.ID);
+            int markingIndex = _currentMarkings.FindIndexOf(markingPrototype.ID); // (m => m.MarkingId == markingPrototype.ID);
 
             if (markingIndex < 0) return;
 
             _selectedMarking.IconModulate = _currentMarkingColors[colorIndex];
-            _usedMarkingList[markingIndex].SetColor(colorIndex, _currentMarkingColors[colorIndex]);
-            OnMarkingColorChange?.Invoke(_usedMarkingList);
+            _currentMarkings[markingIndex].SetColor(colorIndex, _currentMarkingColors[colorIndex]);
+            OnMarkingColorChange?.Invoke(_currentMarkings);
         }
 
         private void MarkingAdd()
         {
-            if (_usedMarkingList is null || _selectedUnusedMarking is null) return;
+            if (_selectedUnusedMarking is null) return;
 
             MarkingPrototype marking = (MarkingPrototype) _selectedUnusedMarking.Metadata!;
 
@@ -408,25 +504,26 @@ namespace Content.Client.Markings
 
             UpdatePoints();
 
-            _usedMarkingList.Add(marking.AsMarking());
+            // _usedMarkingList.Add(marking.AsMarking());
+            _currentMarkings.AddBack(marking.AsMarking());
 
             CMarkingsUnused.Remove(_selectedUnusedMarking);
             var item = new ItemList.Item(CMarkingsUsed)
             {
-                Text = Loc.GetString("marking-used", ("marking-name", $"{GetMarkingName(marking)}"), ("marking-category", Loc.GetString($"markings-category-{marking.MarkingCategory}"))), 
+                Text = Loc.GetString("marking-used", ("marking-name", $"{GetMarkingName(marking)}"), ("marking-category", Loc.GetString($"markings-category-{marking.MarkingCategory}"))),
                 Icon = marking.Sprites[0].Frame0(),
                 Selectable = true,
                 Metadata = marking,
             };
             CMarkingsUsed.Insert(0, item);
-            
+
             _selectedUnusedMarking = null;
-            OnMarkingAdded?.Invoke(_usedMarkingList);
+            OnMarkingAdded?.Invoke(_currentMarkings);
         }
 
         private void MarkingRemove()
         {
-            if (_usedMarkingList is null || _selectedMarking is null) return;
+            if (_selectedMarking is null) return;
 
             MarkingPrototype marking = (MarkingPrototype) _selectedMarking.Metadata!;
 
@@ -437,7 +534,8 @@ namespace Content.Client.Markings
 
             UpdatePoints();
 
-            _usedMarkingList.Remove(marking.AsMarking());
+            // _usedMarkingList.Remove(marking.AsMarking());
+            _currentMarkings.Remove(marking.AsMarking());
             CMarkingsUsed.Remove(_selectedMarking);
 
             if (marking.MarkingCategory == _selectedMarkingCategory)
@@ -447,7 +545,7 @@ namespace Content.Client.Markings
             }
             _selectedMarking = null;
             CMarkingColors.Visible = false;
-            OnMarkingRemoved?.Invoke(_usedMarkingList);
+            OnMarkingRemoved?.Invoke(_currentMarkings);
         }
     }
 }

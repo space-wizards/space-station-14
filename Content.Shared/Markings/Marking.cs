@@ -70,9 +70,15 @@ namespace Content.Shared.Markings
             return (this.MarkingId.Equals(other.MarkingId));
         }
 
-        
+
         // look this could be better but I don't think serializing
         // colors is the correct thing to do
+        //
+        // this is still janky imo but serializing a color and feeding
+        // it into the default JSON serializer (which is just *fine*)
+        // doesn't seem to have compatible interfaces? this 'works'
+        // for now but should eventually be improved so that this can,
+        // in fact just be serialized through a convenient interface
         new public string ToString()
         {
             // reserved character

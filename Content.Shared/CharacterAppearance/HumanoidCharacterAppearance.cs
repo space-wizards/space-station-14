@@ -14,7 +14,7 @@ namespace Content.Shared.CharacterAppearance
             Color facialHairColor,
             Color eyeColor,
             Color skinColor,
-            List<Marking> markings)
+            MarkingsSet markings)
         {
             HairStyleId = hairStyleId;
             HairColor = ClampColor(hairColor);
@@ -31,7 +31,7 @@ namespace Content.Shared.CharacterAppearance
         public Color FacialHairColor { get; }
         public Color EyeColor { get; }
         public Color SkinColor { get; }
-        public List<Marking> Markings { get; }
+        public MarkingsSet Markings { get; }
 
         public HumanoidCharacterAppearance WithHairStyleName(string newName)
         {
@@ -63,7 +63,7 @@ namespace Content.Shared.CharacterAppearance
             return new(HairStyleId, HairColor, FacialHairStyleId, FacialHairColor, EyeColor, newColor, Markings);
         }
 
-        public HumanoidCharacterAppearance WithMarkings(List<Marking> newMarkings)
+        public HumanoidCharacterAppearance WithMarkings(MarkingsSet newMarkings)
         {
             return new(HairStyleId, HairColor, FacialHairStyleId, FacialHairColor, EyeColor, SkinColor, newMarkings);
         }
@@ -77,7 +77,7 @@ namespace Content.Shared.CharacterAppearance
                 Color.Black,
                 Color.Black,
                 Color.FromHex("#C0967F"),
-                new List<Marking>()
+                new MarkingsSet()
             );
         }
 
@@ -101,7 +101,7 @@ namespace Content.Shared.CharacterAppearance
                 .WithBlue(RandomizeColor(newHairColor.B));
 
             // TODO: Add random eye and skin color
-            return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, Color.Black, Color.FromHex("#C0967F"), new List<Marking>());
+            return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, Color.Black, Color.FromHex("#C0967F"), new MarkingsSet());
 
             float RandomizeColor(float channel)
             {
@@ -134,15 +134,7 @@ namespace Content.Shared.CharacterAppearance
             var eyeColor = ClampColor(appearance.EyeColor);
             var skinColor = ClampColor(appearance.SkinColor);
 
-            var markingMgr = IoCManager.Resolve<MarkingManager>();
-            List<Marking> validMarkings = new List<Marking>();
-            foreach (var marking in appearance.Markings)
-            {
-                if (markingMgr.IsValidMarking(marking, out var _))
-                {
-                    validMarkings.Add(marking);
-                }
-            }
+            var validMarkingsSet = MarkingsSet.EnsureValid(appearance.Markings);
 
             return new HumanoidCharacterAppearance(
                 hairStyleId,
@@ -151,7 +143,7 @@ namespace Content.Shared.CharacterAppearance
                 facialHairColor,
                 eyeColor,
                 skinColor,
-                validMarkings);
+                validMarkingsSet);
         }
 
         public bool MemberwiseEquals(ICharacterAppearance maybeOther)
@@ -163,7 +155,7 @@ namespace Content.Shared.CharacterAppearance
             if (!FacialHairColor.Equals(other.FacialHairColor)) return false;
             if (!EyeColor.Equals(other.EyeColor)) return false;
             if (!SkinColor.Equals(other.SkinColor)) return false;
-            if (!Markings.SequenceEqual(other.Markings)) return false;
+            if (Markings != other.Markings) return false;
             return true;
         }
     }

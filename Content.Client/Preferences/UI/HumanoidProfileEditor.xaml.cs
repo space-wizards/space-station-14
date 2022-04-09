@@ -209,7 +209,7 @@ namespace Content.Client.Preferences.UI
             // 0 is 45 - 20 - 100
             // 20 is 25 - 20 - 100
             // 100 is 25 - 100 - 20
-            _skinColor.OnValueChanged += _ => 
+            _skinColor.OnValueChanged += _ =>
             {
                 OnSkinColorOnValueChanged();
             };
@@ -479,7 +479,7 @@ namespace Content.Client.Preferences.UI
             IsDirty = false;
         }
 
-        private void OnMarkingChange(List<Marking> markings) 
+        private void OnMarkingChange(MarkingsSet markings)
         {
             if (Profile is null)
                 return;
@@ -489,7 +489,7 @@ namespace Content.Client.Preferences.UI
             IsDirty = true;
         }
 
-        private void OnMarkingColorChange(List<Marking> markings) 
+        private void OnMarkingColorChange(MarkingsSet markings)
         {
             if (Profile is null)
                 return;
@@ -510,7 +510,7 @@ namespace Content.Client.Preferences.UI
                 case SpeciesSkinColor.HumanToned:
                 {
                     var range = _skinColor.Value;
-                    if (!_skinColor.Visible) 
+                    if (!_skinColor.Visible)
                     {
                         _skinColor.Visible = true;
                         _rgbSkinColorContainer.Visible = false;
@@ -715,7 +715,7 @@ namespace Content.Client.Preferences.UI
             {
                 case SpeciesSkinColor.HumanToned:
                 {
-                    if (!_skinColor.Visible) 
+                    if (!_skinColor.Visible)
                     {
                         _skinColor.Visible = true;
                         _rgbSkinColorContainer.Visible = false;
@@ -744,7 +744,7 @@ namespace Content.Client.Preferences.UI
                         _skinColor.Visible = false;
                         _rgbSkinColorContainer.Visible = true;
                     }
-                    
+
                     // set the RGB values to the direct values otherwise
                     _rSkinColor.ColorValue = Profile.Appearance.SkinColor.RByte;
                     _gSkinColor.ColorValue = Profile.Appearance.SkinColor.GByte;
@@ -844,7 +844,7 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
-            if (_needsDummyRebuild) 
+            if (_needsDummyRebuild)
             {
                 RebuildSpriteView(); // Species change also requires sprite rebuild, so we'll do that now.
                 _needsDummyRebuild = false;

@@ -21,7 +21,7 @@ namespace Content.Client.Markings
         {
             SubscribeLocalEvent<MarkingsComponent, SharedHumanoidAppearanceSystem.ChangedHumanoidAppearanceEvent>(UpdateMarkings);
         }
-        
+
         public void ToggleMarkingVisibility(EntityUid uid, SpriteComponent body, HumanoidVisualLayers layer, bool toggle)
         {
             if(!EntityManager.TryGetComponent(uid, out MarkingsComponent? markings)) return;
@@ -31,7 +31,7 @@ namespace Content.Client.Markings
                     body.LayerSetVisible(activeMarking.MarkingId, toggle);
         }
 
-        public void SetActiveMarkings(EntityUid uid, List<Marking> markingList, MarkingsComponent? markings = null)
+        public void SetActiveMarkings(EntityUid uid, MarkingsSet markingList, MarkingsComponent? markings = null)
         {
             if (!Resolve(uid, ref markings))
             {
@@ -50,12 +50,12 @@ namespace Content.Client.Markings
                 markings.ActiveMarkings[_markingManager.Markings()[marking.MarkingId].BodyPart].Add(marking);
             }
         }
-        
+
         public void UpdateMarkings(EntityUid uid, MarkingsComponent markings, SharedHumanoidAppearanceSystem.ChangedHumanoidAppearanceEvent args)
         {
             var appearance = args.Appearance;
             if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite)) return;
-            List<Marking> totalMarkings = new(appearance.Markings);
+            MarkingsSet totalMarkings = new MarkingsSet(appearance.Markings);
 
             Dictionary<MarkingCategories, MarkingPoints> usedPoints = new();
 
@@ -65,14 +65,15 @@ namespace Content.Client.Markings
                 {
                     Points = points.Points,
                     Required = points.Required,
-                    DefaultMarkings = points.DefaultMarkings 
+                    DefaultMarkings = points.DefaultMarkings
                 };
             }
 
+            var markingsEnumerator = appearance.Markings.GetReverseEnumerator();
             // Reverse ordering
-            for (int i = appearance.Markings.Count - 1; i >= 0; i--)
+            while (markingsEnumerator.MoveNext())
             {
-                var marking = appearance.Markings[i];
+                var marking = (Marking) markingsEnumerator.Current;
                 if (!_markingManager.IsValidMarking(marking, out MarkingPrototype? markingPrototype))
                 {
                     continue;
@@ -122,7 +123,7 @@ namespace Content.Client.Markings
             // if the points are greater than zero
             //
             // if so, then we start applying default markings
-            // until the point requirement is satisfied - 
+            // until the point requirement is satisfied -
             // this can also mean that a specific set of markings
             // is applied on top of existing markings
             //
@@ -157,7 +158,7 @@ namespace Content.Client.Markings
                                 sprite.LayerSetColor(layerId, appearance.SkinColor);
                             }
 
-                            totalMarkings.Add(markingPrototype.AsMarking());
+                            totalMarkings.AddBack(markingPrototype.AsMarking());
                         }
 
                         points.Points--;
