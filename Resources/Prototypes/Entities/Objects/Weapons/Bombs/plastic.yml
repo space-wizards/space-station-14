@@ -15,6 +15,7 @@
       delayOptions: [10, 30, 60, 120, 300]
       initialBeepDelay: 0
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
+    - type: Sticky
     - type: Explosive
       explosionType: Default
       maxIntensity: 10
