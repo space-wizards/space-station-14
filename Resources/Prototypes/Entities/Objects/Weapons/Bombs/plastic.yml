@@ -1,0 +1,37 @@
+﻿- type: entity
+  name: composition C-4
+  description: Used to put holes in specific areas without too much extra hole. A saboteur's favorite.
+  parent: BaseItem
+  id: C4
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Bombs/c4.rsi
+      state: icon
+    - type: Item
+      size: 10
+      sprite: Objects/Weapons/Bombs/c4.rsi
+    - type: OnUseTimerTrigger
+      delay: 3.5
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 10
+      intensitySlope: 3
+      totalIntensity: 120 # about a ~4 tile radius
+    - type: ExplodeOnTrigger
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 10
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+    - type: Appearance
+      visuals:
+        - type: GenericEnumVisualizer
+          key: enum.Trigger.TriggerVisuals.VisualState
+          states:
+            enum.Trigger.TriggerVisualState.Primed: primed
+            enum.Trigger.TriggerVisualState.Unprimed: complete
