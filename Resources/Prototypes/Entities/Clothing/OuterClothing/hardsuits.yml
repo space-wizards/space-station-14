@@ -113,7 +113,7 @@
     lowPressureMultiplier: 100
   - type: ClothingSpeedModifier
     walkModifier: 0.75
-    sprintModifier: 0.75 #turning this up slightly because CEs have started just wearing firesuits instead and never putting on advanced armor
+    sprintModifier: 0.8 #turning this up slightly because CEs have started just wearing firesuits instead and never putting on advanced armor
   - type: Armor
     modifiers:
       coefficients:
