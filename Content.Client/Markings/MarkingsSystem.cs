@@ -57,17 +57,7 @@ namespace Content.Client.Markings
             if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite)) return;
             MarkingsSet totalMarkings = new MarkingsSet(appearance.Markings);
 
-            Dictionary<MarkingCategories, MarkingPoints> usedPoints = new();
-
-            foreach (var (category, points) in markings.LayerPoints)
-            {
-                usedPoints[category] = new MarkingPoints()
-                {
-                    Points = points.Points,
-                    Required = points.Required,
-                    DefaultMarkings = points.DefaultMarkings
-                };
-            }
+            Dictionary<MarkingCategories, MarkingPoints> usedPoints = MarkingPoints.CloneMarkingPointDictionary(markings.LayerPoints);
 
             var markingsEnumerator = appearance.Markings.GetReverseEnumerator();
             // Reverse ordering

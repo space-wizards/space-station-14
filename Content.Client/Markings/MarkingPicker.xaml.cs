@@ -66,16 +66,7 @@ namespace Content.Client.Markings
             body.TryGetComponent("Markings", out MarkingsComponent? markingsComponent);
 
             PointLimits = markingsComponent!.LayerPoints;
-
-            foreach (var (category, points) in PointLimits)
-            {
-                PointsUsed[category] = new MarkingPoints()
-                {
-                    Points = points.Points,
-                    Required = points.Required,
-                    DefaultMarkings = points.DefaultMarkings
-                };
-            }
+            PointsUsed = MarkingPoints.CloneMarkingPointDictionary(PointLimits);
 
             Populate();
             PopulateUsed();
@@ -297,16 +288,7 @@ namespace Content.Client.Markings
             body.TryGetComponent("Markings", out MarkingsComponent? markingsComponent);
 
             PointLimits = markingsComponent!.LayerPoints;
-
-            foreach (var (category, points) in PointLimits)
-            {
-                PointsUsed[category] = new MarkingPoints()
-                {
-                    Points = points.Points,
-                    Required = points.Required,
-                    DefaultMarkings = points.DefaultMarkings
-                };
-            }
+            PointsUsed = MarkingPoints.CloneMarkingPointDictionary(PointLimits);
 
             Populate();
             PopulateUsed();

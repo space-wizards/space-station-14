@@ -26,7 +26,7 @@ namespace Content.Shared.Markings
         [DataField("layerPoints")]
         public Dictionary<MarkingCategories, MarkingPoints> LayerPoints = new();
     }
-    
+
     [DataDefinition]
     public sealed class MarkingPoints
     {
@@ -37,5 +37,22 @@ namespace Content.Shared.Markings
         // Default markings for this layer.
         [DataField("defaultMarkings")]
         public List<string> DefaultMarkings = new();
+
+        public static Dictionary<MarkingCategories, MarkingPoints> CloneMarkingPointDictionary(Dictionary<MarkingCategories, MarkingPoints> self)
+        {
+            var clone = new Dictionary<MarkingCategories, MarkingPoints>();
+
+            foreach (var (category, points) in self)
+            {
+                clone[category] = new MarkingPoints()
+                {
+                    Points = points.Points,
+                    Required = points.Required,
+                    DefaultMarkings = points.DefaultMarkings
+                };
+            }
+
+            return clone;
+        }
     }
 }
