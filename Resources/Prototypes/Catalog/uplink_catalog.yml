@@ -76,13 +76,13 @@
   id: UplinkExplosiveGrenadeFlash
   category: Explosives
   itemId: GrenadeFlashBang
-  price: 4
+  price: 2
 
 - type: uplinkListing
   id: UplinkSyndieMiniBomb
   category: Explosives
   itemId: SyndieMiniBomb
-  price: 6
+  price: 7
 
 - type: uplinkListing
   id: UplinkGrenadePenguin
