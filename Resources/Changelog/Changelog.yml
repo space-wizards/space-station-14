@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed not being able to strip inventory from incapacitated entities.,
-    type: Fix}
-  id: 805
-  time: '2022-01-01T17:03:29.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'After evaluating recent agent performance, the Syndicate now considers
@@ -3023,3 +3017,9 @@ Entries:
     type: Add}
   id: 1304
   time: '2022-04-09T06:59:46.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix instruments having their MIDI program reset after the song loops.,
+    type: Fix}
+  id: 1305
+  time: '2022-04-09T11:24:34.099018+00:00'
