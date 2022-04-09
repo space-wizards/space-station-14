@@ -22,6 +22,11 @@ namespace Content.Shared.Movement.Components
         /// </summary>
         bool Sprinting { get; }
 
+        /// <summary>
+        ///     Is the entity currently weightless?
+        /// </summary>
+        bool Weightless { get; set; }
+
         Angle LastGridAngle { get; set; }
 
         /// <summary>

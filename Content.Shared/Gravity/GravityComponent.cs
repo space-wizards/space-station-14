@@ -44,15 +44,8 @@ namespace Content.Shared.Gravity
             return new GravityComponentState(_enabled);
         }
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-            if (curState is not GravityComponentState state) return;
-            Enabled = state.Enabled;
-        }
-
         [Serializable, NetSerializable]
-        private sealed class GravityComponentState : ComponentState
+        public sealed class GravityComponentState : ComponentState
         {
             public bool Enabled { get; }
 

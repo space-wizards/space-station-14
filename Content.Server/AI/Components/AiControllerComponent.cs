@@ -1,4 +1,4 @@
-﻿using Content.Server.AI.EntitySystems;
+using Content.Server.AI.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Shared.Movement.Components;
 using Content.Shared.Roles;
@@ -18,6 +18,8 @@ namespace Content.Server.AI.Components
     public class AiControllerComponent : Component, IMobMoverComponent, IMoverComponent
     {
         [DataField("logic")] private float _visionRadius = 8.0f;
+
+        public bool Weightless { get; set; } = false;
 
         // TODO: Need to ECS a lot more of the AI first before we can ECS this
         /// <summary>

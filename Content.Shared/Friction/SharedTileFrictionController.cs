@@ -1,22 +1,18 @@
-using System;
 using Content.Shared.CCVar;
+using Content.Shared.Gravity.EntitySystems;
 using Content.Shared.Movement;
-using Content.Shared.Movement.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
-
 
 namespace Content.Shared.Friction
 {
     public abstract class SharedTileFrictionController : VirtualController
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly SharedWeightlessSystem _weightSystem = default!;
 
         protected SharedMoverController Mover = default!;
 
@@ -132,20 +128,13 @@ namespace Content.Shared.Friction
         [Pure]
         private float GetTileFriction(PhysicsComponent body)
         {
-            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(body.Owner);
-            var coords = transform.Coordinates;
-
             // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
             if (body.BodyStatus == BodyStatus.InAir ||
-                body.Owner.IsWeightless(body, coords, _mapManager) ||
-                !_mapManager.TryGetGrid(transform.GridID, out var grid))
+                _weightSystem.IsWeightless(body.Owner, out var tileRef, body) ||
+                tileRef == null)
                 return 0.0f;
 
-            if (!coords.IsValid(EntityManager)) return 0.0f;
-
-            var tile = grid.GetTileRef(coords);
-            var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
-            return tileDef.Friction;
+            return _tileDefinitionManager[tileRef.Value.Tile.TypeId].Friction;
         }
     }
 }

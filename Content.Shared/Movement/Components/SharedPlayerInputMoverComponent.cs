@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.CCVar;
+using Content.Shared.Gravity.EntitySystems;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -48,6 +49,9 @@ namespace Content.Shared.Movement.Components
 
         [ViewVariables]
         public Angle LastGridAngle { get; set; } = new(0);
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Weightless { get; set; } = false;
 
         public float CurrentWalkSpeed =>
             _entityManager.TryGetComponent<MovementSpeedModifierComponent>(Owner,
@@ -200,12 +204,13 @@ namespace Content.Shared.Movement.Components
                 _heldMoveButtons = state.Buttons;
                 _lastInputTick = GameTick.Zero;
                 _lastInputSubTick = 0;
+                Weightless = state.Weightless;
             }
         }
 
         public override ComponentState GetComponentState()
         {
-            return new MoverComponentState(_heldMoveButtons);
+            return new MoverComponentState(_heldMoveButtons, Weightless);
         }
 
         /// <summary>
@@ -244,10 +249,12 @@ namespace Content.Shared.Movement.Components
         private sealed class MoverComponentState : ComponentState
         {
             public MoveButtons Buttons { get; }
+            public readonly bool Weightless;
 
-            public MoverComponentState(MoveButtons buttons)
+            public MoverComponentState(MoveButtons buttons, bool weightless)
             {
                 Buttons = buttons;
+                Weightless = weightless;
             }
         }
 

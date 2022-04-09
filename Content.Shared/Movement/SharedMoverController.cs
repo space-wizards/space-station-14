@@ -3,6 +3,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
+using Content.Shared.Gravity.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
@@ -31,6 +32,7 @@ namespace Content.Shared.Movement
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly TagSystem _tags = default!;
+        [Dependency] private readonly SharedWeightlessSystem _weightlessSystem = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -121,11 +123,10 @@ namespace Content.Shared.Movement
             }
 
             UsedMobMovement[mover.Owner] = true;
-            var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: EntityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
 
             // Handle wall-pushes.
-            if (weightless)
+            if (mover.Weightless)
             {
                 // No gravity: is our entity touching anything?
                 var touching = IsAroundCollider(_physics, xform, mobMover, physicsComponent);
@@ -151,7 +152,7 @@ namespace Content.Shared.Movement
 
             DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));
 
-            if (weightless)
+            if (mover.Weightless)
                 worldTotal *= mobMover.WeightlessStrength;
 
             if (xform.GridID != GridId.Invalid)

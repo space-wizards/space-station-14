@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Clothing.Components;
 using Content.Shared.Alert;
 using Content.Shared.Clothing;
+using Content.Shared.Gravity.EntitySystems;
 using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Clothing
@@ -9,6 +10,7 @@ namespace Content.Server.Clothing
     public sealed class MagbootsSystem : SharedMagbootsSystem
     {
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly SharedWeightlessSystem _weightlessSystem = default!;
 
         public override void Initialize()
         {
@@ -37,6 +39,8 @@ namespace Content.Server.Clothing
             {
                 _alertsSystem.ClearAlert(parent, AlertType.Magboots);
             }
+
+            _weightlessSystem.UpdateMoverWeightlessness(parent);
         }
 
         private void OnGotUnequipped(EntityUid uid, MagbootsComponent component, GotUnequippedEvent args)

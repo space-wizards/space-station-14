@@ -1,17 +1,15 @@
-using System.Collections.Generic;
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;
 using Content.Shared.Gravity;
+using Content.Shared.Gravity.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Gravity.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class WeightlessSystem : EntitySystem
+    public sealed class WeightlessSystem : SharedWeightlessSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
