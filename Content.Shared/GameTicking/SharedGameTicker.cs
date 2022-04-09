@@ -114,11 +114,13 @@ namespace Content.Shared.GameTicking
         /// </summary>
         public Dictionary<StationId, Dictionary<string, int>> JobsAvailableByStation { get; }
         public Dictionary<StationId, string> StationNames { get; }
+        public bool PurchaseAvailable { get; }
 
-        public TickerJobsAvailableEvent(Dictionary<StationId, string> stationNames, Dictionary<StationId, Dictionary<string, int>> jobsAvailableByStation)
+        public TickerJobsAvailableEvent(Dictionary<StationId, string> stationNames, Dictionary<StationId, Dictionary<string, int>> jobsAvailableByStation, bool purchaseAvailable)
         {
             StationNames = stationNames;
             JobsAvailableByStation = jobsAvailableByStation;
+            PurchaseAvailable = purchaseAvailable;
         }
     }
 

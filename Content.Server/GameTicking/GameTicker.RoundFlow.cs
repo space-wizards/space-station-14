@@ -7,6 +7,7 @@ using Content.Server.Mind;
 using Content.Server.OuterRim.Worldgen.Systems.Overworld;
 using Content.Server.Players;
 using Content.Server.Station;
+using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
@@ -14,6 +15,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Station;
 using Prometheus;
 using Robust.Server.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -37,6 +39,7 @@ namespace Content.Server.GameTicking
         private int _roundStartFailCount = 0;
 #endif
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IConsoleHost _consoleHost = default!;
         [Dependency] private readonly WorldChunkSystem _world = default!;
 
         [ViewVariables]
@@ -67,97 +70,127 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         public int RoundId { get; private set; }
 
+        private void InitializeRoundFlow()
+        {
+            _consoleHost.RegisterCommand("purchaseship", String.Empty, String.Empty, PurchaseShipCommand);
+        }
+
+        [AnyCommand]
+        private void PurchaseShipCommand(IConsoleShell shell, string argstr, string[] args)
+        {
+            if (PurchaseAvailable())
+            {
+                LoadGameMap(_gameMapManager.GetSelectedMapChecked(true, true));
+            }
+        }
+
         private void LoadMaps()
         {
             AddGamePresetRules();
 
             DefaultMap = _mapManager.CreateMap();
             _mapManager.AddUninitializedMap(DefaultMap);
+
+            _world.WorldMap = DefaultMap;
+            _world.ForceEmptyChunk(Vector2i.One); // Spawn area.
+
             var startTime = _gameTiming.RealTime;
-            var maps = new List<GameMapPrototype>() { _gameMapManager.GetSelectedMapChecked(true, true) };
+            var maps = new List<GameMapPrototype>() { };
+
+            if (!LobbyEnabled)
+                maps.Add(_gameMapManager.GetSelectedMapChecked(true, true));
 
             // Let game rules dictate what maps we should load.
             RaiseLocalEvent(new LoadingMapsEvent(maps));
 
             foreach (var map in maps)
             {
-                var toLoad = DefaultMap;
-                if (maps[0] != map)
-                {
-                    // Create other maps for the others since we need to.
-                    toLoad = _mapManager.CreateMap();
-                    _mapManager.AddUninitializedMap(toLoad);
-                }
-
-                _mapLoader.LoadMap(toLoad, map.MapPath.ToString());
-
-                var grids = _mapManager.GetAllMapGrids(toLoad).ToList();
-                var dict = new Dictionary<string, StationId>();
-
-                StationId SetupInitialStation(IMapGrid grid, GameMapPrototype map)
-                {
-                    var stationId = _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
-                    SetupGridStation(grid);
-
-                    // ass!
-                    _spawnPoint = grid.ToCoordinates();
-                    return stationId;
-                }
-
-                // Iterate over all BecomesStation
-                for (var i = 0; i < grids.Count; i++)
-                {
-                    var grid = grids[i];
-
-                    // We still setup the grid
-                    if (!TryComp<BecomesStationComponent>(grid.GridEntityId, out var becomesStation))
-                        continue;
-
-                    var stationId = SetupInitialStation(grid, map);
-
-                    dict.Add(becomesStation.Id, stationId);
-                }
-
-                if (!dict.Any())
-                {
-                    // Oh jeez, no stations got loaded.
-                    // We'll just take the first grid and setup that, then.
-
-                    var grid = grids[0];
-                    var stationId = SetupInitialStation(grid, map);
-
-                    dict.Add("Station", stationId);
-                }
-
-                // Iterate over all PartOfStation
-                for (var i = 0; i < grids.Count; i++)
-                {
-                    var grid = grids[i];
-                    if (!TryComp<PartOfStationComponent>(grid.GridEntityId, out var partOfStation))
-                        continue;
-                    SetupGridStation(grid);
-
-                    if (dict.TryGetValue(partOfStation.Id, out var stationId))
-                    {
-                        _stationSystem.AddGridToStation(grid.GridEntityId, stationId);
-                    }
-                    else
-                    {
-                        _sawmill.Error($"Grid {grid.Index} ({grid.GridEntityId}) specified that it was part of station {partOfStation.Id} which does not exist");
-                    }
-                }
+                LoadGameMap(map);
             }
-
-            _world.WorldMap = DefaultMap;
-            _world.ForceEmptyChunk(Vector2i.Zero); // Spawn area.
 
             var timeSpan = _gameTiming.RealTime - startTime;
             _sawmill.Info($"Loaded maps in {timeSpan.TotalMilliseconds:N2}ms.");
         }
 
-        private void SetupGridStation(IMapGrid grid)
-        {
+        private HashSet<GridId> LoadedGrids = new HashSet<GridId>();
 
+        public void LoadGameMap(GameMapPrototype map)
+        {
+            var location = _world.GetChunkWorldCoords(_robustRandom.Pick(_world.SafeSpawnLocations));
+
+            var toLoad = DefaultMap;
+
+            _mapLoader.LoadMap(toLoad, map.MapPath.ToString());
+
+            var grids = _mapManager.GetAllMapGrids(toLoad).Where(x => !LoadedGrids.Contains(x.Index)).ToList();
+            foreach (var grid in grids)
+            {
+                Transform(grid.GridEntityId).Coordinates.Offset(location);
+            }
+            var dict = new Dictionary<string, StationId>();
+
+            StationId SetupInitialStation(IMapGrid grid, GameMapPrototype map)
+            {
+                var stationId = _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
+
+                // ass!
+                _spawnPoint = grid.ToCoordinates();
+                return stationId;
+            }
+
+            // Iterate over all BecomesStation
+            for (var i = 0; i < grids.Count; i++)
+            {
+                var grid = grids[i];
+
+                // We still setup the grid
+                if (!TryComp<BecomesStationComponent>(grid.GridEntityId, out var becomesStation))
+                    continue;
+
+                var stationId = SetupInitialStation(grid, map);
+
+                dict.Add(becomesStation.Id, stationId);
+            }
+
+            if (!dict.Any())
+            {
+                // Oh jeez, no stations got loaded.
+                // We'll just take the first grid and setup that, then.
+
+                var grid = grids[0];
+                var stationId = SetupInitialStation(grid, map);
+
+                dict.Add("Station", stationId);
+            }
+
+            // Iterate over all PartOfStation
+            for (var i = 0; i < grids.Count; i++)
+            {
+                var grid = grids[i];
+
+                LoadedGrids.Add(grid.Index);
+
+                if (!TryComp<PartOfStationComponent>(grid.GridEntityId, out var partOfStation))
+                    continue;
+
+                if (dict.TryGetValue(partOfStation.Id, out var stationId))
+                {
+                    _stationSystem.AddGridToStation(grid.GridEntityId, stationId);
+                }
+                else
+                {
+                    _sawmill.Error($"Grid {grid.Index} ({grid.GridEntityId}) specified that it was part of station {partOfStation.Id} which does not exist");
+                }
+
+
+            }
+
+
+        }
+
+        public bool PurchaseAvailable()
+        {
+            return _stationSystem.StationInfo.Values.Any(x => ((float)x.CurrentJobs / x.TotalJobs) <= 0.20) || _stationSystem.StationInfo.Count == 0;
         }
 
         public void StartRound(bool force = false)

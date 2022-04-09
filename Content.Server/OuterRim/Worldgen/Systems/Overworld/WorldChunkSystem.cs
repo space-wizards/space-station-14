@@ -13,7 +13,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.OuterRim.Worldgen.Systems.Overworld;
 
-public partial class WorldChunkSystem : EntitySystem
+public sealed partial class WorldChunkSystem : EntitySystem
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PoissonDiskSampler _sampler = default!;
@@ -30,6 +30,8 @@ public partial class WorldChunkSystem : EntitySystem
     private readonly Queue<Vector2i> _loadQueue = new();
     private readonly Queue<Vector2i> _unloadQueue = new();
     private HashSet<Vector2i> _currLoaded = new();
+    private HashSet<Vector2i> _safeSpawnLocations = new();
+    public IReadOnlySet<Vector2i> SafeSpawnLocations => _safeSpawnLocations;
     private float _frameAccumulator = 0.0f;
 
     // CVar replicas
@@ -92,6 +94,7 @@ public partial class WorldChunkSystem : EntitySystem
         _loadQueue.Clear();
         _unloadQueue.Clear();
         _currLoaded.Clear();
+        _safeSpawnLocations.Clear();
         ResetNoise();
     }
 
@@ -145,6 +148,11 @@ public partial class WorldChunkSystem : EntitySystem
             }
         }
     }
+
+    public Vector2 GetChunkWorldCoords(Vector2i chunk)
+    {
+        return chunk * ChunkSize;
+    }
 }
 
 public struct WorldChunk
@@ -153,7 +161,7 @@ public struct WorldChunk
     public BiomePrototype Biome;
 }
 
-public class DebrisData
+public sealed class DebrisData
 {
     public DebrisPrototype? Kind;
     public MapCoordinates Coords;

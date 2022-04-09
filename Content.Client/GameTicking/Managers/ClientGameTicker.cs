@@ -25,6 +25,7 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] private bool _initialized;
         private Dictionary<StationId, Dictionary<string, int>>  _jobsAvailable = new();
         private Dictionary<StationId, string> _stationNames = new();
+        public bool PurchaseAvailable { get; private set; } = false;
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
@@ -76,6 +77,7 @@ namespace Content.Client.GameTicking.Managers
         {
             _jobsAvailable = message.JobsAvailableByStation;
             _stationNames = message.StationNames;
+            PurchaseAvailable = message.PurchaseAvailable;
             LobbyJobsAvailableUpdated?.Invoke(JobsAvailable);
         }
 

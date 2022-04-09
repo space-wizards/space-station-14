@@ -54,6 +54,7 @@ namespace Content.Server.GameTicking
             InitializeGamePreset();
             InitializeJobController();
             InitializeUpdates();
+            InitializeRoundFlow();
 
             _initialized = true;
         }

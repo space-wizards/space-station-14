@@ -53,6 +53,8 @@ public sealed class StationSystem : EntitySystem
         /// </summary>
         public readonly GameMapPrototype MapPrototype;
 
+        public readonly int TotalJobs;
+
         /// <summary>
         /// The round job list.
         /// </summary>
@@ -60,11 +62,14 @@ public sealed class StationSystem : EntitySystem
 
         public IReadOnlyDictionary<string, int> JobList => _jobList;
 
+        public int CurrentJobs => JobList.Values.Where(x => x > 0).Sum();
+
         public StationInfoData(string name, GameMapPrototype mapPrototype, Dictionary<string, int> jobList)
         {
             Name = name;
             MapPrototype = mapPrototype;
             _jobList = jobList;
+            TotalJobs = CurrentJobs;
         }
 
         public bool TryAssignJob(string jobName)

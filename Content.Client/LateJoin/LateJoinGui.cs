@@ -33,6 +33,7 @@ namespace Content.Client.LateJoin
         private readonly List<ScrollContainer> _jobLists = new();
 
         private readonly Control _base;
+        private readonly Button _purchaseShip = new() {Text = "Purchase new vessel"};
 
         public LateJoinGui()
         {
@@ -61,17 +62,25 @@ namespace Content.Client.LateJoin
                 Close();
             };
 
+            _purchaseShip.OnPressed += _ =>
+            {
+                _consoleHost.ExecuteCommand("purchaseship");
+            };
+
             gameTicker.LobbyJobsAvailableUpdated += JobsAvailableUpdated;
         }
 
         private void RebuildUI()
         {
             _base.RemoveAllChildren();
+            _base.AddChild(_purchaseShip);
+
             _jobLists.Clear();
             _jobButtons.Clear();
             _jobCategories.Clear();
 
             var gameTicker = EntitySystem.Get<ClientGameTicker>();
+            _purchaseShip.Disabled = !gameTicker.PurchaseAvailable;
             foreach (var (id, name) in gameTicker.StationNames)
             {
                 var jobList = new BoxContainer

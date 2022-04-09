@@ -25,6 +25,7 @@ public partial class WorldChunkSystem
             Debris = new HashSet<DebrisData>(),
             Biome = SelectBiome(chunk),
         };
+        _safeSpawnLocations.Add(chunk);
     }
 
     public void ForceSpawnChunk(Vector2i chunk)
@@ -91,13 +92,11 @@ public partial class WorldChunkSystem
     {
         if (ShouldClipChunk(chunk))
         {
-            Logger.DebugS("worldgen", $"Clipped chunk {chunk}");
             ForceEmptyChunk(chunk);
             return;
         }
 
         var density = GetChunkDensity(chunk);
-        Logger.DebugS("worldgen", $"Made chunk {chunk} w/ density {density}.");
         var offs = (int)((ChunkSize - (density / 2)) / 2);
         var center = chunk * ChunkSize;
         var topLeft = (-offs, -offs);

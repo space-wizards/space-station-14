@@ -174,7 +174,7 @@ namespace Content.Server.GameTicking
         {
             // If late join is disallowed, return no available jobs.
             if (DisallowLateJoin)
-                return new TickerJobsAvailableEvent(new Dictionary<StationId, string>(), new Dictionary<StationId, Dictionary<string, int>>());
+                return new TickerJobsAvailableEvent(new Dictionary<StationId, string>(), new Dictionary<StationId, Dictionary<string, int>>(), PurchaseAvailable());
 
             var jobs = new Dictionary<StationId, Dictionary<string, int>>();
             var stationNames = new Dictionary<StationId, string>();
@@ -185,7 +185,7 @@ namespace Content.Server.GameTicking
                 jobs.Add(id, list);
                 stationNames.Add(id, station.Name);
             }
-            return new TickerJobsAvailableEvent(stationNames, jobs);
+            return new TickerJobsAvailableEvent(stationNames, jobs, PurchaseAvailable());
         }
 
         public void UpdateJobsAvailable()
