@@ -18,6 +18,8 @@
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
       startOnStick: true
     - type: Sticky
+      stickPopupStart: comp-sticky-start-stick-bomb
+      stickPopupSuccess: comp-sticky-success-stick-bomb
     - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
       explosionType: Default
       maxIntensity: 300

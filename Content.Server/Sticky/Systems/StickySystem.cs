@@ -30,7 +30,11 @@ public sealed class StickySystem : EntitySystem
             return;
 
         // show message to user
-        _popupSystem.PopupEntity("You start planting the bomb...", args.User, Filter.Entities(args.User));
+        if (component.StickPopupStart != null)
+        {
+            var msg = Loc.GetString(component.StickPopupStart);
+            _popupSystem.PopupEntity(msg, args.User, Filter.Entities(args.User));
+        }
 
         // start sticking object to target
         var delay = (float) component.Delay.TotalSeconds;
@@ -56,13 +60,20 @@ public sealed class StickySystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        // add container to entity and insert sticker into it
         var container = _containerSystem.EnsureContainer<Container>(target, StickerSlotId);
         container.ShowContents = true;
         if (!container.Insert(uid))
             return;
 
-        _popupSystem.PopupEntity("You planted the bomb", user, Filter.Entities(user));
+        // show message to user
+        if (component.StickPopupSuccess != null)
+        {
+            var msg = Loc.GetString(component.StickPopupSuccess);
+            _popupSystem.PopupEntity(msg, user, Filter.Entities(user));
+        }
 
+        // change sprite draw depth to show entity as overlay
         if (TryComp(uid, out SpriteComponent? sprite))
         {
             sprite.DrawDepth = component.StuckDrawDepth;

@@ -22,4 +22,16 @@ public sealed class StickyComponent : Component
     /// </summary>
     [DataField("stuckDrawDepth")]
     public int StuckDrawDepth = (int) DrawDepth.Overdoors;
+
+    /// <summary>
+    ///     Popup message shown when player started sticking entity to another entity.
+    /// </summary>
+    [DataField("stickPopupStart")]
+    public string? StickPopupStart;
+
+    /// <summary>
+    ///     Popup message shown when player successfully stuck entity.
+    /// </summary>
+    [DataField("stickPopupSuccess")]
+    public string? StickPopupSuccess;
 }
