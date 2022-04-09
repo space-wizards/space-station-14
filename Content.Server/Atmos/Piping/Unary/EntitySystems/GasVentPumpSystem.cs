@@ -216,6 +216,5 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 appearance.SetData(VentPumpVisuals.State, VentPumpState.Welded);
             }
         }
-
     }
 }
