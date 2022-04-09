@@ -1,5 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Damage;
+using Robust.Shared.Containers;
 using System.Threading;
 
 namespace Content.Server.Dragon
@@ -7,6 +9,18 @@ namespace Content.Server.Dragon
     [RegisterComponent]
     public sealed class DragonComponent : Component
     {
+        /// <summary>
+        /// The chemical ID injected upon devouring
+        /// </summary>
+        [DataField("devourChemical")]
+        public string DevourChem = "Ichor";
+
+        /// <summary>
+        /// The amount of ichor injected per devour
+        /// </summary>
+        [DataField("devourHealRate")]
+        public float DevourHealRate = 15f;
+
         /// <summary>
         /// Defines the devour action
         /// </summary>
@@ -24,6 +38,11 @@ namespace Content.Server.Dragon
 
         //Token for interrupting the action
         public CancellationTokenSource? CancelToken;
+
+        /// <summary>
+        /// Where the entities go when dragon devours them, ruptures when the dragon is dead.
+        /// </summary>
+        public Container DragonStomach = default!;
     }
 
     public sealed class DevourActionEvent : PerformEntityTargetActionEvent

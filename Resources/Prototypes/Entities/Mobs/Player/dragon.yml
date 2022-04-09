@@ -58,6 +58,19 @@
       450: !type:CriticalMobState {}
       500: !type:DeadMobState {}
   - type: SolutionContainerManager
+  - type: Metabolizer
+    solutionOnBody: false
+    updateFrequency: 0.25
+    metabolizerTypes: [Dragon]
+    groups:
+    - id: Medicine
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
   - type: Bloodstream
     bloodlossDamage:
       types:
@@ -66,7 +79,7 @@
     bloodlossHealDamage:
       types:
         Bloodloss:
-          -0.25
+          -1
   - type: MovementIgnoreGravity
   - type: Appearance
     visuals:
@@ -76,7 +89,7 @@
       dead: dead
   - type: Butcherable
     spawned: FoodMeatDragon
-    pieces: 2
+    pieces: 6
   - type: UnarmedCombat
     range: 0.8
     arcwidth: 2
@@ -90,8 +103,10 @@
      icon: Interface/Actions/devour.png
      name: action-name-devour
      description: action-description-devour
+     devourChemical: Ichor
+     devourHealRate: 15.0
      whitelist:
        components:
-       - HumanoidAppearance
+       - MobState
        - Tag
   

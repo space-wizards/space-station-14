@@ -200,19 +200,27 @@
   name: dragon flesh
   parent: FoodMeatBase
   id: FoodMeatDragon
-  description: The dense meat of the space-era apex predator is oozing with it's mythical blood. Ironically, best eaten raw.
+  description: The dense meat of the space-era apex predator is oozing with it's mythical ichor. Ironically, best eaten raw.
   components:
   - type: Tag
     tags:
     - Raw
   - type: Sprite
-    state: dragon
+    layers:
+    - state: dragon
+    - state: dragon_veins
+      shader: unshaded
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
-        - ReagentId: Omnizine
-          Quantity: 5
+        - ReagentId: Ichor
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Ichor
+        Quantity: 2
 
 - type: entity
   name: raw lizard meat

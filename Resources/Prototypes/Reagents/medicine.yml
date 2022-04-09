@@ -461,7 +461,7 @@
       - !type:SatiateHunger
         factor: -1
 
-# Should heal quite literally everything
+  # Should heal quite literally everything, use in very small amounts
 - type: reagent
   id: Omnizine
   name: Omnizine
@@ -480,6 +480,11 @@
             Airloss: -2
             Brute: -2
             Radiation: -2
+          types:
+            Bloodloss: -2
+            Poison: -2
+            Radiation: -2
+            Asphyxiation: -2
 
 - type: reagent
   id: Ultravasculine
@@ -522,3 +527,4 @@
           min: 1
         reagent: Ultravasculine
         amount: 0.5
+
