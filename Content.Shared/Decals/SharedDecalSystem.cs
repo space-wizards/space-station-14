@@ -18,23 +18,23 @@ namespace Content.Shared.Decals
         public const int ChunkSize = 32;
         public static Vector2i GetChunkIndices(Vector2 coordinates) => new ((int) Math.Floor(coordinates.X / ChunkSize), (int) Math.Floor(coordinates.Y / ChunkSize));
 
-        private Vector2 _viewSize;
+        private float _viewSize;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
-            _configurationManager.OnValueChanged(CVars.NetDefaultUpdateRange, OnPvsRangeChanged, true);
+            _configurationManager.OnValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged, true);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
-            _configurationManager.UnsubValueChanged(CVars.NetDefaultUpdateRange, OnPvsRangeChanged);
+            _configurationManager.UnsubValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged);
         }
 
-        private void OnPvsRangeChanged(Vector2 obj)
+        private void OnPvsRangeChanged(float obj)
         {
             _viewSize = obj * 2f;
         }
