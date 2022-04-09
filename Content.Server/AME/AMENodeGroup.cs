@@ -162,22 +162,21 @@ namespace Content.Server.AME
         {
             if(_cores.Count < 1 || MasterController == null) { return; }
 
-            var intensity = 0;
+            float radius = 0;
 
             /*
              * todo: add an exact to the shielding and make this find the core closest to the controller
              * so they chain explode, after helpers have been added to make it not cancer
             */
-            var epicenter = _cores.First();
 
             foreach (AMEShieldComponent core in _cores)
             {
-                intensity += MasterController.InjectionAmount;
+                radius += MasterController.InjectionAmount;
             }
 
-            intensity = Math.Min(intensity, 8);
-
-            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(epicenter.Owner, intensity / 2, intensity, intensity * 2, intensity * 3);
+            radius *= 2;
+            radius = Math.Min(radius, 8);
+            EntitySystem.Get<ExplosionSystem>().TriggerExplosive(MasterController.Owner, radius: radius, delete: false);
         }
     }
 }

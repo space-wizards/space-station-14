@@ -32,9 +32,8 @@ namespace Content.Shared.StatusEffect
             base.Update(frameTime);
 
             var curTime = _gameTiming.CurTime;
-            foreach (var status in EntityManager.EntityQuery<StatusEffectsComponent>(false))
+            foreach (var (_, status) in EntityManager.EntityQuery<ActiveStatusEffectsComponent, StatusEffectsComponent>())
             {
-                if (status.ActiveEffects.Count == 0) continue;
                 foreach (var state in status.ActiveEffects.ToArray())
                 {
                     // if we're past the end point of the effect
@@ -48,7 +47,9 @@ namespace Content.Shared.StatusEffect
 
         private void OnGetState(EntityUid uid, StatusEffectsComponent component, ref ComponentGetState args)
         {
-            args.State = new StatusEffectsComponentState(component.ActiveEffects, component.AllowedEffects);
+            // Using new(...) To avoid mispredictions due to MergeImplicitData. This will mean the server-side code is
+            // slightly slower, and really this function should just be overridden by the client...
+            args.State = new StatusEffectsComponentState(new(component.ActiveEffects), new(component.AllowedEffects));
         }
 
         private void OnHandleState(EntityUid uid, StatusEffectsComponent component, ref ComponentHandleState args)
@@ -77,8 +78,8 @@ namespace Content.Shared.StatusEffect
                 }
 
                 var time = effect.Value.Cooldown.Item2 - effect.Value.Cooldown.Item1;
-                //TODO: Not sure how to handle refresh here.
-                TryAddStatusEffect(uid, effect.Key, time, true);
+
+                TryAddStatusEffect(uid, effect.Key, time, true, component);
             }
         }
 
@@ -188,6 +189,7 @@ namespace Content.Shared.StatusEffect
             else
             {
                 status.ActiveEffects.Add(key, new StatusEffectState(cooldown, refresh, null));
+                EnsureComp<ActiveStatusEffectsComponent>(uid);
             }
 
             if (proto.Alert != null)
@@ -269,6 +271,10 @@ namespace Content.Shared.StatusEffect
             }
 
             status.ActiveEffects.Remove(key);
+            if (status.ActiveEffects.Count == 0)
+            {
+                RemComp<ActiveStatusEffectsComponent>(uid);
+            }
 
             Dirty(status);
             // event?

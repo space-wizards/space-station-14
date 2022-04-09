@@ -19,7 +19,8 @@ namespace Content.Server.Entry
             "ItemCabinetVisuals",
             "DiseaseMachineVisuals",
             "HandheldGPS",
-            "PotencyVisuals"
+            "PotencyVisuals",
+            "PaperVisuals"
         };
     }
 }

@@ -11,7 +11,7 @@ namespace Content.Shared.Weapons.Melee
     public sealed class MeleeWeaponAnimationPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables]

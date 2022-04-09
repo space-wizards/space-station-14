@@ -21,6 +21,7 @@ using Content.Server.UserInterface;
 using Robust.Shared.Player;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Storage;
+using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -75,16 +76,13 @@ namespace Content.Server.Drone
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)
         {
-            if (args.IsInDetailsRange)
+            if (TryComp<MindComponent>(uid, out var mind) && mind.HasMind)
             {
-                if (TryComp<MindComponent>(uid, out var mind) && mind.HasMind)
-                {
-                    args.PushMarkup(Loc.GetString("drone-active"));
-                }
-                else
-                {
-                    args.PushMarkup(Loc.GetString("drone-dormant"));
-                }
+                args.PushMarkup(Loc.GetString("drone-active"));
+            }
+            else
+            {
+                args.PushMarkup(Loc.GetString("drone-dormant"));
             }
         }
 
@@ -175,7 +173,7 @@ namespace Content.Server.Drone
         private bool NonDronesInRange(EntityUid uid, DroneComponent component)
         {
             var xform = Comp<TransformComponent>(uid);
-            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, component.InteractionBlockRange))
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, component.InteractionBlockRange))
             {
                 if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
                 {

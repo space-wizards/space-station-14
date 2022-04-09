@@ -1,44 +1,32 @@
-using System;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Systems;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Chemistry.Components;
 using Content.Server.Fluids.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Kitchen.Components;
-using Content.Server.Plants;
 using Content.Server.Popups;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Botany;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Botany.Components
 {
     [RegisterComponent]
 #pragma warning disable 618
-    public sealed class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IExamine
+    public sealed class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate
 #pragma warning restore 618
     {
         public const float HydroponicsSpeedMultiplier = 1f;
@@ -51,7 +39,7 @@ namespace Content.Server.Botany.Components
 
         [ViewVariables] private int _lastProduce;
 
-        [ViewVariables(VVAccess.ReadWrite)] private int _missingGas;
+        [ViewVariables(VVAccess.ReadWrite)] public int MissingGas;
 
         private readonly TimeSpan _cycleDelay = TimeSpan.FromSeconds(15f);
 
@@ -255,22 +243,22 @@ namespace Content.Server.Botany.Components
 
             if (Seed.ConsumeGasses.Count > 0)
             {
-                _missingGas = 0;
+                MissingGas = 0;
 
                 foreach (var (gas, amount) in Seed.ConsumeGasses)
                 {
                     if (environment.GetMoles(gas) < amount)
                     {
-                        _missingGas++;
+                        MissingGas++;
                         continue;
                     }
 
                     environment.AdjustMoles(gas, -amount);
                 }
 
-                if (_missingGas > 0)
+                if (MissingGas > 0)
                 {
-                    Health -= _missingGas * HydroponicsSpeedMultiplier;
+                    Health -= MissingGas * HydroponicsSpeedMultiplier;
                     if (DrawWarnings)
                         _updateSpriteAfterUpdate = true;
                 }
@@ -631,7 +619,7 @@ namespace Content.Server.Botany.Components
             appearanceComponent.SetData(PlantHolderVisuals.NutritionLight, NutritionLevel <= 2);
             appearanceComponent.SetData(PlantHolderVisuals.AlertLight,
                 WeedLevel >= 5 || PestLevel >= 5 || Toxins >= 40 || ImproperHeat || ImproperLight || ImproperPressure ||
-                _missingGas > 0);
+                MissingGas > 0);
             appearanceComponent.SetData(PlantHolderVisuals.HarvestLight, Harvest);
         }
 
@@ -846,66 +834,6 @@ namespace Content.Server.Botany.Components
         {
             // DoHarvest does the sanity checks.
             DoHarvest(eventArgs.User);
-        }
-
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            if (!inDetailsRange)
-                return;
-
-            if (Seed == null)
-            {
-                message.AddMarkup(Loc.GetString("plant-holder-component-nothing-planted-message") + "\n");
-            }
-            else if (!Dead)
-            {
-                message.AddMarkup(Loc.GetString("plant-holder-component-something-already-growing-message",
-                                      ("seedName", Seed.DisplayName),
-                                      ("toBeForm", Seed.DisplayName.EndsWith('s') ? "are" : "is"))
-                                  + "\n");
-
-                if (Health <= Seed.Endurance / 2)
-                    message.AddMarkup(Loc.GetString(
-                                          "plant-holder-component-something-already-growing-low-health-message",
-                                          ("healthState",
-                                              Loc.GetString(Age > Seed.Lifespan
-                                                  ? "plant-holder-component-plant-old-adjective"
-                                                  : "plant-holder-component-plant-unhealthy-adjective")))
-                                      + "\n");
-            }
-            else
-            {
-                message.AddMarkup(Loc.GetString("plant-holder-component-dead-plant-matter-message") + "\n");
-            }
-
-            if (WeedLevel >= 5)
-                message.AddMarkup(Loc.GetString("plant-holder-component-weed-high-level-message") + "\n");
-
-            if (PestLevel >= 5)
-                message.AddMarkup(Loc.GetString("plant-holder-component-pest-high-level-message") + "\n");
-
-            message.AddMarkup(Loc.GetString($"plant-holder-component-water-level-message",
-                ("waterLevel", (int) WaterLevel)) + "\n");
-            message.AddMarkup(Loc.GetString($"plant-holder-component-nutrient-level-message",
-                ("nutritionLevel", (int) NutritionLevel)) + "\n");
-
-            if (DrawWarnings)
-            {
-                if (Toxins > 40f)
-                    message.AddMarkup(Loc.GetString("plant-holder-component-toxins-high-warning") + "\n");
-
-                if (ImproperLight)
-                    message.AddMarkup(Loc.GetString("plant-holder-component-light-improper-warning") + "\n");
-
-                if (ImproperHeat)
-                    message.AddMarkup(Loc.GetString("plant-holder-component-heat-improper-warning") + "\n");
-
-                if (ImproperPressure)
-                    message.AddMarkup(Loc.GetString("plant-holder-component-pressure-improper-warning") + "\n");
-
-                if (_missingGas > 0)
-                    message.AddMarkup(Loc.GetString("plant-holder-component-gas-missing-warning") + "\n");
-            }
         }
     }
 }

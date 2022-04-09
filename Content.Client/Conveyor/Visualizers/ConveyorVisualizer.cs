@@ -34,7 +34,7 @@ namespace Content.Client.Conveyor.Visualizers
                 {
                     ConveyorState.Off => _stateStopped,
                     ConveyorState.Forward => _stateRunning,
-                    ConveyorState.Reversed => _stateReversed,
+                    ConveyorState.Reverse => _stateReversed,
                     _ => throw new ArgumentOutOfRangeException()
                 };
 

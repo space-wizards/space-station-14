@@ -40,6 +40,12 @@ namespace Content.IntegrationTests.Tests.Body
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
   - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 1.5
+    damageRecovery:
+      types:
+        Asphyxiation: -1.5
 ";
 
         [Test]

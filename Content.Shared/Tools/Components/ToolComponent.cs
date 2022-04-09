@@ -1,14 +1,9 @@
 using Content.Shared.Sound;
-using Content.Shared.Tools;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Tools.Components
+namespace Content.Shared.Tools.Components
 {
-    [RegisterComponent, Friend(typeof(ToolSystem))]
+    [RegisterComponent] // TODO move tool system to shared, and make it a friend.
     public sealed class ToolComponent : Component
     {
         [DataField("qualities")]

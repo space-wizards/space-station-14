@@ -92,11 +92,11 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9 #higher physical protections than atmo but less enviro 
+        Blunt: 0.9 #higher physical protections than atmo but less enviro
         Slash: 0.85
         Piercing: 0.9
         Heat: 0.85
-        Radiation: 0.35 
+        Radiation: 0.35
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -140,7 +140,7 @@
     sprintModifier: 0.8
 
 - type: entity
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterEVASuitBase
   id:  ClothingOuterHardsuitEVA
   name: EVA suit
   description: A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies.
@@ -149,17 +149,11 @@
     sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
-  - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
-  - type: PressureProtection
-    highPressureMultiplier: 1
-    lowPressureMultiplier: 100
 
 # Moved to hardsuits because this is where EVA capable suits are apparently.
 # Same stats as normal EVA suit.
 - type: entity
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitSyndicate
   name: syndicate EVA suit
   description: "Has a tag on it 'Totally not property of an enemy corporation, honest!'"
@@ -168,15 +162,9 @@
     sprite: Clothing/OuterClothing/Suits/syndicate.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/syndicate.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 1
-    lowPressureMultiplier: 100
-  - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
 
 - type: entity
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterEVASuitBase
   id:  ClothingOuterHardsuitEVAPrisoner
   name: prisoner EVA suit
   description: A lightweight space suit for prisoners to protect them from the vacuum of space during emergencies.
@@ -185,9 +173,6 @@
     sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 1
-    lowPressureMultiplier: 100
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -302,9 +287,9 @@
         Blunt: 0.7 #slightly higher than sec hardsuit
         Slash: 0.75
         Piercing: 0.7
-        Heat: 0.8 
+        Heat: 0.8
         Radiation: 0.25
-        
+
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSyndie
