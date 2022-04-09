@@ -11,7 +11,7 @@ namespace Content.Shared.Markings
     [Prototype("marking")]
     public sealed class MarkingPrototype : IPrototype
     {
-        [DataField("id", required: true)]
+        [IdDataField]
         public string ID { get; } = "uwu";
 
         public string Name { get; private set; } = default!;
