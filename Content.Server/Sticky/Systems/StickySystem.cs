@@ -1,6 +1,7 @@
 ﻿using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.Sticky.Components;
+using Content.Server.Sticky.Events;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -41,6 +42,8 @@ public sealed class StickySystem : EntitySystem
             BreakOnUserMove = true,
             NeedHand = true
         });
+
+        args.Handled = true;
     }
 
     private void OnStickSuccessful(StickySuccessfulEvent ev)
@@ -59,11 +62,13 @@ public sealed class StickySystem : EntitySystem
             return;
 
         _popupSystem.PopupEntity("You planted the bomb", user, Filter.Entities(user));
-        
+
         if (TryComp(uid, out SpriteComponent? sprite))
         {
-            sprite.DrawDepth = component.StickedDrawDepth;
+            sprite.DrawDepth = component.StuckDrawDepth;
         }
+
+        RaiseLocalEvent(uid, new EntityStuckEvent(user));
     }
 
     private sealed class StickySuccessfulEvent : EntityEventArgs

@@ -17,9 +17,9 @@ public sealed class StickyComponent : Component
     public TimeSpan Delay = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    ///     What sprite draw depth set when entity sticked.
+    ///     What sprite draw depth set when entity stuck.
     ///     Work only when Sprite <see cref="SpriteComponent.NetSyncEnabled"/> is true.
     /// </summary>
-    [DataField("stickedDrawDepth")]
-    public int StickedDrawDepth = (int) DrawDepth.Overdoors;
+    [DataField("stuckDrawDepth")]
+    public int StuckDrawDepth = (int) DrawDepth.Overdoors;
 }
