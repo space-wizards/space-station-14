@@ -13,12 +13,14 @@ public abstract class SharedWeightlessSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
+    /// <summary>
+    ///     List of mover-entities on a given grid. Required when the grid gains or looses gravity.
+    /// </summary>
     public Dictionary<GridId, HashSet<EntityUid>> GridMovers = new();
 
     public override void Initialize()
     {
         base.Initialize();
-
 
         SubscribeLocalEvent<MovementIgnoreGravityComponent, ComponentStartup>(OnIgnoreStartup);
         SubscribeLocalEvent<MovementIgnoreGravityComponent, ComponentShutdown>(OnIgnoreShutdown);
