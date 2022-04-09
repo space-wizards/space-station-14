@@ -6,7 +6,12 @@ using Content.Shared.Movement.EntitySystems;
 using Content.Server.Speech.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Damage;
+using Robust.Shared.Localization;
 using Content.Shared.MobState.Components;
+using Content.Server.Body.Systems;
+using Content.Server.Popups;
+using Content.Shared.Chemistry.Components;
+using Content.Server.Chemistry.EntitySystems;
 
 namespace Content.Server.Disease
 {
@@ -16,9 +21,12 @@ namespace Content.Server.Disease
     public sealed class DiseaseZombieSystem : EntitySystem
     {
         [Dependency] private readonly DiseaseSystem _disease = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -34,10 +42,11 @@ namespace Content.Server.Disease
         {
             if (!component.ApplyZombieTraits)
                 return;
-
+            
+            uid.popupSystem(Loc.GetString("zombie-transform"));
             _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
             EntityManager.EnsureComponent<DamageableComponent>(uid, out var damageable);
-            _damageableSystem.SetAllDamage(damageable, 0);
+            _damageable.SetAllDamage(damageable, 0);
 
             EntityManager.EnsureComponent<ReplacementAccentComponent>(uid).Accent = "zombie";
 
@@ -51,7 +60,7 @@ namespace Content.Server.Disease
 
             EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid, out var ghostcomp);
             ghostcomp.RoleName = metacomp.EntityName;
-            ghostcomp.RoleDescription = "A malevolent creature of the dead."; //TODO: loc strings?.
+            ghostcomp.RoleDescription = "A malevolent creature of the dead."; //TODO: loc string
             ghostcomp.RoleRules = "An evil zombie.";
         }
 
@@ -65,7 +74,7 @@ namespace Content.Server.Disease
 
             foreach (EntityUid entity in args.HitEntities)
             {
-                if (uid != entity)
+                if (entity == uid || HasComp<DiseaseZombieComponent>(entity))
                     continue;
 
                 if (HasComp<DiseaseCarrierComponent>(entity)) //can only infect disease carrying entities. TODO: make it work for all mobs.
@@ -73,19 +82,22 @@ namespace Content.Server.Disease
                     if (_robustRandom.Prob(component.Probability))
                     {
                         _disease.TryAddDisease(entity, "ZombieInfection");
-
-                        if (!EntityManager.TryGetComponent<MobStateComponent>(entity, out var mobState)) //this is fine
-                            return;
-
-                        if (mobState.IsDead() || mobState.IsCritical()) //dead entities are eautomatically infected
-                        {
-                            EntityManager.EnsureComponent<DiseaseZombieComponent>(entity);
-                        }
-                        else if (mobState.IsAlive()) //heals when zombies bite live entities
-                        {
-                            //_damageableSystem.TryChangeDamage(uid, , true, false);
-                        }
                     }
+
+                    EntityManager.EnsureComponent<MobStateComponent>(entity, out var mobState);
+
+                    if (mobState.IsDead() || mobState.IsCritical()) //dead entities are eautomatically infected
+                    {
+                        EntityManager.EnsureComponent<DiseaseZombieComponent>(entity);
+                    }
+                    else if (mobState.IsAlive()) //heals when zombies bite live entities
+                    {
+                        var healingSolution = new Solution();
+                        healingSolution.AddReagent("Bicaridine", 1.00);
+                        _bloodstream.TryAddToChemicals(uid, healingSolution);
+                    }
+
+                    
                 }
             }
         }

@@ -22,7 +22,6 @@
   id: ZombieInfection
   name: Zombie Infection #This is the incubation period of the zombie disease.
   infectious: false
-  cureResist: 0
   effects:
     - !type:DiseaseHealthChange
       probability: 0.05

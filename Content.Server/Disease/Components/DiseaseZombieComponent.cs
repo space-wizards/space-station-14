@@ -26,5 +26,8 @@ namespace Content.Server.Disease.Components
         /// </summary>
         [DataField("applyZombieTraits")]
         public bool ApplyZombieTraits = true;
+
+        [DataField("test")]
+        public bool Test = false;
     }
 }
