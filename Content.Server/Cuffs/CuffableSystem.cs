@@ -2,7 +2,7 @@ using Content.Server.Cuffs.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Cuffs;
-using Content.Shared.Hands.Components;
+using Content.Shared.Hands;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;

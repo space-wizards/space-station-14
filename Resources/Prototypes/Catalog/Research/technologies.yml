@@ -98,6 +98,8 @@
     - Syringe
     - ReagentGrinderMachineCircuitboard
     - PillCanister
+    - TimerTrigger
+    - ChemicalPayload
 
 - type: technology
   name: "medical machinery"
@@ -116,6 +118,8 @@
     - ChemMasterMachineCircuitboard
     - ChemDispenserMachineCircuitboard
     - CrewMonitoringComputerCircuitboard
+    - VaccinatorMachineCircuitboard
+    - DiagnoserMachineCircuitboard
     - HandheldCrewMonitor
 
 # Security Technology Tree
@@ -317,8 +321,30 @@
     - APCElectronics
     - SMESMachineCircuitboard
     - SubstationMachineCircuitboard
+    - WallmountSubstationElectronics
+    - WallmountGeneratorElectronics
+    - WallmountGeneratorAPUElectronics
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
+    - GeneratorPlasmaMachineCircuitboard
+    - GeneratorUraniumMachineCircuitboard
+    
+- type: technology
+  name: "compact power technology"
+  id: CompactPowerTechnology
+  description: Power, but smaller.
+  icon:
+    sprite: Structures/Power/apc.rsi
+    state: apc0
+  requiredPoints: 5000
+  requiredTechnologies:
+    - ElectromagneticTheory
+  unlockedRecipes:
+    - WallmountSubstationElectronics
+    - WallmountGeneratorElectronics
+    - WallmountGeneratorAPUElectronics
+    - GeneratorPlasmaMachineCircuitboard
+    - GeneratorUraniumMachineCircuitboard
 
 - type: technology
   name: "applied musicology"

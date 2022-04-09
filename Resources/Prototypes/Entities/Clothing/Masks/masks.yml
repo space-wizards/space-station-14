@@ -10,6 +10,8 @@
     sprite: Clothing/Mask/gas.rsi
   - type: BreathMask
   - type: IngestionBlocker
+  - type: DiseaseProtection
+    protection: 0.05
 
 - type: entity
   parent: ClothingMaskBase
@@ -23,6 +25,8 @@
     sprite: Clothing/Mask/breath.rsi
   - type: BreathMask
   - type: IngestionBlocker
+  - type: DiseaseProtection
+    protection: 0.05
 
 - type: entity
   parent: ClothingMaskBase
@@ -72,6 +76,8 @@
     sprite: Clothing/Mask/sterile.rsi
   - type: BreathMask
   - type: IngestionBlocker
+  - type: DiseaseProtection
+    protection: 0.1
 
 - type: entity
   parent: ClothingMaskBase
@@ -87,3 +93,18 @@
     - type: AddAccentClothing
       accent: ReplacementAccent
       replacement: mumble
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskPlague
+  name: plague doctor mask
+  description: A bad omen.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/plaguedoctormask.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/plaguedoctormask.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: DiseaseProtection
+    protection: 0.1

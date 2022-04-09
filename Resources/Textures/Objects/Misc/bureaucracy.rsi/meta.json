@@ -175,6 +175,9 @@
       "name": "paper_stamp-warden"
     },
     {
+      "name": "paper_stamp-generic"
+    },
+    {
       "name": "paper_talisman"
     },
     {
@@ -221,6 +224,9 @@
     },
     {
       "name": "pen"
+    },
+	{
+      "name": "overpriced_pen"
     },
     {
       "name": "pen_blue"

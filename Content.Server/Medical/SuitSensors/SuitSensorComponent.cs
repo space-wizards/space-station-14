@@ -40,10 +40,10 @@ namespace Content.Server.Medical.SuitSensors
         public string ActivationSlot = "jumpsuit";
 
         /// <summary>
-        ///     How often does sensor update its owners status (in seconds).
+        ///     How often does sensor update its owners status (in seconds). Limited by the system update rate.
         /// </summary>
         [DataField("updateRate")]
-        public float UpdateRate = 2f;
+        public TimeSpan UpdateRate = TimeSpan.FromSeconds(2f);
 
         /// <summary>
         ///     Current user that wears suit sensor. Null if nobody wearing it.

@@ -1,6 +1,6 @@
 ﻿- type: entity
   parent: MobHuman
-  abstract: True
+  abstract: true
   id: BaseVox
   components:
   - type: Icon
@@ -111,4 +111,6 @@
     speciesId: vox
   - type: Butcherable
     butcheringType: Spike
-    spawned: FoodMeatChicken
+    spawned:
+    - id: FoodMeatChicken
+      amount: 5

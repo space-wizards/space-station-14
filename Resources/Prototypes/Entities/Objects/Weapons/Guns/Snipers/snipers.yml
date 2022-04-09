@@ -37,7 +37,7 @@
   name: Kardashev-Mosin
   parent: SniperBase
   id: SniperBoltGun
-  description: Weapon for hunting, or endless trench warfare.
+  description: A weapon for hunting, or endless trench warfare.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
@@ -53,7 +53,7 @@
   name: Kardashev-Mosin
   parent: SniperBase
   id: SniperBoltGunWood
-  description: Weapon for hunting, or endless trench warfare.
+  description: A weapon for hunting, or endless trench warfare.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi

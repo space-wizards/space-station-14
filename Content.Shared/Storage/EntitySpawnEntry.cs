@@ -1,0 +1,132 @@
+﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
+namespace Content.Shared.Storage;
+
+/// <summary>
+///     Dictates a list of items that can be spawned.
+/// </summary>
+[Serializable]
+[DataDefinition]
+public struct EntitySpawnEntry : IPopulateDefaultValues
+{
+    [DataField("id", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string PrototypeId;
+
+    /// <summary>
+    ///     The probability that an item will spawn. Takes decimal form so 0.05 is 5%, 0.50 is 50% etc.
+    /// </summary>
+    [DataField("prob")] public float SpawnProbability;
+
+    /// <summary>
+    ///     orGroup signifies to pick between entities designated with an ID.
+    ///     <example>
+    ///         <para>
+    ///             To define an orGroup in a StorageFill component you
+    ///             need to add it to the entities you want to choose between and
+    ///             add a prob field. In this example there is a 50% chance the storage
+    ///             spawns with Y or Z.
+    ///         </para>
+    ///         <code>
+    /// - type: StorageFill
+    ///   contents:
+    ///     - name: X
+    ///     - name: Y
+    ///       prob: 0.50
+    ///       orGroup: YOrZ
+    ///     - name: Z
+    ///       orGroup: YOrZ
+    /// </code>
+    ///     </example>
+    /// </summary>
+    [DataField("orGroup")] public string? GroupId;
+
+    [DataField("amount")] public int Amount;
+
+    public void PopulateDefaultValues()
+    {
+        Amount = 1;
+        SpawnProbability = 1;
+    }
+}
+
+public static class EntitySpawnCollection
+{
+    private sealed class OrGroup
+    {
+        public List<EntitySpawnEntry> Entries { get; set; } = new();
+        public float CumulativeProbability { get; set; } = 0f;
+    }
+
+    /// <summary>
+    ///     Using a collection of entity spawn entries, picks a random list of entity prototypes to spawn from that collection.
+    /// </summary>
+    /// <remarks>
+    ///     This does not spawn the entities. The caller is responsible for doing so, since it may want to do something
+    ///     special to those entities (offset them, insert them into storage, etc)
+    /// </remarks>
+    /// <param name="entries">The entity spawn entries.</param>
+    /// <param name="random">Resolve param.</param>
+    /// <returns>A list of entity prototypes that should be spawned.</returns>
+    public static List<string> GetSpawns(IEnumerable<EntitySpawnEntry> entries,
+        IRobustRandom? random = null)
+    {
+        IoCManager.Resolve(ref random);
+
+        var spawned = new List<string>();
+        var orGroupedSpawns = new Dictionary<string, OrGroup>();
+
+        // collect groups together, create singular items that pass probability
+        foreach (var entry in entries)
+        {
+            // Handle "Or" groups
+            if (!string.IsNullOrEmpty(entry.GroupId))
+            {
+                if (!orGroupedSpawns.TryGetValue(entry.GroupId, out OrGroup? orGroup))
+                {
+                    orGroup = new();
+                    orGroupedSpawns.Add(entry.GroupId, orGroup);
+                }
+
+                orGroup.Entries.Add(entry);
+                orGroup.CumulativeProbability += entry.SpawnProbability;
+                continue;
+            }
+
+            // else
+            // Check random spawn
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (entry.SpawnProbability != 1f && !random.Prob(entry.SpawnProbability)) continue;
+
+            for (var i = 0; i < entry.Amount; i++)
+            {
+                spawned.Add(entry.PrototypeId);
+            }
+        }
+
+        // handle orgroup spawns
+        foreach (var spawnValue in orGroupedSpawns.Values)
+        {
+            // For each group use the added cumulative probability to roll a double in that range
+            double diceRoll = random.NextDouble() * spawnValue.CumulativeProbability;
+            // Add the entry's spawn probability to this value, if equals or lower, spawn item, otherwise continue to next item.
+            var cumulative = 0.0;
+            foreach (var entry in spawnValue.Entries)
+            {
+                cumulative += entry.SpawnProbability;
+                if (diceRoll > cumulative) continue;
+                // Dice roll succeeded, add item and break loop
+                for (var index = 0; index < entry.Amount; index++)
+                {
+                    spawned.Add(entry.PrototypeId);
+                }
+
+                break;
+            }
+        }
+
+        return spawned;
+    }
+}

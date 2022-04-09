@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Net;
 using System.Text.Json;
 using Content.Shared.Database;
@@ -22,6 +23,7 @@ namespace Content.Server.Database
         public DbSet<Admin> Admin { get; set; } = null!;
         public DbSet<AdminRank> AdminRank { get; set; } = null!;
         public DbSet<Round> Round { get; set; } = null!;
+        public DbSet<Server> Server { get; set; } = null!;
         public DbSet<AdminLog> AdminLog { get; set; } = null!;
         public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
         public DbSet<Whitelist> Whitelist { get; set; } = null!;
@@ -31,6 +33,7 @@ namespace Content.Server.Database
         public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
         public DbSet<ServerRoleBan> RoleBan { get; set; } = default!;
         public DbSet<ServerRoleUnban> RoleUnban { get; set; } = default!;
+        public DbSet<UploadedResourceLog> UploadedResourceLog { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -138,6 +141,11 @@ namespace Content.Server.Database
             modelBuilder.Entity<ConnectionLog>()
                 .HasIndex(p => p.UserId);
         }
+
+        public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
+        {
+            return query.Where(log => EF.Functions.Like(log.Message, "%" + searchText + "%"));
+        }
     }
 
     public class Preference
@@ -242,6 +250,8 @@ namespace Content.Server.Database
         // Data that changes with each round
         public List<Round> Rounds { get; set; } = null!;
         public List<AdminLogPlayer> AdminLogs { get; set; } = null!;
+
+        public DateTime? LastReadRules { get; set; }
     }
 
     [Table("whitelist")]
@@ -296,6 +306,20 @@ namespace Content.Server.Database
         public List<Player> Players { get; set; } = default!;
 
         public List<AdminLog> AdminLogs { get; set; } = default!;
+
+        [ForeignKey("Server")] public int ServerId { get; set; }
+        public Server Server { get; set; } = default!;
+    }
+
+    public class Server
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public string Name { get; set; } = default!;
+
+        [InverseProperty(nameof(Round.Server))]
+        public List<Round> Rounds { get; set; } = default!;
     }
 
     [Index(nameof(Type))]
@@ -438,5 +462,20 @@ namespace Content.Server.Database
         public Guid? UnbanningAdmin { get; set; }
 
         public DateTime UnbanTime { get; set; }
+    }
+
+    [Table("uploaded_resource_log")]
+    public sealed class UploadedResourceLog
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public Guid UserId { get; set; }
+
+        public string Path { get; set; } = string.Empty;
+
+        public byte[] Data { get; set; } = default!;
     }
 }

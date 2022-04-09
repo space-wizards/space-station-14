@@ -25,6 +25,15 @@
   description: A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
   price: 8
 
+# Poor accuracy, slow to fire, cheap option
+- type: uplinkListing
+  id: UplinkRifleMosin
+  category: Weapons
+  itemId: SniperBoltGunWood
+  listingName: Surplus Rifle
+  description: A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
+  price: 4
+
 #- type: uplinkListing
 #  id: UplinkCrossbowEnergyMini
 #  category: Weapons
@@ -75,6 +84,12 @@
   itemId: SyndieMiniBomb
   price: 6
 
+- type: uplinkListing
+  id: UplinkGrenadePenguin
+  category: Explosives
+  itemId: MobGrenadePenguin
+  price: 6
+
 #- type: uplinkListing
 #  id: UplinkExplosiveC4
 #  category: Weapons
@@ -110,6 +125,15 @@
   price: 2
   icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl.rsi/icon.png
 
+# For the mosin
+- type: uplinkListing
+  id: UplinkMosinAmmo
+  category: Ammo
+  itemId: BoxBulletLRifleSmall
+  description: A box of bullets for the surplus rifle.
+  price: 2
+
+
 #Utility
 
 - type: uplinkListing
@@ -125,9 +149,16 @@
   id: UplinkEmag
   category: Utility
   itemId: Emag
-  description: This sequencer, or "emag", can be used to open or hack a huge variety of items around the station.
+  description: The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
   icon: /Textures/Objects/Tools/emag.rsi/icon.png
   price: 8
+
+- type: uplinkListing
+  id: UplinkHypopen
+  category: Utility
+  itemId: Hypopen
+  description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
+  price: 4
 
 # Bundles
 
@@ -190,7 +221,7 @@
   id: UplinkCarpDehydrated
   category: Tools
   itemId: DehydratedSpaceCarp
-  price: 5
+  price: 3
 
 # Armor
 
@@ -212,16 +243,25 @@
 - type: uplinkListing
   id: UplinkHardsuitSyndie
   category: Armor
-  itemId: ClothingOuterHardsuitSyndie
-  price: 5
+  itemId: ClothingBackpackDuffelSyndicateHardsuitBundle
+  description: The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
+  price: 8
 
 - type: uplinkListing
-  id: UplinkHardsuitSyndieHelmet
+  id: UplinkEVASyndie
   category: Armor
-  itemId: ClothingHeadHelmetHardsuitSyndie
-  price: 5
+  itemId: BoxSyndicateEVA
+  description: A simple EVA suit that offers no protection other than what's needed to survive in space.
+  price: 4
 
 # Misc
+
+- type: uplinkListing
+  id: UplinkCyberpen
+  category: Misc
+  itemId: CyberPen
+  description: Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
+  price: 4
 
 - type: uplinkListing
   id: UplinkBalloon
@@ -242,12 +282,6 @@
   category: Misc
   itemId: RevolverCapGun
   price: 4
-
-- type: uplinkListing
-  id: UplinkPen
-  category: Misc
-  itemId: Pen
-  price: 2
 
 - type: uplinkListing
   id: UplinkCigarettes
@@ -284,3 +318,18 @@
   category: Misc
   itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
   price: 4
+
+- type: uplinkListing
+  id: UplinkGigacancerScanner
+  category: Misc
+  itemId: HandheldHealthAnalyzerGigacancer
+  listingName: Ultragigacancer Health Analyzer
+  description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
+  price: 5
+
+- type: uplinkListing
+  id: UplinkNocturineChemistryBottle
+  category: Misc
+  itemId: NocturineChemistryBottle
+  description: A chemical that makes it very hard for your target to stand up.
+  price: 5

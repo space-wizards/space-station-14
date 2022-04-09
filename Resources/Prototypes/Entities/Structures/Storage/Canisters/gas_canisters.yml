@@ -391,7 +391,7 @@
   parent: GasCanisterBrokenBase
   id: StorageCanisterBroken
   name: broken storage canister
-  abstract: true
+  noSpawn: true
   components:
     - type: Sprite
       state: yellow-1
@@ -400,7 +400,7 @@
   parent: GasCanisterBrokenBase
   id: AirCanisterBroken
   name: broken air canister
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     state: grey-1
@@ -409,7 +409,7 @@
   parent: GasCanisterBrokenBase
   id: OxygenCanisterBroken
   name: broken oxygen canister
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     state: blue-1
@@ -418,7 +418,7 @@
   parent: GasCanisterBrokenBase
   id: NitrogenCanisterBroken
   name: broken nitrogen canister
-  abstract: true
+  noSpawn: true
   components:
     - type: Sprite
       state: red-1
@@ -427,7 +427,7 @@
   parent: GasCanisterBrokenBase
   id: CarbonDioxideCanisterBroken
   name: broken carbon dioxide canister
-  abstract: true
+  noSpawn: true
   components:
     - type: Sprite
       state: black-1
@@ -436,7 +436,7 @@
   parent: GasCanisterBrokenBase
   id: PlasmaCanisterBroken
   name: broken plasma canister
-  abstract: true
+  noSpawn: true
   components:
     - type: Sprite
       state: orange-1
@@ -445,7 +445,7 @@
   parent: GasCanisterBrokenBase
   id: TritiumCanisterBroken
   name: broken tritium canister
-  abstract: true
+  noSpawn: true
   components:
     - type: Sprite
       state: green-1
@@ -454,7 +454,7 @@
   parent: GasCanisterBrokenBase
   id: WaterVaporCanisterBroken
   name: broken water vapor canister
-  abstract: true
+  noSpawn: true
   components:
     - type: Sprite
       state: water_vapor-1

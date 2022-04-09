@@ -15,7 +15,7 @@ namespace Content.Shared.Body.Prototypes
     public sealed class BodyPresetPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("partIDs")]

@@ -32,14 +32,6 @@
     energy: 0.8
     softness: 1
     offset: "0, -0.5"
-  - type: SignalReceiver
-    inputs:
-      - name: state
-        type: bool
-  - type: UserInterface
-    interfaces:
-      - key: enum.SignalReceiverUiKey.Key
-        type: SignalPortSelectorBoundUserInterface
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -84,11 +76,12 @@
     bulb: Tube
     damage:
       types:
-        Heat: 20
+        Heat: 5
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
-  - type: DeviceNetworkComponent
+  - type: DeviceNetwork
     deviceNetId: Apc
+    receiveFrequencyId: SmartLight
   - type: ApcNetworkConnection
   - type: Appearance
     visuals:
@@ -108,7 +101,7 @@
     hasLampOnSpawn: LightTube
     damage:
       types:
-        Heat: 20
+        Heat: 5
 
 - type: entity
   id: PoweredlightLED
@@ -120,7 +113,7 @@
     hasLampOnSpawn: LedLightTube
     damage:
       types:
-        Heat: 20
+        Heat: 5
      
 - type: entity
   parent: WallLight
@@ -132,7 +125,7 @@
     energy: 2.5
     softness: 0.9
     color: "#EEEEFF"
-        
+
 - type: entity
   id: PoweredlightExterior
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
@@ -143,7 +136,7 @@
     hasLampOnSpawn: ExteriorLightTube
     damage:
       types:
-        Heat: 20
+        Heat: 5
         
 - type: entity
   parent: WallLight
@@ -155,7 +148,7 @@
     energy: 4.5
     softness: 0.5
     color: "#B4FCF0"
-        
+
 
 - type: entity
   id: PoweredlightSodium
@@ -167,7 +160,7 @@
     hasLampOnSpawn: SodiumLightTube
     damage:
       types:
-        Heat: 20
+        Heat: 5
         
 - type: entity
   parent: WallLight
@@ -250,11 +243,12 @@
     bulb: Bulb
     damage:
       types:
-        Heat: 20
+        Heat: 5
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
-  - type: DeviceNetworkComponent
+  - type: DeviceNetwork
     deviceNetId: Apc
+    receiveFrequencyId: SmartLight
   - type: ApcNetworkConnection
   - type: Appearance
     visuals:
@@ -271,4 +265,4 @@
     hasLampOnSpawn: LightBulb
     damage:
       types:
-        Heat: 20
+        Heat: 5

@@ -4,6 +4,7 @@ using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
 using Content.Shared.Flash;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
@@ -40,12 +41,18 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<FlashableComponent, ComponentStartup>(OnFlashableStartup);
             SubscribeLocalEvent<FlashableComponent, ComponentShutdown>(OnFlashableShutdown);
             SubscribeLocalEvent<FlashableComponent, MetaFlagRemoveAttemptEvent>(OnMetaFlagRemoval);
+            SubscribeLocalEvent<FlashableComponent, PlayerAttachedEvent>(OnPlayerAttached);
+        }
+
+        private void OnPlayerAttached(EntityUid uid, FlashableComponent component, PlayerAttachedEvent args)
+        {
+            Dirty(component);
         }
 
         private void OnMetaFlagRemoval(EntityUid uid, FlashableComponent component, ref MetaFlagRemoveAttemptEvent args)
         {
             if (component.LifeStage == ComponentLifeStage.Running)
-                args.Cancelled = true;
+                args.ToRemove &= ~MetaDataFlags.EntitySpecific;
         }
 
         private void OnFlashableStartup(EntityUid uid, FlashableComponent component, ComponentStartup args)

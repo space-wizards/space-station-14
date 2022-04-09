@@ -18,7 +18,7 @@ namespace Content.Shared.Cargo
         [DataField("description")] private string _description = string.Empty;
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>
