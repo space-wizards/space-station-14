@@ -18,6 +18,17 @@ namespace Content.Shared.ActionBlocker
     [UsedImplicitly]
     public sealed class ActionBlockerSystem : EntitySystem
     {
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<IMoverComponent, ComponentStartup>(OnMoverStartup);
+        }
+
+        private void OnMoverStartup(EntityUid uid, IMoverComponent component, ComponentStartup args)
+        {
+            UpdateCanMove(uid, component);
+        }
+
         public bool CanMove(EntityUid uid, IMoverComponent? component = null)
         {
             return Resolve(uid, ref component, false) && component.CanMove;

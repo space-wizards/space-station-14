@@ -126,12 +126,6 @@ namespace Content.Shared.Movement.Components
             LastGridAngle = _entityManager.GetComponent<TransformComponent>(Owner).Parent?.WorldRotation ?? new Angle(0);
         }
 
-        protected override void Startup()
-        {
-            base.Startup();
-            EntitySystem.Get<ActionBlockerSystem>().UpdateCanMove(Owner, this);
-        }
-
         /// <summary>
         ///     Toggles one of the four cardinal directions. Each of the four directions are
         ///     composed into a single direction vector, <see cref="VelocityDir"/>. Enabling

@@ -71,7 +71,6 @@ namespace Content.Server.AI.Components
 
                 var startingGear = protoManager.Index<StartingGearPrototype>(StartingGearPrototype);
                 gameTicker.EquipStartingGear(Owner, startingGear, null);
-                EntitySystem.Get<ActionBlockerSystem>().UpdateCanMove(Owner, this);
             }
         }
 
