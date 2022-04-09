@@ -41,13 +41,12 @@ namespace Content.Client.Markings
         private ItemList.Item? _selectedMarking;
         private ItemList.Item? _selectedUnusedMarking;
         private MarkingCategories _selectedMarkingCategory = MarkingCategories.Chest;
-        // private List<Marking> _usedMarkingList = new();
 
         private MarkingsSet _currentMarkings = new();
 
         private List<MarkingCategories> _markingCategories = Enum.GetValues<MarkingCategories>().ToList();
 
-        private string _currentSpecies = SpeciesManager.DefaultSpecies; // mmmmm
+        private string _currentSpecies = SpeciesManager.DefaultSpecies;
 
         public void SetData(MarkingsSet newMarkings, string species)
         {
@@ -137,7 +136,6 @@ namespace Content.Client.Markings
             foreach (var marking in markings[_selectedMarkingCategory])
             {
                 if (_currentMarkings.Contains(marking.AsMarking())) continue;
-                // if (_usedMarkingList.Contains(marking.AsMarking())) continue;
                 if (marking.SpeciesRestrictions != null && !marking.SpeciesRestrictions.Contains(_currentSpecies)) continue;
                 var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", marking.Sprites[0].Frame0());
                 item.Metadata = marking;
@@ -223,75 +221,6 @@ namespace Content.Client.Markings
 
             // since all the points have been processed, update the points visually
             UpdatePoints();
-
-            /*
-            // MarkingSet.EnsureValid_currentMarkings.
-
-            bool isDirty = false;
-            for (var i = 0; i < _usedMarkingList.Count; i++)
-            {
-                var marking = _usedMarkingList[i];
-                if (_markingManager.IsValidMarking(marking, out MarkingPrototype? newMarking))
-                {
-                    if (newMarking.SpeciesRestrictions != null && !newMarking.SpeciesRestrictions.Contains(_currentSpecies))
-                    {
-                        _usedMarkingList.RemoveAt(i);
-                        isDirty = true;
-                        i--;
-
-                        continue;
-                    }
-
-                    if (PointsUsed.TryGetValue(newMarking.MarkingCategory, out var points))
-                    {
-                        if (points.Points == 0)
-                        {
-                            continue;
-                        }
-
-                        points.Points--;
-                    }
-
-                    var _item = new ItemList.Item(CMarkingsUsed)
-                    {
-                        Text = Loc.GetString("marking-used", ("marking-name", $"{GetMarkingName(newMarking)}"), ("marking-category", Loc.GetString($"markings-category-{newMarking.MarkingCategory}"))),
-                        Icon = newMarking.Sprites[0].Frame0(),
-                        Selectable = true,
-                        Metadata = newMarking,
-                        IconModulate = marking.MarkingColors[0]
-                    };
-                    CMarkingsUsed.Insert(0, _item);
-
-                    if (marking.MarkingColors.Count != _usedMarkingList[i].MarkingColors.Count)
-                    {
-                        _usedMarkingList[i] = new Marking(marking.MarkingId, marking.MarkingColors);
-                    }
-
-                    foreach (var unusedMarking in CMarkingsUnused)
-                    {
-                        if (unusedMarking.Metadata == newMarking)
-                        {
-                            CMarkingsUnused.Remove(unusedMarking);
-                            break;
-                        }
-                    }
-
-                }
-                else
-                {
-                    _usedMarkingList.RemoveAt(i);
-                    isDirty = true;
-                    i--;
-                }
-            }
-
-            if (isDirty)
-            {
-                OnMarkingRemoved?.Invoke(_usedMarkingList);
-            }
-
-            UpdatePoints();
-            */
         }
 
         private void SwapMarkingUp()
@@ -348,14 +277,6 @@ namespace Content.Client.Markings
                 default:
                     break;
             }
-
-            /*
-            var backingSrc = _usedMarkingList.Count - 1 - src; // what it actually needs to be
-            var backingDest = backingSrc - places;
-            var backingTemp = _usedMarkingList[backingDest];
-            _usedMarkingList[backingDest] = _usedMarkingList[backingSrc];
-            _usedMarkingList[backingSrc] = backingTemp;
-            */
 
             return true;
         }
@@ -477,7 +398,7 @@ namespace Content.Client.Markings
         {
             if (_selectedMarking is null) return;
             var markingPrototype = (MarkingPrototype) _selectedMarking.Metadata!;
-            int markingIndex = _currentMarkings.FindIndexOf(markingPrototype.ID); // (m => m.MarkingId == markingPrototype.ID);
+            int markingIndex = _currentMarkings.FindIndexOf(markingPrototype.ID);
 
             if (markingIndex < 0) return;
 
@@ -504,7 +425,6 @@ namespace Content.Client.Markings
 
             UpdatePoints();
 
-            // _usedMarkingList.Add(marking.AsMarking());
             _currentMarkings.AddBack(marking.AsMarking());
 
             CMarkingsUnused.Remove(_selectedUnusedMarking);
@@ -534,7 +454,6 @@ namespace Content.Client.Markings
 
             UpdatePoints();
 
-            // _usedMarkingList.Remove(marking.AsMarking());
             _currentMarkings.Remove(marking.AsMarking());
             CMarkingsUsed.Remove(_selectedMarking);
 
