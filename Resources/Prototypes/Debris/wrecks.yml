@@ -18,6 +18,9 @@
         - id: SalvageCanisterSpawner
           prob: 0.05
           orGroup: Debris
+        - id: RandomArtifactSpawner
+          prob: 0.005
+          orGroup: Debris
       plating:
         - id: WallSolid
           prob: 0.3
@@ -28,12 +31,18 @@
         - id: SalvageCanisterSpawner
           prob: 0.05
           orGroup: Debris
+        - id: RandomArtifactSpawner
+          prob: 0.005
+          orGroup: Debris
       lattice:
         - id: SalvageMaterialCrateSpawner
           prob: 0.05
           orGroup: Debris
         - id: SalvageCanisterSpawner
           prob: 0.025
+          orGroup: Debris
+        - id: RandomArtifactSpawner
+          prob: 0.005
           orGroup: Debris
         - id: Grille
           prob: 0.3
@@ -60,6 +69,9 @@
         - id: SalvageCanisterSpawner
           prob: 0.05
           orGroup: Debris
+        - id: RandomArtifactSpawner
+          prob: 0.005
+          orGroup: Debris
       plating:
         - id: WallSolid
           prob: 0.3
@@ -70,12 +82,18 @@
         - id: SalvageCanisterSpawner
           prob: 0.05
           orGroup: Debris
+        - id: RandomArtifactSpawner
+          prob: 0.005
+          orGroup: Debris
       lattice:
         - id: SalvageMaterialCrateSpawner
           prob: 0.05
           orGroup: Debris
         - id: SalvageCanisterSpawner
           prob: 0.025
+          orGroup: Debris
+        - id: RandomArtifactSpawner
+          prob: 0.005
           orGroup: Debris
         - id: Grille
           prob: 0.3
