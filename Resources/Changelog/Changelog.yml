@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Substations now explode when damaged enough and produce debris. Watch
-      out!, type: Fix}
-  id: 803
-  time: '2022-01-01T16:51:57.0000000+00:00'
 - author: Rane
   changes:
   - {message: The Syndicate is now interested in a wider variety of items spread between
@@ -3030,3 +3024,8 @@ Entries:
       or lockers to stamp papers., type: Add}
   id: 1302
   time: '2022-04-08T23:37:22.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Added directional arrows to crew monitors., type: Add}
+  id: 1303
+  time: '2022-04-09T01:50:59.0000000+00:00'
