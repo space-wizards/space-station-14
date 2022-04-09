@@ -81,7 +81,7 @@
 
 - type: entity
   name: Syndicate minibomb
-  description: Creates a small but powerful explosion that is strong enough to break through walls.
+  description: A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
   parent: BaseItem
   id: SyndieMiniBomb
   components:
@@ -96,9 +96,9 @@
     delay: 10
   - type: Explosive
     explosionType: Default
-    totalIntensity: 350
-    intensitySlope: 50 #Will destroy less than 3x3, slightly random depending on where it landed
-    maxIntensity: 100
+    totalIntensity: 200
+    intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
+    maxIntensity: 60
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic
