@@ -17,11 +17,12 @@
       initialBeepDelay: 0
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
     - type: Sticky
-    - type: Explosive
+    - type: Explosive # Powerful explosion in a very small radius. Doesn't create vacuum.
       explosionType: Default
-      maxIntensity: 10
-      intensitySlope: 3
-      totalIntensity: 120 # about a ~4 tile radius
+      maxIntensity: 300
+      intensitySlope: 100
+      totalIntensity: 300
+      canCreateVacuum: false
     - type: ExplodeOnTrigger
     - type: Damageable
       damageContainer: Inorganic
