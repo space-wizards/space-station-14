@@ -156,7 +156,7 @@ namespace Content.Shared.CharacterAppearance
             if (!FacialHairColor.Equals(other.FacialHairColor)) return false;
             if (!EyeColor.Equals(other.EyeColor)) return false;
             if (!SkinColor.Equals(other.SkinColor)) return false;
-            if (Markings != other.Markings) return false;
+            if (!Markings.Equals(other.Markings)) return false;
             return true;
         }
     }
