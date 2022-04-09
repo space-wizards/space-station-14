@@ -1,4 +1,0 @@
-author: Zumorica
-changes:
-  - type: Fix # One of the following: Add, Remove, Tweak, Fix
-    message: Fix bug where sometimes instruments would have the incorrect MIDI program for the first few notes.

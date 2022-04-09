@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'After evaluating recent agent performance, the Syndicate now considers
-      most objectives more difficult. The only exception is dying, which their agents
-      have been getting top marks on.', type: Tweak}
-  id: 806
-  time: '2022-01-01T22:46:00.0000000+00:00'
 - author: Charlese2
   changes:
   - {message: Lowered flash bullet damage., type: Tweak}
@@ -3023,3 +3016,9 @@ Entries:
     type: Fix}
   id: 1305
   time: '2022-04-09T11:24:34.099018+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix bug where sometimes instruments would have the incorrect MIDI program
+      for the first few notes., type: Fix}
+  id: 1306
+  time: '2022-04-09T13:33:33.125973+00:00'
