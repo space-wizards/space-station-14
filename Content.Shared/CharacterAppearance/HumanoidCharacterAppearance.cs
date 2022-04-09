@@ -114,7 +114,7 @@ namespace Content.Shared.CharacterAppearance
             return new(color.RByte, color.GByte, color.BByte);
         }
 
-        public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance)
+        public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, string species)
         {
             var mgr = IoCManager.Resolve<SpriteAccessoryManager>();
             var hairStyleId = appearance.HairStyleId;
@@ -135,6 +135,7 @@ namespace Content.Shared.CharacterAppearance
             var skinColor = ClampColor(appearance.SkinColor);
 
             var validMarkingsSet = MarkingsSet.EnsureValid(appearance.Markings);
+            validMarkingsSet = MarkingsSet.FilterSpecies(validMarkingsSet, species);
 
             return new HumanoidCharacterAppearance(
                 hairStyleId,
