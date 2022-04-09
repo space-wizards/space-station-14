@@ -1,16 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: The Syndicate is now interested in a wider variety of items spread between
-      almost all departments., type: Add}
-  - {message: Some coveted items have had their name or description changed to make
-      their value to NanoTrasen (and the Syndicate) clear., type: Tweak}
-  - {message: The Syndicate is less likely to ask for an overly optimistic amount
-      of things to be stolen., type: Tweak}
-  - {message: The Syndicate will no longer ask for agents to both steal an item and
-      die., type: Fix}
-  id: 804
-  time: '2022-01-01T16:56:25.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed not being able to strip inventory from incapacitated entities.,
@@ -3029,3 +3017,9 @@ Entries:
   - {message: Added directional arrows to crew monitors., type: Add}
   id: 1303
   time: '2022-04-09T01:50:59.0000000+00:00'
+- author: emisse
+  changes:
+  - {message: Cybersun pen has been discovered to work as an excellent screwdriver.,
+    type: Add}
+  id: 1304
+  time: '2022-04-09T06:59:46.0000000+00:00'
