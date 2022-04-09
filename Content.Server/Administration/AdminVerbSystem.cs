@@ -153,7 +153,7 @@ namespace Content.Server.Administration
                 {
                     var coords = Transform(args.Target).MapPosition;
                     Timer.Spawn(_gameTiming.TickPeriod,
-                        () => _explosionSystem.QueueExplosion(coords, ExplosionSystem.DefaultExplosionPrototypeId, 30, 4, 8),
+                        () => _explosionSystem.QueueExplosion(coords, ExplosionSystem.DefaultExplosionPrototypeId, 4, 1, 2, maxTileBreak: 0), // it gibs, damage doesn't need to be high.
                         CancellationToken.None);
 
                     if (TryComp(args.Target, out SharedBodyComponent? body))

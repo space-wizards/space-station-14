@@ -9,6 +9,12 @@
     netsync: false
     layers:
     - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
   - type: Paper
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
@@ -16,20 +22,13 @@
     interfaces:
     - key: enum.PaperUiKey.Key
       type: PaperBoundUserInterface
-  - type: Appearance
-    visuals:
-      - type: GenericEnumVisualizer
-        key: enum.PaperVisuals.Status
-        layer: 0
-        states:
-          # This default isn't actually explicitly used right now.
-          enum.PaperStatus.Blank: paper
-          enum.PaperStatus.Written: paper_words
   - type: Item
     size: 1
   - type: Tag
     tags:
     - Document
+  - type: Appearance
+  - type: PaperVisuals
 
 - type: entity
   parent: Paper
@@ -50,7 +49,7 @@
       type: PaperBoundUserInterface
 
 - type: entity
-  parent: PaperWritten
+  parent: Paper
   id: NukeCodePaper
   name: nuclear authentication codes
   components:
@@ -141,8 +140,6 @@
     visuals:
     - type: MappedItemVisualizer
 
-
-
 - type: entity
   id: BoxFolderRed
   parent: BoxFolderBase
@@ -213,3 +210,188 @@
     - state: folder-colormap
       color: "#3f3f3f"
     - state: folder-base
+
+- type: entity
+  name: mime's rubber stamp
+  parent: BaseItem
+  id: RubberStampMime
+  description: A rubber stamp for stamping important documents.
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-mime
+    stampState: "paper_stamp-mime"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-mime
+    netsync: false
+  - type: Item
+    size: 3
+
+- type: entity
+  name: captain's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampCaptain
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-captain
+    stampState: "paper_stamp-cap"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-cap
+    netsync: false
+
+- type: entity
+  name: CentCom rubber stamp
+  parent: RubberStampMime
+  id: RubberStampCentcom
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-centcom
+    stampState: "paper_stamp-cent"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-cent
+    netsync: false
+
+- type: entity
+  name: chaplain's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampChaplain
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-chaplain
+    stampState: "paper_stamp-chaplain"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-chaplain
+    netsync: false
+
+- type: entity
+  name: clown's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampClown
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-clown
+    stampState: "paper_stamp-clown"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-clown
+    netsync: false
+
+- type: entity
+  name: chief medical officer's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampCMO
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-cmo
+    stampState: "paper_stamp-cmo"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-cmo
+    netsync: false
+
+- type: entity
+  name: DENIED rubber stamp
+  parent: RubberStampMime
+  id: RubberStampDenied
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-denied
+    stampState: "paper_stamp-deny"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-deny
+    netsync: false
+
+- type: entity
+  name: APPROVED rubber stamp
+  parent: RubberStampMime
+  id: RubberStampApproved
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-approved
+    stampState: "paper_stamp-iaa"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-iaa
+    netsync: false
+
+- type: entity
+  name: head of personnel's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampHop
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-hop
+    stampState: "paper_stamp-hop"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-hop
+    netsync: false
+
+- type: entity
+  name: head of security's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampHos
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-hos
+    stampState: "paper_stamp-hos"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-hos
+    netsync: false
+
+- type: entity
+  name: quartermaster's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampQm
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-qm
+    stampState: "paper_stamp-qm"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-qm
+    netsync: false
+
+- type: entity
+  name: research director's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampRd
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-rd
+    stampState: "paper_stamp-rd"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-rd
+    netsync: false
+
+- type: entity
+  name: warden's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampWarden
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-warden
+    stampState: "paper_stamp-warden"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-warden
+    netsync: false
+
+- type: entity
+  name: trader's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampTrader
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-trader
+    stampState: "paper_stamp-trader"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-trader
+    netsync: false

@@ -4,9 +4,16 @@ using System.Runtime.CompilerServices;
 namespace Content.Server.Explosion.EntitySystems;
 
 /// <summary>
-///     This is the base class for <see cref="SpaceExplosion"/> and <see cref="GridExplosion"/>. It just exists to avoid some code duplication, because those classes are generally quite distinct.
+///     This class exists to facilitate the iterative neighbor-finding / flooding algorithm used by explosions in <see
+///     cref="ExplosionSystem.GetExplosionTiles"/>. This is the base class for <see cref="ExplosionSpaceTileFlood"/> and
+///     <see cref="ExplosionGridTileFlood"/>, each of which contains additional code fro logic specific to grids or space.
 /// </summary>
-public abstract class TileExplosion
+/// <remarks>
+///     The class stores information about the tiles that the explosion has currently reached, and provides functions to
+///     perform a neighbor-finding iteration to expand the explosion area. It also has some functionality that allows
+///     tiles to move between grids/space.
+/// </remarks>
+public abstract class ExplosionTileFlood
 {
     // Main tile data sets, mapping iterations onto tile lists
     public Dictionary<int, List<Vector2i>> TileLists = new();

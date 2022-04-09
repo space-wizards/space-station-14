@@ -26,6 +26,7 @@ namespace Content.Server.DoAfter
         public void Add(DoAfterComponent component, DoAfter doAfter)
         {
             component.DoAfters.Add(doAfter, component.RunningIndex);
+            EnsureComp<ActiveDoAfterComponent>(component.Owner);
             component.RunningIndex++;
             Dirty(component);
         }
@@ -36,6 +37,11 @@ namespace Content.Server.DoAfter
                 return;
 
             component.DoAfters.Remove(doAfter);
+
+            if (component.DoAfters.Count == 0)
+            {
+                RemComp<ActiveDoAfterComponent>(component.Owner);
+            }
 
             RaiseNetworkEvent(new CancelledDoAfterMessage(component.Owner, index));
         }
@@ -50,6 +56,11 @@ namespace Content.Server.DoAfter
                 return;
 
             component.DoAfters.Remove(doAfter);
+
+            if (component.DoAfters.Count == 0)
+            {
+                RemComp<ActiveDoAfterComponent>(component.Owner);
+            }
         }
 
         private void OnDoAfterGetState(EntityUid uid, DoAfterComponent component, ref ComponentGetState args)
@@ -105,7 +116,7 @@ namespace Content.Server.DoAfter
         {
             base.Update(frameTime);
 
-            foreach (var comp in EntityManager.EntityQuery<DoAfterComponent>())
+            foreach (var (_, comp) in EntityManager.EntityQuery<ActiveDoAfterComponent, DoAfterComponent>())
             {
                 foreach (var (doAfter, _) in comp.DoAfters.ToArray())
                 {

@@ -18,9 +18,6 @@ namespace Content.Server.PDA.Ringer
         [DataField("noteCount")]
         public int NoteCount = 0;
 
-        [DataField("isPlaying")]
-        public bool IsPlaying = false;
-
         /// <summary>
         /// How far the sound projects in metres.
         /// </summary>
@@ -32,4 +29,7 @@ namespace Content.Server.PDA.Ringer
         [DataField("volume")]
         public float Volume = -4f;
     }
+
+    [RegisterComponent]
+    public sealed class ActiveRingerComponent : Component {}
 }

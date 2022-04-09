@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.Whitelist;
 using Robust.Shared.Serialization;
@@ -19,8 +19,8 @@ namespace Content.Shared.Storage.Components
     {
         public string Layer = string.Empty;
 
-        [DataField("whitelist", required: true)]
-        public EntityWhitelist Whitelist { get; set; } = new();
+        [DataField("whitelist", required: true, serverOnly: true)]
+        public EntityWhitelist ServerWhitelist { get; set; } = new();
     }
 
     [Serializable, NetSerializable]

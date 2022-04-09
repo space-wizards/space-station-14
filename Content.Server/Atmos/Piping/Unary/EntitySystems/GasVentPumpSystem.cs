@@ -35,7 +35,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentPumpComponent, AtmosDeviceDisabledEvent>(OnGasVentPumpLeaveAtmosphere);
             SubscribeLocalEvent<GasVentPumpComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<GasVentPumpComponent, PowerChangedEvent>(OnPowerChanged);
-            SubscribeLocalEvent<GasVentPumpComponent, PacketSentEvent>(OnPacketRecv);
+            SubscribeLocalEvent<GasVentPumpComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         }
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, AtmosDeviceUpdateEvent args)
@@ -162,7 +162,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             component.Enabled = args.Powered;
         }
 
-        private void OnPacketRecv(EntityUid uid, GasVentPumpComponent component, PacketSentEvent args)
+        private void OnPacketRecv(EntityUid uid, GasVentPumpComponent component, DeviceNetworkPacketEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn)
                 || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent alarmable)
@@ -177,7 +177,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSyncData);
                     payload.Add(AirAlarmSystem.AirAlarmSyncData, component.ToAirAlarmData());
 
-                    _deviceNetSystem.QueuePacket(uid, args.SenderAddress, AirAlarmSystem.Freq, payload);
+                    _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
 
                     return;
                 case AirAlarmSystem.AirAlarmSetData:
@@ -189,7 +189,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSetDataStatus);
                     payload.Add(AirAlarmSystem.AirAlarmSetDataStatus, true);
 
-                    _deviceNetSystem.QueuePacket(uid, string.Empty, AirAlarmSystem.Freq, payload, true);
+                    _deviceNetSystem.QueuePacket(uid, null, payload, device: netConn);
 
                     return;
             }

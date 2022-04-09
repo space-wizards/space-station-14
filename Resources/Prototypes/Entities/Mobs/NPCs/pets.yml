@@ -528,10 +528,10 @@
       gender: male
 
 - type: entity
-  name: paperwork
+  name: Paperwork
   parent: MobSloth
   id: MobPaperwork
-  description: Took up a new job sorting books in the library after he got transferred from space station 13. He seems to be just as slow at this.
+  description: Took up a new job sorting books in the library after he got transferred from Space Station 13. He seems to be just as slow at this.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -559,7 +559,7 @@
       gender: male
 
 - type: entity
-  name: walter
+  name: Walter
   parent: SimpleMobBase
   id: MobWalter
   description: He likes chems and treats. Walter.
