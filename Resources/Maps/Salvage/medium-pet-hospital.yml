@@ -129,14 +129,6 @@ entities:
           color: '#FFFFFFFF'
           id: Grasse1
           coordinates: 13.889501,-4.865914
-        10:
-          color: '#FFFFFFFF'
-          id: Rock08
-          coordinates: 3.2020006,-13.537788
-        11:
-          color: '#FFFFFFFF'
-          id: Rock10
-          coordinates: 5.9051256,-13.131538
         12:
           color: '#FFFFFFFF'
           id: Flowersbr2
