@@ -187,10 +187,16 @@ namespace Content.Server.Atmos.EntitySystems
         /// <returns></returns>
         private List<GasOverlayChunk> GetChunksInRange(EntityUid entity)
         {
-            var inRange = new List<GasOverlayChunk>();
-
             // This is the max in any direction that we can get a chunk (e.g. max 2 chunks away of data).
             var (maxXDiff, maxYDiff) = ((int) (_updateRange.X / ChunkSize) + 1, (int) (_updateRange.Y / ChunkSize) + 1);
+
+            // Setting initial list size based on the theoretical max number of chunks from a single grid. For default
+            // parameters, this is currently 6^2 = 36. Unless a player is near more than one grid, this is will
+            // generally slightly over-estimate the actual list size, which will be either 25, 30, or 36 (assuming the
+            // player is not near the edge of a grid).
+            var initialListSize = (1 + (int) MathF.Ceiling(2 * _updateRange.X / ChunkSize)) * (1 + (int) MathF.Ceiling(2 * _updateRange.Y / ChunkSize));
+
+            var inRange = new List<GasOverlayChunk>(initialListSize);
 
             var xform = Transform(entity);
             var worldPos = xform.MapPosition;
@@ -219,8 +225,8 @@ namespace Content.Server.Atmos.EntitySystems
                         // (e.g. if we're on the very edge of a chunk we may need more chunks).
 
                         var (xDiff, yDiff) = (chunkIndices.X - entityTile.X, chunkIndices.Y - entityTile.Y);
-                        if (xDiff > 0 && xDiff > _updateRange.X ||
-                            yDiff > 0 && yDiff > _updateRange.Y ||
+                        if (xDiff > _updateRange.X ||
+                            yDiff > _updateRange.Y ||
                             xDiff < 0 && Math.Abs(xDiff + ChunkSize) > _updateRange.X ||
                             yDiff < 0 && Math.Abs(yDiff + ChunkSize) > _updateRange.Y) continue;
 
