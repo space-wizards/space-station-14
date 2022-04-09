@@ -5,11 +5,12 @@
   id: C4
   components:
     - type: Sprite
+      netsync: true # need this to do draw depth update
       sprite: Objects/Weapons/Bombs/c4.rsi
       state: icon
     - type: Item
-      size: 10
       sprite: Objects/Weapons/Bombs/c4.rsi
+      size: 10
     - type: OnUseTimerTrigger
       delay: 10
       delayOptions: [10, 30, 60, 120, 300]

@@ -2,6 +2,7 @@
 using Content.Server.Popups;
 using Content.Server.Sticky.Components;
 using Content.Shared.Interaction;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
@@ -54,9 +55,14 @@ public sealed class StickySystem : EntitySystem
 
         var container = _containerSystem.EnsureContainer<Container>(target, StickerSlotId);
         container.ShowContents = true;
-        if (container.Insert(uid))
+        if (!container.Insert(uid))
+            return;
+
+        _popupSystem.PopupEntity("You planted the bomb", user, Filter.Entities(user));
+        
+        if (TryComp(uid, out SpriteComponent? sprite))
         {
-            _popupSystem.PopupEntity("You planted the bomb", user, Filter.Entities(user));
+            sprite.DrawDepth = component.StickedDrawDepth;
         }
     }
 
