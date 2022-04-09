@@ -91,6 +91,9 @@
     - type: Construction
       graph: LeverGraph
       node: lever
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
     - type: Destructible
       thresholds:
       - trigger:

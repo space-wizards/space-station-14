@@ -20517,7 +20517,7 @@ entities:
 - uid: 1078
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: 24.5,1.5
     parent: 15
@@ -30207,7 +30207,7 @@ entities:
 - uid: 2124
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: 4.5,-0.5
     parent: 15
@@ -38773,7 +38773,7 @@ entities:
 - uid: 3014
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: -4.5,-20.5
     parent: 15
