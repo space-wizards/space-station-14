@@ -15,7 +15,7 @@ namespace Content.Shared.Alert
     public sealed class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>, ISerializationHooks
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("order")] private readonly List<(string type, string alert)> _order = new();

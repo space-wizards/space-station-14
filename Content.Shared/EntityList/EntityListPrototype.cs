@@ -12,7 +12,7 @@ namespace Content.Shared.EntityList
     public sealed class EntityListPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables]

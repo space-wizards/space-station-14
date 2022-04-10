@@ -1,0 +1,1701 @@
+meta:
+  format: 2
+  name: DemoStation
+  author: Space-Wizards
+  postmapinit: false
+tilemap:
+  0: space
+  1: FloorArcadeBlue
+  2: FloorArcadeRed
+  3: FloorAsteroidIronsand1
+  4: FloorAsteroidIronsand2
+  5: FloorAsteroidIronsand3
+  6: FloorAsteroidIronsand4
+  7: FloorEighties
+  8: FloorGrassJungle
+  9: FloorShuttleBlue
+  10: FloorShuttleOrange
+  11: FloorShuttlePurple
+  12: FloorShuttleRed
+  13: FloorShuttleWhite
+  14: floor_asteroid_coarse_sand0
+  15: floor_asteroid_coarse_sand1
+  16: floor_asteroid_coarse_sand2
+  17: floor_asteroid_coarse_sand_dug
+  18: floor_asteroid_sand
+  19: floor_asteroid_tile
+  20: floor_bar
+  21: floor_blue
+  22: floor_blue_circuit
+  23: floor_clown
+  24: floor_dark
+  25: floor_elevator_shaft
+  26: floor_freezer
+  27: floor_glass
+  28: floor_gold
+  29: floor_grass
+  30: floor_green_circuit
+  31: floor_hydro
+  32: floor_kitchen
+  33: floor_laundry
+  34: floor_lino
+  35: floor_mime
+  36: floor_mono
+  37: floor_reinforced
+  38: floor_rglass
+  39: floor_rock_vault
+  40: floor_showroom
+  41: floor_silver
+  42: floor_snow
+  43: floor_steel
+  44: floor_steel_dirty
+  45: floor_techmaint
+  46: floor_white
+  47: floor_wood
+  48: lattice
+  49: plating
+  50: underplating
+grids:
+- settings:
+    chunksize: 16
+    tilesize: 1
+  chunks:
+  - ind: "-1,-1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAAvAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAAvAAAALwAAAC8AAAAvAAAAMQAAADAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAMQAAADEAAAAxAAAALwAAAC8AAAAvAAAALwAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAAxAAAAEgAAAC8AAAAvAAAALwAAAC8AAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAMQAAABIAAAASAAAALwAAAC8AAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAEgAAAC8AAAAvAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAABIAAAASAAAAEgAAADEAAAAwAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "-1,0"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAA4AAAARAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAA4AAAAOAAAADgAAADEAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEAAAAOAAAADgAAAA4AAAAAAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAAMQAAAA4AAAAAAAAAAAAAAAAAAAAxAAAALQAAADAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAAAAAAAAAAAAOAAAAMQAAAC0AAAAtAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAAAAAADgAAADEAAAAtAAAALQAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMQAAAA4AAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAOAAAADgAAAA4AAAAOAAAAMQAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAA4AAAAOAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "0,-1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEwAAABMAAAATAAAAEwAAABMAAAASAAAAEgAAAAAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADEAAAASAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABIAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAASAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEwAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAMQAAADEAAAATAAAAEwAAABMAAAATAAAAEgAAABMAAAATAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABMAAAATAAAAEwAAABMAAAASAAAAEwAAABIAAAASAAAAAAAAAAAAAAAwAAAAMAAAADAAAAAwAAAAMQAAABIAAAASAAAAEwAAABMAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAADEAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "0,0"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAADEAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABMAAAATAAAAEwAAABMAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEwAAABMAAAATAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAATAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAALQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABMAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAADAAAAAxAAAAEwAAABMAAAATAAAAEwAAABMAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAATAAAAEwAAABMAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABMAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+entities:
+- uid: 0
+  components:
+  - parent: null
+    type: Transform
+  - index: 0
+    type: MapGrid
+  - angularDamping: 100
+    linearDamping: 50
+    fixedRotation: False
+    bodyType: Dynamic
+    type: Physics
+  - fixtures: []
+    type: Fixtures
+  - gravityShakeSound: !type:SoundPathSpecifier
+      path: /Audio/Effects/alert.ogg
+    type: Gravity
+  - chunkCollection:
+      -1,0:
+        0:
+          color: '#FFFFFFFF'
+          id: Bot
+          coordinates: -5,6
+        1:
+          color: '#FFFFFFFF'
+          id: Bot
+          coordinates: -4,6
+        2:
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -5,5
+        58:
+          color: '#FFFFFFFF'
+          id: rune5
+          coordinates: -11.015113,2.7872455
+      0,0:
+        3:
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: 5,9
+        4:
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: 6,4
+        5:
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: 4,3
+        6:
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: 8,8
+        7:
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 7,8
+        8:
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 6,5
+      0,-1:
+        9:
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 9,-6
+        10:
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: 6,-8
+        11:
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: 7,-6
+        12:
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: 12,-7
+        13:
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: 7,-10
+        14:
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 9,-11
+        15:
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 12,-12
+        16:
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: 12,-10
+        17:
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: 13,-11
+        18:
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: 10,-10
+        19:
+          color: '#FFFFFFFF'
+          id: WarnCorner
+          coordinates: 7,-5
+        20:
+          color: '#FFFFFFFF'
+          id: WarnCornerFlipped
+          coordinates: 8,-5
+        21:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale
+          coordinates: 7,-6
+        22:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale
+          coordinates: 8,-6
+        23:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale90
+          coordinates: 9,-7
+        24:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale270
+          coordinates: 6,-7
+        25:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale180
+          coordinates: 7,-8
+        26:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale180
+          coordinates: 8,-8
+        27:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale180
+          coordinates: 9,-12
+        28:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale180
+          coordinates: 10,-12
+        29:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale180
+          coordinates: 11,-12
+        30:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale
+          coordinates: 8,-10
+        31:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale
+          coordinates: 9,-10
+        32:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale
+          coordinates: 10,-10
+        33:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale
+          coordinates: 11,-10
+        34:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale
+          coordinates: 12,-10
+        35:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale90
+          coordinates: 9,-6
+        36:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale90
+          coordinates: 9,-8
+        37:
+          color: '#D381C996'
+          id: QuarterTileOverlayGreyscale
+          coordinates: 9,-6
+        38:
+          color: '#D381C996'
+          id: QuarterTileOverlayGreyscale270
+          coordinates: 9,-8
+        39:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale270
+          coordinates: 6,-8
+        40:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale270
+          coordinates: 6,-6
+        41:
+          color: '#D381C996'
+          id: QuarterTileOverlayGreyscale90
+          coordinates: 6,-6
+        42:
+          color: '#D381C996'
+          id: QuarterTileOverlayGreyscale180
+          coordinates: 6,-8
+        43:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale270
+          coordinates: 7,-11
+        44:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale270
+          coordinates: 7,-10
+        45:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale270
+          coordinates: 8,-12
+        46:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale90
+          coordinates: 13,-10
+        47:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale90
+          coordinates: 13,-11
+        48:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale90
+          coordinates: 12,-12
+        49:
+          color: '#D381C996'
+          id: QuarterTileOverlayGreyscale
+          coordinates: 13,-10
+        50:
+          color: '#D381C996'
+          id: QuarterTileOverlayGreyscale90
+          coordinates: 7,-10
+        51:
+          color: '#D381C996'
+          id: QuarterTileOverlayGreyscale180
+          coordinates: 7,-11
+        52:
+          color: '#D381C996'
+          id: QuarterTileOverlayGreyscale180
+          coordinates: 12,-11
+        53:
+          color: '#D381C996'
+          id: QuarterTileOverlayGreyscale270
+          coordinates: 8,-11
+        54:
+          color: '#D381C996'
+          id: QuarterTileOverlayGreyscale270
+          coordinates: 13,-11
+        55:
+          color: '#D381C996'
+          id: QuarterTileOverlayGreyscale270
+          coordinates: 12,-12
+        56:
+          color: '#D381C996'
+          id: QuarterTileOverlayGreyscale180
+          coordinates: 8,-12
+      -1,-1:
+        57:
+          color: '#FFFFFFFF'
+          id: safe
+          coordinates: -6.5628805,-7.096943
+    type: DecalGrid
+  - tiles:
+      -9,-1: 0
+      -8,-1: 0
+      -7,-1: 0
+      -6,-1: 0
+      -5,-1: 0
+      -4,-1: 0
+      -3,-1: 0
+      -2,-1: 0
+      -1,-1: 0
+    uniqueMixes:
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: GridAtmosphere
+- uid: 1
+  type: WallReinforced
+  components:
+  - pos: -2.5,8.5
+    parent: 0
+    type: Transform
+- uid: 2
+  type: WallReinforced
+  components:
+  - pos: -2.5,7.5
+    parent: 0
+    type: Transform
+- uid: 3
+  type: WallReinforced
+  components:
+  - pos: -3.5,7.5
+    parent: 0
+    type: Transform
+- uid: 4
+  type: WallReinforced
+  components:
+  - pos: -4.5,7.5
+    parent: 0
+    type: Transform
+- uid: 5
+  type: WallReinforced
+  components:
+  - pos: -5.5,7.5
+    parent: 0
+    type: Transform
+- uid: 6
+  type: WallReinforced
+  components:
+  - pos: -5.5,6.5
+    parent: 0
+    type: Transform
+- uid: 7
+  type: WallReinforced
+  components:
+  - pos: -5.5,5.5
+    parent: 0
+    type: Transform
+- uid: 8
+  type: WallReinforced
+  components:
+  - pos: -5.5,4.5
+    parent: 0
+    type: Transform
+- uid: 9
+  type: WallReinforced
+  components:
+  - pos: -7.5,7.5
+    parent: 0
+    type: Transform
+- uid: 10
+  type: WallReinforced
+  components:
+  - pos: -10.5,4.5
+    parent: 0
+    type: Transform
+- uid: 11
+  type: WallReinforced
+  components:
+  - pos: -7.5,2.5
+    parent: 0
+    type: Transform
+- uid: 12
+  type: WallReinforced
+  components:
+  - pos: -9.5,0.5
+    parent: 0
+    type: Transform
+- uid: 13
+  type: WallReinforced
+  components:
+  - pos: 5.5,2.5
+    parent: 0
+    type: Transform
+- uid: 14
+  type: WallReinforced
+  components:
+  - pos: 7.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 15
+  type: WallReinforced
+  components:
+  - pos: 4.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 16
+  type: WallReinforced
+  components:
+  - pos: -4.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 17
+  type: WallReinforced
+  components:
+  - pos: -8.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 18
+  type: WallReinforced
+  components:
+  - pos: -3.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 19
+  type: WallReinforced
+  components:
+  - pos: 5.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 20
+  type: AsteroidRock
+  components:
+  - pos: 5.5,7.5
+    parent: 0
+    type: Transform
+- uid: 21
+  type: AsteroidRock
+  components:
+  - pos: 4.5,7.5
+    parent: 0
+    type: Transform
+- uid: 22
+  type: AsteroidRock
+  components:
+  - pos: 3.5,7.5
+    parent: 0
+    type: Transform
+- uid: 23
+  type: AsteroidRock
+  components:
+  - pos: 3.5,9.5
+    parent: 0
+    type: Transform
+- uid: 24
+  type: AsteroidRock
+  components:
+  - pos: 4.5,9.5
+    parent: 0
+    type: Transform
+- uid: 25
+  type: WallReinforced
+  components:
+  - pos: 3.5,8.5
+    parent: 0
+    type: Transform
+- uid: 26
+  type: Grille
+  components:
+  - pos: 5.5,6.5
+    parent: 0
+    type: Transform
+- uid: 27
+  type: Grille
+  components:
+  - pos: 7.5,6.5
+    parent: 0
+    type: Transform
+- uid: 28
+  type: ReinforcedWindow
+  components:
+  - pos: 5.5,6.5
+    parent: 0
+    type: Transform
+- uid: 29
+  type: ReinforcedWindow
+  components:
+  - pos: 7.5,6.5
+    parent: 0
+    type: Transform
+- uid: 30
+  type: AsteroidRock
+  components:
+  - pos: 4.5,10.5
+    parent: 0
+    type: Transform
+- uid: 31
+  type: AsteroidRock
+  components:
+  - pos: 5.5,10.5
+    parent: 0
+    type: Transform
+- uid: 32
+  type: AsteroidRock
+  components:
+  - pos: 7.5,10.5
+    parent: 0
+    type: Transform
+- uid: 33
+  type: AsteroidRock
+  components:
+  - pos: 8.5,10.5
+    parent: 0
+    type: Transform
+- uid: 34
+  type: AsteroidRock
+  components:
+  - pos: 9.5,9.5
+    parent: 0
+    type: Transform
+- uid: 35
+  type: AsteroidRock
+  components:
+  - pos: 8.5,9.5
+    parent: 0
+    type: Transform
+- uid: 36
+  type: AsteroidRock
+  components:
+  - pos: 9.5,8.5
+    parent: 0
+    type: Transform
+- uid: 37
+  type: AsteroidRock
+  components:
+  - pos: 9.5,7.5
+    parent: 0
+    type: Transform
+- uid: 38
+  type: AsteroidRock
+  components:
+  - pos: 8.5,7.5
+    parent: 0
+    type: Transform
+- uid: 39
+  type: AsteroidRock
+  components:
+  - pos: 7.5,7.5
+    parent: 0
+    type: Transform
+- uid: 40
+  type: AsteroidRock
+  components:
+  - pos: 7.5,5.5
+    parent: 0
+    type: Transform
+- uid: 41
+  type: AsteroidRock
+  components:
+  - pos: 8.5,5.5
+    parent: 0
+    type: Transform
+- uid: 42
+  type: AsteroidRock
+  components:
+  - pos: 8.5,4.5
+    parent: 0
+    type: Transform
+- uid: 43
+  type: AsteroidRock
+  components:
+  - pos: 8.5,3.5
+    parent: 0
+    type: Transform
+- uid: 44
+  type: AsteroidRock
+  components:
+  - pos: 7.5,3.5
+    parent: 0
+    type: Transform
+- uid: 45
+  type: AsteroidRock
+  components:
+  - pos: 7.5,2.5
+    parent: 0
+    type: Transform
+- uid: 46
+  type: AsteroidRock
+  components:
+  - pos: 6.5,2.5
+    parent: 0
+    type: Transform
+- uid: 47
+  type: AsteroidRock
+  components:
+  - pos: 4.5,2.5
+    parent: 0
+    type: Transform
+- uid: 48
+  type: AsteroidRock
+  components:
+  - pos: 3.5,2.5
+    parent: 0
+    type: Transform
+- uid: 49
+  type: AsteroidRock
+  components:
+  - pos: 3.5,3.5
+    parent: 0
+    type: Transform
+- uid: 50
+  type: AsteroidRock
+  components:
+  - pos: 3.5,4.5
+    parent: 0
+    type: Transform
+- uid: 51
+  type: AsteroidRock
+  components:
+  - pos: 4.5,4.5
+    parent: 0
+    type: Transform
+- uid: 52
+  type: AsteroidRock
+  components:
+  - pos: 4.5,5.5
+    parent: 0
+    type: Transform
+- uid: 53
+  type: AsteroidRock
+  components:
+  - pos: 5.5,5.5
+    parent: 0
+    type: Transform
+- uid: 54
+  type: AsteroidRock
+  components:
+  - pos: -3.5,8.5
+    parent: 0
+    type: Transform
+- uid: 55
+  type: AsteroidRock
+  components:
+  - pos: -4.5,8.5
+    parent: 0
+    type: Transform
+- uid: 56
+  type: SalvageMobSpawner75
+  components:
+  - pos: -8.5,2.5
+    parent: 0
+    type: Transform
+- uid: 57
+  type: AsteroidRock
+  components:
+  - pos: -6.5,6.5
+    parent: 0
+    type: Transform
+- uid: 58
+  type: AsteroidRock
+  components:
+  - pos: -6.5,7.5
+    parent: 0
+    type: Transform
+- uid: 59
+  type: AsteroidRock
+  components:
+  - pos: -6.5,8.5
+    parent: 0
+    type: Transform
+- uid: 60
+  type: AsteroidRock
+  components:
+  - pos: -7.5,8.5
+    parent: 0
+    type: Transform
+- uid: 61
+  type: AsteroidRock
+  components:
+  - pos: -6.5,5.5
+    parent: 0
+    type: Transform
+- uid: 62
+  type: Catwalk
+  components:
+  - pos: -2.5,6.5
+    parent: 0
+    type: Transform
+- uid: 63
+  type: Catwalk
+  components:
+  - pos: -2.5,5.5
+    parent: 0
+    type: Transform
+- uid: 64
+  type: Catwalk
+  components:
+  - pos: -2.5,4.5
+    parent: 0
+    type: Transform
+- uid: 65
+  type: Catwalk
+  components:
+  - pos: -1.5,6.5
+    parent: 0
+    type: Transform
+- uid: 66
+  type: Catwalk
+  components:
+  - pos: -1.5,5.5
+    parent: 0
+    type: Transform
+- uid: 67
+  type: Catwalk
+  components:
+  - pos: -1.5,4.5
+    parent: 0
+    type: Transform
+- uid: 68
+  type: Catwalk
+  components:
+  - pos: -3.5,4.5
+    parent: 0
+    type: Transform
+- uid: 69
+  type: Grille
+  components:
+  - pos: -3.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 70
+  type: Grille
+  components:
+  - pos: -3.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 71
+  type: ReinforcedWindow
+  components:
+  - pos: -3.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 72
+  type: ReinforcedWindow
+  components:
+  - pos: -3.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 73
+  type: Grille
+  components:
+  - pos: 8.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 74
+  type: Grille
+  components:
+  - pos: 9.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 75
+  type: Grille
+  components:
+  - pos: 10.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 76
+  type: Grille
+  components:
+  - pos: 11.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 77
+  type: Grille
+  components:
+  - pos: 12.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 78
+  type: ReinforcedWindow
+  components:
+  - pos: 8.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 79
+  type: ReinforcedWindow
+  components:
+  - pos: 9.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 80
+  type: ReinforcedWindow
+  components:
+  - pos: 10.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 81
+  type: ReinforcedWindow
+  components:
+  - pos: 11.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 82
+  type: ReinforcedWindow
+  components:
+  - pos: 12.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 83
+  type: AirlockExternalGlassLocked
+  components:
+  - pos: 6.5,10.5
+    parent: 0
+    type: Transform
+- uid: 84
+  type: AirlockExternalGlassLocked
+  components:
+  - pos: -9.5,-6.5
+    parent: 0
+    type: Transform
+  - state: Welded
+    type: Door
+- uid: 85
+  type: AirlockCommandLocked
+  components:
+  - pos: -8.5,-8.5
+    parent: 0
+    type: Transform
+  - state: Welded
+    type: Door
+- uid: 86
+  type: AirlockExternalGlassLocked
+  components:
+  - pos: 3.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 87
+  type: AirlockScienceLocked
+  components:
+  - pos: 5.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 88
+  type: CrateFilledSpawner
+  components:
+  - pos: -4.5,6.5
+    parent: 0
+    type: Transform
+- uid: 89
+  type: CrateFilledSpawner
+  components:
+  - pos: -3.5,6.5
+    parent: 0
+    type: Transform
+- uid: 90
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 91
+  type: AsteroidRock
+  components:
+  - pos: -6.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 92
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 93
+  type: AsteroidRock
+  components:
+  - pos: -6.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 94
+  type: AsteroidRock
+  components:
+  - pos: -7.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 95
+  type: AsteroidRock
+  components:
+  - pos: -7.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 96
+  type: AsteroidRock
+  components:
+  - pos: -7.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 97
+  type: AsteroidRock
+  components:
+  - pos: -8.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 98
+  type: AsteroidRock
+  components:
+  - pos: -8.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 99
+  type: AsteroidRock
+  components:
+  - pos: -10.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 100
+  type: AsteroidRock
+  components:
+  - pos: -10.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 101
+  type: AsteroidRock
+  components:
+  - pos: -11.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 102
+  type: AsteroidRock
+  components:
+  - pos: -11.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 103
+  type: AsteroidRock
+  components:
+  - pos: -11.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 104
+  type: AsteroidRock
+  components:
+  - pos: -10.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 105
+  type: AsteroidRock
+  components:
+  - pos: -9.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 106
+  type: AsteroidRock
+  components:
+  - pos: -8.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 107
+  type: AsteroidRock
+  components:
+  - pos: -9.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 108
+  type: AsteroidRock
+  components:
+  - pos: -8.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 109
+  type: AsteroidRock
+  components:
+  - pos: -7.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 110
+  type: AsteroidRock
+  components:
+  - pos: -7.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 111
+  type: AsteroidRock
+  components:
+  - pos: -6.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 112
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 113
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 114
+  type: AsteroidRock
+  components:
+  - pos: -4.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 115
+  type: AsteroidRock
+  components:
+  - pos: -3.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 116
+  type: AsteroidRock
+  components:
+  - pos: -3.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 117
+  type: AsteroidRock
+  components:
+  - pos: -4.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 118
+  type: AsteroidRock
+  components:
+  - pos: -4.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 119
+  type: AsteroidRock
+  components:
+  - pos: 3.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 120
+  type: AsteroidRock
+  components:
+  - pos: 4.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 121
+  type: AsteroidRock
+  components:
+  - pos: 5.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 122
+  type: AsteroidRock
+  components:
+  - pos: 4.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 123
+  type: AsteroidRock
+  components:
+  - pos: 5.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 124
+  type: AsteroidRock
+  components:
+  - pos: 5.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 125
+  type: AsteroidRock
+  components:
+  - pos: 6.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 126
+  type: AsteroidRock
+  components:
+  - pos: 6.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 127
+  type: AsteroidRock
+  components:
+  - pos: 8.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 128
+  type: AsteroidRock
+  components:
+  - pos: 9.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 129
+  type: AsteroidRock
+  components:
+  - pos: 9.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 130
+  type: AsteroidRock
+  components:
+  - pos: 10.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 131
+  type: AsteroidRock
+  components:
+  - pos: 11.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 132
+  type: AsteroidRock
+  components:
+  - pos: 12.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 133
+  type: AsteroidRock
+  components:
+  - pos: 10.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 134
+  type: AsteroidRock
+  components:
+  - pos: 12.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 135
+  type: AsteroidRock
+  components:
+  - pos: 13.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 136
+  type: AsteroidRock
+  components:
+  - pos: 13.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 137
+  type: AsteroidRock
+  components:
+  - pos: 13.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 138
+  type: AsteroidRock
+  components:
+  - pos: 13.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 139
+  type: AsteroidRock
+  components:
+  - pos: 12.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 140
+  type: AsteroidRock
+  components:
+  - pos: 11.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 141
+  type: AsteroidRock
+  components:
+  - pos: 10.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 142
+  type: AsteroidRock
+  components:
+  - pos: 9.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 143
+  type: AsteroidRock
+  components:
+  - pos: 10.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 144
+  type: AsteroidRock
+  components:
+  - pos: 7.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 145
+  type: AsteroidRock
+  components:
+  - pos: 6.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 146
+  type: AsteroidRock
+  components:
+  - pos: 5.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 147
+  type: AsteroidRock
+  components:
+  - pos: 4.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 148
+  type: AsteroidRock
+  components:
+  - pos: 3.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 149
+  type: AsteroidRock
+  components:
+  - pos: 5.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 150
+  type: AsteroidRock
+  components:
+  - pos: 6.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 151
+  type: AsteroidRock
+  components:
+  - pos: 6.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 152
+  type: AsteroidRock
+  components:
+  - pos: 6.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 153
+  type: AsteroidRock
+  components:
+  - pos: 7.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 154
+  type: AsteroidRock
+  components:
+  - pos: 7.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 155
+  type: AsteroidRock
+  components:
+  - pos: 13.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 156
+  type: AsteroidRock
+  components:
+  - pos: 13.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 157
+  type: AsteroidRock
+  components:
+  - pos: 14.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 158
+  type: AsteroidRock
+  components:
+  - pos: 14.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 159
+  type: AsteroidRock
+  components:
+  - pos: 14.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 160
+  type: AsteroidRock
+  components:
+  - pos: 14.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 161
+  type: ClosetEmergencyFilledRandom
+  components:
+  - pos: -10.5,-8.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 162
+  type: Rack
+  components:
+  - pos: -7.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 163
+  type: Bookshelf
+  components:
+  - pos: -6.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 164
+  type: Bookshelf
+  components:
+  - pos: -5.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 165
+  type: TableWood
+  components:
+  - pos: -4.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 166
+  type: CarpetSBlue
+  components:
+  - pos: -6.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 167
+  type: CarpetSBlue
+  components:
+  - pos: -6.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 168
+  type: CarpetSBlue
+  components:
+  - pos: -6.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 169
+  type: CarpetSBlue
+  components:
+  - pos: -5.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 170
+  type: CarpetSBlue
+  components:
+  - pos: -5.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 171
+  type: CarpetSBlue
+  components:
+  - pos: -5.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 172
+  type: ComfyChair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -4.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 173
+  type: Bed
+  components:
+  - pos: -6.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 174
+  type: BedsheetNT
+  components:
+  - pos: -6.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 175
+  type: BookDetective
+  components:
+  - pos: -4.366254,-7.5988293
+    parent: 0
+    type: Transform
+- uid: 176
+  type: DrinkGinBottleFull
+  components:
+  - pos: -4.6434374,-7.0447392
+    parent: 0
+    type: Transform
+- uid: 177
+  type: CombatKnife
+  components:
+  - pos: -7.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 178
+  type: AsteroidRock
+  components:
+  - pos: -6.5,9.5
+    parent: 0
+    type: Transform
+- uid: 179
+  type: AsteroidRock
+  components:
+  - pos: -5.5,9.5
+    parent: 0
+    type: Transform
+- uid: 180
+  type: AsteroidRock
+  components:
+  - pos: -4.5,9.5
+    parent: 0
+    type: Transform
+- uid: 181
+  type: AsteroidRock
+  components:
+  - pos: -3.5,9.5
+    parent: 0
+    type: Transform
+- uid: 182
+  type: AsteroidRock
+  components:
+  - pos: -4.5,10.5
+    parent: 0
+    type: Transform
+- uid: 183
+  type: AsteroidRock
+  components:
+  - pos: -5.5,10.5
+    parent: 0
+    type: Transform
+- uid: 184
+  type: AirlockScienceLocked
+  components:
+  - pos: 10.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 185
+  type: AirlockScienceLocked
+  components:
+  - pos: 8.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 186
+  type: SalvageMobSpawner
+  components:
+  - pos: -2.5,5.5
+    parent: 0
+    type: Transform
+- uid: 187
+  type: SalvageMobSpawner
+  components:
+  - pos: -4.5,4.5
+    parent: 0
+    type: Transform
+- uid: 188
+  type: SalvageMobSpawner75
+  components:
+  - pos: 5.5,3.5
+    parent: 0
+    type: Transform
+- uid: 189
+  type: Rack
+  components:
+  - pos: 4.5,8.5
+    parent: 0
+    type: Transform
+- uid: 190
+  type: Table
+  components:
+  - pos: 10.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 191
+  type: Table
+  components:
+  - pos: 11.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 192
+  type: Table
+  components:
+  - pos: 12.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 193
+  type: Rack
+  components:
+  - pos: 8.5,8.5
+    parent: 0
+    type: Transform
+- uid: 194
+  type: Table
+  components:
+  - pos: 13.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 195
+  type: LockerChemistryFilled
+  components:
+  - pos: 11.5,-5.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 196
+  type: ClosetMaintenanceFilledRandom
+  components:
+  - pos: 7.5,4.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 197
+  type: SalvageCanisterSpawner
+  components:
+  - pos: 7.5,9.5
+    parent: 0
+    type: Transform
+- uid: 198
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: 4.5,3.5
+    parent: 0
+    type: Transform
+- uid: 199
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: 7.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 200
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: 8.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 201
+  type: SalvageCanisterSpawner
+  components:
+  - pos: 12.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 202
+  type: SalvageCanisterSpawner
+  components:
+  - pos: 12.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 203
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: 7.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 204
+  type: SheetPlasma1
+  components:
+  - pos: -5.5,8.5
+    parent: 0
+    type: Transform
+- uid: 205
+  type: ChairOfficeDark
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 11.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 206
+  type: ChairOfficeDark
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 13.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 207
+  type: ToiletDirtyWater
+  components:
+  - pos: -10.5,3.5
+    parent: 0
+    type: Transform
+  - containers:
+      stash: !type:ContainerSlot
+        ent: 217
+    type: ContainerContainer
+- uid: 208
+  type: ComputerBroken
+  components:
+  - pos: 11.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 209
+  type: Rack
+  components:
+  - pos: 6.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 210
+  type: Rack
+  components:
+  - pos: 6.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 211
+  type: ClothingOuterHardsuitEVA
+  components:
+  - pos: 6.531904,-6.446867
+    parent: 0
+    type: Transform
+- uid: 212
+  type: ClothingHeadHelmetEVA
+  components:
+  - pos: 6.5055065,-5.470614
+    parent: 0
+    type: Transform
+- uid: 213
+  type: SalvageMobSpawner
+  components:
+  - pos: 7.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 214
+  type: SalvageMobSpawner
+  components:
+  - pos: 9.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 215
+  type: SalvageMobSpawner75
+  components:
+  - pos: 10.5,-11.5
+    parent: 0
+    type: Transform
+- uid: 216
+  type: SalvageMobSpawner
+  components:
+  - pos: 7.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 217
+  type: PistolMandella
+  components:
+  - parent: 207
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+        ent: 218
+    type: ContainerContainer
+- uid: 218
+  type: MagazineClRiflePistol
+  components:
+  - parent: 217
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+...

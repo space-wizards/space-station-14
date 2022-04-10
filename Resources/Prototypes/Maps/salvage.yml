@@ -74,10 +74,46 @@
   size: 7.5
 
 - type: salvageMap
+  id: mediumCargoWreck
+  name: "Medium / Cargo Department Wreck"
+  mapPath: /Maps/Salvage/cargo-1.yml
+  size: 7.5
+
+- type: salvageMap
+  id: mediumPirateWreck
+  name: "Medium / Pirate Barge Fragment"
+  mapPath: /Maps/Salvage/medium-pirate.yml
+  size: 7.5
+
+- type: salvageMap
+  id: tickColony
+  name: "Space Tick colony"
+  mapPath: /Maps/Salvage/tick-colony.yml
+  size: 8.5
+
+- type: salvageMap
+  id: cargoDock
+  name: "Asteroid Cargo Dock"
+  mapPath: /Maps/Salvage/medium-dock.yml
+  size: 8.5
+
+- type: salvageMap
   id: mediumShuttleWreck
   name: "Medium / Ruined Emergency Shuttle"
   mapPath: /Maps/Salvage/medium-ruined-emergency-shuttle.yml
   size: 8.5 # Over standard medium wreck size, may need future adjustment.
+  
+- type: salvageMap
+  id: mediumPetHospital
+  name: "Medium / Pet and Bear Hospital"
+  mapPath: /Maps/Salvage/medium-pet-hospital.yml
+  size: 8.5
+
+- type: salvageMap
+  id: mediumCrashedShuttle
+  name: "Crashed Shuttle"
+  mapPath: /Maps/Salvage/medium-crashed-shuttle.yml
+  size: 9.5
 
 # """Large""" maps
 
@@ -87,3 +123,14 @@
   mapPath: /Maps/Salvage/stationstation.yml
   size: 16
 
+- type: salvageMap
+  id: asteroidBase
+  name: "Asteroid Base"
+  mapPath: /Maps/Salvage/asteroid-base.yml
+  size: 16
+
+- type: salvageMap
+  id: ruinCargoBase
+  name: "Ruined Cargo Storage"
+  mapPath: /Maps/Salvage/ruin-cargo-salvage.yml
+  size: 22.5

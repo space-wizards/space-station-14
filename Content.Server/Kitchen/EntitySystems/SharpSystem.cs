@@ -6,8 +6,10 @@ using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
@@ -15,6 +17,7 @@ public sealed class SharpSystem : EntitySystem
 {
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
     public override void Initialize()
     {
@@ -77,10 +80,12 @@ public sealed class SharpSystem : EntitySystem
 
         sharp.Butchering.Remove(ev.Entity);
 
+        var spawnEntities = EntitySpawnCollection.GetSpawns(butcher.SpawnedEntities, _robustRandom);
+        var coords = Transform(ev.Entity).Coordinates;
         EntityUid popupEnt = default;
-        for (int i = 0; i < butcher.Pieces; i++)
+        foreach (var proto in spawnEntities)
         {
-            popupEnt = Spawn(butcher.SpawnedPrototype, Transform(ev.Entity).Coordinates);
+            popupEnt = Spawn(proto, coords);
         }
 
         _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", ev.Entity), ("knife", ev.Sharp)),
@@ -118,7 +123,7 @@ public sealed class SharpSystem : EntitySystem
             message = Loc.GetString("butcherable-mob-isnt-dead");
         }
 
-        if (args.Using is null || !TryComp<SharpComponent>(args.Using, out var sharp))
+        if (args.Using is null || !HasComp<SharpComponent>(args.Using))
         {
             disabled = true;
             message = Loc.GetString("butcherable-need-knife");

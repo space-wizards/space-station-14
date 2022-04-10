@@ -2,8 +2,6 @@ using Content.Client.EscapeMenu.UI;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Client.Info
 {
@@ -61,13 +59,6 @@ namespace Content.Client.Info
         {
             info.InfoContainer.AddChild(new InfoSection(title,
                 _resourceManager.ContentFileReadAllText($"/Server Info/{path}"), markup));
-        }
-
-        protected override void Opened()
-        {
-            base.Opened();
-
-            _rulesManager.SaveLastReadTime();
         }
     }
 }

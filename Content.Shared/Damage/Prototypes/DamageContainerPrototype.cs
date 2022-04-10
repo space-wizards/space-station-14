@@ -21,7 +21,7 @@ namespace Content.Shared.Damage.Prototypes
     public sealed class DamageContainerPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

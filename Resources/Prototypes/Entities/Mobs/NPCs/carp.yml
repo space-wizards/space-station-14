@@ -43,8 +43,9 @@
       crit: crit
       dead: dead
   - type: Butcherable
-    spawned: FoodMeatFish
-    pieces: 2
+    spawned:
+    - id: FoodMeatFish
+      amount: 2
   - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
