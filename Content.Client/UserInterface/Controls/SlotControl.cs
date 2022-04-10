@@ -14,7 +14,7 @@ namespace Content.Client.UserInterface.Controls
     {
         private const string HighlightShader = "SelectionOutlineInrange";
 
-        public TextureRect Button { get; }
+        public TextureRect ButtonRect { get; }
         public TextureRect BlockedRect { get; }
         public TextureRect HighlightRect { get; }
         public SpriteView SpriteView { get; }
@@ -64,7 +64,7 @@ namespace Content.Client.UserInterface.Controls
             set
             {
                 _buttonTexturePath = value;
-                Button.Texture = Theme.ResolveTexture(_buttonTexturePath);
+                ButtonRect.Texture = Theme.ResolveTexture(_buttonTexturePath);
             }
         }
         public Texture StorageTexture => Theme.ResolveTexture(StorageTexturePath);
@@ -101,7 +101,7 @@ namespace Content.Client.UserInterface.Controls
             IoCManager.InjectDependencies(this);
             Name = "SlotButton_null";
             MinSize = (64, 64);
-            AddChild(Button = new TextureRect
+            AddChild(ButtonRect = new TextureRect
             {
                 TextureScale = (2, 2),
                 MouseFilter = MouseFilterMode.Stop
@@ -113,7 +113,7 @@ namespace Content.Client.UserInterface.Controls
                 MouseFilter = MouseFilterMode.Ignore
             });
 
-            Button.OnKeyBindDown += OnButtonPressed;
+            ButtonRect.OnKeyBindDown += OnButtonPressed;
 
             AddChild(SpriteView = new SpriteView
             {
@@ -145,13 +145,13 @@ namespace Content.Client.UserInterface.Controls
 
             StorageButton.OnPressed += OnStorageButtonPressed;
 
-            Button.OnMouseEntered += _ =>
+            ButtonRect.OnMouseEntered += _ =>
             {
                 MouseIsHovering = true;
             };
-            Button.OnMouseEntered += OnButtonHover;
+            ButtonRect.OnMouseEntered += OnButtonHover;
 
-            Button.OnMouseExited += _ =>
+            ButtonRect.OnMouseExited += _ =>
             {
                 MouseIsHovering = false;
                 ClearHover();
@@ -206,10 +206,22 @@ namespace Content.Client.UserInterface.Controls
             OnHover?.Invoke(args, this);
         }
 
+        public void ClearButtonData()
+        {
+            OnPressed = null;
+            OnHover = null;
+            OnStoragePressed = null;
+            Highlight = false;
+            Blocked = false;
+            HoverSpriteView.Sprite = null;
+            SpriteView.Sprite = null;
+        }
+
+
         protected override void OnThemeUpdated()
         {
             StorageButton.TextureNormal = Theme.ResolveTexture(_storageTexturePath);
-            Button.Texture = Theme.ResolveTexture(_buttonTexturePath);
+            ButtonRect.Texture = Theme.ResolveTexture(_buttonTexturePath);
             HighlightRect.Texture = Theme.ResolveTexture(_highlightTexturePath);
         }
     }

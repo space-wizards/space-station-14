@@ -1,14 +1,41 @@
 ﻿<widget:ActionsBar
     xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:widget="clr-namespace:Content.Client.HUD.Widgets"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:input="clr-namespace:Robust.Shared.Input;assembly=Robust.Shared"
+    xmlns:in="clr-namespace:Content.Shared.Input;assembly=Content.Shared"
     Name="ActionsGUI"
     VerticalExpand="False"
-    VerticalAlignment="Bottom"
-    HorizontalAlignment="Center"
-    Orientation="Vertical"
+    Orientation="Horizontal"
+    HorizontalExpand="False"
 >
     <controls:ActionButtonContainer
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
         Name = "ActionsContainer"
-        />
+    >
+        <controls:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar1}"/>
+        <controls:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar2}"/>
+        <controls:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar3}"/>
+        <controls:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar4}"/>
+        <controls:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar5}"/>
+        <controls:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar6}"/>
+        <controls:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar7}"/>
+        <controls:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar8}"/>
+        <controls:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar9}"/>
+        <controls:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar0}"/>
+    </controls:ActionButtonContainer>
+
+
 </widget:ActionsBar>

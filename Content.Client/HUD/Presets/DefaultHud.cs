@@ -15,8 +15,8 @@ public sealed class DefaultHud : HudPreset
     protected override void DefinePreset()
     {
         RegisterAllowedState<GameplayState>(); //only allow this hud to initialize during gameplay state (Ie: Ingame not lobby)
-        RegisterWidget<MenuBar>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.TopLeft,margin: 10);
+        RegisterWidget<MenuBar>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.TopLeft, margin: 10);
         RegisterWidget<HandsGui>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.CenterBottom, margin: 10);
-        RegisterWidget<ActionsBar>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.CenterLeft, margin: 10);
+        RegisterWidget<ActionsBar>().SetAnchorAndMarginPreset(LayoutContainer.LayoutPreset.BottomLeft, margin: 10);
     }
 }

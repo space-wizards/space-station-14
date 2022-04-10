@@ -7,5 +7,4 @@
     Title="Actions"
     VerticalExpand="True"
 >
-    <controls:ActionButtonContainer/>
 </uiWindow:ActionsWindow>

@@ -1,0 +1,12 @@
+﻿- type: uiTheme
+  id: SS14DefaultTheme
+  path: /textures/interface/Default
+  colors:
+    slotSelectedGold: "#e6b812"
+    slotColor: "#0f1215"
+    slotOutline: "#333850"
+    nanoGold:"#A88B5E"
+    goodGreenFore:"#31843E"
+    concerningOrangeFore:"#A5762F"
+    dangerousRedFore:"#BB3232"
+    disabledFore:"#5A5A5A"

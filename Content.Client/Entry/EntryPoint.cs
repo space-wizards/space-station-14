@@ -37,6 +37,7 @@ using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Themes;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -73,6 +74,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
         [Dependency] private readonly IUIControllerManager _uiControllerManager = default!;
         [Dependency] private readonly NetworkResourceManager _networkResources = default!;
+        [Dependency] private readonly IUIThemeManager _uiThemeManager = default!;
 
         public override void Init()
         {
@@ -159,6 +161,7 @@ namespace Content.Client.Entry
             _voteManager.Initialize();
             _gamePrototypeLoadManager.Initialize();
             _networkResources.Initialize();
+            _uiThemeManager.SetDefaultTheme("SS14DefaultTheme");
 
             _baseClient.RunLevelChanged += (_, args) =>
             {

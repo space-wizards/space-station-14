@@ -21,6 +21,9 @@ namespace Content.Client.Actions
         public Action<ActionType>? OnActionRemoved = null;
         public Action<ActionsComponent>? OnLinkActions = null;
         public Action? OnUnlinkActions = null;
+        private ActionsComponent? _playerActions = null;
+        public ActionsComponent? PlayerActions => _playerActions;
+
 
         public override void Initialize()
         {
@@ -63,12 +66,16 @@ namespace Content.Client.Actions
         }
         private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)
         {
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity) OnLinkActions?.Invoke(component);
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity) return;
+            OnLinkActions?.Invoke(component);
+            _playerActions = component;
         }
 
         private void OnPlayerDetached(EntityUid uid, ActionsComponent component, PlayerDetachedEvent? args = null)
         {
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity) OnUnlinkActions?.Invoke();
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity) return;
+            OnUnlinkActions?.Invoke();
+            _playerActions = null;
         }
 
         public override void Shutdown()
