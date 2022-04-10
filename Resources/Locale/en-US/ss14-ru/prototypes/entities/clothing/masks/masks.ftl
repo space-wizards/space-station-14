@@ -20,5 +20,5 @@ ent-ClothingMaskMuzzle = muzzle
     .desc = To stop that awful noise.
     .suffix = { "" }
 ent-ClothingMaskPlague = plague doctor mask
-    .desc = A bad omen
+    .desc = A bad omen.
     .suffix = { "" }

@@ -17,5 +17,5 @@ ent-FoodPlateSmallPlastic = plastic plate
     .desc = A blue plastic plate, excellent for slices of birthday cake.
     .suffix = { "" }
 ent-FoodPlateTin = pie tin
-    .desc = A cheap, foil tin for pies.
+    .desc = A cheap foil tin for pies.
     .suffix = { "" }

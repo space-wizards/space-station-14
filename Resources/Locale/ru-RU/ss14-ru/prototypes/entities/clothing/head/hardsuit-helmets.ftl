@@ -40,3 +40,6 @@ ent-ClothingHeadHelmetHardsuitWizard = шлем скафандра волшеб�
 ent-ClothingHeadHelmetHardsuitLing = organic space helmet
     .desc = A spaceworthy biomass of pressure and temperature resistant tissue.
     .suffix = { "" }
+ent-ClothingHeadHelmetHardsuitSpatio = spationaut hardsuit helmet
+    .desc = A sturdy helmet designed for complex industrial operations in space.
+    .suffix = { "" }

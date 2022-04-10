@@ -145,3 +145,6 @@ ent-BoxMagazineSRiflePractice = коробка магазинов с .20 вин�
 ent-BoxMagazineSRifleRubber = коробка магазинов с .20 винтовочными (резиновые)
     .desc = Полная коробка магазинов с резиновыми патронами калибра .20 винтовочный.
     .suffix = { "" }
+ent-BoxBulletLRifleSmall = box of .30 rifle bullets
+    .desc = A box full of individual .30 rifle bullets.
+    .suffix = { "" }

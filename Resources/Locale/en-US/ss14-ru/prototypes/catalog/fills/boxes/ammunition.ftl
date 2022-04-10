@@ -145,3 +145,6 @@ ent-BoxMagazineSRiflePractice = box of .20 rifle (practice) magazines
 ent-BoxMagazineSRifleRubber = box of .20 rifle (rubber) magazines
     .desc = A box full of .20 rifle (rubber) magazines.
     .suffix = { "" }
+ent-BoxBulletLRifleSmall = box of .30 rifle bullets
+    .desc = A box full of individual .30 rifle bullets.
+    .suffix = { "" }
