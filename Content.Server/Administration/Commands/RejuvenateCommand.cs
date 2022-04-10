@@ -90,9 +90,9 @@ namespace Content.Server.Administration.Commands
                 entMan.RemoveComponent<JitteringComponent>(target);
             }
 
-            if (entMan.TryGetComponent<DiseaseCarrierComponent>(target, out var carrier))
+            if (entMan.HasComponent<DiseaseCarrierComponent>(target))
             {
-                EntitySystem.Get<DiseaseSystem>().CureAllDiseases(carrier);
+                EntitySystem.Get<DiseaseSystem>().CureAllDiseases(target);
             }
         }
     }
