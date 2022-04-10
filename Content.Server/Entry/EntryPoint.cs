@@ -76,8 +76,6 @@ namespace Content.Server.Entry
                 _euiManager = IoCManager.Resolve<EuiManager>();
                 _voteManager = IoCManager.Resolve<IVoteManager>();
 
-                var playerManager = IoCManager.Resolve<IPlayerManager>();
-
                 var logManager = IoCManager.Resolve<ILogManager>();
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;

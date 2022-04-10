@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Shared.CCVar;
-using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -22,8 +17,10 @@ public sealed class GameMapManager : IGameMapManager
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
 
+    private ISawmill _logger = default!;
+
     [ViewVariables]
-    private readonly Queue<string> _previousMaps = new Queue<string>();
+    private readonly Queue<string> _previousMaps = new();
     [ViewVariables]
     private GameMapPrototype _currentMap = default!;
     [ViewVariables]
@@ -35,24 +32,11 @@ public sealed class GameMapManager : IGameMapManager
 
     public void Initialize()
     {
-        _configurationManager.OnValueChanged(CCVars.GameMap, value =>
-        {
-            if (TryLookupMap(value, out var map))
-                _currentMap = map;
-            else
-                throw new ArgumentException($"Unknown map prototype {value} was selected!");
-        }, true);
-        _configurationManager.OnValueChanged(CCVars.GameMapForced, value => _currentMapForced = value, true);
-        _configurationManager.OnValueChanged(CCVars.GameMapRotation, value => _mapRotationEnabled = value, true);
-        _configurationManager.OnValueChanged(CCVars.GameMapMemoryDepth, value =>
-        {
-            _mapQueueDepth = value;
-            // Drain excess.
-            while (_previousMaps.Count > _mapQueueDepth)
-            {
-                _previousMaps.Dequeue();
-            }
-        }, true);
+        _logger = Logger.GetSawmill("mapman");
+        _configurationManager.OnValueChanged(CCVars.GameMap, SetMapCVar, true);
+
+        _configurationManager.OnValueChanged(CCVars.GameMapRotation, SetMapRotation, true);
+        _configurationManager.OnValueChanged(CCVars.GameMapMemoryDepth, SetMemDepth, true);
 
         var maps = AllVotableMaps().ToArray();
         _random.Shuffle(maps);
@@ -61,6 +45,33 @@ public sealed class GameMapManager : IGameMapManager
             if (_previousMaps.Count >= _mapQueueDepth)
                 break;
             _previousMaps.Enqueue(map.ID);
+        }
+    }
+
+    private void SetMapCVar(string value)
+    {
+        if (string.IsNullOrEmpty(value)) return;
+
+        if (TryLookupMap(value, out var map))
+        {
+            _currentMap = map;
+            _currentMapForced = true;
+        }
+        else
+        {
+            _logger.Error($"Unknown map prototype {value} was selected!");
+        }
+    }
+
+    private void SetMapRotation(bool value) => _mapRotationEnabled = value;
+
+    private void SetMemDepth(int value)
+    {
+        _mapQueueDepth = value;
+        // Drain excess.
+        while (_previousMaps.Count > _mapQueueDepth)
+        {
+            _previousMaps.Dequeue();
         }
     }
 

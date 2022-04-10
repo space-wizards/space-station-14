@@ -132,16 +132,9 @@ namespace Content.Shared.CCVar
             GameMaxCharacterSlots = CVarDef.Create("game.maxcharacterslots", 10, CVar.ARCHIVE | CVar.SERVERONLY);
 
         /// <summary>
-        ///     Controls the game map prototype to load. SS14 stores these prototypes in Prototypes/Maps.
+        ///     Controls the forced game map prototype to load. SS14 stores these prototypes in Prototypes/Maps.
         /// </summary>
         public static readonly CVarDef<string>
-            GameMap = CVarDef.Create("game.map", "saltern", CVar.SERVERONLY);
-
-        /// <summary>
-        ///     Controls if the game should obey map criteria or not. Overriden if a map vote or similar occurs.
-        /// </summary>
-        public static readonly CVarDef<bool>
-            GameMapForced = CVarDef.Create("game.mapforced", false, CVar.SERVERONLY);
 
         /// <summary>
         /// The depth of the queue used to calculate which map is next in rotation.
@@ -428,7 +421,7 @@ namespace Content.Shared.CCVar
         /// <remarks>
         ///     Large nukes tend to generate a lot of shrapnel that flies through space. This can functionally cripple
         ///     the server TPS for a while after an explosion (or even during, if the explosion is processed
-        ///     incrementally. 
+        ///     incrementally.
         /// </remarks>
         public static readonly CVarDef<int> ExplosionThrowLimit =
             CVarDef.Create("explosion.throw_limit", 400, CVar.SERVERONLY);
