@@ -1,15 +1,4 @@
 Entries:
-- author: Charlese2
-  changes:
-  - {message: Lowered flash bullet damage., type: Tweak}
-  id: 807
-  time: '2022-01-01T22:54:43.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: The Uplink purchase sound is much quieter now. It still may be audible
-      to other people if they are close enough and in a quiet place., type: Tweak}
-  id: 808
-  time: '2022-01-02T02:00:01.0000000+00:00'
 - author: vulppine
   changes:
   - {message: 'NanoTrasen has decided that air quality is important, and have provided
@@ -3022,3 +3011,17 @@ Entries:
       for the first few notes., type: Fix}
   id: 1306
   time: '2022-04-09T13:33:33.125973+00:00'
+- author: Emisse
+  changes:
+  - {message: Spationaut suit for salvage specialists. A lightweight competitor to
+      the bulky salvagers suit., type: Add}
+  - {message: Round 2 of hardsuit stat rebalancing. Aim to make them more useful but
+      not as oppressive as they once were., type: Add}
+  id: 1307
+  time: '2022-04-10T20:57:36.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Syndicate Grenade Penguins no longer attack Syndicate members. Party
+      loyalty, baby.', type: Fix}
+  id: 1308
+  time: '2022-04-10T20:57:45.0000000+00:00'
