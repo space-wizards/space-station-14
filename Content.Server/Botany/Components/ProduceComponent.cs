@@ -11,7 +11,5 @@ public sealed class ProduceComponent : Component
 {
     [DataField("targetSolution")] public string SolutionName { get; set; } = "food";
 
-    [ViewVariables]
-
     [DataField("seed", required: true)] public string SeedName = default!;
 }
