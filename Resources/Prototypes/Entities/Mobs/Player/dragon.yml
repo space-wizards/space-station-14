@@ -109,4 +109,10 @@
        components:
        - MobState
        - Tag
+    carpBirthAction:
+     event: !type:CarpBirthEvent
+     icon: Interface/Actions/carpbirth.png
+     name: action-name-carp-birth
+     description: action-description-carp-birth
+     carpProto: MobCarp
   

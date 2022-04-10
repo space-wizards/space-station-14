@@ -30,6 +30,8 @@ namespace Content.Server.Dragon
 
             SubscribeLocalEvent<DragonComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<DragonComponent, DevourActionEvent>(OnDevourAction);
+            SubscribeLocalEvent<DragonComponent, CarpBirthEvent>(OnCarpBirthAction);
+
             SubscribeLocalEvent<TargetDevourSuccessfulEvent>(OnDevourSucsessful);
             SubscribeLocalEvent<TargetDevourCancelledEvent>(OnDevourCancelled);
             SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
@@ -69,6 +71,8 @@ namespace Content.Server.Dragon
             component.DragonStomach = _containerSystem.EnsureContainer<Container>(uid, "dragon-stomach");
             if (component.DevourAction != null)
                 _actionsSystem.AddAction(uid, component.DevourAction, null);
+            if (component.CarpBirthAction != null)
+                _actionsSystem.AddAction(uid, component.CarpBirthAction, null);
         }
 
         /// <summary>
@@ -143,6 +147,18 @@ namespace Content.Server.Dragon
                 else return;
             }
             else _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-fail-target-no-body"), dragonuid, Filter.Entities(dragonuid));
+            return;
+        }
+
+        private void OnCarpBirthAction(EntityUid dragonuid, DragonComponent component, CarpBirthEvent args)
+        {
+            //If dragon has eggs, remove one, spawn carp
+            if (component.EggsLeft > 0)
+            {
+                component.EggsLeft--;
+                EntityManager.SpawnEntity(component.CarpProto, Transform(dragonuid).Coordinates);
+            }
+            else _popupSystem.PopupEntity(Loc.GetString("birth-carp-action-popup-message-fail-no-eggs"), dragonuid, Filter.Entities(dragonuid));
             return;
         }
 

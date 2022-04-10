@@ -48,10 +48,34 @@
       food:
         reagents:
         - ReagentId: Toxin
-          Quantity: 1
+          Quantity: 5
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
+
+- type: entity
+  name: raw carp fillet
+  parent: FoodMeatBase
+  # MeatFish?...
+  id: FoodMeatFish
+  description: Your last words being "Wow, exotic!" are not worth it. The taste itself though? Maybe.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: fish
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: CarpToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpToxin
+        Quantity: 5
 
 - type: entity
   name: raw bacon

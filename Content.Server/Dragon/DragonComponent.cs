@@ -27,20 +27,34 @@ namespace Content.Server.Dragon
         [DataField("devourAction", required: true)]
         public EntityTargetAction DevourAction = new();
 
+        /// <summary>
+        /// Defines the carp birthing action
+        /// </summary>
+        [DataField("carpBirthAction", required: true)]
+        public EntityTargetAction CarpBirthAction = new();
+
         // The amount of time it takes to devour something
         // NOTE: original inteded design was to increase this proportionaly with damage thresholds, but those proved quite difficult to get consistently.
         // right now it devours the structure at a fixed timer.
         [DataField("devourTime")]
         public float DevourTimer = 15f;
 
-        //The amount of eggs the dragon is ready to hatch
+        /// <summary>
+        /// The carp prototype
+        /// </summary>
+        [DataField("carpProto")]
+        public string CarpProto = default!;
+
+        /// <summary>
+        /// The amount of carps the dragon is ready to hatch
+        /// </summary>
         public int EggsLeft = 2;
 
         //Token for interrupting the action
         public CancellationTokenSource? CancelToken;
 
         /// <summary>
-        /// Where the entities go when dragon devours them, ruptures when the dragon is dead.
+        /// Where the entities go when dragon devours them, empties when the dragon is dead.
         /// </summary>
         public Container DragonStomach = default!;
     }
@@ -48,6 +62,11 @@ namespace Content.Server.Dragon
     public sealed class DevourActionEvent : PerformEntityTargetActionEvent
     {
         
+    }
+
+    public sealed class CarpBirthEvent: PerformActionEvent
+    {
+
     }
 
 
