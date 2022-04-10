@@ -78,7 +78,7 @@ namespace Content.MapRenderer.Painters
                 using var stream = resourceCache.ContentFileRead($"{TilesPath}{sprite}.png");
                 Image tileSheet = Image.Load<Rgba32>(stream);
 
-                if (tileSheet.Width != tileSize * definition.Variants || tileSheet.Height != tileSize)
+                if (tileSheet.Width != (tileSize * definition.Variants) || tileSheet.Height != tileSize * ((definition.Flags & TileDefFlag.Diagonals) != 0x0 ? 5 : 1))
                 {
                     throw new NotSupportedException($"Unable to use tiles with a dimension other than {tileSize}x{tileSize}.");
                 }
@@ -90,7 +90,7 @@ namespace Content.MapRenderer.Painters
 
                     if ((definition.Flags & TileDefFlag.Diagonals) != 0x0)
                     {
-                        for (var j = 0; j < 4; j++)
+                        for (var j = 1; j < 5; j++)
                         {
                             var dirTileImage = tileSheet.Clone(o => o.Crop(new Rectangle(tileSize * i, tileSize * j, 32, 32)));
                             images[sprite].Add(dirTileImage);
