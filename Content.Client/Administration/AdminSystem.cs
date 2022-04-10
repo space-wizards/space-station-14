@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
 using Content.Shared.GameTicking;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 
 namespace Content.Client.Administration
@@ -29,7 +26,6 @@ namespace Content.Client.Administration
             base.Initialize();
 
             InitializeOverlay();
-            InitializeMenu();
             SubscribeNetworkEvent<FullPlayerListEvent>(OnPlayerListChanged);
             SubscribeNetworkEvent<PlayerInfoChangedEvent>(OnPlayerInfoChanged);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
