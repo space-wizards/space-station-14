@@ -135,6 +135,7 @@ namespace Content.Shared.CCVar
         ///     Controls the forced game map prototype to load. SS14 stores these prototypes in Prototypes/Maps.
         /// </summary>
         public static readonly CVarDef<string>
+            GameMap = CVarDef.Create("game.map", "", CVar.SERVERONLY);
 
         /// <summary>
         /// The depth of the queue used to calculate which map is next in rotation.
