@@ -2,6 +2,8 @@
   id: floor_steel
   name: steel floor
   texture: "steel"
+  flags:
+  - Diagonals
   variants: 4
   placementVariants: [0, 1, 2, 3]
   base_turfs:
@@ -19,6 +21,8 @@
   id: floor_wood
   name: wood
   texture: "wood"
+  flags:
+  - Diagonals
   variants: 4
   placementVariants: [0, 1, 2, 3]
   base_turfs:
@@ -36,6 +40,8 @@
   id: floor_white
   name: white floor
   texture: "white"
+  flags:
+  - Diagonals
   variants: 4
   placementVariants: [0, 1, 2, 3]
   base_turfs:
@@ -53,6 +59,8 @@
   id: floor_dark
   name: dark floor
   texture: "dark"
+  flags:
+  - Diagonals
   variants: 4
   placementVariants: [ 0, 1, 2, 3 ]
   base_turfs:
@@ -70,6 +78,8 @@
   id: floor_techmaint
   name: techmaint floor
   texture: "tech_maint"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -85,6 +95,8 @@
   id: floor_reinforced
   name: reinforced floor
   texture: "reinforced"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -100,6 +112,8 @@
   id: floor_mono
   name: mono floor
   texture: "mono"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -115,6 +129,8 @@
   id: floor_lino
   name: linoleum floor
   texture: "lino"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -130,6 +146,8 @@
   id: floor_steel_dirty
   name: dirty steel floor
   texture: "steel_dirty"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -145,6 +163,8 @@
   id: floor_elevator_shaft
   name: elevator shaft
   texture: "elevator_shaft"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -160,6 +180,8 @@
   id: floor_rock_vault
   name: rock floor
   texture: "rock_vault"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -175,6 +197,8 @@
   id: floor_blue
   name: blue tile
   texture: blue
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -191,6 +215,8 @@
   id: floor_freezer
   name: freezer
   texture: "freezer"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -223,6 +249,8 @@
   id: floor_hydro
   name: hydro floor
   texture: "hydro"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -238,6 +266,8 @@
   id: floor_bar
   name: bar floor
   texture: "bar"
+  flags:
+  - Diagonals
   variants: 4
   placementVariants: [ 0, 1, 2, 3 ]
   base_turfs:
@@ -255,6 +285,8 @@
   id: floor_clown
   name: clown floor
   texture: "clown"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -270,6 +302,8 @@
   id: floor_mime
   name: mime floor
   texture: "mime"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -285,6 +319,8 @@
   id: floor_kitchen
   name: kitchen floor
   texture: "kitchen"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -300,6 +336,8 @@
   id: floor_laundry
   name: laundry floor
   texture: "laundry"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -316,6 +354,8 @@
   id: FloorArcadeBlue
   name: blue arcade floor
   texture: arcadeblue
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -331,6 +371,8 @@
   id: FloorArcadeRed
   name: red arcade floor
   texture: arcadered
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -346,6 +388,8 @@
   id: FloorEighties
   name: eighties floor
   texture: eighties
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -362,6 +406,8 @@
   id: FloorShuttleWhite
   name: white shuttle floor
   texture: shuttlewhite
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -377,6 +423,8 @@
   id: FloorShuttleBlue
   name: blue shuttle floor
   texture: shuttleblue
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -392,6 +440,8 @@
   id: FloorShuttleOrange
   name: orange shuttle floor
   texture: shuttleorange
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -407,6 +457,8 @@
   id: FloorShuttlePurple
   name: purple shuttle floor
   texture: shuttlepurple
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -422,6 +474,8 @@
   id: FloorShuttleRed
   name: red shuttle floor
   texture: shuttlered
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -439,6 +493,8 @@
   id: floor_gold
   name: gold tile
   texture: gold
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -454,6 +510,8 @@
   id: floor_silver
   name: silver tile
   texture: silver
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -469,6 +527,8 @@
   id: floor_glass
   name: glass floor
   texture: glass
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -484,6 +544,8 @@
   id: floor_rglass
   name: reinforced glass floor
   texture: rglass
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -500,6 +562,8 @@
   id: floor_green_circuit
   name: green circuit floor
   texture: "green_circuit"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -515,6 +579,8 @@
   id: floor_blue_circuit
   name: blue circuit floor
   texture: "blue_circuit"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -531,6 +597,8 @@
   id: floor_snow
   name: snow
   texture: snow
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -546,6 +614,8 @@
   id: floor_grass
   name: grass floor
   texture: "grass"
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -561,6 +631,8 @@
   id: FloorGrassJungle
   name: jungle grass floor
   texture: grassjungle
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -577,6 +649,8 @@
   id: floor_asteroid_sand
   name: asteroid floor
   texture: Asteroid/asteroid_sand
+  flags:
+  - Diagonals
   base_turfs:
   - space
   is_subfloor: false
@@ -591,6 +665,8 @@
   id: floor_asteroid_tile
   name: asteroid tile
   texture: Asteroid/asteroid_tile
+  flags:
+  - Diagonals
   base_turfs:
   - plating
   is_subfloor: false
@@ -605,6 +681,8 @@
   id: floor_asteroid_coarse_sand0
   name: asteroid coarse sand
   texture: Asteroid/asteroid_coarse_sand
+  flags:
+  - Diagonals
   variants: 3
   placementVariants: [ 0, 1, 2 ]
   base_turfs:
@@ -621,6 +699,8 @@
   id: floor_asteroid_coarse_sand1
   name: asteroid coarse sand [DO NOT USE]
   texture: Asteroid/asteroid_coarse_sand
+  flags:
+  - Diagonals
   variants: 3
   placementVariants: [ 0, 1, 2 ]
   base_turfs:
@@ -637,6 +717,8 @@
   id: floor_asteroid_coarse_sand2
   name: asteroid coarse sand [DO NOT USE]
   texture: Asteroid/asteroid_coarse_sand
+  flags:
+  - Diagonals
   variants: 3
   placementVariants: [ 0, 1, 2 ]
   base_turfs:
@@ -653,6 +735,8 @@
   id: floor_asteroid_coarse_sand_dug
   name: asteroid dug coarse sand
   texture: Asteroid/asteroid_coarse_sand_dug
+  flags:
+  - Diagonals
   base_turfs:
   - space
   is_subfloor: false
@@ -667,6 +751,8 @@
   id: FloorAsteroidIronsand1
   name: asteroid ironsand
   texture: ironsand1
+  flags:
+  - Diagonals
   base_turfs:
   - space
   is_subfloor: false
@@ -681,6 +767,8 @@
   id: FloorAsteroidIronsand2
   name: asteroid ironsand pebbles
   texture: ironsand2
+  flags:
+  - Diagonals
   base_turfs:
   - space
   is_subfloor: false
@@ -695,6 +783,8 @@
   id: FloorAsteroidIronsand3
   name: asteroid ironsand pebbles 2
   texture: ironsand3
+  flags:
+  - Diagonals
   base_turfs:
   - space
   is_subfloor: false
@@ -709,6 +799,8 @@
   id: FloorAsteroidIronsand4
   name: asteroid ironsand rock
   texture: ironsand4
+  flags:
+  - Diagonals
   base_turfs:
   - space
   is_subfloor: false

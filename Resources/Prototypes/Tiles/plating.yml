@@ -2,6 +2,8 @@
   id: plating
   name: plating
   texture: plating
+  flags:
+  - Diagonals
   base_turfs:
   - lattice
   is_subfloor: true
@@ -15,6 +17,8 @@
   id: lattice
   name: lattice
   texture: lattice
+  flags:
+  - Diagonals
   base_turfs:
   - space
   is_subfloor: true
@@ -30,6 +34,8 @@
   id: underplating
   name: underplating
   texture: underplating
+  flags:
+  - Diagonals
   base_turfs:
   - lattice
   is_subfloor: true
