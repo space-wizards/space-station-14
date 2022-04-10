@@ -85,14 +85,14 @@ namespace Content.MapRenderer.Painters
 
                 for (var i = 0; i < definition.Variants; i++)
                 {
-                    var tileImage = tileSheet.Clone(o => o.Crop(new Rectangle(tileSize * i, 0, 32, 32)));
+                    var tileImage = tileSheet.Clone(o => o.Crop(new Rectangle(tileSize * i, 0, 32, 32)).Flip(FlipMode.Vertical));
                     images[sprite].Add(tileImage);
 
                     if ((definition.Flags & TileDefFlag.Diagonals) != 0x0)
                     {
                         for (var j = 1; j < 5; j++)
                         {
-                            var dirTileImage = tileSheet.Clone(o => o.Crop(new Rectangle(tileSize * i, tileSize * j, 32, 32)));
+                            var dirTileImage = tileSheet.Clone(o => o.Crop(new Rectangle(tileSize * i, tileSize * j, 32, 32)).Flip(FlipMode.Vertical));
                             images[sprite].Add(dirTileImage);
                         }
                     }
