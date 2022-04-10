@@ -98,7 +98,6 @@ namespace Content.Client.Sandbox
             vBox.AddChild(MachineLinkingButton);
         }
 
-
         protected override void EnteredTree()
         {
             base.EnteredTree();
@@ -110,7 +109,6 @@ namespace Content.Client.Sandbox
             base.ExitedTree();
             _gameHud.SandboxButtonDown = false;
         }
-
     }
 
     public sealed class SandboxSystem : SharedSandboxSystem
@@ -148,6 +146,22 @@ namespace Content.Client.Sandbox
                 InputCmdHandler.FromDelegate(session => ToggleTilesWindow()));
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenDecalSpawnWindow,
                 InputCmdHandler.FromDelegate(session => ToggleDecalsWindow()));
+
+            _placementManager.DirectionChanged += OnDirectionChange;
+        }
+
+        private void OnDirectionChange(object? sender, EventArgs e)
+        {
+            // Realistically this should be on some engine system for creating the window but eh
+            if (_tilesSpawnWindow != null)
+            {
+                var flag = _placementManager.CurrentPermission?.TileFlags;
+
+                if (flag != null)
+                    _tilesSpawnWindow?.SetFlagLabel(flag.Value);
+            }
+
+            _spawnWindow?.SetRotationLabel(_placementManager.Direction);
         }
 
         private void OnAdminStatus()
@@ -196,6 +210,7 @@ namespace Content.Client.Sandbox
             // TODO: Gamehud moment
             _gameHud.SandboxButtonToggled -= SandboxButtonPressed;
             _adminManager.AdminStatusUpdated -= OnAdminStatus;
+            _placementManager.DirectionChanged -= OnDirectionChange;
         }
 
         private void OnSandboxStatus(MsgSandboxStatus ev)
