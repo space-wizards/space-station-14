@@ -125,10 +125,8 @@ namespace Content.Shared.Friction
             body.AngularVelocity *= newSpeed;
         }
 
-        [Pure]
         private float GetTileFriction(PhysicsComponent body)
         {
-            // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
             if (body.BodyStatus == BodyStatus.InAir ||
                 _weightSystem.IsWeightless(body.Owner, out var tileRef, body) ||
                 tileRef == null)
