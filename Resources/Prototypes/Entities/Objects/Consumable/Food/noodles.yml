@@ -68,7 +68,7 @@
   name: spaghetti and meatballs
   parent: FoodNoodlesBase
   id: FoodNoodlesMeatball
-  description: Now that's a nica meatball!
+  description: Now that's a nice-a meatball!
   components:
   - type: Sprite
     layers:
