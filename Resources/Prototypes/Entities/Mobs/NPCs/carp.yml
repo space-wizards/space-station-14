@@ -54,6 +54,22 @@
         Brute: 20
 
 - type: entity
+  name: space carp
+  id: MobCarpSentient
+  suffix: Player
+  parent: MobCarp
+  description: It's a space fish! This one looks ominously.. smart.
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Sentient Carp
+    description: Help the dragon flood the station with carps!
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+
+- type: entity
   name: magicarp
   parent: MobCarp
   id: MobCarpMagic
