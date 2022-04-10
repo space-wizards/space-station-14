@@ -35,7 +35,7 @@ public sealed class ActionButton : SlotControl
             HorizontalAlignment = HAlignment.Left,
             VerticalAlignment = VAlignment.Top
         };
-        _label.FontColorOverride = StyleNano.NanoGold;
+        _label.FontColorOverride = Theme.ResolveColorOrSpecified("slotOutline");
         AddChild(_label);
     }
 }
