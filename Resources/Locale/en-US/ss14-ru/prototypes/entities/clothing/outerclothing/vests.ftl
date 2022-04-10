@@ -1,5 +1,5 @@
 ent-ClothingOuterVestWebMerc = merc web vest
-    .desc = A high-quality armored vest made from a hard synthetic material. It is surprisingly flexible and light, despite formidable armor plating.
+    .desc = A high-quality armored vest made from a hard synthetic material. It's surprisingly flexible and light, despite formidable armor plating.
     .suffix = { "" }
 ent-ClothingOuterVestWeb = web vest
     .desc = A synthetic armor vest. This one has added webbing and ballistic plates.

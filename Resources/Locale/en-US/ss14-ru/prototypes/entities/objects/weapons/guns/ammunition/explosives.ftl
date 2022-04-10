@@ -14,5 +14,5 @@ ent-GrenadeFrag = frag grenade
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }
 ent-SlowRocketAmmo = PG-7VL grenade "Snail-Rocket"
-    .desc = A 1.5 warhead designed for the RPG-7 launcher. It is unusually slow.
+    .desc = A 1.5 warhead designed for the RPG-7 launcher. It's unusually slow.
     .suffix = { "" }

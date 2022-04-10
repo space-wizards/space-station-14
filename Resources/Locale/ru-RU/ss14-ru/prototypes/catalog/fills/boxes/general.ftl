@@ -37,3 +37,6 @@ ent-BoxFlare = коробка фальшфейеров
 ent-BoxTrashbag = коробка мусорных пакетов
     .desc = Коробка мусорных пакетов. Звуки счастливого уборщика.
     .suffix = { "" }
+ent-BoxSyndicateEVA = syndicate EVA box
+    .desc = A box containing one Syndicate approved EVA suit.
+    .suffix = { "" }

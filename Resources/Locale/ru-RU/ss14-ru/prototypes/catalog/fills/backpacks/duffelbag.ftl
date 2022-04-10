@@ -31,3 +31,6 @@ ent-ClothingBackpackDuffelSyndicateCostumeClown = вещмешок с костю
 ent-ClothingBackpackDuffelSyndicatePyjamaBundle = вещмешок пижам синдиката
     .desc = Содержит 3 пижамы синдиката.
     .suffix = { "" }
+ent-ClothingBackpackDuffelSyndicateHardsuitBundle = syndicate hardsuit bundle
+    .desc = Contains the Syndicate's signature blood red hardsuit.
+    .suffix = { "" }

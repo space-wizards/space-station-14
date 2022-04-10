@@ -58,8 +58,9 @@
       graph: LightSwitch
       node: lightSwitch
     - type: ExtensionCableReceiver
-    - type: DeviceNetworkComponent
+    - type: DeviceNetwork
       deviceNetId: Apc
+      transmitFrequencyId: SmartLight # assuming people want to use it for light switches.
     - type: ApcNetworkConnection
     - type: ApcNetSwitch
   placement:
@@ -90,6 +91,9 @@
     - type: Construction
       graph: LeverGraph
       node: lever
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
     - type: Destructible
       thresholds:
       - trigger:

@@ -1,3 +1,3 @@
 ent-AsteroidRock = asteroid rock
-    .desc = That's an asteroid
+    .desc = An asteroid.
     .suffix = { "" }

@@ -29,5 +29,5 @@ ent-OrganHumanLiver = liver
     .desc = Pairing suggestion: chianti and fava beans.
     .suffix = { "" }
 ent-OrganHumanKidneys = kidneys
-    .desc = Filters toxins out of a bloodstream.
+    .desc = Filters toxins from the bloodstream.
     .suffix = { "" }

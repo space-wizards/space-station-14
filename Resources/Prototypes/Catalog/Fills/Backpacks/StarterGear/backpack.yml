@@ -27,6 +27,7 @@
   - type: StorageFill
     contents:
       - id: BoxHug
+      - id: RubberStampClown
 
 - type: entity
   noSpawn: true
@@ -93,6 +94,7 @@
   - type: StorageFill
     contents:
       - id: BoxSurvival
+      - id: RubberStampMime
 
 - type: entity
   noSpawn: true
@@ -112,6 +114,7 @@
     contents:
       - id: BoxSurvival
       - id: Bible
+      - id: RubberStampChaplain
 
 - type: entity
   noSpawn: true

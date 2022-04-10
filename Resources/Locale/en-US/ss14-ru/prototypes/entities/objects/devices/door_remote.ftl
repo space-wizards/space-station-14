@@ -1,5 +1,5 @@
 ent-DoorRemoteDefault = door remote
-    .desc = A gadget which can open and bolt doors remotely
+    .desc = A gadget which can open and bolt doors remotely.
     .suffix = { "" }
 ent-DoorRemoteCommand = command door remote
     .desc = { ent-DoorRemoteDefault.desc }

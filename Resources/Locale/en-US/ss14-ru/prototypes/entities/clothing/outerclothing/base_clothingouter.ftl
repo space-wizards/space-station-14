@@ -4,3 +4,6 @@ ent-ClothingOuterBase = { ent-Clothing }
 ent-ClothingOuterHardsuitBase = base hardsuit
     .desc = { ent-ClothingOuterBase.desc }
     .suffix = { "" }
+ent-ClothingOuterEVASuitBase = base EVA Suit
+    .desc = { ent-ClothingOuterBase.desc }
+    .suffix = { "" }

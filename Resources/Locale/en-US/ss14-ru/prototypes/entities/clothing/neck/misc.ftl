@@ -8,5 +8,5 @@ ent-ClothingNeckBling = bling
     .desc = Damn, it feels good to be a gangster.
     .suffix = { "" }
 ent-ClothingNeckLawyerbadge = lawyer badge
-    .desc = A badge to show that the owner is a 'legitimate' lawyer who passed the NT par exam required to practice law.
+    .desc = A badge to show that the owner is a 'legitimate' lawyer who passed the NT bar exam required to practice law.
     .suffix = { "" }

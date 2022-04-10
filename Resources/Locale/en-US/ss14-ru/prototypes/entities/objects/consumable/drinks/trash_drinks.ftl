@@ -1,5 +1,5 @@
 ent-DrinkBottleBaseEmpty = base empty bottle
-    .desc = That's an empty bottle.
+    .desc = An empty bottle.
     .suffix = { "" }
 ent-DrinkBottleAbsinthe = jailbreaker verte bottle
     .desc = { ent-DrinkBottleBaseEmpty.desc }
