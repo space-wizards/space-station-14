@@ -1,6 +1,7 @@
 using Content.Shared.Body.Events;
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
+using Content.Shared.Gravity.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -18,15 +19,22 @@ namespace Content.Shared.ActionBlocker
     [UsedImplicitly]
     public sealed class ActionBlockerSystem : EntitySystem
     {
+        [Dependency] private readonly SharedWeightlessSystem _weightlessSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
+
+            // TODO Move this to a more general mover-system whenever mover components get fully ECSed.
             SubscribeLocalEvent<IMoverComponent, ComponentStartup>(OnMoverStartup);
         }
 
         private void OnMoverStartup(EntityUid uid, IMoverComponent component, ComponentStartup args)
         {
             UpdateCanMove(uid, component);
+
+            // No duplicate subscriptions
+            _weightlessSystem.OnMoverStartup(component);
         }
 
         public bool CanMove(EntityUid uid, IMoverComponent? component = null)

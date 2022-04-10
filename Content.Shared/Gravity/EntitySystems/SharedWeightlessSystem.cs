@@ -25,26 +25,27 @@ public abstract class SharedWeightlessSystem : EntitySystem
         SubscribeLocalEvent<MovementIgnoreGravityComponent, ComponentStartup>(OnIgnoreStartup);
         SubscribeLocalEvent<MovementIgnoreGravityComponent, ComponentShutdown>(OnIgnoreShutdown);
 
-        SubscribeLocalEvent<IMoverComponent, ComponentStartup>(OnMoverStartup);
-        SubscribeLocalEvent<IMoverComponent, ComponentShutdown>(OnMoverShutdown);
         SubscribeLocalEvent<IMoverComponent, ChangedGridEvent>(OnGridChanged);
         SubscribeLocalEvent<IMoverComponent, PhysicsBodyTypeChangedEvent>(OnBodyTypeChanged);
 
         SubscribeLocalEvent<GravityChangedMessage>(OnGravityChanged);
+
+        // TODO Move this to a more general mover-system whenever mover components get fully ECSed.
+        SubscribeLocalEvent<IMoverComponent, ComponentShutdown>(OnMoverShutdown);
     }
 
-    private void OnMoverStartup(EntityUid uid, IMoverComponent component, ComponentStartup args)
+    public void OnMoverStartup(IMoverComponent component)
     {
-        var xform = Transform(uid);
-        UpdateMoverWeightlessness(uid, component, xform: xform);
+        var xform = Transform(component.Owner);
+        UpdateMoverWeightlessness(component.Owner, component, xform: xform);
 
         if (!xform.GridID.IsValid())
             return;
 
         if (GridMovers.TryGetValue(xform.GridID, out var set))
-            set.Add(uid);
+            set.Add(component.Owner);
         else
-            GridMovers[xform.GridID] = new() { uid };
+            GridMovers[xform.GridID] = new() { component.Owner };
     }
 
     private void OnMoverShutdown(EntityUid uid, IMoverComponent component, ComponentShutdown args)
