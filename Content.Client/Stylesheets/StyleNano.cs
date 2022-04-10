@@ -457,6 +457,11 @@ namespace Content.Client.Stylesheets
             var contextMenuExpansionTexture = resCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
             var verbMenuConfirmationTexture = resCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
 
+            // south-facing arrow:
+            var directionIconArrowTex = resCache.GetTexture("/Textures/Interface/VerbIcons/drop.svg.192dpi.png");
+            var directionIconQuestionTex = resCache.GetTexture("/Textures/Interface/VerbIcons/information.svg.192dpi.png");
+            var directionIconHereTex = resCache.GetTexture("/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
+            
             Stylesheet = new Stylesheet(BaseRules.Concat(new[]
             {
                 // Window title.
@@ -679,6 +684,16 @@ namespace Content.Client.Stylesheets
                 Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextDisabled),
+
+                // Direction / arrow icon
+                Element<DirectionIcon>().Class(DirectionIcon.StyleClassDirectionIconArrow)
+                    .Prop(TextureRect.StylePropertyTexture, directionIconArrowTex),
+
+                Element<DirectionIcon>().Class(DirectionIcon.StyleClassDirectionIconUnknown)
+                    .Prop(TextureRect.StylePropertyTexture, directionIconQuestionTex),
+
+                Element<DirectionIcon>().Class(DirectionIcon.StyleClassDirectionIconHere)
+                    .Prop(TextureRect.StylePropertyTexture, directionIconHereTex),
 
                 // Thin buttons (No padding nor vertical margin)
                 Element<EntityContainerButton>().Class(StyleClassStorageButton)

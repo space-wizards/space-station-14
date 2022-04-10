@@ -110374,7 +110374,7 @@ entities:
 - uid: 9322
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: -25.5,9.5
     parent: 61
@@ -110384,7 +110384,7 @@ entities:
 - uid: 9323
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: 29.5,-22.5
     parent: 61
@@ -110394,7 +110394,7 @@ entities:
 - uid: 9324
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: 18.5,-26.5
     parent: 61
@@ -124645,7 +124645,7 @@ entities:
 - uid: 10627
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: -7.5,7.5
     parent: 61
@@ -132695,7 +132695,7 @@ entities:
 - uid: 11500
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: 13.5,11.5
     parent: 61
@@ -149143,7 +149143,7 @@ entities:
 - uid: 13374
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: 24.5,12.5
     parent: 61
@@ -183092,7 +183092,7 @@ entities:
 - uid: 17268
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: -34.5,25.5
     parent: 61
@@ -186631,7 +186631,7 @@ entities:
 - uid: 17690
   type: ClothingUniformJumpsuitLawyerBlue
   components:
-  - desc: a cool blue suit worn by those higher up the food chain than you
+  - desc: A cool blue suit worn by those higher up the food chain than you.
     name: nanotrasen representative jumpsuit
     type: MetaData
   - parent: 16665
@@ -200722,7 +200722,7 @@ entities:
 - uid: 19310
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: -22.5,-13.5
     parent: 61

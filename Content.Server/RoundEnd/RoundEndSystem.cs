@@ -113,7 +113,8 @@ namespace Content.Server.RoundEnd
                 _adminLog.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled");
             }
 
-            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"), Loc.GetString("Station"), false);
+            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
+                Loc.GetString("Station"), false, colorOverride: Color.Gold);
 
             SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlerecalled.ogg");
 

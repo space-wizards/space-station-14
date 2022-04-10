@@ -79,8 +79,9 @@
         Heat: 5
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
-  - type: DeviceNetworkComponent
+  - type: DeviceNetwork
     deviceNetId: Apc
+    receiveFrequencyId: SmartLight
   - type: ApcNetworkConnection
   - type: Appearance
     visuals:
@@ -245,8 +246,9 @@
         Heat: 5
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
-  - type: DeviceNetworkComponent
+  - type: DeviceNetwork
     deviceNetId: Apc
+    receiveFrequencyId: SmartLight
   - type: ApcNetworkConnection
   - type: Appearance
     visuals:
