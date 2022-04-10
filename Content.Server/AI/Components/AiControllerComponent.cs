@@ -1,14 +1,10 @@
 using Content.Server.AI.EntitySystems;
 using Content.Server.GameTicking;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Movement.Components;
 using Content.Shared.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.AI.Components
 {
@@ -20,6 +16,8 @@ namespace Content.Server.AI.Components
         [DataField("logic")] private float _visionRadius = 8.0f;
 
         public bool Weightless { get; set; } = false;
+
+        public bool CanMove { get; set; } = true;
 
         // TODO: Need to ECS a lot more of the AI first before we can ECS this
         /// <summary>

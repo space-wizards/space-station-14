@@ -1,15 +1,11 @@
 using System;
+using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Gravity.EntitySystems;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Movement.Components
 {
@@ -66,6 +62,9 @@ namespace Content.Shared.Movement.Components
                 : MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
         public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool CanMove { get; set; } = true;
 
         /// <summary>
         ///     Calculated linear velocity direction of the entity.
@@ -128,7 +127,7 @@ namespace Content.Shared.Movement.Components
         {
             base.Initialize();
             Owner.EnsureComponentWarn<PhysicsComponent>();
-            LastGridAngle = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Parent?.WorldRotation ?? new Angle(0);
+            LastGridAngle = _entityManager.GetComponent<TransformComponent>(Owner).Parent?.WorldRotation ?? new Angle(0);
         }
 
         /// <summary>
@@ -205,12 +204,13 @@ namespace Content.Shared.Movement.Components
                 _lastInputTick = GameTick.Zero;
                 _lastInputSubTick = 0;
                 Weightless = state.Weightless;
+                CanMove = state.CanMove;
             }
         }
 
         public override ComponentState GetComponentState()
         {
-            return new MoverComponentState(_heldMoveButtons, Weightless);
+            return new MoverComponentState(_heldMoveButtons, CanMove, Weightless);
         }
 
         /// <summary>
@@ -249,11 +249,13 @@ namespace Content.Shared.Movement.Components
         private sealed class MoverComponentState : ComponentState
         {
             public MoveButtons Buttons { get; }
+            public readonly bool CanMove;
             public readonly bool Weightless;
 
-            public MoverComponentState(MoveButtons buttons, bool weightless)
+            public MoverComponentState(MoveButtons buttons, bool canMove, bool weightless)
             {
                 Buttons = buttons;
+                CanMove = canMove;
                 Weightless = weightless;
             }
         }

@@ -11,6 +11,7 @@ namespace Content.Shared.Movement.Components
         public float CurrentWalkSpeed => 0f;
         public float CurrentSprintSpeed => 0f;
         public bool Weightless { get; set; } = false;
+        public bool CanMove { get; set; } = true;
 
         public Angle LastGridAngle { get => Angle.Zero; set {} }
 
