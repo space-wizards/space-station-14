@@ -74,6 +74,10 @@ namespace Content.Server.Storage.Components
         [DataField("blacklist")]
         public EntityWhitelist? Blacklist = null;
 
+        /// <summary>
+        ///     If true, storage will show popup messages to the player after failed interactions.
+        ///     Usually this is message that item doesn't fit inside container.
+        /// </summary>
         [DataField("popup")]
         public bool ShowPopup = true;
 
