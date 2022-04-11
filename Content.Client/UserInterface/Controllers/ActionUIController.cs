@@ -1,6 +1,7 @@
 ﻿using Content.Client.Actions;
 using Content.Client.Outline;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Robust.Client.UserInterface;
 
@@ -50,20 +51,42 @@ public sealed class ActionUIController : UIController
 
     private void ActionSystemStart()
     {
-        LoadDefaultActions();
-        if (_defaultPage != null) actionContainer?.LoadActionData(_defaultPage);
+        _actionsSystem.OnLinkActions += OnComponentLinked;
+        _actionsSystem.OnUnlinkActions += OnComponentUnlinked;
     }
 
     private void ActionSystemShutdown()
     {
-        _defaultPage = null;
-        actionContainer?.ClearActionData();
+        _actionsSystem.OnLinkActions = null;
+        _actionsSystem.OnUnlinkActions = null;
     }
 
-    private void LoadDefaultActions()
+    private void OnComponentUnlinked()
     {
-        if (_actionsSystem.PlayerActions == null) return;
-        _defaultPage = new ActionPage(_actionsSystem.PlayerActions.Actions);
+        _defaultPage = null;
+        actionContainer?.ClearActionData();
+        //TODO: Clear button data
+    }
+
+    private void OnComponentLinked(ActionsComponent component)
+    {
+        LoadDefaultActions(component);
+        if (_defaultPage != null) actionContainer?.LoadActionData(_defaultPage);
+    }
+
+
+
+    private void LoadDefaultActions(ActionsComponent component)
+    {
+        List<ActionType> actionsToadd = new();
+        foreach (var actionType in component.Actions)
+        {
+            if (actionType.AutoPopulate)
+            {
+                actionsToadd.Add(actionType);
+            }
+        }
+        _defaultPage = new ActionPage(actionsToadd.ToArray());
     }
 
 

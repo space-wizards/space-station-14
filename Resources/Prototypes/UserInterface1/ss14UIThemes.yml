@@ -2,6 +2,7 @@
   id: SS14DefaultTheme
   path: /textures/interface/Default
   colors:
+    whiteText: "#FFF5EE"
     slotSelectedGold: "#e6b812"
     slotColor: "#0f1215"
     slotOutline: "#333850"

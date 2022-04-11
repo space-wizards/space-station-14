@@ -29,22 +29,13 @@ public class ActionButtonContainer : GridContainer
             value.SetPositionInParent(index);
         }
     }
-
     public void LoadActionData(params ActionType?[] actionTypes)
     {
         for (var i = 0; i < actionTypes.Length; i++)
         {
             var action= actionTypes[i];
             if (action == null) continue;
-            if (action.Provider == null || !_entityManager.TryGetComponent(action.Provider.Value, out SpriteComponent sprite))
-            {
-                //TODO: Action button styles
-                ((ActionButton)GetChild(i)).SpriteView.Sprite = null;
-            }
-            else
-            {
-                ((ActionButton)GetChild(i)).SpriteView.Sprite = sprite;
-            }
+            ((ActionButton)GetChild(i)).UpdateButtonData(_entityManager, action);
         }
     }
     public void ClearActionData()
