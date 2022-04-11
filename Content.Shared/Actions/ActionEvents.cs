@@ -9,7 +9,7 @@ namespace Content.Shared.Actions;
 
 /// <summary>
 ///     Event raised directed at items or clothing when they are equipped or held. In order for an item to grant actions some
-///     system has to subscribe to this component. 
+///     system can subscribe to this event and add actions to the <see cref="Actions"/> list. 
 /// </summary>
 /// <remarks>
 ///     Note that a system could also just manually add actions as a result of a <see cref="GotEquippedEvent"/> or <see
@@ -39,10 +39,6 @@ public sealed class GetItemActionsEvent : EntityEventArgs
 /// <summary>
 ///     Event used to communicate with the server that a client wishes to perform some action.
 /// </summary>
-/// <remarks>
-///     Basically a wrapper for <see cref="InstantActionEvent"/> that the action system will validate before performing
-///     (check cooldown, target, enabling-entity)
-/// </remarks>
 [Serializable, NetSerializable]
 public sealed class RequestPerformActionEvent : EntityEventArgs
 {
@@ -110,7 +106,7 @@ public abstract class WorldTargetActionEvent : BaseActionEvent
 }
 
 /// <summary>
-///     Base event that is raised when an action gets performed. This should not generally be used outside of the action
+///     Base class for events that are raised when an action gets performed. This should not generally be used outside of the action
 ///     system.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
