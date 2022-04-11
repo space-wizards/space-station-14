@@ -79,7 +79,7 @@ public sealed class StationSystem : EntitySystem
             if (!TryComp<BecomesStationComponent>(_mapManager.GetGridEuid(grid), out var becomesStation))
                 continue;
 
-            var stationId = InitialSetupStationGrid(grid, ev.GameMap);
+            var stationId = InitialSetupStationGrid(grid, ev.GameMap, ev.StationName);
 
             dict.Add(becomesStation.Id, stationId);
         }
@@ -90,7 +90,7 @@ public sealed class StationSystem : EntitySystem
             // We'll just take the first grid and setup that, then.
 
             var grid = ev.Grids[0];
-            var stationId = InitialSetupStationGrid(grid, ev.GameMap);
+            var stationId = InitialSetupStationGrid(grid, ev.GameMap, ev.StationName);
 
             dict.Add("Station", stationId);
         }

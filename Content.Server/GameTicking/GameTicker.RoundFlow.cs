@@ -101,16 +101,26 @@ namespace Content.Server.GameTicking
             _sawmill.Info($"Loaded maps in {timeSpan.TotalMilliseconds:N2}ms.");
         }
 
-        public (IReadOnlyList<EntityUid>, IReadOnlyList<GridId>) LoadGameMap(GameMapPrototype map, MapId toLoad, MapLoadOptions? loadOptions, string? stationName = null)
+
+        /// <summary>
+        ///     Loads a new map, allowing systems interested in it to handle loading events.
+        ///     In the base game, this is required to be used if you want to load a station.
+        /// </summary>
+        /// <param name="map">Game map prototype to load in.</param>
+        /// <param name="targetMapId">Map to load into.</param>
+        /// <param name="loadOptions">Map loading options, includes offset.</param>
+        /// <param name="stationName">Name to assign to the loaded station.</param>
+        /// <returns>All loaded entities and grids.</returns>
+        public (IReadOnlyList<EntityUid>, IReadOnlyList<GridId>) LoadGameMap(GameMapPrototype map, MapId targetMapId, MapLoadOptions? loadOptions, string? stationName = null)
         {
             var loadOpts = loadOptions ?? new MapLoadOptions();
 
-            var ev = new PreGameMapLoad(toLoad, map, loadOpts);
+            var ev = new PreGameMapLoad(targetMapId, map, loadOpts);
             RaiseLocalEvent(ev);
 
-            var (entities, grids) = _mapLoader.LoadMap(toLoad, ev.GameMap.MapPath.ToString(), ev.Options);
+            var (entities, grids) = _mapLoader.LoadMap(targetMapId, ev.GameMap.MapPath.ToString(), ev.Options);
 
-            RaiseLocalEvent(new PostGameMapLoad(map, toLoad, entities, grids));
+            RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, entities, grids, stationName));
 
             _spawnPoint = _mapManager.GetGrid(grids[0]).ToCoordinates();
             return (entities, grids);
@@ -496,6 +506,9 @@ namespace Content.Server.GameTicking
     ///     Event raised before the game loads a given map.
     ///     This event is mutable, and load options should be tweaked if necessary.
     /// </summary>
+    /// <remarks>
+    ///     You likely want to subscribe to this after StationSystem.
+    /// </remarks>
     [PublicAPI]
     public sealed class PreGameMapLoad : EntityEventArgs
     {
@@ -515,6 +528,9 @@ namespace Content.Server.GameTicking
     /// <summary>
     ///     Event raised after the game loads a given map.
     /// </summary>
+    /// <remarks>
+    ///     You likely want to subscribe to this after StationSystem.
+    /// </remarks>
     [PublicAPI]
     public sealed class PostGameMapLoad : EntityEventArgs
     {
@@ -522,13 +538,15 @@ namespace Content.Server.GameTicking
         public readonly MapId Map;
         public readonly IReadOnlyList<EntityUid> Entities;
         public readonly IReadOnlyList<GridId> Grids;
+        public readonly string? StationName;
 
-        public PostGameMapLoad(GameMapPrototype gameMap, MapId map, IReadOnlyList<EntityUid> entities, IReadOnlyList<GridId> grids)
+        public PostGameMapLoad(GameMapPrototype gameMap, MapId map, IReadOnlyList<EntityUid> entities, IReadOnlyList<GridId> grids, string? stationName)
         {
             GameMap = gameMap;
             Map = map;
             Entities = entities;
             Grids = grids;
+            StationName = stationName;
         }
     }
 
