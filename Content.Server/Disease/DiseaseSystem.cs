@@ -189,6 +189,17 @@ namespace Content.Server.Disease
             _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Entities(carrier.Owner));
         }
 
+        public void CureAllDiseases(EntityUid uid, DiseaseCarrierComponent? carrier = null)
+        {
+            if (!Resolve(uid, ref carrier))
+                return;
+
+            foreach (var disease in carrier.Diseases)
+            {
+                CureDisease(carrier, disease);
+            }
+        }
+
         /// <summary>
         /// Called when someone interacts with a diseased person with an empty hand
         /// to check if they get infected
