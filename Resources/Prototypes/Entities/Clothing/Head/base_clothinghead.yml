@@ -26,6 +26,26 @@
 - type: entity
   abstract: true
   parent: ClothingHeadBase
+  id: ClothingHeadEVAHelmetBase
+  name: base space helmet
+  components:
+  - type: Clothing
+    size: 10
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 10
+  - type: TemperatureProtection
+    coefficient: 0.2
+  - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - HidesHair
+  - type: DiseaseProtection
+    protection: 0.05
+
+- type: entity
+  abstract: true
+  parent: ClothingHeadBase
   id: ClothingHeadHardsuitBase
   name: base hardsuit helmet
   components:

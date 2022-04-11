@@ -16,6 +16,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Content.Shared.Inventory.Events;
 using Content.Server.Nutrition.EntitySystems;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Disease
@@ -186,6 +187,17 @@ namespace Content.Server.Disease
             var CureTuple = (carrier, disease);
             CureQueue.Enqueue(CureTuple);
             _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Entities(carrier.Owner));
+        }
+
+        public void CureAllDiseases(EntityUid uid, DiseaseCarrierComponent? carrier = null)
+        {
+            if (!Resolve(uid, ref carrier))
+                return;
+
+            foreach (var disease in carrier.Diseases)
+            {
+                CureDisease(carrier, disease);
+            }
         }
 
         /// <summary>
@@ -369,7 +381,7 @@ namespace Content.Server.Disease
 
             var carrierQuery = GetEntityQuery<DiseaseCarrierComponent>();
 
-            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, 2f))
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, 2f))
             {
                 if (!carrierQuery.TryGetComponent(entity, out var carrier) ||
                     !_interactionSystem.InRangeUnobstructed(uid, entity)) continue;
