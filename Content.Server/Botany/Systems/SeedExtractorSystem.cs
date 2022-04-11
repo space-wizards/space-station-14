@@ -1,4 +1,4 @@
-﻿using Content.Server.Botany.Components;
+using Content.Server.Botany.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Shared.Interaction;
@@ -32,8 +32,14 @@ public sealed class SeedExtractorSystem : EntitySystem
 
         if (TryComp(args.Used, out ProduceComponent? produce))
         {
-            if (!_prototypeManager.TryIndex<SeedPrototype>(produce.SeedName, out var seed))
-                return;
+            SeedPrototype? seed;
+            // try get seed from seed database
+            if (produce.SeedUid == null || !_botanySystem.Seeds.TryGetValue(produce.SeedUid.Value, out seed))
+            {
+                // try get seed from base prototype
+                if (produce.SeedName == null || !_prototypeManager.TryIndex(produce.SeedName, out seed))
+                    return;
+            }
 
             _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-interact-message",("name", args.Used)),
                 Filter.Entities(args.User));

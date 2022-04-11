@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Botany.Components;
@@ -31,8 +31,14 @@ public sealed partial class BotanySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (!_prototypeManager.TryIndex<SeedPrototype>(component.SeedName, out var seed))
-            return;
+        SeedPrototype? seed;
+        // try get seed from seed database
+        if (component.SeedUid == null || !Seeds.TryGetValue(component.SeedUid.Value, out seed))
+        {
+            // try get seed from base prototype
+            if (component.SeedName == null || !_prototypeManager.TryIndex(component.SeedName, out seed))
+                return;
+        }
 
         args.PushMarkup(Loc.GetString($"seed-component-description", ("seedName", seed.DisplayName)));
 
@@ -54,7 +60,8 @@ public sealed partial class BotanySystem
         var seed = Spawn(SeedPrototype.Prototype, transformCoordinates);
 
         var seedComp = EnsureComp<SeedComponent>(seed);
-        seedComp.SeedName = proto.ID;
+        AddSeedToDatabase(proto);
+        seedComp.SeedUid = proto.Uid;
 
         if (TryComp(seed, out SpriteComponent? sprite))
         {
@@ -111,6 +118,7 @@ public sealed partial class BotanySystem
         }
 
         var products = new List<EntityUid>();
+        AddSeedToDatabase(proto);
 
         for (var i = 0; i < totalYield; i++)
         {
@@ -122,7 +130,7 @@ public sealed partial class BotanySystem
 
             var produce = EnsureComp<ProduceComponent>(entity);
 
-            produce.SeedName = proto.ID;
+            produce.SeedUid = proto.Uid;
             ProduceGrown(entity, produce);
 
             if (TryComp<AppearanceComponent>(entity, out var appearance))

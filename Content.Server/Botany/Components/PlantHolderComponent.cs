@@ -655,9 +655,14 @@ namespace Content.Server.Botany.Components
             {
                 if (Seed == null)
                 {
-                    var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                    if (!protoMan.TryIndex<SeedPrototype>(seeds.SeedName, out var seed))
-                        return false;
+                    SeedPrototype? seed;
+                    // try get seed from seed database
+                    if (seeds.SeedUid == null || !botanySystem.Seeds.TryGetValue(seeds.SeedUid.Value, out seed))
+                    {
+                        // try get seed from base prototype
+                        if (seeds.SeedName == null || !_prototypeManager.TryIndex(seeds.SeedName, out seed))
+                            return false;
+                    }
 
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-plant-success-message",
                         ("seedName", seed.SeedName),

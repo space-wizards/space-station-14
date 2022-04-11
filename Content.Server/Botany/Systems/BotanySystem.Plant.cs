@@ -23,6 +23,7 @@ namespace Content.Server.Botany.Systems
         private int _nextUid = 0;
         private float _timer = 0f;
 
+        [ViewVariables]
         public readonly Dictionary<int, SeedPrototype> Seeds = new();
 
         public override void Initialize()

@@ -75,6 +75,7 @@ public sealed class SeedPrototype : IPrototype
     /// <summary>
     ///     Unique identifier of this seed. Do NOT set this.
     /// </summary>
+    [ViewVariables]
     public int Uid { get; internal set; } = -1;
 
     #region Tracking
