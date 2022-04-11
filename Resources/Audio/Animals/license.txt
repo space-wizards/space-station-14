@@ -13,3 +13,10 @@ chicken_cluck_happy.ogg: modified from "Chicken Single Alarm Call" by freesound 
 ferret_happy.ogg: modified from "Ferret" by freesound user "J.Zazvurek" (https://freesound.org/people/J.Zazvurek/sounds/155115/) licensed under CC BY 3.0. The original audio was trimmed and converted from WAV to OGG format.
 
 mouse_squeak.ogg: modified from "Cartoon - Bat / Mouse Squeak" by freesound user "Breviceps" (https://freesound.org/people/Breviceps/sounds/445958/) licensed under CC0 1.0 (public domain). The original audio was converted from WAV to OGG format.
+
+The following sounds are taken from TGstation github:
+
+sound_weapons_bite.ogg: taken at https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0
+
+sound_creatures_space_dragon_roar.ogg: taken at https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0
+

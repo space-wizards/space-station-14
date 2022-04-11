@@ -10,6 +10,7 @@ using Content.Shared.Damage;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Tag;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
@@ -43,6 +44,7 @@ namespace Content.Server.Dragon
             //TODO: Do this when the dragon gets butchered instead
             if (args.CurrentMobState.IsDead())
             {
+                SoundSystem.Play(Filter.Pvs(uid), "/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
                 component.DragonStomach.EmptyContainer();
             }
         }
@@ -62,6 +64,7 @@ namespace Content.Server.Dragon
         {
             //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
             EntityManager.QueueDeleteEntity(args.Target);
+            SoundSystem.Play(Filter.Pvs(args.User), "/Audio/Effects/sound_magic_demon_consume.ogg");
         }
 
         private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
@@ -107,6 +110,7 @@ namespace Content.Server.Dragon
                                 _bloodstreamSystem.TryAddToChemicals(dragonuid, ichorInjection);
                                 //Sends the human entity into the stomach so it can be revived later. Withold further comments.
                                 dragoncomp.DragonStomach.Insert(target);
+                                SoundSystem.Play(Filter.Pvs(dragonuid), "/Audio/Effects/sound_magic_demon_consume.ogg");
 
                             }
                             //Non-humanoid mobs can only heal dragon for half the normal amount
@@ -117,6 +121,7 @@ namespace Content.Server.Dragon
                                 //Sends the non-human entity into the stomach
                                 //NOTE: I am a bit conflicted on this, and only really adding this because force-delete is bad, is this needed?
                                 dragoncomp.DragonStomach.Insert(target);
+                                SoundSystem.Play(Filter.Pvs(dragonuid), "/Audio/Effects/sound_magic_demon_consume.ogg");
                             }
                         }
                         else return;

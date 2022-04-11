@@ -383,7 +383,7 @@
         - ReagentId: Nutriment
           Quantity: 6
         - ReagentId: CarpToxin
-          Quantity: 12
+          Quantity: 15
 # tastes exotic
 
 - type: entity
