@@ -25,7 +25,7 @@ namespace Content.Server.Storage.EntitySystems
             var list = new List<string>();
             foreach (var mapLayerData in itemMapper.MapLayers.Values)
             {
-                var count = containedLayers.Count(uid => mapLayerData.Whitelist.IsValid(uid));
+                var count = containedLayers.Count(uid => mapLayerData.ServerWhitelist.IsValid(uid));
                 if (count >= mapLayerData.MinCount && count <= mapLayerData.MaxCount)
                 {
                     list.Add(mapLayerData.Layer);

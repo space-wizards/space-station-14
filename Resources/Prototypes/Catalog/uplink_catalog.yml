@@ -25,6 +25,15 @@
   description: A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
   price: 8
 
+# Poor accuracy, slow to fire, cheap option
+- type: uplinkListing
+  id: UplinkRifleMosin
+  category: Weapons
+  itemId: SniperBoltGunWood
+  listingName: Surplus Rifle
+  description: A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
+  price: 4
+
 #- type: uplinkListing
 #  id: UplinkCrossbowEnergyMini
 #  category: Weapons
@@ -116,6 +125,15 @@
   price: 2
   icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl.rsi/icon.png
 
+# For the mosin
+- type: uplinkListing
+  id: UplinkMosinAmmo
+  category: Ammo
+  itemId: BoxBulletLRifleSmall
+  description: A box of bullets for the surplus rifle.
+  price: 2
+
+
 #Utility
 
 - type: uplinkListing
@@ -203,7 +221,7 @@
   id: UplinkCarpDehydrated
   category: Tools
   itemId: DehydratedSpaceCarp
-  price: 5
+  price: 3
 
 # Armor
 
@@ -225,14 +243,16 @@
 - type: uplinkListing
   id: UplinkHardsuitSyndie
   category: Armor
-  itemId: ClothingOuterHardsuitSyndie
-  price: 5
+  itemId: ClothingBackpackDuffelSyndicateHardsuitBundle
+  description: The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
+  price: 8
 
 - type: uplinkListing
-  id: UplinkHardsuitSyndieHelmet
+  id: UplinkEVASyndie
   category: Armor
-  itemId: ClothingHeadHelmetHardsuitSyndie
-  price: 5
+  itemId: BoxSyndicateEVA
+  description: A simple EVA suit that offers no protection other than what's needed to survive in space.
+  price: 4
 
 # Misc
 
@@ -306,7 +326,7 @@
   listingName: Ultragigacancer Health Analyzer
   description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
   price: 5
-  
+
 - type: uplinkListing
   id: UplinkNocturineChemistryBottle
   category: Misc

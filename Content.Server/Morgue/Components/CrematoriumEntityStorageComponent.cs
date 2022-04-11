@@ -5,7 +5,6 @@ using Content.Server.GameTicking;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Morgue;
 using Content.Shared.Popups;
@@ -13,13 +12,7 @@ using Content.Shared.Sound;
 using Content.Shared.Standing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Morgue.Components
 {
@@ -29,7 +22,7 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
 #pragma warning disable 618
-    public sealed class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent, IExamine, ISuicideAct
+    public sealed class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent, ISuicideAct
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entities = default!;
@@ -44,28 +37,6 @@ namespace Content.Server.Morgue.Components
         private int _burnMilis = 5000;
 
         private CancellationTokenSource? _cremateCancelToken;
-
-        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            if (!_entities.TryGetComponent<AppearanceComponent>(Owner, out var appearance)) return;
-
-            if (inDetailsRange)
-            {
-                if (appearance.TryGetData(CrematoriumVisuals.Burning, out bool isBurning) && isBurning)
-                {
-                    message.AddMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning", ("owner", Owner)) + "\n");
-                }
-
-                if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
-                {
-                    message.AddMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-has-contents"));
-                }
-                else
-                {
-                    message.AddText(Loc.GetString("crematorium-entity-storage-component-on-examine-details-empty"));
-                }
-            }
-        }
 
         public override bool CanOpen(EntityUid user, bool silent = false)
         {

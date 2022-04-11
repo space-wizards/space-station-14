@@ -2,7 +2,7 @@
   id: BulletPistol
   name: bullet (.35 auto)
   parent: BulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -13,7 +13,7 @@
   id: BulletPistolFlash
   name: bullet (.35 auto flash)
   parent: BulletBaseFlash
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -24,7 +24,7 @@
   id: BulletPistolHV
   name: bullet (.35 auto high-velocity)
   parent: BulletBaseHV
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -35,7 +35,7 @@
   id: BulletPistolPractice
   name: bullet (.35 auto practice)
   parent: BulletBasePractice
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -46,7 +46,7 @@
   id: BulletPistolRubber
   name: bullet (.35 auto rubber)
   parent: BulletBaseRubber
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:

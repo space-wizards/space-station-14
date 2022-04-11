@@ -380,6 +380,7 @@ namespace Content.Server.Storage.Components
                 SubscribedSessions.Add(session);
             }
 
+            _entityManager.EnsureComponent<ActiveStorageComponent>(Owner);
             if (SubscribedSessions.Count == 1)
                 UpdateStorageVisualization();
         }
@@ -402,7 +403,14 @@ namespace Content.Server.Storage.Components
             CloseNestedInterfaces(session);
 
             if (SubscribedSessions.Count == 0)
+            {
                 UpdateStorageVisualization();
+
+                if (_entityManager.HasComponent<ActiveStorageComponent>(Owner))
+                {
+                    _entityManager.RemoveComponent<ActiveStorageComponent>(Owner);
+                }
+            }
         }
 
         /// <summary>
@@ -656,4 +664,7 @@ namespace Content.Server.Storage.Components
             SoundSystem.Play(Filter.Pvs(Owner), StorageSoundCollection.GetSound(), Owner, AudioParams.Default);
         }
     }
+
+    [RegisterComponent]
+    public sealed class ActiveStorageComponent : Component {}
 }

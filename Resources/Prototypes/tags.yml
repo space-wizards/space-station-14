@@ -43,6 +43,9 @@
   id: CanPilot
 
 - type: Tag
+  id: CannotSuicide
+
+- type: Tag
   id: CaptainSabre
 
 - type: Tag

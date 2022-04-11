@@ -10,7 +10,7 @@ namespace Content.Server.Speech.Components
     public sealed class ReplacementAccentPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("words")]

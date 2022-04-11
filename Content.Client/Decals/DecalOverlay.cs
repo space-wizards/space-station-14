@@ -56,7 +56,7 @@ namespace Content.Client.Decals
                     {
                         if (!cachedTextures.TryGetValue(decal.Id, out var texture))
                         {
-                            var sprite = _prototypeManager.Index<DecalPrototype>(decal.Id).Sprite;
+                            var sprite = GetDecalSprite(decal.Id);
                             texture = _sprites.Frame0(sprite);
                             cachedTextures[decal.Id] = texture;
                         }
@@ -67,6 +67,17 @@ namespace Content.Client.Decals
                             handle.DrawTexture(texture, decal.Coordinates, decal.Angle, decal.Color);
                     }
                 }
+            }
+        }
+
+        public SpriteSpecifier GetDecalSprite(string id)
+        {
+            if (_prototypeManager.TryIndex<DecalPrototype>(id, out var proto))
+                return proto.Sprite;
+            else
+            {
+                Logger.Error($"Unknown decal prototype: {id}");
+                return new SpriteSpecifier.Texture(new ResourcePath("/Textures/noSprite.png"));
             }
         }
     }

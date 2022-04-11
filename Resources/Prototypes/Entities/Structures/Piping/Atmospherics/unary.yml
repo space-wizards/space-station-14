@@ -26,9 +26,11 @@
   components:
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
-    - type: DeviceNetworkComponent
+    - type: DeviceNetwork
       deviceNetId: Apc
-      frequency: 1621
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-vent
     - type: ApcNetworkConnection
     - type: AtmosAlarmable
       alarmedBy:
@@ -63,7 +65,7 @@
   parent: GasUnaryBase
   id: GasPassiveVent
   name: passive vent
-  description: It is an open vent.
+  description: It's an open vent.
   placement:
     mode: SnapgridCenter
   components:
@@ -96,9 +98,11 @@
   components:
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
-    - type: DeviceNetworkComponent
+    - type: DeviceNetwork
       deviceNetId: Apc
-      frequency: 1621
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-scrubber
     - type: ApcNetworkConnection
     - type: AtmosAlarmable
       alarmedBy:

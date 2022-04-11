@@ -83,7 +83,7 @@
   name: wrench
   parent: BaseItem
   id: Wrench
-  description: A common tool for assembly and disassembly, righty tighty lefty loosey.
+  description: 'A common tool for assembly and disassembly. Remember: righty tighty, lefty loosey.'
   components:
   - type: EmitSoundOnLand
     sound:
@@ -181,6 +181,10 @@
     qualities:
       - Pulsing
   - type: SignalLinker
+  - type: UserInterface
+    interfaces:
+    - key: enum.SignalLinkerUiKey.Key
+      type: SignalPortSelectorBoundUserInterface
   - type: Tag
     tags:
       - DroneUsable
