@@ -29,7 +29,7 @@ namespace Content.Tests.Shared.Chemistry
                 var serializationManager = IoCManager.Resolve<ISerializationManager>();
                 serializationManager.Initialize();
 
-                var newReagent = serializationManager.ReadValue<ReagentPrototype>(new MappingDataNode(proto));
+                var newReagent = serializationManager.Read<ReagentPrototype>(new MappingDataNode(proto));
 
                 Assert.That(defType, Is.EqualTo("reagent"));
                 Assert.That(newReagent.ID, Is.EqualTo("H2"));
@@ -43,6 +43,7 @@ namespace Content.Tests.Shared.Chemistry
   id: H2
   name: Hydrogen
   desc: A light, flammable gas.
+  physicalDesc: A light, flammable gas.
   color: " + "\"#008080\"";
     }
 }

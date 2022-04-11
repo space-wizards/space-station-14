@@ -136,7 +136,7 @@ namespace Content.Client.Audio
             //TODO: Make this produce a hashset of nearby entities again.
             var sourceDict = new Dictionary<string, List<AmbientSoundComponent>>(16);
 
-            foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer, LookupFlags.IncludeAnchored | LookupFlags.Approximate))
+            foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer, LookupFlags.Anchored | LookupFlags.Approximate))
             {
                 if (!EntityManager.TryGetComponent(entity, out AmbientSoundComponent? ambientComp) ||
                     !ambientComp.Enabled ||

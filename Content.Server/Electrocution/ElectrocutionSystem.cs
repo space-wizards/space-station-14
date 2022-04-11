@@ -170,7 +170,7 @@ namespace Content.Server.Electrocution
             if (electrified.NoWindowInTile)
             {
                 foreach (var entity in transform.Coordinates.GetEntitiesInTile(
-                    LookupFlags.Approximate | LookupFlags.IncludeAnchored, _entityLookup))
+                    LookupFlags.Approximate | LookupFlags.Anchored, _entityLookup))
                 {
                     if (_tagSystem.HasTag(entity, "Window"))
                         return false;

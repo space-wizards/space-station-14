@@ -163,19 +163,19 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         return explosionTolerance;
     }
-}
 
-/// <summary>
-///     Data struct that describes the explosion-blocking airtight entities on a tile.
-/// </summary>
-public struct TileData
-{
-    public TileData(float[] explosionTolerance, AtmosDirection blockedDirections)
+    /// <summary>
+    ///     Data struct that describes the explosion-blocking airtight entities on a tile.
+    /// </summary>
+    public struct TileData
     {
-        ExplosionTolerance = explosionTolerance;
-        BlockedDirections = blockedDirections;
-    }
+        public TileData(float[] explosionTolerance, AtmosDirection blockedDirections)
+        {
+            ExplosionTolerance = explosionTolerance;
+            BlockedDirections = blockedDirections;
+        }
 
-    public float[] ExplosionTolerance;
-    public AtmosDirection BlockedDirections = AtmosDirection.Invalid;
+        public float[] ExplosionTolerance;
+        public AtmosDirection BlockedDirections = AtmosDirection.Invalid;
+    }
 }

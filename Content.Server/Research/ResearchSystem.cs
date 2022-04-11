@@ -1,7 +1,5 @@
-using Content.Server.UserInterface;
 using Content.Server.Research.Components;
 using JetBrains.Annotations;
-
 
 namespace Content.Server.Research
 {
@@ -17,12 +15,6 @@ namespace Content.Server.Research
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ResearchConsoleComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpen);
-        }
-
-        private void OnAfterUIOpen(EntityUid uid, ResearchConsoleComponent component, AfterActivatableUIOpenEvent args)
-        {
-            component.PlayKeyboardSound();
         }
 
         public bool RegisterServer(ResearchServerComponent server)

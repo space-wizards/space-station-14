@@ -34,3 +34,21 @@
         Heat: 0.90
         Radiation: 0.25
   - type: DiseaseProtection
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterBase
+  id: ClothingOuterEVASuitBase
+  name: base EVA Suit
+  components:
+  - type: PressureProtection
+    highPressureMultiplier: 1
+    lowPressureMultiplier: 100
+  - type: TemperatureProtection
+    coefficient: 0.01 # Not complete protection from fire
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: Clothing
+    size: 30
+  - type: DiseaseProtection
