@@ -27,7 +27,12 @@
       probability: 0.05
       damage:
         types:
-          Brute: 5
+          Blunt: 5
+    - !type:DiseaseSnough
+      probability: 0.01
+      snoughMessage: disease-cough
+      snoughSound:
+        collection: Coughs
     - !type:DiseaseProgression
       probability: 0.5
   cures:
