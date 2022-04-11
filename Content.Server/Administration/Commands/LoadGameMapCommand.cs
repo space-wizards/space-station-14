@@ -1,3 +1,4 @@
+using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Server.Roles;
 using Content.Server.Station;
@@ -28,6 +29,7 @@ namespace Content.Server.Administration.Commands
             var mapLoader = IoCManager.Resolve<IMapLoader>();
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var stationSystem = entityManager.EntitySysManager.GetEntitySystem<StationSystem>();
+            var gameTicker = entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
 
             if (args.Length is not (2 or 4 or 5))
             {
@@ -37,25 +39,16 @@ namespace Content.Server.Administration.Commands
 
             if (prototypeManager.TryIndex<GameMapPrototype>(args[0], out var gameMap))
             {
-                if (int.TryParse(args[1], out var mapId))
+                if (!int.TryParse(args[1], out var mapId)) return;
+
+                var loadOptions = new MapLoadOptions();
+                var stationName = args.Length == 5 ? args[4] : null;
+
+                if (args.Length >= 4 && int.TryParse(args[2], out var x) && int.TryParse(args[3], out var y))
                 {
-                    var gameMapEnt = mapLoader.LoadBlueprint(new MapId(mapId), gameMap.MapPath.ToString());
-                    if (gameMapEnt is null)
-                    {
-                        shell.WriteError($"Failed to create the given game map, is the path {gameMap.MapPath} correct?");
-                        return;
-                    }
-
-                    if (args.Length >= 4 && int.TryParse(args[2], out var x) && int.TryParse(args[3], out var y))
-                    {
-                        var transform = entityManager.GetComponent<TransformComponent>(gameMapEnt.GridEntityId);
-                        transform.WorldPosition = new Vector2(x, y);
-                    }
-
-                    var stationName = args.Length == 5 ? args[4] : null;
-
-                    stationSystem.InitialSetupStationGrid(gameMapEnt.GridEntityId, gameMap, stationName);
+                    loadOptions.Offset = new Vector2(x, y);
                 }
+                gameTicker.LoadGameMap(gameMap, new MapId(mapId), loadOptions, stationName);
             }
             else
             {
