@@ -32,6 +32,10 @@
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer
+  - type: RangedWeapon
 
 - type: entity
   name: Kardashev-Mosin
@@ -43,15 +47,12 @@
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
-  - type: RangedWeapon
   - type: BoltActionBarrel
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
+    capacity: 5
 
 - type: entity
   name: Kardashev-Mosin
-  parent: SniperBase
+  parent: SniperBoltGun
   id: SniperBoltGunWood
   description: A weapon for hunting, or endless trench warfare.
   components:
@@ -59,11 +60,6 @@
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
-  - type: RangedWeapon
-  - type: BoltActionBarrel
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
 
 - type: entity
   name: Hristov
@@ -75,14 +71,10 @@
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
-  - type: RangedWeapon
   - type: BoltActionBarrel
     caliber: AntiMaterial
     capacity: 1
     fillPrototype: CartridgeAntiMaterial
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
 
 - type: entity
   name: flintlock pistol
@@ -92,7 +84,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
-  - type: RangedWeapon
   - type: BoltActionBarrel
     caliber: AntiMaterial
     capacity: 1
@@ -104,9 +95,6 @@
     fillPrototype: CartridgeAntiMaterial
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
   - type: Item
     icon: Objects/Weapons/Guns/Snipers/flintlock.rsi
 
@@ -119,7 +107,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
-  - type: RangedWeapon
   - type: BoltActionBarrel
     caliber: AntiMaterial
     capacity: 1
@@ -131,8 +118,5 @@
     fillPrototype: CartridgeAntiMaterial
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
   - type: Item
     icon: Objects/Weapons/Guns/Snipers/musket.rsi
