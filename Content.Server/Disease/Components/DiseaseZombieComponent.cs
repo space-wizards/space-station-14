@@ -12,22 +12,19 @@ namespace Content.Server.Disease.Components
         /// </summary>
         [DataField("probability")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float Probability = 0.25f;
+        public float Probability = 0.33f;
 
         /// <summary>
         /// A multiplier on the movement speed that zombies recieve.
         /// </summary>
         [DataField("slowAmount")]
-        public float SlowAmount = 0.6f;
+        public float SlowAmount = 0.8f;
 
         /// <summary>
-        /// Whether or not the zombie needs all the zombie stuff initialized
-        /// Useful for zombie entities already yaml'd
+        /// Whether or not the zombie needs all the zombie traits initialized upon component inti
+        /// useful for entities that already are zombies and do not need the additional traits.
         /// </summary>
         [DataField("applyZombieTraits")]
         public bool ApplyZombieTraits = true;
-
-        [DataField("test")]
-        public bool Test = false;
     }
 }
