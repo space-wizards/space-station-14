@@ -1,40 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: The Syndicate is now interested in a wider variety of items spread between
-      almost all departments., type: Add}
-  - {message: Some coveted items have had their name or description changed to make
-      their value to NanoTrasen (and the Syndicate) clear., type: Tweak}
-  - {message: The Syndicate is less likely to ask for an overly optimistic amount
-      of things to be stolen., type: Tweak}
-  - {message: The Syndicate will no longer ask for agents to both steal an item and
-      die., type: Fix}
-  id: 804
-  time: '2022-01-01T16:56:25.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed not being able to strip inventory from incapacitated entities.,
-    type: Fix}
-  id: 805
-  time: '2022-01-01T17:03:29.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'After evaluating recent agent performance, the Syndicate now considers
-      most objectives more difficult. The only exception is dying, which their agents
-      have been getting top marks on.', type: Tweak}
-  id: 806
-  time: '2022-01-01T22:46:00.0000000+00:00'
-- author: Charlese2
-  changes:
-  - {message: Lowered flash bullet damage., type: Tweak}
-  id: 807
-  time: '2022-01-01T22:54:43.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: The Uplink purchase sound is much quieter now. It still may be audible
-      to other people if they are close enough and in a quiet place., type: Tweak}
-  id: 808
-  time: '2022-01-02T02:00:01.0000000+00:00'
 - author: vulppine
   changes:
   - {message: 'NanoTrasen has decided that air quality is important, and have provided
@@ -3029,3 +2993,35 @@ Entries:
   - {message: Added directional arrows to crew monitors., type: Add}
   id: 1303
   time: '2022-04-09T01:50:59.0000000+00:00'
+- author: emisse
+  changes:
+  - {message: Cybersun pen has been discovered to work as an excellent screwdriver.,
+    type: Add}
+  id: 1304
+  time: '2022-04-09T06:59:46.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix instruments having their MIDI program reset after the song loops.,
+    type: Fix}
+  id: 1305
+  time: '2022-04-09T11:24:34.099018+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix bug where sometimes instruments would have the incorrect MIDI program
+      for the first few notes., type: Fix}
+  id: 1306
+  time: '2022-04-09T13:33:33.125973+00:00'
+- author: Emisse
+  changes:
+  - {message: Spationaut suit for salvage specialists. A lightweight competitor to
+      the bulky salvagers suit., type: Add}
+  - {message: Round 2 of hardsuit stat rebalancing. Aim to make them more useful but
+      not as oppressive as they once were., type: Add}
+  id: 1307
+  time: '2022-04-10T20:57:36.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Syndicate Grenade Penguins no longer attack Syndicate members. Party
+      loyalty, baby.', type: Fix}
+  id: 1308
+  time: '2022-04-10T20:57:45.0000000+00:00'

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -112,6 +113,7 @@ namespace Content.Server.Cuffs.Components
 
             Container.Insert(handcuff);
             CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? ownerHands) && ownerHands.Hands.Count() > CuffedHandCount;
+            _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
 
             OnCuffedStateChanged?.Invoke();
             UpdateAlert();
@@ -267,6 +269,7 @@ namespace Content.Server.Cuffs.Components
                 }
 
                 CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.SortedHands.Count() > CuffedHandCount;
+                _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
                 OnCuffedStateChanged?.Invoke();
                 UpdateAlert();
                 Dirty();
