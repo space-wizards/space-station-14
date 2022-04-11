@@ -36,6 +36,16 @@
                     <Control MinSize="4 0"/>
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
+                    <Label Text="{Loc 'ui-options-midi-soundfont'}" />
+                    <Control MinSize="8 0" />
+                    <Button Name="MidiSoundfontButton"
+                            Text="{Loc 'ui-options-midi-soundfont-selector'}" />
+                    <Control MinSize="8 0" />
+                    <Label Name="MidiSoundfontSelection" />
+                    <Control MinSize="4 0"/>
+                </BoxContainer>
+                <Control MinSize="0 8" />
+                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
                     <Label Text="{Loc 'ui-options-ambience-volume'}" />
                     <Control MinSize="8 0" />
                     <Slider Name="AmbienceVolumeSlider"

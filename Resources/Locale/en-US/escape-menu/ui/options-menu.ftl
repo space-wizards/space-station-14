@@ -13,6 +13,8 @@ ui-options-reset-all = Reset All
 
 ui-options-master-volume = Master Volume:
 ui-options-midi-volume = MIDI (Instrument) Volume:
+ui-options-midi-soundfont = MIDI (Instrument) Soundfont:
+ui-options-midi-soundfont-selector = Browse
 ui-options-ambience-volume = Ambience volume:
 ui-options-ambience-max-sounds = Ambience simultaneous sounds:
 ui-options-lobby-music = Lobby Music
