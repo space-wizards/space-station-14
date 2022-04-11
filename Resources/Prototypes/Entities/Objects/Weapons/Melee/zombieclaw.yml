@@ -1,0 +1,19 @@
+﻿# Special entity used to fill zombie's hands when they turn undead
+- type: entity
+  id: ZombieClaw
+  name: Zombie Claw
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/baseball_bat.rsi
+    - type: Item
+    - type: ZombieHand
+    - type: Unremoveable
+    - type: MeleeWeapon
+      damage:
+        types:
+          Slash: 13
+          Piercing: 7
+      range: 1
+      arcwidth: 0
+      arc: claw
+

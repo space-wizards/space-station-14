@@ -11,9 +11,10 @@ using Content.Server.Body.Systems;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Body.Components;
-using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.Atmos.Components;
+using Content.Server.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.Disease
 {
@@ -27,6 +28,7 @@ namespace Content.Server.Disease
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly HandVirtualItemSystem _handVirtualItem = default!;
+        [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         public override void Initialize()
         {
@@ -44,43 +46,60 @@ namespace Content.Server.Disease
             if (!component.ApplyZombieTraits)
                 return;
 
+            _disease.CureAllDiseases(uid); //just to get rid of the weirdness of z-infection having random damage + cough
+
             EntityManager.RemoveComponent<RespiratorComponent>(uid);
             EntityManager.RemoveComponent<BarotraumaComponent>(uid);
 
-            EntityManager.EnsureComponent<DamageableComponent>(uid, out var damageable);
-            _damageable.SetAllDamage(damageable, 0);
+            EntityManager.EnsureComponent<BloodstreamComponent>(uid, out var bloodstream); //zoms need bloodstream anyway for healing
+            _bloodstream.SetBloodLossThreshold(uid, 0f, bloodstream);
+            _bloodstream.TryModifyBleedAmount(uid, -bloodstream.BleedAmount, bloodstream);
+            _bloodstream.TryModifyBloodLevel(uid, bloodstream.BloodSolution.AvailableVolume, bloodstream);
 
-            //nullifies bleed damage while still allowing there to be blood and solution
-            if (EntityManager.TryGetComponent<BloodstreamComponent>(uid, out var bloodstream)) 
+            if (EntityManager.TryGetComponent<DamageableComponent>(uid, out var comp))
             {
-                _bloodstream.SetBloodLossThreshold(uid, 0f, bloodstream);
-                _bloodstream.TryModifyBleedAmount(uid, -bloodstream.BleedAmount, bloodstream);
-                _bloodstream.TryModifyBloodLevel(uid, bloodstream.BloodSolution.AvailableVolume, bloodstream);
+                _damageable.SetDamageModifierSetId(uid, "Zombie", comp);
+                _damageable.SetAllDamage(comp, 0);
             }
+            // circumvents the 20 damage after being converted.
+            // idk a better way of doing this within the meleeHitEvent
+            var healingSolution = new Solution();
+            healingSolution.AddReagent("Bicaridine", 5.00);
+            _bloodstream.TryAddToChemicals(uid, healingSolution);
 
             _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
             EntityManager.EnsureComponent<ReplacementAccentComponent>(uid).Accent = "zombie";
 
+            if(EntityManager.TryGetComponent<HandsComponent>(uid, out var handcomp))
+            {
+                foreach (var hand in handcomp.Hands)
+                {
+                    _sharedHands.TrySetActiveHand(uid, hand.Key);
+                    _sharedHands.TryDrop(uid);
+
+                    var pos = EntityManager.GetComponent<TransformComponent>(uid).Coordinates;
+                    var virtualItem = EntityManager.SpawnEntity("ZombieClaw", pos);
+                    _sharedHands.DoPickup(uid, hand.Value, virtualItem);
+                }
+            }
+
             uid.PopupMessageEveryone(Loc.GetString("zombie-transform", ("target", uid)));
-            SetupGhostRole(uid);
+            if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metacomp))
+            {
+                metacomp.EntityName = Loc.GetString("zombie-name-prefix", ("target", metacomp.EntityName));
+
+                EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid, out var ghostcomp);
+                ghostcomp.RoleName = metacomp.EntityName;
+                ghostcomp.RoleDescription = "A malevolent creature of the dead."; //TODO: loc string
+                ghostcomp.RoleRules = "You are an antagonist. Search out the living and bite them to infect and convert them into zombies. Propagate the zombie hoard across the station";
+            }
         }
 
-        private void SetupGhostRole(EntityUid uid)
-        {
-            //idk if not having a meta comp is ever gonna be an issue but just in case
-            if(EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metacomp))
-                metacomp.EntityName = Loc.GetString("zombie-name-prefix") + " " + metacomp.EntityName;
-
-            EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid, out var ghostcomp);
-            ghostcomp.RoleName = metacomp.EntityName;
-            ghostcomp.RoleDescription = "A malevolent creature of the dead."; //TODO: loc string
-            ghostcomp.RoleRules = "You are an antagonist. Search out the living and bite them to infect and convert them into zombies. Propagate the zombie hoard across the station";
-        }
-
-        ///<summary>
-        ///This handles zombie disease transfer when a entity is hit.
-        ///</summary>
-        private void OnMeleeHit(EntityUid uid, DiseaseZombieComponent component, MeleeHitEvent args)
+        /// <summary>
+        /// This handles zombie disease transfer when a entity is hit.
+        /// This is public because the virtualzombiehand entity needs it
+        /// </summary>
+        public void OnMeleeHit(EntityUid uid, DiseaseZombieComponent component, MeleeHitEvent args)
         {
             if (!args.HitEntities.Any())
                 return;
