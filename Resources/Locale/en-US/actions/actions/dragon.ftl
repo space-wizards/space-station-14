@@ -9,5 +9,5 @@ birth-carp-action-popup-message-fail-no-eggs = You don't have the stamina to cre
 action-name-devour = [color=red]Devour[/color]
 action-description-devour = Attempt to break a structure with your jaws or swallow a creature.
 
-action-name-carp-birth = Summon carp
+action-name-carp-birth = CarpSummon
 action-description-carp-birth = Summon a carp to aid you at seizing the station!

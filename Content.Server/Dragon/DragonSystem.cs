@@ -155,8 +155,8 @@ namespace Content.Server.Dragon
             //If dragon has eggs, remove one, spawn carp
             if (component.EggsLeft > 0)
             {
-                component.EggsLeft--;
                 EntityManager.SpawnEntity(component.CarpProto, Transform(dragonuid).Coordinates);
+                component.EggsLeft--;
             }
             else _popupSystem.PopupEntity(Loc.GetString("birth-carp-action-popup-message-fail-no-eggs"), dragonuid, Filter.Entities(dragonuid));
             return;

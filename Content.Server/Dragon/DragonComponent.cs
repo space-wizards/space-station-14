@@ -1,6 +1,5 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Damage;
 using Robust.Shared.Containers;
 using System.Threading;
 
@@ -31,7 +30,7 @@ namespace Content.Server.Dragon
         /// Defines the carp birthing action
         /// </summary>
         [DataField("carpBirthAction", required: true)]
-        public EntityTargetAction CarpBirthAction = new();
+        public InstantAction CarpBirthAction = new();
 
         // The amount of time it takes to devour something
         // NOTE: original inteded design was to increase this proportionaly with damage thresholds, but those proved quite difficult to get consistently.

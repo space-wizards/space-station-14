@@ -16,6 +16,7 @@
   - type: HeatResistance
   - type: CombatMode
     disarmAction:
+      name: Disarm
       enabled: false
       autoPopulate: false
   - type: Internals
@@ -64,6 +65,7 @@
     metabolizerTypes: [Dragon]
     groups:
     - id: Medicine
+    - id: Poison
   - type: HealthExaminable
     examinableTypes:
     - Blunt
@@ -88,8 +90,9 @@
       crit: crit
       dead: dead
   - type: Butcherable
-    spawned: FoodMeatDragon
-    pieces: 6
+    spawned:
+    - id: FoodMeatDragon
+      amount: 2
   - type: UnarmedCombat
     range: 0.8
     arcwidth: 2
@@ -98,21 +101,22 @@
       groups:
         Brute: 45
   - type: Dragon
+    carpProto: MobCarpSentient
     devourAction:
-     event: !type:DevourActionEvent
-     icon: Interface/Actions/devour.png
-     name: action-name-devour
-     description: action-description-devour
-     devourChemical: Ichor
-     devourHealRate: 15.0
-     whitelist:
-       components:
-       - MobState
-       - Tag
+      event: !type:DevourActionEvent
+      icon: Interface/Actions/devour.png
+      name: action-name-devour
+      description: action-description-devour
+      devourChemical: Ichor
+      devourHealRate: 15.0
+      whitelist:
+        components:
+        - MobState
+        - Tag
     carpBirthAction:
-     event: !type:CarpBirthEvent
-     icon: Interface/Actions/carpbirth.png
-     name: action-name-carp-birth
-     description: action-description-carp-birth
-     carpProto: MobCarpSentient
+      event: !type:CarpBirthEvent
+      icon: Interface/Actions/carpbirth.png
+      name: action-name-carp-birth
+      description: action-description-carp-birth
+      useDelay: 2
   
