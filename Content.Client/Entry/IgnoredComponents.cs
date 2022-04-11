@@ -28,6 +28,7 @@ namespace Content.Client.Entry
             "MeleeWeapon",
             "MeleeChemicalInjector",
             "Dice",
+            "MailingUnit",
             "PaperLabel",
             "Construction",
             "PoweredLight",

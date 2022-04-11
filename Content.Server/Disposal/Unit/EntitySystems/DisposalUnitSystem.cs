@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Content.Server.Atmos.EntitySystems;
@@ -19,18 +17,12 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement;
-using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -104,7 +96,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             // This is not an interaction, activation, or alternative verb type because unfortunately most users are
             // unwilling to accept that this is where they belong and don't want to accidentally climb inside.
-            if (!args.CanAccess ||
+            if (!component.MobsCanEnter ||
+                !args.CanAccess ||
                 !args.CanInteract ||
                 component.Container.ContainedEntities.Contains(args.User) ||
                 !_actionBlockerSystem.CanMove(args.User))
@@ -471,6 +464,15 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             }
 
+            //Allows the MailingUnitSystem to add tags or prevent flushing
+            var beforeFlushArgs = new BeforeDisposalFlushEvent();
+            RaiseLocalEvent(component.Owner, beforeFlushArgs, false);
+
+            if (beforeFlushArgs.Cancelled)
+            {
+                return false;
+            }
+
             var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(component.Owner).GridID);
             var coords = EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates;
             var entry = grid.GetLocal(coords)
@@ -491,7 +493,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 component.Air = environment.Remove(transferMoles);
             }
 
-            entryComponent.TryInsert(component);
+            entryComponent.TryInsert(component, beforeFlushArgs.Tags);
 
             component.AutomaticEngageToken?.Cancel();
             component.AutomaticEngageToken = null;
@@ -641,7 +643,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         /// </summary>
         public void TryQueueEngage(DisposalUnitComponent component)
         {
-            if (component.Deleted || !component.Powered && component.Container.ContainedEntities.Count == 0)
+            if (component.Deleted || !component.AutomaticEngage || !component.Powered && component.Container.ContainedEntities.Count == 0)
             {
                 return;
             }
@@ -667,6 +669,15 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             UpdateVisualState(component);
+        }
+
+        /// <summary>
+        /// Sent before the disposal unit flushes it's contents.
+        /// Allows adding tags for sorting and preventing the disposal unit from flushing.
+        /// </summary>
+        public sealed class BeforeDisposalFlushEvent : CancellableEntityEventArgs
+        {
+            public IEnumerable<string>? Tags;
         }
     }
 }

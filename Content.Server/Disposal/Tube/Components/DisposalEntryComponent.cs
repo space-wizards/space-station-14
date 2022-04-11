@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube;
@@ -19,7 +20,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         private const string HolderPrototypeId = "DisposalHolder";
 
-        public bool TryInsert(DisposalUnitComponent from)
+        public bool TryInsert(DisposalUnitComponent from, IEnumerable<string>? tags = default)
         {
             var holder = _entMan.SpawnEntity(HolderPrototypeId, _entMan.GetComponent<TransformComponent>(Owner).MapPosition);
             var holderComponent = _entMan.GetComponent<DisposalHolderComponent>(holder);
@@ -31,6 +32,9 @@ namespace Content.Server.Disposal.Tube.Components
 
             EntitySystem.Get<AtmosphereSystem>().Merge(holderComponent.Air, from.Air);
             from.Air.Clear();
+
+            if (tags != default)
+                holderComponent.Tags.UnionWith(tags);
 
             return EntitySystem.Get<DisposableSystem>().EnterTube((holderComponent).Owner, Owner, holderComponent, null, this);
         }

@@ -73,7 +73,8 @@ namespace Content.Shared.Disposal
             if (!EntityManager.TryGetComponent(entity, out IPhysBody? physics) ||
                 !physics.CanCollide && storable == null)
             {
-                if (!(EntityManager.TryGetComponent(entity, out MobStateComponent? damageState) && damageState.IsDead()))
+                if (!(EntityManager.TryGetComponent(entity, out MobStateComponent? damageState) &&
+                      (!component.MobsCanEnter || damageState.IsDead())))
                 {
                     return false;
                 }
