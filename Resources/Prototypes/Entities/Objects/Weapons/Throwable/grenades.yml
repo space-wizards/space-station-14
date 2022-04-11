@@ -80,7 +80,7 @@
 
 - type: entity
   name: Syndicate minibomb
-  description: A syndicate manufactured explosive used to sow destruction and chaos.
+  description: Creates a small but powerful explosion that is strong enough to break through walls.
   parent: BaseItem
   id: SyndieMiniBomb
   components:
@@ -95,10 +95,11 @@
     delay: 5
   - type: Explosive
     explosionType: Default
-    # About a 3-3.5 tile radius, strong enough to break reinforced walls near centre.
-    totalIntensity: 800
-    intensitySlope: 15
-    maxTileBreak: 1 # for destroying walls, not spacing the hallway
+    # About a 2.5 tile radius. If placed next to walls, will destroy a line of 3-normal walls and turn 3 reinforced walls into girders.
+    totalIntensity: 492
+    intensitySlope: 20.5
+    maxIntensity: 41
+    canCreateVacuum: false # for destroying walls, not spacing the hallway
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic

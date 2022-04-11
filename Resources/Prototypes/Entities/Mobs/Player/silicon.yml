@@ -166,6 +166,9 @@
     softness: 5
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
+  - type: Tag
+    tags:
+      - CannotSuicide
 
 - type: entity
   name: onestar mecha
