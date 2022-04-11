@@ -236,8 +236,8 @@ namespace Content.Server.Power.EntitySystems
             RaiseLocalEvent(new NetworkBatteryPostSync());
 
             // Send events where necessary.
-            // TODO: Instead of querying ALL power components ever tick, and then checking if an even needs to be raised,
-            // should probably figure that out when power stuff is actually updated.
+            // TODO: Instead of querying ALL power components every tick, and then checking if an event needs to be
+            // raised, should probably assemble a list of entity Uids during the actual solver steps.
             {
                 var appearanceQuery = GetEntityQuery<AppearanceComponent>();
                 foreach (var apcReceiver in EntityManager.EntityQuery<ApcPowerReceiverComponent>())
