@@ -35,5 +35,5 @@ namespace Content.Server.Guardian
         };
     }
 
-    public sealed class GuardianToggleActionEvent : PerformActionEvent { };
+    public sealed class GuardianToggleActionEvent : InstantActionEvent { };
 }

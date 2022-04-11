@@ -42,11 +42,11 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<HandheldLightComponent, ActivateInWorldEvent>(OnActivate);
 
-            SubscribeLocalEvent<HandheldLightComponent, GetActionsEvent>(OnGetActions);
+            SubscribeLocalEvent<HandheldLightComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<HandheldLightComponent, ToggleActionEvent>(OnToggleAction);
         }
 
-        private void OnGetActions(EntityUid uid, HandheldLightComponent component, GetActionsEvent args)
+        private void OnGetActions(EntityUid uid, HandheldLightComponent component, GetItemActionsEvent args)
         {
             args.Actions.Add(component.ToggleAction);
         }
