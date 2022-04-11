@@ -148,6 +148,7 @@
             !type:DamageTrigger
             damage: 200
           behaviors:
+            - !type:EmptyAllContainersBehaviour
             - !type:DoActsBehavior
               acts: ["Destruction"]
             - !type:PlaySoundBehavior
