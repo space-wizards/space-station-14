@@ -1,11 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen has decided that air quality is important, and have provided
-      its stations with air and fire alarms. No longer will a single gas leak accidentally
-      ruin entire stations.', type: Add}
-  id: 809
-  time: '2022-01-02T04:56:24.0000000+00:00'
 - author: Phantom-Lily
   changes:
   - {message: 'Added a classic emergency shuttle wreck to Salvage, in its natural
@@ -3025,3 +3018,10 @@ Entries:
       loyalty, baby.', type: Fix}
   id: 1308
   time: '2022-04-10T20:57:45.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: You can once again scream for help while security abuses you (can scream
+      while stunned & handcuffed). Also allows holoparasites to be released while
+      stunned or cuffed., type: Fix}
+  id: 1309
+  time: '2022-04-11T13:59:11.0000000+00:00'
