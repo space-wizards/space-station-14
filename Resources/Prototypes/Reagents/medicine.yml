@@ -332,7 +332,7 @@
       - !type:HealthChange
         damage:
           types:
-            Cellular: -2
+            Cellular: 1
 
 
 - type: reagent
