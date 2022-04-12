@@ -6,7 +6,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
-using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Decals.UI;
@@ -14,7 +13,6 @@ namespace Content.Client.Decals.UI;
 [GenerateTypedNameReferences]
 public sealed partial class DecalPlacerWindow : DefaultWindow
 {
-    private readonly IPrototypeManager _prototypeManager;
     private readonly DecalPlacementSystem _decalPlacementSystem;
 
     public FloatSpinBox RotationSpinBox;
@@ -28,11 +26,10 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
     private bool _cleanable;
     private int _zIndex;
 
-    public DecalPlacerWindow(IPrototypeManager prototypeManager)
+    public DecalPlacerWindow()
     {
         RobustXamlLoader.Load(this);
 
-        _prototypeManager = prototypeManager;
         _decalPlacementSystem = EntitySystem.Get<DecalPlacementSystem>();
 
         // This needs to be done in C# so we can have custom stuff passed in the constructor
@@ -73,8 +70,6 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         };
         // i have to make this a member method for some reason and i have no idea why its only for spinboxes
         ZIndexSpinBox.ValueChanged += ZIndexSpinboxChanged;
-
-        Populate();
     }
 
     private void UpdateDecalPlacementInfo()
@@ -141,9 +136,8 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         RefreshList();
     }
 
-    public void Populate()
+    public void Populate(IEnumerable<DecalPrototype> prototypes)
     {
-        var prototypes = _prototypeManager.EnumeratePrototypes<DecalPrototype>();
         _decals = new Dictionary<string, Texture>();
         foreach (var decalPrototype in prototypes)
         {
