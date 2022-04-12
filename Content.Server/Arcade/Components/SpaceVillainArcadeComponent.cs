@@ -1,12 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
-<<<<<<< HEAD
-// using Content.Server.WireHacking;
 using Content.Shared.ActionBlocker;
-=======
-using Content.Server.WireHacking;
->>>>>>> 48f0a0b8f748386964d032cda9ad0d44d77c21ee
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
@@ -21,7 +16,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
-    public sealed class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IWires
+    public sealed class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent
     {
         [Dependency] private readonly IRobustRandom _random = null!;
 

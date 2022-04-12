@@ -3,7 +3,7 @@ using System.Threading;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Power.Components;
 using Content.Server.VendingMachines; // TODO: Move this out of vending machines???
-using Content.Server.WireHacking;
+// using Content.Server.WireHacking;
 using Content.Shared.Interaction;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
@@ -12,14 +12,16 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+/*
 using static Content.Shared.Wires.SharedWiresComponent;
 using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
+*/
 
 
 namespace Content.Server.Atmos.Monitor.Components
 {
     [RegisterComponent]
-    public sealed class FireAlarmComponent : Component, IWires
+    public sealed class FireAlarmComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -41,6 +43,7 @@ namespace Content.Server.Atmos.Monitor.Components
             Dummy2,
         }
 
+        /*
         private bool _powerCut;
         private bool PowerCut
         {
@@ -161,5 +164,6 @@ namespace Content.Server.Atmos.Monitor.Components
 
             UpdateWires();
         }
+    */
     }
 }

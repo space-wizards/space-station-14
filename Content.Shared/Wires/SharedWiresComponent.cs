@@ -9,7 +9,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Wires
 {
-<<<<<<< HEAD
     [Serializable, NetSerializable]
     public enum WiresVisuals
     {
@@ -21,16 +20,6 @@ namespace Content.Shared.Wires
     {
         Key,
     }
-=======
-    [Virtual]
-    public class SharedWiresComponent : Component
-    {
-        [Serializable, NetSerializable]
-        public enum WiresVisuals
-        {
-            MaintenancePanelState
-        }
->>>>>>> 48f0a0b8f748386964d032cda9ad0d44d77c21ee
 
     [Serializable, NetSerializable]
     public enum WiresAction
@@ -150,22 +139,11 @@ namespace Content.Shared.Wires
         }
     }
 
-<<<<<<< HEAD
     [Serializable, NetSerializable]
     public struct StatusEntry
     {
         public readonly object Key;
         public readonly object Value;
-=======
-        [Serializable, NetSerializable]
-        public sealed class WiresBoundUserInterfaceState : BoundUserInterfaceState
-        {
-            public string BoardName { get; }
-            public string? SerialNumber { get; }
-            public ClientWire[] WiresList { get; }
-            public StatusEntry[] Statuses { get; }
-            public int WireSeed { get; }
->>>>>>> 48f0a0b8f748386964d032cda9ad0d44d77c21ee
 
         public StatusEntry(object key, object value)
         {
@@ -180,7 +158,6 @@ namespace Content.Shared.Wires
     }
 
 
-<<<<<<< HEAD
     [Serializable, NetSerializable]
     public class ClientWire
     {
@@ -190,27 +167,6 @@ namespace Content.Shared.Wires
         public WireLetter Letter;
 
         public ClientWire(int id, bool isCut, WireColor color, WireLetter letter)
-=======
-        [Serializable, NetSerializable]
-        public sealed class ClientWire
-        {
-            public int Id;
-            public bool IsCut;
-            public WireColor Color;
-            public WireLetter Letter;
-
-            public ClientWire(int id, bool isCut, WireColor color, WireLetter letter)
-            {
-                Id = id;
-                IsCut = isCut;
-                Letter = letter;
-                Color = color;
-            }
-        }
-
-        [Serializable, NetSerializable]
-        public sealed class WiresActionMessage : BoundUserInterfaceMessage
->>>>>>> 48f0a0b8f748386964d032cda9ad0d44d77c21ee
         {
             Id = id;
             IsCut = isCut;

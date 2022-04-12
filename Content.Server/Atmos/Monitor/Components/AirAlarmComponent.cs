@@ -5,20 +5,22 @@ using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.Power.Components;
 using Content.Server.VendingMachines; // TODO: Move this out of vending machines???
-using Content.Server.WireHacking;
+// using Content.Server.WireHacking;
 using Content.Shared.Atmos.Monitor.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;
+/*
 using static Content.Shared.Wires.SharedWiresComponent;
 using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
+*/
 
 namespace Content.Server.Atmos.Monitor.Components
 {
     [RegisterComponent]
-    public sealed class AirAlarmComponent : Component, IWires
+    public sealed class AirAlarmComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -62,6 +64,7 @@ namespace Content.Server.Atmos.Monitor.Components
             Dummy
         }
 
+        /*
         public void RegisterWires(WiresComponent.WiresBuilder builder)
         {
             foreach (var wire in Enum.GetValues<Wires>())
@@ -216,5 +219,6 @@ namespace Content.Server.Atmos.Monitor.Components
 
             UpdateWires();
         }
+        */
     }
 }

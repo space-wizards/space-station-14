@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Hands.Systems;
 using Content.Server.Hands.Components;
 using Content.Server.Tools;
-using Content.Server.Tools.Components;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
+using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -25,7 +26,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Wires;
 
-public class WiresSystem : EntitySystem
+public sealed class WiresSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
@@ -33,6 +34,7 @@ public class WiresSystem : EntitySystem
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly HandsSystem _handsSystem = default!;
 
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
@@ -169,54 +171,66 @@ public class WiresSystem : EntitySystem
     private void OnWiresActionMessage(EntityUid uid, WiresComponent component, WiresActionMessage args)
     {
         // var wire = component.WiresList.Find(x => x.Id == args.Id);
-        var player = args.Session.AttachedEntity;
-        if (player == null)
+        if (args.Session.AttachedEntity == null)
         {
             return;
         }
+        var player = (EntityUid) args.Session.AttachedEntity;
 
-        if (!EntityManager.TryGetComponent(player.Uid, out HandsComponent? handsComponent))
+        if (!EntityManager.TryGetComponent(player, out HandsComponent? handsComponent))
         {
-            _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-no-hands"), uid, Filter.Entities(player.Uid));
+            _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-no-hands"), uid, Filter.Entities(player));
             return;
         }
 
         // it would be odd if the entity was removed in the middle of this synchronous
         // operation, wouldn't it?
-        if (!_interactionSystem.InRangeUnobstructed(player, EntityManager.GetEntity(uid)))
+        if (!_interactionSystem.InRangeUnobstructed(player, uid))
         {
-            _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"), uid, Filter.Entities(player.Uid));
+            _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"), uid, Filter.Entities(player));
             return;
         }
 
-        var activeHand = handsComponent.GetActiveHand;
+        var enumerator = _handsSystem.EnumerateHands(uid, handsComponent).GetEnumerator();
+
+        if (!enumerator.MoveNext())
+        {
+            return;
+        }
+
+        // we only need the active hand
+        var activeHand = enumerator.Current;
+
         if (activeHand == null)
             return;
 
-        var activeHandEntity = activeHand.OwnerUid;
+        if (activeHand.HeldEntity == null)
+            return;
+
+        var activeHandEntity = (EntityUid) activeHand.HeldEntity;
         if (!EntityManager.TryGetComponent(activeHandEntity, out ToolComponent? tool))
             return;
 
-        UpdateWires(uid, player.Uid, activeHandEntity, args.Id, args.Action, component, tool);
+        UpdateWires(uid, player, activeHandEntity, args.Id, args.Action, component, tool);
     }
 
     private void OnInteractUsing(EntityUid uid, WiresComponent component, InteractUsingEvent args)
     {
         Logger.DebugS("Wires", "Attempting to interact using something");
-        if (!EntityManager.TryGetComponent(args.UsedUid, out ToolComponent? tool))
+        if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? tool))
             return;
 
         if (component.IsPanelOpen &&
-            _toolSystem.HasQuality(args.UsedUid, "Cutting", tool) ||
-            _toolSystem.HasQuality(args.UsedUid, "Pulsing", tool))
+            _toolSystem.HasQuality(args.Used, "Cutting", tool) ||
+            _toolSystem.HasQuality(args.Used, "Pulsing", tool))
         {
-            if (EntityManager.TryGetComponent(args.UserUid, out ActorComponent? actor))
+            if (EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             {
                 _uiSystem.GetUiOrNull(uid, WiresUiKey.Key)?.Open(actor.PlayerSession);
                 args.Handled = true;
             }
         }
-        else if (_toolSystem.UseTool(args.UsedUid, args.UserUid, uid, 0f, ScrewTime, new string[]{ "Screwing" }, doAfterCompleteEvent:new WireToolFinishedEvent(uid), toolComponent:tool))
+        else if (_toolSystem.UseTool(args.Used, args.User, uid, 0f, ScrewTime, new string[]{ "Screwing" }, doAfterCompleteEvent:new WireToolFinishedEvent(uid), toolComponent:tool))
         {
             Logger.DebugS("Wires", "Trying to unscrew now...");
             args.Handled = true;

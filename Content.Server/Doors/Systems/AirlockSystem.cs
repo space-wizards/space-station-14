@@ -1,10 +1,6 @@
 using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
-<<<<<<< HEAD
 using Content.Server.Wires;
-=======
-using Content.Server.WireHacking;
->>>>>>> 48f0a0b8f748386964d032cda9ad0d44d77c21ee
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
@@ -131,18 +127,10 @@ namespace Content.Server.Doors.Systems
 
         private void OnActivate(EntityUid uid, AirlockComponent component, ActivateInWorldEvent args)
         {
-<<<<<<< HEAD
-            if (EntityManager.TryGetComponent(uid, out WiresComponent? wires)
-                && wires.IsPanelOpen &&
-                args.Args.User.TryGetComponent(out ActorComponent? actor))
-            {
-                _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
-=======
             if (TryComp<WiresComponent>(uid, out var wiresComponent) && wiresComponent.IsPanelOpen &&
                 EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             {
-                wiresComponent.OpenInterface(actor.PlayerSession);
->>>>>>> 48f0a0b8f748386964d032cda9ad0d44d77c21ee
+                _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
                 args.Handled = true;
             }
         }
