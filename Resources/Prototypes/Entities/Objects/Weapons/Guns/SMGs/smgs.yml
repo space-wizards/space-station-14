@@ -23,7 +23,7 @@
     minAngle: 0
     maxAngle: 60
     angleIncrease: 10
-    angleDecay: 15
+    angleDecay: 20
     magFillPrototype: MagazinePistolSmg
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/smg.ogg
@@ -71,8 +71,8 @@
     - Smg
     minAngle: 5
     maxAngle: 60
-    angleIncrease: 12
-    angleDecay: 15
+    angleIncrease: 10
+    angleDecay: 20
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -114,7 +114,7 @@
     minAngle: 0
     maxAngle: 60
     angleIncrease: 10
-    angleDecay: 15
+    angleDecay: 20
     autoEjectMag: true
   - type: Appearance
     visuals:
@@ -157,7 +157,7 @@
     minAngle: 0
     maxAngle: 60
     angleIncrease: 12
-    angleDecay: 15
+    angleDecay: 20
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
