@@ -11,7 +11,7 @@ namespace Content.Server.Emag
     public sealed class EmagSystem : EntitySystem
     {
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedAdminLogSystem _adminLog = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
 
         public override void Initialize()
         {
