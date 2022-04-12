@@ -5,8 +5,7 @@
   description: A cardboard box for storing things.
   components:
   - type: Sprite
-    layers:
-      - state: box
+    state: box
 
 - type: entity
   name: lightbulb box

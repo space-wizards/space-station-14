@@ -46,6 +46,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _sharedInteractionSystem = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -277,6 +278,9 @@ namespace Content.Server.Storage.EntitySystems
             if (storageComp.Whitelist != null && !storageComp.Whitelist.IsValid(insertEnt))
                 return false;
 
+            if (storageComp.Blacklist != null && storageComp.Blacklist.IsValid(insertEnt))
+                return false;
+
             if (TryComp(insertEnt, out TransformComponent? transformComp) && transformComp.Anchored)
                 return false;
 
@@ -322,12 +326,13 @@ namespace Content.Server.Storage.EntitySystems
 
             var toInsert = hands.ActiveHandEntity;
 
-            if (!_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands) || !Insert(uid, toInsert.Value, storageComp))
+            if (!_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands))
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-storage-cant-insert"), player, Filter.Entities(player));
+                Popup(uid, player, "comp-storage-cant-insert", storageComp);
                 return false;
             }
-            return true;
+
+            return PlayerInsertEntityInWorld(uid, player, toInsert.Value, storageComp);
         }
 
         /// <summary>
@@ -338,9 +343,13 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns>true if inserted, false otherwise</returns>
         public bool PlayerInsertEntityInWorld(EntityUid uid, EntityUid player, EntityUid toInsert, ServerStorageComponent storageComp)
         {
+
+            if (!_sharedInteractionSystem.InRangeUnobstructed(player, uid, popup: storageComp.ShowPopup))
+                return false;
+
             if (!Insert(uid, toInsert, storageComp))
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-storage-cant-insert"), player, Filter.Entities(player));
+                Popup(uid, player, "comp-storage-cant-insert", storageComp);
                 return false;
             }
             return true;
@@ -616,6 +625,13 @@ namespace Content.Server.Storage.EntitySystems
             var state = new StorageBoundUserInterfaceState(storageComp.Storage.ContainedEntities, storageComp.StorageUsed, storageComp.StorageCapacityMax);
 
             _uiSystem.GetUiOrNull(uid, StorageUiKey.Key)?.SetState(state);
+        }
+
+        private void Popup(EntityUid uid, EntityUid player, string message, ServerStorageComponent storageComp)
+        {
+            if (!storageComp.ShowPopup) return;
+
+            _popupSystem.PopupEntity(Loc.GetString(message), player, Filter.Entities(player));
         }
 
     }
