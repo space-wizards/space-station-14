@@ -299,6 +299,9 @@
   id: TrashBag
 
 - type: Tag
+  id: WetFloorSign
+
+- type: Tag
   id: Wall
 
 - type: Tag
