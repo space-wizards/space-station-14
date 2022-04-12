@@ -14,7 +14,6 @@ namespace Content.Server.Botany.Systems;
 public sealed class SeedExtractorSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly BotanySystem _botanySystem = default!;
 
@@ -32,14 +31,8 @@ public sealed class SeedExtractorSystem : EntitySystem
 
         if (TryComp(args.Used, out ProduceComponent? produce))
         {
-            SeedPrototype? seed;
-            // try get seed from seed database
-            if (produce.SeedUid == null || !_botanySystem.Seeds.TryGetValue(produce.SeedUid.Value, out seed))
-            {
-                // try get seed from base prototype
-                if (produce.SeedName == null || !_prototypeManager.TryIndex(produce.SeedName, out seed))
-                    return;
-            }
+            if (!_botanySystem.TryGetSeed(produce, out var seed))
+                return;
 
             _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-interact-message",("name", args.Used)),
                 Filter.Entities(args.User));
@@ -48,6 +41,9 @@ public sealed class SeedExtractorSystem : EntitySystem
 
             var random = _random.Next(component.MinSeeds, component.MaxSeeds);
             var coords = Transform(uid).Coordinates;
+
+            if (random > 1)
+                seed.Unique = false;
 
             for (var i = 0; i < random; i++)
             {

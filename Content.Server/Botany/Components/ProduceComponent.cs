@@ -10,14 +10,14 @@ public sealed class ProduceComponent : Component
     [DataField("targetSolution")] public string SolutionName { get; set; } = "food";
 
     /// <summary>
-    ///     Name of a base seed prototype that this produce can spawn.
+    ///     Seed data used to create a <see cref="SeedComponent"/> when this produce has its seeds extracted.
     /// </summary>
-    [DataField("seed", customTypeSerializer: typeof(PrototypeIdSerializer<SeedPrototype>))]
-    public readonly string? SeedName;
+    [DataField("seed")]
+    public SeedData? Seed;
 
     /// <summary>
-    ///     Uid of a modified seed prototype that this produce can spawn. Takes priority over <see cref="SeedName"/>.
+    ///     Seed data used to create a <see cref="SeedComponent"/> when this produce has its seeds extracted.
     /// </summary>
-    [DataField("SeedUid")]
-    public int? SeedUid;
+    [DataField("seedId", customTypeSerializer: typeof(PrototypeIdSerializer<SeedPrototype>))]
+    public readonly string? SeedId;
 }

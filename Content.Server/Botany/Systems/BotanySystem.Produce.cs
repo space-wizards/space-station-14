@@ -1,8 +1,6 @@
 using Content.Server.Botany.Components;
 using Content.Shared.FixedPoint;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Botany.Systems;
 
@@ -10,14 +8,8 @@ public sealed partial class BotanySystem
 {
     public void ProduceGrown(EntityUid uid, ProduceComponent produce)
     {
-        SeedPrototype? seed;
-        // try get seed from seed database
-        if (produce.SeedUid == null || !Seeds.TryGetValue(produce.SeedUid.Value, out seed))
-        {
-            // try get seed from base prototype
-            if (produce.SeedName == null || !_prototypeManager.TryIndex(produce.SeedName, out seed))
-                return;
-        }
+        if (!TryGetSeed(produce, out var seed))
+            return;
 
         if (TryComp(uid, out SpriteComponent? sprite))
         {

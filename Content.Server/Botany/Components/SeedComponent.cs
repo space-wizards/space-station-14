@@ -7,15 +7,17 @@ namespace Content.Server.Botany.Components
     public sealed class SeedComponent : Component
     {
         /// <summary>
-        ///     Name of a base seed prototype that this produce can spawn.
+        ///     Seed data containing information about the plant type & properties that this seed can grow seed. If
+        ///     null, will instead attempt to get data from a seed prototype, if one is defined. See <see
+        ///     cref="SeedId"/>.
         /// </summary>
-        [DataField("seed", customTypeSerializer:typeof(PrototypeIdSerializer<SeedPrototype>))]
-        public readonly string? SeedName;
+        [DataField("seed")]
+        public SeedData? Seed;
 
         /// <summary>
-        ///     Uid of a modified seed prototype that this produce can spawn. Takes priority over <see cref="SeedName"/>.
+        ///     Name of a base seed prototype that is used if <see cref="Seed"/> is null.
         /// </summary>
-        [DataField("seedUid")]
-        public int? SeedUid;
+        [DataField("seedId", customTypeSerializer:typeof(PrototypeIdSerializer<SeedPrototype>))]
+        public readonly string? SeedId;
     }
 }
