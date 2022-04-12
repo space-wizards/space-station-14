@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+<<<<<<< HEAD
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Serialization.Manager.Attributes;
 
+<<<<<<< HEAD
 namespace Content.Server.Wires;
 
 [RegisterComponent]
@@ -53,6 +55,4 @@ public class WiresComponent : Component
 
     [DataField("screwdriverCloseSound")]
     public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
-
-
 }

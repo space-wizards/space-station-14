@@ -10,7 +10,7 @@ using System;
 
 namespace Content.Server.Traitor.Uplink.Telecrystal
 {
-    public class TelecrystalSystem : EntitySystem
+    public sealed class TelecrystalSystem : EntitySystem
     {
         [Dependency]
         private readonly UplinkAccountsSystem _accounts = default!;
@@ -23,7 +23,7 @@ namespace Content.Server.Traitor.Uplink.Telecrystal
 
         private void OnAfterInteract(EntityUid uid, TelecrystalComponent component, AfterInteractEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.CanReach)
                 return;
 
             if (args.Target == null || !EntityManager.TryGetComponent(args.Target.Value, out UplinkComponent? uplink))
@@ -43,11 +43,12 @@ namespace Content.Server.Traitor.Uplink.Telecrystal
             if (!_accounts.AddToBalance(acc, tcCount))
                 return;
 
-            EntityManager.DeleteEntity(uid);
-
             var msg = Loc.GetString("telecrystal-component-sucs-inserted",
-                ("source", args.Used), ("target", args.Target));
+            ("source", args.Used), ("target", args.Target));
+
             args.User.PopupMessage(args.User, msg);
+
+            EntityManager.DeleteEntity(uid);
 
             args.Handled = true;
         }

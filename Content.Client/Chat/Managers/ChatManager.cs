@@ -21,7 +21,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 
 namespace Content.Client.Chat.Managers
 {
@@ -189,6 +188,8 @@ namespace Content.Client.Chat.Managers
             // can always send/recieve OOC
             SelectableChannels |= ChatSelectChannel.OOC;
             FilterableChannels |= ChatChannel.OOC;
+            SelectableChannels |= ChatSelectChannel.LOOC;
+            FilterableChannels |= ChatChannel.LOOC;
 
             // can always hear server (nobody can actually send server messages).
             FilterableChannels |= ChatChannel.Server;
@@ -197,6 +198,7 @@ namespace Content.Client.Chat.Managers
             {
                 // can always hear local / radio / emote when in the game
                 FilterableChannels |= ChatChannel.Local;
+                FilterableChannels |= ChatChannel.Whisper;
                 FilterableChannels |= ChatChannel.Radio;
                 FilterableChannels |= ChatChannel.Emotes;
 
@@ -205,6 +207,7 @@ namespace Content.Client.Chat.Managers
                 if (!IsGhost)
                 {
                     SelectableChannels |= ChatSelectChannel.Local;
+                    SelectableChannels |= ChatSelectChannel.Whisper;
                     SelectableChannels |= ChatSelectChannel.Radio;
                     SelectableChannels |= ChatSelectChannel.Emotes;
                 }
@@ -319,6 +322,10 @@ namespace Content.Client.Chat.Managers
                     _consoleHost.ExecuteCommand(text.ToString());
                     break;
 
+                case ChatSelectChannel.LOOC:
+                    _consoleHost.ExecuteCommand($"looc \"{CommandParsing.Escape(str)}\"");
+                    break;
+
                 case ChatSelectChannel.OOC:
                     _consoleHost.ExecuteCommand($"ooc \"{CommandParsing.Escape(str)}\"");
                     break;
@@ -346,6 +353,10 @@ namespace Content.Client.Chat.Managers
 
                 case ChatSelectChannel.Local:
                     _consoleHost.ExecuteCommand($"say \"{CommandParsing.Escape(str)}\"");
+                    break;
+
+                case ChatSelectChannel.Whisper:
+                    _consoleHost.ExecuteCommand($"whisper \"{CommandParsing.Escape(str)}\"");
                     break;
 
                 default:
@@ -400,6 +411,10 @@ namespace Content.Client.Chat.Managers
                     AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
                     break;
 
+                case ChatChannel.Whisper:
+                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Whisper);
+                    break;
+
                 case ChatChannel.Dead:
                     if (!IsGhost)
                         break;
@@ -421,7 +436,7 @@ namespace Content.Client.Chat.Managers
                 return;
             }
 
-            var messages = SplitMessage(Basic.RenderMarkup(msg.Message).ToString());
+            var messages = SplitMessage(FormattedMessage.RemoveMarkup(msg.Message));
 
             foreach (var message in messages)
             {

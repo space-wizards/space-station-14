@@ -12,6 +12,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
@@ -22,27 +23,34 @@ namespace Content.Server.NodeContainer.EntitySystems
     /// </summary>
     /// <seealso cref="NodeContainerSystem"/>
     [UsedImplicitly]
-    public class NodeGroupSystem : EntitySystem
+    public sealed class NodeGroupSystem : EntitySystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly INodeGroupFactory _nodeGroupFactory = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private readonly List<int> _visDeletes = new();
         private readonly List<BaseNodeGroup> _visSends = new();
 
         private readonly HashSet<IPlayerSession> _visPlayers = new();
         private readonly HashSet<BaseNodeGroup> _toRemake = new();
+        private readonly HashSet<BaseNodeGroup> _nodeGroups = new();
         private readonly HashSet<Node> _toRemove = new();
         private readonly List<Node> _toReflood = new();
 
         private ISawmill _sawmill = default!;
 
+        private const float VisDataUpdateInterval = 1;
+        private float _accumulatedFrameTime;
+
         public bool VisEnabled => _visPlayers.Count != 0;
 
         private int _gen = 1;
         private int _groupNetIdCounter = 1;
+
+        public bool Snoozing = false;
 
         public override void Initialize()
         {
@@ -97,6 +105,11 @@ namespace Content.Server.NodeContainer.EntitySystems
             {
                 QueueReflood(node);
             }
+
+            if (group.NodeCount == 0)
+            {
+                _nodeGroups.Remove(group);
+            }
         }
 
         public void QueueReflood(Node node)
@@ -127,8 +140,11 @@ namespace Content.Server.NodeContainer.EntitySystems
         {
             base.Update(frameTime);
 
-            DoGroupUpdates();
-            VisDoUpdate();
+            if (!Snoozing)
+            {
+                DoGroupUpdates();
+                VisDoUpdate(frameTime);
+            }
         }
 
         private void DoGroupUpdates()
@@ -140,6 +156,9 @@ namespace Content.Server.NodeContainer.EntitySystems
                 return;
 
             var sw = Stopwatch.StartNew();
+
+            var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
+            var nodeQuery = EntityManager.GetEntityQuery<NodeContainerComponent>();
 
             foreach (var toRemove in _toRemove)
             {
@@ -182,7 +201,11 @@ namespace Content.Server.NodeContainer.EntitySystems
                     QueueRemakeGroup((BaseNodeGroup) node.NodeGroup);
                 }
 
-                foreach (var compatible in GetCompatibleNodes(node))
+                // GetCompatibleNodes will involve getting the transform & grid as most connection requirements are
+                // based on position & anchored neighbours However, here more than one node could be attached to the
+                // same parent. So there is probably a better way of doing this.
+
+                foreach (var compatible in GetCompatibleNodes(node, xformQuery, nodeQuery))
                 {
                     ClearReachableIfNecessary(compatible);
 
@@ -226,6 +249,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
                 oldGroup.Removed = true;
                 oldGroup.AfterRemake(newGrouped);
+                _nodeGroups.Remove(oldGroup);
                 if (VisEnabled)
                     _visDeletes.Add(oldGroup.NetId);
             }
@@ -236,12 +260,20 @@ namespace Content.Server.NodeContainer.EntitySystems
             _toRemake.Clear();
             _toRemove.Clear();
 
+            // notify entities that node groups have been updated, so they can do things like update their visuals.
+            HashSet<EntityUid> entities = new();
             foreach (var group in newGroups)
             {
                 foreach (var node in group.Nodes)
                 {
-                    node.OnPostRebuild();
+                    entities.Add(node.Owner);
                 }
+            }
+
+            foreach (var uid in entities)
+            {
+                var ev = new NodeGroupsRebuilt(uid);
+                RaiseLocalEvent(uid, ref ev, true);
             }
 
             _sawmill.Debug($"Updated node groups in {sw.Elapsed.TotalMilliseconds}ms. {newGroups.Count} new groups, {refloodCount} nodes processed.");
@@ -270,6 +302,8 @@ namespace Content.Server.NodeContainer.EntitySystems
             }
 
             newGroup.LoadNodes(groupNodes);
+
+            _nodeGroups.Add(newGroup);
 
             if (VisEnabled)
                 _visSends.Add(newGroup);
@@ -303,26 +337,54 @@ namespace Content.Server.NodeContainer.EntitySystems
             return allNodes;
         }
 
-        private static IEnumerable<Node> GetCompatibleNodes(Node node)
+        private IEnumerable<Node> GetCompatibleNodes(Node node, EntityQuery<TransformComponent> xformQuery, EntityQuery<NodeContainerComponent> nodeQuery)
         {
-            foreach (var reachable in node.GetReachableNodes())
+            var xform = xformQuery.GetComponent(node.Owner);
+            _mapManager.TryGetGrid(xform.GridID, out var grid);
+
+            if (!node.Connectable(EntityManager, xform))
+                    yield break;
+
+            foreach (var reachable in node.GetReachableNodes(xform, nodeQuery, xformQuery, grid, EntityManager))
             {
                 DebugTools.Assert(reachable != node, "GetReachableNodes() should not include self.");
 
-                if (reachable.Connectable && reachable.NodeGroupID == node.NodeGroupID)
+                if (reachable.NodeGroupID == node.NodeGroupID
+                    && reachable.Connectable(EntityManager, xformQuery.GetComponent(reachable.Owner)))
+                {
                     yield return reachable;
+                }
             }
         }
 
-        private void VisDoUpdate()
+        private void VisDoUpdate(float frametime)
         {
-            if (_visSends.Count == 0 && _visDeletes.Count == 0)
+            if (_visPlayers.Count == 0)
+                return;
+
+            _accumulatedFrameTime += frametime;
+
+            if (_accumulatedFrameTime < VisDataUpdateInterval
+                && _visSends.Count == 0
+                && _visDeletes.Count == 0)
                 return;
 
             var msg = new NodeVis.MsgData();
 
             msg.GroupDeletions.AddRange(_visDeletes);
             msg.Groups.AddRange(_visSends.Select(VisMakeGroupState));
+
+            if (_accumulatedFrameTime > VisDataUpdateInterval)
+            {
+                _accumulatedFrameTime -= VisDataUpdateInterval;
+                foreach (var group in _nodeGroups)
+                {
+                    if (_visSends.Contains(group))
+                        continue;
+
+                    msg.GroupDataUpdates.Add(group.NetId, group.GetDebugData());
+                }
+            }
 
             _visSends.Clear();
             _visDeletes.Clear();
@@ -337,14 +399,7 @@ namespace Content.Server.NodeContainer.EntitySystems
         {
             var msg = new NodeVis.MsgData();
 
-            var allNetworks = EntityManager
-                .EntityQuery<NodeContainerComponent>()
-                .SelectMany(nc => nc.Nodes.Values)
-                .Select(n => (BaseNodeGroup?) n.NodeGroup)
-                .Where(n => n != null)
-                .Distinct();
-
-            foreach (var network in allNetworks)
+            foreach (var network in _nodeGroups)
             {
                 msg.Groups.Add(VisMakeGroupState(network!));
             }
@@ -366,7 +421,8 @@ namespace Content.Server.NodeContainer.EntitySystems
                     Reachable = n.ReachableNodes.Select(r => r.NetId).ToArray(),
                     Entity = n.Owner,
                     Type = n.GetType().Name
-                }).ToArray()
+                }).ToArray(),
+                DebugData = group.GetDebugData()
             };
         }
 
@@ -382,6 +438,21 @@ namespace Content.Server.NodeContainer.EntitySystems
                 NodeGroupID.WireNet => Color.DarkMagenta,
                 _ => Color.White
             };
+        }
+    }
+
+    /// <summary>
+    ///     Event raised after node groups have been updated. Directed at any entity with a <see
+    ///     cref="NodeContainerComponent"/> that had a relevant node.
+    /// </summary>
+    [ByRefEvent]
+    public readonly struct NodeGroupsRebuilt
+    {
+        public readonly EntityUid NodeOwner;
+
+        public NodeGroupsRebuilt(EntityUid nodeOwner)
+        {
+            NodeOwner = nodeOwner;
         }
     }
 }

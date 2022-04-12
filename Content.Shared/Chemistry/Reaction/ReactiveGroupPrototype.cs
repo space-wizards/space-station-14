@@ -4,8 +4,8 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Shared.Chemistry.Reaction;
 
 [Prototype("reactiveGroup")]
-public class ReactiveGroupPrototype : IPrototype
+public sealed class ReactiveGroupPrototype : IPrototype
 {
-    [DataField("id", required: true)]
+    [IdDataFieldAttribute]
     public string ID { get; } = default!;
 }

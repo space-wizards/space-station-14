@@ -67,7 +67,7 @@ namespace Content.Shared.FixedPoint
             => new(a._value + b._value);
 
         public static FixedPoint2 operator -(FixedPoint2 a, FixedPoint2 b)
-            => a + -b;
+            => new(a._value - b._value);
 
         public static FixedPoint2 operator *(FixedPoint2 a, FixedPoint2 b)
         {
@@ -264,11 +264,11 @@ namespace Content.Shared.FixedPoint
 
         public readonly int CompareTo(FixedPoint2 other)
         {
-            if(other._value > _value)
+            if (other._value > _value)
             {
                 return -1;
             }
-            if(other._value < _value)
+            if (other._value < _value)
             {
                 return 1;
             }

@@ -1,0 +1,101 @@
+# ---- SPECIFICS ----
+
+- type: entity
+  id: PaperWrittenSalvageLoreMedium1PlasmaTrap
+  noSpawn: true # keep this from spamming spawn sheet
+  suffix: "Salvage: Lore: Medium 1: Plasma Trap"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |
+      Heheheheh, no way in hell they're going to get at our stash NOW, is there?
+      I rigged the area where our stuff's at to be a toasty thousand K.
+      You know how to drain it when we need it out.
+       - J.
+
+# ---- GAMING ----
+
+- type: entity
+  name: Salvage Lore Paper Gaming Spawner
+  id: SalvageLorePaperGamingSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - texture: Objects/Misc/bureaucracy.rsi/paper_words.png
+    - type: RandomSpawner
+      prototypes:
+        - PaperWrittenSalvageLoreGaming1
+        - PaperWrittenSalvageLoreGaming2
+        - PaperWrittenSalvageLoreGaming3
+        - PaperWrittenSalvageLoreGaming4
+      offset: 0.1
+
+- type: entity
+  id: PaperWrittenSalvageLoreGaming1
+  noSpawn: true # keep this from spamming spawn sheet
+  suffix: "Salvage: Lore: Gaming 1"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |
+      Can't stay for the game.
+      Engineering want me to keep a close eye on the singularity SMESes.
+      Leaving this so you know what's up.
+      Sorry.
+       - Alexander
+
+- type: entity
+  id: PaperWrittenSalvageLoreGaming2
+  noSpawn: true # keep this from spamming spawn sheet
+  suffix: "Salvage: Lore: Gaming 2"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |
+      Johny Clowe
+      Class: Druid
+      Alignment: Neutral Good
+      Str: 1,294,139
+      Dex: 4,102,103
+      Con: 9,522,913
+      Int: 528,491
+      Wis: 1
+      Cha: 1
+
+      Where's the age?
+      Why are those ability scores so ridiculous?
+      What even are you trying to do here, Leah? - Your Friendly DM
+
+- type: entity
+  id: PaperWrittenSalvageLoreGaming3
+  noSpawn: true # keep this from spamming spawn sheet
+  suffix: "Salvage: Lore: Gaming 3"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |
+      THE GIANT SPACE FLY FROM SPACE
+      Session 1: They should have just learned what's going on with the world and the Giant Space Fly.
+      Session 2: They should know to ask the Wizard's Court about seismic distortions.
+      Session 3: On their way to underground lair.
+      Session 4: Just ran into the Architect Of Flies.
+      Oh dear goodness they just started randomly killing everybody
+
+- type: entity
+  id: PaperWrittenSalvageLoreGaming4
+  noSpawn: true # keep this from spamming spawn sheet
+  suffix: "Salvage: Lore: Gaming 4"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |
+      Won't be able to come to the meet, chemist blew up the hospital again.
+      Fifth time this shift.
+      It's amazing.
+      But not in a good way.
+      Cheers, - Arielle
+
+# ----
+

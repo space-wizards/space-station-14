@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             Name="APCMenu"
             Title="{Loc 'apc-menu-title'}"
             Resizable="False">
@@ -24,4 +24,4 @@
             <Label Name="ChargePercentage"/>
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

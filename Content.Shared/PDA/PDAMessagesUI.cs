@@ -14,18 +14,9 @@ namespace Content.Shared.PDA
     }
 
     [Serializable, NetSerializable]
-    public sealed class PDAEjectIDMessage : BoundUserInterfaceMessage
+    public sealed class PDAShowRingtoneMessage : BoundUserInterfaceMessage
     {
-        public PDAEjectIDMessage()
-        {
-
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class PDAEjectPenMessage : BoundUserInterfaceMessage
-    {
-        public PDAEjectPenMessage()
+        public PDAShowRingtoneMessage()
         {
 
         }
@@ -40,6 +31,14 @@ namespace Content.Shared.PDA
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class PDAShowMusicMessage : BoundUserInterfaceMessage
+    {
+        public PDAShowMusicMessage()
+        {
+
+        }
+    }
 
     [Serializable, NetSerializable]
     public sealed class PDARequestUpdateInterfaceMessage : BoundUserInterfaceMessage

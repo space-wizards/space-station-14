@@ -9,6 +9,8 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
+using Content.Shared.Sound;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -74,7 +76,7 @@ namespace Content.Server.Weapon.Melee
             args.Handled = true;
             var curTime = _gameTiming.CurTime;
 
-            if (curTime < comp.CooldownEnd || !args.Target.IsValid())
+            if (curTime < comp.CooldownEnd || args.Target == null)
                 return;
 
             var location = EntityManager.GetComponent<TransformComponent>(args.User).Coordinates;
@@ -101,13 +103,20 @@ namespace Content.Server.Weapon.Melee
                     {
                         if (args.Used == args.User)
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target):target} using their hands and dealt {damageResult.Total:damage} damage");
+                                $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using their hands and dealt {damageResult.Total:damage} damage");
                         else
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:damage} damage");
+                                $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:damage} damage");
                     }
 
-                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
+                    if (hitEvent.HitSoundOverride != null)
+                    {
+                        SoundSystem.Play(Filter.Pvs(owner), hitEvent.HitSoundOverride.GetSound(), target, AudioHelpers.WithVariation(0.25f));
+                    }
+                    else
+                    {
+                        SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
+                    }
                 }
             }
             else
@@ -160,11 +169,18 @@ namespace Content.Server.Weapon.Melee
             {
                 if (entities.Count != 0)
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), EntityManager.GetComponent<TransformComponent>(entities.First()).Coordinates);
+                    if (hitEvent.HitSoundOverride != null)
+                    {
+                        SoundSystem.Play(Filter.Pvs(owner), hitEvent.HitSoundOverride.GetSound(), Transform(entities.First()).Coordinates);
+                    }
+                    else
+                    {
+                        SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), Transform(entities.First()).Coordinates);
+                    }
                 }
                 else
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), EntityManager.GetComponent<TransformComponent>(args.User).Coordinates);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), Transform(args.User).Coordinates);
                 }
 
                 var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
@@ -199,7 +215,7 @@ namespace Content.Server.Weapon.Melee
         /// </summary>
         private void OnAfterInteract(EntityUid owner, MeleeWeaponComponent comp, AfterInteractEvent args)
         {
-            if (!args.CanReach)
+            if (args.Handled || !args.CanReach)
                 return;
 
             var curTime = _gameTiming.CurTime;
@@ -242,7 +258,7 @@ namespace Content.Server.Weapon.Melee
                 var castAngle = new Angle(baseAngle + increment * i);
                 var res = Get<SharedPhysicsSystem>().IntersectRay(mapId,
                     new CollisionRay(position, castAngle.ToWorldVec(),
-                        (int) (CollisionGroup.Impassable | CollisionGroup.MobImpassable)), range, ignore).ToList();
+                        (int) (CollisionGroup.MobMask | CollisionGroup.Opaque)), range, ignore).ToList();
 
                 if (res.Count != 0)
                 {
@@ -279,7 +295,7 @@ namespace Content.Server.Weapon.Melee
             foreach (var bloodstream in hitBloodstreams)
             {
                 var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
-                _bloodstreamSystem.TryAddToBloodstream((bloodstream).Owner, individualInjection, bloodstream);
+                _bloodstreamSystem.TryAddToChemicals((bloodstream).Owner, individualInjection, bloodstream);
             }
         }
 
@@ -299,7 +315,7 @@ namespace Content.Server.Weapon.Melee
     ///     Raised directed on the melee weapon entity used to attack something in combat mode,
     ///     whether through a click attack or wide attack.
     /// </summary>
-    public class MeleeHitEvent : HandledEntityEventArgs
+    public sealed class MeleeHitEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Modifier sets to apply to the hit event when it's all said and done.
@@ -321,6 +337,12 @@ namespace Content.Server.Weapon.Melee
         public IEnumerable<EntityUid> HitEntities { get; }
 
         /// <summary>
+        ///     Used to define a new hit sound in case you want to override the default GenericHit.
+        ///     Also gets a pitch modifier added to it.
+        /// </summary>
+        public SoundSpecifier? HitSoundOverride {get; set;}
+
+        /// <summary>
         /// The user who attacked with the melee weapon.
         /// </summary>
         public EntityUid User { get; }
@@ -336,7 +358,7 @@ namespace Content.Server.Weapon.Melee
     ///     Raised directed on the melee weapon entity used to attack something in combat mode,
     ///     whether through a click attack or wide attack.
     /// </summary>
-    public class MeleeInteractEvent : EntityEventArgs
+    public sealed class MeleeInteractEvent : EntityEventArgs
     {
         /// <summary>
         ///     The entity interacted with.

@@ -1,26 +1,27 @@
-using System;
-using Robust.Shared.GameObjects;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Light.Component
 {
-    [NetworkedComponent()]
+    [NetworkedComponent]
     public abstract class SharedHandheldLightComponent : Robust.Shared.GameObjects.Component
     {
-        public sealed override string Name => "HandheldLight";
+        [DataField("toggleAction", required: true)]
+        public InstantAction ToggleAction = new();
 
-        protected abstract bool HasCell { get; }
-
-        protected const int StatusLevels = 6;
+        public const int StatusLevels = 6;
 
         [Serializable, NetSerializable]
-        protected sealed class HandheldLightComponentState : ComponentState
+        public sealed class HandheldLightComponentState : ComponentState
         {
             public byte? Charge { get; }
 
-            public HandheldLightComponentState(byte? charge)
+            public bool Activated { get; }
+
+            public HandheldLightComponentState(bool activated, byte? charge)
             {
+                Activated = activated;
                 Charge = charge;
             }
         }

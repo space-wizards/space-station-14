@@ -1,6 +1,7 @@
 - type: reagent
   id: Flour
   name: flour
+  group: Foods
   desc: Used for baking.
   physicalDesc: powdery
   color: white
@@ -13,6 +14,7 @@
 - type: reagent
   id: Oats
   name: oats
+  group: Foods
   desc: Used for a variety of tasty purposes.
   physicalDesc: coarse
   color: tan
@@ -25,7 +27,9 @@
 - type: reagent
   id: Enzyme
   name: universal enzyme
+  group: Foods
   desc: Used in cooking various dishes.
+  physicalDesc: chalky
   color: "#009900"
   metabolisms:
     Food:
@@ -36,6 +40,7 @@
 - type: reagent
   id: Egg
   name: egg
+  group: Foods
   desc: Used for baking.
   physicalDesc: mucus-like
   color: white
@@ -48,8 +53,9 @@
 - type: reagent
   id: Sugar
   name: sugar
+  group: Foods
   desc: Tasty spacey sugar!
-  physicalDesc:
+  physicalDesc: sweet
   color: white
   metabolisms:
     Food:
@@ -60,8 +66,9 @@
 - type: reagent
   id: Blackpepper
   name: black pepper
+  group: Foods
   desc: Often used to flavor food or make people sneeze.
-  physicalDesc: Grainy.
+  physicalDesc: grainy
   color: black
   metabolisms:
     Food:
@@ -72,7 +79,9 @@
 - type: reagent
   id: Vinegar
   name: vinegar
+  group: Foods
   desc: Often used to flavor food.
+  physicalDesc: sour
   color: tan
   metabolisms:
     Food:
@@ -83,7 +92,9 @@
 - type: reagent
   id: Rice
   name: rice
+  group: Foods
   desc: Hard, small white grains.
+  physicalDesc: chewy
   color: white
   metabolisms:
     Food:
@@ -93,7 +104,9 @@
 - type: reagent
   id: OilOlive
   name: olive oil
+  group: Foods
   desc: Viscous and fragrant.
+  physicalDesc: oily
   color: olive
   metabolisms:
     Food:
@@ -104,6 +117,7 @@
 - type: reagent
   id: Oil
   name: oil
+  group: Foods
   desc: Used by chefs to cook.
   physicalDesc: oily
   color: "#b67823"
@@ -111,3 +125,30 @@
   meltingPoint: -16.0
   tileReactions:
   - !type:FlammableTileReaction {}
+
+- type: reagent
+  id: CapsaicinOil
+  name: Capsaicin Oil
+  desc: Capsaicin Oil is the ingredient found in different types of hot peppers.
+  physicalDesc: oily
+  color: "#FF0000"
+  meltingPoint: 146
+  boilingPoint: 410 # Really high boiling point compared to its melting
+  metabolisms:
+    Poison:
+      effects:
+        - !type:HealthChange
+          damage:
+            groups:
+              Caustic: 0.5
+        - !type:HealthChange
+          conditions:
+            - !type:ReagentThreshold
+              min: 5
+          damage:
+            groups:
+              Caustic: 1
+        - !type:PopupMessage
+          type: Local
+          messages: [ "capsaicin-effect-light-burn" ]
+          probability: 0.2

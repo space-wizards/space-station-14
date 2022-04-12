@@ -1,29 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Items;
 using Content.Server.Tools.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Temperature;
 using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Tools
 {
-    public partial class ToolSystem
+    public sealed partial class ToolSystem
     {
         private readonly HashSet<EntityUid> _activeWelders = new();
 
@@ -36,7 +32,6 @@ namespace Content.Server.Tools
             SubscribeLocalEvent<WelderComponent, IsHotEvent>(OnWelderIsHotEvent);
             SubscribeLocalEvent<WelderComponent, ExaminedEvent>(OnWelderExamine);
             SubscribeLocalEvent<WelderComponent, SolutionChangedEvent>(OnWelderSolutionChange);
-            SubscribeLocalEvent<WelderComponent, UseInHandEvent>(OnWelderUseInHand);
             SubscribeLocalEvent<WelderComponent, ActivateInWorldEvent>(OnWelderActivate);
             SubscribeLocalEvent<WelderComponent, AfterInteractEvent>(OnWelderAfterInteract);
             SubscribeLocalEvent<WelderComponent, ToolUseAttemptEvent>(OnWelderToolUseAttempt);
@@ -64,9 +59,9 @@ namespace Content.Server.Tools
         public bool TryToggleWelder(EntityUid uid, EntityUid? user,
             WelderComponent? welder = null,
             SolutionContainerManagerComponent? solutionContainer = null,
-            ItemComponent? item = null,
+            SharedItemComponent? item = null,
             PointLightComponent? light = null,
-            SpriteComponent? sprite = null)
+            AppearanceComponent? appearance = null)
         {
             // Right now, we only need the welder.
             // So let's not unnecessarily resolve components
@@ -74,22 +69,22 @@ namespace Content.Server.Tools
                 return false;
 
             return !welder.Lit
-                ? TryTurnWelderOn(uid, user, welder, solutionContainer, item, light, sprite)
-                : TryTurnWelderOff(uid, user, welder, item, light, sprite);
+                ? TryTurnWelderOn(uid, user, welder, solutionContainer, item, light, appearance)
+                : TryTurnWelderOff(uid, user, welder, item, light, appearance);
         }
 
         public bool TryTurnWelderOn(EntityUid uid, EntityUid? user,
             WelderComponent? welder = null,
             SolutionContainerManagerComponent? solutionContainer = null,
-            ItemComponent? item = null,
+            SharedItemComponent? item = null,
             PointLightComponent? light = null,
-            SpriteComponent? sprite = null)
+            AppearanceComponent? appearance = null)
         {
             if (!Resolve(uid, ref welder, ref solutionContainer))
                 return false;
 
             // Optional components.
-            Resolve(uid, ref item, ref light, ref sprite);
+            Resolve(uid, ref item, ref light, ref appearance, false);
 
             if (!_solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var solution, solutionContainer))
                 return false;
@@ -104,9 +99,6 @@ namespace Content.Server.Tools
                 return false;
             }
 
-            if (user != null && !_actionBlockerSystem.CanInteract(user.Value))
-                return false;
-
             solution.RemoveReagent(welder.FuelReagent, welder.FuelLitCost);
 
             welder.Lit = true;
@@ -114,7 +106,7 @@ namespace Content.Server.Tools
             if(item != null)
                 item.EquippedPrefix = "on";
 
-            sprite?.LayerSetVisible(1, true);
+            appearance?.SetData(WelderVisuals.Lit, true);
 
             if (light != null)
                 light.Enabled = true;
@@ -132,18 +124,15 @@ namespace Content.Server.Tools
 
         public bool TryTurnWelderOff(EntityUid uid, EntityUid? user,
             WelderComponent? welder = null,
-            ItemComponent? item = null,
+            SharedItemComponent? item = null,
             PointLightComponent? light = null,
-            SpriteComponent? sprite = null)
+            AppearanceComponent? appearance = null)
         {
             if (!Resolve(uid, ref welder))
                 return false;
 
             // Optional components.
-            Resolve(uid, ref item, ref light, ref sprite);
-
-            if (user != null && !_actionBlockerSystem.CanInteract(user.Value))
-                return false;
+            Resolve(uid, ref item, ref light, ref appearance, false);
 
             welder.Lit = false;
 
@@ -152,7 +141,7 @@ namespace Content.Server.Tools
                 item.EquippedPrefix = "off";
 
             // Layer 1 is the flame.
-            sprite?.LayerSetVisible(1, false);
+            appearance?.SetData(WelderVisuals.Lit, false);
 
             if (light != null)
                 light.Enabled = false;
@@ -237,11 +226,6 @@ namespace Content.Server.Tools
             }
 
             args.Handled = true;
-        }
-
-        private void OnWelderUseInHand(EntityUid uid, WelderComponent welder, UseInHandEvent args)
-        {
-            args.Handled = TryToggleWelder(uid, args.User, welder);
         }
 
         private void OnWelderToolUseAttempt(EntityUid uid, WelderComponent welder, ToolUseAttemptEvent args)

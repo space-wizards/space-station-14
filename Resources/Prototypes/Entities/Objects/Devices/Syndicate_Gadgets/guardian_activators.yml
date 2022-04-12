@@ -1,0 +1,40 @@
+- type: entity
+  name: holoparasite injector
+  id: HoloparasiteInjector
+  parent: BaseItem
+  description: A complex artwork of handheld machinery allowing the user to host a holoparasite guardian.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/hypospray.rsi
+    state: combat_hypo
+    netsync: false
+  - type: GuardianCreator
+    guardianProto: MobHoloparasiteGuardian
+
+- type: entity
+  name: magical lamp
+  id: MagicalLamp
+  parent: BaseItem
+  description: The wizard federation had to cut costs after the jinn merchandise scandal somehow.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Lights/lamp.rsi
+    layers:
+      - state: lamp
+  - type: GuardianCreator
+    guardianProto: MobIfritGuardian
+
+- type: entity
+  name: holoparasite box
+  parent: BoxCardboard
+  id: BoxHoloparasite
+  description: A box containing a holoparasite injector
+  components:
+  - type: StorageFill
+    contents:
+      - id: HoloparasiteInjector
+      - id: HoloparasiteInfo
+      - id: ClothingHeadHatBizarreSoft
+  - type: Sprite
+    layers:
+      - state: box

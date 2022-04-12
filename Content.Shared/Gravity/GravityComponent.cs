@@ -14,8 +14,6 @@ namespace Content.Shared.Gravity
     [NetworkedComponent]
     public sealed class GravityComponent : Component
     {
-        public override string Name => "Gravity";
-
         [DataField("gravityShakeSound")]
         public SoundSpecifier GravityShakeSound { get; set; } = new SoundPathSpecifier("/Audio/Effects/alert.ogg");
 

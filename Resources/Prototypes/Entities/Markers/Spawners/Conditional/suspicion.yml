@@ -19,7 +19,7 @@
         - RifleCalico
       chance: 0.75
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion Pistol Spawner
@@ -45,7 +45,7 @@
         - PistolPaco
       chance: 0.95
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion Melee Spawner
@@ -66,7 +66,7 @@
         - Stunbaton
       chance: 0.95
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion Revolver Spawner
@@ -84,7 +84,7 @@
         - RevolverMateba
       chance: 0.95
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion Shotgun Spawner
@@ -106,7 +106,7 @@
         - ShotgunSawn
       chance: 0.95
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion SMG Spawner
@@ -126,7 +126,7 @@
         - SmgZoric
       chance: 0.95
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion Sniper Spawner
@@ -144,7 +144,7 @@
         - SniperHeavy
       chance: 0.95
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion Hitscan Spawner
@@ -166,7 +166,7 @@
         - TaserGun
       chance: 0.85
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion Launchers Spawner
@@ -183,7 +183,7 @@
         - LauncherRocket
       chance: 0.75
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion Grenades Spawner
@@ -206,7 +206,7 @@
         - SoapSyndie # shhh!
       chance: 0.75
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion Rifle Ammo Spawner
@@ -227,7 +227,7 @@
         - MagazinePistolCalicoTopMounted
       chance: 0.95
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion Shotgun Ammo Spawner
@@ -243,7 +243,7 @@
         - MagazineShotgun
       chance: 0.95
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion Pistol Ammo Spawner
@@ -260,7 +260,7 @@
         - MagazineHCPistol
       chance: 0.95
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion Magnum Ammo Spawner
@@ -277,7 +277,7 @@
         - MagazineMagnumSmg
       chance: 0.95
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion Launcher Ammo Spawner
@@ -294,4 +294,4 @@
         - GrenadeFrag
       chance: 0.95
       gameRules:
-        - RuleSuspicion
+        - Suspicion

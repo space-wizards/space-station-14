@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Access;
-using Content.Server.Access.Systems;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.CPUJob.JobQueues;
 using Content.Server.CPUJob.JobQueues.Queues;
+using Content.Shared.Access.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
@@ -27,7 +27,7 @@ namespace Content.Server.AI.Pathfinding
     /// This system handles pathfinding graph updates as well as dispatches to the pathfinder
     /// (90% of what it's doing is graph updates so not much point splitting the 2 roles)
     /// </summary>
-    public class PathfindingSystem : EntitySystem
+    public sealed class PathfindingSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -146,19 +146,19 @@ namespace Content.Server.AI.Pathfinding
         {
             var chunkX = (int) (Math.Floor((float) tile.X / PathfindingChunk.ChunkSize) * PathfindingChunk.ChunkSize);
             var chunkY = (int) (Math.Floor((float) tile.Y / PathfindingChunk.ChunkSize) * PathfindingChunk.ChunkSize);
-            var Vector2i = new Vector2i(chunkX, chunkY);
+            var vector2i = new Vector2i(chunkX, chunkY);
 
             if (_graph.TryGetValue(tile.GridIndex, out var chunks))
             {
-                if (!chunks.ContainsKey(Vector2i))
+                if (!chunks.ContainsKey(vector2i))
                 {
-                    CreateChunk(tile.GridIndex, Vector2i);
+                    CreateChunk(tile.GridIndex, vector2i);
                 }
 
-                return chunks[Vector2i];
+                return chunks[vector2i];
             }
 
-            var newChunk = CreateChunk(tile.GridIndex, Vector2i);
+            var newChunk = CreateChunk(tile.GridIndex, vector2i);
             return newChunk;
         }
 
@@ -206,21 +206,13 @@ namespace Content.Server.AI.Pathfinding
             SubscribeLocalEvent<CollisionChangeMessage>(QueueCollisionChangeMessage);
             SubscribeLocalEvent<MoveEvent>(QueueMoveEvent);
             SubscribeLocalEvent<AccessReaderChangeMessage>(QueueAccessChangeMessage);
+            SubscribeLocalEvent<GridRemovalEvent>(HandleGridRemoval);
+            SubscribeLocalEvent<GridModifiedEvent>(QueueGridChange);
+            SubscribeLocalEvent<TileChangedEvent>(QueueTileChange);
 
             // Handle all the base grid changes
             // Anything that affects traversal (i.e. collision layer) is handled separately.
-            _mapManager.OnGridRemoved += HandleGridRemoval;
-            _mapManager.GridChanged += QueueGridChange;
-            _mapManager.TileChanged += QueueTileChange;
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            _mapManager.OnGridRemoved -= HandleGridRemoval;
-            _mapManager.GridChanged -= QueueGridChange;
-            _mapManager.TileChanged -= QueueTileChange;
+            
         }
 
         private void HandleTileUpdate(TileRef tile)
@@ -231,25 +223,25 @@ namespace Content.Server.AI.Pathfinding
             node.UpdateTile(tile);
         }
 
-        private void HandleGridRemoval(MapId mapId, GridId gridId)
+        private void HandleGridRemoval(GridRemovalEvent ev)
         {
-            if (_graph.ContainsKey(gridId))
+            if (_graph.ContainsKey(ev.GridId))
             {
-                _graph.Remove(gridId);
+                _graph.Remove(ev.GridId);
             }
         }
 
-        private void QueueGridChange(object? sender, GridChangedEventArgs eventArgs)
+        private void QueueGridChange(GridModifiedEvent ev)
         {
-            foreach (var (position, _) in eventArgs.Modified)
+            foreach (var (position, _) in ev.Modified)
             {
-                _tileUpdateQueue.Enqueue(eventArgs.Grid.GetTileRef(position));
+                _tileUpdateQueue.Enqueue(ev.Grid.GetTileRef(position));
             }
         }
 
-        private void QueueTileChange(object? sender, TileChangedEventArgs eventArgs)
+        private void QueueTileChange(TileChangedEvent ev)
         {
-            _tileUpdateQueue.Enqueue(eventArgs.NewTile);
+            _tileUpdateQueue.Enqueue(ev.NewTile);
         }
 
         private void QueueAccessChangeMessage(AccessReaderChangeMessage message)

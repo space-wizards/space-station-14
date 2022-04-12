@@ -5,12 +5,12 @@ namespace Content.Shared.Movement.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IMoverComponent))]
-    public class SharedDummyInputMoverComponent : Component, IMoverComponent
+    public sealed class SharedDummyInputMoverComponent : Component, IMoverComponent
     {
-        public override string Name => "DummyInputMover";
         public bool IgnorePaused => false;
         public float CurrentWalkSpeed => 0f;
         public float CurrentSprintSpeed => 0f;
+        public bool CanMove { get; set; } = true;
 
         public Angle LastGridAngle { get => Angle.Zero; set {} }
 

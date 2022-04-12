@@ -16,11 +16,9 @@ namespace Content.Shared.Slippery
     [NetworkedComponent()]
     public sealed class SlipperyComponent : Component
     {
-        public override string Name => "Slippery";
-
         private float _paralyzeTime = 5f;
         private float _intersectPercentage = 0.3f;
-        private float _requiredSlipSpeed = 5f;
+        private float _requiredSlipSpeed = 3.5f;
         private float _launchForwardsMultiplier = 1f;
         private bool _slippery = true;
         private SoundSpecifier _slipSound = new SoundPathSpecifier("/Audio/Effects/slip.ogg");
@@ -163,7 +161,7 @@ namespace Content.Shared.Slippery
     }
 
     [Serializable, NetSerializable]
-    public class SlipperyComponentState : ComponentState
+    public sealed class SlipperyComponentState : ComponentState
     {
         public float ParalyzeTime { get; }
         public float IntersectPercentage { get; }

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ComputerBase
   id: ComputerAlert
   name: alerts computer
@@ -9,6 +9,8 @@
     - type: ComputerVisualizer
       key: atmos_key
       screen: "alert-2"
+  - type: Computer
+    board: AlertsComputerCircuitboard
 
 - type: entity
   parent: ComputerBase
@@ -18,8 +20,6 @@
   abstract: true
   components:
   - type: ShuttleConsole
-  - type: ApcPowerReceiver
-    powerLoad: 200
   - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.5
@@ -39,6 +39,8 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: shuttle
+  - type: Computer
+    board: ShuttleConsoleCircuitboard
 
 - type: entity
   parent: ComputerShuttleBase
@@ -71,6 +73,8 @@
     radius: 1.5
     energy: 1.6
     color: "#c9c042"
+  - type: Computer
+    board: PowerComputerCircuitboard
 
 - type: entity
   parent: ComputerBase
@@ -87,6 +91,57 @@
     radius: 1.5
     energy: 1.6
     color: "#1f8c28"
+  - type: Computer
+    board: MedicalRecordsComputerCircuitboard
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerCriminalRecords
+  name: criminal records computer
+  description: This can be used to check criminal records.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: security_key
+      screen: explosive
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#1f8c28"
+  - type: Computer
+    board: CriminalRecordsComputerCircuitboard
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerCrewMonitoring
+  name: crew monitoring console
+  description: Used to monitor active health sensors built into most of the crew's uniforms.
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: med_key
+          screen: crew
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#006400"
+    - type: Computer
+      board: CrewMonitoringComputerCircuitboard
+    - type: ActivatableUI
+      key: enum.CrewMonitoringUIKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.CrewMonitoringUIKey.Key
+          type: CrewMonitoringBoundUserInterface
+    - type: CrewMonitoringConsole
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: SuitSensor
+    - type: WirelessNetworkConnection
+      range: 500
 
 - type: entity
   parent: ComputerBase
@@ -102,6 +157,9 @@
   - type: ResearchClient
   - type: ResearchConsole
   - type: TechnologyDatabase
+  - type: ActivatableUI
+    key: enum.ResearchConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.ResearchConsoleUiKey.Key
@@ -109,7 +167,7 @@
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
   - type: ApcPowerReceiver
-    powerLoad: 200
+    powerLoad: 1000
     priority: Low
   - type: ExtensionCableReceiver
   - type: Computer
@@ -169,9 +227,12 @@
   parent: ComputerBase
   id: computerBodyScanner
   name: body scanner computer
-  description: That's a body scanner.
+  description: A body scanner.
   components:
   - type: BodyScanner
+  - type: ActivatableUI
+    key: enum.BodyScannerUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.BodyScannerUiKey.Key
@@ -181,6 +242,8 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: generic
+  - type: ApcPowerReceiver
+    powerLoad: 500
   - type: Computer
     board: BodyScannerComputerCircuitboard
   - type: PointLight
@@ -239,6 +302,36 @@
     radius: 1.5
     energy: 1.6
     color: "#e6e227"
+  - type: Tag
+    tags:
+      - DroneUsable
+
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerRadar
+  name: mass scanner computer
+  description: A computer for detecting nearby bodies, displaying them by position and mass.
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: generic_key
+          screen: solar_screen
+    - type: RadarConsole
+    - type: ActivatableUI
+      key: enum.RadarConsoleUiKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.RadarConsoleUiKey.Key
+          type: RadarConsoleBoundUserInterface
+    - type: Computer
+      board: RadarConsoleCircuitboard
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#e6e227"
 
 - type: entity
   id: ComputerSupplyOrdering
@@ -270,16 +363,22 @@
       - SecurityHelmet
       - SecuritySupplies
       - SecurityNonLethal
+      - SecurityRestraints
       - HydroponicsTools
       - HydroponicsSeeds
       - HydroponicsSeedsExotic
       - LivestockMonkeyCube
       - LivestockCow
+      - LivestockChicken
+      - LivestockDuck
+      - LivestockGoat
       - FoodPizza
       - ServiceJanitorial
       - ServiceLightsReplacement
       - ServiceSmokeables
       - ServiceCustomSmokable
+      - ServiceBureaucracy
+      - ServicePersonnel
       - EngineeringCableLv
       - EngineeringCableMv
       - EngineeringCableHv
@@ -291,6 +390,8 @@
       - FunPlushies
       - FunArtSupplies
       - FunInstruments
+      - FunBrass
+      - FunBoardGames
       - MaterialSteel
       - MaterialGlass
       - MaterialPlastic
@@ -345,3 +446,31 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+
+- type: entity
+  parent: BaseStructure
+  id: ComputerTelevision
+  name: wooden television
+  description: It's an old television displaying the station's cameras, if they worked.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    layers:
+    - state: television
+    - state: detective_television
+      shader: unshaded
+    visuals:
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 50
+      layer:
+      - SmallImpassable
+      mask:
+      - Impassable

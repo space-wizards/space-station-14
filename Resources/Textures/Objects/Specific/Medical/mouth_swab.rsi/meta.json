@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY",
+    "copyright": "Created by Willhudson#4576 (Discord user id: 935437363180613672) in the SS14 Discord",
+    "states": [
+        {
+            "name": "icon",
+            "directions": 1
+        }
+    ]
+}

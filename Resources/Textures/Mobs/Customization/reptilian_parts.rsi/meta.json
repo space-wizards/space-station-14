@@ -1,0 +1,91 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/tgstation/tgstation/blob/165be097d54c19f2e3de9fd6d95f545bcf356768/icons/mob/mutant_bodyparts.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "tail_smooth_front",
+            "directions": 4
+        },
+        {
+            "name": "tail_spikes_front",
+            "directions": 4
+        },
+        {
+            "name": "tail_dtiger_front",
+            "directions": 4
+        },
+        {
+            "name": "tail_ltiger_front",
+            "directions": 4
+        },
+        {
+            "name": "tail_smooth_behind",
+            "directions": 4
+        },
+        {
+            "name": "tail_spikes_behind",
+            "directions": 4
+        },
+        {
+            "name": "tail_dtiger_behind",
+            "directions": 4
+        },
+        {
+            "name": "tail_ltiger_behind",
+            "directions": 4
+        },
+        {
+            "name": "snout_round",
+            "directions": 4
+        },
+        {
+            "name": "snout_roundlight",
+            "directions": 4
+        },
+        {
+            "name": "snout_sharp",
+            "directions": 4
+        },
+        {
+            "name": "snout_sharplight",
+            "directions": 4
+        },
+        {
+            "name": "horns_simple",
+            "directions": 4
+        },
+        {
+            "name": "horns_short",
+            "directions": 4
+        },
+        {
+            "name": "horns_curled",
+            "directions": 4
+        },
+        {
+            "name": "horns_ram",
+            "directions": 4
+        },
+        {
+            "name": "horns_angler",
+            "directions": 4
+        },
+        {
+            "name": "frills_simple",
+            "directions": 4
+        },
+        {
+            "name": "frills_short",
+            "directions": 4
+        },
+        {
+            "name": "frills_aquatic",
+            "directions": 4
+        }
+    ]
+}

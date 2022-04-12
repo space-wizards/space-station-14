@@ -1,0 +1,68 @@
+- type: entity
+  parent: BaseItem
+  id: DrinkShaker
+  name: shaker
+  description: ''
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+  - type: Drink
+    isOpen: true
+  - type: FitsInDispenser
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shaker.rsi
+    state: icon
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkShotGlass
+  name: shot glass
+  description: ''
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shotglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkCarafe
+  name: pitcher
+  description: A handled glass pitcher.
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/carafe.rsi
+    state: icon-10
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkJar
+  name: jar
+  description: The hipster's cup
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/jar.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkJarWhat
+  name: jar of something
+  description: You can't really tell what this is.
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/jar_what.rsi

@@ -1,6 +1,7 @@
+# Base SMES
 - type: entity
   abstract: true
-  id: BaseSmes
+  id: BaseSMES
   parent: BaseMachine
   name: SMES
   description: A high-capacity superconducting magnetic energy storage (SMES) unit.
@@ -8,6 +9,7 @@
     mode: SnapgridCenter
   components:
     - type: AmbientSound
+      volume: -7
       range: 3
       sound:
         path: /Audio/Ambience/Objects/periodic_beep.ogg
@@ -22,7 +24,7 @@
         - type: SmesVisualizer
     - type: Battery
       maxCharge: 1000
-      startingCharge: 1000
+      startingCharge: 0
     - type: ExaminableBattery
     - type: NodeContainer
       examinable: true
@@ -49,3 +51,22 @@
       energy: 1.6
       color: "#c9c042"
       castShadows: false
+    - type: Construction
+      graph: Machine
+      node: machine
+    - type: Wires
+      BoardName: "SMES"
+      LayoutId: SMES
+    - type: Machine
+      board: SMESMachineCircuitboard
+
+# SMES' in use
+
+- type: entity
+  parent: BaseSMES
+  id: SMESBasic
+  suffix: Basic, 10MW
+  components:
+  - type: Battery
+    maxCharge: 10000000
+    startingCharge: 10000000

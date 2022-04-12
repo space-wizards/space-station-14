@@ -36,7 +36,7 @@ namespace Content.Shared.Throwing
     /// <summary>
     ///     Raised directed on the target entity being hit by the thrown entity.
     /// </summary>
-    public class ThrowHitByEvent : ThrowEvent
+    public sealed class ThrowHitByEvent : ThrowEvent
     {
         public ThrowHitByEvent(EntityUid? user, EntityUid thrown, EntityUid target) : base(user, thrown, target)
         {
@@ -46,7 +46,7 @@ namespace Content.Shared.Throwing
     /// <summary>
     ///     Raised directed on the thrown entity that hits another.
     /// </summary>
-    public class ThrowDoHitEvent : ThrowEvent
+    public sealed class ThrowDoHitEvent : ThrowEvent
     {
         public ThrowDoHitEvent(EntityUid? user, EntityUid thrown, EntityUid target) : base(user, thrown, target)
         {

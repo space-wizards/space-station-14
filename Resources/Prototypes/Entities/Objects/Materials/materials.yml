@@ -10,6 +10,19 @@
   - type: Item
     sprite: Objects/Materials/materials.rsi
   - type: ItemStatus
+  - type: Tag
+    tags:
+      - DroneUsable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: MaterialBase
@@ -38,6 +51,14 @@
   components:
   - type: Stack
     stackType: Cloth
+  - type: Material
+    materials:
+    - Cloth
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
   - type: Sprite
     state: cloth_3
   - type: Appearance
@@ -115,6 +136,9 @@
   components:
   - type: Stack
     stackType: Durathread
+  - type: Material
+    materials:
+    - Durathread
   - type: Sprite
     state: durathread_3
   - type: Appearance
@@ -256,9 +280,8 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/hides.rsi
     HeldPrefix: bear
-    ClothingPrefix: bear
     Slots:
-    - Helmet
+    - HEAD
 
 - type: entity
   parent: MaterialBase
@@ -271,9 +294,8 @@
   # - type: Clothing
   #   sprite: Clothing/Head/Misc/hides.rsi
   #   HeldPrefix: cat
-  #   ClothingPrefix: cat
   #   Slots:
-  #   - Helmet
+  #   - HEAD
 
 - type: entity
   parent: MaterialBase
@@ -285,7 +307,6 @@
     state: corgihide
   - type: Clothing
     sprite: Clothing/Head/Misc/hides.rsi
-  #   HeldPrefix: corgi
-    ClothingPrefix: corgi2
+    HeldPrefix: corgi
     Slots:
-    - Helmet
+    - HEAD

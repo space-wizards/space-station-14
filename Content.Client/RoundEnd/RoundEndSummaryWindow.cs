@@ -9,7 +9,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.RoundEnd
 {
-    public sealed class RoundEndSummaryWindow : SS14Window
+    public sealed class RoundEndSummaryWindow : DefaultWindow
     {
 
         public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, RoundEndMessageEvent.RoundEndPlayerInfo[] info)

@@ -9,6 +9,7 @@ using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -17,11 +18,9 @@ namespace Content.Server.Buckle.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrapComponent))]
-    public class StrapComponent : SharedStrapComponent, IInteractHand, ISerializationHooks, IDestroyAct
+    public sealed class StrapComponent : SharedStrapComponent, IInteractHand, ISerializationHooks, IDestroyAct
     {
-        [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;
-
-        [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private readonly HashSet<EntityUid> _buckledEntities = new();
 
@@ -36,6 +35,50 @@ namespace Content.Server.Buckle.Components
         /// </summary>
         [ViewVariables] [DataField("size")] private int _size = 100;
         private int _occupiedSize;
+
+        /// <summary>
+        /// The buckled entity will be offset by this amount from the center of the strap object.
+        /// If this offset it too big, it will be clamped to <see cref="MaxBuckleDistance"/>
+        /// </summary>
+        [DataField("buckleOffset", required: false)]
+        private Vector2 _buckleOffset = Vector2.Zero;
+
+        private bool _enabled = true;
+
+        /// <summary>
+        /// If disabled, nothing can be buckled on this object, and it will unbuckle anything that's already buckled
+        /// </summary>
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                _enabled = value;
+                if (_enabled == value) return;
+                RemoveAll();
+            }
+        }
+
+        /// <summary>
+        /// The distance above which a buckled entity will be automatically unbuckled.
+        /// Don't change it unless you really have to
+        /// </summary>
+        [DataField("maxBuckleDistance", required: false)]
+        public float MaxBuckleDistance = 0.5f;
+
+        /// <summary>
+        /// You can specify the offset the entity will have after unbuckling.
+        /// </summary>
+        [DataField("unbuckleOffset", required: false)]
+        public Vector2 UnbuckleOffset = Vector2.Zero;
+
+        /// <summary>
+        /// Gets and clamps the buckle offset to MaxBuckleDistance
+        /// </summary>
+        public Vector2 BuckleOffset => Vector2.Clamp(
+            _buckleOffset,
+            Vector2.One * -MaxBuckleDistance,
+            Vector2.One * MaxBuckleDistance);
 
         /// <summary>
         /// The entity that is currently buckled here, synced from <see cref="BuckleComponent.BuckledTo"/>
@@ -96,6 +139,8 @@ namespace Content.Server.Buckle.Components
         /// <returns>True if added, false otherwise</returns>
         public bool TryAdd(BuckleComponent buckle, bool force = false)
         {
+            if (!Enabled) return false;
+
             if (!force && !HasSpace(buckle))
             {
                 return false;
@@ -108,11 +153,14 @@ namespace Content.Server.Buckle.Components
 
             _occupiedSize += buckle.Size;
 
-            buckle.Appearance?.SetData(StrapVisuals.RotationAngle, _rotation);
+            if(_entityManager.TryGetComponent<AppearanceComponent>(buckle.Owner, out var appearanceComponent))
+                appearanceComponent.SetData(StrapVisuals.RotationAngle, _rotation);
 
-#pragma warning disable 618
-            SendMessage(new StrapMessage(buckle.Owner, Owner));
-#pragma warning restore 618
+            // Update the visuals of the strap object
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent>(Owner, out var appearance))
+            {
+                appearance.SetData("StrapState", true);
+            }
 
             return true;
         }
@@ -126,10 +174,12 @@ namespace Content.Server.Buckle.Components
         {
             if (_buckledEntities.Remove(buckle.Owner))
             {
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent>(Owner, out var appearance))
+                {
+                    appearance.SetData("StrapState", false);
+                }
+
                 _occupiedSize -= buckle.Size;
-#pragma warning disable 618
-                SendMessage(new UnStrapMessage(buckle.Owner, Owner));
-#pragma warning restore 618
             }
         }
 
@@ -147,9 +197,11 @@ namespace Content.Server.Buckle.Components
 
         private void RemoveAll()
         {
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
             foreach (var entity in _buckledEntities.ToArray())
             {
-                if (_entMan.TryGetComponent<BuckleComponent?>(entity, out var buckle))
+                if (entManager.TryGetComponent<BuckleComponent>(entity, out var buckle))
                 {
                     buckle.TryUnbuckle(entity, true);
                 }
@@ -166,7 +218,9 @@ namespace Content.Server.Buckle.Components
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!_entMan.TryGetComponent<BuckleComponent?>(eventArgs.User, out var buckle))
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
+            if (!entManager.TryGetComponent<BuckleComponent>(eventArgs.User, out var buckle))
             {
                 return false;
             }
@@ -176,7 +230,9 @@ namespace Content.Server.Buckle.Components
 
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
-            if (!_entMan.TryGetComponent(eventArgs.Dragged, out BuckleComponent? buckleComponent)) return false;
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
+            if (!entManager.TryGetComponent(eventArgs.Dragged, out BuckleComponent? buckleComponent)) return false;
             return buckleComponent.TryBuckle(eventArgs.User, Owner);
         }
     }

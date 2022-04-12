@@ -1,4 +1,5 @@
 using Content.Server.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -6,25 +7,12 @@ using Robust.Shared.IoC;
 namespace Content.Server.AI.WorldState.States.Hands
 {
     [UsedImplicitly]
-    public class AnyFreeHandState : StateData<bool>
+    public sealed class AnyFreeHandState : StateData<bool>
     {
         public override string Name => "AnyFreeHand";
         public override bool GetValue()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent))
-            {
-                return false;
-            }
-
-            foreach (var hand in handsComponent.ActivePriorityEnumerable())
-            {
-                if (handsComponent.GetItem(hand) == null)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedHandsSystem>().TryGetEmptyHand(Owner, out _);
         }
     }
 }

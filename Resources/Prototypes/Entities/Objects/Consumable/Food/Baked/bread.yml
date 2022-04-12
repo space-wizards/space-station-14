@@ -110,6 +110,15 @@
     - state: meat
   - type: SliceableFood
     slice: FoodBreadMeatSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 5
 # Tastes like bread, meat.
 
 - type: entity
@@ -124,6 +133,15 @@
     layers:
     - state: plate
     - state: meat-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 1.2
 
 - type: entity
   name: xeno-meat bread
@@ -139,6 +157,15 @@
     - state: xenomeat
   - type: SliceableFood
     slice: FoodBreadMeatXenoSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 5
 # Tastes like bread, acid.
 
 - type: entity
@@ -153,6 +180,15 @@
     layers:
     - state: plate
     - state: xenomeat-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 1.2
 
 - type: entity
   name: spider-meatbread
@@ -168,6 +204,17 @@
     - state: spidermeat
   - type: SliceableFood
     slice: FoodBreadMeatSpiderSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 60
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Toxin
+          Quantity: 15
 # Tastes like bread, cobwebs.
 
 - type: entity
@@ -182,6 +229,17 @@
     layers:
     - state: plate
     - state: spidermeat-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 1.2
+        - ReagentId: Toxin
+          Quantity: 3
 
 - type: entity
   name: banana-nut bread
@@ -226,6 +284,15 @@
     - state: tofu
   - type: SliceableFood
     slice: FoodBreadTofuSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 5
 # Tastes like bread, tofu.
 
 - type: entity
@@ -240,6 +307,15 @@
     layers:
     - state: plate
     - state: tofu-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 1.2
 
 - type: entity
   name: cream cheese bread
@@ -255,6 +331,15 @@
     - state: creamcheese
   - type: SliceableFood
     slice: FoodBreadCreamcheeseSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 35
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Vitamin
+          Quantity: 5
 # Tastes like bread, cheese.
 
 - type: entity
@@ -269,6 +354,15 @@
     layers:
     - state: plate
     - state: creamcheese-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 1.2
 
 - type: entity
   name: mimana bread
@@ -284,6 +378,17 @@
     - state: mimana
   - type: SliceableFood
     slice: FoodBreadMimanaSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Nothing
+          Quantity: 5
 # Tastes like bread, cheese.
 
 - type: entity
@@ -298,6 +403,17 @@
     layers:
     - state: plate
     - state: mimana-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 1.2
+        - ReagentId: Nothing
+          Quantity: 1.2
 
 # Other than bread/slices
 
@@ -311,6 +427,15 @@
     layers:
     - state: plate
     - state: moldy-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Amatoxin
+          Quantity: 7
 # Tastes like decaying fungus.
 
 - type: entity
@@ -324,6 +449,19 @@
     - Baguette
   - type: Sprite
     state: baguette
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: TableSalt
+          Quantity: 1
+        - ReagentId: Blackpepper
+          Quantity: 1
 # Tastes like France.
 
 - type: entity
@@ -336,6 +474,15 @@
     layers:
     - state: plate
     - state: garlic-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like garlic, Italy.
 
 - type: entity
@@ -346,4 +493,13 @@
   components:
   - type: Sprite
     state: buttered-toast
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like bread, butter.

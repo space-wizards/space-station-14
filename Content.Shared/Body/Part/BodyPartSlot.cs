@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Body.Part
 {
-    public class BodyPartSlot
+    public sealed class BodyPartSlot
     {
         public BodyPartSlot(string id, BodyPartType partType, IEnumerable<BodyPartSlot> connections)
         {

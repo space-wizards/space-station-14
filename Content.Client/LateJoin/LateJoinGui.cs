@@ -21,7 +21,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.LateJoin
 {
-    public sealed class LateJoinGui : SS14Window
+    public sealed class LateJoinGui : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
@@ -252,7 +252,7 @@ namespace Content.Client.LateJoin
         }
     }
 
-    class JobButton : ContainerButton
+    sealed class JobButton : ContainerButton
     {
         public string JobId { get; }
         public int Amount { get; }

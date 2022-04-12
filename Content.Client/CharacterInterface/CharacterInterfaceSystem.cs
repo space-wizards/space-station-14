@@ -48,7 +48,11 @@ namespace Content.Client.CharacterInterface
             if (comp.UIComponents.Count == 0)
                 return;
 
-            comp.Window = new CharacterInterfaceComponent.CharacterWindow(comp.UIComponents);
+            comp.Window = new CharacterInterfaceComponent.CharacterWindow(comp.UIComponents)
+            {
+                SetSize = (545, 400)
+            };
+
             comp.Window.OnClose += () => _gameHud.CharacterButtonDown = false;
         }
 
@@ -77,7 +81,7 @@ namespace Content.Client.CharacterInterface
                 return;
 
             _gameHud.CharacterButtonVisible = true;
-            _gameHud.CharacterButtonToggled = b =>
+            _gameHud.CharacterButtonToggled += b =>
             {
                 if (b)
                     comp.Window.OpenCentered();
@@ -118,7 +122,7 @@ namespace Content.Client.CharacterInterface
             }
         }
 
-        private void _setOpenValue(SS14Window menu, bool value)
+        private void _setOpenValue(DefaultWindow menu, bool value)
         {
             _gameHud.CharacterButtonDown = value;
             if (value)

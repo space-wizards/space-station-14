@@ -11,11 +11,15 @@
   - type: Item
     size: 10
     sprite: Objects/Specific/Janitorial/mop.rsi
-  - type: Mop
+  - type: Absorbent
   - type: SolutionContainerManager
     solutions:
-      mop:
-        maxVol: 10
+      absorbed:
+        maxVol: 50
+  - type: Tag
+    tags:
+      - DroneUsable #No bucket because it holds chems, they can drag the thing around instead
+      - Mop
 
 - type: entity
   name: mop bucket
@@ -31,14 +35,20 @@
     - state: mopbucket_water
     drawdepth: Objects
   - type: InteractionOutline
-  - type: Bucket
   - type: SolutionContainerManager
     solutions:
       bucket:
         maxVol: 500
         reagents:
         - ReagentId: Water
-          Quantity: 500
+          Quantity: 250 # half-full at roundstart to leave room for puddles
+  - type: DrainableSolution
+    solution: bucket
+  - type: RefillableSolution
+    solution: bucket
+  - type: Tag
+    tags:
+      - Wringer
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures

@@ -7,7 +7,7 @@ using static Content.Shared.Cloning.SharedCloningPodComponent;
 namespace Content.Client.Cloning.UI
 {
     [UsedImplicitly]
-    public class CloningPodBoundUserInterface : BoundUserInterface
+    public sealed class CloningPodBoundUserInterface : BoundUserInterface
     {
         public CloningPodBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {

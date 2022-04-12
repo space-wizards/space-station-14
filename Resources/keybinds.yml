@@ -65,6 +65,9 @@ binds:
 - function: FocusLocalChatWindow
   type: State
   key: Period
+- function: FocusWhisperChatWindow
+  type: State
+  key: Comma
 - function: FocusRadioWindow
   type: State
   key: SemiColon
@@ -311,6 +314,9 @@ binds:
 - function: OpenAdminMenu
   type: State
   key: F7
+- function: OpenDecalSpawnWindow
+  type: State
+  key: F8
 - function: OpenSandboxWindow
   type: State
   key: B

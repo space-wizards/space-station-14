@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Wires.Visualizers
 {
-    public class WiresVisualizer : AppearanceVisualizer
+    public sealed class WiresVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

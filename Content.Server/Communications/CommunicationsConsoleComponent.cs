@@ -1,27 +1,25 @@
-using System;
 using System.Globalization;
 using System.Threading;
+using Content.Server.Access.Systems;
 using Content.Server.Chat.Managers;
-using Content.Server.PDA;
 using Content.Server.Power.Components;
 using Content.Server.RoundEnd;
 using Content.Server.UserInterface;
 using Content.Shared.Communications;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Communications
 {
     [RegisterComponent]
-    public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent
+    public sealed class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent, IEntityEventSubscriber
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
@@ -42,10 +40,7 @@ namespace Content.Server.Communications
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            RoundEndSystem.OnRoundEndCountdownStarted += UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownCancelled += UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownFinished += UpdateBoundInterface;
-            RoundEndSystem.OnCallCooldownEnded += UpdateBoundInterface;
+            _entityManager.EventBus.SubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this, (s) => UpdateBoundInterface());
         }
 
         protected override void Startup()
@@ -76,9 +71,7 @@ namespace Content.Server.Communications
 
         protected override void OnRemove()
         {
-            RoundEndSystem.OnRoundEndCountdownStarted -= UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownCancelled -= UpdateBoundInterface;
-            RoundEndSystem.OnRoundEndCountdownFinished -= UpdateBoundInterface;
+            _entityManager.EventBus.UnsubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this);
             base.OnRemove();
         }
 
@@ -105,15 +98,16 @@ namespace Content.Server.Communications
                     UpdateBoundInterface();
 
                     var message = msg.Message.Length <= 256 ? msg.Message.Trim() : $"{msg.Message.Trim().Substring(0, 256)}...";
+                    var sys = _sysMan.GetEntitySystem<IdCardSystem>();
 
                     var author = "Unknown";
-                    if (obj.Session.AttachedEntity is {Valid: true} mob && mob.TryGetHeldId(out var id))
+                    if (obj.Session.AttachedEntity is {Valid: true} mob && sys.TryFindIdCard(mob, out var id))
                     {
                         author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
                     }
 
                     message += $"\nSent by {author}";
-                    _chatManager.DispatchStationAnnouncement(message, "Communications Console");
+                    _chatManager.DispatchStationAnnouncement(message, "Communications Console", colorOverride: Color.Gold);
                     break;
             }
         }

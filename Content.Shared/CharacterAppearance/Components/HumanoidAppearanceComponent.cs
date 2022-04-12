@@ -1,6 +1,7 @@
 using System;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Systems;
+using Content.Shared.Species;
 using Robust.Shared.Analyzers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
@@ -14,10 +15,8 @@ namespace Content.Shared.CharacterAppearance.Components
     [RegisterComponent]
     [Friend(typeof(SharedHumanoidAppearanceSystem), typeof(SharedMagicMirrorComponent))]
     [NetworkedComponent]
-    public class HumanoidAppearanceComponent : Component
+    public sealed class HumanoidAppearanceComponent : Component
     {
-        public override string Name => "HumanoidAppearance";
-
         [ViewVariables]
         public HumanoidCharacterAppearance Appearance { get; set; } = HumanoidCharacterAppearance.Default();
 
@@ -26,6 +25,9 @@ namespace Content.Shared.CharacterAppearance.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public Gender Gender { get; set; } = default!;
+
+        [ViewVariables]
+        public string Species { get; set; } = SpeciesManager.DefaultSpecies;
 
         [DataField("categoriesHair")]
         [ViewVariables]
@@ -42,6 +44,14 @@ namespace Content.Shared.CharacterAppearance.Components
         [ViewVariables]
         [DataField("canColorFacialHair")]
         public bool CanColorFacialHair { get; set; } = true;
+
+        [ViewVariables]
+        [DataField("hairMatchesSkin")]
+        public bool HairMatchesSkin { get; set; } = false;
+
+        [ViewVariables]
+        [DataField("hairAlpha")]
+        public float HairAlpha { get; set; } = 1.0f;
     }
 
     [Serializable, NetSerializable]
@@ -50,14 +60,17 @@ namespace Content.Shared.CharacterAppearance.Components
         public HumanoidCharacterAppearance Appearance { get; }
         public Sex Sex { get; }
         public Gender Gender { get; }
+        public string Species { get; }
 
         public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance,
             Sex sex,
-            Gender gender)
+            Gender gender,
+            string species)
         {
             Appearance = appearance;
             Sex = sex;
             Gender = gender;
+            Species = species;
         }
     }
 }

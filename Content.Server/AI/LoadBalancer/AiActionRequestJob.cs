@@ -15,7 +15,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.AI.LoadBalancer
 {
-    public class AiActionRequestJob : Job<UtilityAction>
+    public sealed class AiActionRequestJob : Job<UtilityAction>
     {
 #if DEBUG
         public static event Action<SharedAiDebug.UtilityAiDebugMessage>? FoundAction;
@@ -39,7 +39,7 @@ namespace Content.Server.AI.LoadBalancer
 
             var entity = _request.Context.GetState<SelfState>().GetValue();
 
-            if (entity == null || !IoCManager.Resolve<IEntityManager>().HasComponent<AiControllerComponent>(entity))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AiControllerComponent>(entity))
             {
                 return null;
             }

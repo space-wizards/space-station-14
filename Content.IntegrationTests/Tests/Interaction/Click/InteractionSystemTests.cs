@@ -1,10 +1,12 @@
 #nullable enable annotations
 using System.Threading.Tasks;
+using Content.Client.Items.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
-using Content.Server.Items;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Weapons.Melee;
 using NUnit.Framework;
 using Robust.Shared.Containers;
@@ -13,12 +15,13 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Reflection;
+using ItemComponent = Content.Server.Clothing.Components.ItemComponent;
 
 namespace Content.IntegrationTests.Tests.Interaction.Click
 {
     [TestFixture]
     [TestOf(typeof(InteractionSystem))]
-    public class InteractionSystemTests : ContentIntegrationTest
+    public sealed class InteractionSystemTests : ContentIntegrationTest
     {
         const string PROTOTYPES = @"
 - type: entity
@@ -52,6 +55,8 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
 
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
+            var sysMan = server.ResolveDependency<IEntitySystemManager>();
+            var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
             var mapId = MapId.Nullspace;
             var coords = MapCoordinates.Nullspace;
@@ -69,7 +74,8 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             server.Assert(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
+                user.EnsureComponent<HandsComponent>();
+                handSys.AddHand(user, "hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, coords);
                 item = sEntities.SpawnEntity(null, coords);
                 item.EnsureComponent<ItemComponent>();
@@ -96,8 +102,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand);
 
-                Assert.That(sEntities.TryGetComponent<HandsComponent>(user, out var hands));
-                Assert.That(hands.PutInHand(sEntities.GetComponent<ItemComponent>(item)));
+                Assert.That(handSys.TryPickup(user, item));
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(interactUsing);
@@ -122,6 +127,8 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
 
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
+            var sysMan = server.ResolveDependency<IEntitySystemManager>();
+            var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
             var mapId = MapId.Nullspace;
             var coords = MapCoordinates.Nullspace;
@@ -140,7 +147,8 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             server.Assert(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
+                user.EnsureComponent<HandsComponent>();
+                handSys.AddHand(user, "hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, new MapCoordinates((1.9f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
                 item.EnsureComponent<ItemComponent>();
@@ -168,8 +176,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand, Is.False);
 
-                Assert.That(sEntities.TryGetComponent<HandsComponent?>(user, out var hands));
-                Assert.That(hands.PutInHand(sEntities.GetComponent<ItemComponent>(item)));
+                Assert.That(handSys.TryPickup(user, item));
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(interactUsing, Is.False);
@@ -193,6 +200,8 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
 
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
+            var sysMan = server.ResolveDependency<IEntitySystemManager>();
+            var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
             var mapId = MapId.Nullspace;
             var coords = MapCoordinates.Nullspace;
@@ -210,7 +219,8 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             server.Assert(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
+                user.EnsureComponent<HandsComponent>();
+                handSys.AddHand(user, "hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, new MapCoordinates((InteractionSystem.InteractionRange - 0.1f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
                 item.EnsureComponent<ItemComponent>();
@@ -237,8 +247,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand);
 
-                Assert.That(sEntities.TryGetComponent<HandsComponent>(user, out var hands));
-                Assert.That(hands.PutInHand(sEntities.GetComponent<ItemComponent>(item)));
+                Assert.That(handSys.TryPickup(user, item));
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(interactUsing);
@@ -263,6 +272,8 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
 
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
+            var sysMan = server.ResolveDependency<IEntitySystemManager>();
+            var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
             var mapId = MapId.Nullspace;
             var coords = MapCoordinates.Nullspace;
@@ -280,8 +291,9 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             server.Assert(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
-                target = sEntities.SpawnEntity(null, new MapCoordinates((InteractionSystem.InteractionRange, 0), mapId));
+                user.EnsureComponent<HandsComponent>();
+                handSys.AddHand(user, "hand", HandLocation.Left);
+                target = sEntities.SpawnEntity(null, new MapCoordinates((SharedInteractionSystem.InteractionRange + 0.01f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
                 item.EnsureComponent<ItemComponent>();
             });
@@ -307,8 +319,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand, Is.False);
 
-                Assert.That(sEntities.TryGetComponent<HandsComponent?>(user, out var hands));
-                Assert.That(hands.PutInHand(sEntities.GetComponent<ItemComponent>(item)));
+                Assert.That(handSys.TryPickup(user, item));
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(interactUsing, Is.False);
@@ -333,6 +344,8 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
 
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
+            var sysMan = server.ResolveDependency<IEntitySystemManager>();
+            var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
             var mapId = MapId.Nullspace;
             var coords = MapCoordinates.Nullspace;
@@ -352,7 +365,8 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             server.Assert(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
+                user.EnsureComponent<HandsComponent>();
+                handSys.AddHand(user, "hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, coords);
                 item = sEntities.SpawnEntity(null, coords);
                 item.EnsureComponent<ItemComponent>();
@@ -392,8 +406,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand);
 
-                Assert.That(sEntities.TryGetComponent<HandsComponent?>(user, out var hands));
-                Assert.That(hands.PutInHand(sEntities.GetComponent<ItemComponent>(item)));
+                Assert.That(handSys.TryPickup(user, item));
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(interactUsing, Is.False);
@@ -406,7 +419,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         }
 
         [Reflect(false)]
-        private class TestInteractionSystem : EntitySystem
+        private sealed class TestInteractionSystem : EntitySystem
         {
             public ComponentEventHandler<HandsComponent, ClickAttackEvent>? AttackEvent;
             public EntityEventHandler<InteractUsingEvent>? InteractUsingEvent;

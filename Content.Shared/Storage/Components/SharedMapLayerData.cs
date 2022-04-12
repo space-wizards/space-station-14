@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.Whitelist;
 using Robust.Shared.Serialization;
@@ -15,16 +15,16 @@ namespace Content.Shared.Storage.Components
 
     [Serializable]
     [DataDefinition]
-    public class SharedMapLayerData
+    public sealed class SharedMapLayerData
     {
         public string Layer = string.Empty;
 
-        [DataField("whitelist", required: true)]
-        public EntityWhitelist Whitelist { get; set; } = new();
+        [DataField("whitelist", required: true, serverOnly: true)]
+        public EntityWhitelist ServerWhitelist { get; set; } = new();
     }
 
     [Serializable, NetSerializable]
-    public class ShowLayerData
+    public sealed class ShowLayerData : ICloneable
     {
         public IReadOnlyList<string> QueuedEntities { get; internal set; }
 
@@ -33,14 +33,14 @@ namespace Content.Shared.Storage.Components
             QueuedEntities = new List<string>();
         }
 
-        public ShowLayerData(IReadOnlyList<string> other)
+        public ShowLayerData(IEnumerable<string> other)
         {
-            QueuedEntities = other;
+            QueuedEntities = new List<string>(other);
         }
 
-        public ShowLayerData(ShowLayerData other)
+        public object Clone()
         {
-            QueuedEntities = other.QueuedEntities;
+            return new ShowLayerData(QueuedEntities);
         }
     }
 }

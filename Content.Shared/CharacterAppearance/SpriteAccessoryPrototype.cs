@@ -12,7 +12,7 @@ namespace Content.Shared.CharacterAppearance
     [Prototype("spriteAccessory")]
     public sealed class SpriteAccessoryPrototype : IPrototype, ISerializationHooks
     {
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("categories", required: true)]

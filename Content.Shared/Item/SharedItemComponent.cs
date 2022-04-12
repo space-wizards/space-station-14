@@ -1,18 +1,9 @@
-using System;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
-using Robust.Shared.GameObjects;
+using Content.Shared.Sound;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Shared.Item
 {
@@ -20,11 +11,9 @@ namespace Content.Shared.Item
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.
     /// </summary>
     [NetworkedComponent()]
-    public abstract class SharedItemComponent : Component, IEquipped, IUnequipped, IInteractHand
+    public abstract class SharedItemComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "Item";
 
         /// <summary>
         ///     How much big this item is.
@@ -42,9 +31,18 @@ namespace Content.Shared.Item
         [DataField("size")]
         private int _size;
 
+        [DataField("inhandVisuals")]
+        public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
+
+        [DataField("clothingVisuals")]
+        public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
+
         /// <summary>
-        ///     Part of the state of the sprite shown on the player when this item is in their hands.
+        ///     Part of the state of the sprite shown on the player when this item is in their hands or inventory.
         /// </summary>
+        /// <remarks>
+        ///     Only used if <see cref="InhandVisuals"/> or <see cref="ClothingVisuals"/> are unspecified.
+        /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]
         public string? EquippedPrefix
         {
@@ -52,13 +50,21 @@ namespace Content.Shared.Item
             set
             {
                 _equippedPrefix = value;
-                OnEquippedPrefixChange();
+                EntitySystem.Get<SharedItemSystem>().VisualsChanged(Owner, this);
                 Dirty();
             }
         }
         [DataField("HeldPrefix")]
         private string? _equippedPrefix;
 
+        [ViewVariables]
+        [DataField("Slots")]
+        public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
+
+        [DataField("EquipSound")]
+        public SoundSpecifier? EquipSound { get; set; } = default!;
+
+        // TODO REMOVE. Currently nonfunctional and only used by RGB system. #6253 Fixes this but requires #6252
         /// <summary>
         ///     Color of the sprite shown on the player when this item is in their hands.
         /// </summary>
@@ -66,7 +72,7 @@ namespace Content.Shared.Item
         public Color Color
         {
             get => _color;
-            protected set
+            set
             {
                 _color = value;
                 Dirty();
@@ -76,106 +82,52 @@ namespace Content.Shared.Item
         private Color _color = Color.White;
 
         /// <summary>
-        ///     Rsi of the sprite shown on the player when this item is in their hands.
+        ///     Rsi of the sprite shown on the player when this item is in their hands. Used to generate a default entry for <see cref="InhandVisuals"/>
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public string? RsiPath
-        {
-            get => _rsiPath;
-            set
-            {
-                _rsiPath = value;
-                Dirty();
-            }
-        }
         [DataField("sprite")]
-        private string? _rsiPath;
+        public readonly string? RsiPath;
 
-        public override ComponentState GetComponentState()
+        public void RemovedFromSlot()
         {
-            return new ItemComponentState(Size, EquippedPrefix, Color, RsiPath);
+            if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent component))
+                component.Visible = true;
         }
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        public virtual void EquippedToSlot()
         {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not ItemComponentState state)
-                return;
-
-            Size = state.Size;
-            EquippedPrefix = state.EquippedPrefix;
-            Color = state.Color;
-            RsiPath = state.RsiPath;
+            if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent component))
+                component.Visible = false;
         }
-
-        /// <summary>
-        ///     If a player can pick up this item.
-        /// </summary>
-        public bool CanPickup(EntityUid user, bool popup = true)
-        {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
-                return false;
-
-            if (_entMan.GetComponent<TransformComponent>(user).MapID != _entMan.GetComponent<TransformComponent>(Owner).MapID)
-                return false;
-
-            if (!_entMan.TryGetComponent(Owner, out IPhysBody? physics) || physics.BodyType == BodyType.Static)
-                return false;
-
-            return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: popup);
-        }
-
-        void IEquipped.Equipped(EquippedEventArgs eventArgs)
-        {
-            EquippedToSlot();
-        }
-
-        void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
-        {
-            RemovedFromSlot();
-        }
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            var user = eventArgs.User;
-
-            if (!CanPickup(user))
-                return false;
-
-            if (!_entMan.TryGetComponent(user, out SharedHandsComponent? hands))
-                return false;
-
-            var activeHand = hands.ActiveHand;
-
-            if (activeHand == null)
-                return false;
-
-            hands.TryPickupEntityToActiveHand(Owner);
-            return true;
-        }
-
-        protected virtual void OnEquippedPrefixChange() { }
-
-        public virtual void RemovedFromSlot() { }
-
-        public virtual void EquippedToSlot() { }
     }
 
     [Serializable, NetSerializable]
-    public class ItemComponentState : ComponentState
+    public sealed class ItemComponentState : ComponentState
     {
         public int Size { get; }
         public string? EquippedPrefix { get; }
-        public Color Color { get; }
-        public string? RsiPath { get; }
 
-        public ItemComponentState(int size, string? equippedPrefix, Color color, string? rsiPath)
+        public ItemComponentState(int size, string? equippedPrefix)
         {
             Size = size;
             EquippedPrefix = equippedPrefix;
-            Color = color;
-            RsiPath = rsiPath;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when an item's visual state is changed. The event is directed at the entity that contains this item, so
+    ///     that it can properly update its hands or inventory sprites and GUI.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class VisualsChangedEvent : EntityEventArgs
+    {
+        public readonly EntityUid Item;
+        public readonly string ContainerId;
+
+        public VisualsChangedEvent(EntityUid item, string containerId)
+        {
+            Item = item;
+            ContainerId = containerId;
         }
     }
 

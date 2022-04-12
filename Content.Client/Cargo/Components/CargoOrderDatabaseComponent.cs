@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.Cargo.Components
 {
     [RegisterComponent]
-    public class CargoOrderDatabaseComponent : SharedCargoOrderDatabaseComponent
+    public sealed class CargoOrderDatabaseComponent : SharedCargoOrderDatabaseComponent
     {
         private readonly List<CargoOrderData> _orders = new();
 
@@ -22,7 +22,7 @@ namespace Content.Client.Cargo.Components
         /// <summary>
         ///     Removes all orders from the database.
         /// </summary>
-        public virtual void Clear()
+        public void Clear()
         {
             _orders.Clear();
         }
@@ -31,7 +31,7 @@ namespace Content.Client.Cargo.Components
         ///     Adds an order to the database.
         /// </summary>
         /// <param name="order">The order to be added.</param>
-        public virtual void AddOrder(CargoOrderData order)
+        public void AddOrder(CargoOrderData order)
         {
             if (!_orders.Contains(order))
                 _orders.Add(order);

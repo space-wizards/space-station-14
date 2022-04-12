@@ -11,7 +11,7 @@ using Robust.Shared.Reflection;
 
 namespace Content.Client.Administration.Managers
 {
-    public class ClientAdminManager : IClientAdminManager, IClientConGroupImplementation, IPostInjectInit
+    public sealed class ClientAdminManager : IClientAdminManager, IClientConGroupImplementation, IPostInjectInit
     {
         [Dependency] private readonly IClientNetManager _netMgr = default!;
         [Dependency] private readonly IClientConGroupController _conGroup = default!;
@@ -38,7 +38,7 @@ namespace Content.Client.Administration.Managers
 
         public bool CanViewVar()
         {
-            return _adminData?.CanViewVar() ?? false;
+            return CanCommand("vv");
         }
 
         public bool CanAdminPlace()

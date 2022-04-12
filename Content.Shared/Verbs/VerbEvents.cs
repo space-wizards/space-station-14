@@ -1,19 +1,18 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 using Content.Shared.Interaction;
+using Robust.Shared.Containers;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Verbs
 {
     [Serializable, NetSerializable]
-    public class RequestServerVerbsEvent : EntityEventArgs
+    public sealed class RequestServerVerbsEvent : EntityEventArgs
     {
         public readonly EntityUid EntityUid;
-        public readonly VerbType Type;
+
+        public readonly List<string> VerbTypes = new();
 
         /// <summary>
         ///     If the target item is inside of some storage (e.g., backpack), this is the entity that owns that item
@@ -21,121 +20,62 @@ namespace Content.Shared.Verbs
         /// </summary>
         public readonly EntityUid? SlotOwner;
 
+        public readonly bool AdminRequest;
 
-        public RequestServerVerbsEvent(EntityUid entityUid, VerbType type, EntityUid? slotOwner = null)
+        public RequestServerVerbsEvent(EntityUid entityUid, List<Type> verbTypes, EntityUid? slotOwner = null, bool adminRequest = false)
         {
             EntityUid = entityUid;
-            Type = type;
             SlotOwner = slotOwner;
+            AdminRequest = adminRequest;
+
+            foreach (var type in verbTypes)
+            {
+                DebugTools.Assert(typeof(Verb).IsAssignableFrom(type));
+                VerbTypes.Add(type.Name);
+            }
         }
     }
 
     [Serializable, NetSerializable]
-    public class VerbsResponseEvent : EntityEventArgs
+    public sealed class VerbsResponseEvent : EntityEventArgs
     {
-        public readonly Dictionary<VerbType, List<Verb>>? Verbs;
+        public readonly List<Verb>? Verbs;
         public readonly EntityUid Entity;
 
-        public VerbsResponseEvent(EntityUid entity, Dictionary<VerbType, SortedSet<Verb>>? verbs)
+        public VerbsResponseEvent(EntityUid entity, SortedSet<Verb>? verbs)
         {
             Entity = entity;
 
             if (verbs == null)
                 return;
 
-            // Apparently SortedSet is not serlializable. Cast to List<Verb>.
-            Verbs = new();
-            foreach (var entry in verbs)
-            {
-                Verbs.Add(entry.Key, new List<Verb>(entry.Value));
-            }
+            // Apparently SortedSet is not serializable, so we cast to List<Verb>.
+            Verbs = new(verbs);
         }
     }
 
     [Serializable, NetSerializable]
-    public class ExecuteVerbEvent : EntityEventArgs
+    public sealed class ExecuteVerbEvent : EntityEventArgs
     {
         public readonly EntityUid Target;
         public readonly Verb RequestedVerb;
 
-        /// <summary>
-        ///     The type of verb to try execute. Avoids having to get a list of all verbs on the receiving end.
-        /// </summary>
-        public readonly VerbType Type;
-
-        public ExecuteVerbEvent(EntityUid target, Verb requestedVerb, VerbType type)
+        public ExecuteVerbEvent(EntityUid target, Verb requestedVerb)
         {
             Target = target;
             RequestedVerb = requestedVerb;
-            Type = type;
         }
-    }
-
-    /// <summary>
-    ///    Request primary interaction verbs. This includes both use-in-hand and interacting with external entities.
-    /// </summary>
-    /// <remarks>
-    ///    These verbs those that involve using the hands or the currently held item on some entity. These verbs usually
-    ///    correspond to interactions that can be triggered by left-clicking or using 'Z', and often depend on the
-    ///    currently held item. These verbs are collectively shown first in the context menu.
-    /// </remarks>
-    public class GetInteractionVerbsEvent : GetVerbsEvent
-    {
-        public GetInteractionVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands,
-            bool canInteract, bool canAccess) : base(user, target, @using, hands, canInteract, canAccess) { }
-
-    }
-
-    /// <summary>
-    ///    Request activation verbs.
-    /// </summary>
-    /// <remarks>
-    ///    These are verbs that activate an item in the world but are independent of the currently held items. For
-    ///    example, opening a door or a GUI. These verbs should correspond to interactions that can be triggered by
-    ///    using 'E', though many of those can also be triggered by left-mouse or 'Z' if there is no other interaction.
-    ///    These verbs are collectively shown second in the context menu.
-    /// </remarks>
-    public class GetActivationVerbsEvent : GetVerbsEvent
-    {
-        public GetActivationVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands,
-            bool canInteract, bool canAccess) : base(user, target, @using, hands, canInteract, canAccess) { }
-    }
-
-    /// <summary>
-    ///     Request alternative-interaction verbs.
-    /// </summary>
-    /// <remarks>
-    ///     When interacting with an entity via alt + left-click/E/Z the highest priority alt-interact verb is executed.
-    ///     These verbs are collectively shown second-to-last in the context menu.
-    /// </remarks>
-    public class GetAlternativeVerbsEvent : GetVerbsEvent
-    {
-        public GetAlternativeVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands,
-            bool canInteract, bool canAccess) : base(user, target, @using, hands, canInteract, canAccess) { }
-    }
-
-    /// <summary>
-    ///     Request Miscellaneous verbs.
-    /// </summary>
-    /// <remarks>
-    ///     Includes (nearly) global interactions like "examine", "pull", or "debug". These verbs are collectively shown
-    ///     last in the context menu.
-    /// </remarks>
-    public class GetOtherVerbsEvent : GetVerbsEvent
-    {
-        public GetOtherVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands,
-            bool canInteract, bool canAccess) : base(user, target, @using, hands, canInteract, canAccess) { }
     }
 
     /// <summary>
     ///     Directed event that requests verbs from any systems/components on a target entity.
     /// </summary>
-    public class GetVerbsEvent : EntityEventArgs
+    public sealed class GetVerbsEvent<TVerb> : EntityEventArgs where TVerb : Verb
     {
         /// <summary>
         ///     Event output. Set of verbs that can be executed.
         /// </summary>
-        public readonly SortedSet<Verb> Verbs = new();
+        public readonly SortedSet<TVerb> Verbs = new();
 
         /// <summary>
         ///     Can the user physically access the target?
@@ -178,7 +118,7 @@ namespace Content.Shared.Verbs
         ///     The entity currently being held by the active hand.
         /// </summary>
         /// <remarks>
-        ///     This is only ever not null when <see cref="ActionBlockerSystem.CanUse(Robust.Shared.GameObjects.EntityUid)"/> is true and the user
+        ///     This is only ever not null when <see cref="ActionBlockerSystem.CanUseHeldEntity(EntityUid)"/> is true and the user
         ///     has hands.
         /// </remarks>
         public readonly EntityUid? Using;

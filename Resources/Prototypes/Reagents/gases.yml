@@ -1,0 +1,126 @@
+﻿- type: reagent
+  id: Oxygen
+  name: oxygen
+  desc: An oxidizing, colorless gas.
+  physicalDesc: gaseous
+  color: "#808080"
+  boilingPoint: -183.0
+  meltingPoint: -218.4
+  metabolisms:
+    Gas:
+      effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Human
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Animal
+      # Convert Oxygen into CO2.
+      - !type:ModifyLungGas
+        ratios:
+          CarbonDioxide: 1.0
+          Oxygen: -1.0
+
+- type: reagent
+  id: Plasma
+  name: plasma
+  desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
+  physicalDesc: gaseous
+  color: "#7e009e"
+  boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
+  meltingPoint: -186.4
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 1.5
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 3
+      - !type:AdjustReagent
+        reagent: Inaprovaline
+        amount: -2.0
+    Gas:
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison:
+              1
+      # Cant be added until I add metabolism effects on reagent removal
+      #- !type:AdjustAlert
+      #  alertType: Toxins
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+
+- type: reagent
+  id: Tritium
+  name: tritium
+  desc: Radioactive space-magic pixie dust.
+  physicalDesc: ionizing
+  color: "#66ff33"
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 2.0
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: 3
+    Gas:
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Radiation:
+              1
+      # Cant be added until I add metabolism effects on reagent removal
+      #- !type:AdjustAlert
+      #  alertType: Toxins
+
+- type: reagent
+  id: CarbonDioxide
+  name: carbon dioxide
+  desc: You have genuinely no idea what this is.
+  physicalDesc: odorless
+  color: "#66ff33"
+  metabolisms:
+    Gas:
+      effects:
+      - !type:HealthChange
+        conditions:
+        # Don't want people to get toxin damage from the gas they just
+        # exhaled, right?
+        - !type:ReagentThreshold
+          min: 0.5
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison:
+              0.2
+      # Cant be added until I add metabolism effects on reagent removal
+      #- !type:AdjustAlert
+      #  alertType: CarbonDioxide
+
+- type: reagent
+  id: Nitrogen
+  name: nitrogen
+  desc: A colorless, odorless unreactive gas. Highly stable.
+  physicalDesc: gaseous
+  color: "#808080"
+  boilingPoint: -195.8
+  meltingPoint: -210.0

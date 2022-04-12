@@ -1,22 +1,11 @@
-
-using System.Collections.Generic;
-using System.IO;
 using Content.Client.EscapeMenu.UI;
-using Content.Client.Stylesheets;
 using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
-using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Info
 {
-    public sealed class RulesAndInfoWindow : SS14Window
+    public sealed class RulesAndInfoWindow : DefaultWindow
     {
         [Dependency] private readonly RulesManager _rulesManager = default!;
         [Dependency] private readonly IResourceCache _resourceManager = default!;
@@ -33,15 +22,8 @@ namespace Content.Client.Info
 
             var rootContainer = new TabContainer();
 
-            var rulesList = new ScrollContainer
-            {
-                HScrollEnabled = false
-            };
-            var tutorialList = new ScrollContainer
-            {
-                HScrollEnabled = false
-            };
-
+            var rulesList = new Info();
+            var tutorialList = new Info();
 
             rootContainer.AddChild(rulesList);
             rootContainer.AddChild(tutorialList);
@@ -57,133 +39,26 @@ namespace Content.Client.Info
             SetSize = (650, 650);
         }
 
-        private void PopulateRules(Control rulesList)
+        private void PopulateRules(Info rulesList)
         {
-            var vBox = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical,
-                Margin = new Thickness(2, 2, 0, 0)
-            };
-
-            var first = true;
-
-            void AddSection(string title, string path, bool markup = false)
-            {
-                if (!first)
-                {
-                    vBox.AddChild(new Control { MinSize = (0, 10) });
-                }
-
-                first = false;
-                vBox.AddChild(new Label { StyleClasses = { StyleBase.StyleClassLabelHeading }, Text = title });
-
-                var label = new RichTextLabel();
-                var text = _resourceManager.ContentFileReadAllText($"/Server Info/{path}");
-                if (markup)
-                {
-                    label.SetMessage(Basic.RenderMarkup(text.Trim()));
-                }
-                else
-                {
-                    label.SetMessage(text);
-                }
-
-                vBox.AddChild(label);
-            }
-
-            AddSection(Loc.GetString("ui-info-header-rules"), "Rules.txt", true);
-
-            rulesList.AddChild(vBox);
-
+            AddSection(rulesList, Loc.GetString("ui-rules-header"), "Rules.txt", true);
         }
 
-        private void PopulateTutorial(Control tutorialList)
+        private void PopulateTutorial(Info tutorialList)
         {
-            Button controlsButton;
+            AddSection(tutorialList, Loc.GetString("ui-info-header-intro"), "Intro.txt");
+            var infoControlSection = new InfoControlsSection();
+            tutorialList.InfoContainer.AddChild(infoControlSection);
+            AddSection(tutorialList, Loc.GetString("ui-info-header-gameplay"), "Gameplay.txt", true);
+            AddSection(tutorialList, Loc.GetString("ui-info-header-sandbox"), "Sandbox.txt", true);
 
-            var vBox = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical,
-                Margin = new Thickness(2, 2, 0, 0)
-            };
-
-            var first = true;
-
-            void AddSection(string title, string path, bool markup = false)
-            {
-                if (!first)
-                {
-                    vBox.AddChild(new Control { MinSize = (0, 10) });
-                }
-
-                first = false;
-                vBox.AddChild(new Label { StyleClasses = { StyleBase.StyleClassLabelHeading }, Text = title });
-
-                var label = new RichTextLabel();
-                var text = _resourceManager.ContentFileReadAllText($"/Server Info/{path}");
-                if (markup)
-                {
-                    label.SetMessage(Basic.RenderMarkup(text.Trim()));
-                }
-                else
-                {
-                    label.SetMessage(text);
-                }
-
-                vBox.AddChild(label);
-            }
-
-            AddSection(Loc.GetString("ui-info-header-intro"), "Intro.txt");
-
-            vBox.AddChild(new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                MinSize = (0, 10),
-                Children =
-                {
-                    new Label {StyleClasses = { StyleBase.StyleClassLabelHeading }, Text = Loc.GetString("ui-info-header-controls")},
-                }
-            });
-
-            vBox.AddChild(new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                SeparationOverride = 5,
-                Children =
-                {
-                     new Label {Text = Loc.GetString("ui-info-text-controls")},
-                     (controlsButton = new Button {Text = Loc.GetString("ui-info-button-controls")})
-                }
-            });
-
-            AddSection(Loc.GetString("ui-info-header-gameplay"), "Gameplay.txt", true);
-            AddSection(Loc.GetString("ui-info-header-sandbox"), "Sandbox.txt", true);
-
-            tutorialList.AddChild(vBox);
-
-            controlsButton.OnPressed += _ =>
-                optionsMenu.OpenCentered();
+            infoControlSection.ControlsButton.OnPressed += _ => optionsMenu.OpenCentered();
         }
 
-        protected override void Opened()
+        private void AddSection(Info info, string title, string path, bool markup = false)
         {
-            base.Opened();
-
-            _rulesManager.SaveLastReadTime();
-        }
-
-        private static IEnumerable<string> Lines(TextReader reader)
-        {
-            while (true)
-            {
-                var line = reader.ReadLine();
-                if (line == null)
-                {
-                    yield break;
-                }
-
-                yield return line;
-            }
+            info.InfoContainer.AddChild(new InfoSection(title,
+                _resourceManager.ContentFileReadAllText($"/Server Info/{path}"), markup));
         }
     }
 }

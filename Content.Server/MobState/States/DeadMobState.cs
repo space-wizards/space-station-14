@@ -1,4 +1,4 @@
-﻿using Content.Server.Alert;
+using System;
 using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Alert;
@@ -11,16 +11,13 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.MobState.States
 {
-    public class DeadMobState : SharedDeadMobState
+    public sealed class DeadMobState : SharedDeadMobState
     {
         public override void EnterState(EntityUid uid, IEntityManager entityManager)
         {
             base.EnterState(uid, entityManager);
 
-            if (entityManager.TryGetComponent(uid, out ServerAlertsComponent? status))
-            {
-                status.ShowAlert(AlertType.HumanDead);
-            }
+            EntitySystem.Get<AlertsSystem>().ShowAlert(uid, AlertType.HumanDead);
 
             if (entityManager.TryGetComponent(uid, out StatusEffectsComponent? stun))
             {

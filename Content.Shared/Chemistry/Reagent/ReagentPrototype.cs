@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
@@ -21,30 +22,40 @@ namespace Content.Shared.Chemistry.Reagent
 {
     [Prototype("reagent")]
     [DataDefinition]
-    public class ReagentPrototype : IPrototype, IInheritingPrototype
+    public sealed class ReagentPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [DataField("name")]
-        public string Name { get; } = string.Empty;
+        [DataField("name", required: true)]
+        public string Name { get; } = default!;
 
-        [DataField("parent", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
+        [DataField("group")]
+        public string Group { get; } = "Unknown";
+
+        [ParentDataFieldAttribute(typeof(PrototypeIdSerializer<ReagentPrototype>))]
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
-        [DataField("abstract")]
+        [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
-        [DataField("desc")]
-        public string Description { get; } = string.Empty;
+        [DataField("desc", required: true)]
+        public string Description { get; } = default!;
 
-        [DataField("physicalDesc")]
-        public string PhysicalDescription { get; } = string.Empty;
+        [DataField("physicalDesc", required: true)]
+        public string PhysicalDescription { get; } = default!;
 
         [DataField("color")]
         public Color SubstanceColor { get; } = Color.White;
+
+        /// <summary>
+        ///     The specific heat of the reagent.
+        ///     How much energy it takes to heat one unit of this reagent by one Kelvin.
+        /// </summary>
+        [DataField("specificHeat")]
+        public float SpecificHeat { get; } = 1.0f;
 
         [DataField("boilingPoint")]
         public float? BoilingPoint { get; }
@@ -58,7 +69,7 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("metabolisms", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, MetabolismGroupPrototype>))]
         public Dictionary<string, ReagentEffectsEntry>? Metabolisms = null;
 
-        [DataField("reactiveEffects", serverOnly: true, customTypeSerializer:typeof(PrototypeIdDictionarySerializer<ReactiveReagentEffectEntry, ReactiveGroupPrototype>))]
+        [DataField("reactiveEffects", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReactiveReagentEffectEntry, ReactiveGroupPrototype>))]
         public Dictionary<string, ReactiveReagentEffectEntry>? ReactiveEffects = null;
 
         [DataField("tileReactions", serverOnly: true)]
@@ -132,23 +143,25 @@ namespace Content.Shared.Chemistry.Reagent
     }
 
     [DataDefinition]
-    public class ReagentEffectsEntry
+    public sealed class ReagentEffectsEntry
     {
         /// <summary>
         ///     Amount of reagent to metabolize, per metabolism cycle.
         /// </summary>
+        [JsonPropertyName("rate")]
         [DataField("metabolismRate")]
         public FixedPoint2 MetabolismRate = FixedPoint2.New(0.5f);
 
         /// <summary>
         ///     A list of effects to apply when these reagents are metabolized.
         /// </summary>
+        [JsonPropertyName("effects")]
         [DataField("effects", required: true)]
         public ReagentEffect[] Effects = default!;
     }
 
     [DataDefinition]
-    public class ReactiveReagentEffectEntry
+    public sealed class ReactiveReagentEffectEntry
     {
         [DataField("methods", required: true)]
         public HashSet<ReactionMethod> Methods = default!;

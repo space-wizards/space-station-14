@@ -6,10 +6,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Dataset
 {
     [Prototype("dataset")]
-    public class DatasetPrototype : IPrototype
+    public sealed class DatasetPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("values")] public IReadOnlyList<string> Values { get; } = new List<string>();

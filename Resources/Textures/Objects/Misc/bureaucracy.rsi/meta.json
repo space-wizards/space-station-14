@@ -56,22 +56,16 @@
       ]
     },
     {
-      "name": "folder"
+      "name": "folder-base"
     },
     {
-      "name": "folder_blue"
+      "name": "folder-colormap"
     },
     {
-      "name": "folder_paper"
+      "name": "folder-white"
     },
     {
-      "name": "folder_red"
-    },
-    {
-      "name": "folder_white"
-    },
-    {
-      "name": "folder_yellow"
+      "name": "folder-overlay-paper"
     },
     {
       "name": "label_cart"
@@ -181,6 +175,9 @@
       "name": "paper_stamp-warden"
     },
     {
+      "name": "paper_stamp-generic"
+    },
+    {
       "name": "paper_talisman"
     },
     {
@@ -227,6 +224,9 @@
     },
     {
       "name": "pen"
+    },
+	{
+      "name": "overpriced_pen"
     },
     {
       "name": "pen_blue"

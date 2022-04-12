@@ -1,0 +1,136 @@
+# ALL SALVAGE MAPS SHOULD BE SETUP SUCH THAT TILE REF -1,-1 IS THEIR OFFICIAL CENTRE,
+# AND FOR EASE OF UNDERSTANDING, USE - pos: 0.5, 0.5 FOR SAVED POSITION.
+
+# "Small"-class maps - Max size square: 7x7, indicated size: 3.5
+
+- type: salvageMap
+  id: small1
+  name: "Small / Engineering Storage 1"
+  mapPath: /Maps/Salvage/small-1.yml
+  size: 3.5
+
+- type: salvageMap
+  id: small2
+  name: "Small / Gaming Nook 1"
+  mapPath: /Maps/Salvage/small-2.yml
+  size: 3.5
+
+- type: salvageMap
+  id: small-ship-1
+  name: "Small / Ship 1 (Pill)"
+  mapPath: /Maps/Salvage/small-ship-1.yml
+  size: 3.5
+
+- type: salvageMap
+  id: small3
+  name: "Small / Laundromat 1"
+  mapPath: /Maps/Salvage/small-3.yml
+  size: 3.5
+
+- type: salvageMap
+  id: smallAISurveyDrone
+  name: "Small / AI Survey Drone"
+  mapPath: /Maps/Salvage/small-ai-survey-drone.yml
+  size: 3.5
+
+- type: salvageMap
+  id: small4
+  name: "Small / Bar Salvage"
+  mapPath: /Maps/Salvage/small-4.yml
+  size: 3.5
+
+# Small - Asteroids
+
+- type: salvageMap
+  id: smallA1
+  name: "Small / Asteroid 1 Plasmafire"
+  mapPath: /Maps/Salvage/small-a-1.yml
+  size: 3.5
+
+# "Medium"-class maps - Max size square: 15x15, indicated size: 7.5
+
+- type: salvageMap
+  id: medium1
+  name: "Medium / Plasma-Trapped Cache 1"
+  mapPath: /Maps/Salvage/medium-1.yml
+  size: 7.5
+
+- type: salvageMap
+  id: mediumvault1
+  name: "Medium / Vault 1"
+  mapPath: /Maps/Salvage/medium-vault-1.yml
+  size: 7.5
+
+- type: salvageMap
+  id: mediumOrchestra
+  name: "Medium / Silent Orchestra"
+  mapPath: /Maps/Salvage/medium-silent-orchestra.yml
+  size: 7.5
+
+- type: salvageMap
+  id: mediumLibraryWreck
+  name: "Medium / Abandoned Library"
+  mapPath: /Maps/Salvage/medium-library.yml
+  size: 7.5
+
+- type: salvageMap
+  id: mediumCargoWreck
+  name: "Medium / Cargo Department Wreck"
+  mapPath: /Maps/Salvage/cargo-1.yml
+  size: 7.5
+
+- type: salvageMap
+  id: mediumPirateWreck
+  name: "Medium / Pirate Barge Fragment"
+  mapPath: /Maps/Salvage/medium-pirate.yml
+  size: 7.5
+
+- type: salvageMap
+  id: tickColony
+  name: "Space Tick colony"
+  mapPath: /Maps/Salvage/tick-colony.yml
+  size: 8.5
+
+- type: salvageMap
+  id: cargoDock
+  name: "Asteroid Cargo Dock"
+  mapPath: /Maps/Salvage/medium-dock.yml
+  size: 8.5
+
+- type: salvageMap
+  id: mediumShuttleWreck
+  name: "Medium / Ruined Emergency Shuttle"
+  mapPath: /Maps/Salvage/medium-ruined-emergency-shuttle.yml
+  size: 8.5 # Over standard medium wreck size, may need future adjustment.
+  
+- type: salvageMap
+  id: mediumPetHospital
+  name: "Medium / Pet and Bear Hospital"
+  mapPath: /Maps/Salvage/medium-pet-hospital.yml
+  size: 8.5
+
+- type: salvageMap
+  id: mediumCrashedShuttle
+  name: "Crashed Shuttle"
+  mapPath: /Maps/Salvage/medium-crashed-shuttle.yml
+  size: 9.5
+
+# """Large""" maps
+
+- type: salvageMap
+  id: stationstation
+  name: "StationStation"
+  mapPath: /Maps/Salvage/stationstation.yml
+  size: 24
+
+- type: salvageMap
+  id: asteroidBase
+  name: "Asteroid Base"
+  mapPath: /Maps/Salvage/asteroid-base.yml
+  size: 16
+
+- type: salvageMap
+  id: ruinCargoBase
+  name: "Ruined Cargo Storage"
+  mapPath: /Maps/Salvage/ruin-cargo-salvage.yml
+  size: 22.5

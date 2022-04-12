@@ -1,40 +1,21 @@
-using System;
 using System.Threading.Tasks;
-using Content.Server.Construction.Components;
+using Content.Server.Administration.Logs;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Pulling;
 using Content.Server.Tools;
-using Content.Server.Tools.Components;
-using Content.Shared.Interaction;
+using Content.Shared.Construction.Components;
+using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Database;
 using Content.Shared.Pulling.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Tools.Components;
 
 namespace Content.Server.Construction
 {
-    public class AnchorableSystem : EntitySystem
+    public sealed class AnchorableSystem : SharedAnchorableSystem
     {
+        [Dependency] private readonly AdminLogSystem _adminLogs = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<AnchorableComponent, InteractUsingEvent>(OnInteractUsing, after:new []{typeof(ConstructionSystem)});
-        }
-
-        private async void OnInteractUsing(EntityUid uid, AnchorableComponent anchorable, InteractUsingEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            // If the used entity doesn't have a tool, return early.
-            if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? usedTool))
-                return;
-
-            args.Handled = await TryToggleAnchor(uid, args.User, args.Used, anchorable, usingTool:usedTool);
-        }
 
         /// <summary>
         ///     Checks if a tool can change the anchored status.
@@ -60,7 +41,7 @@ namespace Content.Server.Construction
             if (attempt.Cancelled)
                 return false;
 
-            return await _toolSystem.UseTool(usingUid, userUid, uid, 0f, 0.5f + attempt.Delay, anchorable.Tool, toolComponent:usingTool);
+            return await _toolSystem.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay + attempt.Delay, anchorable.Tool, toolComponent:usingTool);
         }
 
         /// <summary>
@@ -77,7 +58,7 @@ namespace Content.Server.Construction
                 return false;
 
             // Optional resolves.
-            Resolve(uid, ref pullable);
+            Resolve(uid, ref pullable, false);
 
             if (!Resolve(usingUid, ref usingTool))
                 return false;
@@ -103,7 +84,13 @@ namespace Content.Server.Construction
 
             transform.Anchored = true;
 
-            RaiseLocalEvent(uid, new AnchoredEvent(userUid, usingUid), false);
+            RaiseLocalEvent(uid, new UserAnchoredEvent(userUid, usingUid), false);
+
+            _adminLogs.Add(
+                LogType.Action,
+                LogImpact.Low,
+                $"{EntityManager.ToPrettyString(userUid):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(usingUid):using}"
+            );
 
             return true;
         }
@@ -132,7 +119,13 @@ namespace Content.Server.Construction
 
             transform.Anchored = false;
 
-            RaiseLocalEvent(uid, new UnanchoredEvent(userUid, usingUid), false);
+            RaiseLocalEvent(uid, new UserUnanchoredEvent(userUid, usingUid), false);
+
+            _adminLogs.Add(
+                LogType.Action,
+                LogImpact.Low,
+                $"{EntityManager.ToPrettyString(userUid):user} unanchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(usingUid):using}"
+            );
 
             return true;
         }
@@ -141,7 +134,7 @@ namespace Content.Server.Construction
         ///     Tries to toggle the anchored status of this component's owner.
         /// </summary>
         /// <returns>true if toggled, false otherwise</returns>
-        public async Task<bool> TryToggleAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
+        public override async Task<bool> TryToggleAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
             AnchorableComponent? anchorable = null,
             TransformComponent? transform = null,
             SharedPullableComponent? pullable = null,

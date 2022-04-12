@@ -5,10 +5,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Labels.Components
 {
     [RegisterComponent]
-    public class LabelComponent : Component
+    public sealed class LabelComponent : Component
     {
-        public override string Name => "Label";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("currentLabel")]
         public string? CurrentLabel { get; set; }

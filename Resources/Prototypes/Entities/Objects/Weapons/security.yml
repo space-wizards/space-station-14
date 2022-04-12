@@ -17,12 +17,13 @@
     arc: default
   - type: PowerCellSlot
     slotSize: Medium
-    startingCellType: PowerCellMediumHigh
+    cellSlot:
+      startingItem: PowerCellMediumHigh
   - type: ItemCooldown
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunbaton.rsi
     HeldPrefix: off
-    QuickEquip: false
+    quickEquip: false
     size: 20
     Slots:
     - Belt
@@ -31,7 +32,7 @@
   name: flash
   parent: BaseItem
   id: Flash
-  description: An ultrabright flashbulb with a trigger, causes the victum to be dazed and lose their eyesight for a moment. Useless when burnt out.
+  description: An ultrabright flashbulb with a trigger, which causes the victim to be dazed and lose their eyesight for a moment. Useless when burnt out.
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/flash.rsi
@@ -48,3 +49,51 @@
       size: 2
       sprite: Objects/Weapons/Melee/flash.rsi
     - type: ItemCooldown
+
+- type: entity
+  name: portable flasher
+  parent: BaseStructure
+  id: PortableFlasher
+  description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
+  components:
+    - type: EmitSoundOnTrigger
+      sound:
+        path: /Audio/Weapons/flash.ogg
+    - type: FlashOnTrigger
+      repeating: true
+      range: 3
+    - type: TriggerOnProximity
+      enabled: true
+      cooldown: 5
+      shape:
+        !type:PhysShapeCircle
+          radius: 2
+    - type: Anchorable
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Weapons/pflash.rsi
+      layers:
+        - state: "off"
+          map: ["enum.ProximityTriggerVisualLayers.Base"]
+    - type: InteractionOutline
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.15,-0.3,0.15,0.3"
+        mask:
+        - Impassable
+        - VaultImpassable
+        - SmallImpassable
+        layer:
+        - MobImpassable
+        mass: 70
+    - type: Appearance
+    - type: AnimationPlayer
+    - type: PointLight
+      energy: 2.0
+      radius: 0
+      softness: 0
+      enabled: true
+

@@ -20,7 +20,7 @@ using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public partial class AtmosphereSystem
+    public sealed partial class AtmosphereSystem
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly GasTileOverlaySystem _gasTileOverlaySystem = default!;
@@ -36,7 +36,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             gridAtmosphere.Tiles.Clear();
 
-            if (!EntityManager.TryGetComponent(uid, out IMapGridComponent? mapGrid))
+            if (!TryComp(uid, out IMapGridComponent? mapGrid))
                 return;
 
             if (gridAtmosphere.TilesUniqueMixes != null)
@@ -85,7 +85,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return false;
 
-            if (EntityManager.HasComponent<GridAtmosphereComponent>(mapGrid.GridEntityId))
+            if (HasComp<GridAtmosphereComponent>(mapGrid.GridEntityId))
                 return true;
 
             return false;
@@ -124,7 +124,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return Enumerable.Empty<GasMixture>();
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 return GetAllTileMixtures(gridAtmosphere, invalidate);
             }
@@ -193,13 +193,25 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="mapGrid">The grid where to get the tile.</param>
         /// <param name="tile">The indices of the tile.</param>
         /// <returns></returns>
-        public virtual IEnumerable<AirtightComponent> GetObstructingComponents(IMapGrid mapGrid, Vector2i tile)
+        public IEnumerable<AirtightComponent> GetObstructingComponents(IMapGrid mapGrid, Vector2i tile)
         {
-            foreach (var uid in mapGrid.GetAnchoredEntities(tile))
+            var airQuery = GetEntityQuery<AirtightComponent>();
+            var enumerator = mapGrid.GetAnchoredEntitiesEnumerator(tile);
+
+            while (enumerator.MoveNext(out var uid))
             {
-                if (EntityManager.TryGetComponent<AirtightComponent>(uid, out var ac))
-                    yield return ac;
+                if (!airQuery.TryGetComponent(uid.Value, out var airtight)) continue;
+                yield return airtight;
             }
+        }
+
+        public AtmosObstructionEnumerator GetObstructingComponentsEnumerator(IMapGrid mapGrid, Vector2i tile)
+        {
+            var ancEnumerator = mapGrid.GetAnchoredEntitiesEnumerator(tile);
+            var airQuery = GetEntityQuery<AirtightComponent>();
+
+            var enumerator = new AtmosObstructionEnumerator(ancEnumerator, airQuery);
+            return enumerator;
         }
 
         private AtmosDirection GetBlockedDirections(IMapGrid mapGrid, Vector2i indices)
@@ -284,7 +296,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 InvalidateTile(gridAtmosphere, tile);
                 return;
@@ -312,6 +324,7 @@ namespace Content.Server.Atmos.EntitySystems
                 InvalidateVisuals(tuple.Value.Grid, tuple.Value.Tile);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void InvalidateVisuals(GridId grid, Vector2i tile)
         {
             _gasTileOverlaySystem.Invalidate(grid, tile);
@@ -347,7 +360,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return null;
 
-            if(EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if(TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 return GetTileAtmosphere(gridAtmosphere, tile);
             }
@@ -396,7 +409,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return null;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 return GetTileAtmosphereOrCreateSpace(mapGrid, gridAtmosphere, tile);
             }
@@ -448,7 +461,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 AddActiveTile(gridAtmosphere, tile);
                 return;
@@ -509,7 +522,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 RemoveActiveTile(gridAtmosphere, tile);
                 return;
@@ -582,12 +595,12 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return null;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 return GetTileMixture(gridAtmosphere, tile, invalidate);
             }
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out SpaceAtmosphereComponent? _))
+            if (TryComp(mapGrid.GridEntityId, out SpaceAtmosphereComponent? _))
             {
                 // Always return a new space gas mixture in this case.
                 return GasMixture.SpaceGas;
@@ -645,7 +658,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return ReactionResult.NoReaction;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 return React(gridAtmosphere, tile);
             }
@@ -716,7 +729,9 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var directions = AtmosDirection.Invalid;
 
-            foreach (var obstructingComponent in GetObstructingComponents(mapGrid, tile))
+            var enumerator = GetObstructingComponentsEnumerator(mapGrid, tile);
+
+            while (enumerator.MoveNext(out var obstructingComponent))
             {
                 if (!obstructingComponent.AirBlocked)
                     continue;
@@ -795,12 +810,12 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return Atmospherics.MinimumHeatCapacity;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 return GetTileHeatCapacity(gridAtmosphere, tile);
             }
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out SpaceAtmosphereComponent? _))
+            if (TryComp(mapGrid.GridEntityId, out SpaceAtmosphereComponent? _))
             {
                 return Atmospherics.SpaceHeatCapacity;
             }
@@ -857,7 +872,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return Enumerable.Empty<Vector2i>();
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 return GetAdjacentTiles(gridAtmosphere, tile, includeBlocked);
             }
@@ -911,7 +926,7 @@ namespace Content.Server.Atmos.EntitySystems
         public IEnumerable<GasMixture> GetAdjacentTileMixtures(EntityCoordinates coordinates, bool includeBlocked = false, bool invalidate = false)
         {
             if (TryGetGridAndTile(coordinates, out var tuple))
-                return GetAdjacentTileMixtures(tuple.Value.Grid, tuple.Value.Tile);
+                return GetAdjacentTileMixtures(tuple.Value.Grid, tuple.Value.Tile, includeBlocked, invalidate);
 
             return Enumerable.Empty<GasMixture>();
         }
@@ -934,7 +949,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return Enumerable.Empty<GasMixture>();
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 return GetAdjacentTileMixtures(gridAtmosphere, tile, includeBlocked, invalidate);
             }
@@ -1017,7 +1032,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 UpdateAdjacent(mapGrid, gridAtmosphere, tile);
                 return;
@@ -1093,7 +1108,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 UpdateAdjacent(mapGrid, gridAtmosphere, tile, direction);
                 return;
@@ -1171,7 +1186,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 var tileAtmosphere = GetTileAtmosphere(gridAtmosphere, tile);
 
@@ -1208,7 +1223,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 HotspotExtinguish(gridAtmosphere, tile);
                 return;
@@ -1257,7 +1272,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return false;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 return IsHotspotActive(gridAtmosphere, tile);
             }
@@ -1288,7 +1303,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(pipeNet.Grid, out var mapGrid))
                 return;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 gridAtmosphere.PipeNets.Add(pipeNet);
             }
@@ -1303,7 +1318,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(pipeNet.Grid, out var mapGrid))
                 return;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 gridAtmosphere.PipeNets.Remove(pipeNet);
             }
@@ -1315,12 +1330,12 @@ namespace Content.Server.Atmos.EntitySystems
 
         public bool AddAtmosDevice(AtmosDeviceComponent atmosDevice)
         {
-            var grid = EntityManager.GetComponent<TransformComponent>(atmosDevice.Owner).GridID;
+            var grid = Comp<TransformComponent>(atmosDevice.Owner).GridID;
 
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return false;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 atmosDevice.JoinedGrid = grid;
                 gridAtmosphere.AtmosDevices.Add(atmosDevice);
@@ -1344,7 +1359,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return false;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere)
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere)
                 && gridAtmosphere.AtmosDevices.Contains(atmosDevice))
             {
                 atmosDevice.JoinedGrid = null;
@@ -1435,7 +1450,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
 
-            if (EntityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            if (TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
                 FixVacuum(gridAtmosphere, tile);
                 return;
@@ -1492,6 +1507,11 @@ namespace Content.Server.Atmos.EntitySystems
 
         #region Position Helpers
 
+        private TileRef? GetTile(TileAtmosphere tile)
+        {
+            return tile.GridIndices.GetTileRef(tile.GridIndex, _mapManager);
+        }
+
         public bool TryGetGridAndTile(MapCoordinates coordinates, [NotNullWhen(true)] out (GridId Grid, Vector2i Tile)? tuple)
         {
             if (!_mapManager.TryFindGridAt(coordinates, out var grid))
@@ -1526,7 +1546,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         public bool TryGetMapGrid(GridAtmosphereComponent gridAtmosphere, [NotNullWhen(true)] out IMapGrid? mapGrid)
         {
-            if (EntityManager.TryGetComponent(gridAtmosphere.Owner, out IMapGridComponent? mapGridComponent))
+            if (TryComp(gridAtmosphere.Owner, out IMapGridComponent? mapGridComponent))
             {
                 mapGrid = mapGridComponent.Grid;
                 return true;

@@ -8,12 +8,12 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Content.Shared.Access.SharedIdCardConsoleComponent;
+using static Content.Shared.Access.Components.SharedIdCardConsoleComponent;
 
 namespace Content.Client.Access.UI
 {
     [GenerateTypedNameReferences]
-    public partial class IdCardConsoleWindow : SS14Window
+    public sealed partial class IdCardConsoleWindow : DefaultWindow
     {
         private readonly IdCardConsoleBoundUserInterface _owner;
 
@@ -27,9 +27,6 @@ namespace Content.Client.Access.UI
             RobustXamlLoader.Load(this);
 
             _owner = owner;
-
-            PrivilegedIdButton.OnPressed += _ => _owner.ButtonPressed(UiButton.PrivilegedId);
-            TargetIdButton.OnPressed += _ => _owner.ButtonPressed(UiButton.TargetId);
 
             FullNameLineEdit.OnTextEntered += _ => SubmitData();
             FullNameLineEdit.OnTextChanged += _ =>

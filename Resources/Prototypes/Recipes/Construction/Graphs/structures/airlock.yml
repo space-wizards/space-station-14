@@ -1,0 +1,90 @@
+- type: constructionGraph
+  id: Airlock
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: assembly
+          completed:
+          - !type:SetAnchor
+            value: false
+          steps:
+            - material: Steel
+              amount: 4
+              doAfter: 2
+
+    - node: assembly
+      entity: AirlockAssembly
+      actions:
+        - !type:SpriteStateChange
+          state: assembly
+        - !type:SnapToGrid {}
+        - !type:SetAnchor {}
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              amount: 5
+              doAfter: 2.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 3
+
+    - node: wired
+      entity: AirlockAssembly
+      edges:
+        - to: electronics
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tag: DoorElectronics
+              store: board
+              name: "door electronics circuit board"
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "door_electronics"
+              doAfter: 3
+        - to: assembly
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 5
+          steps:
+            - tool: Cutting
+              doAfter: 2.5
+
+    - node: electronics
+      edges:
+        - to: airlock
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Screwing
+              doAfter: 2.5
+
+    - node: airlock
+      entity: Airlock
+      edges:
+        - to: wired #TODO DOOR ELECTRONICS. If door electronics ever govern access permissions, this step should probably be further down? It makes it too easy to swap permissions around. See also windoor.
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+            - !type:AirlockBolted
+              value: false
+            - !type:WirePanel {}
+          completed:
+            - !type:EmptyAllContainers {}
+          steps:
+            - tool: Prying
+              doAfter: 5

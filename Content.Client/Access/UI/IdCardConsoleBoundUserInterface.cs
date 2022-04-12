@@ -1,14 +1,11 @@
-using System.Collections.Generic;
-using Content.Shared.Access;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using static Content.Shared.Access.SharedIdCardConsoleComponent;
+using static Content.Shared.Access.Components.SharedIdCardConsoleComponent;
 
 namespace Content.Client.Access.UI
 {
-    public class IdCardConsoleBoundUserInterface : BoundUserInterface
+    public sealed class IdCardConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -24,6 +21,10 @@ namespace Content.Client.Access.UI
             base.Open();
 
             _window = new IdCardConsoleWindow(this, _prototypeManager) {Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
+
+            _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
+            _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
+
             _window.OnClose += Close;
             _window.OpenCentered();
         }
@@ -40,11 +41,6 @@ namespace Content.Client.Access.UI
             base.UpdateState(state);
             var castState = (IdCardConsoleBoundUserInterfaceState) state;
             _window?.UpdateState(castState);
-        }
-
-        public void ButtonPressed(UiButton button)
-        {
-            SendMessage(new IdButtonPressedMessage(button));
         }
 
         public void SubmitData(string newFullName, string newJobTitle, List<string> newAccessList)

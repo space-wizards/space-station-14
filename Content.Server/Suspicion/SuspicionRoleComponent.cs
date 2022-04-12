@@ -1,27 +1,15 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameTicking.Rules;
 using Content.Server.Mind.Components;
 using Content.Server.Roles;
-using Content.Server.Suspicion.EntitySystems;
 using Content.Server.Suspicion.Roles;
-using Content.Shared.Examine;
 using Content.Shared.MobState.Components;
 using Content.Shared.Suspicion;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Players;
-using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Suspicion
 {
     [RegisterComponent]
-#pragma warning disable 618
-    public class SuspicionRoleComponent : SharedSuspicionRoleComponent, IExamine
-#pragma warning restore 618
+    public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -44,17 +32,17 @@ namespace Content.Server.Suspicion
 
                 Dirty();
 
-                var suspicionRoleSystem = EntitySystem.Get<SuspicionRoleSystem>();
+                var sus = EntitySystem.Get<SuspicionRuleSystem>();
 
                 if (value == null || !value.Antagonist)
                 {
                     ClearAllies();
-                    suspicionRoleSystem.RemoveTraitor(this);
+                    sus.RemoveTraitor(this);
                 }
                 else if (value.Antagonist)
                 {
-                    SetAllies(suspicionRoleSystem.Traitors);
-                    suspicionRoleSystem.AddTraitor(this);
+                    SetAllies(sus.Traitors);
+                    sus.AddTraitor(this);
                 }
             }
         }
@@ -125,27 +113,6 @@ namespace Content.Server.Suspicion
 
             Dirty();
         }
-
-        void IExamine.Examine(FormattedMessage.Builder message, bool inDetailsRange)
-        {
-            if (!IsDead())
-            {
-                return;
-            }
-
-            var traitor = IsTraitor();
-            var color = traitor ? "red" : "green";
-            var role = traitor ? "suspicion-role-component-role-traitor" : "suspicion-role-component-role-innocent";
-            var article = traitor ? "generic-article-a" : "generic-article-an";
-
-            var tooltip = Loc.GetString("suspicion-role-component-on-examine-tooltip",
-                                        ("article", Loc.GetString(article)),
-                                        ("colorName", color),
-                                        ("role",Loc.GetString(role)));
-
-            message.AddMarkup(tooltip);
-        }
-
         public override ComponentState GetComponentState()
         {
             if (Role == null)
@@ -162,7 +129,7 @@ namespace Content.Server.Suspicion
                     continue;
                 }
 
-                allies.Add((role.Role!.Mind.CharacterName, Uid: role.Owner));
+                allies.Add((role.Role!.Mind.CharacterName, role.Owner));
             }
 
             return new SuspicionRoleComponentState(Role?.Name, Role?.Antagonist, allies.ToArray());

@@ -15,10 +15,8 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
     [NetworkedComponent()]
-    public class ClientRevolverBarrelComponent : Component, IItemStatus
+    public sealed class ClientRevolverBarrelComponent : Component, IItemStatus
     {
-        public override string Name => "RevolverBarrel";
-
         private StatusControl? _statusControl;
 
         /// <summary>

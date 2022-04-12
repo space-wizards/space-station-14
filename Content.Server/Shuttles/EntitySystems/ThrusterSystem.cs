@@ -11,6 +11,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Temperature;
 using Content.Shared.Shuttles.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -52,7 +53,7 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<ThrusterComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<ThrusterComponent, AnchorStateChangedEvent>(OnAnchorChange);
             SubscribeLocalEvent<ThrusterComponent, RotateEvent>(OnRotate);
-
+            SubscribeLocalEvent<ThrusterComponent, IsHotEvent>(OnIsHotEvent);
             SubscribeLocalEvent<ThrusterComponent, StartCollideEvent>(OnStartCollide);
             SubscribeLocalEvent<ThrusterComponent, EndCollideEvent>(OnEndCollide);
 
@@ -95,6 +96,11 @@ namespace Content.Server.Shuttles.EntitySystems
             _mapManager.TileChanged -= OnTileChange;
         }
 
+        private void OnIsHotEvent(EntityUid uid, ThrusterComponent component, IsHotEvent args)
+        {
+            args.IsHot = component.Type != ThrusterType.Angular && component.IsOn;
+        }
+
         private void OnTileChange(object? sender, TileChangedEventArgs e)
         {
             // If the old tile was space but the new one isn't then disable all adjacent thrusters
@@ -112,7 +118,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
                     foreach (var ent in _mapManager.GetGrid(e.NewTile.GridIndex).GetAnchoredEntities(checkPos))
                     {
-                        if (!EntityManager.TryGetComponent(ent, out ThrusterComponent? thruster) || thruster.Type == ThrusterType.Angular) continue;
+                        if (!EntityManager.TryGetComponent(ent, out ThrusterComponent? thruster) || !thruster.RequireSpace) continue;
 
                         // Work out if the thruster is facing this direction
                         var direction = EntityManager.GetComponent<TransformComponent>(ent).LocalRotation.ToWorldVec();
@@ -168,11 +174,11 @@ namespace Content.Server.Shuttles.EntitySystems
             var oldDirection = (int) args.OldRotation.GetCardinalDir() / 2;
             var direction = (int) args.NewRotation.GetCardinalDir() / 2;
 
-            shuttleComponent.LinearThrusterImpulse[oldDirection] -= component.Impulse;
+            shuttleComponent.LinearThrust[oldDirection] -= component.Thrust;
             DebugTools.Assert(shuttleComponent.LinearThrusters[oldDirection].Contains(component));
             shuttleComponent.LinearThrusters[oldDirection].Remove(component);
 
-            shuttleComponent.LinearThrusterImpulse[direction] += component.Impulse;
+            shuttleComponent.LinearThrust[direction] += component.Thrust;
             DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(component));
             shuttleComponent.LinearThrusters[direction].Add(component);
         }
@@ -241,7 +247,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 case ThrusterType.Linear:
                     var direction = (int) xform.LocalRotation.GetCardinalDir() / 2;
 
-                    shuttleComponent.LinearThrusterImpulse[direction] += component.Impulse;
+                    shuttleComponent.LinearThrust[direction] += component.Thrust;
                     DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(component));
                     shuttleComponent.LinearThrusters[direction].Add(component);
 
@@ -260,12 +266,12 @@ namespace Content.Server.Shuttles.EntitySystems
                             CollisionLayer = (int) CollisionGroup.MobImpassable
                         };
 
-                        _fixtureSystem.CreateFixture(physicsComponent, fixture);
+                        _fixtureSystem.TryCreateFixture(physicsComponent, fixture);
                     }
 
                     break;
                 case ThrusterType.Angular:
-                    shuttleComponent.AngularThrust += component.Impulse;
+                    shuttleComponent.AngularThrust += component.Thrust;
                     DebugTools.Assert(!shuttleComponent.AngularThrusters.Contains(component));
                     shuttleComponent.AngularThrusters.Add(component);
                     break;
@@ -307,12 +313,12 @@ namespace Content.Server.Shuttles.EntitySystems
                     angle ??= xform.LocalRotation;
                     var direction = (int) angle.Value.GetCardinalDir() / 2;
 
-                    shuttleComponent.LinearThrusterImpulse[direction] -= component.Impulse;
+                    shuttleComponent.LinearThrust[direction] -= component.Thrust;
                     DebugTools.Assert(shuttleComponent.LinearThrusters[direction].Contains(component));
                     shuttleComponent.LinearThrusters[direction].Remove(component);
                     break;
                 case ThrusterType.Angular:
-                    shuttleComponent.AngularThrust -= component.Impulse;
+                    shuttleComponent.AngularThrust -= component.Thrust;
                     DebugTools.Assert(shuttleComponent.AngularThrusters.Contains(component));
                     shuttleComponent.AngularThrusters.Remove(component);
                     break;
@@ -353,7 +359,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 return false;
             }
 
-            if (component.Type == ThrusterType.Angular)
+            if (!component.RequireSpace)
                 return true;
 
             return NozzleExposed(xform);
@@ -381,7 +387,9 @@ namespace Content.Server.Shuttles.EntitySystems
 
             foreach (var comp in _activeThrusters.ToArray())
             {
-                if (!comp.Firing || comp.Damage == null || comp.Paused || comp.Deleted) continue;
+                MetaDataComponent? metaData = null;
+
+                if (!comp.Firing || comp.Damage == null || Paused(comp.Owner, metaData) || Deleted(comp.Owner, metaData)) continue;
 
                 DebugTools.Assert(comp.Colliding.Count > 0);
 

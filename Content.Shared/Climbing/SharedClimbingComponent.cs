@@ -1,28 +1,26 @@
-using System;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Physics;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Climbing
 {
     [NetworkedComponent()]
     public abstract class SharedClimbingComponent : Component
     {
-        public sealed override string Name => "Climbing";
+        [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         protected bool IsOnClimbableThisFrame
         {
             get
             {
-                if (Body == null) return false;
+                if (!_entMan.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent)) return false;
 
-                foreach (var entity in Body.GetBodiesIntersecting())
+                foreach (var entity in physicsComponent.GetBodiesIntersecting())
                 {
-                    if ((entity.CollisionLayer & (int) CollisionGroup.SmallImpassable) != 0) return true;
+                    if ((entity.CollisionLayer & (int) CollisionGroup.VaultImpassable) != 0) return true;
                 }
 
                 return false;
@@ -37,21 +35,21 @@ namespace Content.Shared.Climbing
             {
                 if (_ownerIsTransitioning == value) return;
                 _ownerIsTransitioning = value;
-                if (Body == null) return;
+                if (!_entMan.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent)) return;
                 if (value)
                 {
-                    Body.BodyType = BodyType.Dynamic;
+                    physicsComponent.BodyType = BodyType.Dynamic;
                 }
                 else
                 {
-                    Body.BodyType = BodyType.KinematicController;
+                    physicsComponent.BodyType = BodyType.KinematicController;
                 }
+
+                _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
             }
         }
 
         private bool _ownerIsTransitioning = false;
-
-        [ComponentDependency] protected PhysicsComponent? Body;
 
         protected TimeSpan StartClimbTime = TimeSpan.Zero;
 
@@ -72,23 +70,23 @@ namespace Content.Shared.Climbing
             }
         }
 
-        protected bool _isClimbing;
+        private bool _isClimbing;
 
         // TODO: Layers need a re-work
         private void ToggleSmallPassable(bool value)
         {
             // Hope the mob has one fixture
-            if (Body == null || Body.Deleted) return;
+            if (!_entMan.TryGetComponent<FixturesComponent>(Owner, out var fixturesComponent) || fixturesComponent.Deleted) return;
 
-            foreach (var fixture in Body.Fixtures)
+            foreach (var fixture in fixturesComponent.Fixtures.Values)
             {
                 if (value)
                 {
-                    fixture.CollisionMask &= ~(int) CollisionGroup.SmallImpassable;
+                    fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
                 }
                 else
                 {
-                    fixture.CollisionMask |= (int) CollisionGroup.SmallImpassable;
+                    fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
                 }
             }
         }

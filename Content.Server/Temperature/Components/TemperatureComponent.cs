@@ -15,11 +15,8 @@ namespace Content.Server.Temperature.Components
     /// and taking fire damage from high temperature.
     /// </summary>
     [RegisterComponent]
-    public class TemperatureComponent : Component
+    public sealed class TemperatureComponent : Component
     {
-        /// <inheritdoc />
-        public override string Name => "Temperature";
-
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentTemperature { get; set; } = Atmospherics.T20C;
 
@@ -55,13 +52,13 @@ namespace Content.Server.Temperature.Components
             }
         }
 
-        [DataField("coldDamage", required: true)]
+        [DataField("coldDamage")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier ColdDamage = default!;
+        public DamageSpecifier ColdDamage = new();
 
-        [DataField("heatDamage", required: true)]
+        [DataField("heatDamage")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier HeatDamage = default!;
+        public DamageSpecifier HeatDamage = new();
 
         /// <summary>
         ///     Temperature won't do more than this amount of damage per second.

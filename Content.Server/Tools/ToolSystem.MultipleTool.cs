@@ -15,12 +15,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tools
 {
-    public partial class ToolSystem
+    public sealed partial class ToolSystem
     {
         private void InitializeMultipleTools()
         {
             SubscribeLocalEvent<MultipleToolComponent, ComponentStartup>(OnMultipleToolStartup);
-            SubscribeLocalEvent<MultipleToolComponent, UseInHandEvent>(OnMultipleToolUsedInHand);
             SubscribeLocalEvent<MultipleToolComponent, ActivateInWorldEvent>(OnMultipleToolActivated);
             SubscribeLocalEvent<MultipleToolComponent, ComponentGetState>(OnMultipleToolGetState);
         }
@@ -30,14 +29,6 @@ namespace Content.Server.Tools
             // Only set the multiple tool if we have a tool component.
             if(EntityManager.TryGetComponent(uid, out ToolComponent? tool))
                 SetMultipleTool(uid, multiple, tool);
-        }
-
-        private void OnMultipleToolUsedInHand(EntityUid uid, MultipleToolComponent multiple, UseInHandEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            args.Handled = CycleMultipleTool(uid, multiple);
         }
 
         private void OnMultipleToolActivated(EntityUid uid, MultipleToolComponent multiple, ActivateInWorldEvent args)

@@ -1,62 +1,71 @@
 - type: reagent
   id: Astrotame
   name: Astrotame
+  group: Foods
   desc: The sweetness of a thousand sugars but none of the calories.
-#  physicalDesc:
+  physicalDesc: sugary
   color: aquamarine
 
 - type: reagent
   id: BbqSauce
   name: BBQ sauce
+  group: Foods
   desc: Hand wipes not included.
-  physicalDesc: Gloopy.
+  physicalDesc: gloopy # splurgy
   color: darkred
 
 - type: reagent
   id: Cornoil
   name: corn oil
+  group: Foods
   desc: Corn oil, A delicious oil used in cooking. Made from corn.
-#  physicalDesc:
+  physicalDesc: oily
   color: yellow
 
 - type: reagent
   id: Frostoil
   name: frostoil
+  group: Foods
   desc: Leaves the tongue numb in its passage.
-#  physicalDesc:
+  physicalDesc: cold
   color: skyblue
 
 - type: reagent
   id: HorseradishSauce
   name: horseradish sauce
+  group: Foods
   desc: Smelly horseradish sauce.
-  physicalDesc: Overpowering.
+  physicalDesc: overpowering
   color: gray
 
 - type: reagent
   id: Hotsauce
   name: hotsauce
+  group: Foods
   desc: Burns so good.
-#  physicalDesc:
+  physicalDesc: spicy
   color: red
 
 - type: reagent
   id: Ketchup
   name: ketchup
+  group: Foods
   desc: Made from pureed tomatoes and flavored with spices.
-#  physicalDesc:
+  physicalDesc: tangy
   color: red
 
 - type: reagent
   id: Soysauce
   name: soy sauce
+  group: Foods
   desc: A salty soy-based flavoring.
-#  physicalDesc:
+  physicalDesc: salty
   color: saddlebrown
 
 - type: reagent
   id: TableSalt
   name: table salt
+  group: Foods
   desc: Commonly known as salt, Sodium Chloride is often used to season food or kill borers instantly.
   physicalDesc: grainy
   color: "#a1000b"

@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodBase
   id: FoodSnackBase
   abstract: true
   components:
@@ -19,7 +19,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
-
+    size: 3
 # Snacks
 
 # "Snacks" means food in a packet. Down the line this stuff can have multiple
@@ -95,7 +95,6 @@
   parent: FoodSnackBase
   id: FoodSnackChocolateBar
   description: Tastes like cardboard.
-  abstract: true
   components:
   - type: Sprite
     state: chocolatebar-open
@@ -133,7 +132,6 @@
   parent: FoodSnackBase
   id: FoodSnackEnergyBar
   description: An energy bar with a lot of punch.
-  abstract: true
   components:
   - type: Sprite
     state: energybar-open
@@ -195,7 +193,7 @@
 # Trash
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: BaseItem
   id: FoodPacketTrash
   description: This is rubbish.
@@ -206,9 +204,14 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash
+  - type: Recyclable
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketBoritosTrash
   name: boritos bag
@@ -219,7 +222,7 @@
     color: blue
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketCheesieTrash
   name: cheesie honkers
@@ -230,7 +233,7 @@
     color: orange
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketChipsTrash
   name: chips
@@ -241,7 +244,7 @@
     color: green
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketChocolateTrash
   name: chocolate wrapper
@@ -252,7 +255,7 @@
     color: red
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketEnergyTrash
   name: energybar wrapper
@@ -263,7 +266,7 @@
     color: green
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketPistachioTrash
   name: pistachios packet
@@ -274,7 +277,7 @@
     color: green
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketPopcornTrash
   name: popcorn box
@@ -285,7 +288,7 @@
     state: blue
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketRaisinsTrash
   name: 4no raisins
@@ -296,7 +299,7 @@
     color: red
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketSemkiTrash
   name: semki packet
@@ -307,7 +310,7 @@
     color: orange
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketSusTrash
   name: sus jerky
@@ -318,7 +321,7 @@
     color: red
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketSyndiTrash
   name: syndi-cakes box

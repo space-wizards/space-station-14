@@ -1,0 +1,34 @@
+- Flags: DEBUG
+  Commands:
+    - atvrange
+    - atvmode
+    - atvcbm
+    - debugai
+    - notify
+    - pathfinder
+    - entitymenug
+    - hidemechanisms
+    - showmechanisms
+    - menuvis
+    - togglehealthoverlay
+    - toggledecals
+    - nodevis
+    - nodevisfilter
+
+- Flags: MAPPING
+  Commands:
+    - showmarkers
+    - showsubfloor
+    - showsubfloorforever
+    - mapping
+    - toggledecals
+    - nodevis
+    - nodevisfilter
+
+- Flags: ADMIN
+  Commands:
+    - togglehealthoverlay
+
+- Flags: QUERY
+  Commands:
+    - uploadfile

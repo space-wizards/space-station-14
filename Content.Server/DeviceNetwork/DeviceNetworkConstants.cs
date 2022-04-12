@@ -5,11 +5,6 @@ namespace Content.Server.DeviceNetwork
     /// </summary>
     public static class DeviceNetworkConstants
     {
-        /// <summary>
-        /// Invalid address used for broadcasting
-        /// </summary>
-        public const string NullAddress = "######";
-
         #region Commands
 
         /// <summary>
@@ -23,6 +18,12 @@ namespace Content.Server.DeviceNetwork
         /// E.g. to turn a light on or off
         /// </summary>
         public const string CmdSetState = "set_state";
+
+        /// <summary>
+        /// The command for a device that just updated its state
+        /// E.g. suit sensors broadcasting owners vitals state
+        /// </summary>
+        public const string CmdUpdatedState = "updated_state";
 
         #endregion
 

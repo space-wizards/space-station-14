@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Content.Client.Stylesheets;
 using Content.Shared.Input;
@@ -7,17 +8,21 @@ using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Log;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using Robust.Client.UserInterface.CustomControls;
 
 namespace Content.Client.EscapeMenu.UI.Tabs
 {
     [GenerateTypedNameReferences]
-    public partial class KeyRebindTab : Control
+    public sealed partial class KeyRebindTab : Control
     {
         // List of key functions that must be registered as toggle instead.
         private static readonly HashSet<BoundKeyFunction> ToggleFunctions = new()
@@ -27,6 +32,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
         };
 
         [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private BindButton? _currentlyRebinding;
 
@@ -34,6 +40,12 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             new();
 
         private readonly List<Action> _deferCommands = new();
+
+        private void HandleToggleUSQWERTYCheckbox(BaseButton.ButtonToggledEventArgs args)
+        {
+            _cfg.SetCVar(CVars.DisplayUSQWERTYHotkeys, args.Pressed);
+            _cfg.SaveToFile();
+        }
 
         public KeyRebindTab()
         {
@@ -74,6 +86,18 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                 _keyControls.Add(function, control);
             }
 
+            void AddCheckBox(string checkBoxName, bool currentState, Action<BaseButton.ButtonToggledEventArgs>? callBackOnClick)
+            {
+                CheckBox newCheckBox = new CheckBox() { Text = Loc.GetString(checkBoxName)};
+                newCheckBox.Pressed = currentState;
+                newCheckBox.OnToggled += callBackOnClick;
+
+                KeybindsContainer.AddChild(newCheckBox);
+            }
+
+            AddHeader("ui-options-header-general");
+            AddCheckBox("ui-options-hotkey-keymap", _cfg.GetCVar(CVars.DisplayUSQWERTYHotkeys), HandleToggleUSQWERTYCheckbox);
+
             AddHeader("ui-options-header-movement");
             AddButton(EngineKeyFunctions.MoveUp);
             AddButton(EngineKeyFunctions.MoveLeft);
@@ -84,8 +108,8 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AddHeader("ui-options-header-interaction-basic");
             AddButton(EngineKeyFunctions.Use);
             AddButton(ContentKeyFunctions.WideAttack);
-            AddButton(ContentKeyFunctions.ActivateItemInHand);
-            AddButton(ContentKeyFunctions.AltActivateItemInHand);
+            AddButton(ContentKeyFunctions.UseItemInHand);
+            AddButton(ContentKeyFunctions.AltUseItemInHand);
             AddButton(ContentKeyFunctions.ActivateItemInWorld);
             AddButton(ContentKeyFunctions.AltActivateItemInWorld);
             AddButton(ContentKeyFunctions.Drop);
@@ -104,6 +128,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AddHeader("ui-options-header-ui");
             AddButton(ContentKeyFunctions.FocusChat);
             AddButton(ContentKeyFunctions.FocusLocalChat);
+            AddButton(ContentKeyFunctions.FocusWhisperChat);
             AddButton(ContentKeyFunctions.FocusRadio);
             AddButton(ContentKeyFunctions.FocusOOC);
             AddButton(ContentKeyFunctions.FocusAdminChat);
@@ -120,6 +145,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AddButton(ContentKeyFunctions.OpenEntitySpawnWindow);
             AddButton(ContentKeyFunctions.OpenSandboxWindow);
             AddButton(ContentKeyFunctions.OpenTileSpawnWindow);
+            AddButton(ContentKeyFunctions.OpenDecalSpawnWindow);
             AddButton(ContentKeyFunctions.OpenAdminMenu);
 
             AddHeader("ui-options-header-misc");
@@ -426,6 +452,18 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                 Button.OnKeyBindDown += ButtonOnOnKeyBindDown;
 
                 MinSize = (200, 0);
+            }
+
+            protected override void EnteredTree()
+            {
+                base.EnteredTree();
+                _tab._inputManager.OnInputModeChanged += UpdateText;
+            }
+
+            protected override void ExitedTree()
+            {
+                base.ExitedTree();
+                _tab._inputManager.OnInputModeChanged -= UpdateText;
             }
 
             private void ButtonOnOnKeyBindDown(GUIBoundKeyEventArgs args)

@@ -2,13 +2,14 @@
 using Content.Shared.Construction.Conditions;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Construction.Prototypes
 {
     [Prototype("construction")]
-    public class ConstructionPrototype : IPrototype
+    public sealed class ConstructionPrototype : IPrototype
     {
         [DataField("conditions")] private List<IConstructionCondition> _conditions = new();
 
@@ -27,7 +28,7 @@ namespace Content.Shared.Construction.Prototypes
         /// <summary>
         ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
         /// </summary>
-        [DataField("graph")]
+        [DataField("graph", customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>))]
         public string Graph { get; } = string.Empty;
 
         /// <summary>
@@ -59,7 +60,7 @@ namespace Content.Shared.Construction.Prototypes
         [DataField("objectType")] public ConstructionType Type { get; private set; } = ConstructionType.Structure;
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("placementMode")]

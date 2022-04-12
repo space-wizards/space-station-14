@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    public class RemoveExtraComponents : IConsoleCommand
+    public sealed class RemoveExtraComponents : IConsoleCommand
     {
         public string Command => "removeextracomponents";
         public string Description => "Removes all components from all entities of the specified id if that component is not in its prototype.\nIf no id is specified, it matches all entities.";

@@ -8,8 +8,6 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
-using Content.Server.Window;
-using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
@@ -22,6 +20,7 @@ using Content.Shared.Pulling.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
+using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -37,7 +36,7 @@ namespace Content.Server.Electrocution
 {
     public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     {
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
@@ -48,6 +47,7 @@ namespace Content.Server.Electrocution
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         private const string StatusEffectKey = "Electrocution";
         private const string DamageType = "Shock";
@@ -109,8 +109,10 @@ namespace Content.Server.Electrocution
 
                     var actual = _damageableSystem.TryChangeDamage(finished.Electrocuting, damage);
                     if (actual != null)
+                    {
                         _logSystem.Add(LogType.Electrocution,
                             $"{ToPrettyString(finished.Owner):entity} received {actual.Total:damage} powered electrocution damage");
+                    }
                 }
 
                 EntityManager.DeleteEntity(uid);
@@ -122,7 +124,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnBump)
                 return;
 
-            TryDoElectrifiedAct(uid, args.OtherFixture.Body.Owner, electrified);
+            TryDoElectrifiedAct(uid, args.OtherFixture.Body.Owner, 1, electrified);
         }
 
         private void OnElectrifiedAttacked(EntityUid uid, ElectrifiedComponent electrified, AttackedEvent args)
@@ -130,7 +132,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnAttacked)
                 return;
 
-            TryDoElectrifiedAct(uid, args.User, electrified);
+            TryDoElectrifiedAct(uid, args.User, 1, electrified);
         }
 
         private void OnElectrifiedHandInteract(EntityUid uid, ElectrifiedComponent electrified, InteractHandEvent args)
@@ -138,7 +140,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnHandInteract)
                 return;
 
-            TryDoElectrifiedAct(uid, args.User, electrified);
+            TryDoElectrifiedAct(uid, args.User, 1, electrified);
         }
 
         private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
@@ -146,10 +148,15 @@ namespace Content.Server.Electrocution
             if (!electrified.OnInteractUsing)
                 return;
 
-            TryDoElectrifiedAct(uid, args.User, electrified);
+            var siemens = TryComp(args.Used, out InsulatedComponent? insulation)
+                ? insulation.SiemensCoefficient
+                : 1;
+
+            TryDoElectrifiedAct(uid, args.User, siemens, electrified);
         }
 
         public bool TryDoElectrifiedAct(EntityUid uid, EntityUid targetUid,
+            float siemens = 1,
             ElectrifiedComponent? electrified = null,
             NodeContainerComponent? nodeContainer = null,
             TransformComponent? transform = null)
@@ -163,14 +170,14 @@ namespace Content.Server.Electrocution
             if (electrified.NoWindowInTile)
             {
                 foreach (var entity in transform.Coordinates.GetEntitiesInTile(
-                    LookupFlags.Approximate | LookupFlags.IncludeAnchored, _entityLookup))
+                    LookupFlags.Approximate | LookupFlags.Anchored, _entityLookup))
                 {
-                    if (EntityManager.HasComponent<WindowComponent>(entity))
+                    if (_tagSystem.HasTag(entity, "Window"))
                         return false;
                 }
             }
 
-            var siemens = electrified.SiemensCoefficient;
+            siemens *= electrified.SiemensCoefficient;
             if (!DoCommonElectrocutionAttempt(targetUid, uid, ref siemens) || siemens <= 0)
                 return false; // If electrocution would fail, do nothing.
 
@@ -232,10 +239,10 @@ namespace Content.Server.Electrocution
 
             Node? TryNode(string? id)
             {
-                if (id != null && nodeContainer.TryGetNode<Node>(id, out var node)
-                               && node.NodeGroup is IBasePowerNet { NetworkNode: { LastAvailableSupplySum: >0 } })
+                if (id != null && nodeContainer.TryGetNode<Node>(id, out var tryNode)
+                               && tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastAvailableSupplySum: >0 } })
                 {
-                    return node;
+                    return tryNode;
                 }
 
                 return null;
@@ -245,11 +252,10 @@ namespace Content.Server.Electrocution
         /// <returns>Whether the entity <see cref="uid"/> was stunned by the shock.</returns>
         public bool TryDoElectrocution(
             EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
-            StatusEffectsComponent? statusEffects = null,
-            SharedAlertsComponent? alerts = null)
+            StatusEffectsComponent? statusEffects = null)
         {
             if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient)
-                || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects, alerts))
+                || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
                 return false;
 
             RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient));
@@ -266,7 +272,6 @@ namespace Content.Server.Electrocution
             bool refresh,
             float siemensCoefficient = 1f,
             StatusEffectsComponent? statusEffects = null,
-            SharedAlertsComponent? alerts = null,
             TransformComponent? sourceTransform = null)
         {
             if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient))
@@ -274,9 +279,9 @@ namespace Content.Server.Electrocution
 
             // Coefficient needs to be higher than this to do a powered electrocution!
             if(siemensCoefficient <= 0.5f)
-                return DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects, alerts);
+                return DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects);
 
-            if (!DoCommonElectrocution(uid, sourceUid, null, time, refresh, siemensCoefficient, statusEffects, alerts))
+            if (!DoCommonElectrocution(uid, sourceUid, null, time, refresh, siemensCoefficient, statusEffects))
                 return false;
 
             if (!Resolve(sourceUid, ref sourceTransform)) // This shouldn't really happen, but just in case...
@@ -318,8 +323,7 @@ namespace Content.Server.Electrocution
 
         private bool DoCommonElectrocution(EntityUid uid, EntityUid? sourceUid,
             int? shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
-            StatusEffectsComponent? statusEffects = null,
-            SharedAlertsComponent? alerts = null)
+            StatusEffectsComponent? statusEffects = null)
         {
             if (siemensCoefficient <= 0)
                 return false;
@@ -332,21 +336,18 @@ namespace Content.Server.Electrocution
                     return false;
             }
 
-            // Optional component.
-            Resolve(uid, ref alerts, false);
-
             if (!Resolve(uid, ref statusEffects, false) ||
                 !_statusEffectsSystem.CanApplyEffect(uid, StatusEffectKey, statusEffects))
                 return false;
 
             if (!_statusEffectsSystem.TryAddStatusEffect<ElectrocutedComponent>(uid, StatusEffectKey, time, refresh,
-                statusEffects, alerts))
+                statusEffects))
                 return false;
 
             var shouldStun = siemensCoefficient > 0.5f;
 
             if (shouldStun)
-                _stunSystem.TryParalyze(uid, time * ParalyzeTimeMultiplier, refresh, statusEffects, alerts);
+                _stunSystem.TryParalyze(uid, time * ParalyzeTimeMultiplier, refresh, statusEffects);
 
             // TODO: Sparks here.
 
@@ -356,13 +357,15 @@ namespace Content.Server.Electrocution
                     new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), dmg));
 
                 if (actual != null)
+                {
                     _logSystem.Add(LogType.Electrocution,
                         $"{ToPrettyString(statusEffects.Owner):entity} received {actual.Total:damage} powered electrocution damage");
+                }
             }
 
-            _stutteringSystem.DoStutter(uid, time * StutteringTimeMultiplier, refresh, statusEffects, alerts);
+            _stutteringSystem.DoStutter(uid, time * StutteringTimeMultiplier, refresh, statusEffects);
             _jitteringSystem.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true,
-                statusEffects, alerts);
+                statusEffects);
 
             _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid,
                 Filter.Entities(uid).Unpredicted());
