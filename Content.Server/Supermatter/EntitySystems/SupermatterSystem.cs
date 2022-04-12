@@ -10,6 +10,7 @@ using Content.Shared.Damage;
 using Content.Shared.Tag;
 using Content.Server.Projectiles.Components;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Explosion.Components;
 using Content.Server.Chat.Managers;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Prototypes;
@@ -19,6 +20,8 @@ using Content.Shared.Atmos;
 using Robust.Shared.Localization;
 using Robust.Shared.Physics.Dynamics;
 using Content.Shared.FixedPoint;
+using Content.Shared.Chat;
+using Content.Server.Chat;
 
 namespace Content.Server.Supermatter.EntitySystems
 {
@@ -28,9 +31,11 @@ namespace Content.Server.Supermatter.EntitySystems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly RadiationSystem _radiationSystem = default!;
+        //[Dependency] private readonly RadiationSystem _radiationSystem = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly ExplosionSystem _explosions = default!;
+        [Dependency] private readonly TagSystem _tag = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         public override void Initialize()
         {
@@ -43,9 +48,10 @@ namespace Content.Server.Supermatter.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var (Supermatter, damageable, Xform) in EntityManager.EntityQuery<SupermatterComponent, DamageableComponent, TransformComponent>())
+            foreach (var (Supermatter, damageable, Xform, Xplode) in EntityManager.EntityQuery<SupermatterComponent, DamageableComponent, TransformComponent, ExplosiveComponent>())
             {
-                HandleBehavior(Supermatter.OwnerUid, frameTime, Supermatter);
+                HandleRads(Supermatter.Owner, frameTime, Supermatter, Xform);
+                HandleDamage(Supermatter.Owner, frameTime, Supermatter, damageable, Xform, Xplode);
             }
         }
 
@@ -70,6 +76,7 @@ namespace Content.Server.Supermatter.EntitySystems
 
                 if (moles > 0f)
                 {
+                    //grab the moles for each gas
                     var Oxy = mixture.Moles[0];
                     var Nit = mixture.Moles[1];
                     var Co2 = mixture.Moles[2];
@@ -77,13 +84,11 @@ namespace Content.Server.Supermatter.EntitySystems
                     var Tri = mixture.Moles[4];
                     var H2o = mixture.Moles[5];
 
+                    //get the moles of each gas as a percent from 0 to 1
                     for(int gasId = 0; gasId < SMcomponent.GasComp.Length; gasId++)
                     {
                         SMcomponent.GasComp[gasId] = Math.Clamp(mixture.Moles[gasId] / moles, 0, 1);
                     };
-
-                    var h2oBonus = 1 - (SMcomponent.GasComp[5] * 0.25f);
-
 
                     SMcomponent.GasmixPowerRatio = 0f;
                     SMcomponent.DynamicHeatModifier = 0f;
@@ -108,6 +113,8 @@ namespace Content.Server.Supermatter.EntitySystems
                     SMcomponent.DynamicHeatResistance = 1f;
                     SMcomponent.GasmixPowerRatio = Math.Clamp(SMcomponent.GasmixPowerRatio, 0, 1);
                     SMcomponent.DynamicHeatModifier = Math.Max(SMcomponent.DynamicHeatModifier, 0.5f);
+
+                    var h2oBonus = 1 - (SMcomponent.GasComp[5] * 0.25f);
                     SMcomponent.PowerTransmissionBonus *= h2oBonus;
 
                     //TODO: port miasma
@@ -126,7 +133,12 @@ namespace Content.Server.Supermatter.EntitySystems
 
                     SMcomponent.PowerlossInhibitor = Math.Clamp(1-(SMcomponent.PowerlossDynamicScaling * Math.Clamp(moles/SupermatterComponent.PowerlossInhibitionMoleBoostThreshold, 1f, 1.5f)), 0f, 1f);
 
-                    float TempFactor;
+                    //with a GasmixPowerRatio > 0.8, make the power more based on heat
+                    //in normal mode (< 0.8), power is less effected by heat
+                    //TODO: change pointlight brightness based off power ratio/temp factor
+                    float TempFactor = SMcomponent.GasmixPowerRatio > 0.8 ? 50f : 30f;
+
+                    /*
                     if (SMcomponent.GasmixPowerRatio > 0.8)
                     {
                         //with a perfect gas mix, make the power more based on heat
@@ -139,6 +151,7 @@ namespace Content.Server.Supermatter.EntitySystems
                         TempFactor = 30f;
                         //glow normally
                     }
+                    */
 
                     //power is set for radiation
                     SMcomponent.Power = Math.Max((((temp * TempFactor) / Atmospherics.T0C) * SMcomponent.GasmixPowerRatio) + SMcomponent.Power, 0);
@@ -149,6 +162,8 @@ namespace Content.Server.Supermatter.EntitySystems
 
                     //TODO: PsyCoeff should change from 0-1 based on psycologist distance
                     float energy = SMcomponent.Power * SupermatterComponent.ReactionPowerModefier * (1f - (SMcomponent.PsyCoeff * 0.2f));
+
+                    //the following comment is tgspeak, there is a non zero chance that it is compltely invalid for ss14
 
                     //To figure out how much temperature to add each tick, consider that at one atmosphere's worth
                     //of pure oxygen, with all four lasers firing at standard energy and no N2 present, at room temperature
@@ -185,9 +200,9 @@ namespace Content.Server.Supermatter.EntitySystems
         /// </summary>
         /// Handles environmental damage and dispatching damage warning
         /// </summary>
-        public void HandleDamage(EntityUid Uid, float frameTime, SupermatterComponent? SMcomponent = null, DamageableComponent? damageable = null, TransformComponent? Xform = null)
+        public void HandleDamage(EntityUid Uid, float frameTime, SupermatterComponent? SMcomponent = null, DamageableComponent? damageable = null, TransformComponent? Xform = null, ExplosiveComponent? Xplode = null)
         {
-            if (!Resolve(Uid, ref SMcomponent, ref damageable, ref Xform))
+            if (!Resolve(Uid, ref SMcomponent, ref damageable, ref Xform, ref Xplode))
             {
                 return;
             }
@@ -207,7 +222,7 @@ namespace Content.Server.Supermatter.EntitySystems
 
                 if (SMcomponent.DamageArchived >= SupermatterComponent.ExplosionPoint)
                 {
-                    Delamination(Uid, frameTime, SMcomponent, Xform);
+                    Delamination(Uid, frameTime, SMcomponent, Xform, Xplode);
                     return;
                 }
                 else
@@ -222,10 +237,11 @@ namespace Content.Server.Supermatter.EntitySystems
                         }
                         if (SMcomponent.DamageArchived >= SupermatterComponent.WarningPoint && SMcomponent.DamageArchived <= SupermatterComponent.EmergencyPoint)
                         {
-                            _chatManager.EntitySay(SMcomponent.Owner, Loc.GetString("supermatter-danger-message", ("integrity", integrity.ToString("0.00"))));
+                            var messageWrap = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
+                            ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")));
+                            _chat.TrySendInGameICMessage(Uid, Loc.GetString("supermatter-danger-message", ("integrity", integrity.ToString("0.00"))), InGameICChatType.Speak, false);
                             SMcomponent.YellAccumulator = 0;
                         }
-
                     }
                 }
 
@@ -293,9 +309,9 @@ namespace Content.Server.Supermatter.EntitySystems
         /// </summary>
         /// Runs the logic and timers for Delamination
         /// </summary>
-        public void Delamination(EntityUid Uid, float frameTime, SupermatterComponent? SMcomponent = null, TransformComponent? Xform = null)
+        public void Delamination(EntityUid Uid, float frameTime, SupermatterComponent? SMcomponent = null, TransformComponent? Xform = null, ExplosiveComponent? Xplode = null)
         {
-            if (!Resolve(Uid, ref SMcomponent, ref Xform))
+            if (!Resolve(Uid, ref SMcomponent, ref Xform, ref Xplode))
             {
                 return;
             }
@@ -317,8 +333,8 @@ namespace Content.Server.Supermatter.EntitySystems
             }
             SMcomponent.FinalCountdown = true;
 
-            SMcomponent.DelamTimerAccumulator += frameTime;
-            SMcomponent.SpeakAccumulator += frameTime;
+            SMcomponent.DelamTimerAccumulator += 1f + frameTime;
+            SMcomponent.SpeakAccumulator += 1f + frameTime;
             int RoundSeconds = SupermatterComponent.DelamTimerTimer - (int)Math.Floor(SMcomponent.DelamTimerAccumulator);
 
             if (SMcomponent.DamageArchived < SupermatterComponent.ExplosionPoint)
@@ -349,11 +365,11 @@ namespace Content.Server.Supermatter.EntitySystems
                     }
                 }
                 //TODO: tune this after explosion refactor
-                _explosions.SpawnExplosion(Xform.Coordinates, 75, 75, 75, 100);
-                EntityManager.QueueDeleteEntity(Uid);
+                EntitySystem.Get<ExplosionSystem>().TriggerExplosive(Uid, explosive: Xplode, totalIntensity: 500000, radius: 100, user: Uid);
+                //EntityManager.QueueDeleteEntity(Uid);
             }
 
-            if (SMcomponent.FinalCountdown && !SMcomponent.AlarmPlaying && RoundSeconds <= 13)
+            if (SMcomponent.FinalCountdown && !SMcomponent.AlarmPlaying && RoundSeconds <= 10)
             {
                 SMcomponent.AlarmPlaying = true;
                 SoundSystem.Play(Filter.Pvs(Uid, 2), SMcomponent.DelamAlarm.GetSound(), Uid);
@@ -370,7 +386,7 @@ namespace Content.Server.Supermatter.EntitySystems
 
             if (EntityManager.HasComponent<TagComponent>(Uid))
             {
-                Tag = EntityManager.GetComponent<TagComponent>(Uid).HasTag("SMimmune");
+                Tag = _tag.HasTag(Uid, "SMimmune");
             }
 
             if (EntityManager.HasComponent<PhysicsComponent>(Uid))
@@ -384,7 +400,7 @@ namespace Content.Server.Supermatter.EntitySystems
         private void OnCollideEvent(EntityUid uid, SupermatterComponent supermatter, StartCollideEvent args)
         {
             EntityUid Target = args.OtherFixture.Body.Owner;
-            if (!supermatter.Whitelist.IsValid(Target) || CannotDestroy(Target) || Target.IsInContainer()) return;
+            if (!supermatter.Whitelist.IsValid(Target) || CannotDestroy(Target) || _container.IsEntityInContainer(uid)) return;
 
             if (EntityManager.TryGetComponent<SupermatterFoodComponent>(Target, out var SupermatterFood))
             {
@@ -405,20 +421,6 @@ namespace Content.Server.Supermatter.EntitySystems
             }
 
             EntityManager.QueueDeleteEntity(Target);
-        }
-
-        /// <summary>
-        /// Handle getting entities in range and calling behavior
-        /// </summary>
-        public void HandleBehavior(EntityUid SMUid, float FrameTime, SupermatterComponent? SMcomponent = null)
-        {
-            if (!Resolve(SMUid, ref SMcomponent, ref damageable, ref Xform))
-            {
-                return;
-            }
-
-            HandleRads(SMUid, FrameTime, SMcomponent, Xform);
-            HandleDamage(SMUid, FrameTime, SMcomponent, damageable, Xform);
         }
     }
 }

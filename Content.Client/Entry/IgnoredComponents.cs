@@ -39,13 +39,10 @@ namespace Content.Client.Entry
             "Healing",
             "Material",
             "RandomAppearance",
-<<<<<<< HEAD
             "DiseaseProtection",
             "DiseaseDiagnoser",
             "DiseaseVaccine",
             "DiseaseVaccineCreator",
-=======
->>>>>>> space-wizards-master
             "Mineable",
             "RangedMagazine",
             "Ammo",
@@ -70,10 +67,7 @@ namespace Content.Client.Entry
             "Electrified",
             "Electrocution",
             "Paper",
-<<<<<<< HEAD
             "Drone",
-=======
->>>>>>> space-wizards-master
             "Bloodstream",
             "TransformableContainer",
             "Mind",
@@ -135,10 +129,7 @@ namespace Content.Client.Entry
             "RCD",
             "RCDAmmo",
             "CursedEntityStorage",
-<<<<<<< HEAD
             "DiseaseArtifact",
-=======
->>>>>>> space-wizards-master
             "Radio",
             "GasArtifact",
             "SentienceTarget",
@@ -250,10 +241,6 @@ namespace Content.Client.Entry
             "MachineFrame",
             "MachineBoard",
             "ChemicalAmmo",
-<<<<<<< HEAD
-=======
-            "CargoTelepad",
->>>>>>> space-wizards-master
             "TraitorDeathMatchRedemption",
             "CanHostGuardian",
             "SliceableFood",
@@ -339,7 +326,7 @@ namespace Content.Client.Entry
             "EnergySword",
             "DoorRemote",
             "InteractionPopup",
-            "HealthAnalyzer"
+            "HealthAnalyzer",
             "Supermatter"
         };
     }

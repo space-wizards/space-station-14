@@ -350,22 +350,22 @@ namespace Content.Shared.Atmos
         public const float OxygenTransmitModifier = 1.5f;
 
         /// <summary>
-        ///
+        ///     nitrogen is boring
         /// </summary>
         public const float NitrogenTransmitModifier = 0f;
 
         /// <summary>
-        ///
+        ///     co2 puts the sm to sleep
         /// </summary>
         public const float CO2TransmitModifier = 0f;
 
         /// <summary>
-        ///
+        ///     The funny gas really gets it going
         /// </summary>
         public const float PlasmaTransmitModifier = 4f;
 
         /// <summary>
-        ///
+        ///     Water is only a little spicy
         /// </summary>
         public const float WaterTransmitModifier = 2f;
 

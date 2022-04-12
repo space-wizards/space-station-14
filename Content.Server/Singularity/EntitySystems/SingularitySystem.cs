@@ -165,7 +165,7 @@ namespace Content.Server.Singularity.EntitySystems
 
             foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, worldPos, destroyRange))
             {
-                if (entity.HasComponent<SupermatterComponent>())
+                if (EntityManager.HasComponent<SupermatterComponent>(entity))
                 {
                     component.CanLevelSix = true;
                 }

@@ -74,19 +74,18 @@ namespace Content.Server.Supermatter.Components
         public float YellAccumulator {get; set;} = YellTimer;
 
         //it's the final countdown
+        [ViewVariables(VVAccess.ReadOnly)]
         public bool FinalCountdown {get; set;} = false;
 
         public float DamageUpdateAccumulator {get; set;}
         //update environment damage every second
         public const float DamageUpdateTimer = 1f;
 
+        [ViewVariables(VVAccess.ReadOnly)]
         public float DelamTimerAccumulator {get; set;}
         public const int DelamTimerTimer = 30;
         public float SpeakAccumulator {get; set;} = 5f;
         public bool AlarmPlaying = false;
-        public float AtmosUpdateAccumulator {get; set;} = 0;
-        public const float AtmosUpdateTimer = 0.5f;
-
         public float AtmosUpdateAccumulator {get; set;}
         //update atmos every half second
         public const float AtmosUpdateTimer = 0.5f;
@@ -154,10 +153,10 @@ namespace Content.Server.Supermatter.Components
 
         public readonly float[,] gasFacts =
         {
-            //GasTrans,                             GasHeat,                              GasPowermix
+            //Gas Transmit Modifier,                Gas Heat Penality,                Gas Power Mix Ratio
             {Atmospherics.OxygenTransmitModifier,   Atmospherics.OxygenHeatPenalty,   Atmospherics.OxygenPowerMixRatio},   //oxygen
             {Atmospherics.NitrogenTransmitModifier, Atmospherics.NitrogenHeatPenalty, Atmospherics.NitrogenPowerMixRatio}, //nitrogen
-            {Atmospherics.CO2TransmitModifier,      Atmospherics.CO2HeatPenalty,      Atmospherics.CO2PowerMixRatio},      //co2
+            {Atmospherics.CO2TransmitModifier,      Atmospherics.CO2HeatPenalty,      Atmospherics.CO2PowerMixRatio},      //carbon dioxide
             {Atmospherics.PlasmaTransmitModifier,   Atmospherics.PlasmaHeatPenalty,   Atmospherics.PlasmaPowerMixRatio},   //plasma
             {Atmospherics.TritiumTransmitModifier,  Atmospherics.TritiumHeatPenalty,  Atmospherics.TritiumPowerMixRatio},  //tritium
             {Atmospherics.WaterTransmitModifier,    Atmospherics.WaterHeatPenalty,    Atmospherics.WaterPowerMixRatio},    //water

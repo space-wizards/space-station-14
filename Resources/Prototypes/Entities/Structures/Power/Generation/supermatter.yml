@@ -53,3 +53,9 @@
       radius: 10
       energy: 5
       color: "#d9ce00"
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 100
+      intensitySlope: 5
+      totalIntensity: 5000
+

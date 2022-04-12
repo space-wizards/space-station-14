@@ -20,7 +20,7 @@ namespace Content.Server.Radiation
     [UsedImplicitly]
     public sealed class RadiationSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
