@@ -55,7 +55,7 @@
         Heat: 0.2
         Radiation: 0.5
   - type: TemperatureProtection
-    coefficient: 0.01
+    coefficient: 0.005
  
 - type: entity
   parent: ClothingHeadHardsuitBase
