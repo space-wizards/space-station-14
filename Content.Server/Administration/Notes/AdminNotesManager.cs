@@ -80,6 +80,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         var note = await _db.GetAdminNote(noteId);
         if (note == null)
         {
+            _sawmill.Info($"Player {deletedBy.Name} tried to delete non-existent note {noteId}");
             return;
         }
 
