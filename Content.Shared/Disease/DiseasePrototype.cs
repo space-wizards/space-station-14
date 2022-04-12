@@ -18,7 +18,7 @@ namespace Content.Shared.Disease
         [DataField("name")]
         public string Name { get; } = string.Empty;
 
-        [ParentDataFieldAttribute(typeof(PrototypeIdSerializer<DiseasePrototype>))]
+        [ParentDataFieldAttribute(typeof(AbstractPrototypeIdSerializer<DiseasePrototype>))]
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
