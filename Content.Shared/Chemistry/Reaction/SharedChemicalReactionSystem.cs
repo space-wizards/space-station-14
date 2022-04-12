@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
@@ -102,7 +103,7 @@ namespace Content.Shared.Chemistry.Reaction
         /// <param name="reaction">The reaction to check.</param>
         /// <param name="lowestUnitReactions">How many times this reaction can occur.</param>
         /// <returns></returns>
-        private static bool CanReact(Solution solution, ReactionPrototype reaction, out FixedPoint2 lowestUnitReactions)
+        private bool CanReact(Solution solution, ReactionPrototype reaction, EntityUid owner, out FixedPoint2 lowestUnitReactions)
         {
             lowestUnitReactions = FixedPoint2.MaxValue;
             if (solution.Temperature < reaction.MinimumTemperature)
@@ -110,6 +111,14 @@ namespace Content.Shared.Chemistry.Reaction
                 lowestUnitReactions = FixedPoint2.Zero;
                 return false;
             } else if(solution.Temperature > reaction.MaximumTemperature)
+            {
+                lowestUnitReactions = FixedPoint2.Zero;
+                return false;
+            }
+
+            var attempt = new ReactionAttemptEvent(reaction, solution);
+            RaiseLocalEvent(owner, attempt, false);
+            if (attempt.Cancelled)
             {
                 lowestUnitReactions = FixedPoint2.Zero;
                 return false;
@@ -207,44 +216,56 @@ namespace Content.Shared.Chemistry.Reaction
         ///     Removes the reactants from the solution, then returns a solution with all products.
         ///     WARNING: Does not trigger reactions between solution and new products.
         /// </summary>
-        private bool ProcessReactions(Solution solution, EntityUid owner, [MaybeNullWhen(false)] out Solution productSolution)
+        private bool ProcessReactions(Solution solution, EntityUid owner, FixedPoint2 maxVolume, SortedSet<ReactionPrototype> reactions)
         {
-            foreach(var reactant in solution.Contents)
+            HashSet<ReactionPrototype> toRemove = new();
+            Solution? products = null;
+
+            // attempt to perform any applicable reaction
+            foreach (var reaction in reactions)
             {
-                if (!_reactions.TryGetValue(reactant.ReagentId, out var reactions))
-                    continue;
-
-                foreach(var reaction in reactions)
+                if (!CanReact(solution, reaction, owner, out var unitReactions))
                 {
-                    if (!CanReact(solution, reaction, out var unitReactions))
-                        continue;
-
-                    productSolution = PerformReaction(solution, owner, reaction, unitReactions);
-                    return true;
+                    toRemove.Add(reaction);
+                    continue;
                 }
+
+                products = PerformReaction(solution, owner, reaction, unitReactions);
+                break;
             }
 
-            productSolution = null;
-            return false;
+            // did any reaction occur?
+            if (products == null)
+                return false; ;
+
+            // Remove any reactions that were not applicable. Avoids re-iterating over them in future.
+            reactions.Except(toRemove);
+
+            if (products.TotalVolume <= 0)
+                return true;
+
+            // remove excess product
+            // TODO spill excess?
+            var excessVolume = solution.TotalVolume + products.TotalVolume - maxVolume;
+            if (excessVolume > 0)
+                products.RemoveSolution(excessVolume);
+
+            // Add any reactions associated with the new products. This may re-add reactions that were already iterated
+            // over previously. The new product may mean the reactions are applicable again and need to be processed.
+            foreach (var reactant in products.Contents)
+            {
+                if (_reactions.TryGetValue(reactant.ReagentId, out var reactantReactions))
+                    reactions.UnionWith(reactantReactions);
+            }
+
+            solution.AddSolution(products);
+            return true;
         }
 
         /// <summary>
         ///     Continually react a solution until no more reactions occur.
         /// </summary>
-        public void FullyReactSolution(Solution solution, EntityUid owner)
-        {
-            for (var i = 0; i < MaxReactionIterations; i++)
-            {
-                if (!ProcessReactions(solution, owner, out var products))
-                    return;
-
-                if (products.TotalVolume <= 0)
-                    return;
-
-                solution.AddSolution(products);
-            }
-            Logger.Error($"{nameof(Solution)} {owner} could not finish reacting in under {MaxReactionIterations} loops.");
-        }
+        public void FullyReactSolution(Solution solution, EntityUid owner) => FullyReactSolution(solution, owner, FixedPoint2.MaxValue);
 
         /// <summary>
         ///     Continually react a solution until no more reactions occur, with a volume constraint.
@@ -252,25 +273,41 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         public void FullyReactSolution(Solution solution, EntityUid owner, FixedPoint2 maxVolume)
         {
+            // construct the initial set of reactions to check.
+            SortedSet<ReactionPrototype> reactions = new();
+            foreach (var reactant in solution.Contents)
+            {
+                if (_reactions.TryGetValue(reactant.ReagentId, out var reactantReactions))
+                    reactions.UnionWith(reactantReactions);
+            }
+
+            // Repeatedly attempt to perform reactions, ending when there are no more applicable reactions, or when we
+            // exceed the iteration limit.
             for (var i = 0; i < MaxReactionIterations; i++)
             {
-                if (!ProcessReactions(solution, owner, out var products))
+                if (!ProcessReactions(solution, owner, maxVolume, reactions))
                     return;
-
-                if (products.TotalVolume <= 0)
-                    return;
-
-                var totalVolume = solution.TotalVolume + products.TotalVolume;
-                var excessVolume = totalVolume - maxVolume;
-
-                if (excessVolume > 0)
-                {
-                    products.RemoveSolution(excessVolume); //excess product is deleted to fit under volume limit
-                }
-
-                solution.AddSolution(products);
             }
+
             Logger.Error($"{nameof(Solution)} {owner} could not finish reacting in under {MaxReactionIterations} loops.");
+        }
+    }
+
+    /// <summary>
+    ///     Raised directed at the owner of a solution to determine whether the reaction should be allowed to occur.
+    /// </summary>
+    /// <reamrks>
+    ///     Some solution containers (e.g., bloodstream, smoke, foam) use this to block certain reactions from occurring.
+    /// </reamrks>
+    public sealed class ReactionAttemptEvent : CancellableEntityEventArgs
+    {
+        public readonly ReactionPrototype Reaction;
+        public readonly Solution Solution;
+
+        public ReactionAttemptEvent(ReactionPrototype reaction, Solution solution)
+        {
+            Reaction = reaction;
+            Solution = solution;
         }
     }
 }

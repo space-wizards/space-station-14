@@ -152,7 +152,7 @@
     currentSelector: Single
     allSelectors:
     - Single
-    fillPrototype: CartridgePistol  
+    fillPrototype: CartridgePistol
     caliber: Pistol
     capacity: 5
     soundEmpty:

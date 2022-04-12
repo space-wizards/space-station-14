@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Completions;
 [UsedImplicitly]
 public sealed class AdminLog : IGraphAction
 {
-    [DataField("logType", required: true)]
+    [DataField("logType")]
     public LogType LogType = LogType.Construction;
 
     [DataField("impact")]

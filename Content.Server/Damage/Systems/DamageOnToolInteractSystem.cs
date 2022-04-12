@@ -4,6 +4,7 @@ using Content.Server.Tools.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
+using Content.Shared.Tools.Components;
 
 namespace Content.Server.Damage.Systems
 {

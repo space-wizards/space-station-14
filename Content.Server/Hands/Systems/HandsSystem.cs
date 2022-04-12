@@ -90,7 +90,7 @@ namespace Content.Server.Hands.Systems
             if (TryComp(uid, out SharedPullerComponent? puller) && puller.Pulling is EntityUid pulled && TryComp(pulled, out SharedPullableComponent? pullable))
                 _pullingSystem.TryStopPull(pullable);
 
-            if (_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
+            if (!_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
                 return;
 
             var targetName = Name(args.Target);

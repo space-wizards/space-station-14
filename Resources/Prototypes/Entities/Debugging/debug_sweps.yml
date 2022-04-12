@@ -44,7 +44,7 @@
   id: BulletDebug
   name: bang, ded bullet
   parent: BulletBase
-  abstract: true
+  noSpawn: true
   suffix: DEBUG
   components:
   - type: Tag

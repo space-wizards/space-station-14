@@ -52,13 +52,13 @@ namespace Content.Server.Temperature.Components
             }
         }
 
-        [DataField("coldDamage", required: true)]
+        [DataField("coldDamage")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier ColdDamage = default!;
+        public DamageSpecifier ColdDamage = new();
 
-        [DataField("heatDamage", required: true)]
+        [DataField("heatDamage")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier HeatDamage = default!;
+        public DamageSpecifier HeatDamage = new();
 
         /// <summary>
         ///     Temperature won't do more than this amount of damage per second.

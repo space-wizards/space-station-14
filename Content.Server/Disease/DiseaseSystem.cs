@@ -1,4 +1,5 @@
 using System.Threading;
+using Content.Server.Chat;
 using Content.Shared.Disease;
 using Content.Shared.Disease.Components;
 using Content.Server.Disease.Components;
@@ -15,6 +16,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Content.Shared.Inventory.Events;
 using Content.Server.Nutrition.EntitySystems;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Disease
@@ -40,6 +42,7 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
             SubscribeLocalEvent<DiseasedComponent, InteractHandEvent>(OnInteractDiseasedHand);
             SubscribeLocalEvent<DiseasedComponent, InteractUsingEvent>(OnInteractDiseasedUsing);
+            SubscribeLocalEvent<DiseasedComponent, EntitySpokeEvent>(OnEntitySpeak);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<DiseaseVaccineComponent, AfterInteractEvent>(OnAfterInteract);
@@ -186,6 +189,17 @@ namespace Content.Server.Disease
             _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Entities(carrier.Owner));
         }
 
+        public void CureAllDiseases(EntityUid uid, DiseaseCarrierComponent? carrier = null)
+        {
+            if (!Resolve(uid, ref carrier))
+                return;
+
+            foreach (var disease in carrier.Diseases)
+            {
+                CureDisease(carrier, disease);
+            }
+        }
+
         /// <summary>
         /// Called when someone interacts with a diseased person with an empty hand
         /// to check if they get infected
@@ -202,6 +216,14 @@ namespace Content.Server.Disease
         private void OnInteractDiseasedUsing(EntityUid uid, DiseasedComponent component, InteractUsingEvent args)
         {
             InteractWithDiseased(args.Target, args.User);
+        }
+
+        private void OnEntitySpeak(EntityUid uid, DiseasedComponent component, EntitySpokeEvent args)
+        {
+            if (TryComp<DiseaseCarrierComponent>(uid, out var carrier))
+            {
+                SneezeCough(uid, _random.Pick(carrier.Diseases), string.Empty);
+            }
         }
 
         /// <summary>
@@ -322,9 +344,13 @@ namespace Content.Server.Disease
         /// rolls the dice to see if they get
         /// the disease.
         /// </summary>
-        public void TryInfect(DiseaseCarrierComponent carrier, DiseasePrototype? disease, float chance = 0.7f)
+        /// <param name="carrier">The target of the disease</param>
+        /// <param name="disease">The disease to apply</param>
+        /// <param name="chance">% chance of the disease being applied, before considering resistance</param>
+        /// <param name="forced">Bypass the disease's infectious trait.</param>
+        public void TryInfect(DiseaseCarrierComponent carrier, DiseasePrototype? disease, float chance = 0.7f, bool forced = false)
         {
-            if(disease is not { Infectious: true })
+            if(disease == null || !forced && !disease.Infectious)
                 return;
             var infectionChance = chance - carrier.DiseaseResist;
             if (infectionChance <= 0)
@@ -355,7 +381,7 @@ namespace Content.Server.Disease
 
             var carrierQuery = GetEntityQuery<DiseaseCarrierComponent>();
 
-            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, 2f))
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, 2f))
             {
                 if (!carrierQuery.TryGetComponent(entity, out var carrier) ||
                     !_interactionSystem.InRangeUnobstructed(uid, entity)) continue;

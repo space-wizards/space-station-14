@@ -14,6 +14,6 @@ namespace Content.Shared.Conveyor
     {
         Off,
         Forward,
-        Reversed
+        Reverse
     }
 }

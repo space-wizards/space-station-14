@@ -16,7 +16,7 @@
   id: HandsAnimal
   name: "animal hands"
   parent: PartAnimal
-  abstract: true
+  noSpawn: true
   components:
   - type: BodyPart
     partType: Hand
@@ -28,7 +28,7 @@
   id: LegsAnimal
   name: "animal legs"
   parent: PartAnimal
-  abstract: true
+  noSpawn: true
   components:
   - type: BodyPart
     partType: Leg
@@ -39,7 +39,7 @@
   id: FeetAnimal
   name: "animal feet"
   parent: PartAnimal
-  abstract: true
+  noSpawn: true
   components:
   - type: BodyPart
     partType: Foot
@@ -50,7 +50,7 @@
   id: TorsoAnimal
   name: "animal torso"
   parent: PartAnimal
-  abstract: true
+  noSpawn: true
   components:
   - type: BodyPart
     partType: Torso
@@ -76,7 +76,7 @@
   id: OrganAnimalLungs
   parent: BaseAnimalOrgan
   name: lungs
-  abstract: true
+  noSpawn: true
   components:
   - type: Mechanism
     size: 1
@@ -95,7 +95,7 @@
   id: OrganAnimalStomach
   parent: BaseAnimalOrgan
   name: stomach
-  abstract: true
+  noSpawn: true
   components:
   - type: Mechanism
     size: 1
@@ -118,7 +118,7 @@
   id: OrganAnimalLiver
   parent: BaseAnimalOrgan
   name: liver
-  abstract: true
+  noSpawn: true
   components:
   - type: Mechanism
     size: 1
@@ -134,7 +134,7 @@
   id: OrganAnimalHeart
   parent: BaseAnimalOrgan
   name: heart
-  abstract: true
+  noSpawn: true
   components:
   - type: Mechanism
     size: 1
@@ -151,7 +151,7 @@
   id: OrganAnimalKidneys
   parent: BaseAnimalOrgan
   name: kidneys
-  abstract: true
+  noSpawn: true
   components:
   - type: Mechanism
     size: 1

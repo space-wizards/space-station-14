@@ -1,4 +1,5 @@
 using System;
+using Content.Shared.ActionBlocker;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -16,6 +17,9 @@ namespace Content.Shared.Shuttles.Components
     [NetworkedComponent]
     public sealed class PilotComponent : Component
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [ViewVariables] public SharedShuttleConsoleComponent? Console { get; set; }
 
         /// <summary>
@@ -37,15 +41,14 @@ namespace Content.Shared.Shuttles.Components
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
-            if (!entityManager.TryGetComponent(console, out SharedShuttleConsoleComponent? shuttleConsoleComponent))
+            if (!_entMan.TryGetComponent(console, out SharedShuttleConsoleComponent? shuttleConsoleComponent))
             {
                 Logger.Warning($"Unable to set Helmsman console to {console}");
                 return;
             }
 
             Console = shuttleConsoleComponent;
+            _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
         }
 
         public override ComponentState GetComponentState()

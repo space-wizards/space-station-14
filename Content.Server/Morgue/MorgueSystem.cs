@@ -1,10 +1,9 @@
 using Content.Server.Morgue.Components;
-using Content.Shared.Administration.Logs;
+using Content.Shared.Morgue;
+using Content.Shared.Examine;
 using Content.Shared.Database;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Morgue
 {
@@ -19,6 +18,8 @@ namespace Content.Server.Morgue
             base.Initialize();
 
             SubscribeLocalEvent<CrematoriumEntityStorageComponent, GetVerbsEvent<AlternativeVerb>>(AddCremateVerb);
+            SubscribeLocalEvent<CrematoriumEntityStorageComponent, ExaminedEvent>(OnCrematoriumExamined);
+            SubscribeLocalEvent<MorgueEntityStorageComponent, ExaminedEvent>(OnMorgueExamined);
         }
 
         private void AddCremateVerb(EntityUid uid, CrematoriumEntityStorageComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -34,6 +35,53 @@ namespace Content.Server.Morgue
             args.Verbs.Add(verb);
         }
 
+        private void OnCrematoriumExamined(EntityUid uid, CrematoriumEntityStorageComponent component, ExaminedEvent args)
+        {
+            if (!TryComp<AppearanceComponent>(uid, out var appearance))
+                return;
+
+            if (args.IsInDetailsRange)
+            {
+                if (appearance.TryGetData(CrematoriumVisuals.Burning, out bool isBurning) && isBurning)
+                {
+                    args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning", ("owner", uid)));
+                }
+
+                if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
+                {
+                    args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-has-contents"));
+                }
+                else
+                {
+                    args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-empty"));
+                }
+            }
+        }
+
+        private void OnMorgueExamined(EntityUid uid, MorgueEntityStorageComponent component, ExaminedEvent args)
+        {
+            if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
+
+            if (args.IsInDetailsRange)
+            {
+                if (appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
+                {
+                    args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-soul"));
+                }
+                else if (appearance.TryGetData(MorgueVisuals.HasMob, out bool hasMob) && hasMob)
+                {
+                    args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-no-soul"));
+                }
+                else if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
+                {
+                    args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-has-contents"));
+                }
+                else
+                {
+                    args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-empty"));
+                }
+            }
+        }
         public override void Update(float frameTime)
         {
             _accumulatedFrameTime += frameTime;
