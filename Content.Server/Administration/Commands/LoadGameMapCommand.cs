@@ -1,15 +1,9 @@
 using Content.Server.GameTicking;
 using Content.Server.Maps;
-using Content.Server.Roles;
-using Content.Server.Station;
 using Content.Shared.Administration;
 using Robust.Server.Maps;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands
@@ -26,9 +20,7 @@ namespace Content.Server.Administration.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var mapLoader = IoCManager.Resolve<IMapLoader>();
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var stationSystem = entityManager.EntitySysManager.GetEntitySystem<StationSystem>();
             var gameTicker = entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
 
             if (args.Length is not (2 or 4 or 5))
@@ -48,7 +40,8 @@ namespace Content.Server.Administration.Commands
                 {
                     loadOptions.Offset = new Vector2(x, y);
                 }
-                gameTicker.LoadGameMap(gameMap, new MapId(mapId), loadOptions, stationName);
+                var (ents, grids) = gameTicker.LoadGameMap(gameMap, new MapId(mapId), loadOptions, stationName);
+                shell.WriteLine($"Loaded {ents.Count} entities and {grids.Count} grids.");
             }
             else
             {
