@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
@@ -15,6 +13,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+
 // ReSharper disable once RedundantUsingDirective
 
 namespace Content.Server.Atmos.EntitySystems
@@ -44,7 +43,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     How far away do we update gas overlays (minimum; due to chunking further away tiles may also be updated).
         /// </summary>
-        private Vector2 _updateRange;
+        private float _updateRange;
 
         // Because the gas overlay updates aren't run every tick we need to avoid the pop-in that might occur with
         // the regular PVS range.
@@ -67,7 +66,7 @@ namespace Content.Server.Atmos.EntitySystems
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.NetGasOverlayTickRate, value => _updateCooldown = value > 0.0f ? 1 / value : float.MaxValue, true);
-            configManager.OnValueChanged(CVars.NetDefaultUpdateRange, value => _updateRange = value + RangeOffset, true);
+            configManager.OnValueChanged(CVars.NetMaxUpdateRange, value => _updateRange = value + RangeOffset, true);
             configManager.OnValueChanged(CCVars.GasOverlayThresholds, value => _thresholds = value, true);
         }
 
@@ -188,21 +187,20 @@ namespace Content.Server.Atmos.EntitySystems
         private List<GasOverlayChunk> GetChunksInRange(EntityUid entity)
         {
             // This is the max in any direction that we can get a chunk (e.g. max 2 chunks away of data).
-            var (maxXDiff, maxYDiff) = ((int) (_updateRange.X / ChunkSize) + 1, (int) (_updateRange.Y / ChunkSize) + 1);
+            var (maxXDiff, maxYDiff) = ((int) (_updateRange / ChunkSize) + 1, (int) (_updateRange / ChunkSize) + 1);
 
             // Setting initial list size based on the theoretical max number of chunks from a single grid. For default
             // parameters, this is currently 6^2 = 36. Unless a player is near more than one grid, this is will
             // generally slightly over-estimate the actual list size, which will be either 25, 30, or 36 (assuming the
             // player is not near the edge of a grid).
-            var initialListSize = (1 + (int) MathF.Ceiling(2 * _updateRange.X / ChunkSize)) * (1 + (int) MathF.Ceiling(2 * _updateRange.Y / ChunkSize));
+            var initialListSize = (1 + (int) MathF.Ceiling(2 * _updateRange / ChunkSize)) * (1 + (int) MathF.Ceiling(2 * _updateRange / ChunkSize));
 
             var inRange = new List<GasOverlayChunk>(initialListSize);
 
             var xform = Transform(entity);
             var worldPos = xform.MapPosition;
 
-            var worldBounds = Box2.CenteredAround(worldPos.Position,
-                _updateRange);
+            var worldBounds = Box2.CenteredAround(worldPos.Position, new Vector2(_updateRange, _updateRange));
 
             foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, worldBounds))
             {
@@ -225,10 +223,10 @@ namespace Content.Server.Atmos.EntitySystems
                         // (e.g. if we're on the very edge of a chunk we may need more chunks).
 
                         var (xDiff, yDiff) = (chunkIndices.X - entityTile.X, chunkIndices.Y - entityTile.Y);
-                        if (xDiff > _updateRange.X ||
-                            yDiff > _updateRange.Y ||
-                            xDiff < 0 && Math.Abs(xDiff + ChunkSize) > _updateRange.X ||
-                            yDiff < 0 && Math.Abs(yDiff + ChunkSize) > _updateRange.Y) continue;
+                        if (xDiff > _updateRange ||
+                            yDiff > _updateRange ||
+                            xDiff < 0 && Math.Abs(xDiff + ChunkSize) > _updateRange ||
+                            yDiff < 0 && Math.Abs(yDiff + ChunkSize) > _updateRange) continue;
 
                         inRange.Add(chunk);
                     }

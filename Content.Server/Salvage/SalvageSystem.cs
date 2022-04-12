@@ -293,9 +293,9 @@ namespace Content.Server.Salvage
             return true;
         }
         private void Report(string messageKey) =>
-            _chatManager.DispatchStationAnnouncement(Loc.GetString(messageKey), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange);
+            _chatManager.DispatchStationAnnouncement(Loc.GetString(messageKey), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange, playDefaultSound: false);
         private void Report(string messageKey, params (string, object)[] args) =>
-            _chatManager.DispatchStationAnnouncement(Loc.GetString(messageKey, args), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange);
+            _chatManager.DispatchStationAnnouncement(Loc.GetString(messageKey, args), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange, playDefaultSound: false);
 
         private void Transition(SalvageMagnetComponent magnet, TimeSpan currentTime)
         {
