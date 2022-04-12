@@ -9,6 +9,7 @@ public sealed partial class StorageSystem
     private async void OnStorageFillMapInit(EntityUid uid, StorageFillComponent component, MapInitEvent args)
     {
         if (component.Contents.Count == 0) return;
+        // ServerStorageComponent needs to rejoin IStorageComponent when other storage components are ECS'd
         TryComp<IStorageComponent>(uid, out var storage);
         TryComp<ServerStorageComponent>(uid, out var serverStorageComp);
         if (storage == null && serverStorageComp == null)

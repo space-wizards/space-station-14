@@ -5,7 +5,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Content.Client.Items.Managers;
 
-
 namespace Content.Client.Storage
 {
     public sealed class StorageBoundUserInterface : BoundUserInterface
@@ -57,7 +56,6 @@ namespace Content.Client.Storage
 
             _window?.BuildEntityList(cast);
         }
-
 
         protected override void Dispose(bool disposing)
         {

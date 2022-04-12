@@ -588,6 +588,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!storageComp.IsOpen)
             {
                 storageComp.IsOpen = true;
+                UpdateStorageVisualization(uid, storageComp);
             }
         }
 
@@ -600,6 +601,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!_uiSystem.IsUiOpen(uid, args.UiKey))
             {
                 storageComp.IsOpen = false;
+                UpdateStorageVisualization(uid, storageComp);
 
                 if (storageComp.StorageCloseSound is not null)
                     SoundSystem.Play(Filter.Pvs(uid), storageComp.StorageCloseSound.GetSound(), uid, AudioParams.Default);
