@@ -18,7 +18,7 @@ public sealed class OpenAdminNotesCommand : IConsoleCommand
     {
         if (shell.Player is not IPlayerSession player)
         {
-            shell.WriteLine("This does not work from the server console.");
+            shell.WriteError("This does not work from the server console.");
             return;
         }
 
