@@ -15,8 +15,6 @@
     sprite: Clothing/Back/Backpacks/backpack.rsi
   - type: Storage
     capacity: 100
-    storageSoundCollection:
-      collection: storageRustle
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key

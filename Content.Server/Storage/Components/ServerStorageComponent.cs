@@ -19,8 +19,7 @@ namespace Content.Server.Storage.Components
 
         public readonly Dictionary<EntityUid, int> SizeCache = new();
 
-        [DataField("occludesLight")]
-        public bool OccludesLight = true;
+        private bool _occludesLight = true;
 
         [DataField("quickInsert")]
         public bool QuickInsert = false; // Can insert storables by "attacking" them with the storage entity
@@ -36,27 +35,40 @@ namespace Content.Server.Storage.Components
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist = null;
 
+        /// <summary>
+        /// This storage has an open UI
+        /// </summary>
+        public bool IsOpen = false;
         public bool StorageInitialCalculated;
         public int StorageUsed;
         [DataField("capacity")]
         public int StorageCapacityMax = 10000;
 
-        [DataField("storageSoundCollection")]
-        public SoundSpecifier StorageSoundCollection { get; set; } = new SoundCollectionSpecifier("storageRustle");
+        [DataField("storageOpenSound")]
+        public SoundSpecifier? StorageOpenSound { get; set; } = new SoundCollectionSpecifier("storageRustle");
+
+        [DataField("storageInsertSound")]
+        public SoundSpecifier? StorageInsertSound { get; set; } = new SoundCollectionSpecifier("storageRustle");
+
+        [DataField("storageRemoveSound")]
+        public SoundSpecifier? StorageRemoveSound { get; set; }
+        [DataField("storageCloseSound")]
+        public SoundSpecifier? StorageCloseSound { get; set; }
 
         [ViewVariables]
         public override IReadOnlyList<EntityUid>? StoredEntities => Storage?.ContainedEntities;
 
-        // [ViewVariables(VVAccess.ReadWrite)]
-        // public bool OccludesLight
-        // {
-        //     get => _occludesLight;
-        //     set
-        //     {
-        //         _occludesLight = value;
-        //         if (Storage != null) Storage.OccludesLight = value;
-        //     }
-        // }
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("occludesLight")]
+        public bool OccludesLight
+        {
+            get => _occludesLight;
+            set
+            {
+                _occludesLight = value;
+                if (Storage != null) Storage.OccludesLight = value;
+            }
+        }
         public override bool Remove(EntityUid entity)
         {
             return true;

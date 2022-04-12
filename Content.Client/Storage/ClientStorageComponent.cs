@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Client.Animations;
 using Content.Shared.DragDrop;
 using Content.Shared.Storage;
@@ -12,24 +11,8 @@ namespace Content.Client.Storage
     public sealed class ClientStorageComponent : SharedStorageComponent, IDraggable
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-
         private List<EntityUid> _storedEntities = new();
-        private int StorageSizeUsed;
-        private int StorageCapacityMax;
-
         public override IReadOnlyList<EntityUid> StoredEntities => _storedEntities;
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not StorageComponentState state)
-            {
-                return;
-            }
-
-            _storedEntities = state.StoredEntities.ToList();
-        }
 
         /// <summary>
         /// Animate the newly stored entities in <paramref name="msg"/> flying towards this storage's position
@@ -51,12 +34,6 @@ namespace Content.Client.Storage
 
         public override bool Remove(EntityUid entity)
         {
-            if (_storedEntities.Remove(entity))
-            {
-                Dirty();
-                return true;
-            }
-
             return false;
         }
     }

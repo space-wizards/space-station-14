@@ -1,6 +1,6 @@
 - type: entity
   id: BoxBase
-  parent: BaseItem
+  parent: BaseStorageItem
   abstract: true
   components:
   - type: Sprite
@@ -12,7 +12,3 @@
   - type: Storage
     capacity: 30
     size: 10
-  - type: UserInterface
-    interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface

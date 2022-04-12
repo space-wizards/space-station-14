@@ -21,15 +21,13 @@ using Content.Shared.Acts;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
 using Content.Shared.Placeable;
-using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Server.Containers;
+using Content.Server.Popups;
 
 using static Content.Shared.Storage.SharedStorageComponent;
 
@@ -47,6 +45,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -62,7 +61,10 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<ServerStorageComponent, AfterInteractEvent>(AfterInteract);
             SubscribeLocalEvent<ServerStorageComponent, DestructionEventArgs>(OnDestroy);
-            SubscribeLocalEvent<ServerStorageComponent, StorageInteractItemMessage>(OnUIInteractMessage);
+            SubscribeLocalEvent<ServerStorageComponent, StorageRemoveItemMessage>(OnRemoveItemMessage);
+            SubscribeLocalEvent<ServerStorageComponent, StorageInsertItemMessage>(OnInsertItemMessage);
+            SubscribeLocalEvent<ServerStorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
+            SubscribeLocalEvent<ServerStorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
 
             SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
         }
@@ -111,18 +113,15 @@ namespace Content.Server.Storage.EntitySystems
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (EntityManager.TryGetComponent(uid, out LockComponent? lockComponent) && lockComponent.Locked)
+            if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
                 return;
 
             // Get the session for the user
-            var session = EntityManager.GetComponentOrNull<ActorComponent>(args.User)?.PlayerSession;
-            if (session == null)
+            if (!TryComp<ActorComponent>(args.User, out var actor) || actor?.PlayerSession == null)
                 return;
 
             // Does this player currently have the storage UI open?
-            // var uiOpen = component.SubscribedSessions.Contains(session);
-            var uiOpen = false;
-            // I'll come back to this one wtf
+            bool uiOpen = _uiSystem.SessionHasOpenUi(uid, StorageUiKey.Key, actor.PlayerSession);
 
             ActivationVerb verb = new();
             verb.Act = () => OpenStorageUI(uid, args.User, component);
@@ -235,26 +234,11 @@ namespace Content.Server.Storage.EntitySystems
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
                 return;
 
-            // bool open = storageComp.SubscribedSessions.Count != 0;
-            // maybe i need to check into this one again
-            // wtf uses this anyhow
-            bool open = false;
-
-            appearance.SetData(StorageVisuals.Open, open);
-            appearance.SetData(SharedBagOpenVisuals.BagState, open ? SharedBagState.Open : SharedBagState.Closed);
+            appearance.SetData(StorageVisuals.Open, storageComp.IsOpen);
+            appearance.SetData(SharedBagOpenVisuals.BagState, storageComp.IsOpen ? SharedBagState.Open : SharedBagState.Closed);
 
             if (HasComp<ItemCounterComponent>(uid))
-                appearance.SetData(StackVisuals.Hide, !open);
-        }
-
-        private void EnsureInitialCalculated(EntityUid uid, ServerStorageComponent storageComp)
-        {
-            if (storageComp.StorageInitialCalculated)
-                return;
-
-            RecalculateStorageUsed(uid, storageComp);
-
-            storageComp.StorageInitialCalculated = true;
+                appearance.SetData(StackVisuals.Hide, !storageComp.IsOpen);
         }
 
         private void RecalculateStorageUsed(EntityUid uid, ServerStorageComponent storageComp)
@@ -264,14 +248,12 @@ namespace Content.Server.Storage.EntitySystems
 
             if (storageComp.Storage == null)
                 return;
-            Logger.Debug("Ran storage used");
 
             foreach (var entity in storageComp.Storage.ContainedEntities)
             {
-                // not sure of the repercussions of this, figure out later
-                if (!TryComp<SharedItemComponent>(entity, out var itemComp))
+                if (!TryComp(entity, out SharedItemComponent? itemComp))
                     continue;
-                Logger.Debug("Item found");
+
                 storageComp.StorageUsed += itemComp.Size;
                 storageComp.SizeCache.Add(entity, itemComp.Size);
             }
@@ -284,20 +266,18 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns>true if it can be inserted, false otherwise</returns>
         public bool CanInsert(EntityUid uid, EntityUid insertEnt, ServerStorageComponent storageComp)
         {
-            EnsureInitialCalculated(uid, storageComp);
-
-            if (TryComp<ServerStorageComponent>(insertEnt, out var storage) &&
+            if (TryComp(insertEnt, out ServerStorageComponent? storage) &&
                 storage.StorageCapacityMax >= storageComp.StorageCapacityMax)
                 return false;
 
-            if (TryComp<SharedItemComponent>(insertEnt, out var itemComp) &&
+            if (TryComp(insertEnt, out SharedItemComponent? itemComp) &&
                 itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed)
                 return false;
 
             if (storageComp.Whitelist != null && !storageComp.Whitelist.IsValid(insertEnt))
                 return false;
 
-            if (TryComp<TransformComponent>(insertEnt, out var transformComp) && transformComp.Anchored)
+            if (TryComp(insertEnt, out TransformComponent? transformComp) && transformComp.Anchored)
                 return false;
 
             return true;
@@ -313,64 +293,20 @@ namespace Content.Server.Storage.EntitySystems
             if (!CanInsert(uid, insertEnt, storageComp) || storageComp.Storage?.Insert(insertEnt) == false)
                 return false;
 
+            if (storageComp.StorageInsertSound is not null)
+                SoundSystem.Play(Filter.Pvs(uid), storageComp.StorageInsertSound.GetSound(), uid, AudioParams.Default);
+
+            RecalculateStorageUsed(uid, storageComp);
             UpdateStorageUI(uid, storageComp);
             return true;
         }
 
-        public bool Remove(EntityUid uid, EntityUid removeEnt, ServerStorageComponent storageComp)
+        // REMOVE: remove and drop on the ground
+        public bool RemoveAndDrop(EntityUid uid, EntityUid removeEnt, ServerStorageComponent storageComp)
         {
-            EnsureInitialCalculated(uid, storageComp);
-            return storageComp.Storage?.Remove(removeEnt) == true;
-        }
-
-        public void HandleEntityMaybeInserted(EntityUid uid, EntInsertedIntoContainerMessage message, ServerStorageComponent storageComp)
-        {
-            // as if it would a SEPERATE container? what?
-            // if (message.Container != storageComp.Storage)
-            //     return;
-
-            PlaySoundCollection(uid, storageComp);
-            EnsureInitialCalculated(uid, storageComp);
-
-            Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) had entity (UID {message.Entity}) inserted into it.");
-
-            var size = 0;
-            if (TryComp<SharedItemComponent>(message.Entity, out var storable))
-                size = storable.Size;
-
-            storageComp.StorageUsed += size;
-            storageComp.SizeCache[message.Entity] = size;
-
-        }
-
-        public void HandleEntityMaybeRemoved(EntityUid uid, EntRemovedFromContainerMessage message, ServerStorageComponent storageComp )
-        {
-
-            // what do you mean MAYBE
-            // seems to just make sure it can still fit
-
-            if (message.Container != storageComp.Storage)
-                return;
-
-            EnsureInitialCalculated(uid, storageComp);
-
-            Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) had entity (UID {message.Entity}) removed from it.");
-
-            if (!storageComp.SizeCache.TryGetValue(message.Entity, out var size))
-            {
-                var mapPos = "unknown";
-                if (TryComp<TransformComponent>(uid, out var transformComp))
-                    mapPos = transformComp.MapPosition.ToString();
-
-                Logger.WarningS(storageComp.LoggerName, $"Removed entity {ToPrettyString(message.Entity)} without a cached size from storage {ToPrettyString(uid)} at {mapPos}");
-
-                RecalculateStorageUsed(uid, storageComp);
-                return;
-            }
-
-            storageComp.StorageUsed -= size;
-
-            // UpdateClientInventories(uid, storageComp);
+            bool ItemRemoved = storageComp.Storage?.Remove(removeEnt) == true;
+            RecalculateStorageUsed(uid, storageComp);
+            return ItemRemoved;
         }
 
         /// <summary>
@@ -380,29 +316,17 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns>true if inserted, false otherwise</returns>
         public bool PlayerInsertHeldEntity(EntityUid uid, EntityUid player, ServerStorageComponent storageComp)
         {
-            //  they're the same THING!
-
-            EnsureInitialCalculated(uid, storageComp);
-
-            if (!TryComp<HandsComponent>(player, out var hands) ||
+            if (!TryComp(player, out HandsComponent? hands) ||
                 hands.ActiveHandEntity == null)
                 return false;
 
             var toInsert = hands.ActiveHandEntity;
 
-            if (!_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands))
+            if (!_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands) || !Insert(uid, toInsert.Value, storageComp))
             {
-                uid.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                _popupSystem.PopupEntity(Loc.GetString("comp-storage-cant-insert"), player, Filter.Entities(player));
                 return false;
             }
-
-            if (!Insert(uid, toInsert.Value, storageComp))
-            {
-                _sharedHandsSystem.PickupOrDrop(player, toInsert.Value, handsComp: hands);
-                uid.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
-                return false;
-            }
-
             return true;
         }
 
@@ -414,14 +338,9 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns>true if inserted, false otherwise</returns>
         public bool PlayerInsertEntityInWorld(EntityUid uid, EntityUid player, EntityUid toInsert, ServerStorageComponent storageComp)
         {
-
-            // just instert into container?
-            EnsureInitialCalculated(uid, storageComp);
-
             if (!Insert(uid, toInsert, storageComp))
             {
-                // NEED NEW POPUPS HERE
-                uid.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                _popupSystem.PopupEntity(Loc.GetString("comp-storage-cant-insert"), player, Filter.Entities(player));
                 return false;
             }
             return true;
@@ -433,17 +352,15 @@ namespace Content.Server.Storage.EntitySystems
         /// <param name="entity">The entity to open the UI for</param>
         public void OpenStorageUI(EntityUid uid, EntityUid entity, ServerStorageComponent storageComp)
         {
-            // just open bound user interfaaaace
-            PlaySoundCollection(uid, storageComp);
-            EnsureInitialCalculated(uid, storageComp);
-
-            if (!TryComp<ActorComponent>(entity, out var player))
+            if (!TryComp(entity, out ActorComponent? player))
                 return;
+
+            if (storageComp.StorageOpenSound is not null)
+                SoundSystem.Play(Filter.Pvs(uid), storageComp.StorageOpenSound.GetSound(), uid, AudioParams.Default);
 
             Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
 
             _uiSystem.GetUiOrNull(uid, StorageUiKey.Key)?.Open(player.PlayerSession);
-            // UpdateClientInventory(uid, player.PlayerSession, storageComp);
         }
 
         /// <summary>
@@ -462,13 +379,13 @@ namespace Content.Server.Storage.EntitySystems
             // close ui
             foreach (var entity in storageComp.StoredEntities)
             {
-                if (TryComp<ServerStorageComponent>(entity, out var storedStorageComp))
+                if (TryComp(entity, out ServerStorageComponent? storedStorageComp))
                 {
                     DebugTools.Assert(storedStorageComp != storageComp, $"Storage component contains itself!? Entity: {uid}");
                     // UnsubscribeSession(entity, session, storedStorageComp);
                 }
 
-                if (TryComp<ServerUserInterfaceComponent>(entity, out var uiComponent))
+                if (TryComp(entity, out ServerUserInterfaceComponent? uiComponent))
                 {
                     foreach (var ui in uiComponent.Interfaces)
                     {
@@ -486,27 +403,23 @@ namespace Content.Server.Storage.EntitySystems
             storageComp.Storage = _containerSystem.EnsureContainer<Container>(uid, "storagebase");
             storageComp.Storage.OccludesLight = storageComp.OccludesLight;
             UpdateStorageVisualization(uid, storageComp);
-            EnsureInitialCalculated(uid, storageComp);
+            RecalculateStorageUsed(uid, storageComp);
             UpdateStorageUI(uid, storageComp);
         }
 
         public void HandleRemoveEntity(EntityUid uid, EntityUid player, EntityUid itemToRemove, ServerStorageComponent storageComp)
         {
-            // why should we care about size, we're removing
-            // EnsureInitialCalculated(uid, storageComp);
-
-            // need to make sure player stuff is correct
-
-            // ENSURE THAT It'S IN THE FUCKING CONTAINER
-
-            // probably pop that not found
             if (!_containerSystem.ContainsEntity(uid, itemToRemove))
                 return;
 
-
             // succeeded, remove entity and update UI
             _containerSystem.RemoveEntity(uid, itemToRemove, false);
+
+            if (storageComp.StorageRemoveSound is not null)
+                SoundSystem.Play(Filter.Pvs(uid), storageComp.StorageRemoveSound.GetSound(), uid, AudioParams.Default);
+
             _sharedHandsSystem.TryPickupAnyHand(player, itemToRemove);
+            RecalculateStorageUsed(uid, storageComp);
             UpdateStorageUI(uid, storageComp);
         }
 
@@ -535,14 +448,9 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns></returns>
         private void OnActivate(EntityUid uid, ServerStorageComponent storageComp, ActivateInWorldEvent args)
         {
-            Logger.Debug("Activate");
-
-            EnsureInitialCalculated(uid, storageComp);
-
             if (!TryComp<ActorComponent>(args.User, out var actor))
                 return;
 
-            Logger.Debug("Open storage uI");
             OpenStorageUI(uid, args.User, storageComp);
         }
 
@@ -610,7 +518,9 @@ namespace Content.Server.Storage.EntitySystems
                 // If we picked up atleast one thing, play a sound and do a cool animation!
                 if (successfullyInserted.Count > 0)
                 {
-                    PlaySoundCollection(uid, storageComp);
+                    if (storageComp.StorageInsertSound is not null)
+                        SoundSystem.Play(Filter.Pvs(uid), storageComp.StorageInsertSound.GetSound(), uid, AudioParams.Default);
+
                     RaiseLocalEvent(new AnimateInsertingEntitiesEvent(uid, successfullyInserted, successfullyInsertedPositions));
                 }
                 return;
@@ -653,28 +563,51 @@ namespace Content.Server.Storage.EntitySystems
 
             foreach (var entity in storedEntities)
             {
-                Remove(uid, entity, storageComp);
+                RemoveAndDrop(uid, entity, storageComp);
             }
         }
 
-        private void OnUIInteractMessage(EntityUid uid, ServerStorageComponent storageComp, StorageInteractItemMessage args)
+        private void OnRemoveItemMessage(EntityUid uid, ServerStorageComponent storageComp, StorageRemoveItemMessage args)
         {
-            Logger.Debug("attempted on item remove");
             if (args.Session.AttachedEntity == null)
                 return;
 
             HandleRemoveEntity(uid, args.Session.AttachedEntity.Value, args.InteractedItemUID, storageComp);
-
         }
 
-        private void PlaySoundCollection(EntityUid uid, ServerStorageComponent storageComp)
+        private void OnInsertItemMessage(EntityUid uid, ServerStorageComponent storageComp, StorageInsertItemMessage args)
         {
-            SoundSystem.Play(Filter.Pvs(uid), storageComp.StorageSoundCollection.GetSound(), uid, AudioParams.Default);
+            if (args.Session.AttachedEntity == null)
+                return;
+
+            PlayerInsertHeldEntity(uid, args.Session.AttachedEntity.Value, storageComp);
+        }
+
+        private void OnBoundUIOpen(EntityUid uid, ServerStorageComponent storageComp, BoundUIOpenedEvent args)
+        {
+            if (!storageComp.IsOpen)
+            {
+                storageComp.IsOpen = true;
+            }
+        }
+
+        private void OnBoundUIClosed(EntityUid uid, ServerStorageComponent storageComp, BoundUIClosedEvent args)
+        {
+            if (TryComp<ActorComponent>(args.Session.AttachedEntity, out var actor) && actor?.PlayerSession != null)
+                CloseNestedInterfaces(uid, actor.PlayerSession, storageComp);
+
+            // If UI is closed for everyone
+            if (!_uiSystem.IsUiOpen(uid, args.UiKey))
+            {
+                storageComp.IsOpen = false;
+
+                if (storageComp.StorageCloseSound is not null)
+                    SoundSystem.Play(Filter.Pvs(uid), storageComp.StorageCloseSound.GetSound(), uid, AudioParams.Default);
+            }
         }
 
         private void UpdateStorageUI(EntityUid uid, ServerStorageComponent storageComp)
         {
-
             if (storageComp.Storage == null)
                 return;
 

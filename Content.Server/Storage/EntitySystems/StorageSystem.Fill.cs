@@ -1,6 +1,4 @@
 using Content.Server.Storage.Components;
-using Robust.Shared.Random;
-using System.Linq;
 using Content.Shared.Storage;
 
 namespace Content.Server.Storage.EntitySystems;
@@ -35,5 +33,7 @@ public sealed partial class StorageSystem
             Logger.ErrorS("storage", $"Tried to StorageFill {item} inside {uid} but can't.");
             EntityManager.DeleteEntity(ent);
         }
+        if (serverStorageComp != null)
+            RecalculateStorageUsed(uid, serverStorageComp);
     }
 }
