@@ -2,8 +2,6 @@ using System;
 using Robust.Shared.Audio;
 using Content.Server.Radiation;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Content.Server.Supermatter.Components;
 using Robust.Shared.Containers;
 using Content.Shared.Damage;
@@ -17,10 +15,7 @@ using Robust.Shared.Prototypes;
 using Content.Server.Atmos.EntitySystems;
 using Robust.Shared.Player;
 using Content.Shared.Atmos;
-using Robust.Shared.Localization;
 using Robust.Shared.Physics.Dynamics;
-using Content.Shared.FixedPoint;
-using Content.Shared.Chat;
 using Content.Server.Chat;
 
 namespace Content.Server.Supermatter.EntitySystems
@@ -31,7 +26,6 @@ namespace Content.Server.Supermatter.EntitySystems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        //[Dependency] private readonly RadiationSystem _radiationSystem = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly TagSystem _tag = default!;
@@ -333,8 +327,8 @@ namespace Content.Server.Supermatter.EntitySystems
             }
             SMcomponent.FinalCountdown = true;
 
-            SMcomponent.DelamTimerAccumulator += 1f + frameTime;
-            SMcomponent.SpeakAccumulator += 1f + frameTime;
+            SMcomponent.DelamTimerAccumulator += frameTime;
+            SMcomponent.SpeakAccumulator += frameTime;
             int RoundSeconds = SupermatterComponent.DelamTimerTimer - (int)Math.Floor(SMcomponent.DelamTimerAccumulator);
 
             if (SMcomponent.DamageArchived < SupermatterComponent.ExplosionPoint)

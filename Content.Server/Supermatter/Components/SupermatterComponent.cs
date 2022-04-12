@@ -94,7 +94,8 @@ namespace Content.Server.Supermatter.Components
 
         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
         public const float  PowerlossInhibitionGasThreshold = 0.20f;
-        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
+        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.
+        //Scales powerloss inhibition down until this amount of moles is reached
         public const float  PowerlossInhibitionMoleThreshold = 20f;
         //bonus powerloss inhibition boost if this amount of moles is reached
         public const float  PowerlossInhibitionMoleBoostThreshold = 500f;
