@@ -4,7 +4,8 @@
   name: Zombie Claw
   components:
     - type: Sprite
-      sprite: Objects/Weapons/Melee/baseball_bat.rsi
+      sprite: Objects/Weapons/Melee/zombie_claw.rsi
+      state: icon
     - type: Item
     - type: ZombieHand
     - type: Unremoveable

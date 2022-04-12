@@ -11,10 +11,10 @@ using Content.Server.Body.Systems;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Body.Components;
-using Content.Server.Hands.Systems;
 using Content.Server.Atmos.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Server.Nutrition.Components;
 
 namespace Content.Server.Disease
 {
@@ -27,7 +27,6 @@ namespace Content.Server.Disease
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-        [Dependency] private readonly HandVirtualItemSystem _handVirtualItem = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         public override void Initialize()
@@ -48,19 +47,25 @@ namespace Content.Server.Disease
 
             _disease.CureAllDiseases(uid); //just to get rid of the weirdness of z-infection having random damage + cough
 
-            EntityManager.RemoveComponent<RespiratorComponent>(uid);
-            EntityManager.RemoveComponent<BarotraumaComponent>(uid);
+            if(HasComp<RespiratorComponent>(uid))
+                EntityManager.RemoveComponent<RespiratorComponent>(uid);
+            if(HasComp<BarotraumaComponent>(uid))
+                EntityManager.RemoveComponent<BarotraumaComponent>(uid);
+            if (HasComp<HungerComponent>(uid))
+                EntityManager.RemoveComponent<HungerComponent>(uid);
+            if (HasComp<ThirstComponent>(uid))
+                EntityManager.RemoveComponent<ThirstComponent>(uid);
 
             EntityManager.EnsureComponent<BloodstreamComponent>(uid, out var bloodstream); //zoms need bloodstream anyway for healing
             _bloodstream.SetBloodLossThreshold(uid, 0f, bloodstream);
             _bloodstream.TryModifyBleedAmount(uid, -bloodstream.BleedAmount, bloodstream);
-            _bloodstream.TryModifyBloodLevel(uid, bloodstream.BloodSolution.AvailableVolume, bloodstream);
 
-            if (EntityManager.TryGetComponent<DamageableComponent>(uid, out var comp))
+            if (TryComp<DamageableComponent>(uid, out var comp))
             {
                 _damageable.SetDamageModifierSetId(uid, "Zombie", comp);
                 _damageable.SetAllDamage(comp, 0);
             }
+
             // circumvents the 20 damage after being converted.
             // idk a better way of doing this within the meleeHitEvent
             var healingSolution = new Solution();
@@ -70,7 +75,7 @@ namespace Content.Server.Disease
             _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
             EntityManager.EnsureComponent<ReplacementAccentComponent>(uid).Accent = "zombie";
 
-            if(EntityManager.TryGetComponent<HandsComponent>(uid, out var handcomp))
+            if(TryComp<HandsComponent>(uid, out var handcomp))
             {
                 foreach (var hand in handcomp.Hands)
                 {
@@ -84,7 +89,7 @@ namespace Content.Server.Disease
             }
 
             uid.PopupMessageEveryone(Loc.GetString("zombie-transform", ("target", uid)));
-            if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metacomp))
+            if (TryComp<MetaDataComponent>(uid, out var metacomp))
             {
                 metacomp.EntityName = Loc.GetString("zombie-name-prefix", ("target", metacomp.EntityName));
 
@@ -106,28 +111,27 @@ namespace Content.Server.Disease
 
             foreach (EntityUid entity in args.HitEntities)
             {
-                if (entity == uid || HasComp<DiseaseZombieComponent>(entity))
+                if (entity == uid)
                     continue;
 
-                if (HasComp<DiseaseCarrierComponent>(entity)) //can only infect disease carrying entities. TODO: make it work for all mobs.
+                if (!HasComp<MobStateComponent>(entity))
+                    continue;
+
+                if (_robustRandom.Prob(component.Probability)&& HasComp<DiseaseCarrierComponent>(entity))
                 {
-                    if (_robustRandom.Prob(component.Probability))
-                    {
-                        _disease.TryAddDisease(entity, "ZombieInfection");
-                    }
+                    _disease.TryAddDisease(entity, "ZombieInfection");
+                }
 
-                    EntityManager.EnsureComponent<MobStateComponent>(entity, out var mobState);
-
-                    if (mobState.IsDead() || mobState.IsCritical()) //dead entities are eautomatically infected. MAYBE: have activated infect ability?
-                    {
-                        EntityManager.EnsureComponent<DiseaseZombieComponent>(entity);
-                    }
-                    else if (mobState.IsAlive()) //heals when zombies bite live entities
-                    {
-                        var healingSolution = new Solution();
-                        healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
-                        _bloodstream.TryAddToChemicals(uid, healingSolution);
-                    }
+                EntityManager.EnsureComponent<MobStateComponent>(entity, out var mobState);
+                if (mobState.IsDead() || mobState.IsCritical()) //dead entities are eautomatically infected. MAYBE: have activated infect ability?
+                {
+                    EntityManager.EnsureComponent<DiseaseZombieComponent>(entity);
+                }
+                else if (mobState.IsAlive()) //heals when zombies bite live entities
+                {
+                    var healingSolution = new Solution();
+                    healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
+                    _bloodstream.TryAddToChemicals(args.User, healingSolution);
                 }
             }
         }
