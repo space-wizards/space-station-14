@@ -75,7 +75,7 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitPost(() =>
             {
                 mapId = mapManager.CreateMap();
-                grid = mapLoader.LoadBlueprint(mapId, testMapName).Item2;
+                grid = mapLoader.LoadBlueprint(mapId, testMapName).gridId;
             });
 
             Assert.NotNull(grid, $"Test blueprint {testMapName} not found.");
@@ -150,7 +150,7 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitPost(() =>
             {
                 mapId = mapManager.CreateMap();
-                grid = mapLoader.LoadBlueprint(mapId, testMapName).Item2;
+                grid = mapLoader.LoadBlueprint(mapId, testMapName).gridId;
             });
 
             Assert.NotNull(grid, $"Test blueprint {testMapName} not found.");

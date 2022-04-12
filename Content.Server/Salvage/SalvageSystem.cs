@@ -282,13 +282,13 @@ namespace Content.Server.Salvage
                 Offset = spl.Position
             };
 
-            var (_, gid) = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString(), opts);
-            if (gid == null)
+            var (_, gridId) = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString(), opts);
+            if (gridId == null)
             {
                 Report("salvage-system-announcement-spawn-debris-disintegrated");
                 return false;
             }
-            var salvageEntityId = _mapManager.GetGridEuid(gid.Value);
+            var salvageEntityId = _mapManager.GetGridEuid(gridId.Value);
             component.AttachedEntity = salvageEntityId;
 
             var pulledTransform = EntityManager.GetComponent<TransformComponent>(salvageEntityId);

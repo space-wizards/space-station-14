@@ -64,7 +64,7 @@ public sealed class FluidSpill : ContentIntegrationTest
         await server.WaitPost(() =>
         {
             mapId = mapManager.CreateMap();
-            gridid = mapLoader.LoadBlueprint(mapId, SpillMapsYml).Item2;
+            gridid = mapLoader.LoadBlueprint(mapId, SpillMapsYml).gridId;
         });
 
         if (gridid == null)
@@ -125,7 +125,7 @@ public sealed class FluidSpill : ContentIntegrationTest
         await server.WaitPost(() =>
         {
             mapId = mapManager.CreateMap();
-            gridid = mapLoader.LoadBlueprint(mapId, SpillMapsYml).Item2;
+            gridid = mapLoader.LoadBlueprint(mapId, SpillMapsYml).gridId;
         });
 
         if (gridid == null)

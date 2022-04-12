@@ -28,7 +28,7 @@ namespace Content.IntegrationTests.Tests
                 // TODO: Un-hardcode the grid Id for this test.
                 mapLoader.SaveBlueprint(new GridId(1), "save load save 1.yml");
                 var mapId = mapManager.CreateMap();
-                var grid = mapLoader.LoadBlueprint(mapId, "save load save 1.yml").Item2;
+                var grid = mapLoader.LoadBlueprint(mapId, "save load save 1.yml").gridId;
                 mapLoader.SaveBlueprint(grid!.Value, "save load save 2.yml");
             });
 
@@ -91,7 +91,7 @@ namespace Content.IntegrationTests.Tests
                 var mapId = mapManager.CreateMap();
                 mapManager.AddUninitializedMap(mapId);
                 mapManager.SetMapPaused(mapId, true);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/saltern.yml").Item2;
+                grid = mapLoader.LoadBlueprint(mapId, "Maps/saltern.yml").gridId;
                 mapLoader.SaveBlueprint(grid!.Value, "load save ticks save 1.yml");
             });
 
