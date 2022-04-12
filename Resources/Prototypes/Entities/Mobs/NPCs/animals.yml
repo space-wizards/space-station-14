@@ -960,6 +960,7 @@
   - type: AiFactionTag
     factions:
     - SimpleHostile
+    - Syndicate
   - type: Sprite
     drawdepth: Mobs
     layers:

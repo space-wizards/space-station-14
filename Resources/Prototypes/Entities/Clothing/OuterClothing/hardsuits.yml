@@ -13,13 +13,13 @@
     lowPressureMultiplier: 100
   - type: ClothingSpeedModifier
     walkModifier: 0.65
-    sprintModifier: 0.65 #less armor than engineering but slightly higher move speed so they can get to breaches a bit faster
+    sprintModifier: 0.7 #less armor than engineering but slightly higher move speed so they can get to breaches a bit faster
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.95 #less physical protection but significantly more atmospheric protections than engi
-        Slash: 0.95
-        Piercing: 0.95
+        Blunt: 0.9 #raising these slightly so its a bit more attractive 
+        Slash: 0.9
+        Piercing: 0.9
         Heat: 0.35
         Radiation: 0.25
 
@@ -45,7 +45,7 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.85
-        Heat: 0.8
+        Heat: 0.5 #putting higher enviro since the captain's carapace is already super heavy physical
         Radiation: 0.1
 
 - type: entity
@@ -88,7 +88,7 @@
     lowPressureMultiplier: 100
   - type: ClothingSpeedModifier
     walkModifier: 0.65
-    sprintModifier: 0.55 #slightly slower than magboot walking
+    sprintModifier: 0.65 #making this a bit faster than salvages
   - type: Armor
     modifiers:
       coefficients:
@@ -112,16 +112,16 @@
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 100
   - type: ClothingSpeedModifier
-    walkModifier: 0.65
-    sprintModifier: 0.75 #It's the advanced hardsuit it should be a little faster than engineering imo
+    walkModifier: 0.75
+    sprintModifier: 0.8 #turning this up slightly because CEs have started just wearing firesuits instead and never putting on advanced armor
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9
+        Blunt: 0.85
         Slash: 0.85
-        Piercing: 0.9
-        Heat: 0.55
-        Radiation: 0.05 #combines the engi and atmos bonuses
+        Piercing: 0.85
+        Heat: 0.45 #slightly improved stats over last pass
+        Radiation: 0.25
 
 #The voidsuit and eva suit are not techically 'hardsuits' but this seems to be the place for all EVA-capable outer clothing. This may be worth reevaluating when we have a lot more items.
 - type: entity
@@ -190,8 +190,8 @@
   - type: DiseaseProtection
     protection: 0.2
   - type: ClothingSpeedModifier
-    walkModifier: 0.7 #higher speed to reflect description but not as high as cap/eva
-    sprintModifier: 0.7
+    walkModifier: 0.9 #old movespeed i had was too punishing and this needs to be useable for saving people in medbay
+    sprintModifier: 0.9
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -209,14 +209,14 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6 #increased blunt as per description, for bomb survival
-        Slash: 0.9
+        Blunt: 0.6
+        Slash: 0.75 #increasing slash on this because it's a big ass suit
         Piercing: 0.95
-        Heat: 0.65 #increased enviro due to science getting increasingly involved with artifact testing
+        Heat: 0.65
         Radiation: 0.25
   - type: ClothingSpeedModifier
-    walkModifier: 0.65 #heavier armor but still a bit faster than engineering
-    sprintModifier: 0.6
+    walkModifier: 0.75 #moving the movespeed on this up, it's a high risk item and traitors shouldnt have to keep this in their bag all round
+    sprintModifier: 0.75
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -232,15 +232,15 @@
     highPressureMultiplier: 0.75
     lowPressureMultiplier: 100
   - type: ClothingSpeedModifier
-    walkModifier: 0.65 #higher move speed because ive seen salvage teams straight up stealing eva to go about salvaging faster
-    sprintModifier: 0.55
+    walkModifier: 0.6 #changing these values around so its only a tiny bit faster so less salvages get stuck floating in space
+    sprintModifier: 0.65
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.85 #closer stats to what the mining suit had in 13
-        Slash: 0.85
-        Piercing: 0.9
-        Heat: 0.9
+        Blunt: 0.8 #buffed up due to introduction of spationaut suit 
+        Slash: 0.75
+        Piercing: 0.75
+        Heat: 0.85
         Radiation: 0.5
 
 - type: entity
@@ -259,14 +259,14 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.8
+        Blunt: 0.7
+        Slash: 0.7
         Piercing: 0.7
         Heat: 0.8 #buffed combat stats all round
         Radiation: 0.25
 
 - type: entity
-  parent: ClothingOuterHardsuitSecurity #set parent to sec hardsuit, hopefully wont break anything
+  parent: ClothingOuterHardsuitSecurity 
   id: ClothingOuterHardsuitSecurityRed
   name: head of security's hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
@@ -279,13 +279,13 @@
     highPressureMultiplier: 0.75
     lowPressureMultiplier: 100
   - type: ClothingSpeedModifier
-    walkModifier: 0.7 #faster than sec hardsuit because HoS hardsuit should be better imo, sec hardsuit retains default hardsuit movespeed to discourage continual wear
-    sprintModifier: 0.55
+    walkModifier: 0.7 
+    sprintModifier: 0.7 #buffing the movespeed slightly so its somewhat feasible to catch up to a felon, this speed is what the cmo's was at. seems a good fit
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.7 #slightly higher than sec hardsuit
-        Slash: 0.75
+        Blunt: 0.7 
+        Slash: 0.65
         Piercing: 0.7
         Heat: 0.8
         Radiation: 0.25
@@ -364,3 +364,28 @@
         Piercing: 1
         Heat: 0.5
         Radiation: 0.3
+   
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSpatio
+  name: spationaut hardsuit
+  description: A lightweight hardsuit designed for industrial eva activies in zero grav.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.9
+    lowPressureMultiplier: 100
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9 #mildly better than eva, might adjust this down if its heavily abused but want to see how it plays out in game first 
+    sprintModifier: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.95
+        Heat: 0.9
+        Radiation: 0.5 #low physical but gave some rad protection in case of rad artifacts/rad storms
