@@ -332,7 +332,7 @@
       - !type:HealthChange
         damage:
           types:
-            Toxin: 1
+            Poison: 2
 
 - type: reagent
   id: PulpedBananaPeel
