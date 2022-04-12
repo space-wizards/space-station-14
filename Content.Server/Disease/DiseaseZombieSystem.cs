@@ -45,7 +45,8 @@ namespace Content.Server.Disease
             if (!component.ApplyZombieTraits)
                 return;
 
-            _disease.CureAllDiseases(uid); //just to get rid of the weirdness of z-infection having random damage + cough
+            if(HasComp<DiseaseCarrierComponent>(uid))
+                _disease.CureAllDiseases(uid); //just to get rid of the weirdness of z-infection having random damage + cough
 
             if(HasComp<RespiratorComponent>(uid))
                 EntityManager.RemoveComponent<RespiratorComponent>(uid);
@@ -93,10 +94,13 @@ namespace Content.Server.Disease
             {
                 metacomp.EntityName = Loc.GetString("zombie-name-prefix", ("target", metacomp.EntityName));
 
-                EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid, out var ghostcomp);
-                ghostcomp.RoleName = metacomp.EntityName;
-                ghostcomp.RoleDescription = "A malevolent creature of the dead."; //TODO: loc string
-                ghostcomp.RoleRules = "You are an antagonist. Search out the living and bite them to infect and convert them into zombies. Propagate the zombie hoard across the station";
+                if (!HasComp<GhostRoleMobSpawnerComponent>(uid)) //this specific component gives build test trouble so pop off, ig
+                {
+                    EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid, out var ghostcomp);
+                    ghostcomp.RoleName = metacomp.EntityName;
+                    ghostcomp.RoleDescription = "A malevolent creature of the dead."; //TODO: loc string
+                    ghostcomp.RoleRules = "You are an antagonist. Search out the living and bite them to infect and convert them into zombies. Propagate the zombie hoard across the station";
+                }
             }
         }
 
