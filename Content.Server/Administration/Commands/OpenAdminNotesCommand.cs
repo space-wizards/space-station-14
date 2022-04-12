@@ -29,7 +29,7 @@ public sealed class OpenAdminNotesCommand : IConsoleCommand
             case 1 when Guid.TryParse(args[0], out notedPlayer):
                 break;
             default:
-                shell.WriteLine($"Invalid arguments.\n{Help}");
+                shell.WriteError($"Invalid arguments.\n{Help}");
                 return;
         }
 
