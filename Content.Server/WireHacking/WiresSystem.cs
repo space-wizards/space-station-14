@@ -191,7 +191,7 @@ public sealed class WiresSystem : EntitySystem
             return;
         }
 
-        var enumerator = _handsSystem.EnumerateHands(uid, handsComponent).GetEnumerator();
+        var enumerator = _handsSystem.EnumerateHands(player, handsComponent).GetEnumerator();
 
         if (!enumerator.MoveNext())
         {

@@ -10,8 +10,6 @@ namespace Content.Server.Wires;
 [RegisterComponent]
 public class WiresComponent : Component
 {
-    public override string Name { get; } = "Wires";
-
     [ViewVariables]
     public bool IsPanelOpen { get; set; }
 
