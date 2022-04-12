@@ -26,10 +26,10 @@
     allSelectors:
     - Single
     fireRate: 8
-    minAngle: 10
+    minAngle: 5
     maxAngle: 60
     angleIncrease: 10
-    angleDecay: 60
+    angleDecay: 15
     magFillPrototype: MagazinePistol
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
@@ -76,7 +76,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
 
 - type: entity
   name: colt M1911
@@ -105,7 +105,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -132,7 +132,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
 
 - type: entity
   name: handmade pistol
@@ -162,10 +162,10 @@
     magazineTypes:
     - Pistol
     fireRate: 8
-    minAngle: 10
+    minAngle: 5
     maxAngle: 60
     angleIncrease: 10
-    angleDecay: 60
+    angleDecay: 15
     magFillPrototype: MagazinePistol
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
@@ -216,7 +216,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/hpistol.ogg
     soundEmpty:
@@ -265,7 +265,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
 
@@ -296,7 +296,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -328,7 +328,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -361,7 +361,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
 
 - type: entity
   name: basilisk
@@ -391,7 +391,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
 
 - type: entity
   name: olivaw
@@ -421,7 +421,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -449,4 +449,4 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15

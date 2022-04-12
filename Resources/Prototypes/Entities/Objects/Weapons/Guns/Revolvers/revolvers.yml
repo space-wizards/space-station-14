@@ -36,6 +36,10 @@
     fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 5
+    minAngle: 0
+    maxAngle: 60
+    angleIncrease: 20
+    angleDecay: 15
     autoCycle: true
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
@@ -70,6 +74,10 @@
     fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 6
+    minAngle: 0
+    maxAngle: 60
+    angleIncrease: 20
+    angleDecay: 15
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     soundGunshot:
@@ -98,6 +106,10 @@
     fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 7
+    minAngle: 0
+    maxAngle: 60
+    angleIncrease: 20
+    angleDecay: 15
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     soundGunshot:
@@ -126,6 +138,10 @@
     fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 7
+    minAngle: 0
+    maxAngle: 60
+    angleIncrease: 20
+    angleDecay: 15
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     soundGunshot:
@@ -155,6 +171,10 @@
     fillPrototype: CartridgePistol
     caliber: Pistol
     capacity: 5
+    minAngle: 0
+    maxAngle: 60
+    angleIncrease: 20
+    angleDecay: 15
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     soundGunshot:
