@@ -77,12 +77,7 @@ public sealed partial class AdminNotesControl : Control
 
     private void ClosePopup()
     {
-        if (_popup == null)
-        {
-            return;
-        }
-
-        _popup.Close();
+        _popup?.Close();
         _popup = null;
     }
 
