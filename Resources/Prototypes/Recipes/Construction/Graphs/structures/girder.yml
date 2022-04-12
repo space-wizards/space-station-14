@@ -43,6 +43,7 @@
           steps:
             - material: Steel
               amount: 2
+              doAfter: 2
 
         - to: reinforcedGirder
           completed:
@@ -53,6 +54,7 @@
           steps:
             - material: Plasteel
               amount: 2
+              doAfter: 1
 
     - node: wall
       entity: WallSolid
