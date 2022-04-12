@@ -1,6 +1,7 @@
 using Content.Server.Atmos;
 using Content.Server.Clothing.Components;
 using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
@@ -11,6 +12,7 @@ namespace Content.Server.Inventory
 {
     sealed class ServerInventorySystem : InventorySystem
     {
+        [Dependency] private readonly StorageSystem _storageSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -39,7 +41,7 @@ namespace Content.Server.Inventory
 
             if (TryGetSlotEntity(uid, ev.Slot, out var entityUid) && TryComp<ServerStorageComponent>(entityUid, out var storageComponent))
             {
-                storageComponent.OpenStorageUI(uid);
+                _storageSystem.OpenStorageUI(entityUid.Value, uid, storageComponent);
             }
         }
     }

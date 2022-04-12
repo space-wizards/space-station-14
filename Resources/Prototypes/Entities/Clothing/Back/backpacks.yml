@@ -17,6 +17,10 @@
     capacity: 100
     storageSoundCollection:
       collection: storageRustle
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
 
 - type: entity
   parent: ClothingBackpack
@@ -116,7 +120,7 @@
     sprite: Clothing/Back/Backpacks/science.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/science.rsi
-    
+
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackVirology

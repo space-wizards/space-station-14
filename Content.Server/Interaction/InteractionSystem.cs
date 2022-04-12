@@ -71,7 +71,9 @@ namespace Content.Server.Interaction
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
-            return storage.SubscribedSessions.Contains(actor.PlayerSession);
+            // return storage.SubscribedSessions.Contains(actor.PlayerSession);
+            // let's come back to this shit
+            return true;
         }
 
         #region Drag drop

@@ -1,42 +1,29 @@
 ﻿using Content.Shared.Storage;
+using static Robust.Client.UserInterface.Controls.BaseButton;
+using Content.Client.Items.Managers;
 
 namespace Content.Client.Storage;
 
 // TODO kill this is all horrid.
 public sealed class StorageSystem : EntitySystem
 {
+
+    [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<StorageHeldItemsEvent>(OnStorageHeldItems);
-        SubscribeNetworkEvent<OpenStorageUIEvent>(OnOpenStorageUI);
-        SubscribeNetworkEvent<CloseStorageUIEvent>(OnCloseStorageUI);
         SubscribeNetworkEvent<AnimateInsertingEntitiesEvent>(OnAnimateInsertingEntities);
     }
 
-    private void OnStorageHeldItems(StorageHeldItemsEvent ev)
+    /// <summary>
+    /// Function for clicking one of the stored entity buttons in the UI, tells server to remove that entity
+    /// </summary>
+    /// <param name="entity"></param>
+    public void Interact(ButtonEventArgs args, EntityUid entity)
     {
-        if (TryComp<ClientStorageComponent>(ev.Storage, out var storage))
-        {
-            storage.HandleStorageMessage(ev);
-        }
-    }
-
-    private void OnOpenStorageUI(OpenStorageUIEvent ev)
-    {
-        if (TryComp<ClientStorageComponent>(ev.Storage, out var storage))
-        {
-            storage.ToggleUI();
-        }
-    }
-
-    private void OnCloseStorageUI(CloseStorageUIEvent ev)
-    {
-        if (TryComp<ClientStorageComponent>(ev.Storage, out var storage))
-        {
-            storage.CloseUI();
-        }
+        if (EntityManager.EntityExists(entity))
+            _itemSlotManager.OnButtonPressed(args.Event, entity);
     }
 
     private void OnAnimateInsertingEntities(AnimateInsertingEntitiesEvent ev)

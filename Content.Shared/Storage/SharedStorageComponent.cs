@@ -16,6 +16,37 @@ namespace Content.Shared.Storage
     [NetworkedComponent()]
     public abstract class SharedStorageComponent : Component, IDraggable
     {
+        [Serializable, NetSerializable]
+        public sealed class StorageBoundUserInterfaceState : BoundUserInterfaceState
+        {
+            public readonly IReadOnlyList<EntityUid> StoredEntities;
+            public readonly int StorageSizeUsed;
+            public readonly int StorageCapacityMax;
+
+            public StorageBoundUserInterfaceState(IReadOnlyList<EntityUid> storedEntities, int storageSizeUsed, int storageCapacityMax)
+            {
+                StoredEntities = storedEntities;
+                StorageSizeUsed = storageSizeUsed;
+                StorageCapacityMax = storageCapacityMax;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public sealed class StorageInteractItemMessage : BoundUserInterfaceMessage
+        {
+            public readonly EntityUid InteractedItemUID;
+            public StorageInteractItemMessage(EntityUid interactedItemUID)
+            {
+                InteractedItemUID = interactedItemUID;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public enum StorageUiKey
+        {
+            Key,
+        }
+
         [Dependency] private readonly IEntityManager _entMan = default!;
         public abstract IReadOnlyList<EntityUid>? StoredEntities { get; }
 

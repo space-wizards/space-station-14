@@ -7,11 +7,13 @@ namespace Content.Server.Storage.EntitySystems;
 
 public sealed partial class StorageSystem
 {
-    private void OnStorageFillMapInit(EntityUid uid, StorageFillComponent component, MapInitEvent args)
+    [Dependency] private StorageSystem _storageSystem = default!;
+    private async void OnStorageFillMapInit(EntityUid uid, StorageFillComponent component, MapInitEvent args)
     {
         if (component.Contents.Count == 0) return;
-
-        if (!TryComp<IStorageComponent>(uid, out var storage))
+        TryComp<IStorageComponent>(uid, out var storage);
+        TryComp<ServerStorageComponent>(uid, out var serverStorageComp);
+        if (storage == null && serverStorageComp == null)
         {
             Logger.Error($"StorageFillComponent couldn't find any StorageComponent ({uid})");
             return;
@@ -24,7 +26,11 @@ public sealed partial class StorageSystem
         {
             var ent = EntityManager.SpawnEntity(item, coordinates);
 
-            if (storage.Insert(ent)) continue;
+            if (storage != null)
+                if (storage.Insert(ent)) continue;
+
+            if (serverStorageComp != null)
+                if (_storageSystem.Insert(uid, ent, serverStorageComp)) continue;
 
             Logger.ErrorS("storage", $"Tried to StorageFill {item} inside {uid} but can't.");
             EntityManager.DeleteEntity(ent);
