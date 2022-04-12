@@ -22,6 +22,8 @@
         Piercing: 0.9
         Heat: 0.2
         Radiation: 0.25
+  - type: TemperatureProtection
+    coefficient: 0.01
 
 - type: entity
   parent: ClothingOuterHardsuitBase
