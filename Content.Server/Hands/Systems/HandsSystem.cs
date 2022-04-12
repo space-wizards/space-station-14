@@ -30,6 +30,7 @@ using Content.Shared.Pulling.Components;
 using Content.Server.Pulling;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Throwing;
+using Content.Server.Disease.Components;
 
 namespace Content.Server.Hands.Systems
 {
@@ -61,6 +62,8 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
 
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
+            SubscribeLocalEvent<HandsComponent, EntInsertedIntoContainerMessage>(HandleEntityInserted);
+            SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
@@ -104,7 +107,23 @@ namespace Content.Server.Hands.Systems
 
             args.Handled = true; // no shove/stun.
         }
+        private void HandleEntityInserted(EntityUid uid, HandsComponent component, EntInsertedIntoContainerMessage args)
+        {
+            if (HasComp<DiseaseCarrierComponent>(args.Entity))
+                _actionBlockerSystem.UpdateCanMove(args.Entity);
+        }
 
+        private void HandleEntityRemoved(EntityUid uid, SharedHandsComponent component, EntRemovedFromContainerMessage args)
+        {
+            if (Deleted(args.Entity))
+                return;
+
+            if (TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
+                _virtualSystem.Delete(@virtual, uid);
+
+            if (HasComp<DiseaseCarrierComponent>(args.Entity))
+                _actionBlockerSystem.UpdateCanMove(args.Entity);
+        }
         #region EntityInsertRemove
         public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? hands = null)
         {
