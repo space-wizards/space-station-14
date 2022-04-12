@@ -1,11 +1,6 @@
-using System;
 using System.Threading;
-using Content.Shared.Cooldown;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Timing
 {
@@ -13,63 +8,40 @@ namespace Content.Shared.Timing
     /// Timer that creates a cooldown each time an object is activated/used
     /// </summary>
     [RegisterComponent]
-    public class UseDelayComponent : Component
+    [NetworkedComponent]
+    public sealed class UseDelayComponent : Component
     {
-        public override string Name => "UseDelay";
+        public TimeSpan LastUseTime;
 
-        private TimeSpan _lastUseTime;
+        public TimeSpan? DelayEndTime;
 
         [DataField("delay")]
-        private float _delay = 1;
-        /// <summary>
-        /// The time, in seconds, between an object's use and when it can be used again
-        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float Delay { get => _delay; set => _delay = value; }
+        public TimeSpan Delay = TimeSpan.FromSeconds(1);
 
-        public bool ActiveDelay{ get; private set; }
+        /// <summary>
+        ///     Stores remaining delay pausing (and eventually, serialization).
+        /// </summary>
+        [DataField("remainingDelay")]
+        public TimeSpan? RemainingDelay;
 
-        private CancellationTokenSource? cancellationTokenSource;
+        public CancellationTokenSource? CancellationTokenSource;
 
-        public void BeginDelay()
+        public bool ActiveDelay => CancellationTokenSource is { Token: { IsCancellationRequested: false } };
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class UseDelayComponentState : ComponentState
+    {
+        public readonly TimeSpan LastUseTime;
+        public readonly TimeSpan Delay;
+        public readonly TimeSpan? DelayEndTime;
+
+        public UseDelayComponentState(TimeSpan lastUseTime, TimeSpan delay, TimeSpan? delayEndTime)
         {
-            if (ActiveDelay)
-            {
-                return;
-            }
-
-            ActiveDelay = true;
-
-            cancellationTokenSource = new CancellationTokenSource();
-
-            Owner.SpawnTimer(TimeSpan.FromSeconds(Delay), () => ActiveDelay = false, cancellationTokenSource.Token);
-
-            _lastUseTime = IoCManager.Resolve<IGameTiming>().CurTime;
-
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ItemCooldownComponent? cooldown))
-            {
-                cooldown.CooldownStart = _lastUseTime;
-                cooldown.CooldownEnd = _lastUseTime + TimeSpan.FromSeconds(Delay);
-            }
-
-        }
-
-        public void Cancel()
-        {
-            cancellationTokenSource?.Cancel();
-            ActiveDelay = false;
-
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ItemCooldownComponent? cooldown))
-            {
-                cooldown.CooldownEnd = IoCManager.Resolve<IGameTiming>().CurTime;
-            }
-        }
-
-        public void Restart()
-        {
-            cancellationTokenSource?.Cancel();
-            ActiveDelay = false;
-            BeginDelay();
+            LastUseTime = lastUseTime;
+            Delay = delay;
+            DelayEndTime = delayEndTime;
         }
     }
 }

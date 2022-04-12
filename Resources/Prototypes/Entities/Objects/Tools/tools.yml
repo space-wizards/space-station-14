@@ -83,7 +83,7 @@
   name: wrench
   parent: BaseItem
   id: Wrench
-  description: A common tool for assembly and disassembly, righty tighty lefty loosey.
+  description: 'A common tool for assembly and disassembly. Remember: righty tighty, lefty loosey.'
   components:
   - type: EmitSoundOnLand
     sound:
@@ -94,6 +94,7 @@
   - type: Sprite
     sprite: Objects/Tools/wrench.rsi
     state: icon
+    netsync: false
   - type: Item
     sprite: Objects/Tools/wrench.rsi
   - type: ItemCooldown
@@ -122,6 +123,7 @@
   - type: Sprite
     sprite: Objects/Tools/crowbar.rsi
     state: icon
+    netsync: false
   - type: Item
     sprite: Objects/Tools/crowbar.rsi
     size: 10
@@ -172,13 +174,20 @@
   - type: Clothing
     size: 5
     sprite: Objects/Tools/multitool.rsi
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - Belt
   - type: Tool
     qualities:
       - Pulsing
   - type: SignalLinker
+  - type: UserInterface
+    interfaces:
+    - key: enum.SignalLinkerUiKey.Key
+      type: SignalPortSelectorBoundUserInterface
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: power drill
@@ -198,6 +207,7 @@
   - type: Tool
     qualities:
       - Screwing
+    speed: 1.5
   - type: MultipleTool
     statusShowBehavior: true
     entries:
@@ -233,7 +243,7 @@
   - type: Clothing
     size: 20
     sprite: Objects/Tools/rcd.rsi
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - Belt
 
@@ -270,3 +280,63 @@
         Blunt: 10
   - type: Item
     sprite: Objects/Tools/shovel.rsi
+
+- type: entity
+  name: omnitool
+  parent: BaseItem
+  id: Omnitool
+  description: A drone's best friend.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/omnitool.rsi
+    state: omnitool-screwing
+  - type: Item
+    sprite: Objects/Tools/omnitool.rsi
+    size: 20
+  - type: TilePrying
+  - type: SignalLinker
+  - type: Tool
+    qualities:
+      - Screwing
+    speed: 1.2 # Kept for future adjustments. Currently 1.2x for balance
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Screwing
+        sprite:
+          sprite: Objects/Tools/omnitool.rsi
+          state: omnitool-screwing
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Prying
+        sprite:
+          sprite: Objects/Tools/omnitool.rsi
+          state: omnitool-prying
+        useSound:
+          path: /Audio/Items/jaws_pry.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Anchoring
+        sprite:
+          sprite: Objects/Tools/omnitool.rsi
+          state: omnitool-wrenching
+        useSound:
+          path: /Audio/Items/ratchet.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: Objects/Tools/omnitool.rsi
+          state: omnitool-snipping
+        useSound:
+          path: /Audio/Items/jaws_cut.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Pulsing
+        sprite:
+          sprite: Objects/Tools/omnitool.rsi
+          state: omnitool-pulsing
+        changeSound:
+          path: /Audio/Items/change_drill.ogg

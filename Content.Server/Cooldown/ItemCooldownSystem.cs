@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Cooldown
 {
-    public class ItemCooldownSystem : EntitySystem
+    public sealed class ItemCooldownSystem : EntitySystem
     {
         public override void Initialize()
         {
@@ -20,7 +20,7 @@ namespace Content.Server.Cooldown
         }
     }
 
-    public class RefreshItemCooldownEvent : EntityEventArgs
+    public sealed class RefreshItemCooldownEvent : EntityEventArgs
     {
         public TimeSpan LastAttackTime { get; }
         public TimeSpan CooldownEnd { get;  }

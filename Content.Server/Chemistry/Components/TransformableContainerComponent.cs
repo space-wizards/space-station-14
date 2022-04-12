@@ -1,4 +1,5 @@
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -8,11 +9,9 @@ using Robust.Shared.Utility;
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public class TransformableContainerComponent : Component
+    public sealed class TransformableContainerComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "TransformableContainer";
 
         public SpriteSpecifier? InitialSprite;
         public string InitialName = default!;

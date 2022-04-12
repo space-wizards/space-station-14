@@ -11,7 +11,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Construction.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    class TileWallsCommand : IConsoleCommand
+    sealed class TileWallsCommand : IConsoleCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "tilewalls";
@@ -100,7 +100,7 @@ namespace Content.Server.Construction.Commands
                 var tile = grid.GetTileRef(childTransform.Coordinates);
                 var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
-                if (tileDef.Name == "underplating")
+                if (tileDef.ID == "underplating")
                 {
                     continue;
                 }

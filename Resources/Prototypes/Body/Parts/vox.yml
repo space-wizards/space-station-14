@@ -31,7 +31,6 @@
         - OrganHumanStomach
         - OrganHumanLiver
         - OrganHumanKidneys
-    - type: BiologicalSurgeryData
       # TODO BODY DettachableDamageableComponent?
 #    criticalThreshold: 100
 #    deadThreshold: 150
@@ -56,7 +55,6 @@
       mechanisms:
         - OrganHumanBrain
         - OrganHumanEyes
-    - type: BiologicalSurgeryData
     #    criticalThreshold: 50
     #    deadThreshold: 120
     - type: Input
@@ -81,7 +79,6 @@
       size: 5
       compatibility: Biological
       symmetry: Left
-    - type: BiologicalSurgeryData
     #    criticalThreshold: 40
     #    deadThreshold: 80
 
@@ -102,7 +99,6 @@
       size: 5
       compatibility: Biological
       symmetry: Right
-    - type: BiologicalSurgeryData
     #    criticalThreshold: 40
     #    deadThreshold: 80
 
@@ -123,7 +119,6 @@
       size: 3
       compatibility: Biological
       symmetry: Left
-    - type: BiologicalSurgeryData
     #    criticalThreshold: 30
     #    deadThreshold: 60
 
@@ -144,7 +139,6 @@
       size: 3
       compatibility: Biological
       symmetry: Right
-    - type: BiologicalSurgeryData
     #    criticalThreshold: 30
     #    deadThreshold: 60
 
@@ -165,7 +159,6 @@
       size: 6
       compatibility: Biological
       symmetry: Left
-    - type: BiologicalSurgeryData
     #    criticalThreshold: 45
     #    deadThreshold: 90
 
@@ -186,7 +179,6 @@
       size: 6
       compatibility: Biological
       symmetry: Right
-    - type: BiologicalSurgeryData
     #    criticalThreshold: 45
     #    deadThreshold: 90
 
@@ -207,7 +199,6 @@
       size: 2
       compatibility: Biological
       symmetry: Left
-    - type: BiologicalSurgeryData
 #    criticalThreshold: 30
 #    deadThreshold: 60
 
@@ -228,6 +219,5 @@
       size: 2
       compatibility: Biological
       symmetry: Right
-    - type: BiologicalSurgeryData
 #    criticalThreshold: 30
 #    deadThreshold: 60

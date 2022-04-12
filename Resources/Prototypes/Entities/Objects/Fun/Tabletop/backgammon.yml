@@ -1,0 +1,25 @@
+- type: entity
+  parent: BaseItem
+  id: BackgammonBoard
+  name: backgammon board
+  description: Old fashioned game of dice and pieces.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/backgammon.rsi
+    state: board
+  - type: TabletopGame
+    boardName: tabletop-backgammon-board-name
+    size: 550, 410
+    setup:
+      !type:TabletopBackgammonSetup
+
+- type: entity
+  id: BackgammonBoardTabletop
+  name: backgammon
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/backgammon_tabletop.rsi
+    state: backgammonBoard
+    noRot: false
+    drawdepth: FloorTiles

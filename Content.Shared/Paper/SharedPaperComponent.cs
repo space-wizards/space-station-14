@@ -1,15 +1,11 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Paper
 {
-    public class SharedPaperComponent : Component
+    public abstract class SharedPaperComponent : Component
     {
-        public override string Name => "Paper";
-
         [Serializable, NetSerializable]
-        public class PaperBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class PaperBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly string Text;
             public readonly PaperAction Mode;
@@ -22,21 +18,11 @@ namespace Content.Shared.Paper
         }
 
         [Serializable, NetSerializable]
-        public class PaperActionMessage : BoundUserInterfaceMessage
-        {
-            public readonly PaperAction Action;
-            public PaperActionMessage(PaperAction action)
-            {
-                Action = action;
-            }
-        }
-
-        [Serializable, NetSerializable]
-        public class PaperInputText : BoundUserInterfaceMessage
+        public sealed class PaperInputTextMessage : BoundUserInterfaceMessage
         {
             public readonly string Text;
 
-            public PaperInputText(string text)
+            public PaperInputTextMessage(string text)
             {
                 Text = text;
             }
@@ -53,14 +39,13 @@ namespace Content.Shared.Paper
         {
             Read,
             Write,
-            CrossOut,
-            Stamp
         }
 
         [Serializable, NetSerializable]
         public enum PaperVisuals : byte
         {
-            Status
+            Status,
+            Stamp
         }
 
         [Serializable, NetSerializable]
@@ -69,6 +54,5 @@ namespace Content.Shared.Paper
             Blank,
             Written
         }
-
     }
 }

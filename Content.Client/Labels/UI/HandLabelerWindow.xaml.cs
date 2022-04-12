@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Labels.UI
 {
     [GenerateTypedNameReferences]
-    public partial class HandLabelerWindow : SS14Window
+    public sealed partial class HandLabelerWindow : DefaultWindow
     {
         public event Action<string>? OnLabelEntered;
 

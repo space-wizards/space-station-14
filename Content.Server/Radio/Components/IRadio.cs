@@ -1,10 +1,9 @@
 using Robust.Shared.GameObjects;
 using System.Collections.Generic;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Radio.Components
 {
-    public interface IRadio
+    public interface IRadio : IComponent
     {
         IReadOnlyList<int> Channels { get; }
 

@@ -9,11 +9,10 @@ namespace Content.Client.Spawners
     ///     Spawns a set of entities on the client only, and removes them when this component is removed.
     /// </summary>
     [RegisterComponent]
-    public class ClientEntitySpawnerComponent : Component
+    [ComponentProtoName("ClientEntitySpawner")]
+    public sealed class ClientEntitySpawnerComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "ClientEntitySpawner";
 
         [DataField("prototypes")] private List<string> _prototypes =  new() { "HVDummyWire" };
 

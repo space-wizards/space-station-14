@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Construction;
+using Content.Server.Construction.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Tools;
 using Content.Shared.Acts;
 using Content.Shared.Body.Components;
+using Content.Shared.Foldable;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Physics;
@@ -29,13 +32,12 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Storage.Components
 {
     [RegisterComponent]
+    [Virtual]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IExAct
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "EntityStorage";
 
         private const float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
 
@@ -54,6 +56,10 @@ namespace Content.Server.Storage.Components
         [ViewVariables]
         [DataField("IsCollidableWhenOpen")]
         private bool _isCollidableWhenOpen;
+
+        [ViewVariables]
+        [DataField("EnteringRange")]
+        private float _enteringRange = -0.4f;
 
         [DataField("showContents")]
         private bool _showContents;
@@ -142,6 +148,13 @@ namespace Content.Server.Storage.Components
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float EnteringRange
+        {
+            get => _enteringRange;
+            set => _enteringRange = value;
+        }
+
         /// <inheritdoc />
         protected override void Initialize()
         {
@@ -149,6 +162,9 @@ namespace Content.Server.Storage.Components
             Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
+
+            if(_entMan.TryGetComponent(Owner, out ConstructionComponent? construction))
+                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner, nameof(EntityStorageComponent), construction);
 
             if (_entMan.TryGetComponent<PlaceableSurfaceComponent?>(Owner, out var surface))
             {
@@ -167,7 +183,9 @@ namespace Content.Server.Storage.Components
         {
             if (IsWeldedShut)
             {
-                if (!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-welded-shut-message"));
+                if (!silent && !Contents.Contains(user))
+                    Owner.PopupMessage(user, Loc.GetString("entity-storage-component-welded-shut-message"));
+
                 return false;
             }
 
@@ -177,12 +195,18 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            return true;
+            var @event = new StorageOpenAttemptEvent();
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event);
+
+            return !@event.Cancelled;
         }
 
         public virtual bool CanClose(EntityUid user, bool silent = false)
         {
-            return true;
+            var @event = new StorageCloseAttemptEvent();
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event);
+
+            return !@event.Cancelled;
         }
 
         public void ToggleOpen(EntityUid user)
@@ -209,11 +233,13 @@ namespace Content.Server.Storage.Components
                     continue;
 
                 // conditions are complicated because of pizzabox-related issues, so follow this guide
+                // 0. Accomplish your goals at all costs.
                 // 1. AddToContents can block anything
                 // 2. maximum item count can block anything
                 // 3. ghosts can NEVER be eaten
                 // 4. items can always be eaten unless a previous law prevents it
                 // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous law prevents it
+                // 6. if this is an item, then mobs must only be eaten if some other component prevents pick-up interactions while a mob is inside (e.g. foldable)
 
                 // Let's not insert admin ghosts, yeah? This is really a a hack and should be replaced by attempt events
                 if (_entMan.HasComponent<GhostComponent>(entity))
@@ -235,8 +261,16 @@ namespace Content.Server.Storage.Components
                 // Seriously, it is insanely hacky and weird to get someone out of a backpack once they end up in there.
                 // And to be clear, they should NOT be in there.
                 // For the record, what you need to do is empty the backpack onto a PlacableSurface (table, rack)
-                if (targetIsMob && !storageIsItem)
-                    allowedToEat = true;
+                if (targetIsMob)
+                {
+                    if (!storageIsItem)
+                        allowedToEat = true;
+                    else
+                    {
+                        // make an exception if this is a foldable-item that is currently un-folded (e.g., body bags).
+                        allowedToEat = _entMan.TryGetComponent(Owner, out FoldableComponent? foldable) && !foldable.IsFolded;
+                    }
+                }
 
                 if (!allowedToEat)
                     continue;
@@ -441,26 +475,18 @@ namespace Content.Server.Storage.Components
 
         protected virtual IEnumerable<EntityUid> DetermineCollidingEntities()
         {
-            var entityLookup = IoCManager.Resolve<IEntityLookup>();
-            return entityLookup.GetEntitiesIntersecting(Owner, -0.015f, LookupFlags.Approximate);
+            var entityLookup = EntitySystem.Get<EntityLookupSystem>();
+            return entityLookup.GetEntitiesInRange(Owner, _enteringRange, LookupFlags.Approximate);
         }
+    }
 
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
-        {
-            if (eventArgs.Severity < ExplosionSeverity.Heavy)
-            {
-                return;
-            }
+    public sealed class StorageOpenAttemptEvent : CancellableEntityEventArgs
+    {
 
-            var containedEntities = Contents.ContainedEntities.ToList();
-            foreach (var entity in containedEntities)
-            {
-                var exActs = _entMan.GetComponents<IExAct>(entity).ToArray();
-                foreach (var exAct in exActs)
-                {
-                    exAct.OnExplosion(eventArgs);
-                }
-            }
-        }
+    }
+
+    public sealed class StorageCloseAttemptEvent : CancellableEntityEventArgs
+    {
+
     }
 }

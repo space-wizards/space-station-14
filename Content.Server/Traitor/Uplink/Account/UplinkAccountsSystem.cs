@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Stacks;
 using Content.Shared.Traitor.Uplink;
 using Robust.Shared.GameObjects;
@@ -12,7 +13,7 @@ namespace Content.Server.Traitor.Uplink.Account
     /// <summary>
     ///     Manage all registred uplink accounts and their balance
     /// </summary>
-    public class UplinkAccountsSystem : EntitySystem
+    public sealed class UplinkAccountsSystem : EntitySystem
     {
         public const string TelecrystalProtoId = "Telecrystal";
 
@@ -28,6 +29,8 @@ namespace Content.Server.Traitor.Uplink.Account
             return _accounts.Add(acc);
         }
 
+        public bool HasAccount(EntityUid holder) =>
+            _accounts.Any(acct => acct.AccountHolder == holder);
 
         /// <summary>
         /// Add TC to uplinks account balance

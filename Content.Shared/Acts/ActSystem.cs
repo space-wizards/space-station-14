@@ -17,9 +17,9 @@ namespace Content.Shared.Acts
         void OnDestroy(DestructionEventArgs eventArgs);
     }
 
-    public class DestructionEventArgs : EntityEventArgs { }
+    public sealed class DestructionEventArgs : EntityEventArgs { }
 
-    public class BreakageEventArgs : EntityEventArgs { }
+    public sealed class BreakageEventArgs : EntityEventArgs { }
 
     public interface IBreakAct
     {
@@ -27,21 +27,6 @@ namespace Content.Shared.Acts
         /// Called when object is broken
         /// </summary>
         void OnBreak(BreakageEventArgs eventArgs);
-    }
-
-    public interface IExAct
-    {
-        /// <summary>
-        /// Called when explosion reaches the entity
-        /// </summary>
-        void OnExplosion(ExplosionEventArgs eventArgs);
-    }
-
-    public class ExplosionEventArgs : EventArgs
-    {
-        public EntityCoordinates Source { get; set; }
-        public EntityUid Target { get; set; }
-        public ExplosionSeverity Severity { get; set; }
     }
 
     [UsedImplicitly]
@@ -59,23 +44,7 @@ namespace Content.Shared.Acts
                 destroyAct.OnDestroy(eventArgs);
             }
 
-            EntityManager.QueueDeleteEntity(owner);
-        }
-
-        public void HandleExplosion(EntityCoordinates source, EntityUid target, ExplosionSeverity severity)
-        {
-            var eventArgs = new ExplosionEventArgs
-            {
-                Source = source,
-                Target = target,
-                Severity = severity
-            };
-            var exActs = EntityManager.GetComponents<IExAct>(target).ToList();
-
-            foreach (var exAct in exActs)
-            {
-                exAct.OnExplosion(eventArgs);
-            }
+            QueueDel(owner);
         }
 
         public void HandleBreakage(EntityUid owner)
@@ -88,12 +57,5 @@ namespace Content.Shared.Acts
                 breakAct.OnBreak(eventArgs);
             }
         }
-    }
-
-    public enum ExplosionSeverity
-    {
-        Light,
-        Heavy,
-        Destruction,
     }
 }

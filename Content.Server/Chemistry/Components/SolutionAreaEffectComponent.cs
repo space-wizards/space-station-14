@@ -13,6 +13,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -27,6 +28,7 @@ namespace Content.Server.Chemistry.Components
         [Dependency] protected readonly IMapManager MapManager = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IEntitySystemManager _systems = default!;
 
         public int Amount { get; set; }
         public SolutionAreaEffectInceptionComponent? Inception { get; set; }
@@ -64,30 +66,43 @@ namespace Content.Server.Chemistry.Components
         /// </summary>
         public void Spread()
         {
-            if (_entities.GetComponent<MetaDataComponent>(Owner).EntityPrototype == null)
+            var meta = _entities.GetComponent<MetaDataComponent>(Owner);
+            if (meta.EntityPrototype == null)
             {
                 Logger.Error("AreaEffectComponent needs its owner to be spawned by a prototype.");
                 return;
             }
 
+            var xform = _entities.GetComponent<TransformComponent>(Owner);
+            var solSys = _systems.GetEntitySystem<SolutionContainerSystem>();
+            var grid = MapManager.GetGrid(xform.GridID);
+            var origin = grid.TileIndicesFor(xform.Coordinates);
+
+            DebugTools.Assert(xform.Anchored, "Area effect entity prototypes must be anchored.");
+
             void SpreadToDir(Direction dir)
             {
-                var grid = MapManager.GetGrid(_entities.GetComponent<TransformComponent>(Owner).GridID);
-                var coords = _entities.GetComponent<TransformComponent>(Owner).Coordinates;
-                foreach (var neighbor in grid.GetInDir(coords, dir))
+                // Currently no support for spreading off or across grids.
+                var index = origin + dir.ToIntVec();
+                if (!grid.TryGetTileRef(index, out var tile) || tile.Tile.IsEmpty)
+                    return;
+
+                foreach (var neighbor in grid.GetAnchoredEntities(index))
                 {
                     if (_entities.TryGetComponent(neighbor,
                         out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
                         return;
 
+                    // TODO for thindows and the like, need to check the directions that are being blocked.
+                    // --> would then also mean you need to check for blockers on the origin tile.
                     if (_entities.TryGetComponent(neighbor,
                         out AirtightComponent? airtight) && airtight.AirBlocked)
                         return;
                 }
 
                 var newEffect = _entities.SpawnEntity(
-                    _entities.GetComponent<MetaDataComponent>(Owner).EntityPrototype?.ID,
-                    grid.DirectionToGrid(coords, dir));
+                    meta.EntityPrototype.ID,
+                    grid.GridTileToLocal(index));
 
                 if (!_entities.TryGetComponent(newEffect, out SolutionAreaEffectComponent? effectComponent))
                 {
@@ -95,7 +110,7 @@ namespace Content.Server.Chemistry.Components
                     return;
                 }
 
-                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+                if (solSys.TryGetSolution(Owner, SolutionName, out var solution))
                 {
                     effectComponent.TryAddSolution(solution.Clone());
                 }
@@ -136,8 +151,10 @@ namespace Content.Server.Chemistry.Components
                 return;
 
             var chemistry = EntitySystem.Get<ReactiveSystem>();
-            var mapGrid = MapManager.GetGrid(_entities.GetComponent<TransformComponent>(Owner).GridID);
-            var tile = mapGrid.GetTileRef(_entities.GetComponent<TransformComponent>(Owner).Coordinates.ToVector2i(_entities, MapManager));
+            var xform = _entities.GetComponent<TransformComponent>(Owner);
+            var mapGrid = MapManager.GetGrid(xform.GridID);
+            var tile = mapGrid.GetTileRef(xform.Coordinates.ToVector2i(_entities, MapManager));
+            var lookup = EntitySystem.Get<EntityLookupSystem>();
 
             var solutionFraction = 1 / Math.Floor(averageExposures);
 
@@ -155,14 +172,14 @@ namespace Content.Server.Chemistry.Components
                 }
 
                 // Touch every entity on the tile
-                foreach (var entity in tile.GetEntitiesInTileFast().ToArray())
+                foreach (var entity in lookup.GetEntitiesIntersecting(tile).ToArray())
                 {
                     chemistry.ReactionEntity(entity, ReactionMethod.Touch, reagent,
                         reagentQuantity.Quantity * solutionFraction, solution);
                 }
             }
 
-            foreach (var entity in tile.GetEntitiesInTileFast().ToArray())
+            foreach (var entity in lookup.GetEntitiesIntersecting(tile).ToArray())
             {
                 ReactWithEntity(entity, solutionFraction);
             }

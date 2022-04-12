@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/austation/austation/tree/30f0ba9c2dab3ec8e55ab6fae03bde1566a154ca",
+  "states": [
+    {
+      "name": "kangaroo",
+      "directions": 4
+    },
+    {
+      "name": "kangaroo-dead"
+    },
+    {
+      "name": "kangaroo-boxing",
+      "directions": 4
+    },
+    {
+      "name": "kangaroo-boxing-dead"
+    },
+    {
+      "name": "kangaroo-space",
+      "directions": 4
+    },
+    {
+      "name": "kangaroo-space-dead"
+    }
+  ]
+}

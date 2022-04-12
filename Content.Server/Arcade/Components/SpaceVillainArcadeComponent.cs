@@ -1,43 +1,33 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
 using Content.Server.WireHacking;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IActivate, IWires
+    public sealed class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IWires
     {
         [Dependency] private readonly IRobustRandom _random = null!;
 
-        [ComponentDependency] private readonly ApcPowerReceiverComponent? _powerReceiverComponent = default!;
-        [ComponentDependency] private readonly WiresComponent? _wiresComponent = default!;
-
-        private bool Powered => _powerReceiverComponent != null && _powerReceiverComponent.Powered;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        private bool Powered => _entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var powerReceiverComponent) && powerReceiverComponent.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SpaceVillainArcadeUiKey.Key);
         [ViewVariables] private bool _overflowFlag;
         [ViewVariables] private bool _playerInvincibilityFlag;
         [ViewVariables] private bool _enemyInvincibilityFlag;
-        [ViewVariables] private SpaceVillainGame _game = null!;
+        [ViewVariables] public SpaceVillainGame Game = null!;
 
         [DataField("newGameSound")] private SoundSpecifier _newGameSound = new SoundPathSpecifier("/Audio/Effects/Arcade/newgame.ogg");
         [DataField("playerAttackSound")] private SoundSpecifier _playerAttackSound = new SoundPathSpecifier("/Audio/Effects/Arcade/player_attack.ogg");
@@ -64,7 +54,7 @@ namespace Content.Server.Arcade.Components
             "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn"
         };
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("possibleRewards")]
+        [DataField("possibleRewards", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
         private List<string> _possibleRewards = new List<string>()
         {
             "ToyMouse", "ToyAi", "ToyNuke", "ToyAssistant", "ToyGriffin", "ToyHonk", "ToyIan",
@@ -72,25 +62,6 @@ namespace Content.Server.Arcade.Components
             "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton"
         };
 
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!Powered || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
-                return;
-
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
-                return;
-
-            _game ??= new SpaceVillainGame(this);
-
-            if (_wiresComponent?.IsPanelOpen == true)
-            {
-                _wiresComponent.OpenInterface(actor.PlayerSession);
-            }
-            else
-            {
-                UserInterface?.Toggle(actor.PlayerSession);
-            }
-        }
 
         protected override void Initialize()
         {
@@ -102,27 +73,12 @@ namespace Content.Server.Arcade.Components
             }
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage powerChanged:
-                    OnOnPowerStateChanged(powerChanged);
-                    break;
-            }
-        }
-
-        private void OnOnPowerStateChanged(PowerChangedMessage e)
+        public void OnPowerStateChanged(PowerChangedEvent e)
         {
             if (e.Powered) return;
 
             UserInterface?.CloseAll();
         }
-
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
@@ -134,22 +90,22 @@ namespace Content.Server.Arcade.Components
             switch (msg.PlayerAction)
             {
                 case PlayerAction.Attack:
-                    _game?.ExecutePlayerAction(msg.PlayerAction);
+                    Game?.ExecutePlayerAction(msg.PlayerAction);
                     break;
                 case PlayerAction.Heal:
-                    _game?.ExecutePlayerAction(msg.PlayerAction);
+                    Game?.ExecutePlayerAction(msg.PlayerAction);
                     break;
                 case PlayerAction.Recharge:
-                    _game?.ExecutePlayerAction(msg.PlayerAction);
+                    Game?.ExecutePlayerAction(msg.PlayerAction);
                     break;
                 case PlayerAction.NewGame:
                     SoundSystem.Play(Filter.Pvs(Owner), _newGameSound.GetSound(), Owner, AudioParams.Default.WithVolume(-4f));
 
-                    _game = new SpaceVillainGame(this);
-                    UserInterface?.SendMessage(_game.GenerateMetaDataMessage());
+                    Game = new SpaceVillainGame(this);
+                    UserInterface?.SendMessage(Game.GenerateMetaDataMessage());
                     break;
                 case PlayerAction.RequestData:
-                    UserInterface?.SendMessage(_game.GenerateMetaDataMessage());
+                    UserInterface?.SendMessage(Game.GenerateMetaDataMessage());
                     break;
             }
         }
@@ -203,13 +159,15 @@ namespace Content.Server.Arcade.Components
 
         public void IndicatorUpdate()
         {
-            _wiresComponent?.SetStatus(Indicators.HealthManager,
+            if (!_entityManager.TryGetComponent<WiresComponent>(Owner, out var wiresComponent)) return;
+
+            wiresComponent.SetStatus(Indicators.HealthManager,
                 new SharedWiresComponent.StatusLightData(Color.Purple,
                     _playerInvincibilityFlag || _enemyInvincibilityFlag
                         ? SharedWiresComponent.StatusLightState.BlinkingSlow
                         : SharedWiresComponent.StatusLightState.On,
                     "MNGR"));
-            _wiresComponent?.SetStatus(Indicators.HealthLimiter,
+            wiresComponent.SetStatus(Indicators.HealthLimiter,
                 new SharedWiresComponent.StatusLightData(Color.Red,
                     _overflowFlag
                         ? SharedWiresComponent.StatusLightState.BlinkingSlow
@@ -247,7 +205,7 @@ namespace Content.Server.Arcade.Components
         /// <summary>
         /// A Class to handle all the game-logic of the SpaceVillain-game.
         /// </summary>
-        public class SpaceVillainGame
+        public sealed class SpaceVillainGame
         {
             [Dependency] private readonly IRobustRandom _random = default!;
 

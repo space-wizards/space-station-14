@@ -12,10 +12,8 @@ namespace Content.Shared.StatusEffect
     [RegisterComponent]
     [NetworkedComponent]
     [Friend(typeof(StatusEffectsSystem))]
-    public class StatusEffectsComponent : Component
+    public sealed class StatusEffectsComponent : Component
     {
-        public override string Name => "StatusEffects";
-
         [ViewVariables]
         public Dictionary<string, StatusEffectState> ActiveEffects = new();
 
@@ -26,11 +24,14 @@ namespace Content.Shared.StatusEffect
         public List<string> AllowedEffects = default!;
     }
 
+    [RegisterComponent]
+    public sealed class ActiveStatusEffectsComponent : Component {}
+
     /// <summary>
     ///     Holds information about an active status effect.
     /// </summary>
     [Serializable, NetSerializable]
-    public class StatusEffectState
+    public sealed class StatusEffectState
     {
         /// <summary>
         ///     The start and end times of the status effect.
@@ -61,7 +62,7 @@ namespace Content.Shared.StatusEffect
     }
 
     [Serializable, NetSerializable]
-    public class StatusEffectsComponentState : ComponentState
+    public sealed class StatusEffectsComponentState : ComponentState
     {
         public Dictionary<string, StatusEffectState> ActiveEffects;
         public List<string> AllowedEffects;

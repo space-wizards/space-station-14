@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC0-1.0",
+  "copyright": "Created By https://github.com/Mith-randalf",
+    "states": [
+        {
+            "name": "icon-0",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "icon-1",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "icon-2",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "duck-0",
+            "directions": 4
+        },
+        {
+            "name": "duck-1",
+            "directions": 4
+        },
+        {
+            "name": "duck-2",
+            "directions": 4
+        },
+        {
+            "name": "dead-0",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "dead-1",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "dead-2",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        }
+    ]
+}

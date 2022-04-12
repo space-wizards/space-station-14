@@ -9,10 +9,8 @@ namespace Content.Client.Wall.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IconSmoothComponent))]
-    public class ReinforcedWallComponent : IconSmoothComponent
+    public sealed class ReinforcedWallComponent : IconSmoothComponent // whyyyyyyyyy
     {
-        public override string Name => "ReinforcedWall";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("reinforcedBase")]
         private string? _reinforcedStateBase = default;
@@ -36,7 +34,7 @@ namespace Content.Client.Wall.Components
             }
         }
 
-        internal override void CalculateNewSprite(IMapGrid grid)
+        internal override void CalculateNewSprite(IMapGrid? grid)
         {
             base.CalculateNewSprite(grid);
 

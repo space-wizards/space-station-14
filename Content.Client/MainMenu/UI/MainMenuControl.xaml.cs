@@ -12,7 +12,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.MainMenu.UI
 {
     [GenerateTypedNameReferences]
-    public partial class MainMenuControl : Control
+    public sealed partial class MainMenuControl : Control
         {
             public MainMenuControl(IResourceCache resCache, IConfigurationManager configMan)
             {
@@ -30,11 +30,6 @@ namespace Content.Client.MainMenu.UI
 
                 var currentUserName = configMan.GetCVar(CVars.PlayerName);
                 UsernameBox.Text = currentUserName;
-
-#if !FULL_RELEASE
-                JoinPublicServerButton.Disabled = true;
-                JoinPublicServerButton.ToolTip = Loc.GetString("main-menu-join-public-server-button-tooltip");
-#endif
 
                 LayoutContainer.SetAnchorPreset(VersionLabel, LayoutContainer.LayoutPreset.BottomRight);
                 LayoutContainer.SetGrowHorizontal(VersionLabel, LayoutContainer.GrowDirection.Begin);

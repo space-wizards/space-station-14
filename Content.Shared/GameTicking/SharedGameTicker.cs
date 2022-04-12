@@ -17,17 +17,17 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public class TickerJoinLobbyEvent : EntityEventArgs
+    public sealed class TickerJoinLobbyEvent : EntityEventArgs
     {
     }
 
     [Serializable, NetSerializable]
-    public class TickerJoinGameEvent : EntityEventArgs
+    public sealed class TickerJoinGameEvent : EntityEventArgs
     {
     }
 
     [Serializable, NetSerializable]
-    public class TickerLateJoinStatusEvent : EntityEventArgs
+    public sealed class TickerLateJoinStatusEvent : EntityEventArgs
     {
         // TODO: Make this a replicated CVar, honestly.
         public bool Disallowed { get; }
@@ -40,19 +40,21 @@ namespace Content.Shared.GameTicking
 
 
     [Serializable, NetSerializable]
-    public class TickerLobbyStatusEvent : EntityEventArgs
+    public sealed class TickerLobbyStatusEvent : EntityEventArgs
     {
         public bool IsRoundStarted { get; }
         public string? LobbySong { get; }
+        public string? LobbyBackground { get; }
         public bool YouAreReady { get; }
         // UTC.
         public TimeSpan StartTime { get; }
         public bool Paused { get; }
 
-        public TickerLobbyStatusEvent(bool isRoundStarted, string? lobbySong, bool youAreReady, TimeSpan startTime, bool paused)
+        public TickerLobbyStatusEvent(bool isRoundStarted, string? lobbySong, string? lobbyBackground, bool youAreReady, TimeSpan startTime, bool paused)
         {
             IsRoundStarted = isRoundStarted;
             LobbySong = lobbySong;
+            LobbyBackground = lobbyBackground;
             YouAreReady = youAreReady;
             StartTime = startTime;
             Paused = paused;
@@ -60,7 +62,7 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public class TickerLobbyInfoEvent : EntityEventArgs
+    public sealed class TickerLobbyInfoEvent : EntityEventArgs
     {
         public string TextBlob { get; }
 
@@ -71,7 +73,7 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public class TickerLobbyCountdownEvent : EntityEventArgs
+    public sealed class TickerLobbyCountdownEvent : EntityEventArgs
     {
         /// <summary>
         /// The game time that the game will start at.
@@ -91,7 +93,7 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public class TickerLobbyReadyEvent : EntityEventArgs
+    public sealed class TickerLobbyReadyEvent : EntityEventArgs
     {
         /// <summary>
         /// The Status of the Player in the lobby (ready, observer, ...)
@@ -105,7 +107,7 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public class TickerJobsAvailableEvent : EntityEventArgs
+    public sealed class TickerJobsAvailableEvent : EntityEventArgs
     {
         /// <summary>
         /// The Status of the Player in the lobby (ready, observer, ...)
@@ -121,7 +123,7 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public class RoundEndMessageEvent : EntityEventArgs
+    public sealed class RoundEndMessageEvent : EntityEventArgs
     {
         [Serializable, NetSerializable]
         public struct RoundEndPlayerInfo

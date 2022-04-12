@@ -1,6 +1,7 @@
 ﻿- type: reagent
   id: Desoxyephedrine
   name: desoxyephedrine
+  group: Narcotics
   desc: Desoxyephedrine is a potent stimulant with dangerous side-effects if too much is consumed.
   physicalDesc: translucent
   color: "#FAFAFA"
@@ -12,7 +13,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 1.5
+            Poison: 0.75
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -24,26 +25,27 @@
     Narcotic:
       effects:
       - !type:MovespeedModifier
-        walkSpeedModifier: 1.3
-        sprintSpeedModifier: 1.3
+        walkSpeedModifier: 1.35
+        sprintSpeedModifier: 1.35
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
       - !type:Jitter
       - !type:GenericStatusEffect
         key: Stun
-        time: 1
+        time: 3
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 1
+        time: 3
         type: Remove
 
 - type: reagent
   id: Ephedrine
   name: ephedrine
+  group: Narcotics
   desc: Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing.
-  physicalDesc: Bone white
+  physicalDesc: powdery
   color: "#D2FFFA"
   boilingPoint: 255.0
   meltingPoint: 36.0
@@ -51,8 +53,8 @@
     Narcotic:
       effects:
       - !type:MovespeedModifier
-        walkSpeedModifier: 1.2
-        sprintSpeedModifier: 1.2
+        walkSpeedModifier: 1.25
+        sprintSpeedModifier: 1.25
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -64,11 +66,11 @@
       - !type:Jitter
       - !type:GenericStatusEffect
         key: Stun
-        time: 0.25
+        time: 1
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 0.25
+        time: 1
         type: Remove
       - !type:PopupMessage
         messages: ["ephedrine-effect-tight-pain", "ephedrine-effect-heart-pounds"]
@@ -78,6 +80,7 @@
 - type: reagent
   id: THC
   name: THC
+  group: Narcotics
   desc: The main psychoactive compound in cannabis.
   color: "#808080"
   physicalDesc: crystalline
@@ -90,6 +93,7 @@
 - type: reagent
   id: THCOil
   name: THC oil
+  group: Narcotics
   desc: Pure THC oil, extracted from the leaves of the cannabis plant. Much stronger than in it's natural form and can be used to numb chronic pain in patients.
   physicalDesc: skunky
   color: "#DAA520"
@@ -97,6 +101,7 @@
 - type: reagent
   id: Nicotine
   name: Nicotine
+  group: Narcotics
   desc: Dangerous and highly addictive.
   color: "#C0C0C0"
   physicalDesc: strong smelling
@@ -107,6 +112,7 @@
 - type: reagent
   id: Impedrezene
   name: impedrezene
+  group: Narcotics
   desc: A narcotic that impedes one's ability by slowing down the higher brain cell functions. Causes massive brain damage.
   physicalDesc: acrid
   color: "#215263"
@@ -114,6 +120,35 @@
 - type: reagent
   id: SpaceDrugs
   name: space drugs
+  group: Narcotics
   desc: An illegal compound which induces a number of effects such as loss of balance and visual artefacts.
   physicalDesc: syrupy
   color: "#63806e"
+
+# Probably replace this one with sleeping chem when putting someone in a comatose state is easier
+- type: reagent
+  id: Nocturine
+  name: nocturine
+  group: Narcotics
+  desc: Makes you feel very tired and unable to stand up. Basically, it's bone hurting juice.
+  physicalDesc: powdery
+  color: "#128e80"
+  boilingPoint: 444.0
+  meltingPoint: 128.0
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 60
+        damage:
+          types:
+            Poison: 1
+      - !type:Paralyze
+        paralyzeTime: 1.2
+        refresh: false
+      - !type:GenericStatusEffect
+        key: Stutter
+        time: 1
+        component: StutteringAccent

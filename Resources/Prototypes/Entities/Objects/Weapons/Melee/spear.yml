@@ -7,6 +7,7 @@
   - type: Tag
     tags:
     - Spear
+  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
     state: spear
@@ -22,12 +23,13 @@
       types:
         Piercing: 15
   - type: Clothing
-    size: 24
+    size: 40
     sprite: Objects/Weapons/Melee/spear.rsi
+    quickEquip: false
     Slots:
     - back
   - type: Construction
-    graph: spear
+    graph: Spear
     node: spear
   - type: ItemCooldown
   - type: MeleeChemicalInjector
@@ -37,8 +39,43 @@
         maxVol: 5
   - type: RefillableSolution
     solution: melee
+  - type: InjectableSolution
+    solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    modifiers:
+      flatReductions:
+        Piercing: -7
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30 #excess damage avoids cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PartRodMetal1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
 
 - type: MeleeWeaponAnimation
   id: spear

@@ -18,8 +18,10 @@ using Robust.Shared.Player;
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasValveSystem : EntitySystem
+    public sealed class GasValveSystem : EntitySystem
     {
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -31,7 +33,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnExamined(EntityUid uid, GasValveComponent valve, ExaminedEvent args)
         {
-            if (!EntityManager.GetComponent<TransformComponent>(valve.Owner).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            if (!Comp<TransformComponent>(valve.Owner).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
             if (Loc.TryGetString("gas-valve-system-examined", out var str,
@@ -49,21 +51,33 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnActivate(EntityUid uid, GasValveComponent component, ActivateInWorldEvent args)
         {
-            if (args.User.InRangeUnobstructed(args.Target) && Get<ActionBlockerSystem>().CanInteract(args.User))
-            {
-                Toggle(uid, component);
-                SoundSystem.Play(Filter.Pvs(component.Owner), component._valveSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.25f));
-            }
+            Toggle(uid, component);
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.ValveSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.25f));
         }
 
         public void Set(EntityUid uid, GasValveComponent component, bool value)
         {
             component.Open = value;
-
-            if (EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                && nodeContainer.TryGetNode(component.PipeName, out PipeNode? pipe))
+            if (TryComp(uid, out NodeContainerComponent? nodeContainer)
+                && nodeContainer.TryGetNode(component.InletName, out PipeNode? inlet)
+                && nodeContainer.TryGetNode(component.OutletName, out PipeNode? outlet))
             {
-                pipe.ConnectionsEnabled = component.Open;
+                if (TryComp<AppearanceComponent>(component.Owner,out var appearance))
+                {
+                    appearance.SetData(FilterVisuals.Enabled, component.Open);
+                }
+                if (component.Open)
+                {
+                    inlet.AddAlwaysReachable(outlet);
+                    outlet.AddAlwaysReachable(inlet);
+                    _ambientSoundSystem.SetAmbience(component.Owner, true);
+                }
+                else
+                {
+                    inlet.RemoveAlwaysReachable(outlet);
+                    outlet.RemoveAlwaysReachable(inlet);
+                    _ambientSoundSystem.SetAmbience(component.Owner, false);
+                }
             }
         }
 

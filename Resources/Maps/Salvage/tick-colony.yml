@@ -1,0 +1,1504 @@
+meta:
+  format: 2
+  name: DemoStation
+  author: Space-Wizards
+  postmapinit: false
+tilemap:
+  0: space
+  1: FloorArcadeBlue
+  2: FloorArcadeRed
+  3: FloorAsteroidIronsand1
+  4: FloorAsteroidIronsand2
+  5: FloorAsteroidIronsand3
+  6: FloorAsteroidIronsand4
+  7: FloorEighties
+  8: FloorGrassJungle
+  9: FloorShuttleBlue
+  10: FloorShuttleOrange
+  11: FloorShuttlePurple
+  12: FloorShuttleRed
+  13: FloorShuttleWhite
+  14: floor_asteroid_coarse_sand0
+  15: floor_asteroid_coarse_sand1
+  16: floor_asteroid_coarse_sand2
+  17: floor_asteroid_coarse_sand_dug
+  18: floor_asteroid_sand
+  19: floor_asteroid_tile
+  20: floor_bar
+  21: floor_blue
+  22: floor_blue_circuit
+  23: floor_clown
+  24: floor_dark
+  25: floor_elevator_shaft
+  26: floor_freezer
+  27: floor_glass
+  28: floor_gold
+  29: floor_grass
+  30: floor_green_circuit
+  31: floor_hydro
+  32: floor_kitchen
+  33: floor_laundry
+  34: floor_lino
+  35: floor_mime
+  36: floor_mono
+  37: floor_reinforced
+  38: floor_rglass
+  39: floor_rock_vault
+  40: floor_showroom
+  41: floor_silver
+  42: floor_snow
+  43: floor_steel
+  44: floor_steel_dirty
+  45: floor_techmaint
+  46: floor_white
+  47: floor_wood
+  48: lattice
+  49: plating
+  50: underplating
+grids:
+- settings:
+    chunksize: 16
+    tilesize: 1
+  chunks:
+  - ind: "-1,-1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAAA==
+  - ind: "-1,0"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "0,0"
+    tiles: EgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "0,-1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+entities:
+- uid: 0
+  components:
+  - parent: null
+    type: Transform
+  - index: 0
+    type: MapGrid
+  - angularDamping: 100
+    linearDamping: 50
+    fixedRotation: False
+    bodyType: Dynamic
+    type: Physics
+  - fixtures: []
+    type: Fixtures
+  - gravityShakeSound: !type:SoundPathSpecifier
+      path: /Audio/Effects/alert.ogg
+    type: Gravity
+  - chunkCollection:
+      -1,0:
+        0:
+          color: '#FFFFFFFF'
+          id: Remains
+          coordinates: -2.0630934,0.49848866
+      -1,-1:
+        1:
+          color: '#FFFFFFFF'
+          id: Remains
+          coordinates: -2.5358996,-4.3628607
+      0,0:
+        2:
+          color: '#FFFFFFFF'
+          id: Remains
+          coordinates: 1.5020566,0.94781697
+    type: DecalGrid
+  - tiles:
+      -2,-2: 0
+      -2,-1: 0
+      -1,-2: 0
+      -1,-1: 0
+      -2,0: 1
+      -1,0: 2
+      0,0: 0
+      0,-2: 0
+      0,-1: 0
+    uniqueMixes:
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 147.925
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 184.23125
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: GridAtmosphere
+- uid: 1
+  type: AsteroidRock
+  components:
+  - pos: -2.5,6.5
+    parent: 0
+    type: Transform
+- uid: 2
+  type: AsteroidRock
+  components:
+  - pos: -1.5,6.5
+    parent: 0
+    type: Transform
+- uid: 3
+  type: AsteroidRock
+  components:
+  - pos: -0.5,6.5
+    parent: 0
+    type: Transform
+- uid: 4
+  type: AsteroidRock
+  components:
+  - pos: 0.5,6.5
+    parent: 0
+    type: Transform
+- uid: 5
+  type: AsteroidRock
+  components:
+  - pos: 1.5,6.5
+    parent: 0
+    type: Transform
+- uid: 6
+  type: AsteroidRock
+  components:
+  - pos: 2.5,5.5
+    parent: 0
+    type: Transform
+- uid: 7
+  type: AsteroidRock
+  components:
+  - pos: 1.5,5.5
+    parent: 0
+    type: Transform
+- uid: 8
+  type: AsteroidRock
+  components:
+  - pos: 0.5,5.5
+    parent: 0
+    type: Transform
+- uid: 9
+  type: AsteroidRock
+  components:
+  - pos: -0.5,5.5
+    parent: 0
+    type: Transform
+- uid: 10
+  type: AsteroidRock
+  components:
+  - pos: -1.5,5.5
+    parent: 0
+    type: Transform
+- uid: 11
+  type: AsteroidRock
+  components:
+  - pos: -2.5,5.5
+    parent: 0
+    type: Transform
+- uid: 12
+  type: AsteroidRock
+  components:
+  - pos: -3.5,5.5
+    parent: 0
+    type: Transform
+- uid: 13
+  type: AsteroidRock
+  components:
+  - pos: -3.5,4.5
+    parent: 0
+    type: Transform
+- uid: 14
+  type: AsteroidRock
+  components:
+  - pos: -2.5,4.5
+    parent: 0
+    type: Transform
+- uid: 15
+  type: AsteroidRock
+  components:
+  - pos: -3.5,3.5
+    parent: 0
+    type: Transform
+- uid: 16
+  type: AsteroidRock
+  components:
+  - pos: -4.5,3.5
+    parent: 0
+    type: Transform
+- uid: 17
+  type: AsteroidRock
+  components:
+  - pos: -4.5,2.5
+    parent: 0
+    type: Transform
+- uid: 18
+  type: AsteroidRock
+  components:
+  - pos: -3.5,2.5
+    parent: 0
+    type: Transform
+- uid: 19
+  type: AsteroidRock
+  components:
+  - pos: -5.5,2.5
+    parent: 0
+    type: Transform
+- uid: 20
+  type: AsteroidRock
+  components:
+  - pos: -5.5,1.5
+    parent: 0
+    type: Transform
+- uid: 21
+  type: AsteroidRock
+  components:
+  - pos: -5.5,0.5
+    parent: 0
+    type: Transform
+- uid: 22
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 23
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 24
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 25
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 26
+  type: AsteroidRock
+  components:
+  - pos: -4.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 27
+  type: AsteroidRock
+  components:
+  - pos: -4.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 28
+  type: AsteroidRock
+  components:
+  - pos: -4.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 29
+  type: AsteroidRock
+  components:
+  - pos: -4.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 30
+  type: AsteroidRock
+  components:
+  - pos: -4.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 31
+  type: AsteroidRock
+  components:
+  - pos: -4.5,0.5
+    parent: 0
+    type: Transform
+- uid: 32
+  type: AsteroidRock
+  components:
+  - pos: -4.5,1.5
+    parent: 0
+    type: Transform
+- uid: 33
+  type: AsteroidRock
+  components:
+  - pos: -3.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 34
+  type: AsteroidRock
+  components:
+  - pos: -3.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 35
+  type: AsteroidRock
+  components:
+  - pos: -3.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 36
+  type: AsteroidRock
+  components:
+  - pos: -2.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 37
+  type: AsteroidRock
+  components:
+  - pos: -2.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 38
+  type: AsteroidRock
+  components:
+  - pos: -1.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 39
+  type: AsteroidRock
+  components:
+  - pos: -1.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 40
+  type: AsteroidRock
+  components:
+  - pos: -0.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 41
+  type: AsteroidRock
+  components:
+  - pos: -0.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 42
+  type: AsteroidRock
+  components:
+  - pos: 0.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 43
+  type: AsteroidRock
+  components:
+  - pos: 0.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 44
+  type: AsteroidRock
+  components:
+  - pos: 1.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 45
+  type: AsteroidRock
+  components:
+  - pos: 1.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 46
+  type: AsteroidRock
+  components:
+  - pos: 2.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 47
+  type: AsteroidRock
+  components:
+  - pos: 2.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 48
+  type: AsteroidRock
+  components:
+  - pos: 3.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 49
+  type: AsteroidRock
+  components:
+  - pos: 3.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 50
+  type: AsteroidRock
+  components:
+  - pos: 4.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 51
+  type: AsteroidRock
+  components:
+  - pos: 4.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 52
+  type: AsteroidRock
+  components:
+  - pos: 4.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 53
+  type: AsteroidRock
+  components:
+  - pos: 4.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 54
+  type: AsteroidRock
+  components:
+  - pos: 4.5,0.5
+    parent: 0
+    type: Transform
+- uid: 55
+  type: AsteroidRock
+  components:
+  - pos: 4.5,1.5
+    parent: 0
+    type: Transform
+- uid: 56
+  type: AsteroidRock
+  components:
+  - pos: 4.5,2.5
+    parent: 0
+    type: Transform
+- uid: 57
+  type: AsteroidRock
+  components:
+  - pos: 3.5,1.5
+    parent: 0
+    type: Transform
+- uid: 58
+  type: AsteroidRock
+  components:
+  - pos: 3.5,0.5
+    parent: 0
+    type: Transform
+- uid: 59
+  type: AsteroidRock
+  components:
+  - pos: 3.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 60
+  type: AsteroidRock
+  components:
+  - pos: 3.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 61
+  type: AsteroidRock
+  components:
+  - pos: 3.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 62
+  type: AsteroidRock
+  components:
+  - pos: 3.5,2.5
+    parent: 0
+    type: Transform
+- uid: 63
+  type: AsteroidRock
+  components:
+  - pos: 2.5,2.5
+    parent: 0
+    type: Transform
+- uid: 64
+  type: AsteroidRock
+  components:
+  - pos: 2.5,3.5
+    parent: 0
+    type: Transform
+- uid: 65
+  type: AsteroidRock
+  components:
+  - pos: 3.5,3.5
+    parent: 0
+    type: Transform
+- uid: 66
+  type: AsteroidRock
+  components:
+  - pos: 2.5,4.5
+    parent: 0
+    type: Transform
+- uid: 67
+  type: AsteroidRock
+  components:
+  - pos: 1.5,4.5
+    parent: 0
+    type: Transform
+- uid: 68
+  type: AsteroidRock
+  components:
+  - pos: 0.5,4.5
+    parent: 0
+    type: Transform
+- uid: 69
+  type: AsteroidRock
+  components:
+  - pos: 1.5,0.5
+    parent: 0
+    type: Transform
+- uid: 70
+  type: AsteroidRock
+  components:
+  - pos: 0.5,1.5
+    parent: 0
+    type: Transform
+- uid: 71
+  type: AsteroidRock
+  components:
+  - pos: 0.5,0.5
+    parent: 0
+    type: Transform
+- uid: 72
+  type: AsteroidRock
+  components:
+  - pos: 0.5,2.5
+    parent: 0
+    type: Transform
+- uid: 73
+  type: AsteroidRock
+  components:
+  - pos: -2.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 74
+  type: AsteroidRock
+  components:
+  - pos: -1.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 75
+  type: AsteroidRock
+  components:
+  - pos: -1.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 76
+  type: AsteroidRock
+  components:
+  - pos: -0.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 77
+  type: RandomArtifactSpawner
+  components:
+  - pos: -0.5,0.5
+    parent: 0
+    type: Transform
+- uid: 78
+  type: SpaceTickSpawner
+  components:
+  - pos: 1.5,1.5
+    parent: 0
+    type: Transform
+- uid: 79
+  type: SpaceTickSpawner
+  components:
+  - pos: -1.5,3.5
+    parent: 0
+    type: Transform
+- uid: 80
+  type: SpaceTickSpawner
+  components:
+  - pos: 2.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 81
+  type: SpaceTickSpawner
+  components:
+  - pos: -0.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 82
+  type: SpaceTickSpawner
+  components:
+  - pos: -3.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 83
+  type: SpaceTickSpawner
+  components:
+  - pos: -2.5,1.5
+    parent: 0
+    type: Transform
+- uid: 84
+  type: SpaceTickSpawner
+  components:
+  - pos: 0.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 85
+  type: ClosetMaintenanceFilledRandom
+  components:
+  - pos: 1.5,-0.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 86
+  type: ClosetMaintenance
+  components:
+  - pos: -3.5,1.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 87
+  type: CratePlasma
+  components:
+  - pos: -2.5,-2.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+    - EntityStorageComponent
+    type: Construction
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+      PaperLabel: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 88
+  type: SalvageHumanCorpse
+  components:
+  - pos: -1.506144,4.5847845
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - fixtures:
+    - shape: !type:PhysShapeCircle
+        radius: 0.35
+      mask:
+      - Impassable
+      - MobImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      mass: 70
+    type: Fixtures
+  - standing: False
+    type: StandingState
+  - solutions:
+      chemicals:
+        reagents: []
+      bloodstream:
+        reagents:
+        - Quantity: 300
+          ReagentId: Blood
+      bloodstreamTemporary:
+        reagents: []
+    type: SolutionContainerManager
+  - containers:
+      Body-BodyComponent: !type:Container
+        ents:
+        - 89
+        - 92
+        - 98
+        - 99
+        - 100
+        - 101
+        - 102
+        - 103
+        - 104
+        - 105
+      left hand: !type:ContainerSlot
+        occludes: False
+      right hand: !type:ContainerSlot
+        occludes: False
+      Cuffable: !type:Container
+        ents: []
+      shoes: !type:ContainerSlot
+        occludes: False
+      jumpsuit: !type:ContainerSlot
+        occludes: False
+      outerClothing: !type:ContainerSlot
+        occludes: False
+      gloves: !type:ContainerSlot
+        occludes: False
+      neck: !type:ContainerSlot
+        occludes: False
+      mask: !type:ContainerSlot
+        occludes: False
+      eyes: !type:ContainerSlot
+        occludes: False
+      ears: !type:ContainerSlot
+        occludes: False
+      head: !type:ContainerSlot
+        occludes: False
+      pocket1: !type:ContainerSlot
+        occludes: False
+      pocket2: !type:ContainerSlot
+        occludes: False
+      id: !type:ContainerSlot
+        occludes: False
+      belt: !type:ContainerSlot
+        occludes: False
+      back: !type:ContainerSlot
+        occludes: False
+    type: ContainerContainer
+  - mustBeDead: True
+    type: GhostOnMove
+- uid: 89
+  type: HeadHuman
+  components:
+  - parent: 88
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents:
+        - 90
+        - 91
+    type: ContainerContainer
+- uid: 90
+  type: OrganHumanBrain
+  components:
+  - parent: 89
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 91
+  type: OrganHumanEyes
+  components:
+  - parent: 89
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 92
+  type: TorsoHuman
+  components:
+  - parent: 88
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents:
+        - 93
+        - 94
+        - 95
+        - 96
+        - 97
+    type: ContainerContainer
+- uid: 93
+  type: OrganHumanHeart
+  components:
+  - parent: 92
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 94
+  type: OrganHumanLungs
+  components:
+  - parent: 92
+    type: Transform
+  - solutions:
+      Lung:
+        canReact: False
+        reagents: []
+    type: SolutionContainerManager
+  - canCollide: False
+    type: Physics
+- uid: 95
+  type: OrganHumanStomach
+  components:
+  - parent: 92
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 96
+  type: OrganHumanLiver
+  components:
+  - parent: 92
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 97
+  type: OrganHumanKidneys
+  components:
+  - parent: 92
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 98
+  type: LeftArmHuman
+  components:
+  - parent: 88
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 99
+  type: LeftHandHuman
+  components:
+  - parent: 88
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 100
+  type: RightArmHuman
+  components:
+  - parent: 88
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 101
+  type: RightHandHuman
+  components:
+  - parent: 88
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 102
+  type: LeftLegHuman
+  components:
+  - parent: 88
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 103
+  type: LeftFootHuman
+  components:
+  - parent: 88
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 104
+  type: RightLegHuman
+  components:
+  - parent: 88
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 105
+  type: RightFootHuman
+  components:
+  - parent: 88
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 106
+  type: SalvageHumanCorpse
+  components:
+  - pos: -0.70098996,4.334125
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - fixtures:
+    - shape: !type:PhysShapeCircle
+        radius: 0.35
+      mask:
+      - Impassable
+      - MobImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      mass: 70
+    type: Fixtures
+  - standing: False
+    type: StandingState
+  - solutions:
+      chemicals:
+        reagents: []
+      bloodstream:
+        reagents:
+        - Quantity: 300
+          ReagentId: Blood
+      bloodstreamTemporary:
+        reagents: []
+    type: SolutionContainerManager
+  - containers:
+      Body-BodyComponent: !type:Container
+        ents:
+        - 107
+        - 110
+        - 116
+        - 117
+        - 118
+        - 119
+        - 120
+        - 121
+        - 122
+        - 123
+      left hand: !type:ContainerSlot
+        occludes: False
+      right hand: !type:ContainerSlot
+        occludes: False
+      Cuffable: !type:Container
+        ents: []
+      shoes: !type:ContainerSlot
+        occludes: False
+      jumpsuit: !type:ContainerSlot
+        occludes: False
+      outerClothing: !type:ContainerSlot
+        occludes: False
+      gloves: !type:ContainerSlot
+        occludes: False
+      neck: !type:ContainerSlot
+        occludes: False
+      mask: !type:ContainerSlot
+        occludes: False
+      eyes: !type:ContainerSlot
+        occludes: False
+      ears: !type:ContainerSlot
+        occludes: False
+      head: !type:ContainerSlot
+        occludes: False
+      pocket1: !type:ContainerSlot
+        occludes: False
+      pocket2: !type:ContainerSlot
+        occludes: False
+      id: !type:ContainerSlot
+        occludes: False
+      belt: !type:ContainerSlot
+        occludes: False
+      back: !type:ContainerSlot
+        occludes: False
+    type: ContainerContainer
+  - mustBeDead: True
+    type: GhostOnMove
+- uid: 107
+  type: HeadHuman
+  components:
+  - parent: 106
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents:
+        - 108
+        - 109
+    type: ContainerContainer
+- uid: 108
+  type: OrganHumanBrain
+  components:
+  - parent: 107
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 109
+  type: OrganHumanEyes
+  components:
+  - parent: 107
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 110
+  type: TorsoHuman
+  components:
+  - parent: 106
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents:
+        - 111
+        - 112
+        - 113
+        - 114
+        - 115
+    type: ContainerContainer
+- uid: 111
+  type: OrganHumanHeart
+  components:
+  - parent: 110
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 112
+  type: OrganHumanLungs
+  components:
+  - parent: 110
+    type: Transform
+  - solutions:
+      Lung:
+        canReact: False
+        reagents: []
+    type: SolutionContainerManager
+  - canCollide: False
+    type: Physics
+- uid: 113
+  type: OrganHumanStomach
+  components:
+  - parent: 110
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 114
+  type: OrganHumanLiver
+  components:
+  - parent: 110
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 115
+  type: OrganHumanKidneys
+  components:
+  - parent: 110
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 116
+  type: LeftArmHuman
+  components:
+  - parent: 106
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 117
+  type: LeftHandHuman
+  components:
+  - parent: 106
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 118
+  type: RightArmHuman
+  components:
+  - parent: 106
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 119
+  type: RightHandHuman
+  components:
+  - parent: 106
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 120
+  type: LeftLegHuman
+  components:
+  - parent: 106
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 121
+  type: LeftFootHuman
+  components:
+  - parent: 106
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 122
+  type: RightLegHuman
+  components:
+  - parent: 106
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 123
+  type: RightFootHuman
+  components:
+  - parent: 106
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 124
+  type: SalvageHumanCorpse
+  components:
+  - pos: -1.3081551,4.030695
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - fixtures:
+    - shape: !type:PhysShapeCircle
+        radius: 0.35
+      mask:
+      - Impassable
+      - MobImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      mass: 70
+    type: Fixtures
+  - standing: False
+    type: StandingState
+  - solutions:
+      chemicals:
+        reagents: []
+      bloodstream:
+        reagents:
+        - Quantity: 300
+          ReagentId: Blood
+      bloodstreamTemporary:
+        reagents: []
+    type: SolutionContainerManager
+  - containers:
+      Body-BodyComponent: !type:Container
+        ents:
+        - 125
+        - 128
+        - 134
+        - 135
+        - 136
+        - 137
+        - 138
+        - 139
+        - 140
+        - 141
+      left hand: !type:ContainerSlot
+        occludes: False
+      right hand: !type:ContainerSlot
+        occludes: False
+      Cuffable: !type:Container
+        ents: []
+      shoes: !type:ContainerSlot
+        occludes: False
+      jumpsuit: !type:ContainerSlot
+        occludes: False
+      outerClothing: !type:ContainerSlot
+        occludes: False
+      gloves: !type:ContainerSlot
+        occludes: False
+      neck: !type:ContainerSlot
+        occludes: False
+      mask: !type:ContainerSlot
+        occludes: False
+      eyes: !type:ContainerSlot
+        occludes: False
+      ears: !type:ContainerSlot
+        occludes: False
+      head: !type:ContainerSlot
+        occludes: False
+      pocket1: !type:ContainerSlot
+        occludes: False
+      pocket2: !type:ContainerSlot
+        occludes: False
+      id: !type:ContainerSlot
+        occludes: False
+      belt: !type:ContainerSlot
+        occludes: False
+      back: !type:ContainerSlot
+        occludes: False
+    type: ContainerContainer
+  - mustBeDead: True
+    type: GhostOnMove
+- uid: 125
+  type: HeadHuman
+  components:
+  - parent: 124
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents:
+        - 126
+        - 127
+    type: ContainerContainer
+- uid: 126
+  type: OrganHumanBrain
+  components:
+  - parent: 125
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 127
+  type: OrganHumanEyes
+  components:
+  - parent: 125
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 128
+  type: TorsoHuman
+  components:
+  - parent: 124
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents:
+        - 129
+        - 130
+        - 131
+        - 132
+        - 133
+    type: ContainerContainer
+- uid: 129
+  type: OrganHumanHeart
+  components:
+  - parent: 128
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 130
+  type: OrganHumanLungs
+  components:
+  - parent: 128
+    type: Transform
+  - solutions:
+      Lung:
+        canReact: False
+        reagents: []
+    type: SolutionContainerManager
+  - canCollide: False
+    type: Physics
+- uid: 131
+  type: OrganHumanStomach
+  components:
+  - parent: 128
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 132
+  type: OrganHumanLiver
+  components:
+  - parent: 128
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 133
+  type: OrganHumanKidneys
+  components:
+  - parent: 128
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 134
+  type: LeftArmHuman
+  components:
+  - parent: 124
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 135
+  type: LeftHandHuman
+  components:
+  - parent: 124
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 136
+  type: RightArmHuman
+  components:
+  - parent: 124
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 137
+  type: RightHandHuman
+  components:
+  - parent: 124
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 138
+  type: LeftLegHuman
+  components:
+  - parent: 124
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 139
+  type: LeftFootHuman
+  components:
+  - parent: 124
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 140
+  type: RightLegHuman
+  components:
+  - parent: 124
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 141
+  type: RightFootHuman
+  components:
+  - parent: 124
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 142
+  type: AsteroidRock
+  components:
+  - pos: -0.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 143
+  type: AsteroidRock
+  components:
+  - pos: 2.5,0.5
+    parent: 0
+    type: Transform
+- uid: 144
+  type: AsteroidRock
+  components:
+  - pos: 0.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 145
+  type: AsteroidRock
+  components:
+  - pos: 1.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 146
+  type: AsteroidRock
+  components:
+  - pos: -3.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 147
+  type: AsteroidRock
+  components:
+  - pos: 0.5,3.5
+    parent: 0
+    type: Transform
+- uid: 148
+  type: CrateFilledSpawner
+  components:
+  - pos: 1.5,3.5
+    parent: 0
+    type: Transform
+- uid: 149
+  type: CrateFilledSpawner
+  components:
+  - pos: -2.5,3.5
+    parent: 0
+    type: Transform
+- uid: 150
+  type: CrateFilledSpawner
+  components:
+  - pos: 1.5,-4.5
+    parent: 0
+    type: Transform
+...

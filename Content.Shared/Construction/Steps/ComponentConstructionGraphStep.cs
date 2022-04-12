@@ -2,12 +2,11 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility.Markup;
 
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
-    public class ComponentConstructionGraphStep : ArbitraryInsertConstructionGraphStep
+    public sealed class ComponentConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
         [DataField("component")] public string Component { get; } = string.Empty;
 
@@ -24,15 +23,13 @@ namespace Content.Shared.Construction.Steps
 
         public override void DoExamine(ExaminedEvent examinedEvent)
         {
-            examinedEvent.Message.AddMessage(
-                    Basic.RenderMarkup(string.IsNullOrEmpty(Name)
-                        ? Loc.GetString(
-                            "construction-insert-entity-with-component",
-                            ("componentName", Component))// Terrible.
-                        : Loc.GetString(
-                            "construction-insert-exact-entity",
-                            ("entityName", Name))
-                    ));
+            examinedEvent.Message.AddMarkup(string.IsNullOrEmpty(Name)
+                ? Loc.GetString(
+                    "construction-insert-entity-with-component",
+                    ("componentName", Component))// Terrible.
+                : Loc.GetString(
+                    "construction-insert-exact-entity",
+                    ("entityName", Name)));
         }
     }
 }

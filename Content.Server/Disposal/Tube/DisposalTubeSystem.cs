@@ -1,13 +1,12 @@
-﻿using Content.Server.Disposal.Tube.Components;
+using Content.Server.Disposal.Tube.Components;
+using Content.Server.UserInterface;
+using Content.Server.Hands.Components;
 using Content.Shared.Movement;
 using Content.Shared.Verbs;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -23,13 +22,15 @@ namespace Content.Server.Disposal.Tube
             base.Initialize();
 
             SubscribeLocalEvent<DisposalTubeComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
-
             SubscribeLocalEvent<DisposalTubeComponent, RelayMovementEntityEvent>(OnRelayMovement);
-            SubscribeLocalEvent<DisposalTaggerComponent, GetInteractionVerbsEvent>(AddOpenUIVerbs);
-            SubscribeLocalEvent<DisposalRouterComponent, GetInteractionVerbsEvent>(AddOpenUIVerbs);
+            SubscribeLocalEvent<DisposalTaggerComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
+            SubscribeLocalEvent<DisposalRouterComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
+            SubscribeLocalEvent<DisposalRouterComponent, ActivatableUIOpenAttemptEvent>(OnOpenRouterUIAttempt);
+            SubscribeLocalEvent<DisposalTaggerComponent, ActivatableUIOpenAttemptEvent>(OnOpenTaggerUIAttempt);
+
         }
 
-        private void AddOpenUIVerbs(EntityUid uid, DisposalTaggerComponent component, GetInteractionVerbsEvent args)
+        private void AddOpenUIVerbs(EntityUid uid, DisposalTaggerComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -38,14 +39,14 @@ namespace Content.Server.Disposal.Tube
                 return;
             var player = actor.PlayerSession;
 
-            Verb verb = new();
+            InteractionVerb verb = new();
             verb.Text = Loc.GetString("configure-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             verb.Act = () => component.OpenUserInterface(actor);
             args.Verbs.Add(verb);
         }
 
-        private void AddOpenUIVerbs(EntityUid uid, DisposalRouterComponent component, GetInteractionVerbsEvent args)
+        private void AddOpenUIVerbs(EntityUid uid, DisposalRouterComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -54,7 +55,7 @@ namespace Content.Server.Disposal.Tube
                 return;
             var player = actor.PlayerSession;
 
-            Verb verb = new();
+            InteractionVerb verb = new();
             verb.Text = Loc.GetString("configure-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             verb.Act = () => component.OpenUserInterface(actor);
@@ -71,6 +72,37 @@ namespace Content.Server.Disposal.Tube
             component.LastClang = _gameTiming.CurTime;
             SoundSystem.Play(Filter.Pvs(uid), component.ClangSound.GetSound(), uid);
         }
+
+        private void OnOpenRouterUIAttempt(EntityUid uid, DisposalRouterComponent router, ActivatableUIOpenAttemptEvent args)
+        {
+            if (!TryComp<HandsComponent>(args.User, out var hands))
+            {
+                uid.PopupMessage(args.User, Loc.GetString("disposal-router-window-tag-input-activate-no-hands"));
+                return;
+            }
+
+            var activeHandEntity = hands.ActiveHandEntity;
+            if (activeHandEntity != null)
+            {
+                args.Cancel();
+            }
+        }
+
+        private void OnOpenTaggerUIAttempt(EntityUid uid, DisposalTaggerComponent router, ActivatableUIOpenAttemptEvent args)
+        {
+            if (!TryComp<HandsComponent>(args.User, out var hands))
+            {
+                uid.PopupMessage(args.User, Loc.GetString("disposal-tagger-window-activate-no-hands"));
+                return;
+            }
+
+            var activeHandEntity = hands.ActiveHandEntity;
+            if (activeHandEntity != null)
+            {
+                args.Cancel();
+            }
+        }
+
 
         private static void BodyTypeChanged(
             EntityUid uid,

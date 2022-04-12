@@ -7,15 +7,15 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Administration
 {
-    internal class AdminNameOverlay : Overlay
+    internal sealed class AdminNameOverlay : Overlay
     {
         private readonly AdminSystem _system;
         private readonly IEntityManager _entityManager;
         private readonly IEyeManager _eyeManager;
-        private readonly IEntityLookup _entityLookup;
+        private readonly EntityLookupSystem _entityLookup;
         private readonly Font _font;
 
-        public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, IEntityLookup entityLookup)
+        public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, EntityLookupSystem entityLookup)
         {
             _system = system;
             _entityManager = entityManager;
@@ -46,7 +46,7 @@ namespace Content.Client.Administration
                     continue;
                 }
 
-                var aabb = _entityLookup.GetWorldAabbFromEntity(entity);
+                var aabb = _entityLookup.GetWorldAABB(entity);
 
                 // if not on screen, continue
                 if (!aabb.Intersects(in viewport))
@@ -62,8 +62,8 @@ namespace Content.Client.Administration
                 {
                     args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), "ANTAG", Color.OrangeRed);
                 }
-                args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, Color.Yellow);
-                args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, Color.Aquamarine);
+                args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, playerInfo.Connected ? Color.Yellow : Color.White);
+                args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, playerInfo.Connected ? Color.Aquamarine : Color.White);
             }
         }
     }

@@ -7,7 +7,6 @@
   - type: MedicalScanner
   - type: Sprite
     netsync: false
-    noRot: true
     sprite: Structures/Machines/scanner.rsi
     layers:
     - state: open
@@ -28,7 +27,7 @@
       mask:
       - MobMask
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -49,6 +48,9 @@
   - type: Appearance
     visuals:
     - type: MedicalScannerVisualizer
+  - type: ActivatableUI
+    key: enum.MedicalScannerUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.MedicalScannerUiKey.Key

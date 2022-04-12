@@ -9,11 +9,6 @@
         - texture: Objects/Fun/toys.rsi/plushie_h.png
     - type: RandomSpawner
       rarePrototypes:
-        - CarvingHelpMe
-        - CarvingHello
-        - CarvingThankYou
-        - CarvingVeryGood
-        - CarvingImSorry
         - FoamBlade
       rareChance: 0.03
       prototypes:
@@ -25,6 +20,9 @@
         - PlushieSlime
         - PlushieSnake
         - PlushieVox
+        - PlushieRatvar
+        - PlushieSpaceLizard
+        - PlushieRouny
         - ToyMouse
       chance: 0.5
       offset: 0.2

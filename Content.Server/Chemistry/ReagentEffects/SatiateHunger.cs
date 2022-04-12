@@ -10,7 +10,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Attempts to find a HungerComponent on the target,
     /// and to update it's hunger values.
     /// </summary>
-    public class SatiateHunger : ReagentEffect
+    public sealed class SatiateHunger : ReagentEffect
     {
         /// <summary>
         ///     How much hunger is satiated when 1u of the reagent is metabolized

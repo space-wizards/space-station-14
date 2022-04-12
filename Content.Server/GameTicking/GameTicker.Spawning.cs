@@ -1,47 +1,40 @@
-using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
-using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station;
-using Content.Shared.Administration.Logs;
-using Content.Shared.CharacterAppearance.Systems;
+using Content.Shared.Access.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Species;
 using Content.Shared.Station;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
-using static Content.Server.Station.StationSystem;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
-        private const string PlayerPrototypeName = "MobHuman";
         private const string ObserverPrototypeName = "MobObserver";
 
         [Dependency] private readonly IdCardSystem _cardSystem = default!;
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         /// <summary>
         /// Can't yet be removed because every test ever seems to depend on it. I'll make removing this a different PR.
@@ -52,16 +45,88 @@ namespace Content.Server.GameTicking
         // Mainly to avoid allocations.
         private readonly List<EntityCoordinates> _possiblePositions = new();
 
+        private void SpawnPlayers(List<IPlayerSession> readyPlayers, IPlayerSession[] origReadyPlayers,
+            Dictionary<NetUserId, HumanoidCharacterProfile> profiles, bool force)
+        {
+            // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
+            RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
+
+            var assignedJobs = AssignJobs(readyPlayers, profiles);
+
+            AssignOverflowJobs(assignedJobs, origReadyPlayers, profiles);
+
+            // Spawn everybody in!
+            foreach (var (player, (job, station)) in assignedJobs)
+            {
+                SpawnPlayer(player, profiles[player.UserId], station, job, false);
+            }
+
+            RefreshLateJoinAllowed();
+
+            // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
+            RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
+        }
+
+        private void AssignOverflowJobs(IDictionary<IPlayerSession, (string, StationId)> assignedJobs,
+            IPlayerSession[] origReadyPlayers, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles)
+        {
+            // For players without jobs, give them the overflow job if they have that set...
+            foreach (var player in origReadyPlayers)
+            {
+                if (assignedJobs.ContainsKey(player))
+                {
+                    continue;
+                }
+
+                var profile = profiles[player.UserId];
+                if (profile.PreferenceUnavailable != PreferenceUnavailableMode.SpawnAsOverflow)
+                    continue;
+
+                // Pick a random station
+                var stations = _stationSystem.StationInfo.Keys.ToList();
+
+                if (stations.Count == 0)
+                {
+                    assignedJobs.Add(player, (FallbackOverflowJob, StationId.Invalid));
+                    continue;
+                }
+
+                _robustRandom.Shuffle(stations);
+
+                foreach (var station in stations)
+                {
+                    // Pick a random overflow job from that station
+                    var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone();
+                    _robustRandom.Shuffle(overflows);
+
+                    // Stations with no overflow slots should simply get skipped over.
+                    if (overflows.Count == 0)
+                        continue;
+
+                    // If the overflow exists, put them in as it.
+                    assignedJobs.Add(player, (overflows[0], stations[0]));
+                    break;
+                }
+            }
+        }
+
         private void SpawnPlayer(IPlayerSession player, StationId station, string? jobId = null, bool lateJoin = true)
         {
             var character = GetPlayerProfile(player);
 
+            var jobBans = _roleBanManager.GetJobBans(player.UserId);
+            if (jobBans == null || (jobId != null && jobBans.Contains(jobId)))
+                return;
             SpawnPlayer(player, character, station, jobId, lateJoin);
             UpdateJobsAvailable();
         }
 
         private void SpawnPlayer(IPlayerSession player, HumanoidCharacterProfile character, StationId station, string? jobId = null, bool lateJoin = true)
         {
+            // Can't spawn players with a dummy ticker!
+            if (DummyTicker)
+                return;
+
             if (station == StationId.Invalid)
             {
                 var stations = _stationSystem.StationInfo.Keys.ToList();
@@ -72,21 +137,32 @@ namespace Content.Server.GameTicking
                     station = stations[0];
             }
 
-            // Can't spawn players with a dummy ticker!
-            if (DummyTicker)
-                return;
-
             if (lateJoin && DisallowLateJoin)
             {
                 MakeObserve(player);
                 return;
             }
 
+            // We raise this event to allow other systems to handle spawning this player themselves. (e.g. late-join wizard, etc)
+            var bev = new PlayerBeforeSpawnEvent(player, character, jobId, lateJoin, station);
+            RaiseLocalEvent(bev);
+
+            // Do nothing, something else has handled spawning this player for us!
+            if (bev.Handled)
+            {
+                PlayerJoinGame(player);
+                return;
+            }
+
             // Pick best job best on prefs.
-            jobId ??= PickBestAvailableJob(character, station);
-            // If no job available, just bail out.
+            jobId ??= PickBestAvailableJob(player, character, station);
+            // If no job available, stay in lobby, or if no lobby spawn as observer
             if (jobId is null)
             {
+                if (!LobbyEnabled)
+                {
+                    MakeObserve(player);
+                }
                 _chatManager.DispatchServerMessage(player, Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
                 return;
             }
@@ -142,7 +218,9 @@ namespace Content.Server.GameTicking
             else
                 _adminLogSystem.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name} joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
 
-            Preset?.OnSpawnPlayerCompleted(player, mob, lateJoin);
+            // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
+            var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, station, character);
+            RaiseLocalEvent(mob, aev);
         }
 
         public void Respawn(IPlayerSession player)
@@ -174,8 +252,6 @@ namespace Content.Server.GameTicking
             if (DummyTicker)
                 return;
 
-            if (!_playersInLobby.ContainsKey(player)) return;
-
             PlayerJoinGame(player);
 
             var name = GetPlayerProfile(player).Name;
@@ -203,7 +279,9 @@ namespace Content.Server.GameTicking
         private EntityUid SpawnPlayerMob(Job job, HumanoidCharacterProfile? profile, StationId station, bool lateJoin = true)
         {
             var coordinates = lateJoin ? GetLateJoinSpawnPoint(station) : GetJobSpawnPoint(job.Prototype.ID, station);
-            var entity = EntityManager.SpawnEntity(PlayerPrototypeName, coordinates);
+            var entity = EntityManager.SpawnEntity(
+                _prototypeManager.Index<SpeciesPrototype>(profile?.Species ?? SpeciesManager.DefaultSpecies).Prototype,
+                coordinates);
 
             if (job.StartingGear != null)
             {
@@ -230,43 +308,37 @@ namespace Content.Server.GameTicking
         #region Equip Helpers
         public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
         {
-            if (EntityManager.TryGetComponent(entity, out InventoryComponent? inventory))
+            if (_inventorySystem.TryGetSlots(entity, out var slotDefinitions))
             {
-                foreach (var slot in EquipmentSlotDefines.AllSlots)
+                foreach (var slot in slotDefinitions)
                 {
-                    var equipmentStr = startingGear.GetGear(slot, profile);
+                    var equipmentStr = startingGear.GetGear(slot.Name, profile);
                     if (!string.IsNullOrEmpty(equipmentStr))
                     {
                         var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
-                        inventory.Equip(slot, EntityManager.GetComponent<ItemComponent>(equipmentEntity));
+                        _inventorySystem.TryEquip(entity, equipmentEntity, slot.Name, true);
                     }
                 }
             }
 
-            if (EntityManager.TryGetComponent(entity, out HandsComponent? handsComponent))
+            if (!TryComp(entity, out HandsComponent? handsComponent))
+                return;
+
+            var inhand = startingGear.Inhand;
+            var coords = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
+            foreach (var (hand, prototype) in inhand)
             {
-                var inhand = startingGear.Inhand;
-                foreach (var (hand, prototype) in inhand)
-                {
-                    var inhandEntity = EntityManager.SpawnEntity(prototype, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
-                    handsComponent.TryPickupEntity(hand, inhandEntity, checkActionBlocker: false);
-                }
+                var inhandEntity = EntityManager.SpawnEntity(prototype, coords);
+                _handsSystem.TryPickup(entity, inhandEntity, hand, checkActionBlocker: false, handsComp: handsComponent);
             }
         }
 
         public void EquipIdCard(EntityUid entity, string characterName, JobPrototype jobPrototype)
         {
-            if (!EntityManager.TryGetComponent(entity, out InventoryComponent? inventory))
+            if (!_inventorySystem.TryGetSlotEntity(entity, "id", out var idUid))
                 return;
 
-            if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item))
-            {
-                return;
-            }
-
-            var itemEntity = item.Owner;
-
-            if (!EntityManager.TryGetComponent(itemEntity, out PDAComponent? pdaComponent) || pdaComponent.ContainedID == null)
+            if (!EntityManager.TryGetComponent(idUid, out PDAComponent? pdaComponent) || pdaComponent.ContainedID == null)
                 return;
 
             var card = pdaComponent.ContainedID;
@@ -292,7 +364,7 @@ namespace Content.Server.GameTicking
 
             _possiblePositions.Clear();
 
-            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>())
+            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>(true))
             {
                 var matchingStation =
                     EntityManager.TryGetComponent<StationComponent>(transform.ParentUid, out var stationComponent) &&
@@ -317,7 +389,7 @@ namespace Content.Server.GameTicking
 
             _possiblePositions.Clear();
 
-            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>())
+            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>(true))
             {
                 var matchingStation =
                     EntityManager.TryGetComponent<StationComponent>(transform.ParentUid, out var stationComponent) &&
@@ -341,7 +413,7 @@ namespace Content.Server.GameTicking
 
             _possiblePositions.Clear();
 
-            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>())
+            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>(true))
             {
                 if (point.SpawnType == SpawnPointType.Observer)
                     _possiblePositions.Add(transform.Coordinates);
@@ -353,5 +425,53 @@ namespace Content.Server.GameTicking
             return location;
         }
         #endregion
+    }
+
+    /// <summary>
+    ///     Event raised broadcast before a player is spawned by the GameTicker.
+    ///     You can use this event to spawn a player off-station on late-join but also at round start.
+    ///     When this event is handled, the GameTicker will not perform its own player-spawning logic.
+    /// </summary>
+    public sealed class PlayerBeforeSpawnEvent : HandledEntityEventArgs
+    {
+        public IPlayerSession Player { get; }
+        public HumanoidCharacterProfile Profile { get; }
+        public string? JobId { get; }
+        public bool LateJoin { get; }
+        public StationId Station { get; }
+
+        public PlayerBeforeSpawnEvent(IPlayerSession player, HumanoidCharacterProfile profile, string? jobId, bool lateJoin, StationId station)
+        {
+            Player = player;
+            Profile = profile;
+            JobId = jobId;
+            LateJoin = lateJoin;
+            Station = station;
+        }
+    }
+
+    /// <summary>
+    ///     Event raised both directed and broadcast when a player has been spawned by the GameTicker.
+    ///     You can use this to handle people late-joining, or to handle people being spawned at round start.
+    ///     Can be used to give random players a role, modify their equipment, etc.
+    /// </summary>
+    public sealed class PlayerSpawnCompleteEvent : EntityEventArgs
+    {
+        public EntityUid Mob { get; }
+        public IPlayerSession Player { get; }
+        public string? JobId { get; }
+        public bool LateJoin { get; }
+        public StationId Station { get; }
+        public HumanoidCharacterProfile Profile { get; }
+
+        public PlayerSpawnCompleteEvent(EntityUid mob, IPlayerSession player, string? jobId, bool lateJoin, StationId station, HumanoidCharacterProfile profile)
+        {
+            Mob = mob;
+            Player = player;
+            JobId = jobId;
+            LateJoin = lateJoin;
+            Station = station;
+            Profile = profile;
+        }
     }
 }

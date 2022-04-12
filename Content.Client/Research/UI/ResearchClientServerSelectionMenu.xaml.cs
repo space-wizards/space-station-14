@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.Research.UI
 {
     [GenerateTypedNameReferences]
-    public partial class ResearchClientServerSelectionMenu : SS14Window
+    public sealed partial class ResearchClientServerSelectionMenu : DefaultWindow
     {
         private int _serverCount;
         private string[] _serverNames = System.Array.Empty<string>();
@@ -56,7 +56,7 @@ namespace Content.Client.Research.UI
                 Servers.AddItem(Loc.GetString("research-client-server-selection-menu-server-entry-text", ("id", id), ("serverName", _serverNames[i])));
                 if (id == _selectedServerId)
                 {
-                    Servers[id].Selected = true;
+                    Servers[i].Selected = true;
                 }
             }
 

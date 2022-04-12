@@ -6,10 +6,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Stunnable.Components
 {
     [RegisterComponent]
-    public class StunbatonComponent : Component
+    public sealed class StunbatonComponent : Component
     {
-        public override string Name => "Stunbaton";
-
         public bool Activated = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -30,7 +28,11 @@ namespace Content.Server.Stunnable.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("energyPerUse")]
-        public float EnergyPerUse { get; set; } = 50;
+        public float EnergyPerUse { get; set; } = 350;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("onThrowStunChance")]
+        public float OnThrowStunChance { get; set; } = 0.20f;
 
         [DataField("stunSound")]
         public SoundSpecifier StunSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/egloves.ogg");

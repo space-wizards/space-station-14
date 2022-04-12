@@ -32,7 +32,7 @@ namespace Content.Server.Suspicion.Roles
 
                 var partnerText = Loc.GetString(
                     "suspicion-partners-in-crime",
-                    ("partnerCount", traitors.Count-1),
+                    ("partnersCount", traitors.Count-1),
                     ("partnerNames", allPartners)
                 );
 

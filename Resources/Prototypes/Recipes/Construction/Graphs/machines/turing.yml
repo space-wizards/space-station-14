@@ -1,0 +1,296 @@
+- type: constructionGraph
+  id: Turing
+  start: a0
+  graph:
+    - node: a0
+      actions:
+        - !type:PopupEveryone
+          text: "Input bit A0..."
+      edges:
+        # Input 1
+        - to: a1
+          steps:
+            - material: Steel
+              amount: 1
+              store: a0
+        # Input 0
+        - to: a1
+          steps:
+            - material: Glass
+              amount: 1
+
+    - node: a1
+      actions:
+        - !type:PopupEveryone
+          text: "Input bit A1..."
+      edges:
+        # Input 1
+        - to: b0
+          steps:
+            - material: Steel
+              amount: 1
+              store: a1
+        # Input 0
+        - to: b0
+          steps:
+            - material: Glass
+              amount: 1
+
+    - node: b0
+      actions:
+        - !type:PopupEveryone
+          text: "Input bit B0..."
+      edges:
+        # Input 1
+        - to: b1
+          steps:
+            - material: Steel
+              amount: 1
+              store: b0
+        # Input 0
+        - to: b1
+          steps:
+            - material: Glass
+              amount: 1
+
+    - node: b1
+      actions:
+        - !type:PopupEveryone
+          text: "Input bit B1..."
+      edges:
+        # Input 1
+        - to: result
+          steps:
+            - material: Steel
+              amount: 1
+              store: b1
+        # Input 0
+        - to: result
+          steps:
+            - material: Glass
+              amount: 1
+
+    - node: result
+      actions:
+        # Carry 0
+        - !type:ConditionalAction
+          condition:
+            !type:AllConditions
+            conditions:
+              - !type:ContainerNotEmpty
+                container: a0
+              - !type:ContainerNotEmpty
+                container: b0
+          action:
+            !type:SpawnPrototypeAtContainer
+            prototype: SheetSteel1
+            container: ca0
+
+        # Output bit 0
+        - !type:ConditionalAction
+          condition:
+            !type:AnyConditions
+            conditions:
+              - !type:AllConditions
+                conditions:
+                  - !type:ContainerEmpty
+                    container: a0
+                  - !type:ContainerNotEmpty
+                    container: b0
+              - !type:AllConditions
+                conditions:
+                  - !type:ContainerNotEmpty
+                    container: a0
+                  - !type:ContainerEmpty
+                    container: b0
+          action:
+            !type:SpawnPrototypeAtContainer
+            prototype: SheetSteel1
+            container: c0
+
+        # Temp bit 0
+        - !type:ConditionalAction
+          condition:
+            !type:AnyConditions
+            conditions:
+              - !type:AllConditions
+                conditions:
+                  - !type:ContainerEmpty
+                    container: a1
+                  - !type:ContainerNotEmpty
+                    container: b1
+              - !type:AllConditions
+                conditions:
+                  - !type:ContainerNotEmpty
+                    container: a1
+                  - !type:ContainerEmpty
+                    container: b1
+          action:
+            !type:SpawnPrototypeAtContainer
+            prototype: SheetSteel1
+            container: t0
+
+        # Output bit 1
+        - !type:ConditionalAction
+          condition:
+            !type:AnyConditions
+            conditions:
+              - !type:AllConditions
+                conditions:
+                  - !type:ContainerEmpty
+                    container: t0
+                  - !type:ContainerNotEmpty
+                    container: ca0
+              - !type:AllConditions
+                conditions:
+                  - !type:ContainerNotEmpty
+                    container: t0
+                  - !type:ContainerEmpty
+                    container: ca0
+          action:
+            !type:SpawnPrototypeAtContainer
+            prototype: SheetSteel1
+            container: c1
+
+        # Temp bit 1
+        - !type:ConditionalAction
+          condition:
+            !type:AllConditions
+            conditions:
+              - !type:ContainerNotEmpty
+                container: a1
+              - !type:ContainerNotEmpty
+                container: b1
+          action:
+            !type:SpawnPrototypeAtContainer
+            prototype: SheetSteel1
+            container: t1
+
+        # Temp bit 2
+        - !type:ConditionalAction
+          condition:
+            !type:AllConditions
+            conditions:
+              - !type:ContainerNotEmpty
+                container: t0
+              - !type:ContainerNotEmpty
+                container: ca0
+          action:
+            !type:SpawnPrototypeAtContainer
+            prototype: SheetSteel1
+            container: t2
+
+        # Output bit 2
+        - !type:ConditionalAction
+          condition:
+            !type:AnyConditions
+            conditions:
+              - !type:ContainerNotEmpty
+                container: t1
+              - !type:ContainerNotEmpty
+                container: t2
+          action:
+            !type:SpawnPrototypeAtContainer
+            prototype: SheetSteel1
+            container: c2
+
+        # Print the result!
+        - !type:ConditionalAction
+          condition:
+            !type:ContainerEmpty
+            container: c0
+          # If c0 == 0...
+          action:
+            !type:ConditionalAction
+            condition:
+              !type:ContainerEmpty
+              container: c1
+            # If c1 == 0...
+            action:
+              !type:ConditionalAction
+              condition:
+                !type:ContainerEmpty
+                container: c2
+              # If c2 == 0...
+              action:
+                !type:PopupEveryone
+                text: "Result: 0"
+              # If c2 == 1...
+              else:
+                !type:PopupEveryone
+                text: "Result: 4"
+            # If c1 == 1...
+            else:
+              !type:ConditionalAction
+              condition:
+                !type:ContainerEmpty
+                container: c2
+              # If c2 == 0...
+              action:
+                !type:PopupEveryone
+                text: "Result: 2"
+              # If c2 == 1...
+              else:
+                !type:PopupEveryone
+                text: "Result: 6"
+          # If c0 == 1...
+          else:
+            !type:ConditionalAction
+            condition:
+              !type:ContainerEmpty
+              container: c1
+            # If c1 == 0...
+            action:
+              !type:ConditionalAction
+              condition:
+                !type:ContainerEmpty
+                container: c2
+              # If c2 == 0...
+              action:
+                !type:PopupEveryone
+                text: "Result: 1"
+              # If c2 == 1...
+              else:
+                !type:PopupEveryone
+                text: "Result: 5"
+            # If c1 == 1...
+            else:
+              !type:ConditionalAction
+              condition:
+                !type:ContainerEmpty
+                container: c2
+              # If c2 == 0...
+              action:
+                !type:PopupEveryone
+                text: "Result: 3"
+              # If c2 == 1...
+              else:
+                !type:PopupEveryone
+                text: "Result: 7"
+      edges:
+        - to: a0
+          completed:
+            - !type:DeleteEntitiesInContainer
+              container: a0
+            - !type:DeleteEntitiesInContainer
+              container: a1
+            - !type:DeleteEntitiesInContainer
+              container: b0
+            - !type:DeleteEntitiesInContainer
+              container: b1
+            - !type:DeleteEntitiesInContainer
+              container: c0
+            - !type:DeleteEntitiesInContainer
+              container: c1
+            - !type:DeleteEntitiesInContainer
+              container: c2
+            - !type:DeleteEntitiesInContainer
+              container: t0
+            - !type:DeleteEntitiesInContainer
+              container: t1
+            - !type:DeleteEntitiesInContainer
+              container: t2
+            - !type:DeleteEntitiesInContainer
+              container: ca0
+          steps:
+            - tool: Prying

@@ -14,7 +14,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Atmos.UI
 {
-    public class GasAnalyzerWindow : BaseWindow
+    public sealed class GasAnalyzerWindow : BaseWindow
     {
         public GasAnalyzerBoundUserInterface Owner { get; }
 
@@ -108,7 +108,7 @@ namespace Content.Client.Atmos.UI
                     },
                     (CloseButton = new TextureButton
                     {
-                        StyleClasses = {SS14Window.StyleClassWindowCloseButton},
+                        StyleClasses = {DefaultWindow.StyleClassWindowCloseButton},
                         VerticalAlignment = VAlignment.Center
                     })
                 }

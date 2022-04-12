@@ -1,15 +1,10 @@
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
-    public class GasVolumePumpComponent : Component
+    public sealed class GasVolumePumpComponent : Component
     {
-        public override string Name => "GasVolumePump";
-
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
 
@@ -25,7 +20,12 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         public string OutletName { get; set; } = "outlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("transferRate")]
         public float TransferRate { get; set; } = Atmospherics.MaxTransferRate;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("maxTransferRate")]
+        public float MaxTransferRate { get; set; } = Atmospherics.MaxTransferRate;
 
         [DataField("leakRatio")]
         public float LeakRatio { get; set; } = 0.1f;
@@ -34,9 +34,9 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         public float LowerThreshold { get; set; } = 0.01f;
 
         [DataField("higherThreshold")]
-        public float HigherThreshold { get; set; } = 9000f;
+        public float HigherThreshold { get; set; } = 2 * Atmospherics.MaxOutputPressure;
 
         [DataField("overclockThreshold")]
-        public float OverclockThreshold { get; set; } = 1000f;
+        public float OverclockThreshold { get; set; } = 1000;
     }
 }

@@ -2,33 +2,29 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.AME;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.AME.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class AMEControllerComponent : SharedAMEControllerComponent, IActivate, IInteractUsing
+    public sealed class AMEControllerComponent : SharedAMEControllerComponent, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(AMEControllerUiKey.Key);
         private bool _injecting;
@@ -66,20 +62,6 @@ namespace Content.Server.AME.Components
             _jarSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-fuelJarContainer");
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage powerChanged:
-                    OnPowerChanged(powerChanged);
-                    break;
-            }
-        }
-
         internal void OnUpdate(float frameTime)
         {
             if (!_injecting)
@@ -115,35 +97,6 @@ namespace Content.Server.AME.Components
 
         }
 
-        /// <summary>
-        /// Called when you click the owner entity with an empty hand. Opens the UI client-side if possible.
-        /// </summary>
-        /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
-        void IActivate.Activate(ActivateEventArgs args)
-        {
-            if (!_entities.TryGetComponent(args.User, out ActorComponent? actor))
-            {
-                return;
-            }
-
-            if (!_entities.TryGetComponent(args.User, out HandsComponent? hands))
-            {
-                Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-no-hands-text"));
-                return;
-            }
-
-            var activeHandEntity = hands.GetActiveHand?.Owner;
-            if (activeHandEntity == null)
-            {
-                UserInterface?.Open(actor.PlayerSession);
-            }
-        }
-
-        private void OnPowerChanged(PowerChangedMessage e)
-        {
-            UpdateUserInterface();
-        }
-
         // Used to update core count
         public void OnAMENodeGroupUpdate()
         {
@@ -172,11 +125,6 @@ namespace Content.Server.AME.Components
             if (playerEntity == default)
                 return false;
 
-            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-
-            //Check if player can interact in their current state
-            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
-                return false;
             //Check if device is powered
             if (needsPower && !Powered)
                 return false;
@@ -184,7 +132,7 @@ namespace Content.Server.AME.Components
             return true;
         }
 
-        private void UpdateUserInterface()
+        public void UpdateUserInterface()
         {
             var state = GetUserInterfaceState();
             UserInterface?.SetState(state);
@@ -245,10 +193,7 @@ namespace Content.Server.AME.Components
             _jarSlot.Remove(jar);
             UpdateUserInterface();
 
-            if (!_entities.TryGetComponent<HandsComponent?>(user, out var hands) || !_entities.TryGetComponent<ItemComponent?>(jar, out var item))
-                return;
-            if (hands.CanPutInHand(item))
-                hands.PutInHand(item);
+            _sysMan.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, jar);
         }
 
         private void ToggleInjection()
@@ -341,13 +286,13 @@ namespace Content.Server.AME.Components
                 return true;
             }
 
-            if (hands.GetActiveHand == null)
+            if (hands.ActiveHandEntity == null)
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-nothing-in-hands-text"));
                 return false;
             }
 
-            var activeHandEntity = hands.GetActiveHand.Owner;
+            var activeHandEntity = hands.ActiveHandEntity;
             if (_entities.HasComponent<AMEFuelContainerComponent?>(activeHandEntity))
             {
                 if (HasJar)
@@ -357,7 +302,7 @@ namespace Content.Server.AME.Components
 
                 else
                 {
-                    _jarSlot.Insert(activeHandEntity);
+                    _jarSlot.Insert(activeHandEntity.Value);
                     Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-success"));
                     UpdateUserInterface();
                 }

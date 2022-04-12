@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
-    public class FireVisualizer : AppearanceVisualizer
+    public sealed class FireVisualizer : AppearanceVisualizer
     {
         [DataField("fireStackAlternateState")]
         private int _fireStackAlternateState = 3;
@@ -30,6 +30,7 @@ namespace Content.Client.Atmos.Visualizers
 
             sprite.LayerMapReserveBlank(FireVisualLayers.Fire);
             sprite.LayerSetVisible(FireVisualLayers.Fire, false);
+            sprite.LayerSetShader(FireVisualLayers.Fire, "unshaded");
         }
 
         public override void OnChangeData(AppearanceComponent component)

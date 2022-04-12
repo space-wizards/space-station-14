@@ -8,12 +8,10 @@ namespace Content.Server.Disposal.Tube.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
-    public class DisposalBendComponent : DisposalTubeComponent
+    public sealed class DisposalBendComponent : DisposalTubeComponent
     {
         [DataField("sideDegrees")]
         private int _sideDegrees = -90;
-
-        public override string Name => "DisposalBend";
 
         protected override Direction[] ConnectableDirections()
         {

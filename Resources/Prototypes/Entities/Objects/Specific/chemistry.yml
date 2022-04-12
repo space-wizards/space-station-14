@@ -1,8 +1,7 @@
 - type: entity
-  name: beaker
   parent: BaseItem
-  description: Used to contain a moderate amount of chemicals and solutions.
-  id: Beaker
+  id: BaseBeaker
+  abstract: true
   components:
   - type: Tag
     tags:
@@ -39,8 +38,6 @@
     interfaces:
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
-  - type: Spillable
-    solution: beaker
   - type: Drink
     isOpen: true
   - type: Appearance
@@ -60,7 +57,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-      - !type:SpillBehavior { }
+      - !type:SpillBehavior
+        solution: beaker
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
@@ -83,11 +81,22 @@
         Blunt: 5
 
 - type: entity
+  name: beaker
+  parent: BaseBeaker
+  description: Used to contain a moderate amount of chemicals and solutions.
+  id: Beaker
+  components:
+  - type: Spillable
+    solution: beaker
+
+- type: entity
   name: large beaker
-  parent: Beaker
+  parent: BaseBeaker
   description: Used to contain a large amount of chemicals or solutions.
   id: LargeBeaker
   components:
+  - type: Spillable
+    solution: beaker
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
     layers:
@@ -109,7 +118,7 @@
 
 - type: entity
   name: cryostasis beaker
-  parent: Beaker
+  parent: BaseBeaker
   description: Used to contain chemicals or solutions without reactions.
   id: CryostasisBeaker
   components:
@@ -120,15 +129,30 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 60
+        maxVol: 40
         canReact: false
-
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: FlimsyMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpillBehavior
+        solution: beaker
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+        
 - type: entity
   name: bluespace beaker
-  parent: Beaker
+  parent: BaseBeaker
   description: Powered by experimental bluespace technology.
   id: BluespaceBeaker
   components:
+  - type: Spillable
+    solution: beaker
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
     layers:
@@ -224,7 +248,7 @@
 - type: entity
   name: pill
   parent: BaseItem
-  id: pill
+  id: Pill
   description: It's not a suppository.
   components:
   - type: Sprite
@@ -257,6 +281,9 @@
     state: pill_canister
   - type: Item
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
+  - type: Tag
+    tags:
+      - PillCanister
   - type: Storage
     capacity: 12
     quickInsert: true

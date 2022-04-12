@@ -1,39 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Camera;
-using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Nutrition.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Stunnable;
-using Content.Server.Throwing;
-using Content.Server.Tools.Components;
+using Content.Shared.Camera;
 using Content.Shared.CombatMode;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.PneumaticCannon;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
+using Content.Shared.Throwing;
+using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.PneumaticCannon
 {
-    public class PneumaticCannonSystem : EntitySystem
+    public sealed class PneumaticCannonSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
+        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
 
         private HashSet<PneumaticCannonComponent> _currentlyFiring = new();
 
@@ -44,8 +41,8 @@ namespace Content.Server.PneumaticCannon
             SubscribeLocalEvent<PneumaticCannonComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<PneumaticCannonComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<PneumaticCannonComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<PneumaticCannonComponent, GetAlternativeVerbsEvent>(OnAlternativeVerbs);
-            SubscribeLocalEvent<PneumaticCannonComponent, GetOtherVerbsEvent>(OnOtherVerbs);
+            SubscribeLocalEvent<PneumaticCannonComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerbs);
+            SubscribeLocalEvent<PneumaticCannonComponent, GetVerbsEvent<Verb>>(OnOtherVerbs);
         }
 
         public override void Update(float frameTime)
@@ -133,7 +130,7 @@ namespace Content.Server.PneumaticCannon
             // this overrides the ServerStorageComponent's insertion stuff because
             // it's not event-based yet and I can't cancel it, so tools and stuff
             // will modify mode/power then get put in anyway
-            if (EntityManager.TryGetComponent<ItemComponent?>(args.Used, out var item)
+            if (EntityManager.TryGetComponent<SharedItemComponent?>(args.Used, out var item)
                 && EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
             {
                 if (storage.CanInsert(args.Used))
@@ -229,12 +226,13 @@ namespace Content.Server.PneumaticCannon
             storage.Remove(ent);
 
             SoundSystem.Play(Filter.Pvs(data.User), comp.FireSound.GetSound(), ((IComponent) comp).Owner, AudioParams.Default);
-            if (EntityManager.TryGetComponent<CameraRecoilComponent?>(data.User, out var recoil))
+            if (EntityManager.HasComponent<CameraRecoilComponent>(data.User))
             {
-                recoil.Kick(Vector2.One * data.Strength);
+                var kick = Vector2.One * data.Strength;
+                _cameraRecoil.KickCamera(data.User, kick);
             }
 
-            ent.TryThrow(data.Direction, data.Strength, data.User, GetPushbackRatioFromPower(comp.Power));
+            _throwingSystem.TryThrow(ent, data.Direction, data.Strength, data.User, GetPushbackRatioFromPower(comp.Power));
 
             // lasagna, anybody?
             ent.EnsureComponent<ForcefeedOnCollideComponent>();
@@ -283,20 +281,20 @@ namespace Content.Server.PneumaticCannon
             return false;
         }
 
-        private void OnAlternativeVerbs(EntityUid uid, PneumaticCannonComponent component, GetAlternativeVerbsEvent args)
+        private void OnAlternativeVerbs(EntityUid uid, PneumaticCannonComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (component.GasTankSlot.ContainedEntities.Count == 0 || !component.GasTankRequired)
                 return;
             if (!args.CanInteract)
                 return;
 
-            Verb ejectTank = new();
+            AlternativeVerb ejectTank = new();
             ejectTank.Act = () => TryRemoveGasTank(component, args.User);
             ejectTank.Text = Loc.GetString("pneumatic-cannon-component-verb-gas-tank-name");
             args.Verbs.Add(ejectTank);
         }
 
-        private void OnOtherVerbs(EntityUid uid, PneumaticCannonComponent component, GetOtherVerbsEvent args)
+        private void OnOtherVerbs(EntityUid uid, PneumaticCannonComponent component, GetVerbsEvent<Verb> args)
         {
             if (!args.CanInteract)
                 return;
@@ -318,11 +316,8 @@ namespace Content.Server.PneumaticCannon
 
             if (component.GasTankSlot.Remove(contained))
             {
-                if (EntityManager.TryGetComponent<HandsComponent?>(user, out var hands))
-                {
-                    hands.TryPutInActiveHandOrAny(contained);
-                }
-
+                _handsSystem.TryPickupAnyHand(user, contained);
+                
                 user.PopupMessage(Loc.GetString("pneumatic-cannon-component-gas-tank-remove",
                     ("tank", contained), ("cannon", component.Owner)));
                 UpdateAppearance(component);

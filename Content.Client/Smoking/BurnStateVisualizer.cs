@@ -1,16 +1,18 @@
-﻿using Content.Client.Clothing;
 using Content.Shared.Smoking;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Smoking
 {
     [UsedImplicitly]
-    public class BurnStateVisualizer : AppearanceVisualizer
+    public sealed class BurnStateVisualizer : AppearanceVisualizer, ISerializationHooks
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [DataField("burntIcon")]
         private string _burntIcon = "burnt-icon";
         [DataField("litIcon")]
@@ -18,49 +20,29 @@ namespace Content.Client.Smoking
         [DataField("unlitIcon")]
         private string _unlitIcon = "icon";
 
-        [DataField("burntPrefix")]
-        private string _burntPrefix = "unlit";
-        [DataField("litPrefix")]
-        private string _litPrefix = "lit";
-        [DataField("unlitPrefix")]
-        private string _unlitPrefix = "unlit";
+        void ISerializationHooks.AfterDeserialization()
+        {
+            IoCManager.InjectDependencies(this);
+        }
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            if (component.TryGetData<SmokableState>(SmokingVisuals.Smoking, out var smoking))
-            {
-                SetState(component, smoking);
-            }
-        }
+            if (!_entMan.TryGetComponent(component.Owner, out SpriteComponent? sprite))
+                return;
 
-        private void SetState(AppearanceComponent component, SmokableState burnState)
-        {
-            var entities = IoCManager.Resolve<IEntityManager>();
-            var clothing = entities.GetComponentOrNull<ClothingComponent>(component.Owner);
+            if (!component.TryGetData<SmokableState>(SmokingVisuals.Smoking, out var burnState))
+                return;
 
-            if (entities.TryGetComponent(component.Owner, out ISpriteComponent sprite))
+            var state = burnState switch
             {
-                switch (burnState)
-                {
-                    case SmokableState.Lit:
-                        if (clothing != null)
-                            clothing.ClothingEquippedPrefix = _litPrefix;
-                        sprite.LayerSetState(0, _litIcon);
-                        break;
-                    case SmokableState.Burnt:
-                        if (clothing != null)
-                            clothing.ClothingEquippedPrefix = _burntPrefix;
-                        sprite.LayerSetState(0, _burntIcon);
-                        break;
-                    case SmokableState.Unlit:
-                        if (clothing != null)
-                            clothing.ClothingEquippedPrefix = _unlitPrefix;
-                        sprite.LayerSetState(0, _unlitIcon);
-                        break;
-                }
-            }
+                SmokableState.Lit => _litIcon,
+                SmokableState.Burnt => _burntIcon,
+                _ => _unlitIcon
+            };
+
+            sprite.LayerSetState(0, state);
         }
     }
 }

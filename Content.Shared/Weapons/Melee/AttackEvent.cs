@@ -7,7 +7,7 @@ namespace Content.Shared.Weapons.Melee
     /// <summary>
     ///     Raised directed on the used entity when a target entity is click attacked by a user.
     /// </summary>
-    public class ClickAttackEvent : HandledEntityEventArgs
+    public sealed class ClickAttackEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity used to attack, for broadcast purposes.
@@ -25,7 +25,7 @@ namespace Content.Shared.Weapons.Melee
         public EntityCoordinates ClickLocation { get; }
 
         /// <summary>
-        ///     UID of the entity that was attacked.
+        ///     The entity that was attacked.
         /// </summary>
         public EntityUid? Target { get; }
 
@@ -41,7 +41,7 @@ namespace Content.Shared.Weapons.Melee
     /// <summary>
     ///     Raised directed on the used entity when a target entity is wide attacked by a user.
     /// </summary>
-    public class WideAttackEvent : HandledEntityEventArgs
+    public sealed class WideAttackEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity used to attack, for broadcast purposes.
@@ -69,7 +69,7 @@ namespace Content.Shared.Weapons.Melee
     /// <summary>
     ///     Event raised on entities that have been attacked.
     /// </summary>
-    public class AttackedEvent : EntityEventArgs
+    public sealed class AttackedEvent : EntityEventArgs
     {
         /// <summary>
         ///     Entity used to attack, for broadcast purposes.

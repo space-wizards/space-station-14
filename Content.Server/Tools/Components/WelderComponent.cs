@@ -10,7 +10,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Tools.Components
 {
     [RegisterComponent]
-    public class WelderComponent : SharedWelderComponent
+    public sealed class WelderComponent : SharedWelderComponent
     {
         /// <summary>
         ///     Solution on the entity that contains the fuel.
@@ -56,9 +56,16 @@ namespace Content.Server.Tools.Components
         /// </summary>
         /// <remarks>
         ///     If this is a standard welder, this damage bonus should probably subtract the entity's standard melee weapon damage
-        ///     and replace it all with heat damage. 
+        ///     and replace it all with heat damage.
         /// </remarks>
         [DataField("litMeleeDamageBonus")]
         public DamageSpecifier LitMeleeDamageBonus = new();
+
+        /// <summary>
+        ///     Whether the item is safe to refill while lit without exploding the tank.
+        /// </summary>
+        [DataField("tankSafe")]
+        public bool TankSafe = false; //I have no idea what I'm doing
+
     }
 }

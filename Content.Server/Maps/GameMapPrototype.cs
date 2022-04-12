@@ -5,6 +5,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Maps;
 
@@ -12,10 +13,10 @@ namespace Content.Server.Maps;
 /// Prototype data for a game map.
 /// </summary>
 [Prototype("gameMap")]
-public class GameMapPrototype : IPrototype
+public sealed class GameMapPrototype : IPrototype
 {
     /// <inheritdoc/>
-    [DataField("id", required: true)]
+    [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
     /// <summary>
@@ -52,7 +53,7 @@ public class GameMapPrototype : IPrototype
     /// Relative directory path to the given map, i.e. `Maps/saltern.yml`
     /// </summary>
     [DataField("mapPath", required: true)]
-    public string MapPath { get; } = default!;
+    public ResourcePath MapPath { get; } = default!;
 
     /// <summary>
     /// Controls if the map can be used as a fallback if no maps are eligible.
@@ -65,6 +66,9 @@ public class GameMapPrototype : IPrototype
     /// </summary>
     [DataField("votable")]
     public bool Votable { get; } = true;
+
+    [DataField("conditions")]
+    public List<GameMapCondition> Conditions { get; } = new();
 
     /// <summary>
     /// Jobs used at round start should the station run out of job slots.

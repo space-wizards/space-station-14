@@ -1,3 +1,4 @@
+# Base substation
 - type: entity
   abstract: true
   id: BaseSubstation
@@ -7,7 +8,7 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Sprite
+  - type: Sprite # TODO: add sprite for maintenance panel open
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation
@@ -16,8 +17,8 @@
     - state: full
       shader: unshaded
   - type: Battery
-    maxCharge: 1000
-    startingCharge: 1000
+    maxCharge: 4000000
+    startingCharge: 0
   - type: ExaminableBattery
   - type: PointLight
     radius: 1.5
@@ -42,3 +43,164 @@
     maxChargeRate: 5000
     supplyRampTolerance: 5000
     supplyRampRate: 1000
+  - type: Construction
+    graph: Machine
+    node: machine
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ExplodeBehavior
+      - !type:SpawnEntitiesBehavior # in future should also emit a cloud of hot gas
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 100
+    intensitySlope: 2
+    totalIntensity: 200
+  - type: Wires
+    BoardName: "Substation"
+    LayoutId: Substation
+  - type: Machine
+    board: SubstationMachineCircuitboard
+
+# Compact Wall Substation Base
+- type: entity
+  id: BaseSubstationWall
+  noSpawn: true
+  name: wallmount substation
+  description: A substation designed for compact shuttles and spaces.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -15
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/hdd_buzz.ogg
+  - type: PointLight
+    netsync: false
+    radius: 1.5
+    energy: 1.6
+    color: "#3db83b"
+    castShadows: false
+  - type: Clickable
+  - type: AccessReader
+    access: [["Engineering"]]
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.3,0.25"
+        layer: [ Passable ]
+  - type: Transform
+    anchored: true
+  - type: Sprite # TODO: add sprite for maintenance panel open
+    drawdepth: WallMountedItems
+    netsync: false
+    sprite: Structures/Power/substation.rsi
+    layers:
+    - state: substation_wall
+    - state: screen
+      shader: unshaded
+  - type: Battery
+    maxCharge: 2000000
+    startingCharge: 0
+  - type: ExaminableBattery
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+  - type: BatteryCharger
+    voltage: High
+  - type: BatteryDischarger
+    voltage: Medium
+  - type: PowerNetworkBattery
+    maxSupply: 150000
+    maxChargeRate: 5000
+    supplyRampTolerance: 5000
+    supplyRampRate: 1000
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+
+# Substations in use
+
+- type: entity
+  parent: BaseSubstation
+  id: SubstationBasic
+  suffix: Basic, 4MW
+  components:
+  - type: Battery
+    maxCharge: 4000000
+    startingCharge: 4000000
+
+- type: entity
+  parent: BaseSubstationWall
+  id: SubstationWallBasic
+  suffix: Basic, 2MW
+  components:
+  - type: Battery
+    maxCharge: 2000000
+    startingCharge: 2000000
+  - type: Construction
+    graph: WallmountSubstation
+    node: substation
+
+# Construction Frame
+- type: entity
+  id: BaseSubstationWallFrame
+  noSpawn: true
+  name: wallmount substation frame
+  description: A substation frame for construction
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.3,0.25"
+        layer: [ Passable ]
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    drawdepth: WallMountedItems
+    netsync: false
+    sprite: Structures/Power/substation.rsi
+    layers:
+    - state: substation_wall
+  - type: Construction
+    graph: WallmountSubstation
+    node: frame

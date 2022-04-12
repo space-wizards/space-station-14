@@ -1,54 +1,75 @@
-using System;
-using System.Globalization;
-using System.IO;
-using Content.Client.HUD;
+using Content.Client.Lobby;
+using Content.Client.Viewport;
 using Content.Shared.CCVar;
+using Content.Shared.Info;
+using Robust.Client.Console;
+using Robust.Client.State;
+using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
-using Robust.Shared.ContentPack;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Info;
 
-public sealed class RulesManager
+public sealed class RulesManager : SharedRulesManager
 {
-    [Dependency] private readonly IClientNetManager _clientNetManager = default!;
-    [Dependency] private readonly IResourceManager _resource = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+    [Dependency] private readonly IStateManager _stateManager = default!;
+    [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
 
-    public event Action? OpenRulesAndInfoWindow;
-
-    private void OnConnectStateChanged(ClientConnectionState state)
-    {
-
-        if (state != ClientConnectionState.Connected)
-            return;
-
-        var path = new ResourcePath($"/rules_last_seen_{_configManager.GetCVar(CCVars.ServerId)}");
-        var showRules = true;
-        if (_resource.UserData.TryReadAllText(path, out var lastReadTimeText)
-            && DateTime.TryParse(lastReadTimeText, null, DateTimeStyles.AssumeUniversal, out var lastReadTime))
-            showRules = lastReadTime < DateTime.UtcNow - TimeSpan.FromDays(60);
-        else
-            SaveLastReadTime();
-
-        if (showRules)
-            OpenRulesAndInfoWindow?.Invoke();
-    }
-
-    /// <summary>
-    ///     Ran when the user opens ("read") the rules, stores the new ID to disk.
-    /// </summary>
-    public void SaveLastReadTime()
-    {
-        using var sw = _resource.UserData.OpenWriteText(new ResourcePath($"/rules_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
-
-        sw.Write(DateTime.UtcNow.ToUniversalTime());
-    }
+    private bool _shouldShowRules;
 
     public void Initialize()
     {
-        _clientNetManager.ClientConnectStateChanged += OnConnectStateChanged;
+        _netManager.RegisterNetMessage<ShouldShowRulesPopupMessage>(OnShouldShowRules);
+        _netManager.RegisterNetMessage<ShowRulesPopupMessage>(OnShowRulesPopupMessage);
+        _netManager.RegisterNetMessage<RulesAcceptedMessage>();
+        _stateManager.OnStateChanged += OnStateChanged;
+    }
+
+    private void OnShouldShowRules(ShouldShowRulesPopupMessage message)
+    {
+        _shouldShowRules = true;
+    }
+
+    private void OnShowRulesPopupMessage(ShowRulesPopupMessage message)
+    {
+        ShowRules(message.PopupTime);
+    }
+
+    private void OnStateChanged(StateChangedEventArgs args)
+    {
+        if (args.NewState is not (GameScreen or LobbyState))
+            return;
+
+        if (!_shouldShowRules)
+            return;
+
+        _shouldShowRules = false;
+
+        ShowRules(_configManager.GetCVar(CCVars.RulesWaitTime));
+    }
+
+    private void ShowRules(float time)
+    {
+        var rulesPopup = new RulesPopup
+        {
+            Timer = time
+        };
+        rulesPopup.OnQuitPressed += OnQuitPressed;
+        rulesPopup.OnAcceptPressed += OnAcceptPressed;
+        _userInterfaceManager.RootControl.AddChild(rulesPopup);
+    }
+
+    private void OnQuitPressed()
+    {
+        _consoleHost.ExecuteCommand("quit");
+    }
+
+    private void OnAcceptPressed()
+    {
+        var message = _netManager.CreateNetMessage<RulesAcceptedMessage>();
+        _netManager.ClientSendMessage(message);
     }
 }

@@ -1,8 +1,12 @@
 name: Publish
 
+concurrency:
+  group: publish
+
 on:
-  push:
-    branches: [ master ]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 10 * * *'
 
 jobs:
   build:

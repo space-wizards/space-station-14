@@ -15,10 +15,8 @@ namespace Content.Server.Materials
     ///     This is not a storage system for say smelteries.
     /// </summary>
     [RegisterComponent]
-    public class MaterialComponent : Component
+    public sealed class MaterialComponent : Component
     {
-        public override string Name => "Material";
-
         [ViewVariables]
         [DataField("materials", customTypeSerializer:typeof(PrototypeIdListSerializer<MaterialPrototype>))]
         // ReSharper disable once CollectionNeverUpdated.Local

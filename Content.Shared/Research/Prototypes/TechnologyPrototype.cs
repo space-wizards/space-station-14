@@ -1,21 +1,22 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Research.Prototypes
 {
     [NetSerializable, Serializable, Prototype("technology")]
-    public class TechnologyPrototype : IPrototype
+    public sealed class TechnologyPrototype : IPrototype
     {
         /// <summary>
         ///     The ID of this technology prototype.
         /// </summary>
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>
@@ -48,15 +49,14 @@ namespace Content.Shared.Research.Prototypes
         /// <summary>
         ///     A list of technology IDs required to unlock this technology.
         /// </summary>
-        [ViewVariables]
-        [DataField("requiredTechnologies")]
+        [DataField("requiredTechnologies", customTypeSerializer: typeof(PrototypeIdListSerializer<TechnologyPrototype>))]
         public List<string> RequiredTechnologies { get; } = new();
 
         /// <summary>
         ///     A list of recipe IDs this technology unlocks.
         /// </summary>
         [ViewVariables]
-        [DataField("unlockedRecipes")]
+        [DataField("unlockedRecipes", customTypeSerializer:typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
         public List<string> UnlockedRecipes { get; } = new();
     }
 }

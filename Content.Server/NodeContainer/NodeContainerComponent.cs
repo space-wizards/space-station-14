@@ -1,14 +1,5 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
-using Content.Shared.Examine;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.NodeContainer
 {
@@ -16,16 +7,12 @@ namespace Content.Server.NodeContainer
     ///     Creates and maintains a set of <see cref="Node"/>s.
     /// </summary>
     [RegisterComponent]
-#pragma warning disable 618
-    public class NodeContainerComponent : Component, IExamine
-#pragma warning restore 618
+    public sealed class NodeContainerComponent : Component
     {
-        public override string Name => "NodeContainer";
-
         //HACK: THIS BEING readOnly IS A FILTHY HACK AND I HATE IT --moony
         [DataField("nodes", readOnly: true)] [ViewVariables] public Dictionary<string, Node> Nodes { get; } = new();
 
-        [DataField("examinable")] private bool _examinable = false;
+        [DataField("examinable")] public bool Examinable = false;
 
         public T GetNode<T>(string identifier) where T : Node
         {
@@ -42,23 +29,6 @@ namespace Content.Server.NodeContainer
 
             node = null;
             return false;
-        }
-
-        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
-        {
-            if (!_examinable || !inDetailsRange) return;
-
-            foreach (var node in Nodes.Values)
-            {
-                if (node == null) continue;
-                message.AddMarkup(node.NodeGroupID switch
-                {
-                    NodeGroupID.HVPower => Loc.GetString("node-container-component-on-examine-details-hvpower") + "\n",
-                    NodeGroupID.MVPower => Loc.GetString("node-container-component-on-examine-details-mvpower") + "\n",
-                    NodeGroupID.Apc => Loc.GetString("node-container-component-on-examine-details-apc") + "\n",
-                    _ => ""
-                });
-            }
         }
     }
 }

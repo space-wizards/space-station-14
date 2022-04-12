@@ -1,5 +1,4 @@
 traitor-death-match-redemption-component-interact-using-main-message = The machine buzzes, and displays: {$secondMessage}
-traitor-death-match-redemption-component-interact-using-no-inventory-message = "USER PDA OUT OF RANGE (0039)"
 traitor-death-match-redemption-component-interact-using-no-mind-message = "AUTHENTICATION FAILED (0045)"
 traitor-death-match-redemption-component-interact-using-no-user-mind-message = "AUTHENTICATION FAILED (0052)"
 traitor-death-match-redemption-component-interact-using-no-pda-message = GIVEN PDA IS NOT A PDA (0058)"

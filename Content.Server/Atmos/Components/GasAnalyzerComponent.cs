@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Hands.Components;
@@ -9,16 +8,13 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IUse
+    [ComponentReference(typeof(SharedGasAnalyzerComponent))]
+    public sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -165,7 +161,7 @@ namespace Content.Server.Atmos.Components
                 if (!_entities.TryGetComponent(playerEntity, out HandsComponent? handsComponent))
                     return;
 
-                if (handsComponent?.GetActiveHand?.Owner is not {Valid: true} activeHandEntity ||
+                if (handsComponent?.ActiveHandEntity is not {Valid: true} activeHandEntity ||
                     !_entities.TryGetComponent(activeHandEntity, out GasAnalyzerComponent? gasAnalyzer))
                 {
                     return;
@@ -232,7 +228,7 @@ namespace Content.Server.Atmos.Components
                         return;
                     }
 
-                    if (handsComponent.GetActiveHand?.Owner is not {Valid: true} activeHandEntity ||
+                    if (handsComponent.ActiveHandEntity is not {Valid: true} activeHandEntity ||
                         !_entities.TryGetComponent(activeHandEntity, out GasAnalyzerComponent? gasAnalyzer))
                     {
                         serverMsg.Session.AttachedEntity.Value.PopupMessage(Loc.GetString("gas-analyzer-component-need-gas-analyzer-in-hand-message"));
@@ -259,26 +255,6 @@ namespace Content.Server.Atmos.Components
             }
 
             return true;
-        }
-
-
-
-        void IDropped.Dropped(DroppedEventArgs eventArgs)
-        {
-            if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-            {
-                CloseInterface(actor.PlayerSession);
-            }
-        }
-
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-            {
-                ToggleInterface(actor.PlayerSession);
-                return true;
-            }
-            return false;
         }
     }
 }

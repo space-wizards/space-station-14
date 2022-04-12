@@ -17,8 +17,128 @@
       - MobMouse2
 
 - type: entity
+  name: Corgi Spawner
+  id: SpawnMobCorgi
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCorgi
+      - MobCorgiOld
+
+- type: entity
+  name: Possum Morty Spawner
+  id: SpawnMobPossumMorty
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobPossumMorty
+
+- type: entity
+  name: Raccoon Morticia Spawner
+  id: SpawnMobRaccoonMorticia
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRaccoonMorticia
+
+- type: entity
+  name: Drone Spawner
+  id: SpawnMobDrone
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - texture: Mobs/Silicon/drone.rsi/shell.png
+  - type: ConditionalSpawner
+    prototypes:
+      - Drone
+
+- type: entity
+  name: Fox Renault Spawner
+  id: SpawnMobFoxRenault
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobFoxRenault
+
+- type: entity
+  name: Runtime Spawner
+  id: SpawnMobCatRuntime
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatRuntime
+
+- type: entity
+  name: Exception Spawner
+  id: SpawnMobCatException
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatException
+
+- type: entity
+  name: Floppa Spawner
+  id: SpawnMobCatFloppa
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatFloppa
+
+- type: entity
   name: Cat Spawner
   id: SpawnMobCat
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatRuntime
+      - MobCatException
+      - MobCatFloppa
+
+- type: entity
+  name: Generic Cat Spawner
+  id: SpawnMobCatGeneric
   parent: MarkerBase
   components:
   - type: Sprite
@@ -32,8 +152,8 @@
       - MobCatCaracal
 
 - type: entity
-  name: Corgi Spawner
-  id: SpawnMobCorgi
+  name: Bandito Spawner
+  id: SpawnMobBandito
   parent: MarkerBase
   components:
   - type: Sprite
@@ -42,5 +162,57 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobCorgi
-      - MobCorgiOld
+      - MobBandito
+
+- type: entity
+  name:  McGriff Spawner
+  id: SpawnMobMcGriff
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobMcGriff
+
+- type: entity
+  name: Sloth Paperwork Spawner
+  id: SpawnMobSlothPaperwork
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobPaperwork
+
+- type: entity
+  name: Walter Spawner
+  id: SpawnMobWalter
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobWalter
+
+- type: entity
+  name: Space Bear Spawner
+  id: SpawnMobBear
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: bear
+      sprite: Mobs/Animals/bear.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBearSpace

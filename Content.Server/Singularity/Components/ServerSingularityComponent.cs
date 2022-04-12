@@ -12,7 +12,7 @@ namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedSingularityComponent))]
-    public class ServerSingularityComponent : SharedSingularityComponent
+    public sealed class ServerSingularityComponent : SharedSingularityComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

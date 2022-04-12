@@ -1,27 +1,15 @@
-using System;
-using Content.Shared.Instruments;
-using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Reflection;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Enums;
-using Robust.Shared.Player;
-using Robust.Shared.Network;
-using Robust.Shared.IoC;
-using Robust.Shared.Utility;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+
 
 namespace Content.Server.UserInterface
 {
     [RegisterComponent]
-    public class ActivatableUIComponent : Component,
+    public sealed class ActivatableUIComponent : Component,
             ISerializationHooks
     {
-        public override string Name => "ActivatableUI";
-
         [ViewVariables]
         public Enum? Key { get; set; }
 
@@ -41,6 +29,25 @@ namespace Content.Server.UserInterface
 
         [DataField("key", readOnly: true, required: true)]
         private string _keyRaw = default!;
+
+        [DataField("verbText")]
+        public string VerbText = "ui-verb-toggle-open";
+
+        /// <summary>
+        ///     Whether you need a hand to operate this UI. The hand does not need to be free, you just need to have one.
+        /// </summary>
+        /// <remarks>
+        ///     This should probably be true for most machines & computers, but there will still be UIs that represent a
+        ///     more generic interaction / configuration that might not require hands.
+        /// </remarks>
+        [DataField("requireHands")]
+        public bool RequireHands = true;
+
+        /// <summary>
+        ///     Whether spectators (non-admin ghosts) should be allowed to view this UI.
+        /// </summary>
+        [DataField("allowSpectator")]
+        public bool AllowSpectator = true;
 
         /// <summary>
         ///     The client channel currently using the object, or null if there's none/not single user.

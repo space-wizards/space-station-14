@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public class GasAnalyzerSystem : EntitySystem
+    public sealed class GasAnalyzerSystem : EntitySystem
     {
         public override void Update(float frameTime)
         {

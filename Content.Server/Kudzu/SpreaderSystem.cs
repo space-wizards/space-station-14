@@ -13,7 +13,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Kudzu;
 
 // Future work includes making the growths per interval thing not global, but instead per "group"
-public class SpreaderSystem : EntitySystem
+public sealed class SpreaderSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -102,7 +102,7 @@ public class SpreaderSystem : EntitySystem
         {
             var direction = (DirectionFlag) (1 << i);
             var coords = transform.Coordinates.Offset(direction.AsDir().ToVec());
-            if (grid.GetTileRef(coords).Tile.IsEmpty || _robustRandom.Prob(spreader.Chance)) continue;
+            if (grid.GetTileRef(coords).Tile.IsEmpty || _robustRandom.Prob(1 - spreader.Chance)) continue;
             var ents = grid.GetLocal(coords);
 
             if (ents.Any(x => IsTileBlockedFrom(x, direction))) continue;

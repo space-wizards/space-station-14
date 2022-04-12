@@ -16,16 +16,11 @@
     - Single
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+  - type: PowerCellSlot
     cellSlot:
       ejectOnUse: true
-      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-      soundOptions: 
+      soundOptions:
         volume: -2
-      startingItem: PowerCellSmallStandard
-      whitelist:
-        components:
-        - Battery
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -102,7 +97,37 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
   - type: BatteryBarrel
-    fireCost: 20
+    fireCost: 25
+
+- type: entity
+  name: PDW-10 pulse pistol
+  parent: BatteryGunBase
+  id: PulsePistolPdw
+  description: A state of the art energy pistol favoured as a sidearm by the NT-ERT operatives.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+  - type: BatteryBarrel
+    fireCost: 25
+    ammoPrototype: Pulse
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: PowerCellSlot
+    cellSlot:
+      ejectOnUse: true
+      soundOptions:
+        volume: -2
+      startingItem: PowerCellSmallHigh
 
 - type: entity
   name: cog laser carbine
@@ -123,7 +148,37 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/cog.rsi
   - type: BatteryBarrel
-    fireCost: 10
+    fireCost: 12
+
+- type: entity
+  name: DEAC-12 pulse carbine
+  parent: BatteryGunBase
+  id: PulseCarbineDeac
+  description: A high tech energy carbine favoured by the NT-ERT operatives.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+  - type: BatteryBarrel
+    fireCost: 12
+    ammoPrototype: Pulse
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: PowerCellSlot
+    cellSlot:
+      ejectOnUse: true
+      soundOptions:
+        volume: -2
+      startingItem: PowerCellSmallHigh
 
 - type: entity
   name: laser cannon
@@ -144,20 +199,16 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: BatteryBarrel
-    fireCost: 600
+    fireCost: 200
     ammoPrototype: RedHeavyLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: PowerCellSlot
     cellSlot:
       ejectOnUse: true
-      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-      soundOptions: 
+      soundOptions:
         volume: -2
       startingItem: PowerCellSmallSuper
-      whitelist:
-        components:
-        - Battery
 
 - type: entity
   name: x-ray cannon
@@ -182,16 +233,12 @@
     ammoPrototype: XrayLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+  - type: PowerCellSlot
     cellSlot:
       ejectOnUse: true
-      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-      soundOptions: 
+      soundOptions:
         volume: -2
       startingItem: PowerCellSmallSuper
-      whitelist:
-        components:
-        - Battery
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -220,7 +267,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
     size: 24
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - Belt
     HeldPrefix: taser4
@@ -231,51 +278,15 @@
     ammoPrototype: BulletTaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
+  - type: PowerCellSlot
+    descFormatString : "" # empty string for no examine-text (cell is not ejectable)
     cellSlot:
-      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-      soundOptions: 
+      soundOptions:
         volume: -2
       locked: true
-      startingItem: PowerCellSmallStandard
-      whitelist:
-        components:
-        - Battery
   - type: Appearance
     visuals:
     - type: MagVisualizer
       magState: mag
       steps: 5
       zeroVisible: true
-
-- type: entity
-  name: laser gun
-  parent: BatteryGunBase
-  id: LaserSecGun
-  description: A laser gun.
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
-  - type: BatteryBarrel
-    minAngle: 1
-    fireRate: 6
-    cellSlot:
-      ejectOnUse: true
-      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-      soundOptions: 
-        volume: -2
-      startingItem: PowerCellMediumStandard
-      whitelist:
-        components:
-        - Battery

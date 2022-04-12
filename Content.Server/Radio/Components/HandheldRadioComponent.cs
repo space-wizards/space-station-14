@@ -1,30 +1,22 @@
 using System.Collections.Generic;
+using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Radio.EntitySystems;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Radio.Components
 {
     [RegisterComponent]
+    [ComponentProtoName("Radio")]
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
+    [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public class HandheldRadioComponent : Component, IUse, IListen, IRadio, IActivate, IExamine
+    public sealed class HandheldRadioComponent : Component, IListen, IRadio, IActivate
 #pragma warning restore 618
     {
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        public override string Name => "Radio";
-
+        private ChatSystem _chatSystem = default!;
         private RadioSystem _radioSystem = default!;
 
         private bool _radioOn;
@@ -33,7 +25,7 @@ namespace Content.Server.Radio.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("broadcastChannel")]
-        private int BroadcastFrequency { get; set; } = 1459;
+        public int BroadcastFrequency { get; set; } = 1459;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("listenRange")] public int ListenRange { get; private set; } = 7;
 
@@ -55,13 +47,14 @@ namespace Content.Server.Radio.Components
             base.Initialize();
 
             _radioSystem = EntitySystem.Get<RadioSystem>();
+            _chatSystem = EntitySystem.Get<ChatSystem>();
 
             RadioOn = false;
         }
 
         public void Speak(string message)
         {
-            _chatManager.EntitySay(Owner, message);
+            _chatSystem.TrySendInGameICMessage(Owner, message, InGameICChatType.Speak, false);
         }
 
         public bool Use(EntityUid user)
@@ -75,15 +68,10 @@ namespace Content.Server.Radio.Components
             return true;
         }
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            return Use(eventArgs.User);
-        }
-
         public bool CanListen(string message, EntityUid source)
         {
             return RadioOn &&
-                   Owner.InRangeUnobstructed(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(source).Coordinates, range: ListenRange);
+                   EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
         }
 
         public void Receive(string message, int channel, EntityUid speaker)
@@ -107,11 +95,6 @@ namespace Content.Server.Radio.Components
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             Use(eventArgs.User);
-        }
-
-        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
-        {
-            message.AddText(Loc.GetString("handheld-radio-component-on-examine",("frequency", BroadcastFrequency)));
         }
     }
 }

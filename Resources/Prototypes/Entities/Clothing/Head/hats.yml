@@ -199,7 +199,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatPlaguedoctor
-  name: plague doctor mask
+  name: plague doctor hat
   description: These were once used by plague doctors.
   components:
   - type: Sprite
@@ -294,6 +294,8 @@
     sprite: Clothing/Head/Hats/ushanka.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/ushanka.rsi
+  - type: AddAccentClothing
+    accent: RussianAccent
 
 - type: entity
   parent: ClothingHeadBase
@@ -371,3 +373,58 @@
     sprite: Clothing/Head/Hats/truckershat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/truckershat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPyjamaSyndicateBlack
+  name: syndicate black pyjama hat
+  description: For keeping that traitor head of yours warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/pyjamasyndicateblack.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/pyjamasyndicateblack.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPyjamaSyndicatePink
+  name: syndicate pink pyjama hat
+  description: For keeping that traitor head of yours warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/pyjamasyndicatepink.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/pyjamasyndicatepink.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPyjamaSyndicateRed
+  name: syndicate red pyjama hat
+  description: For keeping that traitor head of yours warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPaperSack
+  name: papersack hat
+  description: A paper sack with crude holes cut out for eyes. Useful for hiding one's identity or ugliness.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/papersack.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/papersack.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPaperSackSmile
+  name: smiling papersack hat
+  description: A paper sack with crude holes cut out for eyes and a sketchy smile drawn on the front. Not creepy at all.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/papersacksmile.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/papersacksmile.rsi

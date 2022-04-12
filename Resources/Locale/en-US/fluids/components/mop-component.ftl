@@ -1,1 +1,0 @@
-mop-component-mop-is-dry-message = Mop needs to be wet!

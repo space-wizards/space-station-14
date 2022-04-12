@@ -14,10 +14,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent, Friend(typeof(FoodSystem))]
-    public class FoodComponent : Component
+    public sealed class FoodComponent : Component
     {
-        public override string Name => "Food";
-
         [DataField("solution")]
         public string SolutionName { get; set; } = "food";
 
@@ -45,8 +43,17 @@ namespace Content.Server.Nutrition.Components
         [DataField("utensilRequired")]
         public bool UtensilRequired = false;
 
+        /// <summary>
+        /// The localization identifier for the eat message. Needs a "food" entity argument passed to it.
+        /// </summary>
         [DataField("eatMessage")]
         public string EatMessage = "food-nom";
+
+        /// <summary>
+        /// How long it takes to eat the food personally.
+        /// </summary>
+        [DataField("delay")]
+        public float Delay = 1;
 
         /// <summary>
         ///     This is how many seconds it takes to force feed someone this food.

@@ -11,9 +11,10 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/bedsheets.rsi
+    netsync: false
   - type: Clothing
     size: 10
-    QuickEquip: true
+    quickEquip: true
     Slots:
     - neck
 
@@ -66,7 +67,7 @@
   id: BedsheetCE
   parent: BedsheetBase
   name: CE's bedsheet
-  description: It is decorated with a wrench emblem. It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil.
+  description: It's decorated with a wrench emblem. It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil.
   components:
   - type: Sprite
     state: sheetce
@@ -160,7 +161,7 @@
   id: BedsheetHOP
   parent: BedsheetBase
   name: HOP's bedsheet
-  description: It is decorated with a key emblem. For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio.
+  description: It's decorated with a key emblem. For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio.
   components:
   - type: Sprite
     state: sheethop
@@ -172,7 +173,7 @@
   id: BedsheetHOS
   parent: BedsheetBase
   name: HOS's bedsheet
-  description: It is decorated with a shield emblem. While crime doesn't sleep, you do, but you are still THE LAW!
+  description: It's decorated with a shield emblem. While crime doesn't sleep, you do, but you are still THE LAW!
   components:
   - type: Sprite
     state: sheethos
@@ -195,7 +196,7 @@
   id: BedsheetMedical
   parent: BedsheetBase
   name: medical bedsheet
-  description: It's a sterilized* blanket commonly used in the Medbay.  *Sterilization is voided if a virologist is present onboard the station.
+  description: It's a sterilized blanket commonly used in the Medbay. Sterilization is voided if a virologist is present onboard the station.
   components:
   - type: Sprite
     state: sheetmedical

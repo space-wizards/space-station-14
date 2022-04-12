@@ -22,7 +22,9 @@
       - id: Multitool
         prob: 0.2
       - id: trayScanner
-        prob: 0.7      
+        prob: 0.7
+      - id: GasAnalyzer
+        prob: 0.7
       - id: ClothingBeltUtility
         prob: 0.2
       - id: ClothingHandsGlovesColorYellow
@@ -62,7 +64,6 @@
   - type: StorageFill
     contents:
       - id: WelderMini
-        prob: 1
       - id: Welder
         prob: 0.1
       - id: ClothingHeadHatWelding
@@ -79,6 +80,9 @@
       - id: ClothingOuterHardsuitAtmos
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
+      - id: ClothingOuterSuitAtmosFire
+      - id: ClothingHeadHelmetAtmosFire
+      - id: GasAnalyzer
 
 - type: entity
   id: LockerEngineerFilled
@@ -98,3 +102,12 @@
   id: ClosetRadiationSuitFilled
   parent: ClosetRadiationSuit
   suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHatHoodRad
+        amount: 2
+      - id: ClothingOuterSuitRad
+        amount: 2
+      - id: ClothingEyesGlassesMeson
+        amount: 2

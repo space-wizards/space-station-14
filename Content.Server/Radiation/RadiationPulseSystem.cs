@@ -13,9 +13,9 @@ namespace Content.Server.Radiation
     public sealed class RadiationPulseSystem : EntitySystem
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
-        private const float RadiationCooldown = 0.5f;
+        private const float RadiationCooldown = 1.0f;
         private float _accumulator;
 
         public override void Update(float frameTime)

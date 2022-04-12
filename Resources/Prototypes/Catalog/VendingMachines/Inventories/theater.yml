@@ -4,14 +4,17 @@
   spriteName: theater
   startingInventory:
     ClothingMaskJoy: 2
+    ClothingHeadHatCardborg: 2
     ClothingOuterCardborg: 2
+    ClothingHeadHatSombrero: 2
     ClothingOuterPonchoClassic: 2
+    ClothingHeadHatPwig: 2
     ClothingOuterRobesJudge: 2
     ClothingOuterPoncho: 2
+    ClothingHeadHatSantahat: 2
     ClothingOuterSanta: 2
-    ClothingOuterXenos: 2
+    ClothingHeadHatSkub: 2
     ClothingOuterSkub: 2
-    ClothingHeadHatXeno: 2
     ClothingOuterSuitChicken: 2
     ClothingHeadHatChickenhead: 2
     ClothingOuterSuitMonkey: 2
@@ -19,3 +22,5 @@
     ClothingHeadHatShrineMaidenWig: 2
     ClothingOuterSuitShrineMaiden: 2
     Gohei: 2
+    ClothingHeadPaperSack: 2
+    ClothingHeadPaperSackSmile: 2

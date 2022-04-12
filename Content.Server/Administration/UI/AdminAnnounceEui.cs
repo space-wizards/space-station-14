@@ -47,7 +47,7 @@ namespace Content.Server.Administration.UI
                             _chatManager.DispatchServerAnnouncement(doAnnounce.Announcement);
                             break;
                         case AdminAnnounceType.Station:
-                            _chatManager.DispatchStationAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer);
+                            _chatManager.DispatchStationAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
                             break;
                     }
 

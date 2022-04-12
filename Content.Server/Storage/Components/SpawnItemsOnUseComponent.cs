@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Shared.Sound;
+using Content.Shared.Storage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -9,16 +10,14 @@ namespace Content.Server.Storage.Components
     ///     Spawns items when used in hand.
     /// </summary>
     [RegisterComponent]
-    public class SpawnItemsOnUseComponent : Component
+    public sealed class SpawnItemsOnUseComponent : Component
     {
-        public override string Name => "SpawnItemsOnUse";
-
         /// <summary>
         ///     The list of entities to spawn, with amounts and orGroups.
         /// </summary>
         /// <returns></returns>
         [DataField("items", required: true)]
-        public List<EntitySpawnEntry> Items = new List<EntitySpawnEntry>();
+        public List<EntitySpawnEntry> Items = new();
 
         /// <summary>
         ///     A sound to play when the items are spawned. For example, gift boxes being unwrapped.

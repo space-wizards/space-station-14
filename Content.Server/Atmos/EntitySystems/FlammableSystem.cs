@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.Administration.Logs;
-using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
+using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
@@ -28,6 +28,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         private const float MinimumFireStacks = -10f;
@@ -49,6 +50,18 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<FlammableComponent, StartCollideEvent>(OnCollideEvent);
             SubscribeLocalEvent<FlammableComponent, IsHotEvent>(OnIsHotEvent);
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFireEvent);
+            SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
+        }
+
+        private void IgniteOnCollide(EntityUid uid, IgniteOnCollideComponent component, StartCollideEvent args)
+        {
+            var otherFixture = args.OtherFixture.Body.Owner;
+
+            if (!EntityManager.TryGetComponent(otherFixture, out FlammableComponent flammable))
+                return;
+
+            flammable.FireStacks += component.FireStacks;
+            Ignite(otherFixture, flammable);
         }
 
         private void OnInteractUsingEvent(EntityUid uid, FlammableComponent flammable, InteractUsingEvent args)
@@ -102,7 +115,7 @@ namespace Content.Server.Atmos.EntitySystems
             args.IsHot = flammable.OnFire;
         }
 
-        private void OnTileFireEvent(EntityUid uid, FlammableComponent flammable, TileFireEvent args)
+        private void OnTileFireEvent(EntityUid uid, FlammableComponent flammable, ref TileFireEvent args)
         {
             var tempDelta = args.Temperature - MinIgnitionTemperature;
 
@@ -167,19 +180,18 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         public void Resist(EntityUid uid,
-            FlammableComponent? flammable = null,
-            ServerAlertsComponent? alerts = null)
+            FlammableComponent? flammable = null)
         {
-            if (!Resolve(uid, ref flammable, ref alerts))
+            if (!Resolve(uid, ref flammable))
                 return;
 
-            if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner) || flammable.Resisting)
+            if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner, null) || flammable.Resisting)
                 return;
 
             flammable.Resisting = true;
 
             flammable.Owner.PopupMessage(Loc.GetString("flammable-component-resist-message"));
-            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true, alerts: alerts);
+            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true);
 
             // TODO FLAMMABLE: Make this not use TimerComponent...
             flammable.Owner.SpawnTimer(2000, () =>
@@ -200,9 +212,9 @@ namespace Content.Server.Atmos.EntitySystems
                 var fireStackDelta = fireStackMod - flammable.FireStacks;
                 if (fireStackDelta > 0)
                 {
-                    AdjustFireStacks((flammable).Owner, fireStackDelta, flammable);
+                    AdjustFireStacks(flammable.Owner, fireStackDelta, flammable);
                 }
-                Ignite((flammable).Owner, flammable);
+                Ignite(flammable.Owner, flammable);
             }
             _fireEvents.Clear();
 
@@ -224,21 +236,22 @@ namespace Content.Server.Atmos.EntitySystems
                     flammable.FireStacks = MathF.Min(0, flammable.FireStacks + 1);
                 }
 
-                EntityManager.TryGetComponent(flammable.Owner, out ServerAlertsComponent? status);
-
                 if (!flammable.OnFire)
                 {
-                    status?.ClearAlert(AlertType.Fire);
+                    _alertsSystem.ClearAlert(uid, AlertType.Fire);
                     continue;
                 }
 
-                status?.ShowAlert(AlertType.Fire);
+                _alertsSystem.ShowAlert(uid, AlertType.Fire, null, null);
 
                 if (flammable.FireStacks > 0)
                 {
                     // TODO FLAMMABLE: further balancing
                     var damageScale = Math.Min((int)flammable.FireStacks, 5);
-                    _temperatureSystem.ChangeHeat(uid, 12500 * damageScale);
+                    
+                    if(TryComp(uid, out TemperatureComponent? temp))
+                        _temperatureSystem.ChangeHeat(uid, 12500 * damageScale, false, temp);
+
                     _damageableSystem.TryChangeDamage(uid, flammable.Damage * damageScale);
 
                     AdjustFireStacks(uid, -0.1f * (flammable.Resisting ? 10f : 1f), flammable);

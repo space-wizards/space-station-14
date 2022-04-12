@@ -2,31 +2,35 @@
 - type: entity
   name: Xeno
   id: MobXeno
-  parent: SimpleMobBase
+  parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
   components:
   - type: UtilityAI
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
   - type: AiFactionTag
     factions:
     - Xeno
   - type: Hands
   - type: Sprite
     drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/burrower.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
-      sprite: Mobs/Aliens/Xenos/xeno.rsi
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-1,0.4,-0.2"
-      mass: 85
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 120
       mask:
       - Impassable
       - MobImpassable
@@ -39,24 +43,94 @@
       0: !type:NormalMobState {}
       150: !type:CriticalMobState {}
       200: !type:DeadMobState {}
-  - type: Respirator
-    damage:
+  - type: Bloodstream
+    bloodReagent: FluorosulfuricAcid
+    bloodlossDamage:
       types:
-        Asphyxiation: 1
-    damageRecovery:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
       types:
-        Asphyxiation: -1
+        Bloodloss:
+          -0.25
   - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
     arc: claw
     damage:
       groups:
-        Brute: 10
+        Brute: 20
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
+      rotate: true
       normal: running
       crit: crit
       dead: dead
   - type: Puller
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatXeno
+      amount: 5
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: xeno
+    description: You are a xeno, co-operate with your hive to kill all crewmembers!
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: ReplacementAccent
+    accent: xeno
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: -150
+    currentTemperature: 310.15
+  - type: Tag
+    tags:
+      - CannotSuicide
+
+- type: entity
+  name: purple snake
+  parent: SimpleSpaceMobBase
+  id: MobPurpleSnake
+  description: A menacing purple snake from Kepler-283c.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: purple_snake
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: purple_snake
+      crit: dead_purple_snake
+      dead: dead_purple_snake
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+
+- type: entity
+  name: purple snake
+  parent: SimpleSpaceMobBase
+  id: MobSmallPurpleSnake
+  suffix: small
+  description: A smaller version of the menacing purple snake from Kepler-283c.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: small_purple_snake
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: purple_snake
+      crit: dead_small_purple_snake
+      dead: dead_small_purple_snake
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male

@@ -7,9 +7,9 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Tools
 {
     [Prototype("tool")]
-    public class ToolQualityPrototype : IPrototype
+    public sealed class ToolQualityPrototype : IPrototype
     {
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

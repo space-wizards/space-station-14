@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Access.Systems;
 using Content.Server.AI.Pathfinding.Pathfinders;
+using Content.Shared.Access.Systems;
 using Content.Shared.AI;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
@@ -82,11 +83,11 @@ namespace Content.Server.AI.Pathfinding.Accessible
         {
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PathfindingChunkUpdateMessage>(RecalculateNodeRegions);
+            SubscribeLocalEvent<GridRemovalEvent>(GridRemoved);
 #if DEBUG
             SubscribeNetworkEvent<SharedAiDebug.SubscribeReachableMessage>(HandleSubscription);
             SubscribeNetworkEvent<SharedAiDebug.UnsubscribeReachableMessage>(HandleUnsubscription);
 #endif
-            _mapManager.OnGridRemoved += GridRemoved;
         }
 
         public override void Shutdown()
@@ -98,12 +99,11 @@ namespace Content.Server.AI.Pathfinding.Accessible
             _cachedAccessible.Clear();
             _queuedCacheDeletions.Clear();
 
-            _mapManager.OnGridRemoved -= GridRemoved;
         }
 
-        private void GridRemoved(MapId mapId, GridId gridId)
+        private void GridRemoved(GridRemovalEvent ev)
         {
-            _regions.Remove(gridId);
+            _regions.Remove(ev.GridId);
         }
 
         public override void Update(float frameTime)
