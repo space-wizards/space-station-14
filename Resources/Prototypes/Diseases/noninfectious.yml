@@ -38,4 +38,4 @@
   cures:
     - !type:DiseaseReagentCure
       reagent: Zombidozone
-      min: 25
+      min: 10

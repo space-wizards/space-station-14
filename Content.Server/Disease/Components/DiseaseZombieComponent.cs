@@ -18,7 +18,7 @@ namespace Content.Server.Disease.Components
         /// A multiplier on the movement speed that zombies recieve.
         /// </summary>
         [DataField("slowAmount")]
-        public float SlowAmount = 0.8f;
+        public float SlowAmount = 0.75f;
 
         /// <summary>
         /// Whether or not the zombie needs all the zombie traits initialized upon component inti

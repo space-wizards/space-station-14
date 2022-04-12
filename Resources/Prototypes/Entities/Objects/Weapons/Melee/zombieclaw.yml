@@ -2,6 +2,7 @@
 - type: entity
   id: ZombieClaw
   name: Zombie Claw
+  noSpawn: true
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/zombie_claw.rsi

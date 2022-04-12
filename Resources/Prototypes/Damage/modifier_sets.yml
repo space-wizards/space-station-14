@@ -97,12 +97,11 @@
   coefficients:
     Blunt: 0.4
     Slash: 0.8
-    Piercing: 1.5
-    Shock: 0.5
-    Cold: 0.0
+    Piercing: 0.9
+    Shock: 0.3
+    Cold: 0.1
     Heat: 3.0
     Poison: 0.0
-    Radiation: 0.0
 
 # Represents which damage types should be modified
 # in relation to how they cause bloodloss damage.

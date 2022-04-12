@@ -1,0 +1,1 @@
+station-event-zombie-outbreak-announcement = Attention crewmates! The dead walk again! Report all sightings of infected crewmates and animals and stay away to prevent infection.

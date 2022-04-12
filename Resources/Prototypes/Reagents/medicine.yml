@@ -323,7 +323,7 @@
   id: Zombidozone
   name: zombidozone
   group: Medicine
-  desc: A difficult to procure chemical used in the reversal of the zombification process.
+  desc: A difficult to procure chemical used in the reversal of the zombification process. Tastes like death.
   physicalDesc: acrid
   color: "#7e916e"
   metabolisms:
@@ -332,8 +332,7 @@
       - !type:HealthChange
         damage:
           types:
-            Cellular: 1
-
+            Toxin: 1
 
 - type: reagent
   id: PulpedBananaPeel
