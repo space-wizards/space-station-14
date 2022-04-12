@@ -1,0 +1,45 @@
+- type: entity
+  id: Forcefield
+  parent: BaseStructure
+  name: forcefield
+  description: A forcefield device used to stop gasses leaking from a shuttle.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.49,-0.49,0.49,-0.3"
+      mass: 50
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/forcefield.rsi
+    layers:
+      - state: frame
+      - state: field
+  - type: Icon
+    sprite: Structures/Doors/forcefield.rsi
+    state: ghost
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Glass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Airtight
+    fixVacuum: true
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+      - South

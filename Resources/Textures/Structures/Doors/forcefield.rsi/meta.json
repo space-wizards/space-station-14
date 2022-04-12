@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by Peptide for SS14.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "field",
+      "directions": 4,
+      "delays": [
+                [0.2, 0.2, 0.2, 0.3],
+                [0.2, 0.2, 0.2, 0.3],
+                [0.2, 0.2, 0.2, 0.3],
+                [0.2, 0.2, 0.2, 0.3]
+            ]
+    },
+    {
+      "name": "frame",
+      "directions": 4
+    },
+    {
+      "name": "ghost",
+      "directions": 4
+    }
+  ]
+}
