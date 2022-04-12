@@ -120,15 +120,15 @@ public sealed class FluidSpill : ContentIntegrationTest
         var spillSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SpillableSystem>();
         var gameTiming = server.ResolveDependency<IGameTiming>();
         MapId mapId;
-        GridId? gridid = null;
+        GridId? gridId = null;
 
         await server.WaitPost(() =>
         {
             mapId = mapManager.CreateMap();
-            gridid = mapLoader.LoadBlueprint(mapId, SpillMapsYml).gridId;
+            gridId = mapLoader.LoadBlueprint(mapId, SpillMapsYml).gridId;
         });
 
-        if (gridid == null)
+        if (gridId == null)
         {
             Assert.Fail($"Test blueprint {SpillMapsYml} not found.");
             return;
@@ -137,14 +137,14 @@ public sealed class FluidSpill : ContentIntegrationTest
         await server.WaitAssertion(() =>
         {
             var solution = new Solution("Water", FixedPoint2.New(20.01));
-            var grid = mapManager.GetGrid(gridid.Value);
+            var grid = mapManager.GetGrid(gridId.Value);
             var tileRef = grid.GetTileRef(_origin);
             var puddle = spillSystem.SpillAt(tileRef, solution, "PuddleSmear");
 
             Assert.That(puddle, Is.Not.Null);
         });
 
-        if (gridid == null)
+        if (gridId == null)
         {
             Assert.Fail($"Test blueprint {SpillMapsYml} not found.");
             return;
@@ -155,7 +155,7 @@ public sealed class FluidSpill : ContentIntegrationTest
 
         server.Assert(() =>
         {
-            var grid = mapManager.GetGrid(gridid.Value);
+            var grid = mapManager.GetGrid(gridId.Value);
             var puddle = GetPuddle(entityManager, grid, _origin);
             Assert.That(puddle, Is.Not.Null);
             Assert.That(puddle!.CurrentVolume, Is.EqualTo(FixedPoint2.New(20)));
