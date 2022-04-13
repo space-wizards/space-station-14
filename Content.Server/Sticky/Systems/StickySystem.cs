@@ -31,7 +31,7 @@ public sealed class StickySystem : EntitySystem
 
     private void OnAfterInteract(EntityUid uid, StickyComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || args.Target == null)
+        if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
         // try stick object to a clicked target entity
@@ -40,7 +40,7 @@ public sealed class StickySystem : EntitySystem
 
     private void AddUnstickVerb(EntityUid uid, StickyComponent component, GetVerbsEvent<Verb> args)
     {
-        if (!component.CanUnstick || component.StuckTo == null)
+        if (component.StuckTo == null || !component.CanUnstick)
             return;
 
         args.Verbs.Add(new Verb
