@@ -29,30 +29,43 @@ public sealed class StickySystem : EntitySystem
         if (args.Handled || args.Target == null)
             return;
 
-        // show message to user
-        if (component.StickPopupStart != null)
+        // check if delay is not zero to start do after
+        var delay = (float) component.StickDelay.TotalSeconds;
+        if (delay > 0)
         {
-            var msg = Loc.GetString(component.StickPopupStart);
-            _popupSystem.PopupEntity(msg, args.User, Filter.Entities(args.User));
-        }
+            // show message to user
+            if (component.StickPopupStart != null)
+            {
+                var msg = Loc.GetString(component.StickPopupStart);
+                _popupSystem.PopupEntity(msg, args.User, Filter.Entities(args.User));
+            }
 
-        // start sticking object to target
-        var delay = (float) component.Delay.TotalSeconds;
-        _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, delay, target: args.Target)
+            // start sticking object to target
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, delay, target: args.Target)
+            {
+                BroadcastFinishedEvent = new StickySuccessfulEvent(uid, args.User, args.Target.Value),
+                BreakOnStun = true,
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                NeedHand = true
+            });
+        }
+        else
         {
-            BroadcastFinishedEvent = new StickySuccessfulEvent(args.User, args.Target.Value, component),
-            BreakOnStun = true,
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
-            NeedHand = true
-        });
+            // if delay is zero - stick entity immediately
+            StickToEntity(uid, args.Target.Value, args.User, component);
+        }
 
         args.Handled = true;
     }
 
     private void OnStickSuccessful(StickySuccessfulEvent ev)
     {
-        StickToEntity(ev.Component.Owner, ev.Target, ev.User, ev.Component);
+        // check if entity still has sticky component
+        if (!TryComp(ev.Uid, out StickyComponent? component))
+            return;
+
+        StickToEntity(ev.Uid, ev.Target, ev.User, component);
     }
 
     public void StickToEntity(EntityUid uid, EntityUid target, EntityUid user, StickyComponent? component = null)
@@ -84,15 +97,15 @@ public sealed class StickySystem : EntitySystem
 
     private sealed class StickySuccessfulEvent : EntityEventArgs
     {
+        public readonly EntityUid Uid;
         public readonly EntityUid User;
         public readonly EntityUid Target;
-        public readonly StickyComponent Component;
 
-        public StickySuccessfulEvent(EntityUid user, EntityUid target, StickyComponent component)
+        public StickySuccessfulEvent(EntityUid uid, EntityUid user, EntityUid target)
         {
+            Uid = uid;
             User = user;
             Target = target;
-            Component = component;
         }
     }
 }

@@ -11,10 +11,11 @@ using Content.Shared.DrawDepth;
 public sealed class StickyComponent : Component
 {
     /// <summary>
-    ///     How much time does it take to place entity.
+    ///     How much time does it take to stick entity to target.
+    ///     If zero will stick entity immediately.
     /// </summary>
-    [DataField("delay")]
-    public TimeSpan Delay = TimeSpan.FromSeconds(5);
+    [DataField("stickDelay")]
+    public TimeSpan StickDelay = TimeSpan.Zero;
 
     /// <summary>
     ///     What sprite draw depth set when entity stuck.
