@@ -46,6 +46,7 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<DiseaseZombieComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         }
+        
         /// <remarks>
         /// I would imagine that if this component got assigned to something other than a mob, it would throw hella errors.
         /// </remarks>
