@@ -29,6 +29,9 @@ public sealed class StickySystem : EntitySystem
         if (args.Handled || args.Target == null)
             return;
 
+        if (component.Whitelist != null && !component.Whitelist.IsValid(args.Target.Value))
+            return;
+
         // check if delay is not zero to start do after
         var delay = (float) component.StickDelay.TotalSeconds;
         if (delay > 0)

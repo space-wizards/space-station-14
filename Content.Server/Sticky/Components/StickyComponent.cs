@@ -1,4 +1,5 @@
-﻿using Robust.Server.GameObjects;
+﻿using Content.Shared.Whitelist;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Sticky.Components;
 using Content.Shared.DrawDepth;
@@ -10,6 +11,12 @@ using Content.Shared.DrawDepth;
 [RegisterComponent]
 public sealed class StickyComponent : Component
 {
+    /// <summary>
+    ///     What target entities are valid to be surface for sticky entity.
+    /// </summary>
+    [DataField("whitelist")]
+    public EntityWhitelist? Whitelist;
+
     /// <summary>
     ///     How much time does it take to stick entity to target.
     ///     If zero will stick entity immediately.
