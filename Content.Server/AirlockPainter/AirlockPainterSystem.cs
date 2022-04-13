@@ -39,7 +39,7 @@ namespace Content.Server.AirlockPainter
             if (TryComp<AppearanceComponent>(ev.Target, out var appearance) &&
                 TryComp<PaintableAirlockComponent>(ev.Target, out PaintableAirlockComponent? airlock))
             {
-                SoundSystem.Play(Filter.Pvs(ev.User), ev.Component.SpraySound.GetSound(), ev.User);
+                SoundSystem.Play(Filter.Pvs(ev.User, entityManager:EntityManager), ev.Component.SpraySound.GetSound(), ev.User);
                 appearance.SetData(DoorVisuals.BaseRSI, ev.Sprite);
             }
         }
