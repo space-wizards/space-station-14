@@ -25,9 +25,6 @@ namespace Content.Shared.AirlockPainter
                 }
             }
             Styles = styles.ToList();
-            Logger.Debug("Loaded styles:");
-            foreach (var s in Styles)
-                Logger.Debug(s);
         }
     }
 }
