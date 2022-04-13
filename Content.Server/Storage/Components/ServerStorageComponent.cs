@@ -1,7 +1,6 @@
 using Content.Shared.Sound;
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
-using Robust.Server.Player;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Storage.Components
@@ -48,7 +47,6 @@ namespace Content.Server.Storage.Components
         /// This storage has an open UI
         /// </summary>
         public bool IsOpen = false;
-        public bool StorageInitialCalculated;
         public int StorageUsed;
         [DataField("capacity")]
         public int StorageCapacityMax = 10000;
@@ -78,6 +76,8 @@ namespace Content.Server.Storage.Components
                 if (Storage != null) Storage.OccludesLight = value;
             }
         }
+
+        // neccesary for abstraction, should be deleted on complete storage ECS
         public override bool Remove(EntityUid entity)
         {
             return true;

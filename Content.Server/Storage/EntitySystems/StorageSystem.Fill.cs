@@ -6,7 +6,7 @@ namespace Content.Server.Storage.EntitySystems;
 public sealed partial class StorageSystem
 {
     [Dependency] private StorageSystem _storageSystem = default!;
-    private async void OnStorageFillMapInit(EntityUid uid, StorageFillComponent component, MapInitEvent args)
+    private void OnStorageFillMapInit(EntityUid uid, StorageFillComponent component, MapInitEvent args)
     {
         if (component.Contents.Count == 0) return;
         // ServerStorageComponent needs to rejoin IStorageComponent when other storage components are ECS'd
@@ -25,11 +25,12 @@ public sealed partial class StorageSystem
         {
             var ent = EntityManager.SpawnEntity(item, coordinates);
 
-            if (storage != null)
-                if (storage.Insert(ent)) continue;
+            // handle depending on storage component, again this should be unified after ECS
+            if (storage != null && storage.Insert(ent))
+               continue;
 
-            if (serverStorageComp != null)
-                if (_storageSystem.Insert(uid, ent, serverStorageComp)) continue;
+            if (serverStorageComp != null && _storageSystem.Insert(uid, ent, serverStorageComp))
+                continue;
 
             Logger.ErrorS("storage", $"Tried to StorageFill {item} inside {uid} but can't.");
             EntityManager.DeleteEntity(ent);

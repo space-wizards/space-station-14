@@ -1,9 +1,10 @@
 using Content.Client.Storage.UI;
 using Robust.Client.GameObjects;
-using static Content.Shared.Storage.SharedStorageComponent;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Content.Client.Items.Managers;
+
+using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Client.Storage
 {
