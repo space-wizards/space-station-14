@@ -40,7 +40,7 @@
   parent: ClothingOuterBase
   id: ClothingOuterArmorCult
   name: acolyte armor
-  description: An evil-looking cult armor, made of bones.
+  description: An evil-looking piece of cult armor, made of bones.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/cult_armour.rsi

@@ -19,7 +19,7 @@ namespace Content.Shared.Damage.Prototypes
     public sealed class DamageModifierSetPrototype : DamageModifierSet, IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
     }
 }

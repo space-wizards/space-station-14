@@ -2,6 +2,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Interaction.Components;
 using Content.Server.Sound.Components;
 using Content.Server.Throwing;
+using Content.Server.UserInterface;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Throwing;
@@ -29,6 +30,7 @@ namespace Content.Server.Sound
             SubscribeLocalEvent<EmitSoundOnThrowComponent, ThrownEvent>(HandleEmitSoundOnThrown);
             SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>(HandleEmitSoundOnActivateInWorld);
             SubscribeLocalEvent<EmitSoundOnTriggerComponent, TriggerEvent>(HandleEmitSoundOnTrigger);
+            SubscribeLocalEvent<EmitSoundOnUIOpenComponent, AfterActivatableUIOpenEvent>(HandleEmitSoundOnUIOpen);
         }
 
         private void HandleEmitSoundOnTrigger(EntityUid uid, EmitSoundOnTriggerComponent component, TriggerEvent args)
@@ -41,10 +43,13 @@ namespace Content.Server.Sound
             TryEmitSound(component);
         }
 
-        private void HandleEmitSoundOnUseInHand(EntityUid eUI, BaseEmitSoundComponent component, UseInHandEvent arg)
+        private void HandleEmitSoundOnUseInHand(EntityUid eUI, EmitSoundOnUseComponent component, UseInHandEvent arg)
         {
-            // Intentionally not handling interaction. This component is an easy way to add sounds in addition to other behavior.
+            // Intentionally not checking whether the interaction has already been handled.
             TryEmitSound(component);
+
+            if (component.Handle)
+                arg.Handled = true;
         }
 
         private void HandleEmitSoundOnThrown(EntityUid eUI, BaseEmitSoundComponent component, ThrownEvent arg)
@@ -52,9 +57,17 @@ namespace Content.Server.Sound
             TryEmitSound(component);
         }
 
-        private void HandleEmitSoundOnActivateInWorld(EntityUid eUI, BaseEmitSoundComponent component, ActivateInWorldEvent arg)
+        private void HandleEmitSoundOnActivateInWorld(EntityUid eUI, EmitSoundOnActivateComponent component, ActivateInWorldEvent arg)
         {
-            // Intentionally not handling interaction. This component is an easy way to add sounds in addition to other behavior.
+            // Intentionally not checking whether the interaction has already been handled.
+            TryEmitSound(component);
+
+            if (component.Handle)
+                arg.Handled = true;
+        }
+
+        private void HandleEmitSoundOnUIOpen(EntityUid eUI, BaseEmitSoundComponent component, AfterActivatableUIOpenEvent arg)
+        {
             TryEmitSound(component);
         }
 

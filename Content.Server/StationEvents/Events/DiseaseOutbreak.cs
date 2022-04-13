@@ -31,6 +31,8 @@ public sealed class DiseaseOutbreak : StationEvent
     };
     public override string Name => "DiseaseOutbreak";
     public override float Weight => WeightNormal;
+
+    public override string? StartAudio => "/Audio/Announcements/outbreak7.ogg";
     protected override float EndAfter => 1.0f;
     /// <summary>
     /// Finds 2-5 random, alive entities that can host diseases
@@ -65,6 +67,7 @@ public sealed class DiseaseOutbreak : StationEvent
 
             diseaseSystem.TryAddDisease(target.Owner, disease, target);
         }
-        _chatManager.DispatchStationAnnouncement(Loc.GetString("station-event-disease-outbreak-announcement"));
+        _chatManager.DispatchStationAnnouncement(Loc.GetString("station-event-disease-outbreak-announcement"),
+            playDefaultSound: false, colorOverride: Color.YellowGreen);
     }
 }

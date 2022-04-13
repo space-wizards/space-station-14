@@ -4,8 +4,9 @@
   id: ClothingWithSuitSensor
   components:
   - type: SuitSensor
-  - type: DeviceNetworkComponent
+  - type: DeviceNetwork
     deviceNetId: Wireless
+    transmitFrequencyId: SuitSensor
   - type: WirelessNetworkConnection
     range: 500
 
@@ -22,8 +23,9 @@
       path: /Audio/Items/jumpsuit_equip.ogg
   - type: Butcherable
     butcheringType: Knife
-    spawned: MaterialCloth1
-    pieces: 3
+    spawned:
+    - id: MaterialCloth1
+      amount: 3
 
 - type: entity
   abstract: true
@@ -39,5 +41,6 @@
       path: /Audio/Items/jumpsuit_equip.ogg
   - type: Butcherable
     butcheringType: Knife
-    spawned: MaterialCloth1
-    pieces: 3
+    spawned:
+    - id: MaterialCloth1
+      amount: 3

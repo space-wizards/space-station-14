@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
@@ -13,11 +11,9 @@ using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
+
 // ReSharper disable once RedundantUsingDirective
 
 namespace Content.Server.Atmos.EntitySystems
@@ -145,9 +141,9 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="indices"></param>
         /// <param name="overlayData"></param>
         /// <returns>true if updated</returns>
-        private bool TryRefreshTile(GridId grid, GasOverlayData oldTile, Vector2i indices, out GasOverlayData overlayData)
+        private bool TryRefreshTile(GridAtmosphereComponent gridAtmosphere, GasOverlayData oldTile, Vector2i indices, out GasOverlayData overlayData)
         {
-            var tile = _atmosphereSystem.GetTileAtmosphereOrCreateSpace(grid, indices);
+            var tile = _atmosphereSystem.GetTileAtmosphere(gridAtmosphere, indices);
 
             if (tile == null)
             {
@@ -190,22 +186,30 @@ namespace Content.Server.Atmos.EntitySystems
         /// <returns></returns>
         private List<GasOverlayChunk> GetChunksInRange(EntityUid entity)
         {
-            var inRange = new List<GasOverlayChunk>();
-
             // This is the max in any direction that we can get a chunk (e.g. max 2 chunks away of data).
             var (maxXDiff, maxYDiff) = ((int) (_updateRange / ChunkSize) + 1, (int) (_updateRange / ChunkSize) + 1);
 
-            var worldBounds = Box2.CenteredAround(EntityManager.GetComponent<TransformComponent>(entity).WorldPosition,
-                new Vector2(_updateRange, _updateRange));
+            // Setting initial list size based on the theoretical max number of chunks from a single grid. For default
+            // parameters, this is currently 6^2 = 36. Unless a player is near more than one grid, this is will
+            // generally slightly over-estimate the actual list size, which will be either 25, 30, or 36 (assuming the
+            // player is not near the edge of a grid).
+            var initialListSize = (1 + (int) MathF.Ceiling(2 * _updateRange / ChunkSize)) * (1 + (int) MathF.Ceiling(2 * _updateRange / ChunkSize));
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(EntityManager.GetComponent<TransformComponent>(entity).MapID, worldBounds))
+            var inRange = new List<GasOverlayChunk>(initialListSize);
+
+            var xform = Transform(entity);
+            var worldPos = xform.MapPosition;
+
+            var worldBounds = Box2.CenteredAround(worldPos.Position, new Vector2(_updateRange, _updateRange));
+
+            foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, worldBounds))
             {
                 if (!_overlay.TryGetValue(grid.Index, out var chunks))
                 {
                     continue;
                 }
 
-                var entityTile = grid.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates).GridIndices;
+                var entityTile = grid.GetTileRef(worldPos).GridIndices;
 
                 for (var x = -maxXDiff; x <= maxXDiff; x++)
                 {
@@ -219,8 +223,8 @@ namespace Content.Server.Atmos.EntitySystems
                         // (e.g. if we're on the very edge of a chunk we may need more chunks).
 
                         var (xDiff, yDiff) = (chunkIndices.X - entityTile.X, chunkIndices.Y - entityTile.Y);
-                        if (xDiff > 0 && xDiff > _updateRange ||
-                            yDiff > 0 && yDiff > _updateRange ||
+                        if (xDiff > _updateRange ||
+                            yDiff > _updateRange ||
                             xDiff < 0 && Math.Abs(xDiff + ChunkSize) > _updateRange ||
                             yDiff < 0 && Math.Abs(yDiff + ChunkSize) > _updateRange) continue;
 
@@ -283,7 +287,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var chunk = GetOrCreateChunk(gridId, invalid);
 
-                    if (!TryRefreshTile(grid.Index, chunk.GetData(invalid), invalid, out var data)) continue;
+                    if (!TryRefreshTile(gam, chunk.GetData(invalid), invalid, out var data)) continue;
 
                     if (!updatedTiles.TryGetValue(chunk, out var tiles))
                     {
@@ -291,7 +295,7 @@ namespace Content.Server.Atmos.EntitySystems
                         updatedTiles[chunk] = tiles;
                     }
 
-                    updatedTiles[chunk].Add(invalid);
+                    tiles.Add(invalid);
                     chunk.Update(data, invalid);
                 }
             }
