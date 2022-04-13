@@ -9,6 +9,7 @@ using Robust.Shared.Containers;
 using Content.Server.Popups;
 using Robust.Shared.Localization;
 using Content.Shared.ActionBlocker;
+using Content.Server.Disease.Components;
 
 namespace Content.Server.Resist;
 
@@ -23,15 +24,24 @@ public sealed class EscapeInventorySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<CanEscapeInventoryComponent, RelayMovementEntityEvent>(OnRelayMovement);
+        SubscribeLocalEvent<CanEscapeInventoryComponent, UpdateCanMoveEvent>(OnMoveAttempt);
     }
 
     private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, RelayMovementEntityEvent args)
     {
-        EntitySystem.Get<ActionBlockerSystem>().CanMove(uid);
-        if (_containerSystem.IsEntityOrParentInContainer(uid))
+        if (_containerSystem.IsEntityOrParentInContainer(args.Entity))
         {
-            Transform(uid).AttachParentToContainerOrGrid(EntityManager);
+            Transform(args.Entity).AttachParentToContainerOrGrid(EntityManager);
         }
     }
 
+    private void OnMoveAttempt(EntityUid uid, CanEscapeInventoryComponent component, UpdateCanMoveEvent args)
+    {
+        if (_containerSystem.IsEntityOrParentInContainer(uid))
+            args.Cancel();
+    }
+
+    private void AttemptEscape(EntityUid user, EntityUid container, CanEscapeInventoryComponent component)
+    {
+    }
 }

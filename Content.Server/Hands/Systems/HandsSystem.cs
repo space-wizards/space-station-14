@@ -59,8 +59,6 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
 
-            SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
-
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
             SubscribeLocalEvent<HandsComponent, EntInsertedIntoContainerMessage>(HandleEntityInserted);
             SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
@@ -118,7 +116,7 @@ namespace Content.Server.Hands.Systems
             if (Deleted(args.Entity))
                 return;
 
-            if (TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
+            if (!Deleted(args.Entity) && TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
                 _virtualSystem.Delete(@virtual, uid);
 
             if (HasComp<DiseaseCarrierComponent>(args.Entity))
@@ -146,7 +144,6 @@ namespace Content.Server.Hands.Systems
             _logSystem.Add(LogType.Pickup, LogImpact.Low, $"{uid} picked up {entity}");
         }
 
-
         public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
             EntityUid? exclude)
         {
@@ -159,12 +156,6 @@ namespace Content.Server.Hands.Systems
                 filter = filter.RemoveWhereAttachedEntity(entity => entity == exclude);
 
             RaiseNetworkEvent(new PickupAnimationEvent(item, initialPosition, finalPosition), filter);
-        }
-
-        private void HandleEntityRemoved(EntityUid uid, SharedHandsComponent component, EntRemovedFromContainerMessage args)
-        {
-            if (!Deleted(args.Entity) && TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
-                _virtualSystem.Delete(@virtual, uid);
         }
         #endregion
 
