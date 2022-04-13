@@ -54,5 +54,12 @@ namespace Content.Server.Medical.SuitSensors
         ///     Last time when sensor updated owners status
         /// </summary>
         public TimeSpan LastUpdate = TimeSpan.Zero;
+
+        /// <summary>
+        ///     The server the suit sensor sends it state to.
+        ///     The suit sensor will try connecting to a new server when no server is connected.
+        ///     It does this by calling the servers entity system for performance reasons.
+        /// </summary>
+        public string? ConnectedServer = null;
     }
 }

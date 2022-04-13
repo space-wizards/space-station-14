@@ -16,6 +16,6 @@
   - type: CrewMonitoringConsole
   - type: DeviceNetwork
     deviceNetId: Wireless
-    receiveFrequencyId: SuitSensor
+    receiveFrequencyId: CrewMonitor
   - type: WirelessNetworkConnection
     range: 500

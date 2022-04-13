@@ -50,18 +50,24 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <param name="address">The address of the entity that the packet gets sent to. If null, the message is broadcast to all devices on that frequency (except the sender)</param>
         /// <param name="frequency">The frequency to send on</param>
         /// <param name="data">The data to be sent</param>
-        public void QueuePacket(EntityUid uid, string? address, NetworkPayload data, uint? frequency = null, DeviceNetworkComponent? device = null)
+        /// <returns>Returns true when the packet was successfully enqueued.</returns>
+        public bool QueuePacket(EntityUid uid, string? address, NetworkPayload data, uint? frequency = null, DeviceNetworkComponent? device = null)
         {
             if (!Resolve(uid, ref device, false))
-                return;
+                return false;
 
-            if (device.Address == null)
-                return;
+            if (device.Address == string.Empty)
+                return false;
+
+            if (address != null && (!_networks.TryGetValue(device.DeviceNetId, out var network) || !network.Devices.ContainsKey(address)))
+                return false;
 
             frequency ??= device.TransmitFrequency;
 
             if (frequency != null)
                 _packets.Enqueue(new DeviceNetworkPacketEvent(device.DeviceNetId, address, frequency.Value, device.Address, uid, data));
+
+            return true;
         }
 
         /// <summary>

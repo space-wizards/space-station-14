@@ -3,6 +3,7 @@ using Content.Server.Access.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
@@ -29,6 +30,7 @@ namespace Content.Server.Medical.SuitSensors
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly CrewMonitoringServerSystem _monitoringServerSystem = default!;
 
         private const float UpdateRate = 1f;
         private float _updateDif;
@@ -64,16 +66,29 @@ namespace Content.Server.Medical.SuitSensors
                 // check if sensor is ready to update
                 if (curTime - sensor.LastUpdate < sensor.UpdateRate)
                     continue;
-                sensor.LastUpdate = curTime;
+
+                // Add a random offset to the next update time that isn't longer than the sensors update rate
+                sensor.LastUpdate = curTime.Add(TimeSpan.FromSeconds(_random.Next(0, sensor.UpdateRate.Seconds)));
 
                 // get sensor status
                 var status = GetSensorState(sensor.Owner, sensor);
                 if (status == null)
                     continue;
 
-                // broadcast it to device network
+                //Retrieve active server address if the sensor isn't connected to a server
+                if (sensor.ConnectedServer == null)
+                {
+                    if (!_monitoringServerSystem.TryGetActiveServerAddress(out var address))
+                        continue;
+
+                    sensor.ConnectedServer = address;
+                }
+
+                // Send it to the connected server
                 var payload = SuitSensorToPacket(status);
-                _deviceNetworkSystem.QueuePacket(sensor.Owner, null, payload, device: device);
+                // Clear the connected server if sending the status failed
+                if (!_deviceNetworkSystem.QueuePacket(sensor.Owner, sensor.ConnectedServer, payload, device: device))
+                    sensor.ConnectedServer = null;
             }
         }
 

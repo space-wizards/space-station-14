@@ -22,9 +22,6 @@ namespace Content.Server.DeviceNetwork.Components
         }
         // TODO allow devices to join more than one network?
 
-        // TODO if wireless/wired is determined by ConnectionType, what is the point of WirelessNetworkComponent & the
-        // other network-type-specific components? Shouldn't DeviceNetId determine conectivity checks?
-
         [DataField("deviceNetId")]
         public ConnectionType DeviceNetId { get; set; } = ConnectionType.Private;
 

@@ -1,0 +1,44 @@
+﻿- type: entity
+  id: CrewMonitoringServer
+  parent: BaseMachinePowered
+  name: crew monitoring server
+  description: Receives and relais the status of all active suit sensors on the station
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/server.rsi
+      layers:
+        - state: server
+        - state: variant-crew
+    - type: CrewMonitoringServer
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      transmitFrequencyId: CrewMonitor
+      receiveFrequencyId: SuitSensor
+      autoConnect: false
+    - type: WirelessNetworkConnection
+      range: 500
+    - type: ApcPowerReceiver
+      powerLoad: 200
+      priority: Low
+    - type: ExtensionCableReceiver
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 300
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 1
+                  max: 2
+    - type: AmbientSound
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/server_fans.ogg

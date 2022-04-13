@@ -33,6 +33,7 @@ namespace Content.Client.Entry
             "PaperLabel",
             "Construction",
             "PoweredLight",
+            "CrewMonitoringServer",
             "Smes",
             "LightBulb",
             "GlassTable",
