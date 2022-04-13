@@ -14,13 +14,11 @@ namespace Content.Client.Interactable
             if (!target.TryGetContainer(out var container))
                 return false;
 
-            if (!TryComp<ClientStorageComponent>(container.Owner, out var storage))
+            if (!TryComp(container.Owner, out ClientStorageComponent? storage))
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
-            // return storage.UIOpen;
-
-            // Need to check if UI is open
+            // Need to return if UI is open or not
             return true;
         }
     }

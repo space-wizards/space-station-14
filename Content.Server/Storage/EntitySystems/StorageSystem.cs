@@ -201,6 +201,8 @@ namespace Content.Server.Storage.EntitySystems
             {
                 Insert(target, entity, targetComp);
             }
+            RecalculateStorageUsed(source, sourceComp);
+            UpdateStorageUI(source, sourceComp);
         }
 
         /// <summary>
@@ -228,6 +230,8 @@ namespace Content.Server.Storage.EntitySystems
                     _disposalSystem.AfterInsert(disposalComp, entity);
                 }
             }
+            RecalculateStorageUsed(source, sourceComp);
+            UpdateStorageUI(source, sourceComp);
         }
 
         private void UpdateStorageVisualization(EntityUid uid, ServerStorageComponent storageComp)
@@ -469,9 +473,16 @@ namespace Content.Server.Storage.EntitySystems
         /// </summary>
         /// <param name="eventArgs"></param>
         /// <returns></returns>
-        private void AfterInteract(EntityUid uid, ServerStorageComponent storageComp, AfterInteractEvent eventArgs)
+        private async void AfterInteract(EntityUid uid, ServerStorageComponent storageComp, AfterInteractEvent eventArgs)
         {
             if (!eventArgs.CanReach) return;
+
+            if (storageComp.CancelToken != null)
+            {
+                storageComp.CancelToken.Cancel();
+                storageComp.CancelToken = null;
+                return;
+            }
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
@@ -491,15 +502,16 @@ namespace Content.Server.Storage.EntitySystems
                 //If there's only one then let's be generous
                 if (validStorables.Count > 1)
                 {
-                    var doAfterArgs = new DoAfterEventArgs(eventArgs.User, 0.2f * validStorables.Count, CancellationToken.None, uid)
+                    storageComp.CancelToken = new CancellationTokenSource();
+                    var doAfterArgs = new DoAfterEventArgs(eventArgs.User, 0.2f * validStorables.Count, storageComp.CancelToken.Token, uid)
                     {
                         BreakOnStun = true,
                         BreakOnDamage = true,
                         BreakOnUserMove = true,
                         NeedHand = true,
                     };
-                    var result = _doAfterSystem.WaitDoAfter(doAfterArgs);
-                    // if (result != DoAfterStatus.Finished) return true;
+
+                    await _doAfterSystem.WaitDoAfter(doAfterArgs);
                 }
 
                 var successfullyInserted = new List<EntityUid>();
@@ -529,8 +541,7 @@ namespace Content.Server.Storage.EntitySystems
                 {
                     if (storageComp.StorageInsertSound is not null)
                         SoundSystem.Play(Filter.Pvs(uid), storageComp.StorageInsertSound.GetSound(), uid, AudioParams.Default);
-
-                    RaiseLocalEvent(new AnimateInsertingEntitiesEvent(uid, successfullyInserted, successfullyInsertedPositions));
+                    RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid, successfullyInserted, successfullyInsertedPositions));
                 }
                 return;
             }
@@ -552,13 +563,11 @@ namespace Content.Server.Storage.EntitySystems
                     transformEnt.MapPosition);
                     if (PlayerInsertEntityInWorld(uid, eventArgs.User, target, storageComp))
                     {
-                        RaiseLocalEvent(new AnimateInsertingEntitiesEvent(uid,
+                        RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid,
                             new List<EntityUid> { target },
                             new List<EntityCoordinates> { position }));
-                        return;
                     }
                 }
-                return;
             }
             return;
         }
@@ -633,6 +642,5 @@ namespace Content.Server.Storage.EntitySystems
 
             _popupSystem.PopupEntity(Loc.GetString(message), player, Filter.Entities(player));
         }
-
     }
 }
