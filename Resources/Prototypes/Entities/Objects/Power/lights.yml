@@ -65,7 +65,7 @@
   parent: BaseLightbulb
   name: incandescent light bulb
   id: LightBulb
-  description: That's a light bulb.
+  description: A light bulb.
   components:
   - type: LightBulb
     bulb: Bulb
@@ -81,7 +81,7 @@
   parent: BaseLightbulb
   name: fluorescent light tube
   id: LightTube
-  description: That's a light fixture.
+  description: A light fixture.
   components:
   - type: LightBulb
     bulb: Tube

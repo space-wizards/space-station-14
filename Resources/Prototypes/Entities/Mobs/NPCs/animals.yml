@@ -687,6 +687,7 @@
   - type: Tag
     tags:
     - Trash
+    - CannotSuicide
   - type: Recyclable
   - type: Respirator
     damage:
@@ -959,6 +960,7 @@
   - type: AiFactionTag
     factions:
     - SimpleHostile
+    - Syndicate
   - type: Sprite
     drawdepth: Mobs
     layers:

@@ -1,3 +1,4 @@
+using Content.Shared.ActionBlocker;
 using Content.Shared.Physics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
@@ -9,6 +10,7 @@ namespace Content.Shared.Climbing
     public abstract class SharedClimbingComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         /// <summary>
         ///     List of fixtures that had vault-impassable prior to an entity being downed. Required when re-adding the
@@ -49,6 +51,8 @@ namespace Content.Shared.Climbing
                 {
                     physicsComponent.BodyType = BodyType.KinematicController;
                 }
+
+                _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
             }
         }
 

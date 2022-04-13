@@ -926,7 +926,7 @@ namespace Content.Server.Atmos.EntitySystems
         public IEnumerable<GasMixture> GetAdjacentTileMixtures(EntityCoordinates coordinates, bool includeBlocked = false, bool invalidate = false)
         {
             if (TryGetGridAndTile(coordinates, out var tuple))
-                return GetAdjacentTileMixtures(tuple.Value.Grid, tuple.Value.Tile);
+                return GetAdjacentTileMixtures(tuple.Value.Grid, tuple.Value.Tile, includeBlocked, invalidate);
 
             return Enumerable.Empty<GasMixture>();
         }

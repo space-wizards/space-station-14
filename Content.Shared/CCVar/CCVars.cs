@@ -869,5 +869,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<int> ResourceUploadingStoreDeletionDays =
             CVarDef.Create("netres.store_deletion_days", 30, CVar.SERVER | CVar.SERVERONLY);
+
+        /*
+         * Controls
+         */
+
+        /// <summary>
+        /// Deadzone for drag-drop interactions.
+        /// </summary>
+        public static readonly CVarDef<float> DragDropDeadZone =
+            CVarDef.Create("control.drag_dead_zone", 12f, CVar.CLIENTONLY | CVar.ARCHIVE);
     }
 }

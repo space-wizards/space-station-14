@@ -76,16 +76,13 @@ namespace Content.Server.Drone
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)
         {
-            if (args.IsInDetailsRange)
+            if (TryComp<MindComponent>(uid, out var mind) && mind.HasMind)
             {
-                if (TryComp<MindComponent>(uid, out var mind) && mind.HasMind)
-                {
-                    args.PushMarkup(Loc.GetString("drone-active"));
-                }
-                else
-                {
-                    args.PushMarkup(Loc.GetString("drone-dormant"));
-                }
+                args.PushMarkup(Loc.GetString("drone-active"));
+            }
+            else
+            {
+                args.PushMarkup(Loc.GetString("drone-dormant"));
             }
         }
 

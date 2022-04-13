@@ -7,21 +7,17 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Audio;
-using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
 #pragma warning disable 618
-    public sealed class GasTankComponent : Component, IExamine, IGasMixtureHolder
+    public sealed class GasTankComponent : Component, IGasMixtureHolder
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -88,16 +84,6 @@ namespace Content.Server.Atmos.Components
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            }
-        }
-
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            message.AddMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(Air?.Pressure ?? 0))));
-            if (IsConnected)
-            {
-                message.AddText("\n");
-                message.AddMarkup(Loc.GetString("comp-gas-tank-connected"));
             }
         }
 

@@ -1,34 +1,16 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Shared.Examine
 {
-    [Obsolete("Use ExaminedEvent instead.")]
-    public interface IExamine
-    {
-        /// <summary>
-        /// Returns a status examine value for components appended to the end of the description of the entity
-        /// </summary>
-        /// <param name="message">The message to append to which will be displayed.</param>
-        /// <param name="inDetailsRange">Whether the examiner is within the 'Details' range, allowing you to show information logically only availabe when close to the examined entity.</param>
-        void Examine(FormattedMessage message, bool inDetailsRange);
-    }
-
     public abstract class ExamineSystemShared : EntitySystem
     {
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -268,21 +250,6 @@ namespace Content.Shared.Examine
             var isInDetailsRange = IsInDetailsRange(examiner.Value, entity);
             var examinedEvent = new ExaminedEvent(message, entity, examiner.Value, isInDetailsRange, doNewline);
             RaiseLocalEvent(entity, examinedEvent);
-
-            //Add component statuses from components that report one
-            foreach (var examineComponent in EntityManager.GetComponents<IExamine>(entity))
-            {
-                var subMessage = new FormattedMessage();
-                examineComponent.Examine(subMessage, isInDetailsRange);
-                if (subMessage.Tags.Count == 0)
-                    continue;
-
-                if (doNewline)
-                    message.AddText("\n");
-
-                message.AddMessage(subMessage);
-                doNewline = true;
-            }
 
             message.Pop();
 

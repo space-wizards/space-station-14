@@ -25,6 +25,9 @@ public sealed class InstrumentComponent : SharedInstrumentComponent
     [ViewVariables]
     public int MidiEventCount = 0;
 
+    [ViewVariables]
+    public uint LastSequencerTick = 0;
+
     // TODO Instruments: Make this ECS
     public IPlayerSession? InstrumentPlayer =>
         _entMan.GetComponentOrNull<ActivatableUIComponent>(Owner)?.CurrentSingleUser
