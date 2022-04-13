@@ -9,6 +9,7 @@
   - type: Clickable
   - type: Physics
     bodyType: Static
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -40,7 +41,6 @@
   - type: Clickable
   - type: Physics
     bodyType: Dynamic
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
