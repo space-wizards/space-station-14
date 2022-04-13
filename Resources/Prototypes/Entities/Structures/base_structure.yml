@@ -40,6 +40,7 @@
   - type: Clickable
   - type: Physics
     bodyType: Dynamic
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
