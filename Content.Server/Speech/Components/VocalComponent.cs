@@ -36,6 +36,7 @@ public sealed class VocalComponent : Component
         Name = "action-name-scream",
         Description = "AAAAAAAAAAAAAAAAAAAAAAAAA",
         Event = new ScreamActionEvent(),
+        CheckCanInteract = false, // system checks a speech related action blocker.
     };
 }
 

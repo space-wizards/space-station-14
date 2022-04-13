@@ -171,7 +171,10 @@
       - AtmosphericsNitrogen
       - AtmosphericsCarbonDioxide
   - type: CrewMonitoringConsole
-  - type: DeviceNetworkComponent
+    snap: false
+    precision: 3
+  - type: DeviceNetwork
     deviceNetId: Wireless
+    receiveFrequencyId: SuitSensor
   - type: WirelessNetworkConnection
     range: 500

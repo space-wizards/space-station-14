@@ -888,5 +888,15 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<float> MaxDebrisLoadTimeMs =
             CVarDef.Create("worldgen.max_debris_load_time_ms", 4f, CVar.SERVERONLY);
+
+        /*
+         * Controls
+         */
+
+        /// <summary>
+        /// Deadzone for drag-drop interactions.
+        /// </summary>
+        public static readonly CVarDef<float> DragDropDeadZone =
+            CVarDef.Create("control.drag_dead_zone", 12f, CVar.CLIENTONLY | CVar.ARCHIVE);
     }
 }

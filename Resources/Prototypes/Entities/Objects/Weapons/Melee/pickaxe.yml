@@ -2,7 +2,7 @@
   name: pickaxe
   parent: BaseItem
   id: Pickaxe
-  description: Notched to perfection, for jebbing it into rocks
+  description: Notched to perfection, for jamming it into rocks
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/pickaxe.rsi
