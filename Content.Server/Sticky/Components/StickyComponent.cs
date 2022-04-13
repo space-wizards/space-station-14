@@ -74,9 +74,4 @@ public sealed class StickyComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? StuckTo;
-
-    /// <summary>
-    ///     Is someone already trying to unstick entity?
-    /// </summary>
-    public bool UnstickInProgress;
 }

@@ -101,8 +101,6 @@ public sealed class StickySystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return false;
-        if (component.UnstickInProgress)
-            return false;
 
         var delay = (float) component.UnstickDelay.TotalSeconds;
         if (delay > 0)
@@ -115,7 +113,6 @@ public sealed class StickySystem : EntitySystem
             }
 
             // start unsticking object
-            component.UnstickInProgress = true;
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, delay, target: uid)
             {
                 BroadcastFinishedEvent = new UnstickSuccessfulEvent(uid, user),
@@ -140,7 +137,6 @@ public sealed class StickySystem : EntitySystem
         if (!TryComp(ev.Uid, out StickyComponent? component))
             return;
 
-        component.UnstickInProgress = false;
         UnstickFromEntity(ev.Uid, ev.User, component);
     }
 
