@@ -38,6 +38,13 @@ public sealed class StickyComponent : Component
     public bool CanUnstick = true;
 
     /// <summary>
+    ///     How much time does it take to unstick entity.
+    ///     If zero will unstick entity immediately.
+    /// </summary>
+    [DataField("unstickDelay")]
+    public TimeSpan UnstickDelay = TimeSpan.Zero;
+
+    /// <summary>
     ///     Popup message shown when player started sticking entity to another entity.
     /// </summary>
     [DataField("stickPopupStart")]
@@ -50,9 +57,26 @@ public sealed class StickyComponent : Component
     public string? StickPopupSuccess;
 
     /// <summary>
+    ///     Popup message shown when player started unsticking entity from another entity.
+    /// </summary>
+    [DataField("unstickPopupStart")]
+    public string? UnstickPopupStart;
+
+    /// <summary>
+    ///     Popup message shown when player successfully unstuck entity.
+    /// </summary>
+    [DataField("unstickPopupSuccess")]
+    public string? UnstickPopupSuccess;
+
+    /// <summary>
     ///     Entity that is used as surface for sticky entity.
     ///     Null if entity doesn't stuck to anything.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? StuckTo;
+
+    /// <summary>
+    ///     Is someone already trying to unstick entity?
+    /// </summary>
+    public bool UnstickInProgress;
 }

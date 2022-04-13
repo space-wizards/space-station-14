@@ -2,6 +2,7 @@
 using Content.Server.Popups;
 using Content.Server.Sticky.Components;
 using Content.Server.Sticky.Events;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -15,13 +16,15 @@ public sealed class StickySystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
     private const string StickerSlotId = "stickers_container";
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StickySuccessfulEvent>(OnStickSuccessful);
+        SubscribeLocalEvent<StickSuccessfulEvent>(OnStickSuccessful);
+        SubscribeLocalEvent<UnstickSuccessfulEvent>(OnUnstickSuccessful);
         SubscribeLocalEvent<StickyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StickyComponent, GetVerbsEvent<Verb>>(AddUnstickVerb);
     }
@@ -37,13 +40,13 @@ public sealed class StickySystem : EntitySystem
 
     private void AddUnstickVerb(EntityUid uid, StickyComponent component, GetVerbsEvent<Verb> args)
     {
-        if (component.StuckTo == null)
+        if (!component.CanUnstick || component.StuckTo == null)
             return;
 
         args.Verbs.Add(new Verb
         {
             Text = Loc.GetString("comp-sticky-unstick-verb-text"),
-            IconTexture = "/Textures/Interface/VerbIcons/eject.102.svg.192dpi.png",
+            IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",
             Act = () => StartUnsticking(uid, args.User, component)
         });
     }
@@ -69,7 +72,7 @@ public sealed class StickySystem : EntitySystem
             // start sticking object to target
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, delay, target: target)
             {
-                BroadcastFinishedEvent = new StickySuccessfulEvent(uid, user, target),
+                BroadcastFinishedEvent = new StickSuccessfulEvent(uid, user, target),
                 BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -85,13 +88,60 @@ public sealed class StickySystem : EntitySystem
         return true;
     }
 
-    private void OnStickSuccessful(StickySuccessfulEvent ev)
+    private void OnStickSuccessful(StickSuccessfulEvent ev)
     {
         // check if entity still has sticky component
         if (!TryComp(ev.Uid, out StickyComponent? component))
             return;
 
         StickToEntity(ev.Uid, ev.Target, ev.User, component);
+    }
+
+    private bool StartUnsticking(EntityUid uid, EntityUid user, StickyComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+        if (component.UnstickInProgress)
+            return false;
+
+        var delay = (float) component.UnstickDelay.TotalSeconds;
+        if (delay > 0)
+        {
+            // show message to user
+            if (component.UnstickPopupStart != null)
+            {
+                var msg = Loc.GetString(component.UnstickPopupStart);
+                _popupSystem.PopupEntity(msg, user, Filter.Entities(user));
+            }
+
+            // start unsticking object
+            component.UnstickInProgress = true;
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, delay, target: uid)
+            {
+                BroadcastFinishedEvent = new UnstickSuccessfulEvent(uid, user),
+                BreakOnStun = true,
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                NeedHand = true
+            });
+        }
+        else
+        {
+            // if delay is zero - unstick entity immediately
+            UnstickFromEntity(uid, user, component);
+        }
+
+        return true;
+    }
+
+    private void OnUnstickSuccessful(UnstickSuccessfulEvent ev)
+    {
+        // check if entity still has sticky component
+        if (!TryComp(ev.Uid, out StickyComponent? component))
+            return;
+
+        component.UnstickInProgress = false;
+        UnstickFromEntity(ev.Uid, ev.User, component);
     }
 
     public void StickToEntity(EntityUid uid, EntityUid target, EntityUid user, StickyComponent? component = null)
@@ -122,26 +172,64 @@ public sealed class StickySystem : EntitySystem
         RaiseLocalEvent(uid, new EntityStuckEvent(target, user));
     }
 
-    private bool StartUnsticking(EntityUid uid, EntityUid user, StickyComponent? component = null)
+    public void UnstickFromEntity(EntityUid uid, EntityUid user, StickyComponent? component = null)
     {
         if (!Resolve(uid, ref component))
-            return false;
-        
+            return;
+        if (component.StuckTo == null)
+            return;
 
-        return true;
+        // try to remove sticky item from target container
+        var target = component.StuckTo.Value;
+        if (!_containerSystem.TryGetContainer(target, StickerSlotId, out var container) || !container.Remove(uid))
+            return;
+        // delete container if it's now empty
+        if (container.ContainedEntities.Count == 0)
+            container.Shutdown();
+
+        // try place dropped entity into user hands
+        _handsSystem.PickupOrDrop(user, uid);
+
+        // change sprite draw depth to show entity as overlay
+        if (TryComp(uid, out SpriteComponent? sprite))
+        {
+            sprite.DrawDepth = component.StuckDrawDepth;
+        }
+
+        // show message to user
+        if (component.UnstickPopupSuccess != null)
+        {
+            var msg = Loc.GetString(component.UnstickPopupSuccess);
+            _popupSystem.PopupEntity(msg, user, Filter.Entities(user));
+        }
+
+        component.StuckTo = null;
+        RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user));
     }
 
-    private sealed class StickySuccessfulEvent : EntityEventArgs
+    private sealed class StickSuccessfulEvent : EntityEventArgs
     {
         public readonly EntityUid Uid;
         public readonly EntityUid User;
         public readonly EntityUid Target;
 
-        public StickySuccessfulEvent(EntityUid uid, EntityUid user, EntityUid target)
+        public StickSuccessfulEvent(EntityUid uid, EntityUid user, EntityUid target)
         {
             Uid = uid;
             User = user;
             Target = target;
+        }
+    }
+
+    private sealed class UnstickSuccessfulEvent : EntityEventArgs
+    {
+        public readonly EntityUid Uid;
+        public readonly EntityUid User;
+
+        public UnstickSuccessfulEvent(EntityUid uid, EntityUid user)
+        {
+            Uid = uid;
+            User = user;
         }
     }
 }
