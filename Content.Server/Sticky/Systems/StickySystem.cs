@@ -79,7 +79,7 @@ public sealed class StickySystem : EntitySystem
             sprite.DrawDepth = component.StuckDrawDepth;
         }
 
-        RaiseLocalEvent(uid, new EntityStuckEvent(user));
+        RaiseLocalEvent(uid, new EntityStuckEvent(target, user));
     }
 
     private sealed class StickySuccessfulEvent : EntityEventArgs
