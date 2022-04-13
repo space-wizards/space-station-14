@@ -817,6 +817,8 @@
     successChance: 0.3
     interactSuccessString: petting-success-reptile
     interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/lizard_happy.ogg
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: Damageable
@@ -1026,6 +1028,7 @@
     totalIntensity: 120
   - type: ExplodeOnTrigger
 
+  # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
   name: snake
   parent: SimpleMobBase
