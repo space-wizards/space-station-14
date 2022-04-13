@@ -40,12 +40,14 @@ public class PowerWireAction : BaseWireAction
 
     public override object Identifier { get; } = PowerWireActionKey.Key;
 
-    private void UpdatePowerStatus(Wire wire)
+    public override object StatusKey { get; } = PowerWireActionKey.Status;
+
+    public override StatusLightData GetStatusLightData(Wire wire)
     {
+        StatusLightState lightState = StatusLightState.Off;
         if (EntityManager.TryGetComponent<ApcPowerReceiverComponent>(wire.Owner, out var power))
         {
             WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out var pulsed);
-            StatusLightState lightState = StatusLightState.Off;
 
             if (pulsed is bool pulseCast)
             {
@@ -78,13 +80,12 @@ public class PowerWireAction : BaseWireAction
                 electrifiedToken.Cancel();
             }
 
-            var status = new StatusLightData(
-                _statusColor,
-                lightState,
-                _text);
-
-            WiresSystem.SetStatus(wire.Owner, PowerWireActionKey.Status, status);
         }
+
+        return new StatusLightData(
+            _statusColor,
+            lightState,
+            _text);
     }
 
     private void SetElectrified(EntityUid used, bool setting, ElectrifiedComponent? electrified = null)
@@ -143,7 +144,6 @@ public class PowerWireAction : BaseWireAction
         base.Initialize(uid, wire);
 
         _electrocutionSystem = EntitySystem.Get<ElectrocutionSystem>();
-        UpdatePowerStatus(wire);
     }
 
     public override bool Cut(EntityUid used, EntityUid user, Wire wire)
@@ -167,8 +167,6 @@ public class PowerWireAction : BaseWireAction
 
         wire.IsCut = true;
 
-        UpdatePowerStatus(wire);
-
         return true;
     }
 
@@ -178,8 +176,6 @@ public class PowerWireAction : BaseWireAction
             return false;
 
         wire.IsCut = false;
-        UpdatePowerStatus(wire);
-
         return true;
     }
 
@@ -220,7 +216,6 @@ public class PowerWireAction : BaseWireAction
         // AwaitPulseCancel(used, wire, _doAfterSystem.WaitDoAfter(doAfter));
 
         WiresSystem.SetData(used, PowerWireActionKey.PulseCancel, newPulseToken);
-        UpdatePowerStatus(wire);
 
         return true;
     }
@@ -234,6 +229,6 @@ public class PowerWireAction : BaseWireAction
     private void AwaitPulseCancel(EntityUid used, Wire wire)
     {
         WiresSystem.SetData(used, PowerWireActionKey.Pulsed, false);
-        UpdatePowerStatus(wire);
+        WiresSystem.UpdateUserInterface(used);
     }
 }

@@ -322,7 +322,7 @@ public sealed class WiresSystem : EntitySystem
         appearance.SetData(WiresVisuals.MaintenancePanelState, wires.IsPanelOpen && wires.IsPanelVisible);
     }
 
-    private void UpdateUserInterface(EntityUid uid, WiresComponent? wires = null, ServerUserInterfaceComponent? ui = null)
+    public void UpdateUserInterface(EntityUid uid, WiresComponent? wires = null, ServerUserInterfaceComponent? ui = null)
     {
         if (!Resolve(uid, ref wires, ref ui, false)) // logging this means that we get a bunch of errors
             return;
@@ -332,6 +332,9 @@ public sealed class WiresSystem : EntitySystem
         {
             clientList.Add(new ClientWire(entry.Id, entry.IsCut, entry.Color,
                 entry.Letter));
+
+            var statusData = entry.Action.GetStatusLightData(entry);
+            wires.Statuses[entry.Action.StatusKey] = statusData;
         }
 
         _uiSystem.GetUiOrNull(uid, WiresUiKey.Key)?.SetState(
@@ -446,6 +449,7 @@ public sealed class WiresSystem : EntitySystem
         }
 
         wires.StateData[identifier] = data;
+        UpdateUserInterface(uid, wires);
     }
 
 
@@ -465,7 +469,6 @@ public sealed class WiresSystem : EntitySystem
         }
 
         wires.Statuses[statusIdentifier] = status;
-        UpdateUserInterface(uid);
     }
     #endregion
 

@@ -1,3 +1,4 @@
+using Content.Shared.Wires;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Wires;
@@ -36,6 +37,8 @@ public interface IWireAction
     // while checking the type of action inside.
     public object Identifier { get; }
 
+    public object StatusKey { get; }
+
     public void Initialize(EntityUid uid, Wire wire);
 
     public bool Cut(EntityUid used, EntityUid user, Wire wire);
@@ -43,4 +46,6 @@ public interface IWireAction
     public bool Mend(EntityUid used, EntityUid user, Wire wire);
 
     public bool Pulse(EntityUid used, EntityUid user, Wire wire);
+
+    public StatusLightData GetStatusLightData(Wire wire);
 }

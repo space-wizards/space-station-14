@@ -1,11 +1,11 @@
 using Content.Server.DoAfter;
+using Content.Shared.Wires;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Wires;
 
-[DataDefinition]
 public abstract class BaseWireAction : IWireAction
 {
     public IEntityManager EntityManager = default!;
@@ -21,6 +21,8 @@ public abstract class BaseWireAction : IWireAction
 
     public abstract object Identifier { get; }
 
+    public abstract object StatusKey { get; }
+
     // ugly, but IoC doesn't work during deserialization
     public virtual void Initialize(EntityUid uid, Wire wire)
     {
@@ -33,4 +35,5 @@ public abstract class BaseWireAction : IWireAction
     public abstract bool Cut(EntityUid used, EntityUid user, Wire wire);
     public abstract bool Mend(EntityUid used, EntityUid user, Wire wire);
     public abstract bool Pulse(EntityUid used, EntityUid user, Wire wire);
+    public abstract StatusLightData GetStatusLightData(Wire wire);
 }
