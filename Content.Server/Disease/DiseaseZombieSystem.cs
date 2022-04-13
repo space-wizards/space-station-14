@@ -37,6 +37,7 @@ namespace Content.Server.Disease
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly SharedHumanoidAppearanceSystem _sharedHumanoidAppearance = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        
         public override void Initialize()
         {
             base.Initialize();
