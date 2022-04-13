@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: The doctor and CMO's starting inventories are more efficient., type: Tweak}
-  id: 815
-  time: '2022-01-03T07:38:37.0000000+00:00'
 - author: ZeroDayDaemon
   changes:
   - {message: Added 3 variants of ducks and related food items, type: Add}
@@ -3026,3 +3021,8 @@ Entries:
       pulled., type: Fix}
   id: 1314
   time: '2022-04-13T07:11:56.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Added a couple extra contraband posters., type: Add}
+  id: 1315
+  time: '2022-04-13T13:38:34.0000000+00:00'
