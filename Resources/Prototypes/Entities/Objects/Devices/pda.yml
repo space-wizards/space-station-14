@@ -144,13 +144,13 @@
       id: "slips"
       hard: false
       layer:
-      - SmallImpassable
+      - LowImpassable
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.3,0.4,0.3"
       mass: 2.5
       mask:
-      - SmallImpassable
+      - LowImpassable
 
 - type: entity
   parent: BasePDA

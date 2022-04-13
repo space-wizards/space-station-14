@@ -471,6 +471,6 @@
           bounds: "-0.25,-0.25,0.25,0.25"
       mass: 50
       layer:
-      - SmallImpassable
+      - LowImpassable
       mask:
       - Impassable

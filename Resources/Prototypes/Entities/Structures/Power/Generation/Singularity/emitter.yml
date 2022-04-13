@@ -18,13 +18,13 @@
       mass: 100
       layer:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
+      - MidImpassable
+      - HighImpassable
       - Opaque
       mask:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
+      - MidImpassable
+      - HighImpassable
   - type: Transform
     anchored: true
   - type: Sprite

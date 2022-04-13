@@ -31,11 +31,11 @@
       mass: 25
       mask:
       - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - HighImpassable
+      - LowImpassable
       layer:
       - Opaque
-      - MobImpassable
+      - MidImpassable
   - type: Construction
     graph: Machine
     node: machine
@@ -116,11 +116,11 @@
       mass: 25
       mask:
       - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - HighImpassable
+      - LowImpassable
       layer:
       - Opaque
-      - MobImpassable
+      - MidImpassable
   - type: ResearchClient
   - type: Construction
     graph: Machine

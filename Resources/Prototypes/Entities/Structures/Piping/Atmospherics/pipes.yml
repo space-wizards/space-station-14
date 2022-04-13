@@ -31,7 +31,7 @@
         mass: 5
         mask:
           - Impassable
-          - VaultImpassable
+          - HighImpassable
         restitution: 0.3  # fite me
         friction: 0.2
   - type: Transform

@@ -28,9 +28,9 @@
           bounds: "-0.3,-0.16,0.3,0.16"
       mass: 25
       layer:
-      - SmallImpassable
+      - LowImpassable
       mask:
-      - VaultImpassable
+      - HighImpassable
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/microwave.rsi

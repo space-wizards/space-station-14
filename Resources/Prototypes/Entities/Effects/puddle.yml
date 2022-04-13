@@ -22,9 +22,9 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
       layer:
-      - SmallImpassable
+      - LowImpassable
       mask:
-      - SmallImpassable
+      - LowImpassable
       hard: false
   - type: Appearance
     visuals:

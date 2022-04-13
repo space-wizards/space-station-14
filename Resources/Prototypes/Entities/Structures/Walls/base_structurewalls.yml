@@ -30,8 +30,8 @@
       layer:
       - Opaque
       - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - HighImpassable
+      - LowImpassable
       mask:
       - Impassable
   - type: Occluder

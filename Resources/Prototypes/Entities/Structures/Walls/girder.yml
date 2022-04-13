@@ -17,9 +17,9 @@
       mass: 50
       layer:
       - Impassable
-      - SmallImpassable
+      - LowImpassable
       mask:
-      - VaultImpassable
+      - HighImpassable
   - type: InteractionOutline
   - type: Construction
     graph: Girder

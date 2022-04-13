@@ -20,7 +20,7 @@
           bounds: "-0.45,-0.45,0.45,0.05"
       mass: 25
       mask:
-      - SmallImpassable
+      - LowImpassable
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
     state: bed

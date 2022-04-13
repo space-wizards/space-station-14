@@ -19,13 +19,13 @@
           mass: 25
           layer:
             - Impassable
-            - MobImpassable
-            - VaultImpassable
+            - MidImpassable
+            - HighImpassable
             - Opaque
           mask:
             - Impassable
-            - MobImpassable
-            - VaultImpassable
+            - MidImpassable
+            - HighImpassable
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable

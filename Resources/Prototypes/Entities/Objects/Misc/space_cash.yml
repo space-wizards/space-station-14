@@ -25,7 +25,7 @@
           bounds: "-0.35,-0.2,0.25,0.1"
       mask:
       - Impassable
-      - VaultImpassable
+      - HighImpassable
   - type: Appearance
     visuals:
     - type: StackVisualizer

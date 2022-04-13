@@ -37,9 +37,9 @@
       mass: 20
       mask:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
       layer:
       - Opaque
   - type: MovementSpeedModifier
@@ -135,8 +135,8 @@
         radius: 0.35
       mass: 20
       mask:
-      - SmallImpassable
-      - MobImpassable
+      - LowImpassable
+      - MidImpassable
       layer:
       - Opaque
   - type: Appearance
@@ -215,9 +215,9 @@
         radius: 1
       mass: 500
       mask:
-      - SmallImpassable
-      - MobImpassable
-      - VaultImpassable
+      - LowImpassable
+      - MidImpassable
+      - HighImpassable
       - Impassable
       layer:
       - Opaque

@@ -22,8 +22,8 @@
       mass: 10
       mask:
       - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MidImpassable #Bullets?!
+      - LowImpassable
       layer:
       - Opaque
   - type: Appearance
@@ -225,8 +225,8 @@
       mass: 10
       mask:
       - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MidImpassable #Bullets?!
+      - LowImpassable
       layer:
       - Opaque
   - type: Appearance
@@ -377,8 +377,8 @@
       mass: 10
       mask:
       - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MidImpassable #Bullets?!
+      - LowImpassable
       layer:
       - Opaque
   - type: Appearance
@@ -422,9 +422,9 @@
       mass: 10
       mask:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
       layer:
       - Opaque
   - type: Appearance
@@ -479,9 +479,9 @@
       mass: 10
       mask:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
       layer:
       - Opaque
   - type: Appearance
@@ -525,9 +525,9 @@
       mass: 10
       mask:
       - Impassable
-      - MobImpassable
-      - SmallImpassable
-      - VaultImpassable
+      - MidImpassable
+      - LowImpassable
+      - HighImpassable
       layer:
       - Opaque
   - type: Appearance
@@ -605,9 +605,9 @@
       mass: 10
       mask:
       - Impassable
-      - MobImpassable
-      - SmallImpassable
-      - VaultImpassable
+      - MidImpassable
+      - LowImpassable
+      - HighImpassable
       layer:
       - Opaque
   - type: Appearance

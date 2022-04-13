@@ -50,7 +50,7 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
       layer:
-      - MobImpassable
+      - MidImpassable
   - type: FoamSolutionAreaEffect
   - type: SolutionContainerManager
     solutions:
@@ -78,7 +78,7 @@
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
       layer:
-      - MobImpassable
+      - MidImpassable
   - type: Appearance
     visuals:
     - type: FoamVisualizer
@@ -106,7 +106,7 @@
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
       layer:
-      - MobImpassable
+      - MidImpassable
   - type: Appearance
     visuals:
       - type: FoamVisualizer
@@ -140,9 +140,9 @@
       layer:
         - Opaque
         - Impassable
-        - MobImpassable
-        - VaultImpassable
-        - SmallImpassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
   - type: Occluder
     sizeX: 32
     sizeY: 32

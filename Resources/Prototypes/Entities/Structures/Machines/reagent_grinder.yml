@@ -32,9 +32,9 @@
         !type:PhysShapeAabb
           bounds: "-0.08,-0.35,0.15,0.25"
       layer:
-      - SmallImpassable
+      - LowImpassable
       mask:
-      - VaultImpassable
+      - HighImpassable
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/juicer.rsi

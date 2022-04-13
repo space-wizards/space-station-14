@@ -15,11 +15,11 @@
       mass: 50
       layer:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
       mask:
-      - VaultImpassable
+      - HighImpassable
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/Windoors/windoor.rsi

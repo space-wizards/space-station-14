@@ -84,10 +84,10 @@
             bounds: "-0.15,-0.3,0.15,0.3"
         mask:
         - Impassable
-        - VaultImpassable
-        - SmallImpassable
+        - HighImpassable
+        - LowImpassable
         layer:
-        - MobImpassable
+        - MidImpassable
         mass: 70
     - type: Appearance
     - type: AnimationPlayer

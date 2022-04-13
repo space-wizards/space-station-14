@@ -31,10 +31,10 @@
           bounds: "-0.25,-0.4,0.25,0.4"
       mass: 25
       mask:
-      - SmallImpassable
+      - LowImpassable
       layer:
       - Opaque
-      - MobImpassable
+      - MidImpassable
   - type: Destructible
     thresholds:
     - trigger:

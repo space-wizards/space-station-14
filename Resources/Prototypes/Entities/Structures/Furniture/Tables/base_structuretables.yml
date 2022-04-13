@@ -16,11 +16,11 @@
         bounds: "-0.45,-0.45,0.45,0.45"
       mass: 50
       layer:
-      - VaultImpassable
+      - HighImpassable
       mask:
       - Impassable
-      - VaultImpassable # tables should collide with other tables
-      - SmallImpassable
+      - HighImpassable # tables should collide with other tables
+      - LowImpassable
   - type: Sprite
     netsync: false
   - type: Icon

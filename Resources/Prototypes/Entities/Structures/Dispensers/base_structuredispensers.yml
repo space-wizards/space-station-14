@@ -20,12 +20,12 @@
       mass: 25
       mask:
         - Impassable
-        - VaultImpassable
-        - SmallImpassable
+        - HighImpassable
+        - LowImpassable
       layer:
         - Opaque
-        - MobImpassable
-        - SmallImpassable
+        - MidImpassable
+        - LowImpassable
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: ActivatableUI

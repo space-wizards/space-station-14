@@ -22,7 +22,7 @@
         bounds: "-0.49,-0.49,0.49,0.49"
       mass: 100
       layer:
-      - VaultImpassable
+      - HighImpassable
       mask:
       - Impassable
   - type: Damageable
@@ -58,7 +58,7 @@
       mass: 100
       layer:
       - Opaque
-      - VaultImpassable
+      - HighImpassable
       mask:
       - Impassable
   - type: Occluder

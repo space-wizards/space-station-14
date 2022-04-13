@@ -19,8 +19,8 @@
         mask:
         - Opaque
         - Impassable
-        - MobImpassable
-        - VaultImpassable
+        - MidImpassable
+        - HighImpassable
     - type: Transform
       anchored: true
     - type: Pullable

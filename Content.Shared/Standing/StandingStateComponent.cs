@@ -21,7 +21,7 @@ namespace Content.Shared.Standing
         ///     collision mask.
         /// </summary>
         [DataField("vaultImpassableFixtures")]
-        public List<string> VaultImpassableFixtures = new();
+        public List<string> HighImpassableFixtures = new();
 
         public override ComponentState GetComponentState()
         {

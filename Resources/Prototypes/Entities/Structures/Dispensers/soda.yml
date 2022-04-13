@@ -18,11 +18,11 @@
       mass: 25
       mask:
         - Impassable
-        - VaultImpassable
+        - HighImpassable
       layer:
         - Opaque
-        - MobImpassable
-        - SmallImpassable
+        - MidImpassable
+        - LowImpassable
   - type: ReagentDispenser
     pack: SodaDispenserInventory
     emagPack: SodaDispenserEmagInventory

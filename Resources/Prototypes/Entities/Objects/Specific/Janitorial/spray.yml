@@ -94,8 +94,8 @@
       mask:
       - Opaque
       - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
   - type: Appearance
     visuals:
     - type: VaporVisualizer

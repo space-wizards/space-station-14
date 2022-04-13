@@ -36,9 +36,9 @@
           radius: 0.45
         mass: 50
         layer:
-          - SmallImpassable
+          - LowImpassable
         mask:
-          - VaultImpassable
+          - HighImpassable
 
 - type: entity
   parent: BasePlaceableInstrument

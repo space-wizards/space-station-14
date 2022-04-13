@@ -31,8 +31,8 @@
           bounds: "-0.45,-0.45,0.45,0.45"
       mass: 50
       layer:
-      - SmallImpassable
+      - LowImpassable
       mask:
-      - VaultImpassable
+      - HighImpassable
   - type: Transform
     noRot: true

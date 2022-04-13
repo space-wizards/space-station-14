@@ -36,7 +36,7 @@
       layer:
       - Opaque
       - Impassable
-      - VaultImpassable
+      - HighImpassable
   - type: Door
     board: DoorElectronics
     crushDamage:

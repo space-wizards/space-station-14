@@ -10,7 +10,7 @@
           bounds: "0.17,0.25,-0.17,-0.30"
       mass: 25
       layer:
-      - MobImpassable
+      - MidImpassable
       mask:
       - Impassable
   - type: Damageable

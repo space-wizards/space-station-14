@@ -30,11 +30,11 @@
         !type:PhysShapeAabb {}
       layer:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
       mask:
-      - VaultImpassable
+      - HighImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
@@ -122,11 +122,11 @@
       mass: 50
       layer:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
       mask:
-      - VaultImpassable
+      - HighImpassable
   - type: Repairable
   - type: Damageable
     damageContainer: Inorganic

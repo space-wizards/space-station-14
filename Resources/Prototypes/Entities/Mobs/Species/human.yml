@@ -173,9 +173,9 @@
       restitution: 0.0
       mask:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
       layer:
       - Opaque
   - type: AtmosExposed
@@ -406,9 +406,9 @@
         restitution: 0.0
         mask:
         - Impassable
-        - MobImpassable
-        - VaultImpassable
-        - SmallImpassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
         layer:
         - Opaque
     - type: HumanoidAppearance

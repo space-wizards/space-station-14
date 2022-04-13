@@ -38,8 +38,8 @@
       layer:
       - Opaque
       - Impassable
-      - MobImpassable
-      - VaultImpassable
+      - MidImpassable
+      - HighImpassable
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 5

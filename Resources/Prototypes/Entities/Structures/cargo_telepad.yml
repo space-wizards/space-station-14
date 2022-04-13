@@ -19,7 +19,7 @@
       layer:
       - Passable
       mask:
-      - VaultImpassable
+      - HighImpassable
   - type: Sprite
     netsync: false
     sprite: Structures/cargo_telepad.rsi

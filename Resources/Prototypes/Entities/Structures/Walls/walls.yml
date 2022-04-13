@@ -504,9 +504,9 @@
       layer:
       - Opaque
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
       mask:
       - Impassable
   - type: Destructible

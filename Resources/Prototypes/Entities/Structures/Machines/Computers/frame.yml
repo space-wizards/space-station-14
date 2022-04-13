@@ -17,9 +17,9 @@
         - MobMask
       layer:
         - Opaque
-        - MobImpassable
-        - SmallImpassable
-        - VaultImpassable
+        - MidImpassable
+        - LowImpassable
+        - HighImpassable
   - type: InteractionOutline
   - type: Rotatable
   - type: Anchorable

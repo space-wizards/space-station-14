@@ -20,10 +20,10 @@
           bounds: "-0.25,-0.25,0.25,0.25"
       mass: 25
       mask:
-      - SmallImpassable
+      - LowImpassable
       layer:
       - Opaque
-      - MobImpassable
+      - MidImpassable
   - type: TraitorDeathMatchRedemption
   placement:
     mode: AlignTileAny

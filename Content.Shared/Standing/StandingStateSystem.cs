@@ -65,11 +65,11 @@ namespace Content.Shared.Standing
             {
                 foreach (var (key, fixture) in fixtureComponent.Fixtures)
                 {
-                    if ((fixture.CollisionMask & (int) CollisionGroup.VaultImpassable) == 0)
+                    if ((fixture.CollisionMask & (int) CollisionGroup.HighImpassable) == 0)
                         continue;
 
-                    standingState.VaultImpassableFixtures.Add(key);
-                    fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
+                    standingState.HighImpassableFixtures.Add(key);
+                    fixture.CollisionMask &= ~(int) CollisionGroup.HighImpassable;
                 }
             }
 
@@ -111,13 +111,13 @@ namespace Content.Shared.Standing
 
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
             {
-                foreach (var key in standingState.VaultImpassableFixtures)
+                foreach (var key in standingState.HighImpassableFixtures)
                 {
                     if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
-                        fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
+                        fixture.CollisionMask |= (int) CollisionGroup.HighImpassable;
                 }
             }
-            standingState.VaultImpassableFixtures.Clear();
+            standingState.HighImpassableFixtures.Clear();
 
             return true;
         }

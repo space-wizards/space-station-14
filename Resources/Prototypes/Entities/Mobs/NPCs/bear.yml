@@ -25,8 +25,8 @@
       mass: 100
       mask:
       - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
       layer:
       - Opaque
   - type: MovementIgnoreGravity

@@ -17,7 +17,7 @@ namespace Content.Shared.Climbing
         ///     collision mask.
         /// </summary>
         [DataField("vaultImpassableFixtures")]
-        public List<string> VaultImpassableFixtures = new();
+        public List<string> HighImpassableFixtures = new();
 
         protected bool IsOnClimbableThisFrame
         {
@@ -27,7 +27,7 @@ namespace Content.Shared.Climbing
 
                 foreach (var entity in physicsComponent.GetBodiesIntersecting())
                 {
-                    if ((entity.CollisionLayer & (int) CollisionGroup.VaultImpassable) != 0) return true;
+                    if ((entity.CollisionLayer & (int) CollisionGroup.HighImpassable) != 0) return true;
                 }
 
                 return false;
@@ -73,14 +73,14 @@ namespace Content.Shared.Climbing
                 if (_isClimbing == value) return;
                 _isClimbing = value;
 
-                ToggleSmallPassable(value);
+                ToggleHighImpassable(value);
             }
         }
 
         private bool _isClimbing;
 
         // TODO: Layers need a re-work
-        private void ToggleSmallPassable(bool value)
+        private void ToggleHighImpassable(bool value)
         {
             // Hope the mob has one fixture
             if (!_entMan.TryGetComponent<FixturesComponent>(Owner, out var fixturesComponent) || fixturesComponent.Deleted) return;
@@ -89,21 +89,21 @@ namespace Content.Shared.Climbing
             {
                 foreach (var (key, fixture) in fixturesComponent.Fixtures)
                 {
-                    if ((fixture.CollisionMask & (int) CollisionGroup.VaultImpassable) == 0)
+                    if ((fixture.CollisionMask & (int) CollisionGroup.HighImpassable) == 0)
                         continue;
 
-                    VaultImpassableFixtures.Add(key);
-                    fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
+                    HighImpassableFixtures.Add(key);
+                    fixture.CollisionMask &= ~(int) CollisionGroup.HighImpassable;
                 }
                 return;
             }
 
-            foreach (var key in VaultImpassableFixtures)
+            foreach (var key in HighImpassableFixtures)
             {
                 if (fixturesComponent.Fixtures.TryGetValue(key, out var fixture))
-                    fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
+                    fixture.CollisionMask |= (int) CollisionGroup.HighImpassable;
             }
-            VaultImpassableFixtures.Clear();
+            HighImpassableFixtures.Clear();
         }
 
         [Serializable, NetSerializable]

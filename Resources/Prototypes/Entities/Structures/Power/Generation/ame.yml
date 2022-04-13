@@ -20,12 +20,12 @@
       mass: 25
       mask:
       - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - HighImpassable
+      - LowImpassable
       layer:
       - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -91,12 +91,12 @@
       mass: 25
       mask:
       - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - HighImpassable
+      - LowImpassable
       layer:
       - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
 
 - type: entity
   id: AMEShielding
@@ -119,9 +119,9 @@
       layer:
       - Opaque
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

@@ -33,9 +33,9 @@
       mass: 120
       mask:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
       layer:
       - Opaque
   - type: MobState

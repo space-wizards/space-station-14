@@ -17,13 +17,13 @@
       mass: 100
       mask:
       - Impassable
-      - SmallImpassable
+      - LowImpassable
       layer:
       - Opaque
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

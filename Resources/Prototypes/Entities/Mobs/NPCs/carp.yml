@@ -26,8 +26,8 @@
       mass: 20
       mask:
       - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
       layer:
       - Opaque
   - type: MobState
@@ -106,8 +106,8 @@
       mass: 5
       mask:
         - Impassable
-        - MobImpassable
-        - SmallImpassable
+        - MidImpassable
+        - LowImpassable
       layer:
         - Opaque
   - type: GhostTakeoverAvailable

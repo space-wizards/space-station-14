@@ -17,7 +17,7 @@
       mass: 500
       layer:
       - Opaque
-      - VaultImpassable
+      - HighImpassable
   - type: Climbable
 
 - type: entity

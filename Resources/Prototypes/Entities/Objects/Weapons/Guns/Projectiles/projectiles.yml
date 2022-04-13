@@ -24,7 +24,7 @@
       mask:
       - Impassable
       layer:
-      - MobImpassable
+      - MidImpassable
   - type: Projectile
     damage:
       types:
@@ -51,7 +51,7 @@
       mask:
       - Impassable
       layer:
-      - MobImpassable
+      - MidImpassable
 
 - type: entity
   id: BulletBaseFlash
@@ -130,7 +130,7 @@
       mask:
       - Impassable
       layer:
-      - MobImpassable
+      - MidImpassable
   - type: Ammo
     isProjectile: true
     ammoVelocity: 20

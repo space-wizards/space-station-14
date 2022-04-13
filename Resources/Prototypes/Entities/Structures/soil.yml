@@ -17,14 +17,14 @@
       hard: false
       mask:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
       layer:
       - Opaque
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

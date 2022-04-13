@@ -124,9 +124,9 @@
             !type:PhysShapeCircle
             radius: 0.3
           layer:
-            - SmallImpassable
+            - LowImpassable
           mask:
-            - VaultImpassable
+            - HighImpassable
           mass: 100
     - type: SolutionContainerManager
       solutions:

@@ -35,11 +35,11 @@
       mass: 70
       mask:
       - Impassable
-      - SmallImpassable
+      - LowImpassable
       layer:
       - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
   - type: EntityStorage
   - type: PlaceableSurface
     placeCentered: true

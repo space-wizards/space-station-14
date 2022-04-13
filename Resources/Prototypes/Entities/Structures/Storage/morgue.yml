@@ -25,14 +25,14 @@
       mass: 25
       mask:
        - Impassable
-       - MobImpassable
-       - VaultImpassable
-       - SmallImpassable
+       - MidImpassable
+       - HighImpassable
+       - LowImpassable
       layer:
        - Opaque
-       - MobImpassable
-       - VaultImpassable
-       - SmallImpassable
+       - MidImpassable
+       - HighImpassable
+       - LowImpassable
   - type: MorgueEntityStorage
     CanWeldShut: false
     IsCollidableWhenOpen: true
@@ -68,9 +68,9 @@
         mass: 25
         mask:
           - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - SmallImpassable
+          - MidImpassable
+          - HighImpassable
+          - LowImpassable
   - type: Sprite
     netsync: false
     sprite: Structures/Storage/morgue.rsi
@@ -107,14 +107,14 @@
       mass: 25
       mask:
        - Impassable
-       - MobImpassable
-       - VaultImpassable
-       - SmallImpassable
+       - MidImpassable
+       - HighImpassable
+       - LowImpassable
       layer:
        - Opaque
-       - MobImpassable
-       - VaultImpassable
-       - SmallImpassable
+       - MidImpassable
+       - HighImpassable
+       - LowImpassable
   - type: CrematoriumEntityStorage
     CanWeldShut: false
     IsCollidableWhenOpen: true

@@ -28,7 +28,7 @@
           mass: 30
           mask:
             - Impassable
-            - SmallImpassable
+            - LowImpassable
           layer:
             - Opaque
     - type: Damageable

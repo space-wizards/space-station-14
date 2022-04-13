@@ -30,8 +30,8 @@
       mass: 2.5
       mask:
       - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
       layer:
       - Opaque
   - type: MobState

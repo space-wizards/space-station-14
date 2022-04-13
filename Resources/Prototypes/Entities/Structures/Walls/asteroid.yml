@@ -38,5 +38,5 @@
       layer:
       - Opaque
       - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - HighImpassable
+      - LowImpassable

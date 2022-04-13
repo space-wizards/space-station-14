@@ -19,9 +19,9 @@
       mass: 15
       layer:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Inflatable
@@ -63,9 +63,9 @@
       mass: 15
       layer:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
   - type: Door
     openSound:
       path: /Audio/Misc/zip.ogg

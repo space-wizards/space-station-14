@@ -21,10 +21,10 @@
         bounds: "-0.49,-0.49,0.49,-0.3"
       mass: 50
       layer:
-      - VaultImpassable
+      - HighImpassable
       mask:
       - Impassable
-      - SmallImpassable
+      - LowImpassable
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
@@ -74,19 +74,19 @@
         bounds: "-0.49,-0.49,0.49,-0.3"
       mass: 50
       layer:
-      - VaultImpassable
+      - HighImpassable
       mask:
       - Impassable
-      - SmallImpassable
+      - LowImpassable
     - shape:
         !type:PhysShapeAabb
         bounds: "0.49,0.49,0.3,-0.49"
       mass: 50
       layer:
-      - VaultImpassable
+      - HighImpassable
       mask:
       - Impassable
-      - SmallImpassable
+      - LowImpassable
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
@@ -136,10 +136,10 @@
         bounds: "-0.49,0.49,-0.3,0.3"
       mass: 50
       layer:
-      - VaultImpassable
+      - HighImpassable
       mask:
       - Impassable
-      - SmallImpassable
+      - LowImpassable
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable

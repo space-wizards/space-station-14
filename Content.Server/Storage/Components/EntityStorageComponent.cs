@@ -45,9 +45,9 @@ namespace Content.Server.Storage.Components
         public TimeSpan LastInternalOpenAttempt;
 
         private const int OpenMask = (int) (
-            CollisionGroup.MobImpassable |
-            CollisionGroup.VaultImpassable |
-            CollisionGroup.SmallImpassable);
+            CollisionGroup.MidImpassable |
+            CollisionGroup.HighImpassable |
+            CollisionGroup.LowImpassable);
 
         [ViewVariables]
         [DataField("Capacity")]

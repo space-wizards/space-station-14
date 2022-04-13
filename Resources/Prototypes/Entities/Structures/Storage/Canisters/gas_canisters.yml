@@ -58,9 +58,9 @@
           - MobMask
           layer:
             - Opaque
-            - MobImpassable
-            - SmallImpassable
-            - VaultImpassable
+            - MidImpassable
+            - LowImpassable
+            - HighImpassable
     - type: AtmosDevice
       requireAnchored: false
       joinSystem: true
@@ -384,9 +384,9 @@
           - MobMask
           layer:
             - Opaque
-            - MobImpassable
-            - SmallImpassable
-            - VaultImpassable
+            - MidImpassable
+            - LowImpassable
+            - HighImpassable
 
 - type: entity
   parent: GasCanisterBrokenBase

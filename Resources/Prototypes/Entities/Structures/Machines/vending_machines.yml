@@ -25,11 +25,11 @@
           bounds: "-0.25,-0.45,0.25,0.45"
       mask:
       - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - HighImpassable
+      - LowImpassable
       layer:
       - Opaque
-      - MobImpassable
+      - MidImpassable
       mass: 100
   - type: Destructible
     thresholds:

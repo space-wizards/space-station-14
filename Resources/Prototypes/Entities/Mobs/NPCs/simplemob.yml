@@ -53,9 +53,9 @@
       mass: 20
       mask:
       - Impassable
-      - MobImpassable #Bullets?!
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable #Bullets?!
+      - HighImpassable
+      - LowImpassable
       layer:
       - Opaque
   - type: SolutionContainerManager

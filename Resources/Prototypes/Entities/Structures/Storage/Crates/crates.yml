@@ -624,11 +624,11 @@
       mass: 75
       mask:
       - Impassable
-      - SmallImpassable
+      - LowImpassable
       layer:
       - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
   - type: Construction
     graph: CrateLivestock
     node: cratelivestock

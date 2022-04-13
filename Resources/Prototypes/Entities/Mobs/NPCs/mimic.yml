@@ -31,12 +31,12 @@
       mass: 100
       mask:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
       layer:
       - Opaque
-      - MobImpassable
+      - MidImpassable
   - type: CharacterInfo
   - type: HumanoidAppearance
   - type: AnimationPlayer

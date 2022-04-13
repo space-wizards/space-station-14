@@ -39,10 +39,10 @@
       mass: 2.5
       hard: false
       layer:
-      - SmallImpassable
+      - LowImpassable
       mask:
       - Impassable
-      - MobImpassable
+      - MidImpassable
 
 - type: entity
   parent: PlushieCarp
@@ -80,7 +80,7 @@
       mass: 2.5
       hard: false
       layer:
-      - SmallImpassable
+      - LowImpassable
       mask:
       - Impassable
-      - MobImpassable
+      - MidImpassable

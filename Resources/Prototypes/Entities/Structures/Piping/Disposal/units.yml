@@ -30,9 +30,9 @@
       - Impassable
       layer:
       - Opaque
-      - SmallImpassable
-      - VaultImpassable
-      - MobImpassable
+      - LowImpassable
+      - HighImpassable
+      - MidImpassable
   - type: Destructible
     thresholds:
     - trigger:

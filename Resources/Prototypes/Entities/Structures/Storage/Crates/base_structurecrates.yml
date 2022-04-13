@@ -27,11 +27,11 @@
       mass: 25
       mask:
       - Impassable
-      - SmallImpassable
+      - LowImpassable
       layer:
       - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
   - type: EntityStorage
     Capacity: 500
     CanWeldShut: true
@@ -90,11 +90,11 @@
       mass: 25
       mask:
       - Impassable
-      - SmallImpassable
+      - LowImpassable
       layer:
       - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
   - type: EntityStorage
     Capacity: 500
     CanWeldShut: true

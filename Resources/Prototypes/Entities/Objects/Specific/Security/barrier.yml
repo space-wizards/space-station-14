@@ -18,8 +18,8 @@
       layer:
       - Opaque
       - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - HighImpassable
+      - LowImpassable
       mask:
       - Impassable
       mass: 150

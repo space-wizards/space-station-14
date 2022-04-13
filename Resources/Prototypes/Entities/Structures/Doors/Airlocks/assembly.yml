@@ -20,8 +20,8 @@
       mask:
       - MobMask
       layer:
-      - MobImpassable
-      - VaultImpassable
+      - MidImpassable
+      - HighImpassable
   - type: Anchorable
     delay: 2
   - type: Pullable

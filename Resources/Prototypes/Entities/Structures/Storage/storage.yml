@@ -21,10 +21,10 @@
           bounds: "-0.3,-0.3,0.3,0.3"
       mass: 50
       layer:
-      - VaultImpassable
+      - HighImpassable
       mask:
       - Impassable
-      - SmallImpassable
+      - LowImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

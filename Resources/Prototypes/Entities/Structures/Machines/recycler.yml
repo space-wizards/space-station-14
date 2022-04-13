@@ -22,8 +22,8 @@
       layer:
       - Opaque
       - Impassable
-      - MobImpassable
-      - VaultImpassable
+      - MidImpassable
+      - HighImpassable
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49"

@@ -11,7 +11,7 @@
         !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
       layer:
-      - MobImpassable
+      - MidImpassable
   - type: Sprite
     state: atmosplaque
   - type: AtmosPlaque

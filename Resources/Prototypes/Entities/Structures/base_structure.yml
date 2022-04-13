@@ -17,7 +17,7 @@
           bounds: "-0.45,-0.45,0.45,0.45"
       mass: 50
       layer:
-      - VaultImpassable
+      - HighImpassable
       mask:
       - Impassable
   - type: Pullable
@@ -48,9 +48,9 @@
           bounds: "-0.45,-0.45,0.45,0.45"
       mass: 50
       layer:
-      - SmallImpassable
+      - LowImpassable
       mask:
-      - VaultImpassable
+      - HighImpassable
   - type: Anchorable
 
 - type: Tag
