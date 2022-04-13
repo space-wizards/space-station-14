@@ -28,11 +28,11 @@ snake_hiss.ogg: modified from "hissing snake sound effect" by freesound user "Ga
 
 The following sounds were used from youtube:
 
-penguin_squawk.ogg: audio is recorded/provided by youtube user "ProSounds" (https://youtu.be/Anr35RbBL3Y) audio is free to use and downloadable via video description. The original audio was trimmed and converted from MP3 to OGG format.
+penguin_squawk.ogg: audio is recorded/created by youtube user "ProSounds" (https://youtu.be/Anr35RbBL3Y) licensed under CC BY 3.0. The original audio was trimmed and converted from MP3 to OGG format.
 
-raccoon_squeak.ogg: audio is recorded by youtube user "jnargus" (https://youtu.be/BGjFP1CP7E0) licensed under Creative Commons Attribution license (reuse allowed)
+raccoon_squeak.ogg: audio is recorded by youtube user "jnargus" (https://youtu.be/BGjFP1CP7E0) licensed under CC by 3.0
 
-goat_bah.ogg: audio is provided by youtube user "Winry Marini" (https://youtu.be/QIhwzsk5bww) granted permission to be used in game
+goat_bah.ogg: audio is created by youtube user "Winry Marini" (https://youtu.be/QIhwzsk5bww) licensed under CC BY 3.0
 
-lizard_happy.ogg: audio created by youtube user "Nagaty Studio" (https://youtu.be/I7CX0AS8RNI) licensed under Creative Commons Attribution license (reuse allowed).
+lizard_happy.ogg: audio created by youtube user "Nagaty Studio" (https://youtu.be/I7CX0AS8RNI) licensed under CC by 3.0.
 
