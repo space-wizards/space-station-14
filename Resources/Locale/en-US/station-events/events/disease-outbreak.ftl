@@ -1,1 +1,1 @@
-station-event-disease-outbreak-announcement = Ship systems have detected that some crewmates have been infected with a disease.
+station-event-disease-outbreak-announcement = Confirmed outbreak of level 7 biohazard aboard the station. All personnel must contain the outbreak.

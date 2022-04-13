@@ -1,41 +1,21 @@
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
-using Content.Server.Construction.Components;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Pulling;
 using Content.Server.Tools;
-using Content.Server.Tools.Components;
+using Content.Shared.Construction.Components;
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
-using Content.Shared.Interaction;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Tools.Components;
 
 namespace Content.Server.Construction
 {
-    public sealed class AnchorableSystem : EntitySystem
+    public sealed class AnchorableSystem : SharedAnchorableSystem
     {
         [Dependency] private readonly AdminLogSystem _adminLogs = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<AnchorableComponent, InteractUsingEvent>(OnInteractUsing, after:new []{typeof(ConstructionSystem)});
-        }
-
-        private async void OnInteractUsing(EntityUid uid, AnchorableComponent anchorable, InteractUsingEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            // If the used entity doesn't have a tool, return early.
-            if (!TryComp(args.Used, out ToolComponent? usedTool) || !usedTool.Qualities.Contains(anchorable.Tool))
-                return;
-
-            args.Handled = true;
-            await TryToggleAnchor(uid, args.User, args.Used, anchorable, usingTool:usedTool);
-        }
 
         /// <summary>
         ///     Checks if a tool can change the anchored status.
@@ -154,7 +134,7 @@ namespace Content.Server.Construction
         ///     Tries to toggle the anchored status of this component's owner.
         /// </summary>
         /// <returns>true if toggled, false otherwise</returns>
-        public async Task<bool> TryToggleAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
+        public override async Task<bool> TryToggleAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
             AnchorableComponent? anchorable = null,
             TransformComponent? transform = null,
             SharedPullableComponent? pullable = null,

@@ -10,12 +10,12 @@ using Content.Server.Popups;
 using Content.Server.Hands.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Paper;
-using Content.Server.Tools.Components;
 using Content.Server.Power.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
+using Content.Shared.Tools.Components;
 
 namespace Content.Server.Disease
 {
@@ -27,6 +27,7 @@ namespace Content.Server.Disease
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly PaperSystem _paperSystem = default!;
 
         public override void Initialize()
         {
@@ -344,7 +345,7 @@ namespace Content.Server.Disease
             }
             MetaData(printed).EntityName = reportTitle;
 
-            paper.SetContent(contents.ToMarkup());
+            _paperSystem.SetContent(printed, contents.ToMarkup(), paper);
         }
 
         /// <summary>

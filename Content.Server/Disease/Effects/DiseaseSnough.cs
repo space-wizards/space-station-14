@@ -1,5 +1,9 @@
 using Content.Shared.Disease;
 using JetBrains.Annotations;
+using Content.Shared.Sound;
+using Content.Shared.Audio;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.Disease
 {
@@ -15,14 +19,22 @@ namespace Content.Server.Disease
         /// </summary>
         [DataField("snoughMessage")]
         public string SnoughMessage = "disease-sneeze";
+
+        /// </summary>
+        /// Sound to play when snoughing
         /// <summary>
-        /// Whether to spread the disease throught he air
+        [DataField("snoughSound")]
+        public SoundSpecifier? SnoughSound;
+        /// <summary>
+        /// Whether to spread the disease through the air
         /// </summary>
         [DataField("airTransmit")]
         public bool AirTransmit = true;
 
         public override void Effect(DiseaseEffectArgs args)
         {
+            if (SnoughSound != null)
+                SoundSystem.Play(Filter.Pvs(args.DiseasedEntity), SnoughSound.GetSound(), args.DiseasedEntity, AudioHelpers.WithVariation(0.2f));
             EntitySystem.Get<DiseaseSystem>().SneezeCough(args.DiseasedEntity, args.Disease, SnoughMessage, AirTransmit);
         }
     }

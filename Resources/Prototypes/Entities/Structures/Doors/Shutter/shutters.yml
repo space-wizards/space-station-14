@@ -66,11 +66,7 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
-  - type: SignalReceiver
-    inputs:
-    - name: pressed
-  - type: ToggleDoorOnTrigger
-  - type: TriggerOnSignalReceived
+  - type: DoorSignalControl
   placement:
     mode: SnapgridCenter
 

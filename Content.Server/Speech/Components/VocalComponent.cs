@@ -28,7 +28,7 @@ public sealed class VocalComponent : Component
     public const float Variation = 0.125f;
 
     // Not using the in-build sound support for actions, given that the sound is modified non-prototype specific factors like gender.
-    [DataField("action", required: true)]
+    [DataField("action")]
     public InstantAction Action = new()
     {
         UseDelay = TimeSpan.FromSeconds(10),
@@ -37,6 +37,7 @@ public sealed class VocalComponent : Component
         DisplayName = "action-name-scream",
         Description = "AAAAAAAAAAAAAAAAAAAAAAAAA",
         Event = new ScreamActionEvent(),
+        CheckCanInteract = false, // system checks a speech related action blocker.
     };
 }
 

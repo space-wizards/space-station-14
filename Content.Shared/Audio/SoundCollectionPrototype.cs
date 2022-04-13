@@ -10,7 +10,7 @@ namespace Content.Shared.Audio
     public sealed class SoundCollectionPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("files")]
