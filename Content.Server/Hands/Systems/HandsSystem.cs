@@ -30,7 +30,7 @@ using Content.Shared.Pulling.Components;
 using Content.Server.Pulling;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Throwing;
-using Content.Server.Disease.Components;
+using Content.Server.Resist;
 
 namespace Content.Server.Hands.Systems
 {
@@ -107,7 +107,7 @@ namespace Content.Server.Hands.Systems
         }
         private void HandleEntityInserted(EntityUid uid, HandsComponent component, EntInsertedIntoContainerMessage args)
         {
-            if (HasComp<DiseaseCarrierComponent>(args.Entity))
+            if (HasComp<CanResistInventoryComponent>(args.Entity))
                 _actionBlockerSystem.UpdateCanMove(args.Entity);
         }
 
@@ -119,7 +119,7 @@ namespace Content.Server.Hands.Systems
             if (!Deleted(args.Entity) && TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
                 _virtualSystem.Delete(@virtual, uid);
 
-            if (HasComp<DiseaseCarrierComponent>(args.Entity))
+            if (HasComp<CanResistInventoryComponent>(args.Entity))
                 _actionBlockerSystem.UpdateCanMove(args.Entity);
         }
         #region EntityInsertRemove

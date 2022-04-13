@@ -23,11 +23,11 @@ public sealed class EscapeInventorySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CanEscapeInventoryComponent, RelayMovementEntityEvent>(OnRelayMovement);
-        SubscribeLocalEvent<CanEscapeInventoryComponent, UpdateCanMoveEvent>(OnMoveAttempt);
+        SubscribeLocalEvent<CanResistInventoryComponent, RelayMovementEntityEvent>(OnRelayMovement);
+        SubscribeLocalEvent<CanResistInventoryComponent, UpdateCanMoveEvent>(OnMoveAttempt);
     }
 
-    private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, RelayMovementEntityEvent args)
+    private void OnRelayMovement(EntityUid uid, CanResistInventoryComponent component, RelayMovementEntityEvent args)
     {
         if (_containerSystem.IsEntityOrParentInContainer(args.Entity))
         {
@@ -35,13 +35,13 @@ public sealed class EscapeInventorySystem : EntitySystem
         }
     }
 
-    private void OnMoveAttempt(EntityUid uid, CanEscapeInventoryComponent component, UpdateCanMoveEvent args)
+    private void OnMoveAttempt(EntityUid uid, CanResistInventoryComponent component, UpdateCanMoveEvent args)
     {
         if (_containerSystem.IsEntityOrParentInContainer(uid))
             args.Cancel();
     }
 
-    private void AttemptEscape(EntityUid user, EntityUid container, CanEscapeInventoryComponent component)
+    private void AttemptEscape(EntityUid user, EntityUid container, CanResistInventoryComponent component)
     {
     }
 }

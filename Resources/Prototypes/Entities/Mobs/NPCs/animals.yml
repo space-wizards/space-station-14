@@ -718,7 +718,7 @@
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier #The other class lab animal and disease vector
-  - type: CanEscapeInventory
+  - type: CanResistInventory
 
 
 - type: entity
@@ -742,7 +742,6 @@
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier #Why doesn't this save if it's only on the parent wtf
-  - type: CanEscapeInventory
 
 
 - type: entity
@@ -766,7 +765,6 @@
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier
-  - type: CanEscapeInventory
 
 
 - type: entity

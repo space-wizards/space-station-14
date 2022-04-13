@@ -38,7 +38,6 @@ public sealed class ResistLockerSystem : EntitySystem
         {
             AttemptResist(args.Entity, uid, storageComponent, component);
         }
-
     }
 
     private void AttemptResist(EntityUid user, EntityUid target, EntityStorageComponent? storageComponent = null, ResistLockerComponent? resistLockerComponent = null)
