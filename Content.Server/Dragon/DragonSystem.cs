@@ -76,6 +76,9 @@ namespace Content.Server.Dragon
                 _actionsSystem.AddAction(uid, component.DevourAction, null);
             if (component.CarpBirthAction != null)
                 _actionsSystem.AddAction(uid, component.CarpBirthAction, null);
+            // Announces the dragon's spawn with a global bellowing sound
+            // NOTE: good idea(?)
+            SoundSystem.Play(Filter.Broadcast(), "/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
         }
 
         /// <summary>
