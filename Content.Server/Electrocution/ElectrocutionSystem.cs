@@ -189,7 +189,7 @@ namespace Content.Server.Electrocution
                 // attempt an electrocution if all the checks succeed.
 
                 if (electrified.UsesApcPower &&
-                    (!EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent power)
+                    (!TryComp(uid, out ApcPowerReceiverComponent? power)
                      || !power.Powered))
                 {
                     return false;
