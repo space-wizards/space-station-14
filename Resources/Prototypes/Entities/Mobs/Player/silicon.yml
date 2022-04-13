@@ -155,6 +155,7 @@
   - type: Actions
   - type: UnpoweredFlashlight
     toggleAction:
+      id: toggleLightAction
       name: action-name-toggle-light
       description: action-description-toggle-light
       icon: Objects/Tools/flashlight.rsi/flashlight.png
@@ -229,6 +230,7 @@
       dead: onestar_boss_wrecked
   - type: CombatMode
     disarmAction:
+      id: disarmAction
       name: action-name-disarm
       description: action-description-disarm
       icon: Interface/Actions/disarmOff.png

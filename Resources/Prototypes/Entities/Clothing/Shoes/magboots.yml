@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: ClothingShoesBase
   id: ClothingShoesBootsMag
   name: magboots
@@ -11,6 +11,7 @@
       sprite: Clothing/Shoes/Boots/magboots.rsi
     - type: Magboots
       toggleAction:
+        id: magbootsToggleAction
         icon: Clothing/Shoes/Boots/magboots.rsi/icon.png
         iconOn: Clothing/Shoes/Boots/magboots.rsi/icon-on.png
         name: action-name-magboot-toggle
@@ -35,6 +36,7 @@
     sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
   - type: Magboots
     toggleAction:
+      id: magbootsToggleAction
       icon: Clothing/Shoes/Boots/magboots-advanced.rsi/icon.png
       iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
       name: action-name-magboot-toggle

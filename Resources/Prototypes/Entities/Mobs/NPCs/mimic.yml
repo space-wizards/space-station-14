@@ -37,7 +37,6 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: CharacterInfo
   - type: HumanoidAppearance
   - type: AnimationPlayer
   - type: UnarmedCombat

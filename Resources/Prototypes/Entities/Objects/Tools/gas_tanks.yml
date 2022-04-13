@@ -18,6 +18,7 @@
     quickEquip: false
   - type: GasTank
     toggleAction:
+      id: internalsAction
       name: action-name-internals-toggle
       description: action-description-internals-toggle
       icon: Interface/Actions/internal0.png

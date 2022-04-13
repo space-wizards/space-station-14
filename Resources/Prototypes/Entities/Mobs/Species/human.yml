@@ -259,6 +259,7 @@
           sprite: Mobs/Effects/burn_damage.rsi
   - type: CombatMode
     disarmAction:
+      id: disarmAction
       name: action-name-disarm
       description: action-description-disarm
       icon: Interface/Actions/disarmOff.png
@@ -274,7 +275,6 @@
         - StatusEffects
   - type: Climbing
   - type: Cuffable
-  - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle
   - type: UnarmedCombat

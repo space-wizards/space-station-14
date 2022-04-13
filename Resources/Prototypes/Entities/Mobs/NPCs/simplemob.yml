@@ -96,6 +96,7 @@
   - type: HeatResistance
   - type: CombatMode
     disarmAction:
+      id: disarmAction
       name: action-name-disarm
       description: action-description-disarm
       icon: Interface/Actions/disarmOff.png

@@ -1,5 +1,6 @@
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -12,7 +13,8 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     /// <summary>
     ///     Name to show in UI.
     /// </summary>
-    [DataField("id", required: true)]
+    [ViewVariables]
+    [IdDataField]
     public string ID = string.Empty;
 
     /// <summary>

@@ -18,6 +18,7 @@
       - state: inhand-right-light
         shader: unshaded
     toggleAction:
+      id: toggleLightAction
       name: action-name-toggle-light
       description: action-description-toggle-light
       icon: Objects/Tools/flashlight.rsi/flashlight.png
