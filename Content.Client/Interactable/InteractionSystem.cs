@@ -20,7 +20,7 @@ namespace Content.Client.Interactable
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
             // return storage.UIOpen;
 
-            // fix this shit later
+            // Need to check if UI is open
             return true;
         }
     }
