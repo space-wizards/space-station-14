@@ -176,7 +176,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         _logQueue.Clear();
         Queue.Set(0);
 
-        if (_runLevel == GameRunLevel.PreRoundLobby)
+        if (_runLevel == GameRunLevel.PreRoundLobby && !_preRoundLogQueue.IsEmpty)
         {
             _sawmill.Error($"Dropping {_preRoundLogQueue.Count} pre-round logs. Current cap: {_preRoundQueueMax}");
         }
