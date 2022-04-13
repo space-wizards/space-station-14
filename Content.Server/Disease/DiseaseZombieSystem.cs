@@ -94,12 +94,7 @@ namespace Content.Server.Disease
                 color.A = 1;
 
                 var oldapp = spritecomp.Appearance;
-                var newapp = new HumanoidCharacterAppearance(oldapp.HairStyleId,
-                    oldapp.HairColor,
-                    oldapp.FacialHairStyleId,
-                    oldapp.FacialHairColor,
-                    oldapp.EyeColor,
-                    color);
+                var newapp = oldapp.WithSkinColor(color);
                 _sharedHumanoidAppearance.UpdateAppearance(uid, newapp);
             }
 
