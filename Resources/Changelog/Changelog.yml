@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: "The prophecy is true, the arrival of the \u0429\u03A3\u0389, is finally\
-      \ here!", type: Add}
-  id: 814
-  time: '2022-01-03T05:51:43.0000000+00:00'
 - author: Rane
   changes:
   - {message: The doctor and CMO's starting inventories are more efficient., type: Tweak}
@@ -3026,3 +3020,9 @@ Entries:
       room., type: Tweak}
   id: 1313
   time: '2022-04-12T03:00:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed handcuffed players being able to freely move around despite being
+      pulled., type: Fix}
+  id: 1314
+  time: '2022-04-13T07:11:56.0000000+00:00'
