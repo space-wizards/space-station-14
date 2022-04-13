@@ -28,7 +28,6 @@
   - type: Actions
   - type: Input
   - type: Alerts
-    context: "human"
   - type: PlayerMobMover
   - type: PlayerInputMover
   - type: MovementSpeedModifier
