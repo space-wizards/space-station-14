@@ -32,6 +32,12 @@ public sealed class StickyComponent : Component
     public int StuckDrawDepth = (int) DrawDepth.Overdoors;
 
     /// <summary>
+    ///     Whether users can unstick item when it was stuck to surface.
+    /// </summary>
+    [DataField("canUnstick")]
+    public bool CanUnstick = true;
+
+    /// <summary>
     ///     Popup message shown when player started sticking entity to another entity.
     /// </summary>
     [DataField("stickPopupStart")]
@@ -42,4 +48,11 @@ public sealed class StickyComponent : Component
     /// </summary>
     [DataField("stickPopupSuccess")]
     public string? StickPopupSuccess;
+
+    /// <summary>
+    ///     Entity that is used as surface for sticky entity.
+    ///     Null if entity doesn't stuck to anything.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public EntityUid? StuckTo;
 }

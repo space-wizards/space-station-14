@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Server.Sticky.Components;
 using Content.Server.Sticky.Events;
 using Content.Shared.Interaction;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -22,6 +23,7 @@ public sealed class StickySystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<StickySuccessfulEvent>(OnStickSuccessful);
         SubscribeLocalEvent<StickyComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<StickyComponent, GetVerbsEvent<Verb>>(AddUnstickVerb);
     }
 
     private void OnAfterInteract(EntityUid uid, StickyComponent component, AfterInteractEvent args)
@@ -29,8 +31,29 @@ public sealed class StickySystem : EntitySystem
         if (args.Handled || args.Target == null)
             return;
 
-        if (component.Whitelist != null && !component.Whitelist.IsValid(args.Target.Value))
+        // try stick object to a clicked target entity
+        args.Handled = StartSticking(uid, args.User, args.Target.Value, component);
+    }
+
+    private void AddUnstickVerb(EntityUid uid, StickyComponent component, GetVerbsEvent<Verb> args)
+    {
+        if (component.StuckTo == null)
             return;
+
+        args.Verbs.Add(new Verb
+        {
+            Text = Loc.GetString("comp-sticky-unstick-verb-text"),
+            IconTexture = "/Textures/Interface/VerbIcons/eject.102.svg.192dpi.png",
+            Act = () => StartUnsticking(uid, args.User, component)
+        });
+    }
+
+    private bool StartSticking(EntityUid uid, EntityUid user, EntityUid target, StickyComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+        if (component.Whitelist != null && !component.Whitelist.IsValid(target))
+            return false;
 
         // check if delay is not zero to start do after
         var delay = (float) component.StickDelay.TotalSeconds;
@@ -40,13 +63,13 @@ public sealed class StickySystem : EntitySystem
             if (component.StickPopupStart != null)
             {
                 var msg = Loc.GetString(component.StickPopupStart);
-                _popupSystem.PopupEntity(msg, args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(msg, user, Filter.Entities(user));
             }
 
             // start sticking object to target
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, delay, target: args.Target)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, delay, target: target)
             {
-                BroadcastFinishedEvent = new StickySuccessfulEvent(uid, args.User, args.Target.Value),
+                BroadcastFinishedEvent = new StickySuccessfulEvent(uid, user, target),
                 BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -56,10 +79,10 @@ public sealed class StickySystem : EntitySystem
         else
         {
             // if delay is zero - stick entity immediately
-            StickToEntity(uid, args.Target.Value, args.User, component);
+            StickToEntity(uid, target, user, component);
         }
 
-        args.Handled = true;
+        return true;
     }
 
     private void OnStickSuccessful(StickySuccessfulEvent ev)
@@ -95,7 +118,17 @@ public sealed class StickySystem : EntitySystem
             sprite.DrawDepth = component.StuckDrawDepth;
         }
 
+        component.StuckTo = target;
         RaiseLocalEvent(uid, new EntityStuckEvent(target, user));
+    }
+
+    private bool StartUnsticking(EntityUid uid, EntityUid user, StickyComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+        
+
+        return true;
     }
 
     private sealed class StickySuccessfulEvent : EntityEventArgs
