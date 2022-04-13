@@ -87,11 +87,7 @@ namespace Content.Server.Disease
             if(TryComp<HumanoidAppearanceComponent>(uid, out var spritecomp))
             {
                 //zombie hex color is #aeb87bff
-                var color = new Color();
-                color.R = 0.70f;
-                color.G = 0.72f;
-                color.B = 0.48f;
-                color.A = 1;
+                var color = new Color(0.70f, 0.72f, 0.48f, 1);
 
                 var oldapp = spritecomp.Appearance;
                 var newapp = oldapp.WithSkinColor(color);
