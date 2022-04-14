@@ -1,13 +1,12 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
+using Content.Server.MachineLinking.Components;
+using Content.Server.MachineLinking.Events;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.GameTicking;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Cargo
 {
@@ -35,7 +34,7 @@ namespace Content.Server.Cargo
         /// <summary>
         /// Used to assign IDs to bank accounts. Incremental counter.
         /// </summary>
-        private int _accountIndex = 0;
+        private int _accountIndex;
         /// <summary>
         /// Enumeration of all bank accounts.
         /// </summary>
@@ -52,8 +51,26 @@ namespace Content.Server.Cargo
 
         private void InitializeConsole()
         {
+            SubscribeLocalEvent<CargoConsoleComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<CargoConsoleComponent, SignalReceivedEvent>(OnSignalReceived);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             Reset();
+        }
+        
+        private void OnSignalReceived(EntityUid uid, CargoConsoleComponent component, SignalReceivedEvent args)
+        {
+            switch (args.Port)
+            {
+                case "On": Console.WriteLine(uid + " " + component); break;
+            }
+        }
+        
+        private void OnInit(EntityUid uid, CargoConsoleComponent console, ComponentInit args)
+        {
+            var receiver = EnsureComp<SignalReceiverComponent>(uid);
+            foreach (string port in new[] { "Order Sender" })
+                if (!receiver.Inputs.ContainsKey(port))
+                    receiver.AddPort(port);
         }
 
         private void Reset(RoundRestartCleanupEvent ev)
