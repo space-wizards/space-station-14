@@ -26,7 +26,6 @@
     context: "human"
   - type: PAI
     midiAction:
-      id: playMidiAction
       name: action-name-pai-play-midi
       checkCanInteract: false
       icon: Interface/Actions/pai-midi.png

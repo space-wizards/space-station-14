@@ -1,6 +1,5 @@
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -10,13 +9,6 @@ namespace Content.Shared.Actions.ActionTypes;
 [Serializable, NetSerializable]
 public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneable
 {
-    /// <summary>
-    ///     Name to show in UI.
-    /// </summary>
-    [ViewVariables]
-    [IdDataField]
-    public string ID = string.Empty;
-
     /// <summary>
     ///     Icon representing this action in the UI.
     /// </summary>

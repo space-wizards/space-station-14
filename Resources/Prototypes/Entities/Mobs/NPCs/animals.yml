@@ -709,12 +709,10 @@
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
     combatToggleAction:
-      id: combatAction
       enabled: false
       autoPopulate: false
       name: action-name-combat
     disarmAction:
-      id: disarmAction
       enabled: false
       autoPopulate: false
       name: action-name-disarm
