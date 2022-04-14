@@ -1,9 +1,4 @@
 Entries:
-- author: Schiene
-  changes:
-  - {message: 'Added Shuttle SS Reach, atmospherics not included yet.', type: Add}
-  id: 824
-  time: '2022-01-04T13:36:37.0000000+00:00'
 - author: MeltedPixel
   changes:
   - {message: Added Hydroponics plant - Chilis!, type: Add}
@@ -3019,3 +3014,9 @@ Entries:
       making tap firing worse.', type: Tweak}
   id: 1323
   time: '2022-04-14T18:42:23.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: 'Attention agents! Syndicate has added new C-4 sticky bombs into your
+      uplinks. You can use it to breach walls, airlocks or sabotage equipment.', type: Add}
+  id: 1324
+  time: '2022-04-14T22:00:50.0000000+00:00'
