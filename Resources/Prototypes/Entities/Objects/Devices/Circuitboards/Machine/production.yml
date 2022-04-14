@@ -218,7 +218,7 @@
       sprite: Objects/Misc/module.rsi
       state: power_mod
     - type: MachineBoard
-      prototype: BaseSMES
+      prototype: SMESBasic
       requirements:
         Capacitor: 10
 
@@ -229,7 +229,7 @@
   description: A machine printed circuit board for a substation
   components:
     - type: MachineBoard
-      prototype: BaseSubstation
+      prototype: SubstationBasic
       requirements:
         Capacitor: 3
       materialRequirements:
@@ -282,7 +282,7 @@
         Capacitor: 1
       materialRequirements:
         CableHV: 5
-        
+
 - type: entity
   id: GeneratorUraniumMachineCircuitboard
   parent: BaseMachineCircuitboard

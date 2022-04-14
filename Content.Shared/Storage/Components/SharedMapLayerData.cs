@@ -21,6 +21,20 @@ namespace Content.Shared.Storage.Components
 
         [DataField("whitelist", required: true, serverOnly: true)]
         public EntityWhitelist ServerWhitelist { get; set; } = new();
+
+        /// <summary>
+        ///     Minimal amount of entities that are valid for whitelist.
+        ///     If it's smaller than minimal amount, layer will be hidden.
+        /// </summary>
+        [DataField("minCount")]
+        public int MinCount = 1;
+
+        /// <summary>
+        ///     Max amount of entities that are valid for whitelist.
+        ///     If it's bigger than max amount, layer will be hidden.
+        /// </summary>
+        [DataField("maxCount")]
+        public int MaxCount = int.MaxValue;
     }
 
     [Serializable, NetSerializable]

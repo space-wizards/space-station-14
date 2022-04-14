@@ -20,7 +20,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<GasTankComponent, BeforeActivatableUIOpenEvent>(BeforeUiOpen);
-            SubscribeLocalEvent<GasTankComponent, GetActionsEvent>(OnGetActions);
+            SubscribeLocalEvent<GasTankComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<GasTankComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<GasTankComponent, ToggleActionEvent>(OnActionToggle);
             SubscribeLocalEvent<GasTankComponent, DroppedEvent>(OnDropped);
@@ -37,7 +37,7 @@ namespace Content.Server.Atmos.EntitySystems
             component.DisconnectFromInternals(args.User);
         }
 
-        private void OnGetActions(EntityUid uid, GasTankComponent component, GetActionsEvent args)
+        private void OnGetActions(EntityUid uid, GasTankComponent component, GetItemActionsEvent args)
         {
             args.Actions.Add(component.ToggleAction);
         }
