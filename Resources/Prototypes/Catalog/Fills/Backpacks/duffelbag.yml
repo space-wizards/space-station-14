@@ -178,7 +178,7 @@
     - type: StorageFill
       contents:
         - id: C4
-          amount: 10
+          amount: 8
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
