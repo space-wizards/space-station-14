@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Spawned salvage now synced with a station rotation., type: Tweak}
-  id: 818
-  time: '2022-01-03T21:32:16.0000000+00:00'
 - author: Rane
   changes:
   - {message: Fire and Air Alarm Electronics can now be printed in the lathe after
@@ -3021,3 +3016,9 @@ Entries:
   - {message: Mob pulling now 20% less jank., type: Fix}
   id: 1317
   time: '2022-04-14T02:29:56.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that would prevent drones and mice from moving under doors
+      after having been stunned., type: Fix}
+  id: 1318
+  time: '2022-04-14T02:31:07.0000000+00:00'
