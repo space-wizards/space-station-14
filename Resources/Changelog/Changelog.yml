@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: The Syndicate now considers certain steal targets to be easier or harder
-      than others., type: Tweak}
-  id: 821
-  time: '2022-01-04T12:05:06.0000000+00:00'
 - author: router
   changes:
   - {message: Added paying respects, type: Add}
@@ -3019,3 +3013,8 @@ Entries:
   - {message: Added new lobby art, type: Add}
   id: 1320
   time: '2022-04-14T17:10:31.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Added round Id to the lobby and the round end summary window., type: Add}
+  id: 1321
+  time: '2022-04-14T18:40:26.0000000+00:00'
