@@ -1,11 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: 'Due to a few incidents during the first deployment of the Holoparasite,
-      the Syndicate have now integrated a safety to prevent Holoparasites from attacking
-      their host.', type: Fix}
-  id: 820
-  time: '2022-01-04T09:22:28.0000000+00:00'
 - author: Rane
   changes:
   - {message: The Syndicate now considers certain steal targets to be easier or harder
@@ -3021,3 +3014,8 @@ Entries:
   - {message: All welder steps in wall deconstruction now take 5 times as long., type: Tweak}
   id: 1319
   time: '2022-04-14T07:41:30.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Added new lobby art, type: Add}
+  id: 1320
+  time: '2022-04-14T17:10:31.0000000+00:00'
