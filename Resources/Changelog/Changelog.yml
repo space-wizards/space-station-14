@@ -1,10 +1,4 @@
 Entries:
-- author: ZeroDayDaemon
-  changes:
-  - {message: Added 3 variants of ducks and related food items, type: Add}
-  - {message: Tweaked Cargo console to sell duck and chicken crates, type: Tweak}
-  id: 816
-  time: '2022-01-03T07:47:36.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Lockers and crates now have significantly reduced HP, so anything that
@@ -3026,3 +3020,9 @@ Entries:
   - {message: Added a couple extra contraband posters., type: Add}
   id: 1315
   time: '2022-04-13T13:38:34.0000000+00:00'
+- author: ProfanedBane
+  changes:
+  - {message: Modified object physics so you can drag things round corners more easily,
+    type: Tweak}
+  id: 1316
+  time: '2022-04-14T02:28:32.0000000+00:00'
