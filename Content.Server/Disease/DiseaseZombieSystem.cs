@@ -13,13 +13,12 @@ using Content.Server.Hands.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Chat.Managers;
-using Content.Server.Drone.Components; //future-proofing for borg
+using Content.Server.Drone.Components;
 using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Movement.EntitySystems;
-using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
 
@@ -78,12 +77,6 @@ namespace Content.Server.Disease
                 _damageable.SetAllDamage(comp, 0);
             }
 
-            // circumvents the 20 damage after being converted.
-            // idk a better way of doing this within the meleeHitEvent
-            var healingSolution = new Solution();
-            healingSolution.AddReagent("Bicaridine", 5.00);
-            _bloodstream.TryAddToChemicals(uid, healingSolution);  
-
             if(TryComp<HumanoidAppearanceComponent>(uid, out var spritecomp))
             {
                 //zombie hex color is #aeb87bff
@@ -92,6 +85,8 @@ namespace Content.Server.Disease
                 var oldapp = spritecomp.Appearance;
                 var newapp = oldapp.WithSkinColor(color);
                 _sharedHumanoidAppearance.UpdateAppearance(uid, newapp);
+				
+				_sharedHumanoidAppearance.ForceAppearanceUpdate(uid);
             }
 
             if(TryComp<HandsComponent>(uid, out var handcomp))
@@ -168,9 +163,13 @@ namespace Content.Server.Disease
                 }
 
                 EntityManager.EnsureComponent<MobStateComponent>(entity, out var mobState);
-                if (mobState.IsDead() || mobState.IsCritical()) //dead entities are eautomatically infected. MAYBE: have activated infect ability?
+                if ((mobState.IsDead() || mobState.IsCritical()) && !HasComp<DiseaseZombieComponent>(entity)) //dead entities are eautomatically infected. MAYBE: have activated infect ability?
                 {
-                    EntityManager.EnsureComponent<DiseaseZombieComponent>(entity);
+                    EntityManager.AddComponent<DiseaseZombieComponent>(entity);
+					var dspec = new DamageSpecifier();
+                    dspec.DamageDict.TryAdd("Slash", -12);
+                    dspec.DamageDict.TryAdd("Piercing", -7);
+					args.BonusDamage += dspec;
                 }
                 else if (mobState.IsAlive() && !HasComp<DroneComponent>(entity)) //heals when zombies bite live entities
                 {

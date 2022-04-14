@@ -22,21 +22,22 @@
   id: ZombieInfection
   name: Zombie Infection #This is the incubation period of the zombie disease.
   infectious: false
+  cureResist: 0.2
   effects:
     - !type:DiseaseHealthChange
       probability: 0.05
       damage:
         types:
-          Blunt: 5
+          Blunt: 3
     - !type:DiseaseSnough
-      probability: 0.01
+      probability: 0.005
       snoughMessage: disease-cough
       snoughSound:
         collection: Coughs
     - !type:DiseaseProgression
-      probability: 0.5
+      probability: 0.35
       comp: DiseaseZombie
   cures:
     - !type:DiseaseReagentCure
-      reagent: Zombidozone
+      reagent: Romerol
       min: 10

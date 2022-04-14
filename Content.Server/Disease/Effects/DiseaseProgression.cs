@@ -38,15 +38,14 @@ namespace Content.Server.Disease.Effects
             if ( Progression < 1) //increases steadily until 100%
             {
                 Progression += Rate;
-                
             }
             else if(Comp != null)//adds the component for the later stage of the disease.
             {
 				EntityUid uid = args.DiseasedEntity;
                 var newComponent = (Component) IoCManager.Resolve<IComponentFactory>().GetComponent(Comp);
 				newComponent.Owner = uid;
-
-                args.EntityManager.AddComponent(uid, newComponent);
+                if (!args.EntityManager.HasComponent(uid, newComponent.GetType()))
+                    args.EntityManager.AddComponent(uid, newComponent);
             }
         }
     }
