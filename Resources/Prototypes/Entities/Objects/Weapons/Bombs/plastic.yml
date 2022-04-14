@@ -19,11 +19,10 @@
     - type: Sticky
       stickDelay: 5
       unstickDelay: 5
-      canUnstick: false
       stickPopupStart: comp-sticky-start-stick-bomb
       stickPopupSuccess: comp-sticky-success-stick-bomb
-      unstickPopupStart: comp-sticky-start-stick-bomb
-      unstickPopupSuccess: comp-sticky-success-stick-bomb
+      unstickPopupStart: comp-sticky-start-unstick-bomb
+      unstickPopupSuccess: comp-sticky-success-unstick-bomb
     - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
       explosionType: Default
       maxIntensity: 300
