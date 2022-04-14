@@ -5,6 +5,7 @@
   name: action-name-scream
   description: AAAAAAAAAAAAAAAAAAAAAAAAA
   serverEvent: !type:ScreamActionEvent
+  checkCanInteract: false
 
 - type: instantAction
   id: ToggleLight
