@@ -35,7 +35,7 @@
         collection: Coughs
     - !type:DiseaseProgression
       probability: 0.5
-      comp: diseaseZombie
+      comp: DiseaseZombie
   cures:
     - !type:DiseaseReagentCure
       reagent: Zombidozone

@@ -1,6 +1,7 @@
 using Content.Server.Disease.Components;
 using JetBrains.Annotations;
 using Content.Shared.Disease;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Disease.Effects
 {
@@ -26,10 +27,11 @@ namespace Content.Server.Disease.Effects
         [ViewVariables(VVAccess.ReadWrite)]
         public float Progression = 0.00f;
 
+		/// <summary>
+		/// The component that is added at the end of build up
+		/// </summary>
 		[DataField("comp")]
 		public string? Comp =  null;
-
-        [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
         public override void Effect(DiseaseEffectArgs args)
         {
@@ -41,7 +43,7 @@ namespace Content.Server.Disease.Effects
             else if(Comp != null)//adds the component for the later stage of the disease.
             {
 				EntityUid uid = args.DiseasedEntity;
-                var newComponent = (Component) _componentFactory.GetComponent(Comp);
+                var newComponent = (Component) IoCManager.Resolve<IComponentFactory>().GetComponent(Comp);
 				newComponent.Owner = uid;
 
                 args.EntityManager.AddComponent(uid, newComponent);
