@@ -11,6 +11,7 @@
     anchored: true
   - type: Physics
     bodyType: Static
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -111,6 +112,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -126,6 +128,7 @@
     state: solar_assembly
   - type: Transform
     anchored: true
+    noRot: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -153,6 +156,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -174,6 +178,7 @@
     netsync: false
   - type: Transform
     anchored: true
+    noRot: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

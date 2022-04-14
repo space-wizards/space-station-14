@@ -28,9 +28,11 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49"
+          bounds: "-0.45,-0.45,0.45,0.45"
       mass: 50
       layer:
       - SmallImpassable
       mask:
       - VaultImpassable
+  - type: Transform
+    noRot: true
