@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Fire and Air Alarm Electronics can now be printed in the lathe after
-      unlocking Industrial Engineering., type: Add}
-  id: 819
-  time: '2022-01-03T21:32:28.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: 'Due to a few incidents during the first deployment of the Holoparasite,
@@ -3022,3 +3016,8 @@ Entries:
       after having been stunned., type: Fix}
   id: 1318
   time: '2022-04-14T02:31:07.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: All welder steps in wall deconstruction now take 5 times as long., type: Tweak}
+  id: 1319
+  time: '2022-04-14T07:41:30.0000000+00:00'
