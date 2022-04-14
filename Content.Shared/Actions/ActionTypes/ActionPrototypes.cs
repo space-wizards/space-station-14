@@ -19,7 +19,7 @@ public sealed class WorldTargetActionPrototype : WorldTargetAction, IPrototype
     // prototypes, but some actions may need to use server-exclusive events, and there is no way to specify on a
     // per-prototype basis whether the client should ignore it when validating yaml.
     [DataField("serverEvent", serverOnly: true)]
-    public WorldTargetActionEvent? SeverEvent
+    public WorldTargetActionEvent? ServerEvent
     {
         get => Event;
         set => Event = value;
@@ -33,7 +33,7 @@ public sealed class EntityTargetActionPrototype : EntityTargetAction, IPrototype
     public string ID { get; } = default!;
 
     [DataField("serverEvent", serverOnly: true)]
-    public EntityTargetActionEvent? SeverEvent
+    public EntityTargetActionEvent? ServerEvent
     {
         get => Event;
         set => Event = value;
@@ -47,7 +47,7 @@ public sealed class InstantActionPrototype : InstantAction, IPrototype
     public string ID { get; } = default!;
 
     [DataField("serverEvent", serverOnly: true)]
-    public InstantActionEvent? SeverEvent
+    public InstantActionEvent? ServerEvent
     {
         get => Event;
         set => Event = value;
