@@ -37,14 +37,14 @@ namespace Content.Client.Ghost.UI
 
         private void AddButtonPlayers()
         {
-            var sortedPlayers = new List<(EntityUid, string[])>(Players.Count);
+            var sortingList = new List<(EntityUid, string[])>(Players.Count);
 
             foreach (var (key, player) in Players)
             {
-                sortedPlayers.Add((key, player));
+                sortingList.Add((key, player));
             }
 
-            var test = sortedPlayers.OrderBy(x => x.Item2[0]);
+            var sortedPlayers = sortingList.OrderBy(x => x.Item2[0]);
 
             foreach (var (key, player) in sortedPlayers)
             {
