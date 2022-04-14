@@ -49,9 +49,6 @@
   - type: Wires
     BoardName: "Vending Machine"
     LayoutId: Vending
-    wireActions:
-    - !type:PowerWireAction
-    - !type:AccessWireAction
   - type: Anchorable
   - type: DoAfter
   - type: Electrified

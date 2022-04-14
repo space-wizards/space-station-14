@@ -1,0 +1,23 @@
+- type: wireLayout
+  id: Airlock
+  wires:
+  - !type:PowerWireAction
+  - !type:AccessWireAction
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockSecurity
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockCommand
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockArmory
+
+- type: wireLayout
+  id: Vending
+  wires:
+  - !type:PowerWireAction
+  - !type:AccessWireAction

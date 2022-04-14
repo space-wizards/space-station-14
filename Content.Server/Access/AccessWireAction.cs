@@ -46,6 +46,7 @@ public class AccessWireAction : BaseWireAction
         }
 
         access.Enabled = false;
+        wire.IsCut = true;
 
         return true;
     }
@@ -58,7 +59,7 @@ public class AccessWireAction : BaseWireAction
         }
 
         access.Enabled = true;
-
+        wire.IsCut = false;
 
         return true;
     }

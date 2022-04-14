@@ -20,6 +20,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Reflection;
 using Robust.Shared.ViewVariables;
@@ -29,6 +30,7 @@ namespace Content.Server.Wires;
 public sealed class WiresSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
@@ -63,9 +65,32 @@ public sealed class WiresSystem : EntitySystem
 
         WireLayout? layout = null;
         if (wires.LayoutId != null)
+        {
             TryGetLayout(wires.LayoutId, out layout);
+        }
+        else
+        {
+            return;
+        }
 
-        var wireSet = CreateWireSet(uid, layout, wires);
+        if (!_protoMan.TryIndex(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
+            return;
+
+        // does the prototype have a parent (and are the wires empty?) if so, we just create
+        // a new layout based on that
+        //
+        // TODO: Merge wire layouts...
+        if (!string.IsNullOrEmpty(layoutPrototype.Parent) && layoutPrototype.Wires == null)
+        {
+            var parent = layoutPrototype.Parent;
+
+            if (!_protoMan.TryIndex(parent, out WireLayoutPrototype? parentPrototype))
+                return;
+
+            layoutPrototype = parentPrototype;
+        }
+
+        var wireSet = CreateWireSet(uid, layout, layoutPrototype);
 
         if (wireSet != null)
             wires.WiresList.AddRange(wireSet);
@@ -84,17 +109,14 @@ public sealed class WiresSystem : EntitySystem
         {
             _random.Shuffle(wires.WiresList);
 
-            if (wires.LayoutId != null)
+            var dict = new Dictionary<object, WireLayout.WireData>();
+            for (var i = 0; i < wires.WiresList.Count; i++)
             {
-                var dict = new Dictionary<object, WireLayout.WireData>();
-                for (var i = 0; i < wires.WiresList.Count; i++)
-                {
-                    var d = wires.WiresList[i];
-                    dict.Add(d.Identifier, new WireLayout.WireData(d.Letter, d.Color, i));
-                }
-
-                AddLayout(wires.LayoutId, new WireLayout(dict));
+                var d = wires.WiresList[i];
+                dict.Add(d.Identifier, new WireLayout.WireData(d.Letter, d.Color, i));
             }
+
+            AddLayout(wires.LayoutId, new WireLayout(dict));
         }
 
         var id = 0;
@@ -105,9 +127,14 @@ public sealed class WiresSystem : EntitySystem
         }
     }
 
-    private List<Wire>? CreateWireSet(EntityUid uid, WireLayout? layout, WiresComponent? wires = null)
+    private List<Wire>? CreateWireSet(EntityUid uid, WireLayout? layout, WireLayoutPrototype wires)
     {
+        /*
         if (!Resolve(uid, ref wires))
+            return null;
+            */
+
+        if (wires.Wires == null)
             return null;
 
         List<WireColor> colors =
@@ -117,7 +144,7 @@ public sealed class WiresSystem : EntitySystem
             new((WireLetter[]) Enum.GetValues(typeof(WireLetter)));
 
         var wireSet = new List<Wire>();
-        foreach (var wire in wires.WireActions)
+        foreach (var wire in wires.Wires)
         {
             wireSet.Add(CreateWire(uid, wire, layout, colors, letters));
         }
