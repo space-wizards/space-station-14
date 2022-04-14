@@ -34,6 +34,7 @@ namespace Content.Client.Entry
             "Construction",
             "PoweredLight",
             "CrewMonitoringServer",
+            "StationLimitedNetwork",
             "Smes",
             "LightBulb",
             "GlassTable",

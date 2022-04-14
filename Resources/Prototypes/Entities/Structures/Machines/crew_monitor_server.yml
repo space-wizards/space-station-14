@@ -9,6 +9,11 @@
       layers:
         - state: server
         - state: variant-crew
+    - type: Construction
+      graph: Machine
+      node: machine
+    - type: Machine
+      board: CrewMonitoringServerMachineCircuitboard
     - type: CrewMonitoringServer
     - type: DeviceNetwork
       deviceNetId: Wireless
@@ -17,6 +22,7 @@
       autoConnect: false
     - type: WirelessNetworkConnection
       range: 500
+    - type: StationLimitedNetwork
     - type: ApcPowerReceiver
       powerLoad: 200
       priority: Low

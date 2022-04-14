@@ -9,6 +9,7 @@
     transmitFrequencyId: SuitSensor
   - type: WirelessNetworkConnection
     range: 500
+  - type: StationLimitedNetwork
 
 - type: entity
   abstract: true

@@ -1,10 +1,10 @@
-﻿using Content.Server.Destructible;
-using Content.Server.DeviceNetwork;
+﻿using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.SuitSensors;
 using Content.Server.Power.Components;
 using Content.Shared.Medical.SuitSensor;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Medical.CrewMonitoring;
@@ -17,11 +17,12 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
 
     private const float UpdateRate = 3f;
     private float _updateDif;
-    private EntityUid? _activeServer;
+    private Dictionary<GridId, EntityUid> _activeServers = new();
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<CrewMonitoringServerComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<CrewMonitoringServerComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<CrewMonitoringServerComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<CrewMonitoringServerComponent, PowerChangedEvent>(OnPowerChanged);
@@ -37,48 +38,44 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
             return;
         _updateDif = 0f;
 
-        if (_activeServer == null)
+        var servers = EntityManager.EntityQuery<CrewMonitoringServerComponent>();
+
+        foreach (var server in servers)
         {
-            var servers = EntityManager.EntityQuery<CrewMonitoringServerComponent>().GetEnumerator();
-            CrewMonitoringServerComponent? server = null;
+            if (!server.Available || _activeServers.ContainsKey(server.StationId))
+                continue;
 
-            //Retrieve the first available server
-            while (servers.MoveNext())
-            {
-                if (servers.Current.Available)
-                {
-                    server = servers.Current;
-                }
-            }
-
-            servers.Dispose();
-
-            if (server == null)
-                return;
-
-            _activeServer = server.Owner;
+            _activeServers.Add(server.StationId, server.Owner);
             _deviceNetworkSystem.ConnectDevice(server.Owner);
         }
 
-        if (_activeServer == null)
-            return;
-
-        UpdateTimeout((EntityUid) _activeServer!);
-        BroadcastSensorStatus((EntityUid) _activeServer!);
+        foreach (var (_, activeServer) in _activeServers)
+        {
+            UpdateTimeout(activeServer);
+            BroadcastSensorStatus(activeServer);
+        }
     }
 
     /// <summary>
-    /// Returns the address of the currently active server if there is one
+    /// Sets the station id the server is on
     /// </summary>
-    public bool TryGetActiveServerAddress(out string? address)
+    private void OnInit(EntityUid uid, CrewMonitoringServerComponent component, ComponentInit args)
     {
-        if (_activeServer == null)
+        component.StationId = Transform(uid).GridID;
+    }
+
+    /// <summary>
+    /// Returns the address of the currently active server for the given station id if there is one
+    /// </summary>
+    public bool TryGetActiveServerAddress(GridId stationId, out string? address)
+    {
+        if (!_activeServers.ContainsKey(stationId))
         {
             address = null;
             return false;
         }
 
-        address = GetServerAddress((EntityUid) _activeServer!);
+        address = GetServerAddress(_activeServers[stationId]);
         return address != null;
     }
 
@@ -106,7 +103,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
     private void OnRemove(EntityUid uid, CrewMonitoringServerComponent component, ComponentRemove args)
     {
         component.SensorStatus.Clear();
-        _activeServer = null;
+        _activeServers.Remove(component.StationId);
     }
 
     /// <summary>
@@ -115,7 +112,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
     private void OnPowerChanged(EntityUid uid, CrewMonitoringServerComponent component, PowerChangedEvent args)
     {
         component.Available = args.Powered;
-        if (uid != _activeServer || args.Powered)
+        if (!_activeServers.ContainsValue(component.Owner) || args.Powered)
             return;
 
         DisconnectServer(uid, component);
@@ -164,6 +161,6 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
 
         server.SensorStatus.Clear();
         _deviceNetworkSystem.DisconnectDevice(uid, device);
-        _activeServer = null;
+        _activeServers.Remove(server.StationId);
     }
 }

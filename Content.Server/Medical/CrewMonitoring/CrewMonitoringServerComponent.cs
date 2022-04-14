@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Medical.SuitSensor;
+using Robust.Shared.Map;
 
 namespace Content.Server.Medical.CrewMonitoring;
 
@@ -21,6 +22,11 @@ public sealed class CrewMonitoringServerComponent : Component
     /// <summary>
     ///     Whether the server can become the currently active server. The server being unavailable usually means that it isn't powered
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] public bool Available = true;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool Available = true;
 
+    /// <summary>
+    /// The id of the station the server is on.
+    /// </summary>
+    public GridId StationId;
 }

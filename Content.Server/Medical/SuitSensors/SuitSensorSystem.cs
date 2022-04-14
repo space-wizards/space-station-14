@@ -78,7 +78,8 @@ namespace Content.Server.Medical.SuitSensors
                 //Retrieve active server address if the sensor isn't connected to a server
                 if (sensor.ConnectedServer == null)
                 {
-                    if (!_monitoringServerSystem.TryGetActiveServerAddress(out var address))
+                    var stationId = Transform(sensor.Owner).GridID;
+                    if (!_monitoringServerSystem.TryGetActiveServerAddress(stationId, out var address))
                         continue;
 
                     sensor.ConnectedServer = address;
