@@ -44,6 +44,8 @@
   - type: Airtight
     fixVacuum: true
     airBlockedDirection:
+      - East
+      - West
       - South
   - type: Tag
     tags:

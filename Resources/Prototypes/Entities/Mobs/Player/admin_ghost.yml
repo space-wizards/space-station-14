@@ -12,21 +12,6 @@
   - type: Hands
   - type: DoAfter
   - type: CombatMode
-    disarmAction:
-      id: disarmAction
-      name: action-name-disarm
-      description: action-description-disarm
-      icon: Interface/Actions/disarmOff.png
-      iconOn: Interface/Actions/disarm.png
-      repeat: true
-      useDelay: 1.5
-      interactOnMiss: true
-      event: !type:DisarmActionEvent
-      canTargetSelf: false
-      whitelist:
-        components:
-        - Hands
-        - StatusEffects
   - type: Actions
   - type: PlayerInputMover
   - type: MovementSpeedModifier
@@ -67,7 +52,6 @@
     uis:
       - key: enum.SolarControlConsoleUiKey.Key
         toggleAction:
-          id: showSolarConsoleAction
           name: action-name-show-solar-console
           description: action-description-show-solar-console
           icon: Structures/Machines/parts.rsi/box_0.png
@@ -77,7 +61,6 @@
           event: !type:ToggleIntrinsicUIEvent
       - key: enum.CommunicationsConsoleUiKey.Key
         toggleAction:
-          id: showCommunicationsConsoleAction
           name: action-name-show-communications-console
           description: action-description-show-communications-console
           icon: Structures/Machines/parts.rsi/box_0.png
@@ -87,7 +70,6 @@
           event: !type:ToggleIntrinsicUIEvent
       - key: enum.RadarConsoleUiKey.Key
         toggleAction:
-          id: showRadarConsoleAction
           name: action-name-show-radar-console
           description: action-description-show-radar-console
           icon: Structures/Machines/parts.rsi/box_0.png
@@ -97,7 +79,6 @@
           event: !type:ToggleIntrinsicUIEvent
       - key: enum.CargoConsoleUiKey.Key
         toggleAction:
-          id: showCargoConsoleAction
           name: action-name-show-cargo-console
           description: action-description-show-cargo-console
           icon: Structures/Machines/parts.rsi/box_0.png
@@ -107,7 +88,6 @@
           event: !type:ToggleIntrinsicUIEvent
       - key: enum.CrewMonitoringUIKey.Key
         toggleAction:
-          id: showCrewMonitoringConsoleAction
           name: action-name-show-crew-monitoring-console
           description: action-description-crew-monitoring-console
           icon: Structures/Machines/parts.rsi/box_0.png

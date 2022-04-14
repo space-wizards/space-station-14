@@ -6,12 +6,14 @@
   components:
   - type: Transform
     anchored: true
+    noRot: true
   - type: Physics
     bodyType: Static
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
       mass: 50
       layer:
       - Impassable
