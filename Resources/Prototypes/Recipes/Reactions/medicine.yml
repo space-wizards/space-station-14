@@ -190,14 +190,14 @@
     Phalanximine: 3
 
 - type: reaction
-  id: Zombidozone
+  id: Romerol
   reactants:
     Phalanximine:
       amount: 1
     Tricordrazine:
       amount: 1
   products:
-    Zombidozone: 2
+    Romerol: 2
 
 - type: reaction
   id: Synaptizine
