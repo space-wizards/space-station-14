@@ -5,7 +5,6 @@
   id: C4
   components:
     - type: Sprite
-      netsync: true # need this to do draw depth update
       sprite: Objects/Weapons/Bombs/c4.rsi
       state: icon
     - type: Item
@@ -18,9 +17,13 @@
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
       startOnStick: true
     - type: Sticky
-      stickDelay: 0
+      stickDelay: 5
+      unstickDelay: 5
+      canUnstick: false
       stickPopupStart: comp-sticky-start-stick-bomb
       stickPopupSuccess: comp-sticky-success-stick-bomb
+      unstickPopupStart: comp-sticky-start-stick-bomb
+      unstickPopupSuccess: comp-sticky-success-stick-bomb
     - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
       explosionType: Default
       maxIntensity: 300
@@ -38,6 +41,7 @@
           behaviors:
             - !type:DoActsBehavior
               acts: ["Destruction"]
+    - type: StickyVisualizer
     - type: Appearance
       visuals:
         - type: GenericEnumVisualizer

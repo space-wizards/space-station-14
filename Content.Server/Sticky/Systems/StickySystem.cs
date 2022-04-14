@@ -4,8 +4,8 @@ using Content.Server.Sticky.Components;
 using Content.Server.Sticky.Events;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Sticky.Components;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
@@ -97,10 +97,10 @@ public sealed class StickySystem : EntitySystem
         StickToEntity(ev.Uid, ev.Target, ev.User, component);
     }
 
-    private bool StartUnsticking(EntityUid uid, EntityUid user, StickyComponent? component = null)
+    private void StartUnsticking(EntityUid uid, EntityUid user, StickyComponent? component = null)
     {
         if (!Resolve(uid, ref component))
-            return false;
+            return;
 
         var delay = (float) component.UnstickDelay.TotalSeconds;
         if (delay > 0)
@@ -128,7 +128,7 @@ public sealed class StickySystem : EntitySystem
             UnstickFromEntity(uid, user, component);
         }
 
-        return true;
+        return;
     }
 
     private void OnUnstickSuccessful(UnstickSuccessfulEvent ev)
@@ -158,10 +158,10 @@ public sealed class StickySystem : EntitySystem
             _popupSystem.PopupEntity(msg, user, Filter.Entities(user));
         }
 
-        // change sprite draw depth to show entity as overlay
-        if (TryComp(uid, out SpriteComponent? sprite))
+        // send information to appearance that entity is stuck
+        if (TryComp(uid, out AppearanceComponent? appearance))
         {
-            sprite.DrawDepth = component.StuckDrawDepth;
+            appearance.SetData(StickyVisuals.IsStuck, true);
         }
 
         component.StuckTo = target;
@@ -186,10 +186,10 @@ public sealed class StickySystem : EntitySystem
         // try place dropped entity into user hands
         _handsSystem.PickupOrDrop(user, uid);
 
-        // change sprite draw depth to show entity as overlay
-        if (TryComp(uid, out SpriteComponent? sprite))
+        // send information to appearance that entity isn't stuck
+        if (TryComp(uid, out AppearanceComponent? appearance))
         {
-            sprite.DrawDepth = component.StuckDrawDepth;
+            appearance.SetData(StickyVisuals.IsStuck, false);
         }
 
         // show message to user
