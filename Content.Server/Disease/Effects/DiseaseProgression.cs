@@ -26,6 +26,11 @@ namespace Content.Server.Disease.Effects
         [ViewVariables(VVAccess.ReadWrite)]
         public float Progression = 0.00f;
 
+		[DataField("comp")]
+		public string? Comp =  null;
+
+        [Dependency] private readonly IComponentFactory _componentFactory = default!;
+
         public override void Effect(DiseaseEffectArgs args)
         {
             if ( Progression < 1) //increases steadily until 100%
@@ -33,9 +38,13 @@ namespace Content.Server.Disease.Effects
                 Progression += Rate;
                 
             }
-            else //adds the component for the later stage of the disease.
+            else if(Comp != null)//adds the component for the later stage of the disease.
             {
-                args.EntityManager.EnsureComponent<DiseaseZombieComponent>(args.DiseasedEntity); //TODO: needs to be generalized.
+				EntityUid uid = args.DiseasedEntity;
+                var newComponent = (Component) _componentFactory.GetComponent(Comp);
+				newComponent.Owner = uid;
+
+                args.EntityManager.AddComponent(uid, newComponent);
             }
         }
     }
