@@ -54,8 +54,6 @@ namespace Content.Server.Storage.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<ServerStorageComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
-            SubscribeLocalEvent<EntityStorageComponent, RelayMovementEntityEvent>(OnRelayMovement);
             SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
             SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<UtilityVerb>>(AddTransferVerbs);
             SubscribeLocalEvent<ServerStorageComponent, InteractUsingEvent>(OnInteractUsing);
@@ -66,6 +64,9 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, StorageInsertItemMessage>(OnInsertItemMessage);
             SubscribeLocalEvent<ServerStorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
             SubscribeLocalEvent<ServerStorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
+
+            SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
+            SubscribeLocalEvent<EntityStorageComponent, RelayMovementEntityEvent>(OnRelayMovement);
 
             SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
         }
@@ -89,9 +90,7 @@ namespace Content.Server.Storage.EntitySystems
 
             if (_gameTiming.CurTime <
                 component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)
-            {
                 return;
-            }
 
             component.LastInternalOpenAttempt = _gameTiming.CurTime;
             component.TryOpenStorage(args.Entity);
@@ -638,7 +637,6 @@ namespace Content.Server.Storage.EntitySystems
                 if (TryComp(entity, out ServerStorageComponent? storedStorageComp))
                 {
                     DebugTools.Assert(storedStorageComp != storageComp, $"Storage component contains itself!? Entity: {uid}");
-                    // UnsubscribeSession(entity, session, storedStorageComp);
                 }
 
                 if (TryComp(entity, out ServerUserInterfaceComponent? uiComponent))

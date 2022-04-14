@@ -85,20 +85,6 @@ namespace Content.Shared.Storage
     }
 
     /// <summary>
-    /// Network event for adding an entity to the storage entity.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class InsertEntityEvent : EntityEventArgs
-    {
-        public readonly EntityUid Storage;
-
-        public InsertEntityEvent(EntityUid storage)
-        {
-            Storage = storage;
-        }
-    }
-
-    /// <summary>
     /// Network event for displaying an animation of entities flying into a storage entity
     /// </summary>
     [Serializable, NetSerializable]
@@ -113,51 +99,6 @@ namespace Content.Shared.Storage
             Storage = storage;
             StoredEntities = storedEntities;
             EntityPositions = entityPositions;
-        }
-    }
-
-    /// <summary>
-    /// Network event for removing a contained entity from the storage entity
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class RemoveEntityEvent : EntityEventArgs
-    {
-        public EntityUid Storage;
-        public EntityUid EntityUid;
-
-        public RemoveEntityEvent(EntityUid storage, EntityUid entityUid)
-        {
-            Storage = storage;
-            EntityUid = entityUid;
-        }
-    }
-
-    /// <summary>
-    /// Network event for opening the storage UI
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class OpenStorageUIEvent : EntityEventArgs
-    {
-        public readonly EntityUid Storage;
-
-        public OpenStorageUIEvent(EntityUid storage)
-        {
-            Storage = storage;
-        }
-    }
-
-    /// <summary>
-    /// Network event for closing the storage UI.
-    /// E.g when the player moves too far away from the container.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class CloseStorageUIEvent : EntityEventArgs
-    {
-        public readonly EntityUid Storage;
-
-        public CloseStorageUIEvent(EntityUid storage)
-        {
-            Storage = storage;
         }
     }
 
