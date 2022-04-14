@@ -3,6 +3,7 @@ using Content.Server.Light.Components;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Component;
@@ -14,6 +15,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Light.EntitySystems
@@ -24,6 +26,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
         [Dependency] private readonly ActionsSystem _actionSystem = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
 
         // TODO: Ideally you'd be able to subscribe to power stuff to get events at certain percentages.. or something?
         // But for now this will be better anyway.
@@ -42,13 +45,20 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<HandheldLightComponent, ActivateInWorldEvent>(OnActivate);
 
-            SubscribeLocalEvent<HandheldLightComponent, GetActionsEvent>(OnGetActions);
+            SubscribeLocalEvent<HandheldLightComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<HandheldLightComponent, ToggleActionEvent>(OnToggleAction);
         }
 
-        private void OnGetActions(EntityUid uid, HandheldLightComponent component, GetActionsEvent args)
+        private void OnGetActions(EntityUid uid, HandheldLightComponent component, GetItemActionsEvent args)
         {
-            args.Actions.Add(component.ToggleAction);
+            if (component.ToggleAction == null
+                && _proto.TryIndex(component.ToggleActionId, out InstantActionPrototype? act))
+            {
+                component.ToggleAction = new(act);
+            }
+
+            if (component.ToggleAction != null)
+                args.Actions.Add(component.ToggleAction);
         }
 
         private void OnToggleAction(EntityUid uid, HandheldLightComponent component, ToggleActionEvent args)
@@ -169,7 +179,8 @@ namespace Content.Server.Light.EntitySystems
             if (!component.Activated) return false;
 
             component.Activated = false;
-            _actionSystem.SetToggled(component.ToggleAction, false);
+            if (component.ToggleAction != null)
+                _actionSystem.SetToggled(component.ToggleAction, false);
             _activeLights.Remove(component);
             component.LastLevel = null;
             component.Dirty(EntityManager);
@@ -202,7 +213,8 @@ namespace Content.Server.Light.EntitySystems
             }
 
             component.Activated = true;
-            _actionSystem.SetToggled(component.ToggleAction, true);
+            if (component.ToggleAction != null)
+                _actionSystem.SetToggled(component.ToggleAction, true);
             _activeLights.Add(component);
             component.LastLevel = GetLevel(component);
             Dirty(component);

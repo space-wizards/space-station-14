@@ -48,6 +48,7 @@
   mapPath: /Maps/packedstation.yml
   minPlayers: 15
   maxPlayers: 55
+  votable: false
   conditions:
     - !type:HolidayMapCondition
       inverted: true

@@ -27,6 +27,9 @@
   - type: MovedByPressure
   - type: Physics
     bodyType: Dynamic
+    fixedRotation: false
+  - type: Transform
+    noRot: true
   - type: Fixtures
     fixtures:
     - shape:

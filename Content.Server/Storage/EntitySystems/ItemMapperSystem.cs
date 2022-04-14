@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Storage.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
@@ -12,32 +13,27 @@ namespace Content.Server.Storage.EntitySystems
     [UsedImplicitly]
     public sealed class ItemMapperSystem : SharedItemMapperSystem
     {
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+
         protected override bool TryGetLayers(ContainerModifiedMessage msg,
             ItemMapperComponent itemMapper,
             out IReadOnlyList<string> showLayers)
         {
-            if (EntityManager.TryGetComponent(msg.Container.Owner, out ServerStorageComponent? component))
-            {
-                var containedLayers = component.StoredEntities ?? new List<EntityUid>();
-                var list = new List<string>();
-                foreach (var mapLayerData in itemMapper.MapLayers.Values)
-                {
-                    foreach (var entity in containedLayers)
-                    {
-                        if (mapLayerData.ServerWhitelist.IsValid(entity))
-                        {
-                            list.Add(mapLayerData.Layer);
-                            break;
-                        }
-                    }
-                }
+            var containedLayers = _containerSystem.GetAllContainers(msg.Container.Owner)
+                .SelectMany(cont => cont.ContainedEntities).ToArray();
 
-                showLayers = list;
-                return true;
+            var list = new List<string>();
+            foreach (var mapLayerData in itemMapper.MapLayers.Values)
+            {
+                var count = containedLayers.Count(uid => mapLayerData.ServerWhitelist.IsValid(uid));
+                if (count >= mapLayerData.MinCount && count <= mapLayerData.MaxCount)
+                {
+                    list.Add(mapLayerData.Layer);
+                }
             }
 
-            showLayers = new List<string>();
-            return false;
+            showLayers = list;
+            return true;
         }
     }
 }
