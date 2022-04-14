@@ -1,7 +1,7 @@
 # named frequencies
-device-frequency-prototype-name-atmos = Atmospheric Devices
-device-frequency-prototype-name-suit-sensors = Suit Sensors
-device-frequency-prototype-name-lights = Smart Lights
+device-frequency-prototype-name-atmos = Атмосферные приборы
+device-frequency-prototype-name-suit-sensors = Сенсоры костюмов
+device-frequency-prototype-name-lights = Умное освещение
 # prefixes for randomly generated device addresses
-device-address-prefix-vent = Vnt-
-device-address-prefix-scrubber = Scr-
+device-address-prefix-vent = Вент-
+device-address-prefix-scrubber = Скр-

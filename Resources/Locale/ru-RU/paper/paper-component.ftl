@@ -3,6 +3,6 @@
 # Shown when paper with words examined details
 paper-component-examine-detail-has-words = На листе что-то написано.
 # Shown when paper with stamps examined
-paper-component-examine-detail-stamped-by = { CAPITALIZE(THE($paper)) } { CONJUGATE-HAVE($paper) } been stamped by: { $stamps }.
-paper-component-action-stamp-paper-other = { CAPITALIZE(THE($user)) } stamps { THE($target) } with { THE($stamp) }.
-paper-component-action-stamp-paper-self = You stamp { THE($target) } with { THE($stamp) }.
+paper-component-examine-detail-stamped-by = На { CAPITALIZE($paper) } имеется печать: { $stamps }.
+paper-component-action-stamp-paper-other = { CAPITALIZE($user) } ставит печать { $target } с помощью { $stamp }.
+paper-component-action-stamp-paper-self = Вы ставите печать на { $target } с помощью { $stamp }.
