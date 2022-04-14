@@ -39,6 +39,7 @@
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetEVA
+  noSpawn: true
   name: EVA helmet
   description: A basic helmet designed for extravehicular activies.
   components:
