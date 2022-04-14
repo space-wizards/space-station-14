@@ -1,5 +1,5 @@
 ent-BaseRock = { "" }
-    .desc = Heavy as a really heavy thing.
+    .desc = Очень тяжёлый.
     .suffix = { "" }
 ent-BaseTree = { "" }
     .desc = { "" }
