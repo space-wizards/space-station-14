@@ -1,15 +1,4 @@
 Entries:
-- author: router
-  changes:
-  - {message: Added paying respects, type: Add}
-  id: 822
-  time: '2022-01-04T13:05:21.0000000+00:00'
-- author: Schiene
-  changes:
-  - {message: 'Added a spawnable Boarding Shuttle map called Dart, comes with a small
-      force equipped for Vacuum with heavy weaponry.', type: Add}
-  id: 823
-  time: '2022-01-04T13:23:13.0000000+00:00'
 - author: Schiene
   changes:
   - {message: 'Added Shuttle SS Reach, atmospherics not included yet.', type: Add}
@@ -3018,3 +3007,15 @@ Entries:
   - {message: Added round Id to the lobby and the round end summary window., type: Add}
   id: 1321
   time: '2022-04-14T18:40:26.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Added suit storage!, type: Add}
+  id: 1322
+  time: '2022-04-14T18:41:26.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Most guns now have a much more accurate first shot., type: Tweak}
+  - {message: 'Most guns now take much longer to get back to first-shot accuracy,
+      making tap firing worse.', type: Tweak}
+  id: 1323
+  time: '2022-04-14T18:42:23.0000000+00:00'
