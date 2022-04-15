@@ -29,9 +29,11 @@
     sprite: Objects/Devices/payload.rsi
     state: payload-explosive-armed
   - type: Explosive
-    devastationRange: 0
-    heavyImpactRange: 2
-    lightImpactRange: 4
+    explosionType: Default
+    # same as the standard grenade, but those numbers were also just picked out of a hat.
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 120 # about a ~4 tile radius
     flashRange: 7
   - type: ExplodeOnTrigger
   - type: Destructible
@@ -60,7 +62,7 @@
     state: payload-empty
   - type: ChemicalPayload
     beakerSlotA: &slotDef
-      whitelist: 
+      whitelist:
         components:
         - FitsInDispenser
       swap: false

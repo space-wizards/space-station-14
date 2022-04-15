@@ -1,5 +1,5 @@
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: BulletBaseHV
   id: BulletAntiMaterial
   name: bullet (.60 anti-material)

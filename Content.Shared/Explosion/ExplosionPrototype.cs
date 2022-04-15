@@ -16,7 +16,7 @@ namespace Content.Shared.Explosion;
 [Prototype("explosion")]
 public sealed class ExplosionPrototype : IPrototype
 {
-    [DataField("id", required: true)]
+    [IdDataField]
     public string ID { get; } = default!;
 
     /// <summary>
@@ -27,14 +27,14 @@ public sealed class ExplosionPrototype : IPrototype
 
     /// <summary>
     ///     This set of points, together with <see cref="_tileBreakIntensity"/> define a function that maps the
-    ///     explosion intensity to a tile break chance via linear interpolation. 
+    ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>
     [DataField("tileBreakChance")]
     private readonly float[] _tileBreakChance = { 0f, 1f };
 
     /// <summary>
     ///     This set of points, together with <see cref="_tileBreakChance"/> define a function that maps the
-    ///     explosion intensity to a tile break chance via linear interpolation. 
+    ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>
     [DataField("tileBreakIntensity")]
     private readonly float[] _tileBreakIntensity = {0f, 15f };

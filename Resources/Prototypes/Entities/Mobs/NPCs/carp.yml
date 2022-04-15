@@ -51,6 +51,8 @@
     range: 1.5
     arcwidth: 0
     arc: bite
+    hitSound:
+      path: /Audio/Effects/bite.ogg
     damage:
       groups:
         Brute: 20

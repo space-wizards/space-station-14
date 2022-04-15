@@ -19,7 +19,7 @@
   - type: PowerCellSlot
     cellSlot:
       ejectOnUse: true
-      soundOptions: 
+      soundOptions:
         volume: -2
   - type: Appearance
     visuals:
@@ -44,7 +44,7 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
   - type: RangedWeapon
   - type: BatteryBarrel
@@ -94,7 +94,7 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
   - type: BatteryBarrel
     fireCost: 25
@@ -115,7 +115,7 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
   - type: BatteryBarrel
     fireCost: 25
@@ -125,7 +125,7 @@
   - type: PowerCellSlot
     cellSlot:
       ejectOnUse: true
-      soundOptions: 
+      soundOptions:
         volume: -2
       startingItem: PowerCellSmallHigh
 
@@ -176,7 +176,7 @@
   - type: PowerCellSlot
     cellSlot:
       ejectOnUse: true
-      soundOptions: 
+      soundOptions:
         volume: -2
       startingItem: PowerCellSmallHigh
 
@@ -206,7 +206,7 @@
   - type: PowerCellSlot
     cellSlot:
       ejectOnUse: true
-      soundOptions: 
+      soundOptions:
         volume: -2
       startingItem: PowerCellSmallSuper
 
@@ -236,7 +236,7 @@
   - type: PowerCellSlot
     cellSlot:
       ejectOnUse: true
-      soundOptions: 
+      soundOptions:
         volume: -2
       startingItem: PowerCellSmallSuper
   - type: Appearance
@@ -281,7 +281,7 @@
   - type: PowerCellSlot
     descFormatString : "" # empty string for no examine-text (cell is not ejectable)
     cellSlot:
-      soundOptions: 
+      soundOptions:
         volume: -2
       locked: true
   - type: Appearance

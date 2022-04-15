@@ -102,7 +102,7 @@ public sealed class SpreaderSystem : EntitySystem
         {
             var direction = (DirectionFlag) (1 << i);
             var coords = transform.Coordinates.Offset(direction.AsDir().ToVec());
-            if (grid.GetTileRef(coords).Tile.IsEmpty || _robustRandom.Prob(spreader.Chance)) continue;
+            if (grid.GetTileRef(coords).Tile.IsEmpty || _robustRandom.Prob(1 - spreader.Chance)) continue;
             var ents = grid.GetLocal(coords);
 
             if (ents.Any(x => IsTileBlockedFrom(x, direction))) continue;

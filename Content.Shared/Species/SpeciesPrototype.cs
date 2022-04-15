@@ -11,7 +11,7 @@ public sealed class SpeciesPrototype : IPrototype
     /// <summary>
     /// Prototype ID of the species.
     /// </summary>
-    [DataField("id", required: true)]
+    [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
     /// <summary>

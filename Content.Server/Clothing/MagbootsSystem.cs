@@ -1,13 +1,8 @@
-using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Clothing.Components;
-using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Movement.EntitySystems;
-using Content.Shared.Slippery;
-using Content.Shared.Verbs;
 
 namespace Content.Server.Clothing
 {
@@ -19,8 +14,6 @@ namespace Content.Server.Clothing
         {
             base.Initialize();
 
-            SubscribeLocalEvent<MagbootsComponent, GetVerbsEvent<ActivationVerb>>(AddToggleVerb);
-            SubscribeLocalEvent<MagbootsComponent, SlipAttemptEvent>(OnSlipAttempt);
             SubscribeLocalEvent<MagbootsComponent, GotEquippedEvent>(OnGotEquipped);
             SubscribeLocalEvent<MagbootsComponent, GotUnequippedEvent>(OnGotUnequipped);
         }
@@ -59,26 +52,6 @@ namespace Content.Server.Clothing
             if (args.Slot == "shoes")
             {
                 UpdateMagbootEffects(args.Equipee, uid, true, component);
-            }
-        }
-
-        private void AddToggleVerb(EntityUid uid, MagbootsComponent component, GetVerbsEvent<ActivationVerb> args)
-        {
-            if (!args.CanAccess || !args.CanInteract)
-                return;
-
-            ActivationVerb verb = new();
-            verb.Text = Loc.GetString("toggle-magboots-verb-get-data-text");
-            verb.Act = () => component.On = !component.On;
-            // TODO VERB ICON add toggle icon? maybe a computer on/off symbol?
-            args.Verbs.Add(verb);
-        }
-
-        private void OnSlipAttempt(EntityUid uid, MagbootsComponent component, SlipAttemptEvent args)
-        {
-            if (component.On)
-            {
-                args.Cancel();
             }
         }
     }

@@ -47,6 +47,7 @@
             max: 2
   - type: Transform
     anchored: true
+    noRot: true
   - type: Anchorable
   - type: Pullable
 

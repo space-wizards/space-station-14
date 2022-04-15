@@ -22,7 +22,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <param name="maxIntensity">The maximum intensity that the explosion can have at any given tile. This
     /// effectively caps the damage that this explosion can do.</param>
     /// <returns>A list of tile-sets and a list of intensity values which describe the explosion.</returns>
-    private (int, List<float>, SpaceExplosion?, Dictionary<GridId, GridExplosion>, Matrix3)? GetExplosionTiles(
+    private (int, List<float>, ExplosionSpaceTileFlood?, Dictionary<GridId, ExplosionGridTileFlood>, Matrix3)? GetExplosionTiles(
         MapCoordinates epicenter,
         string typeID,
         float totalIntensity,
@@ -64,8 +64,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         }
 
         // Main data for the exploding tiles in space and on various grids
-        Dictionary<GridId, GridExplosion> gridData = new();
-        SpaceExplosion? spaceData = null;
+        Dictionary<GridId, ExplosionGridTileFlood> gridData = new();
+        ExplosionSpaceTileFlood? spaceData = null;
 
         // The intensity slope is how much the intensity drop over a one-tile distance. The actual algorithm step-size is half of thhat.
         var stepSize = slope / 2;
@@ -98,7 +98,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (!_airtightMap.TryGetValue(epicentreGrid.Value, out var airtightMap))
                 airtightMap = new();
 
-            var initialGridData = new GridExplosion(
+            var initialGridData = new ExplosionGridTileFlood(
                 _mapManager.GetGrid(epicentreGrid.Value),
                 airtightMap,
                 maxIntensity,
@@ -116,7 +116,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         else
         {
             // set up the space explosion data
-            spaceData = new SpaceExplosion(this, epicenter, referenceGrid, localGrids, maxDistance);
+            spaceData = new ExplosionSpaceTileFlood(this, epicenter, referenceGrid, localGrids, maxDistance);
             spaceData.InitTile(initialTile);
         }
 
@@ -187,7 +187,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                     if (!_airtightMap.TryGetValue(grid, out var airtightMap))
                         airtightMap = new();
 
-                    data = new GridExplosion(
+                    data = new ExplosionGridTileFlood(
                         _mapManager.GetGrid(grid),
                         airtightMap,
                         maxIntensity,
@@ -208,7 +208,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
             // if space-data is null, but some grid-based explosion reached space, we need to initialize it.
             if (spaceData == null && previousSpaceJump.Count != 0)
-                spaceData = new SpaceExplosion(this, epicenter, referenceGrid, localGrids, maxDistance);
+                spaceData = new ExplosionSpaceTileFlood(this, epicenter, referenceGrid, localGrids, maxDistance);
 
             // If the explosion has reached space, do that neighbors finding step as well.
             if (spaceData != null)
