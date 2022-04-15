@@ -45,8 +45,9 @@
       normal: alive
       dead: dead
   - type: Butcherable
-    spawned: FoodMeatXeno
-    pieces: 1
+    spawned:
+    - id: FoodMeatXeno
+      amount: 1
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: UnarmedCombat
@@ -56,7 +57,6 @@
     damage:
       groups:
         Brute: 2
-
   - type: MeleeChemicalInjector
   - type: SolutionContainerManager
     solutions:

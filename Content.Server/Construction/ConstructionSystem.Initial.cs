@@ -14,7 +14,9 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
+using Content.Shared.Stacks;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
@@ -78,9 +80,9 @@ namespace Content.Server.Construction
 
             var pos = Transform(user).MapPosition;
 
-            foreach (var near in _lookupSystem.GetEntitiesInRange(user!, 2f, LookupFlags.Approximate))
+            foreach (var near in _lookupSystem.GetEntitiesInRange(user, 2f, LookupFlags.Approximate))
             {
-                if (_interactionSystem.InRangeUnobstructed(pos, near, 2f) && _containerSystem.IsInSameOrParentContainer(user, near)) 
+                if (_interactionSystem.InRangeUnobstructed(pos, near, 2f) && _containerSystem.IsInSameOrParentContainer(user, near))
                     yield return near;
             }
         }
@@ -336,8 +338,12 @@ namespace Content.Server.Construction
                 }
             }
 
-            if (await Construct(user, "item_construction", constructionGraph, edge, targetNode) is {Valid: true} item)
-                _handsSystem.PickupOrDrop(user, item);
+            if (await Construct(user, "item_construction", constructionGraph, edge, targetNode) is not { Valid: true } item)
+                return;
+
+            // Just in case this is a stack, attempt to merge it. If it isn't a stack, this will just normally pick up
+            // or drop the item as normal.
+            _stackSystem.TryMergeToHands(item, user);
         }
 
         // LEGACY CODE. See warning at the top of the file!

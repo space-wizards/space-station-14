@@ -1,20 +1,13 @@
-using System;
-using Robust.Shared.GameObjects;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
 using Content.Shared.Damage;
-using Content.Shared.Popups;
 using Content.Server.Cooldown;
-using Content.Server.Inventory;
-using Content.Server.Mind.Components;
 using Content.Server.Bible.Components;
 using Content.Server.Popups;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 
 
@@ -70,7 +63,7 @@ namespace Content.Server.Bible
                 if (_random.Prob(component.FailChance))
                 {
                 var othersFailMessage = Loc.GetString("bible-heal-fail-others", ("user", args.User),("target", args.Target),("bible", uid));
-            _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
+                _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
 
                 var selfFailMessage = Loc.GetString("bible-heal-fail-self", ("target", args.Target),("bible", uid));
                 _popupSystem.PopupEntity(selfFailMessage, args.User, Filter.Entities(args.User));

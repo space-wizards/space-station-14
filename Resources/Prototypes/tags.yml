@@ -43,6 +43,9 @@
   id: CanPilot
 
 - type: Tag
+  id: CannotSuicide
+
+- type: Tag
   id: CaptainSabre
 
 - type: Tag
@@ -217,6 +220,9 @@
   id: Ore
 
 - type: Tag
+  id: Payload # for grenade/bomb crafting
+  
+- type: Tag
   id: PercussionInstrument
 
 - type: Tag
@@ -291,6 +297,9 @@
 
 - type: Tag
   id: TrashBag
+
+- type: Tag
+  id: WetFloorSign
 
 - type: Tag
   id: Wall

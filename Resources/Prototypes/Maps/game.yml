@@ -48,6 +48,7 @@
   mapPath: /Maps/packedstation.yml
   minPlayers: 15
   maxPlayers: 55
+  votable: false
   conditions:
     - !type:HolidayMapCondition
       inverted: true
@@ -104,7 +105,7 @@
 
 - type: gameMap
   id: NSSPillar
-  mapName: 'NSS Pillar v5.2'
+  mapName: 'NSS Pillar v5.3'
   mapNameTemplate: '{0} NSSPillar {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator

@@ -26,14 +26,34 @@
 - type: entity
   abstract: true
   parent: ClothingHeadBase
+  id: ClothingHeadEVAHelmetBase
+  name: base space helmet
+  components:
+  - type: Clothing
+    size: 10
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 10
+  - type: TemperatureProtection
+    coefficient: 0.2
+  - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - HidesHair
+  - type: DiseaseProtection
+    protection: 0.05
+
+- type: entity
+  abstract: true
+  parent: ClothingHeadBase
   id: ClothingHeadHardsuitBase
   name: base hardsuit helmet
   components:
   - type: Clothing
     size: 15
   - type: PressureProtection
-    highPressureMultiplier: 0.3
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 10
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor
@@ -58,26 +78,26 @@
   name: base hardsuit helmet with light
   components:
   - type: Sprite
-    netsync: true
+    netsync: false
     layers:
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     HeldPrefix: off
   - type: PointLight
+    netsync: false
     enabled: false
-    radius: 3
+    radius: 6
+    energy: 2
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
   - type: Appearance
     visuals:
     - type: FlashLightVisualizer
   - type: HandheldLight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
+    addPrefix: true
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellHardsuitHelmet # self recharging

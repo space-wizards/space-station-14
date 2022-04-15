@@ -1,7 +1,7 @@
 - type: entity
   id: Morgue
   name: morgue
-  description: Used to keep bodies in until someone fetches them. Includes a high-tech alert system for false-positives!
+  description: Used to store bodies until someone fetches them. Includes a high-tech alert system for false-positives!
   components:
   - type: Sprite
     netsync: false

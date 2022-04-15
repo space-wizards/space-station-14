@@ -16,5 +16,7 @@
       - id: ClothingBeltUtilityFilled
       - id: FlashlightSeclite
       - id: SurvivalKnife
+      - id: ClothingOuterHardsuitSpatio
+      - id: ClothingHeadHelmetHardsuitSpatio
 
 

@@ -88,10 +88,10 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         if (!Resolve(uid, ref battery))
             return;
 
-        var heavy = (int) Math.Ceiling(Math.Sqrt(battery.CurrentCharge) / 60);
-        var light = (int) Math.Ceiling(Math.Sqrt(battery.CurrentCharge) / 30);
+        var radius = MathF.Min(5, MathF.Ceiling(MathF.Sqrt(battery.CurrentCharge) / 30));
+        battery.CurrentCharge = 0;
 
-        _explosionSystem.SpawnExplosion(uid, 0, heavy, light, light * 2);
+        _explosionSystem.TriggerExplosive(uid, radius: radius);
         QueueDel(uid);
     }
 
