@@ -64,6 +64,7 @@ namespace Content.Client.Entry
             "DiseaseSwab",
             "FloorTile",
             "RandomInsulation",
+            "AgentIDCard",
             "Electrified",
             "Electrocution",
             "Paper",
