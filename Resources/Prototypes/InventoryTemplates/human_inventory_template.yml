@@ -55,13 +55,6 @@
       uiContainer: Top
       uiWindowPos: 1,0
       displayName: Head
-    - name: suitstorage
-      slotTexture: suit_storage
-      slotFlags:   SUITSTORAGE
-      uiContainer: BottomLeft
-      uiWindowPos: 2,0
-      dependsOn: outerClothing
-      displayName: Suit Storage
     - name: belt
       slotTexture: belt
       slotFlags: BELT

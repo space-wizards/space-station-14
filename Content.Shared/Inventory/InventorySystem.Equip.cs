@@ -227,9 +227,6 @@ public abstract partial class InventorySystem
         if (slotDefinition == null && !TryGetSlot(target, slot, out slotDefinition, inventory: inventory))
             return false;
 
-        if (slotDefinition.DependsOn != null && !TryGetSlotEntity(target, slotDefinition.DependsOn, out _, inventory))
-            return false;
-
         if(!item.SlotFlags.HasFlag(slotDefinition.SlotFlags) && (!slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) || item.Size > (int) ReferenceSizes.Pocket))
         {
             reason = "inventory-component-can-equip-does-not-fit";
@@ -315,15 +312,6 @@ public abstract partial class InventorySystem
         //we need to do this to make sure we are 100% removing this entity, since we are now dropping dependant slots
         if (!force && !slotContainer.CanRemove(removedItem.Value))
             return false;
-
-        foreach (var slotDef in GetSlots(target, inventory))
-        {
-            if (slotDef != slotDefinition && slotDef.DependsOn == slotDefinition.Name)
-            {
-                //this recursive call might be risky
-                TryUnequip(actor, target, slotDef.Name, true, true, inventory);
-            }
-        }
 
         if (force)
         {

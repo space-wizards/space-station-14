@@ -8,6 +8,14 @@
     - outerClothing
   - type: Sprite
     state: icon
+  - type: InventorySlot
+    slots:
+      - name: suitstorage
+        slotTexture: suit_storage
+        slotFlags: SUITSTORAGE
+        uiContainer: BottomLeft
+        uiWindowPos: 2,0
+        displayName: Suit Storage
 
 - type: entity
   abstract: true

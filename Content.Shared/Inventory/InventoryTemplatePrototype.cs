@@ -25,9 +25,6 @@ public sealed class SlotDefinition
 
     [DataField("uiWindowPos", required: true)] public Vector2i UIWindowPosition { get; }
 
-    //todo this is supreme shit and ideally slots should be stored in a given equipmentslotscomponent on each equipment
-    [DataField("dependsOn")] public string? DependsOn { get; }
-
     [DataField("displayName", required: true)] public string DisplayName { get; } = string.Empty;
 
     /// <summary>
