@@ -17,6 +17,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
+using Content.Server.Weapons.Melee.ZombieTransfer.Components;
 
 namespace Content.Server.Disease.Zombie
 {

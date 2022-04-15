@@ -8,8 +8,10 @@ using Content.Server.Weapon.Melee;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
+using Content.Server.Disease;
+using Content.Server.Weapons.Melee.ZombieTransfer.Components;
 
-namespace Content.Server.Disease.Zombie
+namespace Content.Server.Weapons.Melee.ZombieTransfer
 {
     public sealed class ZombieTransferSystem : EntitySystem
     {

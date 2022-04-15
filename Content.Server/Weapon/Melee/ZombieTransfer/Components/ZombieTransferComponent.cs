@@ -1,4 +1,4 @@
-namespace Content.Server.Disease.Zombie.Components
+namespace Content.Server.Weapons.Melee.ZombieTransfer.Components
 {
     [RegisterComponent]
     public sealed class ZombieTransferComponent : Component

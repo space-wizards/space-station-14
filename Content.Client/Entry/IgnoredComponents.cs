@@ -45,7 +45,7 @@ namespace Content.Client.Entry
             "DiseaseVaccineCreator",
             "DiseaseZombie",
             "DiseaseBuildup",
-            "ZombieHand",
+            "ZombieTransfer",
             "Mineable",
             "RangedMagazine",
             "Ammo",
