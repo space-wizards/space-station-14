@@ -1,33 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: 'Due to a few incidents during the first deployment of the Holoparasite,
-      the Syndicate have now integrated a safety to prevent Holoparasites from attacking
-      their host.', type: Fix}
-  id: 820
-  time: '2022-01-04T09:22:28.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: The Syndicate now considers certain steal targets to be easier or harder
-      than others., type: Tweak}
-  id: 821
-  time: '2022-01-04T12:05:06.0000000+00:00'
-- author: router
-  changes:
-  - {message: Added paying respects, type: Add}
-  id: 822
-  time: '2022-01-04T13:05:21.0000000+00:00'
-- author: Schiene
-  changes:
-  - {message: 'Added a spawnable Boarding Shuttle map called Dart, comes with a small
-      force equipped for Vacuum with heavy weaponry.', type: Add}
-  id: 823
-  time: '2022-01-04T13:23:13.0000000+00:00'
-- author: Schiene
-  changes:
-  - {message: 'Added Shuttle SS Reach, atmospherics not included yet.', type: Add}
-  id: 824
-  time: '2022-01-04T13:36:37.0000000+00:00'
 - author: MeltedPixel
   changes:
   - {message: Added Hydroponics plant - Chilis!, type: Add}
@@ -3021,3 +2992,31 @@ Entries:
   - {message: All welder steps in wall deconstruction now take 5 times as long., type: Tweak}
   id: 1319
   time: '2022-04-14T07:41:30.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Added new lobby art, type: Add}
+  id: 1320
+  time: '2022-04-14T17:10:31.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Added round Id to the lobby and the round end summary window., type: Add}
+  id: 1321
+  time: '2022-04-14T18:40:26.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Added suit storage!, type: Add}
+  id: 1322
+  time: '2022-04-14T18:41:26.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Most guns now have a much more accurate first shot., type: Tweak}
+  - {message: 'Most guns now take much longer to get back to first-shot accuracy,
+      making tap firing worse.', type: Tweak}
+  id: 1323
+  time: '2022-04-14T18:42:23.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: 'Attention agents! Syndicate has added new C-4 sticky bombs into your
+      uplinks. You can use it to breach walls, airlocks or sabotage equipment.', type: Add}
+  id: 1324
+  time: '2022-04-14T22:00:50.0000000+00:00'

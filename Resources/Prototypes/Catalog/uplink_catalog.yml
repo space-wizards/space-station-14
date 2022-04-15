@@ -90,17 +90,21 @@
   itemId: MobGrenadePenguin
   price: 6
 
-#- type: uplinkListing
-#  id: UplinkExplosiveC4
-#  category: Weapons
-#  itemId: ExplosiveC4
-#  price: 5
+- type: uplinkListing
+  id: UplinkC4
+  category: Explosives
+  itemId: C4
+  price: 2
+  description: >
+    C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, airlocks or sabotage equipment.
+    It can be attached to almost all objects and has a modifiable timer with a minimum setting of 10 seconds.
 
-#- type: uplinkListing
-#  id: UplinkDuffelExplosiveC4
-#  category: Weapons
-#  itemId: DuffelExplosiveC4
-#  price: 15
+- type: uplinkListing
+  id: UplinkC4Bundle
+  category: Explosives
+  itemId: ClothingBackpackDuffelSyndicateC4tBundle
+  price: 12 # 25% off
+  description: Because sometimes quantity is quality. Contains 8 C-4 plastic explosives.
 
 # Ammo
 
