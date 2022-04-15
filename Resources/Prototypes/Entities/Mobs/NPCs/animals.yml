@@ -114,6 +114,7 @@
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
+    - Idle
   - type: AiFactionTag
     factions:
     - SimpleHostile
@@ -1106,6 +1107,7 @@
   name: tarantula
   parent: MobGiantSpider
   id: MobGiantSpiderAngry
+  suffix: Angry
   components:
     - type: AiFactionTag
       factions:

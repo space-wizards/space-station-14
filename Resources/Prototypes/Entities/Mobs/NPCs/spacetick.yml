@@ -57,7 +57,6 @@
     damage:
       groups:
         Brute: 2
-
   - type: MeleeChemicalInjector
   - type: SolutionContainerManager
     solutions:
