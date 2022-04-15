@@ -1,14 +1,4 @@
 Entries:
-- author: MeltedPixel
-  changes:
-  - {message: Added Hydroponics plant - Chilis!, type: Add}
-  - {message: Added Hot Chili Soup Recipe + Meal, type: Add}
-  - {message: Added Clown Chili Soup Recipe + Meal, type: Add}
-  - {message: Added Enchiladas Recipe + Meal, type: Add}
-  - {message: Added Queso Recipe + Meal, type: Add}
-  - {message: Added new reagent Capsaicin Oil from Chilis, type: Add}
-  id: 825
-  time: '2022-01-04T13:51:23.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Energy weapons now only accept small power cells., type: Fix}
@@ -3020,3 +3010,9 @@ Entries:
       uplinks. You can use it to breach walls, airlocks or sabotage equipment.', type: Add}
   id: 1324
   time: '2022-04-14T22:00:50.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Split Station V2.1! Fixed power issues, swapped bar and chapel around
+      and other minor fixes. Look out for the next big update.', type: Add}
+  id: 1325
+  time: '2022-04-15T18:43:39.0000000+00:00'
