@@ -67,7 +67,7 @@ namespace Content.Server.Lathe
             {
                 if (lathe.ProducingRecipe == null)
                     continue;
-                if (lathe.ProducingAccumulator < lathe.ProductionTime)
+                if (lathe.ProducingAccumulator < lathe.ProducingRecipe.CompleteTime.TotalSeconds)
                 {
                     lathe.ProducingAccumulator += frameTime;
                     continue;

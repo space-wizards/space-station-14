@@ -4,7 +4,7 @@
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
   result: Handcuffs
-  completetime: 2000
+  completetime: 2
   materials:
     Steel: 300
 
@@ -14,7 +14,7 @@
     sprite: Objects/Weapons/Melee/stunbaton.rsi
     state: stunbaton_off
   result: Stunbaton
-  completetime: 2000
+  completetime: 2
   materials:
     Steel: 300
     Plastic: 300
@@ -25,7 +25,7 @@
     sprite: Objects/Weapons/Melee/flash.rsi
     state: flash
   result: Flash
-  completetime: 2000
+  completetime: 2
   materials:
     Glass: 100
     Plastic: 200
@@ -37,7 +37,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
     state: base
   result: ShellShotgunBeanbag
-  completetime: 2000
+  completetime: 2
   materials:
     Plastic: 15
     Steel: 10
@@ -48,7 +48,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgePistolRubber
-  completetime: 2000
+  completetime: 2
   materials:
     Plastic: 5
     Steel: 5
@@ -59,7 +59,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgeMagnumRubber
-  completetime: 2000
+  completetime: 2
   materials:
     Plastic: 5
     Steel: 5
@@ -70,7 +70,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgeClRifleRubber
-  completetime: 2000
+  completetime: 2
   materials:
     Plastic: 10
     Steel: 5
@@ -81,7 +81,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgeLRifleRubber
-  completetime: 2000
+  completetime: 2
   materials:
     Plastic: 10
     Steel: 5
@@ -92,7 +92,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgeSRifleRubber
-  completetime: 2000
+  completetime: 2
   materials:
     Plastic: 10
     Steel: 5
@@ -103,7 +103,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgePistol
-  completetime: 2000
+  completetime: 2
   materials:
     Steel: 10
 
@@ -113,7 +113,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     state: base
   result: ShellShotgun
-  completetime: 2000
+  completetime: 2
   materials:
     Steel: 20
 
@@ -123,7 +123,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgeMagnum
-  completetime: 2000
+  completetime: 2
   materials:
     Steel: 20
 
@@ -133,6 +133,6 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgeLRifle
-  completetime: 2000
+  completetime: 2
   materials:
     Steel: 30

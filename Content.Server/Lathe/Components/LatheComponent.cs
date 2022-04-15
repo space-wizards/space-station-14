@@ -38,13 +38,6 @@ namespace Content.Server.Lathe.Components
         /// </summary>
         [ViewVariables]
         public float ProducingAccumulator = 0f;
-        /// <summary>
-        /// How long it takes to produce the current recipe.
-        /// Divides by 1000 because lathe recipe uses integer
-        /// milliseconds for some reason
-        /// </summary>
-        [ViewVariables]
-        public float? ProductionTime => ProducingRecipe?.CompleteTime / 1000;
 
         /// <summary>
         /// The sound that plays when the lathe is producing an item, if any
