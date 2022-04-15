@@ -1,7 +1,7 @@
 namespace Content.Server.Disease.Zombie.Components
 {
     [RegisterComponent]
-    internal sealed class ZombieTransferComponent : Component
+    public sealed class ZombieTransferComponent : Component
     {
     }
 }
