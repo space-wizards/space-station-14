@@ -83,7 +83,7 @@ namespace Content.Server.EUI
         public void SendMessage(EuiMessageBase message)
         {
             var netMgr = IoCManager.Resolve<IServerNetManager>();
-            var msg = netMgr.CreateNetMessage<MsgEuiMessage>();
+            var msg = new MsgEuiMessage();
             msg.Id = Id;
             msg.Message = message;
 
@@ -111,7 +111,7 @@ namespace Content.Server.EUI
             var state = GetNewState();
 
             var netMgr = IoCManager.Resolve<IServerNetManager>();
-            var msg = netMgr.CreateNetMessage<MsgEuiState>();
+            var msg = new MsgEuiState();
             msg.Id = Id;
             msg.State = state;
 

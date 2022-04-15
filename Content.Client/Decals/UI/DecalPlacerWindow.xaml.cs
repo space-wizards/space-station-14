@@ -44,7 +44,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         SpinBoxContainer.AddChild(RotationSpinBox);
 
         Search.OnTextChanged += _ => RefreshList();
-        ColorPicker.OnColorPicked += color =>
+        ColorPicker.OnColorChanged += color =>
         {
             _color = color;
             UpdateDecalPlacementInfo();

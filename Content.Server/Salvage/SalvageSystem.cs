@@ -276,17 +276,22 @@ namespace Content.Server.Salvage
                 Report("salvage-system-announcement-spawn-no-debris-available");
                 return false;
             }
-            var bp = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString());
-            if (bp == null)
+
+            var opts = new MapLoadOptions
+            {
+                Offset = spl.Position
+            };
+
+            var (_, gridId) = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString(), opts);
+            if (gridId == null)
             {
                 Report("salvage-system-announcement-spawn-debris-disintegrated");
                 return false;
             }
-            var salvageEntityId = bp.GridEntityId;
+            var salvageEntityId = _mapManager.GetGridEuid(gridId.Value);
             component.AttachedEntity = salvageEntityId;
 
             var pulledTransform = EntityManager.GetComponent<TransformComponent>(salvageEntityId);
-            pulledTransform.Coordinates = EntityCoordinates.FromMap(_mapManager, spl);
             pulledTransform.WorldRotation = spAngle;
 
             Report("salvage-system-announcement-arrived", ("timeLeft", HoldTime.TotalSeconds));

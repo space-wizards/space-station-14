@@ -4,7 +4,6 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Damage;
 using Content.Shared.Verbs;
 using Content.Shared.Tag;
-using Content.Shared.Actions;
 using Content.Shared.ActionBlocker;
 using Content.Server.Cooldown;
 using Content.Server.Bible.Components;

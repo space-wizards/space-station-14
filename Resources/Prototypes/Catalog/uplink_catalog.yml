@@ -158,6 +158,15 @@
   price: 8
 
 - type: uplinkListing
+  id: UplinkAgentIDCard
+  category: Utility
+  itemId: AgentIDCard
+  listingName: Agent ID Card
+  description: A modified ID card that can copy accesses from other cards and change its name and job title at-will.
+  icon: Objects/Misc/id_cards.rsi/default.png
+  price: 3
+
+- type: uplinkListing
   id: UplinkHypopen
   category: Utility
   itemId: Hypopen
