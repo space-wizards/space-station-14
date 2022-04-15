@@ -22,8 +22,10 @@ public sealed class EscapeInventorySystem : EntitySystem
 
     private void OnRelayMovement(EntityUid uid, CanResistInventoryComponent component, RelayMoveInputEvent args)
     {
+
         if (_containerSystem.IsEntityOrParentInContainer(uid))
         {
+            AttemptEscape(uid, uid, component);
             Transform(uid).AttachParentToContainerOrGrid(EntityManager);
         }
     }
@@ -36,5 +38,16 @@ public sealed class EscapeInventorySystem : EntitySystem
 
     private void AttemptEscape(EntityUid user, EntityUid container, CanResistInventoryComponent component)
     {
+        component.CancelToken = new();
+        var doAfterEventArgs = new DoAfterEventArgs(user, component.ResistTime, component.CancelToken.Token, container)
+        {
+            BreakOnTargetMove = false,
+            BreakOnUserMove = false,
+            BreakOnDamage = true,
+            BreakOnStun = true,
+            NeedHand = false,
+        };
+
+        _doAfterSystem.DoAfter(doAfterEventArgs);
     }
 }
