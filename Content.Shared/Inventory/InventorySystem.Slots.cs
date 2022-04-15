@@ -45,17 +45,24 @@ public partial class InventorySystem : EntitySystem
         if (!Resolve(uid, ref inventory, false))
             return false;
 
-        if (!_prototypeManager.TryIndex<InventoryTemplatePrototype>(inventory.TemplateId, out var templatePrototype))
-            return false;
-
-        foreach (var slotDef in templatePrototype.Slots)
+        static bool TryGetSlotDefFromArray(SlotDefinition[] slotDefinitions, string slotId, [NotNullWhen(true)] out SlotDefinition? slotDefParam)
         {
-            if (!slotDef.Name.Equals(slot)) continue;
-            slotDefinition = slotDef;
-            return true;
+            foreach (var slotDef in slotDefinitions)
+            {
+                if (!slotDef.Name.Equals(slotId)) continue;
+                slotDefParam = slotDef;
+                return true;
+            }
+
+            slotDefParam = null;
+            return false;
         }
 
-        return false;
+        return
+            _prototypeManager.TryIndex<InventoryTemplatePrototype>(inventory.TemplateId, out var templatePrototype) &&
+            TryGetSlotDefFromArray(templatePrototype.Slots, slot, out slotDefinition) ||
+            TryComp<InventorySlotComponent>(uid, out var invSlotComp) &&
+            TryGetSlotDefFromArray(invSlotComp.Slots, slot, out slotDefinition);
     }
 
     public bool TryGetContainerSlotEnumerator(EntityUid uid, out ContainerSlotEnumerator containerSlotEnumerator, InventoryComponent? component = null)
