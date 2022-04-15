@@ -2,7 +2,7 @@
   id: AsteroidRock
   parent: BaseStructure
   name: asteroid rock
-  description: That's an asteroid
+  description: An asteroid.
   components:
   - type: RandomAppearance
     key: enum.AsteroidRockVisuals.State

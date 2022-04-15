@@ -19,7 +19,7 @@
     resistance: 0.65 # +0.25 from helmet -> 90%
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterEVASuitBase
   id: ClothingOuterSuitEmergency
   name: emergency suit
   description: An emergency suit in cases of... emergencies.
@@ -28,16 +28,6 @@
     sprite: Clothing/OuterClothing/Suits/emergency.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/emergency.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.85
-    lowPressureMultiplier: 25
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.85
 
 - type: entity
   parent: ClothingOuterBase
@@ -48,18 +38,21 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/fire.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.85
+    highPressureMultiplier: 0.65
     lowPressureMultiplier: 25
-  - type: TemperatureProtection
-    coefficient: 0.03
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/fire.rsi
   - type: Armor
     modifiers:
       coefficients:
         Slash: 0.9
-        Heat: 0.7 #makes sense right?
-
+        Heat: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: TemperatureProtection
+    coefficient: 0.01
+    
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterSuitRad
@@ -136,7 +129,7 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.65
+    highPressureMultiplier: 0.45
     lowPressureMultiplier: 25
   - type: TemperatureProtection
     coefficient: 0.01
@@ -146,4 +139,7 @@
     modifiers:
       coefficients:
         Slash: 0.9
-        Heat: 0.5
+        Heat: 0.35
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7 

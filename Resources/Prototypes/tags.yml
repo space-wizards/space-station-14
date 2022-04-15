@@ -46,6 +46,9 @@
   id: CanPilot
 
 - type: Tag
+  id: CannotSuicide
+
+- type: Tag
   id: CaptainSabre
 
 - type: Tag
@@ -309,6 +312,9 @@
 
 - type: Tag
   id: VehicleKey
+
+- type: Tag
+  id: WetFloorSign
 
 - type: Tag
   id: Wall

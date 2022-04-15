@@ -12,6 +12,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Item;
 using Content.Shared.Popups;
+using Content.Shared.Tag;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -79,6 +80,17 @@ namespace Content.Server.Chat.Commands
             if (mind?.OwnedComponent?.Owner is not {Valid: true} owner)
             {
                 shell.WriteLine("You don't have a mind!");
+                return;
+            }
+
+            //Checks to see if the CannotSuicide tag exits, ghosts instead.
+            if(EntitySystem.Get<TagSystem>().HasTag(owner, "CannotSuicide"))
+            {
+                if (!EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, true))
+                {
+                    shell?.WriteLine("You can't ghost right now.");
+                    return;
+                }
                 return;
             }
 

@@ -1,14 +1,16 @@
-
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
-using Content.Server.Storage.EntitySystems;
 using Content.Shared.Acts;
+using Content.Shared.Coordinates;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
@@ -22,11 +24,16 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Storage.Components
 {
@@ -62,16 +69,17 @@ namespace Content.Server.Storage.Components
         [DataField("areaInsertRadius")]
         private int _areaInsertRadius = 1;
 
-        /// <summary>
-        /// Whether to play the "You can't insert this!" message.
-        /// Useful for things using storage to hold one item that can't be
-        /// created/destroyed for whatever reason
-        /// </summary>
-        [DataField("suppressFailMsg")]
-        private bool _suppressFailMsg = false;
-
         [DataField("whitelist")]
         private EntityWhitelist? _whitelist = null;
+        [DataField("blacklist")]
+        public EntityWhitelist? Blacklist = null;
+
+        /// <summary>
+        ///     If true, storage will show popup messages to the player after failed interactions.
+        ///     Usually this is message that item doesn't fit inside container.
+        /// </summary>
+        [DataField("popup")]
+        public bool ShowPopup = true;
 
         private bool _storageInitialCalculated;
         public int StorageUsed;
@@ -166,6 +174,11 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
+            if (Blacklist != null && Blacklist.IsValid(entity))
+            {
+                return false;
+            }
+
             if (_entityManager.GetComponent<TransformComponent>(entity).Anchored)
             {
                 return false;
@@ -208,8 +221,7 @@ namespace Content.Server.Storage.Components
 
             StorageUsed += size;
             _sizeCache[message.Entity] = size;
-            var ev = new StorageChangedEvent(this, true);
-            _entityManager.EventBus.RaiseLocalEvent(this.Owner, ev, false);
+
             UpdateClientInventories();
         }
 
@@ -234,8 +246,6 @@ namespace Content.Server.Storage.Components
 
             StorageUsed -= size;
 
-            var ev = new StorageChangedEvent(this, false);
-            _entityManager.EventBus.RaiseLocalEvent(this.Owner, ev, false);
             UpdateClientInventories();
         }
 
@@ -260,16 +270,14 @@ namespace Content.Server.Storage.Components
 
             if (!handSys.TryDrop(player, toInsert.Value, handsComp: hands))
             {
-                if (!this._suppressFailMsg)
-                    Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                Popup(player, "comp-storage-cant-insert");
                 return false;
             }
 
             if (!Insert(toInsert.Value))
             {
                 handSys.PickupOrDrop(player, toInsert.Value, handsComp: hands);
-                if (!this._suppressFailMsg)
-                    Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                Popup(player, "comp-storage-cant-insert");
                 return false;
             }
 
@@ -288,8 +296,7 @@ namespace Content.Server.Storage.Components
 
             if (!Insert(toInsert))
             {
-                if (!this._suppressFailMsg)
-                    Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                Popup(player, "comp-storage-cant-insert");
                 return false;
             }
             return true;
@@ -489,7 +496,7 @@ namespace Content.Server.Storage.Components
                 return;
             }
 
-            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player, Owner, popup: true))
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player, Owner, popup: ShowPopup))
             {
                 return;
             }
@@ -644,6 +651,14 @@ namespace Content.Server.Storage.Components
                 Remove(entity);
             }
         }
+
+        private void Popup(EntityUid player, string message)
+        {
+            if (!ShowPopup) return;
+
+            Owner.PopupMessage(player, Loc.GetString(message));
+        }
+
         private void PlaySoundCollection()
         {
             SoundSystem.Play(Filter.Pvs(Owner), StorageSoundCollection.GetSound(), Owner, AudioParams.Default);

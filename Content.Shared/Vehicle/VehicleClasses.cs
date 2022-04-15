@@ -30,5 +30,5 @@ namespace Content.Shared.Vehicle
     /// <summary>
     /// Raised when someone honks a vehicle horn
     /// </summary>
-    public sealed class HonkActionEvent : PerformActionEvent { }
+    public sealed class HonkActionEvent : InstantActionEvent { }
 }

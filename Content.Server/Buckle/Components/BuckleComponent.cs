@@ -27,6 +27,7 @@ namespace Content.Server.Buckle.Components
     public sealed class BuckleComponent : SharedBuckleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [DataField("size")]
@@ -64,7 +65,8 @@ namespace Content.Server.Buckle.Components
             {
                 _buckledTo = value;
                 _buckleTime = _gameTiming.CurTime;
-                Dirty();
+                _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
+                Dirty(_entMan);
             }
         }
 

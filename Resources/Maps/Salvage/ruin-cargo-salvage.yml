@@ -1,0 +1,4380 @@
+meta:
+  format: 2
+  name: DemoStation
+  author: Space-Wizards
+  postmapinit: false
+tilemap:
+  0: space
+  1: FloorArcadeBlue
+  2: FloorArcadeRed
+  3: FloorAsteroidIronsand1
+  4: FloorAsteroidIronsand2
+  5: FloorAsteroidIronsand3
+  6: FloorAsteroidIronsand4
+  7: FloorEighties
+  8: FloorGrassJungle
+  9: FloorShuttleBlue
+  10: FloorShuttleOrange
+  11: FloorShuttlePurple
+  12: FloorShuttleRed
+  13: FloorShuttleWhite
+  14: floor_asteroid_coarse_sand0
+  15: floor_asteroid_coarse_sand1
+  16: floor_asteroid_coarse_sand2
+  17: floor_asteroid_coarse_sand_dug
+  18: floor_asteroid_sand
+  19: floor_asteroid_tile
+  20: floor_bar
+  21: floor_blue
+  22: floor_blue_circuit
+  23: floor_clown
+  24: floor_dark
+  25: floor_elevator_shaft
+  26: floor_freezer
+  27: floor_glass
+  28: floor_gold
+  29: floor_grass
+  30: floor_green_circuit
+  31: floor_hydro
+  32: floor_kitchen
+  33: floor_laundry
+  34: floor_lino
+  35: floor_mime
+  36: floor_mono
+  37: floor_reinforced
+  38: floor_rglass
+  39: floor_rock_vault
+  40: floor_showroom
+  41: floor_silver
+  42: floor_snow
+  43: floor_steel
+  44: floor_steel_dirty
+  45: floor_techmaint
+  46: floor_white
+  47: floor_wood
+  48: lattice
+  49: plating
+  50: underplating
+grids:
+- settings:
+    chunksize: 16
+    tilesize: 1
+  chunks:
+  - ind: "-1,-1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAMQAAADEAAAAxAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAADEAAAAsAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAxAAAALAAAACwAAAAxAAAAMQAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAMQAAACwAAAAsAAAALAAAADEAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAADEAAAAxAAAALAAAACwAAAAxAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAxAAAALQAAAC0AAAAtAAAAMQAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAAxAAAAMQAAADEAAAAxAAAAMQAAABMAAAAxAAAAMQAAABMAAAAAAAAAMAAAADAAAAATAAAAEwAAADEAAAAxAAAAMQAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAAAAAADAAAAAwAAAAEwAAABMAAAAtAAAALQAAAC0AAAATAAAAMQAAADEAAAATAAAAEwAAABMAAAATAAAAEwAAAA==
+  - ind: "-1,0"
+    tiles: AAAAADAAAAAwAAAAEwAAABMAAAAxAAAAMQAAADEAAAATAAAAEwAAABMAAAATAAAAEwAAADEAAAATAAAAEwAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAAxAAAAEwAAADEAAAATAAAAMQAAABMAAAATAAAAMQAAABMAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAMQAAACIAAAAiAAAAIgAAADEAAAAtAAAALQAAAC0AAAAxAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAADEAAAAiAAAAIgAAACIAAAAxAAAALAAAACwAAAAsAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAAxAAAAIgAAACIAAAAiAAAAMQAAADEAAAAsAAAALAAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAMQAAADEAAAAxAAAAMQAAADEAAAAsAAAALAAAACwAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAAxAAAALAAAACwAAAAxAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAMQAAADEAAAAxAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "0,0"
+    tiles: EwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAMQAAABMAAAATAAAAEwAAABMAAAAwAAAAMAAAADEAAAATAAAAEwAAABMAAAATAAAAEwAAADEAAAATAAAAEwAAADEAAAATAAAAEwAAABMAAAATAAAAMAAAADAAAAAtAAAALQAAAC0AAAAxAAAALQAAAC0AAAAtAAAAMQAAADEAAAAxAAAAEgAAABIAAAASAAAAEgAAADAAAAAwAAAALAAAACwAAAAsAAAAMQAAADEAAAAsAAAALAAAADEAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAwAAAAMAAAADEAAAAxAAAALAAAADEAAAAsAAAALAAAACwAAAAxAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAsAAAALAAAACwAAAAxAAAALAAAACwAAAAxAAAAMQAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAALAAAADEAAAAsAAAAMQAAACwAAAAxAAAALAAAADEAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAMQAAADEAAAAxAAAAMQAAADEAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAADEAAAAxAAAAGAAAABgAAAAxAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAAxAAAAMQAAABgAAAAYAAAAMQAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAMQAAADEAAAAxAAAAGAAAADEAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "0,-1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAsAAAAMQAAACwAAAAxAAAALAAAACwAAAAsAAAAMQAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAALAAAACwAAAAsAAAAMQAAACwAAAAxAAAALAAAADEAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAADEAAAAxAAAALAAAADEAAAAsAAAALAAAADEAAAAxAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAsAAAALAAAACwAAAAxAAAAMQAAACwAAAAsAAAAMQAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAALQAAAC0AAAAtAAAAMQAAAC0AAAAtAAAALQAAADEAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAABMAAAATAAAAEwAAABMAAAATAAAAMQAAADEAAAAxAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAMAAAADAAAAATAAAAEwAAABMAAAAxAAAAEwAAABMAAAATAAAAMQAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAADAAAAAwAAAAMQAAADEAAAATAAAAMQAAADEAAAATAAAAEwAAADEAAAAxAAAAMQAAABIAAAASAAAAEgAAABIAAAAwAAAAMAAAAA==
+  - ind: "1,0"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+entities:
+- uid: 0
+  type: WindoorSecureCargoLocked
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -5.5,1.5
+    parent: 16
+    type: Transform
+- uid: 1
+  type: ChairOfficeDark
+  components:
+  - pos: -5.5,2.5
+    parent: 16
+    type: Transform
+- uid: 2
+  type: BlastDoor
+  components:
+  - pos: 4.5,2.5
+    parent: 16
+    type: Transform
+- uid: 3
+  type: BlastDoor
+  components:
+  - pos: 5.5,2.5
+    parent: 16
+    type: Transform
+- uid: 4
+  type: FirelockEdge
+  components:
+  - pos: 2.5,-2.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 5
+  type: FirelockEdge
+  components:
+  - pos: 1.5,-2.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 6
+  type: FirelockEdge
+  components:
+  - pos: 0.5,-2.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 7
+  type: FirelockEdge
+  components:
+  - pos: -1.5,-2.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 8
+  type: FirelockEdge
+  components:
+  - pos: -2.5,-2.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 9
+  type: WallReinforced
+  components:
+  - pos: -7.5,5.5
+    parent: 16
+    type: Transform
+- uid: 10
+  type: WallReinforced
+  components:
+  - pos: -8.5,5.5
+    parent: 16
+    type: Transform
+- uid: 11
+  type: Grille
+  components:
+  - pos: -8.5,2.5
+    parent: 16
+    type: Transform
+- uid: 12
+  type: Grille
+  components:
+  - pos: -8.5,3.5
+    parent: 16
+    type: Transform
+- uid: 13
+  type: Grille
+  components:
+  - pos: -8.5,4.5
+    parent: 16
+    type: Transform
+- uid: 14
+  type: WallReinforced
+  components:
+  - pos: -8.5,1.5
+    parent: 16
+    type: Transform
+- uid: 15
+  type: WallReinforced
+  components:
+  - pos: -8.5,0.5
+    parent: 16
+    type: Transform
+- uid: 16
+  components:
+  - parent: null
+    type: Transform
+  - index: 0
+    type: MapGrid
+  - angularDamping: 100
+    linearDamping: 50
+    fixedRotation: False
+    bodyType: Dynamic
+    type: Physics
+  - fixtures: []
+    type: Fixtures
+  - gravityShakeSound: !type:SoundPathSpecifier
+      path: /Audio/Effects/alert.ogg
+    type: Gravity
+  - chunkCollection:
+      0,0:
+        7:
+          color: '#FFFFFFFF'
+          id: Caution
+          coordinates: 5,1
+        12:
+          cleanable: True
+          color: '#FED83DFF'
+          id: electricdanger
+          coordinates: 5.4755836,10.555445
+      -1,-1:
+        4:
+          angle: -1.5707963267948966 rad
+          color: '#FFFFFFFF'
+          id: WarningLine
+          coordinates: -8,-1
+        6:
+          angle: -1.5707963267948966 rad
+          color: '#FFFFFFFF'
+          id: WarningLine
+          coordinates: -8,-2
+        8:
+          angle: -1.5707963267948966 rad
+          color: '#FFFFFFFF'
+          id: LoadingArea
+          coordinates: -13,-1
+        9:
+          angle: -1.5707963267948966 rad
+          color: '#FFFFFFFF'
+          id: LoadingArea
+          coordinates: -13,-2
+      -1,0:
+        5:
+          angle: -1.5707963267948966 rad
+          color: '#FFFFFFFF'
+          id: WarningLine
+          coordinates: -8,0
+        10:
+          angle: -1.5707963267948966 rad
+          color: '#FFFFFFFF'
+          id: LoadingArea
+          coordinates: -13,0
+    type: DecalGrid
+  - tiles:
+      -2,-2: 0
+      -2,-1: 0
+      -1,-2: 0
+      -1,-1: 0
+      -2,0: 0
+      -1,0: 0
+      0,0: 0
+      0,-2: 0
+      0,-1: 0
+    uniqueMixes:
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: GridAtmosphere
+- uid: 17
+  type: WallReinforced
+  components:
+  - pos: -6.5,5.5
+    parent: 16
+    type: Transform
+- uid: 18
+  type: WallReinforced
+  components:
+  - pos: -5.5,5.5
+    parent: 16
+    type: Transform
+- uid: 19
+  type: WallReinforced
+  components:
+  - pos: -4.5,5.5
+    parent: 16
+    type: Transform
+- uid: 20
+  type: WallReinforced
+  components:
+  - pos: -4.5,6.5
+    parent: 16
+    type: Transform
+- uid: 21
+  type: WallReinforced
+  components:
+  - pos: -4.5,7.5
+    parent: 16
+    type: Transform
+- uid: 22
+  type: WallReinforced
+  components:
+  - pos: -3.5,7.5
+    parent: 16
+    type: Transform
+- uid: 23
+  type: WallReinforced
+  components:
+  - pos: -2.5,7.5
+    parent: 16
+    type: Transform
+- uid: 24
+  type: WallReinforced
+  components:
+  - pos: -1.5,7.5
+    parent: 16
+    type: Transform
+- uid: 25
+  type: WallReinforced
+  components:
+  - pos: -0.5,7.5
+    parent: 16
+    type: Transform
+- uid: 26
+  type: WallReinforced
+  components:
+  - pos: 0.5,7.5
+    parent: 16
+    type: Transform
+- uid: 27
+  type: WallReinforced
+  components:
+  - pos: 1.5,7.5
+    parent: 16
+    type: Transform
+- uid: 28
+  type: WallReinforced
+  components:
+  - pos: 2.5,7.5
+    parent: 16
+    type: Transform
+- uid: 29
+  type: WallReinforced
+  components:
+  - pos: 3.5,7.5
+    parent: 16
+    type: Transform
+- uid: 30
+  type: WallReinforced
+  components:
+  - pos: 4.5,7.5
+    parent: 16
+    type: Transform
+- uid: 31
+  type: WallReinforced
+  components:
+  - pos: 5.5,7.5
+    parent: 16
+    type: Transform
+- uid: 32
+  type: WallReinforced
+  components:
+  - pos: 6.5,7.5
+    parent: 16
+    type: Transform
+- uid: 33
+  type: WallReinforced
+  components:
+  - pos: 7.5,7.5
+    parent: 16
+    type: Transform
+- uid: 34
+  type: WallReinforced
+  components:
+  - pos: 7.5,6.5
+    parent: 16
+    type: Transform
+- uid: 35
+  type: WallReinforced
+  components:
+  - pos: 7.5,5.5
+    parent: 16
+    type: Transform
+- uid: 36
+  type: WallReinforced
+  components:
+  - pos: 7.5,4.5
+    parent: 16
+    type: Transform
+- uid: 37
+  type: WallReinforced
+  components:
+  - pos: 7.5,3.5
+    parent: 16
+    type: Transform
+- uid: 38
+  type: WallReinforced
+  components:
+  - pos: 7.5,2.5
+    parent: 16
+    type: Transform
+- uid: 39
+  type: WallReinforced
+  components:
+  - pos: 8.5,2.5
+    parent: 16
+    type: Transform
+- uid: 40
+  type: WallReinforced
+  components:
+  - pos: 9.5,2.5
+    parent: 16
+    type: Transform
+- uid: 41
+  type: WallReinforced
+  components:
+  - pos: 9.5,-0.5
+    parent: 16
+    type: Transform
+- uid: 42
+  type: WallReinforced
+  components:
+  - pos: 8.5,-0.5
+    parent: 16
+    type: Transform
+- uid: 43
+  type: WallReinforced
+  components:
+  - pos: 7.5,-0.5
+    parent: 16
+    type: Transform
+- uid: 44
+  type: Table
+  components:
+  - pos: -7.5,4.5
+    parent: 16
+    type: Transform
+- uid: 45
+  type: TableReinforced
+  components:
+  - pos: -5.5,1.5
+    parent: 16
+    type: Transform
+- uid: 46
+  type: WallReinforced
+  components:
+  - pos: 7.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 47
+  type: WallReinforced
+  components:
+  - pos: 7.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 48
+  type: WallReinforced
+  components:
+  - pos: 7.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 49
+  type: WallReinforced
+  components:
+  - pos: 7.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 50
+  type: WallReinforced
+  components:
+  - pos: 7.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 51
+  type: WallReinforced
+  components:
+  - pos: 7.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 52
+  type: WallReinforced
+  components:
+  - pos: 6.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 53
+  type: WallReinforced
+  components:
+  - pos: 5.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 54
+  type: WallReinforced
+  components:
+  - pos: 4.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 55
+  type: WallReinforced
+  components:
+  - pos: 3.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 56
+  type: WallReinforced
+  components:
+  - pos: 2.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 57
+  type: WallReinforced
+  components:
+  - pos: 1.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 58
+  type: WallReinforced
+  components:
+  - pos: 0.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 59
+  type: WallReinforced
+  components:
+  - pos: -0.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 60
+  type: WallReinforced
+  components:
+  - pos: -1.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 61
+  type: WallReinforced
+  components:
+  - pos: -2.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 62
+  type: WallReinforced
+  components:
+  - pos: -3.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 63
+  type: WallReinforced
+  components:
+  - pos: -4.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 64
+  type: WallReinforced
+  components:
+  - pos: -4.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 65
+  type: WallReinforced
+  components:
+  - pos: -4.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 66
+  type: WallReinforced
+  components:
+  - pos: -4.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 67
+  type: WallReinforced
+  components:
+  - pos: -4.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 68
+  type: WallReinforced
+  components:
+  - pos: -4.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 69
+  type: WallReinforced
+  components:
+  - pos: -4.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 70
+  type: WallReinforced
+  components:
+  - pos: -5.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 71
+  type: WallReinforced
+  components:
+  - pos: -6.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 72
+  type: WallReinforced
+  components:
+  - pos: -7.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 73
+  type: WallReinforced
+  components:
+  - pos: -8.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 74
+  type: WallReinforced
+  components:
+  - pos: -8.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 75
+  type: WallReinforced
+  components:
+  - pos: -10.5,0.5
+    parent: 16
+    type: Transform
+- uid: 76
+  type: WallReinforced
+  components:
+  - pos: -9.5,0.5
+    parent: 16
+    type: Transform
+- uid: 77
+  type: WallReinforced
+  components:
+  - pos: -9.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 78
+  type: WallReinforced
+  components:
+  - pos: -10.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 79
+  type: WallSolid
+  components:
+  - pos: -4.5,4.5
+    parent: 16
+    type: Transform
+- uid: 80
+  type: WallSolid
+  components:
+  - pos: -4.5,3.5
+    parent: 16
+    type: Transform
+- uid: 81
+  type: WallSolid
+  components:
+  - pos: -4.5,2.5
+    parent: 16
+    type: Transform
+- uid: 82
+  type: WallSolid
+  components:
+  - pos: -4.5,1.5
+    parent: 16
+    type: Transform
+- uid: 83
+  type: WallSolid
+  components:
+  - pos: -6.5,1.5
+    parent: 16
+    type: Transform
+- uid: 84
+  type: WallSolid
+  components:
+  - pos: -0.5,2.5
+    parent: 16
+    type: Transform
+- uid: 85
+  type: WallSolid
+  components:
+  - pos: -0.5,3.5
+    parent: 16
+    type: Transform
+- uid: 86
+  type: WallSolid
+  components:
+  - pos: -0.5,4.5
+    parent: 16
+    type: Transform
+- uid: 87
+  type: WallSolid
+  components:
+  - pos: -0.5,5.5
+    parent: 16
+    type: Transform
+- uid: 88
+  type: WallSolid
+  components:
+  - pos: -0.5,6.5
+    parent: 16
+    type: Transform
+- uid: 89
+  type: WallSolid
+  components:
+  - pos: 3.5,6.5
+    parent: 16
+    type: Transform
+- uid: 90
+  type: WallSolid
+  components:
+  - pos: 3.5,5.5
+    parent: 16
+    type: Transform
+- uid: 91
+  type: WallSolid
+  components:
+  - pos: 3.5,4.5
+    parent: 16
+    type: Transform
+- uid: 92
+  type: WallSolid
+  components:
+  - pos: 3.5,3.5
+    parent: 16
+    type: Transform
+- uid: 93
+  type: WallSolid
+  components:
+  - pos: 3.5,2.5
+    parent: 16
+    type: Transform
+- uid: 94
+  type: WallSolid
+  components:
+  - pos: 3.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 95
+  type: WallSolid
+  components:
+  - pos: 3.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 96
+  type: WallSolid
+  components:
+  - pos: 3.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 97
+  type: WallSolid
+  components:
+  - pos: 3.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 98
+  type: WallSolid
+  components:
+  - pos: 3.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 99
+  type: WallSolid
+  components:
+  - pos: -0.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 100
+  type: WallSolid
+  components:
+  - pos: -0.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 101
+  type: WallSolid
+  components:
+  - pos: -0.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 102
+  type: WallSolid
+  components:
+  - pos: -0.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 103
+  type: WallSolid
+  components:
+  - pos: -0.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 104
+  type: Table
+  components:
+  - pos: -6.5,4.5
+    parent: 16
+    type: Transform
+- uid: 105
+  type: ClosetMaintenanceFilledRandom
+  components:
+  - pos: -5.5,4.5
+    parent: 16
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 106
+  type: SignalButton
+  components:
+  - pos: -7.5,4.5
+    parent: 16
+    type: Transform
+  - fixtures: []
+    type: Fixtures
+- uid: 107
+  type: ClosetMaintenanceFilledRandom
+  components:
+  - pos: 0.5,6.5
+    parent: 16
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 108
+  type: AirlockCargoLocked
+  components:
+  - pos: -7.5,1.5
+    parent: 16
+    type: Transform
+- uid: 109
+  type: AirlockExternalGlassLocked
+  components:
+  - pos: -10.5,-0.5
+    parent: 16
+    type: Transform
+- uid: 110
+  type: AirlockExternalGlassLocked
+  components:
+  - pos: -8.5,-0.5
+    parent: 16
+    type: Transform
+- uid: 111
+  type: AirlockExternalGlassLocked
+  components:
+  - pos: 9.5,1.5
+    parent: 16
+    type: Transform
+- uid: 112
+  type: AirlockExternalGlassLocked
+  components:
+  - pos: 9.5,0.5
+    parent: 16
+    type: Transform
+- uid: 113
+  type: AirlockExternalGlassLocked
+  components:
+  - pos: 7.5,1.5
+    parent: 16
+    type: Transform
+- uid: 114
+  type: AirlockExternalGlassLocked
+  components:
+  - pos: 7.5,0.5
+    parent: 16
+    type: Transform
+- uid: 115
+  type: Grille
+  components:
+  - pos: 7.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 116
+  type: Grille
+  components:
+  - pos: 7.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 117
+  type: ReinforcedWindow
+  components:
+  - pos: 7.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 118
+  type: ReinforcedWindow
+  components:
+  - pos: 7.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 119
+  type: ReinforcedWindow
+  components:
+  - pos: -8.5,4.5
+    parent: 16
+    type: Transform
+- uid: 120
+  type: ReinforcedWindow
+  components:
+  - pos: -8.5,3.5
+    parent: 16
+    type: Transform
+- uid: 121
+  type: ReinforcedWindow
+  components:
+  - pos: -8.5,2.5
+    parent: 16
+    type: Transform
+- uid: 122
+  type: BlastDoor
+  components:
+  - pos: 6.5,2.5
+    parent: 16
+    type: Transform
+- uid: 123
+  type: BlastDoor
+  components:
+  - pos: 4.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 124
+  type: BlastDoor
+  components:
+  - pos: 5.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 125
+  type: BlastDoor
+  components:
+  - pos: 6.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 126
+  type: ShuttersWindow
+  components:
+  - pos: -2.5,2.5
+    parent: 16
+    type: Transform
+- uid: 127
+  type: ShuttersWindow
+  components:
+  - pos: 1.5,2.5
+    parent: 16
+    type: Transform
+- uid: 128
+  type: ShuttersWindow
+  components:
+  - pos: 1.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 129
+  type: ShuttersWindow
+  components:
+  - pos: -2.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 130
+  type: ShuttersNormal
+  components:
+  - pos: -3.5,2.5
+    parent: 16
+    type: Transform
+- uid: 131
+  type: ShuttersNormal
+  components:
+  - pos: -1.5,2.5
+    parent: 16
+    type: Transform
+- uid: 132
+  type: ShuttersNormal
+  components:
+  - pos: 0.5,2.5
+    parent: 16
+    type: Transform
+- uid: 133
+  type: ShuttersNormal
+  components:
+  - pos: 2.5,2.5
+    parent: 16
+    type: Transform
+- uid: 134
+  type: ShuttersNormal
+  components:
+  - pos: 0.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 135
+  type: ShuttersNormal
+  components:
+  - pos: 2.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 136
+  type: ShuttersNormal
+  components:
+  - pos: -1.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 137
+  type: ShuttersNormal
+  components:
+  - pos: -3.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 138
+  type: Rack
+  components:
+  - pos: -7.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 139
+  type: Rack
+  components:
+  - pos: -6.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 140
+  type: Table
+  components:
+  - pos: -0.5,1.5
+    parent: 16
+    type: Transform
+- uid: 141
+  type: Table
+  components:
+  - pos: 3.5,1.5
+    parent: 16
+    type: Transform
+- uid: 142
+  type: Table
+  components:
+  - pos: 6.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 143
+  type: Table
+  components:
+  - pos: 6.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 144
+  type: ChairOfficeDark
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 5.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 145
+  type: ChairOfficeDark
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -0.5,0.5
+    parent: 16
+    type: Transform
+- uid: 146
+  type: ComputerBroken
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 6.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 147
+  type: ComputerBroken
+  components:
+  - pos: -0.5,1.5
+    parent: 16
+    type: Transform
+- uid: 148
+  type: PoweredlightEmpty
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 6.5,-0.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 149
+  type: PoweredlightEmpty
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -4.5,-1.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 150
+  type: PoweredlightEmpty
+  components:
+  - pos: -0.5,1.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 151
+  type: PoweredlightEmpty
+  components:
+  - pos: 8.5,1.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 152
+  type: Poweredlight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 8.5,0.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 153
+  type: Poweredlight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 3.5,-2.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 154
+  type: Poweredlight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -0.5,-2.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 155
+  type: Poweredlight
+  components:
+  - pos: 3.5,1.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 156
+  type: Poweredlight
+  components:
+  - pos: -4.5,0.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 157
+  type: Poweredlight
+  components:
+  - pos: -6.5,4.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 158
+  type: CrateServiceBureaucracy
+  components:
+  - pos: -6.5,2.5
+    parent: 16
+    type: Transform
+  - containers:
+    - EntityStorageComponent
+    type: Construction
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+      PaperLabel: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 159
+  type: SalvageMobSpawner75
+  components:
+  - pos: -5.5,3.5
+    parent: 16
+    type: Transform
+- uid: 160
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: -3.5,6.5
+    parent: 16
+    type: Transform
+- uid: 161
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: -2.5,6.5
+    parent: 16
+    type: Transform
+- uid: 162
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: -1.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 163
+  type: SalvageCanisterSpawner
+  components:
+  - pos: 2.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 164
+  type: SalvageCanisterSpawner
+  components:
+  - pos: 2.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 165
+  type: RandomArtifactSpawner
+  components:
+  - pos: 5.5,6.5
+    parent: 16
+    type: Transform
+- uid: 166
+  type: SalvageMobSpawner
+  components:
+  - pos: 0.5,5.5
+    parent: 16
+    type: Transform
+- uid: 167
+  type: SalvageMobSpawner
+  components:
+  - pos: -1.5,4.5
+    parent: 16
+    type: Transform
+- uid: 168
+  type: ClosetMaintenanceFilledRandom
+  components:
+  - pos: 1.5,6.5
+    parent: 16
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 169
+  type: SalvageMobSpawner
+  components:
+  - pos: 2.5,4.5
+    parent: 16
+    type: Transform
+- uid: 170
+  type: SalvageMobSpawner
+  components:
+  - pos: -3.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 171
+  type: SalvageMobSpawner
+  components:
+  - pos: 1.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 172
+  type: SalvageMobSpawner75
+  components:
+  - pos: 4.5,5.5
+    parent: 16
+    type: Transform
+- uid: 173
+  type: SalvageMobSpawner75
+  components:
+  - pos: 6.5,4.5
+    parent: 16
+    type: Transform
+- uid: 174
+  type: SalvageMobSpawner75
+  components:
+  - pos: 5.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 175
+  type: SalvageMobSpawner
+  components:
+  - pos: -2.5,1.5
+    parent: 16
+    type: Transform
+- uid: 176
+  type: SalvageMobSpawner
+  components:
+  - pos: 1.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 177
+  type: SalvageMobSpawner
+  components:
+  - pos: 5.5,0.5
+    parent: 16
+    type: Transform
+- uid: 178
+  type: SalvageMobSpawner
+  components:
+  - pos: -4.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 179
+  type: Catwalk
+  components:
+  - pos: -14.5,0.5
+    parent: 16
+    type: Transform
+- uid: 180
+  type: Catwalk
+  components:
+  - pos: -14.5,-0.5
+    parent: 16
+    type: Transform
+- uid: 181
+  type: Catwalk
+  components:
+  - pos: -14.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 182
+  type: Catwalk
+  components:
+  - pos: -13.5,0.5
+    parent: 16
+    type: Transform
+- uid: 183
+  type: Catwalk
+  components:
+  - pos: -13.5,-0.5
+    parent: 16
+    type: Transform
+- uid: 184
+  type: Catwalk
+  components:
+  - pos: -13.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 185
+  type: AsteroidRock
+  components:
+  - pos: -10.5,1.5
+    parent: 16
+    type: Transform
+- uid: 186
+  type: AsteroidRock
+  components:
+  - pos: -9.5,1.5
+    parent: 16
+    type: Transform
+- uid: 187
+  type: AsteroidRock
+  components:
+  - pos: -8.5,6.5
+    parent: 16
+    type: Transform
+- uid: 188
+  type: AsteroidRock
+  components:
+  - pos: -7.5,6.5
+    parent: 16
+    type: Transform
+- uid: 189
+  type: AsteroidRock
+  components:
+  - pos: -6.5,6.5
+    parent: 16
+    type: Transform
+- uid: 190
+  type: AsteroidRock
+  components:
+  - pos: -5.5,6.5
+    parent: 16
+    type: Transform
+- uid: 191
+  type: AsteroidRock
+  components:
+  - pos: -5.5,7.5
+    parent: 16
+    type: Transform
+- uid: 192
+  type: AsteroidRock
+  components:
+  - pos: -6.5,7.5
+    parent: 16
+    type: Transform
+- uid: 193
+  type: AsteroidRock
+  components:
+  - pos: -7.5,7.5
+    parent: 16
+    type: Transform
+- uid: 194
+  type: AsteroidRock
+  components:
+  - pos: -5.5,8.5
+    parent: 16
+    type: Transform
+- uid: 195
+  type: AsteroidRock
+  components:
+  - pos: -5.5,9.5
+    parent: 16
+    type: Transform
+- uid: 196
+  type: AsteroidRock
+  components:
+  - pos: -4.5,8.5
+    parent: 16
+    type: Transform
+- uid: 197
+  type: AsteroidRock
+  components:
+  - pos: -4.5,9.5
+    parent: 16
+    type: Transform
+- uid: 198
+  type: AsteroidRock
+  components:
+  - pos: -4.5,10.5
+    parent: 16
+    type: Transform
+- uid: 199
+  type: AsteroidRock
+  components:
+  - pos: -3.5,8.5
+    parent: 16
+    type: Transform
+- uid: 200
+  type: AsteroidRock
+  components:
+  - pos: -3.5,9.5
+    parent: 16
+    type: Transform
+- uid: 201
+  type: AsteroidRock
+  components:
+  - pos: -3.5,10.5
+    parent: 16
+    type: Transform
+- uid: 202
+  type: AsteroidRock
+  components:
+  - pos: -2.5,8.5
+    parent: 16
+    type: Transform
+- uid: 203
+  type: AsteroidRock
+  components:
+  - pos: -2.5,9.5
+    parent: 16
+    type: Transform
+- uid: 204
+  type: AsteroidRock
+  components:
+  - pos: -2.5,10.5
+    parent: 16
+    type: Transform
+- uid: 205
+  type: AsteroidRock
+  components:
+  - pos: -0.5,10.5
+    parent: 16
+    type: Transform
+- uid: 206
+  type: SalvageCanisterSpawner
+  components:
+  - pos: -0.5,9.5
+    parent: 16
+    type: Transform
+- uid: 207
+  type: AsteroidRock
+  components:
+  - pos: -0.5,8.5
+    parent: 16
+    type: Transform
+- uid: 208
+  type: AsteroidRock
+  components:
+  - pos: -1.5,10.5
+    parent: 16
+    type: Transform
+- uid: 209
+  type: AsteroidRock
+  components:
+  - pos: -1.5,9.5
+    parent: 16
+    type: Transform
+- uid: 210
+  type: AsteroidRock
+  components:
+  - pos: -1.5,8.5
+    parent: 16
+    type: Transform
+- uid: 211
+  type: AsteroidRock
+  components:
+  - pos: -2.5,11.5
+    parent: 16
+    type: Transform
+- uid: 212
+  type: AsteroidRock
+  components:
+  - pos: -1.5,11.5
+    parent: 16
+    type: Transform
+- uid: 213
+  type: AsteroidRock
+  components:
+  - pos: -0.5,11.5
+    parent: 16
+    type: Transform
+- uid: 214
+  type: AsteroidRock
+  components:
+  - pos: 0.5,11.5
+    parent: 16
+    type: Transform
+- uid: 215
+  type: AsteroidRock
+  components:
+  - pos: 1.5,11.5
+    parent: 16
+    type: Transform
+- uid: 216
+  type: AsteroidRock
+  components:
+  - pos: 2.5,11.5
+    parent: 16
+    type: Transform
+- uid: 217
+  type: WallReinforced
+  components:
+  - pos: 7.5,12.5
+    parent: 16
+    type: Transform
+- uid: 218
+  type: SalvageCanisterSpawner
+  components:
+  - pos: 11.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 219
+  type: AsteroidRock
+  components:
+  - pos: 0.5,10.5
+    parent: 16
+    type: Transform
+- uid: 220
+  type: AsteroidRock
+  components:
+  - pos: 0.5,9.5
+    parent: 16
+    type: Transform
+- uid: 221
+  type: AsteroidRock
+  components:
+  - pos: 0.5,8.5
+    parent: 16
+    type: Transform
+- uid: 222
+  type: AsteroidRock
+  components:
+  - pos: 1.5,10.5
+    parent: 16
+    type: Transform
+- uid: 223
+  type: AsteroidRock
+  components:
+  - pos: 1.5,9.5
+    parent: 16
+    type: Transform
+- uid: 224
+  type: AsteroidRock
+  components:
+  - pos: 1.5,8.5
+    parent: 16
+    type: Transform
+- uid: 225
+  type: AsteroidRock
+  components:
+  - pos: 2.5,10.5
+    parent: 16
+    type: Transform
+- uid: 226
+  type: AsteroidRock
+  components:
+  - pos: 2.5,9.5
+    parent: 16
+    type: Transform
+- uid: 227
+  type: AsteroidRock
+  components:
+  - pos: 2.5,8.5
+    parent: 16
+    type: Transform
+- uid: 228
+  type: WindowReinforcedDirectional
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 5.5,11.5
+    parent: 16
+    type: Transform
+- uid: 229
+  type: WindoorSecureCargoLocked
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 5.5,10.5
+    parent: 16
+    type: Transform
+- uid: 230
+  type: AsteroidRock
+  components:
+  - pos: 3.5,8.5
+    parent: 16
+    type: Transform
+- uid: 231
+  type: WallReinforced
+  components:
+  - pos: 7.5,9.5
+    parent: 16
+    type: Transform
+- uid: 232
+  type: WallReinforced
+  components:
+  - pos: 7.5,10.5
+    parent: 16
+    type: Transform
+- uid: 233
+  type: AsteroidRock
+  components:
+  - pos: 4.5,8.5
+    parent: 16
+    type: Transform
+- uid: 234
+  type: WallReinforced
+  components:
+  - pos: 3.5,9.5
+    parent: 16
+    type: Transform
+- uid: 235
+  type: WallReinforced
+  components:
+  - pos: 4.5,9.5
+    parent: 16
+    type: Transform
+- uid: 236
+  type: AsteroidRock
+  components:
+  - pos: 5.5,8.5
+    parent: 16
+    type: Transform
+- uid: 237
+  type: WallReinforced
+  components:
+  - pos: 4.5,12.5
+    parent: 16
+    type: Transform
+- uid: 238
+  type: WallReinforced
+  components:
+  - pos: 3.5,12.5
+    parent: 16
+    type: Transform
+- uid: 239
+  type: AsteroidRock
+  components:
+  - pos: 6.5,8.5
+    parent: 16
+    type: Transform
+- uid: 240
+  type: Catwalk
+  components:
+  - pos: 5.5,13.5
+    parent: 16
+    type: Transform
+- uid: 241
+  type: Catwalk
+  components:
+  - pos: 6.5,13.5
+    parent: 16
+    type: Transform
+- uid: 242
+  type: AsteroidRock
+  components:
+  - pos: 7.5,8.5
+    parent: 16
+    type: Transform
+- uid: 243
+  type: AsteroidRock
+  components:
+  - pos: 8.5,10.5
+    parent: 16
+    type: Transform
+- uid: 244
+  type: AsteroidRock
+  components:
+  - pos: 8.5,9.5
+    parent: 16
+    type: Transform
+- uid: 245
+  type: AsteroidRock
+  components:
+  - pos: 8.5,8.5
+    parent: 16
+    type: Transform
+- uid: 246
+  type: AsteroidRock
+  components:
+  - pos: 9.5,10.5
+    parent: 16
+    type: Transform
+- uid: 247
+  type: AsteroidRock
+  components:
+  - pos: 9.5,9.5
+    parent: 16
+    type: Transform
+- uid: 248
+  type: AsteroidRock
+  components:
+  - pos: 9.5,8.5
+    parent: 16
+    type: Transform
+- uid: 249
+  type: AsteroidRock
+  components:
+  - pos: 8.5,11.5
+    parent: 16
+    type: Transform
+- uid: 250
+  type: Catwalk
+  components:
+  - pos: 4.5,13.5
+    parent: 16
+    type: Transform
+- uid: 251
+  type: WallReinforced
+  components:
+  - pos: 5.5,12.5
+    parent: 16
+    type: Transform
+- uid: 252
+  type: WallReinforced
+  components:
+  - pos: 3.5,10.5
+    parent: 16
+    type: Transform
+- uid: 253
+  type: AsteroidRock
+  components:
+  - pos: 9.5,11.5
+    parent: 16
+    type: Transform
+- uid: 254
+  type: AsteroidRock
+  components:
+  - pos: 8.5,12.5
+    parent: 16
+    type: Transform
+- uid: 255
+  type: Catwalk
+  components:
+  - pos: 3.5,13.5
+    parent: 16
+    type: Transform
+- uid: 256
+  type: Catwalk
+  components:
+  - pos: 7.5,13.5
+    parent: 16
+    type: Transform
+- uid: 257
+  type: WallReinforced
+  components:
+  - pos: 3.5,11.5
+    parent: 16
+    type: Transform
+- uid: 258
+  type: WallReinforced
+  components:
+  - pos: 5.5,9.5
+    parent: 16
+    type: Transform
+- uid: 259
+  type: WallReinforced
+  components:
+  - pos: 7.5,11.5
+    parent: 16
+    type: Transform
+- uid: 260
+  type: AsteroidRock
+  components:
+  - pos: 2.5,12.5
+    parent: 16
+    type: Transform
+- uid: 261
+  type: AsteroidRock
+  components:
+  - pos: 1.5,12.5
+    parent: 16
+    type: Transform
+- uid: 262
+  type: AsteroidRock
+  components:
+  - pos: 0.5,12.5
+    parent: 16
+    type: Transform
+- uid: 263
+  type: AsteroidRock
+  components:
+  - pos: -0.5,12.5
+    parent: 16
+    type: Transform
+- uid: 264
+  type: AsteroidRock
+  components:
+  - pos: 10.5,10.5
+    parent: 16
+    type: Transform
+- uid: 265
+  type: AsteroidRock
+  components:
+  - pos: 10.5,9.5
+    parent: 16
+    type: Transform
+- uid: 266
+  type: AsteroidRock
+  components:
+  - pos: 10.5,8.5
+    parent: 16
+    type: Transform
+- uid: 267
+  type: AsteroidRock
+  components:
+  - pos: 10.5,7.5
+    parent: 16
+    type: Transform
+- uid: 268
+  type: AsteroidRock
+  components:
+  - pos: 10.5,6.5
+    parent: 16
+    type: Transform
+- uid: 269
+  type: AsteroidRock
+  components:
+  - pos: 11.5,10.5
+    parent: 16
+    type: Transform
+- uid: 270
+  type: AsteroidRock
+  components:
+  - pos: 11.5,9.5
+    parent: 16
+    type: Transform
+- uid: 271
+  type: AsteroidRock
+  components:
+  - pos: 11.5,8.5
+    parent: 16
+    type: Transform
+- uid: 272
+  type: AsteroidRock
+  components:
+  - pos: 11.5,7.5
+    parent: 16
+    type: Transform
+- uid: 273
+  type: AsteroidRock
+  components:
+  - pos: 11.5,6.5
+    parent: 16
+    type: Transform
+- uid: 274
+  type: AsteroidRock
+  components:
+  - pos: 12.5,7.5
+    parent: 16
+    type: Transform
+- uid: 275
+  type: AsteroidRock
+  components:
+  - pos: 12.5,6.5
+    parent: 16
+    type: Transform
+- uid: 276
+  type: AsteroidRock
+  components:
+  - pos: 12.5,5.5
+    parent: 16
+    type: Transform
+- uid: 277
+  type: AsteroidRock
+  components:
+  - pos: 12.5,4.5
+    parent: 16
+    type: Transform
+- uid: 278
+  type: AsteroidRock
+  components:
+  - pos: 11.5,3.5
+    parent: 16
+    type: Transform
+- uid: 279
+  type: AsteroidRock
+  components:
+  - pos: 11.5,4.5
+    parent: 16
+    type: Transform
+- uid: 280
+  type: AsteroidRock
+  components:
+  - pos: 11.5,5.5
+    parent: 16
+    type: Transform
+- uid: 281
+  type: AsteroidRock
+  components:
+  - pos: 10.5,3.5
+    parent: 16
+    type: Transform
+- uid: 282
+  type: AsteroidRock
+  components:
+  - pos: 10.5,4.5
+    parent: 16
+    type: Transform
+- uid: 283
+  type: AsteroidRock
+  components:
+  - pos: 10.5,5.5
+    parent: 16
+    type: Transform
+- uid: 284
+  type: AsteroidRock
+  components:
+  - pos: 8.5,7.5
+    parent: 16
+    type: Transform
+- uid: 285
+  type: AsteroidRock
+  components:
+  - pos: 8.5,6.5
+    parent: 16
+    type: Transform
+- uid: 286
+  type: AsteroidRock
+  components:
+  - pos: 8.5,5.5
+    parent: 16
+    type: Transform
+- uid: 287
+  type: AsteroidRock
+  components:
+  - pos: 8.5,4.5
+    parent: 16
+    type: Transform
+- uid: 288
+  type: AsteroidRock
+  components:
+  - pos: 8.5,3.5
+    parent: 16
+    type: Transform
+- uid: 289
+  type: AsteroidRock
+  components:
+  - pos: 9.5,7.5
+    parent: 16
+    type: Transform
+- uid: 290
+  type: SalvageCanisterSpawner
+  components:
+  - pos: -7.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 291
+  type: AsteroidRock
+  components:
+  - pos: 9.5,5.5
+    parent: 16
+    type: Transform
+- uid: 292
+  type: AsteroidRock
+  components:
+  - pos: 9.5,4.5
+    parent: 16
+    type: Transform
+- uid: 293
+  type: AsteroidRock
+  components:
+  - pos: 9.5,3.5
+    parent: 16
+    type: Transform
+- uid: 294
+  type: AsteroidRock
+  components:
+  - pos: 9.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 295
+  type: AsteroidRock
+  components:
+  - pos: 8.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 296
+  type: AsteroidRock
+  components:
+  - pos: 8.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 297
+  type: AsteroidRock
+  components:
+  - pos: 8.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 298
+  type: AsteroidRock
+  components:
+  - pos: 9.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 299
+  type: AsteroidRock
+  components:
+  - pos: 9.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 300
+  type: AsteroidRock
+  components:
+  - pos: 10.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 301
+  type: AsteroidRock
+  components:
+  - pos: 10.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 302
+  type: AsteroidRock
+  components:
+  - pos: 10.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 303
+  type: AsteroidRock
+  components:
+  - pos: 11.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 304
+  type: AsteroidRock
+  components:
+  - pos: 11.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 305
+  type: AsteroidRock
+  components:
+  - pos: -3.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 306
+  type: AsteroidRock
+  components:
+  - pos: 12.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 307
+  type: AsteroidRock
+  components:
+  - pos: 12.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 308
+  type: AsteroidRock
+  components:
+  - pos: 12.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 309
+  type: AsteroidRock
+  components:
+  - pos: 12.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 310
+  type: AsteroidRock
+  components:
+  - pos: 12.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 311
+  type: AsteroidRock
+  components:
+  - pos: 11.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 312
+  type: AsteroidRock
+  components:
+  - pos: 11.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 313
+  type: AsteroidRock
+  components:
+  - pos: 10.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 314
+  type: AsteroidRock
+  components:
+  - pos: 10.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 315
+  type: AsteroidRock
+  components:
+  - pos: 9.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 316
+  type: AsteroidRock
+  components:
+  - pos: 9.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 317
+  type: AsteroidRock
+  components:
+  - pos: 8.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 318
+  type: AsteroidRock
+  components:
+  - pos: 8.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 319
+  type: AsteroidRock
+  components:
+  - pos: 8.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 320
+  type: AsteroidRock
+  components:
+  - pos: 9.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 321
+  type: AsteroidRock
+  components:
+  - pos: 10.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 322
+  type: AsteroidRock
+  components:
+  - pos: -12.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 323
+  type: AsteroidRock
+  components:
+  - pos: -11.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 324
+  type: AsteroidRock
+  components:
+  - pos: -10.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 325
+  type: AsteroidRock
+  components:
+  - pos: -10.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 326
+  type: AsteroidRock
+  components:
+  - pos: -9.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 327
+  type: AsteroidRock
+  components:
+  - pos: -9.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 328
+  type: AsteroidRock
+  components:
+  - pos: -8.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 329
+  type: AsteroidRock
+  components:
+  - pos: -7.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 330
+  type: AsteroidRock
+  components:
+  - pos: -6.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 331
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 332
+  type: AsteroidRock
+  components:
+  - pos: -12.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 333
+  type: AsteroidRock
+  components:
+  - pos: -12.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 334
+  type: AsteroidRock
+  components:
+  - pos: -11.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 335
+  type: AsteroidRock
+  components:
+  - pos: -11.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 336
+  type: AsteroidRock
+  components:
+  - pos: -10.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 337
+  type: AsteroidRock
+  components:
+  - pos: -10.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 338
+  type: MaintenanceToolSpawner
+  components:
+  - pos: 9.5,6.5
+    parent: 16
+    type: Transform
+- uid: 339
+  type: AsteroidRock
+  components:
+  - pos: -9.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 340
+  type: AsteroidRock
+  components:
+  - pos: -8.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 341
+  type: AsteroidRock
+  components:
+  - pos: -8.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 342
+  type: AsteroidRock
+  components:
+  - pos: -7.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 343
+  type: AsteroidRock
+  components:
+  - pos: -7.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 344
+  type: AsteroidRock
+  components:
+  - pos: -6.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 345
+  type: AsteroidRock
+  components:
+  - pos: -6.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 346
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 347
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 348
+  type: AsteroidRock
+  components:
+  - pos: -11.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 349
+  type: AsteroidRock
+  components:
+  - pos: -11.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 350
+  type: AsteroidRock
+  components:
+  - pos: -10.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 351
+  type: AsteroidRock
+  components:
+  - pos: -10.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 352
+  type: AsteroidRock
+  components:
+  - pos: -9.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 353
+  type: AsteroidRock
+  components:
+  - pos: -9.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 354
+  type: AsteroidRock
+  components:
+  - pos: -8.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 355
+  type: AsteroidRock
+  components:
+  - pos: -8.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 356
+  type: AsteroidRock
+  components:
+  - pos: -7.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 357
+  type: AsteroidRock
+  components:
+  - pos: -7.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 358
+  type: AsteroidRock
+  components:
+  - pos: -6.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 359
+  type: AsteroidRock
+  components:
+  - pos: -6.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 360
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-6.5
+    parent: 16
+    type: Transform
+- uid: 361
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 362
+  type: AsteroidRock
+  components:
+  - pos: -10.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 363
+  type: AsteroidRock
+  components:
+  - pos: -9.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 364
+  type: AsteroidRock
+  components:
+  - pos: -8.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 365
+  type: MaintenanceToolSpawner
+  components:
+  - pos: 2.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 366
+  type: AsteroidRock
+  components:
+  - pos: -6.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 367
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 368
+  type: AsteroidRock
+  components:
+  - pos: -8.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 369
+  type: AsteroidRock
+  components:
+  - pos: -8.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 370
+  type: AsteroidRock
+  components:
+  - pos: -7.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 371
+  type: AsteroidRock
+  components:
+  - pos: -7.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 372
+  type: AsteroidRock
+  components:
+  - pos: -6.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 373
+  type: AsteroidRock
+  components:
+  - pos: -6.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 374
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 375
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 376
+  type: AsteroidRock
+  components:
+  - pos: -4.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 377
+  type: AsteroidRock
+  components:
+  - pos: -4.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 378
+  type: AsteroidRock
+  components:
+  - pos: -3.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 379
+  type: AsteroidRock
+  components:
+  - pos: -3.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 380
+  type: AsteroidRock
+  components:
+  - pos: -2.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 381
+  type: AsteroidRock
+  components:
+  - pos: -2.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 382
+  type: AsteroidRock
+  components:
+  - pos: -1.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 383
+  type: AsteroidRock
+  components:
+  - pos: -1.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 384
+  type: AsteroidRock
+  components:
+  - pos: -0.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 385
+  type: AsteroidRock
+  components:
+  - pos: -0.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 386
+  type: AsteroidRock
+  components:
+  - pos: 0.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 387
+  type: AsteroidRock
+  components:
+  - pos: 0.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 388
+  type: AsteroidRock
+  components:
+  - pos: 1.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 389
+  type: AsteroidRock
+  components:
+  - pos: 1.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 390
+  type: WallReinforced
+  components:
+  - pos: 6.5,9.5
+    parent: 16
+    type: Transform
+- uid: 391
+  type: AsteroidRock
+  components:
+  - pos: 2.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 392
+  type: AsteroidRock
+  components:
+  - pos: 3.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 393
+  type: AsteroidRock
+  components:
+  - pos: 3.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 394
+  type: AsteroidRock
+  components:
+  - pos: 4.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 395
+  type: AsteroidRock
+  components:
+  - pos: 4.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 396
+  type: AsteroidRock
+  components:
+  - pos: 5.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 397
+  type: AsteroidRock
+  components:
+  - pos: 5.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 398
+  type: AsteroidRock
+  components:
+  - pos: 6.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 399
+  type: AsteroidRock
+  components:
+  - pos: 6.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 400
+  type: AsteroidRock
+  components:
+  - pos: 7.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 401
+  type: AsteroidRock
+  components:
+  - pos: 7.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 402
+  type: AsteroidRock
+  components:
+  - pos: 8.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 403
+  type: AsteroidRock
+  components:
+  - pos: 8.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 404
+  type: AsteroidRock
+  components:
+  - pos: 9.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 405
+  type: AsteroidRock
+  components:
+  - pos: 9.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 406
+  type: AsteroidRock
+  components:
+  - pos: 10.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 407
+  type: AsteroidRock
+  components:
+  - pos: 10.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 408
+  type: AsteroidRock
+  components:
+  - pos: 11.5,-9.5
+    parent: 16
+    type: Transform
+- uid: 409
+  type: AsteroidRock
+  components:
+  - pos: 11.5,-10.5
+    parent: 16
+    type: Transform
+- uid: 410
+  type: AsteroidRock
+  components:
+  - pos: 11.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 411
+  type: AsteroidRock
+  components:
+  - pos: 10.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 412
+  type: AsteroidRock
+  components:
+  - pos: 9.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 413
+  type: AsteroidRock
+  components:
+  - pos: 8.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 414
+  type: AsteroidRock
+  components:
+  - pos: 7.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 415
+  type: AsteroidRock
+  components:
+  - pos: 6.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 416
+  type: AsteroidRock
+  components:
+  - pos: 5.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 417
+  type: AsteroidRock
+  components:
+  - pos: 4.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 418
+  type: AsteroidRock
+  components:
+  - pos: 3.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 419
+  type: AsteroidRock
+  components:
+  - pos: 2.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 420
+  type: AsteroidRock
+  components:
+  - pos: 1.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 421
+  type: AsteroidRock
+  components:
+  - pos: 0.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 422
+  type: AsteroidRock
+  components:
+  - pos: -0.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 423
+  type: AsteroidRock
+  components:
+  - pos: -1.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 424
+  type: AsteroidRock
+  components:
+  - pos: -2.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 425
+  type: MaintenanceWeaponSpawner
+  components:
+  - pos: -9.5,-4.5
+    parent: 16
+    type: Transform
+- uid: 426
+  type: AsteroidRock
+  components:
+  - pos: -4.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 427
+  type: AsteroidRock
+  components:
+  - pos: -5.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 428
+  type: AsteroidRock
+  components:
+  - pos: -6.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 429
+  type: AsteroidRock
+  components:
+  - pos: -7.5,-11.5
+    parent: 16
+    type: Transform
+- uid: 430
+  type: AsteroidRock
+  components:
+  - pos: -4.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 431
+  type: AsteroidRock
+  components:
+  - pos: -3.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 432
+  type: AsteroidRock
+  components:
+  - pos: -2.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 433
+  type: AsteroidRock
+  components:
+  - pos: -1.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 434
+  type: AsteroidRock
+  components:
+  - pos: -0.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 435
+  type: AsteroidRock
+  components:
+  - pos: 0.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 436
+  type: AsteroidRock
+  components:
+  - pos: 1.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 437
+  type: AsteroidRock
+  components:
+  - pos: 2.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 438
+  type: AsteroidRock
+  components:
+  - pos: 3.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 439
+  type: AsteroidRock
+  components:
+  - pos: 4.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 440
+  type: AsteroidRock
+  components:
+  - pos: 5.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 441
+  type: AsteroidRock
+  components:
+  - pos: 6.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 442
+  type: AsteroidRock
+  components:
+  - pos: 7.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 443
+  type: AsteroidRock
+  components:
+  - pos: 8.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 444
+  type: AsteroidRock
+  components:
+  - pos: 9.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 445
+  type: AsteroidRock
+  components:
+  - pos: 10.5,-12.5
+    parent: 16
+    type: Transform
+- uid: 446
+  type: Catwalk
+  components:
+  - pos: 14.5,3.5
+    parent: 16
+    type: Transform
+- uid: 447
+  type: Catwalk
+  components:
+  - pos: 14.5,2.5
+    parent: 16
+    type: Transform
+- uid: 448
+  type: Catwalk
+  components:
+  - pos: 14.5,1.5
+    parent: 16
+    type: Transform
+- uid: 449
+  type: Catwalk
+  components:
+  - pos: 14.5,0.5
+    parent: 16
+    type: Transform
+- uid: 450
+  type: Catwalk
+  components:
+  - pos: 14.5,-0.5
+    parent: 16
+    type: Transform
+- uid: 451
+  type: Catwalk
+  components:
+  - pos: 14.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 452
+  type: Catwalk
+  components:
+  - pos: 14.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 453
+  type: Catwalk
+  components:
+  - pos: 15.5,3.5
+    parent: 16
+    type: Transform
+- uid: 454
+  type: Catwalk
+  components:
+  - pos: 15.5,2.5
+    parent: 16
+    type: Transform
+- uid: 455
+  type: Catwalk
+  components:
+  - pos: 15.5,1.5
+    parent: 16
+    type: Transform
+- uid: 456
+  type: Catwalk
+  components:
+  - pos: 15.5,0.5
+    parent: 16
+    type: Transform
+- uid: 457
+  type: Catwalk
+  components:
+  - pos: 15.5,-0.5
+    parent: 16
+    type: Transform
+- uid: 458
+  type: Catwalk
+  components:
+  - pos: 15.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 459
+  type: Catwalk
+  components:
+  - pos: 15.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 460
+  type: SalvageMobSpawner75
+  components:
+  - pos: 4.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 461
+  type: SalvageMobSpawner75
+  components:
+  - pos: 6.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 462
+  type: PoweredlightExterior
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 10.5,-0.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 463
+  type: Rack
+  components:
+  - pos: -9.5,3.5
+    parent: 16
+    type: Transform
+- uid: 464
+  type: Rack
+  components:
+  - pos: -9.5,2.5
+    parent: 16
+    type: Transform
+- uid: 465
+  type: PoweredlightExterior
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 10.5,2.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 466
+  type: DoubleEmergencyOxygenTankFilled
+  components:
+  - pos: -9.5,3.5
+    parent: 16
+    type: Transform
+- uid: 467
+  type: DoubleEmergencyOxygenTankFilled
+  components:
+  - pos: -9.5,2.5
+    parent: 16
+    type: Transform
+- uid: 468
+  type: FireAxeCabinet
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -4.5,3.5
+    parent: 16
+    type: Transform
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 469
+  type: FirelockEdge
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -3.5,1.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 470
+  type: FirelockEdge
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,1.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 471
+  type: FirelockEdge
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -1.5,1.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 472
+  type: FirelockEdge
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 0.5,1.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 473
+  type: FirelockEdge
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,1.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 474
+  type: FirelockEdge
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 2.5,1.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 475
+  type: FirelockEdge
+  components:
+  - pos: -3.5,-2.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 476
+  type: Firelock
+  components:
+  - pos: -4.5,0.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 477
+  type: Firelock
+  components:
+  - pos: -4.5,-0.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 478
+  type: Firelock
+  components:
+  - pos: -4.5,-1.5
+    parent: 16
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 479
+  type: Rack
+  components:
+  - pos: 10.5,2.5
+    parent: 16
+    type: Transform
+- uid: 480
+  type: Rack
+  components:
+  - pos: 11.5,2.5
+    parent: 16
+    type: Transform
+- uid: 481
+  type: SurvivalKnife
+  components:
+  - pos: 10.5,2.5
+    parent: 16
+    type: Transform
+- uid: 482
+  type: FireExtinguisher
+  components:
+  - pos: 6.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 483
+  type: FireExtinguisher
+  components:
+  - pos: -7.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 484
+  type: FireExtinguisher
+  components:
+  - pos: -6.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 485
+  type: SalvageMobSpawner75
+  components:
+  - pos: 11.5,1.5
+    parent: 16
+    type: Transform
+- uid: 486
+  type: SalvageMobSpawner75
+  components:
+  - pos: 13.5,0.5
+    parent: 16
+    type: Transform
+- uid: 487
+  type: PoweredSmallLight
+  components:
+  - pos: -2.5,6.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - enabled: False
+    type: AmbientSound
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 488
+  type: PoweredSmallLight
+  components:
+  - pos: 1.5,6.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - enabled: False
+    type: AmbientSound
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 489
+  type: PoweredSmallLight
+  components:
+  - pos: 5.5,6.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - enabled: False
+    type: AmbientSound
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 490
+  type: PoweredSmallLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 5.5,-7.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - enabled: False
+    type: AmbientSound
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 491
+  type: PoweredSmallLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-7.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - enabled: False
+    type: AmbientSound
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 492
+  type: PoweredSmallLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,-7.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - enabled: False
+    type: AmbientSound
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 493
+  type: CableHV
+  components:
+  - pos: 3.5,10.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 494
+  type: SubstationWallBasic
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 3.5,10.5
+    parent: 16
+    type: Transform
+- uid: 495
+  type: CableHV
+  components:
+  - pos: 4.5,11.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 496
+  type: GeneratorBasic
+  components:
+  - pos: 4.5,11.5
+    parent: 16
+    type: Transform
+- uid: 497
+  type: CableMV
+  components:
+  - pos: 3.5,10.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 498
+  type: CableMV
+  components:
+  - pos: 4.5,10.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 499
+  type: CableMV
+  components:
+  - pos: 4.5,9.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 500
+  type: CableMV
+  components:
+  - pos: 4.5,8.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 501
+  type: CableMV
+  components:
+  - pos: 4.5,7.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 502
+  type: CableMV
+  components:
+  - pos: 4.5,6.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 503
+  type: CableMV
+  components:
+  - pos: 4.5,5.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 504
+  type: CableMV
+  components:
+  - pos: 4.5,4.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 505
+  type: CableMV
+  components:
+  - pos: 4.5,3.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 506
+  type: CableMV
+  components:
+  - pos: 4.5,2.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 507
+  type: CableMV
+  components:
+  - pos: 4.5,1.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 508
+  type: CableMV
+  components:
+  - pos: 4.5,0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 509
+  type: CableMV
+  components:
+  - pos: 4.5,-0.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 510
+  type: CableMV
+  components:
+  - pos: 5.5,-0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 511
+  type: CableMV
+  components:
+  - pos: 6.5,-0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 512
+  type: CableMV
+  components:
+  - pos: 7.5,-0.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 513
+  type: SalternAPC
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 7.5,-0.5
+    parent: 16
+    type: Transform
+- uid: 514
+  type: CableApcExtension
+  components:
+  - pos: 7.5,-0.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 515
+  type: CableApcExtension
+  components:
+  - pos: 6.5,-0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 516
+  type: CableApcExtension
+  components:
+  - pos: 5.5,-0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 517
+  type: CableApcExtension
+  components:
+  - pos: 4.5,-0.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 518
+  type: CableApcExtension
+  components:
+  - pos: 3.5,-0.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 519
+  type: CableApcExtension
+  components:
+  - pos: 2.5,-0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 520
+  type: CableApcExtension
+  components:
+  - pos: 1.5,-0.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 521
+  type: CableApcExtension
+  components:
+  - pos: 0.5,-0.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 522
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 523
+  type: CableApcExtension
+  components:
+  - pos: -1.5,-0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 524
+  type: CableApcExtension
+  components:
+  - pos: -2.5,-0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 525
+  type: CableApcExtension
+  components:
+  - pos: -3.5,-0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 526
+  type: CableApcExtension
+  components:
+  - pos: -4.5,-0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 527
+  type: CableApcExtension
+  components:
+  - pos: -5.5,-0.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 528
+  type: CableApcExtension
+  components:
+  - pos: -6.5,-0.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 529
+  type: CableApcExtension
+  components:
+  - pos: -7.5,-0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 530
+  type: CableApcExtension
+  components:
+  - pos: -8.5,-0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 531
+  type: CableApcExtension
+  components:
+  - pos: -9.5,-0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 532
+  type: CableApcExtension
+  components:
+  - pos: -5.5,0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 533
+  type: CableApcExtension
+  components:
+  - pos: -5.5,1.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 534
+  type: CableApcExtension
+  components:
+  - pos: -5.5,2.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 535
+  type: CableApcExtension
+  components:
+  - pos: -5.5,3.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 536
+  type: CableApcExtension
+  components:
+  - pos: -2.5,-1.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 537
+  type: CableApcExtension
+  components:
+  - pos: -2.5,-2.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 538
+  type: CableApcExtension
+  components:
+  - pos: -2.5,-3.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 539
+  type: CableApcExtension
+  components:
+  - pos: -2.5,-4.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 540
+  type: CableApcExtension
+  components:
+  - pos: -2.5,-5.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 541
+  type: CableApcExtension
+  components:
+  - pos: -2.5,-6.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 542
+  type: CableApcExtension
+  components:
+  - pos: 1.5,-1.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 543
+  type: CableApcExtension
+  components:
+  - pos: 1.5,-2.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 544
+  type: CableApcExtension
+  components:
+  - pos: 1.5,-3.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 545
+  type: CableApcExtension
+  components:
+  - pos: 1.5,-4.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 546
+  type: CableApcExtension
+  components:
+  - pos: 1.5,-5.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 547
+  type: CableApcExtension
+  components:
+  - pos: 1.5,-6.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 548
+  type: CableApcExtension
+  components:
+  - pos: 5.5,-1.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 549
+  type: CableApcExtension
+  components:
+  - pos: 5.5,-2.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 550
+  type: CableApcExtension
+  components:
+  - pos: 5.5,-3.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 551
+  type: CableApcExtension
+  components:
+  - pos: 5.5,-4.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 552
+  type: CableApcExtension
+  components:
+  - pos: 5.5,-5.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 553
+  type: CableApcExtension
+  components:
+  - pos: 5.5,-6.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 554
+  type: CableApcExtension
+  components:
+  - pos: 5.5,0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 555
+  type: CableApcExtension
+  components:
+  - pos: 5.5,1.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 556
+  type: CableApcExtension
+  components:
+  - pos: 5.5,2.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 557
+  type: CableApcExtension
+  components:
+  - pos: 5.5,3.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 558
+  type: CableApcExtension
+  components:
+  - pos: 5.5,4.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 559
+  type: CableApcExtension
+  components:
+  - pos: 5.5,5.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 560
+  type: CableApcExtension
+  components:
+  - pos: 1.5,5.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 561
+  type: CableApcExtension
+  components:
+  - pos: 1.5,4.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 562
+  type: CableApcExtension
+  components:
+  - pos: 1.5,3.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 563
+  type: CableApcExtension
+  components:
+  - pos: 1.5,2.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 564
+  type: CableApcExtension
+  components:
+  - pos: 1.5,1.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 565
+  type: CableApcExtension
+  components:
+  - pos: 1.5,0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 566
+  type: CableApcExtension
+  components:
+  - pos: -2.5,0.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 567
+  type: CableApcExtension
+  components:
+  - pos: -2.5,1.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 568
+  type: CableApcExtension
+  components:
+  - pos: -2.5,2.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 569
+  type: CableApcExtension
+  components:
+  - pos: -2.5,3.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 570
+  type: CableApcExtension
+  components:
+  - pos: -2.5,4.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 571
+  type: CableApcExtension
+  components:
+  - pos: -2.5,5.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 572
+  type: CableApcExtension
+  components:
+  - pos: 6.5,1.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 573
+  type: CableApcExtension
+  components:
+  - pos: 7.5,1.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 574
+  type: CableApcExtension
+  components:
+  - pos: 8.5,1.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 575
+  type: CableApcExtension
+  components:
+  - pos: -10.5,-0.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 576
+  type: AirlockEngineeringLocked
+  components:
+  - pos: 6.5,12.5
+    parent: 16
+    type: Transform
+- uid: 577
+  type: SignElectricalMed
+  components:
+  - pos: 5.5,12.5
+    parent: 16
+    type: Transform
+- uid: 578
+  type: SignSecureMedRed
+  components:
+  - pos: 3.5,2.5
+    parent: 16
+    type: Transform
+- uid: 579
+  type: SignSecureMedRed
+  components:
+  - pos: 3.5,-3.5
+    parent: 16
+    type: Transform
+- uid: 580
+  type: SignSecureSmall
+  components:
+  - pos: -6.5,1.5
+    parent: 16
+    type: Transform
+- uid: 581
+  type: PosterContrabandUnreadableAnnouncement
+  components:
+  - pos: -6.5,5.5
+    parent: 16
+    type: Transform
+- uid: 582
+  type: RandomPosterLegit
+  components:
+  - pos: -4.5,1.5
+    parent: 16
+    type: Transform
+- uid: 583
+  type: RandomPosterContraband
+  components:
+  - pos: 6.5,-8.5
+    parent: 16
+    type: Transform
+- uid: 584
+  type: RandomPosterContraband
+  components:
+  - pos: 2.5,7.5
+    parent: 16
+    type: Transform
+- uid: 585
+  type: RandomPosterLegit
+  components:
+  - pos: 7.5,11.5
+    parent: 16
+    type: Transform
+- uid: 586
+  type: WallReinforced
+  components:
+  - pos: 13.5,2.5
+    parent: 16
+    type: Transform
+- uid: 587
+  type: CableApcExtension
+  components:
+  - pos: 9.5,1.5
+    parent: 16
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 588
+  type: CableApcExtension
+  components:
+  - pos: 10.5,1.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 589
+  type: CableApcExtension
+  components:
+  - pos: 11.5,1.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 590
+  type: CableApcExtension
+  components:
+  - pos: 12.5,1.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 591
+  type: CableApcExtension
+  components:
+  - pos: 13.5,1.5
+    parent: 16
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 592
+  type: PoweredlightExterior
+  components:
+  - pos: 13.5,1.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 593
+  type: PoweredlightExterior
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 14.5,2.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 594
+  type: PoweredlightExterior
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 13.5,3.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 595
+  type: PoweredlightExterior
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 12.5,2.5
+    parent: 16
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 596
+  type: CableHVStack1
+  components:
+  - pos: 4.6570635,10.57176
+    parent: 16
+    type: Transform
+- uid: 597
+  type: Wirecutter
+  components:
+  - pos: 5.950589,10.861998
+    parent: 16
+    type: Transform
+- uid: 598
+  type: PoweredSmallLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 5.5,13.5
+    parent: 16
+    type: Transform
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 599
+  type: PoweredSmallLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 6.5,10.5
+    parent: 16
+    type: Transform
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 600
+  type: RandomSpawner
+  components:
+  - pos: 10.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 601
+  type: RandomSpawner
+  components:
+  - pos: 13.5,-1.5
+    parent: 16
+    type: Transform
+- uid: 602
+  type: RandomSpawner
+  components:
+  - pos: -6.5,4.5
+    parent: 16
+    type: Transform
+- uid: 603
+  type: RandomSpawner
+  components:
+  - pos: 3.5,-2.5
+    parent: 16
+    type: Transform
+- uid: 604
+  type: RandomSpawner
+  components:
+  - pos: -3.5,1.5
+    parent: 16
+    type: Transform
+- uid: 605
+  type: RandomSpawner
+  components:
+  - pos: -1.5,5.5
+    parent: 16
+    type: Transform
+- uid: 606
+  type: RandomSpawner
+  components:
+  - pos: -1.5,-5.5
+    parent: 16
+    type: Transform
+- uid: 607
+  type: pointingarrow
+  components:
+  - pos: 10.495093,2.3575568
+    parent: 16
+    type: Transform
+  - drawdepth: Overlays
+    type: Sprite
+  - layer: 2
+    type: Visibility
+- uid: 608
+  type: pointingarrow
+  components:
+  - pos: -9.2956085,3.4921217
+    parent: 16
+    type: Transform
+  - drawdepth: Overlays
+    type: Sprite
+  - layer: 2
+    type: Visibility
+- uid: 609
+  type: pointingarrow
+  components:
+  - pos: -9.6983185,3.162306
+    parent: 16
+    type: Transform
+  - drawdepth: Overlays
+    type: Sprite
+  - layer: 2
+    type: Visibility
+- uid: 610
+  type: PianoInstrument
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 4.5,-7.5
+    parent: 16
+    type: Transform
+- uid: 611
+  type: Stool
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 5.5,-7.5
+    parent: 16
+    type: Transform
+...

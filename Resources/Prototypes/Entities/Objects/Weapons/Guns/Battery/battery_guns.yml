@@ -44,7 +44,7 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
   - type: RangedWeapon
   - type: BatteryBarrel
@@ -94,7 +94,7 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
   - type: BatteryBarrel
     fireCost: 25
@@ -115,7 +115,7 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
   - type: BatteryBarrel
     fireCost: 25

@@ -687,6 +687,7 @@
   - type: Tag
     tags:
     - Trash
+    - CannotSuicide
   - type: Recyclable
   - type: Respirator
     damage:
@@ -704,6 +705,7 @@
     # mice are gender neutral who cares
     maleScream: /Audio/Animals/mouse_squeak.ogg
     femaleScream: /Audio/Animals/mouse_squeak.ogg
+    wilhelmProbability: 0.001
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
     combatToggleAction:
@@ -959,6 +961,7 @@
   - type: AiFactionTag
     factions:
     - SimpleHostile
+    - Syndicate
   - type: Sprite
     drawdepth: Mobs
     layers:

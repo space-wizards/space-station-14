@@ -82,7 +82,7 @@
     - Janitor
   - type: Storage
     capacity: 126 ## See ServerStorageComponent.cs Line 152
-    suppressFailMsg: true
+    popup: false
     whitelist:
       tags:
         - TrashBag
