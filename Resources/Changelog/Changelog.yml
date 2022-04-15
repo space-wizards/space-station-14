@@ -1,14 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug preventing hand-labellers from being used., type: Fix}
-  id: 829
-  time: '2022-01-06T01:51:35.0000000+00:00'
-- author: Delete69
-  changes:
-  - {message: 'Added small railing corners, making railing more versatile.', type: Add}
-  id: 830
-  time: '2022-01-06T01:51:41.0000000+00:00'
 - author: Daemon
   changes:
   - {message: Added new chat filters for emotes, type: Add}
@@ -3015,3 +3005,15 @@ Entries:
   - {message: Fixed cans transferring contents when closed., type: Fix}
   id: 1328
   time: '2022-04-15T21:17:48.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Durathread now has a crafting recipe. Have a good time impersonating
+      department heads., type: Add}
+  id: 1329
+  time: '2022-04-15T21:20:14.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Entities that are powered by APCs can now be designed so that they can
+      electrocute you. Shocking!, type: Tweak}
+  id: 1330
+  time: '2022-04-15T21:21:11.0000000+00:00'
