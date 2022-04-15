@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Energy weapons now only accept small power cells., type: Fix}
-  id: 826
-  time: '2022-01-05T04:20:26.0000000+00:00'
 - author: Matz05
   changes:
   - {message: Made LED tubes increase the brightness of lights they're installed in,
@@ -3016,3 +3011,8 @@ Entries:
       and other minor fixes. Look out for the next big update.', type: Add}
   id: 1325
   time: '2022-04-15T18:43:39.0000000+00:00'
+- author: Radosvik
+  changes:
+  - {message: Lobby Info Box now refreshes when needed., type: Tweak}
+  id: 1326
+  time: '2022-04-15T18:55:38.0000000+00:00'
