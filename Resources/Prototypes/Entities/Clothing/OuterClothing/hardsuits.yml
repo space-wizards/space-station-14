@@ -187,8 +187,6 @@
     sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetEVA
 
 - type: entity
   parent: ClothingOuterHardsuitBase
