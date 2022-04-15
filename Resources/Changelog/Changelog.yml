@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Traitors can now see their codewords in the objective menu., type: Add}
-  id: 828
-  time: '2022-01-05T05:46:41.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug preventing hand-labellers from being used., type: Fix}
@@ -3015,3 +3010,8 @@ Entries:
       you want.', type: Add}
   id: 1327
   time: '2022-04-15T21:15:25.0000000+00:00'
+- author: Alainx277
+  changes:
+  - {message: Fixed cans transferring contents when closed., type: Fix}
+  id: 1328
+  time: '2022-04-15T21:17:48.0000000+00:00'
