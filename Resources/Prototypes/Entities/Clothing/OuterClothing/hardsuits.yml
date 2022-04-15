@@ -9,19 +9,21 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/atmospherics.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.45
+    highPressureMultiplier: 0.2
     lowPressureMultiplier: 100
   - type: ClothingSpeedModifier
     walkModifier: 0.65
-    sprintModifier: 0.7 #less armor than engineering but slightly higher move speed so they can get to breaches a bit faster
+    sprintModifier: 0.7 
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9 #raising these slightly so its a bit more attractive 
+        Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
-        Heat: 0.35
+        Heat: 0.2
         Radiation: 0.25
+  - type: TemperatureProtection
+    coefficient: 0.01
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -44,8 +46,8 @@
       coefficients:
         Blunt: 0.8
         Slash: 0.8
-        Piercing: 0.85
-        Heat: 0.5 #putting higher enviro since the captain's carapace is already super heavy physical
+        Piercing: 0.75
+        Heat: 0.5 
         Radiation: 0.1
 
 - type: entity
@@ -88,14 +90,14 @@
     lowPressureMultiplier: 100
   - type: ClothingSpeedModifier
     walkModifier: 0.65
-    sprintModifier: 0.65 #making this a bit faster than salvages
+    sprintModifier: 0.65 
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9 #higher physical protections than atmo but less enviro
+        Blunt: 0.9 
         Slash: 0.85
-        Piercing: 0.9
-        Heat: 0.85
+        Piercing: 0.85
+        Heat: 0.7
         Radiation: 0.35
 
 - type: entity
@@ -109,18 +111,18 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/engineering-white.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.45
+    highPressureMultiplier: 0.4
     lowPressureMultiplier: 100
   - type: ClothingSpeedModifier
     walkModifier: 0.75
-    sprintModifier: 0.8 #turning this up slightly because CEs have started just wearing firesuits instead and never putting on advanced armor
+    sprintModifier: 0.8 
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.85
         Slash: 0.85
-        Piercing: 0.85
-        Heat: 0.45 #slightly improved stats over last pass
+        Piercing: 0.8
+        Heat: 0.4
         Radiation: 0.25
 
 #The voidsuit and eva suit are not techically 'hardsuits' but this seems to be the place for all EVA-capable outer clothing. This may be worth reevaluating when we have a lot more items.
@@ -190,8 +192,13 @@
   - type: DiseaseProtection
     protection: 0.2
   - type: ClothingSpeedModifier
-    walkModifier: 0.9 #old movespeed i had was too punishing and this needs to be useable for saving people in medbay
+    walkModifier: 0.9 
     sprintModifier: 0.9
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.90
+        Radiation: 0.25 
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -210,12 +217,12 @@
     modifiers:
       coefficients:
         Blunt: 0.6
-        Slash: 0.75 #increasing slash on this because it's a big ass suit
+        Slash: 0.75
         Piercing: 0.95
         Heat: 0.65
         Radiation: 0.25
   - type: ClothingSpeedModifier
-    walkModifier: 0.75 #moving the movespeed on this up, it's a high risk item and traitors shouldnt have to keep this in their bag all round
+    walkModifier: 0.75
     sprintModifier: 0.75
 
 - type: entity
@@ -262,7 +269,7 @@
         Blunt: 0.7
         Slash: 0.7
         Piercing: 0.7
-        Heat: 0.8 #buffed combat stats all round
+        Heat: 0.8 
         Radiation: 0.25
 
 - type: entity
@@ -280,7 +287,7 @@
     lowPressureMultiplier: 100
   - type: ClothingSpeedModifier
     walkModifier: 0.7 
-    sprintModifier: 0.7 #buffing the movespeed slightly so its somewhat feasible to catch up to a felon, this speed is what the cmo's was at. seems a good fit
+    sprintModifier: 0.7
   - type: Armor
     modifiers:
       coefficients:
@@ -337,7 +344,7 @@
         Blunt: 0.6
         Slash: 0.6
         Piercing: 0.4
-        Heat: 0.25 #higher heat resist due to spell casting
+        Heat: 0.25 
         Radiation: 0.20
 
 - type: entity

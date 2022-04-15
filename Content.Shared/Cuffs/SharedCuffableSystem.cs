@@ -26,7 +26,8 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<SharedCuffableComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, PickupAttemptEvent>(OnPickupAttempt);
-            SubscribeLocalEvent<SharedCuffableComponent, PullMessage>(OnPull);
+            SubscribeLocalEvent<SharedCuffableComponent, PullStartedMessage>(OnPull);
+            SubscribeLocalEvent<SharedCuffableComponent, PullStoppedMessage>(OnPull);
         }
 
         private void OnPull(EntityUid uid, SharedCuffableComponent component, PullMessage args)

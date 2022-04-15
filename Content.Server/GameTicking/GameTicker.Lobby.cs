@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.GameTicking;
 using Robust.Server.Player;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
@@ -50,7 +45,7 @@ namespace Content.Server.GameTicking
             var mapName = map?.MapName ?? Loc.GetString("game-ticker-no-map-selected");
             var gmTitle = Loc.GetString(_preset.ModeTitle);
             var desc = Loc.GetString(_preset.Description);
-            return Loc.GetString("game-ticker-get-info-text",("playerCount", playerCount),("mapName", mapName),("gmTitle", gmTitle),("desc", desc));
+            return Loc.GetString("game-ticker-get-info-text",("roundId", RoundId), ("playerCount", playerCount),("mapName", mapName),("gmTitle", gmTitle),("desc", desc));
         }
 
         private TickerLobbyReadyEvent GetStatusSingle(ICommonSession player, LobbyPlayerStatus status)
