@@ -1,5 +1,6 @@
 ﻿namespace Content.Shared.Inventory;
 
+[RegisterComponent]
 [Virtual]
 [Friend(typeof(InventorySystem))]
 [ComponentProtoName("InventorySlot")]
