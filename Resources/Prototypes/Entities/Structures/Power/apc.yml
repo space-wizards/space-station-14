@@ -68,3 +68,4 @@
     maxChargeRate: 5000
     supplyRampTolerance: 1000
     supplyRampRate: 500
+  - type: WallMount
