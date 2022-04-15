@@ -1,9 +1,9 @@
 namespace Content.Server.Disease.Components
 {
-    [RegisterComponent]
     /// <summary>
     /// The component which gives an entity zombie traits.
     /// </summary>
+    [RegisterComponent]
     public sealed class DiseaseZombieComponent : Component
     {
         /// <summary>
