@@ -3,7 +3,9 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Popups;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -13,6 +15,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     private Queue<EntityUid> _toInsert = new();
 
@@ -125,18 +128,22 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
     /// <summary>
     ///     Equip or unequip the toggleable clothing.
-    /// </summary>=
+    /// </summary>
     private void OnToggleClothing(EntityUid uid, ToggleableClothingComponent component, ToggleClothingEvent args)
     {
         if (args.Handled || component.Container == null || component.ClothingUid == null)
             return;
 
+        var parent = Transform(uid).ParentUid;
         if (component.Container.ContainedEntity == null)
+            _inventorySystem.TryUnequip(parent, component.Slot);
+        else if (_inventorySystem.TryGetSlotEntity(parent, component.Slot, out var existing))
         {
-            _inventorySystem.TryUnequip(Transform(uid).ParentUid, component.Slot);
+            _popupSystem.PopupEntity(Loc.GetString("toggleable-clothing-remove-first", ("entity", existing)),
+                args.Performer, Filter.Entities(args.Performer));
         }
         else
-            _inventorySystem.TryEquip(Transform(uid).ParentUid, component.ClothingUid.Value, component.Slot);
+            _inventorySystem.TryEquip(parent, component.ClothingUid.Value, component.Slot);
 
         args.Handled = true;
     }
@@ -169,6 +176,8 @@ public sealed class ToggleableClothingSystem : EntitySystem
             DebugTools.Assert(Exists(component.ClothingUid), "Toggleable clothing is missing expected entity.");
             DebugTools.Assert(TryComp(component.ClothingUid, out AttachedClothingComponent? comp), "Toggleable clothing is missing an attached component");
             DebugTools.Assert(comp?.AttachedUid == uid, "Toggleable clothing uid mismatch");
+            component.ToggleAction.EntityIcon = component.ClothingUid;
+            _actionsSystem.Dirty(component.ToggleAction);
             return;
         }
 

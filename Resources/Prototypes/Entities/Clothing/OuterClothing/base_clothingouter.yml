@@ -39,7 +39,7 @@
       name: action-name-hardsuit
       description: action-description-hardsuit
       itemIconStyle: BigItem
-      cooldown: 1 # equip noise spam.
+      useDelay: 1 # equip noise spam.
       event: !type:ToggleClothingEvent
 
 - type: entity
@@ -64,5 +64,5 @@
       name: action-name-hardsuit
       description: action-description-hardsuit
       itemIconStyle: BigItem
-      cooldown: 1 # equip noise spam.
+      useDelay: 1 # equip noise spam.
       event: !type:ToggleClothingEvent
