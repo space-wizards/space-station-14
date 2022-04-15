@@ -26,7 +26,7 @@ namespace Content.Server.AI.Utility.Considerations.Clothing
             foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
             {
                 if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothingComponent) ||
-                    !EntitySystem.Get<InventorySystem>().TryGetSlot(entity, slots, out var slotDef))
+                    !EntitySystem.Get<InventorySystem>().TryGetSlot(entity, slots, out var slotDef, out _))
                 {
                     continue;
                 }

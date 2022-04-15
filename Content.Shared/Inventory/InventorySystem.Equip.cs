@@ -69,7 +69,7 @@ public abstract partial class InventorySystem
 
     private void OnEntRemoved(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)
     {
-        if(!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
+        if(!TryGetSlot(uid, args.Container.ID, out var slotDef, out _, inventory: component))
             return;
 
         var unequippedEvent = new DidUnequipEvent(uid, args.Entity, slotDef);
@@ -81,7 +81,7 @@ public abstract partial class InventorySystem
 
     private void OnEntInserted(EntityUid uid, InventoryComponent component, EntInsertedIntoContainerMessage args)
     {
-        if(!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
+        if(!TryGetSlot(uid, args.Container.ID, out var slotDef, out _, inventory: component))
            return;
 
         var equippedEvent = new DidEquipEvent(uid, args.Entity, slotDef);
@@ -136,7 +136,7 @@ public abstract partial class InventorySystem
 
         if (_handsSystem.TryDrop(actor, hands.ActiveHand!, doDropInteraction: false, handsComp: hands))
             TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory);
-        }
+    }
 
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
         InventoryComponent? inventory = null, SharedItemComponent? item = null) =>
@@ -224,7 +224,8 @@ public abstract partial class InventorySystem
         if (!Resolve(target, ref inventory, false) || !Resolve(itemUid, ref item, false))
             return false;
 
-        if (slotDefinition == null && !TryGetSlot(target, slot, out slotDefinition, inventory: inventory))
+        EntityUid? invSlotEntity = null;
+        if (slotDefinition == null && !TryGetSlot(target, slot, out slotDefinition, out invSlotEntity, inventory: inventory))
             return false;
 
         if(!item.SlotFlags.HasFlag(slotDefinition.SlotFlags) && (!slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) || item.Size > (int) ReferenceSizes.Pocket))
@@ -233,7 +234,7 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if (!CanAccess(actor, target, itemUid))
+        if (!CanAccess(actor, invSlotEntity ?? target, itemUid))
         {
             reason = "interaction-system-user-interaction-cannot-reach";
             return false;
@@ -358,7 +359,7 @@ public abstract partial class InventorySystem
         var itemUid = containerSlot.ContainedEntity.Value;
 
         // make sure the user can actually reach the target
-        if (!CanAccess(actor, target, itemUid))
+        if (!CanAccess(actor, containerSlot.Owner, itemUid))
         {
             reason = "interaction-system-user-interaction-cannot-reach";
             return false;

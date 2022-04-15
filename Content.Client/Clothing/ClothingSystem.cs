@@ -227,7 +227,7 @@ public sealed class ClothingSystem : EntitySystem
             });
         }
 
-        if (!_inventorySystem.TryGetSlot(equipee, slot, out var slotDef, inventory))
+        if (!_inventorySystem.TryGetSlot(equipee, slot, out var slotDef, out _, inventory))
             return;
 
         // Remove old layers. We could also just set them to invisible, but as items may add arbitrary layers, this
@@ -258,7 +258,7 @@ public sealed class ClothingSystem : EntitySystem
         // temporary, until layer draw depths get added. Basically: a layer with the key "slot" is being used as a
         // bookmark to determine where in the list of layers we should insert the clothing layers.
         bool slotLayerExists = sprite.LayerMapTryGet(slot, out var index);
-        
+
         // add the new layers
         foreach (var (key, layerData) in ev.Layers)
         {

@@ -16,6 +16,7 @@
         uiContainer: BottomLeft
         uiWindowPos: 2,0
         displayName: Suit Storage
+  - type: ContainerContainer
 
 - type: entity
   abstract: true

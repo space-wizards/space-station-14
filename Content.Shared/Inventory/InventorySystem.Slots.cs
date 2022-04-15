@@ -17,11 +17,14 @@ public partial class InventorySystem : EntitySystem
     {
         containerSlot = null;
         slotDefinition = null;
-        if (!Resolve(uid, ref inventory, ref containerComp, false))
+        if (!Resolve(uid, ref containerComp, ref inventory, false))
             return false;
 
-        if (!TryGetSlot(uid, slot, out slotDefinition, inventory: inventory))
+        if (!TryGetSlot(uid, slot, out slotDefinition, out var isInvSlot, inventory: inventory))
             return false;
+
+        //this overrides the containerComp var with the containerComp of the inventorySlotEntity. its janky, but it works
+        if (isInvSlot != null && !TryComp(isInvSlot, out containerComp)) return false;
 
         if (!containerComp.TryGetContainer(slotDefinition.Name, out var container))
         {
@@ -37,13 +40,13 @@ public partial class InventorySystem : EntitySystem
     }
 
     public bool HasSlot(EntityUid uid, string slot, InventoryComponent? component = null) =>
-        TryGetSlot(uid, slot, out _, component);
+        TryGetSlot(uid, slot, out _, out _, component);
 
-    public bool TryGetSlot(EntityUid uid, string slot, [NotNullWhen(true)] out SlotDefinition? slotDefinition, InventoryComponent? inventory = null)
+    public bool TryGetSlot(EntityUid uid, string slot, [NotNullWhen(true)] out SlotDefinition? slotDefinition, out EntityUid? isFromInvSlotEntity, InventoryComponent? inventory = null)
     {
         slotDefinition = null;
-        if (!Resolve(uid, ref inventory, false))
-            return false;
+        isFromInvSlotEntity = null;
+        if (!Resolve(uid, ref inventory, false)) return false;
 
         static bool TryGetSlotDefFromArray(SlotDefinition[] slotDefinitions, string slotId, [NotNullWhen(true)] out SlotDefinition? slotDefParam)
         {
@@ -58,11 +61,22 @@ public partial class InventorySystem : EntitySystem
             return false;
         }
 
-        return
-            _prototypeManager.TryIndex<InventoryTemplatePrototype>(inventory.TemplateId, out var templatePrototype) &&
-            TryGetSlotDefFromArray(templatePrototype.Slots, slot, out slotDefinition) ||
-            TryComp<InventorySlotComponent>(uid, out var invSlotComp) &&
-            TryGetSlotDefFromArray(invSlotComp.Slots, slot, out slotDefinition);
+        if (_prototypeManager.TryIndex<InventoryTemplatePrototype>(inventory.TemplateId, out var templatePrototype) &&
+            TryGetSlotDefFromArray(templatePrototype.Slots, slot, out slotDefinition)) return true;
+
+        foreach (var slotSlot in inventory.InventorySlotSlots)
+        {
+            if (!TryGetSlotEntity(uid, slotSlot, out var slotEntity, inventory)) continue;
+
+            if (TryComp<InventorySlotComponent>(slotEntity, out var invSlotComp) &&
+                TryGetSlotDefFromArray(invSlotComp.Slots, slot, out slotDefinition))
+            {
+                isFromInvSlotEntity = slotEntity;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public bool TryGetContainerSlotEnumerator(EntityUid uid, out ContainerSlotEnumerator containerSlotEnumerator, InventoryComponent? component = null)

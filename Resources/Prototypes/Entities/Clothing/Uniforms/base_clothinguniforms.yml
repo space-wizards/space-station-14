@@ -46,6 +46,7 @@
         uiContainer: BottomRight
         uiWindowPos: 2,1
         displayName: ID
+  - type: ContainerContainer
 
 - type: entity
   abstract: true
@@ -84,3 +85,4 @@
         uiContainer: BottomRight
         uiWindowPos: 2,1
         displayName: ID
+  - type: ContainerContainer

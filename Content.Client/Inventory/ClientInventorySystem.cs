@@ -90,10 +90,21 @@ namespace Content.Client.Inventory
             if (!Resolve(uid, ref component))
                 return;
 
-            if (!component.SlotButtons.TryGetValue(slot, out var buttons) &&
-                (!TryComp<ClientInventorySlotComponent>(uid, out var invSlotComp) ||
-                 !invSlotComp.SlotButtons.TryGetValue(slot, out buttons)))
-                return;
+            if (!component.SlotButtons.TryGetValue(slot, out var buttons))
+            {
+                var found = false;
+                foreach (var slotSlot in component.InventorySlotSlots)
+                {
+                    if(TryGetSlotEntity(uid, slotSlot, out var slotEnt, component)) continue;
+
+                    if(TryComp<ClientInventorySlotComponent>(slotEnt, out var invSlotComp))
+                    {
+                        if (invSlotComp.SlotButtons.TryGetValue(slot, out buttons))
+                            found = true;
+                    }
+                }
+                if(!found) return;
+            }
 
             _itemSlotManager.SetItemSlot(buttons.hudButton, item);
             _itemSlotManager.SetItemSlot(buttons.windowButton, item);

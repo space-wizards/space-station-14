@@ -6,4 +6,6 @@ public abstract class InventoryComponent : Component
 {
     [DataField("templateId", customTypeSerializer: typeof(PrototypeIdSerializer<InventoryTemplatePrototype>))]
     public string TemplateId { get; } = "human";
+
+    public HashSet<string> InventorySlotSlots = new();
 }
