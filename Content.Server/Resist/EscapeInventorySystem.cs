@@ -1,15 +1,8 @@
 using Content.Shared.Movement;
-using Robust.Shared.GameObjects;
-using Content.Server.Storage.Components;
 using Content.Server.DoAfter;
-using Content.Server.Lock;
-using Robust.Shared.IoC;
-using Robust.Shared.Player;
 using Robust.Shared.Containers;
 using Content.Server.Popups;
-using Robust.Shared.Localization;
-using Content.Shared.ActionBlocker;
-using Content.Server.Disease.Components;
+using Content.Shared.Movement.EntitySystems;
 
 namespace Content.Server.Resist;
 
@@ -23,15 +16,15 @@ public sealed class EscapeInventorySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CanResistInventoryComponent, RelayMovementEntityEvent>(OnRelayMovement);
+        SubscribeLocalEvent<CanResistInventoryComponent, RelayMoveInputEvent>(OnRelayMovement);
         SubscribeLocalEvent<CanResistInventoryComponent, UpdateCanMoveEvent>(OnMoveAttempt);
     }
 
-    private void OnRelayMovement(EntityUid uid, CanResistInventoryComponent component, RelayMovementEntityEvent args)
+    private void OnRelayMovement(EntityUid uid, CanResistInventoryComponent component, RelayMoveInputEvent args)
     {
-        if (_containerSystem.IsEntityOrParentInContainer(args.Entity))
+        if (_containerSystem.IsEntityOrParentInContainer(uid))
         {
-            Transform(args.Entity).AttachParentToContainerOrGrid(EntityManager);
+            Transform(uid).AttachParentToContainerOrGrid(EntityManager);
         }
     }
 
