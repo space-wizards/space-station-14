@@ -24,7 +24,7 @@ public sealed class SpillableSystem : EntitySystem
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IEntityLookup _entityLookup = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
     public override void Initialize()

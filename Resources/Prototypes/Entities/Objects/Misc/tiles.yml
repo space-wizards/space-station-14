@@ -15,6 +15,19 @@
         Blunt: 10
   - type: Stack
     count: 1
+  - type: Tag
+    tags:
+      - DroneUsable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   name: steel tile
@@ -32,7 +45,7 @@
   - type: Stack
     stackType: FloorTileSteel
   - type: Construction
-    graph: tileSteel
+    graph: TileSteel
     node: steeltile
 
 - type: entity
@@ -51,7 +64,7 @@
   - type: Stack
     stackType: FloorTileWood
   - type: Construction
-    graph: tileWood
+    graph: TileWood
     node: woodtile
 
 - type: entity
@@ -69,6 +82,9 @@
       - floor_white
   - type: Stack
     stackType: FloorTileWhite
+  - type: Construction
+    graph: TileWhite
+    node: whitetile
 
 - type: entity
   name: dark tile
@@ -85,6 +101,9 @@
       - floor_dark
   - type: Stack
     stackType: FloorTileDark
+  - type: Construction
+    graph: TileDark
+    node: darktile
 
 - type: entity
   name: techmaint floor
@@ -181,6 +200,8 @@
     outputs:
       - plating
       - floor_elevator_shaft
+  - type: Stack
+    stackType: FloorTileElevatorShaft
 
 - type: entity
   name: rock vault tile
@@ -195,6 +216,8 @@
     outputs:
       - plating
       - floor_rock_vault
+  - type: Stack
+    stackType: FloorTileRockVault
 
 - type: entity
   name: blue tile
@@ -209,6 +232,8 @@
     outputs:
       - plating
       - floor_blue
+  - type: Stack
+    stackType: FloorTileBlue
 
 # Departamental
 - type: entity
@@ -272,6 +297,8 @@
     outputs:
       - plating
       - floor_bar
+  - type: Stack
+    stackType: FloorTileBar
 
 - type: entity
   name: clown tile
@@ -286,6 +313,8 @@
     outputs:
       - plating
       - floor_clown
+  - type: Stack
+    stackType: FloorTileClown
 
 - type: entity
   name: mime tile
@@ -300,6 +329,8 @@
     outputs:
       - plating
       - floor_mime
+  - type: Stack
+    stackType: FloorTileMime
 
 - type: entity
   name: kitchen tile
@@ -314,6 +345,8 @@
     outputs:
       - plating
       - floor_kitchen
+  - type: Stack
+    stackType: FloorTileKitchen
 
 - type: entity
   name: laundry tile
@@ -328,6 +361,138 @@
     outputs:
       - plating
       - floor_laundry
+  - type: Stack
+    stackType: FloorTileLaundry
+
+# Carpets
+- type: entity
+  name: blue arcade floor
+  parent: FloorTileItemBase
+  id: FloorTileItemArcadeBlue
+  components:
+  - type: Sprite
+    state: arcadeblue
+  - type: Item
+    HeldPrefix: arcadeblue
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorArcadeBlue
+  - type: Stack
+    stackType: FloorTileStackArcadeBlue
+
+- type: entity
+  name: red arcade floor
+  parent: FloorTileItemBase
+  id: FloorTileItemArcadeRed
+  components:
+  - type: Sprite
+    state: arcadered
+  - type: Item
+    HeldPrefix: arcadered
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorArcadeRed
+  - type: Stack
+    stackType: FloorTileStackArcadeRed
+
+- type: entity
+  name: eighties floor
+  parent: FloorTileItemBase
+  id: FloorTileItemEighties
+  components:
+  - type: Sprite
+    state: eighties
+  - type: Item
+    HeldPrefix: eighties
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorEighties
+  - type: Stack
+    stackType: FloorTileStackEighties
+
+# Shuttles
+- type: entity
+  name: white shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleWhite
+  components:
+  - type: Sprite
+    state: shuttlewhite
+  - type: Item
+    HeldPrefix: shuttlewhite
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorShuttleWhite
+  - type: Stack
+    stackType: FloorTileStackShuttleWhite
+
+- type: entity
+  name: blue shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleBlue
+  components:
+  - type: Sprite
+    state: shuttleblue
+  - type: Item
+    HeldPrefix: shuttleblue
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorShuttleBlue
+  - type: Stack
+    stackType: FloorTileStackShuttleBlue
+
+- type: entity
+  name: orange shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleOrange
+  components:
+  - type: Sprite
+    state: shuttleorange
+  - type: Item
+    HeldPrefix: shuttleorange
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorShuttleOrange
+  - type: Stack
+    stackType: FloorTileStackShuttleOrange
+
+- type: entity
+  name: purple shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttlePurple
+  components:
+  - type: Sprite
+    state: shuttlepurple
+  - type: Item
+    HeldPrefix: shuttlepurple
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorShuttlePurple
+  - type: Stack
+    stackType: FloorTileStackShuttlePurple
+
+- type: entity
+  name: red shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleRed
+  components:
+  - type: Sprite
+    state: shuttlered
+  - type: Item
+    HeldPrefix: shuttlered
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorShuttleRed
+  - type: Stack
+    stackType: FloorTileStackShuttleRed
 
 # Materials
 - type: entity
@@ -359,6 +524,8 @@
     outputs:
       - plating
       - floor_silver
+  - type: Stack
+    stackType: FloorTileSilver
 
 # Circuits
 - type: entity
@@ -374,6 +541,8 @@
     outputs:
       - plating
       - floor_green_circuit
+  - type: Stack
+    stackType: FloorTileGCircuit
 
 - type: entity
   name: blue circuit floor
@@ -388,6 +557,8 @@
     outputs:
       - plating
       - floor_blue_circuit
+  - type: Stack
+    stackType: FloorTileBCircuit
 
 # Terrain
 - type: entity
@@ -403,6 +574,24 @@
     outputs:
       - plating
       - floor_grass
+  - type: Stack
+    stackType: FloorTileGrass
+
+- type: entity
+  name: jungle grass tile
+  parent: FloorTileItemBase
+  id: FloorTileItemGrassJungle
+  components:
+  - type: Sprite
+    state: grassjungle
+  - type: Item
+    HeldPrefix: grassjungle
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorGrassJungle
+  - type: Stack
+    stackType: FloorTileGrassJungle
 
 - type: entity
   name: snow tile
@@ -417,3 +606,5 @@
     outputs:
       - plating
       - floor_snow
+  - type: Stack
+    stackType: FloorTileSnow

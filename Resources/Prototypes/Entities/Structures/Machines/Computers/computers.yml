@@ -9,6 +9,8 @@
     - type: ComputerVisualizer
       key: atmos_key
       screen: "alert-2"
+  - type: Computer
+    board: AlertsComputerCircuitboard
 
 - type: entity
   parent: ComputerBase
@@ -71,6 +73,8 @@
     radius: 1.5
     energy: 1.6
     color: "#c9c042"
+  - type: Computer
+    board: PowerComputerCircuitboard
 
 - type: entity
   parent: ComputerBase
@@ -87,6 +91,26 @@
     radius: 1.5
     energy: 1.6
     color: "#1f8c28"
+  - type: Computer
+    board: MedicalRecordsComputerCircuitboard
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerCriminalRecords
+  name: criminal records computer
+  description: This can be used to check criminal records.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: security_key
+      screen: explosive
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#1f8c28"
+  - type: Computer
+    board: CriminalRecordsComputerCircuitboard
 
 - type: entity
   parent: ComputerBase
@@ -113,8 +137,9 @@
         - key: enum.CrewMonitoringUIKey.Key
           type: CrewMonitoringBoundUserInterface
     - type: CrewMonitoringConsole
-    - type: DeviceNetworkComponent
+    - type: DeviceNetwork
       deviceNetId: Wireless
+      receiveFrequencyId: SuitSensor
     - type: WirelessNetworkConnection
       range: 500
 
@@ -132,6 +157,9 @@
   - type: ResearchClient
   - type: ResearchConsole
   - type: TechnologyDatabase
+  - type: ActivatableUI
+    key: enum.ResearchConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.ResearchConsoleUiKey.Key
@@ -199,9 +227,12 @@
   parent: ComputerBase
   id: computerBodyScanner
   name: body scanner computer
-  description: That's a body scanner.
+  description: A body scanner.
   components:
   - type: BodyScanner
+  - type: ActivatableUI
+    key: enum.BodyScannerUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.BodyScannerUiKey.Key
@@ -271,6 +302,10 @@
     radius: 1.5
     energy: 1.6
     color: "#e6e227"
+  - type: Tag
+    tags:
+      - DroneUsable
+
 
 - type: entity
   parent: ComputerBase
@@ -355,6 +390,7 @@
       - FunPlushies
       - FunArtSupplies
       - FunInstruments
+      - FunBrass
       - FunBoardGames
       - MaterialSteel
       - MaterialGlass
@@ -410,3 +446,31 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+
+- type: entity
+  parent: BaseStructure
+  id: ComputerTelevision
+  name: wooden television
+  description: It's an old television displaying the station's cameras, if they worked.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    layers:
+    - state: television
+    - state: detective_television
+      shader: unshaded
+    visuals:
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 50
+      layer:
+      - SmallImpassable
+      mask:
+      - Impassable

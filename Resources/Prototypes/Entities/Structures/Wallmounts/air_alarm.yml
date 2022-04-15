@@ -6,9 +6,10 @@
   - type: WallMount
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
-  - type: DeviceNetworkComponent
+  - type: DeviceNetwork
     deviceNetId: Apc
-    frequency: 1621
+    receiveFrequencyId: AtmosMonitor
+    transmitFrequencyId: AtmosMonitor
   - type: ApcNetworkConnection
   - type: AtmosMonitor
     temperatureThreshold: stationTemperature
@@ -77,6 +78,7 @@
   name: air alarm assembly
   description: An air alarm. Doesn't look like it'll be alarming air any time soon.
   components:
+  - type: WallMount
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite

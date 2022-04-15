@@ -59,6 +59,9 @@ public sealed class DoorComponent : Component, ISerializationHooks
     [DataField("denyDuration")]
     public readonly TimeSpan DenyDuration = TimeSpan.FromSeconds(0.45f);
 
+    [DataField("emagDuration")]
+    public readonly TimeSpan EmagDuration = TimeSpan.FromSeconds(0.8f);
+
     /// <summary>
     ///     When the door is active, this is the time when the state will next update.
     /// </summary>
@@ -116,6 +119,12 @@ public sealed class DoorComponent : Component, ISerializationHooks
     /// </summary>
     [DataField("tryOpenDoorSound")]
     public SoundSpecifier TryOpenDoorSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
+
+    /// <summary>
+    /// Sound to play when door has been emagged or possibly electrically tampered
+    /// </summary>
+    [DataField("sparkSound")]
+    public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks");
     #endregion
 
     #region Crushing
@@ -130,17 +139,24 @@ public sealed class DoorComponent : Component, ISerializationHooks
     public DamageSpecifier? CrushDamage;
 
     /// <summary>
-    /// If false, this door is incapable of crushing entities. Note that this differs from the airlock's "safety"
-    /// feature that checks for colliding entities.
+    /// If false, this door is incapable of crushing entities. This just determines whether it will apply damage and
+    /// stun, not whether it can close despite entities being in the way.
     /// </summary>
     [DataField("canCrush")]
     public readonly bool CanCrush = true;
 
     /// <summary>
+    /// Whether to check for colliding entities before closing. This may be overridden by other system by subscribing to
+    /// <see cref="BeforeDoorClosedEvent"/>. For example, hacked airlocks will set this to false.
+    /// </summary>
+    [DataField("performCollisionCheck")]
+    public readonly bool PerformCollisionCheck = true;
+
+    /// <summary>
     /// List of EntityUids of entities we're currently crushing. Cleared in OnPartialOpen().
     /// </summary>
     [DataField("currentlyCrushing")]
-    public List<EntityUid> CurrentlyCrushing = new();
+    public HashSet<EntityUid> CurrentlyCrushing = new();
     #endregion
 
     #region Serialization
@@ -157,7 +173,7 @@ public sealed class DoorComponent : Component, ISerializationHooks
             _secondsUntilStateChange = null;
             return;
         };
-        
+
         var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
         _secondsUntilStateChange = (float) (NextStateChange.Value - curTime).TotalSeconds;
     }
@@ -223,6 +239,7 @@ public enum DoorState
     Opening,
     Welded,
     Denying,
+    Emagging
 }
 
 [Serializable, NetSerializable]
@@ -238,7 +255,7 @@ public enum DoorVisuals
 public sealed class DoorComponentState : ComponentState
 {
     public readonly DoorState DoorState;
-    public readonly List<EntityUid> CurrentlyCrushing;
+    public readonly HashSet<EntityUid> CurrentlyCrushing;
     public readonly TimeSpan? NextStateChange;
     public readonly bool Partial;
 

@@ -9,11 +9,12 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+          bounds: "-0.45,-0.45,0.45,0.45"
       mass: 25
       layer:
       - Impassable
@@ -26,6 +27,7 @@
       - VaultImpassable
   - type: Transform
     anchored: true
+    noRot: true
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/collector.rsi
     netsync: false

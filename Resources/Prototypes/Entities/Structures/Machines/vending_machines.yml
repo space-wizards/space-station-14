@@ -7,7 +7,7 @@
   components:
   - type: AmbientOnPowered
   - type: AmbientSound
-    volume: -14
+    volume: -9
     range: 3
     sound:
       path: /Audio/Ambience/Objects/vending_machine_hum.ogg
@@ -16,11 +16,13 @@
     netsync: false
   - type: Physics
     bodyType: Static
+  - type: Transform
+    noRot: true
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
+          bounds: "-0.25,-0.45,0.25,0.45"
       mask:
       - Impassable
       - VaultImpassable
@@ -37,6 +39,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+  - type: ActivatableUI
+    key: enum.VendingMachineUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.VendingMachineUiKey.Key
@@ -55,7 +60,8 @@
   - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
-  
+  - type: SentienceTarget
+    flavorKind: mechanical
 
 - type: entity
   parent: VendingMachine
@@ -187,6 +193,9 @@
   - type: Advertise
     pack: ClothesMateAds
   - type: Speech
+  - type: Tag
+    tags:
+      - DroneUsable
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/clothing.rsi
     layers:
@@ -656,6 +665,9 @@
     radius: 1.5
     energy: 1.6
     color: "#c73434"
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   parent: VendingMachine
@@ -753,6 +765,9 @@
     radius: 1.5
     energy: 1.6
     color: "#d4ab33"
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   parent: VendingMachine

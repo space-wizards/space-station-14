@@ -114,6 +114,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         Pistol,
         A35, // Placeholder?
         LRifle,
+        HRifle,
         Magnum,
         AntiMaterial,
         Shotgun,

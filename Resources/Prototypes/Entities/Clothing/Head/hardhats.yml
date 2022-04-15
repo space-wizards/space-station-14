@@ -10,6 +10,7 @@
     - state: light-icon
       shader: unshaded
       visible: false
+      map: [ "light" ]
   - type: Clothing
     HeldPrefix: off
   - type: PointLight
@@ -19,9 +20,7 @@
     visuals:
       - type: FlashLightVisualizer
   - type: HandheldLight
-  - type: ItemActions
-    actions:
-      - actionType: ToggleLight
+    addPrefix: true
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellSmallHigh

@@ -207,7 +207,7 @@ namespace Content.Server.StationEvents
             if (!_conGroupController.CanCommand(player, "events"))
                 return;
 
-            var newMsg = _netManager.CreateNetMessage<MsgStationEvents>();
+            var newMsg = new MsgStationEvents();
             newMsg.Events = StationEvents.Select(e => e.Name).ToArray();
             _netManager.ServerSendMessage(newMsg, player.ConnectedClient);
         }

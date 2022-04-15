@@ -1,7 +1,7 @@
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.NodeContainer.NodeGroups;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.NodeContainer.EntitySystems
 {
@@ -23,6 +23,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             SubscribeLocalEvent<NodeContainerComponent, ComponentShutdown>(OnShutdownEvent);
             SubscribeLocalEvent<NodeContainerComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
             SubscribeLocalEvent<NodeContainerComponent, RotateEvent>(OnRotateEvent);
+            SubscribeLocalEvent<NodeContainerComponent, ExaminedEvent>(OnExamine);
         }
 
         private void OnInitEvent(EntityUid uid, NodeContainerComponent component, ComponentInit args)
@@ -90,6 +91,32 @@ namespace Content.Server.NodeContainer.EntitySystems
 
                 if (rotatableNode.RotateEvent(ref ev))
                     _nodeGroupSystem.QueueReflood(node);
+            }
+        }
+
+        private void OnExamine(EntityUid uid, NodeContainerComponent component, ExaminedEvent args)
+        {
+            if (!component.Examinable || !args.IsInDetailsRange)
+                return;
+
+            foreach (var node in component.Nodes.Values)
+            {
+                if (node == null) continue;
+                switch (node.NodeGroupID)
+                {
+                    case NodeGroupID.HVPower:
+                        args.PushMarkup(
+                            Loc.GetString("node-container-component-on-examine-details-hvpower"));
+                        break;
+                    case NodeGroupID.MVPower:
+                        args.PushMarkup(
+                            Loc.GetString("node-container-component-on-examine-details-mvpower"));
+                        break;
+                    case NodeGroupID.Apc:
+                        args.PushMarkup(
+                            Loc.GetString("node-container-component-on-examine-details-apc"));
+                        break;
+                }
             }
         }
     }

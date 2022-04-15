@@ -1,6 +1,5 @@
-using Robust.Shared.GameObjects;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.PAI
 {
@@ -17,6 +16,8 @@ namespace Content.Shared.PAI
     [RegisterComponent, NetworkedComponent]
     public sealed class PAIComponent : Component
     {
+        [DataField("midiAction", required: true, serverOnly: true)] // server only, as it uses a server-BUI event !type
+        public InstantAction? MidiAction;
     }
 }
 

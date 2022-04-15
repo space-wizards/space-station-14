@@ -43,6 +43,9 @@
   id: CanPilot
 
 - type: Tag
+  id: CannotSuicide
+
+- type: Tag
   id: CaptainSabre
 
 - type: Tag
@@ -118,6 +121,9 @@
   id: Donut
 
 - type: Tag
+  id: DroneUsable
+
+- type: Tag
   id: Egg
 
 - type: Tag
@@ -163,6 +169,9 @@
   id: HideContextMenu
 
 - type: Tag
+  id: HidesHair # for headwear.
+
+- type: Tag
   id: Hoe
 
 - type: Tag
@@ -199,10 +208,10 @@
   id: MonkeyCube
 
 - type: Tag
-  id: NoSpinOnThrow
+  id: Mop
 
 - type: Tag
-  id: NukeDisk
+  id: NoSpinOnThrow
 
 - type: Tag
   id: Ointment
@@ -210,6 +219,9 @@
 - type: Tag
   id: Ore
 
+- type: Tag
+  id: Payload # for grenade/bomb crafting
+  
 - type: Tag
   id: PercussionInstrument
 
@@ -284,6 +296,12 @@
   id: Trash
 
 - type: Tag
+  id: TrashBag
+
+- type: Tag
+  id: WetFloorSign
+
+- type: Tag
   id: Wall
 
 - type: Tag
@@ -302,4 +320,10 @@
   id: Wrench
 
 - type: Tag
+  id: Wringer
+
+- type: Tag
   id: Write
+
+- type: Tag
+  id: Drone

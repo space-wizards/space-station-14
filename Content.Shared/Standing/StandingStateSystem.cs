@@ -1,12 +1,11 @@
-using System;
 using Content.Shared.Audio;
 using Content.Shared.Hands.Components;
 using Content.Shared.Rotation;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Physics;
+using Content.Shared.Physics;
 
 namespace Content.Shared.Standing
 {
@@ -53,7 +52,7 @@ namespace Content.Shared.Standing
                 return false;
 
             standingState.Standing = false;
-            standingState.Dirty();
+            Dirty(standingState);
             RaiseLocalEvent(uid, new DownedEvent(), false);
 
             if (!_gameTiming.IsFirstTimePredicted)
@@ -61,6 +60,18 @@ namespace Content.Shared.Standing
 
             // Seemed like the best place to put it
             appearance?.SetData(RotationVisuals.RotationState, RotationState.Horizontal);
+
+            if (TryComp(uid, out FixturesComponent? fixtureComponent))
+            {
+                foreach (var (key, fixture) in fixtureComponent.Fixtures)
+                {
+                    if ((fixture.CollisionMask & (int) CollisionGroup.VaultImpassable) == 0)
+                        continue;
+
+                    standingState.VaultImpassableFixtures.Add(key);
+                    fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
+                }
+            }
 
             // Currently shit is only downed by server but when it's predicted we can probably only play this on server / client
             // > no longer true with door crushing. There just needs to be a better way to handle audio prediction.
@@ -97,6 +108,17 @@ namespace Content.Shared.Standing
             RaiseLocalEvent(uid, new StoodEvent(), false);
 
             appearance?.SetData(RotationVisuals.RotationState, RotationState.Vertical);
+
+            if (TryComp(uid, out FixturesComponent? fixtureComponent))
+            {
+                foreach (var key in standingState.VaultImpassableFixtures)
+                {
+                    if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
+                        fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
+                }
+            }
+            standingState.VaultImpassableFixtures.Clear();
+
             return true;
         }
     }

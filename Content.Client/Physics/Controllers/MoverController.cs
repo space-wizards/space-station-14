@@ -3,15 +3,16 @@ using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Pulling.Components;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Physics.Controllers
 {
     public sealed class MoverController : SharedMoverController
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -56,17 +57,6 @@ namespace Content.Client.Physics.Controllers
                 }
             }
 
-            // If we're pulling a mob then make sure that isn't predicted so it doesn't fuck our velocity up.
-            if (TryComp(player, out SharedPullerComponent? pullerComp))
-            {
-                if (pullerComp.Pulling is {Valid: true} pulling &&
-                    HasComp<MobStateComponent>(pulling) &&
-                    TryComp(pulling, out PhysicsComponent? pullingBody))
-                {
-                    pullingBody.Predict = false;
-                }
-            }
-
             // Server-side should just be handled on its own so we'll just do this shizznit
             if (TryComp(player, out IMobMoverComponent? mobMover))
             {
@@ -75,6 +65,16 @@ namespace Content.Client.Physics.Controllers
             }
 
             HandleKinematicMovement(mover, body);
+        }
+
+        protected override Filter GetSoundPlayers(EntityUid mover)
+        {
+            return Filter.Local();
+        }
+
+        protected override bool CanSound()
+        {
+            return _timing.IsFirstTimePredicted && _timing.InSimulation;
         }
     }
 }

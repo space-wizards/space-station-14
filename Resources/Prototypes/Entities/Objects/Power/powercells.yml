@@ -8,6 +8,8 @@
   components:
   - type: Battery
   - type: PowerCell
+  - type: Explosive
+    explosionType: Default
   - type: Sprite
     netsync: false
   - type: SolutionContainerManager
@@ -23,6 +25,9 @@
       reagents:
         - ReagentId: Licoxide
           Quantity: 5
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   id: PowerCellMediumBase

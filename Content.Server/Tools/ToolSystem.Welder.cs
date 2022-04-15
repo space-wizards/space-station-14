@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
@@ -15,9 +14,7 @@ using Content.Shared.Temperature;
 using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Tools
@@ -64,7 +61,7 @@ namespace Content.Server.Tools
             SolutionContainerManagerComponent? solutionContainer = null,
             SharedItemComponent? item = null,
             PointLightComponent? light = null,
-            SpriteComponent? sprite = null)
+            AppearanceComponent? appearance = null)
         {
             // Right now, we only need the welder.
             // So let's not unnecessarily resolve components
@@ -72,8 +69,8 @@ namespace Content.Server.Tools
                 return false;
 
             return !welder.Lit
-                ? TryTurnWelderOn(uid, user, welder, solutionContainer, item, light, sprite)
-                : TryTurnWelderOff(uid, user, welder, item, light, sprite);
+                ? TryTurnWelderOn(uid, user, welder, solutionContainer, item, light, appearance)
+                : TryTurnWelderOff(uid, user, welder, item, light, appearance);
         }
 
         public bool TryTurnWelderOn(EntityUid uid, EntityUid? user,
@@ -81,13 +78,13 @@ namespace Content.Server.Tools
             SolutionContainerManagerComponent? solutionContainer = null,
             SharedItemComponent? item = null,
             PointLightComponent? light = null,
-            SpriteComponent? sprite = null)
+            AppearanceComponent? appearance = null)
         {
             if (!Resolve(uid, ref welder, ref solutionContainer))
                 return false;
 
             // Optional components.
-            Resolve(uid, ref item, ref light, ref sprite);
+            Resolve(uid, ref item, ref light, ref appearance, false);
 
             if (!_solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var solution, solutionContainer))
                 return false;
@@ -109,7 +106,7 @@ namespace Content.Server.Tools
             if(item != null)
                 item.EquippedPrefix = "on";
 
-            sprite?.LayerSetVisible(1, true);
+            appearance?.SetData(WelderVisuals.Lit, true);
 
             if (light != null)
                 light.Enabled = true;
@@ -129,13 +126,13 @@ namespace Content.Server.Tools
             WelderComponent? welder = null,
             SharedItemComponent? item = null,
             PointLightComponent? light = null,
-            SpriteComponent? sprite = null)
+            AppearanceComponent? appearance = null)
         {
             if (!Resolve(uid, ref welder))
                 return false;
 
             // Optional components.
-            Resolve(uid, ref item, ref light, ref sprite);
+            Resolve(uid, ref item, ref light, ref appearance, false);
 
             welder.Lit = false;
 
@@ -144,7 +141,7 @@ namespace Content.Server.Tools
                 item.EquippedPrefix = "off";
 
             // Layer 1 is the flame.
-            sprite?.LayerSetVisible(1, false);
+            appearance?.SetData(WelderVisuals.Lit, false);
 
             if (light != null)
                 light.Enabled = false;

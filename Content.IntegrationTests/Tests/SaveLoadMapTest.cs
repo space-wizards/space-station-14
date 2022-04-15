@@ -33,25 +33,24 @@ namespace Content.IntegrationTests.Tests
                 var dir = new ResourcePath(mapPath).Directory;
                 resManager.UserData.CreateDir(dir);
 
-                var nextMapId = mapManager.NextMapId();
-                var mapId = mapManager.CreateMap(nextMapId);
+                var mapId = mapManager.CreateMap();
 
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
                     var mapGridEnt = mapGrid.GridEntityId;
                     sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(10, 10);
-                    mapGrid.SetTile(new Vector2i(0,0), new Tile(1, 512));
+                    mapGrid.SetTile(new Vector2i(0,0), new Tile(1, (TileRenderFlag)1, 255));
                 }
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
                     var mapGridEnt = mapGrid.GridEntityId;
                     sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(-8, -8);
-                    mapGrid.SetTile(new Vector2i(0, 0), new Tile(2, 511));
+                    mapGrid.SetTile(new Vector2i(0, 0), new Tile(2, (TileRenderFlag)1, 254));
                 }
 
                 mapLoader.SaveMap(mapId, mapPath);
 
-                mapManager.DeleteMap(nextMapId);
+                mapManager.DeleteMap(mapId);
             });
             await server.WaitIdleAsync();
 
@@ -68,14 +67,14 @@ namespace Content.IntegrationTests.Tests
 
                     Assert.That(mapGrid.WorldPosition, Is.EqualTo(new Vector2(10, 10)));
 
-                    Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(1, 512)));
+                    Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(1, (TileRenderFlag)1, 255)));
                 }
                 {
                     if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var mapGrid))
                         Assert.Fail();
 
                     Assert.That(mapGrid.WorldPosition, Is.EqualTo(new Vector2(-8, -8)));
-                    Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(2, 511)));
+                    Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(2, (TileRenderFlag)1, 254)));
                 }
             });
 

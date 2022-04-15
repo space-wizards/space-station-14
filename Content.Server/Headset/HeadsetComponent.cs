@@ -1,17 +1,9 @@
-using System.Collections.Generic;
 using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Chat;
-using Content.Shared.Examine;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Headset
 {
@@ -19,7 +11,7 @@ namespace Content.Server.Headset
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
 #pragma warning disable 618
-    public sealed class HeadsetComponent : Component, IListen, IRadio, IExamine
+    public sealed class HeadsetComponent : Component, IListen, IRadio
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -32,7 +24,7 @@ namespace Content.Server.Headset
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("broadcastChannel")]
-        private int BroadcastFrequency { get; set; } = 1459;
+        public int BroadcastFrequency { get; set; } = 1459;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("listenRange")]
@@ -63,7 +55,7 @@ namespace Content.Server.Headset
 
                 var playerChannel = actor.PlayerSession.ConnectedClient;
 
-                var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+                var msg = new MsgChatMessage();
 
                 msg.Channel = ChatChannel.Radio;
                 msg.Message = message;
@@ -82,15 +74,6 @@ namespace Content.Server.Headset
         {
             _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
             RadioRequested = false;
-        }
-
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            message.AddText(Loc.GetString("examine-radio-frequency", ("frequency", BroadcastFrequency)));
-            message.AddText("\n");
-            message.AddText(Loc.GetString("examine-headset"));
-            message.AddText("\n");
-            message.AddText(Loc.GetString("examine-headset-chat-prefix", ("prefix", ";")));
         }
     }
 }

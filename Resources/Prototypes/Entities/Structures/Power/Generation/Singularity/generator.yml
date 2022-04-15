@@ -14,6 +14,7 @@
   - type: Clickable
   - type: Physics
     bodyType: Static
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -25,8 +26,9 @@
       layer:
       - Opaque
       mask:
-      - MobImpassable
+      - MobMask
   - type: Transform
     anchored: true
+    noRot: true
   - type: Anchorable
   - type: Pullable

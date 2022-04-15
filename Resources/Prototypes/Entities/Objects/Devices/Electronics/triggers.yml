@@ -1,0 +1,27 @@
+# Misc electronic trigger devices.
+# TODO:
+# - proximity
+# - voice
+# - machine linking
+# - device network
+# - biometric/health (maybe just via device nets?)
+# - booby-trap / on-storage-open
+
+- type: entity
+  parent: BaseItem
+  id: TimerTrigger
+  name: timer trigger
+  description: A configurable timer.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/timer.rsi
+    state: timer
+  - type: Item
+    size: 5
+  - type: PayloadTrigger
+    components:
+    - type: OnUseTimerTrigger
+      delay: 5
+      delayOptions: [3, 5, 10, 15, 30]
+      initialBeepDelay: 0
+      beepSound: /Audio/Machines/Nuke/general_beep.ogg

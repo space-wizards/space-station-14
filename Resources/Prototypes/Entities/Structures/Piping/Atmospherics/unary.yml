@@ -8,6 +8,7 @@
     - type: AtmosDevice
     - type: SubFloorHide
       blockInteractions: false
+      blockAmbience: false
     - type: NodeContainer
       nodes:
         pipe:
@@ -25,9 +26,11 @@
   components:
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
-    - type: DeviceNetworkComponent
+    - type: DeviceNetwork
       deviceNetId: Apc
-      frequency: 1621
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-vent
     - type: ApcNetworkConnection
     - type: AtmosAlarmable
       alarmedBy:
@@ -47,12 +50,22 @@
         - type: PipeColorVisualizer
         - type: VentPumpVisualizer
     - type: GasVentPump
+    - type: Construction
+      graph: GasUnary
+      node: ventpump
+    - type: VentCritterSpawnLocation
+    - type: AmbientSound
+      enabled: false
+      volume: -12
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_vent.ogg
 
 - type: entity
   parent: GasUnaryBase
   id: GasPassiveVent
   name: passive vent
-  description: It is an open vent.
+  description: It's an open vent.
   placement:
     mode: SnapgridCenter
   components:
@@ -71,6 +84,9 @@
       visuals:
         - type: PipeColorVisualizer
     - type: GasPassiveVent
+    - type: Construction
+      graph: GasUnary
+      node: passivevent
 
 - type: entity
   parent: GasUnaryBase
@@ -82,9 +98,11 @@
   components:
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
-    - type: DeviceNetworkComponent
+    - type: DeviceNetwork
       deviceNetId: Apc
-      frequency: 1621
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-scrubber
     - type: ApcNetworkConnection
     - type: AtmosAlarmable
       alarmedBy:
@@ -105,6 +123,15 @@
         - type: ScrubberVisualizer
     - type: AtmosDevice
     - type: GasVentScrubber
+    - type: Construction
+      graph: GasUnary
+      node: ventscrubber
+    - type: AmbientSound
+      enabled: false
+      volume: -12
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_vent.ogg
 
 - type: entity
   parent: GasUnaryBase
@@ -127,12 +154,14 @@
       visuals:
         - type: PipeColorVisualizer
     - type: GasOutletInjector
+    - type: Construction
+      graph: GasUnary
+      node: outletinjector
 
 - type: entity
   parent: BaseMachinePowered
   id: BaseGasThermoMachine
   name: thermomachine
-  description: Heats or cools gas in connected pipes.
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -140,7 +169,6 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Piping/Atmospherics/thermomachine.rsi
-      noRot: true
     - type: Appearance
       visuals:
         - type: PipeColorVisualizer
@@ -148,6 +176,13 @@
     - type: GasThermoMachine
     - type: AtmosPipeColor
     - type: AtmosDevice
+    - type: UserInterface
+      interfaces:
+      - key: enum.ThermomachineUiKey.Key
+        type: GasThermomachineBoundUserInterface
+    - type: ActivatableUI
+      inHandsOnly: false
+      key: enum.ThermomachineUiKey.Key
     - type: Construction
       graph: Machine
       node: machine
@@ -165,6 +200,7 @@
   parent: BaseGasThermoMachine
   id: GasThermoMachineFreezer
   name: freezer
+  description: Cools gas in connected pipes.
   placement:
     mode: SnapgridCenter
   components:
@@ -190,6 +226,7 @@
   parent: BaseGasThermoMachine
   id: GasThermoMachineHeater
   name: heater
+  description: Heats gas in connected pipes.
   placement:
     mode: SnapgridCenter
   components:

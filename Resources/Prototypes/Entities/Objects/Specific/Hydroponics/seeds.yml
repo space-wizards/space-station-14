@@ -1,9 +1,8 @@
 - type: entity
   parent: BaseItem
   id: SeedBase
-  abstract: true
+  noSpawn: true
   components:
-    - type: Seed
     - type: SolutionContainerManager
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/seeds.rsi
@@ -282,3 +281,14 @@
       seed: gatfruit
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/gatfruit.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of onion seeds
+  description: "Not a shallot."
+  id: OnionSeeds
+  components:
+    - type: Seed
+      seed: onion
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/onion.rsi

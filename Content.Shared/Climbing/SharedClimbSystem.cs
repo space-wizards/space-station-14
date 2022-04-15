@@ -8,11 +8,14 @@ namespace Content.Shared.Climbing
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedClimbingComponent, MovementAttemptEvent>(HandleMoveAttempt);
+            SubscribeLocalEvent<SharedClimbingComponent, UpdateCanMoveEvent>(HandleMoveAttempt);
         }
 
-        private void HandleMoveAttempt(EntityUid uid, SharedClimbingComponent component, MovementAttemptEvent args)
+        private void HandleMoveAttempt(EntityUid uid, SharedClimbingComponent component, UpdateCanMoveEvent args)
         {
+            if (component.LifeStage > ComponentLifeStage.Running)
+                return;
+
             if (component.OwnerIsTransitioning)
                 args.Cancel();
         }

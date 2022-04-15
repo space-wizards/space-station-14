@@ -99,7 +99,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (args.Current is not DoorComponentState state)
             return;
 
-        door.CurrentlyCrushing = state.CurrentlyCrushing;
+        door.CurrentlyCrushing = new(state.CurrentlyCrushing);
         door.State = state.DoorState;
         door.NextStateChange = state.NextStateChange;
         door.Partial = state.Partial;
@@ -135,6 +135,11 @@ public abstract class SharedDoorSystem : EntitySystem
                 door.NextStateChange = GameTiming.CurTime + door.DenyDuration;
                 break;
 
+            case DoorState.Emagging:
+                _activeDoors.Add(door);
+                door.NextStateChange = GameTiming.CurTime + door.EmagDuration;
+                break;
+
             case DoorState.Open:
             case DoorState.Closed:
                 door.Partial = false;
@@ -162,13 +167,10 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     #region Interactions
-    private void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
+    protected virtual void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
     {
-        if (args.Handled || !door.ClickOpen)
-            return;
-
-        TryToggleDoor(uid, door, args.User);
-        args.Handled = true;
+        // avoid client-mispredicts, as the server will definitely handle this event
+        args.Handled = true; 
     }
 
     private void OnExamine(EntityUid uid, DoorComponent door, ExaminedEvent args)
@@ -309,12 +311,15 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return false;
 
-        var ev = new BeforeDoorClosedEvent();
+        var ev = new BeforeDoorClosedEvent(door.PerformCollisionCheck);
         RaiseLocalEvent(uid, ev, false);
         if (ev.Cancelled)
             return false;
 
-        return HasAccess(uid, user);
+        if (!HasAccess(uid, user))
+            return false;
+
+        return !ev.PerformCollisionCheck || !GetColliding(uid).Any();
     }
 
     public virtual void StartClosing(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
@@ -337,7 +342,6 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door, ref physics))
             return false;
 
-        SetCollidable(uid, true, door, physics);
         door.Partial = true;
         door.Dirty();
 
@@ -350,9 +354,10 @@ public abstract class SharedDoorSystem : EntitySystem
             return false;
         }
 
+        SetCollidable(uid, true, door, physics);
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         _activeDoors.Add(door);
-        
+
         // Crush any entities. Note that we don't check airlock safety here. This should have been checked before
         // the door closed.
         Crush(uid, door, physics);
@@ -387,11 +392,10 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return;
 
-        // is this door capable of crushing? NOT the same as an airlock safety check. The door will still close.
         if (!door.CanCrush)
             return;
 
-        // Crush
+        // Find entities and apply curshing effects
         var stunTime = door.DoorStunTime + door.OpenTimeOne;
         foreach (var entity in GetColliding(uid, physics))
         {
@@ -421,16 +425,22 @@ public abstract class SharedDoorSystem : EntitySystem
         // TODO SLOTH fix electro's code.
         var doorAABB = physics.GetWorldAABB();
 
-        foreach (var body in _physicsSystem.GetCollidingEntities(Transform(uid).MapID, doorAABB))
+        foreach (var otherPhysics in _physicsSystem.GetCollidingEntities(Transform(uid).MapID, doorAABB))
         {
-            // static bodies (e.g., furniture) shouldn't stop airlocks/windoors from closing.
-            if (body.BodyType == BodyType.Static)
+            if (otherPhysics == physics)
                 continue;
 
-            if (body.GetWorldAABB().IntersectPercentage(doorAABB) < IntersectPercentage)
+            if (!otherPhysics.CanCollide)
                 continue;
 
-            yield return body.Owner;
+            if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0
+                && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
+                continue;
+
+            if (otherPhysics.GetWorldAABB().IntersectPercentage(doorAABB) < IntersectPercentage)
+                continue;
+
+            yield return otherPhysics.Owner;
         }
     }
 
@@ -572,6 +582,10 @@ public abstract class SharedDoorSystem : EntitySystem
             case DoorState.Denying:
                 // Finish denying entry and return to the closed state.
                 SetState(door.Owner, DoorState.Closed, door);
+                break;
+
+            case DoorState.Emagging:
+                StartOpening(door.Owner, door);
                 break;
 
             case DoorState.Open:

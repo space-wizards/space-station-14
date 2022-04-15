@@ -167,6 +167,8 @@
       state_closed: freezer_door
   - type: AccessReader
     access: [ [ "Kitchen" ] ]
+  - type: ExplosionResistance
+    resistance: 0.90
 
 # Botanist
 - type: entity

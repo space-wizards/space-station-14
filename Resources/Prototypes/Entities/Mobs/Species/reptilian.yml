@@ -1,0 +1,238 @@
+- type: entity
+  save: false
+  name: Urisst' Mzhand
+  parent: MobHumanBase
+  id: MobReptilianBase
+  abstract: true
+  description: A miserable pile of scales.
+  components:
+  - type: Icon
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: full
+  - type: Sprite
+    netsync: false
+    noRot: true
+    drawdepth: Mobs
+    scale: 1, 1
+    layers:
+      - map: [ "enum.HumanoidVisualLayers.TailBehind" ]
+        color: "#34a223"
+        state: tail_smooth_behind
+        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "enum.HumanoidVisualLayers.Chest" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: torso_m
+      - map: [ "enum.HumanoidVisualLayers.Head" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: head_m
+      - map: [ "enum.HumanoidVisualLayers.Snout" ]
+        color: "#34a223"
+        state: snout_round
+        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+        color: "#008800"
+        sprite: Mobs/Customization/eyes.rsi
+        state: eyes
+      - map: [ "enum.HumanoidVisualLayers.RArm" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: r_arm
+      - map: [ "enum.HumanoidVisualLayers.LArm" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: l_arm
+      - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: r_leg
+      - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: l_leg
+      - shader: StencilClear
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: l_leg
+      - shader: StencilMask
+        map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: female_full
+        visible: false
+      - map: [ "jumpsuit" ]
+        shader: StencilDraw
+      - map: [ "enum.HumanoidVisualLayers.LHand" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: l_hand
+      - map: [ "enum.HumanoidVisualLayers.RHand" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: r_hand
+      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: l_foot
+      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: r_foot
+      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+        color: "#ffffff"
+        sprite: Objects/Misc/handcuffs.rsi
+        state: body-overlay-2
+        visible: false
+      - map: [ "id" ]
+      - map: [ "gloves" ]
+      - map: [ "shoes" ]
+      - map: [ "ears" ]
+      - map: [ "outerClothing" ]
+      - map: [ "eyes" ]
+      - map: [ "enum.HumanoidVisualLayers.TailFront" ]
+        color: "#34a223"
+        state: tail_smooth_front
+        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "belt" ]
+      - map: [ "neck" ]
+      - map: [ "back" ]
+      - map: [ "enum.HumanoidVisualLayers.Frills" ]
+        state: frills_simple
+        color: "#34a223"
+        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "enum.HumanoidVisualLayers.Horns" ]
+        state: horns_simple
+        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "mask" ]
+      - map: [ "head" ]
+      - map: [ "pocket1" ]
+      - map: [ "pocket2" ]
+  - type: Body
+    template: HumanoidTemplate
+    preset: ReptilianPreset
+  - type: LizardAccent
+  - type: DiseaseCarrier
+    diseaseResist: 0.1
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
+  - type: Temperature
+    heatDamageThreshold: 400
+    coldDamageThreshold: 285
+    currentTemperature: 310.15
+    specificHeat: 46
+    coldDamage:
+      types:
+        Cold : 1.1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 0.9 #per second, scales with temperature & other constants
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.7
+    baseSprintSpeed : 4.5
+
+- type: entity
+  save: false
+  name: Urist McHands
+  parent: MobHumanDummy
+  id: MobReptilianDummy
+  noSpawn: true
+  description: A dummy reptilian meant to be used in character setup.
+  components:
+  - type: Sprite
+    netsync: false
+    noRot: true
+    drawdepth: Mobs
+    scale: 1, 1
+    layers:
+      - map: [ "enum.HumanoidVisualLayers.TailBehind" ]
+        color: "#34a223"
+        state: tail_smooth_behind
+        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "enum.HumanoidVisualLayers.Chest" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: torso_m
+      - map: [ "enum.HumanoidVisualLayers.Head" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: head_m
+      - map: [ "enum.HumanoidVisualLayers.Snout" ]
+        color: "#34a223"
+        state: snout_round
+        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+        color: "#008800"
+        sprite: Mobs/Customization/eyes.rsi
+        state: eyes
+      - map: [ "enum.HumanoidVisualLayers.RArm" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: r_arm
+      - map: [ "enum.HumanoidVisualLayers.LArm" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: l_arm
+      - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: r_leg
+      - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: l_leg
+      - shader: StencilClear
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: l_leg
+      - shader: StencilMask
+        map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: female_full
+        visible: false
+      - map: [ "jumpsuit" ]
+        shader: StencilDraw
+      - map: [ "enum.HumanoidVisualLayers.LHand" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: l_hand
+      - map: [ "enum.HumanoidVisualLayers.RHand" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: r_hand
+      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: l_foot
+      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+        color: "#34a223"
+        sprite: Mobs/Species/Reptilian/parts.rsi
+        state: r_foot
+      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+        color: "#ffffff"
+        sprite: Objects/Misc/handcuffs.rsi
+        state: body-overlay-2
+        visible: false
+      - map: [ "id" ]
+      - map: [ "gloves" ]
+      - map: [ "shoes" ]
+      - map: [ "ears" ]
+      - map: [ "outerClothing" ]
+      - map: [ "eyes" ]
+      - map: [ "enum.HumanoidVisualLayers.TailFront" ]
+        color: "#34a223"
+        state: tail_smooth_front
+        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "belt" ]
+      - map: [ "neck" ]
+      - map: [ "back" ]
+      - map: [ "enum.HumanoidVisualLayers.Frills" ]
+        state: frills_simple
+        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "enum.HumanoidVisualLayers.Horns" ]
+        state: horns_simple
+        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "mask" ]
+      - map: [ "head" ]
+      - map: [ "pocket1" ]
+      - map: [ "pocket2" ]
+
+#Weh

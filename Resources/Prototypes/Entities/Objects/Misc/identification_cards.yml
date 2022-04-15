@@ -3,7 +3,7 @@
   id: IDCardStandard
   name: identification card
   description: A card necessary to access various areas aboard the station.
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Objects/Misc/id_cards.rsi
@@ -365,3 +365,15 @@
   - type: Access
     tags:
     - Maintenance
+
+- type: entity
+  parent: IDCardStandard
+  id: MusicianIDCard
+  name: musician ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idmusician
+    - type: PresetIdCard
+      job: Musician

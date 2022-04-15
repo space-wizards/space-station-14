@@ -14,6 +14,8 @@
   - type: Appearance
     visuals:
     - type: MicrowaveVisualizer
+  - type: ActivatableUI
+    key: enum.MicrowaveUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.MicrowaveUiKey.Key

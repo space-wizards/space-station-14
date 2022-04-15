@@ -1,0 +1,784 @@
+- type: decal
+  id: Grassa1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassa1
+
+- type: decal
+  id: Grassa2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassa2
+
+- type: decal
+  id: Grassa3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassa3
+
+- type: decal
+  id: Grassa4
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassa4
+
+- type: decal
+  id: Grassa5
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassa5
+
+- type: decal
+  id: Grassb1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassb1
+
+- type: decal
+  id: Grassb2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassb2
+
+- type: decal
+  id: Grassb3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassb3
+
+- type: decal
+  id: Grassb4
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassb4
+
+- type: decal
+  id: Grassb5
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassb5
+
+- type: decal
+  id: Grassc1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassc1
+
+- type: decal
+  id: Grassc2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassc2
+
+- type: decal
+  id: Grassc3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassc3
+
+- type: decal
+  id: Grassc4
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassc4
+
+- type: decal
+  id: Grassd1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassd1
+
+- type: decal
+  id: Grassd2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassd2
+
+- type: decal
+  id: Grassd3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grassd3
+
+- type: decal
+  id: Grasse1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grasse1
+
+- type: decal
+  id: Grasse2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grasse2
+
+- type: decal
+  id: Grasse3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grass.rsi
+    state: grasse3
+
+- type: decal
+  id: grasssnow
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnow
+
+- type: decal
+  id: grasssnow01
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnow01
+
+- type: decal
+  id: grasssnow02
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnow02
+
+- type: decal
+  id: grasssnow03
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnow03
+
+- type: decal
+  id: grasssnow04
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnow04
+
+- type: decal
+  id: grasssnow05
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnow05
+
+- type: decal
+  id: grasssnow06
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnow06
+
+- type: decal
+  id: grasssnow07
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnow07
+
+- type: decal
+  id: grasssnow08
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnow08
+
+- type: decal
+  id: grasssnow09
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnow09
+
+- type: decal
+  id: grasssnow10
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnow10
+
+- type: decal
+  id: grasssnow11
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnow11
+
+- type: decal
+  id: grasssnow12
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnow12
+
+- type: decal
+  id: grasssnow13
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnow13
+
+- type: decal
+  id: grasssnowa1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnowa1
+
+- type: decal
+  id: grasssnowa2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnowa2
+
+- type: decal
+  id: grasssnowa3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnowa3
+
+- type: decal
+  id: grasssnowb1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnowb1
+
+- type: decal
+  id: grasssnowb2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnowb2
+
+- type: decal
+  id: grasssnowb3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnowb3
+
+- type: decal
+  id: grasssnowc1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnowc1
+
+- type: decal
+  id: grasssnowc2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnowc2
+
+- type: decal
+  id: grasssnowc3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_grasssnow.rsi
+    state: grasssnowc3
+
+- type: decal
+  id: Busha1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: busha1
+
+- type: decal
+  id: Busha2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: busha2
+
+- type: decal
+  id: Busha3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: busha3
+
+- type: decal
+  id: Bushb1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushb1
+
+- type: decal
+  id: Bushb2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushb2
+
+- type: decal
+  id: Bushb3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushb3
+
+- type: decal
+  id: Bushc1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushc1
+
+- type: decal
+  id: Bushc2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushc2
+
+- type: decal
+  id: Bushc3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushc3
+
+- type: decal
+  id: Bushd1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushd1
+
+- type: decal
+  id: Bushd2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushd2
+
+- type: decal
+  id: Bushd3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushd3
+
+- type: decal
+  id: Bushd4
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushd4
+
+- type: decal
+  id: Bushe1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushe1
+
+- type: decal
+  id: Bushe2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushe2
+
+- type: decal
+  id: Bushe3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushe3
+
+- type: decal
+  id: Bushe4
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushe4
+
+- type: decal
+  id: Bushf1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushf1
+
+- type: decal
+  id: Bushf2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushf2
+
+- type: decal
+  id: Bushf3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushf3
+
+- type: decal
+  id: Bushg1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushg1
+
+- type: decal
+  id: Bushg2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushg2
+
+- type: decal
+  id: Bushg3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushg3
+
+- type: decal
+  id: Bushg4
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushg4
+
+- type: decal
+  id: Bushh1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushh1
+
+- type: decal
+  id: Bushh2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushh2
+
+- type: decal
+  id: Bushh3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushh3
+
+- type: decal
+  id: Bushi1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushi1
+
+- type: decal
+  id: Bushi2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushi2
+
+- type: decal
+  id: Bushi3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushi3
+
+- type: decal
+  id: Bushi4
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushi4
+
+- type: decal
+  id: Bushj1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushj1
+
+- type: decal
+  id: Bushj2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushj2
+
+- type: decal
+  id: Bushj3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushj3
+
+- type: decal
+  id: Bushk1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushk1
+
+- type: decal
+  id: Bushk2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushk2
+
+- type: decal
+  id: Bushk3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushk3
+
+- type: decal
+  id: Bushl1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushl1
+
+- type: decal
+  id: Bushl2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushl2
+
+- type: decal
+  id: Bushl3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushl3
+
+- type: decal
+  id: Bushl4
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushl4
+
+- type: decal
+  id: Bushm1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushm1
+
+- type: decal
+  id: Bushm2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushm2
+
+- type: decal
+  id: Bushm3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushm3
+
+- type: decal
+  id: Bushm4
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushm4
+
+- type: decal
+  id: Bushn1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushn1
+
+- type: decal
+  id: bushsnowa1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushessnow.rsi
+    state: bushsnowa1
+
+- type: decal
+  id: bushsnowa2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushessnow.rsi
+    state: bushsnowa2
+
+- type: decal
+  id: bushsnowa3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushessnow.rsi
+    state: bushsnowa3
+
+- type: decal
+  id: bushsnowb1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushessnow.rsi
+    state: bushsnowb1
+
+- type: decal
+  id: bushsnowb2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushessnow.rsi
+    state: bushsnowb2
+
+- type: decal
+  id: bushsnowb3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_bushessnow.rsi
+    state: bushsnowb3
+
+- type: decal
+  id: Rock01
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_rocks.rsi
+    state: rock01
+
+- type: decal
+  id: Rock02
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_rocks.rsi
+    state: rock02
+
+- type: decal
+  id: Rock03
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_rocks.rsi
+    state: rock03
+
+- type: decal
+  id: Rock04
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_rocks.rsi
+    state: rock04
+
+- type: decal
+  id: Rock05
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_rocks.rsi
+    state: rock05
+
+- type: decal
+  id: Rock06
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_rocks.rsi
+    state: rock06
+
+- type: decal
+  id: Rock07
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_rocks.rsi
+    state: rock07
+
+- type: decal
+  id: Flowersbr1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_flowers.rsi
+    state: flowersbr1
+
+- type: decal
+  id: Flowersbr2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_flowers.rsi
+    state: flowersbr2
+
+- type: decal
+  id: Flowersbr3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_flowers.rsi
+    state: flowersbr3
+
+- type: decal
+  id: Flowerspv1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_flowers.rsi
+    state: flowerspv1
+
+- type: decal
+  id: Flowerspv2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_flowers.rsi
+    state: flowerspv2
+
+- type: decal
+  id: Flowerspv3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_flowers.rsi
+    state: flowerspv3
+
+- type: decal
+  id: Flowersy1
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_flowers.rsi
+    state: flowersy1
+
+- type: decal
+  id: Flowersy2
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_flowers.rsi
+    state: flowersy2
+
+- type: decal
+  id: Flowersy3
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_flowers.rsi
+    state: flowersy3
+
+- type: decal
+  id: Flowersy4
+  tags: ["flora"]
+  sprite:
+    sprite: Decals/Flora/flora_flowers.rsi
+    state: flowersy4
+

@@ -95,12 +95,16 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("aiFaction");
             prototypes.RegisterIgnore("gameMap");
             prototypes.RegisterIgnore("behaviorSet");
+            prototypes.RegisterIgnore("lobbyBackground");
             prototypes.RegisterIgnore("advertisementsPack");
             prototypes.RegisterIgnore("metabolizerType");
             prototypes.RegisterIgnore("metabolismGroup");
             prototypes.RegisterIgnore("salvageMap");
             prototypes.RegisterIgnore("gamePreset");
             prototypes.RegisterIgnore("gameRule");
+            prototypes.RegisterIgnore("worldSpell");
+            prototypes.RegisterIgnore("entitySpell");
+            prototypes.RegisterIgnore("instantSpell");
 
             ClientContentIoC.Register();
 
@@ -186,13 +190,12 @@ namespace Content.Client.Entry
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
 
             IoCManager.Resolve<IChatManager>().Initialize();
-            IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();
             IoCManager.Resolve<EuiManager>().Initialize();
-            IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<IVoteManager>().Initialize();
             IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
+            IoCManager.Resolve<NetworkResourceManager>().Initialize();
 
             _baseClient.RunLevelChanged += (_, args) =>
             {

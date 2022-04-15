@@ -6,6 +6,8 @@
   - type: Sprite
     sprite: Objects/Tanks/generic.rsi
     state: icon
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.SharedGasTankUiKey.Key
@@ -13,11 +15,17 @@
   - type: Clothing
     size: 15
     sprite: Objects/Tanks/generic.rsi
-    QuickEquip: false
+    quickEquip: false
   - type: GasTank
-  - type: ItemActions
-    actions:
-    - actionType: ToggleInternals
+    toggleAction:
+      name: action-name-internals-toggle
+      description: action-description-internals-toggle
+      icon: Interface/Actions/internal0.png
+      iconOn: Interface/Actions/internal1.png
+      event: !type:ToggleActionEvent
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
 
 - type: entity
   parent: GasTankBase
@@ -36,6 +44,7 @@
     sprite: Objects/Tanks/oxygen.rsi
     Slots:
     - Back
+    - suitStorage
 
 - type: entity
   parent: OxygenTank
@@ -49,6 +58,7 @@
     sprite: Objects/Tanks/yellow.rsi
     Slots:
     - Back
+    - suitStorage
 
 - type: entity
   parent: OxygenTank
@@ -62,6 +72,7 @@
     sprite: Objects/Tanks/red.rsi
     Slots:
     - Back
+    - suitStorage
 
 - type: entity
   parent: OxygenTank
@@ -82,6 +93,7 @@
     Slots:
     - Pocket
     - Belt
+    - suitStorage
 
 - type: entity
   parent: EmergencyOxygenTank
@@ -103,6 +115,7 @@
     Slots:
     - Pocket
     - Belt
+    - suitStorage
 
 - type: entity
   parent: ExtendedEmergencyOxygenTank
@@ -121,6 +134,7 @@
     Slots:
     - Pocket
     - Belt
+    - suitStorage
 
 - type: entity
   parent: GasTankBase
@@ -139,6 +153,7 @@
       sprite: Objects/Tanks/generic.rsi
       Slots:
         - Back
+        - suitStorage
 
 - type: entity
   parent: GasTankBase
@@ -158,3 +173,4 @@
       sprite: Objects/Tanks/plasma.rsi
       Slots:
         - Belt
+        - suitStorage

@@ -1,12 +1,8 @@
 ﻿using Content.Shared.Database;
+using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Content.Shared.Follower.Components;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Follower;
 
@@ -51,7 +47,7 @@ public sealed class FollowerSystem : EntitySystem
 
     // Since we parent our observer to the followed entity, we need to detach
     // before they get deleted so that we don't get recursively deleted too.
-    private void OnFollowedTerminating(EntityUid uid, FollowedComponent component, EntityTerminatingEvent args)
+    private void OnFollowedTerminating(EntityUid uid, FollowedComponent component, ref EntityTerminatingEvent args)
     {
         StopAllFollowers(uid, component);
     }
@@ -92,7 +88,7 @@ public sealed class FollowerSystem : EntitySystem
     public void StopFollowingEntity(EntityUid uid, EntityUid target,
         FollowedComponent? followed=null)
     {
-        if (!Resolve(target, ref followed))
+        if (!Resolve(target, ref followed, false))
             return;
 
         if (!HasComp<FollowerComponent>(uid))
