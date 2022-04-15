@@ -1,3 +1,6 @@
+using Content.Shared.AirlockPainter.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
 namespace Content.Server.AirlockPainter
 {
     [RegisterComponent]
