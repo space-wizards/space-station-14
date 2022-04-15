@@ -218,8 +218,6 @@ public sealed class BloodstreamSystem : EntitySystem
             return;
 
         comp.BloodlossThreshold = threshold;
-
-        Dirty(comp);
     }
 
     /// <summary>
