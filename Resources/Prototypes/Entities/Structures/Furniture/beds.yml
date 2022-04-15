@@ -7,8 +7,8 @@
   - type: HealOnBuckle
     damage:
       groups:
-        Brute: -0.3 ## 0.1 per
-        Burn: -0.3
+        Brute: -0.2 ## 0.1 per
+        Burn: -0.2
       types:
         Poison: -0.1
   - type: Physics
@@ -69,8 +69,8 @@
   - type: HealOnBuckle
     damage:
       groups:
-        Brute: -0.6 ## 0.2 per
-        Burn: -0.6
+        Brute: -0.4 ## 0.2 per
+        Burn: -0.4
       types:
         Poison: -0.2
   - type: Construction

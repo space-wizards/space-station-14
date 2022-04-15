@@ -282,7 +282,7 @@
         Capacitor: 1
       materialRequirements:
         CableHV: 5
-        
+
 - type: entity
   id: GeneratorUraniumMachineCircuitboard
   parent: BaseMachineCircuitboard
@@ -325,4 +325,13 @@
         Manipulator: 1
       materialRequirements:
         Cable: 3
+      tagRequirements:
+        Pipe:
+          Amount: 4
+          DefaultPrototype: GasPipeStraight
+          ExamineName: Pipe
+        Cryobeaker:
+          Amount: 2
+          DefaultPrototype: CryostasisBeaker
+          ExamineName: Cryostasis Beaker
 
