@@ -66,7 +66,9 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.25,-0.5,0.25,0.5"
-      layer: [ Underplating ]
+      mask:
+      - Impassable
+      - LowImpassable
   - type: Construction
     graph: DisposalPipe
     node: broken
@@ -93,7 +95,9 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.25,-0.5,0.25,0.5"
-      layer: [ Underplating ]
+      mask:
+      - Impassable
+      - LowImpassable
   - type: Construction
     graph: DisposalPipe
     node: pipe
@@ -123,10 +127,12 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.25,-0.5,0.25,0.5"
-        layer: [ Underplating ]
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+      mask:
+      - Impassable
+      - LowImpassable
   - type: Construction
     graph: DisposalPipe
     node: tagger
@@ -150,10 +156,12 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.25,-0.5,0.25,0.4"
-        layer: [ Underplating ]
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.4"
+      mask:
+      - Impassable
+      - LowImpassable
   - type: Construction
     graph: DisposalPipe
     node: trunk
@@ -189,10 +197,12 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.25,0.5"
-        layer: [ Underplating ]
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.5"
+      mask:
+      - Impassable
+      - LowImpassable
   - type: Construction
     graph: DisposalPipe
     node: router
@@ -224,7 +234,9 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.25,-0.5,0.5,0.5"
-      layer: [ Underplating ]
+      mask:
+      - Impassable
+      - LowImpassable
 
 - type: entity
   id: DisposalJunction
@@ -254,7 +266,9 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.25,0.5"
-      layer: [ Underplating ]
+      mask:
+      - Impassable
+      - LowImpassable
   - type: Construction
     graph: DisposalPipe
     node: junction
@@ -286,7 +300,9 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.25,-0.5,0.5,0.5"
-      layer: [ Underplating ]
+      mask:
+      - Impassable
+      - LowImpassable
 
 - type: entity
   id: DisposalYJunction
@@ -314,7 +330,9 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.25"
-      layer: [ Underplating ]
+      mask:
+      - Impassable
+      - LowImpassable
   - type: Construction
     graph: DisposalPipe
     node: yJunction
@@ -341,7 +359,9 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.25,0.25"
-      layer: [ Underplating ]
+      mask:
+      - Impassable
+      - LowImpassable
   - type: Construction
     graph: DisposalPipe
     node: bend
