@@ -8,6 +8,7 @@ using Content.Server.Materials;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
+using Content.Server.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
@@ -83,6 +84,7 @@ namespace Content.Server.Lathe
         /// </summary>
         private void OnComponentInit(EntityUid uid, LatheComponent component, ComponentInit args)
         {
+            component.UserInterface = uid.GetUIOrNull(LatheUiKey.Key);
             if (component.UserInterface != null)
             {
                 component.UserInterface.OnReceiveMessage += msg => UserInterfaceOnOnReceiveMessage(uid, component, msg);
@@ -120,7 +122,7 @@ namespace Content.Server.Lathe
             }
 
             // Check if it can take ALL of the material's volume.
-            if (storage.StorageLimit != -1 && !storage.CanTakeAmount(totalAmount))
+            if (storage.StorageLimit > 0 && !storage.CanTakeAmount(totalAmount))
                 return;
             var lastMat = string.Empty;
             foreach (var mat in material.MaterialIds)

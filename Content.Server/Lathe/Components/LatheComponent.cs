@@ -55,6 +55,6 @@ namespace Content.Server.Lathe.Components
         /// <summmary>
         /// The lathe's UI.
         /// </summary>
-        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(LatheUiKey.Key);
+        [ViewVariables] public BoundUserInterface? UserInterface;
     }
 }
