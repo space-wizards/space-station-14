@@ -5,8 +5,7 @@ namespace Content.Shared.AirlockPainter.Prototypes
     [Prototype("AirlockGroup")]
     public sealed class AirlockGroupPrototype : IPrototype
     {
-        [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("stylePaths")]
