@@ -126,7 +126,7 @@ public class PowerWireAction : BaseWireAction
                 };
 
                 WiresSystem.SetData(used, PowerWireActionKey.ElectrifiedCancel, newToken);
-                DoAfterSystem.DoAfter(doAfter);
+                WiresSystem.StartWireAction(doAfter);
             }
             else
             {
@@ -151,19 +151,8 @@ public class PowerWireAction : BaseWireAction
         if (!TrySetElectrocution(used, user, wire))
             return false;
 
-        if (WiresSystem.TryGetData(used, PowerWireActionKey.PulseCancel, out var pulseObject)
-            && WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.ElectrifiedCancel, out var electrifiedObject))
-        {
-            if (electrifiedObject is CancellationTokenSource electrifiedToken)
-            {
-                electrifiedToken.Cancel();
-            }
-
-            if (pulseObject is CancellationTokenSource pulseToken)
-            {
-                pulseToken.Cancel();
-            }
-        }
+        WiresSystem.TryCancelWireAction(used, PowerWireActionKey.PulseCancel);
+        WiresSystem.TryCancelWireAction(used, PowerWireActionKey.ElectrifiedCancel);
 
         wire.IsCut = true;
 
@@ -181,25 +170,19 @@ public class PowerWireAction : BaseWireAction
 
     public override bool Pulse(EntityUid used, EntityUid user, Wire wire)
     {
-        if (WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.ElectrifiedCancel, out var electrifiedObject))
-        {
-            if (electrifiedObject is CancellationTokenSource electrifiedToken)
-            {
-                electrifiedToken.Cancel();
-            }
-        }
+        WiresSystem.TryCancelWireAction(used, PowerWireActionKey.ElectrifiedCancel);
 
         if (!TrySetElectrocution(used, user, wire, true))
             return false;
 
-        WiresSystem.SetData(used, PowerWireActionKey.Pulsed, true);
-        if (WiresSystem.TryGetData(used, PowerWireActionKey.PulseCancel, out var pulseObject))
+        // disrupted power shouldn't re-disrupt
+        if (WiresSystem.TryGetData(used, PowerWireActionKey.Pulsed, out var pulsedKey)
+            && (bool) pulsedKey)
         {
-            if (pulseObject is CancellationTokenSource pulseToken)
-            {
-                pulseToken.Cancel();
-            }
+            return false;
         }
+
+        WiresSystem.SetData(used, PowerWireActionKey.Pulsed, true);
 
         var newPulseToken = new CancellationTokenSource();
         var doAfter = new DoAfterEventArgs(
@@ -211,7 +194,7 @@ public class PowerWireAction : BaseWireAction
             UserFinishedEvent = new WireDoAfterEvent(AwaitPulseCancel, wire)
         };
 
-        DoAfterSystem.DoAfter(doAfter);
+        WiresSystem.StartWireAction(doAfter);
 
         // AwaitPulseCancel(used, wire, _doAfterSystem.WaitDoAfter(doAfter));
 

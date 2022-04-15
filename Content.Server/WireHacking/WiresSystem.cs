@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
+using Content.Server.DoAfter;
 using Content.Server.Hands.Systems;
 using Content.Server.Hands.Components;
 using Content.Server.Tools;
@@ -189,12 +191,111 @@ public sealed class WiresSystem : EntitySystem
     }
     #endregion
 
-    #region Event Handling
+    #region DoAfters
     private void OnWireDoAfter(EntityUid uid, WiresComponent component, WireDoAfterEvent args)
     {
         args.Delegate(uid, args.Wire);
     }
 
+    public void TryCancelWireAction(EntityUid owner, object key)
+    {
+        if (TryGetData(owner, key, out var cancelObject))
+        {
+            if (cancelObject is CancellationTokenSource token)
+            {
+                token.Cancel();
+            }
+        }
+    }
+
+    // lifting DoAfterEventArgs for now because i cba to actually
+    // write up an arg set
+    //
+    // TODO: actually write the arg set
+    //
+    // JANKY, FIX LATER
+    public void StartWireAction(DoAfterEventArgs args)
+    {
+        if (!_activeWires.ContainsKey((EntityUid) args.User!))
+        {
+            _activeWires.Add((EntityUid) args.User!, new());
+        }
+
+        _activeWires[(EntityUid) args.User!].Add(new ActiveWireAction
+        (
+            args.User,
+            args.Delay,
+            args.CancelToken,
+            (WireDoAfterEvent) args.UserFinishedEvent!,
+            (WireDoAfterEvent) args.UserCancelledEvent!
+        ));
+
+    }
+
+    private Dictionary<EntityUid, List<ActiveWireAction>> _activeWires = new();
+    private List<(EntityUid, ActiveWireAction)> _finishedWires = new();
+
+    public override void Update(float frameTime)
+    {
+        foreach (var (owner, activeWires) in _activeWires)
+        {
+            foreach (var wire in activeWires)
+            {
+                if (wire.CancelToken.IsCancellationRequested)
+                {
+                    RaiseLocalEvent(owner, wire.OnCancel);
+                    _finishedWires.Add((owner, wire));
+                }
+                else
+                {
+                    wire.TimeLeft -= frameTime;
+                    if (wire.TimeLeft <= 0)
+                    {
+                        RaiseLocalEvent(owner, wire.OnFinish);
+                        _finishedWires.Add((owner, wire));
+                    }
+                }
+            }
+        }
+
+        if (_finishedWires.Count != 0)
+        {
+            foreach (var (owner, wireAction) in _finishedWires)
+            {
+                // sure
+                _activeWires[owner].RemoveAll(action => action.CancelToken == wireAction.CancelToken);
+
+                if (_activeWires[owner].Count == 0)
+                {
+                    _activeWires.Remove(owner);
+                }
+            }
+
+            _finishedWires.Clear();
+        }
+    }
+
+    private class ActiveWireAction
+    {
+        public object Id;
+        public float TimeLeft;
+        public CancellationToken CancelToken;
+        public WireDoAfterEvent OnFinish;
+        public WireDoAfterEvent OnCancel;
+
+        public ActiveWireAction(object identifier, float time, CancellationToken cancelToken, WireDoAfterEvent onFinish, WireDoAfterEvent onCancel)
+        {
+            Id = identifier;
+            TimeLeft = time;
+            CancelToken = cancelToken;
+            OnFinish = onFinish;
+            OnCancel = onCancel;
+        }
+    }
+
+    #endregion
+
+    #region Event Handling
     private void OnWiresActionMessage(EntityUid uid, WiresComponent component, WiresActionMessage args)
     {
         // var wire = component.WiresList.Find(x => x.Id == args.Id);
@@ -394,6 +495,7 @@ public sealed class WiresSystem : EntitySystem
         return wires.WiresList.Find(x => x.Identifier == id);
     }
 
+
     public void UpdateWires(EntityUid used, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)
     {
         if (!Resolve(used, ref wires)
@@ -420,7 +522,11 @@ public sealed class WiresSystem : EntitySystem
                 }
 
                 _toolSystem.PlayToolSound(toolEntity, tool);
-                wire.Action.Cut(used, user, wire);
+                if (wire.Action.Cut(used, user, wire))
+                {
+                    wire.IsCut = true;
+                }
+
                 UpdateUserInterface(used);
                 break;
             case WiresAction.Mend:
@@ -431,7 +537,11 @@ public sealed class WiresSystem : EntitySystem
                 }
 
                 _toolSystem.PlayToolSound(toolEntity, tool);
-                wire.Action.Mend(used, user, wire);
+                if (wire.Action.Mend(used, user, wire))
+                {
+                    wire.IsCut = false;
+                }
+
                 UpdateUserInterface(used);
                 break;
             case WiresAction.Pulse:
