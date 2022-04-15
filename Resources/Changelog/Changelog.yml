@@ -1,16 +1,4 @@
 Entries:
-- author: Lamrr
-  changes:
-  - {message: Spare jumpsuits and jumpskirts are now available in the form of various
-      colour themed wardrobes. Collect them all!, type: Add}
-  id: 837
-  time: '2022-01-07T03:58:41.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: Radiation closets and medicine lockers now come with supplies inside.,
-    type: Tweak}
-  id: 838
-  time: '2022-01-07T04:03:20.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: PAIs can no longer run around on their little robot legs., type: Fix}
@@ -3026,3 +3014,17 @@ Entries:
       Pod, Medical Scanner, and Stasis Bed.', type: Add}
   id: 1336
   time: '2022-04-15T22:53:52.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Adds colorable sliders and a RGB/HSV color picker based on colorable
+      sliders., type: Add}
+  id: 1337
+  time: '2022-04-15T22:55:56.0000000+00:00'
+- author: CrzyPotato
+  changes:
+  - {message: 'Added more animal sounds for pettable animals! Some of these animals
+      include sloths, foxes, lizards, cows, goats, and more.', type: Add}
+  - {message: fixed issue with gibbed head being able to change direction via clicking,
+    type: Add}
+  id: 1338
+  time: '2022-04-15T22:56:05.0000000+00:00'
