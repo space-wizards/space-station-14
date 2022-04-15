@@ -1,14 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Xenomorph sprites now match their physics bounds more accurately, type: Tweak}
-  id: 832
-  time: '2022-01-06T01:51:53.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Capsaicin Oil will no longer appear in the chemical dispenser., type: Fix}
-  id: 833
-  time: '2022-01-06T04:50:39.0000000+00:00'
 - author: JustinTime
   changes:
   - {message: Added ability to resist out of lockers or locked closets, type: Tweak}
@@ -3017,3 +3007,15 @@ Entries:
   - {message: 'Salvage should no longer freak out when you''re around 0, 0', type: Fix}
   id: 1331
   time: '2022-04-15T21:35:58.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: 'Due to the recent number of jailbreaks, Nanotrasen has added iron caps
+      to Reinforced Window''s screws. You will now need to melt them to deconstruct
+      the window.', type: Tweak}
+  id: 1332
+  time: '2022-04-15T21:41:20.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: Added roles to Player's names in the Ghost Warp menu!, type: Add}
+  id: 1333
+  time: '2022-04-15T21:41:27.0000000+00:00'
