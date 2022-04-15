@@ -21,7 +21,7 @@ namespace Content.Server.Disease.Components
         public float SlowAmount = 0.75f;
 
         /// <summary>
-        /// Whether or not the zombie needs all the zombie traits initialized upon component inti
+        /// Whether or not the zombie needs all the zombie traits initialized upon component init
         /// useful for entities that already are zombies and do not need the additional traits.
         /// </summary>
         [DataField("applyZombieTraits")]
