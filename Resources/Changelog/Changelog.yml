@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Smoking is cool again (fixed animation/sprite)., type: Fix}
-  id: 835
-  time: '2022-01-06T12:45:02.0000000+00:00'
 - author: LittleBuilderJane
   changes:
   - {message: Adjusted aspects of Reach and Dart to fix issues., type: Add}
@@ -3020,3 +3015,8 @@ Entries:
       need both a suit and a helmet., type: Tweak}
   id: 1334
   time: '2022-04-15T22:41:48.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Welding masks actually protect your eyes now!, type: Tweak}
+  id: 1335
+  time: '2022-04-15T22:51:56.0000000+00:00'
