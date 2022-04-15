@@ -1,9 +1,4 @@
 Entries:
-- author: Daemon
-  changes:
-  - {message: Added new chat filters for emotes, type: Add}
-  id: 831
-  time: '2022-01-06T01:51:48.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Xenomorph sprites now match their physics bounds more accurately, type: Tweak}
@@ -3017,3 +3012,8 @@ Entries:
       electrocute you. Shocking!, type: Tweak}
   id: 1330
   time: '2022-04-15T21:21:11.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Salvage should no longer freak out when you''re around 0, 0', type: Fix}
+  id: 1331
+  time: '2022-04-15T21:35:58.0000000+00:00'
