@@ -91,6 +91,9 @@
   id: CrowbarRed
 
 - type: Tag
+  id: Cryobeaker
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
@@ -221,7 +224,7 @@
 
 - type: Tag
   id: Payload # for grenade/bomb crafting
-  
+
 - type: Tag
   id: PercussionInstrument
 
