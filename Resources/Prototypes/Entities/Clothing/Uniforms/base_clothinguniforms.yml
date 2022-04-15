@@ -26,6 +26,26 @@
     spawned:
     - id: MaterialCloth1
       amount: 3
+  - type: InventorySlot
+    slots:
+      - name: pocket1
+        slotTexture: pocket
+        slotFlags: POCKET
+        uiContainer: BottomRight
+        uiWindowPos: 0,3
+        displayName: Pocket 1
+      - name: pocket2
+        slotTexture: pocket
+        slotFlags: POCKET
+        uiContainer: BottomRight
+        uiWindowPos: 2,3
+        displayName: Pocket 2
+      - name: id
+        slotTexture: id
+        slotFlags: IDCARD
+        uiContainer: BottomRight
+        uiWindowPos: 2,1
+        displayName: ID
 
 - type: entity
   abstract: true
@@ -44,3 +64,23 @@
     spawned:
     - id: MaterialCloth1
       amount: 3
+  - type: InventorySlot
+    slots:
+      - name: pocket1
+        slotTexture: pocket
+        slotFlags: POCKET
+        uiContainer: BottomRight
+        uiWindowPos: 0,3
+        displayName: Pocket 1
+      - name: pocket2
+        slotTexture: pocket
+        slotFlags: POCKET
+        uiContainer: BottomRight
+        uiWindowPos: 2,3
+        displayName: Pocket 2
+      - name: id
+        slotTexture: id
+        slotFlags: IDCARD
+        uiContainer: BottomRight
+        uiWindowPos: 2,1
+        displayName: ID

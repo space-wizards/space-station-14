@@ -55,20 +55,6 @@
       uiContainer: Top
       uiWindowPos: 1,0
       displayName: Head
-    - name: pocket1
-      slotTexture: pocket
-      slotFlags: POCKET
-      uiContainer: BottomRight
-      uiWindowPos: 0,3
-      dependsOn: jumpsuit
-      displayName: Pocket 1
-    - name: pocket2
-      slotTexture: pocket
-      slotFlags: POCKET
-      uiContainer: BottomRight
-      uiWindowPos: 2,3
-      dependsOn: jumpsuit
-      displayName: Pocket 2
     - name: suitstorage
       slotTexture: suit_storage
       slotFlags:   SUITSTORAGE
@@ -76,13 +62,6 @@
       uiWindowPos: 2,0
       dependsOn: outerClothing
       displayName: Suit Storage
-    - name: id
-      slotTexture: id
-      slotFlags: IDCARD
-      uiContainer: BottomRight
-      uiWindowPos: 2,1
-      dependsOn: jumpsuit
-      displayName: ID
     - name: belt
       slotTexture: belt
       slotFlags: BELT

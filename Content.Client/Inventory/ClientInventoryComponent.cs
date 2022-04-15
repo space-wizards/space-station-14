@@ -25,7 +25,7 @@ namespace Content.Client.Inventory
 
         public DefaultWindow InventoryWindow = default!;
 
-        public readonly Dictionary<string, ItemSlotButton> SlotButtons = new();
+        public readonly Dictionary<string, (ItemSlotButton hudButton, ItemSlotButton windowButton)> SlotButtons = new();
 
         [ViewVariables]
         [DataField("speciesId")] public string? SpeciesId { get; set; }

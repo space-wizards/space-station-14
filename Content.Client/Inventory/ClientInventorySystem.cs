@@ -39,7 +39,7 @@ namespace Content.Client.Inventory
         /// Stores delegates used to create controls for a given <see cref="InventoryTemplatePrototype"/>.
         /// </summary>
         private readonly
-            Dictionary<string, Func<EntityUid, Dictionary<string, ItemSlotButton>, (DefaultWindow window, Control bottomLeft, Control bottomRight, Control
+            Dictionary<string, Func<EntityUid, Dictionary<string, (ItemSlotButton, ItemSlotButton)>, (DefaultWindow window, Control bottomLeft, Control bottomRight, Control
                 topQuick)>>
             _uiGenerateDelegates = new();
 
@@ -90,12 +90,13 @@ namespace Content.Client.Inventory
             if (!Resolve(uid, ref component))
                 return;
 
-            if (!component.SlotButtons.TryGetValue(slot, out var button) &&
+            if (!component.SlotButtons.TryGetValue(slot, out var buttons) &&
                 (!TryComp<ClientInventorySlotComponent>(uid, out var invSlotComp) ||
-                 !invSlotComp.SlotButtons.TryGetValue(slot, out button)))
+                 !invSlotComp.SlotButtons.TryGetValue(slot, out buttons)))
                 return;
 
-            _itemSlotManager.SetItemSlot(button, item);
+            _itemSlotManager.SetItemSlot(buttons.hudButton, item);
+            _itemSlotManager.SetItemSlot(buttons.windowButton, item);
         }
 
         private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent? args = null)
@@ -136,7 +137,8 @@ namespace Content.Client.Inventory
             {
                 foreach (var (_, btn) in inventoryComponent.SlotButtons)
                 {
-                    btn.RefreshTextures(_gameHud);
+                    btn.hudButton.RefreshTextures(_gameHud);
+                    btn.windowButton.RefreshTextures(_gameHud);
                 }
             }
 
@@ -144,7 +146,8 @@ namespace Content.Client.Inventory
             {
                 foreach (var (_, btn) in inventorySlotComponent.SlotButtons)
                 {
-                    btn.RefreshTextures(_gameHud);
+                    btn.hudButton.RefreshTextures(_gameHud);
+                    btn.windowButton.RefreshTextures(_gameHud);
                 }
             }
         }
@@ -175,14 +178,15 @@ namespace Content.Client.Inventory
             component.TopQuickButtons = topQuick;
         }
 
-        private void InitSlotButtons(EntityUid uid, Dictionary<string, ItemSlotButton> slotButtons, ClientInventoryComponent component, ContainerManagerComponent containerManager)
+        private void InitSlotButtons(EntityUid uid, Dictionary<string, (ItemSlotButton, ItemSlotButton)> slotButtons, ClientInventoryComponent component, ContainerManagerComponent containerManager)
         {
             foreach (var (slot, button) in slotButtons)
             {
                 if (!TryGetSlotEntity(uid, slot, out var entity, component, containerManager))
                     continue;
 
-                _itemSlotManager.SetItemSlot(button, entity);
+                _itemSlotManager.SetItemSlot(button.Item1, entity);
+                _itemSlotManager.SetItemSlot(button.Item2, entity);
             }
         }
 
@@ -297,25 +301,26 @@ namespace Content.Client.Inventory
 
                     foreach (var slotDefinition in template.Slots)
                     {
-                        var button = GenerateButton(entityUid, slotDefinition);
+                        var hudButton = GenerateButton(entityUid, slotDefinition);
                         switch (slotDefinition.UIContainer)
                         {
                             case SlotUIContainer.BottomLeft:
-                                bottomLeft.AddChild(button);
+                                bottomLeft.AddChild(hudButton);
                                 break;
                             case SlotUIContainer.BottomRight:
-                                bottomRight.AddChild(button);
+                                bottomRight.AddChild(hudButton);
                                 break;
                             case SlotUIContainer.Top:
-                                topQuick.AddChild(button);
+                                topQuick.AddChild(hudButton);
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }
 
-                        list[slotDefinition.Name] = button;
-                        windowContents.AddChild(button);
-                        LayoutContainer.SetPosition(button, slotDefinition.UIWindowPosition * (ButtonSize + ButtonSeparation));
+                        var windowButton = GenerateButton(entityUid, slotDefinition);
+                        list[slotDefinition.Name] = (hudButton, windowButton);
+                        windowContents.AddChild(windowButton);
+                        LayoutContainer.SetPosition(windowButton, slotDefinition.UIWindowPosition * (ButtonSize + ButtonSeparation));
                     }
 
                     return (window, bottomLeft, bottomRight, topQuick);
