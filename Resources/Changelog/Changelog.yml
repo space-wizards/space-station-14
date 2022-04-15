@@ -1,9 +1,4 @@
 Entries:
-- author: JustinTime
-  changes:
-  - {message: Added ability to resist out of lockers or locked closets, type: Tweak}
-  id: 834
-  time: '2022-01-06T06:18:48.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Smoking is cool again (fixed animation/sprite)., type: Fix}
@@ -3019,3 +3014,9 @@ Entries:
   - {message: Added roles to Player's names in the Ghost Warp menu!, type: Add}
   id: 1333
   time: '2022-04-15T21:41:27.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: The way pressure protection is calculated has been changed. You now
+      need both a suit and a helmet., type: Tweak}
+  id: 1334
+  time: '2022-04-15T22:41:48.0000000+00:00'
