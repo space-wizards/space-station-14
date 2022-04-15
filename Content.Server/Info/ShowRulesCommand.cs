@@ -58,7 +58,7 @@ public sealed class ShowRulesCommand : IConsoleCommand
 
         var netManager = IoCManager.Resolve<INetManager>();
 
-        var message = netManager.CreateNetMessage<SharedRulesManager.ShowRulesPopupMessage>();
+        var message = new SharedRulesManager.ShowRulesPopupMessage();
         message.PopupTime = seconds;
 
         var player = IoCManager.Resolve<IPlayerManager>().GetSessionByUserId(located.UserId);
