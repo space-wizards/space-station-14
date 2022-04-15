@@ -6,6 +6,8 @@
   description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
   components:
     - type: InteractionOutline
+    - type: Transform
+      noRot: true
     - type: Sprite
       netsync: false
       sprite: Structures/Storage/canister.rsi
