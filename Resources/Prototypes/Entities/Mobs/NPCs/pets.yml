@@ -130,8 +130,8 @@
     arc: bite
     damage:
       types:
-        Piercing: 10
-        Slash: 10
+        Piercing: 8
+        Slash: 7
   - type: UtilityAI
     behaviorSets:
     - Idle

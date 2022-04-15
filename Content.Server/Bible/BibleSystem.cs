@@ -26,8 +26,6 @@ namespace Content.Server.Bible
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
 
-
-
         public override void Initialize()
         {
             base.Initialize();
