@@ -1,4 +1,4 @@
-namespace Content.Server.Disease.Components
+namespace Content.Server.Disease.Zombie.Components
 {
     /// <summary>
     /// The component which gives an entity zombie traits.

@@ -1,56 +1,54 @@
-using System.Linq;
-using Content.Server.Chat.Managers;
-using Content.Server.Disease.Components;
-using Content.Server.Disease;
-using Content.Shared.Disease;
-using Content.Shared.MobState.Components;
 using Robust.Shared.Random;
-using Robust.Shared.Prototypes;
+using Content.Server.Chat.Managers;
+using Content.Server.Disease.Zombie.Components;
+using Content.Shared.MobState.Components;
 
-namespace Content.Server.StationEvents.Events;
-/// <summary>
-/// Revives several dead entities as zombies
-/// </summary>
-public sealed class ZombieOutbreak : StationEvent
+namespace Content.Server.StationEvents.Events
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-
-    public override string Name => "ZombieOutbreak";
-    public override float Weight => WeightLow;
-
-    public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
-    protected override float EndAfter => 1.0f;
-
-    public override int? MaxOccurrences => 1;
-
     /// <summary>
-    /// Finds 1-3 random, dead entities accross the station
-    /// and turns them into zombies.
+    /// Revives several dead entities as zombies
     /// </summary>
-    public override void Startup()
+    public sealed class ZombieOutbreak : StationEvent
     {
-        base.Startup();
-        List<MobStateComponent> deadList = new();
-        foreach (var mobState in _entityManager.EntityQuery<MobStateComponent>())
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+
+        public override string Name => "ZombieOutbreak";
+        public override float Weight => WeightLow;
+
+        public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
+        protected override float EndAfter => 1.0f;
+
+        public override int? MaxOccurrences => 1;
+
+        /// <summary>
+        /// Finds 1-3 random, dead entities accross the station
+        /// and turns them into zombies.
+        /// </summary>
+        public override void Startup()
         {
-            if (mobState.IsDead())
-                deadList.Add(mobState);
+            base.Startup();
+            List<MobStateComponent> deadList = new();
+            foreach (var mobState in _entityManager.EntityQuery<MobStateComponent>())
+            {
+                if (mobState.IsDead() || mobState.IsCritical())
+                    deadList.Add(mobState);
+            }
+            _random.Shuffle(deadList);
+
+            var toInfect = _random.Next(1, 3);
+
+            /// Now we give it to people in the list of dead entities earlier.
+            foreach (var target in deadList)
+            {
+                if (toInfect-- == 0)
+                    break;
+
+                _entityManager.EnsureComponent<DiseaseZombieComponent>(target.Owner);
+            }
+            _chatManager.DispatchStationAnnouncement(Loc.GetString("station-event-zombie-outbreak-announcement"),
+            playDefaultSound: false, colorOverride: Color.DarkMagenta);
         }
-        _random.Shuffle(deadList);
-
-        var toInfect = _random.Next(1, 3);
-
-        /// Now we give it to people in the list of dead entities earlier.
-        foreach (var target in deadList)
-        {
-            if (toInfect-- == 0)
-                break;
-
-            _entityManager.EnsureComponent<DiseaseZombieComponent>(target.Owner);
-        }
-        _chatManager.DispatchStationAnnouncement(Loc.GetString("station-event-zombie-outbreak-announcement"),
-        playDefaultSound: false, colorOverride: Color.DarkMagenta);
     }
 }

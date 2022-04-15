@@ -1,10 +1,8 @@
-using System.Linq;
 using Robust.Shared.Containers;
-using Robust.Shared.Random;
 using Content.Server.Speech.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Disease.Components;
-using Content.Server.Weapon.Melee;
+using Content.Server.Disease.Zombie.Components;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Popups;
@@ -13,36 +11,31 @@ using Content.Server.Hands.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Chat.Managers;
-using Content.Server.Drone.Components;
 using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
 
-namespace Content.Server.Disease
+namespace Content.Server.Disease.Zombie
 {
     /// <summary>
     /// Handles zombie propagation and inherent zombie traits
     /// </summary>
     public sealed class DiseaseZombieSystem : EntitySystem
     {
-        [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly SharedHumanoidAppearanceSystem _sharedHumanoidAppearance = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<DiseaseZombieComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<DiseaseZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<DiseaseZombieComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         }
 
@@ -54,11 +47,12 @@ namespace Content.Server.Disease
             if (!component.ApplyZombieTraits || !HasComp<MobStateComponent>(uid))
                 return;
 
-            EntityManager.RemoveComponent<DiseaseCarrierComponent>(uid);
-            EntityManager.RemoveComponent<RespiratorComponent>(uid);
-            EntityManager.RemoveComponent<BarotraumaComponent>(uid);
-            EntityManager.RemoveComponent<HungerComponent>(uid);
-            EntityManager.RemoveComponent<ThirstComponent>(uid);
+            RemComp<DiseaseCarrierComponent>(uid);
+            RemComp<DiseaseBuildupComponent>(uid);
+            RemComp<RespiratorComponent>(uid);
+            RemComp<BarotraumaComponent>(uid);
+            RemComp<HungerComponent>(uid);
+            RemComp<ThirstComponent>(uid);
 
             EntityManager.EnsureComponent<BloodstreamComponent>(uid, out var bloodstream); //zoms need bloodstream anyway for healing
             _bloodstream.SetBloodLossThreshold(uid, 0f, bloodstream);
@@ -92,6 +86,10 @@ namespace Content.Server.Disease
                     var virtualItem = EntityManager.SpawnEntity("ZombieClaw", pos);
                     _sharedHands.DoPickup(uid, hand.Value, virtualItem);
                 }
+            }
+            else
+            {
+                EnsureComp<ZombieTransferComponent>(uid);
             }
 
             if (TryComp<ContainerManagerComponent>(uid, out var cmcomp))
@@ -128,46 +126,6 @@ namespace Content.Server.Disease
                     ghostcomp.RoleName = metacomp.EntityName;
                     ghostcomp.RoleDescription = Loc.GetString("zombie-role-desc");
                     ghostcomp.RoleRules = Loc.GetString("zombie-role-rules");
-                }
-            }
-        }
-
-        /// <summary>
-        /// This handles zombie disease transfer when a entity is hit.
-        /// This is public because the virtualzombiehand entity needs it
-        /// </summary>
-        public void OnMeleeHit(EntityUid uid, DiseaseZombieComponent component, MeleeHitEvent args)
-        {
-            if (!args.HitEntities.Any())
-                return;
-
-            foreach (EntityUid entity in args.HitEntities)
-            {
-                if (entity == uid)
-                    continue;
-
-                if (!HasComp<MobStateComponent>(entity))
-                    continue;
-
-                if (_robustRandom.Prob(component.Probability) && HasComp<DiseaseCarrierComponent>(entity))
-                {
-                    _disease.TryAddDisease(entity, "ZombieInfection");
-                }
-
-                EntityManager.EnsureComponent<MobStateComponent>(entity, out var mobState);
-                if ((mobState.IsDead() || mobState.IsCritical()) && !HasComp<DiseaseZombieComponent>(entity)) //dead entities are eautomatically infected. MAYBE: have activated infect ability?
-                {
-                    EntityManager.AddComponent<DiseaseZombieComponent>(entity);
-                    var dspec = new DamageSpecifier();
-                    dspec.DamageDict.TryAdd("Slash", -12);
-                    dspec.DamageDict.TryAdd("Piercing", -7);
-                    args.BonusDamage += dspec;
-                }
-                else if (mobState.IsAlive() && !HasComp<DroneComponent>(entity)) //heals when zombies bite live entities
-                {
-                    var healingSolution = new Solution();
-                    healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
-                    _bloodstream.TryAddToChemicals(args.User, healingSolution);
                 }
             }
         }
