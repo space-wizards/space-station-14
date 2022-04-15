@@ -64,10 +64,9 @@ namespace Content.Server.Atmos.EntitySystems
 
                 modifier = Math.Min(protection.LowPressureModifier, modifier);
                 multiplier = Math.Min(protection.LowPressureMultiplier, multiplier);
-
             }
 
-            // generic, non-clothing related modifiers.
+            // Then apply any generic, non-clothing related modifiers.
             var lowPressureEvent = new LowPressureEvent(environmentPressure);
             RaiseLocalEvent(baro.Owner, lowPressureEvent, false);
 
@@ -99,10 +98,9 @@ namespace Content.Server.Atmos.EntitySystems
 
                 modifier = Math.Max(protection.LowPressureModifier, modifier);
                 multiplier = Math.Max(protection.LowPressureMultiplier, multiplier);
-
             }
 
-            // generic, non-clothing related modifiers.
+            // Then apply any generic, non-clothing related modifiers.
             var highPressureEvent = new HighPressureEvent(environmentPressure);
             RaiseLocalEvent(baro.Owner, highPressureEvent, false);
 
