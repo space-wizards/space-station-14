@@ -95,7 +95,7 @@ namespace Content.Client.Inventory
                 var found = false;
                 foreach (var slotSlot in component.InventorySlotSlots)
                 {
-                    if(TryGetSlotEntity(uid, slotSlot, out var slotEnt, component)) continue;
+                    if(!TryGetSlotEntity(uid, slotSlot, out var slotEnt, component)) continue;
 
                     if(TryComp<ClientInventorySlotComponent>(slotEnt, out var invSlotComp))
                     {

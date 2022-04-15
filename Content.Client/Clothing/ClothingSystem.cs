@@ -182,14 +182,13 @@ public sealed class ClothingSystem : EntitySystem
 
     public void InitClothing(EntityUid uid, ClientInventoryComponent? component = null, SpriteComponent? sprite = null)
     {
-        if (!_inventorySystem.TryGetSlots(uid, out var slots, component) || !Resolve(uid, ref sprite, ref component)) return;
+        if (!_inventorySystem.TryGetSlotEnumerator(uid, out var enumerator, inventoryComponent: component) || !Resolve(uid, ref sprite, ref component)) return;
 
-        foreach (var slot in slots)
+        while (enumerator.MoveNext(out var slotDefinition))
         {
-            if (!_inventorySystem.TryGetSlotContainer(uid, slot.Name, out var containerSlot, out _, component) ||
-                !containerSlot.ContainedEntity.HasValue) continue;
+            if (!_inventorySystem.TryGetSlotEntity(uid, slotDefinition.Name, out var slotEntity, component)) continue;
 
-            RenderEquipment(uid, containerSlot.ContainedEntity.Value, slot.Name, component, sprite);
+            RenderEquipment(uid, slotEntity.Value, slotDefinition.Name, component, sprite);
         }
     }
 

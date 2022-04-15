@@ -88,9 +88,9 @@ namespace Content.Server.Administration.Commands
             }
 
             var invSystem = EntitySystem.Get<InventorySystem>();
-            if (invSystem.TryGetSlots(target, out var slotDefinitions, inventoryComponent))
+            if (invSystem.TryGetSlotEnumerator(target, out var slotDefinitions, inventoryComponent: inventoryComponent))
             {
-                foreach (var slot in slotDefinitions)
+                while (slotDefinitions.MoveNext(out var slot))
                 {
                     invSystem.TryUnequip(target, slot.Name, true, true, inventoryComponent);
                     var gearStr = startingGear.GetGear(slot.Name, profile);

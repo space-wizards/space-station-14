@@ -308,9 +308,9 @@ namespace Content.Server.GameTicking
         #region Equip Helpers
         public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
         {
-            if (_inventorySystem.TryGetSlots(entity, out var slotDefinitions))
+            if (_inventorySystem.TryGetSlotEnumerator(entity, out var enumerator))
             {
-                foreach (var slot in slotDefinitions)
+                while (enumerator.MoveNext(out var slot))
                 {
                     var equipmentStr = startingGear.GetGear(slot.Name, profile);
                     if (!string.IsNullOrEmpty(equipmentStr))

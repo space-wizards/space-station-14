@@ -150,11 +150,11 @@ namespace Content.Client.Lobby.UI
             // ReSharper disable once ConstantNullCoalescingCondition
             var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
 
-            if (job.StartingGear != null && invSystem.TryGetSlots(dummy, out var slots))
+            if (job.StartingGear != null && invSystem.TryGetSlotEnumerator(dummy, out var slotEnumerator))
             {
                 var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
 
-                foreach (var slot in slots)
+                while (slotEnumerator.MoveNext(out var slot))
                 {
                     var itemType = gear.GetGear(slot.Name, profile);
                     if (invSystem.TryUnequip(dummy, slot.Name, out var unequippedItem, true, true))

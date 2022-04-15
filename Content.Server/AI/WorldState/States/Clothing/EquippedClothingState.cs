@@ -18,12 +18,12 @@ namespace Content.Server.AI.WorldState.States.Clothing
             var result = new Dictionary<string, EntityUid>();
 
             var invSystem = EntitySystem.Get<InventorySystem>();
-            if (!invSystem.TryGetSlots(Owner, out var slotDefinitions))
+            if (!invSystem.TryGetSlotEnumerator(Owner, out var slotDefinitions))
             {
                 return result;
             }
 
-            foreach (var slot in slotDefinitions)
+            while (slotDefinitions.MoveNext(out var slot))
             {
                 if (!invSystem.HasSlot(Owner, slot.Name)) continue;
 

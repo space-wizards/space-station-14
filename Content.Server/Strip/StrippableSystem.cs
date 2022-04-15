@@ -61,9 +61,9 @@ namespace Content.Server.Strip
                 }
             }
 
-            if (_inventorySystem.TryGetSlots(uid, out var slots))
+            if (_inventorySystem.TryGetSlotEnumerator(uid, out var enumerator))
             {
-                foreach (var slot in slots)
+                while (enumerator.MoveNext(out var slot))
                 {
                     var name = "None";
 

@@ -42,9 +42,9 @@ namespace Content.Server.Chemistry.Components
             // TODO: Add a permeability property to clothing
             // For now it just adds to protection for each clothing equipped
             var protection = 0f;
-            if (invSystem.TryGetSlots(entity, out var slotDefinitions))
+            if (invSystem.TryGetSlotEnumerator(entity, out var enumerator))
             {
-                foreach (var slot in slotDefinitions)
+                while (enumerator.MoveNext(out var slot))
                 {
                     if (slot.Name == "back" ||
                         slot.Name == "pocket1" ||

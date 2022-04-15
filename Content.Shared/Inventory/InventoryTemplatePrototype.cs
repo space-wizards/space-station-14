@@ -31,6 +31,11 @@ public sealed class SlotDefinition
     ///     Offset for the clothing sprites.
     /// </summary>
     [DataField("offset")] public Vector2 Offset { get; } = Vector2.Zero;
+
+    public bool ConflictsWith(SlotDefinition otherDefinition)
+    {
+        return Name == otherDefinition.Name || UIWindowPosition == otherDefinition.UIWindowPosition;
+    }
 }
 
 public enum SlotUIContainer

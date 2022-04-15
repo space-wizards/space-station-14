@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Inventory.Events;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.Inventory;
 
@@ -10,6 +11,26 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventorySlotComponent, GotEquippedEvent>(OnInvSlotGotEquipped);
         SubscribeLocalEvent<InventorySlotComponent, GotUnequippedEvent>(OnInvSlotGotUnequipped);
         SubscribeLocalEvent<InventorySlotComponent, BeingEquippedAttemptEvent>(OnEquipAttempt);
+        SubscribeLocalEvent<InventorySlotComponent, EntInsertedIntoContainerMessage>(OnSlotEntInserted);
+        SubscribeLocalEvent<InventorySlotComponent, EntRemovedFromContainerMessage>(OnSlotEntRemoved);
+    }
+
+    private void OnSlotEntRemoved(EntityUid uid, InventorySlotComponent component, EntRemovedFromContainerMessage args)
+    {
+        var parent = Transform(uid).ParentUid;
+        if (!TryInvCompWarn(parent, out var invComp))
+            return;
+
+        OnEntRemoved(parent, invComp, args);
+    }
+
+    private void OnSlotEntInserted(EntityUid uid, InventorySlotComponent component, EntInsertedIntoContainerMessage args)
+    {
+        var parent = Transform(uid).ParentUid;
+        if (!TryInvCompWarn(parent, out var invComp))
+            return;
+
+        OnEntInserted(parent, invComp, args);
     }
 
     private void OnEquipAttempt(EntityUid uid, InventorySlotComponent component, BeingEquippedAttemptEvent args)
@@ -26,9 +47,9 @@ public partial class InventorySystem
                 return;
             foreach (var invSlotDef in template.Slots)
             {
-                if (invSlotDef.Name == invSlotSlotDef.Name)
+                if (invSlotDef.ConflictsWith(invSlotSlotDef))
                 {
-                    Logger.Error($"Found duplicate slotname {invSlotDef.Name} when trying to equip invslotcomp.");
+                    Logger.Error($"Found conflicting slots {invSlotDef.Name} and {invSlotSlotDef.Name} when trying to equip invslotcomp.");
                     args.Cancel();
                     return;
                 }

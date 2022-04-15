@@ -205,6 +205,10 @@ public abstract partial class InventorySystem
         if (_interactionSystem.CanAccessViaStorage(actor, itemUid))
             return true;
 
+        // the item is in an inventoryslotcomponent
+        if (itemUid.TryGetContainer(out var container) && HasComp<InventorySlotComponent>(container.Owner) && _containerSystem.IsInSameOrParentContainer(actor, container.Owner))
+            return true;
+
         // Is the actor currently stripping the target? Here we could check if the actor has the stripping UI open, but
         // that requires server/client specific code. so lets just check if they **could** open the stripping UI.
         // Note that this doesn't check that the item is equipped by the target, as this is done elsewhere.
