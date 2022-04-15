@@ -89,6 +89,7 @@
           type: WiresBoundUserInterface
     - type: Airtight
       fixVacuum: true
+    - type: Occluder
     - type: Construction
       graph: Firelock
       node: Firelock
@@ -100,6 +101,10 @@
   components:
     - type: Sprite
       sprite: Structures/Doors/Airlocks/Glass/firelock.rsi
+    - type: Occluder
+      enabled: false
+    - type: Door
+      occludes: false
 
 - type: entity
   id: FirelockEdge
@@ -121,8 +126,7 @@
         mask:
           - MidImpassable
         layer:
-          - Opaque
-          - Impassable
-          - MidImpassable
-          - HighImpassable
-          - LowImpassable
+    - type: Occluder
+      enabled: false
+    - type: Door
+      occludes: false
