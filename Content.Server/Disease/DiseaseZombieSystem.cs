@@ -36,7 +36,7 @@ namespace Content.Server.Disease
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly SharedHumanoidAppearanceSystem _sharedHumanoidAppearance = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        
+
         public override void Initialize()
         {
             base.Initialize();
@@ -45,7 +45,7 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<DiseaseZombieComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         }
-        
+
         /// <remarks>
         /// I would imagine that if this component got assigned to something other than a mob, it would throw hella errors.
         /// </remarks>
@@ -72,19 +72,16 @@ namespace Content.Server.Disease
                 _damageable.SetAllDamage(comp, 0);
             }
 
-            if(TryComp<HumanoidAppearanceComponent>(uid, out var spritecomp))
+            if (TryComp<HumanoidAppearanceComponent>(uid, out var spritecomp))
             {
-                //zombie hex color is #aeb87bff
-                var color = new Color(0.70f, 0.72f, 0.48f, 1);
-
                 var oldapp = spritecomp.Appearance;
-                var newapp = oldapp.WithSkinColor(color);
+                var newapp = oldapp.WithSkinColor(component.SkinColor);
                 _sharedHumanoidAppearance.UpdateAppearance(uid, newapp);
-				
-				_sharedHumanoidAppearance.ForceAppearanceUpdate(uid);
+
+                _sharedHumanoidAppearance.ForceAppearanceUpdate(uid);
             }
 
-            if(TryComp<HandsComponent>(uid, out var handcomp))
+            if (TryComp<HandsComponent>(uid, out var handcomp))
             {
                 foreach (var hand in handcomp.Hands)
                 {
@@ -97,7 +94,7 @@ namespace Content.Server.Disease
                 }
             }
 
-            if(TryComp<ContainerManagerComponent>(uid,out var cmcomp))
+            if (TryComp<ContainerManagerComponent>(uid, out var cmcomp))
             {
                 foreach (var container in cmcomp.Containers)
                 {
@@ -111,7 +108,7 @@ namespace Content.Server.Disease
                 }
             }
 
-            if(TryComp<MindComponent>(uid, out var mindcomp))
+            if (TryComp<MindComponent>(uid, out var mindcomp))
             {
                 if (mindcomp.Mind != null && mindcomp.Mind.TryGetSession(out var session))
                 {
@@ -129,7 +126,7 @@ namespace Content.Server.Disease
                 {
                     EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid, out var ghostcomp);
                     ghostcomp.RoleName = metacomp.EntityName;
-                    ghostcomp.RoleDescription = Loc.GetString("zombie-role-desc"); 
+                    ghostcomp.RoleDescription = Loc.GetString("zombie-role-desc");
                     ghostcomp.RoleRules = Loc.GetString("zombie-role-rules");
                 }
             }
@@ -152,7 +149,7 @@ namespace Content.Server.Disease
                 if (!HasComp<MobStateComponent>(entity))
                     continue;
 
-                if (_robustRandom.Prob(component.Probability)&& HasComp<DiseaseCarrierComponent>(entity))
+                if (_robustRandom.Prob(component.Probability) && HasComp<DiseaseCarrierComponent>(entity))
                 {
                     _disease.TryAddDisease(entity, "ZombieInfection");
                 }
@@ -161,10 +158,10 @@ namespace Content.Server.Disease
                 if ((mobState.IsDead() || mobState.IsCritical()) && !HasComp<DiseaseZombieComponent>(entity)) //dead entities are eautomatically infected. MAYBE: have activated infect ability?
                 {
                     EntityManager.AddComponent<DiseaseZombieComponent>(entity);
-					var dspec = new DamageSpecifier();
+                    var dspec = new DamageSpecifier();
                     dspec.DamageDict.TryAdd("Slash", -12);
                     dspec.DamageDict.TryAdd("Piercing", -7);
-					args.BonusDamage += dspec;
+                    args.BonusDamage += dspec;
                 }
                 else if (mobState.IsAlive() && !HasComp<DroneComponent>(entity)) //heals when zombies bite live entities
                 {

@@ -15,7 +15,6 @@ public sealed class ZombieOutbreak : StationEvent
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
 
     public override string Name => "ZombieOutbreak";
@@ -27,9 +26,8 @@ public sealed class ZombieOutbreak : StationEvent
     public override int? MaxOccurrences => 1;
 
     /// <summary>
-    /// Finds 2-5 random, alive entities that can host diseases
-    /// and gives them a randomly selected disease.
-    /// They all get the same disease.
+    /// Finds 1-3 random, dead entities accross the station
+    /// and turns them into zombies.
     /// </summary>
     public override void Startup()
     {
@@ -42,9 +40,9 @@ public sealed class ZombieOutbreak : StationEvent
         }
         _random.Shuffle(deadList);
 
-        var toInfect = _random.Next(5, 7);
+        var toInfect = _random.Next(1, 3);
 
-        /// Now we give it to people in the list of living disease carriers earlier
+        /// Now we give it to people in the list of dead entities earlier.
         foreach (var target in deadList)
         {
             if (toInfect-- == 0)

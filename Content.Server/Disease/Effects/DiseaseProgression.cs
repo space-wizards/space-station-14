@@ -21,29 +21,23 @@ namespace Content.Server.Disease.Effects
         public float Rate = 0.01f;
 
         /// <summary>
-        /// The current amount of progression that has built up.
+        /// The component that is added at the end of build up
         /// </summary>
-        [DataField("progression")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float Progression = 0.00f;
-
-		/// <summary>
-		/// The component that is added at the end of build up
-		/// </summary>
-		[DataField("comp")]
-		public string? Comp =  null;
+        [DataField("comp")]
+        public string? Comp = null;
 
         public override void Effect(DiseaseEffectArgs args)
         {
-            if ( Progression < 1) //increases steadily until 100%
+            args.EntityManager.EnsureComponent<DiseaseBuildupComponent>(args.DiseasedEntity, out var buildup);
+            if (buildup.Progression < 1) //increases steadily until 100%
             {
-                Progression += Rate;
+                buildup.Progression += Rate;
             }
-            else if(Comp != null)//adds the component for the later stage of the disease.
+            else if (Comp != null)//adds the component for the later stage of the disease.
             {
-				EntityUid uid = args.DiseasedEntity;
+                EntityUid uid = args.DiseasedEntity;
                 var newComponent = (Component) IoCManager.Resolve<IComponentFactory>().GetComponent(Comp);
-				newComponent.Owner = uid;
+                newComponent.Owner = uid;
                 if (!args.EntityManager.HasComponent(uid, newComponent.GetType()))
                     args.EntityManager.AddComponent(uid, newComponent);
             }

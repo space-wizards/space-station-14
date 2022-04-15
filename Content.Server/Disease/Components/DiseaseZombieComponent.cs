@@ -18,6 +18,7 @@ namespace Content.Server.Disease.Components
         /// A multiplier on the movement speed that zombies recieve.
         /// </summary>
         [DataField("slowAmount")]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float SlowAmount = 0.75f;
 
         /// <summary>
@@ -26,5 +27,11 @@ namespace Content.Server.Disease.Components
         /// </summary>
         [DataField("applyZombieTraits")]
         public bool ApplyZombieTraits = true;
+
+        /// <summary>
+        /// The color of the zombie's skin
+        /// </summary>
+        [DataField("skinColor")]
+        public readonly Color SkinColor = (0.70f, 0.72f, 0.48f, 1);
     }
 }

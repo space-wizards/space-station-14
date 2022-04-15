@@ -14,9 +14,9 @@ namespace Content.Server.Weapon.Melee.ZombieHand
 
         private void OnMeleeHit(EntityUid uid, ZombieHandComponent component, MeleeHitEvent args)
         {
-            if(HasComp<DiseaseZombieComponent>(args.User))
+            if (EntityManager.TryGetComponent<DiseaseZombieComponent>(args.User, out var comp))
             {
-                _diseaseZombie.OnMeleeHit(uid, EntityManager.GetComponent<DiseaseZombieComponent>(args.User), args);
+                _diseaseZombie.OnMeleeHit(uid, comp, args);
             }
         }
     }
