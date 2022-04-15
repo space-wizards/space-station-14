@@ -122,4 +122,4 @@
   - type: Armor
     modifiers:
       coefficients:
-        Heat: 0.5 #matches mesons now but for thermal
+        Heat: 0.95
