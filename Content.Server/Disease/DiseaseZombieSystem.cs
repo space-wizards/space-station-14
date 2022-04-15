@@ -54,16 +54,11 @@ namespace Content.Server.Disease
             if (!component.ApplyZombieTraits || !HasComp<MobStateComponent>(uid))
                 return;
 
-            if (HasComp<DiseaseCarrierComponent>(uid))
-                EntityManager.RemoveComponent<DiseaseCarrierComponent>(uid);
-            if (HasComp<RespiratorComponent>(uid))
-                EntityManager.RemoveComponent<RespiratorComponent>(uid);
-            if (HasComp<BarotraumaComponent>(uid))
-                EntityManager.RemoveComponent<BarotraumaComponent>(uid);
-            if (HasComp<HungerComponent>(uid))
-                EntityManager.RemoveComponent<HungerComponent>(uid);
-            if (HasComp<ThirstComponent>(uid))
-                EntityManager.RemoveComponent<ThirstComponent>(uid);
+            EntityManager.RemoveComponent<DiseaseCarrierComponent>(uid);
+            EntityManager.RemoveComponent<RespiratorComponent>(uid);
+            EntityManager.RemoveComponent<BarotraumaComponent>(uid);
+            EntityManager.RemoveComponent<HungerComponent>(uid);
+            EntityManager.RemoveComponent<ThirstComponent>(uid);
 
             EntityManager.EnsureComponent<BloodstreamComponent>(uid, out var bloodstream); //zoms need bloodstream anyway for healing
             _bloodstream.SetBloodLossThreshold(uid, 0f, bloodstream);
