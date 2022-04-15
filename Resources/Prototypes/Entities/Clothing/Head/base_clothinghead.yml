@@ -33,7 +33,7 @@
     size: 10
   - type: PressureProtection
     highPressureMultiplier: 0.6
-    lowPressureMultiplier: 10
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.2
   - type: IngestionBlocker
@@ -52,8 +52,8 @@
   - type: Clothing
     size: 15
   - type: PressureProtection
-    highPressureMultiplier: 0.6
-    lowPressureMultiplier: 10
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor
