@@ -28,5 +28,5 @@ public sealed class CrewMonitoringServerComponent : Component
     /// <summary>
     /// The id of the station the server is on.
     /// </summary>
-    public GridId StationId;
+    public GridId? StationId;
 }

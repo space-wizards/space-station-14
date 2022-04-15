@@ -18,7 +18,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// Sets the station id the device is limited to.
         /// Uses the grid id until moonys station beacon system is implemented
         /// </summary>
-        public void SetStation(EntityUid uid, GridId stationId, StationLimitedNetworkComponent? component = null)
+        public void SetStation(EntityUid uid, GridId? stationId, StationLimitedNetworkComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
@@ -31,6 +31,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnComponentInit(EntityUid uid, StationLimitedNetworkComponent networkComponent, ComponentInit args)
         {
+            //TODO: Change this to StationId after it's system got reworked
             networkComponent.StationId = Transform(uid).GridID;
         }
 
@@ -45,9 +46,9 @@ namespace Content.Server.DeviceNetwork.Systems
             }
         }
 
-        private bool CheckStationId(EntityUid senderUid, GridId receiverStationId, StationLimitedNetworkComponent? sender = null)
+        private bool CheckStationId(EntityUid senderUid, GridId? receiverStationId, StationLimitedNetworkComponent? sender = null)
         {
-            if (!Resolve(senderUid, ref sender))
+            if (!receiverStationId.HasValue || !Resolve(senderUid, ref sender))
                 return false;
 
             return sender.StationId == receiverStationId;

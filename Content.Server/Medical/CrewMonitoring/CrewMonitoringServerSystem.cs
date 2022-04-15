@@ -42,10 +42,10 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
 
         foreach (var server in servers)
         {
-            if (!server.Available || _activeServers.ContainsKey(server.StationId))
+            if (!server.StationId.HasValue || !server.Available || _activeServers.ContainsKey(server.StationId!.Value))
                 continue;
 
-            _activeServers.Add(server.StationId, server.Owner);
+            _activeServers.Add(server.StationId!.Value, server.Owner);
             _deviceNetworkSystem.ConnectDevice(server.Owner);
         }
 
@@ -61,6 +61,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
     /// </summary>
     private void OnInit(EntityUid uid, CrewMonitoringServerComponent component, ComponentInit args)
     {
+        //TODO: Change this to StationId after it's system got reworked
         component.StationId = Transform(uid).GridID;
     }
 
@@ -103,7 +104,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
     private void OnRemove(EntityUid uid, CrewMonitoringServerComponent component, ComponentRemove args)
     {
         component.SensorStatus.Clear();
-        _activeServers.Remove(component.StationId);
+        _activeServers.Remove(component.StationId!.Value);
     }
 
     /// <summary>
@@ -161,6 +162,6 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
 
         server.SensorStatus.Clear();
         _deviceNetworkSystem.DisconnectDevice(uid, device);
-        _activeServers.Remove(server.StationId);
+        _activeServers.Remove(server.StationId!.Value);
     }
 }
