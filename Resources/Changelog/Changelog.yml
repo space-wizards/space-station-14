@@ -1,12 +1,4 @@
 Entries:
-- author: Matz05
-  changes:
-  - {message: Made LED tubes increase the brightness of lights they're installed in,
-    type: Tweak}
-  - {message: 'Provided an admin/sandbox/map-spawnable light fixture that starts out
-      with an LED tube, for brighter-lit areas.', type: Add}
-  id: 827
-  time: '2022-01-05T05:25:37.0000000+00:00'
 - author: Rane
   changes:
   - {message: Traitors can now see their codewords in the objective menu., type: Add}
@@ -3016,3 +3008,10 @@ Entries:
   - {message: Lobby Info Box now refreshes when needed., type: Tweak}
   id: 1326
   time: '2022-04-15T18:55:38.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added Agent ID cards to the uplink, a traitor item that allows you
+      to copy accesses from other cards and change the name and job title to whatever
+      you want.', type: Add}
+  id: 1327
+  time: '2022-04-15T21:15:25.0000000+00:00'
