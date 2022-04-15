@@ -11,6 +11,12 @@
   - type: IngestionBlocker
   - type: ExplosionResistance
     resistance: 0.25 # +0.65 from body -> 90%
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.8
+        Piercing: 0.8    
 
 - type: entity
   parent: ClothingHeadEVAHelmetBase
@@ -88,6 +94,12 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/light_riot.rsi
   - type: IngestionBlocker
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
 
 - type: entity
   parent: ClothingHeadBase
@@ -100,6 +112,12 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/scaf.rsi
   - type: IngestionBlocker
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
 
 - type: entity
   parent: ClothingHeadBase
@@ -176,6 +194,14 @@
       startingItem: PowerCellSmallHigh
   - type: TemperatureProtection
     coefficient: 0.01
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.65
+        Radiation: 1
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase # hardsuitlight base for light and protection
@@ -190,6 +216,14 @@
   - type: IngestionBlocker
   - type: TemperatureProtection
     coefficient: 0.005
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.5
+        Radiation: .95
 
 - type: entity
   parent: ClothingHeadBase
