@@ -4,6 +4,11 @@
   parent: BaseVox
   id: Vox
   components:
+    - type: InteractionPopup
+      successChance: 0.9
+      interactSuccessString: hugging-success-generic
+      interactSuccessSound: /Audio/Effects/hug.ogg
+      interactFailureString: hugging-failure-generic
     - type: Mind
       showExamineInfo: true
     - type: Input
