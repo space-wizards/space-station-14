@@ -153,11 +153,5 @@
       normal: purple_snake
       crit: dead_small_purple_snake
       dead: dead_small_purple_snake
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        reagents:
-        - ReagentId: Toxin
-          Quantity: 50
   - type: SolutionTransfer
     maxTransferAmount: 1
