@@ -53,7 +53,7 @@ namespace Content.Shared.Ghost
     [Serializable, NetSerializable]
     public sealed class GhostWarpsResponseEvent : EntityEventArgs
     {
-        public GhostWarpsResponseEvent(List<string> locations, Dictionary<EntityUid, string[]> players)
+        public GhostWarpsResponseEvent(List<string> locations, Dictionary<EntityUid, string> players)
         {
             Locations = locations;
             Players = players;
@@ -67,7 +67,7 @@ namespace Content.Shared.Ghost
         /// <summary>
         /// A dictionary containing the entity id, and name of players that can be warped to.
         /// </summary>
-        public Dictionary<EntityUid, string[]> Players { get; }
+        public Dictionary<EntityUid, string> Players { get; }
     }
 
     /// <summary>

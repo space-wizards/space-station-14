@@ -245,9 +245,9 @@ namespace Content.Server.Ghost
             return null;
         }
 
-        private Dictionary<EntityUid, string[]> GetPlayerWarps(EntityUid except)
+        private Dictionary<EntityUid, string> GetPlayerWarps(EntityUid except)
         {
-            var players = new Dictionary<EntityUid, string[]>();
+            var players = new Dictionary<EntityUid, string>();
 
             foreach (var player in _playerManager.Sessions)
             {
@@ -255,7 +255,8 @@ namespace Content.Server.Ghost
                 {
                     TryComp<MindComponent>(attached, out var mind);
 
-                    string[] playerInfo = { EntityManager.GetComponent<MetaDataComponent>(attached).EntityName, mind?.Mind?.CurrentJob?.Name ?? "Unknow" };
+                    string playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";
+
                     if (TryComp<MobStateComponent>(attached, out var state) && !state.IsDead())
                         players.Add(attached, playerInfo);
                 }

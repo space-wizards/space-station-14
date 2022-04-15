@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace Content.Client.Ghost.UI
 
         public List<string> Locations { get; set; } = new();
 
-        public Dictionary<EntityUid, string[]> Players { get; set; } = new();
+        public Dictionary<EntityUid, string> Players { get; set; } = new();
 
         public GhostTargetWindow(IEntityNetworkManager netManager)
         {
@@ -37,20 +37,20 @@ namespace Content.Client.Ghost.UI
 
         private void AddButtonPlayers()
         {
-            var sortingList = new List<(EntityUid, string[])>(Players.Count);
+            var sortedPlayers = new List<(string, EntityUid)>(Players.Count);
 
             foreach (var (key, player) in Players)
             {
-                sortingList.Add((key, player));
+                sortedPlayers.Add((player, key));
             }
 
-            var sortedPlayers = sortingList.OrderBy(x => x.Item2[0]);
+            sortedPlayers.Sort((x, y) => string.Compare(x.Item1, y.Item1, StringComparison.Ordinal));
 
             foreach (var (key, player) in sortedPlayers)
             {
                 var currentButtonRef = new Button
                 {
-                    Text = $"{player[0]} ({player[1]})",
+                    Text = key,
                     TextAlign = Label.AlignMode.Right,
                     HorizontalAlignment = HAlignment.Center,
                     VerticalAlignment = VAlignment.Center,
@@ -61,7 +61,7 @@ namespace Content.Client.Ghost.UI
 
                 currentButtonRef.OnPressed += (_) =>
                 {
-                    var msg = new GhostWarpToTargetRequestEvent(key);
+                    var msg = new GhostWarpToTargetRequestEvent(player);
                     _netManager.SendSystemNetworkMessage(msg);
                 };
 
