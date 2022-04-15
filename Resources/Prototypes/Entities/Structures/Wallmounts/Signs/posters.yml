@@ -927,7 +927,7 @@
   - type: Sprite
     state: salternmap  
     
- - type: entity
+- type: entity
   parent: PosterBase
   id: PosterMapSplit
   name: "Split Station Map"
