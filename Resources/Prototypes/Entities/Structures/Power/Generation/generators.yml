@@ -94,11 +94,6 @@
     color: "#3db83b"
     castShadows: false
   - type: Fixtures
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.3,0.25"
-        layer: [ Passable ]
   - type: Transform
     anchored: true
   - type: Sprite
@@ -137,11 +132,6 @@
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.3,0.25"
-        layer: [ Passable ]
   - type: Transform
     anchored: true
   - type: Sprite

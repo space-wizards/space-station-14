@@ -21,9 +21,6 @@ namespace Content.Shared.Physics
 		HighImpassable  = 1 <<  3, // 8 Things that cannot be jumped over, not half walls or tables
 		LowImpassable   = 1 <<  4, // 16 Things a smaller object - a cat, a crab - can't go through - a wall, but not a computer terminal or a table
         GhostImpassable = 1 <<  5, // 32 Things impassible by ghosts/observers, ie blessed tiles or forcefields
-        [Obsolete("Don't use Passable for collision.")]
-        // Collision is for what things collide, not what they "don't collide with" so this makes 0 logical sense.
-        Passable        = 1 <<  7, // 128 Things that are passable.
         MapGrid         = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
 
         MobMask = Impassable | MidImpassable | HighImpassable | LowImpassable,

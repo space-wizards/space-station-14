@@ -16,8 +16,6 @@
         !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.00"
       mass: 25
-      layer:
-      - Passable
       mask:
       - HighImpassable
   - type: Sprite
