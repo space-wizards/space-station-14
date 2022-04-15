@@ -163,8 +163,6 @@
     sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetEVA
 
 # Moved to hardsuits because this is where EVA capable suits are apparently.
 # Same stats as normal EVA suit.
@@ -178,8 +176,6 @@
     sprite: Clothing/OuterClothing/Suits/syndicate.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/syndicate.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetSyndicate
 
 - type: entity
   parent: ClothingOuterEVASuitBase

@@ -19,7 +19,7 @@
     resistance: 0.65 # +0.25 from helmet -> 90%
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterEVASuitBase
   id: ClothingOuterSuitEmergency
   name: emergency suit
   description: An emergency suit in cases of... emergencies.
@@ -27,17 +27,7 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/emergency.rsi
   - type: Clothing
-    size: 30
     sprite: Clothing/OuterClothing/Suits/emergency.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 1
-    lowPressureMultiplier: 100
-  - type: TemperatureProtection
-    coefficient: 0.01 # Not complete protection from fire
-  - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
-  - type: DiseaseProtection
 
 - type: entity
   parent: ClothingOuterBase

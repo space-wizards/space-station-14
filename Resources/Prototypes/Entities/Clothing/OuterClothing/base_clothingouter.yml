@@ -59,10 +59,3 @@
   - type: Clothing
     size: 30
   - type: DiseaseProtection
-  - type: ToggleableClothing
-    toggleAction:
-      name: action-name-hardsuit
-      description: action-description-hardsuit
-      itemIconStyle: BigItem
-      useDelay: 1 # equip noise spam.
-      event: !type:ToggleClothingEvent
