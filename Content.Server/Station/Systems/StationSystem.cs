@@ -266,6 +266,7 @@ public sealed class StationSystem : EntitySystem
         if (!Resolve(station, ref stationData))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
+        _stations.Remove(station);
         Del(station);
     }
 }
