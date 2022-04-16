@@ -45,6 +45,8 @@ public sealed class StationSpawningSystem : EntitySystem
         SubscribeLocalEvent<StationSpawnerManagerComponent, ComponentShutdown>(OnSpawnerShutdown);
     }
 
+    #region Spawner management
+
     private void OnStationInitialized(StationInitializedEvent ev)
     {
         AddComp<StationSpawningComponent>(ev.Station);
@@ -145,6 +147,8 @@ public sealed class StationSpawningSystem : EntitySystem
         if (stationSpawning.SpawnersByGrid[previousGrid].Count == 0)
             stationSpawning.SpawnersByGrid.Remove(previousGrid);
     }
+
+    #endregion
 
     /// <summary>
     /// Attempts to spawn a player character onto the given station.
