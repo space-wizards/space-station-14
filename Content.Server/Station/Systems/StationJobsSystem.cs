@@ -296,7 +296,6 @@ public sealed class StationJobsSystem : EntitySystem
     {
         _cachedAvailableJobs = GenerateJobsAvailableEvent();
         RaiseNetworkEvent(_cachedAvailableJobs, Filter.Empty().AddPlayers(_gameTicker.PlayersInLobby.Keys));
-        Logger.Debug("jobs updated");
     }
 
     private void OnPlayerJoinedLobby(PlayerJoinedLobbyEvent ev)

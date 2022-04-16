@@ -121,7 +121,6 @@ public sealed class StationSystem : EntitySystem
 
         foreach (var (_, gridIds) in dict)
         {
-            Logger.Debug($"{gridIds.Count}");
             InitializeNewStation(ev.GameMap, gridIds, ev.StationName);
         }
     }
@@ -169,16 +168,16 @@ public sealed class StationSystem : EntitySystem
             metaData.EntityName = "How did we get here?";
         }
 
+        _stations.Add(station);
+
         RaiseLocalEvent(new StationInitializedEvent(station));
         _sawmill.Info($"Set up station {metaData.EntityName} ({station}) with prototype {mapPrototype?.ID}");
-
 
         foreach (var grid in gridIds ?? Array.Empty<GridId>())
         {
             RaiseLocalEvent(station, new StationGridAddedEvent(grid, true));
         }
 
-        _stations.Add(station);
         return station;
     }
 
