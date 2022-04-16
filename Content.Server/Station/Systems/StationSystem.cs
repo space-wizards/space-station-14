@@ -121,6 +121,7 @@ public sealed class StationSystem : EntitySystem
 
         foreach (var (_, gridIds) in dict)
         {
+            Logger.Debug($"{gridIds.Count}");
             InitializeNewStation(ev.GameMap, gridIds, ev.StationName);
         }
     }
@@ -146,7 +147,7 @@ public sealed class StationSystem : EntitySystem
     /// <returns>The initialized station.</returns>
     public EntityUid InitializeNewStation(GameMapPrototype? mapPrototype, IEnumerable<GridId>? gridIds, string? name = null)
     {
-        var station = Spawn(null, MapCoordinates.Nullspace);
+        var station = Spawn(null, new MapCoordinates(0, 0, new MapId(1)));
         var data = AddComp<StationDataComponent>(station);
         var metaData = MetaData(station);
         data.MapPrototype = mapPrototype;
@@ -176,6 +177,7 @@ public sealed class StationSystem : EntitySystem
             RaiseLocalEvent(station, new StationGridAddedEvent(grid, true));
         }
 
+        _stations.Add(station);
         return station;
     }
 

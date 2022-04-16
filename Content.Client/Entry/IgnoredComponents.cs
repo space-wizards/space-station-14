@@ -89,6 +89,7 @@ namespace Content.Client.Entry
             "CommunicationsConsole",
             "BarSign",
             "SolarPanel",
+            "StationSpawnerManager",
             "BodyScanner",
             "Stunbaton",
             "TilePrying",

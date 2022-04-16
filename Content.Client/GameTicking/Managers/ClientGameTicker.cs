@@ -3,7 +3,6 @@ using Content.Client.RoundEnd;
 using Content.Client.Viewport;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
-using Content.Shared.Station;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;

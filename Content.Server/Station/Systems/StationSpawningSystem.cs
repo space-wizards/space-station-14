@@ -53,7 +53,7 @@ public sealed class StationSpawningSystem : EntitySystem
     private void OnStationGridAdded(EntityUid uid, StationSpawningComponent component,  StationGridAddedEvent ev)
     {
         var spawnerEntities = new HashSet<EntityUid>(128); // Somewhat arbitrary magic number.
-        foreach (var (manager, xform) in EntityQuery<StationSpawnerManagerComponent, TransformComponent>())
+        foreach (var (manager, xform) in EntityQuery<StationSpawnerManagerComponent, TransformComponent>(true))
         {
             if (!(xform.GridID == ev.GridId))
                 continue;
@@ -162,8 +162,10 @@ public sealed class StationSpawningSystem : EntitySystem
 
         // TODO: Cache this list.
         var options = stationSpawning.Spawners.ToList();
+        if (options.Count == 0)
+            return null;
 
-        var startAt = _robustRandom.Next(0, options.Count - 1);
+        var startAt = _robustRandom.Next(0, options.Count);
         var curr = startAt;
         var ev = new SpawnPlayerEvent(job, profile);
         do

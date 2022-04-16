@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Station.Components;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
@@ -17,7 +16,7 @@ public sealed class StationJobsSystem : EntitySystem
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialized);
     }
 
-    private void OnStationInitialized(StationInitializedEvent msg, EntitySessionEventArgs args)
+    private void OnStationInitialized(StationInitializedEvent msg)
     {
         var stationJobs = AddComp<StationJobsComponent>(msg.Station);
         var stationData = Comp<StationDataComponent>(msg.Station);
@@ -30,7 +29,7 @@ public sealed class StationJobsSystem : EntitySystem
         stationJobs.RoundStartTotalJobs = mapJobList.Values.Select(x => x[0]).Where(x => x > 0).Sum();
         stationJobs.MidRoundTotalJobs = mapJobList.Values.Select(x => x[1]).Where(x => x > 0).Sum();
         stationJobs.JobList = mapJobList.ToDictionary(x => x.Key, x => x.Value[1]);
-        stationJobs.OverflowJobs = stationData.MapPrototype.OverflowJobs.ToHashSet(); // Careful to clone it and not keep a ref.
+        stationJobs.OverflowJobs = stationData.MapPrototype.OverflowJobs.ToHashSet();
     }
 
     /// <inheritdoc cref="TryAssignJob(Robust.Shared.GameObjects.EntityUid,Content.Shared.Roles.JobPrototype,Content.Server.Station.Components.StationJobsComponent?)"/>

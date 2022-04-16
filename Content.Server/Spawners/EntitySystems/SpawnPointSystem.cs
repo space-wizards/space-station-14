@@ -17,7 +17,7 @@ public sealed class SpawnPointSystem : EntitySystem
     private void OnSpawnPlayer(EntityUid uid, SpawnPointComponent component, ref SpawnPlayerEvent args)
     {
         // Spawn the player here if the job matches, we're not in-round, and we're a job spawner OR if we're a late-join spawner.
-        if (args.Job?.Prototype.ID != component.Job?.ID && _gameTicker.RunLevel != GameRunLevel.InRound && component.SpawnType == SpawnPointType.Job)
+        if (args.Job != null && args.Job?.Prototype.ID != component.Job?.ID && _gameTicker.RunLevel != GameRunLevel.InRound && component.SpawnType == SpawnPointType.Job)
             return;
 
         if (component.SpawnType is SpawnPointType.Observer or SpawnPointType.Unset)
