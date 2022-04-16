@@ -90,7 +90,7 @@ public sealed class StationSpawningSystem : EntitySystem
 
     private void OnSpawnerShutdown(EntityUid uid, StationSpawnerManagerComponent component, ComponentShutdown args)
     {
-        if (component.PreviousGrid != null && component.PreviousStation != null)
+        if (component.PreviousGrid != null && component.PreviousStation != null && Exists(component.PreviousStation))
         {
             RemoveSpawnerFromStation(uid, component.PreviousStation.Value, component.PreviousGrid.Value);
         }
