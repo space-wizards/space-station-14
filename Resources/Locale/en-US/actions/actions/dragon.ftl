@@ -1,5 +1,5 @@
 devour-action-popup-message-structure = your jaws dig into thick material..
-devour-action-popup-message-fail-target-not-valid = That doesn't look particularly edible
+devour-action-popup-message-fail-target-not-valid = That doesn't look particularly edible.
 devour-action-popup-message-fail-target-no-body = Your palate isn't ready for whatever that is
 devour-action-popup-message-fail-target-alive = You can't consume creatures alive
 
